@@ -648,7 +648,7 @@ namespace win
       static ::user::interaction * PASCAL GetDescendantWindow(::user::interaction * hWnd, id id);
       static void PASCAL SendMessageToDescendants(HWND hWnd, UINT message,
          WPARAM wParam, LPARAM lParam, BOOL bDeep, BOOL bOnlyPerm);
-      virtual BOOL IsFrameWnd(); // is_kind_of(System.type_info < frame_window > ()))
+      virtual BOOL IsFrameWnd(); // is_kind_of(System.get_type_info < frame_window > ()))
       virtual void on_final_release();
       static BOOL PASCAL ModifyStyle(HWND hWnd, DWORD dwRemove, DWORD dwAdd,
          UINT nFlags);

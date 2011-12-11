@@ -2078,7 +2078,7 @@ lpSecurityAttrs;
 return NULL;
 #else
 ASSERT(pThreadClass != NULL);
-ASSERT(pThreadClass->IsDerivedFrom(System.type_info < thread > ()));
+ASSERT(pThreadClass->IsDerivedFrom(System.get_type_info < thread > ()));
 
 thread* pThread = dynamic_cast < thread * > (App(get_app()).alloc(pThreadClass));
 if (pThread == NULL)
