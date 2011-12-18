@@ -717,7 +717,10 @@ namespace win
 
       lpMetrics->tmAscent = ((graphics * )this)->gdiplus_font()->GetSize() * family.GetCellAscent(((graphics * )this)->gdiplus_font()->GetStyle()) / dHeight;
       lpMetrics->tmDescent = ((graphics * )this)->gdiplus_font()->GetSize() * family.GetCellDescent(((graphics * )this)->gdiplus_font()->GetStyle()) / dHeight;
-      lpMetrics->tmHeight = ((graphics * )this)->gdiplus_font()->GetSize() * family.GetLineSpacing(((graphics * )this)->gdiplus_font()->GetStyle()) / dHeight;
+      lpMetrics->tmHeight = ((graphics * )this)->gdiplus_font()->GetSize() * family.GetEmHeight(((graphics * )this)->gdiplus_font()->GetStyle()) / dHeight;
+
+      lpMetrics->tmInternalLeading = lpMetrics->tmAscent + lpMetrics->tmDescent - lpMetrics->tmHeight;
+      lpMetrics->tmExternalLeading = family.GetLineSpacing(((graphics * )this)->gdiplus_font()->GetStyle()) / dHeight;
       
       const Gdiplus::FontFamily * pfamilyMono = family.GenericMonospace();
 
@@ -912,34 +915,55 @@ namespace win
 
    BOOL graphics::AbortPath()
    {
-      ASSERT(get_handle1() != NULL); 
-      return ::AbortPath(get_handle1()); 
+      if(m_ppath != NULL)
+      {
+         delete m_ppath;
+         m_ppath = NULL;
+      }
+      return true;
    }
+
    BOOL graphics::BeginPath()
    { 
-      ASSERT(get_handle1() != NULL); 
-      return ::BeginPath(get_handle1()); 
+      
+      if(m_ppath != NULL)
+         delete m_ppath;
+      
+      m_ppath = new Gdiplus::GraphicsPath;
+
+      return m_ppath != NULL;
+
    }
+
    BOOL graphics::CloseFigure()
    {
-      ASSERT(get_handle1() != NULL); 
-      return ::CloseFigure(get_handle1()); 
+      ASSERT(m_ppath != NULL); 
+      return m_ppath->CloseFigure() == Gdiplus::Status::Ok;
    }
+
    BOOL graphics::EndPath()
    { 
-      ASSERT(get_handle1() != NULL); 
-      return ::EndPath(get_handle1()); 
+
+      if(m_ppath == NULL)
+         return FALSE;
+
+      m_ppathPaint   = m_ppath;
+      m_ppath        = NULL;
+      
+      return true;
+
    }
+
    BOOL graphics::FillPath()
    { 
-      ASSERT(get_handle1() != NULL); 
-      return ::FillPath(get_handle1()); 
+      return m_pgraphics->FillPath(gdiplus_brush(), m_ppath) == Gdiplus::Status::Ok;
    }
+
    BOOL graphics::FlattenPath()
    {
-      ASSERT(get_handle1() != NULL); 
-      return ::FlattenPath(get_handle1()); 
+      return m_ppath->Flatten() == Gdiplus::Status::Ok;
    }
+
    float graphics::GetMiterLimit() const
    {
       ASSERT(get_handle1() != NULL); 
@@ -947,6 +971,7 @@ namespace win
       VERIFY(::GetMiterLimit(get_handle1(), &fMiterLimit)); 
       return fMiterLimit; 
    }
+
    int graphics::GetPath(LPPOINT lpPoints, LPBYTE lpTypes, int nCount) const
    { 
       ASSERT(get_handle1() != NULL); 
@@ -959,18 +984,17 @@ namespace win
    }
    BOOL graphics::StrokeAndFillPath()
    { 
-      ASSERT(get_handle1() != NULL); 
-      return ::StrokeAndFillPath(get_handle1()); 
+      BOOL bOk1 = m_pgraphics->FillPath(gdiplus_brush(), m_ppathPaint) == Gdiplus::Status::Ok;
+      BOOL bOk2 = m_pgraphics->DrawPath(gdiplus_pen(), m_ppathPaint) == Gdiplus::Status::Ok;
+      return bOk1 && bOk2;
    }
    BOOL graphics::StrokePath()
    {
-      ASSERT(get_handle1() != NULL); 
-      return ::StrokePath(get_handle1()); 
+      return m_pgraphics->DrawPath(gdiplus_pen(), m_ppathPaint) == Gdiplus::Status::Ok;
    }
    BOOL graphics::WidenPath()
    {
-      ASSERT(get_handle1() != NULL); 
-      return ::WidenPath(get_handle1()); 
+      return m_ppath->Widen(gdiplus_pen()) == Gdiplus::Status::Ok;
    }
 
    BOOL graphics::AddMetaFileComment(UINT nDataSize, const BYTE* pCommentData)
@@ -1382,20 +1406,26 @@ namespace win
    {
 //      set_handle1(NULL);
   //    set_handle2(NULL);
-      m_bPrinting = FALSE;
-      m_pdibAlphaBlend = NULL;
-      m_pgraphics = NULL;
+      m_bPrinting       = FALSE;
+      m_pdibAlphaBlend  = NULL;
+      m_pgraphics       = NULL;
       m_bHdc            = false;
+      m_ppath           = NULL;
+      m_ppathPaint      = NULL;
+
    }
 
    graphics::graphics()
    {
     //  set_handle1(NULL);
       //set_handle2(NULL);
-      m_bPrinting = FALSE;
-      m_pgraphics = NULL;
-      m_pgraphics = NULL;
+      m_bPrinting    = FALSE;
+      m_pgraphics       = NULL;
+      m_pgraphics       = NULL;
       m_bHdc            = false;
+      m_ppath           = NULL;
+      m_ppathPaint      = NULL;
+
    }
 
 #ifdef _DEBUG
@@ -1501,6 +1531,18 @@ namespace win
       if(hdc != NULL)
       {
          ::DeleteDC(hdc);
+      }
+
+      if(m_ppath != NULL)
+      {
+         delete m_ppath;
+         m_ppath = NULL;
+      }
+
+      if(m_ppathPaint != NULL)
+      {
+         delete m_ppathPaint;
+         m_ppathPaint = NULL;
       }
 
    }
@@ -1622,7 +1664,7 @@ namespace win
 
    }
 
-   ::ca::font* graphics::SelectObject(::ca::font* pFont)
+   ::ca::font* graphics::SelectObject(::ca::font* pfont)
    {
 /*      HGDIOBJ hOldObj = NULL;
       if(pFont == NULL)
@@ -1633,12 +1675,17 @@ namespace win
          hOldObj = ::SelectObject(get_handle2(), pFont->get_os_data());
       return dynamic_cast < ::ca::font * > (::win::graphics_object::from_handle(get_app(), hOldObj));*/
 
-      ASSERT(pFont != NULL);
+      /*ASSERT(pFont != NULL);
 
       if(pFont == NULL)
          return NULL;
 
       m_fontxyz = *pFont;
+      return &m_fontxyz;*/
+      
+      if(!select_font(pfont))
+         return NULL;
+
       return &m_fontxyz;
 
    }
@@ -1711,14 +1758,15 @@ namespace win
 
    COLORREF graphics::SetTextColor(COLORREF crColor)
    {
-      COLORREF crRetVal = m_crColor;
-      m_crColor = crColor;
+      return set_color(crColor);
+      //COLORREF crRetVal = m_crColor;
+      //m_crColor = crColor;
 /*      COLORREF crRetVal = CLR_INVALID;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          crRetVal = ::SetTextColor(get_handle1(), crColor);
       if(get_handle2() != NULL)
          crRetVal = ::SetTextColor(get_handle2(), crColor);*/
-      return crRetVal;
+      //return crRetVal;
    }
 
    int graphics::SetGraphicsMode(int iMode)
@@ -1863,14 +1911,26 @@ namespace win
       return ::GetClipBox(get_handle1(), lpRect);
    }
 
-   int graphics::SelectClipRgn(::ca::region* pRgn)
+   int graphics::SelectClipRgn(::ca::region * pregion)
    {
-      int nRetVal = ERROR;
+
+      if(pregion == NULL)
+      {
+         m_pgraphics->ResetClip();
+      }
+      else
+      {
+         m_pgraphics->SetClip((Gdiplus::Region *) pregion->get_os_data());
+      }
+
+      return 0;
+
+/*      int nRetVal = ERROR;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          nRetVal = ::SelectClipRgn(get_handle1(), pRgn == NULL ? NULL : (HRGN) pRgn->get_os_data());
       if(get_handle2() != NULL)
          nRetVal = ::SelectClipRgn(get_handle2(), pRgn == NULL ? NULL : (HRGN) pRgn->get_os_data());
-      return nRetVal;
+      return nRetVal;*/
    }
 
    int graphics::ExcludeClipRect(int x1, int y1, int x2, int y2)
@@ -2319,15 +2379,65 @@ namespace win
       wstring wstr = gen::international::utf8_to_unicode(str);
       return ::DrawTextW(get_handle1(), (const wchar_t *)wstr, (int)wcslen(wstr), lpRect, nFormat); */
 
-      Gdiplus::RectF rectf(lpRect->left, lpRect->top, lpRect->right - lpRect->left, lpRect->bottom - lpRect->top);
+      
 
 
       Gdiplus::StringFormat format;
 
 
-      m_pgraphics->DrawString(gen::international::utf8_to_unicode(str),
-         -1, gdiplus_font(), rectf, &format, gdiplus_brush());
+      if(nFormat & DT_LEFT)
+      {
+         format.SetAlignment(Gdiplus::StringAlignmentNear);
+      }
+      else if(nFormat & DT_RIGHT)
+      {
+         format.SetAlignment(Gdiplus::StringAlignmentFar);
+      }
+      else if(nFormat & DT_CENTER)
+      {
+         format.SetAlignment(Gdiplus::StringAlignmentCenter);
+      }
+      else
+      {
+         format.SetAlignment(Gdiplus::StringAlignmentNear);
+      }
 
+      if(nFormat & DT_BOTTOM)
+      {
+         format.SetLineAlignment(Gdiplus::StringAlignmentFar);
+      }
+      else if(nFormat & DT_TOP)
+      {
+         format.SetLineAlignment(Gdiplus::StringAlignmentNear);
+      }
+      else if(nFormat & DT_VCENTER)
+      {
+         format.SetLineAlignment(Gdiplus::StringAlignmentCenter);
+      }
+      else
+      {
+         format.SetLineAlignment(Gdiplus::StringAlignmentNear);
+      }
+
+      //m_dFontSize             = fontSrc.m_dFontSize;
+
+      Gdiplus::Matrix m;
+      m_pgraphics->GetTransform(&m);
+
+      Gdiplus::Matrix * pmNew = m.Clone();
+
+      pmNew->Translate(lpRect->left, lpRect->top);
+      pmNew->Scale(m_fontxyz.m_dFontWidth, 1.0, Gdiplus::MatrixOrderAppend);
+
+      Gdiplus::RectF rectf(0, 0, (lpRect->right - lpRect->left) * m_spfont.m_p->m_dFontWidth, lpRect->bottom - lpRect->top);
+
+      m_pgraphics->SetTransform(pmNew);
+
+      m_pgraphics->DrawString(gen::international::utf8_to_unicode(str), -1, gdiplus_font(), rectf, &format, gdiplus_brush());
+
+      m_pgraphics->SetTransform(&m);
+
+      delete pmNew;
 
       return 1;
 
@@ -2626,7 +2736,7 @@ namespace win
    BOOL graphics::TextOut(int x, int y, const char * lpszString, int nCount)
    {
 
-      ::Gdiplus::PointF origin(x, y);
+      ::Gdiplus::PointF origin(0, 0);
 
       string str(lpszString, nCount);
       
@@ -2636,12 +2746,44 @@ namespace win
       //m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
       m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintSingleBitPerPixelGridFit);
    
-      return m_pgraphics->DrawString(
-         wstr, 
-         wstr.get_length(), 
-         gdiplus_font(), 
-         origin, 
-         gdiplus_brush()) == Gdiplus::Status::Ok;
+      Gdiplus::Matrix m;
+      m_pgraphics->GetTransform(&m);
+
+      Gdiplus::Matrix * pmNew = m.Clone();
+
+      pmNew->Translate(x, y);
+      pmNew->Scale(m_fontxyz.m_dFontWidth, 1.0, Gdiplus::MatrixOrderAppend);
+
+      Gdiplus::Status status;
+
+      if(m_ppath != NULL)
+      {
+         
+         m_ppath->Transform(pmNew);
+
+         Gdiplus::FontFamily fontfamily;
+
+         gdiplus_font()->GetFamily(&fontfamily);
+
+         status = m_ppath->AddString(gen::international::utf8_to_unicode(str), -1, &fontfamily, gdiplus_font()->GetStyle(), gdiplus_font()->GetSize(), origin, NULL);
+
+         m_ppath->Transform(&m);
+
+      }
+      else
+      {
+
+         m_pgraphics->SetTransform(pmNew);
+
+         status = m_pgraphics->DrawString(gen::international::utf8_to_unicode(str), -1, gdiplus_font(), origin, gdiplus_brush());
+
+         m_pgraphics->SetTransform(&m);
+
+      }
+
+      delete pmNew;
+
+      return status  == Gdiplus::Status::Ok;
 
    }
 

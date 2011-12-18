@@ -193,13 +193,14 @@ namespace win
 
    bool dib::to(::ca::graphics * pgraphics, point pt, class size size, point ptSrc)
    {
-      return SetDIBitsToDevice(
+      return pgraphics->BitBlt(pt.x, pt.y, size.cx, size.cy, get_graphics(), ptSrc.x, ptSrc.y, SRCCOPY);
+    /*  return SetDIBitsToDevice(
          (dynamic_cast<::win::graphics * >(pgraphics))->get_handle1(), 
          pt.x, pt.y, 
          size.cx, size.cy, 
          ptSrc.x, ptSrc.y, ptSrc.y, m_size.cy - ptSrc.y, 
          m_pcolorref, &m_info, 0)
-            != FALSE; 
+            != FALSE; */
    }
 
    bool dib::from(::ca::graphics * pdc)

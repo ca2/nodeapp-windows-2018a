@@ -108,6 +108,19 @@ namespace win
 
             path.AddPolygon(pa.get_data(), pa.get_count());
          }
+         else if(m_etype == type_rect)
+         {
+            
+            Gdiplus::RectF rect;
+
+            rect.X      = m_pta[0].x;
+            rect.Y      = m_pta[0].y;
+            rect.Width  = m_pta[1].x - m_pta[0].x;
+            rect.Height = m_pta[1].y - m_pta[0].y;
+
+            path.AddRectangle(rect);
+
+         }
 
          ((region *) this)->m_pregion = new Gdiplus::Region(&path);
          
