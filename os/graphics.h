@@ -67,6 +67,9 @@ namespace win
       DWORD GetLayout() const;
       DWORD SetLayout(DWORD dwLayout);
 
+
+      virtual double get_dpix() const;
+
    // Constructors
       BOOL CreateDC(const char * lpszDriverName, const char * lpszDeviceName,
          const char * lpszOutput, const void * lpInitData);

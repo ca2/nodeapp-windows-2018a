@@ -117,6 +117,7 @@ namespace win
       }
       m_dwLastUpdate = ::GetTickCount();
       UpdateBuffer();
+      return;
       if(m_pbuffer->GetBuffer()->get_os_data() != NULL)
       {
          //m_pbuffer->m_spdib->fill_channel(255, visual::rgba::channel_alpha);

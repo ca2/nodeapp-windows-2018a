@@ -335,7 +335,7 @@ namespace win
 
       pdibWork->create(width(), height());
 
-      pdibWork->Fill(0, 0, 0, 0);
+      pdibWork->FillByte(0);
 
       pdibWork->channel_from(visual::rgba::channel_alpha, this);
 
@@ -483,10 +483,83 @@ namespace win
 
    void dib::channel_invert(visual::rgba::echannel echannel)
    {
-      __int64 size=m_size.area();
+      __int64 size   = m_size.area();
+      register __int64 size64 = size / 64;
       LPBYTE lpb = (LPBYTE) m_pcolorref;
       lpb += ((int)echannel) % 4;
-      for ( int i=0; i<size; i++ )
+      register __int64 i = 0;
+      for(; i < size64; i++)
+      {
+         lpb[4 *  0] = 255 - lpb[4 *  0];
+         lpb[4 *  1] = 255 - lpb[4 *  1];
+         lpb[4 *  2] = 255 - lpb[4 *  2];
+         lpb[4 *  3] = 255 - lpb[4 *  3];
+         lpb[4 *  4] = 255 - lpb[4 *  4];
+         lpb[4 *  5] = 255 - lpb[4 *  5];
+         lpb[4 *  6] = 255 - lpb[4 *  6];
+         lpb[4 *  7] = 255 - lpb[4 *  7];
+         lpb[4 *  8] = 255 - lpb[4 *  8];
+         lpb[4 *  9] = 255 - lpb[4 *  9];
+         lpb[4 * 10] = 255 - lpb[4 * 10];
+         lpb[4 * 11] = 255 - lpb[4 * 11];
+         lpb[4 * 12] = 255 - lpb[4 * 12];
+         lpb[4 * 13] = 255 - lpb[4 * 13];
+         lpb[4 * 14] = 255 - lpb[4 * 14];
+         lpb[4 * 15] = 255 - lpb[4 * 15];
+         lpb[4 * 16] = 255 - lpb[4 * 16];
+         lpb[4 * 17] = 255 - lpb[4 * 17];
+         lpb[4 * 18] = 255 - lpb[4 * 18];
+         lpb[4 * 19] = 255 - lpb[4 * 19];
+         lpb[4 * 20] = 255 - lpb[4 * 20];
+         lpb[4 * 21] = 255 - lpb[4 * 21];
+         lpb[4 * 22] = 255 - lpb[4 * 22];
+         lpb[4 * 23] = 255 - lpb[4 * 23];
+         lpb[4 * 24] = 255 - lpb[4 * 24];
+         lpb[4 * 25] = 255 - lpb[4 * 25];
+         lpb[4 * 26] = 255 - lpb[4 * 26];
+         lpb[4 * 27] = 255 - lpb[4 * 27];
+         lpb[4 * 28] = 255 - lpb[4 * 28];
+         lpb[4 * 29] = 255 - lpb[4 * 29];
+         lpb[4 * 30] = 255 - lpb[4 * 30];
+         lpb[4 * 31] = 255 - lpb[4 * 31];
+
+         lpb[4 * 32] = 255 - lpb[4 * 32];
+         lpb[4 * 33] = 255 - lpb[4 * 33];
+         lpb[4 * 34] = 255 - lpb[4 * 34];
+         lpb[4 * 35] = 255 - lpb[4 * 35];
+         lpb[4 * 36] = 255 - lpb[4 * 36];
+         lpb[4 * 37] = 255 - lpb[4 * 37];
+         lpb[4 * 38] = 255 - lpb[4 * 38];
+         lpb[4 * 39] = 255 - lpb[4 * 39];
+         lpb[4 * 40] = 255 - lpb[4 * 40];
+         lpb[4 * 41] = 255 - lpb[4 * 41];
+         lpb[4 * 42] = 255 - lpb[4 * 42];
+         lpb[4 * 43] = 255 - lpb[4 * 43];
+         lpb[4 * 44] = 255 - lpb[4 * 44];
+         lpb[4 * 45] = 255 - lpb[4 * 45];
+         lpb[4 * 46] = 255 - lpb[4 * 46];
+         lpb[4 * 47] = 255 - lpb[4 * 47];
+         lpb[4 * 48] = 255 - lpb[4 * 48];
+         lpb[4 * 49] = 255 - lpb[4 * 49];
+         lpb[4 * 50] = 255 - lpb[4 * 50];
+         lpb[4 * 51] = 255 - lpb[4 * 51];
+         lpb[4 * 52] = 255 - lpb[4 * 52];
+         lpb[4 * 53] = 255 - lpb[4 * 53];
+         lpb[4 * 54] = 255 - lpb[4 * 54];
+         lpb[4 * 55] = 255 - lpb[4 * 55];
+         lpb[4 * 56] = 255 - lpb[4 * 56];
+         lpb[4 * 57] = 255 - lpb[4 * 57];
+         lpb[4 * 58] = 255 - lpb[4 * 58];
+         lpb[4 * 59] = 255 - lpb[4 * 59];
+         lpb[4 * 60] = 255 - lpb[4 * 60];
+         lpb[4 * 61] = 255 - lpb[4 * 61];
+         lpb[4 * 62] = 255 - lpb[4 * 62];
+         lpb[4 * 63] = 255 - lpb[4 * 63];
+
+         lpb += 4 * 64;
+      }
+      i *= 64;
+      for(; i < size; i++ )
       {
          *lpb = 255 - *lpb;
          lpb += 4;
@@ -2265,6 +2338,12 @@ namespace win
 
    void dib::stretch_dib(::ca::dib * pdib)
    {
+      Gdiplus::RectF rectDest(0, 0, width(), height());
+      Gdiplus::RectF rectSource(0, 0, pdib->width(), pdib->height());
+
+      ((Gdiplus::Graphics * ) m_spgraphics->get_os_data())->DrawImage(((Gdiplus::Bitmap *)pdib->get_bitmap()->get_os_data()), rectDest, rectSource, Gdiplus::UnitPixel);
+
+      /*
       ::StretchDIBits(
          SP_HDC(m_spgraphics),
          0, 0,
@@ -2274,7 +2353,7 @@ namespace win
          WIN_DIB(pdib)->m_pcolorref,
          &WIN_DIB(pdib)->m_info,
          DIB_RGB_COLORS,
-         SRCCOPY);
+         SRCCOPY);*/
    }
 
    ::ca::graphics * dib::get_graphics()

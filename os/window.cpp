@@ -6039,13 +6039,6 @@ namespace win
    void window::_001DeferPaintLayeredWindowBackground(::ca::graphics * pdc)
    {
 
-      rect rectClient;
-
-      GetClientRect(rectClient);
-
-      pdc->set_alpha_mode(::ca::alpha_mode_set);
-
-      pdc->FillSolidRect(rectClient, ARGB(0, 0, 0, 0));
 
    }
 
@@ -6068,7 +6061,8 @@ namespace win
 
       BLENDFUNCTION blendPixelFunction = { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
       
-      _001OnDeferPaintLayeredWindowBackground(dib->get_graphics());
+      dib->FillByte(0);
+
       _001Print(dib->get_graphics());
 
       pg->Flush();

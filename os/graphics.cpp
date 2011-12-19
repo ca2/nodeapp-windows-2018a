@@ -480,7 +480,7 @@ namespace win
    BOOL graphics::Rectangle(LPCRECT lpRect)
    { 
 
-      return Rectangle(lpRect->left, lpRect->top, lpRect->right - lpRect->left, lpRect->bottom - lpRect->top);
+      return Rectangle(lpRect->left, lpRect->top, lpRect->right, lpRect->bottom);
 
    }
 
@@ -498,7 +498,7 @@ namespace win
    BOOL graphics::DrawRectangle(LPCRECT lpRect)
    { 
 
-      return DrawRectangle(lpRect->left, lpRect->top, lpRect->right - lpRect->left, lpRect->bottom - lpRect->top);
+      return DrawRectangle(lpRect->left, lpRect->top, lpRect->right, lpRect->bottom);
 
    }
 
@@ -717,10 +717,13 @@ namespace win
 
       lpMetrics->tmAscent = ((graphics * )this)->gdiplus_font()->GetSize() * family.GetCellAscent(((graphics * )this)->gdiplus_font()->GetStyle()) / dHeight;
       lpMetrics->tmDescent = ((graphics * )this)->gdiplus_font()->GetSize() * family.GetCellDescent(((graphics * )this)->gdiplus_font()->GetStyle()) / dHeight;
-      lpMetrics->tmHeight = ((graphics * )this)->gdiplus_font()->GetSize() * family.GetEmHeight(((graphics * )this)->gdiplus_font()->GetStyle()) / dHeight;
+      lpMetrics->tmHeight = ((graphics * )this)->gdiplus_font()->GetSize();
 
       lpMetrics->tmInternalLeading = lpMetrics->tmAscent + lpMetrics->tmDescent - lpMetrics->tmHeight;
-      lpMetrics->tmExternalLeading = family.GetLineSpacing(((graphics * )this)->gdiplus_font()->GetStyle()) / dHeight;
+      lpMetrics->tmExternalLeading = ((graphics * )this)->gdiplus_font()->GetSize() * 
+        (family.GetLineSpacing(((graphics * )this)->gdiplus_font()->GetStyle()) 
+       - family.GetCellAscent(((graphics * )this)->gdiplus_font()->GetStyle())
+       - family.GetCellDescent(((graphics * )this)->gdiplus_font()->GetStyle())) / dHeight;
       
       const Gdiplus::FontFamily * pfamilyMono = family.GenericMonospace();
 
@@ -732,10 +735,13 @@ namespace win
       Gdiplus::PointF origin(0, 0);
       m_pgraphics->MeasureString(wstr.m_pwsz, -1, ((graphics * )this)->gdiplus_font(), origin, &rect);
 
+      
+
+
       /*wstr = L"";
       m_pgraphics->MeasureString(wstr.m_pwsz, -1, (Gdiplus::Font *) m_font->get_os_data(), origin, &rect2);*/
 
-      lpMetrics->tmAveCharWidth = rect.Width / (double) wstr.get_length();
+      lpMetrics->tmAveCharWidth = rect.Width * GetCurrentFont().m_dFontWidth / (double) wstr.get_length();
 
 
       return TRUE;
@@ -2475,7 +2481,7 @@ namespace win
 
       m_pgraphics->MeasureString(wstr, wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, &box);
 
-      return size(box.Width, box.Height);
+      return size(box.Width * m_fontxyz.m_dFontWidth, box.Height);
 
       /*if(get_handle2() == NULL)
          return size(0, 0);
@@ -2509,7 +2515,7 @@ namespace win
 
       m_pgraphics->MeasureString(wstr, wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, &box);
 
-      return size(box.Width, box.Height);
+      return size(box.Width * m_fontxyz.m_dFontWidth, box.Height);
 
    }
 
@@ -2749,25 +2755,45 @@ namespace win
       Gdiplus::Matrix m;
       m_pgraphics->GetTransform(&m);
 
-      Gdiplus::Matrix * pmNew = m.Clone();
+      Gdiplus::Matrix * pmNew;
 
-      pmNew->Translate(x, y);
+      if(m_ppath != NULL)
+      {
+         pmNew = new Gdiplus::Matrix();
+      }
+      else
+      {
+         pmNew = m.Clone();
+      }
+
+      pmNew->Translate(x / m_fontxyz.m_dFontWidth, y);
       pmNew->Scale(m_fontxyz.m_dFontWidth, 1.0, Gdiplus::MatrixOrderAppend);
 
       Gdiplus::Status status;
 
+      Gdiplus::StringFormat format;
+
+      format.SetLineAlignment(Gdiplus::StringAlignmentNear);
+
       if(m_ppath != NULL)
       {
-         
-         m_ppath->Transform(pmNew);
 
+         Gdiplus::GraphicsPath path;
+         
          Gdiplus::FontFamily fontfamily;
 
          gdiplus_font()->GetFamily(&fontfamily);
 
-         status = m_ppath->AddString(gen::international::utf8_to_unicode(str), -1, &fontfamily, gdiplus_font()->GetStyle(), gdiplus_font()->GetSize(), origin, NULL);
+         double d1 = gdiplus_font()->GetSize() * m_pgraphics->GetDpiX() / 72.0;
+         double d2 = fontfamily.GetEmHeight(gdiplus_font()->GetStyle());
+         double d3 = d1 * d2;
 
-         m_ppath->Transform(&m);
+         status = path.AddString(gen::international::utf8_to_unicode(str), -1, &fontfamily, gdiplus_font()->GetStyle(), d1, origin, &format);
+
+         path.Transform(pmNew);
+
+
+         m_ppath->AddPath(&path, FALSE);
 
       }
       else
@@ -2775,7 +2801,7 @@ namespace win
 
          m_pgraphics->SetTransform(pmNew);
 
-         status = m_pgraphics->DrawString(gen::international::utf8_to_unicode(str), -1, gdiplus_font(), origin, gdiplus_brush());
+         status = m_pgraphics->DrawString(gen::international::utf8_to_unicode(str), -1, gdiplus_font(), origin, &format, gdiplus_brush());
 
          m_pgraphics->SetTransform(&m);
 
@@ -2945,6 +2971,12 @@ namespace win
 
       return true;
 
+   }
+
+
+   double graphics::get_dpix() const
+   {
+      return m_pgraphics->GetDpiX();
    }
 
 } // namespace win
