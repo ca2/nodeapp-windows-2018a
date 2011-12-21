@@ -27,7 +27,7 @@ void __cdecl _null_se_translator(unsigned int uiCode, EXCEPTION_POINTERS * ppoin
 int CLASS_DECL_VMSWIN AfxWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
 
-//   AfxDebugBreak();
+   AfxDebugBreak();
 
    UNREFERENCED_PARAMETER(lpCmdLine);
 
