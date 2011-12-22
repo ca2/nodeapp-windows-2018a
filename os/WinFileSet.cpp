@@ -76,12 +76,15 @@ void WinFileSet::refresh()
          strFilter.trim("\\/");
          if(bRecursive)
          {
-            System.dir().rls_pattern(m_straSearch.element_at(i), strFilter, &m_straFile);
+            Application.dir().rls_pattern(m_straSearch.element_at(i), strFilter, &m_straFile);
          }
          else
          {
-            System.dir().ls_pattern(m_straSearch.element_at(i), strFilter, &m_straFile);
+            Application.dir().ls_pattern(m_straSearch.element_at(i), strFilter, &m_straFile);
          }
       }
    }
 }
+
+
+

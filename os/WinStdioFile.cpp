@@ -22,8 +22,7 @@ WinStdioFile::~WinStdioFile()
       close();
 }
 
-BOOL WinStdioFile::open(const char * lpszFileName, UINT nOpenFlags,
-   ex1::file_exception_sp* pException)
+BOOL WinStdioFile::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_exception_sp* pException)
 {
    ASSERT(pException == NULL || fx_is_valid_address(pException, sizeof(ex1::file_exception_sp)));
    ASSERT(lpszFileName != NULL);
@@ -31,7 +30,7 @@ BOOL WinStdioFile::open(const char * lpszFileName, UINT nOpenFlags,
 
    if(nOpenFlags  & ::ex1::file::defer_create_directory)
    {
-      System.dir().mk(System.dir().name(lpszFileName));
+      Application.dir().mk(System.dir().name(lpszFileName));
    }
 
    m_pStream = NULL;

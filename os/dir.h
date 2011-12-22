@@ -29,12 +29,12 @@ namespace win
       virtual void  ls_dir(::ca::application * papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL);
       virtual bool  has_subdir(::ca::application * papp, const char * lpcsz);
       virtual void  ls_file(::ca::application * papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL);
-      virtual bool  is(const char * lpcsz, ::ca::application * papp, );
-      virtual bool  is_inside(const char * lpcszDir, const char * lpcszPath);
-      virtual bool  is_inside_time(const char * lpcsz);
-      virtual void root_ones(stringa & stra);
-      virtual bool mk(const char * lpcsz);
-      virtual bool rm(const char * psz, bool bRecursive = true);
+      virtual bool  is(const char * lpcsz, ::ca::application * papp);
+      virtual bool  is_inside(const char * lpcszDir, const char * lpcszPath, ::ca::application * papp);
+      virtual bool  is_inside_time(const char * lpcsz, ::ca::application * papp);
+      virtual void root_ones(stringa & stra, ::ca::application * papp);
+      virtual bool mk(const char * lpcsz, ::ca::application * papp);
+      virtual bool rm(::ca::application * papp, const char * psz, bool bRecursive = true);
       
 
       virtual string name(const char * psz);

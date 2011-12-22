@@ -129,7 +129,7 @@ namespace win
       return System.file_system().ComparePath(lpcsz1, lpcsz2);
    }
 
-   void dir::root_ones(stringa & stra)
+   void dir::root_ones(stringa & stra, ::ca::application * papp)
    {
       DWORD dwSize = ::GetLogicalDriveStrings(0, NULL);
       LPTSTR lpszAlloc = (LPTSTR) malloc(dwSize + 1);
@@ -152,11 +152,11 @@ namespace win
       free(lpszAlloc);
    }
 
-   void dir::ls_pattern(const char * lpcsz, const char * pszPattern, stringa * pstraPath, stringa * pstraTitle, base_array < bool, bool > * pbaIsDir, base_array < __int64, __int64 > * piaSize)
+   void dir::ls_pattern(::ca::application * papp, const char * lpcsz, const char * pszPattern, stringa * pstraPath, stringa * pstraTitle, base_array < bool, bool > * pbaIsDir, base_array < __int64, __int64 > * piaSize)
    {
-      if(::ca::dir::system::is(lpcsz)) // if base class "already" "says" it is a dir, let it handle it: may be not a operational system dir, e.g., zip or compressed directory...
+      if(::ca::dir::system::is(lpcsz, papp)) // if base class "already" "says" it is a dir, let it handle it: may be not a operational system dir, e.g., zip or compressed directory...
       {
-         return ::ca::dir::system::ls_pattern(lpcsz, pszPattern, pstraPath, pstraTitle, pbaIsDir, piaSize);
+         return ::ca::dir::system::ls_pattern(papp, lpcsz, pszPattern, pstraPath, pstraTitle, pbaIsDir, piaSize);
       }
       FileFind filefind;
       BOOL bWorking;
@@ -186,15 +186,15 @@ namespace win
       }
    }
 
-   void dir::rls(const char * lpcsz, stringa * pstraPath, stringa * pstraTitle, stringa * pstraRelative)
+   void dir::rls(::ca::application * papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle, stringa * pstraRelative)
    {
-      rls_pattern(lpcsz, "*.*", pstraPath, pstraTitle, pstraRelative, NULL, NULL);
+      rls_pattern(papp, lpcsz, "*.*", pstraPath, pstraTitle, pstraRelative, NULL, NULL);
    }
 
-   void dir::rls_pattern(const char * lpcsz, const char * lpszPattern, stringa * pstraPath, stringa * pstraTitle, stringa * pstraRelative, base_array < bool, bool > * pbaIsDir, base_array < __int64, __int64 > * piaSize)
+   void dir::rls_pattern(::ca::application * papp, const char * lpcsz, const char * lpszPattern, stringa * pstraPath, stringa * pstraTitle, stringa * pstraRelative, base_array < bool, bool > * pbaIsDir, base_array < __int64, __int64 > * piaSize)
    {
       stringa straDir;
-      ls_dir(lpcsz, &straDir);
+      ls_dir(papp, lpcsz, &straDir);
       for(int i = 0; i < straDir.get_count(); i++)
       {
          string strDir = straDir[i];
@@ -205,7 +205,7 @@ namespace win
          {
             iStart = pstraRelative->get_size();
          }
-         rls_pattern(strDir, lpszPattern, pstraPath, pstraTitle, pstraRelative, pbaIsDir, piaSize);
+         rls_pattern(papp, strDir, lpszPattern, pstraPath, pstraTitle, pstraRelative, pbaIsDir, piaSize);
          if(pstraRelative != NULL)
          {
             for(int i = iStart; i < pstraRelative->get_size(); i++)
@@ -265,11 +265,11 @@ namespace win
       }
       else
       {
-         ::ca::dir::system::rls(lpcsz, pstraPath, pstraTitle, pstraRelative);
+         ::ca::dir::system::rls(papp, lpcsz, pstraPath, pstraTitle, pstraRelative);
       }
    }
 
-   void dir::rls_dir(const char * lpcsz, stringa * pstraPath, stringa * pstraTitle, stringa * pstraRelative)
+   void dir::rls_dir(::ca::application * papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle, stringa * pstraRelative)
    {
       FileFind filefind;
       BOOL bWorking;
@@ -298,7 +298,7 @@ namespace win
                {
                   iStart = pstraRelative->get_size();
                }
-               rls_dir(filefind.GetFilePath(), pstraPath, pstraTitle, pstraRelative);
+               rls_dir(papp, filefind.GetFilePath(), pstraPath, pstraTitle, pstraRelative);
                if(pstraRelative != NULL)
                {
                   for(int i = iStart; i < pstraRelative->get_size(); i++)
@@ -311,7 +311,7 @@ namespace win
       }
    }
 
-   void dir::ls_dir(const char * lpcsz, stringa * pstraPath, stringa * pstraTitle)
+   void dir::ls_dir(::ca::application * papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle)
    {
       
       FileFind filefind;
@@ -319,7 +319,7 @@ namespace win
       bWorking = filefind.FindFile(System.dir().path(lpcsz, "*.*"));
       if(!bWorking)
       {
-         ::ca::dir::system::ls_dir(lpcsz, pstraPath, pstraTitle);
+         ::ca::dir::system::ls_dir(papp, lpcsz, pstraPath, pstraTitle);
          return;
       }
       while(bWorking)
@@ -339,7 +339,7 @@ namespace win
       }
    }
 
-   void dir::ls_file(const char * lpcsz, stringa * pstraPath, stringa * pstraTitle)
+   void dir::ls_file(::ca::application * papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle)
    {
       FileFind filefind;
       BOOL bWorking;
@@ -361,15 +361,15 @@ namespace win
       }
    }
 
-   void dir::ls(const char * lpcsz, stringa * pstraPath, stringa * pstraTitle, base_array < bool, bool > * pbaIsDir, base_array < __int64, __int64 > * piaSize)
+   void dir::ls(::ca::application * papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle, base_array < bool, bool > * pbaIsDir, base_array < __int64, __int64 > * piaSize)
    {
-      return ls_pattern(lpcsz, "*.*", pstraPath, pstraTitle, pbaIsDir, piaSize);
+      return ls_pattern(papp, lpcsz, "*.*", pstraPath, pstraTitle, pbaIsDir, piaSize);
    }
 
-   bool dir::is(const char * lpcszPath)
+   bool dir::is(const char * lpcszPath, ::ca::application * papp)
    {
       
-      if(::ca::dir::system::is(lpcszPath))
+      if(::ca::dir::system::is(lpcszPath, papp))
          return true;
 
       bool bIsDir;
@@ -465,34 +465,29 @@ namespace win
       return path(strLogBaseDir, pszId);
    }
 
-   bool dir::mk(const char * lpcsz)
+   bool dir::mk(const char * lpcsz, ::ca::application * papp)
    {
-      if(is(lpcsz))
+
+      if(is(lpcsz, papp))
          return true;
+
       stringa stra;
       System.file().get_ascendants_path(lpcsz, stra);
       for(int i = 0; i < stra.get_size(); i++)
       {
-         if(!is(stra[i]))
+         if(!is(stra[i], papp))
          {
             if(!::CreateDirectoryW(gen::international::utf8_to_unicode(stra[i]), NULL))
             {
                DWORD dwError = ::GetLastError();
                char * pszError;
-               FormatMessage(
-     FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-     NULL,
-     dwError,
-     0,
-     (LPTSTR) &pszError,
-     8,
-     NULL);
+               FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwError, 0, (LPTSTR) &pszError, 8, NULL);
 
                TRACE("dir::mk CreateDirectoryW last error(%d)=%s", dwError, pszError);
                ::LocalFree(pszError);
             }
             
-            if(!is(stra[i]))
+            if(!is(stra[i], papp))
             {
                return false;
             }
@@ -501,18 +496,18 @@ namespace win
       return true;
    }
 
-   bool dir::rm(const char * psz, bool bRecursive)
+   bool dir::rm(::ca::application * papp, const char * psz, bool bRecursive)
    {
       if(bRecursive)
       {
          stringa straPath;
          stringa straTitle;
-         ls(psz, &straPath, &straTitle);         
+         ls(papp, psz, &straPath, &straTitle);         
          for(int i = 0; i < straPath.get_count(); i++)
          {
-            if(is(straPath[i]))
+            if(is(straPath[i], papp))
             {
-               rm(path(psz, straTitle[i]), true);
+               rm(papp, path(psz, straTitle[i]), true);
             }
             else
             {
@@ -674,10 +669,10 @@ namespace win
          m_strTimeFolder = appdata("time");
       if(m_strNetSeedFolder.is_empty())
          m_strNetSeedFolder = ca2("net/netseed");
-      mk(m_strTimeFolder);
-      if(!is(m_strTimeFolder))
+      mk(m_strTimeFolder, get_app());
+      if(!is(m_strTimeFolder, get_app()))
          return false;
-      mk(path(m_strTimeFolder, "time"));
+      mk(path(m_strTimeFolder, "time"), get_app());
       return true;
    }
 
@@ -876,17 +871,17 @@ namespace win
       return path(str, lpcszRelativePath, lpcsz2);
    }
 
-   bool dir::is_inside_time(const char * pszPath)
+   bool dir::is_inside_time(const char * pszPath, ::ca::application * papp)
    {
-      return is_inside(time(), pszPath);
+      return is_inside(time(), pszPath, papp);
    }
 
-   bool dir::is_inside(const char * pszDir, const char * pszPath)
+   bool dir::is_inside(const char * pszDir, const char * pszPath, ::ca::application * papp)
    {
       return gen::str::begins_ci(pszDir, pszPath);
    }
 
-   bool dir::has_subdir(const char * pszDir)
+   bool dir::has_subdir(::ca::application * papp, const char * pszDir)
    {
       FileFind filefind;
       BOOL bWorking;
