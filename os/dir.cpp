@@ -368,6 +368,15 @@ namespace win
 
    bool dir::is(const char * lpcszPath)
    {
+      
+      if(::ca::dir::system::is(lpcszPath))
+         return true;
+
+      bool bIsDir;
+
+      if(m_isdirmap.lookup(lpcszPath, bIsDir))
+         return bIsDir;
+
       string strPath(lpcszPath);
       if(strPath.get_length() >= MAX_PATH)
       {
@@ -386,9 +395,12 @@ namespace win
       {
          dwAttrib = GetFileAttributes(lpcszPath);
       }
-      if((dwAttrib != INVALID_FILE_ATTRIBUTES) && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY))
-         return true;
-      return ::ca::dir::system::is(lpcszPath);
+      
+      bIsDir = (dwAttrib != INVALID_FILE_ATTRIBUTES) && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY);
+      
+      m_isdirmap.set(lpcszPath, bIsDir);
+
+      return bIsDir;
    }
       
 
@@ -599,44 +611,44 @@ namespace win
    {
       string strPath;
       strPath = path(locale_style_matter(papp), psz, psz2);
-      if(System.file().exists(strPath))
+      if(System.file().exists(strPath, papp))
          return strPath;
       strPath = path(locale_style_matter(papp, "en"), psz, psz2);
-      if(System.file().exists(strPath))
+      if(System.file().exists(strPath, papp))
          return strPath;
       strPath = path(locale_style_matter(papp, "_std"), psz, psz2);
-      if(System.file().exists(strPath))
+      if(System.file().exists(strPath, papp))
          return strPath;
       strPath = path(locale_style_matter(papp, NULL, App(papp).get_locale()), psz, psz2);
-      if(System.file().exists(strPath))
+      if(System.file().exists(strPath, papp))
          return strPath;
       strPath = path(locale_style_matter(papp, NULL, "en"), psz, psz2);
-      if(System.file().exists(strPath))
+      if(System.file().exists(strPath, papp))
          return strPath;
       strPath = path(locale_style_matter(papp, NULL, "_std"), psz, psz2);
-      if(System.file().exists(strPath))
+      if(System.file().exists(strPath, papp))
          return strPath;
       strPath = path(locale_style_matter(papp, "en", "en"), psz, psz2);
-      if(System.file().exists(strPath))
+      if(System.file().exists(strPath, papp))
          return strPath;
       strPath = path(locale_style_matter(papp, "_std", "_std"), psz, psz2);
-      if(System.file().exists(strPath))
+      if(System.file().exists(strPath, papp))
          return strPath;
       strPath = path(locale_style_matter(papp, "se", "se"), psz, psz2);
-      if(System.file().exists(strPath))
+      if(System.file().exists(strPath, papp))
          return strPath;
       if(papp->m_psession != NULL && papp->m_psession != papp &&
          (::ca::application *) papp->m_psystem != (::ca::application *) papp)
       {
          strPath = matter(papp->m_psession, psz, psz2);
-         if(System.file().exists(strPath))
+         if(System.file().exists(strPath, papp))
             return strPath;
       }
       if(papp->m_psystem != NULL && papp->m_psystem != papp &&
          (::ca::application *) papp->m_psystem != (::ca::application *) papp->m_psession)
       {
          strPath = matter(papp->m_psystem, psz, psz2);
-         if(System.file().exists(strPath))
+         if(System.file().exists(strPath, papp))
             return strPath;
       }
       return path(locale_style_matter(papp), psz, psz2);
