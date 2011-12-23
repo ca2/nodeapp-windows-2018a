@@ -644,7 +644,7 @@ namespace win
       BOOL HandleFloatingSysCommand(UINT nID, LPARAM lParam);
       BOOL IsTopParentActive();
       void ActivateTopParent();
-      virtual void WalkPreTranslateTree(HWND hWndStop, gen::signal_object * pobj);
+      virtual void WalkPreTranslateTree(::user::interaction * puiStop, gen::signal_object * pobj);
       static ::user::interaction * PASCAL GetDescendantWindow(::user::interaction * hWnd, id id);
       static void PASCAL SendMessageToDescendants(HWND hWnd, UINT message,
          WPARAM wParam, LPARAM lParam, BOOL bDeep, BOOL bOnlyPerm);

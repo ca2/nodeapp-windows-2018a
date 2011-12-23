@@ -2593,29 +2593,27 @@ namespace win
       return FALSE;
    }
 
-   void window::WalkPreTranslateTree(HWND hWndStop, gen::signal_object * pobj)
+   void window::WalkPreTranslateTree(::user::interaction * puiStop, gen::signal_object * pobj)
    {
-      ASSERT(hWndStop == NULL || ::IsWindow(hWndStop));
+      ASSERT(puiStop == NULL || puiStop->IsWindow());
       ASSERT(pobj != NULL);
 
       SCAST_PTR(::gen::message::base, pbase, pobj);
       // walk from the target window up to the hWndStop window checking
       //  if any window wants to translate this message
 
-      for (HWND hWnd = pbase->m_hwnd; hWnd != NULL; hWnd = ::GetParent(hWnd))
+      for (::user::interaction * pui = pbase->m_pwnd; pui != NULL; pui->GetParent())
       {
-         ::ca::window * pWnd = ::win::window::FromHandlePermanent(hWnd);
-         if (pWnd != NULL)
-         {
-            // target window is a C++ window
-            WIN_WINDOW(pWnd)->pre_translate_message(pobj);
-            if(pobj->m_bRet)
-               return; // trapped by target window (eg: accelerators)
-         }
+
+         pui->pre_translate_message(pobj);
+
+         if(pobj->m_bRet)
+            return; // trapped by target window (eg: accelerators)
 
          // got to hWndStop window without interest
-         if (hWnd == hWndStop)
+         if(pui == puiStop)
             break;
+
       }
       // no special processing
    }
@@ -5266,7 +5264,7 @@ int window::GetCheckedRadioButton(int nIDFirstButton, int nIDLastButton)
       // in debug builds and warn the ::fontopus::user.
       ::ca::smart_pointer < ::gen::message::base > spbase;
 
-      spbase(pinteraction->get_base(hWnd, nMsg, wParam, lParam));
+      spbase(pinteraction->get_base(pinteraction, nMsg, wParam, lParam));
 
       _AfxTraceMsg("WndProc", spbase);
 

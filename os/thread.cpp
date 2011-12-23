@@ -161,7 +161,7 @@ CLASS_DECL_VMSWIN void AfxInternalProcessWndProcException(base_exception*, gen::
    else if (pbase->m_uiMessage == WM_PAINT)
    {
       // force validation of ::ca::window to prevent getting WM_PAINT again
-      ValidateRect(pbase->m_hwnd, NULL);
+      ValidateRect(pbase->m_pwnd->get_safe_handle(), NULL);
       pbase->set_lresult(0);
       return;
    }
@@ -185,40 +185,40 @@ void AfxInternalPreTranslateMessage(gen::signal_object * pobj)
 
       //   ASSERT_VALID(this);
 
-      ::radix::thread *pThread = dynamic_cast < ::radix::thread * > (::win::get_thread());
-      if( pThread )
+      ::ca::thread * pthread = ::win::get_thread();
+      if(pthread)
       {
          // if this is a thread-message, short-circuit this function
-         if (pbase->m_hwnd == NULL)
+         if (pbase->m_pwnd == NULL)
          {
-            pThread->DispatchThreadMessageEx(pobj);
+            pthread->DispatchThreadMessageEx(pobj);
             if(pobj->m_bRet)
                return;
          }
       }
 
       // walk from target to main ::ca::window
-      ::user::interaction* pMainWnd = pThread->GetMainWnd();
-      if(pMainWnd != NULL && pMainWnd->IsWindow())
+      ::user::interaction * pwndMain = pthread->GetMainWnd();
+      if(pwndMain != NULL && pwndMain->IsWindow())
       {
-         pMainWnd->WalkPreTranslateTree(pobj);
+         pwndMain->WalkPreTranslateTree(pobj);
          if(pobj->m_bRet)
             return;
       }
 
       // in case of modeless dialogs, last chance route through main
       //   ::ca::window's accelerator table
-      ::ca::window * pWnd = ::win::window::from_handle(pbase->m_hwnd);
-      if (pMainWnd != NULL)
+      ::user::interaction * pwnd = pbase->m_pwnd;
+      if(pwndMain != NULL)
       {
-         if (pWnd != NULL && WIN_WINDOW(pWnd)->GetTopLevelParent() != pMainWnd)
+         if(pwnd != NULL && WIN_WINDOW(pwnd)->GetTopLevelParent() != pwndMain)
          {
-            pMainWnd->pre_translate_message(pobj);
+            pwndMain->pre_translate_message(pobj);
             if(pobj->m_bRet)
                return;
          }
       }
-      user::LPWndArray wnda = Sys(pThread->get_app()).frames();
+      user::LPWndArray wnda = Sys(pthread->get_app()).frames();
       for(int i = 0; i < wnda.get_count(); i++)
       {
          ::user::interaction * pui = wnda[i];
@@ -228,8 +228,7 @@ void AfxInternalPreTranslateMessage(gen::signal_object * pobj)
             {
                if(pui->m_pguie != NULL)
                {
-                  if(pui->m_pguie != pMainWnd
-                  && pui != pMainWnd)
+                  if(pui->m_pguie != pwndMain && pui != pwndMain)
                   {
                      pui->m_pguie->pre_translate_message(pobj);
                      if(pobj->m_bRet)
@@ -238,7 +237,7 @@ void AfxInternalPreTranslateMessage(gen::signal_object * pobj)
                }
                else
                {
-                  if(pui != pMainWnd)
+                  if(pui != pwndMain)
                   {
                      pui->pre_translate_message(pobj);
                      if(pobj->m_bRet)
@@ -1339,7 +1338,7 @@ stop_run:
          return;
 
       case MSGF_MENU:
-         pMsgWnd = window::from_handle(pbase->m_hwnd);
+         pMsgWnd = pbase->m_pwnd;
          if (pMsgWnd != NULL)
          {
             pTopFrameWnd = pMsgWnd->GetTopLevelFrame();
@@ -1546,19 +1545,19 @@ stop_run:
       }
 
       // all other messages route through message ::collection::map
-      ::ca::window * pwindow = ::win::window::FromHandlePermanent(pbase->m_hwnd);
+      ::ca::window * pwindow = pbase->m_pwnd->get_wnd();
 
-      ASSERT(pwindow == NULL || WIN_WINDOW(pwindow)->get_handle() == pbase->m_hwnd);
+      ASSERT(pwindow == NULL || pwindow == pbase->m_pwnd->m_pimpl);
 
-      if(pwindow == NULL || WIN_WINDOW(pwindow)->get_handle() != pbase->m_hwnd)
+      if(pwindow == NULL || pwindow != pbase->m_pwnd->m_pimpl)
       {
-         pbase->set_lresult(::DefWindowProc(pbase->m_hwnd, pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));
+         pbase->set_lresult(::DefWindowProc(pbase->m_pwnd->get_safe_handle(), pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));
          return;
       }
 
       _AFX_THREAD_STATE* pThreadState = _afxThreadState.get_data();
       MSG oldState = pThreadState->m_lastSentMsg;   // save for nesting
-      pThreadState->m_lastSentMsg.hwnd       = pbase->m_hwnd;
+      pThreadState->m_lastSentMsg.hwnd       = pbase->m_pwnd->get_safe_handle();
       pThreadState->m_lastSentMsg.message    = pbase->m_uiMessage;
       pThreadState->m_lastSentMsg.wParam     = pbase->m_wparam;
       pThreadState->m_lastSentMsg.lParam     = pbase->m_lparam;
