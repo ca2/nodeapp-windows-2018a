@@ -5,6 +5,7 @@ class FileException;
 struct FileStatus;
 
 void CLASS_DECL_VMSWIN vfxGetRoot(const wchar_t * lpszPath, string& wstrRoot);
+void CLASS_DECL_VMSWIN vfxGetRoot(wstring & wstrRoot, const wstring & wstrPath);
 
 /////////////////////////////////////////////////////////////////////////////
 // File - raw unbuffered disk file I/O
@@ -31,6 +32,7 @@ public:
    zip::Util *    m_pziputil;
    BOOL           m_bCloseOnDelete;
    string         m_strFileName;
+   wstring        m_wstrFileName;
    UINT           m_hFile;
 
 

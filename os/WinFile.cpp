@@ -63,8 +63,10 @@ ex1::file * WinFile::Duplicate() const
 
 BOOL WinFile::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_exception_sp* pException)
 {
+
    if (m_hFile != (UINT)hFileNull)
       close();
+
    ASSERT_VALID(this);
    ASSERT(AfxIsValidString(lpszFileName));
    ASSERT(pException == NULL ||
@@ -84,14 +86,8 @@ BOOL WinFile::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_excepti
    m_hFile = (UINT)hFileNull;
    m_strFileName.Empty();
 
-   try
-   {
-      System.file_system().FullPath(m_strFileName, lpszFileName);
-   }
-   catch(...)
-   {
-      return FALSE;
-   }
+   m_strFileName     = lpszFileName;
+   m_wstrFileName    = gen::international::utf8_to_unicode(m_strFileName);
 
    ASSERT(sizeof(HANDLE) == sizeof(UINT_PTR));
    ASSERT(shareCompat == 0);
@@ -157,27 +153,48 @@ BOOL WinFile::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_excepti
       dwCreateFlag = OPEN_EXISTING;
 
    // attempt file creation
-   HANDLE hFile = WindowsShell::CreateFile(gen::international::utf8_to_unicode(m_strFileName), dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
+   //HANDLE hFile = WindowsShell::CreateFile(gen::international::utf8_to_unicode(m_strFileName), dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
+   HANDLE hFile = ::CreateFileW(m_wstrFileName, dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
    if (hFile == INVALID_HANDLE_VALUE)
    {
-      if (pException != NULL)
+
+      try
       {
-         WinFileException * pfe = dynamic_cast < WinFileException * > (pException->m_p);
-         if(pfe != NULL)
-         {
-            pfe->m_lOsError = ::GetLastError();
-            pfe->m_cause = WinFileException::OsErrorToException(pfe->m_lOsError);
-            pfe->m_strFileName = lpszFileName;
-         }
+         m_psystem->m_spfilesystem.m_p->FullPath(m_wstrFileName, m_wstrFileName);
+      }
+      catch(...)
+      {
          return FALSE;
       }
-      else
+
+      m_strFileName = ::gen::international::unicode_to_utf8(m_wstrFileName);
+
+      hFile = ::CreateFileW(m_wstrFileName, dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
+
+      if (hFile == INVALID_HANDLE_VALUE)
       {
-         DWORD dwLastError = ::GetLastError();
-         vfxThrowFileException(get_app(), WinFileException::OsErrorToException(dwLastError), dwLastError, m_strFileName);
+         if (pException != NULL)
+         {
+            WinFileException * pfe = dynamic_cast < WinFileException * > (pException->m_p);
+            if(pfe != NULL)
+            {
+               pfe->m_lOsError = ::GetLastError();
+               pfe->m_cause = WinFileException::OsErrorToException(pfe->m_lOsError);
+               pfe->m_strFileName = lpszFileName;
+            }
+            return FALSE;
+         }
+         else
+         {
+            DWORD dwLastError = ::GetLastError();
+            vfxThrowFileException(get_app(), WinFileException::OsErrorToException(dwLastError), dwLastError, m_strFileName);
+         }
       }
+
    }
+   
    m_hFile = (HFILE)hFile;
+
    m_bCloseOnDelete = TRUE;
 
    return TRUE;
@@ -585,6 +602,90 @@ BOOL CLASS_DECL_VMSWIN vfxFullPath(wchar_t * lpszPathOut, const wchar_t * lpszFi
    return TRUE;
 }
 
+
+// turn a file, relative path or other into an absolute path
+BOOL CLASS_DECL_VMSWIN vfxFullPath(wstring & wstrFullPath, const wstring & wstrPath)
+   // lpszPathOut = buffer of _MAX_PATH
+   // lpszFileIn = file, relative path or absolute path
+   // (both in ANSI character set)
+{
+
+   DWORD dwAllocLen = wstrPath.get_length() + _MAX_PATH;
+
+   wstrFullPath.alloc(dwAllocLen);
+
+   // first, fully qualify the path name
+   wchar_t * lpszFilePart;
+
+   DWORD dwLen = GetFullPathNameW(wstrPath, dwAllocLen, wstrFullPath.m_pwsz, &lpszFilePart);
+
+   if(dwLen == 0)
+   {
+#ifdef _DEBUG
+//      if (lpszFileIn[0] != '\0')
+  //       TRACE1("Warning: could not parse the path '%s'.\n", lpszFileIn);
+#endif
+      wstrFullPath = wstrPath; // take it literally
+      return FALSE;
+   }
+   else if(dwLen > dwAllocLen)
+   {
+      
+      dwAllocLen = dwLen + _MAX_PATH;
+
+      dwLen = GetFullPathNameW(wstrPath, dwAllocLen, wstrFullPath.m_pwsz, &lpszFilePart);
+
+      if(dwLen == 0 || dwLen > dwAllocLen)
+      {
+   #ifdef _DEBUG
+   //      if (lpszFileIn[0] != '\0')
+     //       TRACE1("Warning: could not parse the path '%s'.\n", lpszFileIn);
+   #endif
+         wstrFullPath = wstrPath; // take it literally
+         return FALSE;
+      }
+
+   }
+
+   wstring wstrRoot;
+   // determine the root name of the volume
+   vfxGetRoot(wstrRoot, wstrFullPath);
+
+   // get file system information for the volume
+   DWORD dwFlags, dwDummy;
+   if (!GetVolumeInformationW(wstrRoot, NULL, 0, NULL, &dwDummy, &dwFlags, NULL, 0))
+   {
+//      TRACE1("Warning: could not get volume information '%s'.\n", strRoot);
+      return FALSE;   // preserving case may not be correct
+   }
+
+   // not all characters have complete uppercase/lowercase
+   if (!(dwFlags & FS_CASE_IS_PRESERVED))
+      CharUpperW(wstrFullPath.m_pwsz);
+
+   // assume non-UNICODE file systems, use OEM character set
+   if (!(dwFlags & FS_UNICODE_STORED_ON_DISK))
+   {
+      WIN32_FIND_DATAW data;
+      HANDLE h = FindFirstFileW(wstrPath, &data);
+      if (h != INVALID_HANDLE_VALUE)
+      {
+         FindClose(h);
+         int iLenFileName = lstrlenW(data.cFileName);
+         if(iLenFileName >=  MAX_PATH)
+         {
+            wstring wstrBackup = wstrFullPath;
+            int iFilePart = lpszFilePart - wstrFullPath.m_pwsz;
+            wstrFullPath.alloc(iFilePart + iLenFileName + 32); // arrange more space with more 32 extra wchars
+            lstrcpynW(wstrFullPath.m_pwsz, wstrBackup, iFilePart);
+            lpszFilePart = wstrFullPath.m_pwsz + iFilePart;
+         }
+         lstrcpyW(lpszFilePart, data.cFileName);
+      }
+   }
+   return TRUE;
+}
+
 /*void CLASS_DECL_VMSWIN AfxGetRoot(const char * lpszPath, string & strRoot)
 {
    ASSERT(lpszPath != NULL);
@@ -747,6 +848,48 @@ void WinFile::dump(dump_context & dumpcontext) const
 #define _wcsdec(_cpc1, _cpc2) ((_cpc1)>=(_cpc2) ? NULL : (_cpc2)-1)
 
 #define _wcsinc(_pc)    ((_pc)+1)
+
+void CLASS_DECL_VMSWIN vfxGetRoot(wstring & wstrRoot, const wstring & wstrPath)
+{
+//   ASSERT(lpszPath != NULL);
+   // determine the root name of the volume
+   wstrRoot = wstrPath;
+   wchar_t * lpszRoot = wstrRoot.m_pwsz;
+   wchar_t * lpsz;
+   for (lpsz = lpszRoot; *lpsz != L'\0'; lpsz = _wcsinc(lpsz))
+   {
+      // find first double slash and stop
+      if (IsDirSep(lpsz[0]) && IsDirSep(lpsz[1]))
+         break;
+   }
+   if (*lpsz != '\0')
+   {
+      // it is a UNC name, find second slash past '\\'
+      ASSERT(IsDirSep(lpsz[0]));
+      ASSERT(IsDirSep(lpsz[1]));
+      lpsz += 2;
+      while (*lpsz != '\0' && (!IsDirSep(*lpsz)))
+         lpsz = _wcsinc(lpsz);
+      if (*lpsz != '\0')
+         lpsz = _wcsinc(lpsz);
+      while (*lpsz != '\0' && (!IsDirSep(*lpsz)))
+         lpsz = _wcsinc(lpsz);
+      // terminate it just after the UNC root (ie. '\\server\share\')
+      if (*lpsz != '\0')
+         lpsz[1] = '\0';
+   }
+   else
+   {
+      // not a UNC, look for just the first slash
+      lpsz = lpszRoot;
+      while (*lpsz != '\0' && (!IsDirSep(*lpsz)))
+         lpsz = _wcsinc(lpsz);
+      // terminate it just after root (ie. 'x:\')
+      if (*lpsz != '\0')
+         lpsz[1] = '\0';
+   }
+}
+
 
 void CLASS_DECL_VMSWIN vfxGetRoot(const wchar_t * lpszPath, string& strRoot)
 {

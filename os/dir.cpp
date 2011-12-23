@@ -391,10 +391,10 @@ namespace win
       }
       DWORD dwAttrib;
       dwAttrib = GetFileAttributesW(gen::international::utf8_to_unicode(strPath));
-      if(dwAttrib == INVALID_FILE_ATTRIBUTES)
+      /*if(dwAttrib == INVALID_FILE_ATTRIBUTES)
       {
          dwAttrib = GetFileAttributes(lpcszPath);
-      }
+      }*/
       
       bIsDir = (dwAttrib != INVALID_FILE_ATTRIBUTES) && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY);
       
@@ -483,7 +483,7 @@ namespace win
                char * pszError;
                FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwError, 0, (LPTSTR) &pszError, 8, NULL);
 
-               TRACE("dir::mk CreateDirectoryW last error(%d)=%s", dwError, pszError);
+               //TRACE("dir::mk CreateDirectoryW last error(%d)=%s", dwError, pszError);
                ::LocalFree(pszError);
             }
             
@@ -522,33 +522,21 @@ namespace win
    string dir::name(const char * path1)
    {
       const char * psz = path1 + strlen(path1);
-      const char * pszPrevious = psz;
       string strChar;
-      while((psz = gen::str::utf8_dec(path1, pszPrevious)) != NULL)
-      {
-         strChar = gen::str::utf8_char(psz);
-         if(strChar != "\\" && strChar != "/" && strChar != ":")
+      ::gen::utf8_char ch;
+      while((psz = gen::str::utf8_dec(&ch, path1, psz)) != NULL)
+         if(ch.m_chLen == 1 && ch.m_sz[0] != '\\' && ch.m_sz[0] != '/' && ch.m_sz[0] != ':')
             break;
-         pszPrevious = psz;
-      }
-      while((psz = gen::str::utf8_dec(path1, pszPrevious)) != NULL)
-      {
-         strChar = gen::str::utf8_char(psz);
-         if(strChar == "\\" || strChar == "/" || strChar == ":")
+      while((psz = gen::str::utf8_dec(&ch, path1, psz)) != NULL)
+         if(ch.m_chLen == 1 && (ch.m_sz[0] == '\\' || ch.m_sz[0] == '/' || ch.m_sz[0] == ':'))
             break;
-         pszPrevious = psz;
-      }
       if(psz != NULL) // strChar == "\\" || strChar == "/"
       {
-         pszPrevious = psz;
-         while((psz = gen::str::utf8_dec(path1, pszPrevious)) != NULL)
-         {
-            string strChar = gen::str::utf8_char(psz);
-            if(strChar != "\\" && strChar != "/" && strChar != ":")
+         const char * pszEnd = psz;
+         while((psz = gen::str::utf8_dec(&ch, path1, psz)) != NULL)
+            if(ch.m_chLen == 1 && ch.m_sz[0] != '\\' && ch.m_sz[0] != '/' && ch.m_sz[0] != ':')
                break;
-            pszPrevious = psz;
-         }
-         return string(path1, pszPrevious - path1 + 1);
+         return string(path1, pszEnd - path1 + 1);
       }
       else
       {
