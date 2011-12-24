@@ -462,11 +462,7 @@ inline UINT WindowsShell::GetTempFileName(const char * lpPathName, const char * 
    wstring wstrPrefixString = gen::international::utf8_to_unicode(lpPrefixString);
    wstring wstr;
    wstr.alloc(MAX_PATH * 4);
-   UINT uiResult = (*theWindowsShell.m_pfnGetTempFileName)(
-      wstrPathName,
-      wstrPrefixString,
-      uUnique,
-      wstr.m_pwsz);
+   UINT uiResult = (*theWindowsShell.m_pfnGetTempFileName)(wstrPathName, wstrPrefixString, uUnique, wstr);
    gen::international::unicode_to_utf8(str, wstr);
    return uiResult;
 }

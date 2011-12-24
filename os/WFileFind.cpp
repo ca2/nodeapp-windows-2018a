@@ -106,6 +106,7 @@ BOOL FileFind::FindFile(const char * pstrName /* = NULL */, DWORD dwUnused /* = 
          else
             *pstrBack = '\0';
       }
+      wstrRoot.release_buffer();
    }
    m_strRoot = gen::international::unicode_to_utf8(wstrRoot);
    return TRUE;

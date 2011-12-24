@@ -733,9 +733,8 @@ namespace win
       Gdiplus::RectF rect;
       Gdiplus::RectF rect2;
       Gdiplus::PointF origin(0, 0);
-      m_pgraphics->MeasureString(wstr.m_pwsz, -1, ((graphics * )this)->gdiplus_font(), origin, &rect);
 
-      
+      m_pgraphics->MeasureString(wstr, wstr.get_length(), ((graphics * )this)->gdiplus_font(), origin, &rect);
 
 
       /*wstr = L"";

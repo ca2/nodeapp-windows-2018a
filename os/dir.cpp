@@ -403,6 +403,46 @@ namespace win
       return bIsDir;
    }
       
+   bool dir::is(const string & strPath, ::ca::application * papp)
+   {
+      
+      if(::ca::dir::system::is(strPath, papp))
+         return true;
+
+      bool bIsDir;
+
+      if(m_isdirmap.lookup(strPath, bIsDir))
+         return bIsDir;
+
+      wstring wstrPath;
+      
+      int iLen = ::gen::international::utf8_to_unicode_count(strPath);
+      wstrPath.alloc(iLen + 32);
+      ::gen::international::utf8_to_unicode(wstrPath, iLen + 32, strPath, strPath.get_length());
+      if(wstrPath.get_length() >= MAX_PATH)
+      {
+         if(::gen::str::begins(wstrPath, L"\\\\"))
+         {
+            ::gen::str::begin(wstrPath, L"\\\\?\\UNC");
+         }
+         else
+         {
+            ::gen::str::begin(wstrPath, L"\\\\?\\");
+         }
+      }
+      DWORD dwAttrib;
+      dwAttrib = GetFileAttributesW(wstrPath);
+      /*if(dwAttrib == INVALID_FILE_ATTRIBUTES)
+      {
+         dwAttrib = GetFileAttributes(strPath);
+      }*/
+      
+      bIsDir = (dwAttrib != INVALID_FILE_ATTRIBUTES) && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY);
+      
+      m_isdirmap.set(strPath, bIsDir);
+
+      return bIsDir;
+   }
 
 
    string dir::votagus(const char * lpcsz, const char * lpcsz2)

@@ -30,6 +30,7 @@ namespace win
       virtual bool  has_subdir(::ca::application * papp, const char * lpcsz);
       virtual void  ls_file(::ca::application * papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL);
       virtual bool  is(const char * lpcsz, ::ca::application * papp);
+      virtual bool  is(const string & str, ::ca::application * papp);
       virtual bool  is_inside(const char * lpcszDir, const char * lpcszPath, ::ca::application * papp);
       virtual bool  is_inside_time(const char * lpcsz, ::ca::application * papp);
       virtual void root_ones(stringa & stra, ::ca::application * papp);

@@ -617,7 +617,7 @@ BOOL CLASS_DECL_VMSWIN vfxFullPath(wstring & wstrFullPath, const wstring & wstrP
    // first, fully qualify the path name
    wchar_t * lpszFilePart;
 
-   DWORD dwLen = GetFullPathNameW(wstrPath, dwAllocLen, wstrFullPath.m_pwsz, &lpszFilePart);
+   DWORD dwLen = GetFullPathNameW(wstrPath, dwAllocLen, wstrFullPath, &lpszFilePart);
 
    if(dwLen == 0)
    {
@@ -633,7 +633,7 @@ BOOL CLASS_DECL_VMSWIN vfxFullPath(wstring & wstrFullPath, const wstring & wstrP
       
       dwAllocLen = dwLen + _MAX_PATH;
 
-      dwLen = GetFullPathNameW(wstrPath, dwAllocLen, wstrFullPath.m_pwsz, &lpszFilePart);
+      dwLen = GetFullPathNameW(wstrPath, dwAllocLen, wstrFullPath, &lpszFilePart);
 
       if(dwLen == 0 || dwLen > dwAllocLen)
       {
@@ -661,7 +661,7 @@ BOOL CLASS_DECL_VMSWIN vfxFullPath(wstring & wstrFullPath, const wstring & wstrP
 
    // not all characters have complete uppercase/lowercase
    if (!(dwFlags & FS_CASE_IS_PRESERVED))
-      CharUpperW(wstrFullPath.m_pwsz);
+      CharUpperW(wstrFullPath);
 
    // assume non-UNICODE file systems, use OEM character set
    if (!(dwFlags & FS_UNICODE_STORED_ON_DISK))
@@ -675,12 +675,13 @@ BOOL CLASS_DECL_VMSWIN vfxFullPath(wstring & wstrFullPath, const wstring & wstrP
          if(iLenFileName >=  MAX_PATH)
          {
             wstring wstrBackup = wstrFullPath;
-            int iFilePart = lpszFilePart - wstrFullPath.m_pwsz;
+            int iFilePart = lpszFilePart - wstrFullPath;
             wstrFullPath.alloc(iFilePart + iLenFileName + 32); // arrange more space with more 32 extra wchars
-            lstrcpynW(wstrFullPath.m_pwsz, wstrBackup, iFilePart);
-            lpszFilePart = wstrFullPath.m_pwsz + iFilePart;
+            lstrcpynW(wstrFullPath, wstrBackup, iFilePart);
+            lpszFilePart = (wchar_t *) wstrFullPath + iFilePart;
          }
          lstrcpyW(lpszFilePart, data.cFileName);
+         wstrFullPath.release_buffer();
       }
    }
    return TRUE;
@@ -816,6 +817,7 @@ void CLASS_DECL_VMSWIN vfxGetModuleShortFileName(HINSTANCE hInst, string& strSho
    }
    else
    {
+      wstrShortName.release_buffer();
       gen::international::unicode_to_utf8(strShortName, wstrShortName);
    }
 }
@@ -854,7 +856,7 @@ void CLASS_DECL_VMSWIN vfxGetRoot(wstring & wstrRoot, const wstring & wstrPath)
 //   ASSERT(lpszPath != NULL);
    // determine the root name of the volume
    wstrRoot = wstrPath;
-   wchar_t * lpszRoot = wstrRoot.m_pwsz;
+   wchar_t * lpszRoot = wstrRoot;
    wchar_t * lpsz;
    for (lpsz = lpszRoot; *lpsz != L'\0'; lpsz = _wcsinc(lpsz))
    {
@@ -888,6 +890,7 @@ void CLASS_DECL_VMSWIN vfxGetRoot(wstring & wstrRoot, const wstring & wstrPath)
       if (*lpsz != '\0')
          lpsz[1] = '\0';
    }
+   wstrRoot.release_buffer();
 }
 
 
@@ -1483,7 +1486,7 @@ BOOL PASCAL WinFile::GetStatus(const char * lpszFileName, ::ex1::file_status& rS
    wstring wstrFullName;
    wstring wstrFileName;
    wstrFileName = gen::international::utf8_to_unicode(lpszFileName);
-   if (!vfxFullPath(wstrFullName.alloc(MAX_PATH * 8), wstrFileName))
+   if (!vfxFullPath(wstrFullName, wstrFileName))
    {
       rStatus.m_strFullName.Empty();
       return FALSE;
