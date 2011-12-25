@@ -517,6 +517,7 @@ namespace win
       {
          if(!is(stra[i], papp))
          {
+            
             if(!::CreateDirectoryW(gen::international::utf8_to_unicode(stra[i]), NULL))
             {
                DWORD dwError = ::GetLastError();
@@ -525,12 +526,20 @@ namespace win
 
                //TRACE("dir::mk CreateDirectoryW last error(%d)=%s", dwError, pszError);
                ::LocalFree(pszError);
+               m_isdirmap.set(stra[i], false);
+               
             }
+            else
+            {
+               m_isdirmap.set(stra[i], true);
+            }
+            
             
             if(!is(stra[i], papp))
             {
                return false;
             }
+            
          }
       }
       return true;
