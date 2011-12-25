@@ -197,27 +197,8 @@ void AfxInternalPreTranslateMessage(gen::signal_object * pobj)
          }
       }
 
-      // walk from target to main ::ca::window
-      ::user::interaction * pwndMain = pthread->GetMainWnd();
-      if(pwndMain != NULL && pwndMain->IsWindow())
-      {
-         pwndMain->WalkPreTranslateTree(pobj);
-         if(pobj->m_bRet)
-            return;
-      }
+      ::user::interaction * puiTopic = pbase->m_pwnd->m_pguie;
 
-      // in case of modeless dialogs, last chance route through main
-      //   ::ca::window's accelerator table
-      ::user::interaction * pwnd = pbase->m_pwnd;
-      if(pwndMain != NULL)
-      {
-         if(pwnd != NULL && WIN_WINDOW(pwnd)->GetTopLevelParent() != pwndMain)
-         {
-            pwndMain->pre_translate_message(pobj);
-            if(pobj->m_bRet)
-               return;
-         }
-      }
       user::LPWndArray wnda = Sys(pthread->get_app()).frames();
       for(int i = 0; i < wnda.get_count(); i++)
       {
@@ -228,21 +209,15 @@ void AfxInternalPreTranslateMessage(gen::signal_object * pobj)
             {
                if(pui->m_pguie != NULL)
                {
-                  if(pui->m_pguie != pwndMain && pui != pwndMain)
-                  {
-                     pui->m_pguie->pre_translate_message(pobj);
-                     if(pobj->m_bRet)
-                        return;
-                  }
+                  pui->m_pguie->pre_translate_message(pobj);
+                  if(pobj->m_bRet)
+                     return;
                }
                else
                {
-                  if(pui != pwndMain)
-                  {
-                     pui->pre_translate_message(pobj);
-                     if(pobj->m_bRet)
-                        return;
-                  }
+                  pui->pre_translate_message(pobj);
+                  if(pobj->m_bRet)
+                     return;
                }
             }
          }
