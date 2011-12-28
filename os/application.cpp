@@ -428,8 +428,8 @@ namespace win
       WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_ptimera = new ::user::interaction::timer_array;
       WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_puiptra = new user::LPWndArray;
 
-      WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_ptimera->m_papp = ::ca::smart_pointer < ::ex2::application >::m_p;
-      WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_puiptra->m_papp = ::ca::smart_pointer < ::ex2::application >::m_p;
+      WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_ptimera->m_papp = dynamic_cast < ::plane::application * >  (::ca::smart_pointer < ::ex2::application >::m_p);
+      WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_puiptra->m_papp = dynamic_cast < ::plane::application * >  (::ca::smart_pointer < ::ex2::application >::m_p);
 
       WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->set_run();
       return true;

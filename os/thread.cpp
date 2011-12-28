@@ -1417,9 +1417,9 @@ stop_run:
                if(spbase->m_bRet)
                   return TRUE;
             
-               if(!Application.is_system())
+               if(m_papp->is_system())
                {
-                  Application.pre_translate_message(spbase);
+                  m_papp->pre_translate_message(spbase);
                   if(spbase->m_bRet)
                      return TRUE;
                }
