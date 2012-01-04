@@ -526,7 +526,7 @@ namespace win
 
                //TRACE("dir::mk CreateDirectoryW last error(%d)=%s", dwError, pszError);
                ::LocalFree(pszError);
-               m_isdirmap.set(stra[i], false);
+               //m_isdirmap.set(stra[i], false);
                
             }
             else
