@@ -199,30 +199,45 @@ void AfxInternalPreTranslateMessage(gen::signal_object * pobj)
 
       ::user::interaction * puiTopic = pbase->m_pwnd->m_pguie;
 
-      for(int i = 0; i < pthread->m_papp->m_psession->frames().get_count(); i++)
+      try
       {
-         try
+         if(pthread->m_papp->m_psession != NULL)
          {
-            ::user::interaction * pui = pthread->m_papp->m_psession->frames()[i];
-            if(pui != NULL)
+            try
             {
-               if(pui->m_pguie != NULL)
+               for(int i = 0; i < pthread->m_papp->m_psession->frames().get_count(); i++)
                {
-                  pui->m_pguie->pre_translate_message(pobj);
-                  if(pobj->m_bRet)
-                     return;
-               }
-               else
-               {
-                  pui->pre_translate_message(pobj);
-                  if(pobj->m_bRet)
-                     return;
+                  try
+                  {
+                     ::user::interaction * pui = pthread->m_papp->m_psession->frames()[i];
+                     if(pui != NULL)
+                     {
+                        if(pui->m_pguie != NULL)
+                        {
+                           pui->m_pguie->pre_translate_message(pobj);
+                           if(pobj->m_bRet)
+                              return;
+                        }
+                        else
+                        {
+                           pui->pre_translate_message(pobj);
+                           if(pobj->m_bRet)
+                              return;
+                        }
+                     }
+                  }
+                  catch(...)
+                  {
+                  }
                }
             }
+            catch(...)
+            {
+            }
          }
-         catch(...)
-         {
-         }
+      }
+      catch(...)
+      {
       }
    }
    catch(...)
