@@ -1405,45 +1405,87 @@ stop_run:
             
                spbase(get_base(&msg));
 
-               if(m_p != NULL)
+               try
                {
-                  m_p->pre_translate_message(spbase);
-                  if(spbase->m_bRet)
-                     return TRUE;
+                  if(m_p != NULL)
+                  {
+                     m_p->pre_translate_message(spbase);
+                     if(spbase->m_bRet)
+                        return TRUE;
+                  }
+               }
+               catch(...)
+               {
                }
 
-               if(m_papp != NULL)
+               try
                {
-                  if(m_papp->m_psystem != NULL)
+                  if(m_papp != NULL)
                   {
-                     m_papp->m_psystem->pre_translate_message(spbase);
-                     if(spbase->m_bRet)
-                        return TRUE;
-                     if(m_papp->m_psystem->m_pcube != NULL)
+                     try
                      {
-                        m_papp->m_psystem->m_pcubeInterface->pre_translate_message(spbase);
-                        if(spbase->m_bRet)
-                           return TRUE;
+                        if(m_papp->m_psystem != NULL)
+                        {
+                           m_papp->m_psystem->pre_translate_message(spbase);
+                           if(spbase->m_bRet)
+                              return TRUE;
+                           try
+                           {
+                              if(m_papp->m_psystem->m_pcube != NULL)
+                              {
+                                 m_papp->m_psystem->m_pcubeInterface->pre_translate_message(spbase);
+                                 if(spbase->m_bRet)
+                                    return TRUE;
+                              }
+                           }
+                           catch(...)
+                           {
+                           }
+                        }
+                     }
+                     catch(...)
+                     {
+                     }
+                     if(m_papp->m_psession != NULL)
+                     {
+                        try
+                        {
+                           m_papp->m_psession->pre_translate_message(spbase);
+                           if(spbase->m_bRet)
+                              return TRUE;
+                        }
+                        catch(...)
+                        {
+                        }
+                        try
+                        {
+                           if(m_papp->m_psession->m_pbergedge != NULL)
+                           {
+                              m_papp->m_psession->m_pbergedgeInterface->pre_translate_message(spbase);
+                              if(spbase->m_bRet)
+                                 return TRUE;
+                           }
+                        }
+                        catch(...)
+                        {
+                        }
                      }
                   }
-                  if(m_papp->m_psession != NULL)
-                  {
-                     m_papp->m_psession->pre_translate_message(spbase);
-                     if(spbase->m_bRet)
-                        return TRUE;
-                     if(m_papp->m_psession->m_pbergedge != NULL)
-                     {
-                        m_papp->m_psession->m_pbergedgeInterface->pre_translate_message(spbase);
-                        if(spbase->m_bRet)
-                           return TRUE;
-                     }
-                  }
+               }
+               catch(...)
+               {
+               }
+               try
+               {
                   if(!m_papp->is_system() && m_papp->is_bergedge())
                   {
                      m_papp->pre_translate_message(spbase);
                      if(spbase->m_bRet)
                         return TRUE;
                   }
+               }
+               catch(...)
+               {
                }
             
             
