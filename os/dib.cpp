@@ -324,6 +324,10 @@ namespace win
 
    void dib::mult_alpha(::ca::dib * pdibWork, bool bPreserveAlpha)
    {
+
+      if(area() <= 0)
+         return;
+
       //return ::ca::dib::mult_alpha(NULL, true);
       ::ca::dib_sp dibWork;
 
@@ -333,7 +337,8 @@ namespace win
          pdibWork = dibWork;
       }
 
-      pdibWork->create(width(), height());
+      if(pdibWork->create(width(), height()))
+         return;
 
       pdibWork->FillByte(0);
 

@@ -199,12 +199,11 @@ void AfxInternalPreTranslateMessage(gen::signal_object * pobj)
 
       ::user::interaction * puiTopic = pbase->m_pwnd->m_pguie;
 
-      user::LPWndArray wnda = Sys(pthread->get_app()).frames();
-      for(int i = 0; i < wnda.get_count(); i++)
+      for(int i = 0; i < pthread->m_papp->m_psession->frames().get_count(); i++)
       {
-         ::user::interaction * pui = wnda[i];
          try
          {
+            ::user::interaction * pui = pthread->m_papp->m_psession->frames()[i];
             if(pui != NULL)
             {
                if(pui->m_pguie != NULL)
@@ -1413,16 +1412,40 @@ stop_run:
                      return TRUE;
                }
 
-               System.pre_translate_message(spbase);
-               if(spbase->m_bRet)
-                  return TRUE;
-            
-               if(m_papp->is_system())
+               if(m_papp != NULL)
                {
-                  m_papp->pre_translate_message(spbase);
-                  if(spbase->m_bRet)
-                     return TRUE;
+                  if(m_papp->m_psystem != NULL)
+                  {
+                     m_papp->m_psystem->pre_translate_message(spbase);
+                     if(spbase->m_bRet)
+                        return TRUE;
+                     if(m_papp->m_psystem->m_pcube != NULL)
+                     {
+                        m_papp->m_psystem->m_pcubeInterface->pre_translate_message(spbase);
+                        if(spbase->m_bRet)
+                           return TRUE;
+                     }
+                  }
+                  if(m_papp->m_psession != NULL)
+                  {
+                     m_papp->m_psession->pre_translate_message(spbase);
+                     if(spbase->m_bRet)
+                        return TRUE;
+                     if(m_papp->m_psession->m_pbergedge != NULL)
+                     {
+                        m_papp->m_psession->m_pbergedgeInterface->pre_translate_message(spbase);
+                        if(spbase->m_bRet)
+                           return TRUE;
+                     }
+                  }
+                  if(!m_papp->is_system() && m_papp->is_bergedge())
+                  {
+                     m_papp->pre_translate_message(spbase);
+                     if(spbase->m_bRet)
+                        return TRUE;
+                  }
                }
+            
             
                AfxPreTranslateMessage(spbase);
                if(spbase->m_bRet)
