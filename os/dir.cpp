@@ -518,7 +518,7 @@ namespace win
          if(!is(stra[i], papp))
          {
             
-            if(!::CreateDirectoryW(gen::international::utf8_to_unicode(stra[i]), NULL))
+            if(!::CreateDirectoryW(gen::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
             {
                DWORD dwError = ::GetLastError();
                char * pszError;

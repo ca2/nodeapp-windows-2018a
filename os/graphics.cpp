@@ -2434,7 +2434,7 @@ namespace win
       pmNew->Translate(lpRect->left, lpRect->top);
       pmNew->Scale(m_fontxyz.m_dFontWidth, 1.0, Gdiplus::MatrixOrderAppend);
 
-      Gdiplus::RectF rectf(0, 0, (lpRect->right - lpRect->left) * m_spfont.m_p->m_dFontWidth, lpRect->bottom - lpRect->top);
+      Gdiplus::RectF rectf(0, 0, (lpRect->right - lpRect->left) * m_fontxyz.m_dFontWidth, lpRect->bottom - lpRect->top);
 
       m_pgraphics->SetTransform(pmNew);
 
