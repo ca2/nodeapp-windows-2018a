@@ -102,10 +102,10 @@ namespace win
          delete m_pgraphics;
       }
 
-      
-
       m_pgraphics = new Gdiplus::Graphics((Gdiplus::Bitmap *) pBitmap->get_os_data());
+
       m_bitmap = pBitmap;
+
       return m_bitmap;
    }
 
@@ -538,22 +538,44 @@ namespace win
       try
       {
          return m_pgraphics->DrawImage(
-            (Gdiplus::Bitmap *) (dynamic_cast < ::win::graphics * > (pgraphicsSrc))->m_bitmap->get_os_data(),
+            (Gdiplus::Bitmap *) pgraphicsSrc->GetCurrentBitmap().get_os_data(),
             x, y , xSrc, ySrc, nWidth, nHeight, Gdiplus::UnitPixel) == Gdiplus::Status::Ok;
       }
       catch(...)
       {
          return FALSE;
       }
+
       //return ::BitBlt(get_handle1(), x, y, nWidth, nHeight, WIN_HDC(pgraphicsSrc), xSrc, ySrc, dwRop); 
+
    }
 
 
-   BOOL graphics::StretchBlt(int x, int y, int nWidth, int nHeight, ::ca::graphics * pgraphicsSrc,
-      int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, DWORD dwRop)
-   { ASSERT(get_handle1() != NULL); return ::StretchBlt(get_handle1(), x, y, nWidth, nHeight,
-   WIN_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth, nSrcHeight,
-   dwRop); }
+   BOOL graphics::StretchBlt(int xDst, int yDst, int nDstWidth, int nDstHeight, ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, DWORD dwRop)
+   { 
+
+      if(pgraphicsSrc == NULL)
+         return FALSE;
+
+      Gdiplus::RectF dstRect(xDst, yDst, nDstWidth, nDstHeight);
+      Gdiplus::RectF srcRect(xSrc, ySrc, nSrcWidth, nSrcHeight);
+
+      try
+      {
+         return m_pgraphics->DrawImage(
+            (Gdiplus::Bitmap *) pgraphicsSrc->GetCurrentBitmap().get_os_data(),
+            dstRect, srcRect, Gdiplus::UnitPixel) == Gdiplus::Status::Ok;
+      }
+      catch(...)
+      {
+         return FALSE;
+      }
+
+      //return ::StretchBlt(get_handle1(), x, y, nWidth, nHeight, WIN_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth, nSrcHeight, dwRop); 
+   
+   }
+
+
    COLORREF graphics::GetPixel(int x, int y) const
    { ASSERT(get_handle1() != NULL); return ::GetPixel(get_handle1(), x, y); }
    COLORREF graphics::GetPixel(POINT point) const
@@ -1021,13 +1043,45 @@ namespace win
    // double blend
    // COLOR_DEST = SRC_ALPHA * BLEND_ALPHA * COLOR_SRC  + (1 - SRC_ALPHA * BLEND_ALPHA) * COLOR_DST
 
-   bool graphics::alpha_blend(int xDest, int yDest, int nDestWidth, int nDestHeight,
+// Thank you
+// Jiju George T
+// Web Developer
+// India India
+// Member
+
+   bool graphics::alpha_blend(int xDest, int yDest, int nDestWidth, int nDestHeight, ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, double dRate)
+   {
+
+      float fA = (float) dRate;
+
+      Gdiplus::ColorMatrix matrix = { 
+         1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+         0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+         0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+         0.0f, 0.0f, 0.0f, fA  , 0.0f,
+         0.0f, 0.0f, 0.0f, 0.0f, 1.0f
+      };
+
+      Gdiplus::ImageAttributes attributes;
+
+      attributes.SetColorMatrix(&matrix, Gdiplus::ColorMatrixFlagsDefault, Gdiplus::ColorAdjustTypeBitmap);
+
+      Gdiplus::RectF dstRect(xDest, yDest, nDestWidth, nDestHeight);
+
+      m_pgraphics->DrawImage((Gdiplus::Bitmap *) pgraphicsSrc->GetCurrentBitmap().get_os_data(), dstRect, xSrc, ySrc, nSrcWidth, nSrcHeight, Gdiplus::UnitPixel, &attributes);
+
+      return true;
+
+   }
+
+
+   /*bool graphics::alpha_blend(int xDest, int yDest, int nDestWidth, int nDestHeight,
       ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, BLENDFUNCTION blend)
    { 
       
-
-      if(get_handle1() == NULL)
-         return false;
+      throw not_implemented_exception();
+      //if(get_handle1() == NULL)
+        // return false;
 
       
       if(m_pdibAlphaBlend != NULL)
@@ -1104,7 +1158,7 @@ namespace win
       return ::AlphaBlend(get_handle1(), xDest, yDest, 
          nDestWidth, nDestHeight, WIN_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth, 
          nSrcHeight, blend) != FALSE; 
-   }
+   }*/
 
 
    BOOL graphics::TransparentBlt(int xDest, int yDest, int nDestWidth, 

@@ -304,9 +304,12 @@ namespace win
       BOOL TransparentBlt(int xDest, int yDest, int nDestWidth, int nDestHeight,
         ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, 
         UINT clrTransparent);
-      bool alpha_blend(int xDest, int yDest, int nDestWidth, int nDestHeight,
+
+      virtual bool alpha_blend(int xDest, int yDest, int nDestWidth, int nDestHeight, ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, double dOpacity);
+
+      /*bool alpha_blend(int xDest, int yDest, int nDestWidth, int nDestHeight,
         ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, 
-        BLENDFUNCTION blend);
+        BLENDFUNCTION blend);*/
 
    // Text Functions
       virtual BOOL TextOut(int x, int y, const char * lpszString, int nCount);

@@ -325,6 +325,8 @@ namespace win
    void dib::mult_alpha(::ca::dib * pdibWork, bool bPreserveAlpha)
    {
 
+      return ;
+      /*
       if(area() <= 0)
          return;
 
@@ -364,6 +366,8 @@ namespace win
          channel_from(visual::rgba::channel_alpha, pdibWork);
 
       }
+
+      */
 
    }
 
