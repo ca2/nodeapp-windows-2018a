@@ -614,6 +614,21 @@ namespace win
       }
       else
       {
+         string strLibraryRoot;
+         string strLibraryName;
+         if(App(papp).m_strLibraryName.has_char() && App(papp).m_strLibraryName != "app_" + App(papp).m_strAppName
+            && gen::str::begins_ci(App(papp).m_strLibraryName, "app_") && App(papp).m_strLibraryName.find("_", strlen("app_")) > 4)
+         {
+            stringa stra2;
+            stra2.add_tokens(App(papp).m_strLibraryName, "_", FALSE);
+            strLibraryRoot = stra2[1];
+            strLibraryName = stra2.implode("_", 2);
+         }
+         else
+         {
+            strLibraryName = App(papp).m_strLibraryName;
+         }
+
          stringa stra;
          stra.add_tokens(App(papp).m_strAppName, "_", FALSE);
          for(int i = 1; i < stra.get_upper_bound(); i++)
@@ -622,17 +637,35 @@ namespace win
          }
          if(stra.get_size() > 1)
          {
-            strRoot = "app-" + stra[0];
+            if(strLibraryRoot.has_char())
+            {
+               strRoot = "app-" + strLibraryRoot;
+            }
+            else
+            {
+               strRoot = "app-" + stra[0];
+            }
             stra.remove_at(0);
-            if(App(papp).m_strLibraryName.has_char() && App(papp).m_strLibraryName != "app_" + App(papp).m_strAppName)
-               stra.insert_at(stra.get_upper_bound(), App(papp).m_strLibraryName);
+            if(strLibraryName.has_char() && strLibraryName != "app_" + App(papp).m_strAppName)
+            {
+               stra.insert_at(stra.get_upper_bound(), strLibraryName);
+            }
             strDomain += stra.implode("/");
          }
          else
          {
-            strRoot = "app";
-            if(App(papp).m_strLibraryName.has_char() && App(papp).m_strLibraryName != "app_" + App(papp).m_strAppName)
-               strDomain = App(papp).m_strLibraryName + "/";
+            if(strLibraryRoot.has_char())
+            {
+               strRoot = "app-" + strLibraryRoot;
+            }
+            else
+            {
+               strRoot = "app";
+            }
+            if(strLibraryName.has_char() && strLibraryName != "app_" + App(papp).m_strAppName)
+            {
+               strDomain = strLibraryName + "/";
+            }
             strDomain += App(papp).m_strAppName;
          }
       }
