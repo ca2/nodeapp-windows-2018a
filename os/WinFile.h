@@ -131,7 +131,7 @@ public:
    static void PASCAL ThrowOsError(::ca::application * papp, LONG lOsError, const char * lpszFileName = NULL);
    static void PASCAL ThrowErrno(::ca::application * papp, int nErrno, const char * lpszFileName = NULL);
 
-   virtual BOOL GetErrorMessage(string & str, PUINT pnHelpContext = NULL);
+   virtual BOOL GetErrorMessage(string & str, PUINT pnHelpContext = NULL) const;
 };
 
 inline WinFileException::WinFileException(::ca::application * papp, int cause, LONG lOsError,

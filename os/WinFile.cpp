@@ -1170,7 +1170,7 @@ void PASCAL WinFileException::ThrowErrno(::ca::application * papp, int nErrno, c
       vfxThrowFileException(papp, WinFileException::ErrnoToException(nErrno), _doserrno, lpszFileName);
 }
 
-BOOL WinFileException::GetErrorMessage(string & str, PUINT pnHelpContext)
+BOOL WinFileException::GetErrorMessage(string & str, PUINT pnHelpContext) const
 {
    
   // if (pnHelpContext != NULL)
