@@ -85,37 +85,23 @@ public:
 
 };
 
-class CLASS_DECL_VMSWIN WinFileException :
+namespace WinFileException
+{
+   int PASCAL OsErrorToException(LONG lOsError);
+   int PASCAL ErrnoToException(int nErrno);
+   void PASCAL ThrowOsError(::ca::application * papp, LONG lOsError, const char * lpszFileName = NULL);
+   void PASCAL ThrowErrno(::ca::application * papp, int nErrno, const char * lpszFileName = NULL);
+
+}
+
+/*class CLASS_DECL_VMSWIN WinFileException :
    virtual public ex1::file_exception
 {
 public:
-   enum
-   {
-      none,
-      generic,
-      fileNotFound,
-      badPath,
-      tooManyOpenFiles,
-      accessDenied,
-      invalidFile,
-      removeCurrentDir,
-      directoryFull,
-      badSeek,
-      hardIO,
-      sharingViolation,
-      lockViolation,
-      diskFull,
-      endOfFile
-   };
-
    WinFileException(::ca::application * papp, int cause = none, LONG lOsError = -1, const char * lpszArchiveName = NULL);
    virtual ~WinFileException();
 
 // Attributes
-   int      m_cause;
-   LONG     m_lOsError;
-   string   m_strFileName;
-
 
    virtual int get_cause();
    virtual LONG get_os_error();
@@ -135,13 +121,13 @@ public:
 };
 
 inline WinFileException::WinFileException(::ca::application * papp, int cause, LONG lOsError,
-                                          const char * pstrFileName /* = NULL */) :
-   ca(papp),
+                                          const char * pstrFileName /* = NULL */ /*) :
+/*   ca(papp),
    ex1::file_exception(papp)
    { m_cause = cause; m_lOsError = lOsError; m_strFileName = pstrFileName; }
 inline WinFileException::~WinFileException()
    { }
-
+   */
 
 /////////////////////////////////////////////////////////////////////////////
 // File status

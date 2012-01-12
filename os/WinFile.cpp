@@ -175,7 +175,7 @@ BOOL WinFile::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_excepti
       {
          if (pException != NULL)
          {
-            WinFileException * pfe = dynamic_cast < WinFileException * > (pException->m_p);
+            ::ex1::file_exception * pfe = dynamic_cast < ::ex1::file_exception * > (pException->m_p);
             if(pfe != NULL)
             {
                pfe->m_lOsError = ::GetLastError();
@@ -1142,20 +1142,6 @@ UINT CLASS_DECL_VMSWIN vfxGetFileName(const wchar_t * lpszPathName, wchar_t * lp
 // FileException
 
 
-int WinFileException::get_cause()
-{
-   return m_cause;
-}
-
-LONG WinFileException::get_os_error()
-{
-   return m_lOsError;
-}
-
-string WinFileException::get_file_path()
-{
-   return m_strFileName;
-}
 
 
 void PASCAL WinFileException::ThrowOsError(::ca::application * papp, LONG lOsError, const char * lpszFileName /* = NULL */)
@@ -1170,21 +1156,6 @@ void PASCAL WinFileException::ThrowErrno(::ca::application * papp, int nErrno, c
       vfxThrowFileException(papp, WinFileException::ErrnoToException(nErrno), _doserrno, lpszFileName);
 }
 
-BOOL WinFileException::GetErrorMessage(string & str, PUINT pnHelpContext) const
-{
-   
-  // if (pnHelpContext != NULL)
-//      *pnHelpContext = m_cause + AFX_IDP_FILE_NONE;
-
-   string strMessage;
-   string strFileName = m_strFileName;
-   if(strFileName.is_empty())
-      strFileName = "IDS_UNNAMED_FILE";
-   strMessage.Format("file error number: %d - %s - file: %s", m_cause, get_error_message(m_lOsError), strFileName);
-   str = strMessage;
-
-   return TRUE;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 // WinFileException diagnostics
@@ -1218,7 +1189,7 @@ void CLASS_DECL_VMSWIN vfxThrowFileException(::ca::application * papp, int cause
       lpsz = szUnknown;
 //   TRACE3("WinFile exception: %hs, WinFile %s, App error information = %ld.\n", lpsz, (lpszFileName == NULL) ? "Unknown" : lpszFileName, lOsError);
 #endif
-   throw new WinFileException(papp, cause, lOsError, lpszFileName);
+   throw new ::ex1::file_exception(papp, cause, lOsError, lpszFileName);
 }
 
 int PASCAL WinFileException::ErrnoToException(int nErrno)
