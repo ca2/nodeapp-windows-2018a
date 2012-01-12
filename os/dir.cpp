@@ -369,13 +369,14 @@ namespace win
    bool dir::is(const char * lpcszPath, ::ca::application * papp)
    {
       
-      if(::ca::dir::system::is(lpcszPath, papp))
-         return true;
-
       bool bIsDir;
 
       if(m_isdirmap.lookup(lpcszPath, bIsDir))
          return bIsDir;
+
+      if(::ca::dir::system::is(lpcszPath, papp))
+         return true;
+
 
       string strPath(lpcszPath);
       if(strPath.get_length() >= MAX_PATH)
