@@ -374,7 +374,13 @@ void CLASS_DECL_VMSWIN AfxEndThread(::radix::application * papp, UINT nExitCode,
    AfxTermThread(papp);
 
    // allow C-runtime to cleanup, and exit the thread
-   _endthreadex(nExitCode);
+   try
+   {
+      _endthreadex(nExitCode);
+   }
+   catch(...)
+   {
+   }
 }
 
 extern thread_local_storage * _afxThreadData;

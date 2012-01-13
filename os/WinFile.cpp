@@ -175,6 +175,7 @@ BOOL WinFile::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_excepti
       {
          if (pException != NULL)
          {
+            pException->create(get_app());
             ::ex1::file_exception * pfe = dynamic_cast < ::ex1::file_exception * > (pException->m_p);
             if(pfe != NULL)
             {
