@@ -1158,24 +1158,6 @@ void PASCAL WinFileException::ThrowErrno(::ca::application * papp, int nErrno, c
 }
 
 
-/////////////////////////////////////////////////////////////////////////////
-// WinFileException diagnostics
-
-#ifdef _DEBUG
-/*void WinFileException::dump(dump_context & dumpcontext) const
-{
-   ::radix::object::dump(dumpcontext);
-
-   dumpcontext << "m_cause = ";
-   if (m_cause >= 0 && m_cause < _countof(rgszFileExceptionCause))
-      dumpcontext << rgszFileExceptionCause[m_cause];
-   else
-      dumpcontext << szUnknown;
-   dumpcontext << "\nm_lOsError = " << (void *)m_lOsError;
-
-   dumpcontext << "\n";
-}*/
-#endif
 
 /////////////////////////////////////////////////////////////////////////////
 // WinFileException helpers
