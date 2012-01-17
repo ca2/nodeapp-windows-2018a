@@ -1807,12 +1807,25 @@ namespace win
 
    int graphics::SetStretchBltMode(int nStretchMode)
    {
-      int nRetVal = 0;
+      if(nStretchMode == 0)
+      {
+         m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeNearestNeighbor);
+      }
+      else if(nStretchMode == HALFTONE)
+      {
+         m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
+      }
+      else
+      {
+         m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeLowQuality);
+      }
+      return 1;
+      /*int nRetVal = 0;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          nRetVal = ::SetStretchBltMode(get_handle1(), nStretchMode);
       if(get_handle2() != NULL)
          nRetVal = ::SetStretchBltMode(get_handle2(), nStretchMode);
-      return nRetVal;
+      return nRetVal;*/
    }
 
    COLORREF graphics::SetTextColor(COLORREF crColor)
