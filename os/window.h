@@ -377,14 +377,11 @@ namespace win
       static ::ca::window * PASCAL WindowFromPoint(POINT point);
 
    // Alert Functions
+
       BOOL FlashWindow(BOOL bInvert);
-   #pragma push_macro("MessageBox")
-   #undef MessageBox
-      virtual int _AFX_FUNCNAME(MessageBox)(const char * lpszText, const char * lpszCaption = NULL,
-            UINT nType = MB_OK);
-      virtual int MessageBox(const char * lpszText, const char * lpszCaption = NULL,
-            UINT nType = MB_OK);
-   #pragma pop_macro("MessageBox")
+
+      virtual int message_box(const char * lpszText, const char * lpszCaption = NULL, UINT nType = MB_OK);
+
 
    #if(WINVER >= 0x0500)
 

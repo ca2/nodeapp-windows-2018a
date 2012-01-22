@@ -2083,7 +2083,7 @@ namespace win
       return ::win::window::from_handle(hWnd);
    }
 
-   int window::MessageBox(const char * lpszText, const char * lpszCaption, UINT nType)
+   int window::message_box(const char * lpszText, const char * lpszCaption, UINT nType)
    {
       if (lpszCaption == NULL)
          lpszCaption = AfxGetAppName();
@@ -4811,40 +4811,123 @@ int window::GetCheckedRadioButton(int nIDFirstButton, int nIDLastButton)
     }
 
     ::ca::window * PASCAL window::WindowFromPoint(POINT point)
-      { return ::win::window::from_handle(::WindowFromPoint(point)); }
-   #pragma push_macro("MessageBox")
-   #undef MessageBox
-    int window::MessageBox(const char * lpszText, const char * lpszCaption, UINT nType)
-      { return _AFX_FUNCNAME(MessageBox)(lpszText, lpszCaption, nType); }
-   #pragma pop_macro("MessageBox")
+    { 
+       
+       return ::win::window::from_handle(::WindowFromPoint(point));
+
+    }
+
     BOOL window::FlashWindow(BOOL bInvert)
-      { ASSERT(::IsWindow(get_handle())); return ::FlashWindow(get_handle(), bInvert); }
+    {
+       
+       ASSERT(::IsWindow(get_handle())); return ::FlashWindow(get_handle(), bInvert);
+    
+    }
+
     BOOL window::ChangeClipboardChain(HWND hWndNext)
-      { ASSERT(::IsWindow(get_handle())); return ::ChangeClipboardChain(get_handle(), hWndNext); }
+    {
+       
+       ASSERT(::IsWindow(get_handle())); 
+       
+       return ::ChangeClipboardChain(get_handle(), hWndNext);
+
+    }
+
     HWND window::SetClipboardViewer()
-      { ASSERT(::IsWindow(get_handle())); return ::SetClipboardViewer(get_handle()); }
+    {
+       
+       ASSERT(::IsWindow(get_handle()));
+       
+       return ::SetClipboardViewer(get_handle());
+    
+    }
+
     BOOL window::OpenClipboard()
-      { ASSERT(::IsWindow(get_handle())); return ::OpenClipboard(get_handle()); }
+    { 
+       
+       ASSERT(::IsWindow(get_handle())); 
+       
+       return ::OpenClipboard(get_handle());
+
+    }
+    
     ::ca::window * PASCAL window::GetOpenClipboardWindow()
-      { return ::win::window::from_handle(::GetOpenClipboardWindow()); }
+    {
+       
+       return ::win::window::from_handle(::GetOpenClipboardWindow());
+    
+    }
+
     ::ca::window * PASCAL window::GetClipboardOwner()
-      { return ::win::window::from_handle(::GetClipboardOwner()); }
+    {
+       
+       return ::win::window::from_handle(::GetClipboardOwner());
+    
+    }
+    
     ::ca::window * PASCAL window::GetClipboardViewer()
-      { return ::win::window::from_handle(::GetClipboardViewer()); }
+    {
+       
+       return ::win::window::from_handle(::GetClipboardViewer());
+    
+    }
+    
     void window::CreateCaret(::ca::bitmap* pBitmap)
-      { ASSERT(::IsWindow(get_handle())); ::CreateCaret(get_handle(), (HBITMAP)pBitmap->get_os_data(), 0, 0); }
+    {
+       
+       ASSERT(::IsWindow(get_handle())); 
+       
+       ::CreateCaret(get_handle(), (HBITMAP)pBitmap->get_os_data(), 0, 0);
+    
+    }
+    
     void window::CreateSolidCaret(int nWidth, int nHeight)
-      { ASSERT(::IsWindow(get_handle())); ::CreateCaret(get_handle(), (HBITMAP)0, nWidth, nHeight); }
+    {
+       
+       ASSERT(::IsWindow(get_handle())); 
+       
+       ::CreateCaret(get_handle(), (HBITMAP)0, nWidth, nHeight);
+    
+    }
+    
     void window::CreateGrayCaret(int nWidth, int nHeight)
-      { ASSERT(::IsWindow(get_handle())); ::CreateCaret(get_handle(), (HBITMAP)1, nWidth, nHeight); }
+    {
+       
+       ASSERT(::IsWindow(get_handle()));
+       
+       ::CreateCaret(get_handle(), (HBITMAP)1, nWidth, nHeight);
+    
+    }
+    
     point PASCAL window::GetCaretPos()
-      { point point; ::GetCaretPos((LPPOINT)&point); return point; }
+    { 
+       
+       point point;
+       
+       ::GetCaretPos((LPPOINT)&point); return point;
+    
+    }
+    
     void PASCAL window::SetCaretPos(POINT point)
-      { ::SetCaretPos(point.x, point.y); }
+    { 
+       
+       ::SetCaretPos(point.x, point.y);
+    
+    }
+    
     void window::HideCaret()
-      { ::HideCaret(get_handle()); }
+    {
+       
+       ::HideCaret(get_handle());
+    
+    }
+    
     void window::ShowCaret()
-      { ::ShowCaret(get_handle()); }
+    { 
+       
+       ::ShowCaret(get_handle());
+    
+    }
 
     BOOL window::SetForegroundWindow()
     {
@@ -4869,17 +4952,56 @@ int window::GetCheckedRadioButton(int nIDFirstButton, int nIDLastButton)
 
    // Win4
     HICON window::SetIcon(HICON hIcon, BOOL bBigIcon)
-      { return (HICON)SendMessage(WM_SETICON, bBigIcon, (LPARAM)hIcon); }
+    { 
+       
+       return (HICON)SendMessage(WM_SETICON, bBigIcon, (LPARAM)hIcon);
+    
+    }
+    
     HICON window::GetIcon(BOOL bBigIcon) const
-      { ASSERT(::IsWindow(get_handle())); return (HICON)const_cast < window * > (this)->SendMessage(WM_GETICON, bBigIcon, 0); }
+    { 
+       
+       ASSERT(::IsWindow(get_handle()));
+       
+       return (HICON)const_cast < window * > (this)->SendMessage(WM_GETICON, bBigIcon, 0);
+    
+    }
+
     void window::Print(::ca::graphics * pgraphics, DWORD dwFlags) const
-      { ASSERT(::IsWindow(get_handle())); const_cast < window * > (this)->SendMessage(WM_PRINT, (WPARAM)(dynamic_cast<::win::graphics * >(pgraphics))->get_os_data(), dwFlags); }
+    { 
+       
+       ASSERT(::IsWindow(get_handle()));
+       
+       const_cast < window * > (this)->SendMessage(WM_PRINT, (WPARAM)(dynamic_cast<::win::graphics * >(pgraphics))->get_os_data(), dwFlags);
+    
+    }
+    
     void window::PrintClient(::ca::graphics * pgraphics, DWORD dwFlags) const
-      { ASSERT(::IsWindow(get_handle())); const_cast < window * > (this)->SendMessage(WM_PRINTCLIENT, (WPARAM)(dynamic_cast<::win::graphics * >(pgraphics))->get_os_data(), dwFlags); }
+    { 
+       
+       ASSERT(::IsWindow(get_handle()));
+       
+       const_cast < window * > (this)->SendMessage(WM_PRINTCLIENT, (WPARAM)(dynamic_cast<::win::graphics * >(pgraphics))->get_os_data(), dwFlags);
+    
+    }
+    
     BOOL window::SetWindowContextHelpId(DWORD dwContextHelpId)
-      { ASSERT(::IsWindow(get_handle())); return ::SetWindowContextHelpId(get_handle(), dwContextHelpId); }
+    { 
+       
+       ASSERT(::IsWindow(get_handle()));
+       
+       return ::SetWindowContextHelpId(get_handle(), dwContextHelpId);
+    
+    }
+
     DWORD window::GetWindowContextHelpId() const
-      { ASSERT(::IsWindow(get_handle())); return ::GetWindowContextHelpId(get_handle()); }
+    {
+       
+       ASSERT(::IsWindow(get_handle()));
+       
+       return ::GetWindowContextHelpId(get_handle());
+    
+    }
 
 
    // Default message ::collection::map implementations
