@@ -1217,11 +1217,13 @@ stop_run:
    void thread::DispatchThreadMessageEx(gen::signal_object * pobj)
    {
       SCAST_PTR(::gen::message::base, pbase, pobj);
-      if(pbase->m_uiMessage == WM_APP + 1984 && pbase->m_wparam == 77)
+      if(!pbase->m_bRet && pbase->m_uiMessage == WM_APP + 1984 && pbase->m_wparam == 77)
       {
          gen::scoped_ptr < message > spmessage(pbase->m_lparam);
          spmessage->send();
-         pbase->m_bRet = true;
+         pbase->m_uiMessage   = 0;    // ssshhhh.... - self-healing - sh...
+         pbase->m_wparam      = 0;    // ssshhhh.... - self-healing - sh...
+         pbase->m_bRet        = true;
          return;
       }
    /*   const AFX_MSGMAP* pMessageMap; pMessageMap = GetMessageMap();
