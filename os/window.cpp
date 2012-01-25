@@ -1190,7 +1190,8 @@ namespace win
          // user presence status activity reporting
          if(pbase->m_uiMessage == WM_LBUTTONDOWN 
          || pbase->m_uiMessage == WM_RBUTTONDOWN 
-         || pbase->m_uiMessage == WM_MBUTTONDOWN)
+         || pbase->m_uiMessage == WM_MBUTTONDOWN
+         || pbase->m_uiMessage == WM_MOUSEMOVE)
          {
             if(Application.m_puser != NULL)
             {
