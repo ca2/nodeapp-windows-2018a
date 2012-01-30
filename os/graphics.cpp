@@ -2579,7 +2579,14 @@ namespace win
 
       Gdiplus::PointF origin(0, 0);
 
-      m_pgraphics->MeasureString(wstr, wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, &box);
+      try
+      {
+         m_pgraphics->MeasureString(wstr, wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, &box);
+      }
+      catch(...)
+      {
+         return size(0, 0);
+      }
 
       return size(box.Width * m_fontxyz.m_dFontWidth, box.Height);
 

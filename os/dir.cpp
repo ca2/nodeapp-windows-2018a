@@ -1,12 +1,22 @@
 #include "StdAfx.h"
 
+
 namespace win
 {
+
+
    dir::dir(::ca::application * papp) :
       ca(papp),
       ::ca::dir::system(papp),
       m_path(papp)
    {
+      
+      string strCa2Module = ca2module();
+      
+      m_strCa2 = strCa2Module;
+
+      System.file().path().eat_end_level(m_strCa2, 2, "\\");
+
    }
 
    dir::path::path(::ca::application * papp) :
@@ -45,53 +55,152 @@ namespace win
          *ppszRequest = psz;
       }
       return true;
+
    }
 
-   string dir::path(const char * lpcszFolder, const char * lpcszRelative, const char * psz2)
+   inline bool myspace(char ch)
    {
-      bool bUrl = is_url(lpcszFolder);
-      if(lpcszRelative == NULL)
+      return ch == ' ' ||
+             ch == '\t' ||
+             ch == '\r' ||
+             ch == '\n';
+   }
+
+   string dir::path(const string & strFolder, const string & strRelative, const string & str2)
+   {
+      bool bUrl = is_url(strFolder);
+      if(strRelative.is_empty())
       {
-         if(psz2 == NULL)
-            return lpcszFolder;
-         psz2 = lpcszRelative;
-         psz2 = NULL;
+         if(str2.is_empty())
+            return strFolder;
+         return path(strFolder, str2);
       }
+      int iFolderBeg = 0;
+      int iFolderEnd = strFolder.get_length() - 1;
+      if(iFolderEnd >= iFolderBeg) 
+      {
+         //strFolder.trim();
+         // passive left trimming
+         while(iFolderBeg <= iFolderEnd && myspace(strFolder.m_pszData[iFolderBeg]))
+            iFolderBeg++;
+         // passive right trimming
+         while(iFolderBeg <= iFolderEnd && myspace(strFolder.m_pszData[iFolderEnd]))
+            iFolderEnd--;
+         //better than following 2 together
+         //gen::str::ends_eat(strFolder, "\\");
+         //gen::str::ends_eat(strFolder, "/");
+         while(iFolderBeg <= iFolderEnd && (strFolder.m_pszData[iFolderEnd] == '/' || strFolder.m_pszData[iFolderEnd] == '\\'))
+            iFolderEnd--;
+      }
+      int iRelativeBeg = 0;
+      int iRelativeEnd = strRelative.get_length() - 1;
+      if(iRelativeEnd >= iRelativeBeg) 
+      {
+         //strFolder.trim();
+         // passive left trimming
+         while(iRelativeBeg <= iRelativeEnd && myspace(strRelative.m_pszData[iRelativeBeg]))
+            iFolderBeg++;
+         // passive right trimming
+         while(iRelativeBeg <= iRelativeEnd && myspace(strRelative.m_pszData[iRelativeEnd]))
+            iFolderEnd--;
+         //better than following 2 together
+         //gen::str::ends_eat(strFolder, "\\");
+         //gen::str::ends_eat(strFolder, "/");
+         while(iRelativeBeg <= iRelativeEnd && (strRelative.m_pszData[iRelativeBeg] == '/' || strRelative.m_pszData[iRelativeBeg] == '\\'))
+            iRelativeBeg++;
+      }
+
       string strPath;
-      string strFolder(lpcszFolder);
-      string strRelative(lpcszRelative);
-      strFolder.trim();
-      gen::str::ends_eat(strFolder, "\\");
-      gen::str::ends_eat(strFolder, "/");
-      gen::str::begins_eat(strRelative, "\\");
-      gen::str::begins_eat(strRelative, "/");
-      if(strFolder.is_empty())
+      if(iFolderBeg > iFolderEnd)
       {
          strPath = strRelative;
       }
-      else if(bUrl)
-      {
-         strPath = strFolder + "/" + strRelative;
-      }
       else
       {
-         strPath = strFolder + "\\" + strRelative;
+         char * psz = strPath.GetBufferSetLength(iRelativeEnd - iRelativeBeg + 1 + iFolderEnd - iFolderBeg + 1 + 1);
+         strncpy(psz, &strFolder.m_pszData[iFolderBeg], iFolderEnd - iFolderBeg + 1);
+         if(bUrl)
+         {
+            psz[iFolderEnd - iFolderBeg + 1] = '/';
+         }
+         else
+         {
+            psz[iFolderEnd - iFolderBeg + 1] = '\\';
+         }
+         strncpy(&psz[iFolderEnd - iFolderBeg + 2], &strRelative.m_pszData[iRelativeBeg], iRelativeEnd - iRelativeBeg + 1);
+         strPath.ReleaseBuffer(iRelativeEnd - iRelativeBeg + 1 + iFolderEnd - iFolderBeg + 1 + 1);
       }
-      if(psz2 != NULL)
+      
+      if(str2.has_char())
       {
-         strPath = path(strPath, psz2);
+         int iBeg2 = 0;
+         int iEnd2 = str2.get_length() - 1;
+         if(iEnd2 >= iBeg2) 
+         {
+            //strFolder.trim();
+            // passive left trimming
+            while(iBeg2 <= iEnd2 && myspace(str2.m_pszData[iBeg2]))
+               iBeg2++;
+            // passive right trimming
+            while(iBeg2 <= iEnd2 && myspace(str2.m_pszData[iEnd2]))
+               iEnd2--;
+            //better than following 2 together
+            //gen::str::ends_eat(strFolder, "\\");
+            //gen::str::ends_eat(strFolder, "/");
+            while(iBeg2 <= iEnd2 && (str2[iBeg2] == '/' || str2[iBeg2] == '\\'))
+               iBeg2++;
+         }
+         if(strPath.has_char())
+         {
+            int iPathBeg = 0;
+            int iPathEnd = strPath.get_length() - 1;
+            if(iPathEnd >= iPathBeg) 
+            {
+               //better than following 2 together
+               //gen::str::ends_eat(strFolder, "\\");
+               //gen::str::ends_eat(strFolder, "/");
+               while(iPathBeg <= iPathEnd && (strPath.m_pszData[iPathEnd] == '/' || strPath.m_pszData[iPathEnd] == '\\'))
+                  iPathEnd--;
+            }
+            char * psz = strPath.GetBufferSetLength(iEnd2 - iBeg2 + 1 + iPathEnd - iPathBeg + 1 + 1);
+            if(bUrl)
+            {
+               psz[iPathEnd - iPathBeg + 1] = '/';
+            }
+            else
+            {
+               psz[iPathEnd - iPathBeg + 1] = '\\';
+            }
+            strncpy(&psz[iPathEnd - iPathBeg + 2], &str2.m_pszData[iBeg2], iEnd2 - iBeg2 + 1);
+            strPath.ReleaseBuffer(iEnd2 - iBeg2 + 1 + iPathEnd - iPathBeg + 1 + 1);
+         }
+         else
+         {
+            char * psz = strPath.GetBufferSetLength(iEnd2 - iBeg2 + 1);
+            strncpy(psz, &str2.m_pszData[iBeg2], iEnd2 - iBeg2 + 1);
+            strPath.ReleaseBuffer(iEnd2 - iBeg2 + 1);
+         }
       }
    
-      if(bUrl)
+
       {
-         strPath.replace("\\", "/");
+         char * psz = (char *) (const char*)strPath;
+         if(bUrl)
+         {
+            while(*psz++ != '\0')
+               if(*psz == '\\') *psz = '/';
+         }
+         else
+         {
+            while(*psz++ != '\0')
+               if(*psz == '/') *psz = '\\';
+         }
       }
-      else
-      {
-         strPath.replace("/", "\\");
-      }
+
       return strPath;
    }
+
+
 
    string dir::relpath(const char * lpcszSource, const char * lpcszRelative, const char * psz2)
    {
@@ -100,7 +209,7 @@ namespace win
       {
          if(gen::str::begins(lpcszRelative, "/"))
          {
-            return path(string(lpcszSource, pszRequest - lpcszSource), lpcszRelative);
+            return path((const char *) string(lpcszSource, pszRequest - lpcszSource), lpcszRelative);
          }
          else if(*pszRequest == '\0' || gen::str::ends(lpcszSource, "/"))
          {
@@ -108,7 +217,7 @@ namespace win
          }
          else
          {
-            return path(name(lpcszSource), lpcszRelative, psz2);
+            return path((const char *) name(lpcszSource), lpcszRelative, psz2);
          }
       }
       else
@@ -119,7 +228,7 @@ namespace win
          }
          else
          {
-            return path(name(lpcszSource), lpcszRelative, psz2);
+            return path((const char *) name(lpcszSource), lpcszRelative, psz2);
          }
       }
    }
@@ -445,6 +554,90 @@ namespace win
       return bIsDir;
    }
 
+   bool dir::name_is(const string & str, ::ca::application * papp)
+   {
+      
+      int iLast = str.get_length() - 1;
+      while(iLast >= 0)
+      {
+         if(str.m_pszData[iLast] != '\\' && str.m_pszData[iLast] != '/' && str.m_pszData[iLast] != ':')
+            break;
+         iLast--;
+      }
+      while(iLast >= 0)
+      {
+         if(str.m_pszData[iLast] == '\\' || str.m_pszData[iLast] == '/' || str.m_pszData[iLast] == ':')
+            break;
+         iLast--;
+      }
+      if(iLast >= 0)
+      {
+         while(iLast >= 0)
+         {
+            if(str.m_pszData[iLast] != '\\' && str.m_pszData[iLast] != '/' && str.m_pszData[iLast] != ':')
+            {
+               iLast++;
+               break;
+            }
+            iLast--;
+         }
+      }
+      else
+      {
+         return true; // assume empty string is root_ones directory
+      }
+
+
+      if(papp->m_bZipIsDir && iLast >= 3  && !strnicmp_dup(&((const char *) str)[iLast - 3], ".zip", 4))
+      {
+         m_isdirmap.set(str.Left(iLast + 1), true);
+         return true;
+      }
+      int iFind = gen::str::find_ci(".zip:", str);
+      if(papp->m_bZipIsDir && iFind >= 0 && iFind < iLast)
+      {
+         bool bHasSubFolder;
+         if(m_isdirmap.lookup(str, bHasSubFolder))
+            return bHasSubFolder;
+         bHasSubFolder = m_pziputil->HasSubFolder(papp, str);
+         m_isdirmap.set(str.Left(iLast + 1), bHasSubFolder);
+         return bHasSubFolder;
+      }
+
+      bool bIsDir;
+
+      if(m_isdirmap.lookup(str, bIsDir))
+         return bIsDir;
+
+      wstring wstrPath;
+      
+      int iLen = ::gen::international::utf8_to_unicode_count(str, iLast + 1);
+      wstrPath.alloc(iLen + 32);
+      ::gen::international::utf8_to_unicode(wstrPath, iLen + 32, str, iLast + 1);
+      if(wstrPath.get_length() >= MAX_PATH)
+      {
+         if(::gen::str::begins(wstrPath, L"\\\\"))
+         {
+            ::gen::str::begin(wstrPath, L"\\\\?\\UNC");
+         }
+         else
+         {
+            ::gen::str::begin(wstrPath, L"\\\\?\\");
+         }
+      }
+      DWORD dwAttrib;
+      dwAttrib = GetFileAttributesW(wstrPath);
+      /*if(dwAttrib == INVALID_FILE_ATTRIBUTES)
+      {
+         dwAttrib = GetFileAttributes(strPath);
+      }*/
+      
+      bIsDir = (dwAttrib != INVALID_FILE_ATTRIBUTES) && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY);
+      
+      m_isdirmap.set(str.Left(iLast + 1), bIsDir);
+
+      return bIsDir;
+   }
 
    string dir::votagus(const char * lpcsz, const char * lpcsz2)
    {
@@ -476,10 +669,58 @@ namespace win
    // stage in ccvotagus spalib
    string dir::ca2(const char * lpcsz, const char * lpcsz2)
    {
-      string str = ca2module();
-      System.file().path().eat_end_level(str, 2, "\\");
-      return dir::path(str, lpcsz, lpcsz2);
+      
+      single_lock sl(&m_mutex, true);
+
+      return dir::path(m_strCa2, lpcsz, lpcsz2);
+
    }
+
+   string dir::ca2(const string & str, const char * lpcsz2)
+   {
+      
+      single_lock sl(&m_mutex, true);
+
+      return dir::path(m_strCa2, str, lpcsz2);
+
+   }
+
+   string dir::ca2(const char * lpcsz, const string & str2)
+   {
+      
+      single_lock sl(&m_mutex, true);
+
+      return dir::path(m_strCa2, lpcsz, str2);
+
+   }
+
+   string dir::ca2(const string & str, const string & str2)
+   {
+      
+      single_lock sl(&m_mutex, true);
+
+      return dir::path(m_strCa2, str, str2);
+
+   }
+
+   string dir::ca2(const string & str)
+   {
+      
+      single_lock sl(&m_mutex, true);
+
+      return dir::path(m_strCa2, str);
+
+   }
+
+   string dir::ca2()
+   {
+      
+      single_lock sl(&m_mutex, true);
+
+      return m_strCa2;
+
+   }
+
 
    string dir::module(const char * lpcsz, const char * lpcsz2)
    {
@@ -571,20 +812,18 @@ namespace win
 
    string dir::name(const char * path1)
    {
-      const char * psz = path1 + strlen(path1);
-      string strChar;
-      ::gen::utf8_char ch;
-      while((psz = gen::str::utf8_dec(&ch, path1, psz)) != NULL)
-         if(ch.m_chLen == 1 && ch.m_sz[0] != '\\' && ch.m_sz[0] != '/' && ch.m_sz[0] != ':')
+      const char * psz = path1 + strlen(path1) - 1;
+      while(psz-- >= path1)
+         if(*psz != '\\' && *psz != '/' && *psz != ':')
             break;
-      while((psz = gen::str::utf8_dec(&ch, path1, psz)) != NULL)
-         if(ch.m_chLen == 1 && (ch.m_sz[0] == '\\' || ch.m_sz[0] == '/' || ch.m_sz[0] == ':'))
+      while(psz-- >= path1)
+         if(*psz == '\\' || *psz == '/' || *psz == ':')
             break;
-      if(psz != NULL) // strChar == "\\" || strChar == "/"
+      if(psz >= path1) // strChar == "\\" || strChar == "/"
       {
          const char * pszEnd = psz;
-         while((psz = gen::str::utf8_dec(&ch, path1, psz)) != NULL)
-            if(ch.m_chLen == 1 && ch.m_sz[0] != '\\' && ch.m_sz[0] != '/' && ch.m_sz[0] != ':')
+         while(psz-- >= path1)
+            if(*psz != '\\' && *psz != '/' && *psz != ':')
                break;
          return string(path1, pszEnd - path1 + 1);
       }
@@ -594,130 +833,102 @@ namespace win
       }
    }
 
-   string dir::locale_style(::ca::application * papp, const char * pszLocale, const char * pszStyle)
+   string dir::name(const string & str)
    {
-      return App(papp).get_locale_style_dir(pszLocale, pszStyle);
-   }
-
-   string dir::locale_style_matter(::ca::application * papp, const char * pszLocale, const char * pszStyle)
-   {
-      string strRoot;
-      string strDomain;
-      if(papp->is_system())
+      int iLast = str.get_length() - 1;
+      while(iLast >= 0)
       {
-         strRoot     = "app";
-         strDomain   = "main";
+         if(str.m_pszData[iLast] != '\\' && str.m_pszData[iLast] != '/' && str.m_pszData[iLast] != ':')
+            break;
+         iLast--;
       }
-      else if(papp->is_bergedge())
+      while(iLast >= 0)
       {
-         strRoot     = "app";
-         strDomain   = "bergedge";
+         if(str.m_pszData[iLast] == '\\' || str.m_pszData[iLast] == '/' || str.m_pszData[iLast] == ':')
+            break;
+         iLast--;
+      }
+      if(iLast >= 0)
+      {
+         while(iLast >= 0)
+         {
+            if(str.m_pszData[iLast] != '\\' && str.m_pszData[iLast] != '/' && str.m_pszData[iLast] != ':')
+               break;
+            iLast--;
+         }
+         return str.Left(iLast + 1);
       }
       else
       {
-         string strLibraryRoot;
-         string strLibraryName;
-         if(App(papp).m_strLibraryName.has_char() && App(papp).m_strLibraryName != "app_" + App(papp).m_strAppName
-            && gen::str::begins_ci(App(papp).m_strLibraryName, "app_") && App(papp).m_strLibraryName.find("_", strlen("app_")) > 4)
-         {
-            stringa stra2;
-            stra2.add_tokens(App(papp).m_strLibraryName, "_", FALSE);
-            strLibraryRoot = stra2[1];
-            strLibraryName = stra2.implode("_", 2);
-         }
-         else
-         {
-            strLibraryName = App(papp).m_strLibraryName;
-         }
-
-         stringa stra;
-         stra.add_tokens(App(papp).m_strAppName, "_", FALSE);
-         for(int i = 1; i < stra.get_upper_bound(); i++)
-         {
-            stra[i] == "_" + stra[i];
-         }
-         if(stra.get_size() > 1)
-         {
-            if(strLibraryRoot.has_char())
-            {
-               strRoot = "app-" + strLibraryRoot;
-            }
-            else
-            {
-               strRoot = "app-" + stra[0];
-            }
-            stra.remove_at(0);
-            if(strLibraryName.has_char() && strLibraryName != "app_" + App(papp).m_strAppName)
-            {
-               stra.insert_at(stra.get_upper_bound(), strLibraryName);
-            }
-            strDomain += stra.implode("/");
-         }
-         else
-         {
-            if(strLibraryRoot.has_char())
-            {
-               strRoot = "app-" + strLibraryRoot;
-            }
-            else
-            {
-               strRoot = "app";
-            }
-            if(strLibraryName.has_char() && strLibraryName != "app_" + App(papp).m_strAppName)
-            {
-               strDomain = strLibraryName + "/";
-            }
-            strDomain += App(papp).m_strAppName;
-         }
+         return "";
       }
-      return ca2(path(strRoot, "appmatter", strDomain), App(papp).get_locale_style_dir(pszLocale, pszStyle));
    }
 
-   string dir::matter(::ca::application * papp, const char * psz, const char * psz2)
+   string dir::locale_style(::ca::application * papp, const string & strLocale, const string & strStyle)
    {
+      return papp->m_pappThis->get_locale_style_dir(strLocale, strStyle);
+   }
+
+   string dir::locale_style_matter(::ca::application * papp, const string & strLocale, const string & strStyle)
+   {
+      
+      single_lock sl(&papp->m_pappThis->m_mutexMatter, true);
+
+      return path(papp->m_pappThis->m_strLocaleStyleMatter, papp->m_pappThis->get_locale_style_dir(strLocale, strStyle));
+
+   }
+
+   string dir::matter(::ca::application * papp, const string & str, const string & str2)
+   {
+      static const string strEn("en");
+      static const string strStd("_std");
+      static const string strEmpty("");
       string strPath;
-      strPath = path(locale_style_matter(papp), psz, psz2);
+      string strLs = locale_style_matter(papp, strEmpty, strEmpty);
+      strPath = path(strLs, str, str2);
       if(System.file().exists(strPath, papp))
          return strPath;
-      strPath = path(locale_style_matter(papp, "en"), psz, psz2);
+      strLs = locale_style_matter(papp, strEn, strEmpty);
+      strPath = path(strLs, str, str2);
       if(System.file().exists(strPath, papp))
          return strPath;
-      strPath = path(locale_style_matter(papp, "_std"), psz, psz2);
+      strPath = path(locale_style_matter(papp, strStd, strEmpty), str, str2);
       if(System.file().exists(strPath, papp))
          return strPath;
-      strPath = path(locale_style_matter(papp, NULL, App(papp).get_locale()), psz, psz2);
+      strPath = path(locale_style_matter(papp, strEmpty, App(papp).get_locale()), str, str2);
       if(System.file().exists(strPath, papp))
          return strPath;
-      strPath = path(locale_style_matter(papp, NULL, "en"), psz, psz2);
+      strPath = path(locale_style_matter(papp, strEmpty, strEn), str, str2);
       if(System.file().exists(strPath, papp))
          return strPath;
-      strPath = path(locale_style_matter(papp, NULL, "_std"), psz, psz2);
+      strPath = path(locale_style_matter(papp, strEmpty, strStd), str, str2);
       if(System.file().exists(strPath, papp))
          return strPath;
-      strPath = path(locale_style_matter(papp, "en", "en"), psz, psz2);
+      strLs = locale_style_matter(papp, strEn, strEn);
+      strPath = path(strLs, str, str2);
       if(System.file().exists(strPath, papp))
          return strPath;
-      strPath = path(locale_style_matter(papp, "_std", "_std"), psz, psz2);
+      strPath = path(locale_style_matter(papp, strStd, strStd), str, str2);
       if(System.file().exists(strPath, papp))
          return strPath;
-      strPath = path(locale_style_matter(papp, "se", "se"), psz, psz2);
+      strPath = path(locale_style_matter(papp, "se", "se"), str, str2);
       if(System.file().exists(strPath, papp))
          return strPath;
       if(papp->m_psession != NULL && papp->m_psession != papp &&
          (::ca::application *) papp->m_psystem != (::ca::application *) papp)
       {
-         strPath = matter(papp->m_psession, psz, psz2);
+         strPath = matter(papp->m_psession, str, str2);
          if(System.file().exists(strPath, papp))
             return strPath;
       }
       if(papp->m_psystem != NULL && papp->m_psystem != papp &&
          (::ca::application *) papp->m_psystem != (::ca::application *) papp->m_psession)
       {
-         strPath = matter(papp->m_psystem, psz, psz2);
+         strPath = matter(papp->m_psystem, str, str2);
          if(System.file().exists(strPath, papp))
             return strPath;
       }
-      return path(locale_style_matter(papp), psz, psz2);
+      return path(locale_style_matter(papp, strEmpty, strEmpty), str, str2);
    }
 
 
@@ -763,7 +974,7 @@ namespace win
          time = time::get_current_time();
          strFormat.Format("%04d-%02d-%02d %02d-%02d-%02d\\", time.GetYear(), time.GetMonth(), time.GetDay(), time.GetHour(), time.GetMinute(), time.GetSecond());
          str += strFormat;
-         if(strDir[2] == '\\')
+         if(strDir.m_pszData[2] == '\\')
          {
             str += strDir.Mid(3);
          }
@@ -840,7 +1051,7 @@ namespace win
 
       if(App(papp).directrix().m_varTopicQuery.has_property("user_folder_relative_path"))
       {
-         strUserFolderShift = path(strRelative, App(papp).directrix().m_varTopicQuery["user_folder_relative_path"]);
+         strUserFolderShift = path(strRelative, App(papp).directrix().m_varTopicQuery["user_folder_relative_path"].get_string());
       }
       else
       {
