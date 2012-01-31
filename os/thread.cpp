@@ -884,10 +884,13 @@ void thread::Delete()
    }
    try
    {
-      ::radix::thread * pthread = dynamic_cast < ::radix::thread * > (m_p);
-      if(pthread->m_peventReady != NULL)
+      if(m_p != NULL)
       {
-         ::SetEvent((HANDLE) pthread->m_peventReady);
+         ::radix::thread * pthread = dynamic_cast < ::radix::thread * > (m_p);
+         if(pthread->m_peventReady != NULL)
+         {
+            ::SetEvent((HANDLE) pthread->m_peventReady);
+         }
       }
    }
    catch(...)
