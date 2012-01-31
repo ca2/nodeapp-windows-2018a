@@ -606,7 +606,7 @@ namespace win
 
       bool bIsDir;
 
-      if(m_isdirmap.lookup(str, bIsDir))
+      if(m_isdirmap.lookup(str, bIsDir, iLast))
          return bIsDir;
 
       wstring wstrPath;
