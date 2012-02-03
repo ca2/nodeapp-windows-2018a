@@ -735,17 +735,6 @@ namespace win
 
    }
 
-   ::user::printer * application::get_printer(const char * pszDeviceName)
-   {
-      return NULL;
-      /*::win::printer * pprinter = new ::win::printer(get_app());
-      if(!pprinter->open(pszDeviceName))
-      {
-         delete pprinter;
-         return NULL;
-      }
-      return pprinter;*/
-   }
 
 
 } // namespace win

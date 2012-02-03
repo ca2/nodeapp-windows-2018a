@@ -206,8 +206,8 @@ namespace win
       virtual void set_env_var(const string & var,const string & value);
       virtual unsigned long application::get_thread_id();
 
-      virtual ::user::printer * get_printer(const char * pszDeviceName);
 
    };
+
 
 } // namespace win

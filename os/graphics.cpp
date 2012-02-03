@@ -1468,7 +1468,7 @@ namespace win
       m_bPrinting       = FALSE;
       m_pdibAlphaBlend  = NULL;
       m_pgraphics       = NULL;
-      m_bHdc            = false;
+      m_hdc             = NULL;
       m_ppath           = NULL;
       m_ppathPaint      = NULL;
 
@@ -1481,7 +1481,7 @@ namespace win
       m_bPrinting    = FALSE;
       m_pgraphics       = NULL;
       m_pgraphics       = NULL;
-      m_bHdc            = false;
+      m_hdc             = NULL;
       m_ppath           = NULL;
       m_ppathPaint      = NULL;
 
@@ -1533,7 +1533,7 @@ namespace win
       if(hdc != NULL)
       {
          m_pgraphics = new ::Gdiplus::Graphics(hdc);
-         m_bHdc = true;
+         m_hdc = hdc;
       }
 
       return m_pgraphics != NULL;
@@ -1558,7 +1558,7 @@ namespace win
    HDC graphics::Detach()
    {
 
-      if(!m_bHdc)
+      if(m_hdc == NULL)
          return NULL;
 
       if(m_pgraphics == NULL)
@@ -2927,9 +2927,7 @@ namespace win
 
    HDC graphics::get_handle() const
    {
-      if(m_pgraphics == NULL || !m_bHdc)
-         return NULL;
-      return m_pgraphics->GetHDC();
+      return m_hdc;
    }
 
    HDC graphics::get_handle1() const

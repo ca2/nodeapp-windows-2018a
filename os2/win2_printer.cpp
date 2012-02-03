@@ -1,8 +1,10 @@
 #include "StdAfx.h"
 #include <WinSpool.h>
 
-namespace win
+
+namespace win2
 {
+
 
    printer::printer(::ca::application * papp) :
       ca(papp),
@@ -59,7 +61,7 @@ namespace win
       close();
    }
 
-   bool printer::document_properties::initialize(::win::printer * pprinter, DEVMODE * pdevmode)
+   bool printer::document_properties::initialize(::win2::printer * pprinter, DEVMODE * pdevmode)
    {
       UNREFERENCED_PARAMETER(pdevmode);
       if(m_pdevmode != NULL)
@@ -101,8 +103,10 @@ namespace win
          return NULL;
       m_hdc = ::CreateDC("WINSPOOL", (LPCSTR) m_pdevmode->dmDeviceName, NULL, m_pdevmode);
       ::ca::graphics_sp g(get_app());
-      g->attach(m_hdc);
+      g->Attach(m_hdc);
       return g.detach();
    }
 
-} // namespace win
+
+} // namespace win2
+

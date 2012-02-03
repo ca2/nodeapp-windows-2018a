@@ -17,9 +17,9 @@ namespace win
 
 
       ::Gdiplus::Graphics *         m_pgraphics;
-      bool                          m_bHdc;
       ::Gdiplus::GraphicsPath *     m_ppath;
       ::Gdiplus::GraphicsPath *     m_ppathPaint;
+      HDC                           m_hdc;
 
 
 

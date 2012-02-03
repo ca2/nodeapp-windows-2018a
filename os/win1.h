@@ -1,7 +1,10 @@
 #pragma once
 
+
 namespace win
 {
+
+
    class thread;
 
    class win
@@ -20,6 +23,7 @@ namespace win
    CLASS_DECL_VMSWIN BOOL        DeleteFile(const char * lpFileName);
    CLASS_DECL_VMSWIN int         GetMenuStringW(HMENU hMenu, UINT uIDItem, string & str, UINT flags);
    CLASS_DECL_VMSWIN void        TimeToFileTime(::ca::application * papp, const class time& time, LPFILETIME pFileTime);
+
 
 } // namespace win
 
