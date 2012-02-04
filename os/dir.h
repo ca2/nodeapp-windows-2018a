@@ -70,10 +70,6 @@ namespace win
       virtual void time_square(string &str);
       virtual string time_log(const char * pszId);
 
-      virtual string locale_style(::ca::application * papp, const string & strLocale, const string & strStyle);
-      virtual string locale_style_matter(::ca::application * papp, const string & strLocale, const string & strStyle);
-      using ::ca::dir::system::matter;
-      virtual string matter(::ca::application * papp, const string & str, const string & str2);
 
       virtual string trash_that_is_not_trash(const char * psz);
 
