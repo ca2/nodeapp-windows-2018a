@@ -157,6 +157,27 @@ BOOL WinFile::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_excepti
    HANDLE hFile = ::CreateFileW(m_wstrFileName, dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
    if (hFile == INVALID_HANDLE_VALUE)
    {
+      DWORD dwLastError = ::GetLastError();
+
+      if(dwLastError != ERROR_FILE_NOT_FOUND && dwLastError != ERROR_PATH_NOT_FOUND)
+      {
+         if (pException != NULL)
+         {
+            pException->create(get_app());
+            ::ex1::file_exception * pfe = dynamic_cast < ::ex1::file_exception * > (pException->m_p);
+            if(pfe != NULL)
+            {
+               pfe->m_lOsError = dwLastError;
+               pfe->m_cause = WinFileException::OsErrorToException(pfe->m_lOsError);
+               pfe->m_strFileName = lpszFileName;
+            }
+            return FALSE;
+         }
+         else
+         {
+            vfxThrowFileException(get_app(), WinFileException::OsErrorToException(dwLastError), dwLastError, m_strFileName);
+         }
+      }
 
       try
       {
