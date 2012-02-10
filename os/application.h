@@ -35,6 +35,7 @@ namespace win
    public:
 
 
+
       USHORT               m_atomApp;
       USHORT               m_atomSystemTopic;
 

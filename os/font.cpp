@@ -234,12 +234,15 @@ namespace win
             unit = Gdiplus::UnitPoint;
             break;
          };
+         
+         single_lock slGdiplus(&System.m_mutexGdiplus, TRUE);
 
          ((font *) this)->m_pfont = new Gdiplus::Font(
                gen::international::utf8_to_unicode(m_strFontFamilyName),
                m_dFontSize,
                iStyle,
                unit);
+
       }
 
 
