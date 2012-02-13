@@ -813,18 +813,27 @@ namespace win
    string dir::name(const char * path1)
    {
       const char * psz = path1 + strlen(path1) - 1;
-      while(psz-- >= path1)
+      while(psz >= path1)
+      {
          if(*psz != '\\' && *psz != '/' && *psz != ':')
             break;
-      while(psz-- >= path1)
+         psz--;
+      }
+      while(psz >= path1)
+      {
          if(*psz == '\\' || *psz == '/' || *psz == ':')
             break;
+         psz--;
+      }
       if(psz >= path1) // strChar == "\\" || strChar == "/"
       {
          const char * pszEnd = psz;
-         while(psz-- >= path1)
+         /*while(psz >= path1)
+         {
             if(*psz != '\\' && *psz != '/' && *psz != ':')
                break;
+            psz--;
+         }*/
          return string(path1, pszEnd - path1 + 1);
       }
       else
