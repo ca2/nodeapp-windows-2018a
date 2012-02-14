@@ -5431,10 +5431,20 @@ int window::GetCheckedRadioButton(int nIDFirstButton, int nIDLastButton)
 //         TRACE(::radix::trace::category_AppMsg, 0, "Warning: Uncaught exception in message_handler (returning %ld).\n", spbase->get_lresult());
          pe->Delete();
       }
-   run:
-      pThreadState->m_lastSentMsg = oldState;
-      LRESULT lresult = spbase->get_lresult();
-      return lresult;
+      catch(...)
+      {
+      }
+run:
+      try
+      {
+         pThreadState->m_lastSentMsg = oldState;
+         LRESULT lresult = spbase->get_lresult();
+         return lresult;
+      }
+      catch(...)
+      {
+         return 0;
+      }
    }
 
 

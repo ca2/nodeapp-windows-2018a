@@ -1537,6 +1537,10 @@ stop_run:
                return TRUE;
          return FALSE;
       }
+      catch(...)
+      {
+         return FALSE;
+      }
    }
 
 
