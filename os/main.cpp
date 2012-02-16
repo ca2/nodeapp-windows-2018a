@@ -137,6 +137,9 @@ int CLASS_DECL_VMSWIN ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, con
       ::plane::system * psystem = new ::plane::system();
 
 
+      Sleep(30 * 1000);
+
+
       ASSERT(hPrevInstance == NULL);
 
       int nReturnCode = 0;
