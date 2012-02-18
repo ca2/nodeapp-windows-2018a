@@ -235,7 +235,7 @@ namespace win
             break;
          };
          
-         single_lock slGdiplus(&System.m_mutexGdiplus, TRUE);
+         retry_single_lock slGdiplus(&System.m_mutexGdiplus, millis(84), millis(84));
 
          ((font *) this)->m_pfont = new Gdiplus::Font(
                gen::international::utf8_to_unicode(m_strFontFamilyName),
