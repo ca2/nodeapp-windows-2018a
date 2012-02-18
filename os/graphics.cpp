@@ -2578,11 +2578,18 @@ namespace win
       }
       return size;*/
 
+      if(m_pgraphics == NULL)
+         return size(0, 0);
+
       wstring wstr = gen::international::utf8_to_unicode(str);
 
       Gdiplus::RectF box;
 
       Gdiplus::PointF origin(0, 0);
+
+
+      if(m_pgraphics == NULL)
+         return size(0, 0);
 
       try
       {
