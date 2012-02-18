@@ -731,6 +731,9 @@ namespace win
       lpMetrics->tmAscent = rect.Height;
       lpMetrics->tmDescent = rect2.Height - rect.Height;*/
 
+
+      single_lock slGdiplus(&System.m_mutexGdiplus, TRUE);
+
       Gdiplus::FontFamily family;
 
       ((graphics * )this)->gdiplus_font()->GetFamily(&family);
@@ -2538,6 +2541,8 @@ namespace win
 
    size graphics::GetTextExtent(const char * lpszString, int nCount) const
    {
+
+      single_lock slGdiplus(&System.m_mutexGdiplus, TRUE);
 
       wstring wstr = gen::international::utf8_to_unicode(lpszString, nCount);
 
