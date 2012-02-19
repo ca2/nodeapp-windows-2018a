@@ -30,6 +30,10 @@ int CLASS_DECL_VMSWIN AfxWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, L
    UNREFERENCED_PARAMETER(lpCmdLine);
 
 
+   if(!os_initialize())
+      return -1;
+
+
    _set_purecall_handler(_ca2_purecall);
 
    ::plane::system * psystem = new ::plane::system();
@@ -53,6 +57,9 @@ int CLASS_DECL_VMSWIN AfxWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, L
 
    nReturnCode = psystem->main();
 
+
+   if(!os_finalize())
+      return -1;
 
    try
    {

@@ -194,7 +194,14 @@ namespace win
       {
          if(m_pfont != NULL)
          {
-            delete m_pfont;
+            try
+            {
+               delete ((font *) this)->m_pfont;
+            }
+            catch(...)
+            {
+            }
+            ((font *) this)->m_pfont = NULL;
          }
 
 

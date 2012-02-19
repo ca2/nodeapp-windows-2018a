@@ -532,14 +532,23 @@ namespace win
    BOOL graphics::BitBlt(int x, int y, int nWidth, int nHeight, ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc, DWORD dwRop)
    { 
       
-      if(pgraphicsSrc == NULL)
-         return FALSE;
 
       try
       {
+
+         if(pgraphicsSrc == NULL)
+            return FALSE;
+
+         if(&pgraphicsSrc->GetCurrentBitmap() == NULL)
+            return FALSE;
+
+         if(pgraphicsSrc->GetCurrentBitmap().get_os_data() == NULL)
+            return FALSE;
+
          return m_pgraphics->DrawImage(
             (Gdiplus::Bitmap *) pgraphicsSrc->GetCurrentBitmap().get_os_data(),
             x, y , xSrc, ySrc, nWidth, nHeight, Gdiplus::UnitPixel) == Gdiplus::Status::Ok;
+
       }
       catch(...)
       {
