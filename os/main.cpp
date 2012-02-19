@@ -30,8 +30,8 @@ int CLASS_DECL_VMSWIN AfxWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, L
    UNREFERENCED_PARAMETER(lpCmdLine);
 
 
-   //if(!os_initialize())
-     // return -1;
+   if(!main_initialize())
+      return -1;
 
 
    _set_purecall_handler(_ca2_purecall);
@@ -58,8 +58,13 @@ int CLASS_DECL_VMSWIN AfxWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, L
    nReturnCode = psystem->main();
 
 
-   //if(!os_finalize())
-     // return -1;
+   try
+   {
+      main_finalize();
+   }
+   catch(...)
+   {
+   }
 
    try
    {
