@@ -4527,6 +4527,8 @@ ExitModal:
       }
       else
       {
+         if(((Gdiplus::Graphics *)(dynamic_cast<::win::graphics * >(pgraphics))->get_os_data()) == NULL)
+            return -1;
          ::ReleaseDC(get_handle(), ((Gdiplus::Graphics *)(dynamic_cast<::win::graphics * >(pgraphics))->get_os_data())->GetHDC()); 
          pgraphics->release();
       }

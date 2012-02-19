@@ -338,11 +338,29 @@ namespace win
 
    BOOL graphics::DrawIcon(int x, int y, ::visual::icon * picon, int cx, int cy, UINT istepIfAniCur, HBRUSH hbrFlickerFreeDraw, UINT diFlags)
    { 
-      if(picon == NULL)
+
+      try
+      {
+      
+         if(picon == NULL)
+            return FALSE;
+
+         if(m_pgraphics == NULL)
+            return FALSE;
+
+         Gdiplus::Bitmap b(picon->m_hicon);
+      
+         m_pgraphics->DrawImage(&b, x, y, 0, 0, cx, cy, Gdiplus::UnitPixel);
+
+
+      }
+      catch(...)
+      {
          return FALSE;
-      Gdiplus::Bitmap b(picon->m_hicon);
-      m_pgraphics->DrawImage(&b, x, y, 0, 0, cx, cy, Gdiplus::UnitPixel);
+      }
+
       //return ::DrawIconEx(get_handle1(), x, y, picon->m_hicon, cx, cy, istepIfAniCur, hbrFlickerFreeDraw, diFlags); 
+
    }
 
    BOOL graphics::DrawState(point pt, size size, HBITMAP hBitmap, UINT nFlags, HBRUSH hBrush)
@@ -744,6 +762,10 @@ namespace win
       single_lock slGdiplus(&System.m_mutexGdiplus, TRUE);
 
       Gdiplus::FontFamily family;
+
+
+      if(((graphics * )this)->gdiplus_font() == NULL)
+         return FALSE;
 
       ((graphics * )this)->gdiplus_font()->GetFamily(&family);
 
@@ -2826,9 +2848,22 @@ namespace win
       //g().SetCompositingMode(Gdiplus::CompositingModeSourceOver);
       //g().SetCompositingQuality(Gdiplus::CompositingQualityGammaCorrected);
 
-      set_color(clr);
 
-      m_pgraphics->FillRectangle(gdiplus_brush(), x, y, cx, cy);
+      try
+      {
+
+         if(m_pgraphics == NULL)
+            return;
+
+         set_color(clr);
+
+         m_pgraphics->FillRectangle(gdiplus_brush(), x, y, cx, cy);
+
+      }
+      catch(...)
+      {
+         return;
+      }
 
    }
 
@@ -2928,15 +2963,27 @@ namespace win
 
    void graphics::set_alpha_mode(::ca::e_alpha_mode ealphamode)
    {
-      
-      ::ca::graphics::set_alpha_mode(ealphamode);
-      if(m_ealphamode == ::ca::alpha_mode_blend)
+
+      try
       {
-         m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
+
+         if(m_pgraphics == NULL)
+            return;
+
+         ::ca::graphics::set_alpha_mode(ealphamode);
+         if(m_ealphamode == ::ca::alpha_mode_blend)
+         {
+            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
+         }
+         else if(m_ealphamode == ::ca::alpha_mode_set)
+         {
+            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceCopy);
+         }
+
       }
-      else if(m_ealphamode == ::ca::alpha_mode_set)
+      catch(...)
       {
-         m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceCopy);
+         return;
       }
 
    }
