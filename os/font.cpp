@@ -246,7 +246,7 @@ namespace win
 
          ((font *) this)->m_pfont = new Gdiplus::Font(
                gen::international::utf8_to_unicode(m_strFontFamilyName),
-               m_dFontSize,
+               (Gdiplus::REAL) m_dFontSize,
                iStyle,
                unit);
 

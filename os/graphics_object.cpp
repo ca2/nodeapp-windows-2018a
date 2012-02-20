@@ -161,7 +161,7 @@ namespace win
 
 } // namespace win
 
-hgdiobj_map * PASCAL afxMapHGDIOBJ(BOOL bCreate)
+/*hgdiobj_map * PASCAL afxMapHGDIOBJ(BOOL bCreate)
 {
    UNREFERENCED_PARAMETER(bCreate);
    try
@@ -177,3 +177,4 @@ hgdiobj_map * PASCAL afxMapHGDIOBJ(BOOL bCreate)
    }
 
 }
+*/

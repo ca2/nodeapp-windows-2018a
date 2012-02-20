@@ -21,12 +21,15 @@
 
 void CLASS_DECL_VMSWIN AfxUnregisterWndClasses()
 {
+   
    // unregister Window classes
    AFX_MODULE_STATE* pModuleState = AfxGetModuleState();
+
    AfxLockGlobals(CRIT_REGCLASSLIST);
+
    if(pModuleState->m_pstrUnregisterList != NULL) 
    {
-      int start = 0;
+      strsize start = 0;
       string className = pModuleState->m_pstrUnregisterList->Tokenize("\n",start);
       while (!className.is_empty())
       {

@@ -193,7 +193,9 @@ namespace win
 
    bool dib::to(::ca::graphics * pgraphics, point pt, class size size, point ptSrc)
    {
-      return pgraphics->BitBlt(pt.x, pt.y, size.cx, size.cy, get_graphics(), ptSrc.x, ptSrc.y, SRCCOPY);
+
+      return pgraphics->BitBlt(pt.x, pt.y, size.cx, size.cy, get_graphics(), ptSrc.x, ptSrc.y, SRCCOPY) != FALSE;
+
     /*  return SetDIBitsToDevice(
          (dynamic_cast<::win::graphics * >(pgraphics))->get_handle1(), 
          pt.x, pt.y, 
@@ -201,6 +203,7 @@ namespace win
          ptSrc.x, ptSrc.y, ptSrc.y, m_size.cy - ptSrc.y, 
          m_pcolorref, &m_info, 0)
             != FALSE; */
+
    }
 
    bool dib::from(::ca::graphics * pdc)
@@ -2347,8 +2350,10 @@ namespace win
 
    void dib::stretch_dib(::ca::dib * pdib)
    {
-      Gdiplus::RectF rectDest(0, 0, width(), height());
-      Gdiplus::RectF rectSource(0, 0, pdib->width(), pdib->height());
+
+      Gdiplus::RectF rectDest(0, 0, (Gdiplus::REAL) width(), (Gdiplus::REAL) height());
+
+      Gdiplus::RectF rectSource(0, 0, (Gdiplus::REAL) pdib->width(), (Gdiplus::REAL) pdib->height());
 
       ((Gdiplus::Graphics * ) m_spgraphics->get_os_data())->DrawImage(((Gdiplus::Bitmap *)pdib->get_bitmap()->get_os_data()), rectDest, rectSource, Gdiplus::UnitPixel);
 
@@ -2363,6 +2368,7 @@ namespace win
          &WIN_DIB(pdib)->m_info,
          DIB_RGB_COLORS,
          SRCCOPY);*/
+
    }
 
    ::ca::graphics * dib::get_graphics()
@@ -2502,7 +2508,7 @@ namespace win
          return false;
       }
 
-      memcpy(m_pcolorref, pcolorref, area() * sizeof(COLORREF));
+      memcpy(m_pcolorref, pcolorref, (size_t) (area() * sizeof(COLORREF)));
 
 
       RGBQUAD bkcolor;

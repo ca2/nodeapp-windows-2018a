@@ -3774,7 +3774,7 @@ ExitModal:
       ASSERT(::IsWindow(get_handle()));
 
       // this result will be returned from window::RunModalLoop
-      m_nModalResult = nResult;
+      m_nModalResult = (int) nResult;
 
       // make sure a message goes through to exit the modal loop
       if(m_iModalCount > 0)
@@ -4753,8 +4753,16 @@ int window::GetCheckedRadioButton(int nIDFirstButton, int nIDLastButton)
       { ASSERT(::IsWindow(get_handle())); return ::DlgDirSelectEx(get_handle(), lpString, nSize, nIDListBox); }
     BOOL window::DlgDirSelectComboBox(LPTSTR lpString, int nSize, int nIDComboBox)
       { ASSERT(::IsWindow(get_handle())); return ::DlgDirSelectComboBoxEx(get_handle(), lpString, nSize, nIDComboBox);}
+    
     void window::GetDlgItem(id id, HWND* phWnd) const
-      { ASSERT(::IsWindow(get_handle())); ASSERT(phWnd != NULL); *phWnd = ::GetDlgItem(get_handle(), id); }
+    {
+       
+       ASSERT(::IsWindow(get_handle())); 
+       ASSERT(phWnd != NULL); 
+       *phWnd = ::GetDlgItem(get_handle(), (int) id);
+
+    }
+
     UINT window::GetDlgItemInt(int nID, BOOL* lpTrans,
          BOOL bSigned) const
       { ASSERT(::IsWindow(get_handle())); return ::GetDlgItemInt(get_handle(), nID, lpTrans, bSigned);}

@@ -347,7 +347,7 @@ namespace win
          }
          else if((1000 / m_iFramesPerSecond) > m_dwLastDelay)
          {
-            Sleep(max(iUiDataWriteWindowTimeForTheApplicationInThisMachine, (1000 / m_iFramesPerSecond) - m_dwLastDelay));
+            Sleep(max((DWORD) max(0, iUiDataWriteWindowTimeForTheApplicationInThisMachine), (1000 / m_iFramesPerSecond) - m_dwLastDelay));
          }
          else
          {
@@ -1239,11 +1239,11 @@ namespace win
             {
                HWND hwndZOrder = (HWND) pwnd->m_pguie->oprop("pending_zorder").get_integer();
                ::SetWindowPos(hwndParam, HWND_TOPMOST, 
-                  rectWindow.left, rectWindow.top, rectWindow.width(), rectWindow.height(), SWP_SHOWWINDOW);
+                  (int) rectWindow.left, (int) rectWindow.top, (int) rectWindow.width(), (int) rectWindow.height(), SWP_SHOWWINDOW);
                ::SetWindowPos(hwndParam, HWND_NOTOPMOST, 
-                  rectWindow.left, rectWindow.top, rectWindow.width(), rectWindow.height(), SWP_SHOWWINDOW);
+                  (int) rectWindow.left, (int) rectWindow.top, (int) rectWindow.width(), (int) rectWindow.height(), SWP_SHOWWINDOW);
                ::SetWindowPos(hwndParam, hwndZOrder, 
-                  rectWindow.left, rectWindow.top, rectWindow.width(), rectWindow.height(), SWP_SHOWWINDOW | SWP_FRAMECHANGED);
+                  (int) rectWindow.left, (int) rectWindow.top, (int) rectWindow.width(), (int) rectWindow.height(), SWP_SHOWWINDOW | SWP_FRAMECHANGED);
                /*simple_frame_window * pframe = dynamic_cast < simple_frame_window * > (pwnd->m_pguie);
                if(pframe != NULL)
                {
@@ -1253,7 +1253,7 @@ namespace win
             }
             else
             {
-               ::SetWindowPos(hwndParam, NULL, rectWindow.left, rectWindow.top, rectWindow.width(), rectWindow.height(), SWP_SHOWWINDOW);
+               ::SetWindowPos(hwndParam, NULL, (int) rectWindow.left, (int) rectWindow.top, (int) rectWindow.width(), (int) rectWindow.height(), SWP_SHOWWINDOW);
             }
          }
 

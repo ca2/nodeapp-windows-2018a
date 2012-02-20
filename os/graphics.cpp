@@ -199,7 +199,7 @@ namespace win
 
       m.TransformPoints(&origin);
 
-      return point(origin.X, origin.Y);
+      return point((int64_t) origin.X, (int64_t) origin.Y);
    }
 
    size graphics::GetViewportExt() const
@@ -295,7 +295,7 @@ namespace win
    BOOL graphics::Arc(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4)
    { 
 
-      ::Gdiplus::RectF rectf(x1, y1, x2, y2);
+      ::Gdiplus::RectF rectf((Gdiplus::REAL) x1, (Gdiplus::REAL) y1, (Gdiplus::REAL) x2, (Gdiplus::REAL) y2);
 
       double centerx    = (x2 + x1) / 2.0;
       double centery    = (y2 + y1) / 2.0;
@@ -304,7 +304,7 @@ namespace win
       double end        = atan2(y4 - centery, x4 - centerx);
 
    
-      return m_pgraphics->DrawArc(gdiplus_pen(), rectf, start, end) == Gdiplus::Status::Ok;
+      return m_pgraphics->DrawArc(gdiplus_pen(), rectf, (Gdiplus::REAL) start, (Gdiplus::REAL) end) == Gdiplus::Status::Ok;
       
    }
    BOOL graphics::Arc(LPCRECT lpRect, POINT ptStart, POINT ptEnd)
@@ -350,7 +350,7 @@ namespace win
 
          Gdiplus::Bitmap b(picon->m_hicon);
       
-         m_pgraphics->DrawImage(&b, x, y, 0, 0, cx, cy, Gdiplus::UnitPixel);
+         return m_pgraphics->DrawImage(&b, x, y, 0, 0, cx, cy, Gdiplus::UnitPixel) == Gdiplus::Ok;
 
 
       }
@@ -486,7 +486,7 @@ namespace win
    BOOL graphics::Rectangle(int x1, int y1, int x2, int y2)
    { 
       
-      Gdiplus::RectF rectf(x1, y1, x2 - x1, y2 - y1);
+      Gdiplus::RectF rectf((Gdiplus::REAL) x1, (Gdiplus::REAL) y1, (Gdiplus::REAL) (x2 - x1), (Gdiplus::REAL) (y2 - y1));
 
       BOOL bOk1 = m_pgraphics->FillRectangle(gdiplus_brush(), rectf) == Gdiplus::Status::Ok;
       BOOL bOk2 = m_pgraphics->DrawRectangle(gdiplus_pen(), rectf) == Gdiplus::Status::Ok;
@@ -505,7 +505,7 @@ namespace win
    BOOL graphics::DrawRectangle(int x1, int y1, int x2, int y2)
    { 
       
-      Gdiplus::RectF rectf(x1, y1, x2 - x1, y2 - y1);
+      Gdiplus::RectF rectf((Gdiplus::REAL) x1, (Gdiplus::REAL) y1, (Gdiplus::REAL) (x2 - x1), (Gdiplus::REAL) (y2 - y1));
 
       BOOL bOk = m_pgraphics->DrawRectangle(gdiplus_pen(), rectf) == Gdiplus::Status::Ok;
 
@@ -523,7 +523,7 @@ namespace win
    BOOL graphics::FillRectangle(int x1, int y1, int x2, int y2)
    { 
       
-      Gdiplus::RectF rectf(x1, y1, x2 - x1, y2 - y1);
+      Gdiplus::RectF rectf((Gdiplus::REAL) x1, (Gdiplus::REAL) y1, (Gdiplus::REAL) (x2 - x1), (Gdiplus::REAL) (y2 - y1));
 
       BOOL bOk = m_pgraphics->FillRectangle(gdiplus_brush(), rectf) == Gdiplus::Status::Ok;
 
@@ -584,8 +584,9 @@ namespace win
       if(pgraphicsSrc == NULL)
          return FALSE;
 
-      Gdiplus::RectF dstRect(xDst, yDst, nDstWidth, nDstHeight);
-      Gdiplus::RectF srcRect(xSrc, ySrc, nSrcWidth, nSrcHeight);
+      Gdiplus::RectF dstRect((Gdiplus::REAL) xDst, (Gdiplus::REAL) yDst, (Gdiplus::REAL) nDstWidth, (Gdiplus::REAL) nDstHeight);
+
+      Gdiplus::RectF srcRect((Gdiplus::REAL) xSrc, (Gdiplus::REAL) ySrc, (Gdiplus::REAL) nSrcWidth, (Gdiplus::REAL) nSrcHeight);
 
       try
       {
@@ -771,15 +772,15 @@ namespace win
 
       double dHeight = family.GetEmHeight(((graphics * )this)->gdiplus_font()->GetStyle());
 
-      lpMetrics->tmAscent = ((graphics * )this)->gdiplus_font()->GetSize() * family.GetCellAscent(((graphics * )this)->gdiplus_font()->GetStyle()) / dHeight;
-      lpMetrics->tmDescent = ((graphics * )this)->gdiplus_font()->GetSize() * family.GetCellDescent(((graphics * )this)->gdiplus_font()->GetStyle()) / dHeight;
-      lpMetrics->tmHeight = ((graphics * )this)->gdiplus_font()->GetSize();
+      lpMetrics->tmAscent              = (LONG) (((graphics * )this)->gdiplus_font()->GetSize() * family.GetCellAscent(((graphics * )this)->gdiplus_font()->GetStyle()) / dHeight);
+      lpMetrics->tmDescent             = (LONG) (((graphics * )this)->gdiplus_font()->GetSize() * family.GetCellDescent(((graphics * )this)->gdiplus_font()->GetStyle()) / dHeight);
+      lpMetrics->tmHeight              = (LONG) (((graphics * )this)->gdiplus_font()->GetSize());
 
-      lpMetrics->tmInternalLeading = lpMetrics->tmAscent + lpMetrics->tmDescent - lpMetrics->tmHeight;
-      lpMetrics->tmExternalLeading = ((graphics * )this)->gdiplus_font()->GetSize() * 
-        (family.GetLineSpacing(((graphics * )this)->gdiplus_font()->GetStyle()) 
-       - family.GetCellAscent(((graphics * )this)->gdiplus_font()->GetStyle())
-       - family.GetCellDescent(((graphics * )this)->gdiplus_font()->GetStyle())) / dHeight;
+      lpMetrics->tmInternalLeading     = (LONG) lpMetrics->tmAscent + lpMetrics->tmDescent - lpMetrics->tmHeight;
+      lpMetrics->tmExternalLeading     = (LONG) (((graphics * )this)->gdiplus_font()->GetSize() * 
+                                                (family.GetLineSpacing(((graphics * )this)->gdiplus_font()->GetStyle()) 
+                                                - family.GetCellAscent(((graphics * )this)->gdiplus_font()->GetStyle())
+                                                - family.GetCellDescent(((graphics * )this)->gdiplus_font()->GetStyle())) / dHeight);
       
       const Gdiplus::FontFamily * pfamilyMono = family.GenericMonospace();
 
@@ -796,7 +797,7 @@ namespace win
       /*wstr = L"";
       m_pgraphics->MeasureString(wstr.m_pwsz, -1, (Gdiplus::Font *) m_font->get_os_data(), origin, &rect2);*/
 
-      lpMetrics->tmAveCharWidth = rect.Width * GetCurrentFont().m_dFontWidth / (double) wstr.get_length();
+      lpMetrics->tmAveCharWidth        = (LONG) (rect.Width * GetCurrentFont().m_dFontWidth / (double) wstr.get_length());
 
 
       return TRUE;
@@ -1100,9 +1101,10 @@ namespace win
 
       attributes.SetColorMatrix(&matrix, Gdiplus::ColorMatrixFlagsDefault, Gdiplus::ColorAdjustTypeBitmap);
 
-      Gdiplus::RectF dstRect(xDest, yDest, nDestWidth, nDestHeight);
+      Gdiplus::RectF dstRect((Gdiplus::REAL) xDest, (Gdiplus::REAL) yDest, (Gdiplus::REAL) nDestWidth, (Gdiplus::REAL) nDestHeight);
 
-      m_pgraphics->DrawImage((Gdiplus::Bitmap *) pgraphicsSrc->GetCurrentBitmap().get_os_data(), dstRect, xSrc, ySrc, nSrcWidth, nSrcHeight, Gdiplus::UnitPixel, &attributes);
+      m_pgraphics->DrawImage((Gdiplus::Bitmap *) pgraphicsSrc->GetCurrentBitmap().get_os_data(), dstRect, 
+         (Gdiplus::REAL) xSrc, (Gdiplus::REAL) ySrc, (Gdiplus::REAL) nSrcWidth, (Gdiplus::REAL) nSrcHeight, Gdiplus::UnitPixel, &attributes);
 
       return true;
 
@@ -1935,7 +1937,7 @@ namespace win
       if(get_handle2() != NULL)
          ::SetViewportOrgEx(get_handle2(), x, y, &point);*/
       Gdiplus::Matrix m;
-      m.Translate(x, y);
+      m.Translate((Gdiplus::REAL) x, (Gdiplus::REAL) y);
       g().SetTransform(&m);
       //return point;
       return point(x, y);
@@ -2532,10 +2534,10 @@ namespace win
 
       Gdiplus::Matrix * pmNew = m.Clone();
 
-      pmNew->Translate(lpRect->left, lpRect->top);
-      pmNew->Scale(m_fontxyz.m_dFontWidth, 1.0, Gdiplus::MatrixOrderAppend);
+      pmNew->Translate((Gdiplus::REAL) lpRect->left, (Gdiplus::REAL) lpRect->top);
+      pmNew->Scale((Gdiplus::REAL) m_fontxyz.m_dFontWidth, (Gdiplus::REAL) 1.0, Gdiplus::MatrixOrderAppend);
 
-      Gdiplus::RectF rectf(0, 0, (lpRect->right - lpRect->left) * m_fontxyz.m_dFontWidth, lpRect->bottom - lpRect->top);
+      Gdiplus::RectF rectf(0, 0, (Gdiplus::REAL) ((lpRect->right - lpRect->left) * m_fontxyz.m_dFontWidth), (Gdiplus::REAL) (lpRect->bottom - lpRect->top));
 
       m_pgraphics->SetTransform(pmNew);
 
@@ -2583,7 +2585,7 @@ namespace win
 
       m_pgraphics->MeasureString(wstr, wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, &box);
 
-      return size(box.Width * m_fontxyz.m_dFontWidth, box.Height);
+      return size((__int64) (box.Width * m_fontxyz.m_dFontWidth), (__int64) (box.Height));
 
       /*if(get_handle2() == NULL)
          return size(0, 0);
@@ -2631,7 +2633,7 @@ namespace win
          return size(0, 0);
       }
 
-      return size(box.Width * m_fontxyz.m_dFontWidth, box.Height);
+      return size((int64_t) (box.Width * m_fontxyz.m_dFontWidth), (int64_t) box.Height);
 
    }
 
@@ -2895,8 +2897,8 @@ namespace win
          pmNew = m.Clone();
       }
 
-      pmNew->Translate(x / m_fontxyz.m_dFontWidth, y);
-      pmNew->Scale(m_fontxyz.m_dFontWidth, 1.0, Gdiplus::MatrixOrderAppend);
+      pmNew->Translate((Gdiplus::REAL)  (x / m_fontxyz.m_dFontWidth), (Gdiplus::REAL) y);
+      pmNew->Scale((Gdiplus::REAL) m_fontxyz.m_dFontWidth, (Gdiplus::REAL) 1.0, Gdiplus::MatrixOrderAppend);
 
       Gdiplus::Status status;
 
@@ -2917,7 +2919,7 @@ namespace win
          double d2 = fontfamily.GetEmHeight(gdiplus_font()->GetStyle());
          double d3 = d1 * d2;
 
-         status = path.AddString(gen::international::utf8_to_unicode(str), -1, &fontfamily, gdiplus_font()->GetStyle(), d1, origin, &format);
+         status = path.AddString(gen::international::utf8_to_unicode(str), -1, &fontfamily, gdiplus_font()->GetStyle(), (Gdiplus::REAL) d1, origin, &format);
 
          path.Transform(pmNew);
 
@@ -2950,7 +2952,7 @@ namespace win
 
 //      ::Gdiplus::Pen pen(::Gdiplus::Color(GetAValue(m_crColor), GetRValue(m_crColor), GetGValue(m_crColor), GetBValue(m_crColor)), m_dPenWidth);
 
-      m_pgraphics->DrawLine(gdiplus_pen(), Gdiplus::Point(m_x, m_y), Gdiplus::Point(x, y));
+      m_pgraphics->DrawLine(gdiplus_pen(), Gdiplus::Point((INT) m_x, (INT) m_y), Gdiplus::Point((INT) x,(INT) y));
 
 
       m_x = x;
@@ -3075,8 +3077,9 @@ namespace win
          return false;
 
       Gdiplus::BlurParams myBlurParams;
-      myBlurParams.expandEdge = bExpand ? 1 : 0;
-      myBlurParams.radius = dRadius;
+
+      myBlurParams.expandEdge    = bExpand ? 1 : 0;
+      myBlurParams.radius        = (float) dRadius;
 
       Gdiplus::Blur myBlur;
       myBlur.SetParameters(&myBlurParams);
@@ -3088,10 +3091,10 @@ namespace win
 
       Gdiplus::PointF points[2];
 
-      points[0].X    = lpcrect->left;
-      points[0].Y    = lpcrect->top;
-      points[1].X    = lpcrect->right;
-      points[1].Y    = lpcrect->bottom;
+      points[0].X    = (Gdiplus::REAL) lpcrect->left;
+      points[0].Y    = (Gdiplus::REAL) lpcrect->top;
+      points[1].X    = (Gdiplus::REAL) lpcrect->right;
+      points[1].Y    = (Gdiplus::REAL) lpcrect->bottom;
 
       m.TransformPoints(points, 2);
 
@@ -3099,10 +3102,10 @@ namespace win
 
       RECT rect;
 
-      rect.left      = points[0].X;
-      rect.top       = points[0].Y;
-      rect.right     = points[1].X;
-      rect.bottom    = points[1].Y;
+      rect.left      = (LONG) points[0].X;
+      rect.top       = (LONG) points[0].Y;
+      rect.right     = (LONG) points[1].X;
+      rect.bottom    = (LONG) points[1].Y;
 
       Gdiplus::Bitmap * pbitmap = ((Gdiplus::Bitmap *) m_bitmap->get_os_data());
 

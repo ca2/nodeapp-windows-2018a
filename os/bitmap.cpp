@@ -118,13 +118,20 @@ namespace win
       return FALSE;
    
    }
+   
    size bitmap::SetBitmapDimension(int nWidth, int nHeight)
    {
-      SIZE size;
+
+
+      throw not_implemented_exception();
+
+      //SIZE size;
       //VERIFY(::SetBitmapDimensionEx((HBITMAP)get_handle(), nWidth, nHeight, &size));
       //return size;
-      return size;
+      return class ::size(0, 0);
+
    }
+
    size bitmap::GetBitmapDimension() const
    {
       

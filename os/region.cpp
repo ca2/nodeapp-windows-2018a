@@ -50,7 +50,7 @@ namespace win
    BOOL region::PtInRegion(int x, int y) const
    { 
 
-      Gdiplus::PointF pointf(x, y);
+      Gdiplus::PointF pointf((Gdiplus::REAL) x, (Gdiplus::REAL) y);
       
       ASSERT(get_os_data() != NULL); //return ::PtInRegion((HRGN)get_os_data(), x, y); 
 
@@ -62,7 +62,7 @@ namespace win
    { 
 
       //return ::PtInRegion((HRGN)get_os_data(), point.x, point.y); 
-      Gdiplus::PointF pointf(point.x, point.y);
+      Gdiplus::PointF pointf((Gdiplus::REAL) point.x, (Gdiplus::REAL) point.y);
       
       ASSERT(get_os_data() != NULL); //return ::PtInRegion((HRGN)get_os_data(), x, y); 
 
@@ -73,7 +73,7 @@ namespace win
    { 
       //ASSERT(get_os_data() != NULL); return ::RectInRegion((HRGN)get_os_data(), lpRect); 
 
-      Gdiplus::RectF rectf(lpRect->left, lpRect->top, lpRect->right - lpRect->left, lpRect->bottom - lpRect->top);
+      Gdiplus::RectF rectf((Gdiplus::REAL) lpRect->left, (Gdiplus::REAL) lpRect->top, (Gdiplus::REAL) (lpRect->right - lpRect->left), (Gdiplus::REAL) (lpRect->bottom - lpRect->top));
       
       ASSERT(get_os_data() != NULL); //return ::PtInRegion((HRGN)get_os_data(), x, y); 
 
@@ -103,7 +103,7 @@ namespace win
 
             for(int i = 0; i < m_pta.get_size(); i++)
             {
-               pa.add(Gdiplus::PointF(m_pta[i].x, m_pta[i].y));
+               pa.add(Gdiplus::PointF((Gdiplus::REAL) m_pta[i].x, (Gdiplus::REAL) m_pta[i].y));
             }
 
             path.AddPolygon(pa.get_data(), pa.get_count());
@@ -113,10 +113,10 @@ namespace win
             
             Gdiplus::RectF rect;
 
-            rect.X      = m_pta[0].x;
-            rect.Y      = m_pta[0].y;
-            rect.Width  = m_pta[1].x - m_pta[0].x;
-            rect.Height = m_pta[1].y - m_pta[0].y;
+            rect.X      = (Gdiplus::REAL) m_pta[0].x;
+            rect.Y      = (Gdiplus::REAL) m_pta[0].y;
+            rect.Width  = (Gdiplus::REAL) (m_pta[1].x - m_pta[0].x);
+            rect.Height = (Gdiplus::REAL) (m_pta[1].y - m_pta[0].y);
 
             path.AddRectangle(rect);
 

@@ -88,8 +88,8 @@ protected:
 //class CHandleMap;
 class hwnd_map;
 class hmenu_map;
-class hdc_map;
-class hgdiobj_map;
+//class hdc_map;
+//class hgdiobj_map;
 class himagelist_map;
 class frame_window;
 class CToolTipCtrl;
@@ -211,8 +211,8 @@ public:
 
 
    hwnd_map       * m_pmapHWND;
-   hdc_map        * m_pmapHDC;
-   hgdiobj_map    * m_pmapHGDIOBJ;
+//   hdc_map        * m_pmapHDC;
+//   hgdiobj_map    * m_pmapHGDIOBJ;
    hmenu_map      * m_pmapHMENU;
 
 

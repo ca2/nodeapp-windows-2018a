@@ -93,20 +93,20 @@ int CLASS_DECL_VMSWIN AfxWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, L
    catch(...)
    {
    }
-   try
+/*   try
    {
       delete AfxGetModuleState()->m_pmapHDC;
    }
    catch(...)
    {
-   }
-   try
+   }*/
+/*   try
    {
       delete AfxGetModuleState()->m_pmapHGDIOBJ;
    }
    catch(...)
    {
-   }
+   }*/
 //      delete AfxGetModuleState()->m_pmapHMENU;
 
    try
@@ -116,20 +116,20 @@ int CLASS_DECL_VMSWIN AfxWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, L
    catch(...)
    {
    }
-   try
+/*   try
    {
       AfxGetModuleState()->m_pmapHDC      = NULL;
    }
    catch(...)
    {
-   }
-   try
+   }*/
+/*   try
    {
       AfxGetModuleState()->m_pmapHGDIOBJ  = NULL;
    }
    catch(...)
    {
-   }
+   }*/
 
    set_heap_mutex(NULL);
 
@@ -190,20 +190,20 @@ int CLASS_DECL_VMSWIN ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, con
       catch(...)
       {
       }
-      try
+/*      try
       {
          delete AfxGetModuleState()->m_pmapHDC;
       }
       catch(...)
       {
-      }
-      try
+      }*/
+/*      try
       {
          delete AfxGetModuleState()->m_pmapHGDIOBJ;
       }
       catch(...)
       {
-      }
+      }*/
 //      delete AfxGetModuleState()->m_pmapHMENU;
       try
       {
@@ -212,7 +212,7 @@ int CLASS_DECL_VMSWIN ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, con
       catch(...)
       {
       }
-      try
+/*      try
       {
          AfxGetModuleState()->m_pmapHDC      = NULL;
       }
@@ -225,7 +225,7 @@ int CLASS_DECL_VMSWIN ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, con
       }
       catch(...)
       {
-      }
+      }*/
 
       set_heap_mutex(NULL);
 

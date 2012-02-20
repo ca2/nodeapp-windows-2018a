@@ -118,8 +118,8 @@ AFX_MODULE_STATE::AFX_MODULE_STATE(BOOL bDLL)
 #endif
 {
    m_pmapHWND              = NULL;
-   m_pmapHDC               = NULL;
-   m_pmapHGDIOBJ           = NULL;
+//   m_pmapHDC               = NULL;
+//   m_pmapHGDIOBJ           = NULL;
    m_pmapHMENU             = NULL;
    m_pstrUnregisterList    = NULL;
    /* xxx xxx xxx
