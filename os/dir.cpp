@@ -75,8 +75,11 @@ namespace win
             return strFolder;
          return path(strFolder, str2);
       }
-      int iFolderBeg = 0;
-      int iFolderEnd = strFolder.get_length() - 1;
+      
+      strsize iFolderBeg = 0;
+
+      strsize iFolderEnd = strFolder.get_length() - 1;
+
       if(iFolderEnd >= iFolderBeg) 
       {
          //strFolder.trim();
@@ -92,8 +95,8 @@ namespace win
          while(iFolderBeg <= iFolderEnd && (strFolder.m_pszData[iFolderEnd] == '/' || strFolder.m_pszData[iFolderEnd] == '\\'))
             iFolderEnd--;
       }
-      int iRelativeBeg = 0;
-      int iRelativeEnd = strRelative.get_length() - 1;
+      strsize iRelativeBeg = 0;
+      strsize iRelativeEnd = strRelative.get_length() - 1;
       if(iRelativeEnd >= iRelativeBeg) 
       {
          //strFolder.trim();
@@ -133,8 +136,11 @@ namespace win
       
       if(str2.has_char())
       {
-         int iBeg2 = 0;
-         int iEnd2 = str2.get_length() - 1;
+         
+         strsize iBeg2 = 0;
+
+         strsize iEnd2 = str2.get_length() - 1;
+
          if(iEnd2 >= iBeg2) 
          {
             //strFolder.trim();
@@ -152,8 +158,11 @@ namespace win
          }
          if(strPath.has_char())
          {
-            int iPathBeg = 0;
-            int iPathEnd = strPath.get_length() - 1;
+            
+            strsize iPathBeg = 0;
+
+            strsize iPathEnd = strPath.get_length() - 1;
+
             if(iPathEnd >= iPathBeg) 
             {
                //better than following 2 together
@@ -309,7 +318,7 @@ namespace win
          string strDir = straDir[i];
          if(strDir == lpcsz)
             continue;
-         int iStart = 0;
+         index iStart = 0;
          if(pstraRelative != NULL)
          {
             iStart = pstraRelative->get_size();
@@ -317,7 +326,7 @@ namespace win
          rls_pattern(papp, strDir, lpszPattern, pstraPath, pstraTitle, pstraRelative, pbaIsDir, piaSize, eextract == extract_all ? extract_all : extract_none);
          if(pstraRelative != NULL)
          {
-            for(int i = iStart; i < pstraRelative->get_size(); i++)
+            for(index i = iStart; i < pstraRelative->get_size(); i++)
             {
                pstraRelative->element_at(i) = System.dir().path(System.file().name_(strDir), pstraRelative->element_at(i));
             }
@@ -402,7 +411,7 @@ namespace win
             }
             if(filefind.IsDirectory())
             {
-               int iStart = 0;
+               index iStart = 0;
                if(pstraRelative != NULL)
                {
                   iStart = pstraRelative->get_size();
@@ -410,7 +419,7 @@ namespace win
                rls_dir(papp, filefind.GetFilePath(), pstraPath, pstraTitle, pstraRelative);
                if(pstraRelative != NULL)
                {
-                  for(int i = iStart; i < pstraRelative->get_size(); i++)
+                  for(index i = iStart; i < pstraRelative->get_size(); i++)
                   {
                      pstraRelative->element_at(i) = System.dir().path(filefind.GetFileName(), pstraRelative->element_at(i));
                   }
@@ -526,7 +535,7 @@ namespace win
 
       wstring wstrPath;
       
-      int iLen = ::gen::international::utf8_to_unicode_count(strPath);
+      strsize iLen = ::gen::international::utf8_to_unicode_count(strPath);
       wstrPath.alloc(iLen + 32);
       ::gen::international::utf8_to_unicode(wstrPath, iLen + 32, strPath, strPath.get_length());
       if(wstrPath.get_length() >= MAX_PATH)
@@ -557,7 +566,7 @@ namespace win
    bool dir::name_is(const string & str, ::ca::application * papp)
    {
       
-      int iLast = str.get_length() - 1;
+      strsize iLast = str.get_length() - 1;
       while(iLast >= 0)
       {
          if(str.m_pszData[iLast] != '\\' && str.m_pszData[iLast] != '/' && str.m_pszData[iLast] != ':')
@@ -593,7 +602,9 @@ namespace win
          m_isdirmap.set(str.Left(iLast + 1), true);
          return true;
       }
-      int iFind = gen::str::find_ci(".zip:", str);
+      
+      strsize iFind = gen::str::find_ci(".zip:", str);
+
       if(papp->m_bZipIsDir && iFind >= 0 && iFind < iLast)
       {
          bool bHasSubFolder;
@@ -606,14 +617,17 @@ namespace win
 
       bool bIsDir;
 
-      if(m_isdirmap.lookup(str, bIsDir, iLast))
+      if(m_isdirmap.lookup(str, bIsDir, (int) iLast))
          return bIsDir;
 
       wstring wstrPath;
       
-      int iLen = ::gen::international::utf8_to_unicode_count(str, iLast + 1);
+      strsize iLen = ::gen::international::utf8_to_unicode_count(str, iLast + 1);
+
       wstrPath.alloc(iLen + 32);
+
       ::gen::international::utf8_to_unicode(wstrPath, iLen + 32, str, iLast + 1);
+
       if(wstrPath.get_length() >= MAX_PATH)
       {
          if(::gen::str::begins(wstrPath, L"\\\\"))
@@ -844,7 +858,9 @@ namespace win
 
    string dir::name(const string & str)
    {
-      int iLast = str.get_length() - 1;
+      
+      strsize iLast = str.get_length() - 1;
+
       while(iLast >= 0)
       {
          if(str.m_pszData[iLast] != '\\' && str.m_pszData[iLast] != '/' && str.m_pszData[iLast] != ':')
@@ -943,9 +959,9 @@ namespace win
       index iFind = strRelative.find(':');
       if(iFind >= 0)
       {
-         int iFind1 = strRelative.reverse_find("\\", iFind);
-         int iFind2 = strRelative.reverse_find("/", iFind);
-         int iStart = max(iFind1 + 1, iFind2 + 1);
+         strsize iFind1 = strRelative.reverse_find("\\", iFind);
+         strsize iFind2 = strRelative.reverse_find("/", iFind);
+         strsize iStart = max(iFind1 + 1, iFind2 + 1);
          strRelative = strRelative.Left(iFind - 1) + "_" + strRelative.Mid(iStart, iFind - iStart) + strRelative.Mid(iFind + 1);
       }
       return path(path(str, "ca2", strRelative), lpcsz, lpcsz2);
@@ -983,9 +999,9 @@ namespace win
       index iFind = strRelative.find(':');
       if(iFind >= 0)
       {
-         int iFind1 = strRelative.reverse_find("\\", iFind);
-         int iFind2 = strRelative.reverse_find("/", iFind);
-         int iStart = max(iFind1 + 1, iFind2 + 1);
+         strsize iFind1 = strRelative.reverse_find("\\", iFind);
+         strsize iFind2 = strRelative.reverse_find("/", iFind);
+         strsize iStart = max(iFind1 + 1, iFind2 + 1);
          strRelative = strRelative.Left(iFind - 1) + "_" + strRelative.Mid(iStart, iFind - iStart) + strRelative.Mid(iFind + 1);
       }
 

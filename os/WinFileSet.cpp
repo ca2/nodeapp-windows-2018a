@@ -26,19 +26,19 @@ void WinFileSet::add_filter(stringa & stra)
    refresh();
 }
 
-int WinFileSet::get_file_count()
+::count WinFileSet::get_file_count()
 {
    return m_straFile.get_size();
 }
 
-void WinFileSet::file_at(int i, string & str)
+void WinFileSet::file_at(::index i, string & str)
 {
    str = m_straFile[i];
 }
 
-int WinFileSet::find_first_file(const char * lpcsz)
+::index WinFileSet::find_first_file(const char * lpcsz, ::index iStart)
 {
-   return m_straFile.find_first_ci(lpcsz);
+   return m_straFile.find_first_ci(lpcsz, iStart);
 }
 
 void WinFileSet::clear_search()

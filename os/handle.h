@@ -122,7 +122,7 @@ namespace win
 } // namespace win
 
 
-#include "ca/radix/fixed_alloc.h"
+#include "ca/radix/radix_fixed_alloc.h"
 
 template<class TYPE>
 struct ConstructDestruct
@@ -166,12 +166,10 @@ public:
    ::collection::map < HANDLE, HANDLE, CT *, CT *> m_temporaryMap;
 
    handle_map();
-#ifdef _ApplicationFrameworkDLL
-   ~handle_map()
-#else
    virtual ~handle_map()
-#endif
-      { delete_temp(); }
+   { 
+      delete_temp();
+   }
 
 // Operations
 public:

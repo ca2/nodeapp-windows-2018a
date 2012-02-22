@@ -39,16 +39,6 @@
 #pragma component(browser, off, references, "WORD")
 #endif  //!_AFX_PORTABLE
 
-/////////////////////////////////////////////////////////////////////////////
-// For target version (one of)
-//   _CUSTOM   : for custom configurations (causes afxv_cfg.h to be included)
-//
-// Additional build options:
-//  _DEBUG              debug versions (full diagnostics)
-//  _ApplicationFrameworkDLL             use shared MFC DLL
-//  _AFXEXT             extension DLL version, implies _ApplicationFrameworkDLL
-//  _USRDLL             create regular DLL (_ApplicationFrameworkDLL is valid too)
-//
 
 #ifndef _DEBUG
 #ifndef _AFX_DISABLE_INLINES
@@ -58,21 +48,6 @@
 
 #define _AFX_NO_NESTED_DERIVATION
 
-/////////////////////////////////////////////////////////////////////////////
-// Special configurations
-
-// _AFXEXT implies _ApplicationFrameworkDLL
-#if defined(_AFXEXT) && !defined(_ApplicationFrameworkDLL)
-	#define _ApplicationFrameworkDLL
-#endif
-
-#if defined(_ApplicationFrameworkDLL) && !defined(_DLL) && defined(WIN32)
-//	#error Please use the /MD switch for _ApplicationFrameworkDLL builds
-#endif
-
-#if defined(_ApplicationFrameworkDLL) && !defined(_MT) && defined(WIN32)
-	#error Please use the /MD switch (multithreaded DLL C-runtime)
-#endif
 
 /////////////////////////////////////////////////////////////////////////////
 // special include files
@@ -106,9 +81,7 @@
 	#define _AFX_PACKING    4   // default packs structs at 4 bytes
 #endif
 
-#ifdef _ApplicationFrameworkDLL
-	#include "version_dll.h"
-#endif
+#include "version_dll.h"
 
 // Define this virtual key for use by status bar
 #ifndef VK_KANA

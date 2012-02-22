@@ -689,13 +689,13 @@ namespace win
       }
    }
 
-   int thread::get_ui_count()
+   ::count thread::get_ui_count()
    {
       single_lock sl(&m_mutexUiPtra, TRUE);
       return m_puiptra->get_count();
    }
 
-   ::user::interaction * thread::get_ui(int iIndex)
+   ::user::interaction * thread::get_ui(index iIndex)
    {
       single_lock sl(&m_mutexUiPtra, TRUE);
       return m_puiptra->element_at(iIndex);
@@ -1700,7 +1700,7 @@ stop_run:
 
    void thread::set_os_int(INT_PTR iData)
    {
-      m_nThreadID = (DWORD_PTR) iData;
+      m_nThreadID = (DWORD) iData;
    }
 
    void thread::message_window_message_handler(gen::signal_object * pobj)

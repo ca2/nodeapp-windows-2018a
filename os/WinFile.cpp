@@ -234,7 +234,7 @@ BOOL WinFile::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_excepti
    ASSERT(fx_is_valid_address(lpBuf, nCount));
 
    DWORD dwRead;
-   if (!::ReadFile((HANDLE)m_hFile, lpBuf, nCount, &dwRead, NULL))
+   if (!::ReadFile((HANDLE)m_hFile, lpBuf, (DWORD) nCount, &dwRead, NULL))
       WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError());
 
    return (UINT)dwRead;
@@ -252,7 +252,7 @@ void WinFile::write(const void * lpBuf, ::primitive::memory_size nCount)
    ASSERT(fx_is_valid_address(lpBuf, nCount, FALSE));
 
    DWORD nWritten;
-   if (!::WriteFile((HANDLE)m_hFile, lpBuf, nCount, &nWritten, NULL))
+   if (!::WriteFile((HANDLE)m_hFile, lpBuf, (DWORD) nCount, &nWritten, NULL))
       WinFileException::ThrowOsError(get_app(), (LONG)::GetLastError(), m_strFileName);
 
    // Win32s will not return an error all the time (usually DISK_FULL)
@@ -632,14 +632,14 @@ BOOL CLASS_DECL_VMSWIN vfxFullPath(wstring & wstrFullPath, const wstring & wstrP
    // (both in ANSI character set)
 {
 
-   DWORD dwAllocLen = wstrPath.get_length() + _MAX_PATH;
+   strsize dwAllocLen = wstrPath.get_length() + _MAX_PATH;
 
    wstrFullPath.alloc(dwAllocLen);
 
    // first, fully qualify the path name
    wchar_t * lpszFilePart;
 
-   DWORD dwLen = GetFullPathNameW(wstrPath, dwAllocLen, wstrFullPath, &lpszFilePart);
+   DWORD dwLen = GetFullPathNameW(wstrPath, (DWORD) dwAllocLen, wstrFullPath, &lpszFilePart);
 
    if(dwLen == 0)
    {
@@ -655,7 +655,7 @@ BOOL CLASS_DECL_VMSWIN vfxFullPath(wstring & wstrFullPath, const wstring & wstrP
       
       dwAllocLen = dwLen + _MAX_PATH;
 
-      dwLen = GetFullPathNameW(wstrPath, dwAllocLen, wstrFullPath, &lpszFilePart);
+      dwLen = GetFullPathNameW(wstrPath, (DWORD) dwAllocLen, wstrFullPath, &lpszFilePart);
 
       if(dwLen == 0 || dwLen > dwAllocLen)
       {
@@ -697,9 +697,9 @@ BOOL CLASS_DECL_VMSWIN vfxFullPath(wstring & wstrFullPath, const wstring & wstrP
          if(iLenFileName >=  MAX_PATH)
          {
             wstring wstrBackup = wstrFullPath;
-            int iFilePart = lpszFilePart - wstrFullPath;
+            strsize iFilePart = lpszFilePart - wstrFullPath;
             wstrFullPath.alloc(iFilePart + iLenFileName + 32); // arrange more space with more 32 extra wchars
-            lstrcpynW(wstrFullPath, wstrBackup, iFilePart);
+            lstrcpynW(wstrFullPath, wstrBackup, (int) iFilePart);
             lpszFilePart = (wchar_t *) wstrFullPath + iFilePart;
          }
          lstrcpyW(lpszFilePart, data.cFileName);

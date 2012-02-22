@@ -258,37 +258,46 @@ namespace win
 
    // application
    HCURSOR application::LoadCursor(const char * lpszResourceName) const
-   { return ::LoadCursor(AfxFindResourceHandle(lpszResourceName,
-                         ATL_RT_GROUP_CURSOR), lpszResourceName); }
+   { 
+      return NULL;
+   }
+
    HCURSOR application::LoadCursor(UINT nIDResource) const
-   { return ::LoadCursor(AfxFindResourceHandle(ATL_MAKEINTRESOURCE(nIDResource),
-                         ATL_RT_GROUP_CURSOR), ATL_MAKEINTRESOURCE(nIDResource)); }
+   { 
+      return NULL;
+   }
+
    HCURSOR application::LoadStandardCursor(const char * lpszCursorName) const
-   { return ::LoadCursor(NULL, lpszCursorName); }
+   { 
+      return ::LoadCursor(NULL, lpszCursorName);
+   }
+
    HCURSOR application::LoadOEMCursor(UINT nIDCursor) const
-   { return ::LoadCursor(NULL, ATL_MAKEINTRESOURCE(nIDCursor)); }
+   { 
+   
+      return ::LoadCursor(NULL, ATL_MAKEINTRESOURCE(nIDCursor));
+   
+   }
+
    HICON application::LoadIcon(const char * lpszResourceName) const
-   { return ::LoadIcon(AfxFindResourceHandle(lpszResourceName,
-                       ATL_RT_GROUP_ICON), lpszResourceName); }
+   { 
+      return NULL;
+   }
+
    HICON application::LoadIcon(UINT nIDResource) const
-   { return ::LoadIcon(AfxFindResourceHandle(ATL_MAKEINTRESOURCE(nIDResource),
-                       ATL_RT_GROUP_ICON), ATL_MAKEINTRESOURCE(nIDResource)); }
+   { 
+      return NULL;
+   }
+
    HICON application::LoadStandardIcon(const char * lpszIconName) const
-   { return ::LoadIcon(NULL, lpszIconName); }
+   { 
+      return ::LoadIcon(NULL, lpszIconName);
+   }
+   
    HICON application::LoadOEMIcon(UINT nIDIcon) const
-   { return ::LoadIcon(NULL, ATL_MAKEINTRESOURCE(nIDIcon)); }
-   //void application::EnableHtmlHelp()
-   //{ SetHelpMode( afxHTMLHelp ); }
-
-   //AFX_HELP_TYPE application::GetHelpMode() 
-   //{ return m_eHelpType; }
-
-   //void application::SetHelpMode( AFX_HELP_TYPE eHelpType )
-   //{ 
-   // ASSERT( eHelpType == afxHTMLHelp || eHelpType == afxWinHelp );
-   //m_eHelpType = eHelpType; 
-   //}
-
+   { 
+      return ::LoadIcon(NULL, ATL_MAKEINTRESOURCE(nIDIcon));
+   }
 
 
 

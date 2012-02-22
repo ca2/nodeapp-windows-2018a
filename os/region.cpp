@@ -106,7 +106,7 @@ namespace win
                pa.add(Gdiplus::PointF((Gdiplus::REAL) m_pta[i].x, (Gdiplus::REAL) m_pta[i].y));
             }
 
-            path.AddPolygon(pa.get_data(), pa.get_count());
+            path.AddPolygon(pa.get_data(), (int) pa.get_count());
          }
          else if(m_etype == type_rect)
          {

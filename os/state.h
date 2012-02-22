@@ -44,43 +44,6 @@ public:
 
 EXTERN_PROCESS_LOCAL(_AFX_WIN_STATE, _afxWinState)
 
-/////////////////////////////////////////////////////////////////////////////
-// Type library cache - AFX_INTERNAL
-
-#ifndef _AFX_NO_OLE_SUPPORT
-
-struct ITypeInfo;
-typedef ITypeInfo* LPTYPEINFO;
-
-struct ITypeLib;
-typedef ITypeLib* LPTYPELIB;
-
-typedef struct _GUID GUID;
-#ifndef _REFCLSID_DEFINED
-#define REFGUID const GUID &
-#endif
-
-class CLASS_DECL_VMSWIN CTypeLibCache
-{
-public:
-   CTypeLibCache() : m_cRef(0), m_lcid((LCID)-1), m_ptlib(NULL), m_ptinfo(NULL) {}
-   void lock();
-   void unlock();
-   BOOL Lookup(LCID lcid, LPTYPELIB* pptlib);
-   void Cache(LCID lcid, LPTYPELIB ptlib);
-   BOOL LookupTypeInfo(LCID lcid, REFGUID guid, LPTYPEINFO* pptinfo);
-   void CacheTypeInfo(LCID lcid, REFGUID guid, LPTYPEINFO ptinfo);
-   const GUID* m_pTypeLibID;
-
-protected:
-   LCID m_lcid;
-   LPTYPELIB m_ptlib;
-   GUID m_guidInfo;
-   LPTYPEINFO m_ptinfo;
-   long m_cRef;
-};
-
-#endif //!_AFX_NO_OLE_SUPPORT
 
 /////////////////////////////////////////////////////////////////////////////
 // AFX_MODULE_STATE : portion of state that is pushed/popped
@@ -132,19 +95,6 @@ public:
    // thread-local ca2 API new handler (separate from C-runtime)
    _PNH m_pfnNewHandler;
 
-#ifndef _AFX_NO_SOCKET_SUPPORT
-   // WinSock specific thread state
-   HWND m_hSocketWindow;
-#ifdef _ApplicationFrameworkDLL
-   CEmbeddedButActsLikePtr<map_ptr_to_ptr> m_pmapSocketHandle;
-   CEmbeddedButActsLikePtr<map_ptr_to_ptr> m_pmapDeadSockets;
-   CEmbeddedButActsLikePtr<pointer_list> m_plistSocketNotifications;
-#else
-   map_ptr_to_ptr* m_pmapSocketHandle;
-   map_ptr_to_ptr* m_pmapDeadSockets;
-   pointer_list* m_plistSocketNotifications;
-#endif
-#endif
 
    // common controls thread state
    CToolTipCtrl* m_pToolTip;
@@ -161,18 +111,7 @@ class application;
 
 class ::ca::window;
 
-#ifdef _ApplicationFrameworkDLL
-class CDynLinkLibrary;
-#endif
 
-#ifndef _AFX_NO_OCC_SUPPORT
-class COccManager;
-class COleControlLock;
-#endif
-
-#ifndef _AFX_NO_DAO_SUPPORT
-class _AFX_DAO_STATE;
-#endif
 
 class CDllIsolationWrapperBase;
 #ifndef _AFX_NO_AFXCMN_SUPPORT
@@ -180,23 +119,12 @@ class CComCtlWrapper;
 #endif
 class CCommDlgWrapper;
 
-class CLASS_DECL_VMSWIN CTypeLibCacheMap : public map_ptr_to_ptr
-{
-public:
-   virtual void remove_all(void * pExcept);
-};
-
-
 // AFX_MODULE_STATE (global data for a module)
 class CLASS_DECL_VMSWIN AFX_MODULE_STATE : public no_track_object
 {
 public:
-#ifdef _ApplicationFrameworkDLL
    AFX_MODULE_STATE(BOOL bDLL, WNDPROC pfnAfxWndProc, DWORD dwVersion,
       BOOL bSystem = FALSE);
-#else
-   explicit AFX_MODULE_STATE(BOOL bDLL);
-#endif
    ~AFX_MODULE_STATE();
 
    ::radix::application* m_pCurrentWinApp;
@@ -226,39 +154,13 @@ public:
 
    string * m_pstrUnregisterList;
 
-#ifdef _ApplicationFrameworkDLL
    WNDPROC m_pfnAfxWndProc;
    DWORD m_dwVersion;  // version that module linked against
-#endif
 
    // variables related to a given process in a module
    //  (used to be AFX_MODULE_PROCESS_STATE)
    void (PASCAL *m_pfnFilterToolTipMessage)(MSG*, ::ca::window *);
 
-#ifdef _ApplicationFrameworkDLL
-   // CDynLinkLibrary objects (for resource chain)
-   typed_simple_list<CDynLinkLibrary*> m_libraryList;
-
-   // special case for MFC80XXX.DLL (localized ca2 API resources)
-   HINSTANCE m_appLangDLL;
-#endif
-
-#ifndef _AFX_NO_OCC_SUPPORT
-   // OLE control container manager
-   COccManager* m_pOccManager;
-   // locked OLE controls
-   typed_simple_list<COleControlLock*> m_lockList;
-#endif
-
-#ifndef _AFX_NO_DAO_SUPPORT
-   _AFX_DAO_STATE* m_pDaoState;
-#endif
-
-#ifndef _AFX_NO_OLE_SUPPORT
-   // Type library caches
-   CTypeLibCache m_typeLibCache;
-   CTypeLibCacheMap* m_pTypeLibCacheMap;
-#endif
 
    // define thread local portions of module state
    thread_local<AFX_MODULE_THREAD_STATE, slot_AFX_MODULE_THREAD_STATE> m_thread;
@@ -272,10 +174,7 @@ public:
    void CreateActivationContext();
 };
 
-//CLASS_DECL_VMSWIN AFX_MODULE_STATE* AfxGetAppModuleState();
-#ifdef _ApplicationFrameworkDLL
 CLASS_DECL_VMSWIN AFX_MODULE_STATE* AfxSetModuleState(AFX_MODULE_STATE* pNewState);
-#endif
 CLASS_DECL_VMSWIN AFX_MODULE_STATE* AfxGetModuleState();
 CLASS_DECL_VMSWIN BOOL AfxIsModuleDll();
 CLASS_DECL_VMSWIN BOOL AfxInitCurrentStateApp();
@@ -284,16 +183,11 @@ CLASS_DECL_VMSWIN HINSTANCE AfxGetInstanceHandleHelper();
 
 CLASS_DECL_VMSWIN AFX_MODULE_THREAD_STATE* AfxGetModuleThreadState();
 
-#ifdef _ApplicationFrameworkDLL
 #define _AFX_CMDTARGET_GETSTATE() (m_pModuleState)
-#else
-#define _AFX_CMDTARGET_GETSTATE() (AfxGetModuleThreadState())
-#endif
 
 /////////////////////////////////////////////////////////////////////////////
 // macros & classes to manage pushing/popping the module state
 
-#ifdef _ApplicationFrameworkDLL
 struct CLASS_DECL_VMSWIN AFX_MAINTAIN_STATE
 {
    explicit AFX_MAINTAIN_STATE(AFX_MODULE_STATE* pModuleState) throw();
@@ -302,7 +196,6 @@ struct CLASS_DECL_VMSWIN AFX_MAINTAIN_STATE
 protected:
    AFX_MODULE_STATE* m_pPrevModuleState;
 };
-#endif
 
 class _AFX_THREAD_STATE;
 struct CLASS_DECL_VMSWIN AFX_MAINTAIN_STATE2
@@ -311,10 +204,8 @@ struct CLASS_DECL_VMSWIN AFX_MAINTAIN_STATE2
    ~AFX_MAINTAIN_STATE2();
 
 protected:
-#ifdef _ApplicationFrameworkDLL
    AFX_MODULE_STATE* m_pPrevModuleState;
    _AFX_THREAD_STATE* m_pThreadState;
-#endif
 
    ULONG_PTR m_ulActCtxCookie;
    BOOL m_bValidActCtxCookie;

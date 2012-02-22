@@ -401,7 +401,7 @@ WCHAR * __cdecl WindowsShell::__fullpath (
 
 
         if ( !path || !*path )  /* no work to do */
-            return( _wgetcwd( UserBuf, maxlen ) );
+            return( _wgetcwd( UserBuf, (int) maxlen ) );
 
         /* allocate buffer if necessary */
 
@@ -416,7 +416,7 @@ WCHAR * __cdecl WindowsShell::__fullpath (
             buf = UserBuf;
 
         count = GetFullPathName ( path,
-                                  maxlen,
+                                  (int) maxlen,
                                   buf,
                                   &pfname );
 
@@ -528,7 +528,7 @@ BOOL WindowsShell::_GetStringTypeEx(
    int cchSrc,
    LPWORD lpCharType)
 {
-   int iCount = cchSrc;
+   strsize iCount = cchSrc;
    if(iCount < 0)
       iCount = gen::international::UnicodeToMultiByteCount(uiCodePage, lpSrcStr);
    string str;
@@ -542,7 +542,7 @@ BOOL WindowsShell::_GetStringTypeEx(
    {
       return false;
    }
-   if(!GetStringTypeA(uiCodePage, dwInfoType, lpsz, iCount, lpCharType))
+   if(!GetStringTypeA(uiCodePage, dwInfoType, lpsz, (int) iCount, lpCharType))
    {
       return FALSE;
    }

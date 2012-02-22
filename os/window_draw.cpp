@@ -512,7 +512,7 @@ namespace win
       }
       return true;
       
-      for(int j = wndaApp.get_upper_bound(); j >= 0; j--)
+      for(index j = wndaApp.get_upper_bound(); j >= 0; j--)
       {
          HWND hwndTopic = wndaApp[j];
 

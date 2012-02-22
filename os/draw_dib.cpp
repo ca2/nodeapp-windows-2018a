@@ -101,7 +101,7 @@ namespace win
       
    BOOL draw_dib::ProfileDisplay ( LPBITMAPINFOHEADER lpbi )
    {
-      return DrawDibProfileDisplay ( lpbi );
+      return (BOOL) DrawDibProfileDisplay ( lpbi );
    }
 
    ::ca::palette * draw_dib::get_palette ()

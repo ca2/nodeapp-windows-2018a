@@ -108,7 +108,7 @@ BOOL WinStdioFile::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_ex
 
    ASSERT(fx_is_valid_address(lpBuf, nCount));
 
-   UINT nRead = 0;
+   primitive::memory_size nRead = 0;
 
    if ((nRead = fread(lpBuf, sizeof(BYTE), nCount, m_pStream)) == 0 && !feof(m_pStream))
       vfxThrowFileException(get_app(), ::ex1::file_exception::generic, _doserrno, m_strFileName);
@@ -163,7 +163,7 @@ UINT WinStdioFile::read_string(string & rString)
    const int nMaxSize = 128;
    char * lpsz = rString.GetBuffer(nMaxSize);
    char * lpszResult;
-   int nLen = 0;
+   ::primitive::memory_size nLen = 0;
    for (;;)
    {
       lpszResult = fgets(lpsz, nMaxSize+1, m_pStream);

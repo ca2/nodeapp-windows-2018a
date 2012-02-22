@@ -27,22 +27,18 @@
 
 
 
-#ifdef _ApplicationFrameworkDLL
 // AFX_MAINTAIN_STATE functions
  AFX_MAINTAIN_STATE::AFX_MAINTAIN_STATE(AFX_MODULE_STATE* pNewState)
    {  m_pPrevModuleState = AfxSetModuleState(pNewState); }
-#endif
 
 // AFX_MAINTAIN_STATE2 functions
  AFX_MAINTAIN_STATE2::~AFX_MAINTAIN_STATE2()
 {
-#ifdef _ApplicationFrameworkDLL
    // Not a good place to report errors here, so just be safe
    if(m_pThreadState)
    {
       m_pThreadState->m_pModuleState = m_pPrevModuleState;
    }
-#endif
 
 /*   if (m_bValidActCtxCookie)
    {

@@ -676,7 +676,7 @@ namespace win
       
       //ASSERT(get_handle1() != NULL); 
       //wstring wstr = gen::international::utf8_to_unicode(str);
-      return TextOut(x, y, str, str.get_length()); 
+      return TextOut(x, y, str, (int) str.get_length()); 
    
    } // call virtual
 
@@ -791,7 +791,7 @@ namespace win
       Gdiplus::RectF rect2;
       Gdiplus::PointF origin(0, 0);
 
-      m_pgraphics->MeasureString(wstr, wstr.get_length(), ((graphics * )this)->gdiplus_font(), origin, &rect);
+      m_pgraphics->MeasureString(wstr, (INT) wstr.get_length(), ((graphics * )this)->gdiplus_font(), origin, &rect);
 
 
       /*wstr = L"";
@@ -820,8 +820,15 @@ namespace win
 
    DWORD graphics::GetCharacterPlacement(const char * lpString, int nCount, int nMaxExtent, LPGCP_RESULTS lpResults, DWORD dwFlags) const
    { ASSERT(get_handle1() != NULL); return ::GetCharacterPlacement(get_handle1(), lpString, nCount, nMaxExtent, lpResults, dwFlags); }
+   
    DWORD graphics::GetCharacterPlacement(string & str, int nMaxExtent, LPGCP_RESULTS lpResults, DWORD dwFlags) const
-   { ASSERT(get_handle1() != NULL); return ::GetCharacterPlacement(get_handle1(), (const char *)str, str.get_length(), nMaxExtent, lpResults, dwFlags); }
+   { 
+      
+      ASSERT(get_handle1() != NULL); 
+      
+      return ::GetCharacterPlacement(get_handle1(), (const char *)str, (int) str.get_length(), nMaxExtent, lpResults, dwFlags);
+   
+   }
 
 
    size graphics::GetAspectRatioFilter() const
@@ -2474,7 +2481,7 @@ namespace win
       ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
       ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
       wstring wstr = gen::international::utf8_to_unicode(string(lpszString, nCount));
-      return ::DrawTextW(get_handle1(), wstr, wcslen(wstr), lpRect, nFormat); 
+      return ::DrawTextW(get_handle1(), wstr, (int) wcslen(wstr), lpRect, nFormat); 
    }
 
    int graphics::DrawText(const string & str, LPRECT lpRect, UINT nFormat)
@@ -2583,7 +2590,7 @@ namespace win
 
       Gdiplus::PointF origin(0, 0);
 
-      m_pgraphics->MeasureString(wstr, wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, &box);
+      m_pgraphics->MeasureString(wstr, (int) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, &box);
 
       return size((__int64) (box.Width * m_fontxyz.m_dFontWidth), (__int64) (box.Height));
 
@@ -2626,7 +2633,7 @@ namespace win
 
       try
       {
-         m_pgraphics->MeasureString(wstr, wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, &box);
+         m_pgraphics->MeasureString(wstr, (int) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, &box);
       }
       catch(...)
       {

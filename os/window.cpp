@@ -1034,50 +1034,6 @@ namespace win
          ::SendMessage(hWndCapture, WM_CANCELMODE, 0, 0);
    }
 
-   // for dll builds we just delay load it
-   #ifndef _ApplicationFrameworkDLL
-   _AFX_HTMLHELP_STATE::~_AFX_HTMLHELP_STATE()
-   {
-      if (m_hInstHtmlHelp)
-         FreeLibrary(m_hInstHtmlHelp);
-   }
-   #endif
-
-   /*HWND WINAPI AfxHtmlHelp(HWND hWnd, const char * szHelpFilePath, UINT nCmd, DWORD_PTR dwData)
-   {
-   // for dll builds we just delay load it
-   #ifndef _ApplicationFrameworkDLL
-   #ifdef _UNICODE
-      #define _HTMLHELP_ENTRY "HtmlHelpW"
-   #else
-      #define _HTMLHELP_ENTRY "HtmlHelpA"
-   #endif
-
-      AfxLockGlobals(CRIT_DYNDLLLOAD);
-      // check if the HtmlHelp library was loaded
-      _AFX_HTMLHELP_STATE* pState = _afxHtmlHelpState.get_data();
-      if (!pState->m_pfnHtmlHelp)
-      {
-         // load the library
-         ASSERT(!pState->m_hInstHtmlHelp);
-         pState->m_hInstHtmlHelp = LoadLibraryA("hhctrl.ocx");
-         if (!pState->m_hInstHtmlHelp)
-            return NULL;
-         pState->m_pfnHtmlHelp = (HTMLHELPPROC *) GetProcAddress(pState->m_hInstHtmlHelp, _HTMLHELP_ENTRY);
-         if (!pState->m_pfnHtmlHelp)
-         {
-            FreeLibrary(pState->m_hInstHtmlHelp);
-            pState->m_hInstHtmlHelp = NULL;
-            return NULL;
-         }
-      }
-      AfxUnlockGlobals(CRIT_DYNDLLLOAD);
-      // now call it
-      return (*(pState->m_pfnHtmlHelp))(hWnd, szHelpFilePath, nCmd, dwData);
-   #else
-      return ::HtmlHelp(hWnd, szHelpFilePath, nCmd, dwData);
-   #endif
-   }*/
 
    void window::WinHelpInternal(DWORD_PTR dwData, UINT nCmd)
    {
@@ -1362,7 +1318,7 @@ namespace win
          {
             try
             {
-               Application.set_key_pressed(pbase->m_wparam, true);
+               Application.set_key_pressed((int) pbase->m_wparam, true);
             }
             catch(...)
             {
@@ -1372,7 +1328,7 @@ namespace win
          {
             try
             {
-               Application.set_key_pressed(pbase->m_wparam, false);
+               Application.set_key_pressed((int) pbase->m_wparam, false);
             }
             catch(...)
             {
@@ -3782,7 +3738,7 @@ ExitModal:
          m_iModalCount--;
          for(index i = 0; i < m_iaModalThread.get_count(); i++)
          {
-            ::PostThreadMessage(m_iaModalThread[i], WM_NULL, 0, 0);
+            ::PostThreadMessage((DWORD) m_iaModalThread[i], WM_NULL, 0, 0);
          }
          PostMessage(WM_NULL);
          System.GetThread()->PostThreadMessage(WM_NULL, 0, 0);
@@ -4413,13 +4369,13 @@ ExitModal:
       m_strWindowText = lpszString;
    }
 
-   int window::GetWindowText(__out_ecount_part_z(nMaxCount, return + 1) LPTSTR lpszString, __in int nMaxCount)
+   strsize window::GetWindowText(LPTSTR lpszString, strsize nMaxCount)
    { 
       strncpy(lpszString, m_strWindowText, nMaxCount);
       return min(nMaxCount, m_strWindowText.get_length());
    }
    
-   int window::GetWindowTextLength()
+   strsize window::GetWindowTextLength()
    { 
       ASSERT(::IsWindow(get_handle())); 
       return ::GetWindowTextLength(get_handle()); 
@@ -5599,13 +5555,6 @@ run:
       LRESULT lResult = CallNextHookEx(pThreadState->m_hHookOldCbtFilter, code,
          wParam, lParam);
 
-   #ifndef _ApplicationFrameworkDLL
-      if (bContextIsDLL)
-      {
-         ::UnhookWindowsHookEx(pThreadState->m_hHookOldCbtFilter);
-         pThreadState->m_hHookOldCbtFilter = NULL;
-      }
-   #endif
       return lResult;
    }
 
@@ -5700,11 +5649,7 @@ LRESULT CALLBACK AfxWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 // always indirectly accessed via AfxGetAfxWndProc
 WNDPROC CLASS_DECL_VMSWIN AfxGetAfxWndProc()
 {
-#ifdef _ApplicationFrameworkDLL
    return AfxGetModuleState()->m_pfnAfxWndProc;
-#else
-   return &AfxWndProc;
-#endif
 }
    /////////////////////////////////////////////////////////////////////////////
    // Special helpers for certain windows messages
@@ -5774,13 +5719,6 @@ CLASS_DECL_VMSWIN void AfxHookWindowCreate(::user::interaction * pWnd)
 CLASS_DECL_VMSWIN BOOL AfxUnhookWindowCreate()
 {
    _AFX_THREAD_STATE* pThreadState = _afxThreadState.get_data();
-#ifndef _ApplicationFrameworkDLL
-   if (afxContextIsDLL && pThreadState->m_hHookOldCbtFilter != NULL)
-   {
-      ::UnhookWindowsHookEx(pThreadState->m_hHookOldCbtFilter);
-      pThreadState->m_hHookOldCbtFilter = NULL;
-   }
-#endif
    if (pThreadState->m_pWndInit != NULL)
    {
       pThreadState->m_pWndInit = NULL;
@@ -5904,13 +5842,7 @@ AFX_STATIC BOOL CLASS_DECL_VMSWIN _AfxRegisterWithIcon(WNDCLASS* pWndCls,
    const char * lpszClassName, UINT nIDIcon)
 {
    pWndCls->lpszClassName = lpszClassName;
-   HINSTANCE hInst = AfxFindResourceHandle(
-      ATL_MAKEINTRESOURCE(nIDIcon), ATL_RT_GROUP_ICON);
-   if ((pWndCls->hIcon = ::LoadIcon(hInst, ATL_MAKEINTRESOURCE(nIDIcon))) == NULL)
-   {
-      // use default icon
-      pWndCls->hIcon = ::LoadIcon(NULL, IDI_APPLICATION);
-   }
+   pWndCls->hIcon = ::LoadIcon(NULL, IDI_APPLICATION);
    return AfxRegisterClass(pWndCls);
 }
 

@@ -111,18 +111,6 @@ CLASS_DECL_VMSWIN void AfxTermThread(::radix::application * papp, HINSTANCE hIns
 #define afxRegisteredClasses    AfxGetModuleState()->m_fRegisteredClasses
 #define afxAmbientActCtx    AfxGetModuleState()->m_bSetAmbientActCtx
 
-#ifndef _AFX_NO_OCC_SUPPORT
-#define afxOccManager   AfxGetModuleState()->m_pOccManager
-#endif
-
-//Fusion: Access macros for WinSxS dynamic wrappers.
-#ifndef _AFX_NO_AFXCMN_SUPPORT
-#define _AFX_COMCTL32_ISOLATION_WRAPPER_INDEX 0
-#define afxComCtlWrapper static_cast<CComCtlWrapper*>(AfxGetModuleState()->m_pDllIsolationWrappers[_AFX_COMCTL32_ISOLATION_WRAPPER_INDEX])
-#endif
-
-#define _AFX_COMMDLG_ISOLATION_WRAPPER_INDEX 1
-#define afxCommDlgWrapper static_cast<CCommDlgWrapper*>(AfxGetModuleState()->m_pDllIsolationWrappers[_AFX_COMMDLG_ISOLATION_WRAPPER_INDEX])
 
 // Advanced initialization: for overriding default WinMain
 //CLASS_DECL_VMSWIN BOOL AfxWinInit(__in HINSTANCE hInstance, __in HINSTANCE hPrevInstance,

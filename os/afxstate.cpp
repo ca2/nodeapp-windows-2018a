@@ -8,7 +8,6 @@
 /////////////////////////////////////////////////////////////////////////////
 // AFX_MODULE_STATE push/pop implementation
 
-#ifdef _ApplicationFrameworkDLL
 CLASS_DECL_VMSWIN AFX_MODULE_STATE * AfxSetModuleState(AFX_MODULE_STATE* pNewState)
 {
    _AFX_THREAD_STATE* pState = _afxThreadState;
@@ -34,11 +33,9 @@ AFX_MAINTAIN_STATE::~AFX_MAINTAIN_STATE()
    pState->m_pModuleState = m_pPrevModuleState;
 }
 }
-#endif //_ApplicationFrameworkDLL
 
 AFX_MAINTAIN_STATE2::AFX_MAINTAIN_STATE2(AFX_MODULE_STATE* pNewState)
 {
-#ifdef _ApplicationFrameworkDLL
    m_pThreadState = _afxThreadState;
    ASSERT(m_pThreadState);
    if(m_pThreadState)
@@ -53,7 +50,6 @@ AFX_MAINTAIN_STATE2::AFX_MAINTAIN_STATE2(AFX_MODULE_STATE* pNewState)
       m_pPrevModuleState=NULL;
       m_pThreadState=NULL;
    }
-#endif
 
 /*   if (AfxGetAmbientActCtx() && 
       pNewState->m_hActCtx != INVALID_HANDLE_VALUE)
@@ -110,12 +106,8 @@ THREAD_LOCAL(_AFX_THREAD_STATE, _afxThreadState, slot_AFX_THREAD_STATE)
 /////////////////////////////////////////////////////////////////////////////
 // AFX_MODULE_STATE implementation
 
-#ifdef _ApplicationFrameworkDLL
 AFX_MODULE_STATE::AFX_MODULE_STATE(BOOL bDLL, WNDPROC pfnAfxWndProc,
    DWORD dwVersion, BOOL bSystem)
-#else
-AFX_MODULE_STATE::AFX_MODULE_STATE(BOOL bDLL)
-#endif
 {
    m_pmapHWND              = NULL;
 //   m_pmapHDC               = NULL;
@@ -127,11 +119,9 @@ AFX_MODULE_STATE::AFX_MODULE_STATE(BOOL bDLL)
 
    m_fRegisteredClasses = 0;
    m_bDLL = (BYTE)bDLL;
-#ifdef _ApplicationFrameworkDLL
    m_pfnAfxWndProc = pfnAfxWndProc;
    m_dwVersion = dwVersion;
    m_bSystem = (BYTE)bSystem;
-#endif
 //   BOOL bEnable = TRUE;
    try
    {
@@ -150,12 +140,6 @@ AFX_MODULE_STATE::AFX_MODULE_STATE(BOOL bDLL)
    // cast starts out in "::fontopus::user control"
    m_bUserCtrl = TRUE;
 
-#ifndef _AFX_NO_OCC_SUPPORT
-   m_lockList.Construct(offsetof(COleControlLock, m_pNextLock));
-#endif
-#ifdef _ApplicationFrameworkDLL
-   m_libraryList.Construct(offsetof(CDynLinkLibrary, m_pNextDLL));
-#endif
    
 
    //bEnable = AfxEnableMemoryTracking(FALSE);      
@@ -278,18 +262,7 @@ void AFX_MODULE_STATE::CreateActivationContext()
 
 AFX_MODULE_STATE::~AFX_MODULE_STATE()
 {
-#ifndef _AFX_NO_DAO_SUPPORT
-//   delete m_pDaoState;
-#endif
 
-
-
-   // clean up type lib cache ::collection::map, if any
-   if (m_pTypeLibCacheMap != NULL)
-   {
-      m_pTypeLibCacheMap->remove_all(&m_typeLibCache);
-      delete m_pTypeLibCacheMap;
-   }
    if (m_hActCtx != NULL && m_hActCtx != INVALID_HANDLE_VALUE)
    {
       AfxReleaseActCtx(m_hActCtx);
@@ -297,18 +270,6 @@ AFX_MODULE_STATE::~AFX_MODULE_STATE()
    }
 }
 
-void CTypeLibCacheMap::remove_all(void * pExcept)
-{
-   POSITION pos = get_start_position();
-   void * pTypeLibID;
-   CTypeLibCache* pCache;
-   while (pos != NULL)
-   {
-      get_next_assoc(pos, pTypeLibID, (void *&)pCache);
-      if (pCache != pExcept)
-         delete pCache;
-   }
-}
 
 AFX_MODULE_THREAD_STATE::AFX_MODULE_THREAD_STATE()
 {
@@ -322,25 +283,10 @@ AFX_MODULE_THREAD_STATE::AFX_MODULE_THREAD_STATE()
 
 AFX_MODULE_THREAD_STATE::~AFX_MODULE_THREAD_STATE()
 {
-   // cleanup thread local tooltip ::ca::window
-/*   if (m_pToolTip != NULL)
-      m_pToolTip->DestroyToolTipCtrl();*/
 
    delete m_pLastInfo;
 
 
-#ifndef _AFX_NO_SOCKET_SUPPORT
-   // cleanup socket notification list
-   if (m_plistSocketNotifications != NULL)
-      while (!m_plistSocketNotifications->is_empty())
-         delete m_plistSocketNotifications->remove_head();
-#ifndef _ApplicationFrameworkDLL
-   // cleanup dynamically allocated socket maps
-   delete m_pmapSocketHandle;
-   delete m_pmapDeadSockets;
-   delete m_plistSocketNotifications;
-#endif
-#endif //!_AFX_NO_SOCKET_SUPPORT
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -351,17 +297,11 @@ LRESULT CALLBACK AfxWndProcBase(HWND, UINT, WPARAM, LPARAM);
 class _AFX_BASE_MODULE_STATE : public AFX_MODULE_STATE
 {
 public:
-#ifdef _ApplicationFrameworkDLL
    _AFX_BASE_MODULE_STATE() : AFX_MODULE_STATE(TRUE, AfxWndProcBase, _MFC_VER)
-#else
-   _AFX_BASE_MODULE_STATE() : AFX_MODULE_STATE(TRUE)
-#endif
       { }
 };
 
 PROCESS_LOCAL(_AFX_BASE_MODULE_STATE, _afxBaseModuleState)
-
-#ifdef _ApplicationFrameworkDLL
 
 #undef AfxWndProc
 LRESULT CALLBACK
@@ -369,8 +309,6 @@ AfxWndProcBase(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 {
    return AfxWndProc(hWnd, nMsg, wParam, lParam);
 }
-
-#endif
 
 /////////////////////////////////////////////////////////////////////////////
 // helper functions for module state
@@ -435,25 +373,3 @@ CLASS_DECL_VMSWIN AFX_MODULE_THREAD_STATE * AfxGetModuleThreadState()
    return pResult;
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// CTypeLibCache::unlock
-// (Note: the rest of CTypeLibCache is implemented in oletyplb.cpp)
-
-void CTypeLibCache::unlock()
-{
-   ASSERT(m_cRef > 0);
-
-   if (InterlockedDecrement(&m_cRef) == 0)
-   {
-      if (m_ptinfo != NULL)
-      {
-         m_ptinfo->Release();
-         m_ptinfo = NULL;
-      }
-      if (m_ptlib != NULL)
-      {
-         m_ptlib->Release();
-         m_ptlib = NULL;
-      }
-   }
-}

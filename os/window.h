@@ -1,12 +1,15 @@
 #pragma once
 
+
 namespace win
 {
-   
+
+
    CLASS_DECL_VMSWIN LRESULT CALLBACK _AfxSendMsgHook(int, WPARAM, LPARAM);
    //CLASS_DECL_VMSWIN void _AfxStandardSubclass(HWND);
    CLASS_DECL_VMSWIN LRESULT CALLBACK _AfxCbtFilterHook(int, WPARAM, LPARAM);
    CLASS_DECL_VMSWIN LRESULT AfxCallWndProc(::user::interaction * pWnd, HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
+
 
    class CLASS_DECL_VMSWIN window : 
       virtual public ::ca::window,
@@ -164,9 +167,9 @@ namespace win
 
    // Window Text Functions
       void SetWindowText(const char * lpszString);
-      int GetWindowText(__out_ecount_part_z(nMaxCount, return + 1) LPTSTR lpszStringBuf, __in int nMaxCount);
+      strsize GetWindowText(LPTSTR lpszStringBuf, strsize nMaxCount);
       void GetWindowText(string & rString);
-      int GetWindowTextLength();
+      strsize GetWindowTextLength();
       void SetFont(::ca::font* pFont, BOOL bRedraw = TRUE);
       ::ca::font* GetFont();
 
@@ -704,4 +707,7 @@ namespace win
 
    };
 
+
 } // namespace win
+
+

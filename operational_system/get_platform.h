@@ -38,10 +38,6 @@
 
 
 
-#define _ApplicationFrameworkDLL
-
-
-
 
 #if defined(_WIN64) && defined(_M_X64)
 

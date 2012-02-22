@@ -10,7 +10,6 @@
 
 #pragma pointers_to_members( full_generality, virtual_inheritance )
 #include "win32_system.h"
-#define _ApplicationFrameworkDLL
 
 #include <typeinfo.h>
 

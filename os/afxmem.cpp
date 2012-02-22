@@ -5,16 +5,10 @@
 
 _PNH CLASS_DECL_VMSWIN AfxSetNewHandler(_PNH pfnNewHandler)
 {
-#ifdef _ApplicationFrameworkDLL
    AFX_MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
    _PNH pfnOldHandler = pState->m_pfnNewHandler;
    pState->m_pfnNewHandler = pfnNewHandler;
    return pfnOldHandler;
-#else
-   _PNH pfnOldHandler = _afxNewHandler;
-   _afxNewHandler = pfnNewHandler;
-   return pfnOldHandler;
-#endif
 }
 
 

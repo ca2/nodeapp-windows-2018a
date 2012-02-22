@@ -338,7 +338,7 @@ inline DWORD WindowsShell::SHGetFileInfo(
    UINT cbFileInfo,
    UINT uFlags)
 {
-   return (*theWindowsShell.m_pfnSHGetFileInfo)(
+   return (DWORD) (*theWindowsShell.m_pfnSHGetFileInfo)(
       pszPath,
       dwFileAttributes,
       psfi,
