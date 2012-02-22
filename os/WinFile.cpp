@@ -639,7 +639,7 @@ BOOL CLASS_DECL_VMSWIN vfxFullPath(wstring & wstrFullPath, const wstring & wstrP
    // first, fully qualify the path name
    wchar_t * lpszFilePart;
 
-   DWORD dwLen = GetFullPathNameW(wstrPath, (DWORD) dwAllocLen, wstrFullPath, &lpszFilePart);
+   strsize dwLen = GetFullPathNameW(wstrPath, (DWORD) dwAllocLen, wstrFullPath, &lpszFilePart);
 
    if(dwLen == 0)
    {
