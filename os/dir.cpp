@@ -102,10 +102,10 @@ namespace win
          //strFolder.trim();
          // passive left trimming
          while(iRelativeBeg <= iRelativeEnd && myspace(strRelative.m_pszData[iRelativeBeg]))
-            iFolderBeg++;
+            iRelativeBeg++;
          // passive right trimming
          while(iRelativeBeg <= iRelativeEnd && myspace(strRelative.m_pszData[iRelativeEnd]))
-            iFolderEnd--;
+            iRelativeEnd--;
          //better than following 2 together
          //gen::str::ends_eat(strFolder, "\\");
          //gen::str::ends_eat(strFolder, "/");

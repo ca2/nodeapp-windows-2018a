@@ -121,6 +121,28 @@ namespace win
 
    HGDIOBJ graphics::SelectObject(HGDIOBJ hObject) // Safe for NULL handles
    {
+
+      UINT uiType = GetObjectType(hObject);
+
+      if(uiType == OBJ_BITMAP)
+      {
+         
+         HBITMAP hbitmap = (HBITMAP) hObject;
+
+         if(m_bitmap.is_null())
+            m_bitmap.create(get_app());
+
+         if(m_bitmap.is_null())
+            return NULL;
+
+         (dynamic_cast < ::win::bitmap * > (m_bitmap.m_p))->m_pbitmap = new Gdiplus::Bitmap(hbitmap, NULL);
+
+         m_pgraphics = new Gdiplus::Graphics((Gdiplus::Bitmap *) m_bitmap->get_os_data());
+
+         return hbitmap;
+
+      }
+
       //*ASSERT(get_handle1() == get_handle2()); // ASSERT a simple graphics object
       //return (hObject != NULL) ? ::SelectObject(get_handle1(), hObject) : NULL; */
       return NULL;
