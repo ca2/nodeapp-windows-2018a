@@ -1,5 +1,4 @@
 #include "StdAfx.h"
-
 #include <math.h>
 
 
@@ -8,6 +7,85 @@
 
 namespace win
 {
+
+
+   graphics::graphics(::ca::application * papp) :
+      ca(papp)
+   {
+
+      m_bPrinting       = FALSE;
+      m_pdibAlphaBlend  = NULL;
+      m_pgraphics       = NULL;
+      m_hdc             = NULL;
+      m_ppath           = NULL;
+      m_ppathPaint      = NULL;
+
+   }
+
+   graphics::graphics()
+   {
+
+      m_bPrinting       = FALSE;
+      m_pgraphics       = NULL;
+      m_pgraphics       = NULL;
+      m_hdc             = NULL;
+      m_ppath           = NULL;
+      m_ppathPaint      = NULL;
+
+   }
+
+#ifdef _DEBUG
+   void graphics::assert_valid() const
+   {
+      ::radix::object::assert_valid();
+   }
+
+   void graphics::dump(dump_context & dumpcontext) const
+   {
+      ::radix::object::dump(dumpcontext);
+
+      dumpcontext << "get_handle1() = " << get_handle1();
+      dumpcontext << "\nm_hAttribDC = " << get_handle2();
+      dumpcontext << "\nm_bPrinting = " << m_bPrinting;
+
+      dumpcontext << "\n";
+   }
+#endif //_DEBUG
+
+   graphics::~graphics()
+   {
+      
+      HDC hdc = Detach();
+      
+      if(hdc != NULL)
+      {
+         BOOL bDeleted = ::DeleteDC(hdc);
+         if(!bDeleted)
+         {
+            TRACE("Failed to delete GDI device context");
+         }
+      }
+
+      if(m_pgraphics != NULL)
+      {
+         delete m_pgraphics;
+         m_pgraphics = NULL;
+      }
+
+      if(m_ppath != NULL)
+      {
+         delete m_ppath;
+         m_ppath = NULL;
+      }
+
+      if(m_ppathPaint != NULL)
+      {
+         delete m_ppathPaint;
+         m_ppathPaint = NULL;
+      }
+
+   }
+
 
    ::ca::window * graphics::GetWindow() const
    { 
@@ -32,16 +110,26 @@ namespace win
 
    BOOL graphics::CreateCompatibleDC(::ca::graphics * pgraphics)
    { 
-//      throw "not needed exception";
-  //    return FALSE;
+
+      HDC hdc = NULL;
+
       if(pgraphics == NULL)
       {
-         return Attach(::CreateCompatibleDC(NULL));
+         hdc = ::CreateCompatibleDC(NULL);
       }
       else
       {
-         return Attach(::CreateCompatibleDC((HDC)(dynamic_cast<::win::graphics * >(pgraphics))->get_handle1())); 
+         hdc = ::CreateCompatibleDC((HDC)(dynamic_cast<::win::graphics * >(pgraphics))->get_handle1()); 
       }
+
+      if(!Attach(hdc))
+      {
+         ::DeleteDC(hdc);
+         return FALSE;
+      }
+
+      return true;
+
    }
 
    int graphics::ExcludeUpdateRgn(::ca::window * pWnd)
@@ -136,6 +224,11 @@ namespace win
             return NULL;
 
          (dynamic_cast < ::win::bitmap * > (m_bitmap.m_p))->m_pbitmap = new Gdiplus::Bitmap(hbitmap, NULL);
+
+         if(m_pgraphics != NULL)
+         {
+            delete m_pgraphics;
+         }
 
          m_pgraphics = new Gdiplus::Graphics((Gdiplus::Bitmap *) m_bitmap->get_os_data());
 
@@ -329,6 +422,7 @@ namespace win
       return m_pgraphics->DrawArc(gdiplus_pen(), rectf, (Gdiplus::REAL) start, (Gdiplus::REAL) end) == Gdiplus::Status::Ok;
       
    }
+
    BOOL graphics::Arc(LPCRECT lpRect, POINT ptStart, POINT ptEnd)
    { ASSERT(get_handle1() != NULL); return ::Arc(get_handle1(), lpRect->left, lpRect->top,
    lpRect->right, lpRect->bottom, ptStart.x, ptStart.y,
@@ -471,9 +565,11 @@ namespace win
          return TRUE;
 
       BOOL bOk1 = FALSE;
+
       BOOL bOk2 = FALSE;
 
       Gdiplus::Point * ppoints = new Gdiplus::Point[nCount];
+
       try
       {
 
@@ -485,6 +581,7 @@ namespace win
    
          bOk1 = m_pgraphics->FillPolygon(gdiplus_brush(), ppoints, nCount, gdiplus_get_fill_mode()) == Gdiplus::Status::Ok;
          bOk2 = m_pgraphics->DrawPolygon(gdiplus_pen(), ppoints, nCount) == Gdiplus::Status::Ok;
+
       }
       catch(...)
       {
@@ -511,6 +608,7 @@ namespace win
       Gdiplus::RectF rectf((Gdiplus::REAL) x1, (Gdiplus::REAL) y1, (Gdiplus::REAL) (x2 - x1), (Gdiplus::REAL) (y2 - y1));
 
       BOOL bOk1 = m_pgraphics->FillRectangle(gdiplus_brush(), rectf) == Gdiplus::Status::Ok;
+
       BOOL bOk2 = m_pgraphics->DrawRectangle(gdiplus_pen(), rectf) == Gdiplus::Status::Ok;
 
       return bOk1 && bOk2;
@@ -824,6 +922,7 @@ namespace win
 
       return TRUE;
    }
+
 #pragma push_macro("GetTextMetrics")
 #undef GetTextMetrics
    BOOL graphics::GetTextMetrics(LPTEXTMETRIC lpMetrics) const
@@ -1047,7 +1146,9 @@ namespace win
 
    BOOL graphics::FillPath()
    { 
+
       return m_pgraphics->FillPath(gdiplus_brush(), m_ppath) == Gdiplus::Status::Ok;
+
    }
 
    BOOL graphics::FlattenPath()
@@ -1073,16 +1174,23 @@ namespace win
       ASSERT(get_handle1() != NULL); 
       return ::SetMiterLimit(get_handle1(), fMiterLimit, NULL); 
    }
+   
    BOOL graphics::StrokeAndFillPath()
    { 
+
       BOOL bOk1 = m_pgraphics->FillPath(gdiplus_brush(), m_ppathPaint) == Gdiplus::Status::Ok;
+
       BOOL bOk2 = m_pgraphics->DrawPath(gdiplus_pen(), m_ppathPaint) == Gdiplus::Status::Ok;
+
       return bOk1 && bOk2;
+
    }
+
    BOOL graphics::StrokePath()
    {
       return m_pgraphics->DrawPath(gdiplus_pen(), m_ppathPaint) == Gdiplus::Status::Ok;
    }
+
    BOOL graphics::WidenPath()
    {
       return m_ppath->Widen(gdiplus_pen()) == Gdiplus::Status::Ok;
@@ -1523,52 +1631,6 @@ namespace win
 
 
 
-   /////////////////////////////////////////////////////////////////////////////
-   // graphics
-   graphics::graphics(::ca::application * papp) :
-      ca(papp)
-   {
-//      set_handle1(NULL);
-  //    set_handle2(NULL);
-      m_bPrinting       = FALSE;
-      m_pdibAlphaBlend  = NULL;
-      m_pgraphics       = NULL;
-      m_hdc             = NULL;
-      m_ppath           = NULL;
-      m_ppathPaint      = NULL;
-
-   }
-
-   graphics::graphics()
-   {
-    //  set_handle1(NULL);
-      //set_handle2(NULL);
-      m_bPrinting    = FALSE;
-      m_pgraphics       = NULL;
-      m_pgraphics       = NULL;
-      m_hdc             = NULL;
-      m_ppath           = NULL;
-      m_ppathPaint      = NULL;
-
-   }
-
-#ifdef _DEBUG
-   void graphics::assert_valid() const
-   {
-      ::radix::object::assert_valid();
-   }
-
-   void graphics::dump(dump_context & dumpcontext) const
-   {
-      ::radix::object::dump(dumpcontext);
-
-      dumpcontext << "get_handle1() = " << get_handle1();
-      dumpcontext << "\nm_hAttribDC = " << get_handle2();
-      dumpcontext << "\nm_bPrinting = " << m_bPrinting;
-
-      dumpcontext << "\n";
-   }
-#endif //_DEBUG
 
 
    //::ca::graphics * PASCAL ::win::graphics::from_handle(HDC hDC)
@@ -1584,14 +1646,14 @@ namespace win
    BOOL graphics::Attach(HDC hdc)
    {
 
-      
-      if(m_pgraphics != NULL)
+      if(hdc == NULL)
+         return FALSE;
+
+      if(m_hdc == hdc)
       {
 
-         if(hdc == m_pgraphics->GetHDC())
+         if(m_pgraphics != NULL)
             return TRUE;
-
-         delete m_pgraphics;
 
       }
       
@@ -1629,10 +1691,11 @@ namespace win
       if(m_pgraphics == NULL)
          return NULL;
 
-      HDC hdc = m_pgraphics->GetHDC();
-
       delete m_pgraphics;
       m_pgraphics = NULL;
+
+      HDC hdc = m_hdc;
+      m_hdc = NULL;
 
       return hdc;
       
@@ -1647,29 +1710,6 @@ namespace win
       return ::DeleteDC(Detach());
    }
 
-   graphics::~graphics()
-   {
-      
-      HDC hdc = Detach();
-      
-      if(hdc != NULL)
-      {
-         ::DeleteDC(hdc);
-      }
-
-      if(m_ppath != NULL)
-      {
-         delete m_ppath;
-         m_ppath = NULL;
-      }
-
-      if(m_ppathPaint != NULL)
-      {
-         delete m_ppathPaint;
-         m_ppathPaint = NULL;
-      }
-
-   }
 
 
    void graphics::SetAttribDC(HDC hDC)  // Set the Attribute DC
@@ -1842,12 +1882,15 @@ namespace win
 
    int graphics::SetBkMode(int nBkMode)
    {
-      int nRetVal = 0;
+
+      return 0;
+
+/*      int nRetVal = 0;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          nRetVal = ::SetBkMode(get_handle1(), nBkMode);
       if(get_handle2() != NULL)
          nRetVal = ::SetBkMode(get_handle2(), nBkMode);
-      return nRetVal;
+      return nRetVal;*/
    }
 
    int graphics::SetPolyFillMode(int nPolyFillMode)

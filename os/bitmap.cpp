@@ -161,6 +161,12 @@ namespace win
          m_pdata = NULL;
       }
 
+      if(m_pbitmap != NULL)
+      {
+         delete m_pbitmap;
+         m_pbitmap = NULL;
+      }
+
       m_pbitmap = new ::Gdiplus::Bitmap(nWidth, nHeight, Gdiplus::PixelOffsetModeHighQuality);
 
       return TRUE;
@@ -173,6 +179,12 @@ namespace win
       {
          ca2_free(m_pdata);
          m_pdata = NULL;
+      }
+
+      if(m_pbitmap != NULL)
+      {
+         delete m_pbitmap;
+         m_pbitmap = NULL;
       }
 
       m_pbitmap = new ::Gdiplus::Bitmap(nWidth, nHeight, Gdiplus::PixelOffsetModeHighQuality);

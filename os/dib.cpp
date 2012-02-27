@@ -82,7 +82,7 @@ namespace win
 
    dib::~dib ()
    {
-      //Destroy ();
+//      Destroy ();
    }
 
    BOOL dib::create(class size size)
@@ -327,7 +327,7 @@ namespace win
 
    void dib::mult_alpha(::ca::dib * pdibWork, bool bPreserveAlpha)
    {
-
+      ::ca::dib::mult_alpha(pdibWork, bPreserveAlpha);
       return ;
       /*
       if(area() <= 0)

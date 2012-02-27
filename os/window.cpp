@@ -2844,10 +2844,10 @@ namespace win
       EnumWindows(GetAppsEnumWindowsProc, (LPARAM) &wnda);
    }
 
-   void window::_001OnDeferPaintLayeredWindowBackground(::ca::graphics * pdc)
+/*   void window::_001OnDeferPaintLayeredWindowBackground(::ca::graphics * pdc)
    {
       _001DeferPaintLayeredWindowBackground(pdc);
-   }
+   }*/
 
 
    class print_window :
@@ -2891,7 +2891,7 @@ namespace win
       }
    };
 
-/*   void window::_001DeferPaintLayeredWindowBackground(::ca::graphics * pdc)
+   void window::_001DeferPaintLayeredWindowBackground(HDC hdc)
    {
 
       rect rectClient;
@@ -2899,38 +2899,40 @@ namespace win
       GetClientRect(rectClient);
 
 
-      pdc->FillSolidRect(rectClient, 0x00000000);
+      //pdc->FillSolidRect(rectClient, 0x00000000);
 
-      return;
+      //return;
       rect rectUpdate;
-      GetDesktopWindow()->GetWindowRect(rectUpdate);
-      pdc->SetViewportOrg(point(0, 0));
+      GetWindowRect(rectUpdate);
+      SetViewportOrgEx(hdc, 0, 0, NULL);
       rect rectPaint;
       rectPaint = rectUpdate;
       ScreenToClient(rectPaint);
       user::HWNDArray wndaApp;
 
-      user::LPWndArray wndpa;
 
-      
+      int i; 
+      int j;
 
-      ::ca::region_sp rgnWindow(get_app());
-      ::ca::region_sp rgnIntersect(get_app());
+      HRGN rgnWindow;
+      HRGN rgnIntersect;
+      HRGN rgnUpdate = NULL;
 
 
-      rgnWindow->CreateRectRgn(0, 0, 0, 0);
-      rgnIntersect->CreateRectRgn(0, 0, 0, 0);
-      
+      rgnWindow = CreateRectRgn(0, 0, 0, 0);
+      rgnIntersect = CreateRectRgn(0, 0, 0, 0);
 
 //      int iCount = wndaApp.get_count();
+
+      try
+      {
      
       if(GetWindowLong(GWL_EXSTYLE) & WS_EX_LAYERED)
       {
-         wndpa = System.frames();
          rect rect5;
          rect rect9;
-         ::ca::region_sp rgnUpdate(get_app());
-         rgnUpdate->CreateRectRgnIndirect(rectUpdate);
+         
+         rgnUpdate = CreateRectRgnIndirect(&rectUpdate);
          HWND hwndOrder = ::GetWindow(get_handle(), GW_HWNDNEXT);
          for(;;)
          {
@@ -2950,27 +2952,23 @@ namespace win
                   wndaApp.add(hwndOrder);
                }
             }
-   /*         else if(::GetWindowLong(wndaApp[j], GWL_EXSTYLE) & WS_EX_LAYERED)
-            {
-               j++;
-            }*/
-            /*else
+            else
             {
                rect rectWindow;
                ::GetWindowRect(hwndOrder, rectWindow);
-               rgnWindow->SetRectRgn(rectWindow);
-               rgnIntersect->SetRectRgn(rect(0, 0, 0, 0));
-               rgnIntersect->CombineRgn(rgnUpdate, rgnWindow, RGN_AND);
+               SetRectRgn(rgnWindow, rectWindow.left, rectWindow.top, rectWindow.right, rectWindow.bottom);
+               SetRectRgn(rgnIntersect, 0, 0, 0, 0);
+               CombineRgn(rgnIntersect, rgnUpdate, rgnWindow, RGN_AND);
                rect rectIntersectBox;
-               rgnIntersect->GetRgnBox(rectIntersectBox);
+               GetRgnBox(rgnIntersect, rectIntersectBox);
                if(rectIntersectBox.is_empty())
                {
                }
                else
                {
-                  rgnUpdate->CombineRgn(rgnUpdate, rgnWindow, RGN_DIFF);
+                  CombineRgn(rgnUpdate, rgnUpdate, rgnWindow, RGN_DIFF);
                   rect rectDiffBox;
-                  rgnUpdate->GetRgnBox(rectDiffBox);
+                  GetRgnBox(rgnUpdate, rectDiffBox);
                   wndaApp.add(hwndOrder);
                   if(rectDiffBox.is_empty())
                   {
@@ -2979,6 +2977,8 @@ namespace win
                }
             }
             hwndOrder = ::GetWindow(hwndOrder, GW_HWNDNEXT);
+            
+
          }
          for(int j = wndaApp.get_upper_bound(); j >= 0; j--)
          {
@@ -2987,11 +2987,11 @@ namespace win
                break;
             if(!::IsWindowVisible(hWnd) || ::IsIconic(hWnd))
                continue;
-            ::GetWindowRect(hWnd, rect5);*/
-            //rect9.intersect(rect5, rectUpdate);
-            //if(rect9.width() >0 && rect9.height() > 0)
-      /*      {
-               ::ca::window * pwnd = dynamic_cast < ::ca::window * > (window::FromHandlePermanent(hWnd));
+            ::GetWindowRect(hWnd, rect5);
+            rect9.intersect(rect5, rectUpdate);
+            if(rect9.width() >0 && rect9.height() > 0)
+            {
+               /*::ca::window * pwnd = dynamic_cast < ::ca::window * > (window::FromHandlePermanent(hWnd));
                if(pwnd == NULL)
                {
                   for(int l = 0; l < wndpa.get_count(); l++)
@@ -3006,25 +3006,29 @@ namespace win
                if(pwnd != NULL)
                {
                   pwnd->_001Print(pdc);
-               }
-               else if(::GetWindowLong(wndaApp[j], GWL_EXSTYLE) & WS_EX_LAYERED)
+               }*/
+               //if(::GetWindowLong(wndaApp[j], GWL_EXSTYLE) & WS_EX_LAYERED)
+               if(true)
                {
                   HDC hDCMem = CreateCompatibleDC(NULL);
                   HBITMAP hBmp = NULL;
                   {
-                     HDC hDC = ::GetDC(hWnd);
+                     HDC hDC = ::GetWindowDC(hWnd);
                      hBmp = CreateCompatibleBitmap(hDC, rect5.width(), rect5.height());
                      ::ReleaseDC(hWnd, hDC);
                   }
                   HGDIOBJ hOld = SelectObject(hDCMem, hBmp);
-                  print_window printwindow(get_app(), hWnd, hDCMem, 284);
+                  //print_window printwindow(get_app(), hWnd, hDCMem, 284);
+                  ::PrintWindow(hWnd, hDCMem, 0);
                   ::BitBlt(
-                     (HDC) pdc->get_os_data(), 
-                     rect5.left,
-                     rect5.top,
+                     hdc ,
+                     //rect5.left,
+                     //rect5.top,
+                     0, 0,
                      rect5.width(), rect5.height(),
                      hDCMem,
-                     0, 0,
+                     rectUpdate.left - rect5.left, 
+                     rectUpdate.top - rect5.top, 
                      SRCCOPY);
                   ::SelectObject(hDCMem, hOld);
                   ::DeleteObject(hDCMem);
@@ -3032,16 +3036,16 @@ namespace win
                }
                else
                {
-                  pdc->SetViewportOrg(point(0, 0));
+                  SetViewportOrgEx(hdc, 0, 0, NULL);
                   HDC hdcWindow = ::GetDCEx(wndaApp[j], NULL, DCX_WINDOW);
                   if(hdcWindow == NULL)
                      hdcWindow = ::GetDCEx(wndaApp[j], NULL, DCX_WINDOW | DCX_CACHE);
                   if(hdcWindow != NULL)
                   {
                      ::BitBlt(
-                        (HDC) pdc->get_os_data(),
-                        rect5.left,
-                        rect5.top,
+                        hdc,
+                        rect5.left - rectUpdate.left,
+                        rect5.top - rectUpdate.top,
                         rect5.width(), rect5.height(),
                         hdcWindow,
                         rect5.left - rect5.left,
@@ -3057,7 +3061,16 @@ namespace win
             }
          }
       }
-   }*/
+      }
+      catch(...)
+      {
+
+      }
+
+      ::DeleteObject(rgnWindow);
+      ::DeleteObject(rgnIntersect);
+      ::DeleteObject(rgnUpdate);
+   }
 
    void window::_001OnProdevianSynch(gen::signal_object * pobj)
    {
@@ -3805,7 +3818,7 @@ ExitModal:
    #ifdef _DEBUG
       else if (*lplpfn != oldWndProc)
       {
-         TRACE(::radix::trace::category_AppMsg, 0, "Error: Trying to use SubclassWindow with incorrect window\n");
+         TRACE(::radix::trace::category_AppMsg, 0, "p: Trying to use SubclassWindow with incorrect window\n");
          TRACE(::radix::trace::category_AppMsg, 0, "\tderived class.\n");
          TRACE(::radix::trace::category_AppMsg, 0, "\thWnd = $%08X (nIDC=$%08X) is not a %hs.\n", (UINT)(UINT_PTR)hWnd,
             _AfxGetDlgCtrlID(hWnd), typeid(*this).name());
@@ -4476,16 +4489,21 @@ ExitModal:
 
    int window::ReleaseDC(::ca::graphics * pgraphics)
    { 
+      
+      if(pgraphics == NULL)
+         return -1;
+
+      if(((Gdiplus::Graphics *)(dynamic_cast<::win::graphics * >(pgraphics))->get_os_data()) == NULL)
+         return -1;
+
       if(get_handle() == NULL)
       {
-         ::ReleaseDC(NULL, ((Gdiplus::Graphics *)(dynamic_cast<::win::graphics * >(pgraphics))->get_os_data())->GetHDC()); 
+         ::ReleaseDC(NULL, (dynamic_cast<::win::graphics * >(pgraphics))->m_hdc); 
          pgraphics->release();
       }
       else
       {
-         if(((Gdiplus::Graphics *)(dynamic_cast<::win::graphics * >(pgraphics))->get_os_data()) == NULL)
-            return -1;
-         ::ReleaseDC(get_handle(), ((Gdiplus::Graphics *)(dynamic_cast<::win::graphics * >(pgraphics))->get_os_data())->GetHDC()); 
+         ::ReleaseDC(get_handle(), (dynamic_cast<::win::graphics * >(pgraphics))->m_hdc); 
          pgraphics->release();
       }
       return 1;
@@ -6109,15 +6127,15 @@ BOOL CLASS_DECL_VMSWIN AfxRegisterClass(WNDCLASS* lpWndClass)
 namespace win
 {
 
-   void window::_001DeferPaintLayeredWindowBackground(::ca::graphics * pdc)
+/*   void window::_001DeferPaintLayeredWindowBackground(::ca::graphics * pdc)
    {
 
 
-   }
+   }*/
 
    void window::_001UpdateWindow()
    {
-      
+
       rect rectWindow;
 
       GetWindowRect(rectWindow);
@@ -6125,134 +6143,129 @@ namespace win
       if(rectWindow.area() <= 0)
          return;
 
-      ::visual::dib_sp dib(get_app());
 
-      if(!dib->create(rectWindow.size()))
-         return;
+      POINT pt;
+      SIZE sz;
 
-      Gdiplus::Graphics * pg = (Gdiplus::Graphics *) dib->get_graphics()->get_os_data();
+      pt.x = rectWindow.left;
+      pt.y = rectWindow.top;
+      sz.cx = rectWindow.right - rectWindow.left;
+      sz.cy = rectWindow.bottom - rectWindow.top;
+   
+      int cx = sz.cx;
+      int cy = sz.cy;
 
-      BLENDFUNCTION blendPixelFunction = { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
-      
-      dib->FillByte(0);
+      BITMAPINFO info;
+      COLORREF * pcolorref;
 
-      _001Print(dib->get_graphics());
+      ZeroMemory(&info, sizeof (BITMAPINFO));
 
-      pg->Flush();
+      info.bmiHeader.biSize          = sizeof (BITMAPINFOHEADER);
+      info.bmiHeader.biWidth         = cx;
+      info.bmiHeader.biHeight        = - cy;
+      info.bmiHeader.biPlanes        = 1;
+      info.bmiHeader.biBitCount      = 32; 
+      info.bmiHeader.biCompression   = BI_RGB;
+      info.bmiHeader.biSizeImage     = cx * cy * 4;
 
-      HDC hdcScreen = ::GetDC(get_handle());
+      HBITMAP hbitmap = CreateDIBSection(NULL, &info, DIB_RGB_COLORS, (void **) &pcolorref, NULL, NULL);
 
-//      HDC hdcMemory = ::CreateCompatibleDC(NULL);
-
-  //    HBITMAP hbitmap = CreateCompatibleBitmap(hdc, iWidth, iHeight);
-
-    //  ::B
-
-//      ::SelectObject(hdcMemory, hbitmap);
-
-
-      point pt;
-      size sz;
-
-      pt = point(rectWindow.top_left());
-      sz = size(rectWindow.size());
-
-      point ptSrc(0, 0);
-
-      ::visual::dib_sp dibMultAlphaWork(get_app());
-
-      dib->mult_alpha(dibMultAlphaWork);
-
-
-/*      ::Gdiplus::Graphics g(hdc);
-
-      g.DrawImage((Gdiplus::Bitmap *) (dynamic_cast < ::win::dib * > (dib.m_p))->m_spbitmap->get_os_data(), 0, 0);*/
-      //HDC hdcDib = pg->GetHDC();
- // Default to upper left of screen
-     //POINT ptOrigin = { 0, 0 };
-     //SIZE sizeSplash = { 128, 128 };
-
-     // Get the actual screen location
-     //GetPointOfOrigin(ptOrigin, sizeSplash);
-
-     // Our in memory database of GDI+ Bitmaps
-     //data::image::BoxOfBits *box = 
-       //dynamic_cast<data::image::BoxOfBits *>(&Images.get_package("skin_layout_008"));
-
-     // Create a display context as a canvas to draw the images
-     //HDC hdcScreen = GetDC(NULL);
-
-      BITMAPINFO bi;
-
-      ZeroMemory(&bi, sizeof (BITMAPINFO));
-	   bi.bmiHeader.biSize=sizeof (BITMAPINFOHEADER);
-	   bi.bmiHeader.biWidth= rectWindow.width();
-	   bi.bmiHeader.biHeight=-rectWindow.height();
-	   bi.bmiHeader.biPlanes=1;
-	   bi.bmiHeader.biBitCount=32;
-	   bi.bmiHeader.biCompression=BI_RGB;
-	   bi.bmiHeader.biSizeImage=abs(rectWindow.width()*rectWindow.height()*4);
-
-     HDC hdcMem = CreateCompatibleDC(hdcScreen);
-     COLORREF * pcolorref = (dynamic_cast < ::win::dib * > (dib.m_p))->m_pcolorref;
-     
-     HBITMAP bmMem = CreateDIBSection(hdcMem, &bi, DIB_RGB_COLORS, (void**) &pcolorref, NULL, 0);
-     //memcpy(pcolorref, (dynamic_cast < ::win::dib * > (dib.m_p))->m_pcolorref, bi.bmiHeader.biSizeImage);
-     // Prep canvas for rendering graphic
-     HBITMAP hbmpOld = (HBITMAP)SelectObject(hdcMem, bmMem);
-     Gdiplus::Graphics graphics(hdcMem);
-
-
-     graphics.DrawImage((Gdiplus::Bitmap *) (dynamic_cast < ::win::dib * > (dib.m_p))->m_spbitmap->get_os_data(), 0, 0, 0, 0, rectWindow.width(), rectWindow.height(), Gdiplus::UnitPixel);
-
-     // Prepare to alpha blend the canvas with the screen
-     /*BLENDFUNCTION blend = { 0 };
-     blend.BlendOp = AC_SRC_OVER;
-     blend.SourceConstantAlpha = 255;
-     blend.AlphaFormat = AC_SRC_ALPHA;*/
-
-     // Composite the canvas with the screen into the layered window
-     POINT ptZero = { 0 };
-     ::UpdateLayeredWindow(get_handle(), hdcScreen, &pt, &sz, hdcMem, &ptSrc, RGB(0, 0, 0), &blendPixelFunction, ULW_ALPHA);
-
-     // Delete temporary objects used for canvas
-     ::SelectObject(hdcMem, hbmpOld);
-     ::DeleteObject(bmMem);
-     ::DeleteDC(hdcMem);
-     ::ReleaseDC(NULL, hdcScreen);
-
-      /*class rect rectWin;
-      GetWindowRect(rectWin);
-      if(rect(rectWindow) != rectWin || (m_pguie != NULL && (bool) m_pguie->oprop("pending_layout")))
       {
 
-            
-         if(m_pguie != NULL && (bool) m_pguie->oprop("pending_layout"))
-         {
-            HWND hwndZOrder = (HWND) m_pguie->oprop("pending_zorder").get_integer();
-            SetWindowPos((int) HWND_TOPMOST, 
-               rectWindow.left, rectWindow.top, rectWindow.width(), rectWindow.height(), SWP_SHOWWINDOW);
-            SetWindowPos((int) HWND_NOTOPMOST, 
-               rectWindow.left, rectWindow.top, rectWindow.width(), rectWindow.height(), SWP_SHOWWINDOW);
-            SetWindowPos((int) hwndZOrder, 
-               rectWindow.left, rectWindow.top, rectWindow.width(), rectWindow.height(), SWP_SHOWWINDOW | SWP_FRAMECHANGED);
-            /*simple_frame_window * pframe = dynamic_cast < simple_frame_window * > (pwnd->m_pguie);
-            if(pframe != NULL)
-            {
-               pframe->ActivateFrame();
-            }*/
-/*            m_pguie->oprop("pending_layout") = false;
-         }
-         else
-         {
-            SetWindowPos(NULL, rectWindow.left, rectWindow.top, rectWindow.width(), rectWindow.height(), SWP_SHOWWINDOW);
-         }
+         memset(pcolorref, 0, cx * cy * 4);
+
+         Gdiplus::Bitmap b(cx, cy, cx *4 , PixelFormat32bppARGB, (BYTE *) pcolorref);
+         
+         ::ca::graphics_sp spg(get_app());
+
+         (dynamic_cast < ::win::graphics * > (spg.m_p))->attach(new Gdiplus::Graphics(&b));
+
+         _001Print(spg);
+
       }
-      */
+
+
+      BYTE *dst=(BYTE*)pcolorref;
+      __int64 size = cx * cy;
+
+
+      // >> 8 instead of / 255 subsequent alpha_blend operations say thanks on true_blend because (255) * (1/254) + (255) * (254/255) > 255
+
+
+      while (size >= 8)
+      {
+         dst[0] = LOBYTE(((int)dst[0] * (int)dst[3])>> 8);
+         dst[1] = LOBYTE(((int)dst[1] * (int)dst[3])>> 8);
+         dst[2] = LOBYTE(((int)dst[2] * (int)dst[3])>> 8);
+
+         dst[4+0] = LOBYTE(((int)dst[4+0] * (int)dst[4+3])>> 8);
+         dst[4+1] = LOBYTE(((int)dst[4+1] * (int)dst[4+3])>> 8);
+         dst[4+2] = LOBYTE(((int)dst[4+2] * (int)dst[4+3])>> 8);
+
+         dst[8+0] = LOBYTE(((int)dst[8+0] * (int)dst[8+3])>> 8);
+         dst[8+1] = LOBYTE(((int)dst[8+1] * (int)dst[8+3])>> 8);
+         dst[8+2] = LOBYTE(((int)dst[8+2] * (int)dst[8+3])>> 8);
+
+         dst[12+0] = LOBYTE(((int)dst[12+0] * (int)dst[12+3])>> 8);
+         dst[12+1] = LOBYTE(((int)dst[12+1] * (int)dst[12+3])>> 8);
+         dst[12+2] = LOBYTE(((int)dst[12+2] * (int)dst[12+3])>> 8);
+
+         dst[16+0] = LOBYTE(((int)dst[16+0] * (int)dst[16+3])>> 8);
+         dst[16+1] = LOBYTE(((int)dst[16+1] * (int)dst[16+3])>> 8);
+         dst[16+2] = LOBYTE(((int)dst[16+2] * (int)dst[16+3])>> 8);
+
+         dst[20+0] = LOBYTE(((int)dst[20+0] * (int)dst[20+3])>> 8);
+         dst[20+1] = LOBYTE(((int)dst[20+1] * (int)dst[20+3])>> 8);
+         dst[20+2] = LOBYTE(((int)dst[20+2] * (int)dst[20+3])>> 8);
+
+         dst[24+0] = LOBYTE(((int)dst[24+0] * (int)dst[24+3])>> 8);
+         dst[24+1] = LOBYTE(((int)dst[24+1] * (int)dst[24+3])>> 8);
+         dst[24+2] = LOBYTE(((int)dst[24+2] * (int)dst[24+3])>> 8);
+
+         dst[28+0] = LOBYTE(((int)dst[28+0] * (int)dst[28+3])>> 8);
+         dst[28+1] = LOBYTE(((int)dst[28+1] * (int)dst[28+3])>> 8);
+         dst[28+2] = LOBYTE(((int)dst[28+2] * (int)dst[28+3])>> 8);
+
+         dst += 4 * 8;
+         size -= 8;
+      }
+      while(size--)
+      {
+         dst[0] = LOBYTE(((int)dst[0] * (int)dst[3])>> 8);
+         dst[1] = LOBYTE(((int)dst[1] * (int)dst[3])>> 8);
+         dst[2] = LOBYTE(((int)dst[2] * (int)dst[3])>> 8);
+         dst += 4;
+      }
+
+
+      {
+         HDC hdcScreen = ::GetDC(get_handle());
+
+         HDC hdcMem = ::CreateCompatibleDC(NULL);
+
+         HBITMAP hbitmapOld = (HBITMAP) ::SelectObject(hdcMem, hbitmap);
+
+         BLENDFUNCTION blendPixelFunction = { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
+      
+         POINT ptZero = { 0 };
+      
+         point ptSrc(0, 0);
+
+         BOOL bOk = ::UpdateLayeredWindow(get_handle(), hdcScreen, &pt, &sz, hdcMem, &ptSrc, RGB(0, 0, 0), &blendPixelFunction, ULW_ALPHA);
+
+         ::SelectObject(hdcMem, hbitmapOld);
+      
+         ::DeleteDC(hdcMem);
+
+         ::ReleaseDC(get_handle(), hdcScreen);
+      }
+
+      ::DeleteObject(hbitmap);
 
 
    }
 
-
-
 }
+
+
+

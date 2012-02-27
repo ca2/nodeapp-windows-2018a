@@ -19,6 +19,12 @@ namespace win
 
    region::~region()
    {
+      
+      if(m_pregion != NULL)
+      {
+         delete m_pregion;
+         m_pregion = NULL;
+      }
 
    }
 

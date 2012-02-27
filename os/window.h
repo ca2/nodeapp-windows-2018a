@@ -692,9 +692,7 @@ namespace win
 
       static void get_app_wnda(user::HWNDArray & wnda);
 
-      virtual void _001DeferPaintLayeredWindowBackground(::ca::graphics * pdc);
-
-      virtual void _001OnDeferPaintLayeredWindowBackground(::ca::graphics * pdc);
+      virtual void _001DeferPaintLayeredWindowBackground(HDC hdc);
 
       virtual LONG GetWindowLong(int nIndex);
       virtual LONG SetWindowLong(int nIndex, LONG lValue);
