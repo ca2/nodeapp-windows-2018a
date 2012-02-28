@@ -464,10 +464,51 @@ namespace win
          if(m_pgraphics == NULL)
             return FALSE;
 
-         Gdiplus::Bitmap b(picon->m_hicon);
-      
-         return m_pgraphics->DrawImage(&b, x, y, 0, 0, cx, cy, Gdiplus::UnitPixel) == Gdiplus::Ok;
+         BOOL bOk = FALSE;
 
+         BITMAPINFO info;
+         COLORREF * pcolorref;
+
+         ZeroMemory(&info, sizeof (BITMAPINFO));
+
+         info.bmiHeader.biSize          = sizeof (BITMAPINFOHEADER);
+         info.bmiHeader.biWidth         = cx;
+         info.bmiHeader.biHeight        = - cy;
+         info.bmiHeader.biPlanes        = 1;
+         info.bmiHeader.biBitCount      = 32; 
+         info.bmiHeader.biCompression   = BI_RGB;
+         info.bmiHeader.biSizeImage     = cx * cy * 4;
+
+         HBITMAP hbitmap = ::CreateDIBSection(NULL, &info, DIB_RGB_COLORS, (void **) &pcolorref, NULL, NULL);
+
+         HDC hdc = ::CreateCompatibleDC(NULL);
+
+         HBITMAP hbitmapOld = (HBITMAP) ::SelectObject(hdc, hbitmap);
+
+         if(::DrawIconEx(hdc, 0, 0, picon->m_hicon, cx, cy, istepIfAniCur, NULL, DI_IMAGE | DI_MASK))
+         {
+
+            ::SelectObject(hdc, hbitmapOld);
+
+            try
+            {
+
+               Gdiplus::Bitmap b(cx, cy, cx * 4 , PixelFormat32bppARGB, (BYTE *) pcolorref);
+
+               bOk = m_pgraphics->DrawImage(&b, x, y, 0, 0, cx, cy, Gdiplus::UnitPixel) == Gdiplus::Ok;
+
+            }
+            catch(...)
+            {
+            }
+
+         }
+
+         ::DeleteDC(hdc);
+
+         ::DeleteObject(hbitmap);
+
+         return bOk;
 
       }
       catch(...)
