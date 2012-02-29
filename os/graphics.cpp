@@ -751,14 +751,14 @@ namespace win
 
       try
       {
-         return m_pgraphics->DrawImage(
-            (Gdiplus::Bitmap *) pgraphicsSrc->GetCurrentBitmap().get_os_data(),
-            dstRect, srcRect, Gdiplus::UnitPixel) == Gdiplus::Status::Ok;
+         return m_pgraphics->DrawImage((Gdiplus::Bitmap *) pgraphicsSrc->GetCurrentBitmap().get_os_data(),  dstRect, srcRect, Gdiplus::UnitPixel) == Gdiplus::Status::Ok;
       }
       catch(...)
       {
-         return FALSE;
+         
       }
+
+      return FALSE;
 
       //return ::StretchBlt(get_handle1(), x, y, nWidth, nHeight, WIN_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth, nSrcHeight, dwRop); 
    
