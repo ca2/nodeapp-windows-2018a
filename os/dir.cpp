@@ -19,7 +19,7 @@ namespace win
 
    }
 
-   dir::path::path(::ca::application * papp) :
+   path::path(::ca::application * papp) :
       ca(papp)
    {
    }
@@ -242,7 +242,7 @@ namespace win
       }
    }
 
-   bool dir::path::is_equal(const char * lpcsz1, const char * lpcsz2)
+   bool path::is_equal(const char * lpcsz1, const char * lpcsz2)
    {
       return System.file_system().ComparePath(lpcsz1, lpcsz2);
    }
@@ -890,7 +890,7 @@ namespace win
    }
 
 
-   class ::ca::dir::system::path & dir::path()
+   class ::ca::path & dir::path()
    {
       return m_path;
    }

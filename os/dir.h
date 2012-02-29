@@ -4,19 +4,20 @@
 namespace win
 {
 
+   class CLASS_DECL_VMSWIN path :
+      virtual public ::ca::path
+   {
+   public:
+      path(::ca::application * papp);
+      virtual bool  is_equal(const char * lpszFilPathA, const char * lpszFilPathB);
+   };
+
    class CLASS_DECL_VMSWIN dir :
       virtual public ::ca::dir::system
    {
    public:
 
 
-      class CLASS_DECL_VMSWIN path :
-         virtual public ::ca::dir::system::path
-      {
-      public:
-         path(::ca::application * papp);
-         virtual bool  is_equal(const char * lpszFilPathA, const char * lpszFilPathB);
-      };
 
 
       string      m_strCa2;
@@ -25,10 +26,10 @@ namespace win
       dir(::ca::application * papp);
 
 
-      virtual class ::ca::dir::system::path & path();
-
       using ::ca::dir::system::path;
+      virtual class ::ca::path & path();
       virtual string path(const string & strFolder, const string & strRelative, const string & str2);
+
       virtual string relpath(const char * lpcszSource, const char * lpcszRelative, const char * lpcsz2 = NULL);
       virtual void  ls_pattern(::ca::application * papp, const char * lpcsz, const char * lpcszPattern, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, base_array < bool, bool > * pbaIsDir = NULL, base_array < __int64, __int64 > * piaSize = NULL);
       virtual void  ls(::ca::application * papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, base_array < bool, bool > * pbaIsDir = NULL, base_array < __int64, __int64 > * piaSize = NULL);
