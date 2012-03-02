@@ -54,7 +54,7 @@ int CLASS_DECL_VMSWIN AfxWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, L
    
    psystem->init_main_data(pinitmaindata);
 
-   MessageBox(NULL, "box1", "box1", MB_ICONINFORMATION);
+   //MessageBox(NULL, "box1", "box1", MB_ICONINFORMATION);
 
    nReturnCode = psystem->main();
 
