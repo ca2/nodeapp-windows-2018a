@@ -4496,17 +4496,14 @@ ExitModal:
       if(((Gdiplus::Graphics *)(dynamic_cast<::win::graphics * >(pgraphics))->get_os_data()) == NULL)
          return -1;
 
-      if(get_handle() == NULL)
-      {
-         ::ReleaseDC(NULL, (dynamic_cast<::win::graphics * >(pgraphics))->m_hdc); 
-         pgraphics->release();
-      }
-      else
-      {
-         ::ReleaseDC(get_handle(), (dynamic_cast<::win::graphics * >(pgraphics))->m_hdc); 
-         pgraphics->release();
-      }
+      ::ReleaseDC(get_handle(), (dynamic_cast<::win::graphics * >(pgraphics))->m_hdc); 
+      
+      (dynamic_cast<::win::graphics * >(pgraphics))->m_hdc = NULL;
+      
+      pgraphics->release();
+
       return 1;
+
    }
    
    void window::UpdateWindow()
