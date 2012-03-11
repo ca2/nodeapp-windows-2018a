@@ -25,7 +25,7 @@ void CLASS_DECL_VMSWIN AfxUnregisterWndClasses()
    // unregister Window classes
    AFX_MODULE_STATE* pModuleState = AfxGetModuleState();
 
-   AfxLockGlobals(CRIT_REGCLASSLIST);
+   single_lock sl(&pModuleState->m_mutexRegClassList, TRUE);
 
    if(pModuleState->m_pstrUnregisterList != NULL) 
    {
@@ -39,7 +39,6 @@ void CLASS_DECL_VMSWIN AfxUnregisterWndClasses()
       pModuleState->m_pstrUnregisterList->Empty();
       pModuleState->m_pstrUnregisterList = NULL;
    }
-   AfxUnlockGlobals(CRIT_REGCLASSLIST);
 
 }
 void CLASS_DECL_VMSWIN AfxWinTerm(void)

@@ -122,7 +122,7 @@ no_track_object* process_local_object::get_data(
 {
    if (m_pObject == NULL)
    {
-      AfxLockGlobals(CRIT_PROCESSLOCAL);
+      single_lock sl(&m_mutex, TRUE);
       try
       {
          if (m_pObject == NULL)
@@ -130,11 +130,9 @@ no_track_object* process_local_object::get_data(
       }
       catch(base_exception * pe)
       {
-         AfxUnlockGlobals(CRIT_PROCESSLOCAL);
          ::ca::rethrow(pe);
       }
       
-      AfxUnlockGlobals(CRIT_PROCESSLOCAL);
    }
    return m_pObject;
 }

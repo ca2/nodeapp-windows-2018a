@@ -4,11 +4,15 @@
 namespace win
 {
 
+
    void PASCAL window::DeleteTempMap()
    {
+      
       hwnd_map* pMap = AfxGetModuleState()->m_pmapHWND;
-      if (gen::is_null(pMap))
+
+      if(::ca::is_null(pMap))
          return;
+
       single_lock sl(&pMap->m_mutex, TRUE);
 
       raw_array < HWND > hwndaRemove;
@@ -45,16 +49,6 @@ namespace win
    }
 
 
-//   void PASCAL graphics::DeleteTempMap()
-  // {
-      /*hdc_map* pMap = AfxGetModuleState()->m_pmapHDC;
-      pMap->delete_temp();*/
-   //}
-
-//   void PASCAL graphics_object::DeleteTempMap()
-  // {
-      /*hgdiobj_map* pMap = AfxGetModuleState()->m_pmapHGDIOBJ;
-      pMap->delete_temp();*/
-   //}
-
 } // namespace win
+
+

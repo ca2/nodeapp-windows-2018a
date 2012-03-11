@@ -898,12 +898,12 @@ namespace win
 
    bool dir::initialize()
    {
-      xml::node node(get_app());
-      node.load(Application.file().as_string(appdata("configuration\\directory.xml")));
-      if(node.m_strName == "directory_configuration")
+      xml::document doc(get_app());
+      doc.load(Application.file().as_string(appdata("configuration\\directory.xml")));
+      if(doc.get_name() == "directory_configuration")
       {
-         m_strTimeFolder = node.get_child_value("time"); 
-         m_strNetSeedFolder = node.get_child_value("netseed"); 
+         m_strTimeFolder = doc.get_child_value("time"); 
+         m_strNetSeedFolder = doc.get_child_value("netseed"); 
       }
       if(m_strTimeFolder.is_empty())
          m_strTimeFolder = appdata("time");

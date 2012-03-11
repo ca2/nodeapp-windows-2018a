@@ -1896,9 +1896,9 @@ namespace win
       if (ReflectLastMsg(hWndCtrl, pResult))
          return TRUE;        // eaten by child
 
-      AFX_NOTIFY notify;
-      notify.pResult = pResult;
-      notify.pNMHDR = pNMHDR;
+//      AFX_NOTIFY notify;
+  //    notify.pResult = pResult;
+    //  notify.pNMHDR = pNMHDR;
    //xxx   return _001OnCommand((UINT)nID, MAKELONG(nCode, WM_NOTIFY), &notify, NULL);
       return FALSE;
    }
@@ -2651,9 +2651,9 @@ namespace win
             // reflect the message through the message ::collection::map as OCM_NOTIFY
             NMHDR* pNMHDR = (NMHDR*)lParam;
 //            int nCode = pNMHDR->code;
-            AFX_NOTIFY notify;
-            notify.pResult = pResult;
-            notify.pNMHDR = pNMHDR;
+//            AFX_NOTIFY notify;
+  //          notify.pResult = pResult;
+    //        notify.pNMHDR = pNMHDR;
    // xxxx         return window::_001OnCommand(0, MAKELONG(nCode, WM_REFLECT_BASE+WM_NOTIFY), &notify, NULL);
          }
 
@@ -2785,7 +2785,7 @@ namespace win
       if (System.GetMainWnd() == this)
       {
          // update any system metrics cache
-         afxData.UpdateSysMetrics();
+//         afxData.UpdateSysMetrics();
       }
 
       // forward this message to all other child windows
@@ -5903,7 +5903,7 @@ BOOL CLASS_DECL_VMSWIN AfxEndDeferRegisterClass(LONG fToRegisterParam, const cha
    memset(&wndcls, 0, sizeof(WNDCLASS));   // start with NULL defaults
    wndcls.lpfnWndProc = DefWindowProc;
    wndcls.hInstance = Sys(::win::get_thread()->m_papp).m_hInstance;
-   wndcls.hCursor = afxData.hcurArrow;
+   //wndcls.hCursor = afxData.hcurArrow;
 
    INITCOMMONCONTROLSEX init;
    init.dwSize = sizeof(init);
@@ -6093,11 +6093,12 @@ BOOL CLASS_DECL_VMSWIN AfxRegisterClass(WNDCLASS* lpWndClass)
 
    if (afxContextIsDLL)
    {
-      AfxLockGlobals(CRIT_REGCLASSLIST);
+      
       try
       {
          // class registered successfully, add to registered list
          AFX_MODULE_STATE* pModuleState = AfxGetModuleState();
+         single_lock sl(&pModuleState->m_mutexRegClassList, TRUE);
          if(pModuleState->m_pstrUnregisterList == NULL)
             pModuleState->m_pstrUnregisterList = new string;
          *pModuleState->m_pstrUnregisterList += lpWndClass->lpszClassName;
@@ -6105,12 +6106,10 @@ BOOL CLASS_DECL_VMSWIN AfxRegisterClass(WNDCLASS* lpWndClass)
       }
       catch(base_exception * pe)
       {
-         AfxUnlockGlobals(CRIT_REGCLASSLIST);
          ::ca::rethrow(pe);
          // Note: DELETE_EXCEPTION not required.
       }
       
-      AfxUnlockGlobals(CRIT_REGCLASSLIST);
    }
 
    return bRet;

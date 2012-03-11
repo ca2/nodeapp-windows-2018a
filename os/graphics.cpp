@@ -1470,8 +1470,8 @@ namespace win
          }
          else
          {
-            cxPerInch = afxData.cxPixelsPerInch;
-            cyPerInch = afxData.cyPixelsPerInch;
+//            cxPerInch = afxData.cxPixelsPerInch;
+  //          cyPerInch = afxData.cyPixelsPerInch;
          }
          ASSERT(cxPerInch != 0 && cyPerInch != 0);
          lpSize->cx = MulDiv(lpSize->cx, HIMETRIC_INCH, cxPerInch);
@@ -1505,8 +1505,8 @@ namespace win
          }
          else
          {
-            cxPerInch = afxData.cxPixelsPerInch;
-            cyPerInch = afxData.cyPixelsPerInch;
+//            cxPerInch = afxData.cxPixelsPerInch;
+  //          cyPerInch = afxData.cyPixelsPerInch;
          }
          ASSERT(cxPerInch != 0 && cyPerInch != 0);
          lpSize->cx = MulDiv(lpSize->cx, cxPerInch, HIMETRIC_INCH);
@@ -1535,7 +1535,7 @@ namespace win
 
    ::ca::brush* PASCAL graphics::GetHalftoneBrush(::ca::application * papp)
    {
-      AfxLockGlobals(CRIT_HALFTONEBRUSH);
+/*      AfxLockGlobals(CRIT_HALFTONEBRUSH);
       if (_afxHalftoneBrush == NULL)
       {
          WORD grayPattern[8];
@@ -1552,7 +1552,7 @@ namespace win
          _afxWingdixTerm = (char)!atexit(&AfxWingdixTerm);
       AfxUnlockGlobals(CRIT_HALFTONEBRUSH);
 
-//      return ::win::brush::from_handle(papp, _afxHalftoneBrush);
+//      return ::win::brush::from_handle(papp, _afxHalftoneBrush);*/
       return NULL;
    }
 

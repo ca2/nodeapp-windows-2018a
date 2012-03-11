@@ -6,7 +6,7 @@
 
 // Classes declared in this file
 
-class simple_list;
+//class simple_list;
 class thread_slot_data;                  // for manipulationg thread local storage
 template < int iSlot >
 class thread_local_object;               // for storing thread local data
@@ -139,6 +139,9 @@ thread_local_object < iSlot > ::~thread_local_object()
 class CLASS_DECL_VMSWIN AFX_NOVTABLE process_local_object
 {
 public:
+
+   mutex          m_mutex;
+
 // Attributes
    no_track_object* get_data(no_track_object* (* pfnCreateObject)());
 
