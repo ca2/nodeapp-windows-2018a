@@ -500,11 +500,21 @@ namespace win
       }
          */
       
-      for(int l = 0; l < wndpa.get_count(); l++)
+      for(int l = 0; l < wndpa.get_count();)
       {
          try
          {
             dynamic_cast < ::ca::window * > (wndpa[l]->m_pimpl)->_001UpdateWindow();
+            l++;
+         }
+         catch(simple_exception & se)
+         {
+            if(strcmp_dup(se.m_szMessage, "no more a window") == 0)
+            {
+               System.frames().remove(wndpa[l]);
+               wndpa.remove_at(l);
+               
+            }
          }
          catch(...)
          {

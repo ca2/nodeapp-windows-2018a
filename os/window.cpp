@@ -4085,7 +4085,8 @@ ExitModal:
 
    void window::GetWindowRect(__rect64 * lprect)
    {
-      ASSERT(::IsWindow(get_handle()));
+      if(!::IsWindow(get_handle()))
+         throw simple_exception("no more a window");
       // if it is temporary window - probably not ca2 wrapped window
       if(m_pguie == NULL || m_pguie == this)
       {

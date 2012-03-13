@@ -56,7 +56,7 @@ namespace win
       ::ca::smart_pointer<::ex2::application>::m_p->_001OnFileNew(NULL);
    }
 
-   ::document * application::_001OpenDocumentFile(var varFile)
+   ::user::document_interface * application::_001OpenDocumentFile(var varFile)
    {
       return ::ca::smart_pointer<::ex2::application>::m_p->_001OpenDocumentFile(varFile);
    }

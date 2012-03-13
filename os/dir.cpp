@@ -900,10 +900,10 @@ namespace win
    {
       xml::document doc(get_app());
       doc.load(Application.file().as_string(appdata("configuration\\directory.xml")));
-      if(doc.get_name() == "directory_configuration")
+      if(doc.get_root()->get_name() == "directory_configuration")
       {
-         m_strTimeFolder = doc.get_child_value("time"); 
-         m_strNetSeedFolder = doc.get_child_value("netseed"); 
+         m_strTimeFolder = doc.get_root()->get_child_value("time"); 
+         m_strNetSeedFolder = doc.get_root()->get_child_value("netseed"); 
       }
       if(m_strTimeFolder.is_empty())
          m_strTimeFolder = appdata("time");

@@ -48,7 +48,7 @@ namespace win
       virtual HINSTANCE GetHinstance();
       BOOL _001OnDDECommand(const char * lpcsz);
       virtual void _001EnableShellOpen();
-      virtual ::document * _001OpenDocumentFile(var varFile);
+      virtual ::user::document_interface * _001OpenDocumentFile(var varFile);
       virtual void _001OnFileNew();
 
       // Loads a cursor resource.
