@@ -1141,7 +1141,8 @@ namespace win
          pbase->m_uiMessage == WM_MBUTTONUP ||
          pbase->m_uiMessage == WM_RBUTTONDOWN ||
          pbase->m_uiMessage == WM_RBUTTONUP ||
-         pbase->m_uiMessage == WM_MOUSEMOVE)
+         pbase->m_uiMessage == WM_MOUSEMOVE ||
+         pbase->m_uiMessage == WM_MOUSEWHEEL)
       {
          // user presence status activity reporting
          if(pbase->m_uiMessage == WM_LBUTTONDOWN 
