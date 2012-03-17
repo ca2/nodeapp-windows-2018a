@@ -1,0 +1,15 @@
+=============================
+MICROSOFT CORPORATION CREDITS
+=============================
+
+The Simple3DGame sample uses several texture assets that were obtained
+from http://www.3dmd.net.  These textures include:
+	metal_texture.dds
+	oldWood4_nt.dds
+Each of these textures was converted from the original jpeg files to the 
+DDS format.   The original files were:
+	seamless_brushed_aluminum_metal_texture.jpeg
+	oldWood4_nt.jpeg
+
+The terms of use of these textures can be found at:
+	http://www.3dmd.net/license.htm

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
+  <Identity Name="Simple3DGameDX-Xaml" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="1.0.0.1" />
+  <Properties>
+    <DisplayName>Simple 3D Game using DirectX and Xaml</DisplayName>
+    <PublisherDisplayName>Microsoft Corporation</PublisherDisplayName>
+    <Logo>storeLogo-sdk.png</Logo>
+    <Description>Version of Simple 3D Game using DirectX and Xaml</Description>
+  </Properties>
+  <Prerequisites>
+    <OSMinVersion>6.2</OSMinVersion>
+    <OSMaxVersionTested>6.2</OSMaxVersionTested>
+  </Prerequisites>
+  <Resources>
+    <Resource Language="en-us" />
+  </Resources>
+  <Applications>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Simple3DGameXaml.App">
+      <VisualElements DisplayName="Metro style DirectX/XAML first-person game sample" Logo="squareTile-sdk.png" SmallLogo="smallTile-sdk.png" Description="Metro style DirectX/XAML first-person game sample" ForegroundText="dark" BackgroundColor="#222222">
+        <DefaultTile ShowName="allLogos" ShortName="D3D GameXAML" />
+        <SplashScreen Image="splash-sdk.png" />
+      </VisualElements>
+    </Application>
+  </Applications>
+</Package>

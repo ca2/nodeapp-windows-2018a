@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="appm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="appm_base.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="appm_renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.xaml.cpp" />
+    <ClCompile Include="intro.xaml.cpp" />
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="appm_base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="appm_renderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="appm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="main.xaml.h" />
+    <ClInclude Include="intro.xaml.h" />
+    <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{b2946d81-5d53-4d2e-98e8-e86a6508f6dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{b61abbc8-5bd2-49ee-88a3-7b1a69d6cb05}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="main.xaml">
+      <Filter>Source Files</Filter>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="intro.xaml">
+      <Filter>Source Files</Filter>
+    </ApplicationDefinition>
+  </ItemGroup>
+</Project>
