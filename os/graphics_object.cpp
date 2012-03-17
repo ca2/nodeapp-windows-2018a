@@ -127,7 +127,7 @@ namespace win
    /////////////////////////////////////////////////////////////////////////////
    // ::ca::graphics_object
 
-#ifdef _DEBUG
+
    void graphics_object::dump(dump_context & dumpcontext) const
    {
       ::radix::object::dump(dumpcontext);
@@ -142,7 +142,7 @@ namespace win
       //ASSERT(get_handle() == NULL ||
         // (afxData.bWin95 || ::GetObjectType(get_handle()) != 0));
    }
-#endif
+
 
    /*void * graphics_object::detach_os_data()
    {

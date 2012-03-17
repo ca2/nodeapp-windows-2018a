@@ -560,7 +560,6 @@ namespace win
          PostNcDestroy();
    }
 
-   #ifdef _DEBUG
    void window::assert_valid() const
    {
       if (get_handle() == NULL)
@@ -662,7 +661,6 @@ namespace win
 
       dumpcontext << "\n";
    }
-   #endif
 
    BOOL window::DestroyWindow()
    {

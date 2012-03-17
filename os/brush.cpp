@@ -102,7 +102,7 @@ namespace win
 //      return FALSE;
 //   }
 
-#ifdef _DEBUG
+
    void brush::dump(dump_context & dumpcontext) const
    {
       ::ca::graphics_object::dump(dumpcontext);
@@ -119,7 +119,7 @@ namespace win
       dumpcontext << "\n";
       */
    }
-#endif
+
 
 
    void * brush::get_os_data() const

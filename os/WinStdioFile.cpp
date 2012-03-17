@@ -310,7 +310,7 @@ void WinStdioFile::UnlockRange(file_position /* dwPos */, file_size /* dwCount *
    AfxThrowNotSupportedException();
 }
 
-#ifdef _DEBUG
+
 void WinStdioFile::dump(dump_context & dumpcontext) const
 {
    WinFile::dump(dumpcontext);
@@ -318,7 +318,7 @@ void WinStdioFile::dump(dump_context & dumpcontext) const
    dumpcontext << "m_pStream = " << (void *)m_pStream;
    dumpcontext << "\n";
 }
-#endif
+
 
 
 

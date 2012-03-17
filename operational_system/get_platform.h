@@ -54,9 +54,9 @@
 
 
 
-#ifndef _DEBUG
-#define _DEBUG // ca2 is in debug - bugs come and go, always
-#endif
+//#ifndef _DEBUG
+//#define _DEBUG // ca2 basis is in debug - bugs come and go, always - in stage, at least, it should go
+//#endif
 
 
 

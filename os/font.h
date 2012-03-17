@@ -37,11 +37,7 @@ namespace win
 
       virtual int GetLogFont(LOGFONT* pLogFont);
 
-      #ifdef _DEBUG
          virtual void dump(dump_context & dumpcontext) const;
-      #endif
-
-      
 
 
    };

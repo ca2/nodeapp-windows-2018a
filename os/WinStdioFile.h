@@ -25,9 +25,7 @@ public:
    virtual UINT read_string(string & rString);
 
    virtual ~WinStdioFile();
-#ifdef _DEBUG
    void dump(dump_context & dumpcontext) const;
-#endif
    virtual file_position get_position() const;
    virtual BOOL open(const char * lpszFileName, UINT nOpenFlags, ex1::file_exception_sp * pError = NULL);
    virtual ::primitive::memory_size read(void * lpBuf, ::primitive::memory_size nCount);

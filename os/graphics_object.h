@@ -29,10 +29,8 @@ namespace win
       BOOL operator==(const ::ca::graphics_object& obj) const;
       BOOL operator!=(const ::ca::graphics_object& obj) const;
 
-   #ifdef _DEBUG
       virtual void dump(dump_context & dumpcontext) const;
       virtual void assert_valid() const;
-   #endif
 
    };
 

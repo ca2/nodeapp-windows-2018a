@@ -632,10 +632,8 @@ namespace win
    // Implementation
       virtual ~window();
       virtual BOOL CheckAutoCenter();
-   #ifdef _DEBUG
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
-   #endif
       static BOOL PASCAL GrayCtlColor(HDC hDC, HWND hWnd, UINT nCtlColor,
          HBRUSH hbrGray, COLORREF clrText);
 

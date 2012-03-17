@@ -153,10 +153,8 @@ namespace win
    // Implementation
    public:
       virtual ~thread();
-   #ifdef _DEBUG
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
-   #endif
       void CommonConstruct();
       virtual void Delete();
          // 'delete this' only if m_bAutoDelete == TRUE

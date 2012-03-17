@@ -34,7 +34,7 @@ namespace win
 
    }
 
-#ifdef _DEBUG
+
    void graphics::assert_valid() const
    {
       ::radix::object::assert_valid();
@@ -50,7 +50,7 @@ namespace win
 
       dumpcontext << "\n";
    }
-#endif //_DEBUG
+
 
    graphics::~graphics()
    {
@@ -2774,7 +2774,7 @@ namespace win
    /////////////////////////////////////////////////////////////////////////////
    // Helper DCs
 
-#ifdef _DEBUG
+
    void CClientDC::assert_valid() const
    {
       graphics::assert_valid();
@@ -2788,7 +2788,7 @@ namespace win
       dumpcontext << "get_handle1() = " << m_hWnd;
       dumpcontext << "\n";
    }
-#endif
+
 
    CClientDC::CClientDC(window * pWnd)
    {
@@ -2804,7 +2804,7 @@ namespace win
       ::ReleaseDC(m_hWnd, Detach());
    }
 
-#ifdef _DEBUG
+
    void CWindowDC::assert_valid() const
    {
       graphics::assert_valid();
@@ -2818,7 +2818,7 @@ namespace win
       dumpcontext << "get_handle1() = " << m_hWnd;
       dumpcontext << "\n";
    }
-#endif
+
 
    CWindowDC::CWindowDC(window * pWnd)
    {
@@ -2834,7 +2834,7 @@ namespace win
       ::ReleaseDC(m_hWnd, Detach());
    }
 
-#ifdef _DEBUG
+
    void CPaintDC::assert_valid() const
    {
       graphics::assert_valid();
@@ -2852,7 +2852,7 @@ namespace win
 
       dumpcontext << "\n";
    }
-#endif
+
 
    CPaintDC::CPaintDC(window * pWnd)
    {

@@ -32,9 +32,7 @@ namespace win
       //BOOL CreateSysColorBrush(int nIndex);
 
 
-#ifdef _DEBUG
       virtual void dump(dump_context & dumpcontext) const;
-#endif
    };
 
 

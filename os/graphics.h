@@ -475,10 +475,8 @@ namespace win
 
    // Implementation
    public:
-   #ifdef _DEBUG
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
-   #endif
 
       // advanced use and implementation
       BOOL m_bPrinting;

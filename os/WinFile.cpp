@@ -847,7 +847,7 @@ void CLASS_DECL_VMSWIN vfxGetModuleShortFileName(HINSTANCE hInst, string& strSho
 /////////////////////////////////////////////////////////////////////////////
 // WinFile diagnostics
 
-#ifdef _DEBUG
+
 void WinFile::assert_valid() const
 {
    ::radix::object::assert_valid();
@@ -862,7 +862,7 @@ void WinFile::dump(dump_context & dumpcontext) const
    dumpcontext << " and name \"" << m_strFileName << "\"";
    dumpcontext << "\n";
 }
-#endif
+
 
 
 // IMPLEMENT_DYNAMIC(WinFile, ::radix::object)

@@ -1547,7 +1547,7 @@ stop_run:
    /////////////////////////////////////////////////////////////////////////////
    // thread diagnostics
 
-#ifdef _DEBUG
+
    void thread::assert_valid() const
    {
       command_target::assert_valid();
@@ -1582,7 +1582,7 @@ stop_run:
 
    dumpcontext << "\n";
 }
-#endif
+
 
    bool thread::post_message(::user::interaction * pguie, UINT uiMessage, WPARAM wparam, LPARAM lparam)
    {
@@ -2679,7 +2679,7 @@ return FALSE;
 /////////////////////////////////////////////////////////////////////////////
 // thread diagnostics
 
-#ifdef _DEBUG
+
 void thread::assert_valid() const
 {
 command_target::assert_valid();
@@ -2715,7 +2715,7 @@ dumpcontext << "\nm_nMsgLast = " << pState->m_nMsgLast;
 
 dumpcontext << "\n";
 }
-#endif
+
 
 bool thread::post_message(::user::interaction * pguie, UINT uiMessage, WPARAM wparam, LPARAM lparam)
 {

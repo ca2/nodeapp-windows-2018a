@@ -75,10 +75,8 @@ public:
    virtual void close();
 
    virtual bool IsOpened();
-#ifdef _DEBUG
    virtual void assert_valid() const;
    virtual void dump(dump_context & dumpcontext) const;
-#endif
    enum BufferCommand { bufferRead, bufferWrite, bufferCommit, bufferCheck };
    virtual uint64_t GetBufferPtr(UINT nCommand, uint64_t nCount = 0,
       void ** ppBufStart = NULL, void ** ppBufMax = NULL);

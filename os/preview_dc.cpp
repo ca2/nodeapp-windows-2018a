@@ -156,7 +156,7 @@ void preview_dc::SetScaleRatio(int nNumerator, int nDenominator)
 }
 
 // Implementation support
-#ifdef _DEBUG
+
 void preview_dc::assert_valid() const
 {
    ::ca::graphics_sp::assert_valid();
@@ -170,7 +170,7 @@ void preview_dc::dump(dump_context & dumpcontext) const
    dumpcontext << "Scale Factor: " << m_nScaleNum << "/" << m_nScaleDen;
    dumpcontext << "\n";
 }
-#endif
+
 
 int preview_dc::SaveDC()
 {

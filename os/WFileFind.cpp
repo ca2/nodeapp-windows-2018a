@@ -322,7 +322,7 @@ __int64 FileFind::get_length() const
       return 0;
 }
 
-#ifdef _DEBUG
+
 void FileFind::dump(dump_context & dumpcontext) const
 {
    ::radix::object::dump(dumpcontext);
@@ -341,7 +341,7 @@ void FileFind::assert_valid() const
       ASSERT(m_pFoundInfo != NULL && m_pNextInfo != NULL);
 
 }
-#endif
+
 
 
 // IMPLEMENT_DYNAMIC(FileFind, ::radix::object)

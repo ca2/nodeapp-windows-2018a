@@ -101,7 +101,7 @@ namespace win
          }*/
       }
 
-#ifdef _DEBUG
+
       void font::dump(dump_context & dumpcontext) const
       {
          ::ca::graphics_object::dump(dumpcontext);
@@ -135,7 +135,7 @@ namespace win
 
          dumpcontext << "\n";*/
       }
-#endif
+
 
    /////////////////////////////////////////////////////////////////////////////
    // out-of-line ::ca::brush, font, etc. helpers

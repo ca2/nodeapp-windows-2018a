@@ -180,10 +180,8 @@ namespace win
       // Advanced: virtual access to GetMainWnd()
       virtual ::user::interaction* GetMainWnd();
 
-   #ifdef _DEBUG
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
-   #endif
       virtual void CommonConstruct();
       virtual void Delete();
          // 'delete this' only if m_bAutoDelete == TRUE

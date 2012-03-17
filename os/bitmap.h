@@ -43,9 +43,9 @@ namespace win
       class size SetBitmapDimension(int nWidth, int nHeight);
       class size GetBitmapDimension() const;
 
-   #ifdef _DEBUG
       virtual void dump(dump_context & dumpcontext) const;
-   #endif
+
+
    };
 
 

@@ -31,9 +31,7 @@ namespace win
 
 
       virtual ~pen();
-   #ifdef _DEBUG
       virtual void dump(dump_context & dumpcontext) const;
-   #endif
 
    };
 

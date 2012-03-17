@@ -495,7 +495,7 @@ namespace win
    }
 
 
-   #ifdef _DEBUG
+   
    void application::assert_valid() const
    {
       ::win::thread::assert_valid();
@@ -506,7 +506,7 @@ namespace win
       ::win::thread::dump(dumpcontext);
    }
 
-   #endif
+   
    void application::CommonConstruct()
    {
       ::win::thread::CommonConstruct();

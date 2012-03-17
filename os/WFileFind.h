@@ -52,10 +52,8 @@ protected:
    string m_strRoot;
    char m_chDirSeparator;     // not '\\' for Internet classes
 
-#ifdef _DEBUG
    void dump(dump_context & dumpcontext) const;
    void assert_valid() const;
-#endif
 
    
 };

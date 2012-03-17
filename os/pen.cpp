@@ -68,7 +68,7 @@ namespace win
 
    /////////////////////////////////////////////////////////////////////////////
 
-#ifdef _DEBUG
+
    void pen::dump(dump_context & dumpcontext) const
    {
       ::ca::graphics_object::dump(dumpcontext);
@@ -91,7 +91,7 @@ namespace win
 
       dumpcontext << "\n";*/
    }
-#endif
+
 
 
 

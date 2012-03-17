@@ -1,9 +1,5 @@
 #pragma once
 
-#ifndef _DEBUG
-#define _DEBUG
-#endif
-
 #define IMPLEMENT_VISTA_TOOLS
 #define WIN32
 #define DRAWDIB_INCLUDE_STRETCHDIB
