@@ -535,9 +535,9 @@ namespace win
 
       wstring wstrPath;
       
-      strsize iLen = ::gen::international::utf8_to_unicode_count(strPath);
-      wstrPath.alloc(iLen + 32);
-      ::gen::international::utf8_to_unicode(wstrPath, iLen + 32, strPath, strPath.get_length());
+      //strsize iLen = ::gen::international::utf8_to_unicode_count(strPath);
+      //wstrPath.alloc(iLen + 32);
+      wstrPath = ::gen::international::utf8_to_unicode(strPath);
       if(wstrPath.get_length() >= MAX_PATH)
       {
          if(::gen::str::begins(wstrPath, L"\\\\"))
@@ -565,7 +565,7 @@ namespace win
 
    bool dir::name_is(const string & str, ::ca::application * papp)
    {
-      
+      OutputDebugString(str);
       strsize iLast = str.get_length() - 1;
       while(iLast >= 0)
       {
@@ -622,11 +622,13 @@ namespace win
 
       wstring wstrPath;
       
-      strsize iLen = ::gen::international::utf8_to_unicode_count(str, iLast + 1);
+      //strsize iLen = ::gen::international::utf8_to_unicode_count(str, iLast + 1);
 
-      wstrPath.alloc(iLen + 32);
+      //wstrPath.alloc(iLen + 32);
 
-      ::gen::international::utf8_to_unicode(wstrPath, iLen + 32, str, iLast + 1);
+      wstrPath = ::gen::international::utf8_to_unicode(str, iLast + 1);
+
+      //OutputDebugStringW(wstrPath);
 
       if(wstrPath.get_length() >= MAX_PATH)
       {
