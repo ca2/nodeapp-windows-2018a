@@ -576,11 +576,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="..\c\_.vcxproj">
-      <Project>{d9e0a96e-c666-45c1-aabe-609ddc85ec33}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="_mem.cpp" />
   </ItemGroup>
@@ -589,6 +584,11 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app-sentinel.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\app\appseed\c\_.vcxproj">
+      <Project>{d9e0a96e-c666-45c1-aabe-609ddc85ec33}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

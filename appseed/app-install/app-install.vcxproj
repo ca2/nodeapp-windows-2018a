@@ -604,12 +604,12 @@
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\c\_.vcxproj">
-      <Project>{d9e0a96e-c666-45c1-aabe-609ddc85ec33}</Project>
-    </ProjectReference>
+    <ResourceCompile Include="app-install.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="app-install.rc" />
+    <ProjectReference Include="..\..\..\app\appseed\c\_.vcxproj">
+      <Project>{d9e0a96e-c666-45c1-aabe-609ddc85ec33}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
