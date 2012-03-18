@@ -23,11 +23,13 @@ void CLASS_DECL_VMSWIN AfxSetAllocStop(LONG lRequestNumber)
    _CrtSetBreakAlloc(lRequestNumber);
 }
 */
+#ifdef _DEBUG
 BOOL CLASS_DECL_VMSWIN AfxCheckMemory()
   // check all of primitive::memory (look for primitive::memory tromps)
 {
    return _CrtCheckMemory();
 }
+#endif
 /*
 // -- true if block of exact size, allocated on the heap
 // -- set *plRequestNumber to request number (or 0)

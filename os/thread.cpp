@@ -1562,7 +1562,9 @@ stop_run:
    dumpcontext << "\nm_bAutoDelete = " << m_bAutoDelete;
    dumpcontext << "\nm_hThread = " << (void *)m_hThread;
    dumpcontext << "\nm_nThreadID = " << m_nThreadID;
+#ifdef _DEBUG
    dumpcontext << "\nm_nDisablePumpCount = " << pState->m_nDisablePumpCount;
+#endif
    if (AfxGetThread() == this)
       dumpcontext << "\nm_pMainWnd = " << m_puiMain;
 

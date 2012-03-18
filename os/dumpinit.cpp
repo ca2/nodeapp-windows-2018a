@@ -7,6 +7,8 @@
 #ifndef _AFX_NO_DEBUG_CRT
 static _CRT_DUMP_CLIENT pfnOldCrtDumpClient = NULL;
 
+#ifdef _DEBUG
+
 
 void __cdecl _AfxCrtDumpClient(void * pvData, size_t nBytes)
 {
@@ -92,10 +94,12 @@ int __cdecl _AfxCrtReportHook(int nRptType, __in char *szMsg, int* pResult)
    //Allow other report hooks to be called.
    return FALSE;
 }
+
+#endif
 #endif // _AFX_NO_DEBUG_CRT
 
 
-
+#ifdef _DEBUG
 
 _AFX_DEBUG_STATE::_AFX_DEBUG_STATE()
 {
@@ -147,6 +151,7 @@ BOOL CLASS_DECL_VMSWIN AfxDiagnosticInit(void)
    return TRUE;
 }
 
+#endif
 
 
 #include "StdAfx.h"

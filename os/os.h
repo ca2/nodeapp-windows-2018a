@@ -35,11 +35,11 @@ CLASS_DECL_VMSWIN BOOL AfxInitialize(BOOL bDLL = FALSE, DWORD dwVersion = _MFC_V
 CLASS_DECL_VMSWIN void AfxSetAllocStop(LONG lRequestNumber);
 
 // Return TRUE if primitive::memory is sane or print out what is wrong
-CLASS_DECL_VMSWIN BOOL AfxCheckMemory();
+//CLASS_DECL_VMSWIN BOOL AfxCheckMemory();
 
 // Return TRUE if valid primitive::memory block of nBytes
-CLASS_DECL_VMSWIN BOOL AfxIsMemoryBlock(const void * p, UINT nBytes,
-   LONG* plRequestNumber = NULL);
+//CLASS_DECL_VMSWIN BOOL AfxIsMemoryBlock(const void * p, UINT nBytes,
+  // LONG* plRequestNumber = NULL);
 
 // helper routines for non-C++ EH implementations
 // for THROW_LAST auto-delete backward compatiblity

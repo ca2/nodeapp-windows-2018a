@@ -88,7 +88,7 @@ CLASS_DECL_VMSWIN LONG AfxDelRegTreeHelper(HKEY hParentKey, const string & strKe
 
 
 // Advanced initialization: for overriding default diagnostics
-CLASS_DECL_VMSWIN BOOL AfxDiagnosticInit(void);
+//CLASS_DECL_VMSWIN BOOL AfxDiagnosticInit(void);
 
 
 CLASS_DECL_VMSWIN ::win::thread * AfxGetThread();
