@@ -565,7 +565,7 @@ namespace win
 
    bool dir::name_is(const string & str, ::ca::application * papp)
    {
-      OutputDebugString(str);
+      //OutputDebugString(str);
       strsize iLast = str.get_length() - 1;
       while(iLast >= 0)
       {
