@@ -14,14 +14,14 @@ WinFile::WinFile(::ca::application * papp) :
    ca(papp)
 {
    m_hFile = (UINT) hFileNull;
-   m_bCloseOnDelete = FALSE;
+   m_bCloseOnDelete = TRUE;
 }
 
 WinFile::WinFile(::ca::application * papp, int hFile) :
    ca(papp)
 {
    m_hFile = hFile;
-   m_bCloseOnDelete = FALSE;
+   m_bCloseOnDelete = TRUE;
 }
 
 WinFile::WinFile(::ca::application * papp, const char * lpszFileName, UINT nOpenFlags) :
