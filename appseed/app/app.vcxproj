@@ -789,17 +789,6 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\app\appseed\ca\ca.vcxproj">
-      <Project>{acb3ff4b-0b61-45a7-881d-e102e0f85808}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\app\appseed\c\c.vcxproj">
-      <Project>{4d7d3626-ada6-4ca2-9566-ed7b131e3d51}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\nodeapp\os\os.vcxproj">
-      <Project>{9163e31a-2d5a-4f18-ad6f-b561c76e5054}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="ca2.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -809,6 +798,17 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\app\appseed\ca\ca.vcxproj">
+      <Project>{acb3ff4b-0b61-45a7-881d-e102e0f85808}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\app\appseed\c\c.vcxproj">
+      <Project>{4d7d3626-ada6-4ca2-9566-ed7b131e3d51}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\os\os.vcxproj">
+      <Project>{9163e31a-2d5a-4f18-ad6f-b561c76e5054}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
