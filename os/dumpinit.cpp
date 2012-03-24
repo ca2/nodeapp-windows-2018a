@@ -43,7 +43,7 @@ void __cdecl _AfxCrtDumpClient(void * pvData, size_t nBytes)
 
       if(pobject == NULL)
       {
-            ATL_CRT_ERRORCHECK_SPRINTF(_snprintf_s(sz, _countof(sz), _countof(sz) - 1, "unknown object at $%p, %u bytes long\n", pvData, nBytes));
+            C_RUNTIME_ERRORCHECK_SPRINTF(_snprintf_s(sz, _countof(sz), _countof(sz) - 1, "unknown object at $%p, %u bytes long\n", pvData, nBytes));
       }
       else if(afxdump.GetDepth() > 0)
       {
@@ -55,7 +55,7 @@ void __cdecl _AfxCrtDumpClient(void * pvData, size_t nBytes)
       {
          ::radix::object & obj = *pobject;
          // short form
-         ATL_CRT_ERRORCHECK_SPRINTF(_snprintf_s(sz, _countof(sz), _countof(sz) - 1, "a %hs object at $%p, %u bytes long\n", typeid(obj).name(), pvData, nBytes));
+         C_RUNTIME_ERRORCHECK_SPRINTF(_snprintf_s(sz, _countof(sz), _countof(sz) - 1, "a %hs object at $%p, %u bytes long\n", typeid(obj).name(), pvData, nBytes));
          afxdump << sz;
       }
    }

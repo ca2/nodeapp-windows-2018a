@@ -5224,73 +5224,8 @@ int window::GetCheckedRadioButton(int nIDFirstButton, int nIDLastButton)
       { return m_strTitle; }
 */
 
-   // MDI functions
-  /*  void CMDIFrameWnd::MDIActivate(::user::interaction* pWndActivate)
-      {  m_pguieMdiClient->SendMessage(WM_MDIACTIVATE,
-         (WPARAM)pWndActivate, 0); }
-    void CMDIFrameWnd::MDIIconArrange()
-      {  m_pguieMdiClient->SendMessage(WM_MDIICONARRANGE, 0, 0); }
-    void CMDIFrameWnd::MDIMaximize(::user::interaction * pWnd)
-      {  m_pguieMdiClient->SendMessage(WM_MDIMAXIMIZE, (WPARAM)pWnd, 0); }
-    void CMDIFrameWnd::MDIPrev()
-      {  m_pguieMdiClient->SendMessage(WM_MDINEXT, 0, 1); }
-    void CMDIFrameWnd::MDINext()
-      {  m_pguieMdiClient->SendMessage(WM_MDINEXT, 0, 0); }
-    void CMDIFrameWnd::MDIRestore(::user::interaction * pWnd)
-      {  m_pguieMdiClient->SendMessage(WM_MDIRESTORE, (WPARAM)pWnd, 0); }
-    void CMDIFrameWnd::MDITile()
-      {  m_pguieMdiClient->SendMessage(WM_MDITILE, 0, 0); }
-    void CMDIFrameWnd::MDICascade()
-      {  m_pguieMdiClient->SendMessage(WM_MDICASCADE, 0, 0); }
 
-    void CMDIFrameWnd::MDICascade(int nType)
-      {  m_pguieMdiClient->SendMessage(WM_MDICASCADE, nType, 0); }
-    void CMDIFrameWnd::MDITile(int nType)
-      {  m_pguieMdiClient->SendMessage(WM_MDITILE, nType, 0); }
-    void CMDIChildWnd::MDIDestroy()
-      {  GetParent()->SendMessage(WM_MDIDESTROY, (WPARAM)this, 0L); }
-    void CMDIChildWnd::MDIActivate()
-      {  GetParent()->SendMessage( WM_MDIACTIVATE, (WPARAM)this, 0L); }
-    void CMDIChildWnd::MDIMaximize()
-      {  GetParent()->SendMessage( WM_MDIMAXIMIZE, (WPARAM)this, 0L); }
-    void CMDIChildWnd::MDIRestore()
-      {  GetParent()->SendMessage( WM_MDIRESTORE, (WPARAM)this, 0L); }
-
-   // ::view
-    document * view::get_document() const
-      { ASSERT(this != NULL); return ::view::get_document(); }
-
-   // document
-    const string & document::get_title() const
-      { ASSERT(this != NULL); return m_strTitle; }
-    const string & document::get_path_name() const
-      { ASSERT(this != NULL); return m_strPathName; }
-    document_template * document::get_document_template() const
-      { ASSERT(this != NULL); return m_pdocumentemplate; }
-    BOOL document::is_modified()
-      { ASSERT(this != NULL); return m_bModified; }
-    void document::set_modified_flag(BOOL bModified)
-      { ASSERT(this != NULL); m_bModified = bModified; }
-
-   // thread
-    thread::operator HANDLE() const
-      { return this == NULL ? NULL : m_hThread; }
-    BOOL thread::SetThreadPriority(int nPriority)
-      { ASSERT(m_hThread != NULL); return ::SetThreadPriority(m_hThread, nPriority); }
-    int thread::GetThreadPriority()
-      { ASSERT(m_hThread != NULL); return ::GetThreadPriority(m_hThread); }
-    DWORD thread::ResumeThread()
-      { ASSERT(m_hThread != NULL); return ::ResumeThread(m_hThread); }
-    DWORD thread::SuspendThread()
-      { ASSERT(m_hThread != NULL); return ::SuspendThread(m_hThread); }
-    BOOL thread::PostThreadMessage(UINT message, WPARAM wParam, LPARAM lParam)
-      { ASSERT(m_hThread != NULL); return ::PostThreadMessage(m_nThreadID, message, wParam, lParam); }*/
-
-
-
-   /////////////////////////////////////////////////////////////////////////////
-   // Obsolete and non-portable
-
+   
     void window::CloseWindow()
       { ASSERT(::IsWindow(get_handle())); ::CloseWindow(get_handle()); }
     BOOL window::OpenIcon()
@@ -5756,11 +5691,11 @@ CLASS_DECL_VMSWIN const char * AfxRegisterWndClass(UINT nClassStyle,
 
    if (hCursor == NULL && hbrBackground == NULL && hIcon == NULL)
    {
-      ATL_CRT_ERRORCHECK_SPRINTF(_sntprintf_s(lpszName, _AFX_TEMP_CLASS_NAME_SIZE, _AFX_TEMP_CLASS_NAME_SIZE - 1, "Afx:%p:%x", hInst, nClassStyle));
+      C_RUNTIME_ERRORCHECK_SPRINTF(_sntprintf_s(lpszName, _AFX_TEMP_CLASS_NAME_SIZE, _AFX_TEMP_CLASS_NAME_SIZE - 1, "Afx:%p:%x", hInst, nClassStyle));
    }
    else
    {
-      ATL_CRT_ERRORCHECK_SPRINTF(_sntprintf_s(lpszName, _AFX_TEMP_CLASS_NAME_SIZE, _AFX_TEMP_CLASS_NAME_SIZE - 1, "Afx:%p:%x:%p:%p:%p", hInst, nClassStyle,
+      C_RUNTIME_ERRORCHECK_SPRINTF(_sntprintf_s(lpszName, _AFX_TEMP_CLASS_NAME_SIZE, _AFX_TEMP_CLASS_NAME_SIZE - 1, "Afx:%p:%x:%p:%p:%p", hInst, nClassStyle,
          hCursor, hbrBackground, hIcon));
    }
    
