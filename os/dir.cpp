@@ -120,18 +120,24 @@ namespace win
       }
       else
       {
-         char * psz = strPath.GetBufferSetLength(iRelativeEnd - iRelativeBeg + 1 + iFolderEnd - iFolderBeg + 1 + 1);
+         int iAddUp = 0;
+         char * psz = strPath.GetBufferSetLength(iRelativeEnd - iRelativeBeg + 1 + iFolderEnd - iFolderBeg + 1 + 1 + 1);
          strncpy(psz, &strFolder.m_pszData[iFolderBeg], iFolderEnd - iFolderBeg + 1);
          if(bUrl)
          {
             psz[iFolderEnd - iFolderBeg + 1] = '/';
+            if(strFolder.m_pszData[iFolderEnd - iFolderBeg] == ':')
+            {
+               psz[iFolderEnd - iFolderBeg + 1 + 1] = '/';
+               iAddUp = 1;
+            }
          }
          else
          {
             psz[iFolderEnd - iFolderBeg + 1] = '\\';
          }
-         strncpy(&psz[iFolderEnd - iFolderBeg + 2], &strRelative.m_pszData[iRelativeBeg], iRelativeEnd - iRelativeBeg + 1);
-         strPath.ReleaseBuffer(iRelativeEnd - iRelativeBeg + 1 + iFolderEnd - iFolderBeg + 1 + 1);
+         strncpy(&psz[iFolderEnd - iFolderBeg + 2 + iAddUp], &strRelative.m_pszData[iRelativeBeg], iRelativeEnd - iRelativeBeg + 1);
+         strPath.ReleaseBuffer(iRelativeEnd - iRelativeBeg + 1 + iFolderEnd - iFolderBeg + 1 + 1 + iAddUp);
       }
       
       if(str2.has_char())
