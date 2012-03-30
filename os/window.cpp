@@ -483,7 +483,7 @@ namespace win
       ::win::window_draw * pdraw = dynamic_cast < ::win::window_draw * > (System.get_twf());
       if(pdraw != NULL)
       {
-         pdraw->m_eventFree.wait();
+         retry_single_lock sl(&pdraw->m_eventFree, millis(84), millis(84));
          pdraw->m_wndpaOut.remove(this);
          pdraw->m_wndpaOut.remove(m_pguie);
       }
@@ -6115,85 +6115,113 @@ namespace win
 
       }
 
-
-      BYTE *dst=(BYTE*)pcolorref;
-      __int64 size = cx * cy;
-
-
-      // >> 8 instead of / 255 subsequent alpha_blend operations say thanks on true_blend because (255) * (1/254) + (255) * (254/255) > 255
-
-
-      while (size >= 8)
+      if(GetExStyle() & WS_EX_LAYERED)
       {
-         dst[0] = LOBYTE(((int)dst[0] * (int)dst[3])>> 8);
-         dst[1] = LOBYTE(((int)dst[1] * (int)dst[3])>> 8);
-         dst[2] = LOBYTE(((int)dst[2] * (int)dst[3])>> 8);
+         BYTE *dst=(BYTE*)pcolorref;
+         __int64 size = cx * cy;
 
-         dst[4+0] = LOBYTE(((int)dst[4+0] * (int)dst[4+3])>> 8);
-         dst[4+1] = LOBYTE(((int)dst[4+1] * (int)dst[4+3])>> 8);
-         dst[4+2] = LOBYTE(((int)dst[4+2] * (int)dst[4+3])>> 8);
 
-         dst[8+0] = LOBYTE(((int)dst[8+0] * (int)dst[8+3])>> 8);
-         dst[8+1] = LOBYTE(((int)dst[8+1] * (int)dst[8+3])>> 8);
-         dst[8+2] = LOBYTE(((int)dst[8+2] * (int)dst[8+3])>> 8);
+         // >> 8 instead of / 255 subsequent alpha_blend operations say thanks on true_blend because (255) * (1/254) + (255) * (254/255) > 255
 
-         dst[12+0] = LOBYTE(((int)dst[12+0] * (int)dst[12+3])>> 8);
-         dst[12+1] = LOBYTE(((int)dst[12+1] * (int)dst[12+3])>> 8);
-         dst[12+2] = LOBYTE(((int)dst[12+2] * (int)dst[12+3])>> 8);
 
-         dst[16+0] = LOBYTE(((int)dst[16+0] * (int)dst[16+3])>> 8);
-         dst[16+1] = LOBYTE(((int)dst[16+1] * (int)dst[16+3])>> 8);
-         dst[16+2] = LOBYTE(((int)dst[16+2] * (int)dst[16+3])>> 8);
+         while (size >= 8)
+         {
+            dst[0] = LOBYTE(((int)dst[0] * (int)dst[3])>> 8);
+            dst[1] = LOBYTE(((int)dst[1] * (int)dst[3])>> 8);
+            dst[2] = LOBYTE(((int)dst[2] * (int)dst[3])>> 8);
 
-         dst[20+0] = LOBYTE(((int)dst[20+0] * (int)dst[20+3])>> 8);
-         dst[20+1] = LOBYTE(((int)dst[20+1] * (int)dst[20+3])>> 8);
-         dst[20+2] = LOBYTE(((int)dst[20+2] * (int)dst[20+3])>> 8);
+            dst[4+0] = LOBYTE(((int)dst[4+0] * (int)dst[4+3])>> 8);
+            dst[4+1] = LOBYTE(((int)dst[4+1] * (int)dst[4+3])>> 8);
+            dst[4+2] = LOBYTE(((int)dst[4+2] * (int)dst[4+3])>> 8);
 
-         dst[24+0] = LOBYTE(((int)dst[24+0] * (int)dst[24+3])>> 8);
-         dst[24+1] = LOBYTE(((int)dst[24+1] * (int)dst[24+3])>> 8);
-         dst[24+2] = LOBYTE(((int)dst[24+2] * (int)dst[24+3])>> 8);
+            dst[8+0] = LOBYTE(((int)dst[8+0] * (int)dst[8+3])>> 8);
+            dst[8+1] = LOBYTE(((int)dst[8+1] * (int)dst[8+3])>> 8);
+            dst[8+2] = LOBYTE(((int)dst[8+2] * (int)dst[8+3])>> 8);
 
-         dst[28+0] = LOBYTE(((int)dst[28+0] * (int)dst[28+3])>> 8);
-         dst[28+1] = LOBYTE(((int)dst[28+1] * (int)dst[28+3])>> 8);
-         dst[28+2] = LOBYTE(((int)dst[28+2] * (int)dst[28+3])>> 8);
+            dst[12+0] = LOBYTE(((int)dst[12+0] * (int)dst[12+3])>> 8);
+            dst[12+1] = LOBYTE(((int)dst[12+1] * (int)dst[12+3])>> 8);
+            dst[12+2] = LOBYTE(((int)dst[12+2] * (int)dst[12+3])>> 8);
 
-         dst += 4 * 8;
-         size -= 8;
+            dst[16+0] = LOBYTE(((int)dst[16+0] * (int)dst[16+3])>> 8);
+            dst[16+1] = LOBYTE(((int)dst[16+1] * (int)dst[16+3])>> 8);
+            dst[16+2] = LOBYTE(((int)dst[16+2] * (int)dst[16+3])>> 8);
+
+            dst[20+0] = LOBYTE(((int)dst[20+0] * (int)dst[20+3])>> 8);
+            dst[20+1] = LOBYTE(((int)dst[20+1] * (int)dst[20+3])>> 8);
+            dst[20+2] = LOBYTE(((int)dst[20+2] * (int)dst[20+3])>> 8);
+
+            dst[24+0] = LOBYTE(((int)dst[24+0] * (int)dst[24+3])>> 8);
+            dst[24+1] = LOBYTE(((int)dst[24+1] * (int)dst[24+3])>> 8);
+            dst[24+2] = LOBYTE(((int)dst[24+2] * (int)dst[24+3])>> 8);
+
+            dst[28+0] = LOBYTE(((int)dst[28+0] * (int)dst[28+3])>> 8);
+            dst[28+1] = LOBYTE(((int)dst[28+1] * (int)dst[28+3])>> 8);
+            dst[28+2] = LOBYTE(((int)dst[28+2] * (int)dst[28+3])>> 8);
+
+            dst += 4 * 8;
+            size -= 8;
+         }
+         while(size--)
+         {
+            dst[0] = LOBYTE(((int)dst[0] * (int)dst[3])>> 8);
+            dst[1] = LOBYTE(((int)dst[1] * (int)dst[3])>> 8);
+            dst[2] = LOBYTE(((int)dst[2] * (int)dst[3])>> 8);
+            dst += 4;
+         }
+
+
+         {
+            HDC hdcScreen = ::GetDC(get_handle());
+
+            HDC hdcMem = ::CreateCompatibleDC(NULL);
+
+            HBITMAP hbitmapOld = (HBITMAP) ::SelectObject(hdcMem, hbitmap);
+
+            BLENDFUNCTION blendPixelFunction = { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
+      
+            POINT ptZero = { 0 };
+      
+            point ptSrc(0, 0);
+
+            BOOL bOk = ::UpdateLayeredWindow(get_handle(), hdcScreen, &pt, &sz, hdcMem, &ptSrc, RGB(0, 0, 0), &blendPixelFunction, ULW_ALPHA);
+
+            ::SelectObject(hdcMem, hbitmapOld);
+      
+            ::DeleteDC(hdcMem);
+
+            ::ReleaseDC(get_handle(), hdcScreen);
+         }
+
+         
       }
-      while(size--)
+      else
       {
-         dst[0] = LOBYTE(((int)dst[0] * (int)dst[3])>> 8);
-         dst[1] = LOBYTE(((int)dst[1] * (int)dst[3])>> 8);
-         dst[2] = LOBYTE(((int)dst[2] * (int)dst[3])>> 8);
-         dst += 4;
-      }
+         
+         {
+            HDC hdcScreen = ::GetDC(get_handle());
 
+            HDC hdcMem = ::CreateCompatibleDC(NULL);
 
-      {
-         HDC hdcScreen = ::GetDC(get_handle());
+            HBITMAP hbitmapOld = (HBITMAP) ::SelectObject(hdcMem, hbitmap);
 
-         HDC hdcMem = ::CreateCompatibleDC(NULL);
-
-         HBITMAP hbitmapOld = (HBITMAP) ::SelectObject(hdcMem, hbitmap);
-
-         BLENDFUNCTION blendPixelFunction = { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
+            BLENDFUNCTION blendPixelFunction = { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
       
-         POINT ptZero = { 0 };
+            POINT ptZero = { 0 };
       
-         point ptSrc(0, 0);
+            point ptSrc(0, 0);
 
-         BOOL bOk = ::UpdateLayeredWindow(get_handle(), hdcScreen, &pt, &sz, hdcMem, &ptSrc, RGB(0, 0, 0), &blendPixelFunction, ULW_ALPHA);
+            ::BitBlt(hdcScreen, 0, 0, sz.cx, sz.cy, hdcMem, 0, 0, SRCCOPY);
 
-         ::SelectObject(hdcMem, hbitmapOld);
+            ::SelectObject(hdcMem, hbitmapOld);
       
-         ::DeleteDC(hdcMem);
+            ::DeleteDC(hdcMem);
 
-         ::ReleaseDC(get_handle(), hdcScreen);
+            ::ReleaseDC(get_handle(), hdcScreen);
+         }
+
       }
 
       ::DeleteObject(hbitmap);
-
-
    }
 
 }

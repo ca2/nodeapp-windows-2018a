@@ -518,6 +518,8 @@ namespace win
          }
          catch(...)
          {
+            System.frames().remove(wndpa[l]);
+            wndpa.remove_at(l);
          }
       }
       return true;
