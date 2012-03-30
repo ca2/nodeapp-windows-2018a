@@ -1101,7 +1101,7 @@ namespace win
       }
       if(pbase->m_uiMessage == WM_TIMER)
       {
-         System.GetThread()->step_timer();
+         m_pthread->step_timer();
       }
       else if(pbase->m_uiMessage == WM_LBUTTONDOWN)
       {
