@@ -442,6 +442,7 @@ inline CT* handle_map <HT, CT>::lookup_temporary(HANDLE h)
 
 
 CLASS_DECL_VMSWIN hwnd_map * PASCAL afxMapHWND(BOOL bCreate = FALSE);
+CLASS_DECL_VMSWIN mutex * PASCAL afxMutexHwnd();
 CLASS_DECL_VMSWIN himagelist_map * PASCAL afxMapHIMAGELIST(BOOL bCreate = FALSE);
 //CLASS_DECL_VMSWIN hdc_map * PASCAL afxMapHDC(BOOL bCreate = FALSE);
 //CLASS_DECL_VMSWIN hgdiobj_map * PASCAL afxMapHGDIOBJ(BOOL bCreate = FALSE);

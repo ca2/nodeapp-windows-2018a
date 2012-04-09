@@ -24,39 +24,6 @@ namespace win
    {
    }
 
-   bool is_url(const char * pszCandidate, const char ** ppszRequest = NULL)
-   {
-      const char * psz = pszCandidate;
-      count count = 0;
-      while(*psz != '\0' && (*psz == '.' || *psz == '_' || gen::ch::is_letter_or_digit(psz)))
-      {
-         psz = gen::str::utf8_inc(psz);
-         count++;
-      }
-      if(count <= 0)
-         return false;
-      if(*psz != ':')
-         return false;
-      psz++;
-      if(*psz != '/')
-         return false;
-      psz++;
-      if(*psz != '/')
-         return false;
-      psz++;
-      while(*psz != '\0' && (*psz == '.' || *psz == '_' || gen::ch::is_letter_or_digit(psz)))
-      {
-         psz = gen::str::utf8_inc(psz);
-      }
-      if(*psz != '\0' && *psz != '/')
-         return false;
-      if(ppszRequest != NULL)
-      {
-         *ppszRequest = psz;
-      }
-      return true;
-
-   }
 
    inline bool myspace(char ch)
    {
@@ -66,152 +33,89 @@ namespace win
              ch == '\n';
    }
 
-   string dir::path(const string & strFolder, const string & strRelative, const string & str2)
+   string dir::path(const char * pszFolder, int iLenFolder, const char * pszRelative, int iLenRelative, const char * psz2, int iLen2, bool bUrl)
    {
-      bool bUrl = is_url(strFolder);
-      if(strRelative.is_empty())
-      {
-         if(str2.is_empty())
-            return strFolder;
-         return path(strFolder, str2);
-      }
-      
-      strsize iFolderBeg = 0;
 
-      strsize iFolderEnd = strFolder.get_length() - 1;
+      bool bEmptyRelative = iLenRelative == 0 || pszRelative == NULL || *pszRelative == '\0';
+      bool bEmpty2 = iLen2 == 0 || psz2 == NULL || *psz2 == '\0';
 
-      if(iFolderEnd >= iFolderBeg) 
-      {
-         //strFolder.trim();
-         // passive left trimming
-         while(iFolderBeg <= iFolderEnd && myspace(strFolder.m_pszData[iFolderBeg]))
-            iFolderBeg++;
-         // passive right trimming
-         while(iFolderBeg <= iFolderEnd && myspace(strFolder.m_pszData[iFolderEnd]))
-            iFolderEnd--;
-         //better than following 2 together
-         //gen::str::ends_eat(strFolder, "\\");
-         //gen::str::ends_eat(strFolder, "/");
-         while(iFolderBeg <= iFolderEnd && (strFolder.m_pszData[iFolderEnd] == '/' || strFolder.m_pszData[iFolderEnd] == '\\'))
-            iFolderEnd--;
-      }
-      strsize iRelativeBeg = 0;
-      strsize iRelativeEnd = strRelative.get_length() - 1;
-      if(iRelativeEnd >= iRelativeBeg) 
-      {
-         //strFolder.trim();
-         // passive left trimming
-         while(iRelativeBeg <= iRelativeEnd && myspace(strRelative.m_pszData[iRelativeBeg]))
-            iRelativeBeg++;
-         // passive right trimming
-         while(iRelativeBeg <= iRelativeEnd && myspace(strRelative.m_pszData[iRelativeEnd]))
-            iRelativeEnd--;
-         //better than following 2 together
-         //gen::str::ends_eat(strFolder, "\\");
-         //gen::str::ends_eat(strFolder, "/");
-         while(iRelativeBeg <= iRelativeEnd && (strRelative.m_pszData[iRelativeBeg] == '/' || strRelative.m_pszData[iRelativeBeg] == '\\'))
-            iRelativeBeg++;
-      }
+      if(bEmptyRelative && bEmpty2)
+         return pszFolder;
 
       string strPath;
-      if(iFolderBeg > iFolderEnd)
+      LPSTR lpsz;
+
+      if(bEmptyRelative)
       {
-         strPath = strRelative;
+         pszRelative = psz2;
+         iLenRelative = iLen2;
       }
-      else
+
+      while((pszFolder[iLenFolder - 1] == '\\' || pszFolder[iLenFolder - 1] == '/') && iLenFolder > 0)
       {
-         int iAddUp = 0;
-         char * psz = strPath.GetBufferSetLength(iRelativeEnd - iRelativeBeg + 1 + iFolderEnd - iFolderBeg + 1 + 1 + 1);
-         strncpy(psz, &strFolder.m_pszData[iFolderBeg], iFolderEnd - iFolderBeg + 1);
-         if(bUrl)
-         {
-            psz[iFolderEnd - iFolderBeg + 1] = '/';
-            if(strFolder.m_pszData[iFolderEnd - iFolderBeg] == ':')
-            {
-               psz[iFolderEnd - iFolderBeg + 1 + 1] = '/';
-               iAddUp = 1;
-            }
-         }
-         else
-         {
-            psz[iFolderEnd - iFolderBeg + 1] = '\\';
-         }
-         strncpy(&psz[iFolderEnd - iFolderBeg + 2 + iAddUp], &strRelative.m_pszData[iRelativeBeg], iRelativeEnd - iRelativeBeg + 1);
-         strPath.ReleaseBuffer(iRelativeEnd - iRelativeBeg + 1 + iFolderEnd - iFolderBeg + 1 + 1 + iAddUp);
+         iLenFolder--;
       }
-      
-      if(str2.has_char())
+
+      while(*pszRelative != '\0' && (*pszRelative == '\\' || *pszRelative == '/') && iLenRelative > 0)
       {
-         
-         strsize iBeg2 = 0;
+         pszRelative++;
+         iLenRelative--;
+      }
 
-         strsize iEnd2 = str2.get_length() - 1;
-
-         if(iEnd2 >= iBeg2) 
+      if(bEmptyRelative || bEmpty2)
+      {
+         lpsz = strPath.GetBufferSetLength(iLenFolder + 1 + iLenRelative);
+         strncpy(lpsz, pszFolder, iLenFolder);
+         lpsz[iLenFolder] = '/';
+         strncpy(&lpsz[iLenFolder + 1], pszRelative, iLenRelative);
+         lpsz[iLenFolder + 1 + iLenRelative] = '\0';
          {
-            //strFolder.trim();
-            // passive left trimming
-            while(iBeg2 <= iEnd2 && myspace(str2.m_pszData[iBeg2]))
-               iBeg2++;
-            // passive right trimming
-            while(iBeg2 <= iEnd2 && myspace(str2.m_pszData[iEnd2]))
-               iEnd2--;
-            //better than following 2 together
-            //gen::str::ends_eat(strFolder, "\\");
-            //gen::str::ends_eat(strFolder, "/");
-            while(iBeg2 <= iEnd2 && (str2[iBeg2] == '/' || str2[iBeg2] == '\\'))
-               iBeg2++;
-         }
-         if(strPath.has_char())
-         {
-            
-            strsize iPathBeg = 0;
-
-            strsize iPathEnd = strPath.get_length() - 1;
-
-            if(iPathEnd >= iPathBeg) 
-            {
-               //better than following 2 together
-               //gen::str::ends_eat(strFolder, "\\");
-               //gen::str::ends_eat(strFolder, "/");
-               while(iPathBeg <= iPathEnd && (strPath.m_pszData[iPathEnd] == '/' || strPath.m_pszData[iPathEnd] == '\\'))
-                  iPathEnd--;
-            }
-            char * psz = strPath.GetBufferSetLength(iEnd2 - iBeg2 + 1 + iPathEnd - iPathBeg + 1 + 1);
             if(bUrl)
             {
-               psz[iPathEnd - iPathBeg + 1] = '/';
+               while(*lpsz++ != '\0')
+                  if(*lpsz == '\\') *lpsz = '/';
             }
             else
             {
-               psz[iPathEnd - iPathBeg + 1] = '\\';
+               while(*lpsz++ != '\0')
+                  if(*lpsz == '/') *lpsz = '\\';
             }
-            strncpy(&psz[iPathEnd - iPathBeg + 2], &str2.m_pszData[iBeg2], iEnd2 - iBeg2 + 1);
-            strPath.ReleaseBuffer(iEnd2 - iBeg2 + 1 + iPathEnd - iPathBeg + 1 + 1);
          }
-         else
-         {
-            char * psz = strPath.GetBufferSetLength(iEnd2 - iBeg2 + 1);
-            strncpy(psz, &str2.m_pszData[iBeg2], iEnd2 - iBeg2 + 1);
-            strPath.ReleaseBuffer(iEnd2 - iBeg2 + 1);
-         }
+         strPath.ReleaseBuffer(iLenFolder + 1 + iLenRelative);
+         return strPath;
       }
-   
 
+      while((pszRelative[iLenRelative - 1] == '\\' || pszRelative[iLenRelative - 1] == '/') && iLenRelative > 0)
       {
-         char * psz = (char *) (const char*)strPath;
+         iLenRelative--;
+      }
+
+      while(*psz2 != '\0' && (*psz2 == '\\' || *psz2 == '/') && iLen2 > 0)
+      {
+         psz2++;
+         iLen2--;
+      }
+
+      lpsz = strPath.GetBufferSetLength(iLenFolder + 1 + iLenRelative + 1 + iLen2);
+      strncpy(lpsz, pszFolder, iLenFolder);
+      lpsz[iLenFolder] = '/';
+      strncpy(&lpsz[iLenFolder + 1], pszRelative, iLenRelative);
+      lpsz[iLenFolder + 1 + iLenRelative] = '/';
+      strncpy(&lpsz[iLenFolder + 1 + iLenRelative + 1], psz2, iLen2);
+      lpsz[iLenFolder + 1 + iLenRelative + 1 + iLen2] = '\0';
+      {
          if(bUrl)
          {
-            while(*psz++ != '\0')
-               if(*psz == '\\') *psz = '/';
+            while(*lpsz++ != '\0')
+               if(*lpsz == '\\') *lpsz = '/';
          }
          else
          {
-            while(*psz++ != '\0')
-               if(*psz == '/') *psz = '\\';
+            while(*lpsz++ != '\0')
+               if(*lpsz == '/') *lpsz = '\\';
          }
       }
-
+      strPath.ReleaseBuffer(iLenFolder + 1 + iLenRelative + 1 + iLen2);
       return strPath;
    }
 
@@ -220,7 +124,7 @@ namespace win
    string dir::relpath(const char * lpcszSource, const char * lpcszRelative, const char * psz2)
    {
       const char * pszRequest;
-      if(is_url(lpcszSource, &pszRequest))
+      if(::ca2::is_url(lpcszSource, &pszRequest))
       {
          if(gen::str::begins(lpcszRelative, "/"))
          {

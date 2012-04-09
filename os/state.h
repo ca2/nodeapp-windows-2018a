@@ -140,6 +140,7 @@ public:
    mutex       m_mutexRegClassList;
 
    hwnd_map       * m_pmapHWND;
+   mutex             * m_pmutexHwnd;
 //   hdc_map        * m_pmapHDC;
 //   hgdiobj_map    * m_pmapHGDIOBJ;
    hmenu_map      * m_pmapHMENU;

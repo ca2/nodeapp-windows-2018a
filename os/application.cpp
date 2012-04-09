@@ -413,6 +413,7 @@ namespace win
          if(AfxGetModuleState()->m_pmapHWND == NULL)
          {
             AfxGetModuleState()->m_pmapHWND = new hwnd_map;
+            AfxGetModuleState()->m_pmutexHwnd = new mutex();
          }
 /*         if(AfxGetModuleState()->m_pmapHDC == NULL)
          {

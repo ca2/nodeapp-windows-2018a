@@ -151,16 +151,25 @@ namespace win
 
    window * PASCAL window::from_handle(HWND hWnd)
    {
+      single_lock sl(afxMutexHwnd(), TRUE);
       hwnd_map* pMap = afxMapHWND(TRUE); //create ::collection::map if not exist
-      ASSERT(pMap != NULL);
-      window * pWnd =  pMap->from_handle(hWnd);
-      if(pWnd != NULL && WIN_WINDOW(pWnd)->get_handle() != hWnd)
+      try
+      {
+         ASSERT(pMap != NULL);
+         window * pWnd =  pMap->from_handle(hWnd);
+         if(pWnd != NULL && WIN_WINDOW(pWnd)->get_handle() != hWnd)
+            return NULL;
+         return pWnd;
+      }
+      catch(...)
+      {
          return NULL;
-      return pWnd;
+      }
    }
 
    window * PASCAL window::FromHandlePermanent(HWND hWnd)
    {
+      single_lock sl(afxMutexHwnd(), TRUE);
       hwnd_map* pMap = afxMapHWND();
       window * pWnd = NULL;
       if (pMap != NULL)
@@ -181,7 +190,7 @@ namespace win
 
       if (hWndNew == NULL)
          return FALSE;
-
+      single_lock sl(afxMutexHwnd(), TRUE);
       hwnd_map * pMap = afxMapHWND(TRUE); // create ::collection::map if not exist
       ASSERT(pMap != NULL);
 
@@ -199,6 +208,7 @@ namespace win
       HWND hWnd = get_handle();
       if (hWnd != NULL)
       {
+         single_lock sl(afxMutexHwnd(), TRUE);
          hwnd_map * pMap = afxMapHWND(); // don't create if not exist
          if (pMap != NULL)
             pMap->remove_handle(get_handle());
@@ -369,7 +379,7 @@ namespace win
       else
       {
          string strName = "ca2::fontopus::message_wnd::winservice_1";
-         if(!create(NULL, pszName, 0, rect(0, 0, 0, 0), System.window_from_os_data(HWND_MESSAGE), NULL))
+         if(!CreateEx(0, NULL, pszName, WS_CHILD, 0, 0, 0, 0, HWND_MESSAGE, NULL, NULL))
          {
             return false;
          }
@@ -582,6 +592,7 @@ namespace win
          ASSERT(::IsWindow(get_handle()));
 
          // should also be in the permanent or temporary handle ::collection::map
+         single_lock sl(afxMutexHwnd(), TRUE);
          hwnd_map * pMap = afxMapHWND();
          if(pMap == NULL) // inside thread not having windows
             return; // let go
@@ -679,6 +690,7 @@ namespace win
       hWndOrig = NULL;
       if (get_handle() != NULL)
       {
+         single_lock sl(afxMutexHwnd(), TRUE);
          pMap = afxMapHWND();
          if(pMap != NULL)
          {
@@ -2584,6 +2596,7 @@ namespace win
    BOOL PASCAL window::ReflectLastMsg(HWND hWndChild, LRESULT* pResult)
    {
       // get the ::collection::map, and if no ::collection::map, then this message does not need reflection
+      single_lock sl(afxMutexHwnd(), TRUE);
       hwnd_map * pMap = afxMapHWND();
       if (pMap == NULL)
          return FALSE;
@@ -5575,6 +5588,21 @@ hwnd_map* PASCAL afxMapHWND(BOOL bCreate)
    }
 }
 
+
+mutex * PASCAL afxMutexHwnd()
+{
+   try
+   {
+      AFX_MODULE_STATE* pState = AfxGetModuleState();
+      if(pState == NULL)
+         return NULL;
+      return pState->m_pmutexHwnd;
+   }
+   catch(...)
+   {
+      return NULL;
+   }
+}
 
    /////////////////////////////////////////////////////////////////////////////
 // The WndProc for all window's and derived classes
