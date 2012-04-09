@@ -598,7 +598,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="_mem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
