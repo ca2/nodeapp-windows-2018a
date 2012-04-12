@@ -240,4 +240,20 @@ namespace win
 
    }
 
+   bool bitmap::Attach(HBITMAP hbitmap)
+   {
+      if(m_pbitmap != NULL)
+      {
+         delete m_pbitmap;
+         m_pbitmap = NULL;
+      }
+      
+      m_pbitmap = new Gdiplus::Bitmap(hbitmap, NULL);
+
+
+      return true;
+
+   }
+
+
 } // namespace win
