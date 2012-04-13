@@ -1970,7 +1970,8 @@ run:
    bool thread::has_message()
    {
       ASSERT(GetCurrentThreadId() == m_nThreadID);
-      return ::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE) != false;
+      MSG msg;
+      return ::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE) != FALSE;
    }
 
 
