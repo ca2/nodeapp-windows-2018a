@@ -188,6 +188,9 @@ namespace win
 		int priority();
 
 
+      virtual bool has_message();
+
+
    };
 
    CLASS_DECL_VMSWIN ::ca::thread * get_thread();
