@@ -32,6 +32,7 @@ namespace win
       System.factory().creatable < port_forward                >  (System.template type_info < ::ca4::port_forward      > (), 1);
       System.factory().creatable_small < copydesk              >  (System.template type_info < ::ca4::copydesk          > (), 1);
       System.factory().creatable_small < crypt                 >  (System.template type_info < ::ca4::crypt             > (), 1);
+      System.factory().creatable_small < ip_enum               >  (System.template type_info < ::ca4::ip_enum           > ());
       ::win::dib::s_initialize();
    }
 

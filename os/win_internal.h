@@ -23,3 +23,4 @@
 
 #include "copydesk.h"
 #include "crypt.h"
+#include "ip_enum.h"
