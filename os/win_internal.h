@@ -18,3 +18,5 @@
 #include "application.h"
 #include "WinStdioFile.h"
 #include "WinFileSet.h"
+
+#include "copydesk.h"

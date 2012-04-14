@@ -170,6 +170,9 @@
     <ClCompile Include="region.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="copydesk.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="win32.def">
@@ -382,6 +385,9 @@
       <Filter>Header Files\operational_system\cross\general</Filter>
     </ClInclude>
     <ClInclude Include="region.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="copydesk.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

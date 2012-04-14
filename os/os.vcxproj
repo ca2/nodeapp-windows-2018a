@@ -881,6 +881,7 @@
     <ClCompile Include="appterm.cpp" />
     <ClCompile Include="bitmap.cpp" />
     <ClCompile Include="brush.cpp" />
+    <ClCompile Include="copydesk.cpp" />
     <ClCompile Include="dib.cpp" />
     <ClCompile Include="dir.cpp" />
     <ClCompile Include="draw_dib.cpp" />
@@ -1235,6 +1236,7 @@
     <ClInclude Include="application.h" />
     <ClInclude Include="bitmap.h" />
     <ClInclude Include="brush.h" />
+    <ClInclude Include="copydesk.h" />
     <ClInclude Include="dib.h" />
     <ClInclude Include="dir.h" />
     <ClInclude Include="draw_dib.h" />

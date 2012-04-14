@@ -1,7 +1,9 @@
 #include "StdAfx.h"
 
+
 namespace win
 {
+
 
    factory_exchange::factory_exchange(::ca::application * papp) :
       ca(papp)
@@ -28,12 +30,15 @@ namespace win
       System.factory().cloneable_small < draw_dib             >  (System.template type_info < ::ca::draw_dib           > ());
       System.factory().creatable < osi                  >  (System.template type_info < ::ca::osi                > (), 1);
       System.factory().creatable < port_forward         >  (System.template type_info < ::ca4::port_forward             > (), 1);
+      System.factory().creatable_small < copydesk       >  (System.template type_info < ::ca4::copydesk             > (), 1);
       ::win::dib::s_initialize();
    }
+
 
    factory_exchange::~factory_exchange()
    {
    }
+
 
 } // namespace win
 
@@ -43,3 +48,6 @@ void ca2_factory_exchange(::ca::application * papp)
 {
    win::factory_exchange factoryexchange(papp);
 }
+
+
+
