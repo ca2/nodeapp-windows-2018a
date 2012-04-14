@@ -173,6 +173,9 @@
     <ClCompile Include="copydesk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="crypt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="win32.def">
@@ -388,6 +391,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="copydesk.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="crypt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

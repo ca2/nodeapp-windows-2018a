@@ -7,6 +7,8 @@
 
 #define new DEBUG_NEW
 
+#include <wincrypt.h>
+
 
 #include "dir.h"
 #include "WFileFind.h"
@@ -20,3 +22,4 @@
 #include "WinFileSet.h"
 
 #include "copydesk.h"
+#include "crypt.h"
