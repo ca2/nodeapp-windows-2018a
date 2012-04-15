@@ -890,6 +890,7 @@
     <ClCompile Include="ip_enum.cpp" />
     <ClCompile Include="os.cpp" />
     <ClCompile Include="port_forward.cpp" />
+    <ClCompile Include="registry.cpp" />
     <ClCompile Include="trace.cpp" />
     <ClCompile Include="win_error.cpp" />
     <ClCompile Include="except.cpp" />
@@ -933,7 +934,7 @@
     <ClCompile Include="graphics_object.cpp" />
     <ClCompile Include="handle.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="osi.cpp" />
+    <ClCompile Include="os_os.cpp" />
     <ClCompile Include="palette.cpp" />
     <ClCompile Include="pen.cpp" />
     <ClCompile Include="preview_dc.cpp" />
@@ -1270,11 +1271,12 @@
     <ClInclude Include="operational_system\win32_system.h" />
     <ClInclude Include="operational_system\_.h" />
     <ClInclude Include="os.h" />
-    <ClInclude Include="osi.h" />
+    <ClInclude Include="os_os.h" />
     <ClInclude Include="palette.h" />
     <ClInclude Include="pen.h" />
     <ClInclude Include="port_forward.h" />
     <ClInclude Include="region.h" />
+    <ClInclude Include="registry.h" />
     <ClInclude Include="state.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="template\core.h" />

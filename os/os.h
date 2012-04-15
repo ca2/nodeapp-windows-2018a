@@ -87,7 +87,6 @@ CLASS_DECL_VMSWIN void AfxResetMsgCache();
 #include "draw_dib.h"
 #include "thread.h"
 #include "window.h"
-#include "osi.h"
 #include "port_forward.h"
 
 #define NULL_REF(class) (*((class *) NULL))

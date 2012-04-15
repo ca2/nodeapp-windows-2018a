@@ -24,3 +24,6 @@
 #include "copydesk.h"
 #include "crypt.h"
 #include "ip_enum.h"
+#include "registry.h"
+
+#include "os_os.h"

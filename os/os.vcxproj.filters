@@ -92,9 +92,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="osi.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="palette.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -179,6 +176,12 @@
     <ClCompile Include="ip_enum.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="os_os.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="registry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="win32.def">
@@ -226,9 +229,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="implementation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="osi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="palette.h">
@@ -400,6 +400,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ip_enum.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="os_os.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="registry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

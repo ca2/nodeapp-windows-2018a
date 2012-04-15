@@ -28,7 +28,7 @@ namespace win
       System.factory().creatable_large < thread                >  (System.template type_info < ::ca::thread             > ());
       System.factory().creatable_large < window                >  (System.template type_info < ::ca::window             > ());
       System.factory().cloneable_small < draw_dib              >  (System.template type_info < ::ca::draw_dib           > ());
-      System.factory().creatable < osi                         >  (System.template type_info < ::ca::osi                > (), 1);
+      System.factory().creatable < os                          >  (System.template type_info < ::ca::os                 > (), 1);
       System.factory().creatable < port_forward                >  (System.template type_info < ::ca4::port_forward      > (), 1);
       System.factory().creatable_small < copydesk              >  (System.template type_info < ::ca4::copydesk          > (), 1);
       System.factory().creatable_small < crypt                 >  (System.template type_info < ::ca4::crypt             > (), 1);
