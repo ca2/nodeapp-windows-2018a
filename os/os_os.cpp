@@ -249,7 +249,7 @@ namespace win
 
       key.OpenKey(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings", false);
 
-      string strUrl = System.os().connection_settings_get_auto_config_url();
+      string strUrl;
 
       key.QueryValue("AutoConfigURL", strUrl);
 
