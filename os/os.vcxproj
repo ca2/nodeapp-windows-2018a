@@ -1230,7 +1230,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="folder_watch.cpp">
-      <FileType>Document</FileType>
+      <FileType>CppCode</FileType>
     </ClCompile>
     <None Include="win32.def" />
     <None Include="win64.def" />
