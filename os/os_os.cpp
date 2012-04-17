@@ -601,6 +601,87 @@ namespace win
 
    }
 
+   bool os::start_service(::planebase::application * papp)
+   {
+
+      if(papp->m_strAppName.is_empty()
+      || papp->m_strAppName.CompareNoCase("bergedge") == 0
+      || !papp->is_serviceable())
+         return false;
+
+      SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_ALL_ACCESS);
+
+      if(hdlSCM == 0)
+      {
+         //::GetLastError();
+         return false;
+      }
+    
+      SC_HANDLE hdlServ = ::OpenService(
+         hdlSCM,                    // SCManager database 
+         "CGCLCSTvotagusCa2FontopusMain-" + papp->m_strAppName,               // name of service 
+         SERVICE_START);                     // no password 
+    
+    
+      if (!hdlServ)
+      {
+         CloseServiceHandle(hdlSCM);
+         //Ret = ::GetLastError();
+         return FALSE;
+      }
+       
+      BOOL bOk = StartService(hdlServ, 0, NULL);
+
+      CloseServiceHandle(hdlServ);
+      CloseServiceHandle(hdlSCM);
+
+      return bOk != FALSE;
+   }
+
+   bool os::stop_service(::planebase::application * papp)
+   {
+
+      if(papp->m_strAppName.is_empty()
+      || papp->m_strAppName.CompareNoCase("bergedge") == 0
+      || !papp->is_serviceable())
+         return false;
+
+      SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_ALL_ACCESS);
+
+      if(hdlSCM == 0)
+      {
+         //::GetLastError();
+         return false;
+      }
+    
+      SC_HANDLE hdlServ = ::OpenService(
+         hdlSCM,                    // SCManager database 
+         "CGCLCSTvotagusCa2FontopusMain-" + papp->m_strAppName,               // name of service 
+         SERVICE_STOP);                     // no password 
+    
+      if (!hdlServ)
+      {
+         // Ret = ::GetLastError();
+         CloseServiceHandle(hdlSCM);
+         return false;
+      }
+
+      SERVICE_STATUS ss;
+
+      memset(&ss, 0, sizeof(ss));
+
+      BOOL bOk = ::ControlService(hdlServ, SERVICE_CONTROL_STOP, &ss);
+
+      ::DeleteService(hdlServ);
+
+      CloseServiceHandle(hdlServ);
+
+      CloseServiceHandle(hdlSCM);
+
+      return bOk != FALSE;
+   }
+
+
 
 } // namespace win
 

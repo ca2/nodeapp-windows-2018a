@@ -47,6 +47,12 @@ namespace win
       virtual bool open_in_ie(const char * lpcsz);
 
 
+      virtual bool create_service(::planebase::application * papp);
+      virtual bool remove_service(::planebase::application * papp);
+      
+      virtual bool start_service(::planebase::application * papp);
+      virtual bool stop_service(::planebase::application * papp);
+
    };
 
 
