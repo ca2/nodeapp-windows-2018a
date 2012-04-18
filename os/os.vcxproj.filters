@@ -24,6 +24,9 @@
     <Filter Include="Header Files\operational_system\cross\general">
       <UniqueIdentifier>{d6be4fad-8c6b-4418-9f9c-e5e66f1f34aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\operational_system\cross\linux">
+      <UniqueIdentifier>{474232c1-9519-4032-b9c4-25c8d63fddbc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="afxabort.cpp">
@@ -381,9 +384,6 @@
     <ClInclude Include="operational_system\win32_system.h">
       <Filter>Header Files\operational_system</Filter>
     </ClInclude>
-    <ClInclude Include="operational_system\cross\cross.h">
-      <Filter>Header Files\operational_system\cross</Filter>
-    </ClInclude>
     <ClInclude Include="operational_system\cross\general\general.h">
       <Filter>Header Files\operational_system\cross\general</Filter>
     </ClInclude>
@@ -407,6 +407,15 @@
     </ClInclude>
     <ClInclude Include="registry.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\operational_system\cross\cross.h">
+      <Filter>Header Files\operational_system\cross</Filter>
+    </ClInclude>
+    <ClInclude Include="..\operational_system\cross\linux\linux.h">
+      <Filter>Header Files\operational_system\cross\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\operational_system\cross\linux\linux_datetime.h">
+      <Filter>Header Files\operational_system\cross\linux</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
