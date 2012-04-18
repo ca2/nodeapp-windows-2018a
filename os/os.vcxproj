@@ -1239,6 +1239,7 @@
     <ClInclude Include="..\operational_system\cross\cross.h" />
     <ClInclude Include="..\operational_system\cross\linux\linux.h" />
     <ClInclude Include="..\operational_system\cross\linux\linux_datetime.h" />
+    <ClInclude Include="..\operational_system\cross\linux\linux_file.h" />
     <ClInclude Include="application.h" />
     <ClInclude Include="bitmap.h" />
     <ClInclude Include="brush.h" />

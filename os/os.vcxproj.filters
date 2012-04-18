@@ -417,5 +417,8 @@
     <ClInclude Include="..\operational_system\cross\linux\linux_datetime.h">
       <Filter>Header Files\operational_system\cross\linux</Filter>
     </ClInclude>
+    <ClInclude Include="..\operational_system\cross\linux\linux_file.h">
+      <Filter>Header Files\operational_system\cross\linux</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
