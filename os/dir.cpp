@@ -53,7 +53,28 @@ namespace win
 
       while((pszFolder[iLenFolder - 1] == '\\' || pszFolder[iLenFolder - 1] == '/') && iLenFolder > 0)
       {
-         iLenFolder--;
+         if(bUrl)
+         {
+            if((iLenFolder - 2) >= 0 && (pszFolder[iLenFolder - 2] == '\\' || pszFolder[iLenFolder - 2] == '/' || pszFolder[iLenFolder - 2] == ':'))
+            {
+               if(pszFolder[iLenFolder - 2] == ':')
+               {
+                  break;
+               }
+               else
+               {
+                  if((iLenFolder - 3) >= 0 && (pszFolder[iLenFolder - 3] == ':'))
+                  {
+                     iLenFolder--;
+                     break;
+                  }
+               }
+            }
+         }
+         else
+         {
+            iLenFolder--;
+         }
       }
 
       while(*pszRelative != '\0' && (*pszRelative == '\\' || *pszRelative == '/') && iLenRelative > 0)
