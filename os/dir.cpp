@@ -689,19 +689,49 @@ namespace win
             if(!::CreateDirectoryW(gen::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
             {
                DWORD dwError = ::GetLastError();
+               if(dwError == ERROR_ALREADY_EXISTS)
+               {
+                  string str;
+                  str = "\\\\?\\" + stra[i];
+                  str.trim_right("\\/");
+                  try
+                  {
+                     System.file().del(str);
+                  }
+                  catch(...)
+                  {
+                  }
+                  str = stra[i];
+                  str.trim_right("\\/");
+                  try
+                  {
+                     System.file().del(str);
+                  }
+                  catch(...)
+                  {
+                  }
+                  if(::CreateDirectoryW(gen::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
+                  {
+                     m_isdirmap.set(stra[i], true);
+                     goto try1;
+                  }
+                  else
+                  {
+                     dwError = ::GetLastError();
+                  }
+               }
                char * pszError;
                FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwError, 0, (LPTSTR) &pszError, 8, NULL);
 
                //TRACE("dir::mk CreateDirectoryW last error(%d)=%s", dwError, pszError);
                ::LocalFree(pszError);
                //m_isdirmap.set(stra[i], false);
-               
             }
             else
             {
                m_isdirmap.set(stra[i], true);
             }
-            
+            try1:
             
             if(!is(stra[i], papp))
             {
