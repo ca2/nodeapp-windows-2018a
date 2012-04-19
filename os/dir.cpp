@@ -87,7 +87,14 @@ namespace win
       {
          lpsz = strPath.GetBufferSetLength(iLenFolder + 1 + iLenRelative);
          strncpy(lpsz, pszFolder, iLenFolder);
-         lpsz[iLenFolder] = '/';
+         if(strnicmp(&lpsz[iLenFolder - 5], ".zip:", 5) == 0)
+         {
+            iLenFolder--;
+         }
+         else
+         {
+            lpsz[iLenFolder] = '/';
+         }
          strncpy(&lpsz[iLenFolder + 1], pszRelative, iLenRelative);
          lpsz[iLenFolder + 1 + iLenRelative] = '\0';
          {
