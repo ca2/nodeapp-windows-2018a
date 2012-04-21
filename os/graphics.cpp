@@ -2685,6 +2685,94 @@ namespace win
       return ::DrawTextExW(get_handle1(), const_cast<wchar_t *>((const wchar_t *)wstr), (int)wcslen(wstr), lpRect, nFormat, lpDTParams); 
    }
 
+   size graphics::GetTextExtent(const char * lpszString, int nCount, int iIndex) const
+   {
+
+      if(lpszString == NULL || *lpszString == '\0')
+         return size(0, 0);
+
+      if(nCount < 0)
+         nCount = strlen(lpszString);
+
+      if(iIndex > nCount)
+         return size(0, 0);
+
+      if(iIndex < 0)
+         return size(0, 0);
+
+      wstring wstr = gen::international::utf8_to_unicode(lpszString, nCount);
+
+      int i = 0;
+      const char * psz = lpszString;
+      while(i < iIndex)
+      {
+         if(*psz == '\0')
+            break;
+         psz = gen::str::utf8_inc(psz);
+         i++;
+         if(psz == NULL)
+            break;
+
+      }
+
+      Gdiplus::CharacterRange charRanges[1] = { Gdiplus::CharacterRange(0, i) }; 
+
+      Gdiplus::StringFormat strFormat(Gdiplus::StringFormat::GenericTypographic());
+      //Gdiplus::StringFormat strFormat;
+
+      strFormat.SetMeasurableCharacterRanges(1, charRanges);
+
+      int count = strFormat.GetMeasurableCharacterRangeCount();
+
+      Gdiplus::Region * pCharRangeRegions = new Gdiplus::Region[count];
+
+      Gdiplus::RectF box(0, 0, 4000, 4000);
+
+      Gdiplus::PointF origin(0, 0);
+
+      //m_pgraphics->MeasureString(wstr, (int) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, Gdiplus::StringFormat::GenericTypographic(), &box);
+
+      ((graphics *)this)->m_pgraphics->MeasureCharacterRanges(wstr, nCount, ((graphics *)this)->gdiplus_font(), box, &strFormat, count, pCharRangeRegions);
+
+      Gdiplus::Region * pregion = NULL;
+
+
+      if(count > 0)
+      {
+
+          pregion = pCharRangeRegions[0].Clone();
+
+      }
+
+
+
+      for(i = 1; i < count; i++)
+      {
+         pregion->Union(&pCharRangeRegions[i]);
+      }
+
+
+      if(pregion == NULL)
+         return size(0, 0);
+
+      delete [] pCharRangeRegions;
+
+
+      Gdiplus::RectF rectBound;
+
+      pregion->GetBounds(&rectBound, m_pgraphics);
+
+      delete pregion;
+
+      
+
+      Gdiplus::SizeF size;
+
+      rectBound.GetSize(&size);
+
+      return class ::size(size.Width, size.Height);
+   }
+
    size graphics::GetTextExtent(const char * lpszString, int nCount) const
    {
 
@@ -2696,7 +2784,7 @@ namespace win
 
       Gdiplus::PointF origin(0, 0);
 
-      m_pgraphics->MeasureString(wstr, (int) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, &box);
+      m_pgraphics->MeasureString(wstr, (int) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, Gdiplus::StringFormat::GenericTypographic(),  &box);
 
       return size((__int64) (box.Width * m_fontxyz.m_dFontWidth), (__int64) (box.Height));
 
@@ -3015,7 +3103,7 @@ namespace win
 
       Gdiplus::Status status;
 
-      Gdiplus::StringFormat format;
+      Gdiplus::StringFormat format(Gdiplus::StringFormat::GenericTypographic());
 
       format.SetLineAlignment(Gdiplus::StringAlignmentNear);
 

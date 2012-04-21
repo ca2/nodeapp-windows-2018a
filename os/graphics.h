@@ -345,6 +345,7 @@ namespace win
    #pragma pop_macro("DrawText")
    #pragma pop_macro("DrawTextEx")
 
+      size GetTextExtent(const char * lpszString, int nCount, int iIndex) const;
       size GetTextExtent(const char * lpszString, int nCount) const;
       size GetTextExtent(const string & str) const;
       size GetOutputTextExtent(const char * lpszString, int nCount) const;
