@@ -313,7 +313,9 @@ namespace win
 
    // Text Functions
       virtual BOOL TextOut(int x, int y, const char * lpszString, int nCount);
-            BOOL TextOut(int x, int y, const string & str);
+      virtual BOOL TextOut(int x, int y, const string & str);
+      virtual BOOL TextOut(double x, double y, const char * lpszString, int nCount);
+      virtual BOOL TextOut(double x, double y, const string & str);
       virtual BOOL ExtTextOut(int x, int y, UINT nOptions, LPCRECT lpRect,
                const char * lpszString, UINT nCount, LPINT lpDxWidths);
             BOOL ExtTextOut(int x, int y, UINT nOptions, LPCRECT lpRect,
@@ -348,6 +350,9 @@ namespace win
       size GetTextExtent(const char * lpszString, int nCount, int iIndex) const;
       size GetTextExtent(const char * lpszString, int nCount) const;
       size GetTextExtent(const string & str) const;
+      bool GetTextExtent(sized & size, const char * lpszString, int nCount, int iIndex) const;
+      bool GetTextExtent(sized & size, const char * lpszString, int nCount) const;
+      bool GetTextExtent(sized & size, const string & str) const;
       size GetOutputTextExtent(const char * lpszString, int nCount) const;
       size GetOutputTextExtent(const string & str) const;
       size GetTabbedTextExtent(const char * lpszString, int nCount,
@@ -484,6 +489,8 @@ namespace win
       HGDIOBJ SelectObject(HGDIOBJ);      // do not use for regions
 
       virtual void set_alpha_mode(::ca::e_alpha_mode ealphamode);
+
+      virtual void set_text_rendering(::ca::e_text_rendering etextrendering);
 
       virtual void * get_os_data() const;
       virtual HDC get_handle() const;

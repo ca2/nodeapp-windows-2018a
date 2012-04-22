@@ -19,6 +19,7 @@ namespace win
       m_hdc             = NULL;
       m_ppath           = NULL;
       m_ppathPaint      = NULL;
+      m_etextrendering  = ::ca::text_rendering_anti_alias_grid_fit;
 
    }
 
@@ -31,6 +32,8 @@ namespace win
       m_hdc             = NULL;
       m_ppath           = NULL;
       m_ppathPaint      = NULL;
+      m_etextrendering  = ::ca::text_rendering_anti_alias_grid_fit;
+;
 
    }
 
@@ -192,6 +195,8 @@ namespace win
 
       m_pgraphics = new Gdiplus::Graphics((Gdiplus::Bitmap *) pBitmap->get_os_data());
 
+      set_text_rendering(::ca::text_rendering_anti_alias_grid_fit);
+
       m_bitmap = pBitmap;
 
       return m_bitmap;
@@ -231,6 +236,8 @@ namespace win
          }
 
          m_pgraphics = new Gdiplus::Graphics((Gdiplus::Bitmap *) m_bitmap->get_os_data());
+
+         set_text_rendering(::ca::text_rendering_anti_alias_grid_fit);
 
          return hbitmap;
 
@@ -786,6 +793,62 @@ namespace win
    //// COLOR_DEST = SRC_ALPHA * BLEND_ALPHA * COLOR_SRC  + (1 - SRC_ALPHA * BLEND_ALPHA) * COLOR_DST
 
    BOOL graphics::TextOut(int x, int y, const string & str)
+   { 
+      if(m_pdibAlphaBlend != NULL)
+      {
+         if(GetBkMode() == TRANSPARENT)
+         {
+         //   return TRUE;
+            rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
+            rect rectText(point(x, y), GetTextExtent(str));
+            if(rectIntersect.intersect(rectIntersect, rectText))
+            {
+               ::ca::dib_sp dib0(get_app());
+               dib0->create(rectText.size());
+               dib0->get_graphics()->SetTextColor(RGB(255, 255, 255));
+               dib0->get_graphics()->SelectObject(&GetCurrentFont());
+               dib0->get_graphics()->SetBkMode(TRANSPARENT);
+               dib0->get_graphics()->TextOut(0, 0, str);
+               dib0->ToAlpha(0);
+               ::ca::dib_sp dib1(get_app());
+               dib1->create(rectText.size());
+               dib1->get_graphics()->SetTextColor(GetTextColor());
+               dib1->get_graphics()->SelectObject(&GetCurrentFont());
+               dib1->get_graphics()->SetBkMode(TRANSPARENT);
+               dib1->get_graphics()->TextOut(0, 0, str);
+               dib1->channel_from(visual::rgba::channel_alpha, dib0);
+               ::ca::dib_sp dib2(get_app());
+               dib2->create(rectText.size());
+               dib2->Fill(255, 0, 0, 0);
+               dib2->from(point(max(0, m_ptAlphaBlend.x - x), max(0, m_ptAlphaBlend.y - y)),
+                  m_pdibAlphaBlend->get_graphics(), point(max(0, x - m_ptAlphaBlend.x), max(0, y - m_ptAlphaBlend.y)), rectText.size());
+               dib1->channel_multiply(visual::rgba::channel_alpha, dib2);
+               /*::ca::dib_sp dib3(get_app());
+               dib1->mult_alpha(dib3);*/
+
+               keeper < ::ca::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
+
+               return System.imaging().true_blend(this, point(x, y), rectText.size(), dib1->get_graphics(), null_point());
+
+               /*BLENDFUNCTION bf;
+               bf.BlendOp     = AC_SRC_OVER;
+               bf.BlendFlags  = 0;
+               bf.SourceConstantAlpha = 0xFF;
+               bf.AlphaFormat = AC_SRC_ALPHA;
+               return ::AlphaBlend(get_handle1(), x, y, 
+                  rectText.width(), rectText.height(), WIN_HDC(dib1->get_graphics()), 0, 0, rectText.width(), 
+                  rectText.height(), bf) != FALSE; */
+            }
+         }
+      }
+      
+      //ASSERT(get_handle1() != NULL); 
+      //wstring wstr = gen::international::utf8_to_unicode(str);
+      return TextOut(x, y, str, (int) str.get_length()); 
+   
+   } // call virtual
+
+   BOOL graphics::TextOut(double x, double y, const string & str)
    { 
       if(m_pdibAlphaBlend != NULL)
       {
@@ -1700,8 +1763,13 @@ namespace win
       
       if(hdc != NULL)
       {
+         
          m_pgraphics = new ::Gdiplus::Graphics(hdc);
+
+         set_text_rendering(::ca::text_rendering_anti_alias_grid_fit);
+
          m_hdc = hdc;
+
       }
 
       return m_pgraphics != NULL;
@@ -2600,11 +2668,42 @@ namespace win
       wstring wstr = gen::international::utf8_to_unicode(str);
       return ::DrawTextW(get_handle1(), (const wchar_t *)wstr, (int)wcslen(wstr), lpRect, nFormat); */
 
+      try
+      {
+
+         if(m_pgraphics == NULL)
+            return FALSE;
+
+         switch(m_etextrendering)
+         {
+         case ::ca::text_rendering_anti_alias:
+            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
+            break;
+         case ::ca::text_rendering_anti_alias_grid_fit:
+            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
+            break;
+         case ::ca::text_rendering_single_bit_per_pixel:
+            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintSingleBitPerPixel);
+            break;
+         case ::ca::text_rendering_clear_type_grid_fit:
+            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
+            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintClearTypeGridFit);
+            break;
+         }
+
+      }
+      catch(...)
+      {
+      }
       
 
 
-      Gdiplus::StringFormat format;
+      Gdiplus::StringFormat format(Gdiplus::StringFormat::GenericTypographic());
 
+
+      format.SetFormatFlags(format.GetFormatFlags() 
+                             | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
+                             | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap);
 
       if(nFormat & DT_LEFT)
       {
@@ -2722,11 +2821,15 @@ namespace win
 
       strFormat.SetMeasurableCharacterRanges(1, charRanges);
 
+      strFormat.SetFormatFlags(strFormat.GetFormatFlags() 
+                             | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
+                             | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap);
+
       int count = strFormat.GetMeasurableCharacterRangeCount();
 
       Gdiplus::Region * pCharRangeRegions = new Gdiplus::Region[count];
 
-      Gdiplus::RectF box(0, 0, 4000, 4000);
+      Gdiplus::RectF box(0.0f, 0.0f, 128.0f * 1024.0f, 128.0f * 1024.0f);
 
       Gdiplus::PointF origin(0, 0);
 
@@ -2770,7 +2873,7 @@ namespace win
 
       rectBound.GetSize(&size);
 
-      return class ::size(size.Width, size.Height);
+      return class ::size(size.Width * m_fontxyz.m_dFontWidth, size.Height);
    }
 
    size graphics::GetTextExtent(const char * lpszString, int nCount) const
@@ -2784,7 +2887,13 @@ namespace win
 
       Gdiplus::PointF origin(0, 0);
 
-      m_pgraphics->MeasureString(wstr, (int) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, Gdiplus::StringFormat::GenericTypographic(),  &box);
+      Gdiplus::StringFormat strFormat(Gdiplus::StringFormat::GenericTypographic());
+
+      strFormat.SetFormatFlags(strFormat.GetFormatFlags() 
+                             | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
+                             | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap);
+
+      m_pgraphics->MeasureString(wstr, (int) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, &strFormat,  &box);
 
       return size((__int64) (box.Width * m_fontxyz.m_dFontWidth), (__int64) (box.Height));
 
@@ -2856,6 +2965,176 @@ namespace win
       VERIFY(::GetTextExtentPoint32W(get_handle1(), wstr, (int)wstr.get_length(), &size));
       return size;
    }
+
+   bool graphics::GetTextExtent(sized & size, const char * lpszString, int nCount, int iIndex) const
+   {
+
+      if(lpszString == NULL || *lpszString == '\0')
+         return false;
+
+      if(nCount < 0)
+         nCount = strlen(lpszString);
+
+      if(iIndex > nCount)
+         return false;
+
+      if(iIndex < 0)
+         return false;
+
+      wstring wstr = gen::international::utf8_to_unicode(lpszString, nCount);
+
+      int i = 0;
+      const char * psz = lpszString;
+      while(i < iIndex)
+      {
+         if(*psz == '\0')
+            break;
+         psz = gen::str::utf8_inc(psz);
+         i++;
+         if(psz == NULL)
+            break;
+
+      }
+
+      Gdiplus::CharacterRange charRanges[1] = { Gdiplus::CharacterRange(0, i) }; 
+
+      Gdiplus::StringFormat strFormat(Gdiplus::StringFormat::GenericTypographic());
+      //Gdiplus::StringFormat strFormat;
+
+      strFormat.SetMeasurableCharacterRanges(1, charRanges);
+
+      strFormat.SetFormatFlags(strFormat.GetFormatFlags() 
+                             | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
+                             | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap);
+
+      int count = strFormat.GetMeasurableCharacterRangeCount();
+
+      Gdiplus::Region * pCharRangeRegions = new Gdiplus::Region[count];
+
+      Gdiplus::RectF box(0.0f, 0.0f, 128.0f * 1024.0f, 128.0f * 1024.0f);
+
+      Gdiplus::PointF origin(0, 0);
+
+      //m_pgraphics->MeasureString(wstr, (int) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, Gdiplus::StringFormat::GenericTypographic(), &box);
+
+      ((graphics *)this)->m_pgraphics->MeasureCharacterRanges(wstr, nCount, ((graphics *)this)->gdiplus_font(), box, &strFormat, count, pCharRangeRegions);
+
+      Gdiplus::Region * pregion = NULL;
+
+
+      if(count > 0)
+      {
+
+          pregion = pCharRangeRegions[0].Clone();
+
+      }
+
+      for(i = 1; i < count; i++)
+      {
+         pregion->Union(&pCharRangeRegions[i]);
+      }
+
+      delete [] pCharRangeRegions;
+
+      if(pregion == NULL)
+         return false;
+
+      Gdiplus::RectF rectBound;
+
+      pregion->GetBounds(&rectBound, m_pgraphics);
+
+      delete pregion;
+
+      Gdiplus::SizeF sizef;
+
+      rectBound.GetSize(&sizef);
+
+      size.cx = sizef.Width * m_fontxyz.m_dFontWidth;
+
+      size.cy = sizef.Height;
+
+      return true;
+   }
+
+   bool graphics::GetTextExtent(sized & size, const char * lpszString, int nCount) const
+   {
+
+      single_lock slGdiplus(&System.m_mutexGdiplus, TRUE);
+
+      wstring wstr = gen::international::utf8_to_unicode(lpszString, nCount);
+
+      Gdiplus::RectF box;
+
+      Gdiplus::PointF origin(0, 0);
+
+      Gdiplus::StringFormat strFormat(Gdiplus::StringFormat::GenericTypographic());
+
+      strFormat.SetFormatFlags(strFormat.GetFormatFlags() 
+                             | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
+                             | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap);
+      bool bOk = true;
+
+      try
+      {
+         if(m_pgraphics->MeasureString(wstr, (int) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, &strFormat,  &box) != Gdiplus::Status::Ok)
+            bOk = false;
+      }
+      catch(...)
+      {
+         bOk = false;
+      }
+
+      if(!bOk)
+         return false;
+
+      size.cx = box.Width * m_fontxyz.m_dFontWidth;
+
+      size.cy = box.Height;
+
+      return true;
+
+   }
+
+   bool graphics::GetTextExtent(sized & size, const string & str) const
+   {
+
+      if(m_pgraphics == NULL)
+         return false;
+
+      wstring wstr = gen::international::utf8_to_unicode(str);
+
+      Gdiplus::RectF box;
+
+      Gdiplus::PointF origin(0, 0);
+
+
+      if(m_pgraphics == NULL)
+         return false;
+
+      bool bOk = true;
+
+      try
+      {
+         if(m_pgraphics->MeasureString(wstr, (int) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, &box) != Gdiplus::Status::Ok)
+            bOk = false;
+      }
+      catch(...)
+      {
+         bOk = false;
+      }
+
+      if(!bOk)
+         return false;
+
+      size.cx = box.Width * m_fontxyz.m_dFontWidth;
+
+      size.cy = box.Height;
+
+      return true;
+
+   }
+
+   
 
 /*
 
@@ -3079,10 +3358,42 @@ namespace win
       string str(lpszString, nCount);
       
       wstring wstr = gen::international::utf8_to_unicode(str);
+
+
+      try
+      {
+
+         if(m_pgraphics == NULL)
+            return FALSE;
+
+         switch(m_etextrendering)
+         {
+         case ::ca::text_rendering_anti_alias:
+            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
+            break;
+         case ::ca::text_rendering_anti_alias_grid_fit:
+            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
+            break;
+         case ::ca::text_rendering_single_bit_per_pixel:
+            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintSingleBitPerPixel);
+            break;
+         case ::ca::text_rendering_clear_type_grid_fit:
+            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
+            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintClearTypeGridFit);
+            break;
+         }
+
+      }
+      catch(...)
+      {
+      }
+
       
       //
       //m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-      m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintSingleBitPerPixelGridFit);
+      //m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
+      //m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintClearTypeGridFit);
+      //m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
    
       Gdiplus::Matrix m;
       m_pgraphics->GetTransform(&m);
@@ -3104,6 +3415,12 @@ namespace win
       Gdiplus::Status status;
 
       Gdiplus::StringFormat format(Gdiplus::StringFormat::GenericTypographic());
+
+      format.SetFormatFlags(format.GetFormatFlags() 
+                        | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
+                        | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap
+                        | Gdiplus::StringFormatFlagsNoFitBlackBox);
+
 
       format.SetLineAlignment(Gdiplus::StringAlignmentNear);
 
@@ -3145,6 +3462,117 @@ namespace win
 
    }
 
+   BOOL graphics::TextOut(double x, double y, const char * lpszString, int nCount)
+   {
+
+      ::Gdiplus::PointF origin(0, 0);
+
+      string str(lpszString, nCount);
+      
+      wstring wstr = gen::international::utf8_to_unicode(str);
+
+
+      try
+      {
+
+         if(m_pgraphics == NULL)
+            return FALSE;
+
+         switch(m_etextrendering)
+         {
+         case ::ca::text_rendering_anti_alias:
+            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
+            break;
+         case ::ca::text_rendering_anti_alias_grid_fit:
+            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
+            break;
+         case ::ca::text_rendering_single_bit_per_pixel:
+            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintSingleBitPerPixel);
+            break;
+         case ::ca::text_rendering_clear_type_grid_fit:
+            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
+            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintClearTypeGridFit);
+            break;
+         }
+
+      }
+      catch(...)
+      {
+      }
+
+      
+      //
+      //m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
+      //m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
+      //m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintClearTypeGridFit);
+      //m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
+   
+      Gdiplus::Matrix m;
+      m_pgraphics->GetTransform(&m);
+
+      Gdiplus::Matrix * pmNew;
+
+      if(m_ppath != NULL)
+      {
+         pmNew = new Gdiplus::Matrix();
+      }
+      else
+      {
+         pmNew = m.Clone();
+      }
+
+      pmNew->Translate((Gdiplus::REAL)  (x / m_fontxyz.m_dFontWidth), (Gdiplus::REAL) y);
+      pmNew->Scale((Gdiplus::REAL) m_fontxyz.m_dFontWidth, (Gdiplus::REAL) 1.0, Gdiplus::MatrixOrderAppend);
+
+      Gdiplus::Status status;
+
+      Gdiplus::StringFormat format(Gdiplus::StringFormat::GenericTypographic());
+
+      format.SetFormatFlags(format.GetFormatFlags() 
+                        | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
+                        | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap
+                        | Gdiplus::StringFormatFlagsNoFitBlackBox);
+
+
+      format.SetLineAlignment(Gdiplus::StringAlignmentNear);
+
+      if(m_ppath != NULL)
+      {
+
+         Gdiplus::GraphicsPath path;
+         
+         Gdiplus::FontFamily fontfamily;
+
+         gdiplus_font()->GetFamily(&fontfamily);
+
+         double d1 = gdiplus_font()->GetSize() * m_pgraphics->GetDpiX() / 72.0;
+         double d2 = fontfamily.GetEmHeight(gdiplus_font()->GetStyle());
+         double d3 = d1 * d2;
+
+         status = path.AddString(gen::international::utf8_to_unicode(str), -1, &fontfamily, gdiplus_font()->GetStyle(), (Gdiplus::REAL) d1, origin, &format);
+
+         path.Transform(pmNew);
+
+
+         m_ppath->AddPath(&path, FALSE);
+
+      }
+      else
+      {
+
+         m_pgraphics->SetTransform(pmNew);
+
+         status = m_pgraphics->DrawString(gen::international::utf8_to_unicode(str), -1, gdiplus_font(), origin, &format, gdiplus_brush());
+
+         m_pgraphics->SetTransform(&m);
+
+      }
+
+      delete pmNew;
+
+      return status  == Gdiplus::Status::Ok;
+
+   }
 
 
 
@@ -3190,6 +3618,14 @@ namespace win
       }
 
    }
+
+
+   void graphics::set_text_rendering(::ca::e_text_rendering etextrendering)
+   {
+      m_etextrendering = etextrendering;
+
+   }
+
 
    void * graphics::get_os_data() const
    {
