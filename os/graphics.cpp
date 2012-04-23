@@ -1306,10 +1306,60 @@ namespace win
       return ::GdiComment(get_handle1(), nDataSize, pCommentData); 
    }
    
+
+/*BOOL CALLBACK metaCallback(
+   EmfPlusRecordType recordType, 
+   unsigned int flags, 
+   unsigned int dataSize, 
+   const unsigned char* pStr, 
+   void* callbackData)
+{ 
+   // Play only EmfPlusRecordTypeFillEllipse records.
+   if (recordType == EmfPlusRecordTypeFillEllipse)
+   {
+   // Explicitly cast callbackData as a metafile pointer, and use it to call
+   // the PlayRecord method.
+   static_cast < Metafile* > (callbackData)->PlayRecord(recordType, flags, dataSize, pStr);
+   }
+   return TRUE; 
+}
+
+VOID Example_EnumerateMetafile9(HDC hdc)
+{   
+   Graphics graphics(hdc);
+   // Create a Metafile object from an existing disk metafile.
+   Metafile* pMeta = new Metafile(L"SampleMetafile.emf", hdc);
+   {
+      // Fill a rectangle and an ellipse in pMeta.
+      Graphics metaGraphics(pMeta);
+      metaGraphics.FillRectangle(&SolidBrush(Color(255, 0, 0, 0)), 0, 0, 100, 100);
+  metaGraphics.FillEllipse(&SolidBrush(Color(255, 255, 0, 0)), 100, 0, 200, 100);
+   }
+   // Enumerate pMeta to the destination rectangle, passing pMeta as the callback data. 
+   graphics.EnumerateMetafile(
+   pMeta,
+   Rect(0, 0, 300, 50),
+   metaCallback,
+   pMeta);
+   // Draw pMeta as an image.
+   graphics.DrawImage(pMeta, Point(0, 150));
+   delete pMeta;;
+}*/
    BOOL graphics::PlayMetaFile(HENHMETAFILE hEnhMF, LPCRECT lpBounds)
    { 
-      
-      return ::PlayEnhMetaFile(get_handle1(), hEnhMF, lpBounds); 
+
+      Gdiplus::RectF rect(lpBounds->left, lpBounds->top, width(lpBounds), height(lpBounds));
+
+      Gdiplus::Metafile* pMeta = new Gdiplus::Metafile(hEnhMF, false);
+
+      //m_pgraphcis->EnumerateMetafile(pMeta, rect, metaCallback, PMETAHEADER);
+
+      bool bOk = m_pgraphics->DrawImage(pMeta, rect) == Gdiplus::Status::Ok;
+
+      delete pMeta;
+
+      return bOk ? TRUE : FALSE;
+      //return ::PlayEnhMetaFile(get_handle1(), hEnhMF, lpBounds); 
    
    }
 
