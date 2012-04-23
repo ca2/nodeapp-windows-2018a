@@ -2677,12 +2677,15 @@ namespace win
          switch(m_etextrendering)
          {
          case ::ca::text_rendering_anti_alias:
+            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
             m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
             break;
          case ::ca::text_rendering_anti_alias_grid_fit:
+            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
             m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
             break;
          case ::ca::text_rendering_single_bit_per_pixel:
+            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
             m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintSingleBitPerPixel);
             break;
          case ::ca::text_rendering_clear_type_grid_fit:
@@ -2801,20 +2804,23 @@ namespace win
 
       wstring wstr = gen::international::utf8_to_unicode(lpszString, nCount);
 
+      int iRange = 0;
       int i = 0;
+      int iLen;
       const char * psz = lpszString;
       while(i < iIndex)
       {
-         if(*psz == '\0')
-            break;
+         iLen = gen::str::utf8_char(psz).length();
+         iRange++;
+         i += iLen;
          psz = gen::str::utf8_inc(psz);
-         i++;
          if(psz == NULL)
             break;
-
+         if(*psz == '\0')
+            break;
       }
 
-      Gdiplus::CharacterRange charRanges[1] = { Gdiplus::CharacterRange(0, i) }; 
+      Gdiplus::CharacterRange charRanges[1] = { Gdiplus::CharacterRange(0, iRange) }; 
 
       Gdiplus::StringFormat strFormat(Gdiplus::StringFormat::GenericTypographic());
       //Gdiplus::StringFormat strFormat;
@@ -2983,20 +2989,23 @@ namespace win
 
       wstring wstr = gen::international::utf8_to_unicode(lpszString, nCount);
 
+      int iRange = 0;
       int i = 0;
+      int iLen;
       const char * psz = lpszString;
       while(i < iIndex)
       {
-         if(*psz == '\0')
-            break;
+         iLen = gen::str::utf8_char(psz).length();
+         iRange++;
+         i += iLen;
          psz = gen::str::utf8_inc(psz);
-         i++;
          if(psz == NULL)
             break;
-
+         if(*psz == '\0')
+            break;
       }
 
-      Gdiplus::CharacterRange charRanges[1] = { Gdiplus::CharacterRange(0, i) }; 
+      Gdiplus::CharacterRange charRanges[1] = { Gdiplus::CharacterRange(0, iRange) }; 
 
       Gdiplus::StringFormat strFormat(Gdiplus::StringFormat::GenericTypographic());
       //Gdiplus::StringFormat strFormat;
@@ -3369,12 +3378,15 @@ namespace win
          switch(m_etextrendering)
          {
          case ::ca::text_rendering_anti_alias:
+            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
             m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
             break;
          case ::ca::text_rendering_anti_alias_grid_fit:
+            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
             m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
             break;
          case ::ca::text_rendering_single_bit_per_pixel:
+            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
             m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintSingleBitPerPixel);
             break;
          case ::ca::text_rendering_clear_type_grid_fit:
