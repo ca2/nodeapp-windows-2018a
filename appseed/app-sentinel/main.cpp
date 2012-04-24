@@ -1,4 +1,4 @@
-#include "c/c.h"
+#include "StdAfx.h"
 
 
 int spaboot_start();
