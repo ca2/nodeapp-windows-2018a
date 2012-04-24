@@ -117,7 +117,7 @@ namespace win
       virtual BOOL DestroyWindow();
 
       // special pre-creation and ::ca::window rect adjustment hooks
-      virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+      virtual BOOL pre_create_window(CREATESTRUCT& cs);
 
       // Advanced: virtual AdjustWindowRect
       enum AdjustType { adjustBorder = 0, adjustOutside = 1 };

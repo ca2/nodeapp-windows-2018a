@@ -265,7 +265,7 @@ namespace win
 
       if(m_pguie != NULL && m_pguie != this)
       {
-         if(!m_pguie->PreCreateWindow(cs))
+         if(!m_pguie->pre_create_window(cs))
          {
             PostNcDestroy();
             return FALSE;
@@ -273,7 +273,7 @@ namespace win
       }
       else
       {
-         if (!PreCreateWindow(cs))
+         if (!pre_create_window(cs))
          {
             PostNcDestroy();
             return FALSE;
@@ -339,7 +339,7 @@ namespace win
    }
 
    // for child windows
-   BOOL window::PreCreateWindow(CREATESTRUCT& cs)
+   BOOL window::pre_create_window(CREATESTRUCT& cs)
    {
       if (cs.lpszClass == NULL)
       {
