@@ -22,7 +22,7 @@ namespace win
 
       virtual ~brush();
 
-      virtual void * get_os_data() const;
+      virtual INT_PTR get_os_data() const;
 
       //BOOL CreateSolidBrush(COLORREF crColor);
       //BOOL CreateHatchBrush(int nIndex, COLORREF crColor);

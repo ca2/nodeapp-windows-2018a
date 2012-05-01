@@ -136,7 +136,7 @@ namespace win
       BOOL CreateThread(DWORD dwCreateFlags = 0, UINT nStackSize = 0,
          LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
-      virtual void * get_os_data();
+      virtual INT_PTR get_os_data();
       virtual INT_PTR get_os_int();
 
 

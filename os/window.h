@@ -76,7 +76,7 @@ namespace win
    #endif   // WINVER >= 0x0500
 
       virtual ::ca::window * from_os_data(void * pdata);
-      virtual void * get_os_data() const;
+      virtual INT_PTR get_os_data() const;
 
       static window * PASCAL from_handle(HWND hWnd);
       static window * PASCAL FromHandlePermanent(HWND hWnd);

@@ -14,7 +14,7 @@ namespace win
       graphics_object();
       virtual ~graphics_object();
 
-      virtual void * get_os_data() const;
+      virtual INT_PTR get_os_data() const;
 
       BOOL delete_object();
 

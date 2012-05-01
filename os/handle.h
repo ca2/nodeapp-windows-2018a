@@ -241,9 +241,9 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (::ca::app
       return NULL;
 
    CT* pObject = lookup_permanent(h);
-   if (pObject != NULL && pObject->get_os_data() == h)
+   if (pObject != NULL && pObject->get_os_data() == (INT_PTR) h)
       return pObject;   // return permanent one
-   else if ((pObject = lookup_temporary(h)) != NULL && pObject->get_os_data() == h)
+   else if ((pObject = lookup_temporary(h)) != NULL && pObject->get_os_data() == (INT_PTR) h)
    {
       HANDLE* ph = pObject->m_handlea;
       ASSERT(ph[0] == h || ph[0] == NULL);
@@ -419,7 +419,7 @@ inline CT* handle_map <HT, CT>::lookup_permanent(HANDLE h)
    single_lock sl(&m_mutex, TRUE);
 
    CT * pt = m_permanentMap.get(h, (CT*) NULL);
-   if(pt != NULL && pt->get_os_data() == h)
+   if(pt != NULL && pt->get_os_data() == (INT_PTR) h)
       return pt;
    else
       return NULL;
@@ -433,7 +433,7 @@ inline CT* handle_map <HT, CT>::lookup_temporary(HANDLE h)
    single_lock sl(&m_mutex, TRUE);
 
    CT * pt = m_temporaryMap.get(h, (CT*) NULL); 
-   if(pt != NULL && pt->get_os_data() == h)
+   if(pt != NULL && pt->get_os_data() == (INT_PTR) h)
       return pt;
    else
       return NULL;

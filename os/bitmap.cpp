@@ -233,10 +233,10 @@ namespace win
 
 
 
-   void * bitmap::get_os_data() const
+   INT_PTR bitmap::get_os_data() const
    {
       
-      return (Gdiplus::Bitmap *) m_pbitmap;
+      return (INT_PTR) (Gdiplus::Bitmap *) m_pbitmap;
 
    }
 

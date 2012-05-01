@@ -90,9 +90,9 @@ namespace win
       return dynamic_cast <::ca::window *>(from_handle((HWND) pdata));   
    }
 
-   void * window::get_os_data() const
+   INT_PTR window::get_os_data() const
    {
-      return get_handle();
+      return (INT_PTR) get_handle();
    }
 
 

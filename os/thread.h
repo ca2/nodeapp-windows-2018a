@@ -55,7 +55,7 @@ namespace win
 
       UINT                                m_dwFinishTimeout;
 
-      virtual void * get_os_data() const;
+      virtual INT_PTR get_os_data() const;
       virtual INT_PTR get_os_int() const;
 
       void set_os_data(void * pvoidOsData);
@@ -189,6 +189,9 @@ namespace win
 
 
       virtual bool has_message();
+
+
+      virtual HANDLE item() const;
 
 
    };

@@ -2017,9 +2017,9 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    {
       int nRetVal = GDI_ERROR;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
-         nRetVal = (int)(INT_PTR)::SelectObject(get_handle1(), pRgn->get_os_data());
+         nRetVal = (int)(INT_PTR)::SelectObject(get_handle1(), (HGDIOBJ) pRgn->get_os_data());
       if(get_handle2() != NULL)
-         nRetVal = (int)(INT_PTR)::SelectObject(get_handle2(), pRgn->get_os_data());
+         nRetVal = (int)(INT_PTR)::SelectObject(get_handle2(), (HGDIOBJ) pRgn->get_os_data());
       return nRetVal;
    }
 
@@ -3689,9 +3689,9 @@ namespace win
    }
 
 
-   void * graphics::get_os_data() const
+   INT_PTR graphics::get_os_data() const
    {
-      return m_pgraphics;
+      return (INT_PTR) m_pgraphics;
    }
 
    HDC graphics::get_handle() const

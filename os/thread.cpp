@@ -578,14 +578,19 @@ namespace win
 
    }
 
-   void * thread::get_os_data() const
+   INT_PTR thread::get_os_data() const
    {
-      return m_hThread;
+      return (INT_PTR) m_hThread;
    }
 
    INT_PTR thread::get_os_int() const
    {
       return m_nThreadID;
+   }
+
+   HANDLE thread::item() const
+   {
+      return m_hThread;
    }
 
    bool thread::Begin(int nPriority, UINT nStackSize, DWORD dwCreateFlags,

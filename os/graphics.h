@@ -21,6 +21,8 @@ namespace win
       ::Gdiplus::GraphicsPath *     m_ppathPaint;
       HDC                           m_hdc;
 
+      // advanced use and implementation
+      BOOL                          m_bPrinting;
 
 
 
@@ -484,15 +486,13 @@ namespace win
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
 
-      // advanced use and implementation
-      BOOL m_bPrinting;
       HGDIOBJ SelectObject(HGDIOBJ);      // do not use for regions
 
       virtual void set_alpha_mode(::ca::e_alpha_mode ealphamode);
 
       virtual void set_text_rendering(::ca::e_text_rendering etextrendering);
 
-      virtual void * get_os_data() const;
+      virtual INT_PTR get_os_data() const;
       virtual HDC get_handle() const;
       virtual HDC get_handle1() const;
       virtual HDC get_handle2() const;

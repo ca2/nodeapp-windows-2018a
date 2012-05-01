@@ -18,7 +18,7 @@ namespace win
       bitmap(::ca::application * papp);
       virtual ~bitmap();
 
-      void * get_os_data() const;
+      INT_PTR get_os_data() const;
 
 
       BOOL LoadBitmap(const char * lpszResourceName);

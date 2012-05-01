@@ -21,7 +21,7 @@ namespace win
       virtual ~font();
 
 
-      virtual void * get_os_data() const;
+      virtual INT_PTR get_os_data() const;
 
 
       virtual void font::construct(const ::ca::font & fontParam);
