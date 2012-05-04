@@ -701,6 +701,9 @@ namespace win
       void _001UpdateWindow();
 
 
+      void _001OnTriggerMouseInside();
+
+
    };
 
 

@@ -1253,23 +1253,7 @@ namespace win
          }
          if(!m_bMouseHover)
          {
-            string strApp = System.m_strAppName;
-            if(strApp == "netshareserver")
-            {
-               m_bMouseHover = true;
-               TRACKMOUSEEVENT tme = { sizeof(tme) };
-               tme.dwFlags = TME_LEAVE;
-               tme.hwndTrack = get_handle();
-               //System.TrackMouseEvent(&tme);
-            }
-            else
-            {
-               m_bMouseHover = true;
-               TRACKMOUSEEVENT tme = { sizeof(tme) };
-               tme.dwFlags = TME_LEAVE;
-               tme.hwndTrack = get_handle();
-               TrackMouseEvent(&tme);
-            }
+            m_pguie->_001OnTriggerMouseInside();
          }
          if(m_pguieCapture != NULL)
          {
@@ -5535,6 +5519,17 @@ run:
       System.window_map().set((INT_PTR)get_handle(), this);
    }
 
+   
+   void window::_001OnTriggerMouseInside()
+   {
+      
+      m_bMouseHover = true;
+      TRACKMOUSEEVENT tme = { sizeof(tme) };
+      tme.dwFlags = TME_LEAVE;
+      tme.hwndTrack = get_handle();
+      TrackMouseEvent(&tme);
+
+   }
 
 
 } // namespace win
