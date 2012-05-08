@@ -173,7 +173,11 @@ int spaboot_start()
       {  
          break;
       }
-      ca2_cube_install(id, bBackground);
+      vsstring strCommandLine;
+
+      strCommandLine = "app=session session_start=" + id + " install";
+
+      ca2_cube_install(strCommandLine, bBackground);
       iRetry++;
    }
 
@@ -198,7 +202,10 @@ vsstring calc_id()
 
    char szModulePath[MAX_PATH * 3];
    ::GetModuleFileNameA((HINSTANCE) NULL, szModulePath, sizeof(szModulePath));
-   return read_resource_as_string_dup(::GetModuleHandleA(szModulePath), 1984, "CGCL");
+   vsstring strId = read_resource_as_string_dup(::GetModuleHandleA(szModulePath), 1984, "CGCL");
+   if(strId == "mplite") // use veriwell_mplite
+      strId = "bergedge";
+   return strId;
 
 }
 
