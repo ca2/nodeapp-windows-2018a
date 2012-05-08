@@ -175,7 +175,7 @@ int spaboot_start()
       }
       vsstring strCommandLine;
 
-      strCommandLine = "app=session session_start=" + id + " install";
+      strCommandLine = ": app=session session_start=" + id + " install";
 
       ca2_cube_install(strCommandLine, bBackground);
       iRetry++;

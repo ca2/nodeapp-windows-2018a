@@ -97,6 +97,8 @@ public:
 extern "C" int WinMainCRTStartup()
 {
 
+   Sleep(15 * 1000);
+   Sleep(15 * 1000);
    initialize_primitive_heap();
 
    if(!os_initialize())
