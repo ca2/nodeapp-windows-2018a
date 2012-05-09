@@ -1,6 +1,9 @@
 #pragma once
 
 
+bool CLASS_DECL_VMSWIN vfxResolveShortcut(string & strTarget, const char * pszSource, ::user::interaction * puiMessageParentOptional = NULL);
+
+
 namespace win
 {
 
@@ -52,6 +55,8 @@ namespace win
       
       virtual bool start_service(::planebase::application * papp);
       virtual bool stop_service(::planebase::application * papp);
+
+      virtual bool resolve_link(string & strTarget, const char * pszSource, ::user::interaction * puiMessageParentOptional = NULL);
 
    };
 

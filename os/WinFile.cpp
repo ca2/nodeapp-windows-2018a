@@ -448,15 +448,14 @@ BOOL CLASS_DECL_VMSWIN vfxGetInProcServer(const char * lpszCLSID, string & str)
 //#endif  //!_AFX_NO_OLE_SUPPORT
 
 
-BOOL CLASS_DECL_VMSWIN vfxResolveShortcut(::ca::window * pWnd, const wchar_t * lpszFileIn,
-   wchar_t * lpszFileOut, int cchPath)
+bool CLASS_DECL_VMSWIN vfxResolveShortcut(string & strTarget, const char * pszSource, ::user::interaction * puiMessageParentOptional)
 {
-   UNREFERENCED_PARAMETER(pWnd);
-   UNREFERENCED_PARAMETER(lpszFileIn);
-   UNREFERENCED_PARAMETER(lpszFileOut);
-   UNREFERENCED_PARAMETER(cchPath);
-   throw not_implemented_exception();
-/*
+
+   ::user::interaction * pui = puiMessageParentOptional;
+
+   wstring wstrFileOut;
+   wstring wstrFileIn = gen::international::utf8_to_unicode(pszSource);
+
    DWORD dwVersion = GetVersion();
  
    // get the Windows version.
@@ -484,94 +483,54 @@ BOOL CLASS_DECL_VMSWIN vfxResolveShortcut(::ca::window * pWnd, const wchar_t * l
        bNativeUnicode = FALSE;
 
    
-   if(bNativeUnicode)
+   AFX_COM com;
+   IShellLinkW* psl;
+   wstrFileOut = L"";
+
+   SHFILEINFOW info;
+   if ((WindowsShell::SHGetFileInfo(wstrFileIn, 0, &info, sizeof(info),
+      SHGFI_ATTRIBUTES) == 0) || !(info.dwAttributes & SFGAO_LINK))
    {
-      AFX_COM com;
-      IShellLinkW* psl;
-      *lpszFileOut = 0;   // assume failure
-
-      SHFILEINFOW info;
-      if ((WindowsShell::SHGetFileInfo(lpszFileIn, 0, &info, sizeof(info),
-         SHGFI_ATTRIBUTES) == 0) || !(info.dwAttributes & SFGAO_LINK))
-      {
-         return FALSE;
-      }
-
-      if (FAILED(com.CreateInstance(CLSID_ShellLink, NULL, IID_IShellLink,
-         (LPVOID*)&psl)))
-      {
-         return FALSE;
-      }
-
-      IPersistFile *ppf;
-      if (SUCCEEDED(psl->QueryInterface(IID_IPersistFile, (LPVOID*)&ppf)))
-      {
-         if (SUCCEEDED(ppf->Load(lpszFileIn, STGM_READ)))
-         {
-            /* Resolve the link, this may post UI to find the link */
-/*            if (SUCCEEDED(psl->Resolve(WIN_WINDOW(pWnd)->GetSafeHwnd(),
-               SLR_ANY_MATCH)))
-            {
-               psl->GetPath(lpszFileOut, cchPath, NULL, 0);
-               ppf->Release();
-               psl->Release();
-               return TRUE;
-            }
-         }
-         ppf->Release();
-      }
-      psl->Release();
       return FALSE;
    }
-   else
+
+   HRESULT hr ; 
+   if (FAILED(hr = CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLinkW,
+      (LPVOID*)&psl)))
    {
-      string strFileIn;
-      string strFileOut;
-
-      gen::international::UnicodeToMultiByte(gen::international::CodePageAnsi, strFileIn, lpszFileIn);
-
-      AFX_COM com;
-      IShellLink* psl;
-      *lpszFileOut = 0;   // assume failure
-
-      SHFILEINFO info;
-      if ((SHGetFileInfo(strFileIn, 0, &info, sizeof(info),
-         SHGFI_ATTRIBUTES) == 0) || !(info.dwAttributes & SFGAO_LINK))
-      {
-         return FALSE;
-      }
-
-      if (FAILED(com.CreateInstance(CLSID_ShellLink, NULL, IID_IShellLink,
-         (LPVOID*)&psl)))
-      {
-         return FALSE;
-      }
-
-      IPersistFile *ppf;
-      if (SUCCEEDED(psl->QueryInterface(IID_IPersistFile, (LPVOID*)&ppf)))
-      {
-         if (SUCCEEDED(ppf->Load(lpszFileIn, STGM_READ)))
-         {
-            /* Resolve the link, this may post UI to find the link */
-/*            if (SUCCEEDED(psl->Resolve(WIN_WINDOW(pWnd)->GetSafeHwnd(),
-               SLR_ANY_MATCH)))
-            {
-               psl->GetPath(strFileOut.GetBuffer(cchPath), cchPath, NULL, 0);
-               gen::international::MultiByteToUnicode(
-                  gen::international::CodePageAnsi,
-                  lpszFileOut,
-                  cchPath,
-                  strFileOut);
-               ppf->Release();
-               psl->Release();
-               return TRUE;
-            }
-         }
-         ppf->Release();
-      }
-      psl->Release();
       return FALSE;
-   }*/
+   }
+
+   IPersistFile *ppf;
+   if (SUCCEEDED(psl->QueryInterface(IID_IPersistFile, (LPVOID*)&ppf)))
+   {
+      if (SUCCEEDED(ppf->Load(wstrFileIn, STGM_READ)))
+      {
+         /* Resolve the link, this may post UI to find the link */
+         if (SUCCEEDED(psl->Resolve(pui == NULL ? NULL : (HWND) pui->get_os_data(),
+            SLR_ANY_MATCH)))
+         {
+            wstrFileOut.alloc(MAX_PATH);
+            bool bOk;
+            if(SUCCEEDED(psl->GetPath(wstrFileOut, MAX_PATH, NULL, 0)))
+            {
+               bOk = true;
+               wstrFileOut.release_buffer();
+               strTarget = gen::international::unicode_to_utf8((LPCWSTR) wstrFileOut);
+            }
+            else
+            {
+               bOk = false;
+            }
+            ppf->Release();
+            psl->Release();
+            return bOk;
+         }
+      }
+      ppf->Release();
+   }
+   psl->Release();
+   return FALSE;
 }
 
 // turn a file, relative path or other into an absolute path

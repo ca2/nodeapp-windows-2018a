@@ -681,7 +681,12 @@ namespace win
       return bOk != FALSE;
    }
 
+   bool os::resolve_link(string & strTarget, const char * pszSource, ::user::interaction * puiMessageParentOptional)
+   {
 
+      return vfxResolveShortcut(strTarget, pszSource, puiMessageParentOptional);
+
+   }
 
 } // namespace win
 

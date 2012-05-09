@@ -29,6 +29,8 @@ int CLASS_DECL_VMSWIN AfxWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, L
 
    UNREFERENCED_PARAMETER(lpCmdLine);
 
+   ::CoInitialize(NULL);
+
 
    if(!main_initialize())
       return -1;

@@ -62,6 +62,9 @@ UINT APIENTRY _AfxThreadEntry(void * pParam)
 
    ::win::thread* pThread = pStartup->pThread;
 
+      ::CoInitialize(NULL);
+
+
    pThread->::se_translator::attach();
 
    try

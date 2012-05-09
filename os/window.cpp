@@ -1105,6 +1105,14 @@ namespace win
    void window::message_handler(gen::signal_object * pobj)
    {
       SCAST_PTR(::gen::message::base, pbase, pobj);
+
+      if(m_pguie != NULL)
+      {
+         m_pguie->pre_translate_message(pobj);
+         if(pobj->m_bRet)
+            return;
+      }
+
       if(m_pcallback != NULL)
       {
          m_pcallback->message_window_message_handler(pobj);
@@ -1340,7 +1348,6 @@ namespace win
             if(pbase->m_bRet)
                return;
          }
-         /*
          else if(!pkey->m_bRet)
          {
             if(m_pguie != this && m_pguie != NULL)
@@ -1356,7 +1363,7 @@ namespace win
                   return;
             }
          }
-         pbase->set_lresult(DefWindowProc(pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));*/
+         pbase->set_lresult(DefWindowProc(pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));
          return;
       }
       if(pbase->m_uiMessage == ::gen::message_event)
@@ -2026,7 +2033,10 @@ namespace win
          while ((pTemp = pFrameWnd->GetParentFrame()) != NULL)
             pFrameWnd = pTemp;
       }
-      return pFrameWnd;
+      if(pFrameWnd == m_pguie)
+         return NULL;
+      else
+         return pFrameWnd;
    }
 
    ::ca::window * PASCAL window::GetSafeOwner(::ca::window * pParent, HWND* pWndTop)
