@@ -2033,10 +2033,7 @@ namespace win
          while ((pTemp = pFrameWnd->GetParentFrame()) != NULL)
             pFrameWnd = pTemp;
       }
-      if(pFrameWnd == m_pguie)
-         return NULL;
-      else
-         return pFrameWnd;
+      return pFrameWnd;
    }
 
    ::ca::window * PASCAL window::GetSafeOwner(::ca::window * pParent, HWND* pWndTop)
