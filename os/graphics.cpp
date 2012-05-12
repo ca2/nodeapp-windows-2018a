@@ -2891,7 +2891,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       //m_pgraphics->MeasureString(wstr, (int) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, Gdiplus::StringFormat::GenericTypographic(), &box);
 
-      ((graphics *)this)->m_pgraphics->MeasureCharacterRanges(wstr, nCount, ((graphics *)this)->gdiplus_font(), box, &strFormat, count, pCharRangeRegions);
+      ((graphics *)this)->m_pgraphics->MeasureCharacterRanges(wstr, wstr.get_length(), ((graphics *)this)->gdiplus_font(), box, &strFormat, count, pCharRangeRegions);
 
       Gdiplus::Region * pregion = NULL;
 
