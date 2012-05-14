@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 #include "WinStdioFile.h"
 
 #include <errno.h>
@@ -24,9 +24,9 @@ WinStdioFile::~WinStdioFile()
 
 BOOL WinStdioFile::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_exception_sp* pException)
 {
-   ASSERT(pException == NULL || fx_is_valid_address(pException, sizeof(ex1::file_exception_sp)));
+   ASSERT(pException == NULL || __is_valid_address(pException, sizeof(ex1::file_exception_sp)));
    ASSERT(lpszFileName != NULL);
-   ASSERT(AfxIsValidString(lpszFileName));
+   ASSERT(__is_valid_string(lpszFileName));
 
    if(nOpenFlags  & ::ex1::file::defer_create_directory)
    {
@@ -106,7 +106,7 @@ BOOL WinStdioFile::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_ex
    if (nCount == 0)
       return 0;   // avoid Win32 "null-read"
 
-   ASSERT(fx_is_valid_address(lpBuf, nCount));
+   ASSERT(__is_valid_address(lpBuf, nCount));
 
    primitive::memory_size nRead = 0;
 
@@ -124,7 +124,7 @@ void WinStdioFile::write(const void * lpBuf, ::primitive::memory_size nCount)
 {
    ASSERT_VALID(this);
    ASSERT(m_pStream != NULL);
-   ASSERT(fx_is_valid_address(lpBuf, nCount, FALSE));
+   ASSERT(__is_valid_address(lpBuf, nCount, FALSE));
 
    if (fwrite(lpBuf, sizeof(BYTE), nCount, m_pStream) != nCount)
       vfxThrowFileException(get_app(), ::ex1::file_exception::generic, _doserrno, m_strFileName);
@@ -142,7 +142,7 @@ void WinStdioFile::write_string(const char * lpsz)
 LPTSTR WinStdioFile::read_string(LPTSTR lpsz, UINT nMax)
 {
    ASSERT(lpsz != NULL);
-   ASSERT(fx_is_valid_address(lpsz, nMax));
+   ASSERT(__is_valid_address(lpsz, nMax));
    ASSERT(m_pStream != NULL);
 
    LPTSTR lpszResult = _fgetts(lpsz, nMax, m_pStream);
@@ -208,7 +208,7 @@ UINT WinStdioFile::read_string(string & rString)
 /*wchar_t * WinStdioFile::read_string(wchar_t * lpsz, UINT nMax)
 {
    ASSERT(lpsz != NULL);
-   ASSERT(fx_is_valid_address(lpsz, nMax));
+   ASSERT(__is_valid_address(lpsz, nMax));
    ASSERT(m_pStream != NULL);
 
    wchar_t * lpszResult = fgetws(lpsz, nMax, m_pStream);
@@ -290,7 +290,7 @@ ex1::file * WinStdioFile::Duplicate() const
    ASSERT_VALID(this);
    ASSERT(m_pStream != NULL);
 
-   AfxThrowNotSupportedException();
+   throw not_supported_exception();
    return NULL;
 }
 
@@ -299,7 +299,7 @@ void WinStdioFile::LockRange(file_position /* dwPos */, file_size /* dwCount */)
    ASSERT_VALID(this);
    ASSERT(m_pStream != NULL);
 
-   AfxThrowNotSupportedException();
+   throw not_supported_exception();
 }
 
 void WinStdioFile::UnlockRange(file_position /* dwPos */, file_size /* dwCount */)
@@ -307,7 +307,7 @@ void WinStdioFile::UnlockRange(file_position /* dwPos */, file_size /* dwCount *
    ASSERT_VALID(this);
    ASSERT(m_pStream != NULL);
 
-   AfxThrowNotSupportedException();
+   throw not_supported_exception();
 }
 
 

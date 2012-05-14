@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 #include <math.h>
 #include "include/FreeImage.h"
 
@@ -46,7 +46,7 @@ namespace win
    }
 
 
-   CLASS_DECL_VMSWIN void dib::s_initialize()
+   CLASS_DECL_win void dib::s_initialize()
    {
       double dCos;
       double dSin;
@@ -1355,7 +1355,7 @@ namespace win
       return RGB(rgba_get_b(dw), rgba_get_g(dw), rgba_get_r(dw));
    }
 
-   // too slow for animation on AMD XP Atlhon.
+   // too slow for animation on AMD XP gen_hon.
    // TOP SUGGESTION:
    // The gradient can´t have more then 256 levels of the most bright color
    // (white). So creating a radial fill of radius 256 and then using fasting

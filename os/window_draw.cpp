@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 
 class keep_event_reset
 {
@@ -44,7 +44,7 @@ namespace win
 
    bool window_draw::start()
    {
-      AfxBeginThread(get_app(), &window_draw::ThreadProcRedraw, (LPVOID) this);
+      __begin_thread(get_app(), &window_draw::ThreadProcRedraw, (LPVOID) this);
       return true;
    }
 
@@ -284,7 +284,7 @@ namespace win
          else
          {
             BOOL bWin4 = FALSE;
-         //_AfxFillPSOnStack();
+         //_gen::FillPSOnStack();
             ::DefWindowProc(
                hwndParam,
                (bWin4 ? WM_PRINT : WM_PAINT),
@@ -338,7 +338,7 @@ namespace win
          }
          while(::PeekMessageA(&msg, NULL, NULL, NULL, PM_NOREMOVE))
          {
-            AfxGetThread()->pump_message();
+            __get_thread()->pump_message();
          }
          int iUiDataWriteWindowTimeForTheApplicationInThisMachine = 8;
          if(m_iFramesPerSecond == 0)
@@ -359,7 +359,7 @@ namespace win
       return 0;
    }
 
-   UINT AFX_CDECL window_draw::ThreadProcRedraw(LPVOID lpv)
+   UINT c_cdecl window_draw::ThreadProcRedraw(LPVOID lpv)
    {
       window_draw * pdraw = (window_draw *) lpv;
       return pdraw->RedrawProc();

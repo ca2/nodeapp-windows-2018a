@@ -14,7 +14,7 @@ namespace win
 {
 
 
-   class CLASS_DECL_VMSWIN ip_enum :
+   class CLASS_DECL_win ip_enum :
       virtual public ::ca4::ip_enum
    {
    public:

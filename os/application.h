@@ -15,7 +15,7 @@ namespace win
 {
 
 
-   class CLASS_DECL_VMSWIN main_init_data :
+   class CLASS_DECL_win main_init_data :
       public ::ca::main_init_data
    {
    public:
@@ -29,7 +29,7 @@ namespace win
    };
 
 
-   class CLASS_DECL_VMSWIN application :
+   class CLASS_DECL_win application :
       virtual public ::ex2::application
    {
    public:
@@ -128,7 +128,7 @@ namespace win
 
 
 
-      /*virtual void construct(AFX_THREADPROC pfnThreadProc, LPVOID pParam);
+      /*virtual void construct(__THREADPROC pfnThreadProc, LPVOID pParam);
 
       virtual bool Begin(int nPriority = THREAD_PRIORITY_NORMAL, UINT nStackSize = 0,
          DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
@@ -151,7 +151,7 @@ namespace win
 
       virtual bool PreInitInstance();
 
-      // called when occurs an se_exception exception in run
+      // called when occurs an standard_exception exception in run
       // return true to call run again
       virtual bool on_run_exception(::ca::exception & e);
 

@@ -8,7 +8,7 @@
 namespace win
 {
 
-   class CLASS_DECL_VMSWIN font : 
+   class CLASS_DECL_win font : 
       virtual public ::ca::font
    {
    public:

@@ -4,13 +4,13 @@
 class FileException;
 struct FileStatus;
 
-void CLASS_DECL_VMSWIN vfxGetRoot(const wchar_t * lpszPath, string& wstrRoot);
-void CLASS_DECL_VMSWIN vfxGetRoot(wstring & wstrRoot, const wstring & wstrPath);
+void CLASS_DECL_win vfxGetRoot(const wchar_t * lpszPath, string& wstrRoot);
+void CLASS_DECL_win vfxGetRoot(wstring & wstrRoot, const wstring & wstrPath);
 
 /////////////////////////////////////////////////////////////////////////////
 // File - raw unbuffered disk file I/O
 
-class CLASS_DECL_VMSWIN WinFile :
+class CLASS_DECL_win WinFile :
    virtual public ex1::file
 {
 public:

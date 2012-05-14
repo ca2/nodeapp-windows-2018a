@@ -5,7 +5,7 @@ namespace win
 {
 
 
-   class CLASS_DECL_VMSWIN crypt :
+   class CLASS_DECL_win crypt :
       virtual public ::ca4::crypt
    {
    public:

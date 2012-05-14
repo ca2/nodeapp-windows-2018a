@@ -1,7 +1,7 @@
 #pragma once
 
 
-class CLASS_DECL_VMSWIN WinResource :
+class CLASS_DECL_win WinResource :
    virtual public ex1::resource
 {
 public:

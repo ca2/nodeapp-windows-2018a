@@ -8,7 +8,7 @@ namespace user
 namespace win
 {
 
-   class CLASS_DECL_VMSWIN window_draw : 
+   class CLASS_DECL_win window_draw : 
       virtual public ::ca::window_draw,
       virtual public ::ca::message_window_simple_callback
    {
@@ -129,7 +129,7 @@ namespace win
       void get_wnda(user::LPWndArray & wndpa);
       void get_wnda(user::HWNDArray & hwnda);
       
-      static UINT AFX_CDECL ThreadProcRedraw(LPVOID lpv);
+      static UINT c_cdecl ThreadProcRedraw(LPVOID lpv);
 
       virtual UINT RedrawProc();
 

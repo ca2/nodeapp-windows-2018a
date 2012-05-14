@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 
 
 #undef new
@@ -63,7 +63,7 @@ namespace win
    {
       if (!Attach(::ExtCreatePen(nPenStyle, nWidth, pLogBrush, nStyleCount,
          lpStyle)))
-         AfxThrowResourceException();
+         throw resource_exception();
    }*/
 
    /////////////////////////////////////////////////////////////////////////////
@@ -97,10 +97,10 @@ namespace win
 
 
       // IMPLEMENT_DYNAMIC(resource_exception, base_exception)
-      //resource_exception _simpleResourceException(FALSE, AFX_IDS_RESOURCE_EXCEPTION);
+      //resource_exception _simpleResourceException(FALSE, __IDS_RESOURCE_EXCEPTION);
 
       // IMPLEMENT_DYNAMIC(user_exception, base_exception)
-      //user_exception _simpleUserException(FALSE, AFX_IDS_USER_EXCEPTION);
+      //user_exception _simpleUserException(FALSE, __IDS_USER_EXCEPTION);
 
       // IMPLEMENT_DYNCREATE(::ca::graphics_sp, ::radix::object)
       // IMPLEMENT_DYNAMIC(CClientDC, ::ca::graphics_sp)
@@ -119,7 +119,7 @@ namespace win
       // Standard exception processing
 
 
-   /*void AfxGetGrayBitmap(::ca::application * papp, const ::ca::bitmap &rSrc, ::ca::bitmap *pDest, COLORREF crBackground)
+   /*void __get_gray_bitmap(::ca::application * papp, const ::ca::bitmap &rSrc, ::ca::bitmap *pDest, COLORREF crBackground)
    {
       ASSERT(pDest);
       ASSERT_KINDOF(::ca::bitmap, pDest);
@@ -177,7 +177,7 @@ namespace win
       }
    }
 
-   void AfxDrawGrayBitmap(::ca::application * papp, ::ca::graphics * pgraphics, int x, int y, const ::ca::bitmap &rSrc, COLORREF crBackground)
+   void __draw_gray_bitmap(::ca::application * papp, ::ca::graphics * pgraphics, int x, int y, const ::ca::bitmap &rSrc, COLORREF crBackground)
    {
       ASSERT(pgraphics);
       ASSERT_KINDOF(::ca::graphics_sp, pgraphics);
@@ -225,7 +225,7 @@ namespace win
       }
    }
 
-   void AfxGetDitheredBitmap(::ca::application * papp, const ::ca::bitmap &rSrc, ::ca::bitmap *pDest, COLORREF cr1, COLORREF cr2)
+   void __get_dithered_bitmap(::ca::application * papp, const ::ca::bitmap &rSrc, ::ca::bitmap *pDest, COLORREF cr1, COLORREF cr2)
    {
       ASSERT(pDest);
       ASSERT_KINDOF(::ca::bitmap, pDest);
@@ -294,7 +294,7 @@ namespace win
       }
    }
 
-   void AfxDrawDitheredBitmap(::ca::application * papp, ::ca::graphics * pgraphics, int x, int y, const ::ca::bitmap &rSrc, COLORREF cr1, COLORREF cr2)
+   void __draw_dithered_bitmap(::ca::application * papp, ::ca::graphics * pgraphics, int x, int y, const ::ca::bitmap &rSrc, COLORREF cr1, COLORREF cr2)
    {
       ASSERT(pgraphics);
       ASSERT_KINDOF(::ca::graphics_sp, pgraphics);

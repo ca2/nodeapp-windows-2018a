@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 
 
 namespace win
@@ -8,7 +8,7 @@ namespace win
    void PASCAL window::DeleteTempMap()
    {
       
-      hwnd_map* pMap = AfxGetModuleState()->m_pmapHWND;
+      hwnd_map* pMap = __get_module_state()->m_pmapHWND;
 
       if(::ca::is_null(pMap))
          return;

@@ -1,15 +1,15 @@
-#include "StdAfx.h"
+#include "framework.h"
 #include <malloc.h>
 
 
 // interesting function
-/*BOOL CLASS_DECL_VMSWIN AfxCustomLogFont(UINT nIDS, LOGFONT* pLogFont)
+/*BOOL CLASS_DECL_win __custom_log_font(UINT nIDS, LOGFONT* pLogFont)
 {
    ENSURE_ARG(pLogFont != NULL);
    ASSERT(nIDS != 0);
 
    char szFontInfo[256];
-   if (!AfxLoadString(nIDS, szFontInfo,_countof(szFontInfo)))
+   if (!gen::LoadString(nIDS, szFontInfo,_countof(szFontInfo)))
       return FALSE;
 
    LPTSTR lpszSize = _tcschr(szFontInfo, '\n');
@@ -21,11 +21,11 @@
          MulDiv(pLogFont->lfHeight, afxData.cyPixelsPerInch, 72);
       *lpszSize = '\0';
    }
-   _template::checked::tcsncpy_s(pLogFont->lfFaceName, _countof(pLogFont->lfFaceName), szFontInfo, _TRUNCATE);
+   ::gen::tcsncpy_s(pLogFont->lfFaceName, _countof(pLogFont->lfFaceName), szFontInfo, _TRUNCATE);
    return TRUE;
 }*/
 
-BOOL CLASS_DECL_VMSWIN _AfxIsComboBoxControl(HWND hWnd, UINT nStyle)
+BOOL CLASS_DECL_win __is_combo_box_control(HWND hWnd, UINT nStyle)
 {
    if (hWnd == NULL)
       return FALSE;
@@ -36,18 +36,18 @@ BOOL CLASS_DECL_VMSWIN _AfxIsComboBoxControl(HWND hWnd, UINT nStyle)
    // do expensive classname compare next
    char szCompare[_countof("combobox")+1];
    ::GetClassName(hWnd, szCompare, _countof(szCompare));
-   return ::AfxInvariantStrICmp(szCompare, "combobox") == 0;
+   return ::__invariant_stricmp(szCompare, "combobox") == 0;
 }
 
-BOOL CLASS_DECL_VMSWIN _AfxCompareClassName(HWND hWnd, const char * lpszClassName)
+BOOL CLASS_DECL_win __compare_class_name(HWND hWnd, const char * lpszClassName)
 {
    ASSERT(::IsWindow(hWnd));
    char szTemp[32];
    ::GetClassName(hWnd, szTemp, _countof(szTemp));
-   return ::AfxInvariantStrICmp(szTemp, lpszClassName) == 0;
+   return ::__invariant_stricmp(szTemp, lpszClassName) == 0;
 }
 
-HWND CLASS_DECL_VMSWIN _AfxChildWindowFromPoint(HWND hWnd, POINT pt)
+HWND CLASS_DECL_win __child_window_from_point(HWND hWnd, POINT pt)
 {
    ASSERT(hWnd != NULL);
 
@@ -56,7 +56,7 @@ HWND CLASS_DECL_VMSWIN _AfxChildWindowFromPoint(HWND hWnd, POINT pt)
    HWND hWndChild = ::GetWindow(hWnd, GW_CHILD);
    for (; hWndChild != NULL; hWndChild = ::GetWindow(hWndChild, GW_HWNDNEXT))
    {
-      if (_AfxGetDlgCtrlID(hWndChild) != (WORD)0 &&
+      if (__get_dialog_control_id(hWndChild) != (WORD)0 &&
          (::GetWindowLong(hWndChild, GWL_STYLE) & WS_VISIBLE))
       {
          // see if point hits the child ::ca::window
@@ -70,7 +70,7 @@ HWND CLASS_DECL_VMSWIN _AfxChildWindowFromPoint(HWND hWnd, POINT pt)
    return NULL;    // not found
 }
 
-void CLASS_DECL_VMSWIN AfxSetWindowText(::user::interaction * hWndCtrl, const char * lpszNew)
+void CLASS_DECL_win __set_window_text(::user::interaction * hWndCtrl, const char * lpszNew)
 {
    hWndCtrl->SetWindowText(lpszNew);
    /*ENSURE(hWndCtrl);
@@ -88,7 +88,7 @@ void CLASS_DECL_VMSWIN AfxSetWindowText(::user::interaction * hWndCtrl, const ch
    }*/
 }
 
-void CLASS_DECL_VMSWIN AfxDeleteObject(HGDIOBJ* pObject)
+void CLASS_DECL_win __delete_object(HGDIOBJ* pObject)
 {
    ENSURE_ARG(pObject != NULL);   
    if (*pObject != NULL)
@@ -98,7 +98,7 @@ void CLASS_DECL_VMSWIN AfxDeleteObject(HGDIOBJ* pObject)
    }
 }
 /*
-void CLASS_DECL_VMSWIN AfxCancelModes(HWND hWndRcvr)
+void CLASS_DECL_win __cancel_modes(HWND hWndRcvr)
 {
    // if we receive a message destined for a ::ca::window, cancel any combobox
    //  popups that could be in toolbars or dialog bars
@@ -110,14 +110,14 @@ void CLASS_DECL_VMSWIN AfxCancelModes(HWND hWndRcvr)
       return;     // let input go to ::ca::window with focus
 
    // focus is in part of a combo-box
-   if (!_AfxIsComboBoxControl(hWndCancel, (UINT)CBS_DROPDOWNLIST))
+   if (!__is_combo_box_control(hWndCancel, (UINT)CBS_DROPDOWNLIST))
    {
       // check as a dropdown
       hWndCancel = ::GetParent(hWndCancel);   // parent of edit is combo
       if (hWndCancel == hWndRcvr)
          return;     // let input go to part of combo
 
-      if (!_AfxIsComboBoxControl(hWndCancel, (UINT)CBS_DROPDOWN))
+      if (!__is_combo_box_control(hWndCancel, (UINT)CBS_DROPDOWN))
          return;     // not a combo-box that is active
    }
 
@@ -131,7 +131,7 @@ void CLASS_DECL_VMSWIN AfxCancelModes(HWND hWndRcvr)
    ::SendMessage(hWndCancel, CB_SHOWDROPDOWN, FALSE, 0L);
 }*/
 
-void CLASS_DECL_VMSWIN AfxGlobalFree(HGLOBAL hGlobal)
+void CLASS_DECL_win __global_free(HGLOBAL hGlobal)
 {
    if (hGlobal == NULL)
       return;
@@ -149,17 +149,17 @@ void CLASS_DECL_VMSWIN AfxGlobalFree(HGLOBAL hGlobal)
 /////////////////////////////////////////////////////////////////////////////
 // Special new handler for safety pool on temp maps
 
-#ifndef _AFX_PORTABLE
+#ifndef ___PORTABLE
 
 #define MIN_MALLOC_OVERHEAD 4   // LocalAlloc or other overhead
 
-int AFX_CDECL AfxCriticalNewHandler(size_t nSize)
+int c_cdecl __critical_new_handler(size_t nSize)
    // nSize is already rounded
 {
    // called during critical primitive::memory allocation
    //  free up part of the cast's safety cache
 //   TRACE(::radix::trace::category_Memory, 0, "Warning: Critical primitive::memory allocation failed!\n");
-   _AFX_THREAD_STATE* pThreadState = AfxGetThreadState();
+   ___THREAD_STATE* pThreadState = __get_thread_state();
    if (pThreadState != NULL && pThreadState->m_pSafetyPoolBuffer != NULL)
    {
       size_t nOldBufferSize = _msize(pThreadState->m_pSafetyPoolBuffer);
@@ -172,10 +172,10 @@ int AFX_CDECL AfxCriticalNewHandler(size_t nSize)
       }
       else
       {
-         //BOOL bEnable = AfxEnableMemoryTracking(FALSE);
+         //BOOL bEnable = __enable_memory_tracking(FALSE);
          _expand(pThreadState->m_pSafetyPoolBuffer,
             nOldBufferSize - (nSize + MIN_MALLOC_OVERHEAD));
-         //AfxEnableMemoryTracking(bEnable);
+         //__enable_memory_tracking(bEnable);
 //         TRACE(::radix::trace::category_Memory, 0, "Warning: Shrinking safety pool from %d to %d to satisfy request of %d bytes.\n",
   //           nOldBufferSize, _msize(pThreadState->m_pSafetyPoolBuffer), nSize);
       }
@@ -183,8 +183,8 @@ int AFX_CDECL AfxCriticalNewHandler(size_t nSize)
    }
 
 //   TRACE(::radix::trace::category_Memory, 0, "ERROR: Critical primitive::memory allocation from safety pool failed!\n");
-   AfxThrowMemoryException();      // oops
+   throw memory_exception();      // oops
 }
-#endif // !_AFX_PORTABLE
+#endif // !___PORTABLE
 
 /////////////////////////////////////////////////////////////////////////////

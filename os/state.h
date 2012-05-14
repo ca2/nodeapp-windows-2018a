@@ -1,7 +1,7 @@
 #pragma once
 
-#define slot_AFX_MODULE_THREAD_STATE 1
-#define slot_AFX_THREAD_STATE 2
+#define slot___MODULE_THREAD_STATE 1
+#define slot___THREAD_STATE 2
 
 namespace win
 {
@@ -16,38 +16,38 @@ namespace win
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// _AFX_DEBUG_STATE
+// ___DEBUG_STATE
 
 #ifdef _DEBUG
 
-class _AFX_DEBUG_STATE : public no_track_object
+class ___DEBUG_STATE : public no_track_object
 {
 public:
-   _AFX_DEBUG_STATE();
-   virtual ~_AFX_DEBUG_STATE();
+   ___DEBUG_STATE();
+   virtual ~___DEBUG_STATE();
 };
 
-EXTERN_PROCESS_LOCAL(_AFX_DEBUG_STATE, afxDebugState)
+EXTERN_PROCESS_LOCAL(___DEBUG_STATE, afxDebugState)
 
 #endif //_DEBUG
 
 /////////////////////////////////////////////////////////////////////////////
-// _AFX_WIN_STATE
+// ___WIN_STATE
 
 
-class _AFX_WIN_STATE : public no_track_object
+class ___WIN_STATE : public no_track_object
 {
 public:
    // printing abort
    BOOL m_bUserAbort;
 };
 
-EXTERN_PROCESS_LOCAL(_AFX_WIN_STATE, _afxWinState)
+EXTERN_PROCESS_LOCAL(___WIN_STATE, gen_WinState)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// AFX_MODULE_STATE : portion of state that is pushed/popped
-// forward references required for AFX_MODULE_THREAD_STATE definition
+// __MODULE_STATE : portion of state that is pushed/popped
+// forward references required for __MODULE_THREAD_STATE definition
 //class CHandleMap;
 class hwnd_map;
 class hmenu_map;
@@ -79,13 +79,13 @@ public:
    TYPE m_data;
 };
 
-// AFX_MODULE_THREAD_STATE (local to thread *and* module)
-class CLASS_DECL_VMSWIN AFX_MODULE_THREAD_STATE : 
+// __MODULE_THREAD_STATE (local to thread *and* module)
+class CLASS_DECL_win __MODULE_THREAD_STATE : 
    public no_track_object
 {
 public:
-   AFX_MODULE_THREAD_STATE();
-   virtual ~AFX_MODULE_THREAD_STATE();
+   __MODULE_THREAD_STATE();
+   virtual ~__MODULE_THREAD_STATE();
 
    // current thread pointer
    class ::win::thread* m_pCurrentWinThread;
@@ -105,7 +105,7 @@ public:
    ::userbase::control_bar* m_pLastStatus; // last flyby status control bar
 };
 
-// forward references required for AFX_MODULE_STATE definition
+// forward references required for __MODULE_STATE definition
 class application;
 
 
@@ -114,18 +114,18 @@ class ::ca::window;
 
 
 class CDllIsolationWrapperBase;
-#ifndef _AFX_NO_AFXCMN_SUPPORT
+#ifndef ___NO_AFXCMN_SUPPORT
 class CComCtlWrapper;
 #endif
 class CCommDlgWrapper;
 
-// AFX_MODULE_STATE (global data for a module)
-class CLASS_DECL_VMSWIN AFX_MODULE_STATE : public no_track_object
+// __MODULE_STATE (global data for a module)
+class CLASS_DECL_win __MODULE_STATE : public no_track_object
 {
 public:
-   AFX_MODULE_STATE(BOOL bDLL, WNDPROC pfnAfxWndProc, DWORD dwVersion,
+   __MODULE_STATE(BOOL bDLL, WNDPROC pfn_window_procedure, DWORD dwVersion,
       BOOL bSystem = FALSE);
-   ~AFX_MODULE_STATE();
+   ~__MODULE_STATE();
 
    ::radix::application* m_pCurrentWinApp;
    HINSTANCE m_hCurrentInstanceHandle;
@@ -152,90 +152,90 @@ public:
    long m_nObjectCount;
    BOOL m_bUserCtrl;
 
-   // AfxRegisterClass and System.RegisterWndClass data
+   // __register_class and System.RegisterWndClass data
 
    string * m_pstrUnregisterList;
 
-   WNDPROC m_pfnAfxWndProc;
+   WNDPROC m_pfn_window_procedure;
    DWORD m_dwVersion;  // version that module linked against
 
    // variables related to a given process in a module
-   //  (used to be AFX_MODULE_PROCESS_STATE)
+   //  (used to be __MODULE_PROCESS_STATE)
    void (PASCAL *m_pfnFilterToolTipMessage)(MSG*, ::ca::window *);
 
 
    // define thread local portions of module state
-   thread_local<AFX_MODULE_THREAD_STATE, slot_AFX_MODULE_THREAD_STATE> m_thread;
+   thread_local<__MODULE_THREAD_STATE, slot___MODULE_THREAD_STATE> m_thread;
 
    //Fusion: declare pointer to base_array of pointers to isolation aware dll wrappers (ex: comctl32).
    CDllIsolationWrapperBase** m_pDllIsolationWrappers;
-   //Defaults to TRUE. When FALSE - ca2 API will not activate context in AFX_MAINTAIN_STATE2 (used by AFX_MANAGE_STATE).
+   //Defaults to TRUE. When FALSE - ca2 API will not activate context in __MAINTAIN_STATE2 (used by __MANAGE_STATE).
    BOOL   m_bSetAmbientActCtx;
    //Handle of the module context.
    HANDLE   m_hActCtx;
    void CreateActivationContext();
 };
 
-CLASS_DECL_VMSWIN AFX_MODULE_STATE* AfxSetModuleState(AFX_MODULE_STATE* pNewState);
-CLASS_DECL_VMSWIN AFX_MODULE_STATE* AfxGetModuleState();
-CLASS_DECL_VMSWIN BOOL AfxIsModuleDll();
-CLASS_DECL_VMSWIN BOOL AfxInitCurrentStateApp();
-CLASS_DECL_VMSWIN AFX_MODULE_STATE* AfxGetStaticModuleState();
-CLASS_DECL_VMSWIN HINSTANCE AfxGetInstanceHandleHelper();
+CLASS_DECL_win __MODULE_STATE* __set_module_state(__MODULE_STATE* pNewState);
+CLASS_DECL_win __MODULE_STATE* __get_module_state();
+CLASS_DECL_win BOOL __is_module_dll();
+CLASS_DECL_win BOOL __init_current_state_app();
+CLASS_DECL_win __MODULE_STATE* __get_static_module_state();
+CLASS_DECL_win HINSTANCE __get_instance_handle_helper();
 
-CLASS_DECL_VMSWIN AFX_MODULE_THREAD_STATE* AfxGetModuleThreadState();
+CLASS_DECL_win __MODULE_THREAD_STATE* __get_module_thread_state();
 
-#define _AFX_CMDTARGET_GETSTATE() (m_pModuleState)
+#define ___CMDTARGET_GETSTATE() (m_pModuleState)
 
 /////////////////////////////////////////////////////////////////////////////
 // macros & classes to manage pushing/popping the module state
 
-struct CLASS_DECL_VMSWIN AFX_MAINTAIN_STATE
+struct CLASS_DECL_win __MAINTAIN_STATE
 {
-   explicit AFX_MAINTAIN_STATE(AFX_MODULE_STATE* pModuleState) throw();
-   ~AFX_MAINTAIN_STATE();
+   explicit __MAINTAIN_STATE(__MODULE_STATE* pModuleState) throw();
+   ~__MAINTAIN_STATE();
 
 protected:
-   AFX_MODULE_STATE* m_pPrevModuleState;
+   __MODULE_STATE* m_pPrevModuleState;
 };
 
-class _AFX_THREAD_STATE;
-struct CLASS_DECL_VMSWIN AFX_MAINTAIN_STATE2
+class ___THREAD_STATE;
+struct CLASS_DECL_win __MAINTAIN_STATE2
 {
-   explicit AFX_MAINTAIN_STATE2(AFX_MODULE_STATE* pModuleState);
-   ~AFX_MAINTAIN_STATE2();
+   explicit __MAINTAIN_STATE2(__MODULE_STATE* pModuleState);
+   ~__MAINTAIN_STATE2();
 
 protected:
-   AFX_MODULE_STATE* m_pPrevModuleState;
-   _AFX_THREAD_STATE* m_pThreadState;
+   __MODULE_STATE* m_pPrevModuleState;
+   ___THREAD_STATE* m_pThreadState;
 
    ULONG_PTR m_ulActCtxCookie;
    BOOL m_bValidActCtxCookie;
 };
-#define AFX_MANAGE_STATE(p) _AfxInitManaged(); AFX_MAINTAIN_STATE2 _ctlState(p);
+#define __MANAGE_STATE(p) _gen::InitManaged(); __MAINTAIN_STATE2 _ctlState(p);
 
 /////////////////////////////////////////////////////////////////////////////
 // Thread global state
 
-// forward references required for _AFX_THREAD_STATE definition
+// forward references required for ___THREAD_STATE definition
 class view;
 class CToolTipCtrl;
 class ::userbase::control_bar;
 class push_routing_frame;
 class CPushRoutingView;
 
-#define _AFX_TEMP_CLASS_NAME_SIZE 96
-class CLASS_DECL_VMSWIN _AFX_THREAD_STATE : 
+#define ___TEMP_CLASS_NAME_SIZE 96
+class CLASS_DECL_win ___THREAD_STATE : 
    public no_track_object,
    public ::ca::thread_state
 {
 public:
-   _AFX_THREAD_STATE();
-   virtual ~_AFX_THREAD_STATE();
+   ___THREAD_STATE();
+   virtual ~___THREAD_STATE();
 
-   // override for m_pModuleState in _AFX_APP_STATE
-   AFX_MODULE_STATE* m_pModuleState;
-   AFX_MODULE_STATE* m_pPrevModuleState;
+   // override for m_pModuleState in ___APP_STATE
+   __MODULE_STATE* m_pModuleState;
+   __MODULE_STATE* m_pPrevModuleState;
 
 
 
@@ -243,7 +243,7 @@ public:
    void * m_pSafetyPoolBuffer;    // current buffer
 
    // thread local exception context
-   AFX_EXCEPTION_CONTEXT m_exceptionContext;
+   __EXCEPTION_CONTEXT m_exceptionContext;
 
    // ::ca::window create, gray dialog hook, and other hook data
    ::user::interaction * m_pWndInit;
@@ -267,7 +267,7 @@ public:
    MSG m_lastSentMsg;              // see ::ca::window::message_handler
    HWND m_hTrackingWindow;         // see ::ca::window::TrackPopupMenu
    HMENU m_hTrackingMenu;
-   char m_szTempClassName[_AFX_TEMP_CLASS_NAME_SIZE];    // see System.RegisterWndClass
+   char m_szTempClassName[___TEMP_CLASS_NAME_SIZE];    // see System.RegisterWndClass
    HWND m_hLockoutNotifyWindow;    // see ::ca::window::OnCommand
    BOOL m_bInMsgFilter;
 
@@ -283,6 +283,6 @@ public:
    BOOL m_bNeedTerm;       // TRUE if OleUninitialize needs to be called
 };
 
-EXTERN_THREAD_LOCAL(_AFX_THREAD_STATE, _afxThreadState, slot_AFX_THREAD_STATE)
+EXTERN_THREAD_LOCAL(___THREAD_STATE, gen_ThreadState, slot___THREAD_STATE)
 
-CLASS_DECL_VMSWIN _AFX_THREAD_STATE* AfxGetThreadState();
+CLASS_DECL_win ___THREAD_STATE* __get_thread_state();

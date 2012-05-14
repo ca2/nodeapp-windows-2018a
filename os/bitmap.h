@@ -5,7 +5,7 @@ namespace win
 {
 
 
-   class CLASS_DECL_VMSWIN bitmap : 
+   class CLASS_DECL_win bitmap : 
       virtual public ::ca::bitmap
    {
    public:
@@ -24,7 +24,7 @@ namespace win
       BOOL LoadBitmap(const char * lpszResourceName);
       BOOL LoadBitmap(UINT nIDResource);
       BOOL LoadOEMBitmap(UINT nIDBitmap); // for OBM_/OCR_/OIC_
-   #ifndef _AFX_NO_AFXCMN_SUPPORT
+   #ifndef ___NO_AFXCMN_SUPPORT
       BOOL LoadMappedBitmap(UINT nIDBitmap, UINT nFlags = 0,
          LPCOLORMAP lpColorMap = NULL, int nMapSize = 0);
    #endif

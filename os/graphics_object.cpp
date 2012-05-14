@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 
 namespace win
 {
@@ -13,7 +13,7 @@ namespace win
       //delete_object(); 
    }
    
-   int graphics_object::_AFX_FUNCNAME(GetObject)(int nCount, LPVOID lpObject) const
+   int graphics_object::___FUNCNAME(GetObject)(int nCount, LPVOID lpObject) const
    { 
       //return ::GetObject(get_handle(), nCount, lpObject); 
       return 0;
@@ -23,7 +23,7 @@ namespace win
 #undef GetObject
    int graphics_object::GetObject(int nCount, LPVOID lpObject) const
    { 
-      //return _AFX_FUNCNAME(GetObject)(nCount, lpObject); 
+      //return ___FUNCNAME(GetObject)(nCount, lpObject); 
       return 0;
    }
 #pragma pop_macro("GetObject")
@@ -166,7 +166,7 @@ namespace win
    UNREFERENCED_PARAMETER(bCreate);
    try
    {
-      AFX_MODULE_STATE* pState = AfxGetModuleState();
+      __MODULE_STATE* pState = __get_module_state();
       if(pState == NULL)
          return NULL;
       return pState->m_pmapHGDIOBJ;

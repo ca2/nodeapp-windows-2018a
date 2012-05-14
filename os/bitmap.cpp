@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 
 
 #undef new
@@ -113,7 +113,7 @@ namespace win
    }
    BOOL bitmap::LoadBitmap(const char * lpszResourceName)
    { 
-   //   return Attach(::LoadBitmap(AfxFindResourceHandle(
+   //   return Attach(::LoadBitmap(gen::FindResourceHandle(
    //lpszResourceName, RT_BITMAP), lpszResourceName));
       return FALSE;
    
@@ -144,7 +144,7 @@ namespace win
 
    BOOL bitmap::LoadBitmap(UINT nIDResource)
    { 
-      //return Attach(::LoadBitmap(AfxFindResourceHandle(MAKEINTRESOURCE(nIDResource), RT_BITMAP), MAKEINTRESOURCE(nIDResource))); 
+      //return Attach(::LoadBitmap(gen::FindResourceHandle(MAKEINTRESOURCE(nIDResource), RT_BITMAP), MAKEINTRESOURCE(nIDResource))); 
       return FALSE;
    }
    BOOL bitmap::LoadOEMBitmap(UINT nIDBitmap)

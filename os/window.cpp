@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 
 #define COMPILE_MULTIMON_STUBS
 #include <multimon.h>
@@ -6,28 +6,28 @@
 #include "sal.h"
 
 
-AFX_STATIC void CLASS_DECL_VMSWIN _AfxPreInitDialog(
+__STATIC void CLASS_DECL_win __pre_init_dialog(
    ::user::interaction * pWnd, LPRECT lpRectOld, DWORD* pdwStyleOld);
-AFX_STATIC void CLASS_DECL_VMSWIN _AfxPostInitDialog(
+__STATIC void CLASS_DECL_win __post_init_dialog(
    ::user::interaction * pWnd, const RECT& rectOld, DWORD dwStyleOld);
 LRESULT CALLBACK
-_AfxActivationWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
+__activation_window_procedure(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
-AFX_STATIC_DATA const char _afxOldWndProc[] = "AfxOldWndProc423";
+__STATIC_DATA const char gen_OldWndProc[] = "gen::OldWndProc423";
 
-const char _afxWndControlBar[] = AFX_WNDCONTROLBAR;
-const char _afxWndMDIFrame[] = AFX_WNDMDIFRAME;
-const char _afxWndFrameOrView[] = AFX_WNDFRAMEORVIEW;
-const char _afxWndOleControl[] = AFX_WNDOLECONTROL;
+const char gen_WndControlBar[] = __WNDCONTROLBAR;
+const char gen_WndMDIFrame[] = __WNDMDIFRAME;
+const char gen_WndFrameOrView[] = __WNDFRAMEORVIEW;
+const char gen_WndOleControl[] = __WNDOLECONTROL;
 
-   struct AFX_CTLCOLOR
+   struct __CTLCOLOR
    {
       HWND hWnd;
       HDC hDC;
       UINT nCtlType;
    };
 
-const char _afxWnd[] = AFX_WND;
+const char gen_Wnd[] = __WND;
 
 namespace win
 {
@@ -99,7 +99,7 @@ namespace win
 
    // Change a window's style
 
-   AFX_STATIC BOOL CLASS_DECL_VMSWIN _AfxModifyStyle(HWND hWnd, int nStyleOffset,
+   __STATIC BOOL CLASS_DECL_win __modify_style(HWND hWnd, int nStyleOffset,
       DWORD dwRemove, DWORD dwAdd, UINT nFlags)
    {
       ASSERT(hWnd != NULL);
@@ -120,13 +120,13 @@ namespace win
    BOOL PASCAL
    window::ModifyStyle(HWND hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags)
    {
-      return _AfxModifyStyle(hWnd, GWL_STYLE, dwRemove, dwAdd, nFlags);
+      return __modify_style(hWnd, GWL_STYLE, dwRemove, dwAdd, nFlags);
    }
 
    BOOL PASCAL
    window::ModifyStyleEx(HWND hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags)
    {
-      return _AfxModifyStyle(hWnd, GWL_EXSTYLE, dwRemove, dwAdd, nFlags);
+      return __modify_style(hWnd, GWL_EXSTYLE, dwRemove, dwAdd, nFlags);
    }
 
 
@@ -134,7 +134,7 @@ namespace win
    const MSG* PASCAL window::GetCurrentMessage()
    {
       // fill in time and position when asked for
-      _AFX_THREAD_STATE* pThreadState = _afxThreadState.get_data();
+      ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
       pThreadState->m_lastSentMsg.time = ::GetMessageTime();
       pThreadState->m_lastSentMsg.pt = point(::GetMessagePos());
       return &pThreadState->m_lastSentMsg;
@@ -143,7 +143,7 @@ namespace win
    LRESULT window::Default()
    {
       // call DefWindowProc with the last message
-      _AFX_THREAD_STATE* pThreadState = _afxThreadState.get_data();
+      ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
       return DefWindowProc(pThreadState->m_lastSentMsg.message,
          pThreadState->m_lastSentMsg.wParam, pThreadState->m_lastSentMsg.lParam);
    }
@@ -243,9 +243,9 @@ namespace win
       HWND hWndParent, id id, LPVOID lpParam)
    {
       UNREFERENCED_PARAMETER(id);
-      ASSERT(lpszClassName == NULL || AfxIsValidString(lpszClassName) || 
-         AfxIsValidAtom(lpszClassName));
-      ENSURE_ARG(lpszWindowName == NULL || AfxIsValidString(lpszWindowName));
+      ASSERT(lpszClassName == NULL || __is_valid_string(lpszClassName) || 
+         __is_valid_atom(lpszClassName));
+      ENSURE_ARG(lpszWindowName == NULL || __is_valid_string(lpszWindowName));
       
       // allow modification of several common create parameters
       CREATESTRUCT cs;
@@ -285,7 +285,7 @@ namespace win
          cs.style &= ~WS_CHILD;
       }
 
-      AfxHookWindowCreate(this);
+      hook_window_create(this);
       HWND hWnd = ::CreateWindowEx(cs.dwExStyle, cs.lpszClass,
             cs.lpszName, cs.style, cs.x, cs.y, cs.cx, cs.cy,
             cs.hwndParent, cs.hMenu, cs.hInstance, cs.lpCreateParams);
@@ -317,7 +317,7 @@ namespace win
       }
    #endif
 
-      if (!AfxUnhookWindowCreate())
+      if (!unhook_window_create())
          PostNcDestroy();        // cleanup if CreateWindowEx fails too soon
 
       if (hWnd == NULL)
@@ -344,7 +344,7 @@ namespace win
       if (cs.lpszClass == NULL)
       {
          // make sure the default window class is registered
-         VERIFY(AfxEndDeferRegisterClass(AFX_WND_REG, &cs.lpszClass));
+         VERIFY(__end_defer_register_class(__WND_REG, &cs.lpszClass));
 
          // no WNDCLASS provided - use child window default
          ASSERT(cs.style & WS_CHILD);
@@ -520,7 +520,7 @@ namespace win
             {
                // shut down current thread if possible
                if (pThread != &System)
-                  AfxPostQuitMessage(0);
+                  __post_quit_message(0);
             }
             pThread->SetMainWnd(NULL);
          }
@@ -668,7 +668,7 @@ namespace win
 
       dumpcontext << "\nstyle = " << (void *)(DWORD_PTR)::GetWindowLong(get_handle(), GWL_STYLE);
       if (::GetWindowLong(get_handle(), GWL_STYLE) & WS_CHILD)
-         dumpcontext << "\nid = " << _AfxGetDlgCtrlID(get_handle());
+         dumpcontext << "\nid = " << __get_dialog_control_id(get_handle());
 
       dumpcontext << "\n";
    }
@@ -944,16 +944,16 @@ namespace win
    LRESULT window::OnNTCtlColor(WPARAM wParam, LPARAM lParam)
    {
       // fill in special struct for compatiblity with 16-bit WM_CTLCOLOR
-      AFX_CTLCOLOR ctl;
+      __CTLCOLOR ctl;
       ctl.hDC = (HDC)wParam;
       ctl.hWnd = (HWND)lParam;
-      _AFX_THREAD_STATE* pThreadState = _afxThreadState.get_data();
+      ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
       ctl.nCtlType = pThreadState->m_lastSentMsg.message - WM_CTLCOLORMSGBOX;
       //ASSERT(ctl.nCtlType >= CTLCOLOR_MSGBOX);
       ASSERT(ctl.nCtlType <= CTLCOLOR_STATIC);
 
       // Note: We call the virtual message_handler for this window directly,
-      //  instead of calling AfxCallWindowProc, so that Default()
+      //  instead of calling gen::CallWindowProc, so that Default()
       //  will still work (it will call the Default window proc with
       //  the original Win32 WM_CTLCOLOR message).
       /*
@@ -987,7 +987,7 @@ namespace win
       // finally, run the Windows Help engine
    /* trans   if (!::WinHelp(WIN_WINDOW(pWnd)->get_handle(), pApp->m_pszHelpFilePath, nCmd, dwData))
       {
-         // linux System.simple_message_box(AFX_IDP_FAILED_TO_LAUNCH_HELP);
+         // linux System.simple_message_box(__IDP_FAILED_TO_LAUNCH_HELP);
          System.simple_message_box("Failed to launch help");
       }*/
    }
@@ -1013,9 +1013,9 @@ namespace win
       TRACE(::radix::trace::category_AppMsg, 0, "HtmlHelp: pszHelpFile = '%s', dwData: $%lx, fuCommand: %d.\n", pApp->m_pszHelpFilePath, dwData, nCmd);
 
       // run the HTML Help engine
-   /* trans   if (!AfxHtmlHelp(WIN_WINDOW(pWnd)->get_handle(), pApp->m_pszHelpFilePath, nCmd, dwData))
+   /* trans   if (!gen::HtmlHelp(WIN_WINDOW(pWnd)->get_handle(), pApp->m_pszHelpFilePath, nCmd, dwData))
       {
-         // linux System.simple_message_box(AFX_IDP_FAILED_TO_LAUNCH_HELP);
+         // linux System.simple_message_box(__IDP_FAILED_TO_LAUNCH_HELP);
          System.simple_message_box("Failed to launch help");
       }*/
    //}
@@ -1127,7 +1127,7 @@ namespace win
       {
          g_pwndLastLButtonDown = this;
       }
-      else if(pbase->m_uiMessage == CA2M_BERGEDGE)
+/*      else if(pbase->m_uiMessage == CA2M_BERGEDGE)
       {
          if(pbase->m_wparam == BERGEDGE_GETAPP)
          {
@@ -1136,7 +1136,7 @@ namespace win
             pbase->m_bRet = true;
             return;
          }
-      }
+      }*/
       pbase->set_lresult(0);
 
       if(pbase->m_uiMessage == WM_MOUSELEAVE)
@@ -1425,11 +1425,11 @@ namespace win
 
       // special case for activation
       if (message == WM_ACTIVATE)
-         _AfxHandleActivate(this, wParam, ::win::window::from_handle((HWND)lParam));
+         __handle_activate(this, wParam, ::win::window::from_handle((HWND)lParam));
 
       // special case for set cursor HTERROR
       if (message == WM_SETCURSOR &&
-         _AfxHandleSetCursor(this, (short)LOWORD(lParam), HIWORD(lParam)))
+         __handle_set_cursor(this, (short)LOWORD(lParam), HIWORD(lParam)))
       {
          lResult = 1;
          goto LReturnTrue;
@@ -1440,11 +1440,11 @@ namespace win
 
       bHandled = FALSE;
 
-      const AFX_MSGMAP* pMessageMap; pMessageMap = GetMessageMap();
+      const __MSGMAP* pMessageMap; pMessageMap = GetMessageMap();
       UINT iHash; iHash = (LOWORD((DWORD_PTR)pMessageMap) ^ message) & (iHashMax-1);
       winMsgLock.lock(CRIT_WINMSGCACHE);
-      AFX_MSG_CACHE* pMsgCache; pMsgCache = &_afxMsgCache[iHash];
-      const AFX_MSGMAP_ENTRY* lpEntry;
+      __MSG_CACHE* pMsgCache; pMsgCache = &gen_MsgCache[iHash];
+      const __MSGMAP_ENTRY* lpEntry;
       if (message == pMsgCache->nMsg && pMessageMap == pMsgCache->pMessageMap)
       {
          // cache hit
@@ -1474,7 +1474,7 @@ namespace win
             if (message < 0xC000)
             {
                // constant window message
-               if ((lpEntry = AfxFindMessageEntry(pMessageMap->lpEntries,
+               if ((lpEntry = gen::FindMessageEntry(pMessageMap->lpEntries,
                   message, 0, 0)) != NULL)
                {
                   pMsgCache->lpEntry = lpEntry;
@@ -1486,7 +1486,7 @@ namespace win
             {
                // registered windows message
                lpEntry = pMessageMap->lpEntries;
-               while ((lpEntry = AfxFindMessageEntry(lpEntry, 0xC000, 0, 0)) != NULL)
+               while ((lpEntry = gen::FindMessageEntry(lpEntry, 0xC000, 0, 0)) != NULL)
                {
                   UINT* pnID = (UINT*)(lpEntry->nSig);
                   ASSERT(*pnID >= 0xC000 || *pnID == 0);
@@ -1517,69 +1517,69 @@ namespace win
       default:
          ASSERT(FALSE);
          break;
-      case AfxSig_l_p:
+      case gen::Sig_l_p:
          {
             point point(lParam);      
             lResult = (this->*mmf.pfn_l_p)(point);
             break;
          }      
-      case AfxSig_b_D_v:
+      case gen::Sig_b_D_v:
          lResult = (this->*mmf.pfn_b_D)(::win::graphics::from_handle(reinterpret_cast<HDC>(wParam)));
          break;
 
-      case AfxSig_b_b_v:
+      case gen::Sig_b_b_v:
          lResult = (this->*mmf.pfn_b_b)(static_cast<BOOL>(wParam));
          break;
 
-      case AfxSig_b_u_v:
+      case gen::Sig_b_u_v:
          lResult = (this->*mmf.pfn_b_u)(static_cast<UINT>(wParam));
          break;
 
-      case AfxSig_b_h_v:
+      case gen::Sig_b_h_v:
          lResult = (this->*mmf.pfn_b_h)(reinterpret_cast<HANDLE>(wParam));
          break;
 
-      case AfxSig_i_u_v:
+      case gen::Sig_i_u_v:
          lResult = (this->*mmf.pfn_i_u)(static_cast<UINT>(wParam));
          break;
 
-      case AfxSig_C_v_v:
+      case gen::Sig_C_v_v:
          lResult = reinterpret_cast<LRESULT>((this->*mmf.pfn_C_v)());
          break;
 
-      case AfxSig_v_u_W:
+      case gen::Sig_v_u_W:
          (this->*mmf.pfn_v_u_W)(static_cast<UINT>(wParam), 
             ::win::window::from_handle(reinterpret_cast<HWND>(lParam)));
          break;
 
-      case AfxSig_u_u_v:
+      case gen::Sig_u_u_v:
          lResult = (this->*mmf.pfn_u_u)(static_cast<UINT>(wParam));
          break;
 
-      case AfxSig_b_v_v:
+      case gen::Sig_b_v_v:
          lResult = (this->*mmf.pfn_b_v)();
          break;
 
-      case AfxSig_b_W_uu:
+      case gen::Sig_b_W_uu:
          lResult = (this->*mmf.pfn_b_W_u_u)(::win::window::from_handle(reinterpret_cast<HWND>(wParam)),
             LOWORD(lParam), HIWORD(lParam));
          break;
 
-      case AfxSig_b_W_COPYDATASTRUCT:
+      case gen::Sig_b_W_COPYDATASTRUCT:
          lResult = (this->*mmf.pfn_b_W_COPYDATASTRUCT)(
             ::win::window::from_handle(reinterpret_cast<HWND>(wParam)),
             reinterpret_cast<COPYDATASTRUCT*>(lParam));
          break;
 
-      case AfxSig_b_v_HELPINFO:
+      case gen::Sig_b_v_HELPINFO:
          lResult = (this->*mmf.pfn_b_HELPINFO)(reinterpret_cast<LPHELPINFO>(lParam));
          break;
 
-      case AfxSig_CTLCOLOR:
+      case gen::Sig_CTLCOLOR:
          {
             // special case for OnCtlColor to avoid too many temporary objects
             ASSERT(message == WM_CTLCOLOR);
-            AFX_CTLCOLOR* pCtl = reinterpret_cast<AFX_CTLCOLOR*>(lParam);
+            __CTLCOLOR* pCtl = reinterpret_cast<__CTLCOLOR*>(lParam);
             ::ca::graphics_sp dcTemp; 
             dcTemp.set_handle1(pCtl->hDC);
             window wndTemp; 
@@ -1599,11 +1599,11 @@ namespace win
          }
          break;
 
-      case AfxSig_CTLCOLOR_REFLECT:
+      case gen::Sig_CTLCOLOR_REFLECT:
          {
             // special case for CtlColor to avoid too many temporary objects
             ASSERT(message == WM_REFLECT_BASE+WM_CTLCOLOR);
-            AFX_CTLCOLOR* pCtl = reinterpret_cast<AFX_CTLCOLOR*>(lParam);
+            __CTLCOLOR* pCtl = reinterpret_cast<__CTLCOLOR*>(lParam);
             ::ca::graphics_sp dcTemp; 
             dcTemp.set_handle1(pCtl->hDC);
             UINT nCtlType = pCtl->nCtlType;
@@ -1614,126 +1614,126 @@ namespace win
          }
          break;
 
-      case AfxSig_i_u_W_u:
+      case gen::Sig_i_u_W_u:
          lResult = (this->*mmf.pfn_i_u_W_u)(LOWORD(wParam),
             ::win::window::from_handle(reinterpret_cast<HWND>(lParam)), HIWORD(wParam));
          break;
 
-      case AfxSig_i_uu_v:
+      case gen::Sig_i_uu_v:
          lResult = (this->*mmf.pfn_i_u_u)(LOWORD(wParam), HIWORD(wParam));
          break;
 
-      case AfxSig_i_W_uu:
+      case gen::Sig_i_W_uu:
          lResult = (this->*mmf.pfn_i_W_u_u)(::win::window::from_handle(reinterpret_cast<HWND>(wParam)),
             LOWORD(lParam), HIWORD(lParam));
          break;
 
-      case AfxSig_i_v_s:
+      case gen::Sig_i_v_s:
          lResult = (this->*mmf.pfn_i_s)(reinterpret_cast<LPTSTR>(lParam));
          break;
 
-      case AfxSig_l_w_l:
+      case gen::Sig_l_w_l:
          lResult = (this->*mmf.pfn_l_w_l)(wParam, lParam);
          break;
 
       
          
-      case AfxSig_v_b_h:
+      case gen::Sig_v_b_h:
           (this->*mmf.pfn_v_b_h)(static_cast<BOOL>(wParam), 
             reinterpret_cast<HANDLE>(lParam));
          break;
 
-      case AfxSig_v_h_v:
+      case gen::Sig_v_h_v:
           (this->*mmf.pfn_v_h)(reinterpret_cast<HANDLE>(wParam));
          break;
 
-      case AfxSig_v_h_h:
+      case gen::Sig_v_h_h:
           (this->*mmf.pfn_v_h_h)(reinterpret_cast<HANDLE>(wParam), 
             reinterpret_cast<HANDLE>(lParam));
          break;
 
-      case AfxSig_v_v_v:
+      case gen::Sig_v_v_v:
          (this->*mmf.pfn_v_v)();
          break;
 
-      case AfxSig_v_u_v:
+      case gen::Sig_v_u_v:
          (this->*mmf.pfn_v_u)(static_cast<UINT>(wParam));
          break;
 
-      case AfxSig_v_u_u:
+      case gen::Sig_v_u_u:
          (this->*mmf.pfn_v_u_u)(static_cast<UINT>(wParam), static_cast<UINT>(lParam));
          break;
 
-      case AfxSig_v_uu_v:
+      case gen::Sig_v_uu_v:
          (this->*mmf.pfn_v_u_u)(LOWORD(wParam), HIWORD(wParam));
          break;
 
-      case AfxSig_v_v_ii:
+      case gen::Sig_v_v_ii:
          (this->*mmf.pfn_v_i_i)(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
          break;
 
-      case AfxSig_v_u_uu:
+      case gen::Sig_v_u_uu:
          (this->*mmf.pfn_v_u_u_u)(static_cast<UINT>(wParam), LOWORD(lParam), HIWORD(lParam));
          break;
 
-      case AfxSig_v_u_ii:
+      case gen::Sig_v_u_ii:
          (this->*mmf.pfn_v_u_i_i)(static_cast<UINT>(wParam), LOWORD(lParam), HIWORD(lParam));
          break;
 
-      case AfxSig_v_w_l:
+      case gen::Sig_v_w_l:
          (this->*mmf.pfn_v_w_l)(wParam, lParam);
          break;
 
-      case AfxSig_MDIACTIVATE:
+      case gen::Sig_MDIACTIVATE:
          (this->*mmf.pfn_v_b_W_W)(get_handle() == reinterpret_cast<HWND>(lParam),
             ::win::window::from_handle(reinterpret_cast<HWND>(lParam)),
             ::win::window::from_handle(reinterpret_cast<HWND>(wParam)));
          break;
 
-      case AfxSig_v_D_v:
+      case gen::Sig_v_D_v:
          (this->*mmf.pfn_v_D)(::win::graphics::from_handle(reinterpret_cast<HDC>(wParam)));
          break;
 
 
-      case AfxSig_v_W_v:
+      case gen::Sig_v_W_v:
          (this->*mmf.pfn_v_W)(::win::window::from_handle(reinterpret_cast<HWND>(wParam)));
          break;
 
-      case AfxSig_v_v_W:
+      case gen::Sig_v_v_W:
          (this->*mmf.pfn_v_W)(::win::window::from_handle(reinterpret_cast<HWND>(lParam)));
          break;
 
-      case AfxSig_v_W_uu:
+      case gen::Sig_v_W_uu:
          (this->*mmf.pfn_v_W_u_u)(::win::window::from_handle(reinterpret_cast<HWND>(wParam)), LOWORD(lParam),
             HIWORD(lParam));
          break;
 
-      case AfxSig_v_W_p:
+      case gen::Sig_v_W_p:
          {
             point point(lParam);
             (this->*mmf.pfn_v_W_p)(::win::window::from_handle(reinterpret_cast<HWND>(wParam)), point);
          }
          break;
 
-      case AfxSig_v_W_h:
+      case gen::Sig_v_W_h:
          (this->*mmf.pfn_v_W_h)(::win::window::from_handle(reinterpret_cast<HWND>(wParam)),
                reinterpret_cast<HANDLE>(lParam));
          break;
 
-      case AfxSig_ACTIVATE:
+      case gen::Sig_ACTIVATE:
          (this->*mmf.pfn_v_u_W_b)(LOWORD(wParam),
             ::win::window::from_handle(reinterpret_cast<HWND>(lParam)), HIWORD(wParam));
          break;
 
-      case AfxSig_SCROLL:
-      case AfxSig_SCROLL_REFLECT:
+      case gen::Sig_SCROLL:
+      case gen::Sig_SCROLL_REFLECT:
          {
             // special case for WM_VSCROLL and WM_HSCROLL
             ASSERT(message == WM_VSCROLL || message == WM_HSCROLL ||
                message == WM_VSCROLL+WM_REFLECT_BASE || message == WM_HSCROLL+WM_REFLECT_BASE);
             int nScrollCode = (short)LOWORD(wParam);
             int nPos = (short)HIWORD(wParam);
-            if (lpEntry->nSig == AfxSig_SCROLL)
+            if (lpEntry->nSig == gen::Sig_SCROLL)
                (this->*mmf.pfn_v_u_u_W)(nScrollCode, nPos,
                   ::win::window::from_handle(reinterpret_cast<HWND>(lParam)));
             else
@@ -1741,66 +1741,66 @@ namespace win
          }
          break;
 
-      case AfxSig_v_v_s:
+      case gen::Sig_v_v_s:
          (this->*mmf.pfn_v_s)(reinterpret_cast<LPTSTR>(lParam));
          break;
 
-      case AfxSig_v_u_cs:
+      case gen::Sig_v_u_cs:
          (this->*mmf.pfn_v_u_cs)(static_cast<UINT>(wParam), reinterpret_cast<const char *>(lParam));
          break;
 
-      case AfxSig_OWNERDRAW:
+      case gen::Sig_OWNERDRAW:
          (this->*mmf.pfn_v_i_s)(static_cast<int>(wParam), reinterpret_cast<LPTSTR>(lParam));
          lResult = TRUE;
          break;
 
-      case AfxSig_i_i_s:
+      case gen::Sig_i_i_s:
          lResult = (this->*mmf.pfn_i_i_s)(static_cast<int>(wParam), reinterpret_cast<LPTSTR>(lParam));
          break;
 
-      case AfxSig_u_v_p:
+      case gen::Sig_u_v_p:
          {
             point point(lParam);
             lResult = (this->*mmf.pfn_u_p)(point);
          }
          break;
 
-      case AfxSig_u_v_v:
+      case gen::Sig_u_v_v:
          lResult = (this->*mmf.pfn_u_v)();
          break;
 
-      case AfxSig_v_b_NCCALCSIZEPARAMS:
+      case gen::Sig_v_b_NCCALCSIZEPARAMS:
          (this->*mmf.pfn_v_b_NCCALCSIZEPARAMS)(static_cast<BOOL>(wParam), 
             reinterpret_cast<NCCALCSIZE_PARAMS*>(lParam));
          break;
 
-      case AfxSig_v_v_WINDOWPOS:
+      case gen::Sig_v_v_WINDOWPOS:
          (this->*mmf.pfn_v_v_WINDOWPOS)(reinterpret_cast<WINDOWPOS*>(lParam));
          break;
 
-      case AfxSig_v_uu_M:
+      case gen::Sig_v_uu_M:
          (this->*mmf.pfn_v_u_u_M)(LOWORD(wParam), HIWORD(wParam), reinterpret_cast<HMENU>(lParam));
          break;
 
-      case AfxSig_v_u_p:
+      case gen::Sig_v_u_p:
          {
             point point(lParam);
             (this->*mmf.pfn_v_u_p)(static_cast<UINT>(wParam), point);
          }
          break;
 
-      case AfxSig_SIZING:
+      case gen::Sig_SIZING:
          (this->*mmf.pfn_v_u_pr)(static_cast<UINT>(wParam), reinterpret_cast<LPRECT>(lParam));
          lResult = TRUE;
          break;
 
-      case AfxSig_MOUSEWHEEL:
+      case gen::Sig_MOUSEWHEEL:
          lResult = (this->*mmf.pfn_b_u_s_p)(LOWORD(wParam), (short)HIWORD(wParam),
             point(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)));
          if (!lResult)
             return FALSE;
          break;
-      case AfxSig_l:
+      case gen::Sig_l:
          lResult = (this->*mmf.pfn_l_v)();
          if (lResult != 0)
             return FALSE;
@@ -1860,7 +1860,7 @@ namespace win
          // control notification
          ASSERT(nID == 0 || ::IsWindow(hWndCtrl));
 
-         if (_afxThreadState->m_hLockoutNotifyWindow == get_handle())
+         if (gen_ThreadState->m_hLockoutNotifyWindow == get_handle())
             return TRUE;        // locked out - ignore control notification
 
          // reflect notification to child window control
@@ -1889,20 +1889,20 @@ namespace win
       HWND hWndCtrl = pNMHDR->hwndFrom;
 
       // get the child ID from the window itself
-//      UINT_PTR nID = _AfxGetDlgCtrlID(hWndCtrl);
+//      UINT_PTR nID = __get_dialog_control_id(hWndCtrl);
 //      int nCode = pNMHDR->code;
 
       ASSERT(hWndCtrl != NULL);
       ASSERT(::IsWindow(hWndCtrl));
 
-      if (_afxThreadState->m_hLockoutNotifyWindow == get_handle())
+      if (gen_ThreadState->m_hLockoutNotifyWindow == get_handle())
          return TRUE;        // locked out - ignore control notification
 
       // reflect notification to child window control
       if (ReflectLastMsg(hWndCtrl, pResult))
          return TRUE;        // eaten by child
 
-//      AFX_NOTIFY notify;
+//      __NOTIFY notify;
   //    notify.pResult = pResult;
     //  notify.pNMHDR = pNMHDR;
    //xxx   return _001OnCommand((UINT)nID, MAKELONG(nCode, WM_NOTIFY), &notify, NULL);
@@ -1933,7 +1933,7 @@ namespace win
       return NULL;
    }
 
-   /* trans HWND CLASS_DECL_VMSWIN AfxGetParentOwner(::user::interaction * hWnd)
+   /* trans HWND CLASS_DECL_win __get_parent_owner(::user::interaction * hWnd)
    {
       // check for permanent-owned window first
       ::ca::window * pWnd = ::win::window::FromHandlePermanent(hWnd);
@@ -1955,7 +1955,7 @@ namespace win
 
       ::user::interaction * hWndParent = this;
       ::user::interaction * hWndT;
-      while ((hWndT = AfxGetParentOwner(hWndParent)) != NULL)
+      while ((hWndT = __get_parent_owner(hWndParent)) != NULL)
          hWndParent = hWndT;
 
       return hWndParent;
@@ -2049,7 +2049,7 @@ namespace win
    int window::message_box(const char * lpszText, const char * lpszCaption, UINT nType)
    {
       if (lpszCaption == NULL)
-         lpszCaption = AfxGetAppName();
+         lpszCaption = __get_app_name();
       int nResult = ::MessageBox(get_handle(), lpszText, lpszCaption, nType);
       return nResult;
    }
@@ -2115,7 +2115,7 @@ namespace win
             if (pWnd != NULL)
             {
                // call window proc directly since it is a C++ window
-               AfxCallWndProc(dynamic_cast < ::user::interaction * > (pWnd), WIN_WINDOW(pWnd)->get_handle(), message, wParam, lParam);
+               __call_window_procedure(dynamic_cast < ::user::interaction * > (pWnd), WIN_WINDOW(pWnd)->get_handle(), message, wParam, lParam);
             }
          }
          else
@@ -2266,7 +2266,7 @@ namespace win
       // remaining size goes to the 'nIDLeftOver' pane
       // NOTE: nIDFirst->nIDLast are usually 0->0xffff
 
-      AFX_SIZEPARENTPARAMS layout;
+      __SIZEPARENTPARAMS layout;
       ::user::interaction * hWndLeftOver = NULL;
 
       layout.bStretch = bStretch;
@@ -2365,7 +2365,7 @@ namespace win
          if ((nFlags & reposNoPosLeftOver) != reposNoPosLeftOver)
          {
             pLeftOver->CalcWindowRect(&layout.rect);
-            AfxRepositionWindow(&layout, pLeftOver, &layout.rect);
+            __reposition_window(&layout, pLeftOver, &layout.rect);
          }
       }
 
@@ -2390,7 +2390,7 @@ namespace win
       // remaining size goes to the 'nIDLeftOver' pane
       // NOTE: nIDFirst->nIDLast are usually 0->0xffff
 
-      AFX_SIZEPARENTPARAMS layout;
+      __SIZEPARENTPARAMS layout;
       ::user::interaction * hWndLeftOver = NULL;
 
       layout.bStretch = bStretch;
@@ -2489,7 +2489,7 @@ namespace win
          if ((nFlags & reposNoPosLeftOver) != reposNoPosLeftOver)
          {
             pLeftOver->CalcWindowRect(&layout.rect);
-            AfxRepositionWindow(&layout, pLeftOver, &layout.rect);
+            __reposition_window(&layout, pLeftOver, &layout.rect);
          }
       }
 
@@ -2583,7 +2583,7 @@ namespace win
 
    BOOL window::SendChildNotifyLastMsg(LRESULT* pResult)
    {
-      _AFX_THREAD_STATE* pThreadState = _afxThreadState.get_data();
+      ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
       return OnChildNotify(pThreadState->m_lastSentMsg.message,
          pThreadState->m_lastSentMsg.wParam, pThreadState->m_lastSentMsg.lParam, pResult);
    }
@@ -2658,7 +2658,7 @@ namespace win
             // reflect the message through the message ::collection::map as OCM_NOTIFY
             NMHDR* pNMHDR = (NMHDR*)lParam;
 //            int nCode = pNMHDR->code;
-//            AFX_NOTIFY notify;
+//            __NOTIFY notify;
   //          notify.pResult = pResult;
     //        notify.pNMHDR = pNMHDR;
    // xxxx         return window::_001OnCommand(0, MAKELONG(nCode, WM_REFLECT_BASE+WM_NOTIFY), &notify, NULL);
@@ -2669,7 +2669,7 @@ namespace win
          if (uMsg >= WM_CTLCOLORMSGBOX && uMsg <= WM_CTLCOLORSTATIC)
          {
             // fill in special struct for compatiblity with 16-bit WM_CTLCOLOR
-            /*AFX_CTLCOLOR ctl;
+            /*__CTLCOLOR ctl;
             ctl.hDC = (HDC)wParam;
             ctl.nCtlType = uMsg - WM_CTLCOLORMSGBOX;
             //ASSERT(ctl.nCtlType >= CTLCOLOR_MSGBOX);
@@ -2714,7 +2714,7 @@ namespace win
    {
       if (LOWORD(wParam) == WA_INACTIVE)
       {
-//         AFX_MODULE_THREAD_STATE* pModuleThreadState = AfxGetModuleThreadState();
+//         __MODULE_THREAD_STATE* pModuleThreadState = __get_module_thread_state();
       }
 
       return 0;
@@ -2738,7 +2738,7 @@ namespace win
       Default();*/
    }
 
-   BOOL _afxGotScrollLines;
+   BOOL gen_GotScrollLines;
 
    void window::OnSettingChange(UINT uFlags, const char * lpszSection)
    {
@@ -2746,7 +2746,7 @@ namespace win
       UNUSED_ALWAYS(lpszSection);
 
       // force refresh of settings that we cache
-      _afxGotScrollLines = FALSE;
+      gen_GotScrollLines = FALSE;
 
 
       window::OnDisplayChange(0, 0);    // to update system metrics, etc.
@@ -2874,7 +2874,7 @@ namespace win
          m_event.ResetEvent();
          m_hwnd = hwnd;
          m_hdc = hdc;
-         AfxBeginThread(papp, &print_window::s_print_window, (LPVOID) this, THREAD_PRIORITY_ABOVE_NORMAL);
+         __begin_thread(papp, &print_window::s_print_window, (LPVOID) this, THREAD_PRIORITY_ABOVE_NORMAL);
          if(m_event.wait(millis(dwTimeout)).timeout())
          {
             TRACE("print_window::time_out");
@@ -2882,7 +2882,7 @@ namespace win
       }
 
 
-      static UINT AFX_CDECL s_print_window(LPVOID pvoid)
+      static UINT c_cdecl s_print_window(LPVOID pvoid)
       {
          print_window * pprintwindow = (print_window *) pvoid;
          try
@@ -3285,7 +3285,7 @@ namespace win
       {
          // only handle requests to draw the space between edit and drop button
          //  in a drop-down combo (not a drop-down list)
-         if (!_AfxIsComboBoxControl(hWnd, (UINT)CBS_DROPDOWN))
+         if (!__is_combo_box_control(hWnd, (UINT)CBS_DROPDOWN))
             return FALSE;
       }
 
@@ -3309,7 +3309,7 @@ namespace win
       CDataExchange dx(this, bSaveAndValidate);
 
       // prevent control notifications from being dispatched during UpdateData
-      _AFX_THREAD_STATE* pThreadState = AfxGetThreadState();
+      ___THREAD_STATE* pThreadState = __get_thread_state();
       HWND hWndOldLockout = pThreadState->m_hLockoutNotifyWindow;
       ASSERT(hWndOldLockout != get_handle());   // must not recurse
       pThreadState->m_hLockoutNotifyWindow = get_handle();
@@ -3329,7 +3329,7 @@ namespace win
       catch(base_exception * pe)
       {
          // validation failed due to OOM or other resource failure
-         //e->ReportError(MB_ICONEXCLAMATION, AFX_IDP_INTERNAL_FAILURE);
+         //e->ReportError(MB_ICONEXCLAMATION, __IDP_INTERNAL_FAILURE);
          pe->ReportError(MB_ICONEXCLAMATION, "falha interna");
          ASSERT(!bOK);
          pe->Delete();
@@ -3451,7 +3451,7 @@ namespace win
       HGLOBAL hResource = NULL;
       if (lpszResourceName != NULL)
       {
-//         HINSTANCE hInst = AfxFindResourceHandle(lpszResourceName, RT_DLGINIT);
+//         HINSTANCE hInst = gen::FindResourceHandle(lpszResourceName, RT_DLGINIT);
   //       HRSRC hDlgInit = ::FindResource(hInst, lpszResourceName, RT_DLGINIT);
     /*     if (hDlgInit != NULL)
          {
@@ -3495,10 +3495,10 @@ namespace win
 
             #define WIN16_LB_ADDSTRING  0x0401
             #define WIN16_CB_ADDSTRING  0x0403
-            #define AFX_CB_ADDSTRING   0x1234
+            #define __CB_ADDSTRING   0x1234
 
             // unfortunately, WIN16_CB_ADDSTRING == CBEM_INSERTITEM
-            if (nMsg == AFX_CB_ADDSTRING)
+            if (nMsg == __CB_ADDSTRING)
                nMsg = CBEM_INSERTITEM;
             else if (nMsg == WIN16_LB_ADDSTRING)
                nMsg = LB_ADDSTRING;
@@ -3560,7 +3560,7 @@ namespace win
       {
          // send to buttons
          wndTemp.set_handle(hWndChild); // quick and dirty attach
-         state.m_nID = _AfxGetDlgCtrlID(hWndChild);
+         state.m_nID = __get_dialog_control_id(hWndChild);
          state.m_pOther = &wndTemp;
 
          // check for reflect handlers in the child window
@@ -3647,7 +3647,7 @@ namespace win
                ::SendMessage(hWndParent, WM_ENTERIDLE, MSGF_DIALOGBOX, (LPARAM)get_handle());
             }
             if ((dwFlags & MLF_NOKICKIDLE) ||
-               !AfxCallWndProc(this, get_handle(), WM_KICKIDLE, MSGF_DIALOGBOX, lIdleCount++))
+               !__call_window_procedure(this, get_handle(), WM_KICKIDLE, MSGF_DIALOGBOX, lIdleCount++))
             {
                // stop idle processing next time
                bIdle = FALSE;
@@ -3678,7 +3678,7 @@ namespace win
             // pump message, but quit on WM_QUIT
             if (!m_pthread->pump_message())
             {
-               AfxPostQuitMessage(0);
+               __post_quit_message(0);
                return -1;
             }
 
@@ -3695,7 +3695,7 @@ namespace win
                goto ExitModal;
 
             // reset "no idle" state after pumping "normal" message
-            if (AfxIsIdleMessage(&msg))
+            if (__is_idle_message(&msg))
             {
                bIdle = TRUE;
                lIdleCount = 0;
@@ -3817,8 +3817,8 @@ ExitModal:
       // now hook into the AFX WndProc
       WNDPROC* lplpfn = GetSuperWndProcAddr();
       WNDPROC oldWndProc = (WNDPROC)::SetWindowLongPtr(hWnd, GWLP_WNDPROC,
-         (INT_PTR)AfxGetAfxWndProc());
-      ASSERT(oldWndProc != AfxGetAfxWndProc());
+         (INT_PTR)__get_window_procedure());
+      ASSERT(oldWndProc != __get_window_procedure());
 
       if (*lplpfn == NULL)
          *lplpfn = oldWndProc;   // the first control of that type created
@@ -3828,7 +3828,7 @@ ExitModal:
          TRACE(::radix::trace::category_AppMsg, 0, "p: Trying to use SubclassWindow with incorrect window\n");
          TRACE(::radix::trace::category_AppMsg, 0, "\tderived class.\n");
          TRACE(::radix::trace::category_AppMsg, 0, "\thWnd = $%08X (nIDC=$%08X) is not a %hs.\n", (UINT)(UINT_PTR)hWnd,
-            _AfxGetDlgCtrlID(hWnd), typeid(*this).name());
+            __get_dialog_control_id(hWnd), typeid(*this).name());
          ASSERT(FALSE);
          // undo the subclassing if continuing after assert
         ::SetWindowLongPtr(hWnd, GWLP_WNDPROC, (INT_PTR)oldWndProc);
@@ -4360,7 +4360,7 @@ ExitModal:
       m_pguieOwner = pOwnerWnd; 
    }
 
-   LRESULT window::_AFX_FUNCNAME(SendMessage)(UINT message, WPARAM wParam, LPARAM lParam)
+   LRESULT window::___FUNCNAME(SendMessage)(UINT message, WPARAM wParam, LPARAM lParam)
    {
       //ASSERT(::IsWindow(get_handle())); 
       return ::SendMessage(get_handle(), message, wParam, lParam);
@@ -4370,7 +4370,7 @@ ExitModal:
 #undef SendMessage
    LRESULT window::SendMessage(UINT message, WPARAM wParam, LPARAM lParam)
    { 
-      return _AFX_FUNCNAME(SendMessage)(message, wParam, lParam); 
+      return ___FUNCNAME(SendMessage)(message, wParam, lParam); 
    }
 
 #pragma pop_macro("SendMessage")
@@ -5298,9 +5298,9 @@ int window::GetCheckedRadioButton(int nIDFirstButton, int nIDLastButton)
    /////////////////////////////////////////////////////////////////////////////
    // Official way to send message to a window
 
-   CLASS_DECL_VMSWIN LRESULT AfxCallWndProc(::user::interaction * pinteraction, HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
+   CLASS_DECL_win LRESULT __call_window_procedure(::user::interaction * pinteraction, HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
    {
-      _AFX_THREAD_STATE* pThreadState = _afxThreadState.get_data();
+      ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
       MSG oldState = pThreadState->m_lastSentMsg;   // save for nesting
       pThreadState->m_lastSentMsg.hwnd = hWnd;
       pThreadState->m_lastSentMsg.message = nMsg;
@@ -5313,7 +5313,7 @@ int window::GetCheckedRadioButton(int nIDFirstButton, int nIDLastButton)
 
       spbase(pinteraction->get_base(pinteraction, nMsg, wParam, lParam));
 
-      _AfxTraceMsg("WndProc", spbase);
+      __trace_message("WndProc", spbase);
 
       try
       {
@@ -5322,7 +5322,7 @@ int window::GetCheckedRadioButton(int nIDFirstButton, int nIDLastButton)
          rect rectOld;
          DWORD dwStyle = 0;
          if (nMsg == WM_INITDIALOG)
-            _AfxPreInitDialog(pinteraction, &rectOld, &dwStyle);
+            __pre_init_dialog(pinteraction, &rectOld, &dwStyle);
 
          // delegate to object's message_handler
          if(pinteraction->m_pguie != NULL && pinteraction->m_pguie != pinteraction)
@@ -5335,7 +5335,7 @@ int window::GetCheckedRadioButton(int nIDFirstButton, int nIDLastButton)
          }
          // more special case for WM_INITDIALOG
          if (nMsg == WM_INITDIALOG)
-            _AfxPostInitDialog(pinteraction, rectOld, dwStyle);
+            __post_init_dialog(pinteraction, rectOld, dwStyle);
       }
       catch(const ::ca::exception & e)
       {
@@ -5351,7 +5351,7 @@ int window::GetCheckedRadioButton(int nIDFirstButton, int nIDLastButton)
       }
       catch(base_exception * pe)
       {
-         AfxProcessWndProcException(pe, spbase);
+         __process_window_procedure_exception(pe, spbase);
 //         TRACE(::radix::trace::category_AppMsg, 0, "Warning: Uncaught exception in message_handler (returning %ld).\n", spbase->get_lresult());
          pe->Delete();
       }
@@ -5383,9 +5383,9 @@ run:
    /////////////////////////////////////////////////////////////////////////////
    // Window creation hooks
 
-   LRESULT CALLBACK _AfxCbtFilterHook(int code, WPARAM wParam, LPARAM lParam)
+   LRESULT CALLBACK __cbt_filter_hook(int code, WPARAM wParam, LPARAM lParam)
    {
-      _AFX_THREAD_STATE* pThreadState = _afxThreadState.get_data();
+      ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
       if (code != HCBT_CREATEWND)
       {
          // wait for HCBT_CREATEWND just pass others on...
@@ -5402,7 +5402,7 @@ run:
       if (pWndInit != NULL || (!(lpcs->style & WS_CHILD) && !bContextIsDLL))
       {
          // Note: special check to avoid subclassing the IME window
-         //if (_afxDBCS)
+         //if (gen_DBCS)
          {
             // check for cheap CS_IME style first...
             if (GetClassLong((HWND)wParam, GCL_STYLE) & CS_IME)
@@ -5423,7 +5423,7 @@ run:
             }
 
             // a little more expensive to test this way, but necessary...
-            if (::AfxInvariantStrICmp(pszClassName, "ime") == 0)
+            if (::__invariant_stricmp(pszClassName, "ime") == 0)
                goto lCallNextHook;
          }
 
@@ -5449,8 +5449,8 @@ run:
             WNDPROC *pOldWndProc = pWndInit->GetSuperWndProcAddr();
             ASSERT(pOldWndProc != NULL);
 
-            // subclass the window with standard AfxWndProc
-            WNDPROC afxWndProc = AfxGetAfxWndProc();
+            // subclass the window with standard __window_procedure
+            WNDPROC afxWndProc = __get_window_procedure();
             oldWndProc = (WNDPROC)SetWindowLongPtr(hWnd, GWLP_WNDPROC,
                (DWORD_PTR)afxWndProc);
             ASSERT(oldWndProc != NULL);
@@ -5495,13 +5495,13 @@ run:
             {
                // subclass the window with the proc which does gray backgrounds
                oldWndProc = (WNDPROC)GetWindowLongPtr(hWnd, GWLP_WNDPROC);
-               if (oldWndProc != NULL && GetProp(hWnd, _afxOldWndProc) == NULL)
+               if (oldWndProc != NULL && GetProp(hWnd, gen_OldWndProc) == NULL)
                {
-                  SetProp(hWnd, _afxOldWndProc, oldWndProc);
-                  if ((WNDPROC)GetProp(hWnd, _afxOldWndProc) == oldWndProc)
+                  SetProp(hWnd, gen_OldWndProc, oldWndProc);
+                  if ((WNDPROC)GetProp(hWnd, gen_OldWndProc) == oldWndProc)
                   {
-                     GlobalAddAtom(_afxOldWndProc);
-                     SetWindowLongPtr(hWnd, GWLP_WNDPROC, (DWORD_PTR)_AfxActivationWndProc);
+                     GlobalAddAtom(gen_OldWndProc);
+                     SetWindowLongPtr(hWnd, GWLP_WNDPROC, (DWORD_PTR)__activation_window_procedure);
                      ASSERT(oldWndProc != NULL);
                   }
                }
@@ -5583,7 +5583,7 @@ hwnd_map* PASCAL afxMapHWND(BOOL bCreate)
    UNREFERENCED_PARAMETER(bCreate);
    try
    {
-      AFX_MODULE_STATE* pState = AfxGetModuleState();
+      __MODULE_STATE* pState = __get_module_state();
       if(pState == NULL)
          return NULL;
       return pState->m_pmapHWND;
@@ -5599,7 +5599,7 @@ mutex * PASCAL afxMutexHwnd()
 {
    try
    {
-      AFX_MODULE_STATE* pState = AfxGetModuleState();
+      __MODULE_STATE* pState = __get_module_state();
       if(pState == NULL)
          return NULL;
       return pState->m_pmutexHwnd;
@@ -5613,11 +5613,11 @@ mutex * PASCAL afxMutexHwnd()
    /////////////////////////////////////////////////////////////////////////////
 // The WndProc for all window's and derived classes
 
-#undef AfxWndProc
+#undef __window_procedure
 
-LRESULT CALLBACK AfxWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK __window_procedure(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 {
-   // special message which identifies the window as using AfxWndProc
+   // special message which identifies the window as using __window_procedure
    if (nMsg == WM_QUERYAFXWNDPROC)
       return 1;
 
@@ -5627,18 +5627,18 @@ LRESULT CALLBACK AfxWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
    //ASSERT(pWnd==NULL || WIN_WINDOW(pWnd)->get_handle() == hWnd);
    if (pWnd == NULL || WIN_WINDOW(pWnd)->get_handle() != hWnd)
       return ::DefWindowProc(hWnd, nMsg, wParam, lParam);
-   return win::AfxCallWndProc(pWnd, hWnd, nMsg, wParam, lParam);
+   return win::__call_window_procedure(pWnd, hWnd, nMsg, wParam, lParam);
 }
 
-// always indirectly accessed via AfxGetAfxWndProc
-WNDPROC CLASS_DECL_VMSWIN AfxGetAfxWndProc()
+// always indirectly accessed via __get_window_procedure
+WNDPROC CLASS_DECL_win __get_window_procedure()
 {
-   return AfxGetModuleState()->m_pfnAfxWndProc;
+   return __get_module_state()->m_pfn_window_procedure;
 }
    /////////////////////////////////////////////////////////////////////////////
    // Special helpers for certain windows messages
 
-   AFX_STATIC void CLASS_DECL_VMSWIN _AfxPreInitDialog(
+   __STATIC void CLASS_DECL_win __pre_init_dialog(
       ::user::interaction * pWnd, LPRECT lpRectOld, DWORD* pdwStyleOld)
    {
       ASSERT(lpRectOld != NULL);   
@@ -5648,7 +5648,7 @@ WNDPROC CLASS_DECL_VMSWIN AfxGetAfxWndProc()
       *pdwStyleOld = WIN_WINDOW(pWnd)->GetStyle();
    }
 
-   AFX_STATIC void CLASS_DECL_VMSWIN _AfxPostInitDialog(
+   __STATIC void CLASS_DECL_win __post_init_dialog(
       ::user::interaction * pWnd, const RECT& rectOld, DWORD dwStyleOld)
    {
       // must be hidden to start with      
@@ -5679,18 +5679,18 @@ WNDPROC CLASS_DECL_VMSWIN AfxGetAfxWndProc()
 
 
 
-CLASS_DECL_VMSWIN void AfxHookWindowCreate(::user::interaction * pWnd)
+CLASS_DECL_win void hook_window_create(::user::interaction * pWnd)
 {
-   _AFX_THREAD_STATE* pThreadState = _afxThreadState.get_data();
+   ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
    if (pThreadState->m_pWndInit == pWnd)
       return;
 
    if (pThreadState->m_hHookOldCbtFilter == NULL)
    {
       pThreadState->m_hHookOldCbtFilter = ::SetWindowsHookEx(WH_CBT,
-         win::_AfxCbtFilterHook, NULL, ::GetCurrentThreadId());
+         win::__cbt_filter_hook, NULL, ::GetCurrentThreadId());
       if (pThreadState->m_hHookOldCbtFilter == NULL)
-         AfxThrowMemoryException();
+         throw memory_exception();
    }
    ASSERT(pThreadState->m_hHookOldCbtFilter != NULL);
    ASSERT(pWnd != NULL);
@@ -5700,9 +5700,9 @@ CLASS_DECL_VMSWIN void AfxHookWindowCreate(::user::interaction * pWnd)
    pThreadState->m_pWndInit = pWnd;
 }
 
-CLASS_DECL_VMSWIN BOOL AfxUnhookWindowCreate()
+CLASS_DECL_win BOOL unhook_window_create()
 {
-   _AFX_THREAD_STATE* pThreadState = _afxThreadState.get_data();
+   ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
    if (pThreadState->m_pWndInit != NULL)
    {
       pThreadState->m_pWndInit = NULL;
@@ -5713,23 +5713,23 @@ CLASS_DECL_VMSWIN BOOL AfxUnhookWindowCreate()
 
 
 
-CLASS_DECL_VMSWIN const char * AfxRegisterWndClass(UINT nClassStyle,
+CLASS_DECL_win const char * __register_window_class(UINT nClassStyle,
    HCURSOR hCursor, HBRUSH hbrBackground, HICON hIcon)
 {
    // Returns a temporary string name for the class
    //  Save in a string if you want to use it for a long time
-   LPTSTR lpszName = AfxGetThreadState()->m_szTempClassName;
+   LPTSTR lpszName = __get_thread_state()->m_szTempClassName;
 
    // generate a synthetic name for this class
    HINSTANCE hInst = Sys(::win::get_thread()->m_papp).m_hInstance;
 
    if (hCursor == NULL && hbrBackground == NULL && hIcon == NULL)
    {
-      C_RUNTIME_ERRORCHECK_SPRINTF(_sntprintf_s(lpszName, _AFX_TEMP_CLASS_NAME_SIZE, _AFX_TEMP_CLASS_NAME_SIZE - 1, "Afx:%p:%x", hInst, nClassStyle));
+      C_RUNTIME_ERRORCHECK_SPRINTF(_sntprintf_s(lpszName, ___TEMP_CLASS_NAME_SIZE, ___TEMP_CLASS_NAME_SIZE - 1, "gen:::%p:%x", hInst, nClassStyle));
    }
    else
    {
-      C_RUNTIME_ERRORCHECK_SPRINTF(_sntprintf_s(lpszName, _AFX_TEMP_CLASS_NAME_SIZE, _AFX_TEMP_CLASS_NAME_SIZE - 1, "Afx:%p:%x:%p:%p:%p", hInst, nClassStyle,
+      C_RUNTIME_ERRORCHECK_SPRINTF(_sntprintf_s(lpszName, ___TEMP_CLASS_NAME_SIZE, ___TEMP_CLASS_NAME_SIZE - 1, "gen:::%p:%x:%p:%p:%p", hInst, nClassStyle,
          hCursor, hbrBackground, hIcon));
    }
    
@@ -5758,16 +5758,16 @@ CLASS_DECL_VMSWIN const char * AfxRegisterWndClass(UINT nClassStyle,
    wndcls.hbrBackground = hbrBackground;
    wndcls.lpszMenuName = NULL;
    wndcls.lpszClassName = lpszName;
-   if (!AfxRegisterClass(&wndcls))
-      AfxThrowResourceException();
+   if (!__register_class(&wndcls))
+      throw resource_exception();
 
    // return thread-local pointer
    return lpszName;
 }
 
 
-   AFX_STATIC void CLASS_DECL_VMSWIN
-_AfxHandleActivate(::ca::window * pWnd, WPARAM nState, ::ca::window * pWndOther)
+   __STATIC void CLASS_DECL_win
+__handle_activate(::ca::window * pWnd, WPARAM nState, ::ca::window * pWndOther)
 {
    ASSERT(pWnd != NULL);      
 
@@ -5795,8 +5795,8 @@ _AfxHandleActivate(::ca::window * pWnd, WPARAM nState, ::ca::window * pWndOther)
    }
 }
 
-AFX_STATIC BOOL CLASS_DECL_VMSWIN
-_AfxHandleSetCursor(::ca::window * pWnd, UINT nHitTest, UINT nMsg)
+__STATIC BOOL CLASS_DECL_win
+__handle_set_cursor(::ca::window * pWnd, UINT nHitTest, UINT nMsg)
 {
    if (nHitTest == HTERROR &&
       (nMsg == WM_LBUTTONDOWN || nMsg == WM_MBUTTONDOWN ||
@@ -5822,44 +5822,44 @@ _AfxHandleSetCursor(::ca::window * pWnd, UINT nHitTest, UINT nMsg)
 /////////////////////////////////////////////////////////////////////////////
 // Standard init called by WinMain
 
-AFX_STATIC BOOL CLASS_DECL_VMSWIN _AfxRegisterWithIcon(WNDCLASS* pWndCls,
+__STATIC BOOL CLASS_DECL_win __register_with_icon(WNDCLASS* pWndCls,
    const char * lpszClassName, UINT nIDIcon)
 {
    pWndCls->lpszClassName = lpszClassName;
    pWndCls->hIcon = ::LoadIcon(NULL, IDI_APPLICATION);
-   return AfxRegisterClass(pWndCls);
+   return __register_class(pWndCls);
 }
 
 
-BOOL CLASS_DECL_VMSWIN AfxEndDeferRegisterClass(LONG fToRegisterParam, const char ** ppszClass)
+BOOL CLASS_DECL_win __end_defer_register_class(LONG fToRegisterParam, const char ** ppszClass)
 {
    // mask off all classes that are already registered
-   AFX_MODULE_STATE* pModuleState = AfxGetModuleState();
+   __MODULE_STATE* pModuleState = __get_module_state();
    LONG fToRegister = fToRegisterParam & ~pModuleState->m_fRegisteredClasses;
    if (fToRegister == 0)
    {
       fToRegister = fToRegisterParam;
       if(ppszClass != NULL)
       {
-         if(fToRegister & AFX_WND_REG)
+         if(fToRegister & __WND_REG)
          {
-            *ppszClass = _afxWnd;
+            *ppszClass = gen_Wnd;
          }
-         else if (fToRegister & AFX_WNDOLECONTROL_REG)
+         else if (fToRegister & __WNDOLECONTROL_REG)
          {
-            *ppszClass = _afxWndOleControl;
+            *ppszClass = gen_WndOleControl;
          }
-         else if (fToRegister & AFX_WNDCONTROLBAR_REG)
+         else if (fToRegister & __WNDCONTROLBAR_REG)
          {
-            *ppszClass = _afxWndControlBar;
+            *ppszClass = gen_WndControlBar;
          }
-         else if(fToRegister & AFX_WNDMDIFRAME_REG)
+         else if(fToRegister & __WNDMDIFRAME_REG)
          {
-            *ppszClass = _afxWndMDIFrame;
+            *ppszClass = gen_WndMDIFrame;
          }
-         else if(fToRegister & AFX_WNDFRAMEORVIEW_REG)
+         else if(fToRegister & __WNDFRAMEORVIEW_REG)
          {
-            *ppszClass = _afxWndFrameOrView;
+            *ppszClass = gen_WndFrameOrView;
          }
       }
       return TRUE;
@@ -5878,75 +5878,75 @@ BOOL CLASS_DECL_VMSWIN AfxEndDeferRegisterClass(LONG fToRegisterParam, const cha
    init.dwSize = sizeof(init);
 
    // work to register classes as specified by fToRegister, populate fRegisteredClasses as we go
-   if (fToRegister & AFX_WND_REG)
+   if (fToRegister & __WND_REG)
    {
       // Child windows - no brush, no icon, safest default class styles
       wndcls.style = CS_DBLCLKS | CS_HREDRAW | CS_VREDRAW;
-      wndcls.lpszClassName = _afxWnd;
-      if (AfxRegisterClass(&wndcls))
+      wndcls.lpszClassName = gen_Wnd;
+      if (__register_class(&wndcls))
       {
          if(ppszClass != NULL)
          {
             *ppszClass = wndcls.lpszClassName;
          }
-         fRegisteredClasses |= AFX_WND_REG;
+         fRegisteredClasses |= __WND_REG;
       }
    }
-   if (fToRegister & AFX_WNDOLECONTROL_REG)
+   if (fToRegister & __WNDOLECONTROL_REG)
    {
       // OLE control windows - use parent DC for speed
       wndcls.style |= CS_PARENTDC | CS_DBLCLKS | CS_HREDRAW | CS_VREDRAW;
-      wndcls.lpszClassName = _afxWndOleControl;
-      if (AfxRegisterClass(&wndcls))
+      wndcls.lpszClassName = gen_WndOleControl;
+      if (__register_class(&wndcls))
       {
          if(ppszClass != NULL)
          {
             *ppszClass = wndcls.lpszClassName;
          }
-         fRegisteredClasses |= AFX_WNDOLECONTROL_REG;
+         fRegisteredClasses |= __WNDOLECONTROL_REG;
       }
    }
-   if (fToRegister & AFX_WNDCONTROLBAR_REG)
+   if (fToRegister & __WNDCONTROLBAR_REG)
    {
       // control bar windows
       wndcls.style = 0;   // control bars don't handle double click
-      wndcls.lpszClassName = _afxWndControlBar;
+      wndcls.lpszClassName = gen_WndControlBar;
       wndcls.hbrBackground = (HBRUSH)(COLOR_BTNFACE + 1);
-      if (AfxRegisterClass(&wndcls))
+      if (__register_class(&wndcls))
       {
          if(ppszClass != NULL)
          {
             *ppszClass = wndcls.lpszClassName;
          }
-         fRegisteredClasses |= AFX_WNDCONTROLBAR_REG;
+         fRegisteredClasses |= __WNDCONTROLBAR_REG;
       }
    }
-   if (fToRegister & AFX_WNDMDIFRAME_REG)
+   if (fToRegister & __WNDMDIFRAME_REG)
    {
       // MDI Frame window (also used for splitter window)
       wndcls.style = CS_DBLCLKS;
       wndcls.hbrBackground = NULL;
-/*      if (_AfxRegisterWithIcon(&wndcls, _afxWndMDIFrame, AFX_IDI_STD_MDIFRAME))
+/*      if (__register_with_icon(&wndcls, gen_WndMDIFrame, __IDI_STD_MDIFRAME))
       {
          if(ppszClass != NULL)
          {
-            *ppszClass = _afxWndMDIFrame;
+            *ppszClass = gen_WndMDIFrame;
          }
-         fRegisteredClasses |= AFX_WNDMDIFRAME_REG;
+         fRegisteredClasses |= __WNDMDIFRAME_REG;
       }*/
    }
-   if (fToRegister & AFX_WNDFRAMEORVIEW_REG)
+   if (fToRegister & __WNDFRAMEORVIEW_REG)
    {
       // SDI Frame or MDI Child windows or views - normal colors
       wndcls.style = CS_DBLCLKS | CS_HREDRAW | CS_VREDRAW;
       wndcls.hbrBackground = (HBRUSH) (COLOR_WINDOW + 1);
-      if (_AfxRegisterWithIcon(&wndcls, _afxWndFrameOrView, 123))
+      if (__register_with_icon(&wndcls, gen_WndFrameOrView, 123))
       {
          if(ppszClass != NULL)
          {
-            *ppszClass = _afxWndFrameOrView;
+            *ppszClass = gen_WndFrameOrView;
          }
-         fRegisteredClasses |= AFX_WNDFRAMEORVIEW_REG;
+         fRegisteredClasses |= __WNDFRAMEORVIEW_REG;
       }
    }
 
@@ -5954,11 +5954,11 @@ BOOL CLASS_DECL_VMSWIN AfxEndDeferRegisterClass(LONG fToRegisterParam, const cha
    // save new state of registered controls
    pModuleState->m_fRegisteredClasses |= fRegisteredClasses;
 
-   // special case for all common controls registered, turn on AFX_WNDCOMMCTLS_REG
-   if ((pModuleState->m_fRegisteredClasses & AFX_WIN95CTLS_MASK) == AFX_WIN95CTLS_MASK)
+   // special case for all common controls registered, turn on __WNDCOMMCTLS_REG
+   if ((pModuleState->m_fRegisteredClasses & __WIN95CTLS_MASK) == __WIN95CTLS_MASK)
    {
-      pModuleState->m_fRegisteredClasses |= AFX_WNDCOMMCTLS_REG;
-      fRegisteredClasses |= AFX_WNDCOMMCTLS_REG;
+      pModuleState->m_fRegisteredClasses |= __WNDCOMMCTLS_REG;
+      fRegisteredClasses |= __WNDCOMMCTLS_REG;
    }
 
    // must have registered at least as mamy classes as requested
@@ -5971,9 +5971,9 @@ BOOL CLASS_DECL_VMSWIN AfxEndDeferRegisterClass(LONG fToRegisterParam, const cha
 
 
 LRESULT CALLBACK
-_AfxActivationWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
+__activation_window_procedure(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 {
-   WNDPROC oldWndProc = (WNDPROC)::GetProp(hWnd, _afxOldWndProc);
+   WNDPROC oldWndProc = (WNDPROC)::GetProp(hWnd, gen_OldWndProc);
    ASSERT(oldWndProc != NULL);   
 
    LRESULT lResult = 0;
@@ -5987,27 +5987,27 @@ _AfxActivationWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
             DWORD dwStyle;
             rect rectOld;
             ::ca::window * pWnd = ::win::window::from_handle(hWnd);
-            _AfxPreInitDialog(pWnd, &rectOld, &dwStyle);
+            __pre_init_dialog(pWnd, &rectOld, &dwStyle);
             bCallDefault = FALSE;
             lResult = CallWindowProc(oldWndProc, hWnd, nMsg, wParam, lParam);
-            _AfxPostInitDialog(pWnd, rectOld, dwStyle);
+            __post_init_dialog(pWnd, rectOld, dwStyle);
          }
          break;
 
       case WM_ACTIVATE:
-         _AfxHandleActivate(::win::window::from_handle(hWnd), wParam,
+         __handle_activate(::win::window::from_handle(hWnd), wParam,
             ::win::window::from_handle((HWND)lParam));
          break;
 
       case WM_SETCURSOR:
-         bCallDefault = !_AfxHandleSetCursor(::win::window::from_handle(hWnd),
+         bCallDefault = !__handle_set_cursor(::win::window::from_handle(hWnd),
             (short)LOWORD(lParam), HIWORD(lParam));
          break;
 
       case WM_NCDESTROY:
          SetWindowLongPtr(hWnd, GWLP_WNDPROC, reinterpret_cast<INT_PTR>(oldWndProc));
-         RemoveProp(hWnd, _afxOldWndProc);
-         GlobalDeleteAtom(GlobalFindAtom(_afxOldWndProc));
+         RemoveProp(hWnd, gen_OldWndProc);
+         GlobalDeleteAtom(GlobalFindAtom(gen_OldWndProc));
          break;
       }
 
@@ -6024,8 +6024,8 @@ _AfxActivationWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
       msg.wParam = wParam;
       msg.lParam = lParam;
 
-      //lResult = AfxProcessWndProcException(pe, &msg);
-//      TRACE(::radix::trace::category_AppMsg, 0, "Warning: Uncaught exception in _AfxActivationWndProc (returning %ld).\n",
+      //lResult = __process_window_procedure_exception(pe, &msg);
+//      TRACE(::radix::trace::category_AppMsg, 0, "Warning: Uncaught exception in __activation_window_procedure (returning %ld).\n",
   //       lResult);
       pe->Delete();
    }
@@ -6041,7 +6041,7 @@ _AfxActivationWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 // Additional helpers for WNDCLASS init
 
 // like RegisterClass, except will automatically call UnregisterClass
-BOOL CLASS_DECL_VMSWIN AfxRegisterClass(WNDCLASS* lpWndClass)
+BOOL CLASS_DECL_win __register_class(WNDCLASS* lpWndClass)
 {
    WNDCLASS wndcls;      
    if (GetClassInfo(lpWndClass->hInstance, lpWndClass->lpszClassName,
@@ -6066,7 +6066,7 @@ BOOL CLASS_DECL_VMSWIN AfxRegisterClass(WNDCLASS* lpWndClass)
       try
       {
          // class registered successfully, add to registered list
-         AFX_MODULE_STATE* pModuleState = AfxGetModuleState();
+         __MODULE_STATE* pModuleState = __get_module_state();
          single_lock sl(&pModuleState->m_mutexRegClassList, TRUE);
          if(pModuleState->m_pstrUnregisterList == NULL)
             pModuleState->m_pstrUnregisterList = new string;

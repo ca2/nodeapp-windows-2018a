@@ -5,7 +5,7 @@ namespace win2
 {
 
 
-   class CLASS_DECL_VMSWIN2 application :
+   class CLASS_DECL_win2 application :
       virtual public ::cubebase::application
    {
    public:

@@ -1,14 +1,14 @@
 #pragma once
 
 
-bool CLASS_DECL_VMSWIN vfxResolveShortcut(string & strTarget, const char * pszSource, ::user::interaction * puiMessageParentOptional = NULL);
+bool CLASS_DECL_win vfxResolveShortcut(string & strTarget, const char * pszSource, ::user::interaction * puiMessageParentOptional = NULL);
 
 
 namespace win
 {
 
 
-   class CLASS_DECL_VMSWIN os :
+   class CLASS_DECL_win os :
       public ::ca::os
    {
    public:
@@ -57,6 +57,8 @@ namespace win
       virtual bool stop_service(::planebase::application * papp);
 
       virtual bool resolve_link(string & strTarget, const char * pszSource, ::user::interaction * puiMessageParentOptional = NULL);
+
+      DECLSPEC_NO_RETURN void raise_exception( DWORD dwExceptionCode, DWORD dwExceptionFlags);
 
    };
 

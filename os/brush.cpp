@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 
 #undef new
 
@@ -74,13 +74,13 @@ namespace win
 //   void brush::construct(COLORREF crColor)
 //   {
 ////      if (!Attach(::CreateSolidBrush(crColor)))
-//  //       AfxThrowResourceException();
+//  //       throw resource_exception();
 //   }
 //
 //   void brush::construct(int nIndex, COLORREF crColor)
 //   {
 //    //  if (!Attach(::CreateHatchBrush(nIndex, crColor)))
-//      //   AfxThrowResourceException();
+//      //   throw resource_exception();
 //   }
 //
 //   void brush::construct(::ca::bitmap* pBitmap)
@@ -88,7 +88,7 @@ namespace win
 //      //ASSERT_VALID(pBitmap);
 //
 //      //if (!Attach(::CreatePatternBrush((HBITMAP)pBitmap->get_os_data())))
-//        // AfxThrowResourceException();
+//        // throw resource_exception();
 //   }
 //
 //   BOOL brush::CreateDIBPatternBrush(HGLOBAL hPackedDIB, UINT nUsage)

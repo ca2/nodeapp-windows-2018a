@@ -1,6 +1,6 @@
-#include "StdAfx.h"
+#include "framework.h"
 
-extern thread_local_storage * _afxThreadData;
+extern thread_local_storage * gen_ThreadData;
 
 namespace win
 {
@@ -187,7 +187,7 @@ namespace win
 
    BOOL application::DeferRegisterClass(LONG fToRegister, const char ** ppszClass)
    {
-      return AfxEndDeferRegisterClass(fToRegister, ppszClass);
+      return __end_defer_register_class(fToRegister, ppszClass);
    }
 
 
@@ -207,15 +207,15 @@ namespace win
 /*      try
       {
    #ifdef _DEBUG
-         // check for missing AfxLockTempMap calls
-         if (AfxGetModuleThreadState()->m_pCurrentWinThread->m_nTempMapLock != 0)
+         // check for missing gen::LockTempMap calls
+         if (__get_module_thread_state()->m_pCurrentWinThread->m_nTempMapLock != 0)
          {
             TRACE(::radix::trace::category_AppMsg, 0, "Warning: Temp ::collection::map lock count non-zero (%ld).\n",
-               AfxGetModuleThreadState()->m_pCurrentWinThread->m_nTempMapLock);
+               __get_module_thread_state()->m_pCurrentWinThread->m_nTempMapLock);
          }
    #endif
-         AfxLockTempMaps(::ca::smart_pointer < ::ex2::application >::m_p);
-         AfxUnlockTempMaps(::ca::smart_pointer < ::ex2::application >::m_p, -1);
+         gen::LockTempMaps(::ca::smart_pointer < ::ex2::application >::m_p);
+         gen::UnlockTempMaps(::ca::smart_pointer < ::ex2::application >::m_p, -1);
       }
       catch( base_exception* e )
       {
@@ -227,7 +227,7 @@ namespace win
          // cleanup thread local tooltip ::ca::window
          if (hInstTerm == NULL)
          {
-//            AFX_MODULE_THREAD_STATE* pModuleThreadState = AfxGetModuleThreadState();
+//            __MODULE_THREAD_STATE* pModuleThreadState = __get_module_thread_state();
          }
       }
       catch( base_exception* e )
@@ -238,8 +238,8 @@ namespace win
       try
       {
          // cleanup the rest of the thread local data
-         if (_afxThreadData != NULL)
-            _afxThreadData->delete_data();
+         if (gen_ThreadData != NULL)
+            gen_ThreadData->delete_data();
       }
       catch( base_exception* e )
       {
@@ -250,7 +250,7 @@ namespace win
 
    const char * application::RegisterWndClass(UINT nClassStyle, HCURSOR hCursor, HBRUSH hbrBackground, HICON hIcon)
    {
-      return AfxRegisterWndClass(nClassStyle, hCursor, hbrBackground, hIcon);
+      return __register_window_class(nClassStyle, hCursor, hbrBackground, hIcon);
    }
 
 
@@ -275,7 +275,7 @@ namespace win
    HCURSOR application::LoadOEMCursor(UINT nIDCursor) const
    { 
    
-      return ::LoadCursor(NULL, ATL_MAKEINTRESOURCE(nIDCursor));
+      return ::LoadCursor(NULL, MAKEINTRESOURCE(nIDCursor));
    
    }
 
@@ -296,14 +296,14 @@ namespace win
    
    HICON application::LoadOEMIcon(UINT nIDIcon) const
    { 
-      return ::LoadIcon(NULL, ATL_MAKEINTRESOURCE(nIDIcon));
+      return ::LoadIcon(NULL, MAKEINTRESOURCE(nIDIcon));
    }
 
 
 
 
 
-   /*void application::construct(AFX_THREADPROC pfnThreadProc, LPVOID pParam)
+   /*void application::construct(__THREADPROC pfnThreadProc, LPVOID pParam)
    {
       ::win::thread::construct(pfnThreadProc, pParam);
    }
@@ -365,7 +365,7 @@ namespace win
       return ::win::thread::PreInitInstance();
    }
 
-   // called when occurs an se_exception exception in run
+   // called when occurs an standard_exception exception in run
    // return true to call run again
    bool application::on_run_exception(::ca::exception & e)
    {
@@ -410,22 +410,22 @@ namespace win
    {
       if(::ca::smart_pointer < ex2::application > ::m_p->is_system())
       {
-         if(AfxGetModuleState()->m_pmapHWND == NULL)
+         if(__get_module_state()->m_pmapHWND == NULL)
          {
-            AfxGetModuleState()->m_pmapHWND = new hwnd_map;
-            AfxGetModuleState()->m_pmutexHwnd = new mutex();
+            __get_module_state()->m_pmapHWND = new hwnd_map;
+            __get_module_state()->m_pmutexHwnd = new mutex();
          }
-/*         if(AfxGetModuleState()->m_pmapHDC == NULL)
+/*         if(__get_module_state()->m_pmapHDC == NULL)
          {
-            AfxGetModuleState()->m_pmapHDC = new hdc_map;
+            __get_module_state()->m_pmapHDC = new hdc_map;
          }
-         if(AfxGetModuleState()->m_pmapHGDIOBJ == NULL)
+         if(__get_module_state()->m_pmapHGDIOBJ == NULL)
          {
-            AfxGetModuleState()->m_pmapHGDIOBJ = new hgdiobj_map;
+            __get_module_state()->m_pmapHGDIOBJ = new hgdiobj_map;
          }*/
-/*         if(AfxGetModuleState()->m_pmapHMENU == NULL)
+/*         if(__get_module_state()->m_pmapHMENU == NULL)
          {
-            AfxGetModuleState()->m_pmapHMENU = new hmenu_map;
+            __get_module_state()->m_pmapHMENU = new hmenu_map;
          }*/
       }
 
@@ -551,15 +551,15 @@ namespace win
 
    ::radix::thread * application::GetThread()
    {
-      if(AfxGetThread() == NULL)
+      if(__get_thread() == NULL)
          return NULL;
       else
-         return dynamic_cast < ::radix::thread * > (AfxGetThread()->m_p);
+         return dynamic_cast < ::radix::thread * > (__get_thread()->m_p);
    }
 
    void application::set_thread(::radix::thread * pthread)
    {
-      AfxSetThread(pthread);
+      __set_thread(pthread);
    }
 
    ///////////////////////////////////////////////////////////////////////////
@@ -586,13 +586,13 @@ namespace win
       DWORD dwRet = ::GetModuleFileName(m_hInstance, szBuff, _MAX_PATH);
       ASSERT( dwRet != 0 && dwRet != _MAX_PATH );
       if( dwRet == 0 || dwRet == _MAX_PATH )
-         AfxThrowUserException();*/
+         throw user_exception();*/
 
       /*
       LPTSTR lpszExt = ::PathFindExtension(szBuff);
       ASSERT(lpszExt != NULL);
       if( lpszExt == NULL )
-         AfxThrowUserException();
+         throw user_exception();
 
       ASSERT(*lpszExt == '.');
       *lpszExt = 0;       // no suffix
@@ -603,14 +603,14 @@ namespace win
       // get the exe title from the full path name [no extension]
       strExeName = System.get_module_title();
 
-      AfxGetModuleState()->m_lpszCurrentAppName = _tcsdup(m_strAppName);
+      __get_module_state()->m_lpszCurrentAppName = _tcsdup(m_strAppName);
 
       // initialize thread state
-      AFX_MODULE_STATE* pModuleState = AfxGetModuleState();
+      __MODULE_STATE* pModuleState = __get_module_state();
       ENSURE(pModuleState);
       if(pModuleState->m_pCurrentWinApp == NULL)
       {
-         AFX_MODULE_THREAD_STATE* pThreadState = pModuleState->m_thread;
+         __MODULE_THREAD_STATE* pThreadState = pModuleState->m_thread;
          ENSURE(pThreadState);
 //         ASSERT(System.GetThread() == NULL);
          pThreadState->m_pCurrentWinThread = dynamic_cast < class ::win::thread * > (::ca::thread_sp::m_p);
@@ -623,8 +623,8 @@ namespace win
       }
 
 
-//      dynamic_cast < ::win::thread * > ((smart_pointer < ::ex2::application >::m_p->::ca::thread_sp::m_p))->m_hThread = AfxGetThread()->m_hThread;
-  //    dynamic_cast < ::win::thread * > ((smart_pointer < ::ex2::application >::m_p->::ca::thread_sp::m_p))->m_nThreadID = AfxGetThread()->m_nThreadID;
+//      dynamic_cast < ::win::thread * > ((smart_pointer < ::ex2::application >::m_p->::ca::thread_sp::m_p))->m_hThread = __get_thread()->m_hThread;
+  //    dynamic_cast < ::win::thread * > ((smart_pointer < ::ex2::application >::m_p->::ca::thread_sp::m_p))->m_nThreadID = __get_thread()->m_nThreadID;
       dynamic_cast < class ::win::thread * > (::ca::thread_sp::m_p)->m_hThread      =  ::GetCurrentThread();
       dynamic_cast < class ::win::thread * > (::ca::thread_sp::m_p)->m_nThreadID    =  ::GetCurrentThreadId();
       
@@ -715,7 +715,7 @@ namespace win
          SetErrorMode(SetErrorMode(0) | SEM_FAILCRITICALERRORS | SEM_NOOPENFILEERRORBOX);
 
          // set resource handles
-         AFX_MODULE_STATE* pModuleState = AfxGetModuleState();
+         __MODULE_STATE* pModuleState = __get_module_state();
          pModuleState->m_hCurrentInstanceHandle = hInstance;
          pModuleState->m_hCurrentResourceHandle = hInstance;
          pModuleState->CreateActivationContext();
@@ -732,7 +732,7 @@ namespace win
 
          // initialize thread specific data (for main thread)
          if (!afxContextIsDLL)
-            AfxInitThread();
+            __init_thread();
 
          // Initialize ::ca::window::m_pfnNotifyWinEvent
       /*   HMODULE hModule = ::GetModuleHandle("user32.dll");

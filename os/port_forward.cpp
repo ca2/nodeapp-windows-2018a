@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 
 //const UINT UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION = ::RegisterWindowMessageA("UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION-{7C29C80A_5712_40e8_A124_A82E4B2795A7}");  
 #define UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION (WM_APP + 123) 
@@ -309,7 +309,7 @@ namespace win
    // To use this function, your program must be able to receive (and process)
    // a registered window message posted from the thread when the thread is finished.
    // Thus, you must pass in a HWND of one of your windows that will receive the message.  Typically,
-   // you would choose your CMainFrame window (use the ::AfxGetMainWnd() function).  However, you might
+   // you would choose your CMainFrame window (use the ::__get_main_window() function).  However, you might
    // choose a different window, such as your CView-derived window for SDI applications
    //
    // The window that you choose must be able to process the message, which is a UINT named
@@ -349,7 +349,7 @@ namespace win
 	
 	   m_hWndForPortMappingThread = hWnd;
 	
-	   m_pPortMappingThread = ::AfxBeginThread(get_app(), ThreadForPortRetrieval, this,
+	   m_pPortMappingThread = ::__begin_thread(get_app(), ThreadForPortRetrieval, this,
 		   THREAD_PRIORITY_BELOW_NORMAL, 0, CREATE_SUSPENDED );
 	
 	   if ( m_pPortMappingThread != NULL )
@@ -391,7 +391,7 @@ namespace win
 	
 	   m_hWndForEditMappingThread = hWnd;
 	
-	   m_pEditMappingThread = ::AfxBeginThread(get_app(), ThreadToEditMapping, this, THREAD_PRIORITY_BELOW_NORMAL, 0, CREATE_SUSPENDED );
+	   m_pEditMappingThread = ::__begin_thread(get_app(), ThreadToEditMapping, this, THREAD_PRIORITY_BELOW_NORMAL, 0, CREATE_SUSPENDED );
 	
 	   if ( m_pEditMappingThread != NULL )
 	   {
@@ -432,7 +432,7 @@ namespace win
 	
 	   m_hWndForAddMappingThread = hWnd;
 	
-	   m_pAddMappingThread = ::AfxBeginThread(get_app(), ThreadToAddMapping, this, THREAD_PRIORITY_BELOW_NORMAL, 0, CREATE_SUSPENDED);
+	   m_pAddMappingThread = ::__begin_thread(get_app(), ThreadToAddMapping, this, THREAD_PRIORITY_BELOW_NORMAL, 0, CREATE_SUSPENDED);
 	
 	   if ( m_pAddMappingThread != NULL )
 	   {
@@ -473,7 +473,7 @@ namespace win
 	
 	   m_hWndForDeleteMappingThread = hWnd;
 	
-	   m_pDeleteMappingThread = ::AfxBeginThread(get_app(), ThreadToDeleteMapping, this, THREAD_PRIORITY_BELOW_NORMAL, 0, CREATE_SUSPENDED );
+	   m_pDeleteMappingThread = ::__begin_thread(get_app(), ThreadToDeleteMapping, this, THREAD_PRIORITY_BELOW_NORMAL, 0, CREATE_SUSPENDED );
 	
 	   if ( m_pDeleteMappingThread != NULL )
 	   {
@@ -513,7 +513,7 @@ namespace win
 	
 	   m_hWndForDeviceInfoThread = hWnd;
 	
-	   m_pDeviceInfoThread = ::AfxBeginThread(get_app(), ThreadForDeviceInformationRetrieval, this,  THREAD_PRIORITY_BELOW_NORMAL, 0, CREATE_SUSPENDED );
+	   m_pDeviceInfoThread = ::__begin_thread(get_app(), ThreadForDeviceInformationRetrieval, this,  THREAD_PRIORITY_BELOW_NORMAL, 0, CREATE_SUSPENDED );
 	
 	   if ( m_pDeviceInfoThread != NULL )
 	   {

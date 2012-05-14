@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 #include <math.h>
 
 
@@ -927,13 +927,13 @@ namespace win
    #undef DrawText
    #undef DrawTextEx
    int graphics::DrawText(const char * lpszString, int nCount, LPRECT lpRect, UINT nFormat)
-   { return _AFX_FUNCNAME(DrawText)(lpszString, nCount, lpRect, nFormat); }
+   { return ___FUNCNAME(DrawText)(lpszString, nCount, lpRect, nFormat); }
    int graphics::DrawText(const string & str, LPRECT lpRect, UINT nFormat)
-   { return _AFX_FUNCNAME(DrawText)(str, lpRect, nFormat); }
+   { return ___FUNCNAME(DrawText)(str, lpRect, nFormat); }
    int graphics::DrawTextEx(LPTSTR lpszString, int nCount, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
-   { return _AFX_FUNCNAME(DrawTextEx)(lpszString, nCount, lpRect, nFormat, lpDTParams); }
+   { return ___FUNCNAME(DrawTextEx)(lpszString, nCount, lpRect, nFormat, lpDTParams); }
    int graphics::DrawTextEx(const string & str, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
-   { return _AFX_FUNCNAME(DrawTextEx)(str, lpRect, nFormat, lpDTParams); }
+   { return ___FUNCNAME(DrawTextEx)(str, lpRect, nFormat, lpDTParams); }
    #pragma pop_macro("DrawText")
    #pragma pop_macro("DrawTextEx")
 
@@ -967,7 +967,7 @@ namespace win
    { ASSERT(get_handle2() != NULL); int nResult = ::GetTextFace(get_handle2(),
    256, rString.GetBuffer(256)); rString.ReleaseBuffer();
    return nResult; }
-   BOOL graphics::_AFX_FUNCNAME(GetTextMetrics)(LPTEXTMETRIC lpMetrics) const
+   BOOL graphics::___FUNCNAME(GetTextMetrics)(LPTEXTMETRIC lpMetrics) const
    { 
       //ASSERT(get_handle2() != NULL); return ::GetTextMetrics(get_handle2(), lpMetrics); 
       /*wstring wstr(L"123AWZwmc");
@@ -1030,7 +1030,7 @@ namespace win
 #pragma push_macro("GetTextMetrics")
 #undef GetTextMetrics
    BOOL graphics::GetTextMetrics(LPTEXTMETRIC lpMetrics) const
-   { return _AFX_FUNCNAME(GetTextMetrics)(lpMetrics); }
+   { return ___FUNCNAME(GetTextMetrics)(lpMetrics); }
 #pragma pop_macro("GetTextMetrics")
    BOOL graphics::GetOutputTextMetrics(LPTEXTMETRIC lpMetrics) const
    { ASSERT(get_handle1() != NULL); return ::GetTextMetrics(get_handle1(), lpMetrics); }
@@ -1544,13 +1544,13 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 
 
-   AFX_STATIC_DATA HBRUSH _afxHalftoneBrush = 0;
+   __STATIC_DATA HBRUSH gen_HalftoneBrush = 0;
 
-   void AFX_CDECL AfxWingdixTerm()
+   void c_cdecl __win_gdi_x_term()
    {
-      AfxDeleteObject((HGDIOBJ*)&_afxHalftoneBrush);
+      __delete_object((HGDIOBJ*)&gen_HalftoneBrush);
    }
-   char _afxWingdixTerm = 0;
+   char gen_WingdixTerm = 0;
 
    /////////////////////////////////////////////////////////////////////////////
    // More coordinate transforms (in separate file to avoid transitive refs)
@@ -1559,7 +1559,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    void graphics::DPtoHIMETRIC(LPSIZE lpSize) const
    {
-      ASSERT(fx_is_valid_address(lpSize, sizeof(SIZE)));
+      ASSERT(__is_valid_address(lpSize, sizeof(SIZE)));
 
       int nMapMode;
       if (this != NULL && (nMapMode = GetMapMode()) < MM_ISOTROPIC &&
@@ -1594,7 +1594,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    void graphics::HIMETRICtoDP(LPSIZE lpSize) const
    {
-      ASSERT(fx_is_valid_address(lpSize, sizeof(SIZE)));
+      ASSERT(__is_valid_address(lpSize, sizeof(SIZE)));
 
       int nMapMode;
       if (this != NULL && (nMapMode = GetMapMode()) < MM_ISOTROPIC &&
@@ -1629,7 +1629,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    void graphics::LPtoHIMETRIC(LPSIZE lpSize) const
    {
-      ASSERT(fx_is_valid_address(lpSize, sizeof(SIZE)));
+      ASSERT(__is_valid_address(lpSize, sizeof(SIZE)));
 
       LPtoDP(lpSize);
       DPtoHIMETRIC(lpSize);
@@ -1637,7 +1637,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    void graphics::HIMETRICtoLP(LPSIZE lpSize) const
    {
-      ASSERT(fx_is_valid_address(lpSize, sizeof(SIZE)));
+      ASSERT(__is_valid_address(lpSize, sizeof(SIZE)));
 
       HIMETRICtoDP(lpSize);
       DPtoLP(lpSize);
@@ -1648,8 +1648,8 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    ::ca::brush* PASCAL graphics::GetHalftoneBrush(::ca::application * papp)
    {
-/*      AfxLockGlobals(CRIT_HALFTONEBRUSH);
-      if (_afxHalftoneBrush == NULL)
+/*      gen::LockGlobals(CRIT_HALFTONEBRUSH);
+      if (gen_HalftoneBrush == NULL)
       {
          WORD grayPattern[8];
          for (int i = 0; i < 8; i++)
@@ -1657,24 +1657,24 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          HBITMAP grayBitmap = CreateBitmap(8, 8, 1, 1, grayPattern);
          if (grayBitmap != NULL)
          {
-            _afxHalftoneBrush = ::CreatePatternBrush(grayBitmap);
+            gen_HalftoneBrush = ::CreatePatternBrush(grayBitmap);
             ::DeleteObject(grayBitmap);
          }
       }
-      if (!_afxWingdixTerm)
-         _afxWingdixTerm = (char)!atexit(&AfxWingdixTerm);
-      AfxUnlockGlobals(CRIT_HALFTONEBRUSH);
+      if (!gen_WingdixTerm)
+         gen_WingdixTerm = (char)!atexit(&__win_gdi_x_term);
+      gen::UnlockGlobals(CRIT_HALFTONEBRUSH);
 
-//      return ::win::brush::from_handle(papp, _afxHalftoneBrush);*/
+//      return ::win::brush::from_handle(papp, gen_HalftoneBrush);*/
       return NULL;
    }
 
    void graphics::DrawDragRect(LPCRECT lpRect, SIZE size,
       LPCRECT lpRectLast, SIZE sizeLast, ::ca::brush* pBrush, ::ca::brush* pBrushLast)
    {
-      ASSERT(fx_is_valid_address(lpRect, sizeof(RECT), FALSE));
+      ASSERT(__is_valid_address(lpRect, sizeof(RECT), FALSE));
       ASSERT(lpRectLast == NULL ||
-         fx_is_valid_address(lpRectLast, sizeof(RECT), FALSE));
+         __is_valid_address(lpRectLast, sizeof(RECT), FALSE));
 
       // first, determine the update region and select it
       ::ca::region rgnNew;
@@ -2386,16 +2386,16 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return dwRetVal;
    }
 
-   typedef DWORD (CALLBACK* AFX_GDIGETLAYOUTPROC)(HDC);
-   typedef DWORD (CALLBACK* AFX_GDISETLAYOUTPROC)(HDC, DWORD);
+   typedef DWORD (CALLBACK* __GDIGETLAYOUTPROC)(HDC);
+   typedef DWORD (CALLBACK* __GDISETLAYOUTPROC)(HDC, DWORD);
 
    DWORD graphics::GetLayout() const
    {
       HINSTANCE hInst = ::GetModuleHandleA("GDI32.DLL");
       ASSERT(hInst != NULL);
       DWORD dwGetLayout = LAYOUT_LTR;
-      AFX_GDIGETLAYOUTPROC pfn;
-      pfn = (AFX_GDIGETLAYOUTPROC) GetProcAddress(hInst, "GetLayout");
+      __GDIGETLAYOUTPROC pfn;
+      pfn = (__GDIGETLAYOUTPROC) GetProcAddress(hInst, "GetLayout");
       // if they API is available, just call it. If it is not
       // available, indicate an error.
       if (pfn != NULL)
@@ -2413,8 +2413,8 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       HINSTANCE hInst = ::GetModuleHandleA("GDI32.DLL");
       ASSERT(hInst != NULL);
       DWORD dwGetLayout = LAYOUT_LTR;
-      AFX_GDISETLAYOUTPROC pfn;
-      pfn = (AFX_GDISETLAYOUTPROC) GetProcAddress(hInst, "SetLayout");
+      __GDISETLAYOUTPROC pfn;
+      pfn = (__GDISETLAYOUTPROC) GetProcAddress(hInst, "SetLayout");
       // If the API is availalbe, just call it. If it's not available,
       // setting anything other than LAYOUT_LTR is an error.
       if (pfn != NULL)
@@ -2560,7 +2560,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    /////////////////////////////////////////////////////////////////////////////
    // Special handling for metafile playback
 
-   int CALLBACK AfxEnumMetaFileProc(HDC hDC,
+   int CALLBACK __enum_meta_file_procedure(HDC hDC,
       HANDLETABLE* pHandleTable, METARECORD* pMetaRec, int nHandles, LPARAM lParam)
    {
       ::ca::graphics * pgraphics = (::ca::graphics *)lParam;
@@ -2668,7 +2668,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       }
 
       // for special playback, lParam == pgraphics
-      return ::EnumMetaFile(get_handle1(), hMF, AfxEnumMetaFileProc, (LPARAM)this);
+      return ::EnumMetaFile(get_handle1(), hMF, __enum_meta_file_procedure, (LPARAM)this);
    }
 
    /////////////////////////////////////////////////////////////////////////////
@@ -2676,7 +2676,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    void graphics::LPtoDP(LPSIZE lpSize) const
    {
-      ASSERT(fx_is_valid_address(lpSize, sizeof(SIZE)));
+      ASSERT(__is_valid_address(lpSize, sizeof(SIZE)));
 
       size sizeWinExt = GetWindowExt();
       size sizeVpExt = GetViewportExt();
@@ -2686,7 +2686,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    void graphics::DPtoLP(LPSIZE lpSize) const
    {
-      ASSERT(fx_is_valid_address(lpSize, sizeof(SIZE)));
+      ASSERT(__is_valid_address(lpSize, sizeof(SIZE)));
 
       size sizeWinExt = GetWindowExt();
       size sizeVpExt = GetViewportExt();
@@ -2696,7 +2696,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 
 
-   int graphics::_AFX_FUNCNAME(DrawText)(const char * lpszString, int nCount, LPRECT lpRect,
+   int graphics::___FUNCNAME(DrawText)(const char * lpszString, int nCount, LPRECT lpRect,
       UINT nFormat)
    { 
       if(get_handle1() == NULL)
@@ -3221,7 +3221,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       ASSERT(pWnd == NULL || ::IsWindow(WIN_WINDOW(pWnd)->get_handle1()));
 
       if (!Attach(::GetDC(m_hWnd = WIN_WINDOW(pWnd)->GetSafeHwnd())))
-         AfxThrowResourceException();
+         throw resource_exception();
    }
 
    CClientDC::~CClientDC()
@@ -3251,7 +3251,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       ASSERT(pWnd == NULL || ::IsWindow(WIN_WINDOW(pWnd)->get_handle1()));
 
       if (!Attach(::GetWindowDC(m_hWnd = WIN_WINDOW(pWnd)->GetSafeHwnd())))
-         AfxThrowResourceException();
+         throw resource_exception();
    }
 
    CWindowDC::~CWindowDC()
@@ -3286,7 +3286,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       ASSERT(::IsWindow(WIN_WINDOW(pWnd)->get_handle1()));
 
       if (!Attach(::BeginPaint(m_hWnd = WIN_WINDOW(pWnd)->get_handle1(), &m_ps)))
-         AfxThrowResourceException();
+         throw resource_exception();
    }
 
    CPaintDC::~CPaintDC()
@@ -3307,10 +3307,10 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 
    // IMPLEMENT_DYNAMIC(resource_exception, base_exception)
-   //resource_exception _simpleResourceException(FALSE, AFX_IDS_RESOURCE_EXCEPTION);
+   //resource_exception _simpleResourceException(FALSE, __IDS_RESOURCE_EXCEPTION);
 
    // IMPLEMENT_DYNAMIC(user_exception, base_exception)
-   //user_exception _simpleUserException(FALSE, AFX_IDS_USER_EXCEPTION);
+   //user_exception _simpleUserException(FALSE, __IDS_USER_EXCEPTION);
 
    // IMPLEMENT_DYNCREATE(graphics, ::radix::object)
    // IMPLEMENT_DYNAMIC(CClientDC, graphics)
@@ -3325,23 +3325,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    // IMPLEMENT_DYNAMIC(::ca::palette, ::ca::graphics_object)
    // IMPLEMENT_DYNAMIC(::ca::region, ::ca::graphics_object)
 
-   /////////////////////////////////////////////////////////////////////////////
-   // Standard exception processing
 
-
-   // resource failure
-   void CLASS_DECL_VMSWIN AfxThrowResourceException()
-   {
-      throw resource_exception();
-   }
-
-   // ::fontopus::user alert
-   void CLASS_DECL_VMSWIN AfxThrowUserException()
-   {
-      throw user_exception();
-   }
-
-   /////////////////////////////////////////////////////////////////////////////
 } // namespace win
 
 
@@ -3351,7 +3335,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    UNREFERENCED_PARAMETER(bCreate);
    try
    {
-      AFX_MODULE_STATE* pState = AfxGetModuleState();
+      __MODULE_STATE* pState = __get_module_state();
       if(pState == NULL)
          return NULL;
       return pState->m_pmapHDC;

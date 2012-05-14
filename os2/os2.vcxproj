@@ -253,7 +253,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>StdAfx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
@@ -872,7 +872,7 @@
     <ClCompile Include="application.cpp" />
     <ClCompile Include="factory_exchange.cpp" />
     <ClCompile Include="os2.cpp" />
-    <ClCompile Include="StdAfx.cpp">
+    <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='memdleak|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|x64'">Create</PrecompiledHeader>
@@ -886,7 +886,7 @@
     <ClInclude Include="application.h" />
     <ClInclude Include="factory_exchange.h" />
     <ClInclude Include="os2.h" />
-    <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="framework.h" />
     <ClInclude Include="win2_printer.h" />
     <ClInclude Include="..\include\win.h" />
     <ClInclude Include="..\include\win32_system.h" />

@@ -27,3 +27,8 @@
 #include "registry.h"
 
 #include "os_os.h"
+
+
+// Sanity checks for ATOMs
+CLASS_DECL_ca BOOL __is_valid_atom(ATOM nAtom);
+CLASS_DECL_ca BOOL __is_valid_atom(const char * psz);

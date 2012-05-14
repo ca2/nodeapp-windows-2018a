@@ -1,6 +1,6 @@
 #pragma once
 
-BOOL AfxInternalPreTranslateMessage(MSG* pMsg);
+BOOL __internal_pre_translate_message(MSG* pMsg);
 
 namespace ca
 {
@@ -19,7 +19,7 @@ namespace ca
 namespace win
 {
 
-   class CLASS_DECL_VMSWIN thread :
+   class CLASS_DECL_win thread :
       virtual public ::radix::thread,
       virtual public ::ca::message_window_simple_callback
    {
@@ -45,7 +45,7 @@ namespace win
 
 
       LPVOID                              m_pThreadParams; // generic parameters passed to starting function
-      AFX_THREADPROC                      m_pfnThreadProc;
+      __THREADPROC                      m_pfnThreadProc;
 
       event                              m_evFinish;
       UINT                                m_nDisablePumpCount;
@@ -65,7 +65,7 @@ namespace win
 
       thread(::ca::application * papp);
 
-      virtual void construct(AFX_THREADPROC pfnThreadProc, LPVOID pParam);
+      virtual void construct(__THREADPROC pfnThreadProc, LPVOID pParam);
 
       virtual bool Begin(int nPriority = THREAD_PRIORITY_NORMAL, UINT nStackSize = 0,
          DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
@@ -119,7 +119,7 @@ namespace win
 
       virtual bool PreInitInstance();
 
-      // called when occurs an se_exception exception in run
+      // called when occurs an standard_exception exception in run
       // return true to call run again
       virtual bool on_run_exception(::ca::exception & e);
 
@@ -196,8 +196,8 @@ namespace win
 
    };
 
-   CLASS_DECL_VMSWIN ::ca::thread * get_thread();
-   CLASS_DECL_VMSWIN ::ca::thread_state * get_thread_state();
+   CLASS_DECL_win ::ca::thread * get_thread();
+   CLASS_DECL_win ::ca::thread_state * get_thread_state();
 
 } // namespace win
 

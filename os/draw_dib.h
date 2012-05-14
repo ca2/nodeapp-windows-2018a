@@ -13,7 +13,7 @@ namespace win
    //
    //////////////////////////////////////////////////////////////////////
 
-   class CLASS_DECL_VMSWIN draw_dib :
+   class CLASS_DECL_win draw_dib :
       virtual public ::ca::draw_dib
    {
    public:

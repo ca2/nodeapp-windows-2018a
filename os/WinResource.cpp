@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 
 
 WinResource::WinResource(::ca::application * papp) :
@@ -18,7 +18,7 @@ WinResource::~WinResource()
    const char * lpcszType)
 {
 
-   HINSTANCE hinst = ::AfxFindResourceHandle(MAKEINTRESOURCE(nID), lpcszType);
+   HINSTANCE hinst = ::gen::FindResourceHandle(MAKEINTRESOURCE(nID), lpcszType);
    if(hinst == NULL)
       return false;
    return ReadResource(hinst, file, nID, lpcszType);
@@ -57,7 +57,7 @@ WinResource::~WinResource()
         catch(ex1::file_exception_sp * pe)
         {
       #ifdef _DEBUG
-         afxdump << "File could not be opened " << e->m_cause << "\n";
+         g_dumpcontext << "File could not be opened " << e->m_cause << "\n";
       #endif
         }
         
@@ -115,7 +115,7 @@ bool WinResource::ReadResource(ex1::file & spfile, HINSTANCE hinst, UINT nID,  c
         catch(ex1::file_exception_sp *)
         {
       #ifdef _DEBUG
-//         afxdump << "File could not be opened " << pe->m_cause << "\n";
+//         g_dumpcontext << "File could not be opened " << pe->m_cause << "\n";
       #endif
         }
         

@@ -3,7 +3,7 @@
 namespace win
 {
 
-   class CLASS_DECL_VMSWIN factory_exchange :
+   class CLASS_DECL_win factory_exchange :
       virtual public ::radix::object
    {
    public:

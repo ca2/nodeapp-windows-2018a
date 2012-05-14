@@ -4,7 +4,7 @@
 namespace win
 {
 
-   class CLASS_DECL_VMSWIN path :
+   class CLASS_DECL_win path :
       virtual public ::ca::path
    {
    public:
@@ -12,7 +12,7 @@ namespace win
       virtual bool  is_equal(const char * lpszFilPathA, const char * lpszFilPathB);
    };
 
-   class CLASS_DECL_VMSWIN dir :
+   class CLASS_DECL_win dir :
       virtual public ::ca::dir::system
    {
    public:

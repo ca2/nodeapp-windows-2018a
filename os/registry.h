@@ -5,13 +5,13 @@ namespace win
 {
 
 
-   class CLASS_DECL_VMSWIN registry :
+   class CLASS_DECL_win registry :
       virtual public ::radix::object
    {
    public:
 
 
-      class CLASS_DECL_VMSWIN Key
+      class CLASS_DECL_win Key
       {
       public:
 

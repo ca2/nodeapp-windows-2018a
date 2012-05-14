@@ -29,7 +29,7 @@ This file contains several Vista-specific functions helpful when dealing with th
 for information on what each function does and how to use it.
 
 This file contains the Win32 stuff only, it can be used with or without other frameworks, 
-such as ca2 API, _template, etc.
+such as ca2 API, gen, etc.
 
 HOW TO USE THIS FILE:
 
@@ -95,7 +95,7 @@ MODIFICATIONS:
       The first release.
 */
 
-#include "StdAfx.h"
+#include "framework.h"
 
 #ifdef IMPLEMENT_VISTA_TOOLS
 

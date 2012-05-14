@@ -185,13 +185,13 @@ public:
    friend class ::radix::thread;
 };
 
-class CLASS_DECL_VMSWIN hwnd_map :
+class CLASS_DECL_win hwnd_map :
    public handle_map < ::win::hwnd_handle, ::win::window >
 {
 public:
 };
 
-/*class CLASS_DECL_VMSWIN hdc_map :
+/*class CLASS_DECL_win hdc_map :
    public handle_map < ::win::hdc_handle, ::win::graphics >
 {
 public:
@@ -204,7 +204,7 @@ public:
 };*/
 
 /*
-class CLASS_DECL_VMSWIN hdc_map :
+class CLASS_DECL_win hdc_map :
    public handle_map < ::win::hmenu_handle, ::win::menu >
 {
 public:
@@ -260,9 +260,9 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (::ca::app
    // C++ object to wrap it.  We don't want the ::fontopus::user to see this primitive::memory
    // allocation, so we turn tracing off.
 
-   //BOOL bEnable = AfxEnableMemoryTracking(FALSE);
-#ifndef _AFX_PORTABLE
-   _PNH pnhOldHandler = AfxSetNewHandler(&AfxCriticalNewHandler);
+   //BOOL bEnable = __enable_memory_tracking(FALSE);
+#ifndef ___PORTABLE
+   _PNH pnhOldHandler = __set_new_handler(&__critical_new_handler);
 #endif
 
    CT* pTemp = NULL;
@@ -272,7 +272,7 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (::ca::app
       {
          pTemp = pfnAllocator(papp, h);
          if (pTemp == NULL)
-            AfxThrowMemoryException();
+            throw memory_exception();
       }
       else
       {
@@ -280,7 +280,7 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (::ca::app
    //      ASSERT((UINT)m_pClass->m_nObjectSize == m_alloc.GetAllocSize());
          pTemp = (CT*)m_alloc.Alloc();
          if (pTemp == NULL)
-            AfxThrowMemoryException();
+            throw memory_exception();
 
          // now construct the object in place
          ASSERT(m_pfnConstructObject != NULL);
@@ -292,18 +292,18 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (::ca::app
    }
    catch(base_exception * pe)
    {
-#ifndef _AFX_PORTABLE
-      AfxSetNewHandler(pnhOldHandler);
+#ifndef ___PORTABLE
+      __set_new_handler(pnhOldHandler);
 #endif
-      //AfxEnableMemoryTracking(bEnable);
+      //__enable_memory_tracking(bEnable);
       ::ca::rethrow(pe);
    }
    
 
-#ifndef _AFX_PORTABLE
-   AfxSetNewHandler(pnhOldHandler);
+#ifndef ___PORTABLE
+   __set_new_handler(pnhOldHandler);
 #endif
-   //AfxEnableMemoryTracking(bEnable);
+   //__enable_memory_tracking(bEnable);
 
    // now set the handle in the object
    HANDLE* ph = pTemp->m_handlea;  // after ::radix::object
@@ -321,9 +321,9 @@ void handle_map < HT, CT >::set_permanent(HANDLE h, CT * permOb)
    
    single_lock sl(&m_mutex, TRUE);
 
-   //BOOL bEnable = AfxEnableMemoryTracking(FALSE);
+   //BOOL bEnable = __enable_memory_tracking(FALSE);
    m_permanentMap[(LPVOID)h] = permOb;
-   //AfxEnableMemoryTracking(bEnable);
+   //__enable_memory_tracking(bEnable);
 
 }
 #endif //_DEBUG
@@ -441,9 +441,9 @@ inline CT* handle_map <HT, CT>::lookup_temporary(HANDLE h)
 }
 
 
-CLASS_DECL_VMSWIN hwnd_map * PASCAL afxMapHWND(BOOL bCreate = FALSE);
-CLASS_DECL_VMSWIN mutex * PASCAL afxMutexHwnd();
-CLASS_DECL_VMSWIN himagelist_map * PASCAL afxMapHIMAGELIST(BOOL bCreate = FALSE);
-//CLASS_DECL_VMSWIN hdc_map * PASCAL afxMapHDC(BOOL bCreate = FALSE);
-//CLASS_DECL_VMSWIN hgdiobj_map * PASCAL afxMapHGDIOBJ(BOOL bCreate = FALSE);
-//CLASS_DECL_VMSWIN hmenu_map * PASCAL afx_map_HMENU(BOOL bCreate = FALSE);
+CLASS_DECL_win hwnd_map * PASCAL afxMapHWND(BOOL bCreate = FALSE);
+CLASS_DECL_win mutex * PASCAL afxMutexHwnd();
+CLASS_DECL_win himagelist_map * PASCAL afxMapHIMAGELIST(BOOL bCreate = FALSE);
+//CLASS_DECL_win hdc_map * PASCAL afxMapHDC(BOOL bCreate = FALSE);
+//CLASS_DECL_win hgdiobj_map * PASCAL afxMapHGDIOBJ(BOOL bCreate = FALSE);
+//CLASS_DECL_win hmenu_map * PASCAL afx_map_HMENU(BOOL bCreate = FALSE);

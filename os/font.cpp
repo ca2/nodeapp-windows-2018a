@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 
 #undef new
 
@@ -143,13 +143,13 @@ namespace win
    // nPointSize is actually scaled 10x
    BOOL font::CreatePointFont(int nPointSize, const char * lpszFaceName, ::ca::graphics * pgraphics)
    {
-      ASSERT(AfxIsValidString(lpszFaceName));
+      ASSERT(__is_valid_string(lpszFaceName));
 
       LOGFONT logFont;
       memset(&logFont, 0, sizeof(LOGFONT));
       logFont.lfCharSet = DEFAULT_CHARSET;
       logFont.lfHeight = nPointSize;
-      _template::checked::strncpy_s(logFont.lfFaceName, _countof(logFont.lfFaceName), lpszFaceName, _TRUNCATE);
+      ::gen::strncpy_s(logFont.lfFaceName, _countof(logFont.lfFaceName), lpszFaceName, _TRUNCATE);
 
       return CreatePointFontIndirect(&logFont, pgraphics);
    }
@@ -158,7 +158,7 @@ namespace win
    BOOL font::CreatePointFontIndirect(const LOGFONT* lpLogFont, ::ca::graphics * pgraphics)
    {
       return ::ca::font::CreatePointFontIndirect(lpLogFont, pgraphics);
-     /* ASSERT(fx_is_valid_address(lpLogFont, sizeof(LOGFONT), FALSE));
+     /* ASSERT(__is_valid_address(lpLogFont, sizeof(LOGFONT), FALSE));
       HDC hDC;
       if (pgraphics != NULL)
       {

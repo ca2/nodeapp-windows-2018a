@@ -11,7 +11,7 @@ namespace win
 {
 
 
-   class CLASS_DECL_VMSWIN pen : 
+   class CLASS_DECL_win pen : 
       virtual public ::win::graphics_object,
       virtual public ::ca::pen
    {

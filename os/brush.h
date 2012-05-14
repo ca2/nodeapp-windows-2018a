@@ -7,7 +7,7 @@
 namespace win
 {
 
-   class CLASS_DECL_VMSWIN brush : 
+   class CLASS_DECL_win brush : 
       virtual public ::ca::brush
    {
    public:

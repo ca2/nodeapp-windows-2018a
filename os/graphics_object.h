@@ -5,7 +5,7 @@ namespace win
 {
 
 
-   class CLASS_DECL_VMSWIN graphics_object :
+   class CLASS_DECL_win graphics_object :
       virtual public ::ca::graphics_object
    {
    public:
@@ -20,7 +20,7 @@ namespace win
 
    #pragma push_macro("GetObject")
    #undef GetObject
-      int _AFX_FUNCNAME(GetObject)(int nCount, LPVOID lpObject) const;
+      int ___FUNCNAME(GetObject)(int nCount, LPVOID lpObject) const;
       int GetObject(int nCount, LPVOID lpObject) const;
    #pragma pop_macro("GetObject")
       UINT GetObjectType() const;

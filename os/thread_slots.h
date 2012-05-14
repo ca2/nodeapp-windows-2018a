@@ -24,7 +24,7 @@ struct thread_data; // private to implementation
 struct slot_data;   // private to implementation
 
 
-class CLASS_DECL_VMSWIN thread_slot_data
+class CLASS_DECL_win thread_slot_data
 {
 public:
 
@@ -38,7 +38,7 @@ public:
 };
 
 
-class CLASS_DECL_VMSWIN thread_local_storage
+class CLASS_DECL_win thread_local_storage
 {
 public:
 
@@ -58,11 +58,11 @@ public:
 };
 
 
-extern BYTE __afxThreadData[sizeof(thread_local_storage)];
-extern thread_local_storage * _afxThreadData;
+extern BYTE _gen_ThreadData[sizeof(thread_local_storage)];
+extern thread_local_storage * gen_ThreadData;
 
 
-class CLASS_DECL_VMSWIN AFX_NOVTABLE no_track_object
+class CLASS_DECL_win __NOVTABLE no_track_object
 {
 public:
 #undef new
@@ -70,7 +70,7 @@ public:
 #define new DEBUG_NEW
    void PASCAL operator delete(void *);
 
-#if defined(_DEBUG) && !defined(_AFX_NO_DEBUG_CRT)
+#if defined(_DEBUG) && !defined(___NO_DEBUG_CRT)
 #undef new
    void * PASCAL operator new(size_t nSize, const char *, int);
 #define new DEBUG_NEW
@@ -80,7 +80,7 @@ public:
 };
 
 template < int iSlot >
-class AFX_NOVTABLE thread_local_object
+class __NOVTABLE thread_local_object
 {
 public:
 // Attributes
@@ -97,15 +97,15 @@ template < int iSlot >
 no_track_object* thread_local_object < iSlot> ::get_data(no_track_object* ( * pfnCreateObject)())
 {
 
-   if (_afxThreadData == NULL)
+   if (gen_ThreadData == NULL)
    {
 #undef new
-      _afxThreadData = new(__afxThreadData) thread_local_storage;
+      gen_ThreadData = new(_gen_ThreadData) thread_local_storage;
 #define new DEBUG_NEW
-      ENSURE(_afxThreadData != NULL);
+      ENSURE(gen_ThreadData != NULL);
    }
 
-   no_track_object * pValue = (no_track_object *) _afxThreadData->get_slot_data()->m_pa[iSlot];
+   no_track_object * pValue = (no_track_object *) gen_ThreadData->get_slot_data()->m_pa[iSlot];
 
    if(pValue == NULL)
    {
@@ -114,8 +114,8 @@ no_track_object* thread_local_object < iSlot> ::get_data(no_track_object* ( * pf
       pValue =  (*pfnCreateObject)();
 
       // set tls data to newly created object
-      _afxThreadData->get_slot_data()->m_pa[iSlot] = pValue;
-      ASSERT(_afxThreadData->get_slot_data()->m_pa[iSlot] == pValue);
+      gen_ThreadData->get_slot_data()->m_pa[iSlot] = pValue;
+      ASSERT(gen_ThreadData->get_slot_data()->m_pa[iSlot] == pValue);
 
    }
 
@@ -125,18 +125,18 @@ no_track_object* thread_local_object < iSlot> ::get_data(no_track_object* ( * pf
 template < int iSlot >
 no_track_object* thread_local_object < iSlot > ::GetDataNA()
 {
-   return _afxThreadData->get_slot_data()->m_pa[iSlot];
+   return gen_ThreadData->get_slot_data()->m_pa[iSlot];
 }
 template < int iSlot >
 thread_local_object < iSlot > ::~thread_local_object()
 {
-//   if (m_nSlot != 0 && _afxThreadData != NULL)
-  //    _afxThreadData->FreeSlot(m_nSlot);
+//   if (m_nSlot != 0 && gen_ThreadData != NULL)
+  //    gen_ThreadData->FreeSlot(m_nSlot);
    //m_nSlot = 0;
 }
 
 
-class CLASS_DECL_VMSWIN AFX_NOVTABLE process_local_object
+class CLASS_DECL_win __NOVTABLE process_local_object
 {
 public:
 
@@ -183,9 +183,9 @@ public:
 };
 
 #define THREAD_LOCAL(class_name, ident_name, slot) \
-   AFX_COMDAT thread_local<class_name, slot> ident_name;
+   __COMDAT thread_local<class_name, slot> ident_name;
 #define EXTERN_THREAD_LOCAL(class_name, ident_name, slot) \
-   extern CLASS_DECL_VMSWIN thread_local<class_name, slot> ident_name;
+   extern CLASS_DECL_win thread_local<class_name, slot> ident_name;
 
 template<class TYPE>
 class process_local : public process_local_object
@@ -212,16 +212,16 @@ public:
 };
 
 #define PROCESS_LOCAL(class_name, ident_name) \
-   AFX_COMDAT process_local<class_name> ident_name;
+   __COMDAT process_local<class_name> ident_name;
 #define EXTERN_PROCESS_LOCAL(class_name, ident_name) \
    extern process_local<class_name> ident_name;
 
 /////////////////////////////////////////////////////////////////////////////
 
-void CLASS_DECL_VMSWIN AfxInitLocalData(HINSTANCE hInstInit);
-void CLASS_DECL_VMSWIN AfxTermLocalData(HINSTANCE hInstTerm, BOOL bAll = FALSE);
-void CLASS_DECL_VMSWIN AfxTlsAddRef();
-void CLASS_DECL_VMSWIN AfxTlsRelease();
+void CLASS_DECL_win __init_local_data(HINSTANCE hInstInit);
+void CLASS_DECL_win __term_local_data(HINSTANCE hInstTerm, BOOL bAll = FALSE);
+void CLASS_DECL_win __tls_add_ref();
+void CLASS_DECL_win __tls_release();
 
 #endif //__AFXTLS_H__
 

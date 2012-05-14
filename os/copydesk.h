@@ -5,7 +5,7 @@ namespace win
 {
 
 
-   class CLASS_DECL_VMSWIN copydesk : 
+   class CLASS_DECL_win copydesk : 
       virtual public ::ca4::copydesk,
       virtual public ::ca::window_sp
    {

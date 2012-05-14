@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 
 
 #undef USERNAME_LENGTH // mysql one
@@ -687,6 +687,13 @@ namespace win
       return vfxResolveShortcut(strTarget, pszSource, puiMessageParentOptional);
 
    }
+
+   DECLSPEC_NO_RETURN void os::raise_exception( DWORD dwExceptionCode, DWORD dwExceptionFlags)
+   {
+      RaiseException( dwExceptionCode, dwExceptionFlags, 0, NULL );
+   }
+
+
 
 } // namespace win
 

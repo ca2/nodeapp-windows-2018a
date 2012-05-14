@@ -10,8 +10,8 @@
 // See these sources for detailed information regarding the
 // Microsoft Foundation Classes product.
 
-// You can define _AFX_PORTABLE in order to keep the library from using
+// You can define ___PORTABLE in order to keep the library from using
 //  certain Microsoft extensions that are not commonly implemented by
 //  other compilers.
 
-#define _AFX_PORTABLE
+#define ___PORTABLE

@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 #include "sal.h"
 
 CLASS_DECL_ca int ca2_main();
@@ -7,7 +7,7 @@ CLASS_DECL_ca int ca2_main();
 
 //CLASS_DECL_ca fixed_alloc_array * new_wstring_manager();
 
-void CLASS_DECL_VMSWIN __cdecl _ca2_purecall(void)
+void CLASS_DECL_win __cdecl _ca2_purecall(void)
 {
     throw simple_exception();
 }
@@ -19,12 +19,12 @@ void __cdecl _null_se_translator(unsigned int uiCode, EXCEPTION_POINTERS * ppoin
 //::ca::application *     win_application_create(::ca::application * pappSystem, const char * pszId);
 //::ca::application *     win_instantiate_application(::ca::application * pappSystem, const char * pszId);
 //int                     win_application_procedure(::ca::application * pappSystem)
-//UINT AFX_CDECL          win_application_thread_proc(LPVOID);
+//UINT c_cdecl          win_application_thread_proc(LPVOID);
 /////////////////////////////////////////////////////////////////////////////
 // Standard WinMain implementation
-//  Can be replaced as long as 'AfxWinInit' is called first
+//  Can be replaced as long as 'gen::WinInit' is called first
 
-int CLASS_DECL_VMSWIN AfxWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
+int CLASS_DECL_win __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
 
    UNREFERENCED_PARAMETER(lpCmdLine);
@@ -71,7 +71,7 @@ int CLASS_DECL_VMSWIN AfxWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, L
 
    try
    {
-      AfxWinTerm();
+      __win_term();
    }
    catch(...)
    {
@@ -91,44 +91,44 @@ int CLASS_DECL_VMSWIN AfxWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, L
 
    try
    {
-      delete AfxGetModuleState()->m_pmapHWND;
+      delete __get_module_state()->m_pmapHWND;
    }
    catch(...)
    {
    }
 /*   try
    {
-      delete AfxGetModuleState()->m_pmapHDC;
+      delete __get_module_state()->m_pmapHDC;
    }
    catch(...)
    {
    }*/
 /*   try
    {
-      delete AfxGetModuleState()->m_pmapHGDIOBJ;
+      delete __get_module_state()->m_pmapHGDIOBJ;
    }
    catch(...)
    {
    }*/
-//      delete AfxGetModuleState()->m_pmapHMENU;
+//      delete __get_module_state()->m_pmapHMENU;
 
    try
    {
-      AfxGetModuleState()->m_pmapHWND     = NULL;
+      __get_module_state()->m_pmapHWND     = NULL;
    }
    catch(...)
    {
    }
 /*   try
    {
-      AfxGetModuleState()->m_pmapHDC      = NULL;
+      __get_module_state()->m_pmapHDC      = NULL;
    }
    catch(...)
    {
    }*/
 /*   try
    {
-      AfxGetModuleState()->m_pmapHGDIOBJ  = NULL;
+      __get_module_state()->m_pmapHGDIOBJ  = NULL;
    }
    catch(...)
    {
@@ -142,7 +142,7 @@ int CLASS_DECL_VMSWIN AfxWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, L
 }
 
 
-int CLASS_DECL_VMSWIN ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, const char * lpCmdLine, int nCmdShow)
+int CLASS_DECL_win ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, const char * lpCmdLine, int nCmdShow)
 {
    try
    {
@@ -173,7 +173,7 @@ int CLASS_DECL_VMSWIN ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, con
       nReturnCode = psystem->main();
 
 
-      AfxWinTerm();
+      __win_term();
 
 
       try
@@ -188,43 +188,43 @@ int CLASS_DECL_VMSWIN ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, con
 
       try
       {
-         delete AfxGetModuleState()->m_pmapHWND;
+         delete __get_module_state()->m_pmapHWND;
       }
       catch(...)
       {
       }
 /*      try
       {
-         delete AfxGetModuleState()->m_pmapHDC;
+         delete __get_module_state()->m_pmapHDC;
       }
       catch(...)
       {
       }*/
 /*      try
       {
-         delete AfxGetModuleState()->m_pmapHGDIOBJ;
+         delete __get_module_state()->m_pmapHGDIOBJ;
       }
       catch(...)
       {
       }*/
-//      delete AfxGetModuleState()->m_pmapHMENU;
+//      delete __get_module_state()->m_pmapHMENU;
       try
       {
-         AfxGetModuleState()->m_pmapHWND     = NULL;
+         __get_module_state()->m_pmapHWND     = NULL;
       }
       catch(...)
       {
       }
 /*      try
       {
-         AfxGetModuleState()->m_pmapHDC      = NULL;
+         __get_module_state()->m_pmapHDC      = NULL;
       }
       catch(...)
       {
       }
       try
       {
-         AfxGetModuleState()->m_pmapHGDIOBJ  = NULL;
+         __get_module_state()->m_pmapHGDIOBJ  = NULL;
       }
       catch(...)
       {

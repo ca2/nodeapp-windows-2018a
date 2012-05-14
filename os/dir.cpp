@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 
 
 namespace win
@@ -898,8 +898,8 @@ namespace win
          str = strDir.Left(2);
          str += "\\trash_that_is_not_trash\\";
          string strFormat;
-         class time time;
-         time = time::get_current_time();
+         ::datetime::time time;
+         time = ::datetime::time::get_current_time();
          strFormat.Format("%04d-%02d-%02d %02d-%02d-%02d\\", time.GetYear(), time.GetMonth(), time.GetDay(), time.GetHour(), time.GetMinute(), time.GetSecond());
          str += strFormat;
          if(strDir.m_pszData[2] == '\\')

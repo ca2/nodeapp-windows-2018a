@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 
 
 namespace win
@@ -19,7 +19,7 @@ namespace win
       if (err != 0) 
       {
          TRACE("Failed in call to WSAStartup, return value was %d\n", err);
-         AfxThrowNotSupportedException();
+         throw not_supported_exception();
       }
 
       //remember that we have opened winsock
@@ -29,7 +29,7 @@ namespace win
       if ((LOBYTE(wsaData.wVersion) != 1) || (HIBYTE(wsaData.wVersion) != 1)) 
       { 
          TRACE("Failed to find a usable winsock stack which supports Winsock 1.1\n");
-         AfxThrowNotSupportedException();
+         throw not_supported_exception();
       } 
    }
 

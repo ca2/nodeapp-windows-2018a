@@ -11,10 +11,10 @@
 /////////////////////////////////////////////////////////////////////////////
 // turn off reference tracking for certain often used symbols
 
-#ifndef _AFX_PORTABLE
+#ifndef ___PORTABLE
 #pragma component(browser, off, references, "ASSERT")
-#pragma component(browser, off, references, "AfxAssertFailedLine")
-#pragma component(browser, off, references, "AfxDebugBreak")
+#pragma component(browser, off, references, "__assert_failed_line")
+#pragma component(browser, off, references, "__debug_break")
 #pragma component(browser, off, references, "BOOL")
 #pragma component(browser, off, references, "BYTE")
 #pragma component(browser, off, references, "DECLSPEC_IMPORT")
@@ -32,7 +32,7 @@
 #pragma component(browser, off, references, "UINT")
 #pragma component(browser, off, references, "WINAPI")
 #pragma component(browser, off, references, "WORD")
-#endif  //!_AFX_PORTABLE
+#endif  //!___PORTABLE
 
 /////////////////////////////////////////////////////////////////////////////
 // For target version (one of)
@@ -46,12 +46,12 @@
 //
 
 #ifndef _DEBUG
-#ifndef _AFX_DISABLE_INLINES
-//	#define _AFX_ENABLE_INLINES
+#ifndef ___DISABLE_INLINES
+//	#define ___ENABLE_INLINES
 #endif
 #endif
 
-#define _AFX_NO_NESTED_DERIVATION
+#define ___NO_NESTED_DERIVATION
 
 /////////////////////////////////////////////////////////////////////////////
 // Special configurations
@@ -72,8 +72,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // special include files
 
-#ifndef AFX_INLINE
-	#define AFX_INLINE inline /*__forceinline*/
+#ifndef __INLINE
+	#define __INLINE inline /*__forceinline*/
 /*#endif
 
 #include "version_windows.h"
@@ -84,7 +84,7 @@
 #endif
 
 #ifdef _X86_
-	#define _AFX_MINREBUILD
+	#define ___MINREBUILD
 #endif
 
 #ifdef _CUSTOM
@@ -93,8 +93,8 @@
 #endif
 
 // setup default packing value
-#ifndef _AFX_PACKING
-	#define _AFX_PACKING    4   // default packs structs at 4 bytes
+#ifndef ___PACKING
+	#define ___PACKING    4   // default packs structs at 4 bytes
 #endif
 
 #ifdef _ApplicationFrameworkDLL
@@ -107,28 +107,28 @@
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// Special AfxDebugBreak: used to break into debugger at critical times
+// Special __debug_break: used to break into debugger at critical times
 
-#ifndef AfxDebugBreak
+#ifndef __debug_break
 #if core_level_1
-#define AfxDebugBreak() DebugBreak()
-#elif _AFX_NO_DEBUG_CRT
+#define __debug_break() DebugBreak()
+#elif ___NO_DEBUG_CRT
 // by default, debug break is asm int 3, or a call to DebugBreak, or nothing
-#if defined(_M_IX86) && !defined(_AFX_PORTABLE)
-#define AfxDebugBreak() _asm { int 3 }
+#if defined(_M_IX86) && !defined(___PORTABLE)
+#define __debug_break() _asm { int 3 }
 #else
-#define AfxDebugBreak() DebugBreak()
+#define __debug_break() DebugBreak()
 #endif
 #else
-#define AfxDebugBreak() _CrtDbgBreak()
+#define __debug_break() _CrtDbgBreak()
 #endif
 #endif
 
 /*#ifndef _DEBUG
-#ifdef AfxDebugBreak
-#undef AfxDebugBreak
+#ifdef __debug_break
+#undef __debug_break
 #endif
-#define AfxDebugBreak()
+#define __debug_break()
 #endif  // _DEBUG*/
 
 /////////////////////////////////////////////////////////////////////////////
@@ -168,23 +168,23 @@
 #endif
 #endif
 
-// AFX_DEPRECATED is used for functions that should no longer be used
-#ifndef AFX_DEPRECATED
-#ifdef _AFX_DISABLE_DEPRECATED
-	#define AFX_DEPRECATED(_Message)
+// __DEPRECATED is used for functions that should no longer be used
+#ifndef __DEPRECATED
+#ifdef ___DISABLE_DEPRECATED
+	#define __DEPRECATED(_Message)
 #else
-	#define AFX_DEPRECATED(_Message) __declspec(deprecated(_Message))
+	#define __DEPRECATED(_Message) __declspec(deprecated(_Message))
 #endif
 #endif
 
-// _AFX_INSECURE_DEPRECATE is used for deprecated, insecure functions.
-#ifndef _AFX_INSECURE_DEPRECATE
-#ifdef _AFX_SECURE_NO_DEPRECATE
-#define _AFX_INSECURE_DEPRECATE(_Message)
+// ___INSECURE_DEPRECATE is used for deprecated, insecure functions.
+#ifndef ___INSECURE_DEPRECATE
+#ifdef ___SECURE_NO_DEPRECATE
+#define ___INSECURE_DEPRECATE(_Message)
 #else
-#define _AFX_INSECURE_DEPRECATE(_Message) __declspec(deprecated(_Message))
-#endif // _AFX_SECURE_NO_DEPRECATE
-#endif // _AFX_INSECURE_DEPRECATE
+#define ___INSECURE_DEPRECATE(_Message) __declspec(deprecated(_Message))
+#endif // ___SECURE_NO_DEPRECATE
+#endif // ___INSECURE_DEPRECATE
 
 // AFXAPI is used on global public functions
 #ifndef AFXAPI
@@ -196,98 +196,98 @@
 	#define AFXOLEAPI __stdcall
 #endif
 
-// AFX_CDECL is used for rare functions taking variable arguments
-#ifndef AFX_CDECL
-	#define AFX_CDECL __cdecl
+// c_cdecl is used for rare functions taking variable arguments
+#ifndef c_cdecl
+	#define c_cdecl __cdecl
 #endif
 
-// AFX_EXPORT is used for functions which need to be exported
-#ifndef AFX_EXPORT
-	#define AFX_EXPORT EXPORT
+// __EXPORT is used for functions which need to be exported
+#ifndef __EXPORT
+	#define __EXPORT EXPORT
 #endif
 
-#ifndef AFX_STATIC
-	#define AFX_STATIC extern
-	#define AFX_STATIC_DATA extern __declspec(selectany)
+#ifndef __STATIC
+	#define __STATIC extern
+	#define __STATIC_DATA extern __declspec(selectany)
 #endif
 
 // The following macros are used to enable export/import
 
 // for data
-#ifndef AFX_DATA_EXPORT
-	#define AFX_DATA_EXPORT __declspec(dllexport)
+#ifndef __DATA_EXPORT
+	#define __DATA_EXPORT __declspec(dllexport)
 #endif
-#ifndef AFX_DATA_IMPORT
-	#define AFX_DATA_IMPORT __declspec(dllimport)
+#ifndef __DATA_IMPORT
+	#define __DATA_IMPORT __declspec(dllimport)
 #endif
 
 // for classes
-#ifndef AFX_CLASS_EXPORT
-	#define AFX_CLASS_EXPORT __declspec(dllexport)
+#ifndef __CLASS_EXPORT
+	#define __CLASS_EXPORT __declspec(dllexport)
 #endif
-#ifndef AFX_CLASS_IMPORT
-	#define AFX_CLASS_IMPORT __declspec(dllimport)
+#ifndef __CLASS_IMPORT
+	#define __CLASS_IMPORT __declspec(dllimport)
 #endif
 
 // for global APIs
-#ifndef AFX_API_EXPORT
-	#define AFX_API_EXPORT __declspec(dllexport)
+#ifndef __API_EXPORT
+	#define __API_EXPORT __declspec(dllexport)
 #endif
-#ifndef AFX_API_IMPORT
-	#define AFX_API_IMPORT __declspec(dllimport)
+#ifndef __API_IMPORT
+	#define __API_IMPORT __declspec(dllimport)
 #endif
 
 // This macro is used to reduce size requirements of some classes
-#ifndef AFX_ALWAYS_VTABLE
-#ifndef AFX_NOVTABLE
+#ifndef __ALWAYS_VTABLE
+#ifndef __NOVTABLE
 #if _MSC_VER >= 1100 && !defined(_DEBUG)
-#define AFX_NOVTABLE __declspec(novtable)
+#define __NOVTABLE __declspec(novtable)
 #else
-#define AFX_NOVTABLE
+#define __NOVTABLE
 #endif
 #endif
 #endif
 
 // for global data that should be in COMDATs (packaged data)
-#ifndef AFX_COMDAT
-#define AFX_COMDAT __declspec(selectany)
+#ifndef __COMDAT
+#define __COMDAT __declspec(selectany)
 #endif
 
 // The following macros are used on data declarations/definitions
 //  (they are redefined for extension DLLs and the shared MFC DLL)
-#define AFX_DATADEF
-#define AFX_API CLASS_DECL_ca
+#define __DATADEF
+#define __API CLASS_DECL_ca
 
 // used when building the "core" MFC80.DLL
-#ifndef AFX_CORE_DATA
-	#define AFX_CORE_DATA CLASS_DECL_ca
-	#define AFX_CORE_DATADEF
+#ifndef __CORE_DATA
+	#define __CORE_DATA CLASS_DECL_ca
+	#define __CORE_DATADEF
 #endif
 
 // used when building the MFC/OLE support MFCO80.DLL
-#ifndef AFX_OLE_DATA
-	#define AFX_OLE_DATA
-	#define AFX_OLE_DATADEF
+#ifndef __OLE_DATA
+	#define __OLE_DATA
+	#define __OLE_DATADEF
 #endif
 
 // used when building the MFC/DB support MFCD80.DLL
-#ifndef AFX_DB_DATA
-	#define AFX_DB_DATA
-	#define AFX_DB_DATADEF
+#ifndef __DB_DATA
+	#define __DB_DATA
+	#define __DB_DATADEF
 #endif
 
 // used when building the MFC/NET support MFCN80.DLL
-#ifndef AFX_NET_DATA
-	#define AFX_NET_DATA
-	#define AFX_NET_DATADEF
+#ifndef __NET_DATA
+	#define __NET_DATA
+	#define __NET_DATADEF
 #endif
 
 // used when building extension DLLs
-#ifndef AFX_EXT_DATA
-	#define AFX_EXT_DATA
-	#define AFX_EXT_DATADEF
-	#define AFX_EXT_CLASS
-	#define AFX_EXT_API
+#ifndef __EXT_DATA
+	#define __EXT_DATA
+	#define __EXT_DATADEF
+	#define __EXT_CLASS
+	#define __EXT_API
 #endif
 
 // BASED_XXXX macros are provided for backward compatibility
@@ -317,20 +317,20 @@
 // ca2 API inline constructors (including compiler generated) can get deep
 #pragma inline_depth(16)
 
-#ifdef _AFX_DEVBUILD
-	#define AFX_IMPL_DATA AFX_DATA_EXPORT
+#ifdef ___DEVBUILD
+	#define __IMPL_DATA __DATA_EXPORT
 #else
-	#define AFX_IMPL_DATA CLASS_DECL_ca 
+	#define __IMPL_DATA CLASS_DECL_ca 
 #endif
 
 
-// #define _AFX_NOFORCE_LIBS
-#define _AFX_FULLTYPEINFO
+// #define ___NOFORCE_LIBS
+#define ___FULLTYPEINFO
 #define VC_EXTRALEAN
 #define NO_ANSIUNI_ONLY
 #define _MFC_OVERRIDES_NEW
 
-#define AFX_COMDAT __declspec(selectany)*/
+#define __COMDAT __declspec(selectany)*/
 
 #include <winreg.h>
 #include <winnls.h>
@@ -343,7 +343,7 @@
 #include <new.h>
 #include <eh.h>
 
-#undef AfxWndProc
+#undef __window_procedure
 
 //#define MAX_DWORD_PTR ((DWORD_PTR)(-1))
 

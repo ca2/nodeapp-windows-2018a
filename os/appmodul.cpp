@@ -1,9 +1,9 @@
-#include "StdAfx.h"
+#include "framework.h"
 #include "sal.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // export WinMain to force linkage to this module
-extern int CLASS_DECL_VMSWIN AfxWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+extern int CLASS_DECL_win __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance,
    __in LPTSTR lpCmdLine, int nCmdShow);
 
 extern "C" int WINAPI
@@ -11,15 +11,15 @@ _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
    __in LPTSTR lpCmdLine, int nCmdShow)
 {
    // call shared/exported WinMain
-   return AfxWinMain(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+   return __win_main(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // initialize cast state such that it points to this module's core state
 
-CLASS_DECL_VMSWIN BOOL AfxInitialize(BOOL bDLL, DWORD dwVersion)
+CLASS_DECL_win BOOL __initialize(BOOL bDLL, DWORD dwVersion)
 {
-   AFX_MODULE_STATE* pModuleState = AfxGetModuleState();
+   __MODULE_STATE* pModuleState = __get_module_state();
    pModuleState->m_bDLL = (BYTE)bDLL;
    ASSERT(dwVersion <= _MFC_VER);
    UNUSED(dwVersion);  // not used in release build
@@ -37,4 +37,4 @@ CLASS_DECL_VMSWIN BOOL AfxInitialize(BOOL bDLL, DWORD dwVersion)
 //#pragma init_seg(lib)
 
 
-char _afxInitAppState = (char)(AfxInitialize(FALSE, _MFC_VER));
+char gen_InitAppState = (char)(__initialize(FALSE, _MFC_VER));

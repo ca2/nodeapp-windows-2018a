@@ -1,6 +1,6 @@
 #pragma once
 
-class CLASS_DECL_VMSWIN FileFind : public ::radix::object
+class CLASS_DECL_win FileFind : public ::radix::object
 {
 public:
    FileFind();
@@ -18,9 +18,9 @@ public:
    virtual BOOL GetLastWriteTime(FILETIME* pTimeStamp) const;
    virtual BOOL GetLastAccessTime(FILETIME* pTimeStamp) const;
    virtual BOOL GetCreationTime(FILETIME* pTimeStamp) const;
-   virtual BOOL GetLastWriteTime(class time& refTime) const;
-   virtual BOOL GetLastAccessTime(class time& refTime) const;
-   virtual BOOL GetCreationTime(class time& refTime) const;
+   virtual BOOL GetLastWriteTime(::datetime::time& refTime) const;
+   virtual BOOL GetLastAccessTime(::datetime::time& refTime) const;
+   virtual BOOL GetCreationTime(::datetime::time& refTime) const;
 
    virtual BOOL MatchesMask(DWORD dwMask) const;
 
@@ -51,6 +51,8 @@ protected:
    BOOL m_bGotLast;
    string m_strRoot;
    char m_chDirSeparator;     // not '\\' for Internet classes
+
+public:
 
    void dump(dump_context & dumpcontext) const;
    void assert_valid() const;

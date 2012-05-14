@@ -174,8 +174,8 @@
 #pragma warning(pop)
 
 // Mouse message MFC is interested in
-#ifndef AFX_WM_MOUSELAST
-#define AFX_WM_MOUSELAST 0x0209
+#ifndef __WM_MOUSELAST
+#define __WM_MOUSELAST 0x0209
 #endif
 
 #include <zmouse.h>
@@ -217,7 +217,7 @@ typedef struct HKEY__ *HKEY;
 #endif
 
 #ifdef _WIN64
-#define _AFX_NO_CTL3D_SUPPORT
+#define ___NO_CTL3D_SUPPORT
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
@@ -231,7 +231,7 @@ typedef struct HKEY__ *HKEY;
 #ifdef GetWindowTask
 #undef GetWindowTask
 #ifdef _WIN32
-AFX_INLINE HTASK GetWindowTask(HWND hWnd)
+__INLINE HTASK GetWindowTask(HWND hWnd)
 	{ return (HTASK)(DWORD_PTR)GetWindowThreadProcessId(hWnd, NULL); }
 #endif
 #endif
@@ -239,7 +239,7 @@ AFX_INLINE HTASK GetWindowTask(HWND hWnd)
 // Win32 uses macros with parameters for this, which breaks C++ code.
 #ifdef GetNextWindow
 #undef GetNextWindow
-AFX_INLINE HWND GetNextWindow(HWND hWnd, UINT nDirection)
+__INLINE HWND GetNextWindow(HWND hWnd, UINT nDirection)
 	{ return GetWindow(hWnd, nDirection); }
 #endif
 #endif

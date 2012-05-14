@@ -9,7 +9,7 @@
 namespace win
 {
 
-   class CLASS_DECL_VMSWIN graphics : 
+   class CLASS_DECL_win graphics : 
       virtual public ::ca::graphics
    {
       // // DECLARE_DYNCREATE(::ca::graphics_sp)
@@ -331,13 +331,13 @@ namespace win
    #pragma push_macro("DrawTextEx")
    #undef DrawText
    #undef DrawTextEx
-      virtual int _AFX_FUNCNAME(DrawText)(const char * lpszString, int nCount, LPRECT lpRect,
+      virtual int ___FUNCNAME(DrawText)(const char * lpszString, int nCount, LPRECT lpRect,
                UINT nFormat);
-            int _AFX_FUNCNAME(DrawText)(const string & str, LPRECT lpRect, UINT nFormat);
+            int ___FUNCNAME(DrawText)(const string & str, LPRECT lpRect, UINT nFormat);
 
-      virtual int _AFX_FUNCNAME(DrawTextEx)(LPTSTR lpszString, int nCount, LPRECT lpRect,
+      virtual int ___FUNCNAME(DrawTextEx)(LPTSTR lpszString, int nCount, LPRECT lpRect,
                UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
-            int _AFX_FUNCNAME(DrawTextEx)(const string & str, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
+            int ___FUNCNAME(DrawTextEx)(const string & str, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
 
             int DrawText(const char * lpszString, int nCount, LPRECT lpRect,
                UINT nFormat);
@@ -374,7 +374,7 @@ namespace win
       int GetTextFace(string & rString) const;
    #pragma push_macro("GetTextMetrics")
    #undef GetTextMetrics
-      BOOL _AFX_FUNCNAME(GetTextMetrics)(LPTEXTMETRIC lpMetrics) const;
+      BOOL ___FUNCNAME(GetTextMetrics)(LPTEXTMETRIC lpMetrics) const;
       BOOL GetTextMetrics(LPTEXTMETRIC lpMetrics) const;
    #pragma pop_macro("GetTextMetrics")
       BOOL GetOutputTextMetrics(LPTEXTMETRIC lpMetrics) const;

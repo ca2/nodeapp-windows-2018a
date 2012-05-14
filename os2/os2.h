@@ -7,9 +7,9 @@
 
 
 #ifdef _VMSWIN2_DLL
-    #define CLASS_DECL_VMSWIN2  _declspec(dllexport)
+    #define CLASS_DECL_win2  _declspec(dllexport)
 #else
-    #define CLASS_DECL_VMSWIN2  _declspec(dllimport)
+    #define CLASS_DECL_win2  _declspec(dllimport)
 #endif
 
 

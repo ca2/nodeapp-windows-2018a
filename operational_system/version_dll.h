@@ -10,47 +10,47 @@
 
 // special header for _ApplicationFrameworkDLL variant.
 
-// default AFX_XXX_DATA and AFX_XXX_DATADEF macros for using MFC DLLs
+// default __XXX_DATA and __XXX_DATADEF macros for using MFC DLLs
 
-#ifdef _CAFX_DLL
-	#define AFX_CORE_DATA       CLASS_DECL_ca
-	#define AFX_CORE_DATADEF
-#elif AFX_CORE_DATA
-	#define AFX_CORE_DATA       AFX_DATA_IMPORT
-	#define AFX_CORE_DATADEF
+#ifdef _C__DLL
+	#define __CORE_DATA       CLASS_DECL_ca
+	#define __CORE_DATADEF
+#elif __CORE_DATA
+	#define __CORE_DATA       __DATA_IMPORT
+	#define __CORE_DATADEF
 #endif
 
-#ifndef AFX_OLE_DATA
-	#define AFX_OLE_DATA        AFX_DATA_IMPORT
-	#define AFX_OLE_DATADEF
+#ifndef __OLE_DATA
+	#define __OLE_DATA        __DATA_IMPORT
+	#define __OLE_DATADEF
 #endif
 
-#ifndef AFX_DB_DATA
-	#define AFX_DB_DATA         AFX_DATA_IMPORT
-	#define AFX_DB_DATADEF
+#ifndef __DB_DATA
+	#define __DB_DATA         __DATA_IMPORT
+	#define __DB_DATADEF
 #endif
 
-#ifndef AFX_NET_DATA
-	#define AFX_NET_DATA        AFX_DATA_IMPORT
-	#define AFX_NET_DATADEF
+#ifndef __NET_DATA
+	#define __NET_DATA        __DATA_IMPORT
+	#define __NET_DATADEF
 #endif
 
-// default AFX_EXT_DATA and AFX_EXT_DATADEF macros for using or
-//  creating MFC extension DLLs, depending on _AFX_EXT_IMPL
-// AFX_EXT_CLASS can be used to import or export entire classes
+// default __EXT_DATA and __EXT_DATADEF macros for using or
+//  creating MFC extension DLLs, depending on ___EXT_IMPL
+// __EXT_CLASS can be used to import or export entire classes
 //  in an extension DLL without the hassle of creating a .DEF file
 //  with decorated names.
 
-#ifndef AFX_EXT_DATA
+#ifndef __EXT_DATA
 	#ifdef _AFXEXT
-		#define AFX_EXT_CLASS       AFX_CLASS_EXPORT
-		#define AFX_EXT_API         AFX_API_EXPORT
-		#define AFX_EXT_DATA        AFX_DATA_EXPORT
-		#define AFX_EXT_DATADEF
+		#define __EXT_CLASS       __CLASS_EXPORT
+		#define __EXT_API         __API_EXPORT
+		#define __EXT_DATA        __DATA_EXPORT
+		#define __EXT_DATADEF
 	#else
-		#define AFX_EXT_CLASS       AFX_CLASS_IMPORT
-		#define AFX_EXT_API         AFX_API_IMPORT
-		#define AFX_EXT_DATA        AFX_DATA_IMPORT
-		#define AFX_EXT_DATADEF
+		#define __EXT_CLASS       __CLASS_IMPORT
+		#define __EXT_API         __API_IMPORT
+		#define __EXT_DATA        __DATA_IMPORT
+		#define __EXT_DATADEF
 	#endif
 #endif

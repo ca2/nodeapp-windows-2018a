@@ -5,7 +5,7 @@ namespace win2
 {
 
    
-   class CLASS_DECL_VMSWIN2 factory_exchange :
+   class CLASS_DECL_win2 factory_exchange :
       virtual public ::radix::object
    {
    public:

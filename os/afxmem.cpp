@@ -1,11 +1,11 @@
-#include "StdAfx.h"
+#include "framework.h"
 
 
 
 
-_PNH CLASS_DECL_VMSWIN AfxSetNewHandler(_PNH pfnNewHandler)
+_PNH CLASS_DECL_win __set_new_handler(_PNH pfnNewHandler)
 {
-   AFX_MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
+   __MODULE_THREAD_STATE* pState = __get_module_thread_state();
    _PNH pfnOldHandler = pState->m_pfnNewHandler;
    pState->m_pfnNewHandler = pfnNewHandler;
    return pfnOldHandler;
@@ -18,13 +18,13 @@ _PNH CLASS_DECL_VMSWIN AfxSetNewHandler(_PNH pfnNewHandler)
 
 // Obsolete API
 /*
-void CLASS_DECL_VMSWIN AfxSetAllocStop(LONG lRequestNumber)
+void CLASS_DECL_win __set_alloc_stop(LONG lRequestNumber)
 {
    _CrtSetBreakAlloc(lRequestNumber);
 }
 */
 #ifdef _DEBUG
-BOOL CLASS_DECL_VMSWIN AfxCheckMemory()
+BOOL CLASS_DECL_win __check_memory()
   // check all of primitive::memory (look for primitive::memory tromps)
 {
    return _CrtCheckMemory();
@@ -33,7 +33,7 @@ BOOL CLASS_DECL_VMSWIN AfxCheckMemory()
 /*
 // -- true if block of exact size, allocated on the heap
 // -- set *plRequestNumber to request number (or 0)
-BOOL CLASS_DECL_VMSWIN AfxIsMemoryBlock(const void * pData, UINT nBytes,
+BOOL CLASS_DECL_win __is_memory_block(const void * pData, UINT nBytes,
       LONG* plRequestNumber)
 {
    return _CrtIsMemoryBlock(pData, nBytes, plRequestNumber, NULL, NULL);

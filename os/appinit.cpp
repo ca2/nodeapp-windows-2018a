@@ -8,14 +8,14 @@
 // 
 // 
 
-#include "StdAfx.h"
+#include "framework.h"
 #include "sal.h"
 
 
 
 /////////////////////////////////////////////////////////////////////////////
 
-/*BOOL CLASS_DECL_VMSWIN AfxWinInit(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+/*BOOL CLASS_DECL_win gen::WinInit(HINSTANCE hInstance, HINSTANCE hPrevInstance,
    __in LPTSTR lpCmdLine, int nCmdShow)
 {
 }*/
@@ -24,16 +24,16 @@
 /////////////////////////////////////////////////////////////////////////////
 // ex1::filesp implementation helpers
 
-#ifdef AfxGetFileName
-#undef AfxGetFileName
+#ifdef gen::GetFileName
+#undef gen::GetFileName
 #endif
 
 
-/*UINT CLASS_DECL_VMSWIN AfxGetFileName(const char * lpszPathName, __out_ecount_opt(nMax) LPTSTR lpszTitle, UINT nMax)
+/*UINT CLASS_DECL_win gen::GetFileName(const char * lpszPathName, __out_ecount_opt(nMax) LPTSTR lpszTitle, UINT nMax)
 {
    ASSERT(lpszTitle == NULL ||
-      fx_is_valid_address(lpszTitle, nMax));
-   ASSERT(AfxIsValidString(lpszPathName));
+      __is_valid_address(lpszTitle, nMax));
+   ASSERT(__is_valid_string(lpszPathName));
 
    ENSURE_ARG(lpszPathName != NULL);
 
@@ -45,7 +45,7 @@
       return lstrlen(lpszTemp)+1;
 
    // otherwise copy it into the buffer provided
-   _template::checked::strncpy_s(lpszTitle, nMax, lpszTemp, _TRUNCATE);
+   ::gen::strncpy_s(lpszTitle, nMax, lpszTemp, _TRUNCATE);
    return 0;
 }
 

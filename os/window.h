@@ -5,13 +5,13 @@ namespace win
 {
 
 
-   CLASS_DECL_VMSWIN LRESULT CALLBACK _AfxSendMsgHook(int, WPARAM, LPARAM);
-   //CLASS_DECL_VMSWIN void _AfxStandardSubclass(HWND);
-   CLASS_DECL_VMSWIN LRESULT CALLBACK _AfxCbtFilterHook(int, WPARAM, LPARAM);
-   CLASS_DECL_VMSWIN LRESULT AfxCallWndProc(::user::interaction * pWnd, HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
+   CLASS_DECL_win LRESULT CALLBACK __send_message_hook(int, WPARAM, LPARAM);
+   //CLASS_DECL_win void _gen::StandardSubclass(HWND);
+   CLASS_DECL_win LRESULT CALLBACK __cbt_filter_hook(int, WPARAM, LPARAM);
+   CLASS_DECL_win LRESULT __call_window_procedure(::user::interaction * pWnd, HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
 
-   class CLASS_DECL_VMSWIN window : 
+   class CLASS_DECL_win window : 
       virtual public ::ca::window,
       virtual public hwnd_handle
    {
@@ -153,7 +153,7 @@ namespace win
    // Message Functions
    #pragma push_macro("SendMessage")
    #undef SendMessage
-      LRESULT _AFX_FUNCNAME(SendMessage)(UINT message, WPARAM wParam = 0, LPARAM lParam = 0);
+      LRESULT ___FUNCNAME(SendMessage)(UINT message, WPARAM wParam = 0, LPARAM lParam = 0);
       LRESULT SendMessage(UINT message, WPARAM wParam = 0, LPARAM lParam = 0);
    #pragma pop_macro("SendMessage")
       BOOL PostMessage(UINT message, WPARAM wParam = 0, LPARAM lParam = 0);
@@ -674,10 +674,10 @@ namespace win
 
 
       // implementation of message dispatch/hooking
-      CLASS_DECL_VMSWIN friend LRESULT CALLBACK _AfxSendMsgHook(int, WPARAM, LPARAM);
-      //CLASS_DECL_VMSWIN friend void _AfxStandardSubclass(HWND);
-      CLASS_DECL_VMSWIN friend LRESULT CALLBACK _AfxCbtFilterHook(int, WPARAM, LPARAM);
-      CLASS_DECL_VMSWIN friend LRESULT AfxCallWndProc(::user::interaction * pWnd, HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
+      CLASS_DECL_win friend LRESULT CALLBACK __send_message_hook(int, WPARAM, LPARAM);
+      //CLASS_DECL_win friend void _gen::StandardSubclass(HWND);
+      CLASS_DECL_win friend LRESULT CALLBACK __cbt_filter_hook(int, WPARAM, LPARAM);
+      CLASS_DECL_win friend LRESULT __call_window_procedure(::user::interaction * pWnd, HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
       // standard message implementation
       LRESULT OnNTCtlColor(WPARAM wParam, LPARAM lParam);

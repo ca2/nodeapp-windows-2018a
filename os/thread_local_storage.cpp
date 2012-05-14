@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 #include <stddef.h>
 
 
@@ -6,7 +6,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // no_track_object
 
-#if defined(_DEBUG) && !defined(_AFX_NO_DEBUG_CRT)
+#if defined(_DEBUG) && !defined(___NO_DEBUG_CRT)
 #undef new
 void * PASCAL no_track_object::operator new(size_t nSize, const char *, int)
 {
@@ -25,7 +25,7 @@ void * PASCAL no_track_object::operator new(size_t nSize)
 {
    void * p = ::LocalAlloc(LPTR, nSize);
    if (p == NULL)
-      AfxThrowMemoryException();
+      throw memory_exception();
    return p;
 }
 #define new DEBUG_NEW
@@ -58,7 +58,7 @@ thread_local_storage::thread_local_storage()
 {
    m_tlsIndex = TlsAlloc();
    if (m_tlsIndex == (DWORD)-1)
-      AfxThrowMemoryException();
+      throw memory_exception();
 }
 
 
@@ -146,16 +146,16 @@ process_local_object::~process_local_object()
 /////////////////////////////////////////////////////////////////////////////
 // Init/Term for thread/process local data
 
-/*void CLASS_DECL_VMSWIN AfxInitLocalData(HINSTANCE hInst)
+/*void CLASS_DECL_win gen::InitLocalData(HINSTANCE hInst)
 {
-   if (_afxThreadData != NULL)
-      _afxThreadData->AssignInstance(hInst);
+   if (gen_ThreadData != NULL)
+      gen_ThreadData->AssignInstance(hInst);
 }
 
-void CLASS_DECL_VMSWIN AfxTermLocalData(HINSTANCE hInst, BOOL bAll)
+void CLASS_DECL_win __term_local_data(HINSTANCE hInst, BOOL bAll)
 {
-   if (_afxThreadData != NULL)
-      _afxThreadData->DeleteValues(hInst, bAll);
+   if (gen_ThreadData != NULL)
+      gen_ThreadData->DeleteValues(hInst, bAll);
 }*/
 
 // This reference count is needed to support Win32s, such that the
@@ -163,21 +163,21 @@ void CLASS_DECL_VMSWIN AfxTermLocalData(HINSTANCE hInst, BOOL bAll)
 // It is basically a reference count of the number of processes that
 // have attached to the ca2 API DLL.
 
-AFX_STATIC_DATA long _afxTlsRef = 0;
+__STATIC_DATA long gen_TlsRef = 0;
 
-void CLASS_DECL_VMSWIN AfxTlsAddRef()
+void CLASS_DECL_win __tls_add_ref()
 {
-   ++_afxTlsRef;
+   ++gen_TlsRef;
 }
 
-void CLASS_DECL_VMSWIN AfxTlsRelease()
+void CLASS_DECL_win __tls_release()
 {
-   if (_afxTlsRef == 0 || --_afxTlsRef == 0)
+   if (gen_TlsRef == 0 || --gen_TlsRef == 0)
    {
-      if (_afxThreadData != NULL)
+      if (gen_ThreadData != NULL)
       {
-         _afxThreadData->~thread_local_storage();
-         _afxThreadData = NULL;
+         gen_ThreadData->~thread_local_storage();
+         gen_ThreadData = NULL;
       }
    }
 }
@@ -188,8 +188,8 @@ void CLASS_DECL_VMSWIN AfxTlsRelease()
 /////////////////////////////////////////////////////////////////////////////
 // thread_slot_data
 
-// global _afxThreadData used to allocate thread local indexes
-BYTE __afxThreadData[sizeof(thread_local_storage)];
-thread_local_storage * _afxThreadData;
+// global gen_ThreadData used to allocate thread local indexes
+BYTE _gen_ThreadData[sizeof(thread_local_storage)];
+thread_local_storage * gen_ThreadData;
 
 

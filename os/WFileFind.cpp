@@ -2,7 +2,7 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#include "StdAfx.h"
+#include "framework.h"
 #include "WFileFind.h"
 
 #include "WindowsShell.h"
@@ -167,42 +167,42 @@ BOOL FileFind::GetCreationTime(FILETIME* pTimeStamp) const
       return FALSE;
 }
 
-BOOL FileFind::GetLastAccessTime(class time& refTime) const
+BOOL FileFind::GetLastAccessTime(::datetime::time& refTime) const
 {
    ASSERT(m_hContext != NULL);
    ASSERT_VALID(this);
 
    if (m_pFoundInfo != NULL)
    {
-      refTime = class time(((LPWIN32_FIND_DATAW) m_pFoundInfo)->ftLastAccessTime);
+      refTime = ::datetime::time(((LPWIN32_FIND_DATAW) m_pFoundInfo)->ftLastAccessTime);
       return TRUE;
    }
    else
       return FALSE;
 }
 
-BOOL FileFind::GetLastWriteTime(class time& refTime) const
+BOOL FileFind::GetLastWriteTime(::datetime::time& refTime) const
 {
    ASSERT(m_hContext != NULL);
    ASSERT_VALID(this);
 
    if (m_pFoundInfo != NULL)
    {
-      refTime = class time(((LPWIN32_FIND_DATAW) m_pFoundInfo)->ftLastWriteTime);
+      refTime = ::datetime::time(((LPWIN32_FIND_DATAW) m_pFoundInfo)->ftLastWriteTime);
       return TRUE;
    }
    else
       return FALSE;
 }
 
-BOOL FileFind::GetCreationTime(class time& refTime) const
+BOOL FileFind::GetCreationTime(::datetime::time& refTime) const
 {
    ASSERT(m_hContext != NULL);
    ASSERT_VALID(this);
 
    if (m_pFoundInfo != NULL)
    {
-      refTime = class time(((LPWIN32_FIND_DATAW) m_pFoundInfo)->ftCreationTime);
+      refTime = ::datetime::time(((LPWIN32_FIND_DATAW) m_pFoundInfo)->ftCreationTime);
       return TRUE;
    }
    else

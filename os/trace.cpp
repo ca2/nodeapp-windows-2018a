@@ -1,11 +1,11 @@
-#include "StdAfx.h"
+#include "framework.h"
 #include "dde.h"
 
 
 /////////////////////////////////////////////////////////////////////////////
 // Build data tables by including data file three times
 
-struct CLASS_DECL_ca AFX_MAP_MESSAGE
+struct CLASS_DECL_ca __MAP_MESSAGE
 {
    UINT    nMsg;
    const char *  lpszMsg;
@@ -13,7 +13,7 @@ struct CLASS_DECL_ca AFX_MAP_MESSAGE
 
 #define DEFINE_MESSAGE(wm)  { wm, #wm }
 
-static const AFX_MAP_MESSAGE allMessages[] =
+static const __MAP_MESSAGE allMessages[] =
 {
    DEFINE_MESSAGE(WM_CREATE),
    DEFINE_MESSAGE(WM_DESTROY),
@@ -219,7 +219,7 @@ static void TraceDDE(const char * lpszPrefix, const MSG* pMsg)
       ASSERT(hCommands != NULL);
 
       const char * lpszCommands = (const char *)::GlobalLock(hCommands);
-      ENSURE_THROW(lpszCommands != NULL, ::AfxThrowMemoryException() );
+      ENSURE_THROW(lpszCommands != NULL, throw ::memory_exception() );
 //      ::OutputDebugString(::radix::trace::category_AppMsg, 0, "%s: Execute '%s'.\n", lpszPrefix, lpszCommands);
       ::GlobalUnlock(hCommands);
    }
@@ -240,7 +240,7 @@ static void TraceDDE(const char * lpszPrefix, const MSG* pMsg)
       ASSERT(hAdvise != NULL);
 
       DDEADVISE* lpAdvise = (DDEADVISE*)::GlobalLock(hAdvise);
-      ENSURE_THROW(lpAdvise != NULL, ::AfxThrowMemoryException() );
+      ENSURE_THROW(lpAdvise != NULL, throw ::memory_exception() );
       char szItem[80];
       szItem[0] = '\0';
 
@@ -260,7 +260,7 @@ static void TraceDDE(const char * lpszPrefix, const MSG* pMsg)
          // format names.
       }
 
-      AfxTrace(
+      __trace(
          "%s: Advise item='%s', Format='%s', Ack=%d, Defer Update= %d\n",
           lpszPrefix, szItem, szFormat, lpAdvise->fAckReq,
          lpAdvise->fDeferUpd);
@@ -270,9 +270,9 @@ static void TraceDDE(const char * lpszPrefix, const MSG* pMsg)
 
 /////////////////////////////////////////////////////////////////////////////
 
-void _AfxTraceMsg(const char * lpszPrefix, gen::signal_object * pobj)
+void __trace_message(const char * lpszPrefix, gen::signal_object * pobj)
 {
-   ENSURE_ARG(AfxIsValidString(lpszPrefix));
+   ENSURE_ARG(__is_valid_string(lpszPrefix));
    ENSURE_ARG(pobj != NULL);
    SCAST_PTR(::gen::message::base, pbase, pobj);
 
@@ -312,7 +312,7 @@ void _AfxTraceMsg(const char * lpszPrefix, gen::signal_object * pobj)
    else
    {
       // a system windows message
-      const AFX_MAP_MESSAGE* pMapMsg = allMessages;
+      const __MAP_MESSAGE* pMapMsg = allMessages;
       for (/*null*/; pMapMsg->lpszMsg != NULL; pMapMsg++)
       {
          if (pMapMsg->nMsg == pbase->m_uiMessage)
@@ -353,9 +353,9 @@ void _AfxTraceMsg(const char * lpszPrefix, gen::signal_object * pobj)
 }
 
 
-void _AfxTraceMsg(const char * lpszPrefix, LPMSG lpmsg)
+void __trace_message(const char * lpszPrefix, LPMSG lpmsg)
 {
-   ENSURE_ARG(AfxIsValidString(lpszPrefix));
+   ENSURE_ARG(__is_valid_string(lpszPrefix));
    ENSURE_ARG(lpmsg != NULL);
 
    if (lpmsg->message == WM_MOUSEMOVE || lpmsg->message == WM_NCMOUSEMOVE ||
@@ -394,7 +394,7 @@ void _AfxTraceMsg(const char * lpszPrefix, LPMSG lpmsg)
    else
    {
       // a system windows message
-      const AFX_MAP_MESSAGE* pMapMsg = allMessages;
+      const __MAP_MESSAGE* pMapMsg = allMessages;
       for (/*null*/; pMapMsg->lpszMsg != NULL; pMapMsg++)
       {
          if (pMapMsg->nMsg == lpmsg->message)

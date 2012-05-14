@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace _template
+namespace gen
 {
 
       /////////////////////////////////////////////////////////////////////////////
@@ -10,17 +10,17 @@ namespace _template
    
 #pragma warning(push)
    #pragma warning(disable: 4200)
-      struct ATLSTRINGRESOURCEIMAGE
+      struct STRINGRESOURCEIMAGE
       {
          WORD nLength;
          WCHAR achString[];
       };
    #pragma warning(pop)   // C4200
 
-   inline const ATLSTRINGRESOURCEIMAGE* _AtlGetStringResourceImage( HINSTANCE hInstance, HRSRC hResource, UINT id ) throw()
+   inline const STRINGRESOURCEIMAGE* _gen_GetStringResourceImage( HINSTANCE hInstance, HRSRC hResource, UINT id ) throw()
    {
-      const ATLSTRINGRESOURCEIMAGE* pImage;
-      const ATLSTRINGRESOURCEIMAGE* pImageEnd;
+      const STRINGRESOURCEIMAGE* pImage;
+      const STRINGRESOURCEIMAGE* pImageEnd;
       ULONG nResourceSize;
       HGLOBAL hGlobal;
       UINT iIndex;
@@ -31,19 +31,19 @@ namespace _template
          return( NULL );
       }
 
-      pImage = (const ATLSTRINGRESOURCEIMAGE*)::LockResource( hGlobal );
+      pImage = (const STRINGRESOURCEIMAGE*)::LockResource( hGlobal );
       if( pImage == NULL )
       {
          return( NULL );
       }
 
       nResourceSize = ::SizeofResource( hInstance, hResource );
-      pImageEnd = (const ATLSTRINGRESOURCEIMAGE*)(LPBYTE( pImage )+nResourceSize);
+      pImageEnd = (const STRINGRESOURCEIMAGE*)(LPBYTE( pImage )+nResourceSize);
       iIndex = id&0x000f;
 
       while( (iIndex > 0) && (pImage < pImageEnd) )
       {
-         pImage = (const ATLSTRINGRESOURCEIMAGE*)(LPBYTE( pImage )+(sizeof( ATLSTRINGRESOURCEIMAGE )+(pImage->nLength*sizeof( WCHAR ))));
+         pImage = (const STRINGRESOURCEIMAGE*)(LPBYTE( pImage )+(sizeof( STRINGRESOURCEIMAGE )+(pImage->nLength*sizeof( WCHAR ))));
          iIndex--;
       }
       if( pImage >= pImageEnd )
@@ -58,7 +58,7 @@ namespace _template
       return( pImage );
    }
 
-   inline const ATLSTRINGRESOURCEIMAGE* AtlGetStringResourceImage( HINSTANCE hInstance, UINT id ) throw()
+   inline const STRINGRESOURCEIMAGE* gen_GetStringResourceImage( HINSTANCE hInstance, UINT id ) throw()
    {
       HRSRC hResource;
 
@@ -68,10 +68,10 @@ namespace _template
          return( NULL );
       }
 
-      return _AtlGetStringResourceImage( hInstance, hResource, id );
+      return _gen_GetStringResourceImage( hInstance, hResource, id );
    }
 
-   inline const ATLSTRINGRESOURCEIMAGE* AtlGetStringResourceImage( HINSTANCE hInstance, UINT id, WORD wLanguage ) throw()
+   inline const STRINGRESOURCEIMAGE* gen_GetStringResourceImage( HINSTANCE hInstance, UINT id, WORD wLanguage ) throw()
    {
       HRSRC hResource;
 
@@ -81,13 +81,13 @@ namespace _template
          return( NULL );
       }
 
-      return _AtlGetStringResourceImage( hInstance, hResource, id );
+      return _gen_GetStringResourceImage( hInstance, hResource, id );
    }
 
    /*
    Needed by both atlcomcli and atlsafe, so needs to be in here
    */
-   inline HRESULT AtlSafeArrayGetActualVartype
+   inline HRESULT gen_SafeArrayGetActualVartype
    (
        SAFEARRAY *psaArray,
        VARTYPE *pvtType
@@ -119,6 +119,6 @@ namespace _template
    }
 
 
-} // namespace _template
+} // namespace gen
 
 

@@ -14,9 +14,9 @@
 
 
 #ifdef _VMSWIN_DLL
-    #define CLASS_DECL_VMSWIN  _declspec(dllexport)
+    #define CLASS_DECL_win  _declspec(dllexport)
 #else
-    #define CLASS_DECL_VMSWIN  _declspec(dllimport)
+    #define CLASS_DECL_win  _declspec(dllimport)
 #endif
 
 string get_error_message(DWORD dwError);
@@ -26,45 +26,42 @@ string get_error_message(DWORD dwError);
 /////////////////////////////////////////////////////////////////////////////
 // explicit initialization for general purpose classes
 
-CLASS_DECL_VMSWIN BOOL AfxInitialize(BOOL bDLL = FALSE, DWORD dwVersion = _MFC_VER);
+CLASS_DECL_win BOOL __initialize(BOOL bDLL = FALSE, DWORD dwVersion = _MFC_VER);
 
 /////////////////////////////////////////////////////////////////////////////
 // stop on a specific primitive::memory request
 
 // Debugger hook on specified allocation request - Obsolete
-CLASS_DECL_VMSWIN void AfxSetAllocStop(LONG lRequestNumber);
+CLASS_DECL_win void __set_alloc_stop(LONG lRequestNumber);
 
 
 
 #ifdef _DEBUG
 
 // Return TRUE if primitive::memory is sane or print out what is wrong
-CLASS_DECL_VMSWIN BOOL AfxCheckMemory();
+CLASS_DECL_win BOOL __check_memory();
 
 // Return TRUE if valid primitive::memory block of nBytes
-CLASS_DECL_VMSWIN BOOL AfxIsMemoryBlock(const void * p, UINT nBytes, LONG* plRequestNumber = NULL);
+CLASS_DECL_win BOOL __is_memory_block(const void * p, UINT nBytes, LONG* plRequestNumber = NULL);
 
 #endif
 
 // helper routines for non-C++ EH implementations
 // for THROW_LAST auto-delete backward compatiblity
-CLASS_DECL_VMSWIN void AfxThrowLastCleanup();
+CLASS_DECL_win void __throw_last_cleanup();
 
 // other out-of-line helper functions
-CLASS_DECL_VMSWIN void AfxTryCleanup();
+CLASS_DECL_win void __try_cleanup();
 
 
 /////////////////////////////////////////////////////////////////////////////
 // Global implementation helpers
 
 // window creation hooking
-CLASS_DECL_VMSWIN void AfxHookWindowCreate(::user::interaction * pWnd);
-CLASS_DECL_VMSWIN BOOL AfxUnhookWindowCreate();
-CLASS_DECL_VMSWIN void AfxResetMsgCache();
+CLASS_DECL_win void hook_window_create(::user::interaction * pWnd);
+CLASS_DECL_win BOOL unhook_window_create();
+CLASS_DECL_win void reset_message_cache();
 
-// for backward compatibility to previous versions
-#define _AfxHookWindowCreate    AfxHookWindowCreate
-#define _AfxUnhookWindowCreate  AfxUnhookWindowCreate
 
 #include "win1.h"
 #include "implementation.h"
@@ -90,8 +87,8 @@ CLASS_DECL_VMSWIN void AfxResetMsgCache();
 #include "port_forward.h"
 
 #define NULL_REF(class) (*((class *) NULL))
-CLASS_DECL_VMSWIN WNDPROC AfxGetAfxWndProc();
-#define AfxWndProc (*AfxGetAfxWndProc())
+CLASS_DECL_win WNDPROC __get_window_procedure();
+#define __window_procedure (*__get_window_procedure())
 
 #define WIN_THREAD(pthread) (dynamic_cast < ::win::thread * > (dynamic_cast < ::ca::thread * >(pthread)))
 #define WIN_WINDOW(pwnd) (dynamic_cast < ::win::window * > (dynamic_cast < ::ca::window * >(pwnd)))
@@ -117,15 +114,15 @@ CLASS_DECL_VMSWIN WNDPROC AfxGetAfxWndProc();
 #pragma comment(lib, "Msimg32.lib") 
 #pragma comment(lib, "Psapi.lib") 
 
-CLASS_DECL_VMSWIN void _AfxTraceMsg(const char * lpszPrefix, gen::signal_object * pobj);
-CLASS_DECL_VMSWIN void _AfxTraceMsg(const char * lpszPrefix, LPMSG lpmsg);
+CLASS_DECL_win void __trace_message(const char * lpszPrefix, gen::signal_object * pobj);
+CLASS_DECL_win void __trace_message(const char * lpszPrefix, LPMSG lpmsg);
 
-CLASS_DECL_VMSWIN BOOL __cdecl AfxIsIdleMessage(gen::signal_object * pobj);
-CLASS_DECL_VMSWIN BOOL __cdecl AfxIsIdleMessage(MSG* pMsg);
+CLASS_DECL_win BOOL __cdecl __is_idle_message(gen::signal_object * pobj);
+CLASS_DECL_win BOOL __cdecl __is_idle_message(MSG* pMsg);
 
 
-CLASS_DECL_VMSWIN void AfxProcessWndProcException(base_exception*, gen::signal_object * pobj);
-CLASS_DECL_VMSWIN void __cdecl AfxPreTranslateMessage(gen::signal_object * pobj);
+CLASS_DECL_win void __process_window_procedure_exception(base_exception*, gen::signal_object * pobj);
+CLASS_DECL_win void __cdecl __pre_translate_message(gen::signal_object * pobj);
 
 //#include "win_printer.h"
 
