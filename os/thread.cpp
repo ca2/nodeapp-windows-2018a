@@ -531,6 +531,19 @@ namespace win
                catch(...)
                {
                }
+               try
+               {
+                  ::user::interaction * puie = pui->m_pguie;
+                  if(WIN_THREAD(puie->m_pthread) == this 
+                  || WIN_THREAD(puie->m_pthread->m_p) == WIN_THREAD(m_p)
+                  || WIN_THREAD(puie->m_pthread) == WIN_THREAD(m_p))
+                  {
+                     puie->m_pthread = NULL;
+                  }
+               }
+               catch(...)
+               {
+               }
             }
          }
          sl.unlock();
@@ -926,7 +939,7 @@ void thread::Delete()
    {
       // delete thread if it is auto-deleting
       //pthread->::ca::smart_pointer < ::ca::thread >::m_p = NULL;
-      gen::del(m_p);
+      gen::release(m_p);
       // delete_this();
    }
    else

@@ -29,6 +29,9 @@ int CLASS_DECL_win __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTS
 
    UNREFERENCED_PARAMETER(lpCmdLine);
 
+
+
+
    ::CoInitialize(NULL);
 
 
@@ -133,6 +136,7 @@ int CLASS_DECL_win __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTS
    catch(...)
    {
    }*/
+
 
    set_heap_mutex(NULL);
 
