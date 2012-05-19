@@ -3,7 +3,7 @@
 
 
 // interesting function
-/*BOOL CLASS_DECL_win __custom_log_font(UINT nIDS, LOGFONT* pLogFont)
+/*bool CLASS_DECL_win __custom_log_font(UINT nIDS, LOGFONT* pLogFont)
 {
    ENSURE_ARG(pLogFont != NULL);
    ASSERT(nIDS != 0);
@@ -25,7 +25,7 @@
    return TRUE;
 }*/
 
-BOOL CLASS_DECL_win __is_combo_box_control(HWND hWnd, UINT nStyle)
+bool CLASS_DECL_win __is_combo_box_control(HWND hWnd, UINT nStyle)
 {
    if (hWnd == NULL)
       return FALSE;
@@ -39,7 +39,7 @@ BOOL CLASS_DECL_win __is_combo_box_control(HWND hWnd, UINT nStyle)
    return ::__invariant_stricmp(szCompare, "combobox") == 0;
 }
 
-BOOL CLASS_DECL_win __compare_class_name(HWND hWnd, const char * lpszClassName)
+bool CLASS_DECL_win __compare_class_name(HWND hWnd, const char * lpszClassName)
 {
    ASSERT(::IsWindow(hWnd));
    char szTemp[32];
@@ -172,7 +172,7 @@ int c_cdecl __critical_new_handler(size_t nSize)
       }
       else
       {
-         //BOOL bEnable = __enable_memory_tracking(FALSE);
+         //bool bEnable = __enable_memory_tracking(FALSE);
          _expand(pThreadState->m_pSafetyPoolBuffer,
             nOldBufferSize - (nSize + MIN_MALLOC_OVERHEAD));
          //__enable_memory_tracking(bEnable);

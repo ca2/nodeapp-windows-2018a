@@ -22,7 +22,7 @@ WinStdioFile::~WinStdioFile()
       close();
 }
 
-BOOL WinStdioFile::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_exception_sp* pException)
+bool WinStdioFile::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_exception_sp* pException)
 {
    ASSERT(pException == NULL || __is_valid_address(pException, sizeof(ex1::file_exception_sp)));
    ASSERT(lpszFileName != NULL);

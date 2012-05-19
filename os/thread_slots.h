@@ -219,7 +219,7 @@ public:
 /////////////////////////////////////////////////////////////////////////////
 
 void CLASS_DECL_win __init_local_data(HINSTANCE hInstInit);
-void CLASS_DECL_win __term_local_data(HINSTANCE hInstTerm, BOOL bAll = FALSE);
+void CLASS_DECL_win __term_local_data(HINSTANCE hInstTerm, bool bAll = FALSE);
 void CLASS_DECL_win __tls_add_ref();
 void CLASS_DECL_win __tls_release();
 

@@ -283,7 +283,7 @@ namespace win
          }
          else
          {
-            BOOL bWin4 = FALSE;
+            bool bWin4 = FALSE;
          //_gen::FillPSOnStack();
             ::DefWindowProc(
                hwndParam,
@@ -458,9 +458,9 @@ namespace win
       {
          if(hwndOrder == NULL)
             break;
-         //BOOL bVisible = ::IsWindowVisible(hwndOrder);
-         BOOL bVisible = ::IsWindowVisible(hwndOrder);
-         BOOL bIconic = ::IsIconic(hwndOrder);
+         //bool bVisible = ::IsWindowVisible(hwndOrder);
+         bool bVisible = ::IsWindowVisible(hwndOrder);
+         bool bIconic = ::IsIconic(hwndOrder);
          if(!bVisible
          || bIconic
          || wndaApp.contains(hwndOrder))

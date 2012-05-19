@@ -19,16 +19,16 @@ namespace win
       region(::ca::application * papp);
       virtual ~region();
 
-      /*BOOL CreateRectRgn(int x1, int y1, int x2, int y2);
-      BOOL CreateRectRgnIndirect(LPCRECT lpRect);
-      BOOL CreateEllipticRgn(int x1, int y1, int x2, int y2);
-      BOOL CreateEllipticRgnIndirect(LPCRECT lpRect);
-      BOOL CreatePolygonRgn(LPPOINT lpPoints, int nCount, int nMode);
-      BOOL CreatePolyPolygonRgn(LPPOINT lpPoints, LPINT lpPolyCounts,
+      /*bool CreateRectRgn(int x1, int y1, int x2, int y2);
+      bool CreateRectRgnIndirect(LPCRECT lpRect);
+      bool CreateEllipticRgn(int x1, int y1, int x2, int y2);
+      bool CreateEllipticRgnIndirect(LPCRECT lpRect);
+      bool CreatePolygonRgn(LPPOINT lpPoints, int nCount, int nMode);
+      bool CreatePolyPolygonRgn(LPPOINT lpPoints, LPINT lpPolyCounts,
             int nCount, int nPolyFillMode);
-      BOOL CreateRoundRectRgn(int x1, int y1, int x2, int y2, int x3, int y3);
-      BOOL CreateFromPath(::ca::graphics * pgraphics);
-      BOOL CreateFromData(const XFORM* lpXForm, int nCount,
+      bool CreateRoundRectRgn(int x1, int y1, int x2, int y2, int x3, int y3);
+      bool CreateFromPath(::ca::graphics * pgraphics);
+      bool CreateFromData(const XFORM* lpXForm, int nCount,
          const RGNDATA* pRgnData);*/
 
    // Operations
@@ -36,13 +36,13 @@ namespace win
       void SetRectRgn(LPCRECT lpRect);
       int CombineRgn(const ::ca::region* pRgn1, const ::ca::region* pRgn2, int nCombineMode);
       int CopyRgn(const ::ca::region* pRgnSrc);
-      BOOL EqualRgn(const ::ca::region* pRgn) const;
+      bool EqualRgn(const ::ca::region* pRgn) const;
       int OffsetRgn(int x, int y);
       int OffsetRgn(POINT point);
       int GetRgnBox(LPRECT lpRect) const;
-      BOOL PtInRegion(int x, int y) const;
-      BOOL PtInRegion(POINT point) const;
-      BOOL RectInRegion(LPCRECT lpRect) const;
+      bool PtInRegion(int x, int y) const;
+      bool PtInRegion(POINT point) const;
+      bool RectInRegion(LPCRECT lpRect) const;
       int GetRegionData(LPRGNDATA lpRgnData, int nCount) const;
 
       virtual INT_PTR get_os_data() const;

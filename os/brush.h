@@ -24,12 +24,12 @@ namespace win
 
       virtual INT_PTR get_os_data() const;
 
-      //BOOL CreateSolidBrush(COLORREF crColor);
-      //BOOL CreateHatchBrush(int nIndex, COLORREF crColor);
-      //BOOL CreatePatternBrush(::ca::bitmap* pBitmap);
-      //BOOL CreateDIBPatternBrush(HGLOBAL hPackedDIB, UINT nUsage);
-      //BOOL CreateDIBPatternBrush(const void * lpPackedDIB, UINT nUsage);
-      //BOOL CreateSysColorBrush(int nIndex);
+      //bool CreateSolidBrush(COLORREF crColor);
+      //bool CreateHatchBrush(int nIndex, COLORREF crColor);
+      //bool CreatePatternBrush(::ca::bitmap* pBitmap);
+      //bool CreateDIBPatternBrush(HGLOBAL hPackedDIB, UINT nUsage);
+      //bool CreateDIBPatternBrush(const void * lpPackedDIB, UINT nUsage);
+      //bool CreateSysColorBrush(int nIndex);
 
 
       virtual void dump(dump_context & dumpcontext) const;

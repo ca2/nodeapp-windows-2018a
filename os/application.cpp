@@ -69,7 +69,7 @@ namespace win
       m_atomSystemTopic    = ::GlobalAddAtomW(L"system");
    }
 
-   BOOL application::_001OnDDECommand(const char * lpcsz)
+   bool application::_001OnDDECommand(const char * lpcsz)
    {
       UNREFERENCED_PARAMETER(lpcsz);
       return FALSE;
@@ -185,7 +185,7 @@ namespace win
       return true;
    }
 
-   BOOL application::DeferRegisterClass(LONG fToRegister, const char ** ppszClass)
+   bool application::DeferRegisterClass(LONG fToRegister, const char ** ppszClass)
    {
       return __end_defer_register_class(fToRegister, ppszClass);
    }
@@ -196,7 +196,7 @@ namespace win
       WIN_THREAD(::ca::smart_pointer < ::ca::thread >::m_p)->LockTempMaps();
    }
 
-   BOOL application::UnlockTempMaps(BOOL bDeleteTemp)
+   bool application::UnlockTempMaps(bool bDeleteTemp)
    {
       return WIN_THREAD(::ca::smart_pointer < ::ca::thread >::m_p)->UnlockTempMaps(bDeleteTemp);
    }
@@ -325,7 +325,7 @@ namespace win
       return ::win::thread::Begin(nPriority, nStackSize, dwCreateFlags, lpSecurityAttrs);
    }
 
-   BOOL application::CreateThread(DWORD dwCreateFlags, UINT nStackSize,
+   bool application::CreateThread(DWORD dwCreateFlags, UINT nStackSize,
                                   LPSECURITY_ATTRIBUTES lpSecurityAttrs)
    {
       return ::win::thread::CreateThread(dwCreateFlags, nStackSize, lpSecurityAttrs);
@@ -337,7 +337,7 @@ namespace win
    {
       return ::win::thread::GetThreadPriority();
    }
-   BOOL application::SetThreadPriority(int nPriority)
+   bool application::SetThreadPriority(int nPriority)
    {
       return ::win::thread::SetThreadPriority(nPriority);
    }
@@ -351,7 +351,7 @@ namespace win
    {
       return ::win::thread::ResumeThread();
    }
-   BOOL application::PostThreadMessage(UINT message, WPARAM wParam, LPARAM lParam)
+   bool application::PostThreadMessage(UINT message, WPARAM wParam, LPARAM lParam)
    {
       return ::win::thread::PostThreadMessage(message, wParam, lParam);
    }
@@ -389,19 +389,19 @@ namespace win
    {
       return ::win::thread::run();
    }
-   BOOL application::pre_translate_message(gen::signal_object * pobj)
+   bool application::pre_translate_message(gen::signal_object * pobj)
    {
       return ::win::thread::pre_translate_message(pMsg);
    }
-   BOOL application::pump_message()    // low level message pump
+   bool application::pump_message()    // low level message pump
    {
       return ::win::thread::pump_message();
    }
-   BOOL application::on_idle(LONG lCount) // return TRUE if more idle processing
+   bool application::on_idle(LONG lCount) // return TRUE if more idle processing
    {
       return ::win::thread::on_idle(lCount);
    }
-   BOOL application::is_idle_message(MSG* pMsg)  // checks for special messages
+   bool application::is_idle_message(MSG* pMsg)  // checks for special messages
    {
       return ::win::thread::is_idle_message(pMsg);
    }
@@ -483,7 +483,7 @@ namespace win
 
 
    // Advanced: handling messages sent to message filter hook
-   BOOL application::ProcessMessageFilter(int code, LPMSG lpMsg)
+   bool application::ProcessMessageFilter(int code, LPMSG lpMsg)
    {
       return  ::win::thread::ProcessMessageFilter(code, lpMsg);
    }
@@ -518,7 +518,7 @@ namespace win
    }
    // 'delete this' only if m_bAutoDelete == TRUE
 
-   BOOL application::DispatchThreadMessageEx(MSG* msg)  // helper
+   bool application::DispatchThreadMessageEx(MSG* msg)  // helper
    {
       return ::win::thread::DispatchThreadMessageEx(msg);
    }*/

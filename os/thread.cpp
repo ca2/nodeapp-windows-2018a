@@ -7,10 +7,10 @@ namespace win
    class thread;
 } // namespace win
 
-BOOL CLASS_DECL_win __internal_pump_message();
+bool CLASS_DECL_win __internal_pump_message();
 LRESULT CLASS_DECL_win __internal_process_wnd_proc_exception(base_exception*, const MSG* pMsg);
-BOOL __internal_pre_translate_message(MSG* pMsg);
-BOOL __internal_is_idle_message(MSG* pMsg);
+bool __internal_pre_translate_message(MSG* pMsg);
+bool __internal_is_idle_message(MSG* pMsg);
 __STATIC void CLASS_DECL_win __pre_init_dialog(::user::interaction * pWnd, LPRECT lpRectOld, DWORD* pdwStyleOld);
 __STATIC void CLASS_DECL_win __post_init_dialog(::user::interaction * pWnd, const RECT& rectOld, DWORD dwStyleOld);
 
@@ -48,7 +48,7 @@ struct ___THREAD_STARTUP : ::ca::thread_startup
    //HANDLE hEvent2;         // event triggered after thread is resumed
 
    // strictly "out" -- set after hEvent is triggered
-   BOOL bError;    // TRUE if error during startup
+   bool bError;    // TRUE if error during startup
 };
 
 UINT APIENTRY __thread_entry(void * pParam)
@@ -259,7 +259,7 @@ void __cdecl __pre_translate_message(gen::signal_object * pobj)
       return __internal_pre_translate_message( pobj );
 }
 
-BOOL __internal_is_idle_message(gen::signal_object * pobj)
+bool __internal_is_idle_message(gen::signal_object * pobj)
 {
    SCAST_PTR(::gen::message::base, pbase, pobj);
    // Return FALSE if the message just dispatched should _not_
@@ -291,7 +291,7 @@ BOOL __internal_is_idle_message(gen::signal_object * pobj)
 
 
 
-BOOL __internal_is_idle_message(LPMSG lpmsg)
+bool __internal_is_idle_message(LPMSG lpmsg)
 {
    // Return FALSE if the message just dispatched should _not_
    // cause on_idle to be run.  Messages which do not usually
@@ -318,7 +318,7 @@ BOOL __internal_is_idle_message(LPMSG lpmsg)
    return lpmsg->message != WM_PAINT && lpmsg->message != 0x0118;
 }
 
-BOOL __cdecl __is_idle_message(gen::signal_object * pobj)
+bool __cdecl __is_idle_message(gen::signal_object * pobj)
 {
    ::radix::thread *pThread = App(pobj->get_app()).GetThread();
    if( pThread )
@@ -327,7 +327,7 @@ BOOL __cdecl __is_idle_message(gen::signal_object * pobj)
       return __internal_is_idle_message(pobj);
 }
 
-BOOL __cdecl __is_idle_message(MSG* pMsg)
+bool __cdecl __is_idle_message(MSG* pMsg)
 {
    win::thread * pThread = __get_thread();
    if(pThread)
@@ -358,7 +358,7 @@ BOOL __cdecl __is_idle_message(MSG* pMsg)
 
    return pThread;
 }*/
-void CLASS_DECL_win __end_thread(::radix::application * papp, UINT nExitCode, BOOL bDelete)
+void CLASS_DECL_win __end_thread(::radix::application * papp, UINT nExitCode, bool bDelete)
 {
    // remove current thread object from primitive::memory
    __MODULE_THREAD_STATE* pState = __get_module_thread_state();
@@ -794,7 +794,7 @@ namespace win
       m_ptimera->check();
    }
 
-   BOOL thread::CreateThread(DWORD dwCreateFlags, UINT nStackSize,
+   bool thread::CreateThread(DWORD dwCreateFlags, UINT nStackSize,
       LPSECURITY_ATTRIBUTES lpSecurityAttrs)
 {
 #ifndef _MT
@@ -970,7 +970,7 @@ void thread::Delete()
 //      ___THREAD_STATE* pState = __get_thread_state();
 
       // for tracking the idle time state
-      BOOL bIdle = TRUE;
+      bool bIdle = TRUE;
       LONG lIdleCount = 0;
       ::radix::application * pappThis1 = dynamic_cast < ::radix::application * > (this);
       ::radix::application * pappThis2 = dynamic_cast < ::radix::application * > (m_p);
@@ -1051,12 +1051,12 @@ stop_run:
       return 0;
    }
 
-   BOOL thread::is_idle_message(gen::signal_object * pobj)
+   bool thread::is_idle_message(gen::signal_object * pobj)
    {
       return __internal_is_idle_message(pobj);
    }
 
-   BOOL thread::is_idle_message(LPMSG lpmsg)
+   bool thread::is_idle_message(LPMSG lpmsg)
    {
       return __internal_is_idle_message(lpmsg);
    }
@@ -1137,7 +1137,7 @@ stop_run:
       return nResult;
    }
 
-   BOOL thread::on_idle(LONG lCount)
+   bool thread::on_idle(LONG lCount)
    {
 
 
@@ -1326,13 +1326,13 @@ stop_run:
       return __internal_process_wnd_proc_exception(e, pobj);
    }
 
-   __STATIC inline BOOL IsEnterKey(gen::signal_object * pobj)
+   __STATIC inline bool IsEnterKey(gen::signal_object * pobj)
    { 
       SCAST_PTR(::gen::message::base, pbase, pobj);
       return pbase->m_uiMessage == WM_KEYDOWN && pbase->m_wparam == VK_RETURN; 
    }
 
-   __STATIC inline BOOL IsButtonUp(gen::signal_object * pobj)
+   __STATIC inline bool IsButtonUp(gen::signal_object * pobj)
    { 
       SCAST_PTR(::gen::message::base, pbase, pobj);
       return pbase->m_uiMessage == WM_LBUTTONUP; 
@@ -1423,7 +1423,7 @@ stop_run:
    /////////////////////////////////////////////////////////////////////////////
    // thread implementation helpers
 
-   BOOL thread::pump_message()
+   bool thread::pump_message()
    {
       try
       {
@@ -1705,7 +1705,7 @@ stop_run:
 
    thread::operator HANDLE() const
    { return this == NULL ? NULL : m_hThread; }
-   BOOL thread::SetThreadPriority(int nPriority)
+   bool thread::SetThreadPriority(int nPriority)
    { ASSERT(m_hThread != NULL); return ::SetThreadPriority(m_hThread, nPriority); }
    int thread::GetThreadPriority()
    { ASSERT(m_hThread != NULL); return ::GetThreadPriority(m_hThread); }
@@ -1713,7 +1713,7 @@ stop_run:
    { ASSERT(m_hThread != NULL); return ::ResumeThread(m_hThread); }
    DWORD thread::SuspendThread()
    { ASSERT(m_hThread != NULL); return ::SuspendThread(m_hThread); }
-   BOOL thread::PostThreadMessage(UINT message, WPARAM wParam, LPARAM lParam)
+   bool thread::PostThreadMessage(UINT message, WPARAM wParam, LPARAM lParam)
    { ASSERT(m_hThread != NULL); return ::PostThreadMessage(m_nThreadID, message, wParam, lParam); }
 
    void thread::set_os_data(void * pvoidOsData)
@@ -1749,7 +1749,7 @@ stop_run:
    {
       ++m_nTempMapLock;
    }
-   BOOL thread::UnlockTempMaps(BOOL bDeleteTemp)
+   bool thread::UnlockTempMaps(bool bDeleteTemp)
    {
       if (m_nTempMapLock != 0 && --m_nTempMapLock == 0)
    {
@@ -1783,7 +1783,7 @@ stop_run:
             }
 
             // undo handler trap for the following allocation
-            //BOOL bEnable = __enable_memory_tracking(FALSE);
+            //bool bEnable = __enable_memory_tracking(FALSE);
             try
             {
                pThreadState->m_pSafetyPoolBuffer = malloc(papp->m_nSafetyPoolSize);
@@ -2001,11 +2001,11 @@ run:
 
 
 
-BOOL CLASS_DECL_win __internal_pump_message();
+bool CLASS_DECL_win __internal_pump_message();
 LRESULT CLASS_DECL_win __internal_process_wnd_proc_exception(base_exception*, const MSG* pMsg);
 void __internal_pre_translate_message(gen::signal_object * pobj);
-BOOL __internal_is_idle_message(gen::signal_object * pobj);
-BOOL __internal_is_idle_message(LPMSG lpmsg);
+bool __internal_is_idle_message(gen::signal_object * pobj);
+bool __internal_is_idle_message(LPMSG lpmsg);
 
 
 /*thread* CLASS_DECL_win System.GetThread()
@@ -2023,7 +2023,7 @@ ASSERT(pState);
 return &(pState->m_msgCur);
 }
 
-BOOL CLASS_DECL_win __internal_pump_message()
+bool CLASS_DECL_win __internal_pump_message()
 {
 ___THREAD_STATE *pState = __get_thread_state();
 
@@ -2060,7 +2060,7 @@ if (pState->m_msgCur.message != WM_KICKIDLE && !__pre_translate_message(&(pState
 return TRUE;
 }
 
-BOOL CLASS_DECL_win gen::PumpMessage()
+bool CLASS_DECL_win gen::PumpMessage()
 {
 thread *pThread = System.GetThread();
 if( pThread )
@@ -2092,7 +2092,7 @@ return pThread->ProcessWndProcException( e, pMsg );
 else
 return __internal_process_wnd_proc_exception( e, pMsg );
 }
-BOOL __internal_pre_translate_message(MSG* pMsg)
+bool __internal_pre_translate_message(MSG* pMsg)
 {
 //   ASSERT_VALID(this);
 
@@ -2121,7 +2121,7 @@ return pMainWnd->pre_translate_message(pMsg);
 return FALSE;   // no special processing
 }
 
-BOOL __cdecl __pre_translate_message(MSG* pMsg)
+bool __cdecl __pre_translate_message(MSG* pMsg)
 {
 thread *pThread = System.GetThread();
 if( pThread )
@@ -2130,7 +2130,7 @@ else
 return __internal_pre_translate_message( pMsg );
 }
 
-BOOL __internal_is_idle_message(MSG* pMsg)
+bool __internal_is_idle_message(MSG* pMsg)
 {
 // Return FALSE if the message just dispatched should _not_
 // cause on_idle to be run.  Messages which do not usually
@@ -2154,7 +2154,7 @@ return TRUE;
 return pMsg->message != WM_PAINT && pMsg->message != 0x0118;
 }
 
-BOOL __cdecl __is_idle_message(MSG* pMsg)
+bool __cdecl __is_idle_message(MSG* pMsg)
 {
 thread *pThread = System.GetThread();
 if( pThread )
@@ -2198,7 +2198,7 @@ return NULL;
 }*/
 
 /*
-void CLASS_DECL_win __end_thread(UINT nExitCode, BOOL bDelete)
+void CLASS_DECL_win __end_thread(UINT nExitCode, bool bDelete)
 {
 #ifndef _MT
 nExitCode;
@@ -2246,7 +2246,7 @@ __message_filter_hook, NULL, ::GetCurrentThreadId());
 
 
 
-BOOL thread::CreateThread(DWORD dwCreateFlags, UINT nStackSize,
+bool thread::CreateThread(DWORD dwCreateFlags, UINT nStackSize,
 LPSECURITY_ATTRIBUTES lpSecurityAttrs)
 {
 #ifndef _MT
@@ -2359,7 +2359,7 @@ ASSERT_VALID(this);
 ___THREAD_STATE* pState = __get_thread_state();
 
 // for tracking the idle time state
-BOOL bIdle = TRUE;
+bool bIdle = TRUE;
 LONG lIdleCount = 0;
 
 // acquire and dispatch messages until a WM_QUIT message is received.
@@ -2396,7 +2396,7 @@ m_ptimera->check();
 }
 }
 
-BOOL thread::is_idle_message(MSG* pMsg)
+bool thread::is_idle_message(MSG* pMsg)
 {
 return __internal_is_idle_message(pMsg);
 }
@@ -2418,7 +2418,7 @@ int nResult = (int)__get_current_message()->wParam;  // returns the value from P
 return nResult;
 }
 
-BOOL thread::on_idle(LONG lCount)
+bool thread::on_idle(LONG lCount)
 {
 ASSERT_VALID(this);
 
@@ -2490,7 +2490,7 @@ return ::gen::message::PrototypeNone;
 }
 
 
-BOOL thread::DispatchThreadMessageEx(MSG* pmsg)
+bool thread::DispatchThreadMessageEx(MSG* pmsg)
 {
 if(pmsg->message == WM_APP + 1984 && pmsg->wParam == 77)
 {
@@ -2563,7 +2563,7 @@ break;
 return true;
 }
 
-BOOL thread::pre_translate_message(gen::signal_object * pobj)
+bool thread::pre_translate_message(gen::signal_object * pobj)
 {
 ASSERT_VALID(this);
 return __internal_pre_translate_message( pMsg );
@@ -2593,7 +2593,7 @@ LRESULT CALLBACK __message_filter_hook(int code, WPARAM wParam, LPARAM lParam)
    return lresult;
 }
 
-__STATIC BOOL CLASS_DECL_win IsHelpKey(LPMSG lpMsg)
+__STATIC bool CLASS_DECL_win IsHelpKey(LPMSG lpMsg)
 // return TRUE only for non-repeat F1 keydowns.
 {
    return lpMsg->message == WM_KEYDOWN &&
@@ -2604,13 +2604,13 @@ __STATIC BOOL CLASS_DECL_win IsHelpKey(LPMSG lpMsg)
       GetKeyState(VK_MENU) >= 0;
 }
 
-__STATIC inline BOOL IsEnterKey(LPMSG lpMsg)
+__STATIC inline bool IsEnterKey(LPMSG lpMsg)
 { return lpMsg->message == WM_KEYDOWN && lpMsg->wParam == VK_RETURN; }
 
-__STATIC inline BOOL IsButtonUp(LPMSG lpMsg)
+__STATIC inline bool IsButtonUp(LPMSG lpMsg)
 { return lpMsg->message == WM_LBUTTONUP; }
 
-/*&BOOL thread::ProcessMessageFilter(int code, LPMSG lpMsg)
+/*&bool thread::ProcessMessageFilter(int code, LPMSG lpMsg)
 {
    if (lpMsg == NULL)
       return FALSE;   // not handled
@@ -2690,7 +2690,7 @@ return System.get_active_guie();
 /////////////////////////////////////////////////////////////////////////////
 // thread implementation helpers
 
-BOOL thread::pump_message()
+bool thread::pump_message()
 {
 try
 {

@@ -277,7 +277,7 @@ bool WindowsShell::Initialize()
    else                                     // Windows Me/98/95
        dwBuild =  0;
 
-   BOOL bNativeUnicode;
+   bool bNativeUnicode;
    if (dwVersion < 0x80000000)              // Windows NT
        bNativeUnicode = TRUE;
    else if (dwWindowsMajorVersion < 4)      // Win32s
@@ -367,10 +367,11 @@ HANDLE WindowsShell::_FindFirstFile(const wchar_t * lpcsz, WIN32_FIND_DATAW * lp
    return handle;
 }
 
+
 BOOL WindowsShell::_FindNextFile(HANDLE handle, WIN32_FIND_DATAW * lpdata)
 {
    WIN32_FIND_DATAA data;
-   BOOL b = ::FindNextFileA(handle, &data);
+   bool b = ::FindNextFileA(handle, &data) != FALSE;
    if(b == FALSE)
       return FALSE;
 
@@ -470,7 +471,7 @@ BOOL WINAPI WindowsShell::_GetVolumeInformation(
    string strVolumeNameBuffer;
    string strFileSystemNameBuffer;
    gen::international::UnicodeToACP(strRootPathName, lpRootPathName);
-   BOOL b = ::GetVolumeInformation(
+   bool b = ::GetVolumeInformation(
       strRootPathName,
       strVolumeNameBuffer.GetBuffer(nVolumeNameSize),
       nVolumeNameSize,
@@ -478,7 +479,7 @@ BOOL WINAPI WindowsShell::_GetVolumeInformation(
       lpMaximumComponentLength,
       lpFileSystemFlags,
       strFileSystemNameBuffer.GetBuffer(nFileSystemNameSize),
-      nFileSystemNameSize);
+      nFileSystemNameSize) != FALSE;
 
    strVolumeNameBuffer.ReleaseBuffer();
    strFileSystemNameBuffer.ReleaseBuffer();
@@ -627,10 +628,7 @@ DWORD WindowsShell::_GetModuleFileName(
    return dw;
 }
 
-BOOL WindowsShell::_GetClassInfo(
-    HINSTANCE hInstance ,
-    const wchar_t * lpClassName,
-    LPWNDCLASSW lpWndClass)
+BOOL WindowsShell::_GetClassInfo(HINSTANCE hInstance , const wchar_t * lpClassName, LPWNDCLASSW lpWndClass)
 {
    WNDCLASS wndclass;
 

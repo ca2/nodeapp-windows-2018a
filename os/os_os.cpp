@@ -630,7 +630,7 @@ namespace win
          return FALSE;
       }
        
-      BOOL bOk = StartService(hdlServ, 0, NULL);
+      bool bOk = StartService(hdlServ, 0, NULL);
 
       CloseServiceHandle(hdlServ);
       CloseServiceHandle(hdlSCM);
@@ -670,7 +670,7 @@ namespace win
 
       memset(&ss, 0, sizeof(ss));
 
-      BOOL bOk = ::ControlService(hdlServ, SERVICE_CONTROL_STOP, &ss);
+      bool bOk = ::ControlService(hdlServ, SERVICE_CONTROL_STOP, &ss);
 
       ::DeleteService(hdlServ);
 

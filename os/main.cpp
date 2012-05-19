@@ -7,7 +7,7 @@ CLASS_DECL_ca int ca2_main();
 
 //CLASS_DECL_ca fixed_alloc_array * new_wstring_manager();
 
-void CLASS_DECL_win __cdecl _ca2_purecall(void)
+void CLASS_DECL_win __cdecl _ca2_purecall()
 {
     throw simple_exception();
 }

@@ -18,12 +18,12 @@ namespace win
       //return dynamic_cast < palette * > (::win::graphics_object::from_handle(papp, hPalette)); 
       return NULL;
    }
-   BOOL palette::CreatePalette(LPLOGPALETTE lpLogPalette)
+   bool palette::CreatePalette(LPLOGPALETTE lpLogPalette)
    { 
       //return Attach(::CreatePalette(lpLogPalette)); 
       return FALSE;
    }
-   BOOL palette::CreateHalftonePalette(::ca::graphics * pgraphics)
+   bool palette::CreateHalftonePalette(::ca::graphics * pgraphics)
    {
       //ASSERT(pgraphics != NULL && (dynamic_cast<::win::graphics * >(pgraphics))->get_handle1() != NULL); 
       //return Attach(::CreateHalftonePalette((dynamic_cast<::win::graphics * >(pgraphics))->get_handle1())); 
@@ -44,7 +44,7 @@ namespace win
    lpPaletteColors); }
    UINT palette::GetNearestPaletteIndex(COLORREF crColor) const
    { ASSERT(get_os_data() != NULL); return ::GetNearestPaletteIndex((HPALETTE)get_os_data(), crColor); }
-   BOOL palette::ResizePalette(UINT nNumEntries)
+   bool palette::ResizePalette(UINT nNumEntries)
    { ASSERT(get_os_data() != NULL); return ::ResizePalette((HPALETTE)get_os_data(), nNumEntries); }
    int palette::GetEntryCount()
    { ASSERT(get_os_data() != NULL); WORD nEntries;

@@ -26,7 +26,7 @@ string get_error_message(DWORD dwError);
 /////////////////////////////////////////////////////////////////////////////
 // explicit initialization for general purpose classes
 
-CLASS_DECL_win BOOL __initialize(BOOL bDLL = FALSE, DWORD dwVersion = _MFC_VER);
+CLASS_DECL_win bool __initialize(bool bDLL = FALSE, DWORD dwVersion = _MFC_VER);
 
 /////////////////////////////////////////////////////////////////////////////
 // stop on a specific primitive::memory request
@@ -39,10 +39,10 @@ CLASS_DECL_win void __set_alloc_stop(LONG lRequestNumber);
 #ifdef _DEBUG
 
 // Return TRUE if primitive::memory is sane or print out what is wrong
-CLASS_DECL_win BOOL __check_memory();
+CLASS_DECL_win bool __check_memory();
 
 // Return TRUE if valid primitive::memory block of nBytes
-CLASS_DECL_win BOOL __is_memory_block(const void * p, UINT nBytes, LONG* plRequestNumber = NULL);
+CLASS_DECL_win bool __is_memory_block(const void * p, UINT nBytes, LONG* plRequestNumber = NULL);
 
 #endif
 
@@ -59,7 +59,7 @@ CLASS_DECL_win void __try_cleanup();
 
 // window creation hooking
 CLASS_DECL_win void hook_window_create(::user::interaction * pWnd);
-CLASS_DECL_win BOOL unhook_window_create();
+CLASS_DECL_win bool unhook_window_create();
 CLASS_DECL_win void reset_message_cache();
 
 
@@ -117,8 +117,8 @@ CLASS_DECL_win WNDPROC __get_window_procedure();
 CLASS_DECL_win void __trace_message(const char * lpszPrefix, gen::signal_object * pobj);
 CLASS_DECL_win void __trace_message(const char * lpszPrefix, LPMSG lpmsg);
 
-CLASS_DECL_win BOOL __cdecl __is_idle_message(gen::signal_object * pobj);
-CLASS_DECL_win BOOL __cdecl __is_idle_message(MSG* pMsg);
+CLASS_DECL_win bool __cdecl __is_idle_message(gen::signal_object * pobj);
+CLASS_DECL_win bool __cdecl __is_idle_message(MSG* pMsg);
 
 
 CLASS_DECL_win void __process_window_procedure_exception(base_exception*, gen::signal_object * pobj);

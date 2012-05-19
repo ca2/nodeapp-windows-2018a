@@ -4,7 +4,7 @@
 #include "WindowsShell.h"
 
 
-__STATIC inline BOOL IsDirSep(WCHAR ch)
+__STATIC inline bool IsDirSep(WCHAR ch)
 {
    return (ch == '\\' || ch == '/');
 }
@@ -61,7 +61,7 @@ ex1::file * WinFile::Duplicate() const
    return pFile;
 }
 
-BOOL WinFile::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_exception_sp* pException)
+bool WinFile::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_exception_sp* pException)
 {
 
    if (m_hFile != (UINT)hFileNull)
@@ -314,7 +314,7 @@ void WinFile::close()
    ASSERT_VALID(this);
    ASSERT(m_hFile != (UINT)hFileNull);
 
-   BOOL bError = FALSE;
+   bool bError = FALSE;
    if (m_hFile != (UINT)hFileNull)
       bError = !::CloseHandle((HANDLE)m_hFile);
 
@@ -417,10 +417,10 @@ string CLASS_DECL_win vfxStringFromCLSID(REFCLSID rclsid)
    return szCLSID;
 }
 
-BOOL CLASS_DECL_win vfxGetInProcServer(const char * lpszCLSID, string & str)
+bool CLASS_DECL_win vfxGetInProcServer(const char * lpszCLSID, string & str)
 {
    HKEY hKey = NULL;
-   BOOL b = FALSE;
+   bool b = FALSE;
    if (RegOpenKey(HKEY_CLASSES_ROOT, "CLSID", &hKey) == ERROR_SUCCESS)
    {
       HKEY hKeyCLSID = NULL;
@@ -474,7 +474,7 @@ bool CLASS_DECL_win vfxResolveShortcut(string & strTarget, const char * pszSourc
    else                                     // Windows Me/98/95
        dwBuild =  0;
 
-   BOOL bNativeUnicode;
+   bool bNativeUnicode;
    if (dwVersion < 0x80000000)              // Windows NT
        bNativeUnicode = TRUE;
    else if (dwWindowsMajorVersion < 4)      // Win32s
@@ -534,7 +534,7 @@ bool CLASS_DECL_win vfxResolveShortcut(string & strTarget, const char * pszSourc
 }
 
 // turn a file, relative path or other into an absolute path
-BOOL CLASS_DECL_win vfxFullPath(wchar_t * lpszPathOut, const wchar_t * lpszFileIn)
+bool CLASS_DECL_win vfxFullPath(wchar_t * lpszPathOut, const wchar_t * lpszFileIn)
    // lpszPathOut = buffer of _MAX_PATH
    // lpszFileIn = file, relative path or absolute path
    // (both in ANSI character set)
@@ -585,7 +585,7 @@ BOOL CLASS_DECL_win vfxFullPath(wchar_t * lpszPathOut, const wchar_t * lpszFileI
 
 
 // turn a file, relative path or other into an absolute path
-BOOL CLASS_DECL_win vfxFullPath(wstring & wstrFullPath, const wstring & wstrPath)
+bool CLASS_DECL_win vfxFullPath(wstring & wstrFullPath, const wstring & wstrPath)
    // lpszPathOut = buffer of _MAX_PATH
    // lpszFileIn = file, relative path or absolute path
    // (both in ANSI character set)
@@ -711,7 +711,7 @@ BOOL CLASS_DECL_win vfxFullPath(wstring & wstrFullPath, const wstring & wstrPath
    strRoot.ReleaseBuffer();
 }*/
 
-/*BOOL CLASS_DECL_win gen::ComparePath(const char * lpszPath1, const char * lpszPath2)
+/*bool CLASS_DECL_win gen::ComparePath(const char * lpszPath1, const char * lpszPath2)
 {
    // use case insensitive compare as a starter
    if (lstrcmpi(lpszPath1, lpszPath2) != 0)
@@ -920,7 +920,7 @@ void CLASS_DECL_win vfxGetRoot(const wchar_t * lpszPath, string& strRoot)
 }
 
 
-/*BOOL CLASS_DECL_win vfxFullPath(char * lpszPathOut, const char * lpszFileIn)
+/*bool CLASS_DECL_win vfxFullPath(char * lpszPathOut, const char * lpszFileIn)
    // lpszPathOut = buffer of _MAX_PATH
    // lpszFileIn = file, relative path or absolute path
    // (both in ANSI character set)
@@ -1360,7 +1360,7 @@ int PASCAL WinFileException::OsErrorToException(LONG lOsErr)
 /////////////////////////////////////////////////////////////////////////////
 // WinFile Status implementation
 
-BOOL WinFile::GetStatus(::ex1::file_status& rStatus) const
+bool WinFile::GetStatus(::ex1::file_status& rStatus) const
 {
    ASSERT_VALID(this);
 
@@ -1414,7 +1414,7 @@ BOOL WinFile::GetStatus(::ex1::file_status& rStatus) const
 }
 
 
-BOOL PASCAL WinFile::GetStatus(const char * lpszFileName, ::ex1::file_status& rStatus)
+bool PASCAL WinFile::GetStatus(const char * lpszFileName, ::ex1::file_status& rStatus)
 {
    // attempt to fully qualify path first
    wstring wstrFullName;
@@ -1479,7 +1479,7 @@ UINT CLASS_DECL_win vfxGetFileTitle(const wchar_t * lpszPathName, wchar_t * lpsz
 }
 
 
-BOOL vfxComparePath(const wchar_t * lpszPath1, const wchar_t * lpszPath2)
+bool vfxComparePath(const wchar_t * lpszPath1, const wchar_t * lpszPath2)
 {
    // use case insensitive compare as a starter
    if (lstrcmpiW(lpszPath1, lpszPath2) != 0)

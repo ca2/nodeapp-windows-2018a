@@ -215,7 +215,7 @@ namespace win
          return ::ca::dir::system::ls_pattern(papp, lpcsz, pszPattern, pstraPath, pstraTitle, pbaIsDir, piaSize);
       }
       FileFind filefind;
-      BOOL bWorking;
+      bool bWorking;
       bWorking = filefind.FindFile(System.dir().path(lpcsz, pszPattern));
       while(bWorking)
       {
@@ -328,7 +328,7 @@ namespace win
    void dir::rls_dir(::ca::application * papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle, stringa * pstraRelative)
    {
       FileFind filefind;
-      BOOL bWorking;
+      bool bWorking;
       bWorking = filefind.FindFile(System.dir().path(lpcsz, "*.*"));
       while(bWorking)
       {
@@ -371,7 +371,7 @@ namespace win
    {
       
       FileFind filefind;
-      BOOL bWorking;
+      bool bWorking;
       bWorking = filefind.FindFile(System.dir().path(lpcsz, "*.*"));
       if(!bWorking)
       {
@@ -398,7 +398,7 @@ namespace win
    void dir::ls_file(::ca::application * papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle)
    {
       FileFind filefind;
-      BOOL bWorking;
+      bool bWorking;
       bWorking = filefind.FindFile(System.dir().path(lpcsz, "*.*"));
       while(bWorking)
       {
@@ -1094,7 +1094,7 @@ namespace win
    bool dir::has_subdir(::ca::application * papp, const char * pszDir)
    {
       FileFind filefind;
-      BOOL bWorking;
+      bool bWorking;
       bWorking = filefind.FindFile(path(pszDir, "*.*"));
       while(bWorking)
       {

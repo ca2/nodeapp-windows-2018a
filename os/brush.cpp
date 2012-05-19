@@ -23,7 +23,7 @@ namespace win
       }
    }
 
-   //BOOL brush::CreateSolidBrush(COLORREF crColor)
+   //bool brush::CreateSolidBrush(COLORREF crColor)
    //{
 
    //   if(m_pbrush != NULL)
@@ -37,27 +37,27 @@ namespace win
    //      
    //}
 
-   // BOOL brush::CreateHatchBrush(int nIndex, COLORREF crColor)
+   // bool brush::CreateHatchBrush(int nIndex, COLORREF crColor)
    // { 
    //    //return Attach(::CreateHatchBrush(nIndex, crColor));
    //    return FALSE;
    // }
-//    BOOL brush::CreateBrushIndirect(const LOGBRUSH* lpLogBrush)
+//    bool brush::CreateBrushIndirect(const LOGBRUSH* lpLogBrush)
   //  {
        //return Attach(::CreateBrushIndirect(lpLogBrush)); 
     //   return FALSE;
     //}
-    //BOOL brush::CreatePatternBrush(::ca::bitmap* pBitmap)
+    //bool brush::CreatePatternBrush(::ca::bitmap* pBitmap)
     //{ 
     //   //return Attach(::CreatePatternBrush((HBITMAP)pBitmap->get_os_data()));
     //   return FALSE;
     //}
-    //BOOL brush::CreateDIBPatternBrush(const void * lpPackedDIB, UINT nUsage)
+    //bool brush::CreateDIBPatternBrush(const void * lpPackedDIB, UINT nUsage)
     //{ 
     //   //return Attach(::CreateDIBPatternBrushPt(lpPackedDIB, nUsage));
     //   return FALSE;
     //}
-    //BOOL brush::CreateSysColorBrush(int nIndex)
+    //bool brush::CreateSysColorBrush(int nIndex)
     //{ 
     //   //return Attach(::GetSysColorBrush(nIndex));
     //   return FALSE;
@@ -91,12 +91,12 @@ namespace win
 //        // throw resource_exception();
 //   }
 //
-//   BOOL brush::CreateDIBPatternBrush(HGLOBAL hPackedDIB, UINT nUsage)
+//   bool brush::CreateDIBPatternBrush(HGLOBAL hPackedDIB, UINT nUsage)
 //   {
 //      //ASSERT(hPackedDIB != NULL);
 //      //const void * lpPackedDIB = ::GlobalLock(hPackedDIB);
 //      //ASSERT(lpPackedDIB != NULL);
-//      //BOOL bResult = Attach(::CreateDIBPatternBrushPt(lpPackedDIB, nUsage));
+//      //bool bResult = Attach(::CreateDIBPatternBrushPt(lpPackedDIB, nUsage));
 //      //::GlobalUnlock(hPackedDIB);
 //      //return bResult;
 //      return FALSE;

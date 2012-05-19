@@ -41,7 +41,7 @@ void CLASS_DECL_win __gen_unregister_window_classes()
    }
 
 }
-void CLASS_DECL_win __win_term(void)
+void CLASS_DECL_win __win_term()
 {   
    __gen_unregister_window_classes();
    // cleanup OLE if required

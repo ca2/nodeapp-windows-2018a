@@ -17,7 +17,7 @@ _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 /////////////////////////////////////////////////////////////////////////////
 // initialize cast state such that it points to this module's core state
 
-CLASS_DECL_win BOOL __initialize(BOOL bDLL, DWORD dwVersion)
+CLASS_DECL_win bool __initialize(bool bDLL, DWORD dwVersion)
 {
    __MODULE_STATE* pModuleState = __get_module_state();
    pModuleState->m_bDLL = (BYTE)bDLL;

@@ -142,7 +142,7 @@ ___DEBUG_STATE::~___DEBUG_STATE()
 
 PROCESS_LOCAL(___DEBUG_STATE, afxDebugState)
 
-BOOL CLASS_DECL_win __diagnostic_init(void)
+bool CLASS_DECL_win __diagnostic_init()
 {
    // just get the debug state to cause initialization
    ___DEBUG_STATE* pState = afxDebugState.get_data();
@@ -158,7 +158,7 @@ BOOL CLASS_DECL_win __diagnostic_init(void)
 #include "sal.h"
 
 
-//__DATADEF BOOL g_bTraceEnabled = TRUE;
+//__DATADEF bool g_bTraceEnabled = TRUE;
 //__DATADEF UINT g_uiTraceFlags = 0;
-static BOOL gen_DiagnosticInit = __diagnostic_init();
+static bool gen_DiagnosticInit = __diagnostic_init();
 

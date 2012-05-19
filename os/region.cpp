@@ -44,7 +44,7 @@ namespace win
    (HRGN)pRgn2->get_os_data(), nCombineMode); }
    int region::CopyRgn(const ::ca::region* pRgnSrc)
    { ASSERT(get_os_data() != NULL); return ::CombineRgn((HRGN)get_os_data(), (HRGN)pRgnSrc->get_os_data(), NULL, RGN_COPY); }
-   BOOL region::EqualRgn(const ::ca::region* pRgn) const
+   bool region::EqualRgn(const ::ca::region* pRgn) const
    { ASSERT(get_os_data() != NULL); return ::EqualRgn((HRGN)get_os_data(), (HRGN)pRgn->get_os_data()); }
    int region::OffsetRgn(int x, int y)
    { ASSERT(get_os_data() != NULL); return ::OffsetRgn((HRGN)get_os_data(), x, y); }
@@ -53,7 +53,7 @@ namespace win
    int region::GetRgnBox(LPRECT lpRect) const
    { ASSERT(get_os_data() != NULL); return ::GetRgnBox((HRGN)get_os_data(), lpRect); }
    
-   BOOL region::PtInRegion(int x, int y) const
+   bool region::PtInRegion(int x, int y) const
    { 
 
       Gdiplus::PointF pointf((Gdiplus::REAL) x, (Gdiplus::REAL) y);
@@ -64,7 +64,7 @@ namespace win
    
    }
 
-   BOOL region::PtInRegion(POINT point) const
+   bool region::PtInRegion(POINT point) const
    { 
 
       //return ::PtInRegion((HRGN)get_os_data(), point.x, point.y); 
@@ -75,7 +75,7 @@ namespace win
       return m_pregion->IsVisible(pointf);
 
    }
-   BOOL region::RectInRegion(LPCRECT lpRect) const
+   bool region::RectInRegion(LPCRECT lpRect) const
    { 
       //ASSERT(get_os_data() != NULL); return ::RectInRegion((HRGN)get_os_data(), lpRect); 
 

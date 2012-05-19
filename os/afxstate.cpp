@@ -106,8 +106,8 @@ THREAD_LOCAL(___THREAD_STATE, gen_ThreadState, slot___THREAD_STATE)
 /////////////////////////////////////////////////////////////////////////////
 // __MODULE_STATE implementation
 
-__MODULE_STATE::__MODULE_STATE(BOOL bDLL, WNDPROC pfn_window_procedure,
-   DWORD dwVersion, BOOL bSystem)
+__MODULE_STATE::__MODULE_STATE(bool bDLL, WNDPROC pfn_window_procedure,
+   DWORD dwVersion, bool bSystem)
 {
    m_pmapHWND              = NULL;
 //   m_pmapHDC               = NULL;
@@ -122,7 +122,7 @@ __MODULE_STATE::__MODULE_STATE(BOOL bDLL, WNDPROC pfn_window_procedure,
    m_pfn_window_procedure = pfn_window_procedure;
    m_dwVersion = dwVersion;
    m_bSystem = (BYTE)bSystem;
-//   BOOL bEnable = TRUE;
+//   bool bEnable = TRUE;
    try
    {
       //Preallocate the registered classes string, but CRT primitive::memory leak report is
@@ -165,8 +165,8 @@ __MODULE_STATE::__MODULE_STATE(BOOL bDLL, WNDPROC pfn_window_procedure,
 
 __ACTCTX_API_PTR_DEFINE(CreateActCtxW, HANDLE, (PCACTCTXW));
 __ACTCTX_API_PTR_DEFINE(ReleaseActCtx, void, (HANDLE));
-__ACTCTX_API_PTR_DEFINE(ActivateActCtx, BOOL, (HANDLE, ULONG_PTR*));
-__ACTCTX_API_PTR_DEFINE(DeactivateActCtx, BOOL, (DWORD, ULONG_PTR));
+__ACTCTX_API_PTR_DEFINE(ActivateActCtx, bool, (HANDLE, ULONG_PTR*));
+__ACTCTX_API_PTR_DEFINE(DeactivateActCtx, bool, (DWORD, ULONG_PTR));
 
 __STATIC void CLASS_DECL_win __init_context_api()
 {
@@ -204,15 +204,15 @@ void CLASS_DECL_win __release_act_ctx(HANDLE hActCtx)
    }
 }
 
-CLASS_DECL_win BOOL __activate_act_ctx(HANDLE hActCtx, ULONG_PTR *lpCookie) 
+CLASS_DECL_win bool __activate_act_ctx(HANDLE hActCtx, ULONG_PTR *lpCookie) 
 {   
-   BOOL rc = pfnActivateActCtx != 0 ? pfnActivateActCtx(hActCtx, lpCookie) : FALSE;   
+   bool rc = pfnActivateActCtx != 0 ? pfnActivateActCtx(hActCtx, lpCookie) : FALSE;   
    return rc;
 }
 
-CLASS_DECL_win BOOL __deactivate_act_ctx(DWORD dwFlags, ULONG_PTR ulCookie)
+CLASS_DECL_win bool __deactivate_act_ctx(DWORD dwFlags, ULONG_PTR ulCookie)
 {   
-   BOOL rc = pfnDeactivateActCtx != 0 ? pfnDeactivateActCtx(dwFlags, ulCookie) : FALSE;
+   bool rc = pfnDeactivateActCtx != 0 ? pfnDeactivateActCtx(dwFlags, ulCookie) : FALSE;
    return rc;
 }
 
@@ -342,12 +342,12 @@ HINSTANCE CLASS_DECL_win __get_instance_handle_helper()
    return __get_module_state()->m_hCurrentInstanceHandle;
 }
 
-BOOL CLASS_DECL_win __is_module_dll()
+bool CLASS_DECL_win __is_module_dll()
 {
    return __get_module_state()->m_bDLL;
 }
 
-BOOL CLASS_DECL_win __init_current_state_app()
+bool CLASS_DECL_win __init_current_state_app()
 {
    ::radix::application* pApp = __get_module_state()->m_pCurrentWinApp;
    if (pApp != NULL && !pApp->initialize_instance())

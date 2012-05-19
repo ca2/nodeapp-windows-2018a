@@ -50,7 +50,7 @@ void FileFind::CloseContext()
    return;
 }
 
-BOOL FileFind::FindFile(const char * pstrName /* = NULL */, DWORD dwUnused /* = 0 */)
+bool FileFind::FindFile(const char * pstrName /* = NULL */, DWORD dwUnused /* = 0 */)
 {
    UNUSED_ALWAYS(dwUnused);
    close();
@@ -112,7 +112,7 @@ BOOL FileFind::FindFile(const char * pstrName /* = NULL */, DWORD dwUnused /* = 
    return TRUE;
 }
 
-BOOL FileFind::MatchesMask(DWORD dwMask) const
+bool FileFind::MatchesMask(DWORD dwMask) const
 {
    ASSERT(m_hContext != NULL);
    ASSERT_VALID(this);
@@ -123,7 +123,7 @@ BOOL FileFind::MatchesMask(DWORD dwMask) const
       return FALSE;
 }
 
-BOOL FileFind::GetLastAccessTime(FILETIME* pTimeStamp) const
+bool FileFind::GetLastAccessTime(FILETIME* pTimeStamp) const
 {
    ASSERT(m_hContext != NULL);
    ASSERT(pTimeStamp != NULL);
@@ -138,7 +138,7 @@ BOOL FileFind::GetLastAccessTime(FILETIME* pTimeStamp) const
       return FALSE;
 }
 
-BOOL FileFind::GetLastWriteTime(FILETIME* pTimeStamp) const
+bool FileFind::GetLastWriteTime(FILETIME* pTimeStamp) const
 {
    ASSERT(m_hContext != NULL);
    ASSERT(pTimeStamp != NULL);
@@ -153,7 +153,7 @@ BOOL FileFind::GetLastWriteTime(FILETIME* pTimeStamp) const
       return FALSE;
 }
 
-BOOL FileFind::GetCreationTime(FILETIME* pTimeStamp) const
+bool FileFind::GetCreationTime(FILETIME* pTimeStamp) const
 {
    ASSERT(m_hContext != NULL);
    ASSERT_VALID(this);
@@ -167,7 +167,7 @@ BOOL FileFind::GetCreationTime(FILETIME* pTimeStamp) const
       return FALSE;
 }
 
-BOOL FileFind::GetLastAccessTime(::datetime::time& refTime) const
+bool FileFind::GetLastAccessTime(::datetime::time& refTime) const
 {
    ASSERT(m_hContext != NULL);
    ASSERT_VALID(this);
@@ -181,7 +181,7 @@ BOOL FileFind::GetLastAccessTime(::datetime::time& refTime) const
       return FALSE;
 }
 
-BOOL FileFind::GetLastWriteTime(::datetime::time& refTime) const
+bool FileFind::GetLastWriteTime(::datetime::time& refTime) const
 {
    ASSERT(m_hContext != NULL);
    ASSERT_VALID(this);
@@ -195,7 +195,7 @@ BOOL FileFind::GetLastWriteTime(::datetime::time& refTime) const
       return FALSE;
 }
 
-BOOL FileFind::GetCreationTime(::datetime::time& refTime) const
+bool FileFind::GetCreationTime(::datetime::time& refTime) const
 {
    ASSERT(m_hContext != NULL);
    ASSERT_VALID(this);
@@ -209,7 +209,7 @@ BOOL FileFind::GetCreationTime(::datetime::time& refTime) const
       return FALSE;
 }
 
-BOOL FileFind::IsDots() const
+bool FileFind::IsDots() const
 {
    ASSERT(m_hContext != NULL);
    ASSERT_VALID(this);
@@ -217,7 +217,7 @@ BOOL FileFind::IsDots() const
    // return TRUE if the file name is "." or ".." and
    // the file is a directory
 
-   BOOL bResult = FALSE;
+   bool bResult = FALSE;
    if (m_pFoundInfo != NULL && IsDirectory())
    {
       LPWIN32_FIND_DATAW pFindData = (LPWIN32_FIND_DATAW) m_pFoundInfo;
@@ -235,7 +235,7 @@ BOOL FileFind::IsDots() const
    return bResult;
 }
 
-BOOL FileFind::FindNextFile()
+bool FileFind::FindNextFile()
 {
    ASSERT(m_hContext != NULL);
 

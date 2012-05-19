@@ -15,7 +15,7 @@
 #pragma component(browser, off, references, "ASSERT")
 #pragma component(browser, off, references, "__assert_failed_line")
 #pragma component(browser, off, references, "__debug_break")
-#pragma component(browser, off, references, "BOOL")
+#pragma component(browser, off, references, "bool")
 #pragma component(browser, off, references, "BYTE")
 #pragma component(browser, off, references, "DECLSPEC_IMPORT")
 #pragma component(browser, off, references, "DWORD")

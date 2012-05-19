@@ -30,7 +30,7 @@ public:
    enum { hFileNull = -1 };
 
    zip::Util *    m_pziputil;
-   BOOL           m_bCloseOnDelete;
+   bool           m_bCloseOnDelete;
    string         m_strFileName;
    wstring        m_wstrFileName;
    UINT           m_hFile;
@@ -45,15 +45,15 @@ public:
    operator HFILE() const;
 
    virtual file_position get_position() const;
-   BOOL GetStatus(ex1::file_status & rStatus) const;
+   bool GetStatus(ex1::file_status & rStatus) const;
    virtual string GetFileName() const;
    virtual string GetFileTitle() const;
    virtual string GetFilePath() const;
    virtual void SetFilePath(const char * lpszNewName);
 
-   virtual BOOL open(const char * lpszFileName, UINT nOpenFlags, ex1::file_exception_sp * pError = NULL);
+   virtual bool open(const char * lpszFileName, UINT nOpenFlags, ex1::file_exception_sp * pError = NULL);
 
-   virtual BOOL PASCAL GetStatus(const char * lpszFileName, ::ex1::file_status& rStatus);
+   virtual bool PASCAL GetStatus(const char * lpszFileName, ::ex1::file_status& rStatus);
 
    uint64_t ReadHuge(void * lpBuffer, uint64_t dwCount);
    void WriteHuge(const void * lpBuffer, uint64_t dwCount);

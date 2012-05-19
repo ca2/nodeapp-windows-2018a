@@ -16,7 +16,7 @@ namespace win
 
       virtual INT_PTR get_os_data() const;
 
-      BOOL delete_object();
+      bool delete_object();
 
    #pragma push_macro("GetObject")
    #undef GetObject
@@ -24,10 +24,10 @@ namespace win
       int GetObject(int nCount, LPVOID lpObject) const;
    #pragma pop_macro("GetObject")
       UINT GetObjectType() const;
-      BOOL CreateStockObject(int nIndex);
-      BOOL UnrealizeObject();
-      BOOL operator==(const ::ca::graphics_object& obj) const;
-      BOOL operator!=(const ::ca::graphics_object& obj) const;
+      bool CreateStockObject(int nIndex);
+      bool UnrealizeObject();
+      bool operator==(const ::ca::graphics_object& obj) const;
+      bool operator!=(const ::ca::graphics_object& obj) const;
 
       virtual void dump(dump_context & dumpcontext) const;
       virtual void assert_valid() const;

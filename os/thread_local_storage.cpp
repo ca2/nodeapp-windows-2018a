@@ -152,7 +152,7 @@ process_local_object::~process_local_object()
       gen_ThreadData->AssignInstance(hInst);
 }
 
-void CLASS_DECL_win __term_local_data(HINSTANCE hInst, BOOL bAll)
+void CLASS_DECL_win __term_local_data(HINSTANCE hInst, bool bAll)
 {
    if (gen_ThreadData != NULL)
       gen_ThreadData->DeleteValues(hInst, bAll);

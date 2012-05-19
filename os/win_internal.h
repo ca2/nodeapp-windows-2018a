@@ -30,5 +30,5 @@
 
 
 // Sanity checks for ATOMs
-CLASS_DECL_win BOOL __is_valid_atom(ATOM nAtom);
-CLASS_DECL_win BOOL __is_valid_atom(const char * psz);
+CLASS_DECL_win bool __is_valid_atom(ATOM nAtom);
+CLASS_DECL_win bool __is_valid_atom(const char * psz);

@@ -62,7 +62,7 @@ namespace win
       
       if(hdc != NULL)
       {
-         BOOL bDeleted = ::DeleteDC(hdc);
+         bool bDeleted = ::DeleteDC(hdc);
          if(!bDeleted)
          {
             TRACE("Failed to delete GDI device context");
@@ -95,23 +95,23 @@ namespace win
       ASSERT(get_handle1() != NULL); return ::win::window::from_handle(::WindowFromDC(get_handle1())); 
    }
    
-   BOOL graphics::IsPrinting() const
+   bool graphics::IsPrinting() const
    {
       return m_bPrinting; 
    }
    
-   BOOL graphics::CreateDC(const char * lpszDriverName,
+   bool graphics::CreateDC(const char * lpszDriverName,
       const char * lpszDeviceName, const char * lpszOutput, const void * lpInitData)
    {
       return Attach(::CreateDC(lpszDriverName, lpszDeviceName, lpszOutput, (const DEVMODE*)lpInitData)); 
    }
    
-   BOOL graphics::CreateIC(const char * lpszDriverName, const char * lpszDeviceName, const char * lpszOutput, const void * lpInitData)
+   bool graphics::CreateIC(const char * lpszDriverName, const char * lpszDeviceName, const char * lpszOutput, const void * lpInitData)
    { 
       return Attach(::CreateIC(lpszDriverName, lpszDeviceName, lpszOutput, (const DEVMODE*) lpInitData)); 
    }
 
-   BOOL graphics::CreateCompatibleDC(::ca::graphics * pgraphics)
+   bool graphics::CreateCompatibleDC(::ca::graphics * pgraphics)
    { 
 
       HDC hdc = NULL;
@@ -303,7 +303,7 @@ namespace win
       return ::GetGraphicsMode(get_handle2()); 
    }
    
-   BOOL graphics::GetWorldTransform(XFORM* pXform) const
+   bool graphics::GetWorldTransform(XFORM* pXform) const
    { 
       return ::GetWorldTransform(get_handle2(),pXform); 
    }
@@ -386,25 +386,25 @@ namespace win
       ::LPtoDP(get_handle2(), (LPPOINT)lpRect, 2);
    }
 
-   BOOL graphics::FillRgn(::ca::region* pRgn, ::ca::brush* pBrush)
+   bool graphics::FillRgn(::ca::region* pRgn, ::ca::brush* pBrush)
    { 
       return ::FillRgn(get_handle1(), (HRGN)pRgn->get_os_data(), (HBRUSH)pBrush->get_os_data());
    }
 
-   BOOL graphics::FrameRgn(::ca::region* pRgn, ::ca::brush* pBrush, int nWidth, int nHeight)
+   bool graphics::FrameRgn(::ca::region* pRgn, ::ca::brush* pBrush, int nWidth, int nHeight)
    { 
       return ::FrameRgn(get_handle1(), (HRGN)pRgn->get_os_data(), (HBRUSH)pBrush->get_os_data(), nWidth, nHeight); 
    }
 
-   BOOL graphics::InvertRgn(::ca::region* pRgn)
+   bool graphics::InvertRgn(::ca::region* pRgn)
    { ASSERT(get_handle1() != NULL); return ::InvertRgn(get_handle1(), (HRGN)pRgn->get_os_data()); }
-   BOOL graphics::PaintRgn(::ca::region* pRgn)
+   bool graphics::PaintRgn(::ca::region* pRgn)
    { ASSERT(get_handle1() != NULL); return ::PaintRgn(get_handle1(), (HRGN)pRgn->get_os_data()); }
-   BOOL graphics::PtVisible(int x, int y) const
+   bool graphics::PtVisible(int x, int y) const
    { ASSERT(get_handle1() != NULL); return ::PtVisible(get_handle1(), x, y); }
-   BOOL graphics::PtVisible(POINT point) const
+   bool graphics::PtVisible(POINT point) const
    { ASSERT(get_handle1() != NULL); return PtVisible(point.x, point.y); } // call virtual
-   BOOL graphics::RectVisible(LPCRECT lpRect) const
+   bool graphics::RectVisible(LPCRECT lpRect) const
    { ASSERT(get_handle1() != NULL); return ::RectVisible(get_handle1(), lpRect); }
    point graphics::GetCurrentPosition() const
    {
@@ -414,7 +414,7 @@ namespace win
       return point;
    }
 
-   BOOL graphics::Arc(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4)
+   bool graphics::Arc(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4)
    { 
 
       ::Gdiplus::RectF rectf((Gdiplus::REAL) x1, (Gdiplus::REAL) y1, (Gdiplus::REAL) x2, (Gdiplus::REAL) y2);
@@ -430,11 +430,11 @@ namespace win
       
    }
 
-   BOOL graphics::Arc(LPCRECT lpRect, POINT ptStart, POINT ptEnd)
+   bool graphics::Arc(LPCRECT lpRect, POINT ptStart, POINT ptEnd)
    { ASSERT(get_handle1() != NULL); return ::Arc(get_handle1(), lpRect->left, lpRect->top,
    lpRect->right, lpRect->bottom, ptStart.x, ptStart.y,
    ptEnd.x, ptEnd.y); }
-   BOOL graphics::Polyline(const POINT* lpPoints, int nCount)
+   bool graphics::Polyline(const POINT* lpPoints, int nCount)
    { ASSERT(get_handle1() != NULL); return ::Polyline(get_handle1(), lpPoints, nCount); }
    void graphics::FillRect(LPCRECT lpRect, ::ca::brush* pBrush)
    { ASSERT(get_handle1() != NULL); ::FillRect(get_handle1(), lpRect, (HBRUSH)pBrush->get_os_data()); }
@@ -443,7 +443,7 @@ namespace win
    void graphics::InvertRect(LPCRECT lpRect)
    { ASSERT(get_handle1() != NULL); ::InvertRect(get_handle1(), lpRect); }
 
-   BOOL graphics::DrawIcon(int x, int y, ::visual::icon * picon)
+   bool graphics::DrawIcon(int x, int y, ::visual::icon * picon)
    {
       ASSERT(get_handle1() != NULL); 
       if(picon == NULL)
@@ -451,7 +451,7 @@ namespace win
       return ::DrawIcon(get_handle1(), x, y, picon->m_hicon); 
    }
 
-   BOOL graphics::DrawIcon(POINT point, ::visual::icon * picon)
+   bool graphics::DrawIcon(POINT point, ::visual::icon * picon)
    { 
       ASSERT(get_handle1() != NULL); 
       if(picon == NULL)
@@ -459,7 +459,7 @@ namespace win
       return ::DrawIcon(get_handle1(), point.x, point.y, picon->m_hicon); 
    }
 
-   BOOL graphics::DrawIcon(int x, int y, ::visual::icon * picon, int cx, int cy, UINT istepIfAniCur, HBRUSH hbrFlickerFreeDraw, UINT diFlags)
+   bool graphics::DrawIcon(int x, int y, ::visual::icon * picon, int cx, int cy, UINT istepIfAniCur, HBRUSH hbrFlickerFreeDraw, UINT diFlags)
    { 
 
       try
@@ -471,7 +471,7 @@ namespace win
          if(m_pgraphics == NULL)
             return FALSE;
 
-         BOOL bOk = FALSE;
+         bool bOk = FALSE;
 
          BITMAPINFO info;
          COLORREF * pcolorref;
@@ -527,53 +527,53 @@ namespace win
 
    }
 
-   BOOL graphics::DrawState(point pt, size size, HBITMAP hBitmap, UINT nFlags, HBRUSH hBrush)
+   bool graphics::DrawState(point pt, size size, HBITMAP hBitmap, UINT nFlags, HBRUSH hBrush)
    { ASSERT(get_handle1() != NULL); return ::DrawState(get_handle1(), hBrush,
    NULL, (LPARAM)hBitmap, 0, pt.x, pt.y, size.cx, size.cy, nFlags|DST_BITMAP); }
-   BOOL graphics::DrawState(point pt, size size, ::ca::bitmap* pBitmap, UINT nFlags, ::ca::brush* pBrush)
+   bool graphics::DrawState(point pt, size size, ::ca::bitmap* pBitmap, UINT nFlags, ::ca::brush* pBrush)
    { ASSERT(get_handle1() != NULL); return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(),
    NULL, (LPARAM)pBitmap->get_os_data(), 0, pt.x, pt.y, size.cx, size.cy, nFlags|DST_BITMAP); }
-   BOOL graphics::DrawState(point pt, size size, HICON hIcon, UINT nFlags, HBRUSH hBrush)
+   bool graphics::DrawState(point pt, size size, HICON hIcon, UINT nFlags, HBRUSH hBrush)
    { ASSERT(get_handle1() != NULL); return ::DrawState(get_handle1(), hBrush, NULL,
    (LPARAM)hIcon, 0, pt.x, pt.y, size.cx, size.cy, nFlags|DST_ICON); }
-   BOOL graphics::DrawState(point pt, size size, HICON hIcon, UINT nFlags, ::ca::brush* pBrush)
+   bool graphics::DrawState(point pt, size size, HICON hIcon, UINT nFlags, ::ca::brush* pBrush)
    { ASSERT(get_handle1() != NULL); return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(), NULL,
    (LPARAM)hIcon, 0, pt.x, pt.y, size.cx, size.cy, nFlags|DST_ICON); }
-   BOOL graphics::DrawState(point pt, size size, const char * lpszText, UINT nFlags, BOOL bPrefixText, int nTextLen, HBRUSH hBrush)
+   bool graphics::DrawState(point pt, size size, const char * lpszText, UINT nFlags, bool bPrefixText, int nTextLen, HBRUSH hBrush)
    { ASSERT(get_handle1() != NULL); return ::DrawState(get_handle1(), hBrush,
    NULL, (LPARAM)lpszText, (WPARAM)nTextLen, pt.x, pt.y, size.cx, size.cy, nFlags|(bPrefixText ? DST_PREFIXTEXT : DST_TEXT)); }
-   BOOL graphics::DrawState(point pt, size size, const char * lpszText, UINT nFlags, BOOL bPrefixText, int nTextLen, ::ca::brush* pBrush)
+   bool graphics::DrawState(point pt, size size, const char * lpszText, UINT nFlags, bool bPrefixText, int nTextLen, ::ca::brush* pBrush)
    { ASSERT(get_handle1() != NULL); return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(),
    NULL, (LPARAM)lpszText, (WPARAM)nTextLen, pt.x, pt.y, size.cx, size.cy, nFlags|(bPrefixText ? DST_PREFIXTEXT : DST_TEXT)); }
-   BOOL graphics::DrawState(point pt, size size, DRAWSTATEPROC lpDrawProc, LPARAM lData, UINT nFlags, HBRUSH hBrush)
+   bool graphics::DrawState(point pt, size size, DRAWSTATEPROC lpDrawProc, LPARAM lData, UINT nFlags, HBRUSH hBrush)
    { ASSERT(get_handle1() != NULL); return ::DrawState(get_handle1(), hBrush,
    lpDrawProc, lData, 0, pt.x, pt.y, size.cx, size.cy, nFlags|DST_COMPLEX); }
-   BOOL graphics::DrawState(point pt, size size, DRAWSTATEPROC lpDrawProc, LPARAM lData, UINT nFlags, ::ca::brush* pBrush)
+   bool graphics::DrawState(point pt, size size, DRAWSTATEPROC lpDrawProc, LPARAM lData, UINT nFlags, ::ca::brush* pBrush)
    { ASSERT(get_handle1() != NULL); return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(),
    lpDrawProc, lData, 0, pt.x, pt.y, size.cx, size.cy, nFlags|DST_COMPLEX); }
-   BOOL graphics::DrawEdge(LPRECT lpRect, UINT nEdge, UINT nFlags)
+   bool graphics::DrawEdge(LPRECT lpRect, UINT nEdge, UINT nFlags)
    { ASSERT(get_handle1() != NULL); return ::DrawEdge(get_handle1(), lpRect, nEdge, nFlags); }
-   BOOL graphics::DrawFrameControl(LPRECT lpRect, UINT nType, UINT nState)
+   bool graphics::DrawFrameControl(LPRECT lpRect, UINT nType, UINT nState)
    { ASSERT(get_handle1() != NULL); return ::DrawFrameControl(get_handle1(), lpRect, nType, nState); }
 
-   BOOL graphics::Chord(int x1, int y1, int x2, int y2, int x3, int y3,
+   bool graphics::Chord(int x1, int y1, int x2, int y2, int x3, int y3,
       int x4, int y4)
    { ASSERT(get_handle1() != NULL); return ::Chord(get_handle1(), x1, y1, x2, y2, x3, y3, x4, y4); }
-   BOOL graphics::Chord(LPCRECT lpRect, POINT ptStart, POINT ptEnd)
+   bool graphics::Chord(LPCRECT lpRect, POINT ptStart, POINT ptEnd)
    { ASSERT(get_handle1() != NULL); return ::Chord(get_handle1(), lpRect->left, lpRect->top,
    lpRect->right, lpRect->bottom, ptStart.x, ptStart.y,
    ptEnd.x, ptEnd.y); }
    void graphics::DrawFocusRect(LPCRECT lpRect)
    { ASSERT(get_handle1() != NULL); ::DrawFocusRect(get_handle1(), lpRect); }
    
-   BOOL graphics::DrawEllipse(int x1, int y1, int x2, int y2)
+   bool graphics::DrawEllipse(int x1, int y1, int x2, int y2)
    {
       
       return (m_pgraphics->DrawEllipse(gdiplus_pen(), x1, y1, x2 - x1, y2 - y1)) == Gdiplus::Status::Ok;
 
    }
 
-   BOOL graphics::DrawEllipse(LPCRECT lpRect)
+   bool graphics::DrawEllipse(LPCRECT lpRect)
    { 
    
       /*return ::Ellipse(get_handle1(), lpRect->left, lpRect->top,
@@ -583,14 +583,14 @@ namespace win
    
    }
 
-   BOOL graphics::FillEllipse(int x1, int y1, int x2, int y2)
+   bool graphics::FillEllipse(int x1, int y1, int x2, int y2)
    {
       
       return (m_pgraphics->FillEllipse(gdiplus_brush(), x1, y1, x2 - x1, y2 - y1)) == Gdiplus::Status::Ok;
 
    }
 
-   BOOL graphics::FillEllipse(LPCRECT lpRect)
+   bool graphics::FillEllipse(LPCRECT lpRect)
    { 
    
       /*return ::Ellipse(get_handle1(), lpRect->left, lpRect->top,
@@ -600,21 +600,21 @@ namespace win
    
    }
 
-   BOOL graphics::Pie(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4)
+   bool graphics::Pie(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4)
    { ASSERT(get_handle1() != NULL); return ::Pie(get_handle1(), x1, y1, x2, y2, x3, y3, x4, y4); }
-   BOOL graphics::Pie(LPCRECT lpRect, POINT ptStart, POINT ptEnd)
+   bool graphics::Pie(LPCRECT lpRect, POINT ptStart, POINT ptEnd)
    { ASSERT(get_handle1() != NULL); return ::Pie(get_handle1(), lpRect->left, lpRect->top,
    lpRect->right, lpRect->bottom, ptStart.x, ptStart.y,
    ptEnd.x, ptEnd.y); }
-   BOOL graphics::Polygon(const POINT* lpPoints, int nCount)
+   bool graphics::Polygon(const POINT* lpPoints, int nCount)
    {
 
       if(nCount <= 0)
          return TRUE;
 
-      BOOL bOk1 = FALSE;
+      bool bOk1 = FALSE;
 
-      BOOL bOk2 = FALSE;
+      bool bOk2 = FALSE;
 
       Gdiplus::Point * ppoints = new Gdiplus::Point[nCount];
 
@@ -647,75 +647,75 @@ namespace win
       return bOk1 && bOk2;
    
    }
-   BOOL graphics::PolyPolygon(const POINT* lpPoints, const INT* lpPolyCounts, int nCount)
+   bool graphics::PolyPolygon(const POINT* lpPoints, const INT* lpPolyCounts, int nCount)
    { ASSERT(get_handle1() != NULL); return ::PolyPolygon(get_handle1(), lpPoints, lpPolyCounts, nCount); }
    
-   BOOL graphics::Rectangle(int x1, int y1, int x2, int y2)
+   bool graphics::Rectangle(int x1, int y1, int x2, int y2)
    { 
       
       Gdiplus::RectF rectf((Gdiplus::REAL) x1, (Gdiplus::REAL) y1, (Gdiplus::REAL) (x2 - x1), (Gdiplus::REAL) (y2 - y1));
 
-      BOOL bOk1 = m_pgraphics->FillRectangle(gdiplus_brush(), rectf) == Gdiplus::Status::Ok;
+      bool bOk1 = m_pgraphics->FillRectangle(gdiplus_brush(), rectf) == Gdiplus::Status::Ok;
 
-      BOOL bOk2 = m_pgraphics->DrawRectangle(gdiplus_pen(), rectf) == Gdiplus::Status::Ok;
+      bool bOk2 = m_pgraphics->DrawRectangle(gdiplus_pen(), rectf) == Gdiplus::Status::Ok;
 
       return bOk1 && bOk2;
 
    }
    
-   BOOL graphics::Rectangle(LPCRECT lpRect)
+   bool graphics::Rectangle(LPCRECT lpRect)
    { 
 
       return Rectangle(lpRect->left, lpRect->top, lpRect->right, lpRect->bottom);
 
    }
 
-   BOOL graphics::DrawRectangle(int x1, int y1, int x2, int y2)
+   bool graphics::DrawRectangle(int x1, int y1, int x2, int y2)
    { 
       
       Gdiplus::RectF rectf((Gdiplus::REAL) x1, (Gdiplus::REAL) y1, (Gdiplus::REAL) (x2 - x1), (Gdiplus::REAL) (y2 - y1));
 
-      BOOL bOk = m_pgraphics->DrawRectangle(gdiplus_pen(), rectf) == Gdiplus::Status::Ok;
+      bool bOk = m_pgraphics->DrawRectangle(gdiplus_pen(), rectf) == Gdiplus::Status::Ok;
 
       return bOk;
 
    }
    
-   BOOL graphics::DrawRectangle(LPCRECT lpRect)
+   bool graphics::DrawRectangle(LPCRECT lpRect)
    { 
 
       return DrawRectangle(lpRect->left, lpRect->top, lpRect->right, lpRect->bottom);
 
    }
 
-   BOOL graphics::FillRectangle(int x1, int y1, int x2, int y2)
+   bool graphics::FillRectangle(int x1, int y1, int x2, int y2)
    { 
       
       Gdiplus::RectF rectf((Gdiplus::REAL) x1, (Gdiplus::REAL) y1, (Gdiplus::REAL) (x2 - x1), (Gdiplus::REAL) (y2 - y1));
 
-      BOOL bOk = m_pgraphics->FillRectangle(gdiplus_brush(), rectf) == Gdiplus::Status::Ok;
+      bool bOk = m_pgraphics->FillRectangle(gdiplus_brush(), rectf) == Gdiplus::Status::Ok;
 
       return bOk;
 
    }
    
-   BOOL graphics::FillRectangle(LPCRECT lpRect)
+   bool graphics::FillRectangle(LPCRECT lpRect)
    { 
 
       return FillRectangle(lpRect->left, lpRect->top, lpRect->right - lpRect->left, lpRect->bottom - lpRect->top);
 
    }
 
-   BOOL graphics::RoundRect(int x1, int y1, int x2, int y2, int x3, int y3)
+   bool graphics::RoundRect(int x1, int y1, int x2, int y2, int x3, int y3)
    { ASSERT(get_handle1() != NULL); return ::RoundRect(get_handle1(), x1, y1, x2, y2, x3, y3); }
-   BOOL graphics::RoundRect(LPCRECT lpRect, POINT point)
+   bool graphics::RoundRect(LPCRECT lpRect, POINT point)
    { ASSERT(get_handle1() != NULL); return ::RoundRect(get_handle1(), lpRect->left, lpRect->top,
    lpRect->right, lpRect->bottom, point.x, point.y); }
-   BOOL graphics::PatBlt(int x, int y, int nWidth, int nHeight, DWORD dwRop)
+   bool graphics::PatBlt(int x, int y, int nWidth, int nHeight, DWORD dwRop)
    { ASSERT(get_handle1() != NULL); return ::PatBlt(get_handle1(), x, y, nWidth, nHeight, dwRop); }
    
    
-   BOOL graphics::BitBlt(int x, int y, int nWidth, int nHeight, ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc, DWORD dwRop)
+   bool graphics::BitBlt(int x, int y, int nWidth, int nHeight, ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc, DWORD dwRop)
    { 
       
 
@@ -746,7 +746,7 @@ namespace win
    }
 
 
-   BOOL graphics::StretchBlt(int xDst, int yDst, int nDstWidth, int nDstHeight, ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, DWORD dwRop)
+   bool graphics::StretchBlt(int xDst, int yDst, int nDstWidth, int nDstHeight, ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, DWORD dwRop)
    { 
 
       if(pgraphicsSrc == NULL)
@@ -780,9 +780,9 @@ namespace win
    { ASSERT(get_handle1() != NULL); return ::SetPixel(get_handle1(), x, y, crColor); }
    COLORREF graphics::SetPixel(POINT point, COLORREF crColor)
    { ASSERT(get_handle1() != NULL); return ::SetPixel(get_handle1(), point.x, point.y, crColor); }
-   BOOL graphics::FloodFill(int x, int y, COLORREF crColor)
+   bool graphics::FloodFill(int x, int y, COLORREF crColor)
    { ASSERT(get_handle1() != NULL); return ::FloodFill(get_handle1(), x, y, crColor); }
-   BOOL graphics::ExtFloodFill(int x, int y, COLORREF crColor, UINT nFillType)
+   bool graphics::ExtFloodFill(int x, int y, COLORREF crColor, UINT nFillType)
    { ASSERT(get_handle1() != NULL); return ::ExtFloodFill(get_handle1(), x, y, crColor, nFillType); }
    
 
@@ -792,7 +792,7 @@ namespace win
    // double blend
    //// COLOR_DEST = SRC_ALPHA * BLEND_ALPHA * COLOR_SRC  + (1 - SRC_ALPHA * BLEND_ALPHA) * COLOR_DST
 
-   BOOL graphics::TextOut(int x, int y, const string & str)
+   bool graphics::TextOut(int x, int y, const string & str)
    { 
       if(m_pdibAlphaBlend != NULL)
       {
@@ -848,7 +848,7 @@ namespace win
    
    } // call virtual
 
-   BOOL graphics::TextOut(double x, double y, const string & str)
+   bool graphics::TextOut(double x, double y, const string & str)
    { 
       if(m_pdibAlphaBlend != NULL)
       {
@@ -904,13 +904,13 @@ namespace win
    
    } // call virtual
 
-   BOOL graphics::ExtTextOut(int x, int y, UINT nOptions, LPCRECT lpRect, const char * lpszString, UINT nCount, LPINT lpDxWidths)
+   bool graphics::ExtTextOut(int x, int y, UINT nOptions, LPCRECT lpRect, const char * lpszString, UINT nCount, LPINT lpDxWidths)
    { 
       ASSERT(get_handle1() != NULL); 
       return ::ExtTextOut(get_handle1(), x, y, nOptions, lpRect, lpszString, nCount, lpDxWidths); 
    }
 
-   BOOL graphics::ExtTextOut(int x, int y, UINT nOptions, LPCRECT lpRect,
+   bool graphics::ExtTextOut(int x, int y, UINT nOptions, LPCRECT lpRect,
       const string & str, LPINT lpDxWidths)
    { ASSERT(get_handle1() != NULL); return ::ExtTextOut(get_handle1(), x, y, nOptions, lpRect,
    str, (UINT)str.get_length(), lpDxWidths); }
@@ -953,8 +953,8 @@ namespace win
       int nTabPositions, LPINT lpnTabStopPositions) const
    { ASSERT(get_handle1() != NULL); return ::GetTabbedTextExtent(get_handle1(),
    str, (int)str.get_length(), nTabPositions, lpnTabStopPositions); }
-   BOOL graphics::GrayString(::ca::brush* pBrush,
-      BOOL (CALLBACK* lpfnOutput)(HDC, LPARAM, int),
+   bool graphics::GrayString(::ca::brush* pBrush,
+      bool (CALLBACK* lpfnOutput)(HDC, LPARAM, int),
       LPARAM lpData, int nCount,
       int x, int y, int nWidth, int nHeight)
    { ASSERT(get_handle1() != NULL); return ::GrayString(get_handle1(), (HBRUSH)pBrush->get_os_data(),
@@ -967,7 +967,7 @@ namespace win
    { ASSERT(get_handle2() != NULL); int nResult = ::GetTextFace(get_handle2(),
    256, rString.GetBuffer(256)); rString.ReleaseBuffer();
    return nResult; }
-   BOOL graphics::___FUNCNAME(GetTextMetrics)(LPTEXTMETRIC lpMetrics) const
+   bool graphics::___FUNCNAME(GetTextMetrics)(LPTEXTMETRIC lpMetrics) const
    { 
       //ASSERT(get_handle2() != NULL); return ::GetTextMetrics(get_handle2(), lpMetrics); 
       /*wstring wstr(L"123AWZwmc");
@@ -1029,16 +1029,16 @@ namespace win
 
 #pragma push_macro("GetTextMetrics")
 #undef GetTextMetrics
-   BOOL graphics::GetTextMetrics(LPTEXTMETRIC lpMetrics) const
+   bool graphics::GetTextMetrics(LPTEXTMETRIC lpMetrics) const
    { return ___FUNCNAME(GetTextMetrics)(lpMetrics); }
 #pragma pop_macro("GetTextMetrics")
-   BOOL graphics::GetOutputTextMetrics(LPTEXTMETRIC lpMetrics) const
+   bool graphics::GetOutputTextMetrics(LPTEXTMETRIC lpMetrics) const
    { ASSERT(get_handle1() != NULL); return ::GetTextMetrics(get_handle1(), lpMetrics); }
    int graphics::GetTextCharacterExtra() const
    { ASSERT(get_handle2() != NULL); return ::GetTextCharacterExtra(get_handle2()); }
-   BOOL graphics::GetCharWidth(UINT nFirstChar, UINT nLastChar, LPINT lpBuffer) const
+   bool graphics::GetCharWidth(UINT nFirstChar, UINT nLastChar, LPINT lpBuffer) const
    { ASSERT(get_handle2() != NULL); return ::GetCharWidth(get_handle2(), nFirstChar, nLastChar, lpBuffer); }
-   BOOL graphics::GetOutputCharWidth(UINT nFirstChar, UINT nLastChar, LPINT lpBuffer) const
+   bool graphics::GetOutputCharWidth(UINT nFirstChar, UINT nLastChar, LPINT lpBuffer) const
    { ASSERT(get_handle1() != NULL); return ::GetCharWidth(get_handle1(), nFirstChar, nLastChar, lpBuffer); }
    DWORD graphics::GetFontLanguageInfo() const
    { ASSERT(get_handle1() != NULL); return ::GetFontLanguageInfo(get_handle1()); }
@@ -1063,7 +1063,7 @@ namespace win
       VERIFY(::GetAspectRatioFilterEx(get_handle2(), &size));
       return size;
    }
-   BOOL graphics::ScrollDC(int dx, int dy,
+   bool graphics::ScrollDC(int dx, int dy,
       LPCRECT lpRectScroll, LPCRECT lpRectClip,
       ::ca::region* pRgnUpdate, LPRECT lpRectUpdate)
    { ASSERT(get_handle1() != NULL); return ::ScrollDC(get_handle1(), dx, dy, lpRectScroll,
@@ -1078,11 +1078,11 @@ namespace win
    { ASSERT(get_handle1() != NULL); return ::SetBoundsRect(get_handle1(), lpRectBounds, flags); }
    UINT graphics::GetBoundsRect(LPRECT lpRectBounds, UINT flags)
    { ASSERT(get_handle2() != NULL); return ::GetBoundsRect(get_handle2(), lpRectBounds, flags); }
-   BOOL graphics::ResetDC(const DEVMODE* lpDevMode)
+   bool graphics::ResetDC(const DEVMODE* lpDevMode)
    { ASSERT(get_handle2() != NULL); return ::ResetDC(get_handle2(), lpDevMode) != NULL; }
    UINT graphics::GetOutlineTextMetrics(UINT cbData, LPOUTLINETEXTMETRIC lpotm) const
    { ASSERT(get_handle2() != NULL); return ::GetOutlineTextMetrics(get_handle2(), cbData, lpotm); }
-   BOOL graphics::GetCharABCWidths(UINT nFirstChar, UINT nLastChar, LPABC lpabc) const
+   bool graphics::GetCharABCWidths(UINT nFirstChar, UINT nLastChar, LPABC lpabc) const
    { ASSERT(get_handle2() != NULL); return ::GetCharABCWidths(get_handle2(), nFirstChar, nLastChar, lpabc); }
    DWORD graphics::GetFontData(DWORD dwTable, DWORD dwOffset, LPVOID lpData,
       DWORD cbData) const
@@ -1101,44 +1101,44 @@ namespace win
    { ASSERT(get_handle1() != NULL); return ::StartPage(get_handle1()); }
    int graphics::EndPage()
    { ASSERT(get_handle1() != NULL); return ::EndPage(get_handle1()); }
-   int graphics::SetAbortProc(BOOL (CALLBACK* lpfn)(HDC, int))
+   int graphics::SetAbortProc(bool (CALLBACK* lpfn)(HDC, int))
    { ASSERT(get_handle1() != NULL); return ::SetAbortProc(get_handle1(), (ABORTPROC)lpfn); }
    int graphics::AbortDoc()
    { ASSERT(get_handle1() != NULL); return ::AbortDoc(get_handle1()); }
    int graphics::EndDoc()
    { ASSERT(get_handle1() != NULL); return ::EndDoc(get_handle1()); }
 
-   BOOL graphics::MaskBlt(int x, int y, int nWidth, int nHeight, ::ca::graphics * pgraphicsSrc,
+   bool graphics::MaskBlt(int x, int y, int nWidth, int nHeight, ::ca::graphics * pgraphicsSrc,
       int xSrc, int ySrc, ::ca::bitmap& maskBitmap, int xMask, int yMask, DWORD dwRop)
    { ASSERT(get_handle1() != NULL); return ::MaskBlt(get_handle1(), x, y, nWidth, nHeight, WIN_HDC(pgraphicsSrc),
    xSrc, ySrc,  (HBITMAP)maskBitmap.get_os_data(), xMask, yMask, dwRop); }
-   BOOL graphics::PlgBlt(LPPOINT lpPoint, ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc,
+   bool graphics::PlgBlt(LPPOINT lpPoint, ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc,
       int nWidth, int nHeight, ::ca::bitmap& maskBitmap, int xMask, int yMask)
    { ASSERT(get_handle1() != NULL); 
    return ::PlgBlt(get_handle1(), lpPoint, WIN_HDC(pgraphicsSrc), xSrc, ySrc, nWidth,
    nHeight, (HBITMAP)maskBitmap.get_os_data(), xMask, yMask); }
-   BOOL graphics::SetPixelV(int x, int y, COLORREF crColor)
+   bool graphics::SetPixelV(int x, int y, COLORREF crColor)
    { ASSERT(get_handle1() != NULL); 
    return ::SetPixelV(get_handle1(), x, y, crColor); }
-   BOOL graphics::SetPixelV(POINT point, COLORREF crColor)
+   bool graphics::SetPixelV(POINT point, COLORREF crColor)
    { ASSERT(get_handle1() != NULL); 
    return ::SetPixelV(get_handle1(), point.x, point.y, crColor); }
-   BOOL graphics::AngleArc(int x, int y, int nRadius,
+   bool graphics::AngleArc(int x, int y, int nRadius,
       float fStartAngle, float fSweepAngle)
    { ASSERT(get_handle1() != NULL); 
    return ::AngleArc(get_handle1(), x, y, nRadius, fStartAngle, fSweepAngle); }
-   BOOL graphics::ArcTo(LPCRECT lpRect, POINT ptStart, POINT ptEnd)
+   bool graphics::ArcTo(LPCRECT lpRect, POINT ptStart, POINT ptEnd)
    { ASSERT(get_handle1() != NULL); 
    return ArcTo(lpRect->left, lpRect->top, lpRect->right,
    lpRect->bottom, ptStart.x, ptStart.y, ptEnd.x, ptEnd.y); }
    int graphics::GetArcDirection() const
    { ASSERT(get_handle2() != NULL);
    return ::GetArcDirection(get_handle2()); }
-   BOOL graphics::PolyPolyline(const POINT* lpPoints, const DWORD* lpPolyPoints,
+   bool graphics::PolyPolyline(const POINT* lpPoints, const DWORD* lpPolyPoints,
       int nCount)
    { ASSERT(get_handle1() != NULL); 
    return ::PolyPolyline(get_handle1(), lpPoints, lpPolyPoints, nCount); }
-   BOOL graphics::GetColorAdjustment(LPCOLORADJUSTMENT lpColorAdjust) const
+   bool graphics::GetColorAdjustment(LPCOLORADJUSTMENT lpColorAdjust) const
    { ASSERT(get_handle2() != NULL); 
    return ::GetColorAdjustment(get_handle2(), lpColorAdjust); }
 
@@ -1177,7 +1177,7 @@ namespace win
 
    }
 
-   BOOL graphics::PolyBezier(const POINT* lpPoints, int nCount)
+   bool graphics::PolyBezier(const POINT* lpPoints, int nCount)
    {
       ASSERT(get_handle1() != NULL); 
       return ::PolyBezier(get_handle1(), lpPoints, nCount); 
@@ -1195,19 +1195,19 @@ namespace win
        return ::ExtEscape(get_handle1(), nEscape, nInputSize, lpszInputData, nOutputSize, lpszOutputData); 
    }
 
-   BOOL graphics::GetCharABCWidths(UINT nFirstChar, UINT nLastChar,
+   bool graphics::GetCharABCWidths(UINT nFirstChar, UINT nLastChar,
       LPABCFLOAT lpABCF) const
    { 
       ASSERT(get_handle2() != NULL); 
       return ::GetCharABCWidthsFloat(get_handle2(), nFirstChar, nLastChar, lpABCF); 
    }
-   BOOL graphics::GetCharWidth(UINT nFirstChar, UINT nLastChar, float* lpFloatBuffer) const
+   bool graphics::GetCharWidth(UINT nFirstChar, UINT nLastChar, float* lpFloatBuffer) const
    {
       ASSERT(get_handle2() != NULL); 
       return ::GetCharWidthFloat(get_handle2(), nFirstChar, nLastChar, lpFloatBuffer); 
    }
 
-   BOOL graphics::AbortPath()
+   bool graphics::AbortPath()
    {
       if(m_ppath != NULL)
       {
@@ -1217,7 +1217,7 @@ namespace win
       return true;
    }
 
-   BOOL graphics::BeginPath()
+   bool graphics::BeginPath()
    { 
       
       if(m_ppath != NULL)
@@ -1229,13 +1229,13 @@ namespace win
 
    }
 
-   BOOL graphics::CloseFigure()
+   bool graphics::CloseFigure()
    {
       ASSERT(m_ppath != NULL); 
       return m_ppath->CloseFigure() == Gdiplus::Status::Ok;
    }
 
-   BOOL graphics::EndPath()
+   bool graphics::EndPath()
    { 
 
       if(m_ppath == NULL)
@@ -1248,14 +1248,14 @@ namespace win
 
    }
 
-   BOOL graphics::FillPath()
+   bool graphics::FillPath()
    { 
 
       return m_pgraphics->FillPath(gdiplus_brush(), m_ppath) == Gdiplus::Status::Ok;
 
    }
 
-   BOOL graphics::FlattenPath()
+   bool graphics::FlattenPath()
    {
       return m_ppath->Flatten() == Gdiplus::Status::Ok;
    }
@@ -1273,41 +1273,41 @@ namespace win
       ASSERT(get_handle1() != NULL); 
       return ::GetPath(get_handle1(), lpPoints, lpTypes, nCount); 
    }
-   BOOL graphics::SetMiterLimit(float fMiterLimit)
+   bool graphics::SetMiterLimit(float fMiterLimit)
    {
       ASSERT(get_handle1() != NULL); 
       return ::SetMiterLimit(get_handle1(), fMiterLimit, NULL); 
    }
    
-   BOOL graphics::StrokeAndFillPath()
+   bool graphics::StrokeAndFillPath()
    { 
 
-      BOOL bOk1 = m_pgraphics->FillPath(gdiplus_brush(), m_ppathPaint) == Gdiplus::Status::Ok;
+      bool bOk1 = m_pgraphics->FillPath(gdiplus_brush(), m_ppathPaint) == Gdiplus::Status::Ok;
 
-      BOOL bOk2 = m_pgraphics->DrawPath(gdiplus_pen(), m_ppathPaint) == Gdiplus::Status::Ok;
+      bool bOk2 = m_pgraphics->DrawPath(gdiplus_pen(), m_ppathPaint) == Gdiplus::Status::Ok;
 
       return bOk1 && bOk2;
 
    }
 
-   BOOL graphics::StrokePath()
+   bool graphics::StrokePath()
    {
       return m_pgraphics->DrawPath(gdiplus_pen(), m_ppathPaint) == Gdiplus::Status::Ok;
    }
 
-   BOOL graphics::WidenPath()
+   bool graphics::WidenPath()
    {
       return m_ppath->Widen(gdiplus_pen()) == Gdiplus::Status::Ok;
    }
 
-   BOOL graphics::AddMetaFileComment(UINT nDataSize, const BYTE* pCommentData)
+   bool graphics::AddMetaFileComment(UINT nDataSize, const BYTE* pCommentData)
    { 
       ASSERT(get_handle1() != NULL); 
       return ::GdiComment(get_handle1(), nDataSize, pCommentData); 
    }
    
 
-/*BOOL CALLBACK metaCallback(
+/*bool CALLBACK metaCallback(
    EmfPlusRecordType recordType, 
    unsigned int flags, 
    unsigned int dataSize, 
@@ -1345,7 +1345,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    graphics.DrawImage(pMeta, Point(0, 150));
    delete pMeta;;
 }*/
-   BOOL graphics::PlayMetaFile(HENHMETAFILE hEnhMF, LPCRECT lpBounds)
+   bool graphics::PlayMetaFile(HENHMETAFILE hEnhMF, LPCRECT lpBounds)
    { 
 
       Gdiplus::RectF rect(lpBounds->left, lpBounds->top, width(lpBounds), height(lpBounds));
@@ -1488,13 +1488,13 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    }*/
 
 
-   BOOL graphics::TransparentBlt(int xDest, int yDest, int nDestWidth, 
+   bool graphics::TransparentBlt(int xDest, int yDest, int nDestWidth, 
       int nDestHeight, ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, 
       int nSrcHeight, UINT crTransparent)
    { ASSERT(get_handle1() != NULL); return ::TransparentBlt(get_handle1(), xDest, yDest, 
    nDestWidth, nDestHeight, WIN_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth, 
    nSrcHeight, crTransparent); }
-   BOOL graphics::GradientFill(TRIVERTEX* pVertices, ULONG nVertices,
+   bool graphics::GradientFill(TRIVERTEX* pVertices, ULONG nVertices,
       void * pMesh, ULONG nMeshElements, DWORD dwMode)
    { ASSERT(get_handle1() != NULL); return ::GradientFill(get_handle1(), pVertices, nVertices,
    pMesh, nMeshElements, dwMode); }
@@ -1521,18 +1521,18 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    inline COLORREF graphics::SetDCPenColor(COLORREF crColor)
    { ASSERT(get_handle1() != NULL); return ::SetDCPenColor(get_handle1(), crColor); }
 
-   inline BOOL graphics::GetCharABCWidthsI(UINT giFirst, UINT cgi, LPWORD pgi, LPABC lpabc) const
+   inline bool graphics::GetCharABCWidthsI(UINT giFirst, UINT cgi, LPWORD pgi, LPABC lpabc) const
    { ASSERT(get_handle1() != NULL); return ::GetCharABCWidthsI(get_handle1(), giFirst, cgi, pgi, lpabc); }
-   inline BOOL graphics::GetCharWidthI(UINT giFirst, UINT cgi, LPWORD pgi, LPINT lpBuffer) const
+   inline bool graphics::GetCharWidthI(UINT giFirst, UINT cgi, LPWORD pgi, LPINT lpBuffer) const
    { ASSERT(get_handle1() != NULL); return ::GetCharWidthI(get_handle1(), giFirst, cgi, pgi, lpBuffer); }
 
-   inline BOOL graphics::GetTextExtentExPointI(LPWORD pgiIn, int cgi, int nMaxExtent, LPINT lpnFit, LPINT alpDx, LPSIZE lpSize) const
+   inline bool graphics::GetTextExtentExPointI(LPWORD pgiIn, int cgi, int nMaxExtent, LPINT lpnFit, LPINT alpDx, LPSIZE lpSize) const
    { 
       ENSURE(lpSize != NULL); 
       ASSERT(get_handle1() != NULL); 
       return ::GetTextExtentExPointI(get_handle1(), pgiIn, cgi, nMaxExtent, lpnFit, alpDx, lpSize); 
    }
-   inline BOOL graphics::GetTextExtentPointI(LPWORD pgiIn, int cgi, LPSIZE lpSize) const
+   inline bool graphics::GetTextExtentPointI(LPWORD pgiIn, int cgi, LPSIZE lpSize) const
    {
       ENSURE(lpSize != NULL); 
       ASSERT(get_handle1() != NULL); 
@@ -1797,7 +1797,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
      // return NULL;
    //}
 
-   BOOL graphics::Attach(HDC hdc)
+   bool graphics::Attach(HDC hdc)
    {
 
       if(hdc == NULL)
@@ -1860,7 +1860,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       
    }
 
-   BOOL graphics::DeleteDC()
+   bool graphics::DeleteDC()
    {
 
       if(get_handle() == NULL)
@@ -1929,9 +1929,9 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return nRetVal;
    }
 
-   BOOL graphics::RestoreDC(int nSavedDC)
+   bool graphics::RestoreDC(int nSavedDC)
    {
-      BOOL bRetVal = TRUE;
+      bool bRetVal = TRUE;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          bRetVal = ::RestoreDC(get_handle1(), nSavedDC);
       if(get_handle2() != NULL)
@@ -2023,7 +2023,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return nRetVal;
    }
 
-   ::ca::palette* graphics::SelectPalette(::ca::palette* pPalette, BOOL bForceBackground)
+   ::ca::palette* graphics::SelectPalette(::ca::palette* pPalette, bool bForceBackground)
    {
       return NULL;
 //      return dynamic_cast < ::ca::palette * > (::win::graphics_object::from_handle(get_app(), ::SelectPalette(get_handle1(), (HPALETTE)pPalette->get_os_data(), bForceBackground)));
@@ -2122,9 +2122,9 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return nRetVal;
    }
 
-   BOOL graphics::SetWorldTransform(const XFORM* pXform)
+   bool graphics::SetWorldTransform(const XFORM* pXform)
    {
-      BOOL nRetVal = 0;
+      bool nRetVal = 0;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
       {
          nRetVal = ::SetWorldTransform(get_handle1(), pXform);
@@ -2136,9 +2136,9 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return nRetVal;
    }
 
-   BOOL graphics::ModifyWorldTransform(const XFORM* pXform,DWORD iMode)
+   bool graphics::ModifyWorldTransform(const XFORM* pXform,DWORD iMode)
    {
-      BOOL nRetVal = 0;
+      bool nRetVal = 0;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
       {
          nRetVal = ::ModifyWorldTransform(get_handle1(), pXform, iMode);
@@ -2449,10 +2449,10 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    /////////////////////////////////////////////////////////////////////////////
    // Advanced Win32 GDI functions
 
-   BOOL graphics::ArcTo(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4)
+   bool graphics::ArcTo(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4)
    {
       ASSERT(get_handle1() != NULL);
-      BOOL bResult = ::ArcTo(get_handle1(), x1, y1, x2, y2, x3, y3, x4, y4);
+      bool bResult = ::ArcTo(get_handle1(), x1, y1, x2, y2, x3, y3, x4, y4);
       if (get_handle1() != get_handle2())
       {
          point pt;
@@ -2473,10 +2473,10 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return nResult;
    }
 
-   BOOL graphics::PolyDraw(const POINT* lpPoints, const BYTE* lpTypes, int nCount)
+   bool graphics::PolyDraw(const POINT* lpPoints, const BYTE* lpTypes, int nCount)
    {
       ASSERT(get_handle1() != NULL);
-      BOOL bResult = ::PolyDraw(get_handle1(), lpPoints, lpTypes, nCount);
+      bool bResult = ::PolyDraw(get_handle1(), lpPoints, lpTypes, nCount);
       if (get_handle1() != get_handle2())
       {
          point pt;
@@ -2486,10 +2486,10 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return bResult;
    }
 
-   BOOL graphics::PolylineTo(const POINT* lpPoints, int nCount)
+   bool graphics::PolylineTo(const POINT* lpPoints, int nCount)
    {
       ASSERT(get_handle1() != NULL);
-      BOOL bResult = ::PolylineTo(get_handle1(), lpPoints, nCount);
+      bool bResult = ::PolylineTo(get_handle1(), lpPoints, nCount);
       if (get_handle1() != get_handle2())
       {
          point pt;
@@ -2499,10 +2499,10 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return bResult;
    }
 
-   BOOL graphics::SetColorAdjustment(const COLORADJUSTMENT* lpColorAdjust)
+   bool graphics::SetColorAdjustment(const COLORADJUSTMENT* lpColorAdjust)
    {
       ASSERT(get_handle1() != NULL);
-      BOOL bResult = FALSE;
+      bool bResult = FALSE;
       if (get_handle1() != get_handle2())
          bResult = ::SetColorAdjustment(get_handle1(), lpColorAdjust);
       if (get_handle2() != NULL)
@@ -2510,10 +2510,10 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return bResult;
    }
 
-   BOOL graphics::PolyBezierTo(const POINT* lpPoints, int nCount)
+   bool graphics::PolyBezierTo(const POINT* lpPoints, int nCount)
    {
       ASSERT(get_handle1() != NULL);
-      BOOL bResult = ::PolyBezierTo(get_handle1(), lpPoints, nCount);
+      bool bResult = ::PolyBezierTo(get_handle1(), lpPoints, nCount);
       if (get_handle1() != get_handle2())
       {
          point pt;
@@ -2523,7 +2523,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return bResult;
    }
 
-   BOOL graphics::SelectClipPath(int nMode)
+   bool graphics::SelectClipPath(int nMode)
    {
       ASSERT(get_handle1() != NULL);
 
@@ -2532,7 +2532,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          return FALSE;
 
       // transfer clipping region into the attribute DC
-      BOOL bResult = TRUE;
+      bool bResult = TRUE;
       if (get_handle1() != get_handle2())
       {
          HRGN hRgn = ::CreateRectRgn(0, 0, 0, 0);
@@ -2659,7 +2659,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return 1;
    }
 
-   BOOL graphics::PlayMetaFile(HMETAFILE hMF)
+   bool graphics::PlayMetaFile(HMETAFILE hMF)
    {
       if (::GetDeviceCaps(get_handle1(), TECHNOLOGY) == DT_METAFILE)
       {
@@ -3330,7 +3330,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 
 
-/*hdc_map* PASCAL afxMapHDC(BOOL bCreate)
+/*hdc_map* PASCAL afxMapHDC(bool bCreate)
 {
    UNREFERENCED_PARAMETER(bCreate);
    try
@@ -3393,7 +3393,7 @@ namespace win
    }
 
 
-   BOOL graphics::TextOut(int x, int y, const char * lpszString, int nCount)
+   bool graphics::TextOut(int x, int y, const char * lpszString, int nCount)
    {
 
       ::Gdiplus::PointF origin(0, 0);
@@ -3508,7 +3508,7 @@ namespace win
 
    }
 
-   BOOL graphics::TextOut(double x, double y, const char * lpszString, int nCount)
+   bool graphics::TextOut(double x, double y, const char * lpszString, int nCount)
    {
 
       ::Gdiplus::PointF origin(0, 0);
@@ -3622,7 +3622,7 @@ namespace win
 
 
 
-   BOOL graphics::LineTo(double x, double y)
+   bool graphics::LineTo(double x, double y)
    {
 
 //      ::Gdiplus::Pen pen(::Gdiplus::Color(GetAValue(m_crColor), GetRValue(m_crColor), GetGValue(m_crColor), GetBValue(m_crColor)), m_dPenWidth);

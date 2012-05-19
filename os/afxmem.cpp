@@ -24,7 +24,7 @@ void CLASS_DECL_win __set_alloc_stop(LONG lRequestNumber)
 }
 */
 #ifdef _DEBUG
-BOOL CLASS_DECL_win __check_memory()
+bool CLASS_DECL_win __check_memory()
   // check all of primitive::memory (look for primitive::memory tromps)
 {
    return _CrtCheckMemory();
@@ -33,7 +33,7 @@ BOOL CLASS_DECL_win __check_memory()
 /*
 // -- true if block of exact size, allocated on the heap
 // -- set *plRequestNumber to request number (or 0)
-BOOL CLASS_DECL_win __is_memory_block(const void * pData, UINT nBytes,
+bool CLASS_DECL_win __is_memory_block(const void * pData, UINT nBytes,
       LONG* plRequestNumber)
 {
    return _CrtIsMemoryBlock(pData, nBytes, plRequestNumber, NULL, NULL);

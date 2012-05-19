@@ -1,6 +1,6 @@
 #pragma once
 
-BOOL __internal_pre_translate_message(MSG* pMsg);
+bool __internal_pre_translate_message(MSG* pMsg);
 
 namespace ca
 {
@@ -70,7 +70,7 @@ namespace win
       virtual bool Begin(int nPriority = THREAD_PRIORITY_NORMAL, UINT nStackSize = 0,
          DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
-      BOOL CreateThread(DWORD dwCreateFlags = 0, UINT nStackSize = 0,
+      bool CreateThread(DWORD dwCreateFlags = 0, UINT nStackSize = 0,
          LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
 
@@ -109,12 +109,12 @@ namespace win
       virtual void start();
 
       int GetThreadPriority();
-      BOOL SetThreadPriority(int nPriority);
+      bool SetThreadPriority(int nPriority);
 
    // Operations
       DWORD SuspendThread();
       DWORD ResumeThread();
-      BOOL PostThreadMessage(UINT message, WPARAM wParam, LPARAM lParam);
+      bool PostThreadMessage(UINT message, WPARAM wParam, LPARAM lParam);
       bool post_message(::user::interaction * pguie, UINT message, WPARAM wParam, LPARAM lParam);
 
       virtual bool PreInitInstance();
@@ -132,10 +132,10 @@ namespace win
       // running and idle processing
       virtual int run();
       virtual void pre_translate_message(gen::signal_object * pobj);
-      virtual BOOL pump_message();     // low level message pump
-      virtual BOOL on_idle(LONG lCount); // return TRUE if more idle processing
-      virtual BOOL is_idle_message(gen::signal_object * pobj);  // checks for special messages
-      virtual BOOL is_idle_message(LPMSG lpmsg);  // checks for special messages
+      virtual bool pump_message();     // low level message pump
+      virtual bool on_idle(LONG lCount); // return TRUE if more idle processing
+      virtual bool is_idle_message(gen::signal_object * pobj);  // checks for special messages
+      virtual bool is_idle_message(LPMSG lpmsg);  // checks for special messages
       virtual void message_handler(gen::signal_object * pobj);
 
       // thread termination
@@ -168,7 +168,7 @@ namespace win
 
 
       virtual void LockTempMaps();
-      virtual BOOL UnlockTempMaps(BOOL bDeleteTemp);
+      virtual bool UnlockTempMaps(bool bDeleteTemp);
 
 
 		///  \brief		waits for signaling the thread forever

@@ -34,7 +34,7 @@ namespace win
 
    }
 
-   BOOL bitmap::CreateBitmap(int nWidth, int nHeight, UINT nPlanes, UINT nBitcount, const void * lpBits)
+   bool bitmap::CreateBitmap(int nWidth, int nHeight, UINT nPlanes, UINT nBitcount, const void * lpBits)
    { 
 
       if(m_pdata != NULL)
@@ -49,13 +49,13 @@ namespace win
    
    }
 
-   BOOL bitmap::CreateBitmapIndirect(LPBITMAP lpBitmap)
+   bool bitmap::CreateBitmapIndirect(LPBITMAP lpBitmap)
    { 
       return FALSE;
    }
 
 
-   BOOL bitmap::CreateDIBSection(::ca::graphics * pdc, const BITMAPINFO * lpbmi, UINT usage, void **ppvBits, HANDLE hSection, DWORD offset)
+   bool bitmap::CreateDIBSection(::ca::graphics * pdc, const BITMAPINFO * lpbmi, UINT usage, void **ppvBits, HANDLE hSection, DWORD offset)
    { 
 
       if(m_pbitmap != NULL)
@@ -93,7 +93,7 @@ namespace win
    }
 
 
-   BOOL bitmap::CreateDIBitmap(::ca::graphics * pdc, const BITMAPINFOHEADER *pbmih, DWORD flInit, const void *pjBits, const BITMAPINFO *pbmi, UINT iUsage)
+   bool bitmap::CreateDIBitmap(::ca::graphics * pdc, const BITMAPINFOHEADER *pbmih, DWORD flInit, const void *pjBits, const BITMAPINFO *pbmi, UINT iUsage)
    { 
       return FALSE;
    }
@@ -111,7 +111,7 @@ namespace win
       //return ::GetBitmapBits((HBITMAP)get_handle(), dwCount, lpBits);
       return 0;
    }
-   BOOL bitmap::LoadBitmap(const char * lpszResourceName)
+   bool bitmap::LoadBitmap(const char * lpszResourceName)
    { 
    //   return Attach(::LoadBitmap(gen::FindResourceHandle(
    //lpszResourceName, RT_BITMAP), lpszResourceName));
@@ -142,17 +142,17 @@ namespace win
 
    }
 
-   BOOL bitmap::LoadBitmap(UINT nIDResource)
+   bool bitmap::LoadBitmap(UINT nIDResource)
    { 
       //return Attach(::LoadBitmap(gen::FindResourceHandle(MAKEINTRESOURCE(nIDResource), RT_BITMAP), MAKEINTRESOURCE(nIDResource))); 
       return FALSE;
    }
-   BOOL bitmap::LoadOEMBitmap(UINT nIDBitmap)
+   bool bitmap::LoadOEMBitmap(UINT nIDBitmap)
    { 
       //return Attach(::LoadBitmap(NULL, MAKEINTRESOURCE(nIDBitmap))); 
       return FALSE;
    }
-   BOOL bitmap::CreateCompatibleBitmap(::ca::graphics * pgraphics, int nWidth, int nHeight)
+   bool bitmap::CreateCompatibleBitmap(::ca::graphics * pgraphics, int nWidth, int nHeight)
    {
 
       if(m_pdata != NULL)
@@ -172,7 +172,7 @@ namespace win
       return TRUE;
    
    }
-   BOOL bitmap::CreateDiscardableBitmap(::ca::graphics * pgraphics, int nWidth, int nHeight)
+   bool bitmap::CreateDiscardableBitmap(::ca::graphics * pgraphics, int nWidth, int nHeight)
    { 
 
       if(m_pdata != NULL)

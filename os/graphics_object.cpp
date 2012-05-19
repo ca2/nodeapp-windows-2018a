@@ -27,12 +27,12 @@ namespace win
       return 0;
    }
 #pragma pop_macro("GetObject")
-   BOOL graphics_object::CreateStockObject(int nIndex)
+   bool graphics_object::CreateStockObject(int nIndex)
    {
       //return (set_handle(::GetStockObject(nIndex))) != NULL; 
       return 0;
    }
-   BOOL graphics_object::UnrealizeObject()
+   bool graphics_object::UnrealizeObject()
    { 
       //ASSERT(get_handle() != NULL); return ::UnrealizeObject(get_handle()); 
       return 0;
@@ -42,12 +42,12 @@ namespace win
       //return (UINT)::GetObjectType(get_handle()); 
       return 0;
    }
-   BOOL graphics_object::operator==(const ::ca::graphics_object& obj) const
+   bool graphics_object::operator==(const ::ca::graphics_object& obj) const
    { 
       //return ((HGDIOBJ) obj.get_os_data()) == get_handle(); 
       return FALSE;
    }
-   BOOL graphics_object::operator!=(const ::ca::graphics_object& obj) const
+   bool graphics_object::operator!=(const ::ca::graphics_object& obj) const
    { 
       //return ((HGDIOBJ) obj.get_os_data()) != get_handle(); 
       return TRUE;
@@ -84,7 +84,7 @@ namespace win
       return pObject;
    }
 
-   BOOL graphics_object::Attach(HGDIOBJ hObject)
+   bool graphics_object::Attach(HGDIOBJ hObject)
    {
       if (hObject == NULL)
       {
@@ -116,7 +116,7 @@ namespace win
       return hObject;
    }*/
 
-   BOOL graphics_object::delete_object()
+   bool graphics_object::delete_object()
    {
       //if (get_os_data() == NULL)
         // return FALSE;
@@ -161,7 +161,7 @@ namespace win
 
 } // namespace win
 
-/*hgdiobj_map * PASCAL afxMapHGDIOBJ(BOOL bCreate)
+/*hgdiobj_map * PASCAL afxMapHGDIOBJ(bool bCreate)
 {
    UNREFERENCED_PARAMETER(bCreate);
    try

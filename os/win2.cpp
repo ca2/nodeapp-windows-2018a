@@ -20,9 +20,9 @@
       return pThread != NULL ? pThread->GetMainWnd() : NULL; 
  }
 
- CLASS_DECL_win BOOL __gen_get_ambient_act_ctx()
+ CLASS_DECL_win bool __gen_get_ambient_act_ctx()
    {    return afxAmbientActCtx; }
- CLASS_DECL_win void __set_ambient_act_ctx(BOOL bSet)
+ CLASS_DECL_win void __set_ambient_act_ctx(bool bSet)
    {  afxAmbientActCtx = bSet; }
 
 
@@ -42,7 +42,7 @@
 
 /*   if (m_bValidActCtxCookie)
    {
-      BOOL bRet;
+      bool bRet;
       bRet = __deactivate_act_ctx(0, m_ulActCtxCookie);
       ASSERT(bRet == TRUE);
    }*/
@@ -55,7 +55,7 @@
  // __is_valid_atom() returns TRUE if the passed parameter is 
 // a valid local or global atom.
 
-BOOL __is_valid_atom(ATOM nAtom)
+bool __is_valid_atom(ATOM nAtom)
 {
    char sBuffer[256];
    if (GetAtomName(nAtom, sBuffer, _countof(sBuffer)))
@@ -82,7 +82,7 @@ BOOL __is_valid_atom(ATOM nAtom)
 // __is_valid_address() returns TRUE if the passed parameter is 
 // a valid representation of a local or a global atom within a const char *.
 
-BOOL __is_valid_atom(const char * psz)
+bool __is_valid_atom(const char * psz)
 {
    return HIWORD(psz) == 0L && __is_valid_atom(ATOM(LOWORD(psz)));
 }

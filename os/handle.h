@@ -260,7 +260,7 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (::ca::app
    // C++ object to wrap it.  We don't want the ::fontopus::user to see this primitive::memory
    // allocation, so we turn tracing off.
 
-   //BOOL bEnable = __enable_memory_tracking(FALSE);
+   //bool bEnable = __enable_memory_tracking(FALSE);
 #ifndef ___PORTABLE
    _PNH pnhOldHandler = __set_new_handler(&__critical_new_handler);
 #endif
@@ -321,7 +321,7 @@ void handle_map < HT, CT >::set_permanent(HANDLE h, CT * permOb)
    
    single_lock sl(&m_mutex, TRUE);
 
-   //BOOL bEnable = __enable_memory_tracking(FALSE);
+   //bool bEnable = __enable_memory_tracking(FALSE);
    m_permanentMap[(LPVOID)h] = permOb;
    //__enable_memory_tracking(bEnable);
 
@@ -441,9 +441,9 @@ inline CT* handle_map <HT, CT>::lookup_temporary(HANDLE h)
 }
 
 
-CLASS_DECL_win hwnd_map * PASCAL afxMapHWND(BOOL bCreate = FALSE);
+CLASS_DECL_win hwnd_map * PASCAL afxMapHWND(bool bCreate = FALSE);
 CLASS_DECL_win mutex * PASCAL afxMutexHwnd();
-CLASS_DECL_win himagelist_map * PASCAL afxMapHIMAGELIST(BOOL bCreate = FALSE);
-//CLASS_DECL_win hdc_map * PASCAL afxMapHDC(BOOL bCreate = FALSE);
-//CLASS_DECL_win hgdiobj_map * PASCAL afxMapHGDIOBJ(BOOL bCreate = FALSE);
-//CLASS_DECL_win hmenu_map * PASCAL afx_map_HMENU(BOOL bCreate = FALSE);
+CLASS_DECL_win himagelist_map * PASCAL afxMapHIMAGELIST(bool bCreate = FALSE);
+//CLASS_DECL_win hdc_map * PASCAL afxMapHDC(bool bCreate = FALSE);
+//CLASS_DECL_win hgdiobj_map * PASCAL afxMapHGDIOBJ(bool bCreate = FALSE);
+//CLASS_DECL_win hmenu_map * PASCAL afx_map_HMENU(bool bCreate = FALSE);

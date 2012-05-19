@@ -39,7 +39,7 @@ class ___WIN_STATE : public no_track_object
 {
 public:
    // printing abort
-   BOOL m_bUserAbort;
+   bool m_bUserAbort;
 };
 
 EXTERN_PROCESS_LOCAL(___WIN_STATE, gen_WinState)
@@ -123,17 +123,17 @@ class CCommDlgWrapper;
 class CLASS_DECL_win __MODULE_STATE : public no_track_object
 {
 public:
-   __MODULE_STATE(BOOL bDLL, WNDPROC pfn_window_procedure, DWORD dwVersion,
-      BOOL bSystem = FALSE);
+   __MODULE_STATE(bool bDLL, WNDPROC pfn_window_procedure, DWORD dwVersion,
+      bool bSystem = FALSE);
    ~__MODULE_STATE();
 
    ::radix::application* m_pCurrentWinApp;
    HINSTANCE m_hCurrentInstanceHandle;
    HINSTANCE m_hCurrentResourceHandle;
    const char * m_lpszCurrentAppName;
-   BYTE m_bDLL;    // TRUE if module is a DLL, FALSE if it is an EXE
-   BYTE m_bSystem; // TRUE if module is a "system" module, FALSE if not
-   BYTE m_bReserved[2]; // padding
+   bool m_bDLL;    // TRUE if module is a DLL, FALSE if it is an EXE
+   bool m_bSystem; // TRUE if module is a "system" module, FALSE if not
+   bool m_bReserved[2]; // padding
 
    DWORD m_fRegisteredClasses; // flags for registered ::ca::window classes
 
@@ -150,7 +150,7 @@ public:
 
    // number of locked OLE objects
    long m_nObjectCount;
-   BOOL m_bUserCtrl;
+   bool m_bUserCtrl;
 
    // __register_class and System.RegisterWndClass data
 
@@ -170,7 +170,7 @@ public:
    //Fusion: declare pointer to base_array of pointers to isolation aware dll wrappers (ex: comctl32).
    CDllIsolationWrapperBase** m_pDllIsolationWrappers;
    //Defaults to TRUE. When FALSE - ca2 API will not activate context in __MAINTAIN_STATE2 (used by __MANAGE_STATE).
-   BOOL   m_bSetAmbientActCtx;
+   bool   m_bSetAmbientActCtx;
    //Handle of the module context.
    HANDLE   m_hActCtx;
    void CreateActivationContext();
@@ -178,8 +178,8 @@ public:
 
 CLASS_DECL_win __MODULE_STATE* __set_module_state(__MODULE_STATE* pNewState);
 CLASS_DECL_win __MODULE_STATE* __get_module_state();
-CLASS_DECL_win BOOL __is_module_dll();
-CLASS_DECL_win BOOL __init_current_state_app();
+CLASS_DECL_win bool __is_module_dll();
+CLASS_DECL_win bool __init_current_state_app();
 CLASS_DECL_win __MODULE_STATE* __get_static_module_state();
 CLASS_DECL_win HINSTANCE __get_instance_handle_helper();
 
@@ -210,7 +210,7 @@ protected:
    ___THREAD_STATE* m_pThreadState;
 
    ULONG_PTR m_ulActCtxCookie;
-   BOOL m_bValidActCtxCookie;
+   bool m_bValidActCtxCookie;
 };
 #define __MANAGE_STATE(p) _gen::InitManaged(); __MAINTAIN_STATE2 _ctlState(p);
 
@@ -269,18 +269,18 @@ public:
    HMENU m_hTrackingMenu;
    char m_szTempClassName[___TEMP_CLASS_NAME_SIZE];    // see System.RegisterWndClass
    HWND m_hLockoutNotifyWindow;    // see ::ca::window::OnCommand
-   BOOL m_bInMsgFilter;
+   bool m_bInMsgFilter;
 
    // other framework modal data
    CPushRoutingView* m_pPushRoutingView;
 
    // ca2 API/DB thread-local data
-   BOOL m_bWaitForDataSource;
+   bool m_bWaitForDataSource;
 
    // OLE control thread-local data
    ::ca::window * m_pWndPark;       // "parking space" ::ca::window
    long m_nCtrlRef;        // reference count on parking ::ca::window
-   BOOL m_bNeedTerm;       // TRUE if OleUninitialize needs to be called
+   bool m_bNeedTerm;       // TRUE if OleUninitialize needs to be called
 };
 
 EXTERN_THREAD_LOCAL(___THREAD_STATE, gen_ThreadState, slot___THREAD_STATE)
