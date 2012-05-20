@@ -187,7 +187,7 @@ namespace win
    }
 
 
-   INT_PTR font::get_os_data() const
+   int_ptr font::get_os_data() const
    {
       
       if(m_pfont == NULL || !m_bUpdated)
@@ -258,7 +258,7 @@ namespace win
          ((font *) this)->m_bUpdated = true;
       }
 
-      return (INT_PTR) (Gdiplus::Font *) m_pfont;
+      return (int_ptr) (Gdiplus::Font *) m_pfont;
 
    }
 

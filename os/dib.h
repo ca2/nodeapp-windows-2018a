@@ -16,10 +16,10 @@ namespace win
 
       static float Cosines[360];
       static float Sines[360];
-      static __int64 CosN[360]; // * 1 << 31
-      static __int64 SinN[360]; 
-      static __int64 Cos10N[10]; // until 10 degress
-      static __int64 Sin10N[10]; // more precision * 1 << 34
+      static int64_t CosN[360]; // * 1 << 31
+      static int64_t SinN[360]; 
+      static int64_t Cos10N[10]; // until 10 degress
+      static int64_t Sin10N[10]; // more precision * 1 << 34
       static double dPi;
 
       COLORREF *           m_pcolorref;

@@ -314,11 +314,24 @@
 
 #define __COMDAT __declspec(selectany)
 
-#define MAX_DWORD_PTR ((DWORD_PTR)(-1))
+#define MAX_DWORD_PTR ((dword_ptr)(-1))
 
 
 
 #define DECLSPEC_NO_RETURN __declspec(noreturn)
 
 
+typedef INT_PTR         int_ptr;
+typedef UINT_PTR        uint_ptr;
+typedef LONG_PTR        long_ptr;
+typedef ULONG_PTR       ulong_ptr;
+typedef DWORD_PTR       dword_ptr;
+
+
+
 #include "cross/cross.h"
+
+
+
+
+

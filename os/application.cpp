@@ -313,7 +313,7 @@ namespace win
       return ::win::thread::get_os_data();
    }
 
-   INT_PTR application::get_os_int()
+   int_ptr application::get_os_int()
    {
       return ::win::thread::get_os_int();
    }

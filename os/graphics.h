@@ -492,7 +492,7 @@ namespace win
 
       virtual void set_text_rendering(::ca::e_text_rendering etextrendering);
 
-      virtual INT_PTR get_os_data() const;
+      virtual int_ptr get_os_data() const;
       virtual HDC get_handle() const;
       virtual HDC get_handle1() const;
       virtual HDC get_handle2() const;

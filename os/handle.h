@@ -43,35 +43,35 @@ template <>
 inline UINT HashKey < HWND >(HWND key)
 {
    // default identity hash - works for most primitive values
-   return (DWORD)((DWORD_PTR)key);
+   return (DWORD)((dword_ptr)key);
 }
 
 template <>
 inline UINT HashKey < HMENU >(HMENU key)
 {
    // default identity hash - works for most primitive values
-   return (DWORD)((DWORD_PTR)key);
+   return (DWORD)((dword_ptr)key);
 }
 
 template <>
 inline UINT HashKey < HDC >(HDC key)
 {
    // default identity hash - works for most primitive values
-   return (DWORD)((DWORD_PTR)key);
+   return (DWORD)((dword_ptr)key);
 }
 
 template <>
 inline UINT HashKey < HGDIOBJ >(HGDIOBJ key)
 {
    // default identity hash - works for most primitive values
-   return (DWORD)((DWORD_PTR)key);
+   return (DWORD)((dword_ptr)key);
 }
 
 template <>
 inline UINT HashKey < HIMAGELIST >(HIMAGELIST key)
 {
    // default identity hash - works for most primitive values
-   return (DWORD)((DWORD_PTR)key);
+   return (DWORD)((dword_ptr)key);
 }
 
 
@@ -241,9 +241,9 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (::ca::app
       return NULL;
 
    CT* pObject = lookup_permanent(h);
-   if (pObject != NULL && pObject->get_os_data() == (INT_PTR) h)
+   if (pObject != NULL && pObject->get_os_data() == (int_ptr) h)
       return pObject;   // return permanent one
-   else if ((pObject = lookup_temporary(h)) != NULL && pObject->get_os_data() == (INT_PTR) h)
+   else if ((pObject = lookup_temporary(h)) != NULL && pObject->get_os_data() == (int_ptr) h)
    {
       HANDLE* ph = pObject->m_handlea;
       ASSERT(ph[0] == h || ph[0] == NULL);
@@ -419,7 +419,7 @@ inline CT* handle_map <HT, CT>::lookup_permanent(HANDLE h)
    single_lock sl(&m_mutex, TRUE);
 
    CT * pt = m_permanentMap.get(h, (CT*) NULL);
-   if(pt != NULL && pt->get_os_data() == (INT_PTR) h)
+   if(pt != NULL && pt->get_os_data() == (int_ptr) h)
       return pt;
    else
       return NULL;
@@ -433,7 +433,7 @@ inline CT* handle_map <HT, CT>::lookup_temporary(HANDLE h)
    single_lock sl(&m_mutex, TRUE);
 
    CT * pt = m_temporaryMap.get(h, (CT*) NULL); 
-   if(pt != NULL && pt->get_os_data() == (INT_PTR) h)
+   if(pt != NULL && pt->get_os_data() == (int_ptr) h)
       return pt;
    else
       return NULL;

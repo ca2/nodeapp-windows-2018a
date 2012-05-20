@@ -594,12 +594,12 @@ namespace win
 
    }
 
-   INT_PTR thread::get_os_data() const
+   int_ptr thread::get_os_data() const
    {
-      return (INT_PTR) m_hThread;
+      return (int_ptr) m_hThread;
    }
 
-   INT_PTR thread::get_os_int() const
+   int_ptr thread::get_os_int() const
    {
       return m_nThreadID;
    }
@@ -722,7 +722,7 @@ namespace win
       return m_puiptra->element_at(iIndex);
    }
 
-   void thread::set_timer(::user::interaction * pui, UINT_PTR nIDEvent, UINT nEllapse)
+   void thread::set_timer(::user::interaction * pui, uint_ptr nIDEvent, UINT nEllapse)
    {
       if(m_spwindowMessage.is_null())
       {
@@ -741,11 +741,11 @@ namespace win
       sl.unlock();
       if(m_spwindowMessage->IsWindow())
       {
-         m_spwindowMessage->SetTimer((UINT_PTR)-2, iMin, NULL);
+         m_spwindowMessage->SetTimer((uint_ptr)-2, iMin, NULL);
       }
    }
 
-   void thread::unset_timer(::user::interaction * pui, UINT_PTR nIDEvent)
+   void thread::unset_timer(::user::interaction * pui, uint_ptr nIDEvent)
    {
       m_ptimera->unset(pui, nIDEvent);
    }
@@ -830,7 +830,7 @@ namespace win
 #ifdef _WIN32
 //   m_thread = ::CreateThread(NULL, 0, StartThread, this, 0, &m_dwThreadId);
    // create the thread (it may or may not start to run)
-   m_hThread = (HANDLE)(ULONG_PTR)_beginthreadex(lpSecurityAttrs, nStackSize,  
+   m_hThread = (HANDLE)(ulong_ptr)_beginthreadex(lpSecurityAttrs, nStackSize,  
       &__thread_entry, &startup, dwCreateFlags | CREATE_SUSPENDED, (UINT*)&m_nThreadID);
 #else
    pthread_attr_t attr;
@@ -1721,7 +1721,7 @@ stop_run:
       m_hThread = (HANDLE) pvoidOsData;
    }
 
-   void thread::set_os_int(INT_PTR iData)
+   void thread::set_os_int(int_ptr iData)
    {
       m_nThreadID = (DWORD) iData;
    }
@@ -2278,7 +2278,7 @@ return FALSE;
 #ifdef _WIN32
 //   m_thread = ::CreateThread(NULL, 0, StartThread, this, 0, &m_dwThreadId);
 // create the thread (it may or may not start to run)
-m_hThread = (HANDLE)(ULONG_PTR)_beginthreadex(lpSecurityAttrs, nStackSize,  
+m_hThread = (HANDLE)(ulong_ptr)_beginthreadex(lpSecurityAttrs, nStackSize,  
 &__thread_entry, &startup, dwCreateFlags | CREATE_SUSPENDED, (UINT*)&m_nThreadID);
 #else
 pthread_attr_t attr;

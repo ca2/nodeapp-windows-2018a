@@ -76,7 +76,7 @@ namespace win
    #endif   // WINVER >= 0x0500
 
       virtual ::ca::window * from_os_data(void * pdata);
-      virtual INT_PTR get_os_data() const;
+      virtual int_ptr get_os_data() const;
 
       static window * PASCAL from_handle(HWND hWnd);
       static window * PASCAL FromHandlePermanent(HWND hWnd);
@@ -275,9 +275,9 @@ namespace win
 
 
    // Timer Functions
-      virtual UINT_PTR SetTimer(UINT_PTR nIDEvent, UINT nElapse,
-         void (CALLBACK* lpfnTimer)(HWND, UINT, UINT_PTR, DWORD));
-      virtual bool KillTimer(UINT_PTR nIDEvent);
+      virtual uint_ptr SetTimer(uint_ptr nIDEvent, UINT nElapse,
+         void (CALLBACK* lpfnTimer)(HWND, UINT, uint_ptr, DWORD));
+      virtual bool KillTimer(uint_ptr nIDEvent);
 
    // Window State Functions
       virtual bool IsWindowEnabled();
@@ -429,9 +429,9 @@ namespace win
       void OnHelpIndex();     // ID_HELP_INDEX
       void OnHelpFinder();    // ID_HELP_FINDER, ID_DEFAULT_HELP
       void OnHelpUsing();     // ID_HELP_USING
-      virtual void WinHelp(DWORD_PTR dwData, UINT nCmd = HELP_CONTEXT);
-      //virtual void HtmlHelp(DWORD_PTR dwData, UINT nCmd = 0x000F);
-      virtual void WinHelpInternal(DWORD_PTR dwData, UINT nCmd = HELP_CONTEXT);
+      virtual void WinHelp(dword_ptr dwData, UINT nCmd = HELP_CONTEXT);
+      //virtual void HtmlHelp(dword_ptr dwData, UINT nCmd = 0x000F);
+      virtual void WinHelpInternal(dword_ptr dwData, UINT nCmd = HELP_CONTEXT);
 
    // layout and other functions
    /*   void RepositionBars(const char * pszPrefix, const char * pszIdLeftOver,
@@ -556,7 +556,7 @@ namespace win
       void OnRButtonDown(UINT nFlags, point point);
       void OnRButtonUp(UINT nFlags, point point);
       DECL_GEN_SIGNAL(_001OnSetCursor)
-      void OnTimer(UINT_PTR nIDEvent);
+      void OnTimer(uint_ptr nIDEvent);
 
    // Initialization message handler member functions
       void OnInitMenu(::userbase::menu* pMenu);
@@ -595,7 +595,7 @@ namespace win
       void OnSizing(UINT nSide, LPRECT lpRect);
       void OnMoving(UINT nSide, LPRECT lpRect);
       void OnCaptureChanged(::ca::window * pWnd);
-      bool OnDeviceChange(UINT nEventType, DWORD_PTR dwData);
+      bool OnDeviceChange(UINT nEventType, dword_ptr dwData);
 
    // Overridables and other helpers (for implementation of derived classes)
       // for deriving from a standard control

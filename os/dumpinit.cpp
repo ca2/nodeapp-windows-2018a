@@ -27,7 +27,7 @@ void __cdecl __crt_dump_client(void * pvData, size_t nBytes)
       {
          try
          {
-            pobject = dynamic_cast < ::radix::object * > ((::radix::object *)&((INT_PTR *)pca)[i]);
+            pobject = dynamic_cast < ::radix::object * > ((::radix::object *)&((int_ptr *)pca)[i]);
          }
          catch(std::__non_rtti_object & e)
          {

@@ -8,7 +8,7 @@ public:
 
 // Attributes
 public:
-   __int64 get_length() const;
+   int64_t get_length() const;
    virtual string GetFileName() const;
    virtual string GetFilePath() const;
    virtual string GetFileTitle() const;

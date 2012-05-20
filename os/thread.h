@@ -55,11 +55,11 @@ namespace win
 
       UINT                                m_dwFinishTimeout;
 
-      virtual INT_PTR get_os_data() const;
-      virtual INT_PTR get_os_int() const;
+      virtual int_ptr get_os_data() const;
+      virtual int_ptr get_os_int() const;
 
       void set_os_data(void * pvoidOsData);
-      void set_os_int(INT_PTR iData);
+      void set_os_int(int_ptr iData);
 
       virtual void set_p(::radix::thread * p);
 
@@ -85,8 +85,8 @@ namespace win
       virtual void remove(::user::interaction * pui);
       virtual ::count get_ui_count();
       virtual ::user::interaction * get_ui(::index iIndex);
-      virtual void set_timer(::user::interaction * pui, UINT_PTR nIDEvent, UINT nEllapse);
-      virtual void unset_timer(::user::interaction * pui, UINT_PTR nIDEvent);
+      virtual void set_timer(::user::interaction * pui, uint_ptr nIDEvent, UINT nEllapse);
+      virtual void unset_timer(::user::interaction * pui, uint_ptr nIDEvent);
       virtual void set_auto_delete(bool bAutoDelete = true);
       virtual void set_run(bool bRun = true);
       virtual event & get_finish_event();

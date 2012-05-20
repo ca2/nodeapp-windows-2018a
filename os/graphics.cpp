@@ -2017,9 +2017,9 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    {
       int nRetVal = GDI_ERROR;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
-         nRetVal = (int)(INT_PTR)::SelectObject(get_handle1(), (HGDIOBJ) pRgn->get_os_data());
+         nRetVal = (int)(int_ptr)::SelectObject(get_handle1(), (HGDIOBJ) pRgn->get_os_data());
       if(get_handle2() != NULL)
-         nRetVal = (int)(INT_PTR)::SelectObject(get_handle2(), (HGDIOBJ) pRgn->get_os_data());
+         nRetVal = (int)(int_ptr)::SelectObject(get_handle2(), (HGDIOBJ) pRgn->get_os_data());
       return nRetVal;
    }
 
@@ -2951,7 +2951,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       m_pgraphics->MeasureString(wstr, (int) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, &strFormat,  &box);
 
-      return size((__int64) (box.Width * m_fontxyz.m_dFontWidth), (__int64) (box.Height));
+      return size((int64_t) (box.Width * m_fontxyz.m_dFontWidth), (int64_t) (box.Height));
 
       /*if(get_handle2() == NULL)
          return size(0, 0);
@@ -3673,9 +3673,9 @@ namespace win
    }
 
 
-   INT_PTR graphics::get_os_data() const
+   int_ptr graphics::get_os_data() const
    {
-      return (INT_PTR) m_pgraphics;
+      return (int_ptr) m_pgraphics;
    }
 
    HDC graphics::get_handle() const

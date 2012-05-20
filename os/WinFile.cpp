@@ -89,7 +89,7 @@ bool WinFile::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_excepti
    m_strFileName     = lpszFileName;
    m_wstrFileName    = gen::international::utf8_to_unicode(m_strFileName);
 
-   ASSERT(sizeof(HANDLE) == sizeof(UINT_PTR));
+   ASSERT(sizeof(HANDLE) == sizeof(uint_ptr));
    ASSERT(shareCompat == 0);
 
    // ::collection::map read/write mode

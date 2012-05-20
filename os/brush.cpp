@@ -114,7 +114,7 @@ namespace win
       VERIFY(GetObject(sizeof(lb), &lb));
       dumpcontext << "lb.lbStyle = " << lb.lbStyle;
       dumpcontext << "\nlb.lbHatch = " << lb.lbHatch;
-      dumpcontext << "\nlb.lbColor = " << (void *)(DWORD_PTR)lb.lbColor;
+      dumpcontext << "\nlb.lbColor = " << (void *)(dword_ptr)lb.lbColor;
 
       dumpcontext << "\n";
       */
@@ -122,7 +122,7 @@ namespace win
 
 
 
-   INT_PTR brush::get_os_data() const
+   int_ptr brush::get_os_data() const
    {
       
       if(m_pbrush == NULL || !m_bUpdated)
@@ -139,7 +139,7 @@ namespace win
          ((brush *) this)->m_bUpdated = true;
       }
 
-      return (INT_PTR) (Gdiplus::Brush *) m_pbrush;
+      return (int_ptr) (Gdiplus::Brush *) m_pbrush;
 
    }
 

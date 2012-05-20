@@ -154,7 +154,7 @@ namespace win
    return get_os_data();
    }*/
 
-   INT_PTR graphics_object::get_os_data() const
+   int_ptr graphics_object::get_os_data() const
    {
       return NULL;
    }

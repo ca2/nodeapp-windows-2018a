@@ -27,7 +27,7 @@ namespace win
       bool CreatePen(int nPenStyle, double nWidth, const LOGBRUSH* pLogBrush, int nStyleCount = 0, const DWORD* lpStyle = NULL);*/
 
 
-      virtual INT_PTR get_os_data() const;
+      virtual int_ptr get_os_data() const;
 
 
       virtual ~pen();

@@ -99,9 +99,9 @@ public:
    // common controls thread state
    CToolTipCtrl* m_pToolTip;
    ::ca::window * m_pLastHit;       // last ::ca::window to own tooltip
-   INT_PTR m_nLastHit;         // last hittest code
+   int_ptr m_nLastHit;         // last hittest code
    TOOLINFO* m_pLastInfo;    // last TOOLINFO structure
-   INT_PTR m_nLastStatus;      // last flyby status message
+   int_ptr m_nLastStatus;      // last flyby status message
    ::userbase::control_bar* m_pLastStatus; // last flyby status control bar
 };
 
@@ -209,7 +209,7 @@ protected:
    __MODULE_STATE* m_pPrevModuleState;
    ___THREAD_STATE* m_pThreadState;
 
-   ULONG_PTR m_ulActCtxCookie;
+   ulong_ptr m_ulActCtxCookie;
    bool m_bValidActCtxCookie;
 };
 #define __MANAGE_STATE(p) _gen::InitManaged(); __MAINTAIN_STATE2 _ctlState(p);

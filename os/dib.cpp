@@ -14,11 +14,11 @@ namespace win
    float dib::Cosines[360];
    float dib::Sines[360];
 
-   __int64 dib::CosN[360]; // * 1 << 31
-   __int64 dib::SinN[360]; 
+   int64_t dib::CosN[360]; // * 1 << 31
+   int64_t dib::SinN[360]; 
 
-   __int64 dib::Cos10N[10]; // until 10 degress
-   __int64 dib::Sin10N[10]; // more precision * 1 << 34
+   int64_t dib::Cos10N[10]; // until 10 degress
+   int64_t dib::Sin10N[10]; // more precision * 1 << 34
 
    double dib::dPi;
 
@@ -59,8 +59,8 @@ namespace win
          dSin = ::sin ( i/180.0*dPi );
          Cosines[i]=float(dCos);
          Sines[i]=float(dSin);
-         CosN[i] = (__int64) (dCos * d32);
-         SinN[i] = (__int64) (dSin * d32);
+         CosN[i] = (int64_t) (dCos * d32);
+         SinN[i] = (int64_t) (dSin * d32);
       }
       d32 = (1U << 31);
       d32 *= 8;
@@ -68,8 +68,8 @@ namespace win
       {
          dCos = ::cos ( i/180.0*dPi );
          dSin = ::sin ( i/180.0*dPi );
-         Cos10N[i] = (__int64) (dCos * d32);
-         Sin10N[i] = (__int64) (dSin * d32);
+         Cos10N[i] = (int64_t) (dCos * d32);
+         Sin10N[i] = (int64_t) (dSin * d32);
       }
    }
 
@@ -312,7 +312,7 @@ namespace win
    void dib::from_alpha()
    {
       BYTE *dst=(BYTE*)m_pcolorref;
-      __int64 size = m_size.area();
+      int64_t size = m_size.area();
 
       while ( size-- )
       {
@@ -495,11 +495,11 @@ namespace win
 
    void dib::channel_invert(visual::rgba::echannel echannel)
    {
-      __int64 size   = m_size.area();
-      register __int64 size64 = size / 64;
+      int64_t size   = m_size.area();
+      register int64_t size64 = size / 64;
       LPBYTE lpb = (LPBYTE) m_pcolorref;
       lpb += ((int)echannel) % 4;
-      register __int64 i = 0;
+      register int64_t i = 0;
       for(; i < size64; i++)
       {
          lpb[4 *  0] = 255 - lpb[4 *  0];
@@ -581,13 +581,13 @@ namespace win
    {
       if(dRate < 0)
          return;
-      register __int64 size = area();
+      register int64_t size = area();
       LPBYTE lpb = (LPBYTE) get_data();
       lpb += ((int)echannel) % 4;
       register int iDiv = 256 * 256;
       register int iMul = (int) (dRate * ((double) iDiv));
       register int iRes;
-      for(register __int64 i = 0; i < size; i++)
+      for(register int64_t i = 0; i < size; i++)
       {
          iRes = *lpb * iMul / iDiv; 
          *lpb = (byte) (iRes > 255 ? 255 : iRes);
@@ -1324,7 +1324,7 @@ namespace win
    void dib::transparent_color(color color)
    {
       COLORREF crFind = color.get_rgb();
-      __int64 size = area();
+      int64_t size = area();
 
       for ( int i=0; i<size; i++ )
          if((m_pcolorref[i] & 0x00ffffff) == crFind)

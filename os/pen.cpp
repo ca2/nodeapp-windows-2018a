@@ -87,7 +87,7 @@ namespace win
       VERIFY(GetObject(sizeof(lp), &lp));
       dumpcontext << "lgpn.lopnStyle = " << lp.lopnStyle;
       dumpcontext << "\nlgpn.lopnWidth.x (width) = " << lp.lopnWidth.x;
-      dumpcontext << "\nlgpn.lopnColor = " << (void *)(DWORD_PTR)lp.lopnColor;
+      dumpcontext << "\nlgpn.lopnColor = " << (void *)(dword_ptr)lp.lopnColor;
 
       dumpcontext << "\n";*/
    }
@@ -353,7 +353,7 @@ namespace win
 
 */
 
-   INT_PTR pen::get_os_data() const
+   int_ptr pen::get_os_data() const
    {
       
       if(m_ppen == NULL || !m_bUpdated)
@@ -378,7 +378,7 @@ namespace win
          ((pen *) this)->m_bUpdated = true;
       }
 
-      return (INT_PTR) (Gdiplus::Pen *) m_ppen;
+      return (int_ptr) (Gdiplus::Pen *) m_ppen;
 
    }
 

@@ -22,7 +22,7 @@ namespace win
       draw_dib(::ca::application * papp);
       virtual ~draw_dib ();
 
-      virtual INT_PTR get_os_data();
+      virtual int_ptr get_os_data();
 
       bool open ();
       bool close ();

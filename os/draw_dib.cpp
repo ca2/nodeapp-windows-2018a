@@ -23,9 +23,9 @@ namespace win
       close();
    }
 
-   INT_PTR draw_dib::get_os_data()
+   int_ptr draw_dib::get_os_data()
    {
-      return (INT_PTR) m_hdrawdib;
+      return (int_ptr) m_hdrawdib;
    }
 
    bool draw_dib::open()

@@ -90,9 +90,9 @@ namespace win
       return dynamic_cast <::ca::window *>(from_handle((HWND) pdata));   
    }
 
-   INT_PTR window::get_os_data() const
+   int_ptr window::get_os_data() const
    {
-      return (INT_PTR) get_handle();
+      return (int_ptr) get_handle();
    }
 
 
@@ -393,7 +393,7 @@ namespace win
 
       if(m_papp != NULL && m_papp->m_psystem != NULL && Sys(m_papp).m_pwindowmap != NULL)
       {
-         Sys(m_papp).m_pwindowmap->m_map.remove_key((INT_PTR) get_handle());
+         Sys(m_papp).m_pwindowmap->m_map.remove_key((int_ptr) get_handle());
       }
 
       single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_mutex, TRUE);
@@ -543,7 +543,7 @@ namespace win
       {
          WNDPROC pfnSuper = *GetSuperWndProcAddr();
          if (pfnSuper != NULL)
-            SetWindowLongPtr(get_handle(), GWLP_WNDPROC, reinterpret_cast<INT_PTR>(pfnSuper));
+            SetWindowLongPtr(get_handle(), GWLP_WNDPROC, reinterpret_cast<int_ptr>(pfnSuper));
       }
       Detach();
       ASSERT(get_handle() == NULL);
@@ -666,7 +666,7 @@ namespace win
       dumpcontext << "\nrect = " << rect;
       dumpcontext << "\nparent ::ca::window * = " << (void *)((::ca::window *) this)->GetParent();
 
-      dumpcontext << "\nstyle = " << (void *)(DWORD_PTR)::GetWindowLong(get_handle(), GWL_STYLE);
+      dumpcontext << "\nstyle = " << (void *)(dword_ptr)::GetWindowLong(get_handle(), GWL_STYLE);
       if (::GetWindowLong(get_handle(), GWL_STYLE) & WS_CHILD)
          dumpcontext << "\nid = " << __get_dialog_control_id(get_handle());
 
@@ -964,7 +964,7 @@ namespace win
    /////////////////////////////////////////////////////////////////////////////
    // window extensions for help support
 
-   void window::WinHelp(DWORD_PTR dwData, UINT nCmd)
+   void window::WinHelp(dword_ptr dwData, UINT nCmd)
    {
       UNREFERENCED_PARAMETER(dwData);
       UNREFERENCED_PARAMETER(nCmd);
@@ -992,7 +992,7 @@ namespace win
       }*/
    }
 
-   //void window::HtmlHelp(DWORD_PTR dwData, UINT nCmd)
+   //void window::HtmlHelp(dword_ptr dwData, UINT nCmd)
    //{
    // throw not_implemented_exception();
    /*
@@ -1045,7 +1045,7 @@ namespace win
    }
 
 
-   void window::WinHelpInternal(DWORD_PTR dwData, UINT nCmd)
+   void window::WinHelpInternal(dword_ptr dwData, UINT nCmd)
    {
       UNREFERENCED_PARAMETER(dwData);
       UNREFERENCED_PARAMETER(nCmd);
@@ -1441,7 +1441,7 @@ restart_mouse_hover_check:
    bHandled = FALSE;
 
    const __MSGMAP* pMessageMap; pMessageMap = GetMessageMap();
-   UINT iHash; iHash = (LOWORD((DWORD_PTR)pMessageMap) ^ message) & (iHashMax-1);
+   UINT iHash; iHash = (LOWORD((dword_ptr)pMessageMap) ^ message) & (iHashMax-1);
    winMsgLock.lock(CRIT_WINMSGCACHE);
    __MSG_CACHE* pMsgCache; pMsgCache = &gen_MsgCache[iHash];
    const __MSGMAP_ENTRY* lpEntry;
@@ -1889,7 +1889,7 @@ restart_mouse_hover_check:
       HWND hWndCtrl = pNMHDR->hwndFrom;
 
       // get the child ID from the window itself
-      //      UINT_PTR nID = __get_dialog_control_id(hWndCtrl);
+      //      uint_ptr nID = __get_dialog_control_id(hWndCtrl);
       //      int nCode = pNMHDR->code;
 
       ASSERT(hWndCtrl != NULL);
@@ -3815,7 +3815,7 @@ ExitModal:
       // now hook into the AFX WndProc
       WNDPROC* lplpfn = GetSuperWndProcAddr();
       WNDPROC oldWndProc = (WNDPROC)::SetWindowLongPtr(hWnd, GWLP_WNDPROC,
-         (INT_PTR)__get_window_procedure());
+         (int_ptr)__get_window_procedure());
       ASSERT(oldWndProc != __get_window_procedure());
 
       if (*lplpfn == NULL)
@@ -3825,11 +3825,11 @@ ExitModal:
       {
          TRACE(::radix::trace::category_AppMsg, 0, "p: Trying to use SubclassWindow with incorrect window\n");
          TRACE(::radix::trace::category_AppMsg, 0, "\tderived class.\n");
-         TRACE(::radix::trace::category_AppMsg, 0, "\thWnd = $%08X (nIDC=$%08X) is not a %hs.\n", (UINT)(UINT_PTR)hWnd,
+         TRACE(::radix::trace::category_AppMsg, 0, "\thWnd = $%08X (nIDC=$%08X) is not a %hs.\n", (UINT)(uint_ptr)hWnd,
             __get_dialog_control_id(hWnd), typeid(*this).name());
          ASSERT(FALSE);
          // undo the subclassing if continuing after assert
-         ::SetWindowLongPtr(hWnd, GWLP_WNDPROC, (INT_PTR)oldWndProc);
+         ::SetWindowLongPtr(hWnd, GWLP_WNDPROC, (int_ptr)oldWndProc);
       }
 #endif
       ::gen::message::size size(get_app());
@@ -3857,7 +3857,7 @@ ExitModal:
 
       // set WNDPROC back to original value
       WNDPROC* lplpfn = GetSuperWndProcAddr();
-      SetWindowLongPtr(get_handle(), GWLP_WNDPROC, (INT_PTR)*lplpfn);
+      SetWindowLongPtr(get_handle(), GWLP_WNDPROC, (int_ptr)*lplpfn);
       *lplpfn = NULL;
 
       // and Detach the HWND from the window object
@@ -4714,7 +4714,7 @@ ExitModal:
    
    }
 
-   UINT_PTR window::SetTimer(UINT_PTR nIDEvent, UINT nElapse, void (CALLBACK* lpfnTimer)(HWND, UINT, UINT_PTR, DWORD))
+   uint_ptr window::SetTimer(uint_ptr nIDEvent, UINT nElapse, void (CALLBACK* lpfnTimer)(HWND, UINT, uint_ptr, DWORD))
    { 
       
       ASSERT(::IsWindow(get_handle())); 
@@ -4723,7 +4723,7 @@ ExitModal:
    
    }
 
-   bool window::KillTimer(UINT_PTR nIDEvent)
+   bool window::KillTimer(uint_ptr nIDEvent)
    {
       
       ASSERT(::IsWindow(get_handle()));
@@ -5341,7 +5341,7 @@ ExitModal:
    { Default(); }
    void window::OnRButtonUp(UINT, point)
    { Default(); }
-   void window::OnTimer(UINT_PTR)
+   void window::OnTimer(uint_ptr)
    { Default(); }
    void window::OnInitMenu(::userbase::menu*)
    { Default(); }
@@ -5395,7 +5395,7 @@ ExitModal:
    void window::OnCaptureChanged(::ca::window *)
    { Default(); }
    
-   bool window::OnDeviceChange(UINT, DWORD_PTR)
+   bool window::OnDeviceChange(UINT, dword_ptr)
    {
       
       return Default() != FALSE;
@@ -5630,7 +5630,7 @@ run:
             // get class name of the window that is being created
             const char * pszClassName;
             char szClassName[_countof("ime")+1];
-            if (DWORD_PTR(lpcs->lpszClass) > 0xffff)
+            if (dword_ptr(lpcs->lpszClass) > 0xffff)
             {
                pszClassName = lpcs->lpszClass;
             }
@@ -5671,7 +5671,7 @@ run:
             // subclass the window with standard __window_procedure
             WNDPROC afxWndProc = __get_window_procedure();
             oldWndProc = (WNDPROC)SetWindowLongPtr(hWnd, GWLP_WNDPROC,
-               (DWORD_PTR)afxWndProc);
+               (dword_ptr)afxWndProc);
             ASSERT(oldWndProc != NULL);
             if (oldWndProc != afxWndProc)
                *pOldWndProc = oldWndProc;
@@ -5720,7 +5720,7 @@ run:
                   if ((WNDPROC)GetProp(hWnd, gen_OldWndProc) == oldWndProc)
                   {
                      GlobalAddAtom(gen_OldWndProc);
-                     SetWindowLongPtr(hWnd, GWLP_WNDPROC, (DWORD_PTR)__activation_window_procedure);
+                     SetWindowLongPtr(hWnd, GWLP_WNDPROC, (dword_ptr)__activation_window_procedure);
                      ASSERT(oldWndProc != NULL);
                   }
                }
@@ -5746,7 +5746,7 @@ lCallNextHook:
 
    void window::_001BaseWndInterfaceMap()
    {
-      System.window_map().set((INT_PTR)get_handle(), this);
+      System.window_map().set((int_ptr)get_handle(), this);
    }
 
 
@@ -6224,7 +6224,7 @@ LRESULT CALLBACK
          break;
 
       case WM_NCDESTROY:
-         SetWindowLongPtr(hWnd, GWLP_WNDPROC, reinterpret_cast<INT_PTR>(oldWndProc));
+         SetWindowLongPtr(hWnd, GWLP_WNDPROC, reinterpret_cast<int_ptr>(oldWndProc));
          RemoveProp(hWnd, gen_OldWndProc);
          GlobalDeleteAtom(GlobalFindAtom(gen_OldWndProc));
          break;
@@ -6371,7 +6371,7 @@ namespace win
       if(GetExStyle() & WS_EX_LAYERED)
       {
          BYTE *dst=(BYTE*)pcolorref;
-         __int64 size = cx * cy;
+         int64_t size = cx * cy;
 
 
          // >> 8 instead of / 255 subsequent alpha_blend operations say thanks on true_blend because (255) * (1/254) + (255) * (254/255) > 255

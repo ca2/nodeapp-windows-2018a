@@ -45,7 +45,7 @@ namespace win
       bool RectInRegion(LPCRECT lpRect) const;
       int GetRegionData(LPRGNDATA lpRgnData, int nCount) const;
 
-      virtual INT_PTR get_os_data() const;
+      virtual int_ptr get_os_data() const;
 
    };
 

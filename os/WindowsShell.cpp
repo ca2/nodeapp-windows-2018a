@@ -494,7 +494,7 @@ BOOL WINAPI WindowsShell::_GetVolumeInformation(
    return b;
 }
 
-DWORD_PTR WindowsShell::_SHGetFileInfo(      
+dword_ptr WindowsShell::_SHGetFileInfo(      
    const wchar_t * pszPath,
    DWORD dwFileAttributes,
    SHFILEINFOW *psfi,
