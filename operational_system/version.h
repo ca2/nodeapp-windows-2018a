@@ -39,13 +39,13 @@
 //   _CUSTOM   : for custom configurations (causes afxv_cfg.h to be included)
 //
 // Additional build options:
-//  _DEBUG              debug versions (full diagnostics)
+//  DEBUG              debug versions (full diagnostics)
 //  _ApplicationFrameworkDLL             use shared MFC DLL
 //  _AFXEXT             extension DLL version, implies _ApplicationFrameworkDLL
 //  _USRDLL             create regular DLL (_ApplicationFrameworkDLL is valid too)
 //
 
-#ifndef _DEBUG
+#ifndef DEBUG
 #ifndef ___DISABLE_INLINES
 //	#define ___ENABLE_INLINES
 #endif
@@ -82,11 +82,11 @@
 #include "v_w32.h"
 
 // Include any non-Intel platform specific items
-#ifndef _X86_
+#ifndef X86
 	#include "v_cpu.h"
 #endif
 
-#ifdef _X86_
+#ifdef X86
 	#define ___MINREBUILD
 #endif
 
@@ -125,12 +125,12 @@
 #endif
 #endif
 
-/*#ifndef _DEBUG
+/*#ifndef DEBUG
 #ifdef __debug_break
 #undef __debug_break
 #endif
 #define __debug_break()
-#endif  // _DEBUG*/
+#endif  // DEBUG*/
 
 /////////////////////////////////////////////////////////////////////////////
 // Standard preprocessor symbols if not already defined
@@ -241,7 +241,7 @@
 // This macro is used to reduce size requirements of some classes
 #ifndef __ALWAYS_VTABLE
 #ifndef __NOVTABLE
-#if _MSC_VER >= 1100 && !defined(_DEBUG)
+#if _MSC_VER >= 1100 && !defined(DEBUG)
 #define __NOVTABLE __declspec(novtable)
 #else
 #define __NOVTABLE

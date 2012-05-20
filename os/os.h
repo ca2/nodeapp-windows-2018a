@@ -36,7 +36,7 @@ CLASS_DECL_win void __set_alloc_stop(LONG lRequestNumber);
 
 
 
-#ifdef _DEBUG
+#ifdef DEBUG
 
 // Return TRUE if primitive::memory is sane or print out what is wrong
 CLASS_DECL_win bool __check_memory();

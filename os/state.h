@@ -18,7 +18,7 @@ namespace win
 /////////////////////////////////////////////////////////////////////////////
 // ___DEBUG_STATE
 
-#ifdef _DEBUG
+#ifdef DEBUG
 
 class ___DEBUG_STATE : public no_track_object
 {
@@ -29,7 +29,7 @@ public:
 
 EXTERN_PROCESS_LOCAL(___DEBUG_STATE, afxDebugState)
 
-#endif //_DEBUG
+#endif //DEBUG
 
 /////////////////////////////////////////////////////////////////////////////
 // ___WIN_STATE
@@ -259,7 +259,7 @@ public:
    point m_ptCursorLast;          // last mouse position
    UINT m_nMsgLast;                // last mouse message
 
-#ifdef _DEBUG
+#ifdef DEBUG
       int m_nDisablePumpCount; // Diagnostic trap to detect illegal re-entrancy
 #endif
 

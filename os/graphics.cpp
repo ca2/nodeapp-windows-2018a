@@ -1878,7 +1878,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    void graphics::SetOutputDC(HDC hDC)  // Set the Output DC
    {
-#ifdef _DEBUG
+#ifdef DEBUG
 /*      hdc_map* pMap = afxMapHDC();
       if (pMap != NULL && pMap->lookup_permanent(get_handle1()) == this)
       {
@@ -1896,7 +1896,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    void graphics::ReleaseOutputDC()     // Release the Output DC
    {
-#ifdef _DEBUG
+#ifdef DEBUG
 /*      hdc_map* pMap = afxMapHDC();
       if (pMap != NULL && pMap->lookup_permanent(get_handle1()) == this)
       {

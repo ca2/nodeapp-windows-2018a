@@ -290,7 +290,7 @@ namespace win
          cs.lpszName, cs.style, cs.x, cs.y, cs.cx, cs.cy,
          cs.hwndParent, cs.hMenu, cs.hInstance, cs.lpCreateParams);
 
-#ifdef _DEBUG
+#ifdef DEBUG
       if (hWnd == NULL)
       {
          DWORD dwLastError = GetLastError();
@@ -695,7 +695,7 @@ namespace win
          if(pMap != NULL)
          {
             pWnd = dynamic_cast < ::ca::window * > (pMap->lookup_permanent(get_handle()));
-#ifdef _DEBUG
+#ifdef DEBUG
             hWndOrig = get_handle();
 #endif
          }
@@ -711,7 +711,7 @@ namespace win
          if (pWnd != NULL)
          {
             // Should have been detached by OnNcDestroy
-#ifdef _DEBUG
+#ifdef DEBUG
             ::ca::window * pWndPermanent = dynamic_cast < ::ca::window * > (pMap->lookup_permanent(hWndOrig));;
             ASSERT(pWndPermanent == NULL);
             // It is important to call base class, including ca2 core
@@ -721,7 +721,7 @@ namespace win
          }
          else
          {
-#ifdef _DEBUG
+#ifdef DEBUG
             ASSERT(get_handle() == hWndOrig);
 #endif
             // Detach after DestroyWindow called just in case
@@ -1872,7 +1872,7 @@ restart_mouse_hover_check:
       return FALSE;
       }
 
-      #ifdef _DEBUG
+      #ifdef DEBUG
       if (nCode < 0 && nCode != (int)0x8000)
       TRACE(::radix::trace::category_AppMsg, 0, "Implementation Warning: control notification = $%X.\n",
       nCode);
@@ -3507,7 +3507,7 @@ restart_mouse_hover_check:
             ASSERT(nMsg == LB_ADDSTRING || nMsg == CB_ADDSTRING ||
                nMsg == CBEM_INSERTITEM);
 
-#ifdef _DEBUG
+#ifdef DEBUG
             // For AddStrings, the count must exactly delimit the
             // string, including the NULL termination.  This check
             // will not catch all mal-formed ADDSTRINGs, but will
@@ -3820,7 +3820,7 @@ ExitModal:
 
       if (*lplpfn == NULL)
          *lplpfn = oldWndProc;   // the first control of that type created
-#ifdef _DEBUG
+#ifdef DEBUG
       else if (*lplpfn != oldWndProc)
       {
          TRACE(::radix::trace::category_AppMsg, 0, "p: Trying to use SubclassWindow with incorrect window\n");

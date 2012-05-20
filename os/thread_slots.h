@@ -70,7 +70,7 @@ public:
 #define new DEBUG_NEW
    void PASCAL operator delete(void *);
 
-#if defined(_DEBUG) && !defined(___NO_DEBUG_CRT)
+#if defined(DEBUG) && !defined(___NO_DEBUG_CRT)
 #undef new
    void * PASCAL operator new(size_t nSize, const char *, int);
 #define new DEBUG_NEW

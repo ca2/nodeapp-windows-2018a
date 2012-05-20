@@ -443,7 +443,7 @@ namespace win
          COLORREF colorrefaN[2];
          colorrefaN[0] = _colorrefN;
          colorrefaN[1] = _colorrefN;
-   #ifdef _AMD64_
+   #ifdef AMD64
 
          //x64
    #else

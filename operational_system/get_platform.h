@@ -1,10 +1,15 @@
 #pragma once
 
 
+#ifdef _DEBUG
+#define DEBUG
+#endif
+
+
 #define WINDOWS
+#define WIN32
 #define DECL_C __cdecl
 
-#define _WINDOWS
 #define _CRT_SECURE_NO_WARNINGS
 #define _CRT_SECURE_NO_DEPRECATE
 #define _CRT_NONSTDC_NO_DEPRECATE
@@ -13,12 +18,15 @@
 
 #define _WIDEN(x) L#x
 
-#define WIN32
 
 
 #if defined(_M_X64)  // X64
 
-#define _AMD64_
+#define AMD64
+
+#elif defined(_M_IX86)
+
+#define X86
 
 #endif
 
@@ -35,29 +43,42 @@
 #endif
 
 
-#include "win32_system.h"
+#define _BIND_TO_CURRENT_CRT_VERSION 1
+#define _CRT_NOFORCE_MANIFEST
+#define _STL_NOFORCE_MANIFEST
 
 
+BEGIN_EXTERN_C
 
 
-#if defined(_WIN64) && defined(_M_X64)
+__declspec(selectany)  int _forceCRTManifest;
 
 
-#define _AMD64_
+END_EXTERN_C
 
+
+#define NOTHROW throw()
+#define THROWS throw(...)
+
+#ifdef DEBUG
+#define RELEASENOTHROW throw(...)
 #else
-
-
-#define _X86_
-
-
+#define RELEASENOTHROW throw()
 #endif
 
 
+#define WINVER 0x0600
+#define _WIN32_WINNT   0x0600
+#define _WIN32_IE 0x0600
 
-//#ifndef _DEBUG
-//#define _DEBUG // ca2 basis is in debug - bugs come and go, always - in stage, at least, it should go
-//#endif
+
+
+
+
+
+
+
+
 
 
 

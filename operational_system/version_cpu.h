@@ -48,7 +48,7 @@ extern "C" void _BPT();
 
 /////////////////////////////////////////////////////////////////////////////
 
-#ifdef _AMD64_
+#ifdef AMD64
 // specific overrides for AMD64...
 #define ___PACKING    8
-#endif //_AMD64_
+#endif //AMD64

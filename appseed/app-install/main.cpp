@@ -290,7 +290,7 @@ void installer::on_receive(const char * pszMessage)
 
 bool installer::are_there_user_files_in_use()
 {
-#ifdef _X86_
+#ifdef X86
    if(is_user_using(dir::ca2("stage\\x86\\msvcp110d.dll")))
       return true;
    if(is_user_using(dir::ca2("stage\\x86\\msvcr110d.dll")))

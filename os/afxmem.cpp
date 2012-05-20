@@ -23,7 +23,7 @@ void CLASS_DECL_win __set_alloc_stop(LONG lRequestNumber)
    _CrtSetBreakAlloc(lRequestNumber);
 }
 */
-#ifdef _DEBUG
+#ifdef DEBUG
 bool CLASS_DECL_win __check_memory()
   // check all of primitive::memory (look for primitive::memory tromps)
 {

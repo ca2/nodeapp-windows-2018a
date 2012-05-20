@@ -6,7 +6,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // no_track_object
 
-#if defined(_DEBUG) && !defined(___NO_DEBUG_CRT)
+#if defined(DEBUG) && !defined(___NO_DEBUG_CRT)
 #undef new
 void * PASCAL no_track_object::operator new(size_t nSize, const char *, int)
 {

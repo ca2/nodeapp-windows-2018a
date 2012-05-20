@@ -56,7 +56,7 @@ WinResource::~WinResource()
         }
         catch(ex1::file_exception_sp * pe)
         {
-      #ifdef _DEBUG
+      #ifdef DEBUG
          g_dumpcontext << "File could not be opened " << e->m_cause << "\n";
       #endif
         }
@@ -114,7 +114,7 @@ bool WinResource::ReadResource(ex1::file & spfile, HINSTANCE hinst, UINT nID,  c
         }
         catch(ex1::file_exception_sp *)
         {
-      #ifdef _DEBUG
+      #ifdef DEBUG
 //         g_dumpcontext << "File could not be opened " << pe->m_cause << "\n";
       #endif
         }

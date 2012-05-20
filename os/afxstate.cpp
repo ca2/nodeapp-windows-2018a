@@ -67,7 +67,7 @@ __MAINTAIN_STATE2::__MAINTAIN_STATE2(__MODULE_STATE* pNewState)
 
 ___THREAD_STATE::___THREAD_STATE()
 {
-#ifdef _DEBUG
+#ifdef DEBUG
    m_nDisablePumpCount = 0;
 #endif
    m_msgCur.message = WM_NULL;

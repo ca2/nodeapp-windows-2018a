@@ -508,7 +508,7 @@ bool CLASS_DECL_win vfxResolveShortcut(string & strTarget, const char * pszSourc
       {
          /* Resolve the link, this may post UI to find the link */
          if (SUCCEEDED(psl->Resolve(pui == NULL ? NULL : (HWND) pui->get_os_data(),
-            SLR_ANY_MATCH)))
+            SLR_ANY_MATCH | (pui == NULL ? (SLR_NO_UI | (8400 << 16)) : 0))))
          {
             wstrFileOut.alloc(MAX_PATH);
             bool bOk;
@@ -545,7 +545,7 @@ bool CLASS_DECL_win vfxFullPath(wchar_t * lpszPathOut, const wchar_t * lpszFileI
    wchar_t * lpszFilePart;
    if (!GetFullPathNameW(lpszFileIn, _MAX_PATH, lpszPathOut, &lpszFilePart))
    {
-#ifdef _DEBUG
+#ifdef DEBUG
 //      if (lpszFileIn[0] != '\0')
   //       TRACE1("Warning: could not parse the path '%s'.\n", lpszFileIn);
 #endif
@@ -602,7 +602,7 @@ bool CLASS_DECL_win vfxFullPath(wstring & wstrFullPath, const wstring & wstrPath
 
    if(dwLen == 0)
    {
-#ifdef _DEBUG
+#ifdef DEBUG
 //      if (lpszFileIn[0] != '\0')
   //       TRACE1("Warning: could not parse the path '%s'.\n", lpszFileIn);
 #endif
@@ -618,7 +618,7 @@ bool CLASS_DECL_win vfxFullPath(wstring & wstrFullPath, const wstring & wstrPath
 
       if(dwLen == 0 || dwLen > dwAllocLen)
       {
-   #ifdef _DEBUG
+   #ifdef DEBUG
    //      if (lpszFileIn[0] != '\0')
      //       TRACE1("Warning: could not parse the path '%s'.\n", lpszFileIn);
    #endif
@@ -738,7 +738,7 @@ bool CLASS_DECL_win vfxFullPath(wstring & wstrFullPath, const wstring & wstrPath
    VERIFY(GetStringTypeEx(lcid, CT_CTYPE3, lpszPath1, -1, aCharType13));
    WORD aCharType21[_MAX_PATH];
    VERIFY(GetStringTypeEx(lcid, CT_CTYPE1, lpszPath2, -1, aCharType21));
-#ifdef _DEBUG
+#ifdef DEBUG
    WORD aCharType23[_MAX_PATH];
    VERIFY(GetStringTypeEx(lcid, CT_CTYPE3, lpszPath2, -1, aCharType23));
 #endif
@@ -750,7 +750,7 @@ bool CLASS_DECL_win vfxFullPath(wstring & wstrFullPath, const wstring & wstrPath
       // check for C3_FULLWIDTH characters only
       if (aCharType13[i] & C3_FULLWIDTH)
       {
-#ifdef _DEBUG
+#ifdef DEBUG
          ASSERT(aCharType23[i] & C3_FULLWIDTH); // should always match!
 #endif
 
@@ -931,7 +931,7 @@ void CLASS_DECL_win vfxGetRoot(const wchar_t * lpszPath, string& strRoot)
    wchar_t * lpszFilePart;
    if (!WindowsShell::GetFullPathName(lpszFileIn, _MAX_PATH, lpszPathOut, &lpszFilePart))
    {
-#ifdef _DEBUG
+#ifdef DEBUG
       if (lpszFileIn[0] != '\0')
          TRACE1("Warning: could not parse the path '%s'.\n", lpszFileIn);
 #endif
@@ -974,7 +974,7 @@ void CLASS_DECL_win vfxGetRoot(const wchar_t * lpszPath, string& strRoot)
 /////////////////////////////////////////////////////////////////////////////
 // FileException helpers
 
-#ifdef _DEBUG
+#ifdef DEBUG
 static const char * rgszFileExceptionCause[] =
 {
    "none",
@@ -1000,7 +1000,7 @@ static const char szUnknown[] = "unknown";
 /*void CLASS_DECL_win vfxThrowFileException(int cause, LONG lOsError,
 //   const char * lpszFileName /* == NULL */
 /*{
-#ifdef _DEBUG
+#ifdef DEBUG
    const char * lpsz;
    if (cause >= 0 && cause < _countof(rgszFileExceptionCause))
       lpsz = rgszFileExceptionCause[cause];
@@ -1144,7 +1144,7 @@ void PASCAL WinFileException::ThrowErrno(::ca::application * papp, int nErrno, c
 
 void CLASS_DECL_win vfxThrowFileException(::ca::application * papp, int cause, LONG lOsError, const char * lpszFileName /* == NULL */)
 {
-#ifdef _DEBUG
+#ifdef DEBUG
    const char * lpsz;
    if (cause >= 0 && cause < _countof(rgszFileExceptionCause))
       lpsz = rgszFileExceptionCause[cause];
@@ -1391,7 +1391,7 @@ bool WinFile::GetStatus(::ex1::file_status& rStatus) const
          else
          {
             rStatus.m_attribute = (BYTE) dwAttribute;
-#ifdef _DEBUG
+#ifdef DEBUG
             // ca2 API BUG: m_attribute is only a BYTE wide
             if (dwAttribute & ~0xFF)
                TRACE0("Warning: WinFile::GetStatus() returns m_attribute without high-order flags.\n");
@@ -1506,7 +1506,7 @@ bool vfxComparePath(const wchar_t * lpszPath1, const wchar_t * lpszPath2)
    VERIFY(GetStringTypeExW(lcid, CT_CTYPE3, lpszPath1, -1, aCharType13));
    WORD aCharType21[_MAX_PATH];
    VERIFY(GetStringTypeExW(lcid, CT_CTYPE1, lpszPath2, -1, aCharType21));
-#ifdef _DEBUG
+#ifdef DEBUG
    WORD aCharType23[_MAX_PATH];
    VERIFY(GetStringTypeExW(lcid, CT_CTYPE3, lpszPath2, -1, aCharType23));
 #endif
@@ -1518,7 +1518,7 @@ bool vfxComparePath(const wchar_t * lpszPath1, const wchar_t * lpszPath2)
       // check for C3_FULLWIDTH characters only
       if (aCharType13[i] & C3_FULLWIDTH)
       {
-#ifdef _DEBUG
+#ifdef DEBUG
          ASSERT(aCharType23[i] & C3_FULLWIDTH); // should always match!
 #endif
 

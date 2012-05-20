@@ -1078,7 +1078,7 @@ stop_run:
 
       try
       {
-   #ifdef _DEBUG
+   #ifdef DEBUG
          // Check for missing LockTempMap calls
          if(m_nTempMapLock != 0)
          {
@@ -1144,7 +1144,7 @@ stop_run:
 
       ASSERT_VALID(this);
 
-   #if defined(_DEBUG) && !defined(___NO_DEBUG_CRT)
+   #if defined(DEBUG) && !defined(___NO_DEBUG_CRT)
       // check ca2 API's allocator (before idle)
       if (_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) & _CRTDBG_CHECK_ALWAYS_DF)
          ASSERT(__check_memory());
@@ -1219,7 +1219,7 @@ stop_run:
          }*/
       }
 
-   #if defined(_DEBUG) && !defined(___NO_DEBUG_CRT)
+   #if defined(DEBUG) && !defined(___NO_DEBUG_CRT)
       // check ca2 API's allocator (after idle)
       if (_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) & _CRTDBG_CHECK_ALWAYS_DF)
          ASSERT(__check_memory());
@@ -1583,7 +1583,7 @@ stop_run:
    dumpcontext << "\nm_bAutoDelete = " << m_bAutoDelete;
    dumpcontext << "\nm_hThread = " << (void *)m_hThread;
    dumpcontext << "\nm_nThreadID = " << m_nThreadID;
-#ifdef _DEBUG
+#ifdef DEBUG
    dumpcontext << "\nm_nDisablePumpCount = " << pState->m_nDisablePumpCount;
 #endif
    if (__get_thread() == this)
@@ -2029,7 +2029,7 @@ ___THREAD_STATE *pState = __get_thread_state();
 
 if (!::GetMessage(&(pState->m_msgCur), NULL, NULL, NULL))
 {
-#ifdef _DEBUG
+#ifdef DEBUG
 TRACE(::radix::trace::category_AppMsg, 1, "thread::pump_message - Received WM_QUIT.\n");
 pState->m_nDisablePumpCount++; // application must die
 #endif
@@ -2038,7 +2038,7 @@ pState->m_nDisablePumpCount++; // application must die
 return FALSE;
 }
 
-#ifdef _DEBUG
+#ifdef DEBUG
 if (pState->m_nDisablePumpCount != 0)
 {
 TRACE(::radix::trace::category_AppMsg, 0, "Error: thread::pump_message called when not permitted.\n");
@@ -2046,7 +2046,7 @@ ASSERT(FALSE);
 }
 #endif
 
-#ifdef _DEBUG
+#ifdef DEBUG
 __trace_message("pump_message", &(pState->m_msgCur));
 #endif
 
@@ -2422,7 +2422,7 @@ bool thread::on_idle(LONG lCount)
 {
 ASSERT_VALID(this);
 
-#if defined(_DEBUG) && !defined(___NO_DEBUG_CRT)
+#if defined(DEBUG) && !defined(___NO_DEBUG_CRT)
 // check ca2 API's allocator (before idle)
 if (_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) & _CRTDBG_CHECK_ALWAYS_DF)
 ASSERT(__check_memory());
@@ -2475,7 +2475,7 @@ gen::UnlockTempMaps();
 }
 }
 
-#if defined(_DEBUG) && !defined(___NO_DEBUG_CRT)
+#if defined(DEBUG) && !defined(___NO_DEBUG_CRT)
 // check ca2 API's allocator (after idle)
 if (_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) & _CRTDBG_CHECK_ALWAYS_DF)
 ASSERT(__check_memory());

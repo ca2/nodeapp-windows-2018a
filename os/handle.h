@@ -314,7 +314,7 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (::ca::app
    return pTemp;
 }
 
-#ifdef _DEBUG   // out-of-line version for primitive::memory tracking
+#ifdef DEBUG   // out-of-line version for primitive::memory tracking
 template < class HT, class CT >
 void handle_map < HT, CT >::set_permanent(HANDLE h, CT * permOb)
 {
@@ -326,9 +326,9 @@ void handle_map < HT, CT >::set_permanent(HANDLE h, CT * permOb)
    //__enable_memory_tracking(bEnable);
 
 }
-#endif //_DEBUG
+#endif //DEBUG
 
-#ifdef _DEBUG
+#ifdef DEBUG
 template < class HT, class CT >
 void handle_map < HT, CT > ::remove_handle(HANDLE h)
 {
@@ -397,8 +397,8 @@ void handle_map < HT, CT >::delete_temp()
 }
 
 
-// Note: out-of-line _DEBUG version is in winhand.cpp
-#ifndef _DEBUG
+// Note: out-of-line DEBUG version is in winhand.cpp
+#ifndef DEBUG
 template < class HT, class CT >
 inline void handle_map < HT, CT >::set_permanent(HANDLE h, CT * permOb)
    { m_permanentMap[(HANDLE)h] = permOb; }

@@ -384,9 +384,6 @@
     <ClInclude Include="..\operational_system\bare_operational_system.h">
       <Filter>Header Files\operational_system</Filter>
     </ClInclude>
-    <ClInclude Include="..\operational_system\ca2.h">
-      <Filter>Header Files\operational_system</Filter>
-    </ClInclude>
     <ClInclude Include="..\operational_system\get_platform.h">
       <Filter>Header Files\operational_system</Filter>
     </ClInclude>
@@ -412,9 +409,6 @@
       <Filter>Header Files\operational_system</Filter>
     </ClInclude>
     <ClInclude Include="..\operational_system\version_windows.h">
-      <Filter>Header Files\operational_system</Filter>
-    </ClInclude>
-    <ClInclude Include="..\operational_system\win32_system.h">
       <Filter>Header Files\operational_system</Filter>
     </ClInclude>
     <ClInclude Include="framework.h">

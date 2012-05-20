@@ -1169,7 +1169,7 @@ namespace win
    //   ::SelectClipRgn(hdcScreen, rgnClip);
       
       // Debug
-   #ifdef _DEBUG
+   #ifdef DEBUG
       //rect rectClip;
       //rgnClip->GetRgnBox(rectClip);
    #endif

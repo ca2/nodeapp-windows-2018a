@@ -206,7 +206,7 @@ namespace win
    {
 /*      try
       {
-   #ifdef _DEBUG
+   #ifdef DEBUG
          // check for missing gen::LockTempMap calls
          if (__get_module_thread_state()->m_pCurrentWinThread->m_nTempMapLock != 0)
          {

@@ -7,7 +7,7 @@
 #ifndef ___NO_DEBUG_CRT
 static _CRT_DUMP_CLIENT pfnOldCrtDumpClient = NULL;
 
-#ifdef _DEBUG
+#ifdef DEBUG
 
 
 void __cdecl __crt_dump_client(void * pvData, size_t nBytes)
@@ -99,7 +99,7 @@ int __cdecl __crt_report_hook(int nRptType, __in char *szMsg, int* pResult)
 #endif // ___NO_DEBUG_CRT
 
 
-#ifdef _DEBUG
+#ifdef DEBUG
 
 ___DEBUG_STATE::___DEBUG_STATE()
 {
