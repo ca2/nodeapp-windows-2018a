@@ -922,20 +922,7 @@ namespace win
       int nTabPositions, LPINT lpnTabStopPositions, int nTabOrigin)
    { ASSERT(get_handle1() != NULL); return ::TabbedTextOut(get_handle1(), x, y, str, (int)str.get_length(),
    nTabPositions, lpnTabStopPositions, nTabOrigin); }
-   #pragma push_macro("DrawText")
-   #pragma push_macro("DrawTextEx")
-   #undef DrawText
-   #undef DrawTextEx
-   int graphics::DrawText(const char * lpszString, int nCount, LPRECT lpRect, UINT nFormat)
-   { return ___FUNCNAME(DrawText)(lpszString, nCount, lpRect, nFormat); }
-   int graphics::DrawText(const string & str, LPRECT lpRect, UINT nFormat)
-   { return ___FUNCNAME(DrawText)(str, lpRect, nFormat); }
-   int graphics::DrawTextEx(LPTSTR lpszString, int nCount, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
-   { return ___FUNCNAME(DrawTextEx)(lpszString, nCount, lpRect, nFormat, lpDTParams); }
-   int graphics::DrawTextEx(const string & str, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
-   { return ___FUNCNAME(DrawTextEx)(str, lpRect, nFormat, lpDTParams); }
-   #pragma pop_macro("DrawText")
-   #pragma pop_macro("DrawTextEx")
+
 
    size graphics::GetTabbedTextExtent(const char * lpszString, int nCount,
       int nTabPositions, LPINT lpnTabStopPositions) const
@@ -967,7 +954,8 @@ namespace win
    { ASSERT(get_handle2() != NULL); int nResult = ::GetTextFace(get_handle2(),
    256, rString.GetBuffer(256)); rString.ReleaseBuffer();
    return nResult; }
-   bool graphics::___FUNCNAME(GetTextMetrics)(LPTEXTMETRIC lpMetrics) const
+
+   bool graphics::get_text_metrics(LPTEXTMETRIC lpMetrics) const
    { 
       //ASSERT(get_handle2() != NULL); return ::GetTextMetrics(get_handle2(), lpMetrics); 
       /*wstring wstr(L"123AWZwmc");
@@ -1027,13 +1015,17 @@ namespace win
       return TRUE;
    }
 
-#pragma push_macro("GetTextMetrics")
-#undef GetTextMetrics
-   bool graphics::GetTextMetrics(LPTEXTMETRIC lpMetrics) const
-   { return ___FUNCNAME(GetTextMetrics)(lpMetrics); }
-#pragma pop_macro("GetTextMetrics")
-   bool graphics::GetOutputTextMetrics(LPTEXTMETRIC lpMetrics) const
-   { ASSERT(get_handle1() != NULL); return ::GetTextMetrics(get_handle1(), lpMetrics); }
+
+   bool graphics::get_output_text_metrics(LPTEXTMETRIC lpMetrics) const
+   {
+   
+      ASSERT(get_handle1() != NULL);
+      
+      return ::GetTextMetrics(get_handle1(), lpMetrics);
+   
+   }
+
+
    int graphics::GetTextCharacterExtra() const
    { ASSERT(get_handle2() != NULL); return ::GetTextCharacterExtra(get_handle2()); }
    bool graphics::GetCharWidth(UINT nFirstChar, UINT nLastChar, LPINT lpBuffer) const
@@ -2696,20 +2688,23 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 
 
-   int graphics::___FUNCNAME(DrawText)(const char * lpszString, int nCount, LPRECT lpRect,
-      UINT nFormat)
+   int graphics::draw_text(const char * lpszString, int nCount, LPRECT lpRect, UINT nFormat)
    { 
-      if(get_handle1() == NULL)
+      /*if(get_handle1() == NULL)
          return -1;
       // these flags would modify the string
       ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
       ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
       wstring wstr = gen::international::utf8_to_unicode(string(lpszString, nCount));
-      return ::DrawTextW(get_handle1(), wstr, (int) wcslen(wstr), lpRect, nFormat); 
+      return ::DrawTextW(get_handle1(), wstr, (int) wcslen(wstr), lpRect, nFormat); */
+
+      return draw_text(string(lpszString, nCount), lpRect, nFormat);
+
    }
 
-   int graphics::DrawText(const string & str, LPRECT lpRect, UINT nFormat)
+   int graphics::draw_text(const string & str, LPRECT lpRect, UINT nFormat)
    { 
+      
       /*if(get_handle1() == NULL)
          return -1;
       // these flags would modify the string

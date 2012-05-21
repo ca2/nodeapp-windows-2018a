@@ -13,20 +13,12 @@ namespace win
       //delete_object(); 
    }
    
-   int graphics_object::___FUNCNAME(GetObject)(int nCount, LPVOID lpObject) const
+   int graphics_object::get_object(int nCount, LPVOID lpObject) const
    { 
       //return ::GetObject(get_handle(), nCount, lpObject); 
       return 0;
    }
 
-#pragma push_macro("GetObject")
-#undef GetObject
-   int graphics_object::GetObject(int nCount, LPVOID lpObject) const
-   { 
-      //return ___FUNCNAME(GetObject)(nCount, lpObject); 
-      return 0;
-   }
-#pragma pop_macro("GetObject")
    bool graphics_object::CreateStockObject(int nIndex)
    {
       //return (set_handle(::GetStockObject(nIndex))) != NULL; 

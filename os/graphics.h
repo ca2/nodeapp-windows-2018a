@@ -327,27 +327,11 @@ namespace win
             size TabbedTextOut(int x, int y, const string & str,
                int nTabPositions, LPINT lpnTabStopPositions, int nTabOrigin);
 
-   #pragma push_macro("DrawText")
-   #pragma push_macro("DrawTextEx")
-   #undef DrawText
-   #undef DrawTextEx
-      virtual int ___FUNCNAME(DrawText)(const char * lpszString, int nCount, LPRECT lpRect,
-               UINT nFormat);
-            int ___FUNCNAME(DrawText)(const string & str, LPRECT lpRect, UINT nFormat);
+      virtual int draw_text(const char * lpszString, int nCount, LPRECT lpRect, UINT nFormat);
+      virtual int draw_text(const string & str, LPRECT lpRect, UINT nFormat);
 
-      virtual int ___FUNCNAME(DrawTextEx)(LPTSTR lpszString, int nCount, LPRECT lpRect,
-               UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
-            int ___FUNCNAME(DrawTextEx)(const string & str, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
-
-            int DrawText(const char * lpszString, int nCount, LPRECT lpRect,
-               UINT nFormat);
-            int DrawText(const string & str, LPRECT lpRect, UINT nFormat);
-
-            int DrawTextEx(LPTSTR lpszString, int nCount, LPRECT lpRect,
-               UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
-            int DrawTextEx(const string & str, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
-   #pragma pop_macro("DrawText")
-   #pragma pop_macro("DrawTextEx")
+      virtual int draw_text_ex(LPTSTR lpszString, int nCount, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
+      virtual int draw_text_ex(const string & str, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
 
       size GetTextExtent(const char * lpszString, int nCount, int iIndex) const;
       size GetTextExtent(const char * lpszString, int nCount) const;
@@ -372,12 +356,8 @@ namespace win
       UINT SetTextAlign(UINT nFlags);
       int GetTextFace(__in int nCount, __out_ecount_part_z(nCount, return + 1) LPTSTR lpszFacename) const;
       int GetTextFace(string & rString) const;
-   #pragma push_macro("GetTextMetrics")
-   #undef GetTextMetrics
-      bool ___FUNCNAME(GetTextMetrics)(LPTEXTMETRIC lpMetrics) const;
-      bool GetTextMetrics(LPTEXTMETRIC lpMetrics) const;
-   #pragma pop_macro("GetTextMetrics")
-      bool GetOutputTextMetrics(LPTEXTMETRIC lpMetrics) const;
+      bool get_text_metrics(LPTEXTMETRIC lpMetrics) const;
+      bool get_output_text_metrics(LPTEXTMETRIC lpMetrics) const;
       int SetTextJustification(int nBreakExtra, int nBreakCount);
       int GetTextCharacterExtra() const;
       int SetTextCharacterExtra(int nCharExtra);

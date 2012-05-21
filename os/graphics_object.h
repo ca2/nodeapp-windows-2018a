@@ -18,11 +18,7 @@ namespace win
 
       bool delete_object();
 
-   #pragma push_macro("GetObject")
-   #undef GetObject
-      int ___FUNCNAME(GetObject)(int nCount, LPVOID lpObject) const;
-      int GetObject(int nCount, LPVOID lpObject) const;
-   #pragma pop_macro("GetObject")
+      int get_object(int nCount, LPVOID lpObject) const;
       UINT GetObjectType() const;
       bool CreateStockObject(int nIndex);
       bool UnrealizeObject();

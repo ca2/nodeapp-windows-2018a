@@ -404,10 +404,7 @@ inline bool WindowsShell::GetClassInfo(
    const wchar_t * lpClassName,
    LPWNDCLASSW lpWndClass)
 {
-   return (*theWindowsShell.m_pfnGetClassInfo)(
-      hInstance ,
-      lpClassName,
-      lpWndClass);
+   return (*theWindowsShell.m_pfnGetClassInfo)(hInstance, lpClassName, lpWndClass) != FALSE;
 }
 
 inline ATOM WindowsShell::RegisterClass(

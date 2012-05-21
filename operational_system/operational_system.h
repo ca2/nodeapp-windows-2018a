@@ -1,5 +1,13 @@
 #pragma once
 
+
+
+#include <stdio.h>
+
+
+
+
+
 #include <winreg.h>
 #include <winnls.h>
 #include <stddef.h>

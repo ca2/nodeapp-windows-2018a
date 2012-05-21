@@ -3,6 +3,7 @@
 
 #define WINDOWS
 
+
 /////////////////////////////////////////////////////////////////////////////
 // Master version numbers
 
@@ -321,11 +322,11 @@
 #define DECLSPEC_NO_RETURN __declspec(noreturn)
 
 
-typedef INT_PTR         int_ptr;
-typedef UINT_PTR        uint_ptr;
-typedef LONG_PTR        long_ptr;
-typedef ULONG_PTR       ulong_ptr;
-typedef DWORD_PTR       dword_ptr;
+typedef INT_PTR         int_ptr     , * pint_ptr;
+typedef UINT_PTR        uint_ptr    , * puint_ptr;
+typedef LONG_PTR        long_ptr    , * plong_ptr;
+typedef ULONG_PTR       ulong_ptr   , * pulong_ptr;
+typedef DWORD_PTR       dword_ptr   , * pdword_ptr;
 
 
 

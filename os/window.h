@@ -150,12 +150,7 @@ namespace win
 
    #endif   // WINVER >= 0x0500
 
-   // Message Functions
-   #pragma push_macro("SendMessage")
-   #undef SendMessage
-      LRESULT ___FUNCNAME(SendMessage)(UINT message, WPARAM wParam = 0, LPARAM lParam = 0);
-      LRESULT SendMessage(UINT message, WPARAM wParam = 0, LPARAM lParam = 0);
-   #pragma pop_macro("SendMessage")
+      LRESULT send_message(UINT message, WPARAM wParam = 0, LPARAM lParam = 0);
       bool PostMessage(UINT message, WPARAM wParam = 0, LPARAM lParam = 0);
 
       bool SendNotifyMessage(UINT message, WPARAM wParam, LPARAM lParam);
