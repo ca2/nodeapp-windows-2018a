@@ -2811,7 +2811,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   int graphics::DrawTextEx(LPTSTR lpszString, int nCount, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
+   int graphics::draw_text_ex(LPTSTR lpszString, int nCount, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
    { 
       if(get_handle1() == NULL)
          return -1;
@@ -2822,7 +2822,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return ::DrawTextExW(get_handle1(), const_cast<wchar_t *>((const wchar_t *)wstr), (int)wcslen(wstr), lpRect, nFormat, lpDTParams); 
    }
 
-   int graphics::DrawTextEx(const string & str, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
+   int graphics::draw_text_ex(const string & str, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
    { 
       ASSERT(get_handle1() != NULL);
       // these flags would modify the string

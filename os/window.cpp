@@ -4358,20 +4358,12 @@ ExitModal:
       m_pguieOwner = pOwnerWnd; 
    }
 
-   LRESULT window::___FUNCNAME(SendMessage)(UINT message, WPARAM wParam, LPARAM lParam)
+   LRESULT window::send_message(UINT message, WPARAM wParam, LPARAM lParam)
    {
       //ASSERT(::IsWindow(get_handle())); 
       return ::SendMessage(get_handle(), message, wParam, lParam);
    }
 
-#pragma push_macro("SendMessage")
-#undef SendMessage
-   LRESULT window::SendMessage(UINT message, WPARAM wParam, LPARAM lParam)
-   { 
-      return ___FUNCNAME(SendMessage)(message, wParam, lParam); 
-   }
-
-#pragma pop_macro("SendMessage")
    bool window::PostMessage(UINT message, WPARAM wParam, LPARAM lParam)
    { 
       return ::PostMessage(get_handle(), message, wParam, lParam) != FALSE; 
