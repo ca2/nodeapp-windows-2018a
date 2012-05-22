@@ -54,5 +54,11 @@ typedef std::type_info std_type_info;
 
 
 
-//#pragma warning(disable: 4250)
-
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <limits.h>
+#include <stddef.h>
+#include <stdarg.h>
+#include <errno.h>
