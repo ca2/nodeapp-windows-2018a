@@ -652,7 +652,7 @@ namespace win
 
       // dump out window specific statistics
       char szBuf [64];
-      if (!const_cast < window * > (this)->SendMessage(WM_QUERYAFXWNDPROC, 0, 0) && pWnd == this)
+      if (!const_cast < window * > (this)->send_message(WM_QUERYAFXWNDPROC, 0, 0) && pWnd == this)
          ((::ca::window *) this)->GetWindowText(szBuf, _countof(szBuf));
       else
          ::DefWindowProc(get_handle(), WM_GETTEXT, _countof(szBuf), (LPARAM)&szBuf[0]);
@@ -1030,12 +1030,12 @@ namespace win
       }
 
       // cancel any tracking modes
-      SendMessage(WM_CANCELMODE);
+      send_message(WM_CANCELMODE);
       SendMessageToDescendants(WM_CANCELMODE, 0, 0, TRUE, TRUE);
 
       // need to use top level parent (for the case where get_handle() is in DLL)
       ::user::interaction * pWnd = EnsureTopLevelParent();
-      WIN_WINDOW(pWnd)->SendMessage(WM_CANCELMODE);
+      WIN_WINDOW(pWnd)->send_message(WM_CANCELMODE);
       WIN_WINDOW(pWnd)->SendMessageToDescendants(WM_CANCELMODE, 0, 0, TRUE, TRUE);
 
       // attempt to cancel capture
@@ -1148,7 +1148,7 @@ namespace win
                || m_guieptraMouseHover[i]->m_pimpl == this 
                || m_guieptraMouseHover[i]->m_pguie == this)
                continue;
-            m_guieptraMouseHover[i]->SendMessage(WM_MOUSELEAVE);
+            m_guieptraMouseHover[i]->send_message(WM_MOUSELEAVE);
          }
          m_guieptraMouseHover.remove_all();
       }
@@ -1258,7 +1258,7 @@ restart_mouse_hover_check:
             if(!m_guieptraMouseHover[i]->_001IsPointInside(pmouse->m_pt))
             {
                ::user::interaction * pui = m_guieptraMouseHover[i];
-               pui->SendMessage(WM_MOUSELEAVE);
+               pui->send_message(WM_MOUSELEAVE);
                m_guieptraMouseHover.remove(pui);
                goto restart_mouse_hover_check;
             }
@@ -1348,7 +1348,7 @@ restart_mouse_hover_check:
             && puiFocus->IsWindow()
             && puiFocus->GetTopLevelParent() != NULL)
          {
-            puiFocus->SendMessage(pkey);
+            puiFocus->send_message(pkey);
             if(pbase->m_bRet)
                return;
          }
@@ -2420,7 +2420,7 @@ restart_mouse_hover_check:
             if (id == (int) nIdLeftOver)
                hWndLeftOver = hWndChild;
             else if (pWnd != NULL)
-               hWndChild->SendMessage(WM_SIZEPARENT, 0, (LPARAM)&layout);
+               hWndChild->send_message(WM_SIZEPARENT, 0, (LPARAM)&layout);
          }
          for (::user::interaction * hWndChild = m_pguie->get_top_child(); hWndChild != NULL;
             hWndChild = hWndChild->under_sibling())
@@ -2430,7 +2430,7 @@ restart_mouse_hover_check:
             if (id == nIdLeftOver)
                hWndLeftOver = hWndChild;
             else if (pWnd != NULL)
-               hWndChild->SendMessage(WM_SIZEPARENT, 0, (LPARAM)&layout);
+               hWndChild->send_message(WM_SIZEPARENT, 0, (LPARAM)&layout);
          }
       }
       else
@@ -2443,7 +2443,7 @@ restart_mouse_hover_check:
             if (id == nIdLeftOver)
                hWndLeftOver = hWndChild;
             else if (pWnd != NULL)
-               hWndChild->SendMessage(WM_SIZEPARENT, 0, (LPARAM)&layout);
+               hWndChild->send_message(WM_SIZEPARENT, 0, (LPARAM)&layout);
          }
          for (::user::interaction * hWndChild = m_pguie->get_top_child(); hWndChild != NULL;
             hWndChild = hWndChild->under_sibling())
@@ -2453,7 +2453,7 @@ restart_mouse_hover_check:
             if (id == nIdLeftOver)
                hWndLeftOver = hWndChild;
             else if (pWnd != NULL)
-               hWndChild->SendMessage(WM_SIZEPARENT, 0, (LPARAM)&layout);
+               hWndChild->send_message(WM_SIZEPARENT, 0, (LPARAM)&layout);
          }
       }
 
@@ -2542,7 +2542,7 @@ restart_mouse_hover_check:
                HWND hWndSave = get_handle();
                HWND hWndFocus = ::GetFocus();
                pParent->SetActiveWindow();
-               pParent->SendMessage(WM_SYSCOMMAND, nID, lParam);
+               pParent->send_message(WM_SYSCOMMAND, nID, lParam);
 
                // be very careful here...
                if (::IsWindow(hWndSave))
@@ -3359,7 +3359,7 @@ restart_mouse_hover_check:
          {
             // let parent determine alternate center window
             ::user::interaction * hWndTemp =
-               (::user::interaction * )hWndCenter->SendMessage(WM_QUERYCENTERWND, 0, 0);
+               (::user::interaction * )hWndCenter->send_message(WM_QUERYCENTERWND, 0, 0);
             if (hWndTemp != NULL)
                hWndCenter = hWndTemp;
          }
@@ -3943,11 +3943,11 @@ ExitModal:
       {
          if(rectWindowOld.top_left() != m_rectParentClient.top_left())
          {
-            SendMessage(WM_MOVE, 0, 0);
+            send_message(WM_MOVE, 0, 0);
          }
          if(rectWindowOld.size() != m_rectParentClient.size())
          {
-            SendMessage(WM_SIZE, 0, 0);
+            send_message(WM_SIZE, 0, 0);
          }
 
       }
@@ -4602,7 +4602,7 @@ ExitModal:
       {
          try
          {
-            pui->SendMessage(message, wParam, lParam);
+            pui->send_message(message, wParam, lParam);
          }
          catch(...)
          {
@@ -5086,7 +5086,7 @@ ExitModal:
    HICON window::SetIcon(HICON hIcon, bool bBigIcon)
    { 
 
-      return (HICON)SendMessage(WM_SETICON, bBigIcon, (LPARAM)hIcon);
+      return (HICON)send_message(WM_SETICON, bBigIcon, (LPARAM)hIcon);
 
    }
 
@@ -5095,7 +5095,7 @@ ExitModal:
 
       ASSERT(::IsWindow(get_handle()));
 
-      return (HICON)const_cast < window * > (this)->SendMessage(WM_GETICON, bBigIcon, 0);
+      return (HICON)const_cast < window * > (this)->send_message(WM_GETICON, bBigIcon, 0);
 
    }
 
@@ -5104,7 +5104,7 @@ ExitModal:
 
       ASSERT(::IsWindow(get_handle()));
 
-      const_cast < window * > (this)->SendMessage(WM_PRINT, (WPARAM)(dynamic_cast<::win::graphics * >(pgraphics))->get_os_data(), dwFlags);
+      const_cast < window * > (this)->send_message(WM_PRINT, (WPARAM)(dynamic_cast<::win::graphics * >(pgraphics))->get_os_data(), dwFlags);
 
    }
 
@@ -5113,7 +5113,7 @@ ExitModal:
 
       ASSERT(::IsWindow(get_handle()));
 
-      const_cast < window * > (this)->SendMessage(WM_PRINTCLIENT, (WPARAM)(dynamic_cast<::win::graphics * >(pgraphics))->get_os_data(), dwFlags);
+      const_cast < window * > (this)->send_message(WM_PRINTCLIENT, (WPARAM)(dynamic_cast<::win::graphics * >(pgraphics))->get_os_data(), dwFlags);
 
    }
 
@@ -6001,7 +6001,7 @@ __STATIC void CLASS_DECL_win
             hWnd2[1] = WIN_WINDOW(pWndOther)->get_handle();
          }
          // send it...
-         pTopLevel->SendMessage(WM_ACTIVATETOPLEVEL, nState, (LPARAM)&hWnd2[0]);
+         pTopLevel->send_message(WM_ACTIVATETOPLEVEL, nState, (LPARAM)&hWnd2[0]);
       }
    }
 }

@@ -342,12 +342,6 @@
     <ClInclude Include="win_printer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="operational_system\cross\general\general.h">
-      <Filter>Header Files\operational_system\cross\general</Filter>
-    </ClInclude>
-    <ClInclude Include="operational_system\cross\general\general_windows.h">
-      <Filter>Header Files\operational_system\cross\general</Filter>
-    </ClInclude>
     <ClInclude Include="region.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -413,6 +407,12 @@
     </ClInclude>
     <ClInclude Include="framework.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\operational_system\cross\general\general.h">
+      <Filter>Header Files\operational_system\cross\general</Filter>
+    </ClInclude>
+    <ClInclude Include="..\operational_system\cross\general\general_windows.h">
+      <Filter>Header Files\operational_system\cross\general</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

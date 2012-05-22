@@ -1161,7 +1161,7 @@ stop_run:
                {
                   /*__call_window_procedure(pMainWnd, pMainWnd->get_handle(),
                      WM_IDLEUPDATECMDUI, (WPARAM)TRUE, 0);*/
-                  pui->SendMessage(WM_IDLEUPDATECMDUI, (WPARAM)TRUE, 0);
+                  pui->send_message(WM_IDLEUPDATECMDUI, (WPARAM)TRUE, 0);
                /*   pui->SendMessageToDescendants(WM_IDLEUPDATECMDUI,
                      (WPARAM)TRUE, 0, TRUE, TRUE);*/
                }

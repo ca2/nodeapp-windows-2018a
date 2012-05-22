@@ -10,3 +10,6 @@
 #define ZORDER_BOTTOM (1)
 #define ZORDER_TOPMOST (-1)
 #define ZORDER_NOTOPMOST (-2)
+
+
+typedef BOOL WINBOOL;

@@ -93,7 +93,7 @@ namespace win
    {
       if(!m_bProDevianMode && ::IsWindow((HWND) m_spwindowMessage->get_os_data()))
       {
-         m_spwindowMessage->SendMessage(WM_USER + 1984 + 1977);
+         m_spwindowMessage->send_message(WM_USER + 1984 + 1977);
       }
    }
 

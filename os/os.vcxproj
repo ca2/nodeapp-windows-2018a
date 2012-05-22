@@ -1238,6 +1238,8 @@
   <ItemGroup>
     <ClInclude Include="..\operational_system\bare_operational_system.h" />
     <ClInclude Include="..\operational_system\cross\cross.h" />
+    <ClInclude Include="..\operational_system\cross\general\general.h" />
+    <ClInclude Include="..\operational_system\cross\general\general_windows.h" />
     <ClInclude Include="..\operational_system\cross\linux\linux.h" />
     <ClInclude Include="..\operational_system\cross\linux\linux_datetime.h" />
     <ClInclude Include="..\operational_system\cross\linux\linux_file.h" />
@@ -1269,8 +1271,6 @@
     <ClInclude Include="handle.h" />
     <ClInclude Include="implementation.h" />
     <ClInclude Include="ip_enum.h" />
-    <ClInclude Include="operational_system\cross\general\general.h" />
-    <ClInclude Include="operational_system\cross\general\general_windows.h" />
     <ClInclude Include="os.h" />
     <ClInclude Include="os_os.h" />
     <ClInclude Include="palette.h" />
