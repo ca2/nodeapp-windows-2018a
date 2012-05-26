@@ -693,7 +693,12 @@ namespace win
       RaiseException( dwExceptionCode, dwExceptionFlags, 0, NULL );
    }
 
+   bool os::is_remote_session()
+   {
 
+      return GetSystemMetrics(SM_REMOTESESSION);
+
+   }
 
 } // namespace win
 

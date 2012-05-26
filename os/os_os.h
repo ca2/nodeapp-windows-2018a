@@ -60,6 +60,8 @@ namespace win
 
       DECLSPEC_NO_RETURN void raise_exception( DWORD dwExceptionCode, DWORD dwExceptionFlags);
 
+      virtual bool is_remote_session();
+
    };
 
 
