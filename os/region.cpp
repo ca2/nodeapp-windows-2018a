@@ -44,8 +44,16 @@ namespace win
    (HRGN)pRgn2->get_os_data(), nCombineMode); }
    int region::CopyRgn(const ::ca::region* pRgnSrc)
    { ASSERT(get_os_data() != NULL); return ::CombineRgn((HRGN)get_os_data(), (HRGN)pRgnSrc->get_os_data(), NULL, RGN_COPY); }
+
    bool region::EqualRgn(const ::ca::region* pRgn) const
-   { ASSERT(get_os_data() != NULL); return ::EqualRgn((HRGN)get_os_data(), (HRGN)pRgn->get_os_data()); }
+   {
+      
+      ASSERT(get_os_data() != NULL); 
+      
+      return ::EqualRgn((HRGN)get_os_data(), (HRGN)pRgn->get_os_data()) != FALSE;
+
+   }
+
    int region::OffsetRgn(int x, int y)
    { ASSERT(get_os_data() != NULL); return ::OffsetRgn((HRGN)get_os_data(), x, y); }
    int region::OffsetRgn(POINT point)
@@ -60,7 +68,7 @@ namespace win
       
       ASSERT(get_os_data() != NULL); //return ::PtInRegion((HRGN)get_os_data(), x, y); 
 
-      return m_pregion->IsVisible(pointf);
+      return m_pregion->IsVisible(pointf)  != FALSE;
    
    }
 
@@ -72,9 +80,10 @@ namespace win
       
       ASSERT(get_os_data() != NULL); //return ::PtInRegion((HRGN)get_os_data(), x, y); 
 
-      return m_pregion->IsVisible(pointf);
+      return m_pregion->IsVisible(pointf)  != FALSE;
 
    }
+
    bool region::RectInRegion(LPCRECT lpRect) const
    { 
       //ASSERT(get_os_data() != NULL); return ::RectInRegion((HRGN)get_os_data(), lpRect); 
@@ -83,7 +92,7 @@ namespace win
       
       ASSERT(get_os_data() != NULL); //return ::PtInRegion((HRGN)get_os_data(), x, y); 
 
-      return m_pregion->IsVisible(rectf);
+      return m_pregion->IsVisible(rectf)  != FALSE;
 
    }
 

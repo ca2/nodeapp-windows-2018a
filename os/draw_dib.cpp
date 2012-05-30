@@ -37,7 +37,7 @@ namespace win
    {
       if(m_hdrawdib == NULL)
          return TRUE;
-      bool b = DrawDibClose(m_hdrawdib);
+      bool b = DrawDibClose(m_hdrawdib) != FALSE;
       m_hdrawdib = NULL;
       return b;
    }
@@ -46,12 +46,12 @@ namespace win
       LPBITMAPINFOHEADER lpbi, int dxSrc, int dySrc, UINT wFlags )
    {
       return DrawDibBegin ( m_hdrawdib, (HDC)pdc->get_os_data(), dxDest, dyDest, lpbi, 
-         dxSrc, dySrc, wFlags );
+         dxSrc, dySrc, wFlags ) != FALSE;
    }
 
    bool draw_dib::End ()
    {
-      return DrawDibEnd ( m_hdrawdib );
+      return DrawDibEnd ( m_hdrawdib ) != FALSE;
    }
 
    bool draw_dib::draw (::ca::graphics * pdc, int xDst, int yDst,
@@ -59,7 +59,7 @@ namespace win
       int xSrc, int ySrc, int dxSrc, int dySrc, UINT wFlags )
    {
       return ::DrawDibDraw ( m_hdrawdib, (HDC)pdc->get_os_data(), xDst, yDst, dxDst, dyDst, 
-         lpbi, lpBits, xSrc, ySrc, dxSrc, dySrc, wFlags );
+         lpbi, lpBits, xSrc, ySrc, dxSrc, dySrc, wFlags ) != FALSE;
    }
 
    bool draw_dib::draw (::ca::dib *dib, ::ca::graphics * pdc, int xDst, int yDst,
@@ -67,7 +67,7 @@ namespace win
    {
       return ::DrawDibDraw( m_hdrawdib, (HDC)pdc->get_os_data(), xDst, yDst, dxDst, dyDst, 
          &((dynamic_cast < ::win::dib * > (dib))->m_info.bmiHeader), dib->get_data(), 0, 0, dib->width(),
-         dib->height(), wFlags );
+         dib->height(), wFlags ) != FALSE;
    }
 
    bool draw_dib::draw (
@@ -90,7 +90,7 @@ namespace win
          xSrc, ySrc, dxSrc, dySrc, 
          pdib->get_data(), &(dynamic_cast < ::win::dib * > (pdib))->m_info, 
          DIB_RGB_COLORS,
-         SRCCOPY);
+         SRCCOPY) != FALSE;
    }
       
    LPVOID draw_dib::GetBuffer ( LPBITMAPINFOHEADER lpbi,
@@ -101,7 +101,7 @@ namespace win
       
    bool draw_dib::ProfileDisplay ( LPBITMAPINFOHEADER lpbi )
    {
-      return (bool) DrawDibProfileDisplay ( lpbi );
+      return DrawDibProfileDisplay ( lpbi ) != FALSE;
    }
 
    ::ca::palette * draw_dib::get_palette ()
@@ -111,13 +111,13 @@ namespace win
 
    bool draw_dib::set_palette (  ::ca::palette * ppal)
    {
-      return DrawDibSetPalette ( m_hdrawdib, (HPALETTE) ppal->get_os_data()  );
+      return DrawDibSetPalette ( m_hdrawdib, (HPALETTE) ppal->get_os_data()  ) != FALSE;
    }
 
    bool draw_dib::ChangePalette ( ::ca::draw_dib * pdd, int iStart, int iLen, LPPALETTEENTRY lppe )
    {
       UNREFERENCED_PARAMETER(pdd);
-      return DrawDibChangePalette ( m_hdrawdib, iStart, iLen, lppe );
+      return DrawDibChangePalette ( m_hdrawdib, iStart, iLen, lppe ) != FALSE;
    }
 
    UINT draw_dib::Realize ( ::ca::graphics * pdc, bool fBackground )
@@ -127,17 +127,17 @@ namespace win
       
    bool draw_dib::Start ( LONG rate )
    {
-      return DrawDibStart ( m_hdrawdib, rate );
+      return DrawDibStart ( m_hdrawdib, rate ) != FALSE;
    }
 
    bool draw_dib::Stop ()
    {
-      return DrawDibStop ( m_hdrawdib );
+      return DrawDibStop ( m_hdrawdib ) != FALSE;
    }
 
    bool draw_dib::time ( LPDRAWDIBTIME lpddtime )
    {
-      return DrawDibTime ( m_hdrawdib, lpddtime );
+      return DrawDibTime ( m_hdrawdib, lpddtime ) != FALSE;
    }
 
 } // namespace win

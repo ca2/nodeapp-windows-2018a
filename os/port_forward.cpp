@@ -1333,7 +1333,7 @@ namespace win
 	
 	   if ( hWnd!=NULL )
       {
-		   bool b = ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+		   bool b = ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) ) != FALSE;
          if(!b)
          {
             DWORD dw = ::GetLastError();

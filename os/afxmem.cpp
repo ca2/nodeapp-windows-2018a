@@ -27,7 +27,7 @@ void CLASS_DECL_win __set_alloc_stop(LONG lRequestNumber)
 bool CLASS_DECL_win __check_memory()
   // check all of primitive::memory (look for primitive::memory tromps)
 {
-   return _CrtCheckMemory();
+   return _CrtCheckMemory() != FALSE;
 }
 #endif
 /*

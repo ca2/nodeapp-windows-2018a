@@ -630,7 +630,7 @@ namespace win
          return FALSE;
       }
        
-      bool bOk = StartService(hdlServ, 0, NULL);
+      bool bOk = StartService(hdlServ, 0, NULL) != FALSE;
 
       CloseServiceHandle(hdlServ);
       CloseServiceHandle(hdlSCM);
@@ -670,7 +670,7 @@ namespace win
 
       memset(&ss, 0, sizeof(ss));
 
-      bool bOk = ::ControlService(hdlServ, SERVICE_CONTROL_STOP, &ss);
+      bool bOk = ::ControlService(hdlServ, SERVICE_CONTROL_STOP, &ss) != FALSE;
 
       ::DeleteService(hdlServ);
 
@@ -696,7 +696,7 @@ namespace win
    bool os::is_remote_session()
    {
 
-      return GetSystemMetrics(SM_REMOTESESSION);
+      return GetSystemMetrics(SM_REMOTESESSION) != FALSE;
 
    }
 

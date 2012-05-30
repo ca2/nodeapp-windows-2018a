@@ -1704,17 +1704,34 @@ stop_run:
 
 
    thread::operator HANDLE() const
-   { return this == NULL ? NULL : m_hThread; }
+   { 
+   
+      return this == NULL ? NULL : m_hThread; 
+
+   }
+   
    bool thread::SetThreadPriority(int nPriority)
-   { ASSERT(m_hThread != NULL); return ::SetThreadPriority(m_hThread, nPriority); }
+   { 
+      ASSERT(m_hThread != NULL); 
+      
+      return ::SetThreadPriority(m_hThread, nPriority)  != FALSE; 
+   
+   }
+
    int thread::GetThreadPriority()
    { ASSERT(m_hThread != NULL); return ::GetThreadPriority(m_hThread); }
    DWORD thread::ResumeThread()
    { ASSERT(m_hThread != NULL); return ::ResumeThread(m_hThread); }
    DWORD thread::SuspendThread()
    { ASSERT(m_hThread != NULL); return ::SuspendThread(m_hThread); }
+   
    bool thread::PostThreadMessage(UINT message, WPARAM wParam, LPARAM lParam)
-   { ASSERT(m_hThread != NULL); return ::PostThreadMessage(m_nThreadID, message, wParam, lParam); }
+   {
+      ASSERT(m_hThread != NULL);
+      
+      return ::PostThreadMessage(m_nThreadID, message, wParam, lParam)  != FALSE;
+   
+   }
 
    void thread::set_os_data(void * pvoidOsData)
    {

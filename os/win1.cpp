@@ -15,7 +15,7 @@ namespace win
 
    bool CLASS_DECL_win SHGetSpecialFolderPath(HWND hwnd, string &str, int csidl, bool fCreate)
    {
-      return ::SHGetSpecialFolderPathW(hwnd, wstringtou(str, MAX_PATH * 8), csidl, fCreate);
+      return ::SHGetSpecialFolderPathW(hwnd, wstringtou(str, MAX_PATH * 8), csidl, fCreate) != FALSE;
    }
 
    DWORD GetFileAttributes(const char * lpFileName)
@@ -25,7 +25,7 @@ namespace win
 
    bool CreateDirectory(const char * lpPathName, LPSECURITY_ATTRIBUTES lpSecurityAttributes)
    {
-      return ::CreateDirectoryW(gen::international::utf8_to_unicode(lpPathName), lpSecurityAttributes);
+      return ::CreateDirectoryW(gen::international::utf8_to_unicode(lpPathName), lpSecurityAttributes) != FALSE;
    }
 
    DWORD GetCurrentDirectory(string & str)
@@ -65,7 +65,7 @@ namespace win
 
    bool  DeleteFile(const char * lpFileName)
    {
-      return ::DeleteFileW(gen::international::utf8_to_unicode(lpFileName));
+      return ::DeleteFileW(gen::international::utf8_to_unicode(lpFileName)) != FALSE;
    }
 
 /*   int GetMenuString(HMENU hmenu, UINT uIDItem, string & str, UINT flags)

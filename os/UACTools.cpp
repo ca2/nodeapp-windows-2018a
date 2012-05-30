@@ -204,7 +204,7 @@ IsWow64()
         }
     }
 
-    return bIsWow64;
+    return bIsWow64 != FALSE;
 }
 
 #endif//WIN64

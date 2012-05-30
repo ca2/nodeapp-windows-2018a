@@ -44,8 +44,13 @@ namespace win
    lpPaletteColors); }
    UINT palette::GetNearestPaletteIndex(COLORREF crColor) const
    { ASSERT(get_os_data() != NULL); return ::GetNearestPaletteIndex((HPALETTE)get_os_data(), crColor); }
+   
    bool palette::ResizePalette(UINT nNumEntries)
-   { ASSERT(get_os_data() != NULL); return ::ResizePalette((HPALETTE)get_os_data(), nNumEntries); }
+   {
+      ASSERT(get_os_data() != NULL); 
+      return ::ResizePalette((HPALETTE)get_os_data(), nNumEntries) != FALSE;
+   }
+
    int palette::GetEntryCount()
    { ASSERT(get_os_data() != NULL); WORD nEntries;
    ::GetObject((HANDLE) get_os_data(), sizeof(WORD), &nEntries); return (int)nEntries; }
