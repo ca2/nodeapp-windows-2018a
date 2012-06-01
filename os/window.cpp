@@ -3957,7 +3957,7 @@ ExitModal:
          nFlags |= SWP_NOREDRAW;
          nFlags |= SWP_NOMOVE;
          nFlags |= SWP_NOSIZE;
-         nFlags |= SWP_NOZORDER;
+         //nFlags |= SWP_NOZORDER;
          //nFlags |= SWP_FRAMECHANGED;
          if(nFlags & SWP_SHOWWINDOW)
          {
