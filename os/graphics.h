@@ -333,22 +333,18 @@ namespace win
       virtual int draw_text_ex(LPTSTR lpszString, int nCount, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
       virtual int draw_text_ex(const string & str, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
 
-      size GetTextExtent(const char * lpszString, int nCount, int iIndex) const;
-      size GetTextExtent(const char * lpszString, int nCount) const;
+      size GetTextExtent(const char * lpszString, strsize nCount, int iIndex) const;
+      size GetTextExtent(const char * lpszString, strsize nCount) const;
       size GetTextExtent(const string & str) const;
-      bool GetTextExtent(sized & size, const char * lpszString, int nCount, int iIndex) const;
-      bool GetTextExtent(sized & size, const char * lpszString, int nCount) const;
+      bool GetTextExtent(sized & size, const char * lpszString, strsize nCount, int iIndex) const;
+      bool GetTextExtent(sized & size, const char * lpszString, strsize nCount) const;
       bool GetTextExtent(sized & size, const string & str) const;
-      size GetOutputTextExtent(const char * lpszString, int nCount) const;
+      size GetOutputTextExtent(const char * lpszString, strsize nCount) const;
       size GetOutputTextExtent(const string & str) const;
-      size GetTabbedTextExtent(const char * lpszString, int nCount,
-         int nTabPositions, LPINT lpnTabStopPositions) const;
-      size GetTabbedTextExtent(const string & str,
-         int nTabPositions, LPINT lpnTabStopPositions) const;
-      size GetOutputTabbedTextExtent(const char * lpszString, int nCount,
-         int nTabPositions, LPINT lpnTabStopPositions) const;
-      size GetOutputTabbedTextExtent(const string & str,
-         int nTabPositions, LPINT lpnTabStopPositions) const;
+      size GetTabbedTextExtent(const char * lpszString, strsize nCount, int nTabPositions, LPINT lpnTabStopPositions) const;
+      size GetTabbedTextExtent(const string & str, int nTabPositions, LPINT lpnTabStopPositions) const;
+      size GetOutputTabbedTextExtent(const char * lpszString, strsize nCount, int nTabPositions, LPINT lpnTabStopPositions) const;
+      size GetOutputTabbedTextExtent(const string & str, int nTabPositions, LPINT lpnTabStopPositions) const;
       virtual bool GrayString(::ca::brush* pBrush,
          bool (CALLBACK* lpfnOutput)(HDC, LPARAM, int), LPARAM lpData,
             int nCount, int x, int y, int nWidth, int nHeight);

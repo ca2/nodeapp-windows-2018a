@@ -942,7 +942,7 @@ namespace win
          {
          //   return TRUE;
             rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
-            rect rectText(point(x, y), GetTextExtent(str));
+            rect rectText(point((int64_t) x, (int64_t) y), GetTextExtent(str));
             if(rectIntersect.intersect(rectIntersect, rectText))
             {
                ::ca::dib_sp dib0(get_app());
@@ -962,15 +962,15 @@ namespace win
                ::ca::dib_sp dib2(get_app());
                dib2->create(rectText.size());
                dib2->Fill(255, 0, 0, 0);
-               dib2->from(point(max(0, m_ptAlphaBlend.x - x), max(0, m_ptAlphaBlend.y - y)),
-                  m_pdibAlphaBlend->get_graphics(), point(max(0, x - m_ptAlphaBlend.x), max(0, y - m_ptAlphaBlend.y)), rectText.size());
+               dib2->from(point((int64_t) max(0, m_ptAlphaBlend.x - x), (int64_t) max(0, m_ptAlphaBlend.y - y)),
+               m_pdibAlphaBlend->get_graphics(), point((int64_t) max(0, x - m_ptAlphaBlend.x), (int64_t) max(0, y - m_ptAlphaBlend.y)), rectText.size());
                dib1->channel_multiply(visual::rgba::channel_alpha, dib2);
                /*::ca::dib_sp dib3(get_app());
                dib1->mult_alpha(dib3);*/
 
                keeper < ::ca::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
 
-               return System.imaging().true_blend(this, point(x, y), rectText.size(), dib1->get_graphics(), null_point());
+               return System.imaging().true_blend(this, point((int64_t) x, (int64_t) y), rectText.size(), dib1->get_graphics(), null_point());
 
                /*BLENDFUNCTION bf;
                bf.BlendOp     = AC_SRC_OVER;
@@ -1010,28 +1010,36 @@ namespace win
    nTabPositions, lpnTabStopPositions, nTabOrigin); }
 
 
-   size graphics::GetTabbedTextExtent(const char * lpszString, int nCount,
-      int nTabPositions, LPINT lpnTabStopPositions) const
-   { ASSERT(get_handle2() != NULL); return ::GetTabbedTextExtent(get_handle2(), lpszString, nCount,
-   nTabPositions, lpnTabStopPositions); }
-   size graphics::GetTabbedTextExtent(const string & str,
-      int nTabPositions, LPINT lpnTabStopPositions) const
-   { ASSERT(get_handle2() != NULL); return ::GetTabbedTextExtent(get_handle2(),
-   str, (int)str.get_length(), nTabPositions, lpnTabStopPositions); }
-   size graphics::GetOutputTabbedTextExtent(const char * lpszString, int nCount,
-      int nTabPositions, LPINT lpnTabStopPositions) const
-   { ASSERT(get_handle1() != NULL); return ::GetTabbedTextExtent(get_handle1(), lpszString, nCount,
-   nTabPositions, lpnTabStopPositions); }
-   size graphics::GetOutputTabbedTextExtent(const string & str,
-      int nTabPositions, LPINT lpnTabStopPositions) const
-   { ASSERT(get_handle1() != NULL); return ::GetTabbedTextExtent(get_handle1(),
-   str, (int)str.get_length(), nTabPositions, lpnTabStopPositions); }
-   bool graphics::GrayString(::ca::brush* pBrush,
-      bool (CALLBACK* lpfnOutput)(HDC, LPARAM, int),
-      LPARAM lpData, int nCount,
-      int x, int y, int nWidth, int nHeight)
-   { ASSERT(get_handle1() != NULL); return ::GrayString(get_handle1(), (HBRUSH)pBrush->get_os_data(),
-   (GRAYSTRINGPROC)lpfnOutput, lpData, nCount, x, y, nWidth, nHeight) != FALSE; }
+   size graphics::GetTabbedTextExtent(const char * lpszString, strsize nCount, int nTabPositions, LPINT lpnTabStopPositions) const
+   { 
+      ASSERT(get_handle2() != NULL); 
+      return ::GetTabbedTextExtent(get_handle2(), lpszString, (int) nCount, nTabPositions, lpnTabStopPositions);
+   }
+
+   size graphics::GetTabbedTextExtent(const string & str, int nTabPositions, LPINT lpnTabStopPositions) const
+   {
+      ASSERT(get_handle2() != NULL); 
+      return ::GetTabbedTextExtent(get_handle2(), str, (int) str.get_length(), nTabPositions, lpnTabStopPositions);
+   }
+
+   size graphics::GetOutputTabbedTextExtent(const char * lpszString, strsize nCount, int nTabPositions, LPINT lpnTabStopPositions) const
+   {
+      ASSERT(get_handle1() != NULL);
+      return ::GetTabbedTextExtent(get_handle1(), lpszString, (int) nCount, nTabPositions, lpnTabStopPositions);
+   }
+
+   size graphics::GetOutputTabbedTextExtent(const string & str, int nTabPositions, LPINT lpnTabStopPositions) const
+   {
+      ASSERT(get_handle1() != NULL);
+      return ::GetTabbedTextExtent(get_handle1(), str, (int) str.get_length(), nTabPositions, lpnTabStopPositions);
+   }
+
+   bool graphics::GrayString(::ca::brush* pBrush, bool (CALLBACK* lpfnOutput)(HDC, LPARAM, int), LPARAM lpData, int nCount,int x, int y, int nWidth, int nHeight)
+   {
+      ASSERT(get_handle1() != NULL); 
+      return ::GrayString(get_handle1(), (HBRUSH)pBrush->get_os_data(),(GRAYSTRINGPROC)lpfnOutput, lpData, nCount, x, y, nWidth, nHeight) != FALSE;
+   }
+
    UINT graphics::GetTextAlign() const
    { ASSERT(get_handle2() != NULL); return ::GetTextAlign(get_handle2()); }
    int graphics::GetTextFace(__in int nCount, __out_ecount_part_z(nCount, return + 1) LPTSTR lpszFacename) const
@@ -1426,7 +1434,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    bool graphics::PlayMetaFile(HENHMETAFILE hEnhMF, LPCRECT lpBounds)
    { 
 
-      Gdiplus::RectF rect(lpBounds->left, lpBounds->top, width(lpBounds), height(lpBounds));
+      Gdiplus::RectF rect((Gdiplus::REAL) lpBounds->left, (Gdiplus::REAL) lpBounds->top, (Gdiplus::REAL) width(lpBounds), (Gdiplus::REAL) height(lpBounds));
 
       Gdiplus::Metafile* pMeta = new Gdiplus::Metafile(hEnhMF, false);
 
@@ -1572,10 +1580,13 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    { ASSERT(get_handle1() != NULL); return ::TransparentBlt(get_handle1(), xDest, yDest, 
    nDestWidth, nDestHeight, WIN_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth, 
    nSrcHeight, crTransparent) != FALSE; }
-   bool graphics::GradientFill(TRIVERTEX* pVertices, ULONG nVertices,
-      void * pMesh, ULONG nMeshElements, DWORD dwMode)
-   { ASSERT(get_handle1() != NULL); return ::GradientFill(get_handle1(), pVertices, nVertices,
-   pMesh, nMeshElements, dwMode); }
+   
+   bool graphics::GradientFill(TRIVERTEX* pVertices, ULONG nVertices, void * pMesh, ULONG nMeshElements, DWORD dwMode)
+   {
+
+      ASSERT(get_handle1() != NULL); return ::GradientFill(get_handle1(), pVertices, nVertices, pMesh, nMeshElements, dwMode) != FALSE;
+
+   }
 
    // This is ca2 API library.
    // 
@@ -2918,7 +2929,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return ::DrawTextExW(get_handle1(), const_cast<wchar_t *>((const wchar_t *)wstr), (int)wcslen(wstr), lpRect, nFormat, lpDTParams); 
    }
 
-   size graphics::GetTextExtent(const char * lpszString, int nCount, int iIndex) const
+   size graphics::GetTextExtent(const char * lpszString, strsize nCount, int iIndex) const
    {
 
       if(lpszString == NULL || *lpszString == '\0')
@@ -2935,9 +2946,9 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       wstring wstr = gen::international::utf8_to_unicode(lpszString, nCount);
 
-      int iRange = 0;
-      int i = 0;
-      int iLen;
+      strsize iRange = 0;
+      strsize i = 0;
+      strsize iLen;
       const char * psz = lpszString;
       while(i < iIndex)
       {
@@ -2951,7 +2962,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
             break;
       }
 
-      Gdiplus::CharacterRange charRanges[1] = { Gdiplus::CharacterRange(0, iRange) }; 
+      Gdiplus::CharacterRange charRanges[1] = { Gdiplus::CharacterRange(0, (INT) iRange) }; 
 
       Gdiplus::StringFormat strFormat(Gdiplus::StringFormat::GenericTypographic());
       //Gdiplus::StringFormat strFormat;
@@ -2972,7 +2983,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       //m_pgraphics->MeasureString(wstr, (int) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, Gdiplus::StringFormat::GenericTypographic(), &box);
 
-      ((graphics *)this)->m_pgraphics->MeasureCharacterRanges(wstr, wstr.get_length(), ((graphics *)this)->gdiplus_font(), box, &strFormat, count, pCharRangeRegions);
+      ((graphics *)this)->m_pgraphics->MeasureCharacterRanges(wstr, (INT) wstr.get_length(), ((graphics *)this)->gdiplus_font(), box, &strFormat, (INT) count, pCharRangeRegions);
 
       Gdiplus::Region * pregion = NULL;
 
@@ -3010,10 +3021,11 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       rectBound.GetSize(&size);
 
-      return class ::size(size.Width * m_fontxyz.m_dFontWidth, size.Height);
+      return class ::size((int64_t) (size.Width * m_fontxyz.m_dFontWidth), (int64_t) (size.Height));
+
    }
 
-   size graphics::GetTextExtent(const char * lpszString, int nCount) const
+   size graphics::GetTextExtent(const char * lpszString, strsize nCount) const
    {
 
       single_lock slGdiplus(&System.m_mutexGdiplus, TRUE);
@@ -3084,7 +3096,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   size graphics::GetOutputTextExtent(const char * lpszString, int nCount) const
+   size graphics::GetOutputTextExtent(const char * lpszString, strsize nCount) const
    {
       ASSERT(get_handle1() != NULL);
       SIZE size;
@@ -3103,7 +3115,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return size;
    }
 
-   bool graphics::GetTextExtent(sized & size, const char * lpszString, int nCount, int iIndex) const
+   bool graphics::GetTextExtent(sized & size, const char * lpszString, strsize nCount, int iIndex) const
    {
 
       if(lpszString == NULL || *lpszString == '\0')
@@ -3120,9 +3132,9 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       wstring wstr = gen::international::utf8_to_unicode(lpszString, nCount);
 
-      int iRange = 0;
-      int i = 0;
-      int iLen;
+      strsize iRange = 0;
+      strsize i = 0;
+      strsize iLen;
       const char * psz = lpszString;
       while(i < iIndex)
       {
@@ -3136,7 +3148,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
             break;
       }
 
-      Gdiplus::CharacterRange charRanges[1] = { Gdiplus::CharacterRange(0, iRange) }; 
+      Gdiplus::CharacterRange charRanges[1] = { Gdiplus::CharacterRange(0, (INT) iRange) }; 
 
       Gdiplus::StringFormat strFormat(Gdiplus::StringFormat::GenericTypographic());
       //Gdiplus::StringFormat strFormat;
@@ -3157,7 +3169,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       //m_pgraphics->MeasureString(wstr, (int) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, Gdiplus::StringFormat::GenericTypographic(), &box);
 
-      ((graphics *)this)->m_pgraphics->MeasureCharacterRanges(wstr, nCount, ((graphics *)this)->gdiplus_font(), box, &strFormat, count, pCharRangeRegions);
+      ((graphics *)this)->m_pgraphics->MeasureCharacterRanges(wstr, (INT) nCount, ((graphics *)this)->gdiplus_font(), box, &strFormat, (INT) count, pCharRangeRegions);
 
       Gdiplus::Region * pregion = NULL;
 
@@ -3196,7 +3208,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return true;
    }
 
-   bool graphics::GetTextExtent(sized & size, const char * lpszString, int nCount) const
+   bool graphics::GetTextExtent(sized & size, const char * lpszString, strsize nCount) const
    {
 
       single_lock slGdiplus(&System.m_mutexGdiplus, TRUE);

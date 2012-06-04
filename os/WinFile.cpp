@@ -483,7 +483,7 @@ bool CLASS_DECL_win vfxResolveShortcut(string & strTarget, const char * pszSourc
        bNativeUnicode = FALSE;
 
    
-   __COM com;
+//   __COM com;
    IShellLinkW* psl;
    wstrFileOut = L"";
 

@@ -24,9 +24,9 @@
 /////////////////////////////////////////////////////////////////////////////
 // ex1::filesp implementation helpers
 
-#ifdef gen::GetFileName
-#undef gen::GetFileName
-#endif
+//#ifdef gen::GetFileName
+//#undef gen::GetFileName
+//#endif
 
 
 /*UINT CLASS_DECL_win gen::GetFileName(const char * lpszPathName, __out_ecount_opt(nMax) LPTSTR lpszTitle, UINT nMax)

@@ -1085,7 +1085,7 @@ stop_run:
             TRACE(::radix::trace::category_AppMsg, 0, "Warning: Temp ::collection::map lock count non-zero (%ld).\n", m_nTempMapLock);
          }
          LockTempMaps();
-         UnlockTempMaps(-1);
+         UnlockTempMaps(true);
    #endif
       }
       catch(...)

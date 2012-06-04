@@ -2916,9 +2916,6 @@ restart_mouse_hover_check:
       user::HWNDArray wndaApp;
 
 
-      int i; 
-      int j;
-
       HRGN rgnWindow;
       HRGN rgnIntersect;
       HRGN rgnUpdate = NULL;
@@ -2985,7 +2982,7 @@ restart_mouse_hover_check:
 
 
             }
-            for(int j = wndaApp.get_upper_bound(); j >= 0; j--)
+            for(index j = wndaApp.get_upper_bound(); j >= 0; j--)
             {
                HWND hWnd = wndaApp[j];
                if(hWnd == get_handle())
