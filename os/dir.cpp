@@ -33,7 +33,7 @@ namespace win
              ch == '\n';
    }
 
-   string dir::path(const char * pszFolder, int iLenFolder, const char * pszRelative, int iLenRelative, const char * psz2, int iLen2, bool bUrl)
+   string dir::path(const char * pszFolder, strsize iLenFolder, const char * pszRelative, strsize iLenRelative, const char * psz2, strsize iLen2, bool bUrl)
    {
 
       bool bEmptyRelative = iLenRelative == 0 || pszRelative == NULL || *pszRelative == '\0';
