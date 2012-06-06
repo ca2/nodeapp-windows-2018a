@@ -112,7 +112,7 @@ bool WinResource::ReadResource(ex1::file & spfile, HINSTANCE hinst, UINT nID,  c
            spfile.write(lpnRes, dwResSize);
            spfile.Flush();
         }
-        catch(ex1::file_exception_sp *)
+        catch(base_exception &)
         {
       #ifdef DEBUG
 //         g_dumpcontext << "File could not be opened " << pe->m_cause << "\n";

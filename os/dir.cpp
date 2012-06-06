@@ -868,22 +868,34 @@ namespace win
 
    bool dir::initialize()
    {
+      
       xml::document doc(get_app());
+      
       doc.load(Application.file().as_string(appdata("configuration\\directory.xml")));
+      
       if(doc.get_root()->get_name() == "directory_configuration")
       {
+
          m_strTimeFolder = doc.get_root()->get_child_value("time"); 
+
          m_strNetSeedFolder = doc.get_root()->get_child_value("netseed"); 
+
       }
       if(m_strTimeFolder.is_empty())
          m_strTimeFolder = appdata("time");
+
       if(m_strNetSeedFolder.is_empty())
          m_strNetSeedFolder = ca2("net/netseed");
+
       mk(m_strTimeFolder, get_app());
+
       if(!is(m_strTimeFolder, get_app()))
          return false;
+
       mk(path(m_strTimeFolder, "time"), get_app());
+
       return true;
+
    }
 
    string dir::trash_that_is_not_trash(const char * psz)

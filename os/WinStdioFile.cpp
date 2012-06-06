@@ -22,10 +22,11 @@ WinStdioFile::~WinStdioFile()
       close();
 }
 
-bool WinStdioFile::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_exception_sp* pException)
+bool WinStdioFile::open(const char * lpszFileName, UINT nOpenFlags)
 {
-   ASSERT(pException == NULL || __is_valid_address(pException, sizeof(ex1::file_exception_sp)));
+
    ASSERT(lpszFileName != NULL);
+
    ASSERT(__is_valid_string(lpszFileName));
 
    if(nOpenFlags  & ::ex1::file::defer_create_directory)
@@ -34,7 +35,7 @@ bool WinStdioFile::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_ex
    }
 
    m_pStream = NULL;
-   if (!WinFile::open(lpszFileName, (nOpenFlags & ~::ex1::file::type_text), pException))
+   if (!WinFile::open(lpszFileName, (nOpenFlags & ~::ex1::file::type_text)))
       return FALSE;
 
    ASSERT(m_hFile != hFileNull);
@@ -85,11 +86,11 @@ bool WinStdioFile::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_ex
    if (m_pStream == NULL)
    {
       // an error somewhere along the way...
-      if (pException != NULL)
-      {
+//      if (pException != NULL)
+  //    {
 //         pException->m_lOsError = _doserrno;
 //         pException->m_cause = ::ex1::file_exception::OsErrorToException(_doserrno);
-      }
+    //  }
 
       WinFile::Abort(); // close m_hFile
       return FALSE;

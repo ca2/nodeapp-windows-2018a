@@ -13,32 +13,40 @@ __STATIC inline bool IsDirSep(WCHAR ch)
 WinFile::WinFile(::ca::application * papp) :
    ca(papp)
 {
+
    m_hFile = (UINT) hFileNull;
+
    m_bCloseOnDelete = TRUE;
+
 }
 
 WinFile::WinFile(::ca::application * papp, int hFile) :
    ca(papp)
 {
+
    m_hFile = hFile;
+
    m_bCloseOnDelete = TRUE;
+
 }
 
 WinFile::WinFile(::ca::application * papp, const char * lpszFileName, UINT nOpenFlags) :
    ca(papp)
 {
+   
    ASSERT(__is_valid_string(lpszFileName));
 
-   ex1::file_exception_sp e(get_app());
-   if(!open(lpszFileName, nOpenFlags, &e))
-      //xxx vfxThrowFileException(e);
-      throw &e;
+   if(!open(lpszFileName, nOpenFlags))
+      throw ex1::file_exception(papp, ::ex1::file_exception::none, -1, lpszFileName);
+
 }
 
 WinFile::~WinFile()
 {
+
    if (m_hFile != (UINT)hFileNull && m_bCloseOnDelete)
       close();
+
 }
 
 ex1::file * WinFile::Duplicate() const
@@ -61,7 +69,7 @@ ex1::file * WinFile::Duplicate() const
    return pFile;
 }
 
-bool WinFile::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_exception_sp* pException)
+bool WinFile::open(const char * lpszFileName, UINT nOpenFlags)
 {
 
    if (m_hFile != (UINT)hFileNull)
@@ -69,8 +77,6 @@ bool WinFile::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_excepti
 
    ASSERT_VALID(this);
    ASSERT(__is_valid_string(lpszFileName));
-   ASSERT(pException == NULL ||
-      __is_valid_address(pException, sizeof(ex1::file_exception_sp)));
    ASSERT((nOpenFlags & type_text) == 0);   // text mode not supported
 
    // WinFile objects are always binary and CreateFile does not need flag
@@ -161,7 +167,7 @@ bool WinFile::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_excepti
 
       if(dwLastError != ERROR_FILE_NOT_FOUND && dwLastError != ERROR_PATH_NOT_FOUND)
       {
-         if (pException != NULL)
+/*         if (pException != NULL)
          {
             pException->create(get_app());
             ::ex1::file_exception * pfe = dynamic_cast < ::ex1::file_exception * > (pException->m_p);
@@ -174,9 +180,13 @@ bool WinFile::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_excepti
             return FALSE;
          }
          else
-         {
-            vfxThrowFileException(get_app(), WinFileException::OsErrorToException(dwLastError), dwLastError, m_strFileName);
-         }
+         {*/
+
+
+         vfxThrowFileException(get_app(), WinFileException::OsErrorToException(dwLastError), dwLastError, m_strFileName);
+         
+         //}
+
       }
 
       try
@@ -194,7 +204,7 @@ bool WinFile::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_excepti
 
       if (hFile == INVALID_HANDLE_VALUE)
       {
-         if (pException != NULL)
+         /*if (pException != NULL)
          {
             pException->create(get_app());
             ::ex1::file_exception * pfe = dynamic_cast < ::ex1::file_exception * > (pException->m_p);
@@ -207,10 +217,15 @@ bool WinFile::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_excepti
             return FALSE;
          }
          else
-         {
-            DWORD dwLastError = ::GetLastError();
-            vfxThrowFileException(get_app(), WinFileException::OsErrorToException(dwLastError), dwLastError, m_strFileName);
-         }
+         {*/
+
+
+         DWORD dwLastError = ::GetLastError();
+         vfxThrowFileException(get_app(), WinFileException::OsErrorToException(dwLastError), dwLastError, m_strFileName);
+         
+      
+         //}
+
       }
 
    }
@@ -1152,7 +1167,7 @@ void CLASS_DECL_win vfxThrowFileException(::ca::application * papp, int cause, L
       lpsz = szUnknown;
 //   TRACE3("WinFile exception: %hs, WinFile %s, App error information = %ld.\n", lpsz, (lpszFileName == NULL) ? "Unknown" : lpszFileName, lOsError);
 #endif
-   throw new ::ex1::file_exception(papp, cause, lOsError, lpszFileName);
+   throw ::ex1::file_exception(papp, cause, lOsError, lpszFileName);
 }
 
 int PASCAL WinFileException::ErrnoToException(int nErrno)
