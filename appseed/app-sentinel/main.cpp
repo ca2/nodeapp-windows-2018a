@@ -169,19 +169,19 @@ int spaboot_start()
    while(iRetry < iRetryLimit || iRetryLimit < 0)
    {
       update_ca2_installed(true);
-      if(is_ca2_installed() && is_installed(id))
+      if(is_ca2_installed() && is_installed("application", id))
       {  
          break;
       }
       vsstring strCommandLine;
 
-      strCommandLine = ": app=session session_start=" + id + " install";
+      strCommandLine = ": app=session session_start=" + id + " app_type=application install";
 
       ca2_cube_install(strCommandLine, bBackground);
       iRetry++;
    }
 
-   if(!is_ca2_installed() || !is_installed(id))
+   if(!is_ca2_installed() || !is_installed("application", id))
    {  
       return 1;
    }
