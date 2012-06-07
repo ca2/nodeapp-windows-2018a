@@ -35,7 +35,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{B2A3AD3B-1026-4D24-A527-2E1B38324184}</ProjectGuid>
+    <ProjectGuid>{19841115-1984-0411-1977-021977151984}</ProjectGuid>
     <RootNamespace>app</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <ProjectName>app</ProjectName>
@@ -791,7 +791,6 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="..\..\..\app-core\appseed\multimedia\multimedia.vcxproj" />
     <None Include="ca2.ico" />
   </ItemGroup>
   <ItemGroup>

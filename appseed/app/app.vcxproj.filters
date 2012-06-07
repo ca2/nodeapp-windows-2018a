@@ -28,7 +28,6 @@
     <None Include="ca2.ico">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\..\..\app-core\appseed\multimedia\multimedia.vcxproj" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
