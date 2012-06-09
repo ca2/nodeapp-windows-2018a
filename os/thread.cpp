@@ -479,6 +479,7 @@ namespace win
 
    void thread::CommonConstruct()
    {
+      
       m_ptimera      = NULL; 
       m_puiptra      = NULL;
       m_puiMain      = NULL;
