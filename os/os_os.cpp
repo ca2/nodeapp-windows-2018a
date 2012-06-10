@@ -700,6 +700,26 @@ namespace win
 
    }
 
+
+   void os::post_to_all_threads(UINT message, WPARAM wparam, LPARAM lparam)
+   {
+
+      for(index i = 0; i < ::win::thread::s_haThread.get_size(); i++)
+      {
+         
+         try
+         {
+            ::PostThreadMessage(::GetThreadId(::win::thread::s_haThread[i]), message, wparam, lparam);
+         }
+         catch(...)
+         {
+         }
+
+      }
+
+   }
+
+
 } // namespace win
 
 

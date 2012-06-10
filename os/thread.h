@@ -36,6 +36,9 @@ namespace win
    #endif
 
 
+      static comparable_array < HANDLE > s_haThread;
+
+
       // list of frame_window objects for thread
       simple_list < frame_window * >   m_frameList;
 

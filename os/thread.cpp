@@ -104,6 +104,10 @@ UINT APIENTRY __thread_entry(void * pParam)
       ASSERT(FALSE);  // unreachable
    }
 
+
+   ::win::thread::s_haThread.add(::GetCurrentThread());
+
+
    pThread->thread_entry(pStartup);
 
    // pStartup is invlaid after the following
@@ -373,6 +377,8 @@ void CLASS_DECL_win __end_thread(::radix::application * papp, UINT nExitCode, bo
       pState->m_pCurrentWinThread = NULL;
    }
 
+   ::win::thread::s_haThread.remove(::GetCurrentThread());
+
    // allow cleanup of any thread local objects
    __term_thread(papp);
 
@@ -436,6 +442,10 @@ void CLASS_DECL_win __init_thread()
 
 namespace win
 {
+
+
+   comparable_array < HANDLE > thread::s_haThread;
+
 
    void thread::set_p(::radix::thread * p)
    {
@@ -1857,13 +1867,13 @@ stop_run:
       m_puiptra->m_papp    = m_papp;
 
 
+      
       if(!initialize_message_window(get_app(), ""))
          return -1;
 
 
-
-
       return 0;   // not reached
+
    }
 
    int thread::main()
