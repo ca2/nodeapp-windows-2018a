@@ -53,79 +53,97 @@ struct ___THREAD_STARTUP : ::ca::thread_startup
 
 UINT APIENTRY __thread_entry(void * pParam)
 {
-   ___THREAD_STARTUP* pStartup = (___THREAD_STARTUP*)pParam;
-   ASSERT(pStartup != NULL);
-   ASSERT(pStartup->pThreadState != NULL);
-   ASSERT(pStartup->pThread != NULL);
-   //ASSERT(pStartup->hEvent != NULL);
-   ASSERT(!pStartup->bError);
 
-   ::win::thread* pThread = pStartup->pThread;
-
-      ::CoInitialize(NULL);
-
-
-   pThread->::exception::translator::attach();
+   UINT uiRet = 0;
 
    try
    {
-      // inherit parent's module state
-      ___THREAD_STATE* pThreadState = __get_thread_state();
-      pThreadState->m_pModuleState = pStartup->pThreadState->m_pModuleState;
+      
+      ___THREAD_STARTUP* pStartup = (___THREAD_STARTUP*)pParam;
+      ASSERT(pStartup != NULL);
+      ASSERT(pStartup->pThreadState != NULL);
+      ASSERT(pStartup->pThread != NULL);
+      //ASSERT(pStartup->hEvent != NULL);
+      ASSERT(!pStartup->bError);
 
-      // set current thread pointer for System.GetThread
-      __MODULE_STATE* pModuleState = __get_module_state();
-      __MODULE_THREAD_STATE* pState = pModuleState->m_thread;
-      pState->m_pCurrentWinThread = pThread;
+      
+      ::win::thread* pThread = pStartup->pThread;
 
-      // forced initialization of the thread
-      __init_thread();
+      
+      ::CoInitialize(NULL);
 
-      // thread inherits cast's main ::ca::window if not already set
-      //if (papp != NULL && GetMainWnd() == NULL)
+
+      pThread->::exception::translator::attach();
+
+      try
       {
-         // just attach the HWND
-         // trans         threadWnd.Attach(pApp->GetMainWnd()->get_handle());
-         //GetMainWnd() = pApp->GetMainWnd();
+         // inherit parent's module state
+         ___THREAD_STATE* pThreadState = __get_thread_state();
+         pThreadState->m_pModuleState = pStartup->pThreadState->m_pModuleState;
+
+         // set current thread pointer for System.GetThread
+         __MODULE_STATE* pModuleState = __get_module_state();
+         __MODULE_THREAD_STATE* pState = pModuleState->m_thread;
+         pState->m_pCurrentWinThread = pThread;
+
+         // forced initialization of the thread
+         __init_thread();
+
+         // thread inherits cast's main ::ca::window if not already set
+         //if (papp != NULL && GetMainWnd() == NULL)
+         {
+            // just attach the HWND
+            // trans         threadWnd.Attach(pApp->GetMainWnd()->get_handle());
+            //GetMainWnd() = pApp->GetMainWnd();
+         }
       }
-   }
-   catch(base_exception *)
-   {
-      // Note: DELETE_EXCEPTION(e) not required.
+      catch(base_exception *)
+      {
+         // Note: DELETE_EXCEPTION(e) not required.
 
-      // exception happened during thread initialization!!
-      //TRACE(::radix::trace::category_AppMsg, 0, "Warning: Error during thread initialization!\n");
+         // exception happened during thread initialization!!
+         //TRACE(::radix::trace::category_AppMsg, 0, "Warning: Error during thread initialization!\n");
 
-      // set error flag and allow the creating thread to notice the error
-//         threadWnd.Detach();
-      pStartup->bError = TRUE;
+         // set error flag and allow the creating thread to notice the error
+   //         threadWnd.Detach();
+         pStartup->bError = TRUE;
+         VERIFY(::SetEvent(pStartup->hEvent));
+         __end_thread(dynamic_cast < ::radix::application * > (pThread->m_papp), (UINT)-1, FALSE);
+         ASSERT(FALSE);  // unreachable
+      }
+
+
+      ::win::thread::s_haThread.add(::GetCurrentThread());
+
+
+      pThread->thread_entry(pStartup);
+
+      // pStartup is invlaid after the following
+      // SetEvent (but hEvent2 is valid)
+      HANDLE hEvent2 = pStartup->hEvent2;
+
+      // allow the creating thread to return from thread::CreateThread
       VERIFY(::SetEvent(pStartup->hEvent));
-      __end_thread(dynamic_cast < ::radix::application * > (pThread->m_papp), (UINT)-1, FALSE);
-      ASSERT(FALSE);  // unreachable
+
+      // wait for thread to be resumed
+      VERIFY(::WaitForSingleObject(hEvent2, INFINITE) == WAIT_OBJECT_0);
+      ::CloseHandle(hEvent2);
+
+
+
+      int n = pThread->m_p->main();
+
+      uiRet =  pThread->thread_term(n);
+
+
+   }
+   catch(...)
+   {
+      return -1;
    }
 
+   return uiRet;
 
-   ::win::thread::s_haThread.add(::GetCurrentThread());
-
-
-   pThread->thread_entry(pStartup);
-
-   // pStartup is invlaid after the following
-   // SetEvent (but hEvent2 is valid)
-   HANDLE hEvent2 = pStartup->hEvent2;
-
-   // allow the creating thread to return from thread::CreateThread
-   VERIFY(::SetEvent(pStartup->hEvent));
-
-   // wait for thread to be resumed
-   VERIFY(::WaitForSingleObject(hEvent2, INFINITE) == WAIT_OBJECT_0);
-   ::CloseHandle(hEvent2);
-
-
-
-   int n = pThread->m_p->main();
-
-   return pThread->thread_term(n);
 }
 
 #endif //_MT
