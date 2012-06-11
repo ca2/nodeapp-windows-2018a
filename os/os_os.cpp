@@ -728,6 +728,8 @@ namespace win
 
          if(c == ::win::thread::s_haThread.get_size())
             i++;
+         else
+            c = ::win::thread::s_haThread.get_size();
 
       }
 
