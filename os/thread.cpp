@@ -114,6 +114,7 @@ UINT APIENTRY __thread_entry(void * pParam)
 
 
       ::win::thread::s_haThread.add(::GetCurrentThread());
+      ::win::thread::s_threadptra.add(pThread);
 
 
       pThread->thread_entry(pStartup);
@@ -396,6 +397,7 @@ void CLASS_DECL_win __end_thread(::radix::application * papp, UINT nExitCode, bo
    }
 
    ::win::thread::s_haThread.remove(::GetCurrentThread());
+   ::win::thread::s_threadptra.remove(pThread);
 
    // allow cleanup of any thread local objects
    __term_thread(papp);
@@ -463,6 +465,7 @@ namespace win
 
 
    comparable_array < HANDLE > thread::s_haThread;
+   comparable_array < ::ca::thread * > thread::s_threadptra;
 
 
    void thread::set_p(::radix::thread * p)

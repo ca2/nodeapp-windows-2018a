@@ -704,10 +704,70 @@ namespace win
    void os::post_to_all_threads(UINT message, WPARAM wparam, LPARAM lparam)
    {
 
-      ::count c = ::win::thread::s_haThread.get_size();
+      ::count c;
+
+      ::radix::thread * pthread;
+
+      c = ::win::thread::s_threadptra.get_size();
+
+      bool bOk;
+
+      if(message == WM_QUIT)
+      {
+
+         for(index i = 0; i < c; )
+         {
+
+            bOk = true;
+         
+            try
+            {
+               pthread = dynamic_cast < ::radix::thread * >(::win::thread::s_threadptra[i]);
+               pthread->m_bRun = false;
+               pthread->m_p->m_bRun = false;
+            }
+            catch(...)
+            {
+
+               bOk = false;
+
+            }
+
+            try
+            {
+               if(bOk)
+               {
+
+                  if(c == ::win::thread::s_haThread.get_size())
+                     i++;
+                  else
+                     c = ::win::thread::s_haThread.get_size();
+
+               }
+               else
+               {
+
+                  c = ::win::thread::s_haThread.get_size();
+
+               }
+
+            }
+            catch(...)
+            {
+               break;
+            }
+
+         }
+      }
+
+
+      c = ::win::thread::s_haThread.get_size();
+
 
       for(index i = 0; i < c; )
       {
+
+         bOk = true;
          
          try
          {
@@ -716,7 +776,7 @@ namespace win
             {
                if(message == WM_QUIT)
                {
-                  DWORD dwRet = ::WaitForSingleObject(::win::thread::s_haThread[i], 5);
+                  DWORD dwRet = ::WaitForSingleObject(::win::thread::s_haThread[i], 1984);
                   if((dwRet != WAIT_OBJECT_0) && (dwRet != WAIT_FAILED))
                      goto repeat;
                }
@@ -724,14 +784,37 @@ namespace win
          }
          catch(...)
          {
+
+            bOk = false;
+
          }
 
-         if(c == ::win::thread::s_haThread.get_size())
-            i++;
-         else
-            c = ::win::thread::s_haThread.get_size();
+         try
+         {
+            if(bOk)
+            {
+
+               if(c == ::win::thread::s_haThread.get_size())
+                  i++;
+               else
+                  c = ::win::thread::s_haThread.get_size();
+
+            }
+            else
+            {
+
+               c = ::win::thread::s_haThread.get_size();
+
+            }
+
+         }
+         catch(...)
+         {
+            break;
+         }
 
       }
+
 
    }
 

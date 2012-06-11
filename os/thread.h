@@ -37,6 +37,7 @@ namespace win
 
 
       static comparable_array < HANDLE > s_haThread;
+      static comparable_array < ::ca::thread * > s_threadptra;
 
 
       // list of frame_window objects for thread
