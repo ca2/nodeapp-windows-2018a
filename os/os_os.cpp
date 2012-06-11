@@ -704,16 +704,30 @@ namespace win
    void os::post_to_all_threads(UINT message, WPARAM wparam, LPARAM lparam)
    {
 
-      for(index i = 0; i < ::win::thread::s_haThread.get_size(); i++)
+      ::count c = ::win::thread::s_haThread.get_size();
+
+      for(index i = 0; i < c; )
       {
          
          try
          {
-            ::PostThreadMessage(::GetThreadId(::win::thread::s_haThread[i]), message, wparam, lparam);
+            repeat:
+            if(::PostThreadMessage(::GetThreadId(::win::thread::s_haThread[i]), message, wparam, lparam))
+            {
+               if(message == WM_QUIT)
+               {
+                  DWORD dwRet = ::WaitForSingleObject(::win::thread::s_haThread[i], 5);
+                  if((dwRet != WAIT_OBJECT_0) && (dwRet != WAIT_FAILED))
+                     goto repeat;
+               }
+            }
          }
          catch(...)
          {
          }
+
+         if(c == ::win::thread::s_haThread.get_size())
+            i++;
 
       }
 
