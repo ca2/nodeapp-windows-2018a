@@ -8,6 +8,9 @@
     <Filter Include="Header Files">
       <UniqueIdentifier>{b0ea6ee6-3eda-487c-95c3-57a1867f855e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{7ad13f13-8e7c-4186-a97a-ad7b01984cdc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -29,5 +32,18 @@
     <ResourceCompile Include="app-install.rc">
       <Filter>Source Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="ca2v_2011_04_02.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="fluidbasis_2011_10_26.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="small_bell.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
   </ItemGroup>
 </Project>
