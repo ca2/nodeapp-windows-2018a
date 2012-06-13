@@ -5,36 +5,6 @@ UINT g_nRedrawThreadID;
 extern bool g_bAppStarted;
 extern void * g_pvoidPluginSystem;
 
-UINT APIENTRY _redraw(void * pParam)
-{
-   ::ca2plugin_container::host * phost = (::ca2plugin_container::host *) pParam;
-   while(true)
-   {
-      Sleep(100);
-      NPRect invalidRect;
-      invalidRect.left     = (uint16_t) phost->m_rect.left;
-      invalidRect.top      = (uint16_t) phost->m_rect.top;
-      invalidRect.right    = (uint16_t) phost->m_rect.right;
-      invalidRect.bottom   = (uint16_t) phost->m_rect.bottom;
-      NPN_InvalidateRect(phost->m_instance, &invalidRect);
-      NPN_ForceRedraw(phost->m_instance);
-   }
-}
-
-class standard_exception
-{
-public:
-
-   UINT m_uiCode;
-
-   standard_exception(UINT uiCode) : m_uiCode(uiCode) {}
-      
-};
-
-void __cdecl filter2(unsigned int uiCode, EXCEPTION_POINTERS * ppointers)
-{
-   throw standard_exception(ppointers->ExceptionRecord->ExceptionCode);
-}
 
 namespace ca2plugin_container
 {
@@ -44,7 +14,7 @@ namespace ca2plugin_container
    VOID CALLBACK TimerProcHost(HWND hwnd,  UINT uMsg,  uint_ptr idEvent,  DWORD dwTime);
 
 
-   host::host(NPP a_instance)
+   host::host(application * papp)
    {
       
       //Sleep(15 * 1000);
@@ -61,7 +31,7 @@ namespace ca2plugin_container
 
       m_bRunningSpaAdmin = false;
 
-      m_instance = a_instance;
+      m_papp = papp;
 
       m_vssPluginName = "ca2 plugin";
       m_vssPluginDescription = "ca2 plugin for Firefox";
@@ -75,28 +45,10 @@ namespace ca2plugin_container
       SetTimer(m_hwndMessage, (uint_ptr) this, 84, TimerProcHost); // close to 12 frames per second.
 
       m_pfile           = NULL;
-      NPError err = NPN_GetValue(m_instance, NPNVWindowNPObject, &m_pobjectWindow);
 
       m_lpbMemory = NULL;
       m_iMemory = -1;
 
-      NPIdentifier n = NPN_GetStringIdentifier("foof");
-
-      sFoo_id = NPN_GetStringIdentifier("foo");
-      sBar_id = NPN_GetStringIdentifier("bar");
-      sDocument_id = NPN_GetStringIdentifier("document");
-      sLocation_id = NPN_GetStringIdentifier("location");
-      sBody_id = NPN_GetStringIdentifier("body");
-      sCreateElement_id = NPN_GetStringIdentifier("createElement");
-      sCreateTextNode_id = NPN_GetStringIdentifier("createTextNode");
-      sAppendChild_id = NPN_GetStringIdentifier("appendChild");
-      sPluginType_id = NPN_GetStringIdentifier("PluginType");
-
-      NPN_GetProperty(m_instance, m_pobjectWindow, sDocument_id, &m_varDocument);
-
-      err = NPN_SetValue(m_instance, NPPVpluginWindowBool, (void *) FALSE);
-
-      err = NPN_SetValue(m_instance, NPPVpluginTransparentBool, (void *) TRUE);
 
       m_hwnd = NULL;
       m_bStream = false;
@@ -105,15 +57,11 @@ namespace ca2plugin_container
       m_strHostPluginLocation = calc_location_url();
 
 
-      m_phostjs   = NULL;
-//      m_bReload   = false;
 
    }
 
    host::~host()
    {
-      NPN_ReleaseVariantValue(&m_varDocument);
-      NPN_ReleaseObject(m_pobjectWindow);
       ::DestroyWindow(m_hwndMessage);
    }
 
@@ -166,56 +114,6 @@ namespace ca2plugin_container
 
 
 
-
-   NPBool host::isInitialized()
-   {
-      return m_bInitialized;
-   }
-
-   const char * host::getVersion()
-   {
-     return NPN_UserAgent(m_instance);
-   }
-
-
-
-
-
-
-
-
-
-   NPError host::NewStream(NPMIMEType type, NPStream* stream, NPBool seekable, uint16* stype)
-   {
-      m_bOk = false;
-      return NPERR_NO_ERROR;
-   }
-
-
-
-
-
-
-
-   void host::redraw()
-   {
-      if(!m_bOnPaint && (::GetTickCount() - m_last_redraw) >= 5)
-      {
-         NPRect invalidRect;
-         invalidRect.left     = (uint16_t) 0;
-         invalidRect.top      = (uint16_t) 0;
-         invalidRect.right    = (uint16_t) (m_rect.right - m_rect.left);
-         invalidRect.bottom   = (uint16_t) (m_rect.bottom - m_rect.top);
-         NPN_InvalidateRect(m_instance, &invalidRect);
-         NPN_ForceRedraw(m_instance);
-         m_last_redraw = ::GetTickCount();
-      }
-
-
-   }
-
-
-
    bool host::is_ok()
    {
       return m_bStream && m_bOk;
@@ -225,6 +123,8 @@ namespace ca2plugin_container
    {
       ::PostMessage(m_hwnd, uiMessage, wparam, lparam);
    }
+
+
 
 
 
@@ -253,60 +153,15 @@ namespace ca2plugin_container
    }
 
 
-   int32  host::Write(NPStream *stream, int32 offset, int32 len, void *buffer)
-   { 
-      //Sleep(15 * 1000);
-      if(m_strPluginUrl.is_empty() && stream->url != NULL)
-         m_strPluginUrl = stream->url;
-
-      if(m_strPluginHeaders.is_empty() && stream->headers != NULL)
-         m_strPluginHeaders = stream->headers;
-
-      if(buffer != NULL && len > 0)
-      {
-         append_memory(buffer, len);
-      }
-
-      return len; 
-
-   }
-
-
-   NPError host::DestroyStream(NPStream *stream, NPError reason)
-   {
-      if(reason == NPRES_DONE)
-      {
-         m_bStream = true;
-         set_ready();
-      }
-      return NPERR_NO_ERROR;
-   }
-
-
-
-   #undef url
-   #define Application System
-
-
-   uint16 host::HandleEvent(void * pvoid)
-   {
-      NPEvent * pevent = (NPEvent *) pvoid;
-#ifdef WINDOWS
-      return (uint16_t) message_handler(pevent->event, pevent->wParam, pevent->lParam);
-#else
-      return message_handler(pevent);
-#endif
-   }
-
-
 
    bool host::open_url(const char * pszUrl)
    {
-      NPVariant varLocation;
+/*      NPVariant varLocation;
       varLocation.type = NPVariantType_String;
       varLocation.value.stringValue.UTF8Characters = pszUrl;
       varLocation.value.stringValue.UTF8Length = (uint32_t) strlen_dup(pszUrl);
       NPN_SetProperty(m_instance, m_varDocument.value.objectValue, sLocation_id, &varLocation);
+      return true;*/
       return true;
    }
 
@@ -332,144 +187,23 @@ LONG WINAPI MyUnhandledExceptionFilter(EXCEPTION_POINTERS* exceptionInfo)
 
    bool host::reload_plugin()
    {
+
       //NPN_ReloadPlugins(TRUE);
       // Client-side web page javascript will reload this killed and thus not functional
       // plugin served by the web server. This behaviour should be matched, otherwise
       // this killing call will cease the reload process.
       //m_dwReload = ::GetTickCount();
       //m_bReload = true;
-      //::TerminateProcess(::GetCurrentProcess(), 0);
+      ::TerminateProcess(::GetCurrentProcess(), 0);
 
-      //LPTOP_LEVEL_EXCEPTION_FILTER lpFilter = SetUnhandledExceptionFilter(&MyUnhandledExceptionFilter);
-
-      _set_se_translator(&filter2);
-
-
-      
-      
-      stra_dup straPrevious;
-
-      ::process_modules(straPrevious, ::GetCurrentProcessId());
-
-
-
-      
-      finalize();
-
-
-      char szCa2ModuleFolder[MAX_PATH];
-         
-      dir::get_ca2_module_folder_dup(szCa2ModuleFolder);
-
-      vsstring strDir = dir::path(szCa2ModuleFolder, "*.*");
-
-      stra_dup stra;
-
-      dir::ls(stra, strDir);
-
-      try
-      {
-
-         bool bRetry = true;
-
-         while(bRetry)
-         {
-
-            bRetry = false;
-
-            for(int i = 0; i < stra.get_count(); i++)
-            {
-
-               HMODULE hmodule;
-
-               if(stricmp_dup(stra[i], "ca2plugin_container.dll") == 0)
-                  continue;
-
-               if(::GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, stra[i], &hmodule) != FALSE)
-               {
-
-                  bRetry = true;
-
-                  try
-                  {
-                  
-                     ::FreeLibrary(hmodule);
-
-                  }
-                  catch(...)
-                  {
-
-                  }
-
-               }
-
-
-            }
-
-         }
-
-      }
-      catch(...)
-      {
-      }
-
-
-      
-      
-      stra_dup straCurrent;
-
-      ::process_modules(straCurrent, ::GetCurrentProcessId());
-
-
-
-      
-      
-      ::load_modules_diff(straPrevious, straCurrent, szCa2ModuleFolder);
-
-      
-      ::initialize_primitive_heap();
-
-      ::reset_http();
-
-      // hack because unloading dlls - to unlock them for file copying - seems to avoid reloading some previously loaded dlls.
-
-/*      ::LoadLibrary("comctl32.dll");
-      ::LoadLibrary("crypt32.dll");
-      ::LoadLibrary("msasn1.dll");
-      ::LoadLibrary("msvfw32.dll");
-      ::LoadLibrary("secur32.dll");
-      ::LoadLibrary("wtsapi32.dll");
-
-
-      ::LoadLibrary("psapi.dll");
-      ::LoadLibrary("urlmon.dll");
-      ::LoadLibrary("normaliz.dll");
-      ::LoadLibrary("iertutil.dll");
-      ::LoadLibrary("dbghelp.dll");*/
-
-      start_ca2_cube_install(m_pszReloadCommandLine);
-
-      HeapFree(GetProcessHeap(), 0, (LPVOID) m_pszReloadCommandLine);
-
-      
-
-      Sleep(5 * 1000);
-
-      //SetUnhandledExceptionFilter(lpFilter);
-
-      start_plugin();
-
-      initialize();
-
-
-      //open_url(this->get_host_location_url());
 
       return true;
+
    }
 
    vsstring host::calc_location_url()
    {
-      NPVariant varLocation;
+/*      NPVariant varLocation;
       if(!NPN_GetProperty(m_instance, m_pobjectWindow, sLocation_id, &varLocation))
          return "";
       NPObject * plocation = varLocation.value.objectValue;
@@ -484,8 +218,10 @@ LONG WINAPI MyUnhandledExceptionFilter(EXCEPTION_POINTERS* exceptionInfo)
       }
       vsstring strUrl(varValue.value.stringValue.UTF8Characters, varValue.value.stringValue.UTF8Length);
       NPN_ReleaseVariantValue(&varValue);
-      NPN_ReleaseVariantValue(&varLocation);
-      return strUrl;
+      NPN_ReleaseVariantValue(&varLocation);*/
+      //return strUrl;
+
+      return "";
    }
 
    HWND host::get_host_window()
@@ -515,7 +251,7 @@ LONG WINAPI MyUnhandledExceptionFilter(EXCEPTION_POINTERS* exceptionInfo)
          // MessageBox(NULL, "key_down", "key_down", NULL);
          // TerminateProcess(::GetCurrentProcess(), 0);
          // return 0;
-      case WM_TIMER:
+/*      case WM_TIMER:
          {
             switch(wparam)
             {
@@ -526,12 +262,12 @@ LONG WINAPI MyUnhandledExceptionFilter(EXCEPTION_POINTERS* exceptionInfo)
                   invalidRect.top      = (uint16_t) m_rect.top;
                   invalidRect.right    = (uint16_t) m_rect.right;
                   invalidRect.bottom   = (uint16_t) m_rect.bottom;
-                  NPN_InvalidateRect(m_instance, &invalidRect);
+//                  NPN_InvalidateRect(m_instance, &invalidRect);
                   NPN_ForceRedraw(m_instance);
                }
                break;
             }
-         }
+         }*/
          return 0;
       }
       return ::hotplugin::host::message_handler(uiMessage, wparam, lparam);      
@@ -596,7 +332,7 @@ LONG WINAPI MyUnhandledExceptionFilter(EXCEPTION_POINTERS* exceptionInfo)
    }
 
 
-   NPError host::GetValue(NPPVariable variable, void *value)
+/*   NPError host::GetValue(NPPVariable variable, void *value)
    {
        
       switch (variable)
@@ -614,8 +350,9 @@ LONG WINAPI MyUnhandledExceptionFilter(EXCEPTION_POINTERS* exceptionInfo)
          return NPERR_GENERIC_ERROR;
       }
       return NPERR_NO_ERROR;
-   }
+   }*/
 
+   /*
 
    NPObject * host::getScriptableObject()
    {
@@ -631,12 +368,12 @@ LONG WINAPI MyUnhandledExceptionFilter(EXCEPTION_POINTERS* exceptionInfo)
        /* //today// if (m_retainReturnedNPObject)
            m_npHost->RetainObject(m_obj);*/
     
-       return m_phostjs;
-   }
-
+     //  return m_phostjs;
+   //}
+//   */
    // This is the preferred method to get strings from NPIdentifiers, since you
 // don't have to worry about cleaning it up =]
-vsstring host::StringFromIdentifier(NPIdentifier identifier)
+/*vsstring host::StringFromIdentifier(NPIdentifier identifier)
 {
  //   assertMainThread();
     NPUTF8* idStr = NPN_UTF8FromIdentifier(identifier);
@@ -646,7 +383,7 @@ vsstring host::StringFromIdentifier(NPIdentifier identifier)
     NPN_MemFree(idStr);
     return str;
 }
-
+*/
    void * host::get_system()
    {
 
@@ -674,8 +411,200 @@ vsstring host::StringFromIdentifier(NPIdentifier identifier)
 
 
 
+   void host::start_ca2()
+   {
 
 
+      if(is_installation_lock_file_locked())
+      {
+         
+         set_installing_ca2();
+
+         if(!m_phost->m_bInstalling)
+         {
+            m_phost->m_bInstalling = true;
+            // shouldn't do advanced operations using ca2
+            // starter_start will only kick a default app-install.exe if one isn't already running, cleaning file lock if any
+            m_phost->starter_start(": app=session session_start=session app_type=application install");
+         }
+         return;
+      }
+
+      update_ca2_installed(false);
+
+      if(is_ca2_installed())
+      {
+         
+#ifdef WINDOWS
+#ifdef X86
+         ::SetDllDirectory(dir::ca2("stage\\x86"));
+#else
+         ::SetDllDirectory(dir::ca2("stage\\x64"));
+#endif
+#endif
+         //Sleep(15 * 1000);
+
+         ::ca::library ca2library;
+         ca2library.open("ca");
+         FN_NEW_HOTPLUGIN fn_new_hotplugin = ca2library.get < FN_NEW_HOTPLUGIN >("new_hotplugin");
+         m_pplugin = fn_new_hotplugin();
+         m_pplugin->m_phost = m_phost;
+         m_bInstalling = false;
+         start_ca2_system();
+         delete this;
+         return;
+      }
+      else
+      {
+
+         char szCa2ModuleFolder[MAX_PATH];
+         
+         if(dir::get_ca2_module_folder_dup(szCa2ModuleFolder))
+         {
+
+            stra_dup straPrevious;
+
+            ::process_modules(straPrevious, ::GetCurrentProcessId());
+
+         
+
+            vsstring strDir = dir::path(szCa2ModuleFolder, "*.*");
+
+            stra_dup stra;
+
+            dir::ls(stra, strDir);
+
+            try
+            {
+
+               bool bRetry = true;
+
+               while(bRetry)
+               {
+
+                  bRetry = false;
+
+                  for(int i = 0; i < stra.get_count(); i++)
+                  {
+
+                     HMODULE hmodule;
+
+                     if(stricmp_dup(stra[i], "npca2.dll") == 0)
+                        continue;
+
+                     if(::GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, stra[i], &hmodule) != FALSE)
+                     {
+
+                        bRetry = true;
+
+                        try
+                        {
+                  
+                           ::FreeLibrary(hmodule);
+
+                        }
+                        catch(...)
+                        {
+
+                        }
+
+                     }
+
+
+                  }
+
+               }
+
+            }
+            catch(...)
+            {
+            }
+
+
+      
+      
+            stra_dup straCurrent;
+
+            ::process_modules(straCurrent, ::GetCurrentProcessId());
+
+
+
+      
+      
+            ::load_modules_diff(straPrevious, straCurrent, szCa2ModuleFolder);
+
+      
+            ::initialize_primitive_heap();
+
+            ::reset_http();
+
+         }
+
+         m_phost->starter_start(": app=session session_start=session app_type=application install");
+      }
+
+   }
+
+
+   void host::rx(int message, void * pdata, int len)
+   {
+
+      if(message == ::hotplugin::message_init)
+      {
+         NPWindow * pwindow = (NPWindow *) pdata;
+         init(pwindow);
+      }
+      else if(message == ::hotplugin::message_set_window)
+      {
+         NPWindow * pwindow = (NPWindow *) pdata;
+         SetWindow(pwindow);
+      }
+      else if(message == ::hotplugin::message_paint)
+      {
+         struct paint
+         {
+            HDC m_hdc;
+            RECT m_rect;
+         } * ppaint;
+         
+         ppaint = (struct paint *) pdata;
+
+         on_paint(ppaint->m_hdc, &ppaint->m_rect);
+
+      }
+      else if(message == ::hotplugin::message_set_ready)
+      {
+
+         if(m_puchMemory != NULL)
+         {
+            try
+            {
+               ca2_free(m_puchMemory);
+            }
+            catch(...)
+            {
+            }
+         }
+
+         m_countMemory = len;
+         m_puchMemory = (uint8_t *) ca2_alloc(len);
+         memcpy(m_puchMemory, pdata, len);
+
+         if(m_puchMemory != NULL)
+            m_bStream = true;
+
+         set_ready();
+
+      }
+      else if(message == ::hotplugin::message_message)
+      {
+         MSG * pmsg = (MSG *) pdata;
+         message_handler(pmsg->message, pmsg->wParam, pmsg->lParam);
+      }
+      
+      m_papp->send(message, NULL, 0);
+
+   }
 
 } // namespace ca2plugin_container
 

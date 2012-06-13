@@ -9,16 +9,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="npca2_base.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="host.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="npn_gate.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="npp_gate.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="framework.cpp">
@@ -27,11 +18,11 @@
     <ClCompile Include="ca2plugin-container.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="application.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\ccvotagus\source\spaboot_install\spaboot_install.h">
-      <Filter>Header</Filter>
-    </ClInclude>
     <ClInclude Include="host.h">
       <Filter>Header</Filter>
     </ClInclude>
@@ -42,6 +33,9 @@
       <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="application.h">
       <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>
