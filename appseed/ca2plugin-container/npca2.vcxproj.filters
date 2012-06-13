@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{4797ad72-7e48-438c-b0b1-64b9a8b6e046}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header">
+      <UniqueIdentifier>{58740f90-66ec-4405-9e0c-a52510bfb62a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="npca2.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="np_entry.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="npca2_base.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="host.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="npn_gate.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="npp_gate.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="host_js.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="framework.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="npca2.rc">
+      <Filter>Source</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pluginbase.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="npca2.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="npca2_base.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ccvotagus\source\spaboot_install\spaboot_install.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="host.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="host_js.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="npca2.def">
+      <Filter>Source</Filter>
+    </None>
+  </ItemGroup>
+</Project>
