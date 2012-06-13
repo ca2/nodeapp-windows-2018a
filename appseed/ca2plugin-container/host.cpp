@@ -36,8 +36,6 @@ namespace ca2plugin_container
       m_vssPluginName = "ca2 plugin";
       m_vssPluginDescription = "ca2 plugin for Firefox";
 
-      m_rxchannel.create("ca2/fontopus/ccvotagus/spaboot_install_callback", "ca2plugin_container.dll");
-
       ::ca2plugin_container::register_class((HINSTANCE) ::GetModuleHandleA("ca2plugin_container.dll"));
 
       m_hwndMessage = ::CreateWindowExA(0, "npca2_message_window", "npca2_message_window", 0, 0, 0, 0, 0, HWND_MESSAGE, NULL, NULL, NULL);
@@ -239,11 +237,11 @@ LONG WINAPI MyUnhandledExceptionFilter(EXCEPTION_POINTERS* exceptionInfo)
          {
             on_paint((HDC) wparam, (LPCRECT) lparam);
          }
-         if(m_bReload)
-         {
-            m_bReload = false;
-            reload_plugin();
-         }
+         //if(m_bReload)
+         //{
+         //   m_bReload = false;
+         //   reload_plugin();
+         //}
          m_bOnPaint = false;
          return 0;
          // case WM_KEYDOWN:
@@ -420,12 +418,12 @@ LONG WINAPI MyUnhandledExceptionFilter(EXCEPTION_POINTERS* exceptionInfo)
          
          set_installing_ca2();
 
-         if(!m_phost->m_bInstalling)
+         if(!m_bInstalling)
          {
-            m_phost->m_bInstalling = true;
+            m_bInstalling = true;
             // shouldn't do advanced operations using ca2
             // starter_start will only kick a default app-install.exe if one isn't already running, cleaning file lock if any
-            m_phost->starter_start(": app=session session_start=session app_type=application install");
+            starter_start(": app=session session_start=session app_type=application install");
          }
          return;
       }
@@ -444,165 +442,133 @@ LONG WINAPI MyUnhandledExceptionFilter(EXCEPTION_POINTERS* exceptionInfo)
 #endif
          //Sleep(15 * 1000);
 
-         ::ca::library ca2library;
-         ca2library.open("ca");
-         FN_NEW_HOTPLUGIN fn_new_hotplugin = ca2library.get < FN_NEW_HOTPLUGIN >("new_hotplugin");
-         m_pplugin = fn_new_hotplugin();
-         m_pplugin->m_phost = m_phost;
+         m_pplugin = new ::plugin::instance();
+         m_pplugin->m_phost = this;
          m_bInstalling = false;
          start_ca2_system();
-         delete this;
          return;
       }
       else
       {
 
-         char szCa2ModuleFolder[MAX_PATH];
-         
-         if(dir::get_ca2_module_folder_dup(szCa2ModuleFolder))
-         {
+         starter_start(": app=session session_start=session app_type=application install");
 
-            stra_dup straPrevious;
-
-            ::process_modules(straPrevious, ::GetCurrentProcessId());
-
-         
-
-            vsstring strDir = dir::path(szCa2ModuleFolder, "*.*");
-
-            stra_dup stra;
-
-            dir::ls(stra, strDir);
-
-            try
-            {
-
-               bool bRetry = true;
-
-               while(bRetry)
-               {
-
-                  bRetry = false;
-
-                  for(int i = 0; i < stra.get_count(); i++)
-                  {
-
-                     HMODULE hmodule;
-
-                     if(stricmp_dup(stra[i], "npca2.dll") == 0)
-                        continue;
-
-                     if(::GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, stra[i], &hmodule) != FALSE)
-                     {
-
-                        bRetry = true;
-
-                        try
-                        {
-                  
-                           ::FreeLibrary(hmodule);
-
-                        }
-                        catch(...)
-                        {
-
-                        }
-
-                     }
-
-
-                  }
-
-               }
-
-            }
-            catch(...)
-            {
-            }
-
-
-      
-      
-            stra_dup straCurrent;
-
-            ::process_modules(straCurrent, ::GetCurrentProcessId());
-
-
-
-      
-      
-            ::load_modules_diff(straPrevious, straCurrent, szCa2ModuleFolder);
-
-      
-            ::initialize_primitive_heap();
-
-            ::reset_http();
-
-         }
-
-         m_phost->starter_start(": app=session session_start=session app_type=application install");
       }
 
    }
 
 
-   void host::rx(int message, void * pdata, int len)
+   void host::on_receive(small_ipc_rx_channel * prxchannel, int message, void * pdata, int len)
    {
 
-      if(message == ::hotplugin::message_init)
+      if(prxchannel == &m_rxchannel)
       {
-         NPWindow * pwindow = (NPWindow *) pdata;
-         init(pwindow);
-      }
-      else if(message == ::hotplugin::message_set_window)
-      {
-         NPWindow * pwindow = (NPWindow *) pdata;
-         SetWindow(pwindow);
-      }
-      else if(message == ::hotplugin::message_paint)
-      {
-         struct paint
+
+         if(message == ::hotplugin::message_init)
          {
-            HDC m_hdc;
-            RECT m_rect;
-         } * ppaint;
-         
-         ppaint = (struct paint *) pdata;
+            
+            NPWindow * pwindow = (NPWindow *) pdata;
 
-         on_paint(ppaint->m_hdc, &ppaint->m_rect);
-
-      }
-      else if(message == ::hotplugin::message_set_ready)
-      {
-
-         if(m_puchMemory != NULL)
-         {
             try
             {
-               ca2_free(m_puchMemory);
+
+               init(pwindow);
+
             }
             catch(...)
             {
             }
+
+
          }
+         else if(message == ::hotplugin::message_set_window)
+         {
+            
+            NPWindow * pwindow = (NPWindow *) pdata;
 
-         m_countMemory = len;
-         m_puchMemory = (uint8_t *) ca2_alloc(len);
-         memcpy(m_puchMemory, pdata, len);
+            try
+            {
 
-         if(m_puchMemory != NULL)
-            m_bStream = true;
+               SetWindow(pwindow);
 
-         set_ready();
+            }
+            catch(...)
+            {
+            }
 
-      }
-      else if(message == ::hotplugin::message_message)
-      {
-         MSG * pmsg = (MSG *) pdata;
-         message_handler(pmsg->message, pmsg->wParam, pmsg->lParam);
-      }
+         }
+         else if(message == ::hotplugin::message_paint)
+         {
+            
+            struct paint
+            {
+               HDC      m_hdc;
+               RECT     m_rect;
+            } * ppaint;
+         
+            ppaint = (struct paint *) pdata;
+
+            try
+            {
+
+               on_paint(ppaint->m_hdc, &ppaint->m_rect);
+
+            }
+            catch(...)
+            {
+            }
+
+         }
+         else if(message == ::hotplugin::message_set_ready)
+         {
+
+            if(pdata != NULL)
+            {
+
+               if(m_puchMemory != NULL)
+               {
+                  try
+                  {
+                     ca2_free(m_puchMemory);
+                  }
+                  catch(...)
+                  {
+                  }
+               }
+
+               m_countMemory = len;
+
+               m_puchMemory = (uint8_t *) ca2_alloc(len);
+
+               memcpy(m_puchMemory, pdata, len);
+
+               if(m_puchMemory != NULL)
+                  m_bStream = true;
+
+               set_ready();
+
+            }
+
+         }
+         else if(message == ::hotplugin::message_message)
+         {
+
+            MSG * pmsg = (MSG *) pdata;
+
+            try
+            {
+
+               message_handler(pmsg->message, pmsg->wParam, pmsg->lParam);
+
+            }
+            catch(...)
+            {
+            }
+
+
+         }
       
-      m_papp->send(message, NULL, 0);
+      }
 
    }
 

@@ -17,6 +17,7 @@ namespace ca2plugin_container
    bool application::initialize(const char * pszChannel)
    {
 
+      Sleep(15 * 1000);
       
       m_phost = new host(this);
 
@@ -25,13 +26,13 @@ namespace ca2plugin_container
       strChannel += pszChannel;
 
       
-      if(!::small_ipc_channel::open_ba(strChannel, "ca2plugin-container.exe"))
+      if(!m_phost->::small_ipc_channel::open_ba(strChannel, "ca2plugin-container.exe"))
          return false;
 
       m_phost->start_ca2();
 
-      if(!m_phost->initialize())
-         return false;
+//      if(!m_phost->initialize())
+  //       return false;
 
 
       return true;
@@ -43,20 +44,20 @@ namespace ca2plugin_container
 
 
 
-   void application::on_receive(const char * pszMessage)
+   void application::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMessage)
    {
 
       UNREFERENCED_PARAMETER(pszMessage);
 
    }
 
-   void application::on_receive(int message, void * pdata, int len)
+   void application::on_receive(small_ipc_rx_channel * prxchannel, int message, void * pdata, int len)
    {
 
       if(m_phost != NULL)
       {
 
-         m_phost->rx(message, pdata, len);
+         m_phost->on_receive(prxchannel, message, pdata, len);
 
       }
 

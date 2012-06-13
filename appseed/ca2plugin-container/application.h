@@ -5,8 +5,7 @@ namespace ca2plugin_container
 {
 
 
-   class application :
-      virtual public small_ipc_channel
+   class application
    {
    public:
 
@@ -20,8 +19,8 @@ namespace ca2plugin_container
       virtual ~application();
 
 
-      virtual void on_receive(const char * pszMessage);
-      virtual void on_receive(int message, void * pdata, int len);
+      virtual void on_receive(small_ipc_rx_channel * prxchannel, const char * pszMessage);
+      virtual void on_receive(small_ipc_rx_channel * prxchannel, int message, void * pdata, int len);
 
       virtual bool initialize(const char * pszChannel);
 

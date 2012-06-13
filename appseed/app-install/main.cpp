@@ -60,7 +60,7 @@ public:
 
    bool is_user_using(DWORD processid, const char * pszDll);
 
-   virtual void on_receive(const char * pszMessage);
+   virtual void on_receive(small_ipc_rx_channel * prxchannel, const char * pszMessage);
 
    virtual bool initialize();
 
@@ -228,7 +228,7 @@ bool installer::is_user_using(const char * pszDll)
 
 }
 
-void installer::on_receive(const char * pszMessage)
+void installer::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMessage)
 {
    vsstring strMessage(pszMessage);
    int iRet = 0;

@@ -61,7 +61,7 @@ namespace ca2plugin_container
       virtual void * get_system();
       virtual void set_system(void * pvoidPluginSystem);
 
-      virtual void rx(int message, void * pdata, int len);
+      virtual void on_receive(small_ipc_rx_channel * prxchannel, int message, void * pdata, int len);
 
 
       virtual void start_ca2();
