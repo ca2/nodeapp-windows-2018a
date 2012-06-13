@@ -5,14 +5,13 @@
 
 
 
-namespace npca2
+namespace ca2plugin_container
 {
 
    class host_js;
 
 
    class host : 
-      public nsPluginInstanceBase,
       public ::hotplugin::host
    {
    public:
@@ -47,7 +46,7 @@ namespace npca2
       uint16 HandleEvent(void * pvoid);
 
 
-      // npca2::host_interaction::plugin
+      // ca2plugin_container::host_interaction::plugin
       virtual HWND get_host_window();
       virtual void redraw();
       virtual bool is_ok();
@@ -101,5 +100,5 @@ namespace npca2
 
    };
 
-} // namespace npca2
+} // namespace ca2plugin_container
 

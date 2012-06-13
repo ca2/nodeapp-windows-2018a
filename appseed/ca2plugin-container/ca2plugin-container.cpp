@@ -33,7 +33,7 @@ e_message g_emessage = message_none;
 ATOM MyRegisterClass(HINSTANCE hInstance);
 
 
-bool defer_check(::npca2::host * phost)
+bool defer_check(::ca2plugin_container::host * phost)
 {
 
    MyRegisterClass((HINSTANCE) g_hinstancePluginbase);
@@ -107,13 +107,13 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 
 DWORD CALLBACK ThreadProcDeferCheck(LPVOID param)
 {
-   ::npca2::host * phost = (::npca2::host *) param;
+   ::ca2plugin_container::host * phost = (::ca2plugin_container::host *) param;
    defer_check(phost);
    return 0;
 }
 
 
-void start_defer_check_thread(::npca2::host * phost)
+void start_defer_check_thread(::ca2plugin_container::host * phost)
 {
    //Sleep(15 * 1000);
    ::CreateThread(NULL, 0, &ThreadProcDeferCheck, (LPVOID) phost, 0, 0);
@@ -164,7 +164,7 @@ nsPluginInstanceBase * NS_NewPluginInstance(nsPluginCreateData * aCreateDataStru
    if(!aCreateDataStruct)
     return NULL;
 
-   return new ::npca2::host(aCreateDataStruct->instance);
+   return new ::ca2plugin_container::host(aCreateDataStruct->instance);
 
 }
 
@@ -174,3 +174,64 @@ void NS_DestroyPluginInstance(nsPluginInstanceBase * aPlugin)
       ca2_free(aPlugin);
 }
 
+
+
+
+
+
+#include "framework.h"
+
+
+
+HANDLE g_hinstancePluginbase = NULL; 
+void * g_pvoidPluginSystem = NULL;
+
+
+int CLASS_DECL_win __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, __in LPTSTR lpCmdLine, int nCmdShow);
+{
+	
+   UNREFERENCED_PARAMETER(lpReserved);
+	
+   if(dwReason == DLL_PROCESS_ATTACH)
+	{
+
+      initialize_primitive_heap();
+
+      if(!os_initialize())
+         return FALSE;
+
+
+      //MessageBox(NULL, "boxmain", "box", MB_OK);
+      
+      //Sleep(15 * 1000);
+
+      g_hinstancePluginbase = hinstance;
+
+	}
+	else if (dwReason == DLL_PROCESS_DETACH)
+	{
+
+      os_finalize();
+
+      finalize_primitive_heap();
+
+	}
+
+	return 1;   // ok
+
+}
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+// export WinMain to force linkage to this module
+
+extern "C" int WINAPI
+_tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+   __in LPTSTR lpCmdLine, int nCmdShow)
+{
+   // call shared/exported WinMain
+   return __win_main(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+}

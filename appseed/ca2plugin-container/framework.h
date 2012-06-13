@@ -4,7 +4,7 @@
 #include "c/c.h"
 
 
-#include "npca2.h"
+#include "ca2plugin-container.h"
 #include "host.h"
 
 

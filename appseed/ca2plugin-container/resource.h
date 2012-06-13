@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Developer Studio generated include file.
-// Used by basic.rc
+// Microsoft Visual C++ generated include file.
+// Used by ca2plugin-container.rc
 //
 #define IDD_MAIN                        101
 #define IDC_BUTTON_GO                   1002

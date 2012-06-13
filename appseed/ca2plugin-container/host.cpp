@@ -7,7 +7,7 @@ extern void * g_pvoidPluginSystem;
 
 UINT APIENTRY _redraw(void * pParam)
 {
-   ::npca2::host * phost = (::npca2::host *) pParam;
+   ::ca2plugin_container::host * phost = (::ca2plugin_container::host *) pParam;
    while(true)
    {
       Sleep(100);
@@ -36,7 +36,7 @@ void __cdecl filter2(unsigned int uiCode, EXCEPTION_POINTERS * ppointers)
    throw standard_exception(ppointers->ExceptionRecord->ExceptionCode);
 }
 
-namespace npca2
+namespace ca2plugin_container
 {
 
    ATOM register_class(HINSTANCE hInstance);
@@ -66,9 +66,9 @@ namespace npca2
       m_vssPluginName = "ca2 plugin";
       m_vssPluginDescription = "ca2 plugin for Firefox";
 
-      m_rxchannel.create("ca2/fontopus/ccvotagus/spaboot_install_callback", "npca2.dll");
+      m_rxchannel.create("ca2/fontopus/ccvotagus/spaboot_install_callback", "ca2plugin_container.dll");
 
-      ::npca2::register_class((HINSTANCE) ::GetModuleHandleA("npca2.dll"));
+      ::ca2plugin_container::register_class((HINSTANCE) ::GetModuleHandleA("ca2plugin_container.dll"));
 
       m_hwndMessage = ::CreateWindowExA(0, "npca2_message_window", "npca2_message_window", 0, 0, 0, 0, 0, HWND_MESSAGE, NULL, NULL, NULL);
 
@@ -382,7 +382,7 @@ LONG WINAPI MyUnhandledExceptionFilter(EXCEPTION_POINTERS* exceptionInfo)
 
                HMODULE hmodule;
 
-               if(stricmp_dup(stra[i], "npca2.dll") == 0)
+               if(stricmp_dup(stra[i], "ca2plugin_container.dll") == 0)
                   continue;
 
                if(::GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, stra[i], &hmodule) != FALSE)
@@ -677,7 +677,7 @@ vsstring host::StringFromIdentifier(NPIdentifier identifier)
 
 
 
-} // namespace npca2
+} // namespace ca2plugin_container
 
 
 
