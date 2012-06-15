@@ -22,7 +22,7 @@ namespace ca2plugin_container
       m_phost = new host(this);
 
 
-      vsstring strChannel = "/ca2/ca2plugin-container-";
+      vsstring strChannel = "\\ca2\\ca2plugin-container-";
       strChannel += pszChannel;
 
       
