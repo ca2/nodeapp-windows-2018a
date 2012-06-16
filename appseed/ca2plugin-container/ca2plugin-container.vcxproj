@@ -973,9 +973,9 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     </CustomBuild>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="application.cpp" />
-    <ClCompile Include="ca2plugin-container.cpp" />
-    <ClCompile Include="host.cpp" />
+    <ClCompile Include=".\ca2plugincontainer_application.cpp" />
+    <ClCompile Include=".\ca2plugincontainer.cpp" />
+    <ClCompile Include=".\ca2plugincontainer_host.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='memdleak|Win32'">Create</PrecompiledHeader>
@@ -984,14 +984,14 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="application.h" />
-    <ClInclude Include="ca2plugin-container.h" />
-    <ClInclude Include="host.h" />
+    <ClInclude Include=".\ca2plugincontainer_application.h" />
+    <ClInclude Include=".\ca2plugincontainer.h" />
+    <ClInclude Include=".\ca2plugincontainer_host.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="ca2plugin-container.rc" />
+    <ResourceCompile Include=".\ca2plugincontainer.rc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\app\appseed\ca\ca.vcxproj">

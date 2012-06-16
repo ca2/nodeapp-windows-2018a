@@ -7,7 +7,7 @@ void * g_pvoidPluginSystem = NULL;
 HANDLE g_hmutex = NULL;
 
 
-int __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, __in LPTSTR lpCmdLine, int nCmdShow)
+int __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
 	
    UNREFERENCED_PARAMETER(lpCmdLine);
@@ -133,18 +133,11 @@ int __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, __in LPTSTR lpCmdLi
 }
 
 
-
-
-
-/////////////////////////////////////////////////////////////////////////////
-// export WinMain to force linkage to this module
-
-extern "C" int WINAPI
-_tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
-   __in LPTSTR lpCmdLine, int nCmdShow)
+extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
-   // call shared/exported WinMain
+
    return __win_main(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+
 }
 
 

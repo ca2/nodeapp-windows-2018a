@@ -35,9 +35,6 @@ namespace ca2plugin_container
       NPBool init(NPWindow* aWindow);
       void shut();
 
-      NPError SetWindow(NPWindow* pNPWindow);
-
-
       // host
       virtual bool      open_url(const char * pszUrl);
       virtual bool      reload_plugin();

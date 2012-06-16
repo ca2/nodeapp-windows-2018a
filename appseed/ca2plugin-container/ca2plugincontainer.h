@@ -4,10 +4,10 @@
 #include "ca/ca.h"
 
 
-#include "host.h"
+#include "ca2plugincontainer_host.h"
 
 
-#include "application.h"
+#include "ca2plugincontainer_application.h"
 
 
 

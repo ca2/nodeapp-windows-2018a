@@ -9,9 +9,8 @@ extern void * g_pvoidPluginSystem;
 namespace ca2plugin_container
 {
 
-   ATOM register_class(HINSTANCE hInstance);
 
-   VOID CALLBACK TimerProcHost(HWND hwnd,  UINT uMsg,  uint_ptr idEvent,  DWORD dwTime);
+   ATOM register_class(HINSTANCE hInstance);
 
 
    host::host(application * papp)
@@ -40,8 +39,6 @@ namespace ca2plugin_container
 
       m_hwndMessage = ::CreateWindowExA(0, "npca2_message_window", "npca2_message_window", 0, 0, 0, 0, 0, HWND_MESSAGE, NULL, NULL, NULL);
 
-      SetTimer(m_hwndMessage, (uint_ptr) this, 84, TimerProcHost); // close to 12 frames per second.
-
       m_pfile           = NULL;
 
       m_lpbMemory = NULL;
@@ -62,14 +59,6 @@ namespace ca2plugin_container
    {
       ::DestroyWindow(m_hwndMessage);
    }
-
-   static LRESULT CALLBACK PluginWinProc(HWND, UINT, WPARAM, LPARAM);
-   static WNDPROC lpOldProc = NULL;
-
-
-
-
-
 
 
    NPBool host::init(NPWindow* aWindow)
@@ -114,33 +103,23 @@ namespace ca2plugin_container
 
    bool host::is_ok()
    {
+
       return m_bStream && m_bOk;
+
    }
    
+
    void host::post_message(UINT uiMessage, WPARAM wparam, LPARAM lparam)
    {
+      
       ::PostMessage(m_hwnd, uiMessage, wparam, lparam);
-   }
 
-
-
-
-
-   NPError host::SetWindow(NPWindow* pNPWindow) 
-   {
-      m_rect.left = pNPWindow->x;
-      m_rect.top = pNPWindow->y;
-      m_rect.right = m_rect.left + pNPWindow->width;
-      m_rect.bottom = m_rect.top + pNPWindow->height;
-
-      set_window_rect(&m_rect);
-
-      return NPERR_NO_ERROR;
    }
 
 
    void host::shut()
    {
+
       m_bInitialized = false;
       
       ::KillTimer(m_hwndMessage, (uint_ptr) this);
@@ -148,52 +127,25 @@ namespace ca2plugin_container
       finalize();
 
       m_hwnd = NULL;
-   }
 
+   }
 
 
    bool host::open_url(const char * pszUrl)
    {
-/*      NPVariant varLocation;
-      varLocation.type = NPVariantType_String;
-      varLocation.value.stringValue.UTF8Characters = pszUrl;
-      varLocation.value.stringValue.UTF8Length = (uint32_t) strlen_dup(pszUrl);
-      NPN_SetProperty(m_instance, m_varDocument.value.objectValue, sLocation_id, &varLocation);
-      return true;*/
+
+      ensure_tx(::hotplugin::message_open_url, (void *) pszUrl, strlen(pszUrl));
+
       return true;
+
    }
 
-
-
-         /* Our top-level exception filter. */
-LONG WINAPI MyUnhandledExceptionFilter(EXCEPTION_POINTERS* exceptionInfo)
-{
-  DWORD exceptionCode = exceptionInfo->ExceptionRecord->ExceptionCode;
-//  if(exceptionCode == EXCEPTION_GUARD_PAGE)
-  {
-    /* Handle the situation somehow... */
-    /* ...and resume the exception from the place the exception was thrown. */
-    return EXCEPTION_CONTINUE_EXECUTION;
-  }
-  //else
-  {
-    /* Unknown exception, let another exception filter worry about it. */
-    //return EXCEPTION_CONTINUE_SEARCH;
-  }
-}
 
 
    bool host::reload_plugin()
    {
 
-      //NPN_ReloadPlugins(TRUE);
-      // Client-side web page javascript will reload this killed and thus not functional
-      // plugin served by the web server. This behaviour should be matched, otherwise
-      // this killing call will cease the reload process.
-      //m_dwReload = ::GetTickCount();
-      //m_bReload = true;
       ::TerminateProcess(::GetCurrentProcess(), 0);
-
 
       return true;
 
@@ -232,17 +184,18 @@ LONG WINAPI MyUnhandledExceptionFilter(EXCEPTION_POINTERS* exceptionInfo)
       switch(uiMessage)
       {
       case WM_PAINT:
+         
          m_bOnPaint = true;
+         
          if(m_bInitialized)
          {
+         
             on_paint((HDC) wparam, (LPCRECT) lparam);
+
          }
-         //if(m_bReload)
-         //{
-         //   m_bReload = false;
-         //   reload_plugin();
-         //}
+
          m_bOnPaint = false;
+
          return 0;
          // case WM_KEYDOWN:
          // today
@@ -265,25 +218,10 @@ LONG WINAPI MyUnhandledExceptionFilter(EXCEPTION_POINTERS* exceptionInfo)
                }
                break;
             }
-         }*/
-         return 0;
+         }
+         return 0;*/
       }
       return ::hotplugin::host::message_handler(uiMessage, wparam, lparam);      
-   }
-
-
-   VOID CALLBACK TimerProcHost(HWND hwnd,  UINT uMsg,  uint_ptr idEvent,  DWORD dwTime)
-   {
-
-      host * phost = (host *) idEvent;
-      phost->redraw();
-
-      if(phost->is_ca2_installation_ready())
-      {
-         phost->set_ca2_installation_ready(false);
-         phost->start_ca2();
-      }
-
    }
 
 
@@ -316,6 +254,7 @@ LONG WINAPI MyUnhandledExceptionFilter(EXCEPTION_POINTERS* exceptionInfo)
 
    void host::on_paint(HDC hdcWindow, LPCRECT lprect)
    {
+      
       ::hotplugin::host::on_paint(hdcWindow, lprect);
 
    }
@@ -484,12 +423,12 @@ LONG WINAPI MyUnhandledExceptionFilter(EXCEPTION_POINTERS* exceptionInfo)
          else if(message == ::hotplugin::message_set_window)
          {
             
-            NPWindow * pwindow = (NPWindow *) pdata;
+            LPCRECT lpcrect = (LPCRECT) pdata;
 
             try
             {
 
-               SetWindow(pwindow);
+               set_window_rect(lpcrect);
 
             }
             catch(...)
@@ -576,101 +515,3 @@ LONG WINAPI MyUnhandledExceptionFilter(EXCEPTION_POINTERS* exceptionInfo)
 
 
 
-/*extern "C"
-{
-#include <ntddk.h>
-};*/
-
-/*#pragma warning (disable: 4731) // EBP register overwritten
-#pragma warning (disable: 4733) // non-SAFESEH compliant
-
-typedef void (__stdcall* CleanupFN)();
-
-struct CleanupEntry
-{
-    long		m_nPrevIdx;
-    CleanupFN	m_pfnCleanup;
-};
-
-struct UnwindFrame
-{
-    ULONG			m_sig;
-    long			m_nCleanupCount;   //number of entries in unwindtable
-    CleanupEntry*	m_pCleanupArr;
-	// C++ try-catch data is omitted
-};
-
-struct ExcReg
-{ 
-    ExcReg*	m_pPrev;
-    ULONG	m_handler;
-    long	m_NextCleanup;
-    ULONG	m_ebp;
-};
-
-void FrameUnwind(UnwindFrame* pUFrame, ULONG dwEbp, ExcReg* pExcFrame)
-{
-    const CleanupEntry* pCleanupArr = pUFrame->m_pCleanupArr;
-    int count = pUFrame->m_nCleanupCount;
-
-//commented on insertion 2011-05-31	ASSERT(pExcFrame->m_NextCleanup < pUFrame->m_nCleanupCount); // stack corruption test
-
-	while (true)
-	{
-		long nNextID = pExcFrame->m_NextCleanup;
-		if (nNextID < 0)
-			break;
-
-		const CleanupEntry& entry = pCleanupArr[nNextID];
-		CleanupFN pfnCleanup = entry.m_pfnCleanup;
-		pExcFrame->m_NextCleanup = entry.m_nPrevIdx;
-
-		__try {
-			_asm
-			{
-				mov EAX, pfnCleanup
-				push EBP       //save current EBP
-				mov EBP, dwEbp  //the EBP of the unwinding function
-				call EAX
-				pop EBP
-			}
-		} __finally {
-			if (AbnormalTermination())
-				// one of the destructor has raised an exception that resulted
-				// in another unwind.
-				FrameUnwind(pUFrame, dwEbp, pExcFrame); // recursively
-		}
-	}
-}
-
-EXCEPTION_DISPOSITION __cdecl FrameHandler(UnwindFrame* pUFrame, EXCEPTION_RECORD* pExc, ExcReg* pExcFrame)
-{
-	// EXCEPTION_UNWINDING = 2, EXCEPTION_EXIT_UNWIND = 4
-    if (6 & pExc->ExceptionFlags)
-		FrameUnwind(pUFrame, (ULONG) (ulong_ptr) &pExcFrame->m_ebp, pExcFrame);
-    return ExceptionContinueSearch;
-}
-
-extern "C" __declspec (naked)
-EXCEPTION_DISPOSITION __cdecl __CxxFrameHandler3(int a, int b, int c, int d)
-{
-	_asm {
-		//prolog
-        push EBP
-        mov EBP, ESP
-
-		// We don't use the last two parameters (processor and dispatcher contexts)
-		// Hence - push just the 1st two parameters, plus the UnwindFrame passed in EAX
-        push b
-        push a
-        push EAX
-
-        call FrameHandler
-
-		//epilog
-        mov ESP, EBP
-        pop EBP
-        ret
-	};
-}
-*/

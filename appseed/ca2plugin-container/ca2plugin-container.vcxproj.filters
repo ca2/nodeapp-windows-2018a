@@ -9,38 +9,38 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="host.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="framework.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="ca2plugin-container.cpp">
+    <ClCompile Include=".\ca2plugincontainer.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="application.cpp">
+    <ClCompile Include=".\ca2plugincontainer_host.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include=".\ca2plugincontainer_application.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="host.h">
-      <Filter>Header</Filter>
-    </ClInclude>
     <ClInclude Include="framework.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="ca2plugin-container.h">
       <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="application.h">
+    <ClInclude Include=".\ca2plugincontainer_application.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include=".\ca2plugincontainer.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include=".\ca2plugincontainer_host.h">
       <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="ca2plugin-container.rc">
+    <ResourceCompile Include=".\ca2plugincontainer.rc">
       <Filter>Source</Filter>
     </ResourceCompile>
   </ItemGroup>
