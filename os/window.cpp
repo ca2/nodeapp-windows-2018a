@@ -4724,7 +4724,8 @@ ExitModal:
    bool window::IsWindowEnabled()
    {
       
-      ASSERT(::IsWindow(get_handle()));
+      if(!::IsWindow(get_handle()))
+         return false;
       
       return ::IsWindowEnabled(get_handle()) != FALSE;
    
