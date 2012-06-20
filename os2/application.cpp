@@ -8,6 +8,9 @@ namespace win2
    application::application(::ca::application * papp) :
       ca(papp)
    {
+
+      m_bLicense = false;
+
    }
 
    application::~application()

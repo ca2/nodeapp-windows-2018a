@@ -17,7 +17,7 @@ namespace ca2plugin_container
    bool application::initialize(const char * pszChannel)
    {
 
-      //Sleep(15 * 1000);
+      Sleep(15 * 1000);
       
       m_phost = new host(this);
 
