@@ -383,6 +383,7 @@ namespace ca2plugin_container
 
          m_pplugin = new ::plugin::instance();
          m_pplugin->m_phost = this;
+         m_pplugin->m_strBitmapChannel = m_strBitmapChannel;
          m_bInstalling = false;
          start_ca2_system();
          return;

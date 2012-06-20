@@ -25,6 +25,8 @@ namespace ca2plugin_container
       vsstring strChannel = "\\ca2\\ca2plugin-container-";
       strChannel += pszChannel;
 
+
+      m_phost->m_strBitmapChannel = pszChannel;
       
       if(!m_phost->::small_ipc_channel::open_ba(strChannel, "ca2plugin-container.exe"))
          return false;
