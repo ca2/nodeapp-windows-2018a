@@ -929,7 +929,7 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
       <AdditionalIncludeDirectories>$(SolutionDir)../../appseedcore/ca2/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>psapi.lib;msimg32.lib;user32.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;gdi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Ole32.lib;Gdiplus.lib;psapi.lib;msimg32.lib;user32.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;gdi32.lib;Advapi32.lib</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(SolutionDir)../../../time/library/x64/$(ConfigurationName);$(SolutionDir)../../../app/thirdparty/library/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -942,8 +942,10 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ImportLibrary>$(SolutionDir)../../../time/library/x64/$(TargetName).lib</ImportLibrary>
-      <ModuleDefinitionFile>./$(ProjectName).def</ModuleDefinitionFile>
+      <ImportLibrary>
+      </ImportLibrary>
+      <ModuleDefinitionFile>
+      </ModuleDefinitionFile>
       <DelayLoadDLLs>
       </DelayLoadDLLs>
       <Profile>true</Profile>
