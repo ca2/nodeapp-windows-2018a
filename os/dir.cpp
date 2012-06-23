@@ -534,6 +534,13 @@ namespace win
          return true; // assume empty string is root_ones directory
       }
 
+      
+      bool bIsDir;
+
+
+      if(m_isdirmap.lookup(str, bIsDir, (int) iLast))
+         return bIsDir;
+
 
       if(papp->m_bZipIsDir && iLast >= 3  && !strnicmp_dup(&((const char *) str)[iLast - 3], ".zip", 4))
       {
@@ -553,10 +560,6 @@ namespace win
          return bHasSubFolder;
       }
 
-      bool bIsDir;
-
-      if(m_isdirmap.lookup(str, bIsDir, (int) iLast))
-         return bIsDir;
 
       wstring wstrPath;
       
