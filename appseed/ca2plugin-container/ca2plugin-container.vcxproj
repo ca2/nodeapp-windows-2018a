@@ -898,7 +898,7 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
       <AdditionalOptions>-Zm284 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>.;$(SolutionDir)../../../app;$(SolutionDir)../../../app/thirdparty/include;$(SolutionDir)../../../app/thirdparty/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../app/appseed/ca2;$(SolutionDir)../../../;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>__CA__LIB;_CA2_FONTOPUS_NPCA2_DLL;XP_WIN32;MOZILLA_STRICT_API;XPCOM_GLUE;XP_WIN;NPSIMPLE_EXPORTS;_DEBUG;_AFXEXT;_CA2_FONTOPUS_CUBE_DLL;_AFXDLL;USE_SSL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>__C__LIB;_CA2_FONTOPUS_NPCA2_DLL;XP_WIN32;MOZILLA_STRICT_API;XPCOM_GLUE;XP_WIN;NPSIMPLE_EXPORTS;_DEBUG;_AFXEXT;_CA2_FONTOPUS_CUBE_DLL;_AFXDLL;USE_SSL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>Async</ExceptionHandling>
       <BasicRuntimeChecks>
