@@ -173,7 +173,7 @@
     <EmbedManifest Condition="'$(Configuration)|$(Platform)'=='profiler|Win32'">false</EmbedManifest>
     <EmbedManifest Condition="'$(Configuration)|$(Platform)'=='basis|x64'">false</EmbedManifest>
     <EmbedManifest Condition="'$(Configuration)|$(Platform)'=='memdleak|x64'">false</EmbedManifest>
-    <EmbedManifest Condition="'$(Configuration)|$(Platform)'=='codeanalysis|x64'">true</EmbedManifest>
+    <EmbedManifest Condition="'$(Configuration)|$(Platform)'=='codeanalysis|x64'">false</EmbedManifest>
     <EmbedManifest Condition="'$(Configuration)|$(Platform)'=='profiler|x64'">false</EmbedManifest>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">$(VCInstallDir)include;$(WindowsSDK_IncludePath);</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='memdleak|Win32'">$(VCInstallDir)include;$(WindowsSDK_IncludePath);</IncludePath>

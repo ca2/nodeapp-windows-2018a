@@ -173,7 +173,7 @@
     <EmbedManifest Condition="'$(Configuration)|$(Platform)'=='profiler|Win32'">false</EmbedManifest>
     <EmbedManifest Condition="'$(Configuration)|$(Platform)'=='basis|x64'">false</EmbedManifest>
     <EmbedManifest Condition="'$(Configuration)|$(Platform)'=='memdleak|x64'">false</EmbedManifest>
-    <EmbedManifest Condition="'$(Configuration)|$(Platform)'=='codeanalysis|x64'">true</EmbedManifest>
+    <EmbedManifest Condition="'$(Configuration)|$(Platform)'=='codeanalysis|x64'">false</EmbedManifest>
     <EmbedManifest Condition="'$(Configuration)|$(Platform)'=='profiler|x64'">false</EmbedManifest>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">$(VCInstallDir)include;$(WindowsSDK_IncludePath);</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='memdleak|Win32'">$(VCInstallDir)include;$(WindowsSDK_IncludePath);</IncludePath>
@@ -384,7 +384,7 @@
       </DataExecutionPrevention>
       <ImportLibrary>$(SolutionDir)../../../time/library/x86/$(TargetName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
-      <AdditionalDependencies>Gdiplus.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Crypt32.lib;Version.lib;Gdiplus.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>
       <AdditionalManifestFiles>
@@ -470,6 +470,7 @@
       </DataExecutionPrevention>
       <ImportLibrary>$(SolutionDir)../../../time/library/x86/$(TargetName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalDependencies>Crypt32.lib;Version.lib;Gdiplus.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>
       <AdditionalManifestFiles>
@@ -801,6 +802,7 @@
       </DataExecutionPrevention>
       <ImportLibrary>$(SolutionDir)../../../time/library/x64/$(TargetName).lib</ImportLibrary>
       <IgnoreSpecificDefaultLibraries>LIBCMTD.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <AdditionalDependencies>Crypt32.lib;Version.lib;Gdiplus.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>
       <AdditionalManifestFiles>$(SolutionDir)../../appseedcore/include/manifest.dll.embed.manifest;%(AdditionalManifestFiles)</AdditionalManifestFiles>
