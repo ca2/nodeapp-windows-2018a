@@ -72,9 +72,7 @@ public:
 extern "C" int WinMainCRTStartup() \
 { 
 
-   IMPLEMENT_SIMPLE_APP_BODY(installer)
-
-   return 0;
+   return simple_app::s_main < installer > ();
 
 }
 
@@ -105,7 +103,7 @@ bool installer::initialize()
    m_hmutexSpabootInstall = ::CreateMutex(NULL, FALSE, "Global\\ca2::fontopus::ccvotagus_ca2_spaboot_install::7807e510-5579-11dd-ae16-0800200c7784");
    if(::GetLastError() == ERROR_ALREADY_EXISTS)
    {
-      m_iReturn = 202;
+      m_iError = -202;
       return false;
    }
 
@@ -126,7 +124,7 @@ bool installer::initialize()
 
    if(!m_rxchannel.create("ca2/fontopus/ccvotagus/spaboot_install", "app-install.exe"))
    {
-      m_iReturn = -1;
+      m_iError = -1;
       return false;
    }
 
