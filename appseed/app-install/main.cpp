@@ -72,7 +72,7 @@ public:
 extern "C" int WinMainCRTStartup() \
 { 
 
-   return simple_app::s_main < installer > ();
+   ExitProcess(simple_app::s_main < installer > ());
 
 }
 
