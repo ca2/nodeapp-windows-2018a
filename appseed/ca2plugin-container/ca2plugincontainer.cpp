@@ -9,6 +9,8 @@ HANDLE g_hmutex = NULL;
 
 int __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
+
+   //Sleep(15 * 1000);
 	
    UNREFERENCED_PARAMETER(lpCmdLine);
 
