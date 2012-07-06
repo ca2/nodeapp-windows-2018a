@@ -488,7 +488,8 @@ namespace ca2plugin_container
 
                vsstring str((const char *) m_puchMemory, len);
 
-               MessageBox(NULL, str, "ca2plugincontainer::host::on_receive", 0);
+               // debug_box(str, "ca2plugincontainer::host::on_receive", 0);
+
 
                set_ready();
 
