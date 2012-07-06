@@ -485,6 +485,11 @@ namespace ca2plugin_container
                if(m_puchMemory != NULL)
                   m_bStream = true;
 
+
+               vsstring str((const char *) m_puchMemory, len);
+
+               MessageBox(NULL, str, "ca2plugincontainer::host::on_receive", 0);
+
                set_ready();
 
             }
