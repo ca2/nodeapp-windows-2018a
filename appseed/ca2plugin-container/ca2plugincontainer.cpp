@@ -12,7 +12,7 @@ int __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, i
 
    //Sleep(15 * 1000);
 
-   //debug_box("ca2 plugin container win_main", "ca2 plugin container", 0);
+   debug_box("ca2 plugin container win_main", "ca2 plugin container", 0);
 	
    UNREFERENCED_PARAMETER(lpCmdLine);
 
