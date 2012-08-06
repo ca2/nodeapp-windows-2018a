@@ -80,7 +80,7 @@ extern bool g_bInstalling;
 
 installer::installer()
 {
-
+   //debug_box("app-install", "app", 0);
    m_hinstance             = ::GetModuleHandleA(NULL);
    m_hmutexSpabootInstall  = NULL;
    e_message m_emessage    = message_none;
