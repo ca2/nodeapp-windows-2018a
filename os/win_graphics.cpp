@@ -805,6 +805,103 @@ namespace win
    { 
       
 
+      if(m_pdibAlphaBlend != NULL)
+      {
+
+
+         rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
+
+
+         ::ca::dib * pdibWork = NULL;
+         ::ca::dib * pdibWork2 = NULL;
+//         ::ca::dib * pdibWork3 = NULL;
+         ::ca::dib * pdibWork4 = NULL;
+
+            
+         class point ptSrc(xSrc, ySrc);
+         class point ptDest(x, y);
+         class size size(nWidth, nHeight);
+
+
+
+         ::ca::dib_sp spdib;
+         if(pdibWork == NULL)
+         {
+            spdib.create(get_app());
+            pdibWork = spdib;
+         }
+         if(pdibWork == NULL)
+            return false;
+         if(!pdibWork->create(size))
+            return false;
+
+         pdibWork->Fill(0, 0, 0, 0);
+
+         pdibWork->get_graphics()->set_alpha_mode(::ca::alpha_mode_set);
+
+         if(!pdibWork->from(null_point(), pgraphicsSrc, ptSrc, size))
+            return false;
+
+
+
+
+         ::ca::dib_sp spdib2;
+         if(pdibWork2 == NULL)
+         {
+            spdib2.create(get_app());
+            pdibWork2 = spdib2;
+         }
+
+
+         ::ca::dib_sp spdib4;
+         if(pdibWork4 == NULL)
+         {
+            spdib4.create(get_app());
+            pdibWork4 = spdib4;
+         }
+         if(pdibWork4 == NULL)
+            return false;
+         if(!pdibWork4->create(size))
+            return false;
+
+
+         pdibWork4->Fill(255, 0, 0, 0);
+
+         pdibWork4->get_graphics()->set_alpha_mode(::ca::alpha_mode_set);
+            
+         pdibWork4->from(point(max(0, m_ptAlphaBlend.x - x), max(0, m_ptAlphaBlend.y - y)),
+            m_pdibAlphaBlend->get_graphics(), point(max(0, x - m_ptAlphaBlend.x), max(0, y - m_ptAlphaBlend.y)), 
+                               class size(max(0, m_pdibAlphaBlend->width() - max(0, x - m_ptAlphaBlend.x)), max(0, m_pdibAlphaBlend->height() - max(0, y - m_ptAlphaBlend.y))));
+   
+         pdibWork->channel_multiply(visual::rgba::channel_alpha, pdibWork4);
+
+         /*pdibWork->get_graphics()->set_alpha_mode(::ca::alpha_mode_blend);
+
+         pdibWork->from(point(max(0, m_ptAlphaBlend.x - x), max(0, m_ptAlphaBlend.y - y)),
+            m_pdibAlphaBlend->get_graphics(), point(max(0, x - m_ptAlphaBlend.x), max(0, y - m_ptAlphaBlend.y)), 
+                               class size(max(0, size.cx - max(0, x - m_ptAlphaBlend.x)), max(0, size.cy - max(0, y - m_ptAlphaBlend.y))));*/
+   
+         //keeper < ::ca::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
+
+         Gdiplus::CompositingMode mode = m_pgraphics->GetCompositingMode();
+
+         //m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
+
+         bool bOk = m_pgraphics->DrawImage(
+            (Gdiplus::Bitmap *) pdibWork->get_graphics()->GetCurrentBitmap().get_os_data(),
+            x, y , 0, 0, nWidth, nHeight, Gdiplus::UnitPixel) == Gdiplus::Status::Ok;
+
+
+         m_pgraphics->SetCompositingMode(mode);
+
+         return bOk;
+
+         //return System.imaging().true_blend(this, ptDest, size, pdibWork->get_graphics(), null_point()); 
+
+
+      }
+
+
       try
       {
 
@@ -882,32 +979,37 @@ namespace win
    { 
       if(m_pdibAlphaBlend != NULL)
       {
-         if(GetBkMode() == TRANSPARENT)
+         //if(GetBkMode() == TRANSPARENT)
          {
          //   return TRUE;
             rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
             rect rectText(point(x, y), GetTextExtent(str));
             if(rectIntersect.intersect(rectIntersect, rectText))
             {
-               ::ca::dib_sp dib0(get_app());
+               /*::ca::dib_sp dib0(get_app());
                dib0->create(rectText.size());
-               dib0->get_graphics()->SetTextColor(RGB(255, 255, 255));
+               dib0->Fill(0, 0, 0, 0);
+               dib0->get_graphics()->SetTextColor(ARGB(255, 255, 255, 255));
                dib0->get_graphics()->SelectObject(&GetCurrentFont());
                dib0->get_graphics()->SetBkMode(TRANSPARENT);
                dib0->get_graphics()->TextOut(0, 0, str);
-               dib0->ToAlpha(0);
+               dib0->ToAlpha(0);*/
                ::ca::dib_sp dib1(get_app());
                dib1->create(rectText.size());
-               dib1->get_graphics()->SetTextColor(GetTextColor());
+               dib1->Fill(0, 0, 0, 0);
+               dib1->get_graphics()->set_color(m_crColor);
                dib1->get_graphics()->SelectObject(&GetCurrentFont());
                dib1->get_graphics()->SetBkMode(TRANSPARENT);
                dib1->get_graphics()->TextOut(0, 0, str);
-               dib1->channel_from(visual::rgba::channel_alpha, dib0);
+               //dib1->channel_from(visual::rgba::channel_alpha, dib0);
                ::ca::dib_sp dib2(get_app());
                dib2->create(rectText.size());
                dib2->Fill(255, 0, 0, 0);
+               dib2->get_graphics()->set_alpha_mode(::ca::alpha_mode_set);
                dib2->from(point(max(0, m_ptAlphaBlend.x - x), max(0, m_ptAlphaBlend.y - y)),
-                  m_pdibAlphaBlend->get_graphics(), point(max(0, x - m_ptAlphaBlend.x), max(0, y - m_ptAlphaBlend.y)), rectText.size());
+                  m_pdibAlphaBlend->get_graphics(), point(max(0, x - m_ptAlphaBlend.x), max(0, y - m_ptAlphaBlend.y)), 
+                  size(max(0, m_pdibAlphaBlend->width()-max(0, x - m_ptAlphaBlend.x)),
+                        max(0, m_pdibAlphaBlend->height()-max(0, y - m_ptAlphaBlend.y))));
                dib1->channel_multiply(visual::rgba::channel_alpha, dib2);
                /*::ca::dib_sp dib3(get_app());
                dib1->mult_alpha(dib3);*/
@@ -1463,6 +1565,78 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    bool graphics::alpha_blend(int xDest, int yDest, int nDestWidth, int nDestHeight, ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, double dRate)
    {
+      
+      if(m_pdibAlphaBlend != NULL)
+      {
+
+
+         rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
+
+
+         ::ca::dib * pdibWork = NULL;
+         ::ca::dib * pdibWork2 = NULL;
+//         ::ca::dib * pdibWork3 = NULL;
+         ::ca::dib * pdibWork4 = NULL;
+
+            
+         class point ptSrc(xSrc, ySrc);
+         class point ptDest(xDest, yDest);
+         class size size(nDestWidth, nDestHeight);
+
+
+
+         ::ca::dib_sp spdib;
+         if(pdibWork == NULL)
+         {
+            spdib.create(get_app());
+            pdibWork = spdib;
+         }
+         if(pdibWork == NULL)
+            return false;
+         if(!pdibWork->create(size))
+            return false;
+         if(!pdibWork->from(null_point(), pgraphicsSrc, ptSrc, size))
+            return false;
+
+
+
+
+         ::ca::dib_sp spdib2;
+         if(pdibWork2 == NULL)
+         {
+            spdib2.create(get_app());
+            pdibWork2 = spdib2;
+         }
+
+
+         ::ca::dib_sp spdib4;
+         if(pdibWork4 == NULL)
+         {
+            spdib4.create(get_app());
+            pdibWork4 = spdib4;
+         }
+         if(pdibWork4 == NULL)
+            return false;
+         if(!pdibWork4->create(size))
+            return false;
+
+
+         pdibWork4->Fill(255, 0, 0, 0);
+            
+         pdibWork4->from(point(max(0, m_ptAlphaBlend.x - xDest), max(0, m_ptAlphaBlend.y - yDest)),
+            m_pdibAlphaBlend->get_graphics(), point(max(0, xDest - m_ptAlphaBlend.x), max(0, yDest - m_ptAlphaBlend.y)), size);
+   
+         pdibWork->channel_multiply(visual::rgba::channel_alpha, pdibWork4);
+
+
+         keeper < ::ca::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
+
+
+         return System.imaging().true_blend(this, ptDest, size, pdibWork->get_graphics(), ptSrc); 
+
+
+      }
+
 
       float fA = (float) dRate;
 
