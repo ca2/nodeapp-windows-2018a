@@ -3244,7 +3244,14 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       }
       return size;*/
 
-      if(m_pgraphics == NULL)
+      class sized size;
+
+      if(!GetTextExtent(size, str, str.get_length(), str.get_length()))
+         return class size(0, 0);
+
+      return class size((long) size.cx, (long) size.cy);
+
+      /*if(m_pgraphics == NULL)
          return size(0, 0);
 
       wstring wstr = gen::international::utf8_to_unicode(str);
@@ -3266,7 +3273,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          return size(0, 0);
       }
 
-      return size((int64_t) (box.Width * m_fontxyz.m_dFontWidth), (int64_t) box.Height);
+      return size((int64_t) (box.Width * m_fontxyz.m_dFontWidth), (int64_t) box.Height);*/
 
    }
 
