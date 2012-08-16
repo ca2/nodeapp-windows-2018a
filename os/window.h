@@ -125,12 +125,12 @@ namespace win
 
       
          // get immediate child with given ID
-      using ::user::interaction::GetDlgItem;
-      void GetDlgItem(id id, HWND* phWnd) const;
+      using ::user::interaction::GetChildById;
+      void GetChildById(id id, HWND* phWnd) const;
          // as above, but returns HWND
       using ::user::interaction::GetDescendantWindow;
       ::user::interaction * GetDescendantWindow(id id);
-         // like GetDlgItem but recursive
+         // like GetChildById but recursive
       void SendMessageToDescendants(UINT message, WPARAM wParam = 0,
          LPARAM lParam = 0, bool bDeep = TRUE, bool bOnlyPerm = FALSE);
       frame_window* GetParentFrame();
@@ -318,9 +318,9 @@ namespace win
       virtual bool DlgDirSelect(__out_ecount_z(nSize) LPTSTR lpString, __in int nSize, __in int nIDListBox);
       virtual bool DlgDirSelectComboBox(__out_ecount_z(nSize) LPTSTR lpString, __in int nSize, __in int nIDComboBox);
 
-      virtual UINT GetDlgItemInt(int nID, BOOL * lpTrans = NULL, bool bSigned = TRUE) const;
-      virtual int GetDlgItemText(__in int nID, __out_ecount_part_z(nMaxCount, return + 1) LPTSTR lpStr, __in int nMaxCount) const;
-      virtual int GetDlgItemText(int nID, string & rString) const;
+      virtual UINT GetChildByIdInt(int nID, BOOL * lpTrans = NULL, bool bSigned = TRUE) const;
+      virtual int GetChildByIdText(__in int nID, __out_ecount_part_z(nMaxCount, return + 1) LPTSTR lpStr, __in int nMaxCount) const;
+      virtual int GetChildByIdText(int nID, string & rString) const;
       virtual ::ca::window * GetNextDlgGroupItem(::ca::window * pWndCtl, bool bPrevious = FALSE) const;
       virtual ::ca::window * GetNextDlgTabItem(::ca::window * pWndCtl, bool bPrevious = FALSE) const;
       virtual UINT IsDlgButtonChecked(int nIDButton) const;
@@ -597,7 +597,7 @@ namespace win
       virtual WNDPROC* GetSuperWndProcAddr();
 
       // for dialog data exchange and validation
-//      virtual void DoDataExchange(CDataExchange* pDX);
+//      virtual void do_data_exchange(CDataExchange* pDX);
 
       // for modality
       virtual void BeginModalState();

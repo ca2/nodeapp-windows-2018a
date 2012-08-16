@@ -776,12 +776,12 @@ namespace win
 
    }
 
-   int window::GetDlgItemText(int nID, string & rString) const
+   int window::GetChildByIdText(int nID, string & rString) const
    {
       ASSERT(::IsWindow(get_handle()));
       rString = "";    // is_empty without deallocating
 
-      HWND hWnd = ::GetDlgItem(get_handle(), nID);
+      HWND hWnd = ::GetChildById(get_handle(), nID);
       if (hWnd != NULL)
       {
          int nLen = ::GetWindowTextLength(hWnd);
@@ -2057,12 +2057,12 @@ restart_mouse_hover_check:
    ::user::interaction * PASCAL window::GetDescendantWindow(::user::interaction * hWnd, id id)
    {
       single_lock sl(&hWnd->m_pthread->m_mutex, TRUE);
-      // GetDlgItem recursive (return first found)
+      // GetChildById recursive (return first found)
       // breadth-first for 1 level, then depth-first for next level
 
-      // use GetDlgItem since it is a fast USER function
+      // use GetChildById since it is a fast USER function
       ::user::interaction * pWndChild;
-      if ((pWndChild = hWnd->GetDlgItem(id)) != NULL)
+      if ((pWndChild = hWnd->GetChildById(id)) != NULL)
       {
          if (pWndChild->GetTopWindow() != NULL)
          {
@@ -3312,7 +3312,7 @@ restart_mouse_hover_check:
    bool bOK = FALSE;       // assume failure
    try
    {
-   DoDataExchange(&dx);
+   do_data_exchange(&dx);
    bOK = TRUE;         // it worked
    }
    catch(user_exception * pe)
@@ -3840,7 +3840,7 @@ ExitModal:
       ASSERT(::IsWindow(WIN_WINDOW(pParent)->get_handle()));
 
       // check for normal dialog control first
-      HWND hWndControl = ::GetDlgItem(WIN_WINDOW(pParent)->get_handle(), nID);
+      HWND hWndControl = ::GetChildById(WIN_WINDOW(pParent)->get_handle(), nID);
       if (hWndControl != NULL)
          return SubclassWindow(hWndControl);
 
@@ -4865,26 +4865,26 @@ ExitModal:
 
    }
 
-   void window::GetDlgItem(id id, HWND* phWnd) const
+   void window::GetChildById(id id, HWND* phWnd) const
    {
 
       ASSERT(::IsWindow(get_handle())); 
       ASSERT(phWnd != NULL); 
-      *phWnd = ::GetDlgItem(get_handle(), (int) id);
+      *phWnd = ::GetChildById(get_handle(), (int) id);
 
    }
 
-   UINT window::GetDlgItemInt(int nID, BOOL * lpTrans, bool bSigned) const
+   UINT window::GetChildByIdInt(int nID, BOOL * lpTrans, bool bSigned) const
    {
 
       ASSERT(::IsWindow(get_handle())); 
 
-      return ::GetDlgItemInt(get_handle(), nID, lpTrans, bSigned);
+      return ::GetChildByIdInt(get_handle(), nID, lpTrans, bSigned);
 
    }
 
-   int window::GetDlgItemText(__in int nID, __out_ecount_part_z(nMaxCount, return + 1) LPTSTR lpStr, __in int nMaxCount) const
-   { ASSERT(::IsWindow(get_handle())); return ::GetDlgItemText(get_handle(), nID, lpStr, nMaxCount);}
+   int window::GetChildByIdText(__in int nID, __out_ecount_part_z(nMaxCount, return + 1) LPTSTR lpStr, __in int nMaxCount) const
+   { ASSERT(::IsWindow(get_handle())); return ::GetChildByIdText(get_handle(), nID, lpStr, nMaxCount);}
 
    ::ca::window * window::GetNextDlgGroupItem(::ca::window * pWndCtl, bool bPrevious) const
    {
@@ -5402,7 +5402,7 @@ ExitModal:
    { return (UINT)Default(); }
 
    // window dialog data support
-   //    void window::DoDataExchange(CDataExchange*)
+   //    void window::do_data_exchange(CDataExchange*)
    //   { } // default does nothing
 
    // window modality support

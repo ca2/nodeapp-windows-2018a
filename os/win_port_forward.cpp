@@ -1057,7 +1057,7 @@ namespace win
 	
 	   if ( !bContinue || 
          !SUCCEEDED( 
-               piPortMappingCollection->add(
+               piPortMappingCollection->Add(
                   _ttol(newMapping.ExternalPort), 
                   newMapping.Protocol.AllocSysString() , 
                   _ttol(newMapping.InternalPort),  
