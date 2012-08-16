@@ -125,12 +125,12 @@ namespace win
 
       
          // get immediate child with given ID
-      using ::user::interaction::GetChildById;
-      void GetChildById(id id, HWND* phWnd) const;
+      using ::user::interaction::get_child_by_id;
+      void get_child_by_id(id id, HWND* phWnd) const;
          // as above, but returns HWND
       using ::user::interaction::GetDescendantWindow;
       ::user::interaction * GetDescendantWindow(id id);
-         // like GetChildById but recursive
+         // like get_child_by_id but recursive
       void SendMessageToDescendants(UINT message, WPARAM wParam = 0,
          LPARAM lParam = 0, bool bDeep = TRUE, bool bOnlyPerm = FALSE);
       frame_window* GetParentFrame();
