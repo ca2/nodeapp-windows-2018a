@@ -1163,9 +1163,9 @@ namespace win
       wstr = L"123AWZwmcpQçg";
       m_pgraphics->MeasureString(wstr.m_pwsz, -1, (Gdiplus::Font *) m_font->get_os_data(), origin, &rect2);
 
-      lpMetrics->tmAveCharWidth = rect.Width / (double) wstr.get_length();
-      lpMetrics->tmAscent = rect.Height;
-      lpMetrics->tmDescent = rect2.Height - rect.Height;*/
+      lpMetrics->tmAveCharWidth = rect.width / (double) wstr.get_length();
+      lpMetrics->tmAscent = rect.height;
+      lpMetrics->tmDescent = rect2.height - rect.height;*/
 
 
       single_lock slGdiplus(&System.m_mutexGdiplus, TRUE);
