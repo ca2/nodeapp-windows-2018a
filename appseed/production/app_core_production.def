@@ -1,0 +1,7 @@
+; app_production.def : Declares the module parameters for the DLL.
+
+LIBRARY      "app_core_production"
+; DESCRIPTION  'production Windows Dynamic Link Library'
+
+EXPORTS
+get_new_library
