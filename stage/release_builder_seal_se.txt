@@ -1,6 +1,6 @@
-﻿ at votagus/telmico production basis folder V:/basis13/08/2012 
-17:24
- at ns399039 at OVH - through ovh.pt - OVH Made i3 2130 @ 3.20GHz 2 Core x 2 HyperThread processor 16.0GB 2 x 1TB hard-disk high-speed Internet Windows 7 Ultimate Service Pack 1 guest on VMware ESXi 5 Update 1 at Strasbourg France.﻿-∞
+17/08/2012 
+19:05
+﻿-∞
 Tack Sverige!!
 {
   Tack Carlos Gustavo Cecyn Lundgren!!
