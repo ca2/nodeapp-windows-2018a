@@ -83,7 +83,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include=".\app_core_production.def">
+    <None Include=".\app_nodeapp_production.def">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>

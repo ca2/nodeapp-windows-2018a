@@ -450,8 +450,8 @@ restart:
 
       //Application.dir().mk(System.dir().path(m_strBase, "time"));
       Application.file().put_contents(System.dir().path(m_strBase, "app\\build.txt"), m_strBuild);
-      Application.file().put_contents_utf8(System.dir().path(m_strBase, "app\\seed\\this_version_info.h"), strBuildH);
-      Application.file().put_contents_utf8(System.dir().path(m_strBase, "app\\seed\\this_version_info.txt"), strBuildH + "\r\n\r\n" + strDedicaverse + "\r\n\r\n" + strCgclcst);
+      Application.file().put_contents_utf8(System.dir().path(m_strBase, "app\\this_version_info.h"), strBuildH);
+      Application.file().put_contents_utf8(System.dir().path(m_strBase, "app\\this_version_info.txt"), strBuildH + "\r\n\r\n" + strDedicaverse + "\r\n\r\n" + strCgclcst);
 
       if(!commit_for_new_build_and_new_release())
          return 2;
@@ -1099,7 +1099,7 @@ bool production_class::commit_source(const char * psz)
    si.dwFlags = STARTF_USESHOWWINDOW;
    si.wShowWindow = SW_HIDE; 
    str.Format("svn commit --force-log --encoding utf-8 --file %s %s", 
-      System.dir().path(m_strBase, "app\\seed\\this_version_info.txt"),
+      System.dir().path(m_strBase, "app\\this_version_info.txt"),
       System.dir().path(strBase, psz));
    if(!::CreateProcess(NULL, (LPTSTR) (const char *) str, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
    {
