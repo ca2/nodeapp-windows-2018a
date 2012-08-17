@@ -1,0 +1,8 @@
+<solution>
+<projects>
+<project path="app/appseed/c" />
+<project path="app/appseed/ca" />
+<project path="app/appseed/ca2" />
+<project path="app/appseed/optca" />
+</projects>
+</solution>
