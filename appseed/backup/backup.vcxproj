@@ -38,7 +38,7 @@
     <ProjectGuid>{9FC565B2-1C85-4A57-8A25-2C90680A7F4E}</ProjectGuid>
     <RootNamespace>app_backup</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <ProjectName>app_core_backup</ProjectName>
+    <ProjectName>app_nodeapp_backup</ProjectName>
     <VCTargetsPath Condition="'$(VCTargetsPath11)' != '' and '$(VSVersion)' == '' and $(VisualStudioVersion) == ''">$(VCTargetsPath11)</VCTargetsPath>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -815,7 +815,7 @@
     <ClCompile Include=".\backup_view.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include=".\app_core_backup.def" />
+    <None Include=".\app_nodeapp_backup.def" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application.h" />

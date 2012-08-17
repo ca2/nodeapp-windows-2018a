@@ -74,7 +74,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include=".\app_core_backup.def">
+    <None Include=".\app_nodeapp_backup.def">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>
