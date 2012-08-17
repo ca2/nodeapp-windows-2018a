@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<r:RDF xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+<r:Description about="urn:mozilla:extension:npca2@ca2.cc">
+	<em:updates>
+		<r:Seq>
+			<r:li>
+				<r:Description>
+					<em:version>%BUILD%</em:version>
+					<em:targetApplication>
+					<r:Description>
+						<em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
+						<em:minVersion>2.0</em:minVersion>
+						<em:maxVersion>42.*.*</em:maxVersion>
+						<em:updateLink>https://%DOWNLOADSITE%/%PLATFORM%%VERSION%/npca2.xpi</em:updateLink>
+					</r:Description>
+					</em:targetApplication>
+				</r:Description>
+			</r:li>
+		</r:Seq>
+	</em:updates>
+</r:Description>
+</r:RDF>

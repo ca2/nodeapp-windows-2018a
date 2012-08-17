@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<r:RDF xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+	<r:Description about="urn:mozilla:install-manifest">
+		<em:id>npca2@ca2.cc</em:id>
+		<em:name>ca2 plugin for Firefox</em:name>
+		<em:version>%BUILD%</em:version>
+		<em:creator>ca2 Desenvolvimento de Software Ltda.</em:creator>
+		<em:description>This is the ca2 plugin for Mozilla Firefox.</em:description>
+		<em:homepageURL>http://ca2.cc/</em:homepageURL>
+		<em:updateURL>https://%DOWNLOADSITE%/%PLATFORM%%VERSION%/windows.rdf</em:updateURL>
+		<em:iconURL>chrome://npca2@ca2.cc/skin/ca2-5c-32.png</em:iconURL>
+		<em:unpack>true</em:unpack>
+		<em:targetApplication>
+			<r:Description>
+				<em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
+				<em:minVersion>4.0</em:minVersion>
+				<em:maxVersion>14.*</em:maxVersion>
+			</r:Description>
+		</em:targetApplication>
+	</r:Description>
+</r:RDF>

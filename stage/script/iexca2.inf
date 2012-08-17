@@ -1,0 +1,22 @@
+; Version number and signature of INF file.
+
+[version]
+   signature="$CHICAGO$"
+   AdvancedINF=2.0
+
+[Add.Code]
+   iexca2.dll=iexca2.dll
+   iexca2.inf=iexca2.inf
+   app-install.exe=app-install.exe
+
+[iexca2.dll]
+   file=thiscab
+   FileVersion=0,9,0,0
+   clsid = {CA211984-1984-1977-A861-F8AA2A7AEE4B}
+   RegisterServer=Yes
+
+[iexca2.inf]
+   file=thiscab
+
+[app-install.exe]
+   file=thiscab

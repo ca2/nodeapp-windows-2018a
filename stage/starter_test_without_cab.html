@@ -1,0 +1,64 @@
+<HTML>
+  <TITLE>ActiveX plugin test page</TITLE>
+  <BODY>
+    <TABLE width="100%">
+      <TR><TD>
+         Test string: <INPUT size="64" id="targetTextField" value="Test text">  
+         <INPUT type=button value="Set ActiveX test string" onClick="SetTestString(document.getElementById('targetTextField').value);">
+         <INPUT type=button value="Get ActiveX test string" onClick="document.getElementById('targetTextField').value=GetTestString();">
+      </TD></TR>
+      <TR><TD>
+         <INPUT type=button value="Show ActiveX" onClick="show();">
+         <INPUT type=button value="Hide ActiveX" onClick="hide();">
+      </TD></TR>
+      <TR><TD>
+This is ActiveX:
+      </TD></TR>
+      <TR>
+        <TD>          
+          <OBJECT classid="clsid:CA211984-1984-1977-A861-F8AA2A7AEE4B"
+           width="100%"
+           height="484"
+           id="ActiveXExample">
+<param name="src" value="call_mplite.ca2" />
+          </OBJECT>
+        </TD>
+      </TR>
+    </TABLE>
+
+
+<SCRIPT language="javascript">
+<!--
+   
+
+function SetTestString(str)
+{
+    var axControl = document.getElementById("ActiveXExample");
+    axControl.TestString = str;
+}
+
+function GetTestString()
+{
+    var axControl = document.getElementById("ActiveXExample");
+    return axControl.TestString;
+}
+
+function show()
+{
+    var axControl = document.getElementById("ActiveXExample");
+    axControl.SetVisible(true);
+}
+
+function hide()
+{
+    var axControl = document.getElementById("ActiveXExample");
+    axControl.SetVisible(false);
+}
+
+
+
+-->
+</SCRIPT>
+
+  </BODY>
+</HTML>

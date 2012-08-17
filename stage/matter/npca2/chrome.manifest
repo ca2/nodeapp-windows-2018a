@@ -1,0 +1,2 @@
+skin    npca2	classic/1.0 skin/classic/
+binary-component plugins/npca2.dll abi=WINNT_x86-MSVC
