@@ -1,0 +1,76 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C++ Express 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "netnodelibrary", "..\..\appseed\netnodelibrary\netnodelibrary.vcxproj", "{AF07539A-BE49-4BE9-818A-0D2CE6462812}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "netnodescript", "..\..\appseed\netnodescript\netnodescript.vcxproj", "{19841977-8E11-42A4-B923-08D809A03F4F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "command", "..\..\appseed\command\command.vcxproj", "{E407F4BA-7422-4A36-B9B7-53F3E656FAA4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ca2info", "..\..\appseed\ca2info\ca2info.vcxproj", "{85CBA1C6-C28B-410C-9F71-FA6899B00CC8}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ca2", "..\..\appseedcore\ca2\ca2.vcxproj", "{AFC48570-75E4-46BD-B8AB-4590B257E1C8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ACB3FF4B-0B61-45A7-881D-E102E0F85808} = {ACB3FF4B-0B61-45A7-881D-E102E0F85808}
+		{38A5C152-C1EF-4322-BADF-A41B35335831} = {38A5C152-C1EF-4322-BADF-A41B35335831}
+		{6352AD78-A4BA-4F99-89EB-521C22C05322} = {6352AD78-A4BA-4F99-89EB-521C22C05322}
+		{EDC06BE7-D6AF-4309-B8FE-1E8D974D23D7} = {EDC06BE7-D6AF-4309-B8FE-1E8D974D23D7}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cube", "..\..\appseed\cube\cube.vcxproj", "{437699AD-7464-4E5F-ACF3-7167487A9E3D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcharguess", "..\..\thirdparty\appseed\libcharguess\libcharguess.vcxproj", "{38A5C152-C1EF-4322-BADF-A41B35335831}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sqlite", "..\..\thirdparty\appseed\sqlite\sqlite.vcxproj", "{EDC06BE7-D6AF-4309-B8FE-1E8D974D23D7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlib", "..\..\thirdparty\appseed\zlib\zlib.vcxproj", "{6352AD78-A4BA-4F99-89EB-521C22C05322}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_", "..\..\appseedcore\_\_.vcxproj", "{ACB3FF4B-0B61-45A7-881D-E102E0F85808}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cubeapp", "..\..\appseed\cubeapp\cubeapp.vcxproj", "{B2A3AD3B-1026-4D24-A527-2E1B38324184}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19841977-8E11-42A4-B923-08D809A03F4F} = {19841977-8E11-42A4-B923-08D809A03F4F}
+		{ACB3FF4B-0B61-45A7-881D-E102E0F85808} = {ACB3FF4B-0B61-45A7-881D-E102E0F85808}
+		{38A5C152-C1EF-4322-BADF-A41B35335831} = {38A5C152-C1EF-4322-BADF-A41B35335831}
+		{6352AD78-A4BA-4F99-89EB-521C22C05322} = {6352AD78-A4BA-4F99-89EB-521C22C05322}
+		{AF07539A-BE49-4BE9-818A-0D2CE6462812} = {AF07539A-BE49-4BE9-818A-0D2CE6462812}
+		{E407F4BA-7422-4A36-B9B7-53F3E656FAA4} = {E407F4BA-7422-4A36-B9B7-53F3E656FAA4}
+		{85CBA1C6-C28B-410C-9F71-FA6899B00CC8} = {85CBA1C6-C28B-410C-9F71-FA6899B00CC8}
+		{EDC06BE7-D6AF-4309-B8FE-1E8D974D23D7} = {EDC06BE7-D6AF-4309-B8FE-1E8D974D23D7}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "win", "..\..\nodeapp\windows\win\win.vcxproj", "{DFA865FA-07A1-410C-882D-CEBB89AC8FD6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		basis|x64 = basis|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AF07539A-BE49-4BE9-818A-0D2CE6462812}.basis|x64.ActiveCfg = basis|x64
+		{AF07539A-BE49-4BE9-818A-0D2CE6462812}.basis|x64.Build.0 = basis|x64
+		{19841977-8E11-42A4-B923-08D809A03F4F}.basis|x64.ActiveCfg = basis|x64
+		{19841977-8E11-42A4-B923-08D809A03F4F}.basis|x64.Build.0 = basis|x64
+		{E407F4BA-7422-4A36-B9B7-53F3E656FAA4}.basis|x64.ActiveCfg = basis|x64
+		{E407F4BA-7422-4A36-B9B7-53F3E656FAA4}.basis|x64.Build.0 = basis|x64
+		{85CBA1C6-C28B-410C-9F71-FA6899B00CC8}.basis|x64.ActiveCfg = basis|x64
+		{85CBA1C6-C28B-410C-9F71-FA6899B00CC8}.basis|x64.Build.0 = basis|x64
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.basis|x64.ActiveCfg = basis|x64
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.basis|x64.Build.0 = basis|x64
+		{437699AD-7464-4E5F-ACF3-7167487A9E3D}.basis|x64.ActiveCfg = basis|x64
+		{437699AD-7464-4E5F-ACF3-7167487A9E3D}.basis|x64.Build.0 = basis|x64
+		{38A5C152-C1EF-4322-BADF-A41B35335831}.basis|x64.ActiveCfg = basis|x64
+		{38A5C152-C1EF-4322-BADF-A41B35335831}.basis|x64.Build.0 = basis|x64
+		{EDC06BE7-D6AF-4309-B8FE-1E8D974D23D7}.basis|x64.ActiveCfg = basis|x64
+		{EDC06BE7-D6AF-4309-B8FE-1E8D974D23D7}.basis|x64.Build.0 = basis|x64
+		{6352AD78-A4BA-4F99-89EB-521C22C05322}.basis|x64.ActiveCfg = basis|x64
+		{6352AD78-A4BA-4F99-89EB-521C22C05322}.basis|x64.Build.0 = basis|x64
+		{ACB3FF4B-0B61-45A7-881D-E102E0F85808}.basis|x64.ActiveCfg = basis|x64
+		{ACB3FF4B-0B61-45A7-881D-E102E0F85808}.basis|x64.Build.0 = basis|x64
+		{B2A3AD3B-1026-4D24-A527-2E1B38324184}.basis|x64.ActiveCfg = basis|x64
+		{B2A3AD3B-1026-4D24-A527-2E1B38324184}.basis|x64.Build.0 = basis|x64
+		{DFA865FA-07A1-410C-882D-CEBB89AC8FD6}.basis|x64.ActiveCfg = basis|x64
+		{DFA865FA-07A1-410C-882D-CEBB89AC8FD6}.basis|x64.Build.0 = basis|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

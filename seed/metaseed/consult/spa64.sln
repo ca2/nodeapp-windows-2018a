@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C++ Express 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "spalib", "..\source\spalib\spalib.vcxproj", "{FA039458-2E43-45DE-9FA9-66DFA7E11E64}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "spaadmin", "..\source\basis_spaadmin\spaadmin.vcxproj", "{6F0588F8-8010-4F52-ADD8-25A1E64E20AF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "spaboot", "..\source\spaboot\spaboot.vcxproj", "{425B3A60-FCAB-42ED-B95C-86C8CBFB1F3B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FA039458-2E43-45DE-9FA9-66DFA7E11E64} = {FA039458-2E43-45DE-9FA9-66DFA7E11E64}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "install_spaboot", "..\source\install_spaboot\install_spaboot.vcxproj", "{B8E4289C-1BCA-4453-9FAA-DBE27D5B9F8C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3452D53D-2EC0-489A-8FAB-81012AE6EAB2} = {3452D53D-2EC0-489A-8FAB-81012AE6EAB2}
+		{425B3A60-FCAB-42ED-B95C-86C8CBFB1F3B} = {425B3A60-FCAB-42ED-B95C-86C8CBFB1F3B}
+		{6F0588F8-8010-4F52-ADD8-25A1E64E20AF} = {6F0588F8-8010-4F52-ADD8-25A1E64E20AF}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "spa_bspatch", "..\..\appseedcore\ca2\bsdiff\spa_bspatch.vcxproj", "{3452D53D-2EC0-489A-8FAB-81012AE6EAB2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "salt_generator", "..\source\salt_generator\salt_generator.vcxproj", "{C4525E36-7969-42C9-91BF-8D061D7BEE66}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "spa", "..\source\spa\spa.vcxproj", "{A4A61B3B-CC87-4BB6-A130-C68DB95FAA7C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		basis|Win32 = basis|Win32
+		basis|x64 = basis|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA039458-2E43-45DE-9FA9-66DFA7E11E64}.basis|Win32.ActiveCfg = basis|Win32
+		{FA039458-2E43-45DE-9FA9-66DFA7E11E64}.basis|Win32.Build.0 = basis|Win32
+		{FA039458-2E43-45DE-9FA9-66DFA7E11E64}.basis|x64.ActiveCfg = basis|x64
+		{FA039458-2E43-45DE-9FA9-66DFA7E11E64}.basis|x64.Build.0 = basis|x64
+		{6F0588F8-8010-4F52-ADD8-25A1E64E20AF}.basis|Win32.ActiveCfg = basis|Win32
+		{6F0588F8-8010-4F52-ADD8-25A1E64E20AF}.basis|Win32.Build.0 = basis|Win32
+		{6F0588F8-8010-4F52-ADD8-25A1E64E20AF}.basis|x64.ActiveCfg = basis|x64
+		{6F0588F8-8010-4F52-ADD8-25A1E64E20AF}.basis|x64.Build.0 = basis|x64
+		{425B3A60-FCAB-42ED-B95C-86C8CBFB1F3B}.basis|Win32.ActiveCfg = basis|Win32
+		{425B3A60-FCAB-42ED-B95C-86C8CBFB1F3B}.basis|Win32.Build.0 = basis|Win32
+		{425B3A60-FCAB-42ED-B95C-86C8CBFB1F3B}.basis|x64.ActiveCfg = basis|x64
+		{425B3A60-FCAB-42ED-B95C-86C8CBFB1F3B}.basis|x64.Build.0 = basis|x64
+		{B8E4289C-1BCA-4453-9FAA-DBE27D5B9F8C}.basis|Win32.ActiveCfg = basis|Win32
+		{B8E4289C-1BCA-4453-9FAA-DBE27D5B9F8C}.basis|Win32.Build.0 = basis|Win32
+		{B8E4289C-1BCA-4453-9FAA-DBE27D5B9F8C}.basis|x64.ActiveCfg = basis|x64
+		{B8E4289C-1BCA-4453-9FAA-DBE27D5B9F8C}.basis|x64.Build.0 = basis|x64
+		{3452D53D-2EC0-489A-8FAB-81012AE6EAB2}.basis|Win32.ActiveCfg = basis|Win32
+		{3452D53D-2EC0-489A-8FAB-81012AE6EAB2}.basis|Win32.Build.0 = basis|Win32
+		{3452D53D-2EC0-489A-8FAB-81012AE6EAB2}.basis|x64.ActiveCfg = basis|x64
+		{3452D53D-2EC0-489A-8FAB-81012AE6EAB2}.basis|x64.Build.0 = basis|x64
+		{C4525E36-7969-42C9-91BF-8D061D7BEE66}.basis|Win32.ActiveCfg = basis|Win32
+		{C4525E36-7969-42C9-91BF-8D061D7BEE66}.basis|Win32.Build.0 = basis|Win32
+		{C4525E36-7969-42C9-91BF-8D061D7BEE66}.basis|x64.ActiveCfg = basis|x64
+		{C4525E36-7969-42C9-91BF-8D061D7BEE66}.basis|x64.Build.0 = basis|x64
+		{A4A61B3B-CC87-4BB6-A130-C68DB95FAA7C}.basis|Win32.ActiveCfg = basis|Win32
+		{A4A61B3B-CC87-4BB6-A130-C68DB95FAA7C}.basis|Win32.Build.0 = basis|Win32
+		{A4A61B3B-CC87-4BB6-A130-C68DB95FAA7C}.basis|x64.ActiveCfg = basis|x64
+		{A4A61B3B-CC87-4BB6-A130-C68DB95FAA7C}.basis|x64.Build.0 = basis|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

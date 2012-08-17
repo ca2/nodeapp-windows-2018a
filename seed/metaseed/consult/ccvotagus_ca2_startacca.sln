@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C++ Express 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_000ca2api00000", "..\ca2core\fontopus\app\source\main\_000ca2api00000\_000ca2api00000.vcproj", "{9FADAE6B-2055-4F3E-974C-F9AF3E035BDA}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "startacca", "..\ca2\fontopus\app\source\main\startacca\startacca.vcproj", "{C809798D-DA6F-4C99-AC43-44BD4BF718C2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9FADAE6B-2055-4F3E-974C-F9AF3E035BDA} = {9FADAE6B-2055-4F3E-974C-F9AF3E035BDA}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		DebRelease|Win32 = DebRelease|Win32
+		Debug|Win32 = Debug|Win32
+		Release Debug|Win32 = Release Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9FADAE6B-2055-4F3E-974C-F9AF3E035BDA}.DebRelease|Win32.ActiveCfg = Release|Win32
+		{9FADAE6B-2055-4F3E-974C-F9AF3E035BDA}.DebRelease|Win32.Build.0 = Release|Win32
+		{9FADAE6B-2055-4F3E-974C-F9AF3E035BDA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9FADAE6B-2055-4F3E-974C-F9AF3E035BDA}.Debug|Win32.Build.0 = Debug|Win32
+		{9FADAE6B-2055-4F3E-974C-F9AF3E035BDA}.Release Debug|Win32.ActiveCfg = Debug|Win32
+		{9FADAE6B-2055-4F3E-974C-F9AF3E035BDA}.Release Debug|Win32.Build.0 = Debug|Win32
+		{9FADAE6B-2055-4F3E-974C-F9AF3E035BDA}.Release|Win32.ActiveCfg = Release|Win32
+		{9FADAE6B-2055-4F3E-974C-F9AF3E035BDA}.Release|Win32.Build.0 = Release|Win32
+		{C809798D-DA6F-4C99-AC43-44BD4BF718C2}.DebRelease|Win32.ActiveCfg = Release|Win32
+		{C809798D-DA6F-4C99-AC43-44BD4BF718C2}.DebRelease|Win32.Build.0 = Release|Win32
+		{C809798D-DA6F-4C99-AC43-44BD4BF718C2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C809798D-DA6F-4C99-AC43-44BD4BF718C2}.Debug|Win32.Build.0 = Debug|Win32
+		{C809798D-DA6F-4C99-AC43-44BD4BF718C2}.Release Debug|Win32.ActiveCfg = Debug|Win32
+		{C809798D-DA6F-4C99-AC43-44BD4BF718C2}.Release Debug|Win32.Build.0 = Debug|Win32
+		{C809798D-DA6F-4C99-AC43-44BD4BF718C2}.Release|Win32.ActiveCfg = Release|Win32
+		{C809798D-DA6F-4C99-AC43-44BD4BF718C2}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
