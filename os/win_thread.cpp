@@ -1933,30 +1933,28 @@ stop_run:
       {
          // will stop after PostQuitMessage called
          ASSERT_VALID(this);
-         translator::attach();
+// let upper framework attach translator    
+//         translator::attach();
 run:
          try
          {
+            m_bRun = true;
+            m_p->m_bRun = true;
+            nResult = m_p->run();
+         }
+         catch(const ::ca::exception & e)
+         {
+            if(on_run_exception((::ca::exception &) e))
+               goto run;
+            if(App(get_app()).final_handle_exception((::ca::exception & ) e))
+               goto run;
             try
             {
-               m_bRun = true;
-               m_p->m_bRun = true;
-               nResult = m_p->run();
+               nResult = exit();
             }
-            catch(const ::ca::exception & e)
+            catch(...)
             {
-               if(on_run_exception((::ca::exception &) e))
-                  goto run;
-               if(App(get_app()).final_handle_exception((::ca::exception & ) e))
-                  goto run;
-               try
-               {
-                  nResult = exit();
-               }
-               catch(...)
-               {
-                  nResult = (DWORD) -1;
-               }
+               nResult = (DWORD) -1;
             }
          }
          catch(...)
