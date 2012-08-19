@@ -482,8 +482,8 @@ namespace ca2plugin_container
 
                memcpy(m_puchMemory, pdata, len);
 
-               if(m_puchMemory != NULL)
-                  m_bStream = true;
+//  xxx             if(m_puchMemory != NULL)
+  //                m_bStream = true;
 
 
                vsstring str((const char *) m_puchMemory, len);
@@ -491,9 +491,22 @@ namespace ca2plugin_container
                // debug_box(str, "ca2plugincontainer::host::on_receive", 0);
 
 
-               set_ready();
-
             }
+
+            m_bStream = true;
+
+            set_ready();
+
+         }
+         else if(message == ::hotplugin::message_set_plugin_url)
+         {
+
+
+            vsstring str((const char *) pdata, len);
+
+            // debug_box(str, "ca2plugincontainer::host::on_receive", 0);
+
+            m_strPluginUrl = str;
 
          }
          else if(message == ::hotplugin::message_message)
