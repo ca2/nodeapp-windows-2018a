@@ -26,6 +26,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "os", "..\..\os\os.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\app.vcxproj", "{19841115-1984-0411-1977-021977151984}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "guiext", "..\..\..\mrs\src\applet\GuiExt\guiext.vcxproj", "{EEECBE24-99BA-44A8-9C31-6F7C232905D8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -295,6 +297,30 @@ Global
 		{DF63ED62-22B0-453B-AAE6-3B4D5118B46D}.profiler|Win32.ActiveCfg = basis|Win32
 		{DF63ED62-22B0-453B-AAE6-3B4D5118B46D}.profiler|Win32.Build.0 = basis|Win32
 		{DF63ED62-22B0-453B-AAE6-3B4D5118B46D}.profiler|x64.ActiveCfg = basis|Win32
+		{EEECBE24-99BA-44A8-9C31-6F7C232905D8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EEECBE24-99BA-44A8-9C31-6F7C232905D8}.Debug|Win32.Build.0 = Debug|Win32
+		{EEECBE24-99BA-44A8-9C31-6F7C232905D8}.Debug|x64.ActiveCfg = Debug|Win32
+		{EEECBE24-99BA-44A8-9C31-6F7C232905D8}.Release|Win32.ActiveCfg = Release|Win32
+		{EEECBE24-99BA-44A8-9C31-6F7C232905D8}.Release|Win32.Build.0 = Release|Win32
+		{EEECBE24-99BA-44A8-9C31-6F7C232905D8}.Release|x64.ActiveCfg = Release|Win32
+		{EEECBE24-99BA-44A8-9C31-6F7C232905D8}.Template|Win32.ActiveCfg = Release|Win32
+		{EEECBE24-99BA-44A8-9C31-6F7C232905D8}.Template|Win32.Build.0 = Release|Win32
+		{EEECBE24-99BA-44A8-9C31-6F7C232905D8}.Template|x64.ActiveCfg = Release|Win32
+		{EEECBE24-99BA-44A8-9C31-6F7C232905D8}.basis_v110|Win32.ActiveCfg = Release|Win32
+		{EEECBE24-99BA-44A8-9C31-6F7C232905D8}.basis_v110|Win32.Build.0 = Release|Win32
+		{EEECBE24-99BA-44A8-9C31-6F7C232905D8}.basis_v110|x64.ActiveCfg = Release|Win32
+		{EEECBE24-99BA-44A8-9C31-6F7C232905D8}.basis|Win32.ActiveCfg = Release|Win32
+		{EEECBE24-99BA-44A8-9C31-6F7C232905D8}.basis|Win32.Build.0 = Release|Win32
+		{EEECBE24-99BA-44A8-9C31-6F7C232905D8}.basis|x64.ActiveCfg = Release|Win32
+		{EEECBE24-99BA-44A8-9C31-6F7C232905D8}.codeanalysis|Win32.ActiveCfg = Release|Win32
+		{EEECBE24-99BA-44A8-9C31-6F7C232905D8}.codeanalysis|Win32.Build.0 = Release|Win32
+		{EEECBE24-99BA-44A8-9C31-6F7C232905D8}.codeanalysis|x64.ActiveCfg = Release|Win32
+		{EEECBE24-99BA-44A8-9C31-6F7C232905D8}.memdleak|Win32.ActiveCfg = Release|Win32
+		{EEECBE24-99BA-44A8-9C31-6F7C232905D8}.memdleak|Win32.Build.0 = Release|Win32
+		{EEECBE24-99BA-44A8-9C31-6F7C232905D8}.memdleak|x64.ActiveCfg = Release|Win32
+		{EEECBE24-99BA-44A8-9C31-6F7C232905D8}.profiler|Win32.ActiveCfg = Release|Win32
+		{EEECBE24-99BA-44A8-9C31-6F7C232905D8}.profiler|Win32.Build.0 = Release|Win32
+		{EEECBE24-99BA-44A8-9C31-6F7C232905D8}.profiler|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

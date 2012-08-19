@@ -416,7 +416,7 @@ namespace win
       virtual DWORD GetWindowContextHelpId() const;
 
    // Dialog Data support
-      //virtual bool UpdateData(bool bSaveAndValidate = TRUE);
+      //virtual bool update_data(bool bSaveAndValidate = TRUE);
             // data wnd must be same type as this
 
    // Help Command Handlers

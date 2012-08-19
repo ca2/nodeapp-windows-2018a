@@ -3297,13 +3297,13 @@ restart_mouse_hover_check:
    /////////////////////////////////////////////////////////////////////////////
    // 'dialog data' support
 
-   /*bool window::UpdateData(bool bSaveAndValidate)
+   /*bool window::update_data(bool bSaveAndValidate)
    {
-   ASSERT(::IsWindow(get_handle())); // calling UpdateData before DoModal?
+   ASSERT(::IsWindow(get_handle())); // calling update_data before DoModal?
 
    CDataExchange dx(this, bSaveAndValidate);
 
-   // prevent control notifications from being dispatched during UpdateData
+   // prevent control notifications from being dispatched during update_data
    ___THREAD_STATE* pThreadState = __get_thread_state();
    HWND hWndOldLockout = pThreadState->m_hLockoutNotifyWindow;
    ASSERT(hWndOldLockout != get_handle());   // must not recurse
