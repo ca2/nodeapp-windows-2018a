@@ -38,7 +38,7 @@
     <ProjectGuid>{6945864B-2816-46B3-AB26-C31A208A01C9}</ProjectGuid>
     <RootNamespace>app_production</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <ProjectName>app_nodeapp_production</ProjectName>
+    <ProjectName>nodeapp_production</ProjectName>
     <VCTargetsPath Condition="'$(VCTargetsPath11)' != '' and '$(VSVersion)' == '' and $(VisualStudioVersion) == ''">$(VCTargetsPath11)</VCTargetsPath>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -824,7 +824,7 @@
     <ClCompile Include=".\production_view_update_hint.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include=".\app_nodeapp_production.def" />
+    <None Include=".\nodeapp_production.def" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application.h" />

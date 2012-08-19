@@ -426,7 +426,7 @@ restart:
          }
          gen::process process;
          string strPath;
-         strPath = System.dir().ca2("app\\stage\\app\\matter\\stage_clean.bat");
+         strPath = System.dir().ca2("nodeapp\\stage\\script\\stage_clean.bat");
          if(!process.create_child_process(strPath, false))
          {
             DWORD dw = GetLastError();
@@ -1758,7 +1758,7 @@ bool production_class::release_npca2(const char * pszPlatform)
       strVersionUrl = "/basis";
    }
 
-   string strChromeManifest = Application.file().as_string(System.dir().path(m_strBase, "app/stage/app/matter/npca2/chrome.manifest"));
+   string strChromeManifest = Application.file().as_string(System.dir().path(m_strBase, "nodeapp/stage/matter/npca2/chrome.manifest"));
    strChromeManifest.replace("%BUILD%", strNpca2Version);
    strChromeManifest.replace("%PLATFORM%", strPlatform);
    strChromeManifest.replace("%DOWNLOADSITE%", m_strDownloadSite);
@@ -1776,7 +1776,7 @@ bool production_class::release_npca2(const char * pszPlatform)
    }
    Application.file().copy(System.dir().path(strDir, "npca2/skin/classic", "ca2-5c-32.png"), strIcon);
 
-   string strInstall = Application.file().as_string(System.dir().path(m_strBase, "app/stage/app/matter/npca2/install.rdf"));
+   string strInstall = Application.file().as_string(System.dir().path(m_strBase, "nodeapp/stage/matter/npca2/install.rdf"));
    strInstall.replace("%BUILD%", strNpca2Version);
    strInstall.replace("%PLATFORM%", strPlatform);
    strInstall.replace("%DOWNLOADSITE%", m_strDownloadSite);
@@ -1784,7 +1784,7 @@ bool production_class::release_npca2(const char * pszPlatform)
    Application.file().put_contents(System.dir().path(strDir, "npca2", "install.rdf"), strInstall);
 
 
-   string strWindows = Application.file().as_string(System.dir().path(m_strBase, "app/stage/app/matter/npca2/windows.rdf"));
+   string strWindows = Application.file().as_string(System.dir().path(m_strBase, "nodeapp/stage/matter/npca2/windows.rdf"));
    strWindows.replace("%BUILD%", strNpca2Version);
    strWindows.replace("%PLATFORM%", strPlatform);
    strWindows.replace("%DOWNLOADSITE%", m_strDownloadSite);
@@ -1940,7 +1940,7 @@ bool production_class::release_iexca2(const char * pszPlatform)
    string str;
    gen::process process;
    string strPath;
-   strPath = System.dir().path(m_strBase, "app\\stage\\app\\matter\\makecabx86.bat");
+   strPath = System.dir().path(m_strBase, "nodeapp\\stage\\script\\makecabx86.bat");
    if(!process.create_child_process(strPath, false, System.dir().name(strPath)))
    {
       DWORD dw = GetLastError();
@@ -1991,7 +1991,7 @@ bool production_class::release_crxca2(const char * pszPlatform)
       atoi(m_strFormatBuild.Mid(17, 2))
       );
 
-   string strManifestJson = Application.file().as_string(System.dir().path(m_strBase, "app/stage/app/matter/crxca2/manifest.json"));
+   string strManifestJson = Application.file().as_string(System.dir().path(m_strBase, "nodeapp/stage/matter/crxca2/manifest.json"));
    strManifestJson.replace("%BUILD%", strCrxca2Version);
    strManifestJson.replace("%PLATFORM%", strPlatform);
    strManifestJson.replace("%DOWNLOADSITE%", m_strDownloadSite);
@@ -2399,11 +2399,11 @@ void production_class::build(const char * psz)
    string strPath;
    if(Application.m_eversion == version_basis)
    {
-      strPath = System.dir().ca2(strApp + "\\stage\\app\\matter\\stage_build.bat");
+      strPath = System.dir().ca2(strApp + "\\stage\\script\\stage_build.bat");
    }
    else
    {
-      strPath = System.dir().ca2(strApp + "\\stage\\app\\matter\\basis_build.bat");
+      strPath = System.dir().ca2(strApp + "\\stage\\script\\basis_build.bat");
    }
    if(!process.create_child_process(strPath, false))
    {
