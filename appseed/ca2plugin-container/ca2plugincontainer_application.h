@@ -12,6 +12,8 @@ namespace ca2plugin_container
 
       int                        m_iReturn;
 
+      string                     m_strChannel;
+
       host *                     m_phost;
 
 
@@ -28,6 +30,9 @@ namespace ca2plugin_container
 
 
       virtual int run();
+
+
+      virtual void restart_small_ipc_channel();
 
    };
 

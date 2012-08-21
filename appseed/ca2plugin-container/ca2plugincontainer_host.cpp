@@ -141,6 +141,14 @@ namespace ca2plugin_container
    }
 
 
+   void host::restart_small_ipc_channel()
+   {
+
+      m_papp->restart_small_ipc_channel();
+
+   }
+
+
 
    bool host::reload_plugin()
    {

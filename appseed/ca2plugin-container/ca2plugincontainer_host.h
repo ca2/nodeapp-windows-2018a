@@ -63,6 +63,9 @@ namespace ca2plugin_container
 
       virtual void start_ca2();
 
+      virtual void restart_small_ipc_channel();
+
+
    };
 
 } // namespace ca2plugin_container

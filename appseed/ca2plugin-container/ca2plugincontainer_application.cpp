@@ -8,37 +8,37 @@ namespace ca2plugin_container
    application::application()
    {
 
+      m_phost = new host(this);
+
    }
 
    application::~application()
    {
    }
 
+   void application::restart_small_ipc_channel()
+   {
+
+      m_phost->m_strBitmapChannel = m_strChannel;
+
+      vsstring strChannel = "\\ca2\\ca2plugin-container-";
+
+      strChannel += m_strChannel;
+
+      m_phost->::small_ipc_channel::open_ba(strChannel, "ca2plugin-container.exe");
+
+   }
+
    bool application::initialize(const char * pszChannel)
    {
 
-      //Sleep(15 * 1000);
-      
-      m_phost = new host(this);
+      m_strChannel = pszChannel;
 
-
-      vsstring strChannel = "\\ca2\\ca2plugin-container-";
-      strChannel += pszChannel;
-
-
-      m_phost->m_strBitmapChannel = pszChannel;
-      
-      if(!m_phost->::small_ipc_channel::open_ba(strChannel, "ca2plugin-container.exe"))
-         return false;
+      restart_small_ipc_channel();
 
       m_phost->start_ca2();
 
-//      if(!m_phost->initialize())
-  //       return false;
-
-
       return true;
-
 
    }
 
