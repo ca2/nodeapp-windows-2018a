@@ -1,4 +1,4 @@
 @echo going to telmico/votagus production folder
-T:
+V:
 cd \production\stage\x64\
-app.exe : app=app-core/production start_deferred=1 base_dir=T:\stage version=stage
+app.exe : app=nodeapp/production start_deferred=1 base_dir=V:\stage version=stage
