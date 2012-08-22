@@ -1940,7 +1940,7 @@ bool production_class::release_iexca2(const char * pszPlatform)
    string str;
    gen::process process;
    string strPath;
-   strPath = System.dir().path(m_strBase, "nodeapp\\stage\\script\\makecabx86.bat");
+   strPath = System.dir().path(m_strBase, "nodeapp\\stage\\script\\makecab" + string(pszPlatform) + ".bat");
    if(!process.create_child_process(strPath, false, System.dir().name(strPath)))
    {
       DWORD dw = GetLastError();
@@ -1965,7 +1965,7 @@ bool production_class::release_iexca2(const char * pszPlatform)
       strVersion = "\\basis";
    }
 
-   Application.file().copy("C:\\netnodenet\\net\\netseed\\ds\\ca2\\front\\cc\\ca2\\_std\\download\\cab\\"+strPlatform+ strVersion+ "\\iexca2.cab", System.dir().path(m_strBase, "time\\iexca2\\"+strPlatform+"\\iexca2.cab"));
+   Application.file().copy("C:\\netnodenet\\net\\netseed\\ds\\ca2\\front\\cc\\ca2\\_std\\download\\cab\\" +  strPlatform + strVersion + "\\iexca2.cab", System.dir().path(m_strBase, "time\\iexca2\\"+strPlatform+"\\iexca2.cab"));
 
    return true;
 
