@@ -145,7 +145,12 @@ int APIENTRY ca2_cube_install(const char * pszId);
 int spaboot_start()
 {
 
-   vsstring id = calc_id();
+
+   // todo : sentinel should install each older application with new function build get_latest_build_number
+
+   //
+
+   /*vsstring id = calc_id();
    if(id == NULL || id.is_empty())
       id = "spaboot_install";
 
@@ -192,6 +197,9 @@ int spaboot_start()
    }
 
    return 0;
+   */
+
+   return -1;
 
 }
 
