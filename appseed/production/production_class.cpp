@@ -253,7 +253,7 @@ restart:
          m_strDownloadSite    = "download.ca2.cc";
       }
 
-      m_strSignTool = System.dir().ca2("app/thirdparty/binary/signtool.exe");
+      m_strSignTool = System.dir().ca2("nodeapp/thirdparty/binary/signtool.exe");
       m_strSpc = "G:\\cecyn1.at.hotmail.com\\ccvotagus\\certificate\\ca2.p12";
       m_strSignPass = Application.file().as_string("G:\\cecyn1.at.hotmail.com\\ccvotagus\\certificate\\2011-05-ca2.pass");
 
