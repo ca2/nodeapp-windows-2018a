@@ -1,5 +1,5 @@
 ﻿ at votagus/telmico production stage folder V:/stage/app 24/08/2012 
-14:25
+16:09
  at loft7653 at ServerLoft - serverloft.com - Fujitsu PRIMERGY RX100 S6 Intel(R) Xeon(R) X3440 @ 2.53GHz Quadcore 8 threads processor 8.0GB DDR3-ECC RAM 1TB RAID1 HDD SATA storage 60GB RAID1 SSD OCZ Vertex 2 storage high-speed Internet Windows Web Server 2008 R2 64-bit Service Pack 1 at Strausbourg, France/Germany.﻿-∞
 Tack Sverige!!
 {
