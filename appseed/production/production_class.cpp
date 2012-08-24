@@ -1928,7 +1928,7 @@ bool production_class::release_iexca2(const char * pszPlatform)
 {
 
    string strStatus;
-   strStatus.Format("releasing iexca2");
+   strStatus.Format("releasing iexca2 " + string(pszPlatform));
    add_status(strStatus);
 
    string strPlatform(pszPlatform);
@@ -1954,7 +1954,7 @@ bool production_class::release_iexca2(const char * pszPlatform)
    while(!process.has_exited(&dwExitCode))
    {
       Sleep(5000);
-      str.Format("%d Creating iexca2.cab ...", i);
+      str.Format("%d Creating iexca2.cab  " + string(pszPlatform) + "...", i);
       add_status(str);
       i++;
    }
