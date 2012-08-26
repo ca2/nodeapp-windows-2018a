@@ -254,8 +254,8 @@ restart:
       }
 
       m_strSignTool = System.dir().ca2("nodeapp/thirdparty/binary/signtool.exe");
-      m_strSpc = "G:\\cecyn1.at.hotmail.com\\ccvotagus\\certificate\\ca2.p12";
-      m_strSignPass = Application.file().as_string("G:\\cecyn1.at.hotmail.com\\ccvotagus\\certificate\\2011-05-ca2.pass");
+      m_strSpc = "A:\\sensitive\\sensitive\\certificate\\ca2.p12";
+      m_strSignPass = Application.file().as_string("A:\\sensitive\\sensitive\\certificate\\2011-05-ca2.pass");
 
       m_iLoop++;
       defer_quit();
@@ -384,7 +384,7 @@ restart:
       string strBuildH;
       strBuildH.Format("-c1-production -c2-producer -t12n-producing -mmmi- %s", m_strTag);
       strBuildH += " - ";
-      strBuildH += Application.file().as_string(System.dir().path("G:/cecyn1.at.hotmail.com/app/stage", "build_machine_pp_comment.txt"));
+      strBuildH += Application.file().as_string(System.dir().path(m_strBase, "app/stage", "build_machine_pp_comment.txt"));
       strBuildH += unitext("// CarlosGustavoCecynLundgren1984+kaarurosu日歩路主\r\n");
       strBuildH += "// <==! Thanks and dedicated to &lt; <\r\n";
       strBuildH += "// Thanks to and in honor of God > &gt; ==>\r\n";
@@ -445,13 +445,13 @@ restart:
          }
       }
 
-      string strCgclcst = Application.file().as_string("G:/cecyn1.at.hotmail.com/carlos/CarlosGustavoCecynLundgrenVidaDeCamiloSasukeTsumanuma.txt");
-      string strDedicaverse = Application.file().as_string("G:/cecyn1.at.hotmail.com/carlos/dedicaverse.txt");
+      //string strCgclcst = Application.file().as_string("G:/cecyn1.at.hotmail.com/carlos/CarlosGustavoCecynLundgrenVidaDeCamiloSasukeTsumanuma.txt");
+      //string strDedicaverse = Application.file().as_string("G:/cecyn1.at.hotmail.com/carlos/dedicaverse.txt");
 
       //Application.dir().mk(System.dir().path(m_strBase, "time"));
       Application.file().put_contents(System.dir().path(m_strBase, "app\\build.txt"), m_strBuild);
       Application.file().put_contents_utf8(System.dir().path(m_strBase, "app\\this_version_info.h"), strBuildH);
-      Application.file().put_contents_utf8(System.dir().path(m_strBase, "app\\this_version_info.txt"), strBuildH + "\r\n\r\n" + strDedicaverse + "\r\n\r\n" + strCgclcst);
+      Application.file().put_contents_utf8(System.dir().path(m_strBase, "app\\this_version_info.txt"), strBuildH); //  + "\r\n\r\n" + strDedicaverse + "\r\n\r\n" + strCgclcst);
 
       if(!commit_for_new_build_and_new_release())
          return 2;
@@ -1614,9 +1614,9 @@ void production_class::xpi_sign_dir(const char * pszDir)
    add_path(pszDir, "META-INF\\manifest.mf");
    add_path(pszDir, "META-INF\\zigbert.sf");
 
-   string strSignerPath = "G:\\cecyn1.at.hotmail.com\\ccvotagus\\certificate\\npca2signer.pem";
-   string strKeyPath = "G:\\cecyn1.at.hotmail.com\\ccvotagus\\certificate\\npca2key.pem";
-   string strOthersPath = "G:\\cecyn1.at.hotmail.com\\ccvotagus\\certificate\\npca2others.pem";
+   string strSignerPath = "A:\\sensitive\\sensitive\\certificate\\npca2signer.pem";
+   string strKeyPath = "A:\\sensitive\\sensitive\\certificate\\npca2key.pem";
+   string strOthersPath = "A:\\sensitive\\sensitive\\certificate\\npca2others.pem";
 
 
    // Generate manifest.mf and zigbert.sf data
@@ -2021,7 +2021,7 @@ bool production_class::release_crxca2(const char * pszPlatform)
    System.process().synch(strCmd);
 
    add_status("Creating crxca2.crx for Chrome ...");
-   strCmd = "C:\\Users\\production\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe --no-message-box --pack-extension=\"" +strDir + "\" --pack-extension-key=\"G:\\cecyn1.at.hotmail.com\\ccvotagus\\certificate\\npca2pk.pem\"";
+   strCmd = "C:\\Users\\production\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe --no-message-box --pack-extension=\"" +strDir + "\" --pack-extension-key=\"A:\\sensitive\\sensitive\\certificate\\npca2pk.pem\"";
    System.process().synch(strCmd);
 
    string strVersion;
