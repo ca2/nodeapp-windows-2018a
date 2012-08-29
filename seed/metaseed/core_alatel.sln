@@ -34,6 +34,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "os2", "..\..\os2\os2.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_uinteraction", "..\..\..\app-core\appseed\uinteraction\uinteraction.vcxproj", "{E2D7833B-9B59-4826-BBDF-C270A2115E86}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ca2plugin-container", "..\..\appseed\ca2plugin-container\ca2plugin-container.vcxproj", "{AD997EA3-A120-472D-A216-EC4B0B81FDC4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
@@ -174,6 +176,22 @@ Global
 		{ACB3FF4B-0B61-45A7-881D-E102E0F85808}.profiler|Win32.Build.0 = profiler|Win32
 		{ACB3FF4B-0B61-45A7-881D-E102E0F85808}.profiler|x64.ActiveCfg = profiler|x64
 		{ACB3FF4B-0B61-45A7-881D-E102E0F85808}.profiler|x64.Build.0 = profiler|x64
+		{AD997EA3-A120-472D-A216-EC4B0B81FDC4}.basis|Win32.ActiveCfg = basis|Win32
+		{AD997EA3-A120-472D-A216-EC4B0B81FDC4}.basis|Win32.Build.0 = basis|Win32
+		{AD997EA3-A120-472D-A216-EC4B0B81FDC4}.basis|x64.ActiveCfg = basis|x64
+		{AD997EA3-A120-472D-A216-EC4B0B81FDC4}.basis|x64.Build.0 = basis|x64
+		{AD997EA3-A120-472D-A216-EC4B0B81FDC4}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
+		{AD997EA3-A120-472D-A216-EC4B0B81FDC4}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
+		{AD997EA3-A120-472D-A216-EC4B0B81FDC4}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
+		{AD997EA3-A120-472D-A216-EC4B0B81FDC4}.codeanalysis|x64.Build.0 = codeanalysis|x64
+		{AD997EA3-A120-472D-A216-EC4B0B81FDC4}.memdleak|Win32.ActiveCfg = memdleak|Win32
+		{AD997EA3-A120-472D-A216-EC4B0B81FDC4}.memdleak|Win32.Build.0 = memdleak|Win32
+		{AD997EA3-A120-472D-A216-EC4B0B81FDC4}.memdleak|x64.ActiveCfg = memdleak|x64
+		{AD997EA3-A120-472D-A216-EC4B0B81FDC4}.memdleak|x64.Build.0 = memdleak|x64
+		{AD997EA3-A120-472D-A216-EC4B0B81FDC4}.profiler|Win32.ActiveCfg = profiler|Win32
+		{AD997EA3-A120-472D-A216-EC4B0B81FDC4}.profiler|Win32.Build.0 = profiler|Win32
+		{AD997EA3-A120-472D-A216-EC4B0B81FDC4}.profiler|x64.ActiveCfg = profiler|x64
+		{AD997EA3-A120-472D-A216-EC4B0B81FDC4}.profiler|x64.Build.0 = profiler|x64
 		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.basis|Win32.ActiveCfg = basis|Win32
 		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.basis|Win32.Build.0 = basis|Win32
 		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.basis|x64.ActiveCfg = basis|x64
