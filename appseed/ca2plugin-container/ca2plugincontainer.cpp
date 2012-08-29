@@ -7,6 +7,27 @@ void * g_pvoidPluginSystem = NULL;
 HANDLE g_hmutex = NULL;
 
 
+DWORD WINAPI thread_proc_app(LPVOID lpParam)
+{
+
+   vsstring * pstrChannel = (vsstring *) lpParam;
+
+   ::ca2plugin_container::application * papp = new ::ca2plugin_container::application();
+
+
+   if(!papp->initialize(*pstrChannel))
+      return -1;
+
+
+
+
+   int nReturnCode = papp->run();
+
+   return nReturnCode;
+
+}
+
+
 int __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
 
@@ -33,27 +54,36 @@ int __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, i
    int nReturnCode = 0;
 
 
-   vsstring strChannel = get_command_line_param(::GetCommandLine(), "channel");
+   vsstring * pstrChannel = new vsstring(get_command_line_param(::GetCommandLine(), "channel"));
 
 
-   g_hmutex = ::CreateMutex(NULL, FALSE, "Global\\ca2::fontopus::ca2plugin-container::" + strChannel);
+   g_hmutex = ::CreateMutex(NULL, FALSE, "Global\\ca2::fontopus::ca2plugin-container::" + *pstrChannel);
    if(::GetLastError() == ERROR_ALREADY_EXISTS)
    {
       return -1;
    }
 
 
-
-   ::ca2plugin_container::application * papp = new ::ca2plugin_container::application();
-
-
-   if(!papp->initialize(strChannel))
-      return -1;
+   ::CreateThread(NULL, 0, &thread_proc_app, (LPVOID) pstrChannel, 0, 0);
 
 
+   MSG msg;
+      
+   while(true)
+	{
+
+      if(!GetMessage(&msg, NULL, 0, 0xffffffffu))
+         break;
+
+      if(msg.message == WM_QUIT)
+         break;
+
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+
+	}
 
 
-   nReturnCode = papp->run();
 
 
    try
