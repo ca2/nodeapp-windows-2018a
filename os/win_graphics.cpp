@@ -1168,7 +1168,7 @@ namespace win
       lpMetrics->tmDescent = rect2.height - rect.height;*/
 
 
-      retry_single_lock slGdiplus(&System.s_mutexGdiplus, millis(84), millis(84));
+      single_lock slGdiplus(&System.s_mutexGdiplus, true);
 
       Gdiplus::FontFamily family;
 
@@ -3202,7 +3202,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    size graphics::GetTextExtent(const char * lpszString, strsize nCount) const
    {
 
-      retry_single_lock slGdiplus(&System.s_mutexGdiplus, millis(84), millis(84));
+      single_lock slGdiplus(&System.s_mutexGdiplus, true);
 
       wstring wstr = gen::international::utf8_to_unicode(lpszString, nCount);
 
@@ -3299,6 +3299,8 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    bool graphics::GetTextExtent(sized & size, const char * lpszString, strsize nCount, int iIndex) const
    {
 
+      single_lock slGdiplus(&System.s_mutexGdiplus, TRUE);
+
       if(lpszString == NULL || *lpszString == '\0')
          return false;
 
@@ -3392,7 +3394,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    bool graphics::GetTextExtent(sized & size, const char * lpszString, strsize nCount) const
    {
 
-      retry_single_lock slGdiplus(&System.s_mutexGdiplus, millis(84), millis(84));
+      single_lock slGdiplus(&System.s_mutexGdiplus, TRUE);
 
       wstring wstr = gen::international::utf8_to_unicode(lpszString, nCount);
 
