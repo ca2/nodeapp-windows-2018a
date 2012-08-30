@@ -18,9 +18,6 @@ DWORD WINAPI thread_proc_app(LPVOID lpParam)
    if(!papp->initialize(*pstrChannel))
       return -1;
 
-
-
-
    int nReturnCode = papp->run();
 
    return nReturnCode;
@@ -64,7 +61,7 @@ int __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, i
    }
 
 
-   ::CreateThread(NULL, 0, &thread_proc_app, (LPVOID) pstrChannel, 0, 0);
+   start_thread(&thread_proc_app, (LPVOID) pstrChannel);
 
 
    MSG msg;

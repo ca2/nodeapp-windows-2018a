@@ -74,7 +74,7 @@ namespace win
       virtual bool Begin(int nPriority = THREAD_PRIORITY_NORMAL, UINT nStackSize = 0,
          DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
-      bool CreateThread(DWORD dwCreateFlags = 0, UINT nStackSize = 0,
+      bool create_thread(DWORD dwCreateFlags = 0, UINT nStackSize = 0,
          LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
 

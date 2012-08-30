@@ -129,7 +129,13 @@ namespace win
       {
          if(m_pbrush != NULL)
          {
-            delete m_pbrush;
+            try
+            {
+               delete m_pbrush;
+            }
+            catch(...)
+            {
+            }
          }
          ((brush *) this)->m_pbrush = new Gdiplus::SolidBrush(Gdiplus::Color(GetAValue(m_crColor), GetRValue(m_crColor), GetGValue(m_crColor), GetBValue(m_crColor)));
       }

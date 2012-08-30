@@ -123,7 +123,7 @@ UINT APIENTRY __thread_entry(void * pParam)
       // SetEvent (but hEvent2 is valid)
       HANDLE hEvent2 = pStartup->hEvent2;
 
-      // allow the creating thread to return from thread::CreateThread
+      // allow the creating thread to return from thread::create_thread
       VERIFY(::SetEvent(pStartup->hEvent));
 
       // wait for thread to be resumed
@@ -369,7 +369,7 @@ bool __cdecl __is_idle_message(MSG* pMsg)
    thread* pThread = DEBUG_NEW thread(papp, pfnThreadProc, pParam);
    ASSERT_VALID(pThread);
 
-   if (!pThread->CreateThread(dwCreateFlags|CREATE_SUSPENDED, nStackSize,
+   if (!pThread->create_thread(dwCreateFlags|CREATE_SUSPENDED, nStackSize,
       lpSecurityAttrs))
    {
       pThread->Delete();
@@ -644,7 +644,7 @@ namespace win
    bool thread::Begin(int nPriority, UINT nStackSize, DWORD dwCreateFlags,
       LPSECURITY_ATTRIBUTES lpSecurityAttrs)
    {
-      if (!CreateThread(dwCreateFlags|CREATE_SUSPENDED, nStackSize,
+      if (!create_thread(dwCreateFlags|CREATE_SUSPENDED, nStackSize,
          lpSecurityAttrs))
       {
          Delete();
@@ -826,7 +826,7 @@ namespace win
       m_ptimera->check();
    }
 
-   bool thread::CreateThread(DWORD dwCreateFlags, UINT nStackSize,
+   bool thread::create_thread(DWORD dwCreateFlags, UINT nStackSize,
       LPSECURITY_ATTRIBUTES lpSecurityAttrs)
 {
 #ifndef _MT
@@ -851,7 +851,7 @@ namespace win
    startup.dwCreateFlags = dwCreateFlags;
    if (startup.hEvent == NULL || startup.hEvent2 == NULL)
    {
-      TRACE(::radix::trace::category_AppMsg, 0, "Warning: CreateEvent failed in thread::CreateThread.\n");
+      TRACE(::radix::trace::category_AppMsg, 0, "Warning: CreateEvent failed in thread::create_thread.\n");
       if (startup.hEvent != NULL)
          ::CloseHandle(startup.hEvent);
       if (startup.hEvent2 != NULL)
@@ -860,10 +860,12 @@ namespace win
    }
 
 #ifdef _WIN32
-//   m_thread = ::CreateThread(NULL, 0, StartThread, this, 0, &m_dwThreadId);
+//   m_thread = ::create_thread(NULL, 0, StartThread, this, 0, &m_dwThreadId);
    // create the thread (it may or may not start to run)
-   m_hThread = (HANDLE)(ulong_ptr)_beginthreadex(lpSecurityAttrs, nStackSize,  
-      &__thread_entry, &startup, dwCreateFlags | CREATE_SUSPENDED, (UINT*)&m_nThreadID);
+   //m_hThread = (HANDLE)(ulong_ptr)_beginthreadex(lpSecurityAttrs, nStackSize,  
+     // &__thread_entry, &startup, dwCreateFlags | CREATE_SUSPENDED, (UINT*)&m_nThreadID);
+   m_hThread = (HANDLE)(ulong_ptr)::create_thread(lpSecurityAttrs, nStackSize,  
+      (DWORD (__stdcall *)(LPVOID)) &__thread_entry, &startup, dwCreateFlags | CREATE_SUSPENDED, &m_nThreadID);
 #else
    pthread_attr_t attr;
 
@@ -2293,7 +2295,7 @@ __message_filter_hook, NULL, ::GetCurrentThreadId());
 
 
 
-bool thread::CreateThread(DWORD dwCreateFlags, UINT nStackSize,
+bool thread::create_thread(DWORD dwCreateFlags, UINT nStackSize,
 LPSECURITY_ATTRIBUTES lpSecurityAttrs)
 {
 #ifndef _MT
@@ -2314,7 +2316,7 @@ startup.hEvent2 = ::CreateEvent(NULL, TRUE, FALSE, NULL);
 startup.dwCreateFlags = dwCreateFlags;
 if (startup.hEvent == NULL || startup.hEvent2 == NULL)
 {
-TRACE(::radix::trace::category_AppMsg, 0, "Warning: CreateEvent failed in thread::CreateThread.\n");
+TRACE(::radix::trace::category_AppMsg, 0, "Warning: CreateEvent failed in thread::create_thread.\n");
 if (startup.hEvent != NULL)
 ::CloseHandle(startup.hEvent);
 if (startup.hEvent2 != NULL)
@@ -2323,7 +2325,7 @@ return FALSE;
 }
 
 #ifdef _WIN32
-//   m_thread = ::CreateThread(NULL, 0, StartThread, this, 0, &m_dwThreadId);
+//   m_thread = ::create_thread(NULL, 0, StartThread, this, 0, &m_dwThreadId);
 // create the thread (it may or may not start to run)
 m_hThread = (HANDLE)(ulong_ptr)_beginthreadex(lpSecurityAttrs, nStackSize,  
 &__thread_entry, &startup, dwCreateFlags | CREATE_SUSPENDED, (UINT*)&m_nThreadID);

@@ -325,10 +325,10 @@ namespace win
       return ::win::thread::Begin(nPriority, nStackSize, dwCreateFlags, lpSecurityAttrs);
    }
 
-   bool application::CreateThread(DWORD dwCreateFlags, UINT nStackSize,
+   bool application::create_thread(DWORD dwCreateFlags, UINT nStackSize,
                                   LPSECURITY_ATTRIBUTES lpSecurityAttrs)
    {
-      return ::win::thread::CreateThread(dwCreateFlags, nStackSize, lpSecurityAttrs);
+      return ::win::thread::create_thread(dwCreateFlags, nStackSize, lpSecurityAttrs);
    }
 
 
