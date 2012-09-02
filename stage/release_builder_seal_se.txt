@@ -1,4 +1,4 @@
 ﻿basis production
 02/09/2012 
-15:24
+15:30
 ns4004035 ovh.pt - ovh breed Sandy Bridge Intel Core i3 2130 2x2(HT)x3.4+ GHz 16GB DDR3 RAM 2 x 1TB RAID1 HDD SATA2 storage high-speed Internet Windows 7 Ultimate SP1 840GB Soft-RAID1 Virtual Disk VMware ESXi 5 Update 1 Strausbourg, France/Germany.
