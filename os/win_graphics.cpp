@@ -3321,10 +3321,24 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       const char * psz = lpszString;
       while(i < iIndex)
       {
-         iLen = gen::str::utf8_char(psz).length();
+         try
+         {
+            iLen = gen::str::utf8_char(psz).length();
+         }
+         catch(...)
+         {
+            break;
+         }
          iRange++;
          i += iLen;
-         psz = gen::str::utf8_inc(psz);
+         try
+         {
+            psz = gen::str::utf8_inc(psz);
+         }
+         catch(...)
+         {
+            break;
+         }
          if(psz == NULL)
             break;
          if(*psz == '\0')

@@ -509,7 +509,7 @@ namespace win
          }
          catch(simple_exception & se)
          {
-            if(strcmp_dup(se.m_szMessage, "no more a window") == 0)
+            if(se.m_strMessage == "no more a window")
             {
                System.frames().remove(wndpa[l]);
                wndpa.remove_at(l);
