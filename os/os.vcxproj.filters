@@ -182,6 +182,9 @@
     <ClCompile Include=".\win_stdio_file.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="graphics_path.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="win32.def">
@@ -410,6 +413,9 @@
     </ClInclude>
     <ClInclude Include="..\operational_system\cross\general\general_windows.h">
       <Filter>Header Files\operational_system\cross\general</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics_path.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

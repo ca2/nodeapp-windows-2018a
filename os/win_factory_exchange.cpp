@@ -24,6 +24,7 @@ namespace win
       System.factory().cloneable_large < palette               >  (System.template type_info < ::ca::palette            > ());
       System.factory().cloneable_large < region                >  (System.template type_info < ::ca::region             > ());
       System.factory().cloneable_large < font                  >  (System.template type_info < ::ca::font               > ());
+      System.factory().cloneable_large < graphics_path         >  (System.template type_info < ::ca::graphics_path      > ());
       System.factory().creatable < window_draw                 >  (System.template type_info < ::ca::window_draw        > (), 1);
       System.factory().creatable_large < thread                >  (System.template type_info < ::ca::thread             > ());
       System.factory().creatable_large < window                >  (System.template type_info < ::ca::window             > ());

@@ -81,6 +81,7 @@ CLASS_DECL_win void reset_message_cache();
 #include "font.h"
 #include "brush.h"
 #include "region.h"
+#include "graphics_path.h"
 #include "draw_dib.h"
 #include "thread.h"
 #include "window.h"

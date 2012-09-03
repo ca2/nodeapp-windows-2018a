@@ -437,6 +437,11 @@ namespace win
       bool StrokeAndFillPath();
       bool StrokePath();
       bool WidenPath();
+
+      bool draw_path(::ca::graphics_path * ppath);
+      bool fill_path(::ca::graphics_path * ppath);
+
+
       float GetMiterLimit() const;
       bool SetMiterLimit(float fMiterLimit);
       int GetPath(LPPOINT lpPoints, LPBYTE lpTypes, int nCount) const;

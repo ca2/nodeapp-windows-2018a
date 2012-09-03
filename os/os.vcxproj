@@ -929,6 +929,7 @@
     <ClCompile Include=".\win_draw_dib.cpp" />
     <ClCompile Include=".\win_dumpinit.cpp" />
     <ClCompile Include=".\win_ip_enum.cpp" />
+    <ClCompile Include="graphics_path.cpp" />
     <ClCompile Include="os.cpp" />
     <ClCompile Include=".\win_port_forward.cpp" />
     <ClCompile Include=".\win_registry.cpp" />
@@ -1308,6 +1309,7 @@
     <ClInclude Include="gen_1.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="graphics_object.h" />
+    <ClInclude Include="graphics_path.h" />
     <ClInclude Include="handle.h" />
     <ClInclude Include="implementation.h" />
     <ClInclude Include="ip_enum.h" />

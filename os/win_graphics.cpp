@@ -1480,13 +1480,33 @@ namespace win
 
    bool graphics::StrokePath()
    {
+
       return m_pgraphics->DrawPath(gdiplus_pen(), m_ppathPaint) == Gdiplus::Status::Ok;
+
    }
 
    bool graphics::WidenPath()
    {
+
       return m_ppath->Widen(gdiplus_pen()) == Gdiplus::Status::Ok;
+
    }
+
+
+   bool graphics::draw_path(::ca::graphics_path * ppath)
+   {
+
+      return m_pgraphics->DrawPath(gdiplus_pen(), (Gdiplus::GraphicsPath *) ppath->get_os_data()) == Gdiplus::Status::Ok;
+
+   }
+
+   bool graphics::fill_path(::ca::graphics_path * ppath)
+   {
+
+      return m_pgraphics->FillPath(gdiplus_brush(), (Gdiplus::GraphicsPath *) ppath->get_os_data()) == Gdiplus::Status::Ok;
+
+   }
+
 
    bool graphics::AddMetaFileComment(UINT nDataSize, const BYTE* pCommentData)
    { 
