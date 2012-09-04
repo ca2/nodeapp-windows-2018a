@@ -68,13 +68,22 @@ public:
 
 };
 
+// if MSVC CRT is used
+extern "C" int WINAPI
+_tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+   __in LPTSTR lpCmdLine, int nCmdShow)
+{
+   // call shared/exported WinMain
+   return simple_app::s_main < installer > ();
+}
 
-extern "C" int WinMainCRTStartup() \
+// if MSVC CRT is stripped
+/*extern "C" int WinMainCRTStartup() \
 { 
 
    ExitProcess(simple_app::s_main < installer > ());
 
-}
+}*/
 
 extern bool g_bInstalling;
 
