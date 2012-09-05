@@ -74,8 +74,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\ap
 		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0} = {DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Win32Project1", "Win32Project1\Win32Project1.vcxproj", "{AD2F1515-1BDF-4D1D-8AD9-946F8BF8C4FE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -474,24 +472,6 @@ Global
 		{ACB3FF4B-0B61-45A7-881D-E102E0F85808}.profiler|Win32.Build.0 = profiler|Win32
 		{ACB3FF4B-0B61-45A7-881D-E102E0F85808}.profiler|x64.ActiveCfg = profiler|x64
 		{ACB3FF4B-0B61-45A7-881D-E102E0F85808}.profiler|x64.Build.0 = profiler|x64
-		{AD2F1515-1BDF-4D1D-8AD9-946F8BF8C4FE}.Debug|Win32.ActiveCfg = Debug|Win32
-		{AD2F1515-1BDF-4D1D-8AD9-946F8BF8C4FE}.Debug|Win32.Build.0 = Debug|Win32
-		{AD2F1515-1BDF-4D1D-8AD9-946F8BF8C4FE}.Debug|x64.ActiveCfg = Debug|Win32
-		{AD2F1515-1BDF-4D1D-8AD9-946F8BF8C4FE}.Release|Win32.ActiveCfg = Release|Win32
-		{AD2F1515-1BDF-4D1D-8AD9-946F8BF8C4FE}.Release|Win32.Build.0 = Release|Win32
-		{AD2F1515-1BDF-4D1D-8AD9-946F8BF8C4FE}.Release|x64.ActiveCfg = Release|Win32
-		{AD2F1515-1BDF-4D1D-8AD9-946F8BF8C4FE}.basis|Win32.ActiveCfg = Release|Win32
-		{AD2F1515-1BDF-4D1D-8AD9-946F8BF8C4FE}.basis|Win32.Build.0 = Release|Win32
-		{AD2F1515-1BDF-4D1D-8AD9-946F8BF8C4FE}.basis|x64.ActiveCfg = Release|Win32
-		{AD2F1515-1BDF-4D1D-8AD9-946F8BF8C4FE}.codeanalysis|Win32.ActiveCfg = Release|Win32
-		{AD2F1515-1BDF-4D1D-8AD9-946F8BF8C4FE}.codeanalysis|Win32.Build.0 = Release|Win32
-		{AD2F1515-1BDF-4D1D-8AD9-946F8BF8C4FE}.codeanalysis|x64.ActiveCfg = Release|Win32
-		{AD2F1515-1BDF-4D1D-8AD9-946F8BF8C4FE}.memdleak|Win32.ActiveCfg = Release|Win32
-		{AD2F1515-1BDF-4D1D-8AD9-946F8BF8C4FE}.memdleak|Win32.Build.0 = Release|Win32
-		{AD2F1515-1BDF-4D1D-8AD9-946F8BF8C4FE}.memdleak|x64.ActiveCfg = Release|Win32
-		{AD2F1515-1BDF-4D1D-8AD9-946F8BF8C4FE}.profiler|Win32.ActiveCfg = Release|Win32
-		{AD2F1515-1BDF-4D1D-8AD9-946F8BF8C4FE}.profiler|Win32.Build.0 = Release|Win32
-		{AD2F1515-1BDF-4D1D-8AD9-946F8BF8C4FE}.profiler|x64.ActiveCfg = Release|Win32
 		{AD997EA3-A120-472D-A216-EC4B0B81FDC4}.Debug|Win32.ActiveCfg = profiler|Win32
 		{AD997EA3-A120-472D-A216-EC4B0B81FDC4}.Debug|Win32.Build.0 = profiler|Win32
 		{AD997EA3-A120-472D-A216-EC4B0B81FDC4}.Debug|x64.ActiveCfg = profiler|x64
