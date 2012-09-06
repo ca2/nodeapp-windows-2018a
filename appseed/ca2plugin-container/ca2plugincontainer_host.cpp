@@ -496,7 +496,7 @@ namespace ca2plugin_container
 
                vsstring str((const char *) m_puchMemory, len);
 
-               // debug_box(str, "ca2plugincontainer::host::on_receive", 0);
+               //debug_box(str, "ca2plugincontainer::host::on_receive", 0);
 
 
             }
@@ -512,7 +512,7 @@ namespace ca2plugin_container
 
             vsstring str((const char *) pdata, len);
 
-            // debug_box(str, "ca2plugincontainer::host::on_receive", 0);
+            //debug_box(str, "ca2plugincontainer::host::on_receive", 0);
 
             m_strPluginUrl = str;
 
