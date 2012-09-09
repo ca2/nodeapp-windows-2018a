@@ -1,9 +1,12 @@
 #pragma once
 
+
 bool __internal_pre_translate_message(MSG* pMsg);
+
 
 namespace ca
 {
+
    struct  thread_startup
    {
       ::ca::thread *          m_pthread;    // thread for new thread
@@ -14,10 +17,13 @@ namespace ca
       ~thread_startup();
    };
 
+
 } // namespace ca
+
 
 namespace win
 {
+
 
    class CLASS_DECL_win thread :
       virtual public ::radix::thread,
@@ -25,15 +31,9 @@ namespace win
    {
    public:
 
-   #ifdef _WIN32
       // only valid while running
       HANDLE m_hThread;       // this thread's HANDLE
-      operator HANDLE() const;
       DWORD m_nThreadID;      // this thread's ID
-   #else
-      operator pthread_t() const;
-      pthread_t m_thread;
-   #endif
 
 
       static comparable_array < HANDLE > s_haThread;
@@ -59,17 +59,26 @@ namespace win
 
       UINT                                m_dwFinishTimeout;
 
-      virtual int_ptr get_os_data() const;
+
+      thread(::ca::application * papp);
+      virtual ~thread();
+
+
+      virtual void construct(__THREADPROC pfnThreadProc, LPVOID pParam);
+
+
+
+      virtual void * get_os_data() const;
       virtual int_ptr get_os_int() const;
+
+
+      operator HANDLE() const;
+
 
       void set_os_data(void * pvoidOsData);
       void set_os_int(int_ptr iData);
 
       virtual void set_p(::radix::thread * p);
-
-      thread(::ca::application * papp);
-
-      virtual void construct(__THREADPROC pfnThreadProc, LPVOID pParam);
 
       virtual bool Begin(int nPriority = THREAD_PRIORITY_NORMAL, UINT nStackSize = 0,
          DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
@@ -154,9 +163,6 @@ namespace win
       // Advanced: virtual access to GetMainWnd()
       virtual ::user::interaction* GetMainWnd();
 
-   // Implementation
-   public:
-      virtual ~thread();
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
       void CommonConstruct();
@@ -200,10 +206,13 @@ namespace win
 
    };
 
+
    CLASS_DECL_win ::ca::thread * get_thread();
    CLASS_DECL_win ::ca::thread_state * get_thread_state();
 
+
 } // namespace win
+
 
 
 

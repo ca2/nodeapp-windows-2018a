@@ -14,9 +14,12 @@ namespace win
       graphics_object();
       virtual ~graphics_object();
 
-      virtual int_ptr get_os_data() const;
+
+      virtual void * get_os_data() const;
+
 
       bool delete_object();
+
 
       int get_object(int nCount, LPVOID lpObject) const;
       UINT GetObjectType() const;
@@ -32,3 +35,6 @@ namespace win
 
 
 } // namespace ca
+
+
+

@@ -19,6 +19,10 @@ namespace win
       region(::ca::application * papp);
       virtual ~region();
 
+
+      virtual void * get_os_data() const;
+
+
       /*bool CreateRectRgn(int x1, int y1, int x2, int y2);
       bool CreateRectRgnIndirect(LPCRECT lpRect);
       bool CreateEllipticRgn(int x1, int y1, int x2, int y2);
@@ -45,11 +49,13 @@ namespace win
       bool RectInRegion(LPCRECT lpRect) const;
       int GetRegionData(LPRGNDATA lpRgnData, int nCount) const;
 
-      virtual int_ptr get_os_data() const;
+      
+
 
    };
 
 
 } // namespace win
+
 
 

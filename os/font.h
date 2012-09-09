@@ -1,10 +1,5 @@
 #pragma once
 
-#undef new
-
-#include <GdiPlus.h>
-
-
 namespace win
 {
 
@@ -21,7 +16,7 @@ namespace win
       virtual ~font();
 
 
-      virtual int_ptr get_os_data() const;
+      virtual void * get_os_data() const;
 
 
       virtual void font::construct(const ::ca::font & fontParam);
@@ -42,6 +37,5 @@ namespace win
 
    };
 
-} // namespace win
 
-#define new DEBUG_NEW
+} // namespace win
