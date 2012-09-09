@@ -7,6 +7,7 @@
 
 
 #define WINDOWS
+#define WINDOWSEX
 #define WIN32
 #define DECL_C __cdecl
 
