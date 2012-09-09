@@ -498,7 +498,7 @@ namespace win
       if(picon == NULL)
          return false;
 
-      return ::DrawIcon(get_handle1(), x, y, picon->m_hicon) != FALSE; 
+      return ::DrawIcon(get_handle1(), x, y, (HICON) picon->m_picon) != FALSE; 
 
    }
 
@@ -510,7 +510,7 @@ namespace win
       if(picon == NULL)
          return false;
 
-      return ::DrawIcon(get_handle1(), point.x, point.y, picon->m_hicon) != FALSE; 
+      return ::DrawIcon(get_handle1(), point.x, point.y, (HICON) picon->m_picon) != FALSE; 
 
    }
 
@@ -547,7 +547,7 @@ namespace win
 
          HBITMAP hbitmapOld = (HBITMAP) ::SelectObject(hdc, hbitmap);
 
-         if(::DrawIconEx(hdc, 0, 0, picon->m_hicon, cx, cy, istepIfAniCur, NULL, DI_IMAGE | DI_MASK))
+         if(::DrawIconEx(hdc, 0, 0, (HICON) picon->m_picon, cx, cy, istepIfAniCur, NULL, DI_IMAGE | DI_MASK))
          {
 
             ::SelectObject(hdc, hbitmapOld);
@@ -3983,10 +3983,13 @@ namespace win
    }
 
 
-   int_ptr graphics::get_os_data() const
+   void * graphics::get_os_data() const
    {
-      return (int_ptr) m_pgraphics;
+
+      return (void *) m_pgraphics;
+
    }
+
 
    HDC graphics::get_handle() const
    {

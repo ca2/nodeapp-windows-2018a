@@ -28,10 +28,10 @@ namespace win
    }
 
 
-   int_ptr graphics_path::get_os_data() const
+   void * graphics_path::get_os_data() const
    {
 
-      return (int_ptr) m_ppath;
+      return (void *) m_ppath;
 
    }
 

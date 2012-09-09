@@ -187,7 +187,7 @@ CLASS_DECL_win void __internal_process_wnd_proc_exception(base_exception*, gen::
    else if (pbase->m_uiMessage == WM_PAINT)
    {
       // force validation of ::ca::window to prevent getting WM_PAINT again
-      ValidateRect(pbase->m_pwnd->get_safe_handle(), NULL);
+      ValidateRect((HWND) pbase->m_pwnd->get_safe_handle(), NULL);
       pbase->set_lresult(0);
       return;
    }
@@ -626,15 +626,22 @@ namespace win
 
    }
 
-   int_ptr thread::get_os_data() const
+
+   void * thread::get_os_data() const
    {
-      return (int_ptr) m_hThread;
+
+      return (void *) m_hThread;
+
    }
+
 
    int_ptr thread::get_os_int() const
    {
+
       return m_nThreadID;
+
    }
+
 
    HANDLE thread::item() const
    {
@@ -1678,13 +1685,13 @@ stop_run:
 
       if(pwindow == NULL || pwindow != pbase->m_pwnd->m_pimpl)
       {
-         pbase->set_lresult(::DefWindowProc(pbase->m_pwnd->get_safe_handle(), pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));
+         pbase->set_lresult(::DefWindowProc((HWND) pbase->m_pwnd->get_safe_handle(), pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));
          return;
       }
 
       ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
       MSG oldState = pThreadState->m_lastSentMsg;   // save for nesting
-      pThreadState->m_lastSentMsg.hwnd       = pbase->m_pwnd->get_safe_handle();
+      pThreadState->m_lastSentMsg.hwnd       = (HWND) pbase->m_pwnd->get_safe_handle();
       pThreadState->m_lastSentMsg.message    = pbase->m_uiMessage;
       pThreadState->m_lastSentMsg.wParam     = pbase->m_wparam;
       pThreadState->m_lastSentMsg.lParam     = pbase->m_lparam;

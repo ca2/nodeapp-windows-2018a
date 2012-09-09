@@ -353,7 +353,7 @@ namespace win
 
 */
 
-   int_ptr pen::get_os_data() const
+   void * pen::get_os_data() const
    {
       
       if(m_ppen == NULL || !m_bUpdated)
@@ -378,7 +378,7 @@ namespace win
          ((pen *) this)->m_bUpdated = true;
       }
 
-      return (int_ptr) (Gdiplus::Pen *) m_ppen;
+      return (void *) (Gdiplus::Pen *) m_ppen;
 
    }
 

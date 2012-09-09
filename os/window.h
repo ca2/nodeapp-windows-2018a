@@ -676,7 +676,7 @@ namespace win
       LRESULT OnDisplayChange(WPARAM, LPARAM);
       LRESULT OnDragList(WPARAM, LPARAM);
 
-      static BOOL CALLBACK GetAppsEnumWindowsProc(void * hwnd, LPARAM lParam);
+      static BOOL CALLBACK GetAppsEnumWindowsProc(HWND hwnd, LPARAM lParam);
 
 
       static void get_app_wnda(user::HWNDArray & wnda);

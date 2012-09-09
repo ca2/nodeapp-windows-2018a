@@ -96,7 +96,7 @@ namespace win
 
    }
 
-   int_ptr region::get_os_data() const
+   void * region::get_os_data() const
    {
 
       if(m_pregion == NULL || !m_bUpdated)
@@ -148,7 +148,8 @@ namespace win
 
 
 
-      return (int_ptr) (Gdiplus::Region *) m_pregion;
+      return (void *) (Gdiplus::Region *) m_pregion;
+
    }
 
 

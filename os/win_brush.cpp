@@ -122,7 +122,7 @@ namespace win
 
 
 
-   int_ptr brush::get_os_data() const
+   void * brush::get_os_data() const
    {
       
       if(m_pbrush == NULL || !m_bUpdated)
@@ -160,7 +160,7 @@ namespace win
          ((brush *) this)->m_bUpdated = true;
       }
 
-      return (int_ptr) (Gdiplus::Brush *) m_pbrush;
+      return (void *) (Gdiplus::Brush *) m_pbrush;
 
    }
 
