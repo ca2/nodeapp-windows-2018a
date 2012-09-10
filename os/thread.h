@@ -121,8 +121,8 @@ namespace win
 
       virtual void start();
 
-      int GetThreadPriority();
-      bool SetThreadPriority(int nPriority);
+      ::ca::e_thread_priority get_thread_priority();
+      bool set_thread_priority(::ca::thread_priority epriority);
 
    // Operations
       DWORD SuspendThread();

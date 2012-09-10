@@ -648,21 +648,24 @@ namespace win
       return m_hThread;
    }
 
-   bool thread::Begin(int nPriority, UINT nStackSize, DWORD dwCreateFlags,
-      LPSECURITY_ATTRIBUTES lpSecurityAttrs)
+   bool thread::Begin(int nPriority, UINT nStackSize, DWORD dwCreateFlags, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
    {
-      if (!create_thread(dwCreateFlags|CREATE_SUSPENDED, nStackSize,
-         lpSecurityAttrs))
+      
+      if(!create_thread(dwCreateFlags | CREATE_SUSPENDED, nStackSize, lpSecurityAttrs))
       {
          Delete();
          return false;
       }
+
       VERIFY(SetThreadPriority(nPriority));
+
       if (!(dwCreateFlags & CREATE_SUSPENDED))
       {
          ENSURE(ResumeThread() != (DWORD)-1);
       }
+
       return true;
+
    }
 
    void thread::on_delete(::ca::ca * p)
@@ -1751,11 +1754,31 @@ stop_run:
 
    }
    
-   bool thread::SetThreadPriority(int nPriority)
+   bool thread::set_thread_priority(::ca::e_thread_priority epriority)
    { 
+
       ASSERT(m_hThread != NULL); 
+
+      int nPriority = THREAD_PRIORITY_NORMAL;
+
+      switch(epriority)
+      {
+      case ::ca::thread_priority_normal:
+         nPriority = THREAD_PRIORITY_NORMAL;
+         break;
+      default:
+         break;
+      }
       
-      return ::SetThreadPriority(m_hThread, nPriority)  != FALSE; 
+      bool bOk = ::SetThreadPriority(m_hThread, nPriority)  != FALSE; 
+
+      if(!bOk)
+      {
+         DWORD dwLastError = ::GetLastError();
+         ::OutputDebugString("thread::SetThreadPriority LastError = " + gen::str::itoa(dwLastError));
+      }
+
+      return bOk;
    
    }
 
