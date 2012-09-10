@@ -342,6 +342,7 @@ namespace win
 
    bool port_forward::GetMappingsUsingThread( HWND hWnd )
    {
+
 	   // returns TRUE if thread was started successfully
 	
 	   if ( (m_pPortMappingThread!=NULL) || (hWnd==NULL) || (!IsWindow(hWnd)) )
@@ -349,8 +350,7 @@ namespace win
 	
 	   m_hWndForPortMappingThread = hWnd;
 	
-	   m_pPortMappingThread = ::__begin_thread(get_app(), ThreadForPortRetrieval, this,
-		   THREAD_PRIORITY_BELOW_NORMAL, 0, CREATE_SUSPENDED );
+	   m_pPortMappingThread = ::__begin_thread(get_app(), ThreadForPortRetrieval, this, ::ca::thread_priority_below_normal, 0, CREATE_SUSPENDED );
 	
 	   if ( m_pPortMappingThread != NULL )
 	   {
@@ -362,6 +362,7 @@ namespace win
 		   return FALSE;
 	   }
    }
+
 
 
    ///////////////////////////////////////////////
@@ -391,7 +392,7 @@ namespace win
 	
 	   m_hWndForEditMappingThread = hWnd;
 	
-	   m_pEditMappingThread = ::__begin_thread(get_app(), ThreadToEditMapping, this, THREAD_PRIORITY_BELOW_NORMAL, 0, CREATE_SUSPENDED );
+	   m_pEditMappingThread = ::__begin_thread(get_app(), ThreadToEditMapping, this, ::ca::thread_priority_below_normal, 0, CREATE_SUSPENDED );
 	
 	   if ( m_pEditMappingThread != NULL )
 	   {
@@ -432,7 +433,7 @@ namespace win
 	
 	   m_hWndForAddMappingThread = hWnd;
 	
-	   m_pAddMappingThread = ::__begin_thread(get_app(), ThreadToAddMapping, this, THREAD_PRIORITY_BELOW_NORMAL, 0, CREATE_SUSPENDED);
+	   m_pAddMappingThread = ::__begin_thread(get_app(), ThreadToAddMapping, this, ::ca::thread_priority_below_normal, 0, CREATE_SUSPENDED);
 	
 	   if ( m_pAddMappingThread != NULL )
 	   {
@@ -473,7 +474,7 @@ namespace win
 	
 	   m_hWndForDeleteMappingThread = hWnd;
 	
-	   m_pDeleteMappingThread = ::__begin_thread(get_app(), ThreadToDeleteMapping, this, THREAD_PRIORITY_BELOW_NORMAL, 0, CREATE_SUSPENDED );
+	   m_pDeleteMappingThread = ::__begin_thread(get_app(), ThreadToDeleteMapping, this, ::ca::thread_priority_below_normal, 0, CREATE_SUSPENDED );
 	
 	   if ( m_pDeleteMappingThread != NULL )
 	   {
@@ -513,7 +514,7 @@ namespace win
 	
 	   m_hWndForDeviceInfoThread = hWnd;
 	
-	   m_pDeviceInfoThread = ::__begin_thread(get_app(), ThreadForDeviceInformationRetrieval, this,  THREAD_PRIORITY_BELOW_NORMAL, 0, CREATE_SUSPENDED );
+	   m_pDeviceInfoThread = ::__begin_thread(get_app(), ThreadForDeviceInformationRetrieval, this,  ::ca::thread_priority_below_normal, 0, CREATE_SUSPENDED );
 	
 	   if ( m_pDeviceInfoThread != NULL )
 	   {

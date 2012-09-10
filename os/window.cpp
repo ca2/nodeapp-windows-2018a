@@ -2878,7 +2878,7 @@ restart_mouse_hover_check:
          m_event.ResetEvent();
          m_hwnd = hwnd;
          m_hdc = hdc;
-         __begin_thread(papp, &print_window::s_print_window, (LPVOID) this, THREAD_PRIORITY_ABOVE_NORMAL);
+         __begin_thread(papp, &print_window::s_print_window, (LPVOID) this, ::ca::thread_priority_above_normal);
          if(m_event.wait(millis(dwTimeout)).timeout())
          {
             TRACE("print_window::time_out");

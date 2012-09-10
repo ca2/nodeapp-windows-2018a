@@ -648,7 +648,7 @@ namespace win
       return m_hThread;
    }
 
-   bool thread::Begin(int nPriority, UINT nStackSize, DWORD dwCreateFlags, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
+   bool thread::Begin(::ca::e_thread_priority epriority, UINT nStackSize, DWORD dwCreateFlags, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
    {
       
       if(!create_thread(dwCreateFlags | CREATE_SUSPENDED, nStackSize, lpSecurityAttrs))
@@ -657,7 +657,7 @@ namespace win
          return false;
       }
 
-      VERIFY(SetThreadPriority(nPriority));
+      VERIFY(set_thread_priority(epriority));
 
       if (!(dwCreateFlags & CREATE_SUSPENDED))
       {
@@ -869,25 +869,7 @@ namespace win
       return FALSE;
    }
 
-#ifdef _WIN32
-//   m_thread = ::create_thread(NULL, 0, StartThread, this, 0, &m_dwThreadId);
-   // create the thread (it may or may not start to run)
-   //m_hThread = (HANDLE)(ulong_ptr)_beginthreadex(lpSecurityAttrs, nStackSize,  
-     // &__thread_entry, &startup, dwCreateFlags | CREATE_SUSPENDED, (UINT*)&m_nThreadID);
-   m_hThread = (HANDLE)(ulong_ptr)::create_thread(lpSecurityAttrs, nStackSize,  
-      (DWORD (__stdcall *)(LPVOID)) &__thread_entry, &startup, dwCreateFlags | CREATE_SUSPENDED, &m_nThreadID);
-#else
-   pthread_attr_t attr;
-
-   pthread_attr_init(&attr);
-   pthread_attr_setdetachstate(&attr,PTHREAD_CREATE_DETACHED);
-   if (pthread_create(&m_thread,&attr, StartThread,this) == -1)
-   {
-      perror("Thread: create failed");
-      SetRunning(false);
-   }
-//   pthread_attr_destroy(&attr);
-#endif
+   m_hThread = (HANDLE) (ulong_ptr) ::create_thread(lpSecurityAttrs, nStackSize, (DWORD (__stdcall *)(LPVOID)) &__thread_entry, &startup, dwCreateFlags | CREATE_SUSPENDED, &m_nThreadID);
 
    if (m_hThread == NULL)
       return FALSE;

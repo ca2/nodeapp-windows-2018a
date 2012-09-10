@@ -80,11 +80,9 @@ namespace win
 
       virtual void set_p(::radix::thread * p);
 
-      virtual bool Begin(int nPriority = THREAD_PRIORITY_NORMAL, UINT nStackSize = 0,
-         DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
+      virtual bool Begin(::ca::e_thread_priority epriority = get_thread_priority_normal(), UINT nStackSize = 0, DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
-      bool create_thread(DWORD dwCreateFlags = 0, UINT nStackSize = 0,
-         LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
+      bool create_thread(DWORD dwCreateFlags = 0, UINT nStackSize = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
 
       virtual ::user::interaction * SetMainWnd(::user::interaction * pui);
@@ -122,7 +120,7 @@ namespace win
       virtual void start();
 
       ::ca::e_thread_priority get_thread_priority();
-      bool set_thread_priority(::ca::thread_priority epriority);
+      bool set_thread_priority(::ca::e_thread_priority epriority);
 
    // Operations
       DWORD SuspendThread();
