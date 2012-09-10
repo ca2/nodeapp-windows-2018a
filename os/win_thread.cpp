@@ -1763,8 +1763,26 @@ stop_run:
 
       switch(epriority)
       {
+      case ::ca::thread_priority_idle:
+         nPriority = THREAD_PRIORITY_IDLE;
+         break;
+      case ::ca::thread_priority_lowest:
+         nPriority = THREAD_PRIORITY_LOWEST;
+         break;
+      case ::ca::thread_priority_below_normal:
+         nPriority = THREAD_PRIORITY_BELOW_NORMAL;
+         break;
       case ::ca::thread_priority_normal:
          nPriority = THREAD_PRIORITY_NORMAL;
+         break;
+      case ::ca::thread_priority_above_normal:
+         nPriority = THREAD_PRIORITY_ABOVE_NORMAL;
+         break;
+      case ::ca::thread_priority_highest:
+         nPriority = THREAD_PRIORITY_HIGHEST;
+         break;
+      case ::ca::thread_priority_time_critical:
+         nPriority = THREAD_PRIORITY_TIME_CRITICAL;
          break;
       default:
          break;
@@ -1782,8 +1800,47 @@ stop_run:
    
    }
 
-   int thread::GetThreadPriority()
-   { ASSERT(m_hThread != NULL); return ::GetThreadPriority(m_hThread); }
+   ::ca::e_thread_priority thread::get_thread_priority()
+   { 
+   
+      ASSERT(m_hThread != NULL); 
+
+      int nPriority = ::GetThreadPriority(m_hThread);
+
+      ::ca::e_thread_priority epriority;
+
+      if(nPriority <= THREAD_PRIORITY_IDLE)
+      {
+         epriority = ::ca::thread_priority_idle;
+      }
+      else if(nPriority <= THREAD_PRIORITY_LOWEST)
+      {
+         epriority = ::ca::thread_priority_lowest;
+      }
+      else if(nPriority <= THREAD_PRIORITY_BELOW_NORMAL)
+      {
+         epriority = ::ca::thread_priority_below_normal;
+      }
+      else if(nPriority <= THREAD_PRIORITY_NORMAL)
+      {
+         epriority = ::ca::thread_priority_normal;
+      }
+      else if(nPriority <= THREAD_PRIORITY_ABOVE_NORMAL)
+      {
+         epriority = ::ca::thread_priority_above_normal;
+      }
+      else if(nPriority <= THREAD_PRIORITY_HIGHEST)
+      {
+         epriority = ::ca::thread_priority_highest;
+      }
+      else
+      {
+         epriority = ::ca::thread_priority_time_critical;
+      }
+      
+      return epriority;
+   
+   }
    DWORD thread::ResumeThread()
    { ASSERT(m_hThread != NULL); return ::ResumeThread(m_hThread); }
    DWORD thread::SuspendThread()
