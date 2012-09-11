@@ -1168,7 +1168,7 @@ namespace win
             || pbase->m_uiMessage == WM_MBUTTONDOWN
             || pbase->m_uiMessage == WM_MOUSEMOVE)
          {
-            if(Application.m_puser != NULL)
+            if(Session.m_puser != NULL)
             {
                if(&ApplicationUser != NULL)
                {
