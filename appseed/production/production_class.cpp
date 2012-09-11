@@ -480,7 +480,7 @@ restart:
       string strPath = System.dir().ca2("time\\stage\\app\\matter\\job.bat");
 
 
-      //System.http().ms_download("http://spaignition.api.laborserver.net/clean", 
+      //System.http().ms_download("http://api.ca2.cc/spaignition/clean", 
       //   System.dir().votagus("time\\spaignition_update.txt"), NULL, post, headers, ca2::app(get_app()).user().get_user());
       add_status("Cleaning ccvotagus folder...");
       gen::process process;
@@ -981,13 +981,19 @@ ca(pproduction->get_app()),
 
 int production_class::compress_thread::run()
 {
+
    SetThreadAffinityMask(::GetCurrentThread(), m_dwThreadAffinityMask);
-   SetThreadPriority(THREAD_PRIORITY_HIGHEST);
+
+   set_thread_priority(::ca::thread_priority_highest);
+
    while(m_pproduction->compress_next())
    {
    }
+
    m_pevFinished->SetEvent();
+
    return 0;
+
 }
 
 /*void production_class::compress()
@@ -1003,7 +1009,7 @@ string strUrl;
 string strVar;
 strVar.Empty();
 m_straCC.implode(strVar, ",", i, min(8, m_straCC.get_size() - i));
-strUrl = "http://spaignition.api.laborserver.net/compress?file=";
+strUrl = "http://api.ca2.cc/spaignition/compress?file=";
 strUrl += strVar;
 
 strStatus.Format("compress step: %d", i);
