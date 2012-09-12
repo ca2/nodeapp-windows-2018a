@@ -525,18 +525,24 @@ namespace win
 
       SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_CREATE_SERVICE);
 
-      string strCalling = papp->m_strModulePath + " : app=" + papp->m_strAppId + " service usehostlogin";
+      string strCalling = papp->m_strModulePath + " : app=" + papp->m_strAppId + " build_number=\"" + System.command().m_varTopicQuery["build_number"] + "\" service usehostlogin";
 
       if(hdlSCM == 0)
       {
          //::GetLastError()
          return false;
       }
+
+      string strServiceName = "ca2-" + papp->m_strAppId;
+
+      strServiceName.replace("/", "-");
+      strServiceName.replace("\\", "-");
+      //strServiceName.replace("-", "_");
     
       SC_HANDLE hdlServ = ::CreateService(
          hdlSCM,                    // SCManager database 
-         "CGCLCSTvotagusCa2FontopusMain-" + papp->m_strAppName,               // name of service 
-         "ccvotagus ca2 fontopus " + papp->m_strAppName,        // service name to display 
+         strServiceName,
+         "ca2 : " + papp->m_strAppId,        // service name to display 
          STANDARD_RIGHTS_REQUIRED,  // desired access 
          SERVICE_WIN32_OWN_PROCESS | SERVICE_INTERACTIVE_PROCESS, // service type 
          SERVICE_AUTO_START,      // start type 
@@ -551,7 +557,8 @@ namespace win
       if (!hdlServ)
       {
          CloseServiceHandle(hdlSCM);
-         //Ret = ::GetLastError();
+         //DWORD Ret = ::GetLastError();
+         TRACELASTERROR();
          return FALSE;
       }
        
@@ -578,10 +585,15 @@ namespace win
          //::GetLastError();
          return false;
       }
+      string strServiceName = "ca2-" + papp->m_strAppId;
+
+      strServiceName.replace("/", "-");
+      strServiceName.replace("\\", "-");
+    
     
       SC_HANDLE hdlServ = ::OpenService(
          hdlSCM,                    // SCManager database 
-         "CGCLCSTvotagusCa2FontopusMain-" + papp->m_strAppName,               // name of service 
+         strServiceName,
          DELETE);                     // no password 
     
       if (!hdlServ)
@@ -617,9 +629,14 @@ namespace win
          return false;
       }
     
+      string strServiceName = "ca2-" + papp->m_strAppId;
+
+      strServiceName.replace("/", "-");
+      strServiceName.replace("\\", "-");
+
       SC_HANDLE hdlServ = ::OpenService(
          hdlSCM,                    // SCManager database 
-         "CGCLCSTvotagusCa2FontopusMain-" + papp->m_strAppName,               // name of service 
+         strServiceName,
          SERVICE_START);                     // no password 
     
     
@@ -654,9 +671,14 @@ namespace win
          return false;
       }
     
+      string strServiceName = "ca2-" + papp->m_strAppId;
+
+      strServiceName.replace("/", "-");
+      strServiceName.replace("\\", "-");
+
       SC_HANDLE hdlServ = ::OpenService(
          hdlSCM,                    // SCManager database 
-         "CGCLCSTvotagusCa2FontopusMain-" + papp->m_strAppName,               // name of service 
+         strServiceName,
          SERVICE_STOP);                     // no password 
     
       if (!hdlServ)
