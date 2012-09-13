@@ -44,7 +44,7 @@ int __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, i
 
    //_set_purecall_handler(_ca2_purecall);
 
-   ::plane::system * psystem = new ::plane::system();
+   //::plane::system * psystem = new ::plane::system();
 
    ASSERT(hPrevInstance == NULL);
 
@@ -102,13 +102,13 @@ int __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, i
 
    try
    {
-      delete psystem;
+      //delete psystem;
    }
    catch(...)
    {
    }
 
-   psystem = NULL;
+   //psystem = NULL;
 
 
    try
