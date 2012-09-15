@@ -254,8 +254,8 @@ restart:
       }
 
       m_strSignTool = System.dir().ca2("nodeapp/thirdparty/binary/signtool.exe");
-      m_strSpc = "A:\\sensitive\\sensitive\\certificate\\ca2.p12";
-      m_strSignPass = Application.file().as_string("A:\\sensitive\\sensitive\\certificate\\2011-05-ca2.pass");
+      m_strSpc = "X:\\sensitive\\sensitive\\certificate\\ca2.p12";
+      m_strSignPass = Application.file().as_string("X:\\sensitive\\sensitive\\certificate\\2011-05-ca2.pass");
 
       m_iLoop++;
       defer_quit();
@@ -1620,9 +1620,9 @@ void production_class::xpi_sign_dir(const char * pszDir)
    add_path(pszDir, "META-INF\\manifest.mf");
    add_path(pszDir, "META-INF\\zigbert.sf");
 
-   string strSignerPath = "A:\\sensitive\\sensitive\\certificate\\npca2signer.pem";
-   string strKeyPath = "A:\\sensitive\\sensitive\\certificate\\npca2key.pem";
-   string strOthersPath = "A:\\sensitive\\sensitive\\certificate\\npca2others.pem";
+   string strSignerPath = "X:\\sensitive\\sensitive\\certificate\\npca2signer.pem";
+   string strKeyPath = "X:\\sensitive\\sensitive\\certificate\\npca2key.pem";
+   string strOthersPath = "X:\\sensitive\\sensitive\\certificate\\npca2others.pem";
 
 
    // Generate manifest.mf and zigbert.sf data
@@ -1816,7 +1816,7 @@ bool production_class::release_npca2(const char * pszPlatform)
 
    System.file().del(System.dir().path(strDir, "npca2.xpi"));
 
-   create_xpi(pszPlatform, false);
+   create_xpi(pszPlatform, true);
    string strVersion;
    if(m_eversion == version_basis)
    {
@@ -2027,7 +2027,7 @@ bool production_class::release_crxca2(const char * pszPlatform)
    System.process().synch(strCmd);
 
    add_status("Creating crxca2.crx for Chrome ...");
-   strCmd = "C:\\Users\\production\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe --no-message-box --pack-extension=\"" +strDir + "\" --pack-extension-key=\"A:\\sensitive\\sensitive\\certificate\\npca2pk.pem\"";
+   strCmd = "C:\\Users\\production\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe --no-message-box --pack-extension=\"" +strDir + "\" --pack-extension-key=\"X:\\sensitive\\sensitive\\certificate\\npca2pk.pem\"";
    System.process().synch(strCmd);
 
    string strVersion;
