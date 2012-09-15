@@ -29,11 +29,7 @@ int CLASS_DECL_win __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTS
 
    UNREFERENCED_PARAMETER(lpCmdLine);
 
-
-
-
    ::CoInitialize(NULL);
-
 
    if(!main_initialize())
       return -1;

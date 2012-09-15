@@ -187,10 +187,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="win32.def">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="win64.def">
+    <None Include="os.def">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>
