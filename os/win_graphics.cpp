@@ -788,7 +788,7 @@ namespace win
    bool graphics::FillRectangle(LPCRECT lpRect)
    { 
 
-      return FillRectangle(lpRect->left, lpRect->top, lpRect->right - lpRect->left, lpRect->bottom - lpRect->top);
+      return FillRectangle(lpRect->left, lpRect->top, lpRect->right, lpRect->bottom);
 
    }
 

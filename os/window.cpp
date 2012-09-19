@@ -5736,9 +5736,15 @@ run:
             ASSERT(::win::window::FromHandlePermanent(hWnd) == NULL);
 
             pWndInit->m_pthread = dynamic_cast < ::radix::thread * > (::win::get_thread());
-            pWndInit->m_pthread->add(pWndInit);
+            if(pWndInit->m_pthread != NULL)
+            {
+               pWndInit->m_pthread->add(pWndInit);
+            }
             pWndInit->m_pguie->m_pthread = pWndInit->m_pthread;
-            pWndInit->m_pguie->m_pthread->add(pWndInit->m_pguie);
+            if(pWndInit->m_pguie->m_pthread != NULL)
+            {
+               pWndInit->m_pguie->m_pthread->add(pWndInit->m_pguie);
+            }
             pWndInit->m_pguie->m_pimpl = pWndInit;
 
             // connect the void * to pWndInit...
