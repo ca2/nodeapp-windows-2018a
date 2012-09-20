@@ -358,7 +358,7 @@ namespace production
       }
    }
 
-   int view::hit_test(point pt, ::user::control::e_element & eelement)
+   index view::hit_test(point pt, ::user::control::e_element & eelement)
    {
       rect rectArea;
       GetAreaThumbRect(rectArea, m_iV);
