@@ -57,6 +57,9 @@ int CLASS_DECL_win __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTS
 
    //MessageBox(NULL, "box1", "box1", MB_ICONINFORMATION);
 
+   set_main_thread(GetCurrentThread());
+   set_main_thread_id(GetCurrentThreadId());
+
    nReturnCode = psystem->main();
 
 

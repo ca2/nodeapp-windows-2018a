@@ -3380,13 +3380,27 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       Gdiplus::Region * pCharRangeRegions = new Gdiplus::Region[count];
 
-      Gdiplus::RectF box(0.0f, 0.0f, 128.0f * 1024.0f, 128.0f * 1024.0f);
+      //Gdiplus::RectF box(0.0f, 0.0f, 128.0f * 1024.0f, 128.0f * 1024.0f);
 
       Gdiplus::PointF origin(0, 0);
 
+
+      // Generate a layout rect for the text
+
+      Gdiplus::RectF layoutRect;
+      Gdiplus::Status status = ((graphics *)this)->m_pgraphics->MeasureString( wstr, (INT) nCount, ((graphics *)this)->gdiplus_font(), origin, &layoutRect );
+
+
+      // Prevent clipping
+
+      //StringFormat strFormat( StringFormat::GenericTypographic() );
+      //status = ((graphics *)this)->m_pgraphics->SetFormatFlags( StringFormatFlagsNoWrap | StringFormatFlagsNoClip );
+
+
+
       //m_pgraphics->MeasureString(wstr, (int) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, Gdiplus::StringFormat::GenericTypographic(), &box);
 
-      ((graphics *)this)->m_pgraphics->MeasureCharacterRanges(wstr, (INT) nCount, ((graphics *)this)->gdiplus_font(), box, &strFormat, (INT) count, pCharRangeRegions);
+      ((graphics *)this)->m_pgraphics->MeasureCharacterRanges(wstr, (INT) nCount, ((graphics *)this)->gdiplus_font(), layoutRect, &strFormat, (INT) count, pCharRangeRegions);
 
       Gdiplus::Region * pregion = NULL;
 

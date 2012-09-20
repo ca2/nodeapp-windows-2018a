@@ -1491,22 +1491,52 @@ stop_run:
                {
                }
 
-               try
+               if(true)
                {
-                  if(m_papp != NULL)
+                  try
                   {
-                     try
+                     if(m_papp != NULL)
                      {
-                        if(m_papp->m_psystem != NULL)
+                        try
                         {
-                           m_papp->m_psystem->pre_translate_message(spbase);
-                           if(spbase->m_bRet)
-                              return TRUE;
+                           if(m_papp->m_psystem != NULL)
+                           {
+                              m_papp->m_psystem->pre_translate_message(spbase);
+                              if(spbase->m_bRet)
+                                 return TRUE;
+                              try
+                              {
+                                 if(m_papp->m_psystem->m_pcube != NULL)
+                                 {
+                                    m_papp->m_psystem->m_pcubeInterface->pre_translate_message(spbase);
+                                    if(spbase->m_bRet)
+                                       return TRUE;
+                                 }
+                              }
+                              catch(...)
+                              {
+                              }
+                           }
+                        }
+                        catch(...)
+                        {
+                        }
+                        if(m_papp->m_psession != NULL)
+                        {
                            try
                            {
-                              if(m_papp->m_psystem->m_pcube != NULL)
+                              m_papp->m_psession->pre_translate_message(spbase);
+                              if(spbase->m_bRet)
+                                 return TRUE;
+                           }
+                           catch(...)
+                           {
+                           }
+                           try
+                           {
+                              if(m_papp->m_psession->m_pbergedge != NULL)
                               {
-                                 m_papp->m_psystem->m_pcubeInterface->pre_translate_message(spbase);
+                                 m_papp->m_psession->m_pbergedgeInterface->pre_translate_message(spbase);
                                  if(spbase->m_bRet)
                                     return TRUE;
                               }
@@ -1516,49 +1546,23 @@ stop_run:
                            }
                         }
                      }
-                     catch(...)
-                     {
-                     }
-                     if(m_papp->m_psession != NULL)
-                     {
-                        try
-                        {
-                           m_papp->m_psession->pre_translate_message(spbase);
-                           if(spbase->m_bRet)
-                              return TRUE;
-                        }
-                        catch(...)
-                        {
-                        }
-                        try
-                        {
-                           if(m_papp->m_psession->m_pbergedge != NULL)
-                           {
-                              m_papp->m_psession->m_pbergedgeInterface->pre_translate_message(spbase);
-                              if(spbase->m_bRet)
-                                 return TRUE;
-                           }
-                        }
-                        catch(...)
-                        {
-                        }
-                     }
                   }
-               }
-               catch(...)
-               {
-               }
-               try
-               {
-                  if(!m_papp->is_system() && m_papp->is_bergedge())
+                  catch(...)
                   {
-                     m_papp->pre_translate_message(spbase);
-                     if(spbase->m_bRet)
-                        return TRUE;
                   }
-               }
-               catch(...)
-               {
+                  try
+                  {
+                     if(!m_papp->is_system() && m_papp->is_bergedge())
+                     {
+                        m_papp->pre_translate_message(spbase);
+                        if(spbase->m_bRet)
+                           return TRUE;
+                     }
+                  }
+                  catch(...)
+                  {
+                  }
+
                }
             
             
