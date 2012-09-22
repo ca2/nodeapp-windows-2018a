@@ -43,8 +43,6 @@ namespace ca2plugin_container
       virtual vsstring  calc_location_url();
 
 
-      void on_paint(HDC hdcWindow, LPCRECT lprect);
-
       bool finalize();
 
 

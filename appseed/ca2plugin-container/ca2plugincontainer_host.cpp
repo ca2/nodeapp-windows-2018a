@@ -189,47 +189,9 @@ namespace ca2plugin_container
 
    uint_ptr host::message_handler(uint_ptr uiMessage, WPARAM wparam, LPARAM lparam)
    {
-      switch(uiMessage)
-      {
-      case WM_PAINT:
-         
-         m_bOnPaint = true;
-         
-         if(m_bInitialized)
-         {
-         
-            on_paint((HDC) wparam, (LPCRECT) lparam);
 
-         }
-
-         m_bOnPaint = false;
-
-         return 0;
-         // case WM_KEYDOWN:
-         // today
-         // MessageBox(NULL, "key_down", "key_down", NULL);
-         // TerminateProcess(::GetCurrentProcess(), 0);
-         // return 0;
-/*      case WM_TIMER:
-         {
-            switch(wparam)
-            {
-            case 19841977:
-               {
-                  NPRect invalidRect;
-                  invalidRect.left     = (uint16_t) m_rect.left;
-                  invalidRect.top      = (uint16_t) m_rect.top;
-                  invalidRect.right    = (uint16_t) m_rect.right;
-                  invalidRect.bottom   = (uint16_t) m_rect.bottom;
-//                  NPN_InvalidateRect(m_instance, &invalidRect);
-                  NPN_ForceRedraw(m_instance);
-               }
-               break;
-            }
-         }
-         return 0;*/
-      }
       return ::hotplugin::host::message_handler(uiMessage, wparam, lparam);      
+
    }
 
 
@@ -259,13 +221,6 @@ namespace ca2plugin_container
 	   return RegisterClassEx(&wcex);
    }
 
-
-   void host::on_paint(HDC hdcWindow, LPCRECT lprect)
-   {
-      
-      ::hotplugin::host::on_paint(hdcWindow, lprect);
-
-   }
 
    bool host::finalize()
    {
@@ -448,18 +403,15 @@ namespace ca2plugin_container
          else if(message == ::hotplugin::message_paint)
          {
             
-            struct paint
-            {
-               HDC      m_hdc;
-               RECT     m_rect;
-            } * ppaint;
-         
-            ppaint = (struct paint *) pdata;
+            
+            LPRECT prect = (LPRECT) pdata;
 
             try
             {
 
-               on_paint(ppaint->m_hdc, &ppaint->m_rect);
+               simple_graphics g;
+
+               on_paint(g, prect);
 
             }
             catch(...)
