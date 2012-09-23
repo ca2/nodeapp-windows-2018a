@@ -1,79 +1,97 @@
 #include "framework.h"
-#include "WinFileSystem.h"
 
 
-#include "WinFile.h"
-
-WinFileSystem::WinFileSystem(::ca::application * papp) :
-   ca(papp)
+namespace win
 {
 
-}
 
-WinFileSystem::~WinFileSystem()
-{
-
-}
-
-bool WinFileSystem::FullPath(string &str, const char * lpszFileIn)
-{
-   if(::ex1::file_system::FullPath(str, lpszFileIn))
-      return true;
-   if(gen::str::begins_ci(lpszFileIn, "http://"))
+   file_system::file_system(::ca::application * papp) :
+      ca(papp)
    {
-      str = lpszFileIn;
-      return true;
+
    }
-   else if(gen::str::begins_ci(lpszFileIn, "https://"))
+
+
+   file_system::~file_system()
    {
-      str = lpszFileIn;
-      return true;
+
    }
-   wstring wstrFileIn;
-   wstrFileIn = gen::international::utf8_to_unicode(lpszFileIn);
-   wstring wstrFileOut;
-   bool b = vfxFullPath(wstrFileOut.alloc(MAX_PATH * 8), wstrFileIn) != FALSE;
-   if(b)
+
+
+   bool file_system::FullPath(string &str, const char * lpszFileIn)
    {
-      gen::international::unicode_to_utf8(str, wstrFileOut);
-   }
-   return b;
-}
 
-bool WinFileSystem::FullPath(wstring & wstrFullPath, const wstring & wstrPath)
-{
-   
-   if(::ex1::file_system::FullPath(wstrFullPath, wstrPath))
-      return true;
-   
-   if(gen::str::begins_ci(wstrPath, L"http://"))
+      if(::ex1::file_system::FullPath(str, lpszFileIn))
+         return true;
+
+      if(gen::str::begins_ci(lpszFileIn, "http://"))
+      {
+
+         str = lpszFileIn;
+
+         return true;
+
+      }
+      else if(gen::str::begins_ci(lpszFileIn, "https://"))
+      {
+
+         str = lpszFileIn;
+
+         return true;
+
+      }
+      wstring wstrFileIn;
+      wstrFileIn = gen::international::utf8_to_unicode(lpszFileIn);
+      wstring wstrFileOut;
+      bool b = vfxFullPath(wstrFileOut.alloc(MAX_PATH * 8), wstrFileIn) != FALSE;
+      if(b)
+      {
+         gen::international::unicode_to_utf8(str, wstrFileOut);
+      }
+      return b;
+   }
+
+   bool file_system::FullPath(wstring & wstrFullPath, const wstring & wstrPath)
    {
-      wstrFullPath = wstrPath;
-      return true;
+
+      if(::ex1::file_system::FullPath(wstrFullPath, wstrPath))
+         return true;
+
+      if(gen::str::begins_ci(wstrPath, L"http://"))
+      {
+         wstrFullPath = wstrPath;
+         return true;
+      }
+      else if(gen::str::begins_ci(wstrPath, L"https://"))
+      {
+         wstrFullPath = wstrPath;
+         return true;
+      }
+
+      return vfxFullPath(wstrFullPath, wstrPath) != FALSE;
+
    }
-   else if(gen::str::begins_ci(wstrPath, L"https://"))
+
+
+   UINT file_system::GetFileName(const char * lpszPathName, string & str)
    {
-      wstrFullPath = wstrPath;
-      return true;
+      int nMax = MAX_PATH * 8;
+      wstring wstrPathName;
+      wstrPathName = gen::international::utf8_to_unicode(lpszPathName);
+      wstring wstrTitle;
+      UINT user = vfxGetFileName(wstrPathName, wstrTitle.alloc(nMax), nMax);
+      str = gen::international::unicode_to_utf8(wstrTitle);
+      return user;
    }
-   
-   return vfxFullPath(wstrFullPath, wstrPath) != FALSE;
 
-}
+   void file_system::GetModuleShortFileName(HINSTANCE hInst, string & strShortName)
+   {
+      vfxGetModuleShortFileName(hInst, strShortName);
+   }
 
 
-UINT WinFileSystem::GetFileName(const char * lpszPathName, string & str)
-{
-   int nMax = MAX_PATH * 8;
-   wstring wstrPathName;
-   wstrPathName = gen::international::utf8_to_unicode(lpszPathName);
-   wstring wstrTitle;
-   UINT user = vfxGetFileName(wstrPathName, wstrTitle.alloc(nMax), nMax);
-   str = gen::international::unicode_to_utf8(wstrTitle);
-   return user;
-}
 
-void WinFileSystem::GetModuleShortFileName(HINSTANCE hInst, string & strShortName)
-{
-   vfxGetModuleShortFileName(hInst, strShortName);
-}
+} // namespace win
+
+
+

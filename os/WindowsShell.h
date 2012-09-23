@@ -2,7 +2,11 @@
 
 #define WH_SHSTDAPI(type) type
 
-class CLASS_DECL_win WindowsShell  
+
+namespace win
+{
+
+class CLASS_DECL_win shel
 {
 public:
    WindowsShell();

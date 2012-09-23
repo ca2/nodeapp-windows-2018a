@@ -10,7 +10,7 @@ void CLASS_DECL_win vfxGetRoot(wstring & wstrRoot, const wstring & wstrPath);
 /////////////////////////////////////////////////////////////////////////////
 // File - raw unbuffered disk file I/O
 
-class CLASS_DECL_win WinFile :
+class CLASS_DECL_win win_file :
    virtual public ex1::file
 {
 public:
@@ -36,10 +36,10 @@ public:
    UINT           m_hFile;
 
 
-   WinFile(::ca::application * papp);
-   WinFile(::ca::application * papp, int hFile);
-   WinFile(::ca::application * papp, const char * lpszFileName, UINT nOpenFlags);
-   virtual ~WinFile();
+   win_file(::ca::application * papp);
+   win_file(::ca::application * papp, int hFile);
+   win_file(::ca::application * papp, const char * lpszFileName, UINT nOpenFlags);
+   virtual ~win_file();
 
 
    operator HFILE() const;

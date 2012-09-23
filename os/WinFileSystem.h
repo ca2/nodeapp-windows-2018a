@@ -6,6 +6,10 @@ CLASS_DECL_win UINT vfxGetFileName(const wchar_t * lpszPathName, wchar_t * lpszT
 CLASS_DECL_win void vfxGetModuleShortFileName(HINSTANCE hInst, string & strShortName);
 CLASS_DECL_win void vfxGetModuleShortFileName(HINSTANCE hInst, string& strShortName);
 
+
+namespace win
+{
+
 class WinFileSystem :
    virtual public ex1::file_system
 {

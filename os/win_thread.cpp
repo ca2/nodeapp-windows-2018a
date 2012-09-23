@@ -1779,7 +1779,7 @@ stop_run:
       if(!bOk)
       {
          DWORD dwLastError = ::GetLastError();
-         ::OutputDebugString("thread::SetThreadPriority LastError = " + gen::str::itoa(dwLastError));
+         ::OutputDebugString("thread::SetThreadPriority LastError = " + gen::str::from(dwLastError));
       }
 
       return bOk;

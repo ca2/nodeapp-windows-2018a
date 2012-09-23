@@ -42,7 +42,7 @@ namespace win
 //      m_eHelpType = afxWinHelp;
       m_nSafetyPoolSize = 512;        // default size
 
-      WindowsShell::theWindowsShell.Initialize();
+      shell::theWindowsShell.Initialize();
    }
 
    application::~application()

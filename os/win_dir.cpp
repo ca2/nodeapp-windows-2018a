@@ -214,29 +214,29 @@ namespace win
       {
          return ::ca::dir::system::ls_pattern(papp, lpcsz, pszPattern, pstraPath, pstraTitle, pbaIsDir, piaSize);
       }
-      FileFind filefind;
+      file_find file_find;
       bool bWorking;
-      bWorking = filefind.FindFile(System.dir().path(lpcsz, pszPattern));
+      bWorking = file_find.FindFile(System.dir().path(lpcsz, pszPattern));
       while(bWorking)
       {
-         bWorking = filefind.FindNextFileA();
-         if(!filefind.IsDots())
+         bWorking = file_find.FindNextFileA();
+         if(!file_find.IsDots())
          {
             if(pstraPath != NULL)
             {
-               pstraPath->add(filefind.GetFilePath());
+               pstraPath->add(file_find.GetFilePath());
             }
             if(pstraTitle != NULL)
             {
-               pstraTitle->add(filefind.GetFileName());
+               pstraTitle->add(file_find.GetFileName());
             }
             if(pbaIsDir != NULL)
             {
-               pbaIsDir->add(filefind.IsDirectory() != FALSE);
+               pbaIsDir->add(file_find.IsDirectory() != FALSE);
             }
             if(piaSize != NULL)
             {
-               piaSize->add(filefind.get_length());
+               piaSize->add(file_find.get_length());
             }
          }
       }
@@ -271,48 +271,48 @@ namespace win
          }
       }
 
-      FileFind filefind;
-      bool bWorking = filefind.FindFile(System.dir().path(lpcsz, lpszPattern)) != FALSE;
+      file_find file_find;
+      bool bWorking = file_find.FindFile(System.dir().path(lpcsz, lpszPattern)) != FALSE;
       if(bWorking)
       {
          while(bWorking)
          {
-            bWorking = filefind.FindNextFileA() != FALSE;
-            if(!filefind.IsDots() && filefind.GetFilePath() != lpcsz)
+            bWorking = file_find.FindNextFileA() != FALSE;
+            if(!file_find.IsDots() && file_find.GetFilePath() != lpcsz)
             {
                if(pstraPath != NULL)
                {
-                  pstraPath->add(filefind.GetFilePath());
+                  pstraPath->add(file_find.GetFilePath());
                }
                if(pstraTitle != NULL)
                {
-                  pstraTitle->add(filefind.GetFileName());
+                  pstraTitle->add(file_find.GetFileName());
                }
                if(pstraRelative != NULL)
                {
-                  pstraRelative->add(filefind.GetFileName());
+                  pstraRelative->add(file_find.GetFileName());
                }
                if(pbaIsDir != NULL)
                {
-                  pbaIsDir->add(filefind.IsDirectory() != FALSE);
+                  pbaIsDir->add(file_find.IsDirectory() != FALSE);
                }
                if(piaSize != NULL)
                {
-                  piaSize->add(filefind.get_length());
+                  piaSize->add(file_find.get_length());
                }
-               /*if(filefind.IsDirectory())
+               /*if(file_find.IsDirectory())
                {
                   int iStart = 0;
                   if(pstraRelative != NULL)
                   {
                      iStart = pstraRelative->get_size();
                   }
-                  rls_pattern(filefind.GetFilePath(), lpszPattern, pstraPath, pstraTitle, pstraRelative, pbaIsDir, piaSize);
+                  rls_pattern(file_find.GetFilePath(), lpszPattern, pstraPath, pstraTitle, pstraRelative, pbaIsDir, piaSize);
                   if(pstraRelative != NULL)
                   {
                      for(int i = iStart; i < pstraRelative->get_size(); i++)
                      {
-                        pstraRelative->element_at(i) = System.dir().path(filefind.GetFileName(), pstraRelative->element_at(i));
+                        pstraRelative->element_at(i) = System.dir().path(file_find.GetFileName(), pstraRelative->element_at(i));
                      }
                   }
                }*/
@@ -327,39 +327,39 @@ namespace win
 
    void dir::rls_dir(::ca::application * papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle, stringa * pstraRelative)
    {
-      FileFind filefind;
+      file_find file_find;
       bool bWorking;
-      bWorking = filefind.FindFile(System.dir().path(lpcsz, "*.*"));
+      bWorking = file_find.FindFile(System.dir().path(lpcsz, "*.*"));
       while(bWorking)
       {
-         bWorking = filefind.FindNextFileA();
-         if(!filefind.IsDots() && filefind.IsDirectory())
+         bWorking = file_find.FindNextFileA();
+         if(!file_find.IsDots() && file_find.IsDirectory())
          {
             if(pstraPath != NULL)
             {
-               pstraPath->add(filefind.GetFilePath());
+               pstraPath->add(file_find.GetFilePath());
             }
             if(pstraTitle != NULL)
             {
-               pstraTitle->add(filefind.GetFileName());
+               pstraTitle->add(file_find.GetFileName());
             }
             if(pstraRelative != NULL)
             {
-               pstraRelative->add(filefind.GetFileName());
+               pstraRelative->add(file_find.GetFileName());
             }
-            if(filefind.IsDirectory())
+            if(file_find.IsDirectory())
             {
                index iStart = 0;
                if(pstraRelative != NULL)
                {
                   iStart = pstraRelative->get_size();
                }
-               rls_dir(papp, filefind.GetFilePath(), pstraPath, pstraTitle, pstraRelative);
+               rls_dir(papp, file_find.GetFilePath(), pstraPath, pstraTitle, pstraRelative);
                if(pstraRelative != NULL)
                {
                   for(index i = iStart; i < pstraRelative->get_size(); i++)
                   {
-                     pstraRelative->element_at(i) = System.dir().path(filefind.GetFileName(), pstraRelative->element_at(i));
+                     pstraRelative->element_at(i) = System.dir().path(file_find.GetFileName(), pstraRelative->element_at(i));
                   }
                }
             }
@@ -370,9 +370,9 @@ namespace win
    void dir::ls_dir(::ca::application * papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle)
    {
       
-      FileFind filefind;
+      file_find file_find;
       bool bWorking;
-      bWorking = filefind.FindFile(System.dir().path(lpcsz, "*.*"));
+      bWorking = file_find.FindFile(System.dir().path(lpcsz, "*.*"));
       if(!bWorking)
       {
          ::ca::dir::system::ls_dir(papp, lpcsz, pstraPath, pstraTitle);
@@ -380,16 +380,16 @@ namespace win
       }
       while(bWorking)
       {
-         bWorking = filefind.FindNextFileA();
-         if(filefind.IsDirectory() && !filefind.IsDots())
+         bWorking = file_find.FindNextFileA();
+         if(file_find.IsDirectory() && !file_find.IsDots())
          {
             if(pstraPath != NULL)
             {
-               pstraPath->add(filefind.GetFilePath());
+               pstraPath->add(file_find.GetFilePath());
             }
             if(pstraTitle != NULL)
             {
-               pstraTitle->add(filefind.GetFileName());
+               pstraTitle->add(file_find.GetFileName());
             }
          }
       }
@@ -397,21 +397,21 @@ namespace win
 
    void dir::ls_file(::ca::application * papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle)
    {
-      FileFind filefind;
+      file_find file_find;
       bool bWorking;
-      bWorking = filefind.FindFile(System.dir().path(lpcsz, "*.*"));
+      bWorking = file_find.FindFile(System.dir().path(lpcsz, "*.*"));
       while(bWorking)
       {
-         bWorking = filefind.FindNextFileA();
-         if(!filefind.IsDirectory() && !filefind.IsDots())
+         bWorking = file_find.FindNextFileA();
+         if(!file_find.IsDirectory() && !file_find.IsDots())
          {
             if(pstraPath != NULL)
             {
-               pstraPath->add(filefind.GetFilePath());
+               pstraPath->add(file_find.GetFilePath());
             }
             if(pstraTitle != NULL)
             {
-               pstraTitle->add(filefind.GetFileName());
+               pstraTitle->add(file_find.GetFileName());
             }
          }
       }
@@ -1108,13 +1108,13 @@ namespace win
 
    bool dir::has_subdir(::ca::application * papp, const char * pszDir)
    {
-      FileFind filefind;
+      file_find file_find;
       bool bWorking;
-      bWorking = filefind.FindFile(path(pszDir, "*.*"));
+      bWorking = file_find.FindFile(path(pszDir, "*.*"));
       while(bWorking)
       {
-         bWorking = filefind.FindNextFileA();
-         if(filefind.IsDirectory() && !filefind.IsDots())
+         bWorking = file_find.FindNextFileA();
+         if(file_find.IsDirectory() && !file_find.IsDots())
          {
             return true;
          }

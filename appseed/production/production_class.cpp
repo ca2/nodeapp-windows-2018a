@@ -144,21 +144,21 @@ int production_class::run()
       if(m_iGlobalRetry > 8)
       {
          
-         add_status("Retried " + gen::str::itoa(m_iGlobalRetry) + " times - \"giving up\" this command!");
+         add_status("Retried " + gen::str::from(m_iGlobalRetry) + " times - \"giving up\" this command!");
 
          if(m_eversion == version_basis)
          {
-            post["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #882266; display: block; margin-bottom: 1.5em;\">Retried " + gen::str::itoa(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!</span>";
+            post["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #882266; display: block; margin-bottom: 1.5em;\">Retried " + gen::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!</span>";
          }
          else
          {
-            post["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">Retried " + gen::str::itoa(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!</span>";
+            post["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">Retried " + gen::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!</span>";
          }
 
          Application.http().get("http://ca2.cc/status/", str, post, headers, params);
 
 
-         string strTwit = "Retried " + gen::str::itoa(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!";
+         string strTwit = "Retried " + gen::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!";
 
          twitter_twit(strTwit);
 
@@ -183,7 +183,7 @@ int production_class::run()
       }
       else
       {
-         m_strTry = gen::str::itoa(m_iGlobalRetry) + "th";
+         m_strTry = gen::str::from(m_iGlobalRetry) + "th";
       }
 
       if(m_eversion == version_basis)
@@ -457,7 +457,7 @@ restart:
          return 2;
 
 
-      m_strSubversionRevision = "SVN" + gen::str::itoa(atoi(strRevision) + 1);
+      m_strSubversionRevision = "SVN" + gen::str::from(atoi(strRevision) + 1);
 
       if(m_bBuild)
       {
@@ -2128,7 +2128,7 @@ void production_class::OnUpdateRelease()
          }
          else
          {
-            strTwit += " with " + gen::str::itoa(m_iGlobalRetry) + " retries";
+            strTwit += " with " + gen::str::from(m_iGlobalRetry) + " retries";
          }
       }
 
@@ -2175,8 +2175,8 @@ bool production_class::twitter_auth()
       twitterObj.get_oauth().setOAuthTokenSecret( "" );
    }
 
-   string strPathKey = Application.dir().userappdata("twitterClient_token_key"+gen::str::itoa(m_eversion)+".txt");
-   string strPathSecret = Application.dir().userappdata("twitterClient_token_secret"+gen::str::itoa(m_eversion)+".txt");
+   string strPathKey = Application.dir().userappdata("twitterClient_token_key"+gen::str::from(m_eversion)+".txt");
+   string strPathSecret = Application.dir().userappdata("twitterClient_token_secret"+gen::str::from(m_eversion)+".txt");
    /* Step 1: Check if we alredy have OAuth access token from a previous run */
    //    char szKey[1024];
    string myOAuthAccessTokenKey = Application.file().as_string(strPathKey);
@@ -2245,8 +2245,8 @@ Retry2:
       twitterObj.get_oauth().setConsumerSecret(string( "LmgKZmcM5NExmp8cPisHvtuYGxU0KMKH61wNYc0Pn8Q" ) );
    }
 
-   string strPathKey = Application.dir().userappdata("twitterClient_token_key"+gen::str::itoa(m_eversion)+".txt");
-   string strPathSecret = Application.dir().userappdata("twitterClient_token_secret"+gen::str::itoa(m_eversion)+".txt");
+   string strPathKey = Application.dir().userappdata("twitterClient_token_key"+gen::str::from(m_eversion)+".txt");
+   string strPathSecret = Application.dir().userappdata("twitterClient_token_secret"+gen::str::from(m_eversion)+".txt");
    /* Step 1: Check if we alredy have OAuth access token from a previous run */
    //    char szKey[1024];
    string myOAuthAccessTokenKey = Application.file().as_string(strPathKey);

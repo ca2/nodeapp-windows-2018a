@@ -7,7 +7,7 @@
 #include <Security.h>
 #include <shlobj.h>
 
-#include "exception.h"
+#include "win_exception.h"
 
 
 
@@ -64,28 +64,28 @@ CLASS_DECL_win void reset_message_cache();
 
 
 #include "win1.h"
-#include "implementation.h"
-#include "state.h"
-#include "handle.h"
-#include "dir.h"
-#include "folder_watch.h"
-#include "factory_exchange.h"
-#include "UACTools.h"
-#include "window_draw.h"
-#include "graphics.h"
-#include "graphics_object.h"
-#include "bitmap.h"
-#include "dib.h"
-#include "palette.h"
-#include "pen.h"
-#include "font.h"
-#include "brush.h"
-#include "region.h"
-#include "graphics_path.h"
-#include "draw_dib.h"
-#include "thread.h"
-#include "window.h"
-#include "port_forward.h"
+#include "win_implementation.h"
+#include "win_state.h"
+#include "win_handle.h"
+#include "win_dir.h"
+#include "win_folder_watch.h"
+#include "win_factory_exchange.h"
+#include "win_uac_tools.h"
+#include "win_window_draw.h"
+#include "win_graphics.h"
+#include "win_graphics_object.h"
+#include "win_bitmap.h"
+#include "win_dib.h"
+#include "win_palette.h"
+#include "win_pen.h"
+#include "win_font.h"
+#include "win_brush.h"
+#include "win_region.h"
+#include "win_graphics_path.h"
+#include "win_draw_dib.h"
+#include "win_thread.h"
+#include "win_window.h"
+#include "win_port_forward.h"
 
 #define NULL_REF(class) (*((class *) NULL))
 CLASS_DECL_win WNDPROC __get_window_procedure();
@@ -127,4 +127,4 @@ CLASS_DECL_win void __cdecl __pre_translate_message(gen::signal_object * pobj);
 
 //#include "win_printer.h"
 
-#include "application.h"
+#include "win_application.h"

@@ -12,7 +12,7 @@ namespace win
 //#include "template.h"
 
 #ifndef __AFXTLS_H__
-   #include "thread_slots.h"
+   #include "win_thread_slots.h"
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
