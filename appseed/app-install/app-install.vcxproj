@@ -246,7 +246,7 @@
       <FloatingPointModel>
       </FloatingPointModel>
       <CompileAsManaged>false</CompileAsManaged>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <OpenMPSupport>false</OpenMPSupport>
       <SmallerTypeCheck>
       </SmallerTypeCheck>
@@ -308,7 +308,7 @@
       <FloatingPointModel>
       </FloatingPointModel>
       <CompileAsManaged>false</CompileAsManaged>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <OpenMPSupport>false</OpenMPSupport>
       <SmallerTypeCheck>
       </SmallerTypeCheck>
@@ -366,7 +366,7 @@
       <FloatingPointModel>
       </FloatingPointModel>
       <CompileAsManaged>false</CompileAsManaged>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <OpenMPSupport>false</OpenMPSupport>
       <SmallerTypeCheck>
       </SmallerTypeCheck>
@@ -423,7 +423,7 @@
       <FloatingPointModel>
       </FloatingPointModel>
       <CompileAsManaged>false</CompileAsManaged>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <OpenMPSupport>false</OpenMPSupport>
       <SmallerTypeCheck>
       </SmallerTypeCheck>
@@ -479,7 +479,7 @@
       <StringPooling>false</StringPooling>
       <FloatingPointModel>
       </FloatingPointModel>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <OpenMPSupport>false</OpenMPSupport>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -534,7 +534,7 @@
       <StringPooling>false</StringPooling>
       <FloatingPointModel>
       </FloatingPointModel>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <OpenMPSupport>false</OpenMPSupport>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -585,7 +585,7 @@
       <StringPooling>false</StringPooling>
       <FloatingPointModel>
       </FloatingPointModel>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <OpenMPSupport>false</OpenMPSupport>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
@@ -634,7 +634,7 @@
       <StringPooling>false</StringPooling>
       <FloatingPointModel>
       </FloatingPointModel>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <OpenMPSupport>false</OpenMPSupport>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
