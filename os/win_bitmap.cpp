@@ -37,6 +37,7 @@ namespace win
    bool bitmap::CreateBitmap(int nWidth, int nHeight, UINT nPlanes, UINT nBitcount, const void * lpBits)
    { 
 
+
       if(m_pdata != NULL)
       {
          ca2_free(m_pdata);
