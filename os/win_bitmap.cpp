@@ -34,9 +34,10 @@ namespace win
 
    }
 
-   bool bitmap::CreateBitmap(int nWidth, int nHeight, UINT nPlanes, UINT nBitcount, const void * lpBits)
+   bool bitmap::CreateBitmap(::ca::graphics * pgraphics, int nWidth, int nHeight, UINT nPlanes, UINT nBitcount, const void * lpBits)
    { 
 
+      UNREFERENCED_PARAMETER(pgraphics);
 
       if(m_pdata != NULL)
       {
@@ -50,14 +51,19 @@ namespace win
    
    }
 
-   bool bitmap::CreateBitmapIndirect(LPBITMAP lpBitmap)
+   bool bitmap::CreateBitmapIndirect(::ca::graphics * pgraphics, LPBITMAP lpBitmap)
    { 
+
+      UNREFERENCED_PARAMETER(pgraphics);
+
       return FALSE;
    }
 
 
-   bool bitmap::CreateDIBSection(::ca::graphics * pdc, const BITMAPINFO * lpbmi, UINT usage, void **ppvBits, HANDLE hSection, DWORD offset)
+   bool bitmap::CreateDIBSection(::ca::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void **ppvBits, HANDLE hSection, DWORD offset)
    { 
+
+      UNREFERENCED_PARAMETER(pgraphics);
 
       if(m_pbitmap != NULL)
       {
