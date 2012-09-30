@@ -1014,7 +1014,7 @@
     <ClCompile Include="win_draw_dib.cpp" />
     <ClCompile Include="win_dumpinit.cpp" />
     <ClCompile Include="win_error.cpp" />
-    <ClCompile Include="win_except.cpp" />
+    <ClCompile Include="win_exception.cpp" />
     <ClCompile Include="win_factory_exchange.cpp" />
     <ClCompile Include="win_file.cpp" />
     <ClCompile Include="win_file_find.cpp" />

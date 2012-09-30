@@ -286,9 +286,6 @@
     <ClCompile Include="win_error.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win_except.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="win_factory_exchange.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -383,6 +380,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="win_file_find.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="win_exception.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
