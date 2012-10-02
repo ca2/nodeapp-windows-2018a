@@ -130,7 +130,7 @@ namespace win
    {
 
 
-      throw not_implemented_exception();
+      throw not_implemented_exception(get_app());
 
       //SIZE size;
       //VERIFY(::SetBitmapDimensionEx((HBITMAP)get_handle(), nWidth, nHeight, &size));
