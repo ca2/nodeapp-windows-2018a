@@ -130,9 +130,22 @@ UINT APIENTRY __thread_entry(void * pParam)
       VERIFY(::WaitForSingleObject(hEvent2, INFINITE) == WAIT_OBJECT_0);
       ::CloseHandle(hEvent2);
 
+      int n;
 
+      try
+      {
 
-      int n = pThread->m_p->main();
+         n = pThread->m_p->main();
+
+      }
+      catch(::exit_exception & e)
+      {
+
+         Sys(pThread->get_app()).os().post_to_all_threads(WM_QUIT, 0, 0);
+
+         return -1;
+
+      }
 
       uiRet =  pThread->thread_term(n);
 
@@ -1028,6 +1041,19 @@ void thread::Delete()
             {
                if(!m_p->verb())
                   goto stop_run;
+            }
+            catch(::exit_exception & e)
+            {
+
+               throw e;
+
+            }
+            catch(::ca::exception & e)
+            {
+         
+               if(!Application.on_run_exception(e))
+                  throw exit_exception(get_app());
+
             }
             catch(...)
             {
@@ -2018,6 +2044,12 @@ run:
             m_bRun = true;
             m_p->m_bRun = true;
             nResult = m_p->run();
+         }
+         catch(::exit_exception & e)
+         {
+
+            throw e;
+
          }
          catch(const ::ca::exception & e)
          {

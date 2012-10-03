@@ -511,7 +511,7 @@ namespace win
       single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_mutex, TRUE);
       pobj->m_bRet = true;
       // cleanup main and active windows
-      ::ca::thread* pThread = System.GetThread();
+      ::ca::thread* pThread = ::ca::get_thread();
       if (pThread != NULL)
       {
          if (pThread->GetMainWnd() == this)
@@ -5640,15 +5640,17 @@ ExitModal:
       }
       catch(const ::ca::exception & e)
       {
-         try
+
+         if(!App(pinteraction->m_papp).on_run_exception((::ca::exception &) e))
          {
-            if(App(pinteraction->m_papp).on_run_exception((::ca::exception &) e))
-               goto run;
+
+            Sys(pinteraction->m_papp).os().post_to_all_threads(WM_QUIT, 0, 0);
+
+            return -1;
          }
-         catch(...)
-         {
-         }
+
          return -1;
+
       }
       catch(base_exception * pe)
       {
