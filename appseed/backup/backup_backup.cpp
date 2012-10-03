@@ -92,7 +92,7 @@ namespace backup
             return 0;
 
 
-         throw not_implemented_exception(get_app());
+         throw not_implemented(get_app());
 
          /*      string strServer;
          strServer = "loft3099.myftpbackup.com";
