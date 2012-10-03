@@ -1,10 +1,13 @@
 #pragma once
 
+
+
 namespace backup
 {
 
+
    class CLASS_DECL_CA2_BACKUP frame : 
-      public production::frame
+      public ::production::frame
    {
    	
    public:
@@ -13,4 +16,8 @@ namespace backup
 
    };
 
+
 } // namespace backup
+
+
+

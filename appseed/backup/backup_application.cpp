@@ -21,13 +21,14 @@ namespace backup
       if(!cube2::application::initialize_instance())
          return false;
 
-      m_eversion = production_class::version_backup;
+
+      m_eversion = ::production::production::version_backup;
 
 
-      System.factory().creatable_small < backup::document > ();
-      System.factory().creatable_small < backup::frame > ();
-      System.factory().creatable_small < backup::view > ();
-      System.factory().creatable_small < backup::pane_view > ();
+      System.factory().creatable_small < document > ();
+      System.factory().creatable_small < frame > ();
+      System.factory().creatable_small < view > ();
+      System.factory().creatable_small < pane_view > ();
 
       GetStdFileManagerTemplate()->m_strLevelUp = "levelup";
 
@@ -35,9 +36,9 @@ namespace backup
 	   m_pdoctemplateMain = new ::userbase::single_document_template(
          this,
 		   "production/frame",
-         System.template type_info < backup::document > (),
-		   System.template type_info < backup::frame > (),
-		   System.template type_info < backup::pane_view > ());
+         System.template type_info < document > (),
+		   System.template type_info < frame > (),
+		   System.template type_info < pane_view > ());
 
       return true;
    }

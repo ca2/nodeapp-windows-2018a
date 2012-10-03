@@ -31,7 +31,7 @@ namespace production
          ::filemanager::data * pdata, 
          ::fs::item_array & itema);
 
-      production_class::e_version m_eversion;
+      production::e_version m_eversion;
 
    };
 

@@ -153,7 +153,8 @@ class WindowsThread;       // forward reference for friend declaration
 
 
 template < class HT, class CT >
-class handle_map
+class handle_map :
+   virtual public ::radix::object
 {
 public:
 
@@ -165,7 +166,7 @@ public:
    ::collection::map < HANDLE, HANDLE, CT *, CT *> m_permanentMap;
    ::collection::map < HANDLE, HANDLE, CT *, CT *> m_temporaryMap;
 
-   handle_map();
+   handle_map(::ca::application * papp);
    virtual ~handle_map()
    { 
       delete_temp();
@@ -189,6 +190,7 @@ class CLASS_DECL_win hwnd_map :
    public handle_map < ::win::hwnd_handle, ::win::window >
 {
 public:
+   hwnd_map(::ca::application * papp) : handle_map < ::win::hwnd_handle, ::win::window >(papp) {}
 };
 
 /*class CLASS_DECL_win hdc_map :
@@ -213,10 +215,12 @@ public:
 
 
 template < class HT, class CT >
-handle_map < HT, CT > ::handle_map() : 
-      m_permanentMap(1024), 
-      m_temporaryMap(1024), 
-      m_alloc(sizeof(CT), 1024)
+handle_map < HT, CT > ::handle_map(::ca::application * papp) : 
+   ca(papp),
+   m_permanentMap(1024), 
+   m_temporaryMap(1024), 
+   m_alloc(sizeof(CT), 1024),
+   m_mutex(papp)
 {
 
    ASSERT(HT::s_iHandleCount == 1 || HT::s_iHandleCount == 2);
@@ -272,7 +276,7 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (::ca::app
       {
          pTemp = pfnAllocator(papp, h);
          if (pTemp == NULL)
-            throw memory_exception();
+            throw memory_exception(get_app());
       }
       else
       {
@@ -280,7 +284,7 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (::ca::app
    //      ASSERT((UINT)m_pClass->m_nObjectSize == m_alloc.GetAllocSize());
          pTemp = (CT*)m_alloc.Alloc();
          if (pTemp == NULL)
-            throw memory_exception();
+            throw memory_exception(get_app());
 
          // now construct the object in place
          ASSERT(m_pfnConstructObject != NULL);

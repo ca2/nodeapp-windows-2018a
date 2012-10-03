@@ -783,26 +783,36 @@ namespace win
       }
 
 
-      c = ::win::thread::s_haThread.get_size();
-
-
-      for(index i = 0; i < c; )
+      for(index i = 0; i < ::win::thread::s_haThread.get_size(); )
       {
 
          bOk = true;
          
          try
          {
-            repeat:
+
+repeat:
+
             if(::PostThreadMessage(::GetThreadId(::win::thread::s_haThread[i]), message, wparam, lparam))
             {
+
                if(message == WM_QUIT)
                {
-                  DWORD dwRet = ::WaitForSingleObject(::win::thread::s_haThread[i], 1984);
-                  if((dwRet != WAIT_OBJECT_0) && (dwRet != WAIT_FAILED))
-                     goto repeat;
+
+                  if(::win::thread::s_haThread[i] != ::GetCurrentThread())
+                  {
+
+                     DWORD dwRet = ::WaitForSingleObject(::win::thread::s_haThread[i], (1984 + 1977) * 2);
+
+                     if((dwRet != WAIT_OBJECT_0) && (dwRet != WAIT_FAILED) && i < ::win::thread::s_haThread.get_size())
+                        goto repeat;
+
+                  }
+
                }
+
             }
+
          }
          catch(...)
          {
@@ -837,9 +847,7 @@ namespace win
 
       }
 
-
    }
-
 
 } // namespace win
 

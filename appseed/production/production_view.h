@@ -16,7 +16,7 @@ namespace production
 
       int                     m_iLineHeight;
 
-      production_class *      m_pproduction;
+      production *      m_pproduction;
       DWORD                   m_dwLastSnapshotUpdate;
       int                     m_iW;
       int                     m_iH;
@@ -59,7 +59,7 @@ namespace production
       };
 
 
-      virtual production_class * create_production_class();
+      virtual production * create_production();
 
 
 

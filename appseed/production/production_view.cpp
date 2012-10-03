@@ -1,10 +1,11 @@
 #include "framework.h"
-#include "view.h"
-#include "document.h"
-#include <Psapi.h>
+//#include <Psapi.h>
+
+
 
 namespace production
 {
+
 
    view::view(::ca::application * papp) :
       ca(papp),
@@ -291,7 +292,7 @@ namespace production
       //make_production();
 
 
-      m_pproduction = create_production_class();
+      m_pproduction = create_production();
 
       m_pproduction->m_pview  = this;
 
@@ -511,7 +512,7 @@ namespace production
          stringa straTitle;
          string strRemote;
 
-         production::pane_view * pview = GetTypedParent < production::pane_view > ();
+         pane_view * pview = GetTypedParent < pane_view > ();
 
          pview->set_cur_tab_by_id("tabbed_file_manager");
 
@@ -535,18 +536,23 @@ namespace production
       {
          if(m_iStep == 2)
          {
-            production::pane_view * pview = GetTypedParent < production::pane_view > ();
-            pview->set_cur_tab_by_id(production::PaneViewProduction);
+            pane_view * pview = GetTypedParent < pane_view > ();
+            pview->set_cur_tab_by_id(PaneViewProduction);
             m_pproduction->step();
          }
       }
    }
 
-   production_class * view::create_production_class()
+   production * view::create_production()
    {
-      production_class * pclass = new production_class(get_app());
+      production * pclass = new production(get_app());
       pclass->m_eversion = Application.m_eversion;
       return pclass;
    }
 
+
 } // namespace production
+
+
+
+

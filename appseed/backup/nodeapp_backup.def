@@ -1,6 +1,6 @@
 ; app_backup.def : Declares the module parameters for the DLL.
 
-LIBRARY      "app_core_backup"
+LIBRARY      "nodeapp_backup"
 ; DESCRIPTION  'backup Windows Dynamic Link Library'
 
 EXPORTS

@@ -42,7 +42,7 @@ namespace win
       Gdiplus::PointF pf;
 
       if(m_ppath->GetLastPoint(&pf) != Gdiplus::Status::Ok)
-         throw simple_exception("could not get last point from path");
+         throw simple_exception(get_app(), "could not get last point from path");
 
       return point((long) pf.X, (long) pf.Y);
 

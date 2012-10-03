@@ -25,7 +25,7 @@ void * PASCAL no_track_object::operator new(size_t nSize)
 {
    void * p = ::LocalAlloc(LPTR, nSize);
    if (p == NULL)
-      throw memory_exception();
+      throw memory_exception(::ca::get_thread_app());
    return p;
 }
 #define new DEBUG_NEW
@@ -58,7 +58,7 @@ thread_local_storage::thread_local_storage()
 {
    m_tlsIndex = TlsAlloc();
    if (m_tlsIndex == (DWORD)-1)
-      throw memory_exception();
+      throw memory_exception(::ca::get_thread_app());
 }
 
 

@@ -412,8 +412,8 @@ namespace win
       {
          if(__get_module_state()->m_pmapHWND == NULL)
          {
-            __get_module_state()->m_pmapHWND = new hwnd_map;
-            __get_module_state()->m_pmutexHwnd = new mutex();
+            __get_module_state()->m_pmapHWND = new hwnd_map(this);
+            __get_module_state()->m_pmutexHwnd = new mutex(this);
          }
 /*         if(__get_module_state()->m_pmapHDC == NULL)
          {
@@ -435,7 +435,7 @@ namespace win
 
    bool application::initialize1()
    {
-      WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_ptimera = new ::user::interaction::timer_array;
+      WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_ptimera = new ::user::interaction::timer_array(this);
       WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_puiptra = new user::LPWndArray;
 
       WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_ptimera->m_papp = dynamic_cast < ::plane::application * >  (::ca::smart_pointer < ::ex2::application >::m_p);

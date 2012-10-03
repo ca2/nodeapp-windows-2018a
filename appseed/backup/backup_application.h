@@ -1,7 +1,9 @@
 #pragma once
 
+
 namespace backup
 {
+
 
    class CLASS_DECL_CA2_BACKUP application :
       public production::application
@@ -25,4 +27,9 @@ namespace backup
 
    };
 
+
 } // namespace backup
+
+
+
+

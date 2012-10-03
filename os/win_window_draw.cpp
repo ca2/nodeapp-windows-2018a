@@ -26,7 +26,12 @@ namespace win
 
    window_draw::window_draw(::ca::application * papp) : 
       ca(papp),
-      message_window_simple_callback(papp)
+      ::ca::window_draw(papp),
+      message_window_simple_callback(papp),
+      m_mutexRendering(papp),
+      m_mutexRgnUpdate(papp),
+      m_semaphoreBuffer(papp),
+      m_mutexRender(papp)
    {
       m_dwLastRedrawRequest = ::GetTickCount();
       m_bRender = false;

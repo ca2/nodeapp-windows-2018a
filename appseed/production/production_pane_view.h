@@ -4,12 +4,14 @@
 namespace production
 {
 
+
    class document;
+
 
    class CLASS_DECL_CA2_PRODUCTION pane_view : 
       public ::userex::pane_tab_view,
       public FileManagerCallbackInterface,
-      public production::form_callback
+      public ::production::form_callback
    {
    public:
       
@@ -51,4 +53,7 @@ namespace production
 
 
 } // namespace production
+
+
+
 

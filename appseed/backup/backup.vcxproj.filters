@@ -10,9 +10,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="backup_class.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="backup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -40,41 +37,44 @@
     <ClCompile Include=".\backup_view.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="backup_backup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="application.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="backup.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="backup_class.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="document.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="form_callback.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="frame.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="pane_view.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="pane_view_update_hint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="view.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="backup_application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="backup_document.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="backup_form_callback.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="backup_frame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="backup_pane_view.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="backup_pane_view_update_hint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="backup_view.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="backup_backup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include=".\app_nodeapp_backup.def">
+    <None Include="nodeapp_backup.def">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>

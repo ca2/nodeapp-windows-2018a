@@ -2873,7 +2873,8 @@ restart_mouse_hover_check:
       HDC m_hdc;
 
       print_window(::ca::application * papp, void * hwnd, HDC hdc, DWORD dwTimeout) :
-         ca(papp)
+         ca(papp),
+         m_event(papp)
       {
          m_event.ResetEvent();
          m_hwnd = hwnd;
@@ -4178,7 +4179,7 @@ ExitModal:
    void window::GetWindowRect(__rect64 * lprect)
    {
       if(!::IsWindow(get_handle()))
-         throw simple_exception("no more a window");
+         throw simple_exception(get_app(), "no more a window");
       // if it is temporary window - probably not ca2 wrapped window
       if(m_pguie == NULL || m_pguie == this)
       {
@@ -5996,7 +5997,7 @@ CLASS_DECL_win void hook_window_create(::user::interaction * pWnd)
       pThreadState->m_hHookOldCbtFilter = ::SetWindowsHookEx(WH_CBT,
          win::__cbt_filter_hook, NULL, ::GetCurrentThreadId());
       if (pThreadState->m_hHookOldCbtFilter == NULL)
-         throw memory_exception();
+         throw memory_exception(pWnd->get_app());
    }
    ASSERT(pThreadState->m_hHookOldCbtFilter != NULL);
    ASSERT(pWnd != NULL);
@@ -6065,7 +6066,7 @@ CLASS_DECL_win const char * __register_window_class(UINT nClassStyle,
    wndcls.lpszMenuName = NULL;
    wndcls.lpszClassName = lpszName;
    if (!__register_class(&wndcls))
-      throw resource_exception();
+      throw resource_exception(::ca::get_thread_app());
 
    // return thread-local pointer
    return lpszName;

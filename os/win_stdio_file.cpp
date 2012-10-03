@@ -300,7 +300,7 @@ namespace win
       ASSERT_VALID(this);
       ASSERT(m_pStream != NULL);
 
-      throw not_supported_exception();
+      throw not_supported_exception(get_app());
       return NULL;
    }
 
@@ -309,7 +309,7 @@ namespace win
       ASSERT_VALID(this);
       ASSERT(m_pStream != NULL);
 
-      throw not_supported_exception();
+      throw not_supported_exception(get_app());
    }
 
    void stdio_file::UnlockRange(file_position /* dwPos */, file_size /* dwCount */)
@@ -317,7 +317,7 @@ namespace win
       ASSERT_VALID(this);
       ASSERT(m_pStream != NULL);
 
-      throw not_supported_exception();
+      throw not_supported_exception(get_app());
    }
 
 

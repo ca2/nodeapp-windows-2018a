@@ -498,7 +498,9 @@ namespace win
       ca(papp),
       message_window_simple_callback(papp),//,
       //m_evFinish(FALSE, TRUE)
-      radix::thread(NULL)
+      radix::thread(NULL),
+      m_evFinish(papp),
+      m_mutexUiPtra(papp)
    {
       m_evFinish.SetEvent();
       m_pAppThread = dynamic_cast < ::ca::thread * > (papp);
@@ -533,7 +535,7 @@ namespace win
       m_bAutoDelete  = TRUE;
 
       m_frameList.Construct(offsetof(frame_window, m_pNextFrameWnd));
-      m_ptimera = new ::user::interaction::timer_array;
+      m_ptimera = new ::user::interaction::timer_array(get_app());
       m_puiptra = new user::LPWndArray;
 
    }
@@ -1956,7 +1958,7 @@ stop_run:
 
       ::ca::window threadWnd;
 
-      m_ptimera            = new ::user::interaction::timer_array;
+      m_ptimera            = new ::user::interaction::timer_array(get_app());
       m_puiptra            = new user::LPWndArray;
 
       m_ptimera->m_papp    = m_papp;
@@ -2099,7 +2101,7 @@ run:
 	void thread::set_priority(int priority)
 	{
 		if ( ::SetThreadPriority(item(), priority) == 0)
-			throw runtime_error("Thread::set_priority: Couldn't set thread priority.");
+			throw runtime_error(get_app(), "Thread::set_priority: Couldn't set thread priority.");
 	}
 
 	///  \brief		gets thread priority

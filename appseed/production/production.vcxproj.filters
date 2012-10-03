@@ -13,9 +13,6 @@
     <ClCompile Include=".\production_application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include=".\production_class.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include=".\production_document.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -31,9 +28,6 @@
     <ClCompile Include=".\production_pane_view_update_hint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include=".\production_twitter_authorization.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include=".\framework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -43,42 +37,42 @@
     <ClCompile Include=".\production_view_update_hint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="production_production.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="application.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="class.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="document.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="form_callback.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="frame.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="pane_view.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="pane_view_update_hint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="production.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="view.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="view_update_hint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="twitter_authorization.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="framework.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="production_production.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="production_application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="production_document.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="production_form_callback.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="production_frame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="production_pane_view.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="production_pane_view_update_hint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="production_view.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="production_view_update_hint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

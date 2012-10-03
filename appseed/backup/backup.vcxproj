@@ -38,7 +38,7 @@
     <ProjectGuid>{9FC565B2-1C85-4A57-8A25-2C90680A7F4E}</ProjectGuid>
     <RootNamespace>app_backup</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <ProjectName>app_nodeapp_backup</ProjectName>
+    <ProjectName>nodeapp_backup</ProjectName>
     <VCTargetsPath Condition="'$(VCTargetsPath11)' != '' and '$(VSVersion)' == '' and $(VisualStudioVersion) == ''">$(VCTargetsPath11)</VCTargetsPath>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -797,7 +797,7 @@
   <ItemGroup>
     <ClCompile Include=".\backup_application.cpp" />
     <ClCompile Include="backup.cpp" />
-    <ClCompile Include="backup_class.cpp" />
+    <ClCompile Include="backup_backup.cpp" />
     <ClCompile Include=".\backup_document.cpp" />
     <ClCompile Include=".\backup_form_callback.cpp" />
     <ClCompile Include=".\backup_frame.cpp" />
@@ -816,19 +816,19 @@
     <ClCompile Include=".\backup_view.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include=".\app_nodeapp_backup.def" />
+    <None Include="nodeapp_backup.def" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="application.h" />
+    <ClInclude Include="backup_application.h" />
     <ClInclude Include="backup.h" />
-    <ClInclude Include="backup_class.h" />
-    <ClInclude Include="document.h" />
-    <ClInclude Include="form_callback.h" />
-    <ClInclude Include="frame.h" />
-    <ClInclude Include="pane_view.h" />
-    <ClInclude Include="pane_view_update_hint.h" />
+    <ClInclude Include="backup_backup.h" />
+    <ClInclude Include="backup_document.h" />
+    <ClInclude Include="backup_form_callback.h" />
+    <ClInclude Include="backup_frame.h" />
+    <ClInclude Include="backup_pane_view.h" />
+    <ClInclude Include="backup_pane_view_update_hint.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="view.h" />
+    <ClInclude Include="backup_view.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\app\appseed\ca2\ca2.vcxproj">

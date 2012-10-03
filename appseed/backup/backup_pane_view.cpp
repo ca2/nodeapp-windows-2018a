@@ -41,10 +41,10 @@ namespace backup
       if(pobj->previous())
          return;
 
-      add_tab("backup", backup::pane_view_backup);
-      add_tab("Options", backup::pane_view_options);
+      add_tab("backup", pane_view_backup);
+      add_tab("Options", pane_view_options);
       
-      set_cur_tab_by_id(backup::pane_view_backup);
+      set_cur_tab_by_id(pane_view_backup);
       
    }
 
@@ -53,7 +53,7 @@ namespace backup
       ::userbase::tab_view::on_update(pSender, lHint, pHint);
       if(lHint == 543218)
       {
-         set_cur_tab_by_id(backup::pane_view_backup);
+         set_cur_tab_by_id(pane_view_backup);
       }
       if(pHint != NULL)
       {
@@ -103,7 +103,7 @@ namespace backup
       {
       case pane_view_backup:
          {
-            pcreatordata->m_pwnd = create_view < backup::view > ();
+            pcreatordata->m_pwnd = create_view < view > ();
             if(pcreatordata->m_pwnd != NULL)
             {
                pcreatordata->m_pdoc = get_document();

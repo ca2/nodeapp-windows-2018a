@@ -9,7 +9,7 @@ CLASS_DECL_ca int ca2_main();
 
 void CLASS_DECL_win __cdecl _ca2_purecall()
 {
-    throw simple_exception();
+   throw simple_exception(::ca::get_thread_app());
 }
 
 

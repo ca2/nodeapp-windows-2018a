@@ -804,7 +804,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include=".\production_application.cpp" />
-    <ClCompile Include=".\production_class.cpp" />
+    <ClCompile Include="production_production.cpp" />
     <ClCompile Include=".\production_document.cpp" />
     <ClCompile Include=".\production_form_callback.cpp" />
     <ClCompile Include=".\production_frame.cpp" />
@@ -820,7 +820,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='codeanalysis|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='profiler|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include=".\production_twitter_authorization.cpp" />
     <ClCompile Include=".\production_view.cpp" />
     <ClCompile Include=".\production_view_update_hint.cpp" />
   </ItemGroup>
@@ -828,18 +827,17 @@
     <None Include=".\nodeapp_production.def" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="application.h" />
-    <ClInclude Include="class.h" />
-    <ClInclude Include="document.h" />
-    <ClInclude Include="form_callback.h" />
-    <ClInclude Include="frame.h" />
-    <ClInclude Include="pane_view.h" />
-    <ClInclude Include="pane_view_update_hint.h" />
+    <ClInclude Include="production_application.h" />
+    <ClInclude Include="production_production.h" />
+    <ClInclude Include="production_document.h" />
+    <ClInclude Include="production_form_callback.h" />
+    <ClInclude Include="production_frame.h" />
+    <ClInclude Include="production_pane_view.h" />
+    <ClInclude Include="production_pane_view_update_hint.h" />
     <ClInclude Include="production.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="twitter_authorization.h" />
-    <ClInclude Include="view.h" />
-    <ClInclude Include="view_update_hint.h" />
+    <ClInclude Include="production_view.h" />
+    <ClInclude Include="production_view_update_hint.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\app\appseed\ca2\ca2.vcxproj">

@@ -106,8 +106,8 @@ THREAD_LOCAL(___THREAD_STATE, gen_ThreadState, slot___THREAD_STATE)
 /////////////////////////////////////////////////////////////////////////////
 // __MODULE_STATE implementation
 
-__MODULE_STATE::__MODULE_STATE(bool bDLL, WNDPROC pfn_window_procedure,
-   DWORD dwVersion, bool bSystem)
+__MODULE_STATE::__MODULE_STATE(bool bDLL, WNDPROC pfn_window_procedure, DWORD dwVersion, bool bSystem) :
+   m_mutexRegClassList(NULL)
 {
    m_pmapHWND              = NULL;
 //   m_pmapHDC               = NULL;

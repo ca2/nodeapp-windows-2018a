@@ -1,10 +1,9 @@
 #include "framework.h"
-#include "pane_view.h"
-#include "html/html_view.h"
-#include "html/html_document.h"
+
 
 namespace production
 {
+
 
    pane_view::pane_view(::ca::application * papp) :
       ca(papp),
@@ -19,8 +18,10 @@ namespace production
 
    }
 
+
    pane_view::~pane_view()
    {
+
    }
 
 
@@ -47,10 +48,10 @@ namespace production
       if(pobj->previous())
          return;
 
-      add_tab("Production", production::PaneViewProduction);
-      add_tab("Options", production::PaneViewConfiguration);
+      add_tab("Production", PaneViewProduction);
+      add_tab("Options", PaneViewConfiguration);
 
-      set_cur_tab_by_id(production::PaneViewProduction);
+      set_cur_tab_by_id(PaneViewProduction);
       
    }
 
@@ -59,7 +60,7 @@ namespace production
       ::userbase::tab_view::on_update(pSender, lHint, pHint);
       if(lHint == 543218)
       {
-         set_cur_tab_by_id(production::PaneViewProduction);
+         set_cur_tab_by_id(PaneViewProduction);
       }
       if(pHint != NULL)
       {
@@ -107,10 +108,10 @@ namespace production
    {
       ::userex::pane_tab_view::on_show_view();
       //frame * pframe = dynamic_cast < frame *> (dynamic_cast < ::ca::window * > (GetParentFrame()));
-      if(m_pviewdata->m_id == production::PaneViewFileManager)
+      if(m_pviewdata->m_id == PaneViewFileManager)
       {
       }
-      else if(m_pviewdata->m_id == production::PaneViewContextMenu)
+      else if(m_pviewdata->m_id == PaneViewContextMenu)
       {
          ::filemanager::document * pdoc = dynamic_cast < ::filemanager::document * > (m_pviewdata->m_pdoc);
          pdoc->FileManagerBrowse(Application.dir().userappdata("production\\menu"));
