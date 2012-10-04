@@ -139,19 +139,37 @@ namespace win
          }
          if(m_etype == type_solid)
          {
-            ((brush *) this)->m_pbrush = new Gdiplus::SolidBrush(Gdiplus::Color(GetAValue(m_crColor), GetRValue(m_crColor), GetGValue(m_crColor), GetBValue(m_crColor)));
+            try
+            {
+               ((brush *) this)->m_pbrush = new Gdiplus::SolidBrush(Gdiplus::Color(GetAValue(m_crColor), GetRValue(m_crColor), GetGValue(m_crColor), GetBValue(m_crColor)));
+            }
+            catch(...)
+            {
+            }
          }
          else if(m_etype == type_linear_gradient_point_color)
          {
-            ((brush *) this)->m_pbrush = new Gdiplus::LinearGradientBrush(
-               Gdiplus::Point(m_pt1.x, m_pt1.y),
-               Gdiplus::Point(m_pt2.x, m_pt2.y),
-               Gdiplus::Color(GetAValue(m_cr1), GetRValue(m_cr1), GetGValue(m_cr1), GetBValue(m_cr1)),
-               Gdiplus::Color(GetAValue(m_cr2), GetRValue(m_cr2), GetGValue(m_cr2), GetBValue(m_cr2)));
+            try
+            {
+               ((brush *) this)->m_pbrush = new Gdiplus::LinearGradientBrush(
+                  Gdiplus::Point(m_pt1.x, m_pt1.y),
+                  Gdiplus::Point(m_pt2.x, m_pt2.y),
+                  Gdiplus::Color(GetAValue(m_cr1), GetRValue(m_cr1), GetGValue(m_cr1), GetBValue(m_cr1)),
+                  Gdiplus::Color(GetAValue(m_cr2), GetRValue(m_cr2), GetGValue(m_cr2), GetBValue(m_cr2)));
+            }
+            catch(...)
+            {
+            }
          }
          else
          {
-            ((brush *) this)->m_pbrush = new Gdiplus::SolidBrush(Gdiplus::Color(GetAValue(m_crColor), GetRValue(m_crColor), GetGValue(m_crColor), GetBValue(m_crColor)));
+            try
+            {
+               ((brush *) this)->m_pbrush = new Gdiplus::SolidBrush(Gdiplus::Color(GetAValue(m_crColor), GetRValue(m_crColor), GetGValue(m_crColor), GetBValue(m_crColor)));
+            }
+            catch(...)
+            {
+            }
          }
       }
 

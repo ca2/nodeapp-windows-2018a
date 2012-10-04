@@ -511,7 +511,10 @@ namespace win
       {
          try
          {
-            dynamic_cast < ::ca::window * > (wndpa[l]->m_pimpl)->_001UpdateWindow();
+            if(wndpa[l]->oprop("session").is_new())
+            {
+               dynamic_cast < ::ca::window * > (wndpa[l]->m_pimpl)->_001UpdateWindow();
+            }
             l++;
          }
          catch(simple_exception & se)
