@@ -138,7 +138,7 @@ UINT APIENTRY __thread_entry(void * pParam)
          n = pThread->m_p->main();
 
       }
-      catch(::exit_exception & e)
+      catch(::exit_exception &)
       {
 
          Sys(pThread->get_app()).os().post_to_all_threads(WM_QUIT, 0, 0);

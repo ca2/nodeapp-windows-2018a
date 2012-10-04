@@ -781,7 +781,7 @@ namespace win
       //memset(&rStatus, 0, sizeof(::ex1::file_status));
 
       // copy file name from cached m_strFileName
-      rStatus.m_strFullName = m_strFileName;
+      rStatus.m_strFullName = gen::international::unicode_to_utf8(m_wstrFileName);
 
       if (m_hFile != hFileNull)
       {

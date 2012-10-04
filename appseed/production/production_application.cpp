@@ -89,27 +89,9 @@ namespace production
 
    void application::on_request(::ca::create_context * pcreatecontext)
    {
-      string strBaseDir = pcreatecontext->m_spCommandLine->m_varQuery["base_dir"];
-      string strContentsSrc = System.dir().path(strBaseDir, "app/appseed/c", "version.config.h");
-      string strContentsSet;
-      string strContentsGet = App(this).file().as_string(strContentsSrc);
-      if(pcreatecontext->m_spCommandLine->m_varQuery["version"] == "basis")
-      {
-         m_eversion = production::version_basis;
-         strContentsSet = "#pragma once\n\n\n#define CA2_PLATFORM_VERSION CA2_BASIS\n\n\n\n";
-         
-      }
-      else
-      {
-         m_eversion = production::version_stage;
-         strContentsSet = "#pragma once\n\n\n#define CA2_PLATFORM_VERSION CA2_STAGE\n\n\n\n";
-      }
-      if(strContentsSet != strContentsGet)
-      {
-         App(this).file().put_contents(strContentsSrc, strContentsSet);
-      }
-
+      
       m_pdoctemplateMain->open_document_file(pcreatecontext);
+
    }
 
 

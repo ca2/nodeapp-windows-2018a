@@ -517,10 +517,10 @@ namespace win
 
    bool os::create_service(::planebase::application * papp)
    {
-      
+
       if(papp->m_strAppName.is_empty()
-      || papp->m_strAppName.CompareNoCase("bergedge") == 0
-      || !papp->is_serviceable())
+         || papp->m_strAppName.CompareNoCase("bergedge") == 0
+         || !papp->is_serviceable())
          return false;
 
       SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_CREATE_SERVICE);
@@ -538,7 +538,7 @@ namespace win
       strServiceName.replace("/", "-");
       strServiceName.replace("\\", "-");
       //strServiceName.replace("-", "_");
-    
+
       SC_HANDLE hdlServ = ::CreateService(
          hdlSCM,                    // SCManager database 
          strServiceName,
@@ -553,7 +553,7 @@ namespace win
          0,                      // no dependencies 
          0,                      // LocalSystem account 
          0);                     // no password 
-    
+
       if (!hdlServ)
       {
          CloseServiceHandle(hdlSCM);
@@ -561,21 +561,21 @@ namespace win
          TRACELASTERROR();
          return FALSE;
       }
-       
+
       CloseServiceHandle(hdlServ);
       CloseServiceHandle(hdlSCM);
-      
+
       return true;
-      
+
    }
-   
+
 
    bool os::remove_service(::planebase::application * papp)
    {
 
       if(papp->m_strAppName.is_empty()
-      || papp->m_strAppName.CompareNoCase("bergedge") == 0
-      || !papp->is_serviceable())
+         || papp->m_strAppName.CompareNoCase("bergedge") == 0
+         || !papp->is_serviceable())
          return false;
 
       SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_ALL_ACCESS);
@@ -589,13 +589,13 @@ namespace win
 
       strServiceName.replace("/", "-");
       strServiceName.replace("\\", "-");
-    
-    
+
+
       SC_HANDLE hdlServ = ::OpenService(
          hdlSCM,                    // SCManager database 
          strServiceName,
          DELETE);                     // no password 
-    
+
       if (!hdlServ)
       {
          // Ret = ::GetLastError();
@@ -617,8 +617,8 @@ namespace win
    {
 
       if(papp->m_strAppName.is_empty()
-      || papp->m_strAppName.CompareNoCase("bergedge") == 0
-      || !papp->is_serviceable())
+         || papp->m_strAppName.CompareNoCase("bergedge") == 0
+         || !papp->is_serviceable())
          return false;
 
       SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_ALL_ACCESS);
@@ -628,7 +628,7 @@ namespace win
          //::GetLastError();
          return false;
       }
-    
+
       string strServiceName = "ca2-" + papp->m_strAppId;
 
       strServiceName.replace("/", "-");
@@ -638,15 +638,15 @@ namespace win
          hdlSCM,                    // SCManager database 
          strServiceName,
          SERVICE_START);                     // no password 
-    
-    
+
+
       if (!hdlServ)
       {
          CloseServiceHandle(hdlSCM);
          //Ret = ::GetLastError();
          return FALSE;
       }
-       
+
       bool bOk = StartService(hdlServ, 0, NULL) != FALSE;
 
       CloseServiceHandle(hdlServ);
@@ -659,8 +659,8 @@ namespace win
    {
 
       if(papp->m_strAppName.is_empty()
-      || papp->m_strAppName.CompareNoCase("bergedge") == 0
-      || !papp->is_serviceable())
+         || papp->m_strAppName.CompareNoCase("bergedge") == 0
+         || !papp->is_serviceable())
          return false;
 
       SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_ALL_ACCESS);
@@ -670,7 +670,7 @@ namespace win
          //::GetLastError();
          return false;
       }
-    
+
       string strServiceName = "ca2-" + papp->m_strAppId;
 
       strServiceName.replace("/", "-");
@@ -680,7 +680,7 @@ namespace win
          hdlSCM,                    // SCManager database 
          strServiceName,
          SERVICE_STOP);                     // no password 
-    
+
       if (!hdlServ)
       {
          // Ret = ::GetLastError();
@@ -762,7 +762,7 @@ namespace win
       {
 
          bOk = true;
-         
+
          try
          {
 
@@ -823,6 +823,111 @@ repeat:
       }
 
    }
+
+
+   void os::set_file_status(const char * lpszFileName, const ::ex1::file_status& status)
+   {
+
+      DWORD wAttr;
+      FILETIME creationTime;
+      FILETIME lastAccessTime;
+      FILETIME lastWriteTime;
+      LPFILETIME lpCreationTime = NULL;
+      LPFILETIME lpLastAccessTime = NULL;
+      LPFILETIME lpLastWriteTime = NULL;
+
+      wstring wstr(lpszFileName);
+
+      if((wAttr = GetFileAttributesW(wstr)) == (DWORD)-1L)
+      {
+
+         ::win::file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
+
+      }
+
+      if ((DWORD)status.m_attribute != wAttr && (wAttr & ::win::file::readOnly))
+      {
+
+         // Set file attribute, only if currently readonly.
+         // This way we will be able to modify the time assuming the
+         // caller changed the file from readonly.
+
+         if (!SetFileAttributesW(wstr, (DWORD)status.m_attribute))
+         {
+
+            ::win::file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
+
+         }
+
+      }
+
+      // last modification time
+      if (status.m_mtime.get_time() != 0)
+      {
+
+         ::win::TimeToFileTime(get_app(), status.m_mtime, &lastWriteTime);
+
+         lpLastWriteTime = &lastWriteTime;
+
+      }
+
+      // last access time
+      if (status.m_atime.get_time() != 0)
+      {
+
+         ::win::TimeToFileTime(get_app(),status.m_atime, &lastAccessTime);
+
+         lpLastAccessTime = &lastAccessTime;
+
+      }
+
+      // create time
+      if (status.m_ctime.get_time() != 0)
+      {
+
+         ::win::TimeToFileTime(get_app(),status.m_ctime, &creationTime);
+
+         lpCreationTime = &creationTime;
+
+      }
+
+      HANDLE hFile = ::CreateFileW(wstr, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+
+      if(hFile == INVALID_HANDLE_VALUE)
+      {
+
+         ::win::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+
+      }
+
+      if(!SetFileTime((HANDLE)hFile, lpCreationTime, lpLastAccessTime, lpLastWriteTime))
+      {
+
+         ::win::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+
+      }
+
+      if(!::CloseHandle(hFile))
+      {
+
+         ::win::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+
+      }
+
+      if ((DWORD)status.m_attribute != wAttr && !(wAttr & ::win::file::readOnly))
+      {
+
+         if (!::SetFileAttributesW(wstr, (DWORD)status.m_attribute))
+         {
+
+            ::win::file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
+
+         }
+
+      }
+
+   }
+
 
 } // namespace win
 

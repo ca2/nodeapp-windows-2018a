@@ -261,6 +261,41 @@ restart:
             m_strDownloadSite    = "download.ca2.cc";
          }
 
+         
+         m_strBase = Application.command().m_varTopicQuery["base_dir"];
+
+
+         {
+
+            string strContentsSrc = System.dir().path(m_strBase, "include", "product.version.config.h");
+            
+            string strContentsSet;
+            
+            string strContentsGet = Application.file().as_string(strContentsSrc);
+
+            if(m_eversion == version_basis)
+            {
+
+               strContentsSet = "#pragma once\n\n\n#define CA2_PLATFORM_VERSION CA2_BASIS\n\n\n\n";
+         
+            }
+            else
+            {
+
+               strContentsSet = "#pragma once\n\n\n#define CA2_PLATFORM_VERSION CA2_STAGE\n\n\n\n";
+
+            }
+
+            if(strContentsSet != strContentsGet)
+            {
+
+               Application.file().put_contents(strContentsSrc, strContentsSet);
+
+            }
+
+         }
+
+
          m_strSignTool = System.dir().ca2("nodeapp/thirdparty/binary/signtool.exe");
          m_strSpc = "X:\\sensitive\\sensitive\\certificate\\ca2.p12";
          m_strSignPass = Application.file().as_string("X:\\sensitive\\sensitive\\certificate\\2011-05-ca2.pass");
@@ -268,7 +303,7 @@ restart:
          m_iLoop++;
          defer_quit();
 
-         m_strBase = Application.command().m_varTopicQuery["base_dir"];
+         
 
          m_straRoot.remove_all();
 
@@ -617,11 +652,104 @@ restart:
             gen::property_set headers;
             gen::property_set params;
 
+            post["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor +" display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt( "%Y-%m-%d %H-%M-%S")) +  " Storing Symbols...</span></div>";
+
+            Application.http().get("http://ca2.cc/status/", str, post, headers, params);
+
+         }
+
+
+         
+         {
+
+            add_status("Storing Symbols x86...");
+
+            DWORD dwExitCode;
+
+            string strPath = System.dir().ca2("time\\stage\\app\\matter\\store_symbols_job_x86.bat");
+
+            gen::process process;
+            string strCommand = "\"C:\\Program Files (x86)\\Windows Kits\\8.0\\Debuggers\\x86\\symstore.exe\"  add /r  -:REL /f \\\\sewindows\\stage\\" + m_strFormatBuild + "\\stage\\x86\\ /s \\\\sewindows\\SymbolServer\\ /t \"ca2\" /v \"" + m_strFormatBuild + "\"";
+            Application.file().put_contents(strPath, strCommand);
+            if(!process.create_child_process(strPath, false))
+            {
+               DWORD dw = GetLastError();
+               string str;
+               str.Format("Error creating process: %d", dw);
+               add_status(str);
+               return 0;   
+            }
+
+            int i = 1;
+
+            string str;
+
+            while(!process.has_exited(&dwExitCode))
+            {
+               Sleep(584);
+               str.Format("%d Storing Symbols x86 ...", i);
+               add_status(str);
+               i++;
+            }
+
+         }
+
+
+
+
+
+         {
+
+            add_status("Storing Symbols x64...");
+
+            DWORD dwExitCode;
+
+            string strPath = System.dir().ca2("time\\stage\\app\\matter\\store_symbols_job_x64.bat");
+
+            gen::process process;
+            string strCommand = "\"C:\\Program Files (x86)\\Windows Kits\\8.0\\Debuggers\\x64\\symstore.exe\"  add /r  -:REL /f \\\\sewindows\\stage\\" + m_strFormatBuild + "\\stage\\x64\\ /s \\\\sewindows\\SymbolServer\\ /t \"ca2\" /v \"" + m_strFormatBuild + "\"";
+            Application.file().put_contents(strPath, strCommand);
+            if(!process.create_child_process(strPath, false))
+            {
+               DWORD dw = GetLastError();
+               string str;
+               str.Format("Error creating process: %d", dw);
+               add_status(str);
+               return 0;   
+            }
+
+            int i = 1;
+
+            string str;
+
+            while(!process.has_exited(&dwExitCode))
+            {
+               Sleep(584);
+               str.Format("%d Storing Symbols x86 ...", i);
+               add_status(str);
+               i++;
+            }
+
+         }
+
+
+
+
+
+
+         {
+            string str;
+            gen::property_set post;
+            gen::property_set headers;
+            gen::property_set params;
+
             post["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor +" display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt( "%Y-%m-%d %H-%M-%S")) +  " Packaging...</span></div>";
 
             Application.http().get("http://ca2.cc/status/", str, post, headers, params);
 
          }
+
+
 
          add_status("dtf - fileset - file from directory app");
          System.file36().dtf(m_strCCVrelNew + "\\ca2_spa_app.fileset", m_strCCVrelNew + "\\app", get_app());
@@ -662,16 +790,16 @@ restart:
 
          //Application.http().get("http://account.ca2.cc/update_plugins?authnone");
 
-         add_status("ca2.se - freigeben auf Deutschland, Hessen, Frankfurt, ServerLoft...");
+         /*add_status("ca2.se - freigeben auf Deutschland, Hessen, Frankfurt, ServerLoft...");
          prelease = new class release(this);
          prelease->m_strRelease = "http://production.server4serves.ccvotagus.net/release_ca2_ccvotagus_spa?secure=0&authnone=1&format_build=" + m_strFormatBuild;
-         prelease->Begin();
+         prelease->Begin();*/
 
-         add_status(unitext("ca2.cl - lançando no Brasil, Rio Grande do Sul, Porto Alegre, RedeHost..."));
+         /*add_status(unitext("ca2.cl - lançando no Brasil, Rio Grande do Sul, Porto Alegre, RedeHost..."));
          //add_status("ca2.cl - lancando no Brasil, Rio Grande do Sul, Porto Alegre, RedeHost...");
          prelease = new class release(this);
          prelease->m_strRelease = "http://production.server5serves.ccvotagus.net/release_ca2_ccvotagus_spa?secure=0&authnone=1&format_build=" + m_strFormatBuild;
-         prelease->Begin();
+         prelease->Begin();*/
 
          /*
          add_status("releasing in server1serves.ccvotagus.net - United States...");
@@ -1895,7 +2023,7 @@ retry2:
          }
          while(!process.has_exited(&dwExitCode))
          {
-            Sleep(5000);
+            Sleep(284);
             str.Format("%d Compressing npca2 ...", i);
             add_status(str);
          }
@@ -1928,7 +2056,7 @@ retry2:
       int i = 1;
       while(!process.has_exited(&dwExitCode))
       {
-         Sleep(5000);
+         Sleep(284);
          str.Format("%d Compressing npca2 ...", i);
          add_status(str);
          i++;
