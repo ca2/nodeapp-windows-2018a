@@ -736,50 +736,25 @@ namespace win
 
       if(message == WM_QUIT)
       {
+         
+         comparable_array < ::ca::thread * > threadptra = ::win::thread::s_threadptra;
 
-         for(index i = 0; i < c; )
+         for(index i = 0; i < threadptra.get_size(); i++)
          {
 
-            bOk = true;
-         
             try
             {
-               pthread = dynamic_cast < ::radix::thread * >(::win::thread::s_threadptra[i]);
+               pthread = dynamic_cast < ::radix::thread * >(threadptra[i]);
                pthread->m_bRun = false;
                pthread->m_p->m_bRun = false;
             }
             catch(...)
             {
-
-               bOk = false;
-
             }
 
-            try
-            {
-               if(bOk)
-               {
-
-                  if(c == ::win::thread::s_haThread.get_size())
-                     i++;
-                  else
-                     c = ::win::thread::s_haThread.get_size();
-
-               }
-               else
-               {
-
-                  c = ::win::thread::s_haThread.get_size();
-
-               }
-
-            }
-            catch(...)
-            {
-               break;
-            }
 
          }
+
       }
 
 

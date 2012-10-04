@@ -1064,9 +1064,9 @@ void thread::Delete()
          // phase2: pump messages while available
          do
          {
-            
+
             // pump message, but quit on WM_QUIT
-            if (!pump_message())
+            if(!m_bRun || !pump_message())
             {
                try
                {
