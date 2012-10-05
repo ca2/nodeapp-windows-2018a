@@ -5638,6 +5638,14 @@ ExitModal:
          if (nMsg == WM_INITDIALOG)
             __post_init_dialog(pinteraction, rectOld, dwStyle);
       }
+      catch(::exit_exception & e)
+      {
+            
+         Sys(pinteraction->m_papp).os().post_to_all_threads(WM_QUIT, 0, 0);
+
+         return -1;
+
+      }
       catch(const ::ca::exception & e)
       {
 
@@ -5647,6 +5655,7 @@ ExitModal:
             Sys(pinteraction->m_papp).os().post_to_all_threads(WM_QUIT, 0, 0);
 
             return -1;
+
          }
 
          return -1;
