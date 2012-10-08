@@ -278,7 +278,7 @@
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Culture>0x0000</Culture>
-      <AdditionalIncludeDirectories>$(SolutionDir)../../appseedcore/ca2/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../../;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../appseedcore/ca2/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>Ole32.lib;Gdiplus.lib;msimg32.lib;psapi.lib;user32.lib;winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;gdi32.lib;Advapi32.lib</AdditionalDependencies>
@@ -679,7 +679,7 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Culture>0x0000</Culture>
-      <AdditionalIncludeDirectories>$(SolutionDir)../../appseedcore/ca2/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../../;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../appseedcore/ca2/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>Ole32.lib;Gdiplus.lib;psapi.lib;msimg32.lib;user32.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;gdi32.lib;Advapi32.lib</AdditionalDependencies>

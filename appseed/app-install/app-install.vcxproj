@@ -287,7 +287,7 @@
       <PreprocessorDefinitions>WIN32</PreprocessorDefinitions>
       <Culture>
       </Culture>
-      <AdditionalIncludeDirectories>$(SolutionDir)../../../app/appseed</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../../;$(SolutionDir)../../../app/appseed</AdditionalIncludeDirectories>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='memdleak|Win32'">
@@ -515,7 +515,7 @@
       </Culture>
     </ResourceCompile>
     <ResourceCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)../../../app/appseed</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../../;$(SolutionDir)../../../app/appseed</AdditionalIncludeDirectories>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='memdleak|x64'">
