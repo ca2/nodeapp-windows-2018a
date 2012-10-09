@@ -109,6 +109,43 @@ installer::~installer()
 bool installer::initialize()
 {
 
+   if(__argc >= 2)
+   {
+
+      if(!strncmp_dup(__argv[1], "-install:", strlen_dup("-install:")))
+      {
+
+         //Sleep(15 * 1000);
+
+         xxdebug_box(__argv[1], "simple_app::body", 0);
+
+         vsstring strCommandLine;
+
+         for(int i = 1; i < __argc; i++)
+         {
+
+            if(i == 1)
+            {
+               strCommandLine = &__argv[1][strlen_dup("-install:")];
+            }
+            else
+            {
+               strCommandLine = strCommandLine + " ";
+               strCommandLine = strCommandLine + __argv[i];
+            }
+
+         }
+         
+         DWORD dwStartError;
+         
+         spa::ca2_app_install_run(strCommandLine, dwStartError, true);
+         
+         return true;
+
+      }
+   }
+
+
    m_hmutexSpabootInstall = ::CreateMutex(NULL, FALSE, "Global\\ca2::fontopus::ccvotagus_ca2_spaboot_install::7807e510-5579-11dd-ae16-0800200c7784");
    if(::GetLastError() == ERROR_ALREADY_EXISTS)
    {
