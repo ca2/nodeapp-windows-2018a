@@ -105,7 +105,7 @@ namespace production
       {
          if(m_iLoop > m_iLoopCount)
          {
-            System.PostThreadMessage(WM_QUIT, 0, 0);
+            System.post_thread_message(WM_QUIT, 0, 0);
          }
       }
 

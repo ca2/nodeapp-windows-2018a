@@ -117,8 +117,6 @@ bool installer::initialize()
 
          //Sleep(15 * 1000);
 
-         xxdebug_box(__argv[1], "simple_app::body", 0);
-
          vsstring strCommandLine;
 
          for(int i = 1; i < __argc; i++)
@@ -136,13 +134,16 @@ bool installer::initialize()
 
          }
          
+         xxdebug_box(strCommandLine, "simple_app::body", 0);
+
          DWORD dwStartError;
          
          spa::ca2_app_install_run(strCommandLine, dwStartError, true);
          
-         return true;
+         return false;
 
       }
+
    }
 
 

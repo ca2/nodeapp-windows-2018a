@@ -768,7 +768,7 @@ namespace win
 
 repeat:
 
-            if(::PostThreadMessage(::GetThreadId(::win::thread::s_haThread[i]), message, wparam, lparam))
+            if(::PostThreadMessageA(::GetThreadId(::win::thread::s_haThread[i]), message, wparam, lparam))
             {
 
                if(message == WM_QUIT)

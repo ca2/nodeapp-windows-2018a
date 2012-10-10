@@ -1674,7 +1674,7 @@ stop_run:
       pmessage->m_uiMessage   = uiMessage;
       pmessage->m_wparam      = wparam;
       pmessage->m_lparam      = lparam;
-      return PostThreadMessage(WM_APP + 1984, 77, (LPARAM) pmessage) != FALSE;
+      return post_thread_message(WM_APP + 1984, 77, (LPARAM) pmessage) != FALSE;
    }
 
 
@@ -1860,11 +1860,11 @@ stop_run:
    DWORD thread::SuspendThread()
    { ASSERT(m_hThread != NULL); return ::SuspendThread(m_hThread); }
    
-   bool thread::PostThreadMessage(UINT message, WPARAM wParam, LPARAM lParam)
+   bool thread::post_thread_message(UINT message, WPARAM wParam, LPARAM lParam)
    {
       ASSERT(m_hThread != NULL);
       
-      return ::PostThreadMessage(m_nThreadID, message, wParam, lParam)  != FALSE;
+      return ::PostThreadMessageA(m_nThreadID, message, wParam, lParam)  != FALSE;
    
    }
 
@@ -2911,7 +2911,7 @@ pmessage->m_pguie       = pguie;
 pmessage->m_uiMessage   = uiMessage;
 pmessage->m_wparam      = wparam;
 pmessage->m_lparam      = lparam;
-return PostThreadMessage(WM_APP + 1984, 77, (LPARAM) pmessage);
+return post_thread_message(WM_APP + 1984, 77, (LPARAM) pmessage);
 }
 
 
