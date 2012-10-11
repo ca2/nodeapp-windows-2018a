@@ -135,6 +135,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\ap
 		{7149341E-970F-4C74-87A1-FA1D3C4CD40F} = {7149341E-970F-4C74-87A1-FA1D3C4CD40F}
 		{54DEC125-5537-4502-AE28-EAFE740C9AF9} = {54DEC125-5537-4502-AE28-EAFE740C9AF9}
 		{8C03C927-A5AA-4D59-B803-842A323BA776} = {8C03C927-A5AA-4D59-B803-842A323BA776}
+		{5076B034-466D-49E4-AFB5-A3E62F2ADECB} = {5076B034-466D-49E4-AFB5-A3E62F2ADECB}
 		{3714B73A-8B01-42B5-981B-0F52E30F041F} = {3714B73A-8B01-42B5-981B-0F52E30F041F}
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86} = {E2D7833B-9B59-4826-BBDF-C270A2115E86}
 		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0} = {DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}
@@ -227,7 +228,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ca2plugin-container", "..\.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "nodeapp_production", "..\..\appseed\production\production.vcxproj", "{6945864B-2816-46B3-AB26-C31A208A01C9}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_nodeapp_backup", "..\..\appseed\backup\backup.vcxproj", "{9FC565B2-1C85-4A57-8A25-2C90680A7F4E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "nodeapp_backup", "..\..\appseed\backup\backup.vcxproj", "{9FC565B2-1C85-4A57-8A25-2C90680A7F4E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_status", "..\..\..\app-core\appseed\status\status.vcxproj", "{5076B034-466D-49E4-AFB5-A3E62F2ADECB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1442,6 +1445,22 @@ Global
 		{9FC565B2-1C85-4A57-8A25-2C90680A7F4E}.profiler|Win32.Build.0 = profiler|Win32
 		{9FC565B2-1C85-4A57-8A25-2C90680A7F4E}.profiler|x64.ActiveCfg = profiler|x64
 		{9FC565B2-1C85-4A57-8A25-2C90680A7F4E}.profiler|x64.Build.0 = profiler|x64
+		{5076B034-466D-49E4-AFB5-A3E62F2ADECB}.basis|Win32.ActiveCfg = basis|Win32
+		{5076B034-466D-49E4-AFB5-A3E62F2ADECB}.basis|Win32.Build.0 = basis|Win32
+		{5076B034-466D-49E4-AFB5-A3E62F2ADECB}.basis|x64.ActiveCfg = basis|x64
+		{5076B034-466D-49E4-AFB5-A3E62F2ADECB}.basis|x64.Build.0 = basis|x64
+		{5076B034-466D-49E4-AFB5-A3E62F2ADECB}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
+		{5076B034-466D-49E4-AFB5-A3E62F2ADECB}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
+		{5076B034-466D-49E4-AFB5-A3E62F2ADECB}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
+		{5076B034-466D-49E4-AFB5-A3E62F2ADECB}.codeanalysis|x64.Build.0 = codeanalysis|x64
+		{5076B034-466D-49E4-AFB5-A3E62F2ADECB}.memdleak|Win32.ActiveCfg = memdleak|Win32
+		{5076B034-466D-49E4-AFB5-A3E62F2ADECB}.memdleak|Win32.Build.0 = memdleak|Win32
+		{5076B034-466D-49E4-AFB5-A3E62F2ADECB}.memdleak|x64.ActiveCfg = memdleak|x64
+		{5076B034-466D-49E4-AFB5-A3E62F2ADECB}.memdleak|x64.Build.0 = memdleak|x64
+		{5076B034-466D-49E4-AFB5-A3E62F2ADECB}.profiler|Win32.ActiveCfg = profiler|Win32
+		{5076B034-466D-49E4-AFB5-A3E62F2ADECB}.profiler|Win32.Build.0 = profiler|Win32
+		{5076B034-466D-49E4-AFB5-A3E62F2ADECB}.profiler|x64.ActiveCfg = profiler|x64
+		{5076B034-466D-49E4-AFB5-A3E62F2ADECB}.profiler|x64.Build.0 = profiler|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
