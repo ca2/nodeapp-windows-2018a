@@ -89,6 +89,19 @@ namespace production
 
    void application::on_request(::ca::create_context * pcreatecontext)
    {
+
+      if(pcreatecontext->m_spCommandLine->m_varQuery["version"] == "stage")
+      {
+
+         m_eversion = ::production::production::version_stage;
+
+      }
+      else
+      {
+
+         m_eversion = ::production::production::version_basis;
+
+      }
       
       m_pdoctemplateMain->open_document_file(pcreatecontext);
 

@@ -86,6 +86,7 @@ namespace production
       stringa                 m_straBB;
       string                  m_strBuild;
       string                  m_strFormatBuild;
+      bool                    m_bEndProduction;
                               
       string                  m_strTag;
       string                  m_strTagPath;
