@@ -5638,7 +5638,7 @@ ExitModal:
          if (nMsg == WM_INITDIALOG)
             __post_init_dialog(pinteraction, rectOld, dwStyle);
       }
-      catch(::exit_exception & e)
+      catch(::exit_exception &)
       {
             
          Sys(pinteraction->m_papp).os().post_to_all_threads(WM_QUIT, 0, 0);
@@ -5670,7 +5670,7 @@ ExitModal:
       catch(...)
       {
       }
-run:
+
       try
       {
          pThreadState->m_lastSentMsg = oldState;
