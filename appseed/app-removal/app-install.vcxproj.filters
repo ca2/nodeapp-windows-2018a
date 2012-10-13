@@ -29,21 +29,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="app-install.rc">
+    <None Include="removall.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="app-removal.rc">
       <Filter>Source Files</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="ca2v_2011_04_02.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="fluidbasis_2011_10_26.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="small_bell.mp3">
-      <Filter>Resource Files</Filter>
-    </Media>
   </ItemGroup>
 </Project>

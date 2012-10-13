@@ -1,4 +1,10 @@
 ﻿#include "framework.h"
+#include <Shlobj.h>
+#include "winnls.h"
+#include "shobjidl.h"
+#include "objbase.h"
+#include "objidl.h"
+#include "shlguid.h"
 
 
 #include <psapi.h>
@@ -9,7 +15,7 @@
 
 
 
-class installer :
+class removal :
    public simple_app,
    public small_ipc_rx_channel::receiver
 {
@@ -27,7 +33,6 @@ public:
 
    e_message                  m_emessage;
    HANDLE                     m_hmutexSpabootInstall;
-   small_ipc_rx_channel       m_rxchannel;
    
    char *                     m_modpath;
    char *                     m_pszDllEnds;
@@ -37,11 +42,9 @@ public:
    int                        m_iSizeModule;
    bool                       m_bInstallerInstalling;
 
-   installer();
-   virtual ~installer();
+   removal();
+   virtual ~removal();
    
-   void install_defer_file_transfer();
-
    bool is_user_using(const char * pszDll);
 
    ATOM spaboot_message_register_class(HINSTANCE hInstance);
@@ -74,20 +77,21 @@ _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
    __in LPTSTR lpCmdLine, int nCmdShow)
 {
    // call shared/exported WinMain
-   return simple_app::s_main < installer > ();
+   return simple_app::s_main < removal > ();
 }
 
 // if MSVC CRT is stripped
 /*extern "C" int WinMainCRTStartup() \
 { 
 
-   ExitProcess(simple_app::s_main < installer > ());
+   ExitProcess(simple_app::s_main < removal > ());
 
 }*/
 
 extern bool g_bInstalling;
+extern stra_dup * g_pstraTrace;
 
-installer::installer()
+removal::removal()
 {
    xxdebug_box("app-install", "app", 0);
    m_hinstance             = ::GetModuleHandleA(NULL);
@@ -100,106 +104,247 @@ installer::installer()
    m_hmodulea              = NULL;
    m_iSizeModule           = 0;
    m_bInstallerInstalling  = false;
+   g_pstraTrace            = NULL;
 }
 
-installer::~installer()
+removal::~removal()
 {
 }
 
-bool installer::initialize()
+
+// CreateLink - Uses the Shell's IShellLink and IPersistFile interfaces 
+//              to create and store a shortcut to the specified object. 
+//
+// Returns the result of calling the member functions of the interfaces. 
+//
+// Parameters:
+// lpszPathObj  - Address of a buffer that contains the path of the object,
+//                including the file name.
+// lpszPathLink - Address of a buffer that contains the path where the 
+//                Shell link is to be stored, including the file name.
+// lpszDesc     - Address of a buffer that contains a description of the 
+//                Shell link, stored in the Comment field of the link
+//                properties.
+
+
+HRESULT CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc, LPCWSTR lpszIconPath = NULL, int iIcon = 0) 
+{ 
+    HRESULT hres; 
+    IShellLinkW* psl; 
+ 
+    // Get a pointer to the IShellLink interface. It is assumed that CoInitialize
+    // has already been called.
+    hres = CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLinkW, (LPVOID*)&psl); 
+    if (SUCCEEDED(hres)) 
+    { 
+        IPersistFile* ppf; 
+ 
+        // Set the path to the shortcut target and add the description. 
+        psl->SetPath(lpszPathObj); 
+        psl->SetDescription(lpszDesc); 
+        if(lpszIconPath!= NULL)
+        {
+        psl->SetIconLocation(lpszIconPath, iIcon);
+        }
+ 
+        // Query IShellLink for the IPersistFile interface, used for saving the 
+        // shortcut in persistent storage. 
+        hres = psl->QueryInterface(IID_IPersistFile, (LPVOID*)&ppf); 
+ 
+        if (SUCCEEDED(hres)) 
+        { 
+            //WCHAR wsz[MAX_PATH]; 
+ 
+            // Ensure that the string is Unicode. 
+//            MultiByteToWideChar(CP_ACP, 0, lpszPathLink, -1, wsz, MAX_PATH); 
+            
+            // Add code here to check return value from MultiByteWideChar 
+            // for success.
+ 
+            // Save the link by calling IPersistFile::Save. 
+            hres = ppf->Save(lpszPathLink, TRUE); 
+            ppf->Release(); 
+        } 
+        psl->Release(); 
+    } 
+    return hres; 
+
+}
+
+vsstring get_dir(const KNOWNFOLDERID & rfid, const char * lpcsz)
 {
 
-   if(__argc >= 2)
-   {
+   vsstring str;
 
-      if(!strncmp_dup(__argv[1], "-install:", strlen_dup("-install:")))
-      {
+   wchar_t * buf = NULL;
+   
+   SHGetKnownFolderPath(rfid, 0, NULL, &buf);
 
-         //Sleep(15 * 1000);
+   char * psz = utf16_to_8(buf);
 
-         vsstring strCommandLine;
+   str = dir::path(psz, lpcsz);
 
-         for(int i = 1; i < __argc; i++)
-         {
+   ca2_free(psz);
+   
+   CoTaskMemFree(buf);
 
-            if(i == 1)
-            {
-               strCommandLine = &__argv[1][strlen_dup("-install:")];
-            }
-            else
-            {
-               strCommandLine = strCommandLine + " ";
-               strCommandLine = strCommandLine + __argv[i];
-            }
+   return str;
 
-         }
-         
-         xxdebug_box(strCommandLine, "simple_app::body", 0);
+}
 
-         DWORD dwStartError;
-         
-         spa::ca2_app_install_run(strCommandLine, dwStartError, true);
-         
-         return false;
+void my_system(const char * pszCmd)
+{
+STARTUPINFO si;
+PROCESS_INFORMATION pi;
 
-      }
+ZeroMemory(&si, sizeof(si));
+si.cb = sizeof(si);
+ZeroMemory(&pi, sizeof(pi));
 
-   }
+si.dwFlags |= STARTF_USESHOWWINDOW;
+si.wShowWindow = SW_HIDE;
+
+if (CreateProcess(NULL, (char *) pszCmd, NULL, NULL, FALSE, CREATE_NO_WINDOW | CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
+{
+    WaitForSingleObject(pi.hProcess, INFINITE);
+    CloseHandle(pi.hProcess);
+    CloseHandle(pi.hThread);
+}
+
+}
+
+
+void rmdir(const char * pszDir)
+{
+   my_system("rmdir /S /Q \"" + vsstring(pszDir) + "\"");
+}
+
+void rmdir_n_v(const char * pszDir)
+{
+   vsstring str(pszDir);
+   my_system("rmdir /S /Q \"" + str + "\"");
+
+   str.replace(":", "");
+   str = dir::path(get_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Tempoarary Internet Files\\Virtualized\\VirtualStore"), str);
+   my_system("rmdir /S /Q \"" + str + "\"");
+}
+
+
+void g_n_rmdir_n_v(const KNOWNFOLDERID & rfid, const char * pszDir)
+{
+
+   vsstring strDir = get_dir(rfid, pszDir);
+
+   rmdir_n_v(strDir);
+
+}
+
+
+
+
+bool removal::initialize()
+{
 
 
    m_hmutexSpabootInstall = ::CreateMutex(NULL, FALSE, "Global\\ca2::fontopus::ccvotagus_ca2_spaboot_install::7807e510-5579-11dd-ae16-0800200c7784");
    if(::GetLastError() == ERROR_ALREADY_EXISTS)
    {
+      ::MessageBox(NULL, "app-install.exe is running. Please close it to continue.", "app-install.exe is running!", MB_ICONEXCLAMATION);
       m_iError = -202;
       return false;
    }
 
-   installation_file_lock(false);
+   char szFile[MAX_PATH * 8];
 
-   //Sleep(15 * 1000);
+   ::GetModuleFileName(NULL, szFile, sizeof(szFile));
 
-   m_modpath      = (char *) ca2_alloc(MAX_PATH * 8);
-   m_pszDllEnds   = (char *) ca2_alloc(MAX_PATH * 8);
-   m_iSizeProcess = 1024;
-   m_dwaProcess   = (DWORD *) ca2_alloc(m_iSizeProcess);
-   m_iSizeModule  = 1024;
-   m_hmodulea     = (HMODULE *) ca2_alloc(m_iSizeModule);
+   vsstring strTargetDir = get_dir(FOLDERID_ProgramFilesX86, "ca2-app-removal");
 
-   m_rxchannel.m_preceiver = this;
+   dir::mk(strTargetDir);
 
-   prepare_small_bell();
+   vsstring strTarget = dir::path(strTargetDir, "app-removal.exe");
 
-   if(!m_rxchannel.create("ca2/fontopus/ccvotagus/spaboot_install", "app-install.exe"))
+   if(::CopyFile(szFile, strTarget, TRUE))
    {
-      m_iError = -1;
-      return false;
-   }
+      int i = MessageBox(NULL, "Do you want to create a short to ca2 app-removal in Desktop?", "app-removal installation", MB_YESNOCANCEL);
 
-   return true;
+      if(i == IDCANCEL)
+         return false;
 
-}
-
-void installer::install_defer_file_transfer()
-{
-   if(!g_bInstalling)
-   {
-      update_updated();
-      if(!is_updated() && !are_there_user_files_in_use())
+      if(i == IDYES)
       {
-         // missing locale schema;
-
-         throw "missing locale and schema parameters for installing";
-         synch_spaadmin("starter_start: : app=session session_start=session app_type=application install in background in spa");
+         vsstring strLink= get_dir(FOLDERID_Desktop, "ca2 app-removal Tool.lnk");
+         wstring wstrTarget(strTarget);
+         wstring wstrLink(strLink);
+         // create shortcurt;
+         CreateLink(wstrTarget, wstrLink, L"ca2 app-removal Tool", wstrTarget, 0);
       }
    }
+
+
+   my_system("taskkill /F /IM app.exe");
+   my_system("taskkill /F /IM app-install.exe");
+   my_system("taskkill /F /IM ca2plugin-container.exe");
+   my_system("taskkill /F /IM plugin-container.exe");
+   my_system("taskkill /F /IM iexplore.exe");
+   my_system("taskkill /F /IM firefox.exe");
+   g_n_rmdir_n_v(FOLDERID_ProgramFilesX86, "ca2");
+   g_n_rmdir_n_v(FOLDERID_ProgramData, "ca2");
+
+   vsstring str;
+
+   g_n_rmdir_n_v(FOLDERID_Profile, "ca2");
+//rmdir /S /Q "C:\Users\votagus\ca2"
+   g_n_rmdir_n_v(FOLDERID_LocalAppData, "ca2");
+//rmdir /S /Q "C:\Users\votagus\AppData\Local\ca2"
+//rmdir /S /Q "C:\Users\votagus\AppData\Local\VirtualStore\Program Files (x86)\ca2"
+   g_n_rmdir_n_v(FOLDERID_LocalAppData, "VirtualStore\\Programs Files(x86)\\ca2");
+//rmdir /S /Q "C:\Users\votagus\AppData\Local\VirtualStore\ProgramData\ca2"
+   g_n_rmdir_n_v(FOLDERID_LocalAppData, "VirtualStore\\ProgramData\\ca2");
+//rmdir /S /Q "C:\Users\votagus\AppData\LocalLow\ca2"
+   g_n_rmdir_n_v(FOLDERID_LocalAppDataLow, "ca2");
+//rmdir /S /Q "C:\Users\votagus\AppData\Roaming\ca2"
+   str = get_dir(FOLDERID_RoamingAppData, "ca2");
+//del "C:\Windows\Downloaded Program Files\iexca2.dll"
+   ::DeleteFile("C:\\Windows\\Downloaded Program Files\\iexca2.dll");
+//del "C:\Windows\Downloaded Program Files\iexca2.inf"
+   ::DeleteFile("C:\\Windows\\Downloaded Program Files\\iexca2.inf");
+//del "C:\Windows\Downloaded Program Files\app-install.exe"
+   ::DeleteFile("C:\\Windows\\Downloaded Program Files\\app-install.exe");
+//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\ProgramData\ca2"
+   //str = get_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Tempoarary Internet Files\\Virtualized\\VirtualStore\\ProgramsData\\ca2");
+   //rmdir(str);
+//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Program Files (x86)\ca2"
+   //str = get_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Tempoarary Internet Files\\Virtualized\\VirtualStore\\Programs Files(x86)\\ca2");
+   //rmdir(str);
+//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\votagus\ca2"
+   //str = get_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Tempoarary Internet Files\\Virtualized\\VirtualStore\\ProgramsData\\ca2");
+   //rmdir(str);
+//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\votagus\AppData\Local\ca2"
+//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\votagus\AppData\Local\VirtualStore\Program Files (x86)\ca2"
+//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\votagus\AppData\Local\VirtualStore\ProgramData\ca2"
+//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\votagus\AppData\Roaming\ca2"
+//call ".\windows_registry\delete_global_npca2.bat"
+//call ".\windows_registry\delete_activex_iexca2.bat"
+
+   ::reg_delete_tree_dup(HKEY_LOCAL_MACHINE, "SOFTWARE\\Wow6432Node\\MozillaPlugins\\@ca2.cc/npca2");
+   ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "Wow6432Node\\CLSID\\{CA211984-1984-1977-A861-F8AA2A7AEE4B}");
+   ::reg_delete_tree_dup(HKEY_LOCAL_MACHINE, "SOFTWARE\\MozillaPlugins\\@ca2.cc/npca2");
+   ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "CLSID\\{CA211984-1984-1977-A861-F8AA2A7AEE4B}");
+
+   ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "ccvotagus.ca2.fontopus.iexca2");
+   ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "ccvotagus.ca2.fontopus.iexca2.2");
+   ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "ccvotagus_ca2_spaboot_file");
+
+   //MessageBox(NULL, "Hope Helped!", "Hope Helped!", MB_ICONINFORMATION);
+
+   return false;
+
 }
-
-
-typedef int (__cdecl * PFN_SPAADMIN_MAIN)(const char * pszCommandLine);
 
 
 // non-thread safe
-bool installer::is_user_using(DWORD processid, const char * pszDll)
+bool removal::is_user_using(DWORD processid, const char * pszDll)
 {
 
    HANDLE hModuleSnap = INVALID_HANDLE_VALUE;
@@ -240,7 +385,7 @@ bool installer::is_user_using(DWORD processid, const char * pszDll)
 }
 
 // non-thread safe
-bool installer::is_user_using(const char * pszDll)
+bool removal::is_user_using(const char * pszDll)
 {
    HANDLE hProcessSnap;
    PROCESSENTRY32 pe32;
@@ -276,7 +421,7 @@ bool installer::is_user_using(const char * pszDll)
 
 }
 
-void installer::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMessage)
+void removal::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMessage)
 {
    vsstring strMessage(pszMessage);
    int iRet = 0;
@@ -336,7 +481,7 @@ void installer::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMe
 
 
 
-bool installer::are_there_user_files_in_use()
+bool removal::are_there_user_files_in_use()
 {
 #ifdef X86
    if(is_user_using(dir::ca2("stage\\x86\\msvcp110d.dll")))
@@ -365,15 +510,15 @@ bool installer::are_there_user_files_in_use()
 }
 
 
-bool installer::finalize()
+bool removal::finalize()
 {
 
    simple_app::finalize();
 
-   ca2_free(m_hmodulea);
-   ca2_free(m_dwaProcess);
-   ca2_free(m_pszDllEnds);
-   ca2_free(m_modpath);
+   //ca2_free(m_hmodulea);
+   //ca2_free(m_dwaProcess);
+   //ca2_free(m_pszDllEnds);
+   //ca2_free(m_modpath);
 
    return true;
 
