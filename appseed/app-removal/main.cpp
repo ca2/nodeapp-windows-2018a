@@ -216,17 +216,17 @@ if (CreateProcess(NULL, (char *) pszCmd, NULL, NULL, FALSE, CREATE_NO_WINDOW | C
 
 void rmdir(const char * pszDir)
 {
-   my_system("rmdir /S /Q \"" + vsstring(pszDir) + "\"");
+   my_system("cmd.exe /C rmdir /S /Q \"" + vsstring(pszDir) + "\"");
 }
 
 void rmdir_n_v(const char * pszDir)
 {
    vsstring str(pszDir);
-   my_system("rmdir /S /Q \"" + str + "\"");
+   rmdir(str);
 
    str.replace(":", "");
-   str = dir::path(get_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Tempoarary Internet Files\\Virtualized\\VirtualStore"), str);
-   my_system("rmdir /S /Q \"" + str + "\"");
+   str = dir::path(get_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Temporary Internet Files\\Virtualized"), str);
+   rmdir(str);
 }
 
 
@@ -304,7 +304,7 @@ bool removal::initialize()
 //rmdir /S /Q "C:\Users\votagus\AppData\LocalLow\ca2"
    g_n_rmdir_n_v(FOLDERID_LocalAppDataLow, "ca2");
 //rmdir /S /Q "C:\Users\votagus\AppData\Roaming\ca2"
-   str = get_dir(FOLDERID_RoamingAppData, "ca2");
+   g_n_rmdir_n_v(FOLDERID_RoamingAppData, "ca2");
 //del "C:\Windows\Downloaded Program Files\iexca2.dll"
    ::DeleteFile("C:\\Windows\\Downloaded Program Files\\iexca2.dll");
 //del "C:\Windows\Downloaded Program Files\iexca2.inf"
