@@ -121,11 +121,11 @@ namespace win
       primitive::memory_size nRead = 0;
 
       if ((nRead = fread(lpBuf, sizeof(BYTE), nCount, m_pStream)) == 0 && !feof(m_pStream))
-         vfxThrowFileException(get_app(), ::ex1::file_exception::generic, _doserrno, m_strFileName);
+         vfxThrowFileException(get_app(), ::ex1::file_exception::type_generic, _doserrno, m_strFileName);
       if (ferror(m_pStream))
       {
          clearerr(m_pStream);
-         vfxThrowFileException(get_app(), ::ex1::file_exception::generic, _doserrno, m_strFileName);
+         vfxThrowFileException(get_app(), ::ex1::file_exception::type_generic, _doserrno, m_strFileName);
       }
       return nRead;
    }
@@ -137,7 +137,7 @@ namespace win
       ASSERT(__is_valid_address(lpBuf, nCount, FALSE));
 
       if (fwrite(lpBuf, sizeof(BYTE), nCount, m_pStream) != nCount)
-         vfxThrowFileException(get_app(), ::ex1::file_exception::generic, _doserrno, m_strFileName);
+         vfxThrowFileException(get_app(), ::ex1::file_exception::type_generic, _doserrno, m_strFileName);
    }
 
    void stdio_file::write_string(const char * lpsz)
@@ -159,7 +159,7 @@ namespace win
       if (lpszResult == NULL && !feof(m_pStream))
       {
          clearerr(m_pStream);
-         vfxThrowFileException(get_app(), ::ex1::file_exception::generic, _doserrno, m_strFileName);
+         vfxThrowFileException(get_app(), ::ex1::file_exception::type_generic, _doserrno, m_strFileName);
       }
       return lpszResult;
    }
@@ -183,7 +183,7 @@ namespace win
          if (lpszResult == NULL && !feof(m_pStream))
          {
             clearerr(m_pStream);
-            vfxThrowFileException(get_app(), ::ex1::file_exception::generic, _doserrno,
+            vfxThrowFileException(get_app(), ::ex1::file_exception::type_generic, _doserrno,
                m_strFileName);
          }
 

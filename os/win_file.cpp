@@ -759,7 +759,7 @@ namespace win
       case ERROR_SWAPERROR:
          return ::ex1::file_exception::accessDenied;
       default:
-         return ::ex1::file_exception::generic;
+         return ::ex1::file_exception::type_generic;
       }
    }
 
@@ -1674,7 +1674,7 @@ int PASCAL ::win::file_exception::ErrnoToException(int nErrno)
    case EIO:
       return ::ex1::file_exception::hardIO;
    default:
-      return ::ex1::file_exception::generic;
+      return ::ex1::file_exception::type_generic;
    }
 }
 
