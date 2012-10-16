@@ -310,22 +310,6 @@ namespace win
 
    }
 
-   point graphics::GetViewportOrg() const
-   {
-      //POINT point;
-      //::GetViewportOrgEx(get_handle2(), &point);
-
-      Gdiplus::Matrix m;
-
-      m_pgraphics->GetTransform(&m);
-
-      Gdiplus::PointF origin(0, 0);
-
-      m.TransformPoints(&origin);
-
-      return point((int64_t) origin.X, (int64_t) origin.Y);
-   }
-
    size graphics::GetViewportExt() const
    {
       SIZE size;
@@ -2442,6 +2426,24 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          nRetVal = ::SetMapMode(get_handle2(), nMapMode);
       return nRetVal;
    }
+
+   point graphics::GetViewportOrg() const
+   {
+      //POINT point;
+      //::GetViewportOrgEx(get_handle2(), &point);
+
+      Gdiplus::Matrix m;
+
+      m_pgraphics->GetTransform(&m);
+
+      Gdiplus::PointF origin(0, 0);
+
+      m.TransformPoints(&origin);
+
+      return point((int64_t) origin.X, (int64_t) origin.Y);
+   }
+
+
 
    point graphics::SetViewportOrg(int x, int y)
    {
