@@ -70,6 +70,10 @@ namespace win
                   }
                }
             }
+            else
+            {
+               iLenFolder--;
+            }
          }
          else
          {
