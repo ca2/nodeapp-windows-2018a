@@ -2046,8 +2046,8 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    {
       FillSolidRect(x, y, cx - 1, 1, clrTopLeft);
       FillSolidRect(x, y, 1, cy - 1, clrTopLeft);
-      FillSolidRect(x + cx, y, -1, cy, clrBottomRight);
-      FillSolidRect(x, y + cy, cx, -1, clrBottomRight);
+      FillSolidRect(x + cx - 1, y, 1, cy, clrBottomRight);
+      FillSolidRect(x, y + cy - 1, cx, 1, clrBottomRight);
    }
 
 
