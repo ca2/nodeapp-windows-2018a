@@ -32,7 +32,7 @@ public:
 
 
    e_message                  m_emessage;
-   HANDLE                     m_hmutexSpabootInstall;
+   HANDLE                     m_hmutex_app_removal;
    
    char *                     m_modpath;
    char *                     m_pszDllEnds;
@@ -95,7 +95,7 @@ removal::removal()
 {
    xxdebug_box("app-install", "app", 0);
    m_hinstance             = ::GetModuleHandleA(NULL);
-   m_hmutexSpabootInstall  = NULL;
+   m_hmutex_app_removal  = NULL;
    e_message m_emessage    = message_none;
    m_modpath               = NULL;
    m_pszDllEnds            = NULL;
@@ -246,10 +246,10 @@ bool removal::initialize()
 {
 
 
-   m_hmutexSpabootInstall = ::CreateMutex(NULL, FALSE, "Global\\ca2::fontopus::ccvotagus_ca2_spaboot_install::7807e510-5579-11dd-ae16-0800200c7784");
+   m_hmutex_app_removal = ::CreateMutex(NULL, FALSE, "Global\\ca2::fontopus::ccvotagus_ca2_spa_app_removal::7807e510-5579-11dd-ae16-0800200c7784");
    if(::GetLastError() == ERROR_ALREADY_EXISTS)
    {
-      ::MessageBox(NULL, "app-install.exe is running. Please close it to continue.", "app-install.exe is running!", MB_ICONEXCLAMATION);
+      ::MessageBox(NULL, "ca2 app-removal.exe is already running.\n\nPlease wait for app-removal to finish or close it - using Task Manager - Ctrl+Shift+ESC - to continue.", "app-install.exe is running!", MB_ICONEXCLAMATION);
       m_iError = -202;
       return false;
    }
@@ -266,7 +266,7 @@ bool removal::initialize()
 
    if(::CopyFile(szFile, strTarget, TRUE))
    {
-      int i = MessageBox(NULL, "Do you want to create a short to ca2 app-removal in Desktop?", "app-removal installation", MB_YESNOCANCEL);
+      int i = MessageBox(NULL, "Do you want to place a shortcut to ca2 app-removal in Desktop?\n\nProgram has already been copied to Program Files Folder.", "app-removal installation", MB_ICONQUESTION | MB_YESNOCANCEL);
 
       if(i == IDCANCEL)
          return false;
