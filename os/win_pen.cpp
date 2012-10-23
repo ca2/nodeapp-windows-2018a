@@ -362,7 +362,11 @@ namespace win
          {
             delete m_ppen;
          }
-         ((pen *) this)->m_ppen = new Gdiplus::Pen(Gdiplus::Color(m_crPenColor), (Gdiplus::REAL) m_dPenWidth);
+         ((pen *) this)->m_ppen = new Gdiplus::Pen(Gdiplus::Color(
+            GetAValue(m_crPenColor),
+            GetRValue(m_crPenColor),
+            GetGValue(m_crPenColor),
+            GetBValue(m_crPenColor)), (Gdiplus::REAL) m_dPenWidth);
          if(m_nPenStyle & PS_JOIN_ROUND)
          {
             ((pen *) this)->m_ppen->SetLineJoin(Gdiplus::LineJoinRound);
