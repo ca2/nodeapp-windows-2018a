@@ -2,6 +2,7 @@
 #include <openssl/crypto.h>
 #include <openssl/pem.h>
 #include <openssl/err.h>
+#include <openssl/x509.h>
 
 
 namespace production
@@ -1824,7 +1825,7 @@ retry2:
       }
 
 
-      STACK * pstack509 = NULL;
+      stack_st_X509 * pstack509 = NULL;
       {
          string strOthers = Application.file().as_string(strOthersPath);
          raw_array < X509 * > xptra;
