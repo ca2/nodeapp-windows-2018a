@@ -115,6 +115,8 @@ namespace production
       string                  m_strCCVrelNew;
       string                  m_strIndexMd5;
 
+      bool                    m_bEndStatus;
+
 
       production(::ca::application * papp);
       virtual ~production();

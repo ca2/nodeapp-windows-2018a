@@ -32,6 +32,7 @@ namespace production
          stra.add("manifest");
       }
       m_bLoop = false;
+      m_bEndStatus      = false;
 
 
    }
@@ -426,6 +427,8 @@ restart:
 
          add_status(unitext("by Grace of God and CGCL1984+kaarurosu日歩路主!!"));
          m_dwStartTick = ::GetTickCount();
+
+         m_bEndStatus = false;
 
          keeper < bool > keepFinishedFalse(&m_bFinished, false, true, true);
          string str;
@@ -2247,8 +2250,9 @@ retry2:
 
    void production::OnUpdateRelease()
    {
-      if(m_iRelease == 0 && m_bEndProduction)
+      if(m_iRelease == 0 && m_bEndProduction && !m_bEndStatus)
       {
+         m_bEndStatus = true;
          add_status("All releases have been commanded and production has deemed ended!!.!.!!.");
          gen::property_set post;
          gen::property_set headers;
