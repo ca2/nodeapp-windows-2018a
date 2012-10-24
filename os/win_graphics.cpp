@@ -676,6 +676,84 @@ namespace win
    { ASSERT(get_handle1() != NULL); return ::Pie(get_handle1(), lpRect->left, lpRect->top,
    lpRect->right, lpRect->bottom, ptStart.x, ptStart.y,
    ptEnd.x, ptEnd.y) != FALSE; }
+
+   bool graphics::fill_polygon(const POINTD * lpPoints, int nCount)
+   {
+
+      if(nCount <= 0)
+         return TRUE;
+
+      bool bOk1 = FALSE;
+
+      Gdiplus::Point * ppoints = new Gdiplus::Point[nCount];
+
+      try
+      {
+
+         for(int i = 0; i < nCount; i++)
+         {
+            ppoints[i].X = lpPoints[i].x;
+            ppoints[i].Y = lpPoints[i].y;
+         }
+   
+         bOk1 = m_pgraphics->FillPolygon(gdiplus_brush(), ppoints, nCount, gdiplus_get_fill_mode()) == Gdiplus::Status::Ok;
+
+      }
+      catch(...)
+      {
+      }
+      
+      try
+      {
+         delete ppoints;         
+      }
+      catch(...)
+      {
+      }
+
+
+      return bOk1;
+   }
+
+   bool graphics::fill_polygon(const POINT* lpPoints, int nCount)
+   {
+
+      if(nCount <= 0)
+         return TRUE;
+
+      bool bOk1 = FALSE;
+
+      Gdiplus::Point * ppoints = new Gdiplus::Point[nCount];
+
+      try
+      {
+
+         for(int i = 0; i < nCount; i++)
+         {
+            ppoints[i].X = lpPoints[i].x;
+            ppoints[i].Y = lpPoints[i].y;
+         }
+   
+         bOk1 = m_pgraphics->FillPolygon(gdiplus_brush(), ppoints, nCount, gdiplus_get_fill_mode()) == Gdiplus::Status::Ok;
+
+      }
+      catch(...)
+      {
+      }
+      
+      try
+      {
+         delete ppoints;         
+      }
+      catch(...)
+      {
+      }
+
+
+      return bOk1;
+   }
+
+
    bool graphics::Polygon(const POINT* lpPoints, int nCount)
    {
 
