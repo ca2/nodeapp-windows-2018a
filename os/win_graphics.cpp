@@ -3953,7 +3953,9 @@ namespace win
 
 //      ::Gdiplus::Pen pen(::Gdiplus::Color(GetAValue(m_crColor), GetRValue(m_crColor), GetGValue(m_crColor), GetBValue(m_crColor)), m_dPenWidth);
 
-      m_pgraphics->DrawLine(gdiplus_pen(), Gdiplus::Point((INT) m_x, (INT) m_y), Gdiplus::Point((INT) x,(INT) y));
+      gdiplus_pen()->SetAlignment(Gdiplus::PenAlignment::PenAlignmentCenter);
+
+      m_pgraphics->DrawLine(gdiplus_pen(), Gdiplus::Point((FLOAT) m_x, (FLOAT) m_y), Gdiplus::Point((FLOAT) x,(FLOAT) y));
 
 
       m_x = x;
