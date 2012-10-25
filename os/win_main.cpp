@@ -55,7 +55,7 @@ int CLASS_DECL_win __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTS
    
    psystem->init_main_data(pinitmaindata);
 
-   //MessageBox(NULL, "box1", "box1", MB_ICONINFORMATION);
+   xxdebug_box("box1", "box1", MB_ICONINFORMATION);
 
    set_main_thread(GetCurrentThread());
    set_main_thread_id(GetCurrentThreadId());
