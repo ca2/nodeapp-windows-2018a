@@ -298,7 +298,7 @@ bool removal::initialize()
    g_n_rmdir_n_v(FOLDERID_LocalAppData, "ca2");
 //rmdir /S /Q "C:\Users\votagus\AppData\Local\ca2"
 //rmdir /S /Q "C:\Users\votagus\AppData\Local\VirtualStore\Program Files (x86)\ca2"
-   g_n_rmdir_n_v(FOLDERID_LocalAppData, "VirtualStore\\Programs Files(x86)\\ca2");
+   g_n_rmdir_n_v(FOLDERID_LocalAppData, "VirtualStore\\Program Files (x86)\\ca2");
 //rmdir /S /Q "C:\Users\votagus\AppData\Local\VirtualStore\ProgramData\ca2"
    g_n_rmdir_n_v(FOLDERID_LocalAppData, "VirtualStore\\ProgramData\\ca2");
 //rmdir /S /Q "C:\Users\votagus\AppData\LocalLow\ca2"
