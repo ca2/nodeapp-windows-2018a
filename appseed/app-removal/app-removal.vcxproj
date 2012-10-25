@@ -35,7 +35,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{71BAB50B-DC41-4570-B676-30380CDA3A17}</ProjectGuid>
+    <ProjectGuid>{B18E0FCB-402F-4805-8FCD-AFE8DB6DDF74}</ProjectGuid>
     <RootNamespace>app-removal</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <ProjectName>app-removal</ProjectName>

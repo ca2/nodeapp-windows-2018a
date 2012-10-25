@@ -232,6 +232,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "nodeapp_backup", "..\..\app
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_status", "..\..\..\app-core\appseed\status\status.vcxproj", "{5076B034-466D-49E4-AFB5-A3E62F2ADECB}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app-removal", "..\..\appseed\app-removal\app-removal.vcxproj", "{B18E0FCB-402F-4805-8FCD-AFE8DB6DDF74}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
@@ -1460,6 +1462,22 @@ Global
 		{5076B034-466D-49E4-AFB5-A3E62F2ADECB}.profiler|Win32.Build.0 = profiler|Win32
 		{5076B034-466D-49E4-AFB5-A3E62F2ADECB}.profiler|x64.ActiveCfg = profiler|x64
 		{5076B034-466D-49E4-AFB5-A3E62F2ADECB}.profiler|x64.Build.0 = profiler|x64
+		{B18E0FCB-402F-4805-8FCD-AFE8DB6DDF74}.basis|Win32.ActiveCfg = basis|Win32
+		{B18E0FCB-402F-4805-8FCD-AFE8DB6DDF74}.basis|Win32.Build.0 = basis|Win32
+		{B18E0FCB-402F-4805-8FCD-AFE8DB6DDF74}.basis|x64.ActiveCfg = basis|x64
+		{B18E0FCB-402F-4805-8FCD-AFE8DB6DDF74}.basis|x64.Build.0 = basis|x64
+		{B18E0FCB-402F-4805-8FCD-AFE8DB6DDF74}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
+		{B18E0FCB-402F-4805-8FCD-AFE8DB6DDF74}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
+		{B18E0FCB-402F-4805-8FCD-AFE8DB6DDF74}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
+		{B18E0FCB-402F-4805-8FCD-AFE8DB6DDF74}.codeanalysis|x64.Build.0 = codeanalysis|x64
+		{B18E0FCB-402F-4805-8FCD-AFE8DB6DDF74}.memdleak|Win32.ActiveCfg = memdleak|Win32
+		{B18E0FCB-402F-4805-8FCD-AFE8DB6DDF74}.memdleak|Win32.Build.0 = memdleak|Win32
+		{B18E0FCB-402F-4805-8FCD-AFE8DB6DDF74}.memdleak|x64.ActiveCfg = memdleak|x64
+		{B18E0FCB-402F-4805-8FCD-AFE8DB6DDF74}.memdleak|x64.Build.0 = memdleak|x64
+		{B18E0FCB-402F-4805-8FCD-AFE8DB6DDF74}.profiler|Win32.ActiveCfg = profiler|Win32
+		{B18E0FCB-402F-4805-8FCD-AFE8DB6DDF74}.profiler|Win32.Build.0 = profiler|Win32
+		{B18E0FCB-402F-4805-8FCD-AFE8DB6DDF74}.profiler|x64.ActiveCfg = profiler|x64
+		{B18E0FCB-402F-4805-8FCD-AFE8DB6DDF74}.profiler|x64.Build.0 = profiler|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
