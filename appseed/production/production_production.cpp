@@ -14,16 +14,17 @@ namespace production
       thread(papp),
       simple_thread(papp),
       m_mutexStatus(papp),
-      m_mutexCompress(papp)
+      m_mutexCompress(papp),
+      m_evFinish(papp)
    {
 
-      m_bEndProduction = false;
-      m_bClean       = false;
-      m_bBuild       = true;
-      m_bFinished    = true;
-      m_eversion     = version_stage;
-      m_bReleased    = true;
-      m_iRelease     = -1;
+      m_bEndProduction  = false;
+      m_bClean          = false;
+      m_bBuild          = true;
+      m_bFinished       = true;
+      m_eversion        = version_stage;
+      m_bReleased       = true;
+      m_iRelease        = 0;
 
       {
          stringa & stra = m_straStageDirAcceptedFileExtensions;
@@ -31,7 +32,7 @@ namespace production
          stra.add("dll");
          stra.add("manifest");
       }
-      m_bLoop = false;
+      m_bLoop           = false;
       m_bEndStatus      = false;
 
 
@@ -51,7 +52,7 @@ namespace production
       }
       m_iLoop = -1;
       m_iLoopCount = iLoopCount;
-      m_iRelease = -1;
+      m_iRelease = 0;
       m_bEndProduction = false;
       m_timeStart = ::datetime::time::get_current_time();
       m_eversion = eversion;
@@ -80,7 +81,7 @@ namespace production
          return;
       }
 
-      m_iRelease = -1;
+      m_iRelease = 0;
       m_bEndProduction = false;
       m_timeStart = ::datetime::time::get_current_time();
       m_eversion = eversion;
@@ -237,8 +238,6 @@ namespace production
          System.os().post_to_all_threads(WM_QUIT, 0, 0);
 
       }*/
-
-      m_bEndProduction = true;
 
       OnUpdateRelease();
 
@@ -808,6 +807,10 @@ restart:
 
          //Application.http().get("http://account.ca2.cc/update_plugins?authnone");
 
+
+         m_bEndProduction = true;
+
+
          add_status("ca2.se - freigeben auf Deutschland, Hessen, Frankfurt, ServerLoft...");
          prelease = new class release(this);
          prelease->m_strRelease = "http://production.server4serves.ccvotagus.net/release_ca2_ccvotagus_spa?secure=0&authnone=1&format_build=" + m_strFormatBuild;
@@ -954,6 +957,7 @@ restart:
          add_status("");
          add_status("");
          add_status("");
+         m_evFinish.SetEvent();
          if(m_bLoop)
          {
             m_iStep = 1;
@@ -1970,7 +1974,7 @@ retry2:
 
       System.file().del(System.dir().path(strDir, "npca2.xpi"));
 
-      create_xpi(pszPlatform, true);
+      create_xpi(pszPlatform, false);
       string strVersion;
       if(m_eversion == version_basis)
       {
@@ -2253,6 +2257,8 @@ retry2:
       if(m_iRelease == 0 && m_bEndProduction && !m_bEndStatus)
       {
          m_bEndStatus = true;
+         m_evFinish.wait();
+         m_evFinish.ResetEvent();
          add_status("All releases have been commanded and production has deemed ended!!.!.!!.");
          gen::property_set post;
          gen::property_set headers;

@@ -116,6 +116,7 @@ namespace production
       string                  m_strIndexMd5;
 
       bool                    m_bEndStatus;
+      manual_reset_event      m_evFinish;
 
 
       production(::ca::application * papp);
