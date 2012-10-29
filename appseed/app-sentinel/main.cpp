@@ -148,9 +148,9 @@ int spaboot_start()
 
    // todo : sentinel should install each older application with new function build get_latest_build_number
 
-   //
+   
 
-   /*vsstring id = calc_id();
+   vsstring id = calc_id();
    if(id == NULL || id.is_empty())
       id = "spaboot_install";
 
@@ -174,19 +174,19 @@ int spaboot_start()
    while(iRetry < iRetryLimit || iRetryLimit < 0)
    {
       update_ca2_installed(true);
-      if(is_ca2_installed() && is_installed("application", id))
+      if(is_ca2_installed() && is_installed(NULL, NULL, "application", id, "_std", "_std"))
       {  
          break;
       }
       vsstring strCommandLine;
 
-      strCommandLine = ": app=session session_start=" + id + " app_type=application install";
+      strCommandLine = ": app=session session_start=" + id + " app_type=application install locale=_std schema=_std";
 
       ca2_cube_install(strCommandLine, bBackground);
       iRetry++;
    }
 
-   if(!is_ca2_installed() || !is_installed("application", id))
+   if(!is_ca2_installed() || !is_installed(NULL, NULL, "application", id, "_std", "_std"))
    {  
       return 1;
    }
@@ -197,9 +197,6 @@ int spaboot_start()
    }
 
    return 0;
-   */
-
-   return -1;
 
 }
 
