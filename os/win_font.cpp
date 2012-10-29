@@ -35,7 +35,7 @@ namespace win
    //{
      // return dynamic_cast < font * > (::win::graphics_object::from_handle(papp, hFont)); 
    //}
-   bool font::CreateFontIndirect(const LOGFONT* lpLogFont)
+/*   bool font::CreateFontIndirect(const LOGFONT* lpLogFont)
    { 
 
       m_strFontFamilyName = lpLogFont->lfFaceName;
@@ -70,7 +70,7 @@ namespace win
       return 0;
    //   return ::GetObject(get_handle(), sizeof(LOGFONT), pLogFont);
 
-   }
+   }*/
 
 
       /////////////////////////////////////////////////////////////////////////////
@@ -141,7 +141,7 @@ namespace win
    // out-of-line ::ca::brush, font, etc. helpers
 
    // nPointSize is actually scaled 10x
-   bool font::CreatePointFont(int nPointSize, const char * lpszFaceName, ::ca::graphics * pgraphics)
+/*   bool font::CreatePointFont(int nPointSize, const char * lpszFaceName, ::ca::graphics * pgraphics)
    {
       ASSERT(__is_valid_string(lpszFaceName));
 
@@ -183,8 +183,8 @@ namespace win
       if (pgraphics == NULL)
          ReleaseDC(NULL, hDC);
 
-      return CreateFontIndirect(&logFont);*/
-   }
+      return CreateFontIndirect(&logFont);
+   }*/
 
 
    void * font::get_os_data() const
@@ -207,7 +207,7 @@ namespace win
 
          int iStyle = 0;
 
-         if(m_bBold)
+         if(m_iFontWeight >= 600)
          {
             iStyle |= (int) Gdiplus::FontStyleBold;
          }
