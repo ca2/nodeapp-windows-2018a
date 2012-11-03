@@ -451,15 +451,15 @@ namespace win
 
       m_wndpaOut.remove_all();
 
-      ::ca::region_sp rgnWindow(get_app());
-      ::ca::region_sp rgnIntersect(get_app());
+//      ::ca::region_sp rgnWindow(get_app());
+  //    ::ca::region_sp rgnIntersect(get_app());
 
-      rgnWindow->CreateRectRgn(0, 0, 0, 0);
-      rgnIntersect->CreateRectRgn(0, 0, 0, 0);
+//      rgnWindow->create_rect(0, 0, 0, 0);
+  //    rgnIntersect->create_rect(0, 0, 0, 0);
 
       /*rect rectIntersect;
       ::ca::region_sp rgnUpdate(get_app());
-      rgnUpdate->CreateRectRgnIndirect(rectUpdate);
+      rgnUpdate->create_rect(rectUpdate);
       void * hwndOrder = ::GetWindow(::GetDesktopWindow(), GW_CHILD);
       for(;;)
       {
@@ -480,8 +480,8 @@ namespace win
             char text[256];
             //::GetWindowText(hwndOrder, text, sizeof(text));
             bool bLayered = ::GetWindowLong(hwndOrder, GWL_EXSTYLE);
-            rgnWindow->SetRectRgn(rectWindow);
-            rgnIntersect->SetRectRgn(rect(0, 0, 0, 0));
+            rgnWindow->create_rect(rectWindow);
+            rgnIntersect->create_rect(rect(0, 0, 0, 0));
             rgnIntersect->CombineRgn(rgnUpdate, rgnWindow, RGN_AND);
             rect rectIntersectBox;
             rgnIntersect->GetRgnBox(rectIntersectBox);
@@ -492,7 +492,7 @@ namespace win
             {
                if(!bLayered)
                {
-                  rgnUpdate->CombineRgn(rgnUpdate, rgnWindow, RGN_DIFF);
+                  rgnUpdate->CombineRgn(rgnUpdate, rgnWindow, ::ca::region::combine_exclude);
                }
                rect rectDiffBox;
                rgnUpdate->GetRgnBox(rectDiffBox);
@@ -937,7 +937,7 @@ namespace win
       {
       
 
-         iCombine = ::CombineRgn(hrgn, hrgn, hrgnIntersect, RGN_DIFF);
+         iCombine = ::CombineRgn(hrgn, hrgn, hrgnIntersect, ::ca::region::combine_exclude);
 
          point ptOffset(0, 0);
 
@@ -1012,7 +1012,7 @@ namespace win
          ptOffset.y = 0;
          ::ClientToScreen((HWND) hwnd, &ptOffset);
          ::OffsetRgn(hrgn, ptOffset.x, ptOffset.y);
-         if(::CombineRgn(hrgn, hrgn, hrgnOpaque, RGN_DIFF) == NULLREGION)
+         if(::CombineRgn(hrgn, hrgn, hrgnOpaque, ::ca::region::combine_exclude) == NULLREGION)
          {
             ::DeleteObject(hrgn);
             hrgna.remove_at(i);
@@ -1145,7 +1145,7 @@ namespace win
 
       // get the update region bound box.
       // rect rectUpdate;
-      // rgnUpdate.GetRgnBox(rectUpdate);
+      // rgnUpdate.get_bounding_box(rectUpdate);
 
       // get the ::ca::window client area box
       // in screen coordinates.
@@ -1171,9 +1171,9 @@ namespace win
       // with the update region in screen coordinates
       // translated to ::ca::window client coordinates.
       //::ca::region_sp rgnClip(get_app());
-      //rgnClip->CreateRectRgn(0, 0, 0, 0);
+      //rgnClip->create_rect(0, 0, 0, 0);
       //rgnClip->CopyRgn(&rgnUpdate);
-      //rgnClip->OffsetRgn( - rectWnd.top_left());
+      //rgnClip->translate( - rectWnd.top_left());
 
    //   ::SelectClipRgn(hdcScreen, rgnClip);
       

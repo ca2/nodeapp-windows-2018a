@@ -15,7 +15,7 @@ namespace win
 
 
       brush(::ca::application * papp);
-      //virtual void construct(COLORREF crColor);                // CreateSolidBrush
+      //virtual void construct(COLORREF crColor);                // create_solid
       //virtual void construct(int nIndex, COLORREF crColor);    // CreateHatchBrush
       //virtual void construct(::ca::bitmap * pbitmap);                // CreatePatternBrush
       virtual ~brush();
@@ -24,7 +24,7 @@ namespace win
       virtual void * get_os_data() const;
 
 
-      //bool CreateSolidBrush(COLORREF crColor);
+      //bool create_solid(COLORREF crColor);
       //bool CreateHatchBrush(int nIndex, COLORREF crColor);
       //bool CreatePatternBrush(::ca::bitmap* pBitmap);
       //bool CreateDIBPatternBrush(HGLOBAL hPackedDIB, UINT nUsage);

@@ -108,17 +108,17 @@ namespace win
 
          Gdiplus::GraphicsPath path;
 
-         if(m_etype == type_elliptic)
+         if(m_etype == type_oval)
          {
-            path.AddEllipse((INT) m_pta[0].x, (INT) m_pta[0].y, (INT) (m_pta[1].x - m_pta[0].x), (INT) (m_pta[1].y - m_pta[0].y));
+            path.AddEllipse((INT) m_x1, m_y1, (INT) (m_x2 - m_x1), (INT) (m_y2 - m_y1));
          }
          else if(m_etype == type_polygon)
          {
             raw_array < Gdiplus::PointF > pa;
 
-            for(int i = 0; i < m_pta.get_size(); i++)
+            for(int i = 0; i < m_nCount; i++)
             {
-               pa.add(Gdiplus::PointF((Gdiplus::REAL) m_pta[i].x, (Gdiplus::REAL) m_pta[i].y));
+               pa.add(Gdiplus::PointF((Gdiplus::REAL) m_lppoints[i].x, (Gdiplus::REAL) m_lppoints[i].y));
             }
 
             path.AddPolygon(pa.get_data(), (int) pa.get_count());
@@ -128,10 +128,10 @@ namespace win
             
             Gdiplus::RectF rect;
 
-            rect.X      = (Gdiplus::REAL) m_pta[0].x;
-            rect.Y      = (Gdiplus::REAL) m_pta[0].y;
-            rect.Width  = (Gdiplus::REAL) (m_pta[1].x - m_pta[0].x);
-            rect.Height = (Gdiplus::REAL) (m_pta[1].y - m_pta[0].y);
+            rect.X      = (Gdiplus::REAL) m_x1;
+            rect.Y      = (Gdiplus::REAL) m_y1;
+            rect.Width  = (Gdiplus::REAL) (m_x2 - m_x1);
+            rect.Height = (Gdiplus::REAL) (m_y2 - m_y1);
 
             path.AddRectangle(rect);
 

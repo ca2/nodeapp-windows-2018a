@@ -363,17 +363,33 @@ namespace win
             delete m_ppen;
          }
          ((pen *) this)->m_ppen = new Gdiplus::Pen(Gdiplus::Color(
-            GetAValue(m_crPenColor),
-            GetRValue(m_crPenColor),
-            GetGValue(m_crPenColor),
-            GetBValue(m_crPenColor)), (Gdiplus::REAL) m_dPenWidth);
-         if(m_nPenStyle & PS_JOIN_ROUND)
+            GetAValue(m_cr),
+            GetRValue(m_cr),
+            GetGValue(m_cr),
+            GetBValue(m_cr)), (Gdiplus::REAL) m_dWidth);
+         switch(m_elinejoin)
          {
+         case line_join_miter:
+            ((pen *) this)->m_ppen->SetLineJoin(Gdiplus::LineJoinMiter);
+            break;
+         case line_join_bevel:
+            ((pen *) this)->m_ppen->SetLineJoin(Gdiplus::LineJoinBevel);
+            break;
+         case line_join_round:
             ((pen *) this)->m_ppen->SetLineJoin(Gdiplus::LineJoinRound);
+            break;
+         case line_join_miter_clipped:
+            ((pen *) this)->m_ppen->SetLineJoin(Gdiplus::LineJoinMiterClipped);
+            break;
          }
-         if(m_nPenStyle & PS_ENDCAP_ROUND)
+         switch(m_eendcap)
          {
+         case end_cap_flat:
+            ((pen *) this)->m_ppen->SetEndCap(Gdiplus::LineCapFlat);
+            break;
+         case end_cap_round:
             ((pen *) this)->m_ppen->SetEndCap(Gdiplus::LineCapRound);
+            break;
          }
       }
 

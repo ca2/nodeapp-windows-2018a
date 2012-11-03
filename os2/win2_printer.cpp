@@ -1,5 +1,6 @@
 #include "framework.h"
 #include <WinSpool.h>
+#include <Gdiplus.h>
 
 
 namespace win2
@@ -103,7 +104,7 @@ namespace win2
          return NULL;
       m_hdc = ::CreateDC("WINSPOOL", (LPCSTR) m_pdevmode->dmDeviceName, NULL, m_pdevmode);
       ::ca::graphics_sp g(get_app());
-      g->Attach(m_hdc);
+      g->attach(new ::Gdiplus::Graphics(m_hdc));
       return g.detach();
    }
 

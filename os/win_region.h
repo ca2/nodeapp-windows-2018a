@@ -24,7 +24,7 @@ namespace win
 
 
       /*bool CreateRectRgn(int x1, int y1, int x2, int y2);
-      bool CreateRectRgnIndirect(LPCRECT lpRect);
+      bool create_rect(LPCRECT lpRect);
       bool CreateEllipticRgn(int x1, int y1, int x2, int y2);
       bool CreateEllipticRgnIndirect(LPCRECT lpRect);
       bool CreatePolygonRgn(LPPOINT lpPoints, int nCount, int nMode);

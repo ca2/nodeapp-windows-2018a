@@ -2951,7 +2951,7 @@ restart_mouse_hover_check:
             rect rect5;
             rect rect9;
 
-            rgnUpdate = CreateRectRgnIndirect(&rectUpdate);
+            rgnUpdate = ::CreateRectRgnIndirect(&rectUpdate);
             void * hwndOrder = ::GetWindow(get_handle(), GW_HWNDNEXT);
             for(;;)
             {
@@ -2996,7 +2996,7 @@ restart_mouse_hover_check:
                   else
                   {
 
-                     CombineRgn(rgnUpdate, rgnUpdate, rgnWindow, RGN_DIFF);
+                     CombineRgn(rgnUpdate, rgnUpdate, rgnWindow, ::ca::region::combine_exclude);
 
                      rect rectDiffBox;
 

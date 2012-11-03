@@ -23,7 +23,7 @@ namespace win
       }
    }
 
-   //bool brush::CreateSolidBrush(COLORREF crColor)
+   //bool brush::create_solid(COLORREF crColor)
    //{
 
    //   if(m_pbrush != NULL)
@@ -73,7 +73,7 @@ namespace win
 
 //   void brush::construct(COLORREF crColor)
 //   {
-////      if (!Attach(::CreateSolidBrush(crColor)))
+////      if (!Attach(::create_solid(crColor)))
 //  //       throw resource_exception();
 //   }
 //
@@ -141,7 +141,7 @@ namespace win
          {
             try
             {
-               ((brush *) this)->m_pbrush = new Gdiplus::SolidBrush(Gdiplus::Color(GetAValue(m_crColor), GetRValue(m_crColor), GetGValue(m_crColor), GetBValue(m_crColor)));
+               ((brush *) this)->m_pbrush = new Gdiplus::SolidBrush(Gdiplus::Color(GetAValue(m_cr), GetRValue(m_cr), GetGValue(m_cr), GetBValue(m_cr)));
             }
             catch(...)
             {
@@ -165,7 +165,7 @@ namespace win
          {
             try
             {
-               ((brush *) this)->m_pbrush = new Gdiplus::SolidBrush(Gdiplus::Color(GetAValue(m_crColor), GetRValue(m_crColor), GetGValue(m_crColor), GetBValue(m_crColor)));
+               ((brush *) this)->m_pbrush = new Gdiplus::SolidBrush(Gdiplus::Color(GetAValue(m_cr), GetRValue(m_cr), GetGValue(m_cr), GetBValue(m_cr)));
             }
             catch(...)
             {

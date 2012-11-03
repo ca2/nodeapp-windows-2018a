@@ -692,8 +692,8 @@ namespace win
 
          for(int i = 0; i < nCount; i++)
          {
-            ppoints[i].X = lpPoints[i].x;
-            ppoints[i].Y = lpPoints[i].y;
+            ppoints[i].X = (INT) lpPoints[i].x;
+            ppoints[i].Y = (INT) lpPoints[i].y;
          }
    
          bOk1 = m_pgraphics->FillPolygon(gdiplus_brush(), ppoints, nCount, gdiplus_get_fill_mode()) == Gdiplus::Status::Ok;
@@ -2014,9 +2014,13 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return NULL;
    }
 
-   void graphics::DrawDragRect(LPCRECT lpRect, SIZE size,
-      LPCRECT lpRectLast, SIZE sizeLast, ::ca::brush* pBrush, ::ca::brush* pBrushLast)
+   void graphics::DrawDragRect(LPCRECT lpRect, SIZE size, LPCRECT lpRectLast, SIZE sizeLast, ::ca::brush* pBrush, ::ca::brush* pBrushLast)
    {
+
+      throw not_implemented(get_app());
+
+/*
+
       ASSERT(__is_valid_address(lpRect, sizeof(RECT), FALSE));
       ASSERT(lpRectLast == NULL ||
          __is_valid_address(lpRectLast, sizeof(RECT), FALSE));
@@ -2024,13 +2028,13 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       // first, determine the update region and select it
       ::ca::region rgnNew;
       ::ca::region rgnOutside, rgnInside;
-      rgnOutside.CreateRectRgnIndirect(lpRect);
+      rgnOutside.create_rect(lpRect);
       rect rect = *lpRect;
       rect.inflate(-size.cx, -size.cy);
       rect.intersect(rect, lpRect);
-      rgnInside.CreateRectRgnIndirect(rect);
-      rgnNew.CreateRectRgn(0, 0, 0, 0);
-      rgnNew.CombineRgn(&rgnOutside, &rgnInside, RGN_XOR);
+      rgnInside.create_rect(rect);
+      rgnNew.create_rect(0, 0, 0, 0);
+      rgnNew.combine(&rgnOutside, &rgnInside, RGN_XOR);
 
       ::ca::brush* pBrushOld = NULL;
       if (pBrush == NULL)
@@ -2049,7 +2053,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if (lpRectLast != NULL)
       {
          // find difference between new region and old region
-         rgnLast.CreateRectRgn(0, 0, 0, 0);
+         rgnLast.create_rect(0, 0, 0, 0);
          rgnOutside.SetRectRgn(lpRectLast);
          rect = *lpRectLast;
          rect.inflate(-sizeLast.cx, -sizeLast.cy);
@@ -2060,7 +2064,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          // only diff them if brushes are the same
          if (pBrush->get_os_data() == pBrushLast->get_os_data())
          {
-            rgnUpdate.CreateRectRgn(0, 0, 0, 0);
+            rgnUpdate.create_rect(0, 0, 0, 0);
             rgnUpdate.CombineRgn(&rgnLast, &rgnNew, RGN_XOR);
          }
       }
@@ -2085,6 +2089,8 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if (pBrushOld != NULL)
          SelectObject(pBrushOld);
       SelectClipRgn(NULL);
+
+*/
    }
 
    /*void graphics::FillSolidRect(LPCRECT lpRect, COLORREF clr)

@@ -27,8 +27,8 @@ namespace production
 
       m_iLineHeight = 1;
       m_bLayout = false;
-      m_brushBkActive->CreateSolidBrush(RGB(150, 255, 130));
-      m_brushBkInactive->CreateSolidBrush(RGB(128, 208, 120));
+      m_brushBkActive->create_solid(RGB(150, 255, 130));
+      m_brushBkInactive->create_solid(RGB(128, 208, 120));
       LOGFONT lf;
       memset(&lf, 0, sizeof(lf));
 
@@ -210,7 +210,7 @@ namespace production
       rect rectClip(rectText);
       //ClientToScreen(rectClip);
       ::ca::region_sp rgnClip(get_app());
-      rgnClip->CreateRectRgnIndirect(rectClip);
+      rgnClip->create_rect(rectClip);
       //pdc->Draw3dRect(rectText, RGB(200, 200, 200), RGB(200, 200, 200));
       pdc->SelectClipRgn(rgnClip);
       //single_lock sl(&m_pproduction->m_mutexStatus, TRUE);
