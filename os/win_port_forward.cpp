@@ -267,11 +267,11 @@ namespace win
    // Port Forward Engine creates when running COM requests for device information or for
    // retreival/change of port mappings.
    //
-   // There are five functions that create threads, and each function takes a HWND as a 
-   // parameter.  During execution of the thread, each thread will post messages to this HWND,
+   // There are five functions that create threads, and each function takes a oswindow_ as a 
+   // parameter.  During execution of the thread, each thread will post messages to this oswindow_,
    // so as to notify the HWMND of the thread's progress through the needed COM tasks.  The 
    // message is always the same: a UINT named UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION.
-   // Encodings of the WPARAM and LPARAM within the message will enable the HWND to determine
+   // Encodings of the WPARAM and LPARAM within the message will enable the oswindow_ to determine
    // what's going on inside the thread.  The five functions are:
    //
    //   GetMappingsUsingThread()
@@ -308,7 +308,7 @@ namespace win
    //
    // To use this function, your program must be able to receive (and process)
    // a registered window message posted from the thread when the thread is finished.
-   // Thus, you must pass in a HWND of one of your windows that will receive the message.  Typically,
+   // Thus, you must pass in a oswindow_ of one of your windows that will receive the message.  Typically,
    // you would choose your CMainFrame window (use the ::__get_main_window() function).  However, you might
    // choose a different window, such as your CView-derived window for SDI applications
    //
@@ -340,7 +340,7 @@ namespace win
    //        GetPortMappingVector() function to get a copy of the current contents of
    //        std::vector< port_forward::port_map > m_MappingContainer
 
-   bool port_forward::GetMappingsUsingThread( HWND hWnd )
+   bool port_forward::GetMappingsUsingThread( oswindow_ hWnd )
    {
 
 	   // returns TRUE if thread was started successfully
@@ -380,7 +380,7 @@ namespace win
    //      LPARAM signifies if the thread was or was not successful (S_OK or E_FAIL). 
 
 
-   bool port_forward::EditMappingUsingThread( port_forward::port_map& oldMapping, port_forward::port_map& newMapping, HWND hWnd )
+   bool port_forward::EditMappingUsingThread( port_forward::port_map& oldMapping, port_forward::port_map& newMapping, oswindow_ hWnd )
    {
 	   // returns TRUE if thread was started successfully
 	
@@ -422,7 +422,7 @@ namespace win
    //  WPARAM == port_forward::EnumAddMappingDone when the thread is finished, where
    //      LPARAM signifies if the thread was or was not successful (S_OK or E_FAIL). 
 
-   bool port_forward::AddMappingUsingThread( port_forward::port_map& newMapping, HWND hWnd )
+   bool port_forward::AddMappingUsingThread( port_forward::port_map& newMapping, oswindow_ hWnd )
    {
 	   // returns TRUE if thread was started successfully
 	
@@ -463,7 +463,7 @@ namespace win
    //  WPARAM == port_forward::EnumDeleteMappingDone when the thread is finished, where
    //      LPARAM signifies if the thread was or was not successful (S_OK or E_FAIL). 
 
-   bool port_forward::DeleteMappingUsingThread( port_forward::port_map& oldMapping, HWND hWnd )
+   bool port_forward::DeleteMappingUsingThread( port_forward::port_map& oldMapping, oswindow_ hWnd )
    {
 	   // returns TRUE if thread was started successfully
 	
@@ -505,7 +505,7 @@ namespace win
    //      GetDeviceInformationContainer() function to retrieve a copy of the current contents of 
    //      port_forward::DeviceInformationContainer m_DeviceInfo
 
-   bool port_forward::GetDeviceInformationUsingThread( HWND hWnd )
+   bool port_forward::GetDeviceInformationUsingThread( oswindow_ hWnd )
    {	
 	   // returns TRUE if thread was started successfully
 	
@@ -542,7 +542,7 @@ namespace win
 	
 	   // local copies of shared variables
 	
-	   HWND hWndForPosting = pThis->m_hWndForPortMappingThread;
+	   oswindow_ hWndForPosting = pThis->m_hWndForPortMappingThread;
 
 	   WPARAM wp = EnumPortRetrieveInterval;
 	   LPARAM lp = 0;
@@ -679,7 +679,7 @@ namespace win
 
 	   // local copies of shared variables
 
-	   HWND hWndForPosting = pThis->m_hWndForDeviceInfoThread;
+	   oswindow_ hWndForPosting = pThis->m_hWndForDeviceInfoThread;
 
 	   WPARAM wp = EnumDeviceInfoInterval;
 	   LPARAM lp = 0;	
@@ -815,7 +815,7 @@ namespace win
 	
 	   port_map oldMapping = pThis->m_scratchpadOldMapping;
 	   port_map newMapping = pThis->m_scratchpadNewMapping;
-	   HWND hWndForPosting = pThis->m_hWndForEditMappingThread;
+	   oswindow_ hWndForPosting = pThis->m_hWndForEditMappingThread;
 	
 	   WPARAM wp = EnumEditMappingInterval;
 	   LPARAM lp = 0;
@@ -936,7 +936,7 @@ namespace win
 	   // local copies of shared variables
 
 	   port_map oldMapping = pThis->m_scratchpadDeletedMapping;
-	   HWND hWndForPosting = pThis->m_hWndForDeleteMappingThread;
+	   oswindow_ hWndForPosting = pThis->m_hWndForDeleteMappingThread;
 		
 	   WPARAM wp = EnumDeleteMappingInterval;
 	   LPARAM lp = 0;
@@ -1275,7 +1275,7 @@ namespace win
 
 
    HRESULT port_forward::PopulateDeviceInfoContainer( IUPnPDevice* piDevice, 
-				   port_forward::device & deviceInfo, HWND hWnd /* =NULL */ )
+				   port_forward::device & deviceInfo, oswindow_ hWnd /* =NULL */ )
    {
 	
 	   HRESULT result=S_OK, hrReturn=S_OK;

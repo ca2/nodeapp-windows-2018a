@@ -13,7 +13,7 @@ namespace win
       return ::LoadLibraryW(gen::international::utf8_to_unicode(lpsz));
    }
 
-   bool CLASS_DECL_win SHGetSpecialFolderPath(HWND hwnd, string &str, int csidl, bool fCreate)
+   bool CLASS_DECL_win SHGetSpecialFolderPath(oswindow_ hwnd, string &str, int csidl, bool fCreate)
    {
       return ::SHGetSpecialFolderPathW(hwnd, wstringtou(str, MAX_PATH * 8), csidl, fCreate) != FALSE;
    }

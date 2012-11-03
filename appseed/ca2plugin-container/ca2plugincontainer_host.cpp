@@ -72,7 +72,7 @@ namespace ca2plugin_container
       m_rect.right = m_rect.left + aWindow->width;
       m_rect.bottom = m_rect.top + aWindow->height;
 
-      m_hwnd = (HWND)aWindow->window;
+      m_hwnd = (oswindow_)aWindow->window;
 
       if(m_hwnd == NULL)
          return FALSE;
@@ -182,7 +182,7 @@ namespace ca2plugin_container
       return "";
    }
 
-   HWND host::get_host_window()
+   oswindow_ host::get_host_window()
    {
       return m_hwnd;
    }
@@ -195,7 +195,7 @@ namespace ca2plugin_container
    }
 
 
-   LRESULT CALLBACK window_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+   LRESULT CALLBACK window_proc(oswindow_ hWnd, UINT message, WPARAM wParam, LPARAM lParam)
    {
       return DefWindowProc(hWnd, message, wParam, lParam);
    }

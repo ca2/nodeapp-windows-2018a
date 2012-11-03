@@ -77,7 +77,7 @@ namespace win
       static ATOM WINAPI _RegisterClass(
          CONST WNDCLASSW *lpWndClass);
 
-      static HWND WINAPI _CreateWindowEx(
+      static oswindow_ WINAPI _CreateWindowEx(
          DWORD dwExStyle,
          const wchar_t * lpClassName,
          const wchar_t * lpWindowName,
@@ -86,7 +86,7 @@ namespace win
          int y,
          int nWidth,
          int nHeight,
-         HWND hWndParent,
+         oswindow_ hWndParent,
          HMENU hMenu,
          HINSTANCE hInstance,
          LPVOID lpParam);
@@ -155,7 +155,7 @@ namespace win
       ATOM (WINAPI * m_pfnRegisterClass)(
          CONST WNDCLASSW *lpWndClass);
 
-      HWND (WINAPI * m_pfnCreateWindowEx)(
+      oswindow_ (WINAPI * m_pfnCreateWindowEx)(
          DWORD dwExStyle,
          const wchar_t * lpClassName,
          const wchar_t * lpWindowName,
@@ -164,7 +164,7 @@ namespace win
          int y,
          int nWidth,
          int nHeight,
-         HWND hWndParent,
+         oswindow_ hWndParent,
          HMENU hMenu,
          HINSTANCE hInstance,
          LPVOID lpParam);
@@ -240,7 +240,7 @@ namespace win
       static ATOM WINAPI RegisterClass(
          CONST WNDCLASSW *lpWndClass);
 
-      static HWND WINAPI CreateWindowEx(
+      static oswindow_ WINAPI CreateWindowEx(
          DWORD dwExStyle,
          const wchar_t * lpClassName,
          const wchar_t * lpWindowName,
@@ -249,7 +249,7 @@ namespace win
          int y,
          int nWidth,
          int nHeight,
-         HWND hWndParent,
+         oswindow_ hWndParent,
          HMENU hMenu,
          HINSTANCE hInstance,
          LPVOID lpParam);
@@ -423,7 +423,7 @@ namespace win
          lpWndClass);
    }
 
-   inline HWND shell::CreateWindowEx(
+   inline oswindow_ shell::CreateWindowEx(
       DWORD dwExStyle,
       const wchar_t * lpClassName,
       const wchar_t * lpWindowName,
@@ -432,7 +432,7 @@ namespace win
       int y,
       int nWidth,
       int nHeight,
-      HWND hWndParent,
+      oswindow_ hWndParent,
       HMENU hMenu,
       HINSTANCE hInstance,
       LPVOID lpParam)

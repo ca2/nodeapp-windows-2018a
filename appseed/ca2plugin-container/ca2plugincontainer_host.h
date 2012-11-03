@@ -14,8 +14,8 @@ namespace ca2plugin_container
    public:
 
    
-      HWND                          m_hwndMessage;
-      HWND                          m_hwnd;
+      oswindow_                          m_hwndMessage;
+      oswindow_                          m_hwnd;
       bool                          m_bStream;
 
       vsstring                      m_vssPluginName;
@@ -27,7 +27,7 @@ namespace ca2plugin_container
       host(application * papp);
       virtual ~host();
 
-      virtual HWND get_host_window();
+      virtual oswindow_ get_host_window();
       virtual bool is_ok();
       virtual void post_message(UINT uiMessage, WPARAM wparam, LPARAM lparam);
       

@@ -292,7 +292,7 @@ __MODULE_THREAD_STATE::~__MODULE_THREAD_STATE()
 /////////////////////////////////////////////////////////////////////////////
 // __MODULE_STATE for base application
 
-LRESULT CALLBACK __window_procedure_base(HWND, UINT, WPARAM, LPARAM);
+LRESULT CALLBACK __window_procedure_base(oswindow_, UINT, WPARAM, LPARAM);
 
 class ___BASE_MODULE_STATE : public __MODULE_STATE
 {
@@ -305,7 +305,7 @@ PROCESS_LOCAL(___BASE_MODULE_STATE, gen_BaseModuleState)
 
 #undef __window_procedure
 LRESULT CALLBACK
-__window_procedure_base(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
+__window_procedure_base(oswindow_ hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 {
    return __window_procedure(hWnd, nMsg, wParam, lParam);
 }

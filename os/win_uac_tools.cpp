@@ -142,7 +142,7 @@ namespace VistaTools
 // to be able to specify the verb easily.
 
 bool 
-MyShellExec(   HWND hwnd, 
+MyShellExec(   oswindow_ hwnd, 
             const char * pszVerb, 
             const char * pszPath, 
             const char * pszParameters,   // = NULL
@@ -302,7 +302,7 @@ IsElevated( __out_opt bool * pbElevated ) //= NULL )
 
 bool 
 RunElevated( 
-   __in      HWND   hwnd, 
+   __in      oswindow_   hwnd, 
    __in      const char * pszPath, 
    __in_opt   const char * pszParameters,   //   = NULL, 
    __in_opt   const char * pszDirectory,   //   = NULL,
@@ -396,7 +396,7 @@ static PGetModuleHandleExW pGetModuleHandleExW = NULL;
 
 bool 
 RunNonElevated(
-   __in      HWND   hwnd, 
+   __in      oswindow_   hwnd, 
    __in      const char * pszPath, 
    __in_opt   const char * pszParameters,   //   = NULL, 
    __in_opt   const char * pszDirectory,   //   = NULL,
@@ -466,7 +466,7 @@ RunNonElevated(
    //////////////////////////////////////
    // find the shell ::ca::window (the desktop)
 
-   HWND hwndShell = ::FindWindow( "Progman", NULL);
+   oswindow_ hwndShell = ::FindWindow( "Progman", NULL);
 
    if ( !hwndShell )
    {

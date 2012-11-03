@@ -44,7 +44,7 @@ namespace win
    window_draw::~window_draw()
    {
 
-      ::DestroyWindow((HWND) m_spwindowMessage->Detach());
+      ::DestroyWindow((oswindow_) m_spwindowMessage->Detach());
 
    }
 
@@ -98,7 +98,7 @@ namespace win
 
    void window_draw::synch_redraw()
    {
-      if(!m_bProDevianMode && ::IsWindow((HWND) m_spwindowMessage->get_os_data()))
+      if(!m_bProDevianMode && ::IsWindow((oswindow_) m_spwindowMessage->get_os_data()))
       {
          m_spwindowMessage->send_message(WM_USER + 1984 + 1977);
       }
@@ -213,7 +213,7 @@ namespace win
       {
          user::HwndTree & hwndtreeChild = hwndtreea[i];
          void * hwndChild = hwndtreeChild.m_hwnd;
-         ::GetWindowRect((HWND) hwndChild, rectChild);
+         ::GetWindowRect((oswindow_) hwndChild, rectChild);
          if(rectNewUpdate.intersect(rectChild, rectUpdate))
          {
             to(pdc, rectNewUpdate, hwndtreeChild, true, false);
@@ -242,7 +242,7 @@ namespace win
          return false;
       }
 
-      if(!::IsWindow((HWND) hwndParam))
+      if(!::IsWindow((oswindow_) hwndParam))
       {
          return false;
       }
@@ -251,7 +251,7 @@ namespace win
             
 
 
-      if(!::IsWindowVisible((HWND) hwndParam))
+      if(!::IsWindowVisible((oswindow_) hwndParam))
       {
          return true;
       }
@@ -268,7 +268,7 @@ namespace win
          ::user::window_interface * ptwi = System.window_map().get((int_ptr) hwndParam);
          ::user::interaction * pguie = dynamic_cast < ::user::interaction * > (ptwi);
          rect rectWindow;
-         ::GetWindowRect((HWND) hwndParam, rectWindow);
+         ::GetWindowRect((oswindow_) hwndParam, rectWindow);
          //::GetClientRect(hwndParam, rectWindow);
          //::ClientToScreen(hwndParam, &rectWindow.top_left());
          //::ClientToScreen(hwndParam, &rectWindow.bottom_right());
@@ -293,7 +293,7 @@ namespace win
             bool bWin4 = FALSE;
          //_gen::FillPSOnStack();
             ::DefWindowProc(
-               (HWND) hwndParam,
+               (oswindow_) hwndParam,
                (bWin4 ? WM_PRINT : WM_PAINT),
                (WPARAM)((dynamic_cast<::win::graphics * >(pdc))->get_os_data()),
                (LPARAM)(bWin4 ? PRF_CHILDREN | PRF_CLIENT : 0));
@@ -550,7 +550,7 @@ namespace win
                break;
             }
          }
-         if(!::IsWindowVisible((HWND) wndaApp[j]) || ::IsIconic((HWND) wndaApp[j]) || pwnd == NULL)
+         if(!::IsWindowVisible((oswindow_) wndaApp[j]) || ::IsIconic((oswindow_) wndaApp[j]) || pwnd == NULL)
             continue;
 
 
@@ -740,9 +740,9 @@ namespace win
          user::HwndTree & hwndtree = hwndtreea[i];
          void * hwnd = hwndtree.m_hwnd;
          rect rect;
-         ::GetClientRect((HWND) hwnd, rect);
-         ::ClientToScreen((HWND) hwnd, &rect.top_left());
-         ::ClientToScreen((HWND) hwnd, &rect.bottom_right());
+         ::GetClientRect((oswindow_) hwnd, rect);
+         ::ClientToScreen((oswindow_) hwnd, &rect.top_left());
+         ::ClientToScreen((oswindow_) hwnd, &rect.bottom_right());
          if(rectOptimize.contains(rect))
          {
             hwndtreea.remove_at(i);
@@ -773,7 +773,7 @@ namespace win
 
       ::user::window_interface * ptwi = System.window_map().get((int_ptr) hwnd);
 
-      if(!::IsWindowVisible((HWND) hwnd))
+      if(!::IsWindowVisible((oswindow_) hwnd))
       {
          return OptimizeThis;
       }
@@ -881,7 +881,7 @@ namespace win
       void * hwnd = hwndtree.m_hwnd;
 
 
-      if(!::IsWindowVisible((HWND) hwnd))
+      if(!::IsWindowVisible((oswindow_) hwnd))
       {
          return true;
       }
@@ -891,7 +891,7 @@ namespace win
 
       rect rectWindow;
 
-      ::GetWindowRect((HWND) hwnd, rectWindow);
+      ::GetWindowRect((oswindow_) hwnd, rectWindow);
 
 
    //   ::ca::window * pwnd = ::win::window::from_handle(hwnd);
@@ -925,7 +925,7 @@ namespace win
       if(pwndi == NULL)
       {
          ::SendMessage(
-            (HWND) hwnd,
+            (oswindow_) hwnd,
             ::user::window_interface::MessageBaseWndGetProperty, 
             ::user::window_interface::PropertyDrawBaseWndInterface, 
             (LPARAM) &pwndi);
@@ -941,7 +941,7 @@ namespace win
 
          point ptOffset(0, 0);
 
-         ::ScreenToClient((HWND) hwnd, &ptOffset);
+         ::ScreenToClient((oswindow_) hwnd, &ptOffset);
 
          hwnda.add(hwnd);
          ::OffsetRgn(hrgnIntersect, ptOffset.x, ptOffset.y);
@@ -999,7 +999,7 @@ namespace win
 
    //   ::ca::window * pwndOpaque = window::FromHandlePermanent(hwndOpaque);
 
-      ::GetWindowRect((HWND) hwndOpaque, rectWindow);
+      ::GetWindowRect((oswindow_) hwndOpaque, rectWindow);
 
       HRGN hrgnOpaque = ::CreateRectRgnIndirect(rectWindow);
 
@@ -1010,7 +1010,7 @@ namespace win
          HRGN hrgn = hrgna[i];
          ptOffset.x = 0;
          ptOffset.y = 0;
-         ::ClientToScreen((HWND) hwnd, &ptOffset);
+         ::ClientToScreen((oswindow_) hwnd, &ptOffset);
          ::OffsetRgn(hrgn, ptOffset.x, ptOffset.y);
          if(::CombineRgn(hrgn, hrgn, hrgnOpaque, ::ca::region::combine_exclude) == NULLREGION)
          {
@@ -1115,14 +1115,14 @@ namespace win
 
       void * hwndParam = (void *) pwnd->_get_handle();
 
-      HDC hdcScreen = ::GetDCEx((HWND) hwndParam, NULL,  DCX_CLIPSIBLINGS | DCX_WINDOW);
+      HDC hdcScreen = ::GetDCEx((oswindow_) hwndParam, NULL,  DCX_CLIPSIBLINGS | DCX_WINDOW);
 
       if(hdcScreen == NULL)
       {
          // If it has failed to get ::ca::window
          // owned device context, try to get
          // a device context from the cache.
-         hdcScreen = ::GetDCEx((HWND) hwndParam, NULL, DCX_CACHE | DCX_CLIPSIBLINGS | DCX_WINDOW);
+         hdcScreen = ::GetDCEx((oswindow_) hwndParam, NULL, DCX_CACHE | DCX_CLIPSIBLINGS | DCX_WINDOW);
 
          // If no device context could be retrieved,
          // nothing can be drawn at the screen.
@@ -1212,7 +1212,7 @@ namespace win
          TRACE0("Bitmap not painted.\n");
       }*/
 
-      if(::GetWindowLong((HWND) hwndParam, GWL_EXSTYLE) & WS_EX_LAYERED)
+      if(::GetWindowLong((oswindow_) hwndParam, GWL_EXSTYLE) & WS_EX_LAYERED)
       {
          BLENDFUNCTION blendPixelFunction = { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
 
@@ -1246,12 +1246,12 @@ namespace win
 
 //         m_pbuffer->m_spdib->fill_channel(0xc0, visual::rgba::channel_alpha);
 
-         ::UpdateLayeredWindow((HWND) hwndParam, hdcScreen, &pt, &sz,
+         ::UpdateLayeredWindow((oswindow_) hwndParam, hdcScreen, &pt, &sz,
             (HDC)(dynamic_cast<::win::graphics * >(m_pbuffer->GetBuffer()))->get_os_data(),
             &pt, 0, &blendPixelFunction, ULW_ALPHA);
 
          class rect rectWin;
-         ::GetWindowRect((HWND) hwndParam, rectWin);
+         ::GetWindowRect((oswindow_) hwndParam, rectWin);
          if(rect(rectWindow) != rectWin || (pwnd->m_pguie != NULL && (bool) pwnd->m_pguie->oprop("pending_layout")))
          {
 
@@ -1259,11 +1259,11 @@ namespace win
             if(pwnd->m_pguie != NULL && (bool) pwnd->m_pguie->oprop("pending_layout"))
             {
                void * hwndZOrder = (void *) pwnd->m_pguie->oprop("pending_zorder").get_integer();
-               ::SetWindowPos((HWND) hwndParam, HWND_TOPMOST, 
+               ::SetWindowPos((oswindow_) hwndParam, HWND_TOPMOST, 
                   (int) rectWindow.left, (int) rectWindow.top, (int) rectWindow.width(), (int) rectWindow.height(), SWP_SHOWWINDOW);
-               ::SetWindowPos((HWND) hwndParam, HWND_NOTOPMOST, 
+               ::SetWindowPos((oswindow_) hwndParam, HWND_NOTOPMOST, 
                   (int) rectWindow.left, (int) rectWindow.top, (int) rectWindow.width(), (int) rectWindow.height(), SWP_SHOWWINDOW);
-               ::SetWindowPos((HWND) hwndParam, (HWND) hwndZOrder, 
+               ::SetWindowPos((oswindow_) hwndParam, (oswindow_) hwndZOrder, 
                   (int) rectWindow.left, (int) rectWindow.top, (int) rectWindow.width(), (int) rectWindow.height(), SWP_SHOWWINDOW | SWP_FRAMECHANGED);
                /*simple_frame_window * pframe = dynamic_cast < simple_frame_window * > (pwnd->m_pguie);
                if(pframe != NULL)
@@ -1274,7 +1274,7 @@ namespace win
             }
             else
             {
-               ::SetWindowPos((HWND) hwndParam, NULL, (int) rectWindow.left, (int) rectWindow.top, (int) rectWindow.width(), (int) rectWindow.height(), SWP_SHOWWINDOW);
+               ::SetWindowPos((oswindow_) hwndParam, NULL, (int) rectWindow.left, (int) rectWindow.top, (int) rectWindow.width(), (int) rectWindow.height(), SWP_SHOWWINDOW);
             }
          }
 
@@ -1300,7 +1300,7 @@ namespace win
          rectOutputClient.width(),
          rectOutputClient.height());*/
 
-      ::ReleaseDC((HWND) hwndParam, hdcScreen);
+      ::ReleaseDC((oswindow_) hwndParam, hdcScreen);
 
 //      DWORD dwTimeOut = GetTickCount();
    //   TRACE("//\n");

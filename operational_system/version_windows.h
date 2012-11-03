@@ -231,7 +231,7 @@ typedef struct HKEY__ *HKEY;
 #ifdef GetWindowTask
 #undef GetWindowTask
 #ifdef _WIN32
-__INLINE HTASK GetWindowTask(HWND hWnd)
+__INLINE HTASK GetWindowTask(oswindow_ hWnd)
 	{ return (HTASK)(DWORD_PTR)GetWindowThreadProcessId(hWnd, NULL); }
 #endif
 #endif
@@ -239,7 +239,7 @@ __INLINE HTASK GetWindowTask(HWND hWnd)
 // Win32 uses macros with parameters for this, which breaks C++ code.
 #ifdef GetNextWindow
 #undef GetNextWindow
-__INLINE HWND GetNextWindow(HWND hWnd, UINT nDirection)
+__INLINE oswindow_ GetNextWindow(oswindow_ hWnd, UINT nDirection)
 	{ return GetWindow(hWnd, nDirection); }
 #endif
 #endif

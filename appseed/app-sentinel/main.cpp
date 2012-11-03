@@ -4,14 +4,14 @@
 int spaboot_start();
 
 
-HWND g_hwndMessage = NULL;
+oswindow_ g_hwndMessage = NULL;
 stra_dup * g_pstraRestartCommandLine;
 MSG g_msgSentinel;
 HANDLE g_hmutexSpabootInstall;
 
 ATOM sentinel_RegisterClass(HINSTANCE hInstance);
 
-LRESULT CALLBACK sentinel_WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK sentinel_WndProc(oswindow_ hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 
 extern "C" int WinMainCRTStartup()
@@ -97,7 +97,7 @@ ATOM sentinel_RegisterClass(HINSTANCE hInstance)
 }
 
 
-LRESULT CALLBACK sentinel_WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK sentinel_WndProc(oswindow_ hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{

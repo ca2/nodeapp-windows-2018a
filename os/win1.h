@@ -13,7 +13,7 @@ namespace win
    };
 
    CLASS_DECL_win HINSTANCE   LoadLibrary(const char * lpsz);
-   CLASS_DECL_win bool        SHGetSpecialFolderPath(HWND hwnd, string &str, int csidl, bool fCreate);
+   CLASS_DECL_win bool        SHGetSpecialFolderPath(oswindow_ hwnd, string &str, int csidl, bool fCreate);
    CLASS_DECL_win DWORD       GetFileAttributes(const char * lpFileName);
    CLASS_DECL_win bool        CreateDirectory(const char * lpPathName, LPSECURITY_ATTRIBUTES lpSecurityAttributes);
    CLASS_DECL_win DWORD       GetCurrentDirectory(string & str);
@@ -66,7 +66,7 @@ CLASS_DECL_win const char * __register_window_class(UINT nClassStyle, HCURSOR hC
 CLASS_DECL_win bool __register_class(WNDCLASS* lpWndClass);
 
 
-CLASS_DECL_win LRESULT CALLBACK __window_procedure(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
+CLASS_DECL_win LRESULT CALLBACK __window_procedure(oswindow_ hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 CLASS_DECL_win WNDPROC __get_window_procedure();
 #define __window_procedure (*__get_window_procedure())
 
