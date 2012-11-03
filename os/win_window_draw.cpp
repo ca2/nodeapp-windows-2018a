@@ -58,7 +58,7 @@ namespace win
    /*
    void window_draw::OnPaint(oswindow oswindow, CPaintDC & spgraphics)
    {
-      UNREFERENCED_PARAMETER;
+      UNREFERENCED_PARAMETER(oswindow);
       UNREFERENCED_PARAMETER(spgraphics);
    }
    */
