@@ -158,7 +158,7 @@ namespace production
                   if(pframe != NULL)
                   {
                      pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
-                     pframe->SetParent(this);
+                     pframe->set_parent(this);
                      pcreatordata->m_pdoc = pdoc;
                      pcreatordata->m_pwnd = pframe;
                   }
@@ -197,7 +197,7 @@ namespace production
                   if(pframe != NULL)
                   {
                      //pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
-                     //pframe->SetParent(this);
+                     //pframe->set_parent(this);
                      pcreatordata->m_pdoc = pdoc;
                      pcreatordata->m_pwnd = pframe;
                   }
@@ -226,7 +226,7 @@ namespace production
                   if(pframe != NULL)
                   {
                      pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
-                     pframe->SetParent(this);
+                     pframe->set_parent(this);
                      pcreatordata->m_pdoc = pdoc;
                      pcreatordata->m_pwnd = pframe;
                   }
@@ -284,7 +284,7 @@ namespace production
                      if(pframe != NULL)
                      {
                         pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
-                        pframe->SetParent(this);
+                        pframe->set_parent(this);
                         pcreatordata = new ViewData();
                         pcreatordata->m_eview = eview;
                         pcreatordata->m_pdoc = pdoc;
@@ -313,7 +313,7 @@ namespace production
                      {
                         pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
                         pframe->ModifyStyleEx(WS_EX_CLIENTEDGE, 0);
-                        pframe->SetParent(this);
+                        pframe->set_parent(this);
                         pcreatordata = new ViewData();
                         pcreatordata->m_eview = eview;
                         pcreatordata->m_pdoc = pdoc;
@@ -342,7 +342,7 @@ namespace production
                      {
                         pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
                         pframe->ModifyStyleEx(WS_EX_CLIENTEDGE, 0);
-                        pframe->SetParent(this);
+                        pframe->set_parent(this);
                         pcreatordata = new ViewData();
                         pcreatordata->m_eview = eview;
                         pcreatordata->m_pdoc = pdoc;
@@ -371,7 +371,7 @@ namespace production
                      {
                         pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
                         pframe->ModifyStyleEx(WS_EX_CLIENTEDGE, 0);
-                        pframe->SetParent(this);
+                        pframe->set_parent(this);
                         pcreatordata = new ViewData();
                         pcreatordata->m_eview = eview;
                         pcreatordata->m_pdoc = pdoc;

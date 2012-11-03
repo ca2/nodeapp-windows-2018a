@@ -113,7 +113,7 @@ void CLASS_DECL_win __cancel_modes(oswindow oswindow_Rcvr)
    if (!__is_combo_box_control(oswindow_Cancel, (UINT)CBS_DROPDOWNLIST))
    {
       // check as a dropdown
-      oswindow_Cancel = ::GetParent(oswindow_Cancel);   // parent of edit is combo
+      oswindow_Cancel = ::get_parent(oswindow_Cancel);   // parent of edit is combo
       if (oswindow_Cancel == oswindow_Rcvr)
          return;     // let input go to part of combo
 
@@ -124,7 +124,7 @@ void CLASS_DECL_win __cancel_modes(oswindow oswindow_Rcvr)
    // combo-box is active, but if receiver is a popup, do nothing
    if (oswindow_Rcvr != NULL &&
      (::GetWindowLong(oswindow_Rcvr, GWL_STYLE) & WS_CHILD) != 0 &&
-     ::GetParent(oswindow_Rcvr) == ::GetDesktopWindow())
+     ::get_parent(oswindow_Rcvr) == ::GetDesktopWindow())
       return;
   
    // finally, we should cancel the mode!

@@ -664,7 +664,7 @@ namespace win
       rect rect;
       ((::ca::window *) this)->GetWindowRect(&rect);
       dumpcontext << "\nrect = " << rect;
-      dumpcontext << "\nparent ::ca::window * = " << (oswindow)((::ca::window *) this)->GetParent();
+      dumpcontext << "\nparent ::ca::window * = " << (oswindow)((::ca::window *) this)->get_parent();
 
       dumpcontext << "\nstyle = " << (oswindow)(dword_ptr)::GetWindowLong(((window *)this)->get_handle(), GWL_STYLE);
       if (::GetWindowLong(((window *)this)->get_handle(), GWL_STYLE) & WS_CHILD)
@@ -869,27 +869,27 @@ namespace win
 
    bool window::GetWindowInfo(PWINDOWINFO pwi) const
    {
-      ASSERT(::IsWindow((oswindow)get_handle()())); 
-      return ::GetWindowInfo((oswindow)get_handle()(), pwi) != FALSE; 
+      ASSERT(::IsWindow(get_handle())); 
+      return ::GetWindowInfo(get_handle(), pwi) != FALSE; 
    }
 
    ::ca::window * window::GetAncestor(UINT gaFlags) const
-   { ASSERT(::IsWindow((oswindow)get_handle()())); return  ::win::window::from_handle(::GetAncestor((oswindow)get_handle()(), gaFlags)); }
+   { ASSERT(::IsWindow(get_handle())); return  ::win::window::from_handle(::GetAncestor(get_handle(), gaFlags)); }
 
 
 
    bool window::GetScrollBarInfo(LONG idObject, PSCROLLBARINFO psbi) const
    {
-      ASSERT(::IsWindow((oswindow)get_handle()())); 
+      ASSERT(::IsWindow(get_handle())); 
       ASSERT(psbi != NULL);
-      return ::GetScrollBarInfo((oswindow)get_handle()(), idObject, psbi) != FALSE;
+      return ::GetScrollBarInfo(get_handle(), idObject, psbi) != FALSE;
    }
 
    bool window::GetTitleBarInfo(PTITLEBARINFO pti) const
    {
-      ASSERT(::IsWindow((oswindow)get_handle()())); 
+      ASSERT(::IsWindow(get_handle())); 
       ASSERT(pti != NULL);
-      return ::GetTitleBarInfo((oswindow)get_handle()(), pti) != FALSE;
+      return ::GetTitleBarInfo(get_handle(), pti) != FALSE;
    }
 
    bool window::AnimateWindow(DWORD dwTime, DWORD dwFlags) 
@@ -900,7 +900,7 @@ namespace win
 
    bool window::FlashWindowEx(DWORD dwFlags, UINT  uCount, DWORD dwTimeout)
    {
-      ASSERT(::IsWindow((oswindow)get_handle()())); 
+      ASSERT(::IsWindow(get_handle())); 
       FLASHWINFO fwi;
       fwi.cbSize = sizeof(fwi);
       fwi.hwnd = (oswindow) get_handle()();
@@ -916,7 +916,7 @@ namespace win
    bool window::SetLayeredWindowAttributes(COLORREF crKey, BYTE bAlpha, DWORD dwFlags)
    {
       ASSERT(::IsWindow((oswindow) get_handle()())); 
-      return ::SetLayeredWindowAttributes((oswindow)get_handle()(), crKey, bAlpha, dwFlags) != FALSE;
+      return ::SetLayeredWindowAttributes(get_handle(), crKey, bAlpha, dwFlags) != FALSE;
    }
 
    bool window::UpdateLayeredWindow(::ca::graphics * pDCDst, POINT *pptDst, SIZE *psize, 
@@ -1921,14 +1921,14 @@ restart_mouse_hover_check:
 
       ASSERT_VALID(this);
 
-      ::user::interaction * pParentWnd = GetParent();  // start with one parent up
+      ::user::interaction * pParentWnd = get_parent();  // start with one parent up
       while (pParentWnd != NULL)
       {
          if (pParentWnd->IsFrameWnd())
          {
             return dynamic_cast < frame_window * > (pParentWnd);
          }
-         pParentWnd = pParentWnd->GetParent();
+         pParentWnd = pParentWnd->get_parent();
       }
       return NULL;
    }
@@ -1938,11 +1938,11 @@ restart_mouse_hover_check:
    // check for permanent-owned window first
    ::ca::window * pWnd = ::win::window::FromHandlePermanent(oswindow);
    if (pWnd != NULL)
-   return WIN_WINDOW(pWnd)->GetOwner();
+   return WIN_WINDOW(pWnd)->get_owner();
 
    // otherwise, return parent in the Windows sense
    return (::GetWindowLong(oswindow, GWL_STYLE) & WS_CHILD) ?
-   ::GetParent: ::GetWindow(oswindow, GW_OWNER);
+   ::get_parent: ::GetWindow(oswindow, GW_OWNER);
    }*/
 
 
@@ -1988,7 +1988,7 @@ restart_mouse_hover_check:
       oswindow oswindow_Parent = get_handle();
       oswindow oswindow_T;
       while ((::GetWindowLong(oswindow_Parent, GWL_STYLE) & WS_CHILD) &&
-         (oswindow_T = ::GetParent(oswindow_Parent)) != NULL)
+         (oswindow_T = ::get_parent(oswindow_Parent)) != NULL)
       {
          oswindow_Parent = oswindow_T;
       }
@@ -2567,7 +2567,7 @@ restart_mouse_hover_check:
       // walk from the target window up to the oswindow_Stop window checking
       //  if any window wants to translate this message
 
-      for (::user::interaction * pui = pbase->m_pwnd; pui != NULL; pui->GetParent())
+      for (::user::interaction * pui = pbase->m_pwnd; pui != NULL; pui->get_parent())
       {
 
          pui->pre_translate_message(pobj);
@@ -3426,7 +3426,7 @@ restart_mouse_hover_check:
       if (pAlternateOwner == NULL)
       {
          if (dwStyle & WS_CHILD)
-            oswindow_Center = GetParent();
+            oswindow_Center = get_parent();
          else
             oswindow_Center = GetWindow(GW_OWNER);
          if (oswindow_Center != NULL)
@@ -3477,7 +3477,7 @@ restart_mouse_hover_check:
       else
       {
          // center within parent client coordinates
-         oswindow_Parent = GetParent();
+         oswindow_Parent = get_parent();
          ASSERT(oswindow_Parent->IsWindow());
 
          oswindow_Parent->GetClientRect(&rcArea);
@@ -3682,7 +3682,7 @@ restart_mouse_hover_check:
       bool bIdle = TRUE;
       LONG lIdleCount = 0;
       bool bShowIdle = (dwFlags & MLF_SHOWONIDLE) && !(GetStyle() & WS_VISIBLE);
-      oswindow oswindow_Parent = ::GetParent(get_handle());
+      oswindow oswindow_Parent = ::get_parent(get_handle());
       m_iModal = m_iModalCount;
       int iLevel = m_iModal;
       oprop(string("RunModalLoop.thread(") + gen::str::from(iLevel) + ")") = System.GetThread();
@@ -4322,13 +4322,13 @@ ExitModal:
    }
 
 
-   ::user::interaction * window::GetParent()
+   ::user::interaction * window::get_parent()
    {
       if(!::IsWindow(get_handle()))
          return NULL;
       if(get_handle() == NULL)
          return NULL;
-      return ::win::window::from_handle(::GetParent(get_handle()));
+      return ::win::window::from_handle(::get_parent(get_handle()));
    }
 
    LONG window::GetWindowLong(int nIndex)
@@ -4441,7 +4441,7 @@ ExitModal:
       return ModifyStyleEx(get_handle(), dwRemove, dwAdd, nFlags); 
    }
 
-   void window::SetOwner(::user::interaction * pOwnerWnd)
+   void window::set_owner(::user::interaction * pOwnerWnd)
    { 
       m_pguieOwner = pOwnerWnd; 
    }
@@ -4656,7 +4656,7 @@ ExitModal:
          if(!m_pguie->m_bVisible)
             return false;
 
-         if(m_pguie->GetParent() != NULL && !m_pguie->GetParent()->IsWindowVisible())
+         if(m_pguie->get_parent() != NULL && !m_pguie->get_parent()->IsWindowVisible())
             return false;
 
       }
@@ -5023,10 +5023,10 @@ ExitModal:
    ::user::interaction* window::GetLastActivePopup()
    { ASSERT(::IsWindow(get_handle())); return ::win::window::from_handle(::GetLastActivePopup(get_handle())); }
 
-   ::ca::window * window::SetParent(::ca::window * pWndNewParent)
+   ::ca::window * window::set_parent(::ca::window * pWndNewParent)
    {
       ASSERT(::IsWindow(get_handle())); 
-      return ::win::window::from_handle(::SetParent(get_handle(), pWndNewParent->get_handle()())); 
+      return ::win::window::from_handle(::set_parent(get_handle(), pWndNewParent->get_handle()())); 
    }
 
    ::ca::window * PASCAL window::WindowFromPoint(POINT point)
@@ -5557,7 +5557,7 @@ ExitModal:
 
       // a popup ::ca::window cannot be owned by a child ::ca::window
       while (oswindow != NULL && (::GetWindowLong(oswindow, GWL_STYLE) & WS_CHILD))
-         oswindow = ::GetParent(oswindow);
+         oswindow = ::get_parent(oswindow);
 
       // determine toplevel ::ca::window to disable as well
       oswindow oswindow_Top = oswindow;
@@ -5568,7 +5568,7 @@ ExitModal:
             break;
          else
             oswindow_Top = oswindow_Temp;
-         oswindow_Temp = ::GetParent(oswindow_Top);
+         oswindow_Temp = ::get_parent(oswindow_Top);
       }
 
       // get last active popup of first non-child that was found

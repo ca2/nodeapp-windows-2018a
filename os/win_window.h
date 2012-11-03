@@ -57,8 +57,8 @@ namespace win
       bool ModifyStyle(DWORD dwRemove, DWORD dwAdd, UINT nFlags = 0);
       bool ModifyStyleEx(DWORD dwRemove, DWORD dwAdd, UINT nFlags = 0);
 
-      //virtual ::user::interaction * GetOwner();
-      virtual void SetOwner(::user::interaction * pOwnerWnd);
+      //virtual ::user::interaction * get_owner();
+      virtual void set_owner(::user::interaction * pOwnerWnd);
 
       virtual oswindow get_handle() const;
 
@@ -378,9 +378,9 @@ namespace win
       virtual ::user::interaction * GetLastActivePopup();
 
       virtual bool IsChild(::user::interaction *  pWnd);
-      virtual ::user::interaction * GetParent();
-      using ::user::interaction::SetParent;
-      ::ca::window * SetParent(::ca::window * pWndNewParent);
+      virtual ::user::interaction * get_parent();
+      using ::user::interaction::set_parent;
+      ::ca::window * set_parent(::ca::window * pWndNewParent);
       static ::ca::window * PASCAL WindowFromPoint(POINT point);
 
    // Alert Functions
