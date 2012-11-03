@@ -155,7 +155,7 @@ MyShellExec(   oswindow oswindow,
 
    shex.cbSize         = sizeof( SHELLEXECUTEINFO ); 
    shex.fMask         = (phProcess ? SEE_MASK_NOCLOSEPROCESS : 0);
-   shex.oswindow         = oswindow;
+   shex.hwnd         = oswindow;
    shex.lpVerb         = pszVerb; 
    shex.lpFile         = pszPath; 
    shex.lpParameters   = pszParameters; 
@@ -364,7 +364,7 @@ VistaEelevator_HookProc_MsgRet( int code, WPARAM wParam, LPARAM lParam )
         if (pwrs->message == uVEMsg )
       {
          bVESuccess = VistaTools::MyShellExec( 
-                     pwrs->oswindow, 
+            pwrs->hwnd, 
                      NULL, 
                      szVE_Path, 
                      szVE_Parameters, 
@@ -466,7 +466,7 @@ RunNonElevated(
    //////////////////////////////////////
    // find the shell ::ca::window (the desktop)
 
-   oswindow oswindowShell = ::FindWindow( "Progman", NULL);
+   ::oswindow oswindowShell = ::FindWindow( "Progman", NULL);
 
    if ( !oswindowShell )
    {

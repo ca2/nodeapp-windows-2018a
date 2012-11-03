@@ -11,7 +11,7 @@ __STATIC void CLASS_DECL_win __pre_init_dialog(
 __STATIC void CLASS_DECL_win __post_init_dialog(
    ::user::interaction * pWnd, const RECT& rectOld, DWORD dwStyleOld);
 LRESULT CALLBACK
-   __activation_window_procedure(void * oswindow, UINT nMsg, WPARAM wParam, LPARAM lParam);
+   __activation_window_procedure(oswindow oswindow, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
 __STATIC_DATA const char gen_OldWndProc[] = "gen::OldWndProc423";
 
@@ -22,7 +22,7 @@ const char gen_WndOleControl[] = __WNDOLECONTROL;
 
 struct __CTLCOLOR
 {
-   void * oswindow;
+   oswindow oswindow;
    HDC hDC;
    UINT nCtlType;
 };
@@ -56,11 +56,11 @@ namespace win
       m_pguieCapture = NULL;
    }
 
-   void window::construct(void * oswindow)
+   void window::construct(oswindow oswindow)
    {
       m_pcallback = NULL;
       m_pguie = this;
-      set_handle((oswindow) oswindow);
+      set_handle((::oswindow) oswindow);
       m_pguie->m_nFlags = 0;
       m_pfnSuper = NULL;
       m_nModalResult = 0;
@@ -87,14 +87,14 @@ namespace win
 
    ::ca::window * window::from_os_data(void * pdata)
    {
-      return dynamic_cast <::ca::window *>(from_handle((void *) pdata));   
+      return dynamic_cast <::ca::window *>(from_handle((oswindow) pdata));   
    }
 
 
    void * window::get_os_data() const
    {
 
-      return (void *) get_handle();
+      return (void *) ((window *)this)->get_handle();
 
    }
 
@@ -102,30 +102,30 @@ namespace win
 
    // Change a window's style
 
-   __STATIC bool CLASS_DECL_win __modify_style(void * oswindow, int nStyleOffset,
+   __STATIC bool CLASS_DECL_win __modify_style(oswindow oswindow, int nStyleOffset,
       DWORD dwRemove, DWORD dwAdd, UINT nFlags)
    {
       ASSERT(oswindow != NULL);
-      DWORD dwStyle = ::GetWindowLong((oswindow) oswindow, nStyleOffset);
+      DWORD dwStyle = ::GetWindowLong((::oswindow) oswindow, nStyleOffset);
       DWORD dwNewStyle = (dwStyle & ~dwRemove) | dwAdd;
       if (dwStyle == dwNewStyle)
          return FALSE;
 
-      ::SetWindowLong((oswindow) oswindow, nStyleOffset, dwNewStyle);
+      ::SetWindowLong((::oswindow) oswindow, nStyleOffset, dwNewStyle);
       if (nFlags != 0)
       {
-         ::SetWindowPos((oswindow) oswindow, NULL, 0, 0, 0, 0,
+         ::SetWindowPos((::oswindow) oswindow, NULL, 0, 0, 0, 0,
             SWP_NOSIZE | SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE | nFlags);
       }
       return TRUE;
    }
 
-   bool PASCAL window::ModifyStyle(void * oswindow, DWORD dwRemove, DWORD dwAdd, UINT nFlags)
+   bool PASCAL window::ModifyStyle(oswindow oswindow, DWORD dwRemove, DWORD dwAdd, UINT nFlags)
    {
       return __modify_style(oswindow, GWL_STYLE, dwRemove, dwAdd, nFlags);
    }
 
-   bool PASCAL window::ModifyStyleEx(void * oswindow, DWORD dwRemove, DWORD dwAdd, UINT nFlags)
+   bool PASCAL window::ModifyStyleEx(oswindow oswindow, DWORD dwRemove, DWORD dwAdd, UINT nFlags)
    {
       return __modify_style(oswindow, GWL_EXSTYLE, dwRemove, dwAdd, nFlags);
    }
@@ -150,7 +150,7 @@ namespace win
    }
 
 
-   window * PASCAL window::from_handle(void * oswindow)
+   window * PASCAL window::from_handle(oswindow oswindow)
    {
       single_lock sl(afxMutexoswindow_(), TRUE);
       oswindow_map* pMap = get_oswindow_map(TRUE); //create ::collection::map if not exist
@@ -168,7 +168,7 @@ namespace win
       }
    }
 
-   window * PASCAL window::FromHandlePermanent(void * oswindow)
+   window * PASCAL window::FromHandlePermanent(oswindow oswindow)
    {
       single_lock sl(afxMutexoswindow_(), TRUE);
       oswindow_map* pMap = get_oswindow_map();
@@ -183,7 +183,7 @@ namespace win
       return pWnd;
    }
 
-   bool window::attach(void * oswindow_New)
+   bool window::attach(oswindow oswindow_New)
    {
       ASSERT(get_handle() == NULL);     // only attach once, detach on destroy
       ASSERT(FromHandlePermanent(oswindow_New) == NULL);
@@ -195,7 +195,7 @@ namespace win
       oswindow_map * pMap = get_oswindow_map(TRUE); // create ::collection::map if not exist
       ASSERT(pMap != NULL);
 
-      pMap->set_permanent(set_handle((oswindow) oswindow_New), this);
+      pMap->set_permanent(set_handle(oswindow_New), this);
       if(m_pguie == NULL)
       {
          m_pguie = this;
@@ -204,9 +204,9 @@ namespace win
       return TRUE;
    }
 
-   void * window::detach()
+   oswindow window::detach()
    {
-      void * oswindow = get_handle();
+      oswindow oswindow = get_handle();
       if (oswindow != NULL)
       {
          single_lock sl(afxMutexoswindow_(), TRUE);
@@ -241,7 +241,7 @@ namespace win
    bool window::CreateEx(DWORD dwExStyle, const char * lpszClassName,
       const char * lpszWindowName, DWORD dwStyle,
       int x, int y, int nWidth, int nHeight,
-      void * oswindow_Parent, id id, LPVOID lpParam)
+      oswindow oswindow_Parent, id id, LPVOID lpParam)
    {
       UNREFERENCED_PARAMETER(id);
       ASSERT(lpszClassName == NULL || __is_valid_string(lpszClassName) || 
@@ -258,7 +258,7 @@ namespace win
       cs.y = y;
       cs.cx = nWidth;
       cs.cy = nHeight;
-      cs.oswindowParent = (oswindow) oswindow_Parent;
+      cs.hwndParent = oswindow_Parent;
       //   cs.hMenu = oswindow_Parent == NULL ? NULL : nIDorHMenu;
       cs.hMenu = NULL;
       cs.hInstance = System.m_hInstance;
@@ -281,14 +281,14 @@ namespace win
          }
       }
 
-      if(cs.oswindowParent == NULL)
+      if(cs.hwndParent == NULL)
       {
          cs.style &= ~WS_CHILD;
       }
 
       hook_window_create(this);
 
-      void * oswindow = ::CreateWindowEx(cs.dwExStyle, cs.lpszClass, cs.lpszName, cs.style, cs.x, cs.y, cs.cx, cs.cy, cs.oswindowParent, cs.hMenu, cs.hInstance, cs.lpCreateParams);
+      oswindow oswindow = ::CreateWindowEx(cs.dwExStyle, cs.lpszClass, cs.lpszName, cs.style, cs.x, cs.y, cs.cx, cs.cy, cs.hwndParent, cs.hMenu, cs.hInstance, cs.lpCreateParams);
 
 #ifdef DEBUG
       if (oswindow == NULL)
@@ -330,7 +330,7 @@ namespace win
          m_pguie->set_icon(new ::visual::icon(wndcls.hIcon), false);
          m_pguie->set_icon(new ::visual::icon(wndcls.hIcon), true);
       }
-      //      void * oswindowHandle = get_handle();
+      //      oswindow oswindowHandle = get_handle();
       if(oswindow != get_handle())
       {
          ASSERT(FALSE); // should have been set in send msg hook
@@ -572,24 +572,24 @@ namespace win
 
    void window::assert_valid() const
    {
-      if (get_handle() == NULL)
+      if(((window *)this)->get_handle() == NULL)
          return;     // null (unattached) windows are valid
 
       // check for special wnd??? values
       ASSERT(HWND_TOP == NULL);       // same as desktop
-      if (get_handle() == HWND_BOTTOM)
+      if (((window *)this)->get_handle() == HWND_BOTTOM)
       {
       }
-      else if (get_handle() == HWND_TOPMOST)
+      else if (((window *)this)->get_handle() == HWND_TOPMOST)
       {
       }
-      else if (get_handle() == HWND_NOTOPMOST)
+      else if (((window *)this)->get_handle() == HWND_NOTOPMOST)
       {
       }
       else
       {
          // should be a normal window
-         ASSERT(::IsWindow(get_handle()));
+         ASSERT(::IsWindow(((window *)this)->get_handle()));
 
          // should also be in the permanent or temporary handle ::collection::map
          single_lock sl(afxMutexoswindow_(), TRUE);
@@ -613,9 +613,9 @@ namespace win
          // and have used that object in a way that was not intended.
          // (only simple inline wrapper functions should be used)
          //
-         // In general, window objects should be passed by void * from
+         // In general, window objects should be passed by oswindow from
          // one thread to another.  The receiving thread can wrap
-         // the void * with a window object by using ::win::window::from_handle.
+         // the oswindow with a window object by using ::win::window::from_handle.
          //
          // It is dangerous to pass C++ objects from one thread to
          // another, unless the objects are designed to be used in
@@ -628,23 +628,23 @@ namespace win
    {
       ::radix::object::dump(dumpcontext);
 
-      dumpcontext << "\nm_oswindow_ = " << (void *)get_handle();
+      dumpcontext << "\nm_oswindow_ = " << (oswindow)((window *)this)->get_handle();
 
-      if (get_handle() == NULL || get_handle() == HWND_BOTTOM ||
-         get_handle() == HWND_TOPMOST || get_handle() == HWND_NOTOPMOST)
+      if (((window *)this)->get_handle() == NULL || ((window *)this)->get_handle() == HWND_BOTTOM ||
+         ((window *)this)->get_handle() == HWND_TOPMOST || ((window *)this)->get_handle() == HWND_NOTOPMOST)
       {
          // not a normal window - nothing more to dump
          return;
       }
 
-      if (!::IsWindow(get_handle()))
+      if (!::IsWindow(((window *)this)->get_handle()))
       {
          // not a valid window
-         dumpcontext << " (illegal void *)";
+         dumpcontext << " (illegal oswindow)";
          return; // don't do anything more
       }
 
-      ::ca::window * pWnd = ::win::window::FromHandlePermanent(get_handle());
+      ::ca::window * pWnd = ::win::window::FromHandlePermanent(((window *)this)->get_handle());
       if (pWnd != this)
          dumpcontext << " (Detached or temporary window)";
       else
@@ -655,20 +655,20 @@ namespace win
       if (!const_cast < window * > (this)->send_message(WM_QUERYAFXWNDPROC, 0, 0) && pWnd == this)
          ((::ca::window *) this)->GetWindowText(szBuf, _countof(szBuf));
       else
-         ::DefWindowProc(get_handle(), WM_GETTEXT, _countof(szBuf), (LPARAM)&szBuf[0]);
+         ::DefWindowProc(((window *)this)->get_handle(), WM_GETTEXT, _countof(szBuf), (LPARAM)&szBuf[0]);
       dumpcontext << "\ncaption = \"" << szBuf << "\"";
 
-      ::GetClassName(get_handle(), szBuf, _countof(szBuf));
+      ::GetClassName(((window *)this)->get_handle(), szBuf, _countof(szBuf));
       dumpcontext << "\nclass name = \"" << szBuf << "\"";
 
       rect rect;
       ((::ca::window *) this)->GetWindowRect(&rect);
       dumpcontext << "\nrect = " << rect;
-      dumpcontext << "\nparent ::ca::window * = " << (void *)((::ca::window *) this)->GetParent();
+      dumpcontext << "\nparent ::ca::window * = " << (oswindow)((::ca::window *) this)->GetParent();
 
-      dumpcontext << "\nstyle = " << (void *)(dword_ptr)::GetWindowLong(get_handle(), GWL_STYLE);
-      if (::GetWindowLong(get_handle(), GWL_STYLE) & WS_CHILD)
-         dumpcontext << "\nid = " << __get_dialog_control_id(get_handle());
+      dumpcontext << "\nstyle = " << (oswindow)(dword_ptr)::GetWindowLong(((window *)this)->get_handle(), GWL_STYLE);
+      if (::GetWindowLong(((window *)this)->get_handle(), GWL_STYLE) & WS_CHILD)
+         dumpcontext << "\nid = " << __get_dialog_control_id(((window *)this)->get_handle());
 
       dumpcontext << "\n";
    }
@@ -678,7 +678,7 @@ namespace win
       single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_mutex, TRUE);
       ::ca::window * pWnd;
       oswindow_map * pMap;
-      void * oswindow_Orig;
+      oswindow oswindow_Orig;
       bool bResult;
 
       if ((get_handle() == NULL) )
@@ -778,14 +778,14 @@ namespace win
 
    int window::GetChildByIdText(int nID, string & rString) const
    {
-      ASSERT(::IsWindow(get_handle()));
+      ASSERT(::IsWindow(((window *)this)->get_handle()));
       rString = "";    // is_empty without deallocating
 
-      void * oswindow = ::GetDlgItem(get_handle(), nID);
+      oswindow oswindow = ::GetDlgItem(((window *)this)->get_handle(), nID);
       if (oswindow != NULL)
       {
-         int nLen = ::GetWindowTextLength((oswindow) oswindow);
-         ::GetWindowText((oswindow) oswindow, rString.GetBufferSetLength(nLen), nLen+1);
+         int nLen = ::GetWindowTextLength(oswindow);
+         ::GetWindowText(oswindow, rString.GetBufferSetLength(nLen), nLen+1);
          rString.ReleaseBuffer();
       }
 
@@ -814,7 +814,7 @@ namespace win
    {
 
       // reflect notification to child window control
-      if (ReflectLastMsg(lpDrawItemStruct->oswindowItem))
+      if (ReflectLastMsg(lpDrawItemStruct->hwndItem))
          return;     // eat it
 
       // not handled - do default
@@ -826,7 +826,7 @@ namespace win
    {
       // reflect notification to child window control
       LRESULT lResult;
-      if (ReflectLastMsg(lpCompareItemStruct->oswindowItem, &lResult))
+      if (ReflectLastMsg(lpCompareItemStruct->hwndItem, &lResult))
          return (int)lResult;        // eat it
 
       // not handled - do default
@@ -836,7 +836,7 @@ namespace win
    void window::OnDeleteItem(int /*nIDCtl*/, LPDELETEITEMSTRUCT lpDeleteItemStruct)
    {
       // reflect notification to child window control
-      if (ReflectLastMsg(lpDeleteItemStruct->oswindowItem))
+      if (ReflectLastMsg(lpDeleteItemStruct->hwndItem))
          return;     // eat it
       // not handled - do default
       Default();
@@ -869,41 +869,41 @@ namespace win
 
    bool window::GetWindowInfo(PWINDOWINFO pwi) const
    {
-      ASSERT(::IsWindow((oswindow)get_os_data())); 
-      return ::GetWindowInfo((oswindow)get_os_data(), pwi) != FALSE; 
+      ASSERT(::IsWindow((oswindow)get_handle()())); 
+      return ::GetWindowInfo((oswindow)get_handle()(), pwi) != FALSE; 
    }
 
    ::ca::window * window::GetAncestor(UINT gaFlags) const
-   { ASSERT(::IsWindow((oswindow)get_os_data())); return  ::win::window::from_handle(::GetAncestor((oswindow)get_os_data(), gaFlags)); }
+   { ASSERT(::IsWindow((oswindow)get_handle()())); return  ::win::window::from_handle(::GetAncestor((oswindow)get_handle()(), gaFlags)); }
 
 
 
    bool window::GetScrollBarInfo(LONG idObject, PSCROLLBARINFO psbi) const
    {
-      ASSERT(::IsWindow((oswindow)get_os_data())); 
+      ASSERT(::IsWindow((oswindow)get_handle()())); 
       ASSERT(psbi != NULL);
-      return ::GetScrollBarInfo((oswindow)get_os_data(), idObject, psbi) != FALSE;
+      return ::GetScrollBarInfo((oswindow)get_handle()(), idObject, psbi) != FALSE;
    }
 
    bool window::GetTitleBarInfo(PTITLEBARINFO pti) const
    {
-      ASSERT(::IsWindow((oswindow) get_os_data())); 
+      ASSERT(::IsWindow((oswindow)get_handle()())); 
       ASSERT(pti != NULL);
-      return ::GetTitleBarInfo((oswindow)get_os_data(), pti) != FALSE;
+      return ::GetTitleBarInfo((oswindow)get_handle()(), pti) != FALSE;
    }
 
    bool window::AnimateWindow(DWORD dwTime, DWORD dwFlags) 
    {
-      ASSERT(::IsWindow((oswindow) get_os_data())); 
-      return ::AnimateWindow((oswindow) get_os_data(), dwTime, dwFlags) != FALSE;
+      ASSERT(::IsWindow((oswindow) get_handle()())); 
+      return ::AnimateWindow((oswindow) get_handle()(), dwTime, dwFlags) != FALSE;
    }
 
    bool window::FlashWindowEx(DWORD dwFlags, UINT  uCount, DWORD dwTimeout)
    {
-      ASSERT(::IsWindow((oswindow)get_os_data())); 
+      ASSERT(::IsWindow((oswindow)get_handle()())); 
       FLASHWINFO fwi;
       fwi.cbSize = sizeof(fwi);
-      fwi.oswindow = (oswindow) get_os_data();
+      fwi.hwnd = (oswindow) get_handle()();
       fwi.dwFlags = dwFlags;
       fwi.uCount = uCount;
       fwi.dwTimeout = dwTimeout;
@@ -915,29 +915,29 @@ namespace win
 
    bool window::SetLayeredWindowAttributes(COLORREF crKey, BYTE bAlpha, DWORD dwFlags)
    {
-      ASSERT(::IsWindow((oswindow) get_os_data())); 
-      return ::SetLayeredWindowAttributes((oswindow) get_os_data(), crKey, bAlpha, dwFlags) != FALSE;
+      ASSERT(::IsWindow((oswindow) get_handle()())); 
+      return ::SetLayeredWindowAttributes((oswindow)get_handle()(), crKey, bAlpha, dwFlags) != FALSE;
    }
 
    bool window::UpdateLayeredWindow(::ca::graphics * pDCDst, POINT *pptDst, SIZE *psize, 
       ::ca::graphics * pDCSrc, POINT *pptSrc, COLORREF crKey, BLENDFUNCTION *pblend, DWORD dwFlags)
    {
-      ASSERT(::IsWindow((oswindow) get_os_data())); 
-      return ::UpdateLayeredWindow((oswindow) get_os_data(), WIN_HDC(pDCDst), pptDst, psize,
+      ASSERT(::IsWindow((oswindow) get_handle()())); 
+      return ::UpdateLayeredWindow(get_handle()(), WIN_HDC(pDCDst), pptDst, psize,
          WIN_HDC(pDCSrc), pptSrc, crKey, pblend, dwFlags) != FALSE;
    }
 
 
    bool window::GetLayeredWindowAttributes(COLORREF *pcrKey, BYTE *pbAlpha, DWORD *pdwFlags) const
    {
-      ASSERT(::IsWindow((oswindow) get_os_data())); 
-      return ::GetLayeredWindowAttributes((oswindow) get_os_data(), pcrKey, pbAlpha, pdwFlags) != FALSE;
+      ASSERT(::IsWindow((oswindow) get_handle()())); 
+      return ::GetLayeredWindowAttributes(get_handle()(), pcrKey, pbAlpha, pdwFlags) != FALSE;
    }
 
    bool window::PrintWindow(::ca::graphics * pgraphics, UINT nFlags) const
    {
-      ASSERT(::IsWindow((oswindow) get_os_data())); 
-      return ::PrintWindow((oswindow) get_os_data(), (HDC)(dynamic_cast<::win::graphics * >(pgraphics))->get_os_data(), nFlags) != FALSE;
+      ASSERT(::IsWindow((oswindow) get_handle()())); 
+      return ::PrintWindow(get_handle()(), (HDC)(dynamic_cast<::win::graphics * >(pgraphics))->get_handle()(), nFlags) != FALSE;
    }
 
 
@@ -946,7 +946,7 @@ namespace win
       // fill in special struct for compatiblity with 16-bit WM_CTLCOLOR
       __CTLCOLOR ctl;
       ctl.hDC = (HDC)wParam;
-      ctl.oswindow = (void *)lParam;
+      ctl.oswindow = (oswindow)lParam;
       ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
       ctl.nCtlType = pThreadState->m_lastSentMsg.message - WM_CTLCOLORMSGBOX;
       //ASSERT(ctl.nCtlType >= CTLCOLOR_MSGBOX);
@@ -1039,9 +1039,9 @@ namespace win
       WIN_WINDOW(pWnd)->SendMessageToDescendants(WM_CANCELMODE, 0, 0, TRUE, TRUE);
 
       // attempt to cancel capture
-      void * oswindow_Capture = ::GetCapture();
+      oswindow oswindow_Capture = ::GetCapture();
       if (oswindow_Capture != NULL)
-         ::SendMessage((oswindow) oswindow_Capture, WM_CANCELMODE, 0, 0);
+         ::SendMessage(oswindow_Capture, WM_CANCELMODE, 0, 0);
    }
 
 
@@ -1095,7 +1095,7 @@ namespace win
    void window::_002OnDraw(::ca::graphics * pdc)
    {
 
-      ::CallWindowProc(*GetSuperWndProcAddr(), get_handle(), WM_PRINT, (WPARAM)((dynamic_cast<::win::graphics * >(pdc))->get_os_data()), (LPARAM)(PRF_CHILDREN | PRF_CLIENT));
+      ::CallWindowProc(*GetSuperWndProcAddr(), get_handle(), WM_PRINT, (WPARAM)((dynamic_cast<::win::graphics * >(pdc))->get_handle()()), (LPARAM)(PRF_CHILDREN | PRF_CLIENT));
 
    }
 
@@ -1425,7 +1425,7 @@ restart_mouse_hover_check:
 
    // special case for activation
    if (message == WM_ACTIVATE)
-   __handle_activate(this, wParam, ::win::window::from_handle((void *)lParam));
+   __handle_activate(this, wParam, ::win::window::from_handle((oswindow)lParam));
 
    // special case for set cursor HTERROR
    if (message == WM_SETCURSOR &&
@@ -1549,7 +1549,7 @@ restart_mouse_hover_check:
 
    case gen::Sig_v_u_W:
    (this->*mmf.pfn_v_u_W)(static_cast<UINT>(wParam), 
-   ::win::window::from_handle(reinterpret_cast<void *>(lParam)));
+   ::win::window::from_handle(reinterpret_cast<oswindow>(lParam)));
    break;
 
    case gen::Sig_u_u_v:
@@ -1561,13 +1561,13 @@ restart_mouse_hover_check:
    break;
 
    case gen::Sig_b_W_uu:
-   lResult = (this->*mmf.pfn_b_W_u_u)(::win::window::from_handle(reinterpret_cast<void *>(wParam)),
+   lResult = (this->*mmf.pfn_b_W_u_u)(::win::window::from_handle(reinterpret_cast<oswindow>(wParam)),
    LOWORD(lParam), HIWORD(lParam));
    break;
 
    case gen::Sig_b_W_COPYDATASTRUCT:
    lResult = (this->*mmf.pfn_b_W_COPYDATASTRUCT)(
-   ::win::window::from_handle(reinterpret_cast<void *>(wParam)),
+   ::win::window::from_handle(reinterpret_cast<oswindow>(wParam)),
    reinterpret_cast<COPYDATASTRUCT*>(lParam));
    break;
 
@@ -1616,7 +1616,7 @@ restart_mouse_hover_check:
 
    case gen::Sig_i_u_W_u:
    lResult = (this->*mmf.pfn_i_u_W_u)(LOWORD(wParam),
-   ::win::window::from_handle(reinterpret_cast<void *>(lParam)), HIWORD(wParam));
+   ::win::window::from_handle(reinterpret_cast<oswindow>(lParam)), HIWORD(wParam));
    break;
 
    case gen::Sig_i_uu_v:
@@ -1624,7 +1624,7 @@ restart_mouse_hover_check:
    break;
 
    case gen::Sig_i_W_uu:
-   lResult = (this->*mmf.pfn_i_W_u_u)(::win::window::from_handle(reinterpret_cast<void *>(wParam)),
+   lResult = (this->*mmf.pfn_i_W_u_u)(::win::window::from_handle(reinterpret_cast<oswindow>(wParam)),
    LOWORD(lParam), HIWORD(lParam));
    break;
 
@@ -1685,9 +1685,9 @@ restart_mouse_hover_check:
    break;
 
    case gen::Sig_MDIACTIVATE:
-   (this->*mmf.pfn_v_b_W_W)(get_handle() == reinterpret_cast<void *>(lParam),
-   ::win::window::from_handle(reinterpret_cast<void *>(lParam)),
-   ::win::window::from_handle(reinterpret_cast<void *>(wParam)));
+   (this->*mmf.pfn_v_b_W_W)(get_handle() == reinterpret_cast<oswindow>(lParam),
+   ::win::window::from_handle(reinterpret_cast<oswindow>(lParam)),
+   ::win::window::from_handle(reinterpret_cast<oswindow>(wParam)));
    break;
 
    case gen::Sig_v_D_v:
@@ -1696,33 +1696,33 @@ restart_mouse_hover_check:
 
 
    case gen::Sig_v_W_v:
-   (this->*mmf.pfn_v_W)(::win::window::from_handle(reinterpret_cast<void *>(wParam)));
+   (this->*mmf.pfn_v_W)(::win::window::from_handle(reinterpret_cast<oswindow>(wParam)));
    break;
 
    case gen::Sig_v_v_W:
-   (this->*mmf.pfn_v_W)(::win::window::from_handle(reinterpret_cast<void *>(lParam)));
+   (this->*mmf.pfn_v_W)(::win::window::from_handle(reinterpret_cast<oswindow>(lParam)));
    break;
 
    case gen::Sig_v_W_uu:
-   (this->*mmf.pfn_v_W_u_u)(::win::window::from_handle(reinterpret_cast<void *>(wParam)), LOWORD(lParam),
+   (this->*mmf.pfn_v_W_u_u)(::win::window::from_handle(reinterpret_cast<oswindow>(wParam)), LOWORD(lParam),
    HIWORD(lParam));
    break;
 
    case gen::Sig_v_W_p:
    {
    point point(lParam);
-   (this->*mmf.pfn_v_W_p)(::win::window::from_handle(reinterpret_cast<void *>(wParam)), point);
+   (this->*mmf.pfn_v_W_p)(::win::window::from_handle(reinterpret_cast<oswindow>(wParam)), point);
    }
    break;
 
    case gen::Sig_v_W_h:
-   (this->*mmf.pfn_v_W_h)(::win::window::from_handle(reinterpret_cast<void *>(wParam)),
+   (this->*mmf.pfn_v_W_h)(::win::window::from_handle(reinterpret_cast<oswindow>(wParam)),
    reinterpret_cast<HANDLE>(lParam));
    break;
 
    case gen::Sig_ACTIVATE:
    (this->*mmf.pfn_v_u_W_b)(LOWORD(wParam),
-   ::win::window::from_handle(reinterpret_cast<void *>(lParam)), HIWORD(wParam));
+   ::win::window::from_handle(reinterpret_cast<oswindow>(lParam)), HIWORD(wParam));
    break;
 
    case gen::Sig_SCROLL:
@@ -1735,7 +1735,7 @@ restart_mouse_hover_check:
    int nPos = (short)HIWORD(wParam);
    if (lpEntry->nSig == gen::Sig_SCROLL)
    (this->*mmf.pfn_v_u_u_W)(nScrollCode, nPos,
-   ::win::window::from_handle(reinterpret_cast<void *>(lParam)));
+   ::win::window::from_handle(reinterpret_cast<oswindow>(lParam)));
    else
    (this->*mmf.pfn_v_u_u)(nScrollCode, nPos);
    }
@@ -1831,7 +1831,7 @@ restart_mouse_hover_check:
       UNREFERENCED_PARAMETER(wParam);
       UNREFERENCED_PARAMETER(lParam);
       /*   UINT nID = LOWORD(wParam);
-      void * oswindow_Ctrl = (void *)lParam;
+      oswindow oswindow_Ctrl = (oswindow)lParam;
       int nCode = HIWORD(wParam);
 
       // default routing for command messages (through closure table)
@@ -1886,14 +1886,14 @@ restart_mouse_hover_check:
    {
       ASSERT(pResult != NULL);
       NMHDR* pNMHDR = (NMHDR*)lParam;
-      void * oswindow_Ctrl = pNMHDR->oswindowFrom;
+      oswindow oswindow_Ctrl = pNMHDR->oswindowFrom;
 
       // get the child ID from the window itself
       //      uint_ptr nID = __get_dialog_control_id(oswindow_Ctrl);
       //      int nCode = pNMHDR->code;
 
       ASSERT(oswindow_Ctrl != NULL);
-      ASSERT(::IsWindow((oswindow) oswindow_Ctrl));
+      ASSERT(::IsWindow(oswindow_Ctrl));
 
       if (gen_ThreadState->m_hLockoutNotifyWindow == get_handle())
          return true;        // locked out - ignore control notification
@@ -1933,7 +1933,7 @@ restart_mouse_hover_check:
       return NULL;
    }
 
-   /* trans void * CLASS_DECL_win __get_parent_owner(::user::interaction * oswindow)
+   /* trans oswindow CLASS_DECL_win __get_parent_owner(::user::interaction * oswindow)
    {
    // check for permanent-owned window first
    ::ca::window * pWnd = ::win::window::FromHandlePermanent(oswindow);
@@ -1942,7 +1942,7 @@ restart_mouse_hover_check:
 
    // otherwise, return parent in the Windows sense
    return (::GetWindowLong(oswindow, GWL_STYLE) & WS_CHILD) ?
-   ::GetParent(oswindow) : ::GetWindow(oswindow, GW_OWNER);
+   ::GetParent: ::GetWindow(oswindow, GW_OWNER);
    }*/
 
 
@@ -1969,9 +1969,9 @@ restart_mouse_hover_check:
 
       ASSERT_VALID(this);
 
-      void * oswindow_Owner = get_handle();
-      void * oswindow_T;
-      while ((oswindow_T = ::GetWindow((oswindow) oswindow_Owner, GW_OWNER)) != NULL)
+      oswindow oswindow_Owner = get_handle();
+      oswindow oswindow_T;
+      while ((oswindow_T = ::GetWindow(oswindow_Owner, GW_OWNER)) != NULL)
          oswindow_Owner = oswindow_T;
 
       return ::win::window::from_handle(oswindow_Owner);
@@ -1985,10 +1985,10 @@ restart_mouse_hover_check:
 
       ASSERT_VALID(this);
 
-      void * oswindow_Parent = get_handle();
-      void * oswindow_T;
-      while ((::GetWindowLong((oswindow) oswindow_Parent, GWL_STYLE) & WS_CHILD) &&
-         (oswindow_T = ::GetParent((oswindow) oswindow_Parent)) != NULL)
+      oswindow oswindow_Parent = get_handle();
+      oswindow oswindow_T;
+      while ((::GetWindowLong(oswindow_Parent, GWL_STYLE) & WS_CHILD) &&
+         (oswindow_T = ::GetParent(oswindow_Parent)) != NULL)
       {
          oswindow_Parent = oswindow_T;
       }
@@ -2042,9 +2042,9 @@ restart_mouse_hover_check:
       return pFrameWnd;
    }
 
-   ::ca::window * PASCAL window::get_safe_owner(::ca::window * pParent, void ** pWndTop)
+   ::ca::window * PASCAL window::get_safe_owner(::ca::window * pParent, oswindow* pWndTop)
    {
-      void * oswindow = get_safe_owner((void *) pParent->get_os_data(), pWndTop);
+      oswindow oswindow = get_safe_owner(pParent->get_handle()(), pWndTop);
       return ::win::window::from_handle(oswindow);
    }
 
@@ -2102,13 +2102,13 @@ restart_mouse_hover_check:
       return NULL;    // not found
    }
 
-   void PASCAL window::SendMessageToDescendants(void * oswindow, UINT message,
+   void PASCAL window::SendMessageToDescendants(oswindow oswindow, UINT message,
       WPARAM wParam, LPARAM lParam, bool bDeep, bool bOnlyPerm)
    {
       // walk through HWNDs to avoid creating temporary window objects
       // unless we need to call this function recursively
-      for (void * oswindow_Child = ::GetTopWindow((oswindow) oswindow); oswindow_Child != NULL;
-         oswindow_Child = ::GetNextWindow((oswindow) oswindow_Child, GW_HWNDNEXT))
+      for (oswindow oswindow_Child = ::GetTopWindow(oswindow); oswindow_Child != NULL;
+         oswindow_Child = ::GetNextWindow(oswindow_Child, GW_HWNDNEXT))
       {
          // if bOnlyPerm is TRUE, don't send to non-permanent windows
          if (bOnlyPerm)
@@ -2125,13 +2125,13 @@ restart_mouse_hover_check:
             try
             {
                // send message with Windows SendMessage API
-               ::SendMessage((oswindow) oswindow_Child, message, wParam, lParam);
+               ::SendMessage(oswindow_Child, message, wParam, lParam);
             }
             catch(...)
             {
             }
          }
-         if (bDeep && ::GetTopWindow((oswindow) oswindow_Child) != NULL)
+         if (bDeep && ::GetTopWindow(oswindow_Child) != NULL)
          {
             // send to child windows after parent
             try
@@ -2166,7 +2166,7 @@ restart_mouse_hover_check:
 
    int window::GetScrollPos(int nBar) const
    {
-      return ::GetScrollPos(get_handle(), nBar);
+      return ::GetScrollPos(((window *) this)->get_handle(), nBar);
    }
 
    void window::SetScrollRange(int nBar, int nMinPos, int nMaxPos, bool bRedraw)
@@ -2176,7 +2176,7 @@ restart_mouse_hover_check:
 
    void window::GetScrollRange(int nBar, LPINT lpMinPos, LPINT lpMaxPos) const
    {
-      ::GetScrollRange(get_handle(), nBar, lpMinPos, lpMaxPos);
+      ::GetScrollRange(((window *) this)->get_handle(), nBar, lpMinPos, lpMaxPos);
    }
 
    // Turn on/off non-control scrollbars
@@ -2192,9 +2192,9 @@ restart_mouse_hover_check:
    {
       ASSERT(lpScrollInfo != NULL);
 
-      void * oswindow = get_handle();
+      oswindow oswindow = get_handle();
       lpScrollInfo->cbSize = sizeof(*lpScrollInfo);
-      ::SetScrollInfo((oswindow) oswindow, nBar, lpScrollInfo, bRedraw);
+      ::SetScrollInfo(oswindow, nBar, lpScrollInfo, bRedraw);
       return true;
    }
 
@@ -2203,8 +2203,8 @@ restart_mouse_hover_check:
       UNREFERENCED_PARAMETER(nMask);
       ASSERT(lpScrollInfo != NULL);
 
-      void * oswindow = get_handle();
-      return ::GetScrollInfo((oswindow) oswindow, nBar, lpScrollInfo) != FALSE;
+      oswindow oswindow = get_handle();
+      return ::GetScrollInfo(oswindow, nBar, lpScrollInfo) != FALSE;
    }
 
    int window::GetScrollLimit(int nBar)
@@ -2235,16 +2235,16 @@ restart_mouse_hover_check:
          // not visible.  This leaves child windows unscrolled.
          // To account for this oversight, the child windows are moved
          // directly instead.
-         void * oswindow_Child = ::GetWindow(get_handle(), GW_CHILD);
+         oswindow oswindow_Child = ::GetWindow(get_handle(), GW_CHILD);
          if (oswindow_Child != NULL)
          {
             for (; oswindow_Child != NULL;
-               oswindow_Child = ::GetNextWindow((oswindow) oswindow_Child, GW_HWNDNEXT))
+               oswindow_Child = ::GetNextWindow(oswindow_Child, GW_HWNDNEXT))
             {
                rect rect;
-               ::GetWindowRect((oswindow) oswindow_Child, &rect);
+               ::GetWindowRect(oswindow_Child, &rect);
                ScreenToClient(&rect);
-               ::SetWindowPos((oswindow) oswindow_Child, NULL,
+               ::SetWindowPos(oswindow_Child, NULL,
                   rect.left+xAmount, rect.top+yAmount, 0, 0,
                   SWP_NOSIZE|SWP_NOACTIVATE|SWP_NOZORDER);
             }
@@ -2541,16 +2541,16 @@ restart_mouse_hover_check:
                // Sending the above WM_SYSCOMMAND may destroy the cast,
                // so we have to be careful about restoring activation
                // and focus after sending it.
-               void * oswindow_Save = get_handle();
-               void * oswindow_Focus = ::GetFocus();
+               oswindow oswindow_Save = get_handle();
+               oswindow oswindow_Focus = ::GetFocus();
                pParent->SetActiveWindow();
                pParent->send_message(WM_SYSCOMMAND, nID, lParam);
 
                // be very careful here...
-               if (::IsWindow((oswindow) oswindow_Save))
-                  ::SetActiveWindow((oswindow) oswindow_Save);
-               if (::IsWindow((oswindow) oswindow_Focus))
-                  ::SetFocus((oswindow) oswindow_Focus);
+               if (::IsWindow(oswindow_Save))
+                  ::SetActiveWindow(oswindow_Save);
+               if (::IsWindow(oswindow_Focus))
+                  ::SetFocus(oswindow_Focus);
             }
          }
          return true;
@@ -2590,7 +2590,7 @@ restart_mouse_hover_check:
          pThreadState->m_lastSentMsg.wParam, pThreadState->m_lastSentMsg.lParam, pResult);
    }
 
-   bool PASCAL window::ReflectLastMsg(void * oswindow_Child, LRESULT* pResult)
+   bool PASCAL window::ReflectLastMsg(oswindow oswindow_Child, LRESULT* pResult)
    {
       // get the ::collection::map, and if no ::collection::map, then this message does not need reflection
       single_lock sl(afxMutexoswindow_(), TRUE);
@@ -2694,7 +2694,7 @@ restart_mouse_hover_check:
    {
       if ((LOWORD(message) == WM_CREATE || LOWORD(message) == WM_DESTROY))
       {
-         if (ReflectLastMsg((void *)lParam))
+         if (ReflectLastMsg((oswindow)lParam))
             return;     // eat it
       }
       // not handled - do default
@@ -2869,10 +2869,10 @@ restart_mouse_hover_check:
 
 
       manual_reset_event m_event;
-      void * m_oswindow;
+      oswindow m_oswindow;
       HDC m_hdc;
 
-      print_window(::ca::application * papp, void * oswindow, HDC hdc, DWORD dwTimeout) :
+      print_window(::ca::application * papp, oswindow oswindow, HDC hdc, DWORD dwTimeout) :
          ca(papp),
          m_event(papp)
       {
@@ -2895,9 +2895,9 @@ restart_mouse_hover_check:
          try
          {
 
-            HANDLE hevent = (HANDLE) pprintwindow->m_event.get_os_data();
+            HANDLE hevent = (HANDLE) pprintwindow->m_event.get_handle()();
 
-            ::PrintWindow((oswindow) pprintwindow->m_oswindow, pprintwindow->m_hdc, 0);
+            ::PrintWindow(pprintwindow->m_oswindow, pprintwindow->m_hdc, 0);
 
             ::SetEvent(hevent);
 
@@ -2952,15 +2952,15 @@ restart_mouse_hover_check:
             rect rect9;
 
             rgnUpdate = ::CreateRectRgnIndirect(&rectUpdate);
-            void * oswindowOrder = ::GetWindow(get_handle(), GW_HWNDNEXT);
+            oswindow oswindowOrder = ::GetWindow(get_handle(), GW_HWNDNEXT);
             for(;;)
             {
                //            char szText[1024];
                //::GetWindowTextA(oswindowOrder, szText, sizeof(szText));
-               if(oswindowOrder == NULL || !::IsWindow((oswindow) oswindowOrder))
+               if(oswindowOrder == NULL || !::IsWindow(oswindowOrder))
                   break;
 
-               if(!::IsWindowVisible((oswindow) oswindowOrder) || ::IsIconic((oswindow) oswindowOrder) || oswindowOrder == get_handle() || wndaApp.contains(oswindowOrder))
+               if(!::IsWindowVisible(oswindowOrder) || ::IsIconic(oswindowOrder) || oswindowOrder == get_handle() || wndaApp.contains(oswindowOrder))
                {
 
                   if(oswindowOrder == get_handle())
@@ -2977,7 +2977,7 @@ restart_mouse_hover_check:
 
                   rect rectWindow;
 
-                  ::GetWindowRect((oswindow) oswindowOrder, rectWindow);
+                  ::GetWindowRect(oswindowOrder, rectWindow);
 
                   SetRectRgn(rgnWindow, rectWindow.left, rectWindow.top, rectWindow.right, rectWindow.bottom);
 
@@ -3015,22 +3015,22 @@ restart_mouse_hover_check:
 
                }
 
-               oswindowOrder = ::GetWindow((oswindow) oswindowOrder, GW_HWNDNEXT);
+               oswindowOrder = ::GetWindow(oswindowOrder, GW_HWNDNEXT);
 
             }
 
             for(index j = wndaApp.get_upper_bound(); j >= 0; j--)
             {
 
-               void * oswindow = wndaApp[j];
+               oswindow oswindow = wndaApp[j];
 
                if(oswindow == get_handle())
                   break;
 
-               if(!::IsWindowVisible((oswindow) oswindow) || ::IsIconic((oswindow) oswindow))
+               if(!::IsWindowVisible(oswindow) || ::IsIconic(oswindow))
                   continue;
 
-               ::GetWindowRect((oswindow) oswindow, rect5);
+               ::GetWindowRect(oswindow, rect5);
 
                rect9.intersect(rect5, rectUpdate);
 
@@ -3067,11 +3067,11 @@ restart_mouse_hover_check:
 
                      {
 
-                        HDC hDC = ::GetWindowDC((oswindow) oswindow);
+                        HDC hDC = ::GetWindowDC(oswindow);
 
                         hBmp = CreateCompatibleBitmap(hDC, rect5.width(), rect5.height());
 
-                        ::ReleaseDC((oswindow) oswindow, hDC);
+                        ::ReleaseDC(oswindow, hDC);
 
                      }
 
@@ -3079,7 +3079,7 @@ restart_mouse_hover_check:
 
                      //print_window printwindow(get_app(), oswindow, hDCMem, 284);
 
-                     ::PrintWindow((oswindow) oswindow, hDCMem, 0);
+                     ::PrintWindow(oswindow, hDCMem, 0);
 
                      ::BitBlt(
                         hdc ,
@@ -3104,10 +3104,10 @@ restart_mouse_hover_check:
 
                      SetViewportOrgEx(hdc, 0, 0, NULL);
 
-                     HDC hdcWindow = ::GetDCEx((oswindow) wndaApp[j], NULL, DCX_WINDOW);
+                     HDC hdcWindow = ::GetDCEx(wndaApp[j], NULL, DCX_WINDOW);
 
                      if(hdcWindow == NULL)
-                        hdcWindow = ::GetDCEx((oswindow) wndaApp[j], NULL, DCX_WINDOW | DCX_CACHE);
+                        hdcWindow = ::GetDCEx(wndaApp[j], NULL, DCX_WINDOW | DCX_CACHE);
 
                      if(hdcWindow != NULL)
                      {
@@ -3122,7 +3122,7 @@ restart_mouse_hover_check:
                            rect5.top - rect5.top,
                            SRCCOPY);
 
-                        ::ReleaseDC((oswindow) wndaApp[j], hdcWindow);
+                        ::ReleaseDC(wndaApp[j], hdcWindow);
 
                      }
                      else
@@ -3183,7 +3183,7 @@ restart_mouse_hover_check:
 
          ::ca::graphics * pdc = dib->get_graphics();
 
-         if((dynamic_cast<::win::graphics * >(pdc))->get_os_data() == NULL 
+         if((dynamic_cast<::win::graphics * >(pdc))->get_handle()() == NULL 
             || (dynamic_cast<::win::graphics * >(pdc))->get_handle2() == NULL)
             return;
 
@@ -3219,7 +3219,7 @@ restart_mouse_hover_check:
          (dynamic_cast<::win::graphics * >(pdc))->SetViewportOrg(point(0, 0));
          BitBlt(hdc, rectPaint.left, rectPaint.top, 
             rectPaint.width(), rectPaint.height(),
-            (HDC) pdc->get_os_data(), rectUpdate.left, rectUpdate.top,
+            (HDC) pdc->get_handle()(), rectUpdate.left, rectUpdate.top,
             SRCCOPY);
 
       }
@@ -3262,7 +3262,7 @@ restart_mouse_hover_check:
 
          ::ca::graphics * pdc = dib->get_graphics();
 
-         if(pdc->get_os_data() == NULL)
+         if(pdc->get_handle()() == NULL)
             return;
 
          rect rectPaint;
@@ -3336,7 +3336,7 @@ restart_mouse_hover_check:
    //  return value of FALSE means caller must call DefWindowProc's default
    //  TRUE means that 'hbrGray' will be used and the appropriate text
    //    ('clrText') and background colors are set.
-   bool PASCAL window::GrayCtlColor(HDC hDC, void * oswindow, UINT nCtlColor,
+   bool PASCAL window::GrayCtlColor(HDC hDC, oswindow oswindow, UINT nCtlColor,
       HBRUSH hbrGray, COLORREF clrText)
    {
       if (hDC == NULL)
@@ -3357,7 +3357,7 @@ restart_mouse_hover_check:
       {
          // only handle requests to draw the space between edit and drop button
          //  in a drop-down combo (not a drop-down list)
-         if (!__is_combo_box_control((oswindow) oswindow, (UINT)CBS_DROPDOWN))
+         if (!__is_combo_box_control(oswindow, (UINT)CBS_DROPDOWN))
             return FALSE;
       }
 
@@ -3382,7 +3382,7 @@ restart_mouse_hover_check:
 
    // prevent control notifications from being dispatched during update_data
    ___THREAD_STATE* pThreadState = __get_thread_state();
-   void * oswindow_OldLockout = pThreadState->m_hLockoutNotifyWindow;
+   oswindow oswindow_OldLockout = pThreadState->m_hLockoutNotifyWindow;
    ASSERT(oswindow_OldLockout != get_handle());   // must not recurse
    pThreadState->m_hLockoutNotifyWindow = get_handle();
 
@@ -3461,16 +3461,16 @@ restart_mouse_hover_check:
          // center within appropriate monitor coordinates
          if (oswindow_Center == NULL)
          {
-            void * hwDefault = System.GetMainWnd()->get_handle();
+            oswindow hwDefault = System.GetMainWnd()->get_handle();
 
-            :: GetMonitorInfo(::MonitorFromWindow((oswindow) hwDefault, MONITOR_DEFAULTTOPRIMARY), &mi);
+            :: GetMonitorInfo(::MonitorFromWindow(hwDefault, MONITOR_DEFAULTTOPRIMARY), &mi);
             rcCenter = mi.rcWork;
             rcArea = mi.rcWork;
          }
          else
          {
             oswindow_Center->GetWindowRect(&rcCenter);
-            ::GetMonitorInfo(::MonitorFromWindow((oswindow) oswindow_Center->get_handle(), MONITOR_DEFAULTTONEAREST), &mi);
+            ::GetMonitorInfo(::MonitorFromWindow(oswindow_Center->get_handle(), MONITOR_DEFAULTTONEAREST), &mi);
             rcArea = mi.rcWork;
          }
       }
@@ -3483,7 +3483,7 @@ restart_mouse_hover_check:
          oswindow_Parent->GetClientRect(&rcArea);
          ASSERT(oswindow_Center->IsWindow());
          oswindow_Center->GetClientRect(&rcCenter);
-         ::MapWindowPoints((oswindow) oswindow_Center->get_handle(), (oswindow) oswindow_Parent->get_handle(), (POINT*)&rcCenter, 2);
+         ::MapWindowPoints(oswindow_Center->get_handle(), oswindow_Parent->get_handle(), (POINT*)&rcCenter, 2);
       }
 
       // find dialog's upper left based on rcCenter
@@ -3625,7 +3625,7 @@ restart_mouse_hover_check:
       window wndTemp;       // very temporary window just for CmdUI update
 
       // walk all the kids - assume the IDs are for buttons
-      /* xxx   for (void * oswindow_Child = ::GetTopWindow(get_handle()); oswindow_Child != NULL;
+      /* xxx   for (oswindow oswindow_Child = ::GetTopWindow(get_handle()); oswindow_Child != NULL;
       oswindow_Child = ::GetNextWindow(oswindow_Child, GW_HWNDNEXT))
       {
       // send to buttons
@@ -3682,7 +3682,7 @@ restart_mouse_hover_check:
       bool bIdle = TRUE;
       LONG lIdleCount = 0;
       bool bShowIdle = (dwFlags & MLF_SHOWONIDLE) && !(GetStyle() & WS_VISIBLE);
-      void * oswindow_Parent = ::GetParent(get_handle());
+      oswindow oswindow_Parent = ::GetParent(get_handle());
       m_iModal = m_iModalCount;
       int iLevel = m_iModal;
       oprop(string("RunModalLoop.thread(") + gen::str::from(iLevel) + ")") = System.GetThread();
@@ -3714,7 +3714,7 @@ restart_mouse_hover_check:
             if (!(dwFlags & MLF_NOIDLEMSG) && oswindow_Parent != NULL && lIdleCount == 0)
             {
                // send WM_ENTERIDLE to the parent
-               ::SendMessage((oswindow) oswindow_Parent, WM_ENTERIDLE, MSGF_DIALOGBOX, (LPARAM)get_handle());
+               ::SendMessage(oswindow_Parent, WM_ENTERIDLE, MSGF_DIALOGBOX, (LPARAM)get_handle());
             }
             if ((dwFlags & MLF_NOKICKIDLE) ||
                !__call_window_procedure(this, get_handle(), WM_KICKIDLE, MSGF_DIALOGBOX, lIdleCount++))
@@ -3874,7 +3874,7 @@ ExitModal:
    /////////////////////////////////////////////////////////////////////////////
    // Extra window support for dynamic subclassing of controls
 
-   bool window::subclass_window(void * oswindow)
+   bool window::subclass_window(oswindow oswindow)
    {
       if (!attach(oswindow))
          return FALSE;
@@ -3882,11 +3882,11 @@ ExitModal:
       // allow any other subclassing to occur
       pre_subclass_window();
 
-      m_pfnSuper = (WNDPROC)::GetWindowLongPtr((oswindow) oswindow, GWLP_WNDPROC);
+      m_pfnSuper = (WNDPROC)::GetWindowLongPtr(oswindow, GWLP_WNDPROC);
 
       // now hook into the AFX WndProc
       WNDPROC* lplpfn = GetSuperWndProcAddr();
-      WNDPROC oldWndProc = (WNDPROC)::SetWindowLongPtr((oswindow) oswindow, GWLP_WNDPROC, (int_ptr)__get_window_procedure());
+      WNDPROC oldWndProc = (WNDPROC)::SetWindowLongPtr(oswindow, GWLP_WNDPROC, (int_ptr)__get_window_procedure());
       ASSERT(oldWndProc != __get_window_procedure());
 
       if (*lplpfn == NULL)
@@ -3897,13 +3897,13 @@ ExitModal:
 
          TRACE(::radix::trace::category_AppMsg, 0, "p: Trying to use subclass_window with incorrect window\n");
          TRACE(::radix::trace::category_AppMsg, 0, "\tderived class.\n");
-         TRACE(::radix::trace::category_AppMsg, 0, "\toswindow_ = $%08X (nIDC=$%08X) is not a %hs.\n", (UINT)(uint_ptr)oswindow, __get_dialog_control_id((oswindow) oswindow), typeid(*this).name());
+         TRACE(::radix::trace::category_AppMsg, 0, "\toswindow_ = $%08X (nIDC=$%08X) is not a %hs.\n", (UINT)(uint_ptr)oswindow, __get_dialog_control_id(oswindow), typeid(*this).name());
 
          ASSERT(FALSE);
 
          // undo the subclassing if continuing after assert
 
-         ::SetWindowLongPtr((oswindow) oswindow, GWLP_WNDPROC, (int_ptr)oldWndProc);
+         ::SetWindowLongPtr(oswindow, GWLP_WNDPROC, (int_ptr)oldWndProc);
 
       }
 #endif
@@ -3918,7 +3918,7 @@ ExitModal:
       ASSERT(::IsWindow(WIN_WINDOW(pParent)->get_handle()));
 
       // check for normal dialog control first
-      void * oswindow_Control = ::GetDlgItem(WIN_WINDOW(pParent)->get_handle(), nID);
+      oswindow oswindow_Control = ::GetDlgItem(WIN_WINDOW(pParent)->get_handle(), nID);
       if (oswindow_Control != NULL)
          return subclass_window(oswindow_Control);
 
@@ -3926,7 +3926,7 @@ ExitModal:
       return FALSE;   // control not found
    }
 
-   void * window::unsubclass_window()
+   oswindow window::unsubclass_window()
    {
       ASSERT(::IsWindow(get_handle()));
 
@@ -3935,7 +3935,7 @@ ExitModal:
       SetWindowLongPtr(get_handle(), GWLP_WNDPROC, (int_ptr)*lplpfn);
       *lplpfn = NULL;
 
-      // and detach the void * from the window object
+      // and detach the oswindow from the window object
       return detach();
    }
 
@@ -3957,7 +3957,7 @@ ExitModal:
       }
       else
       {
-         return ::IsChild(get_handle(), (oswindow) WIN_WINDOW(pWnd)->get_handle()) != FALSE;
+         return ::IsChild(get_handle(), WIN_WINDOW(pWnd)->get_handle()) != FALSE;
       }
    }
 
@@ -3966,7 +3966,7 @@ ExitModal:
       return ::IsWindow(get_handle()) != FALSE;
    }
 
-   void * window::get_handle()
+   oswindow window::get_handle()
    {
       return get_handle();
    }
@@ -4038,7 +4038,7 @@ ExitModal:
          if(nFlags & SWP_SHOWWINDOW)
          {
 
-            ::SetWindowPos(get_handle(), (oswindow) z, x, y, cx, cy, nFlags);
+            ::SetWindowPos(get_handle(), z, x, y, cx, cy, nFlags);
 
             ShowWindow(SW_SHOW);
 
@@ -4046,7 +4046,7 @@ ExitModal:
          else
          {
 
-            ::SetWindowPos(get_handle(), (oswindow) z, x, y, cx, cy, nFlags);
+            ::SetWindowPos(get_handle(), z, x, y, cx, cy, nFlags);
 
          }
 
@@ -4066,13 +4066,13 @@ ExitModal:
          if(z == -3)
          {
 
-            ::SetWindowPos((oswindow) get_handle(), (oswindow) 0, x, y, cx, cy, nFlags);
+            ::SetWindowPos(get_handle(), 0, x, y, cx, cy, nFlags);
 
          }
          else
          {
 
-            ::SetWindowPos((oswindow) get_handle(), (oswindow) z, x, y, cx, cy, nFlags);
+            ::SetWindowPos(get_handle(), z, x, y, cx, cy, nFlags);
 
          }
 
@@ -4344,7 +4344,7 @@ ExitModal:
 
    ::user::interaction * window::release_capture()
    {
-      void * oswindowCapture = ::GetCapture();
+      oswindow oswindowCapture = ::GetCapture();
       if(oswindowCapture == NULL)
          return NULL;
       if(oswindowCapture == get_handle())
@@ -4368,7 +4368,7 @@ ExitModal:
 
    ::user::interaction * window::get_capture()
    {
-      void * oswindowCapture = ::GetCapture();
+      oswindow oswindowCapture = ::GetCapture();
       if(oswindowCapture == NULL)
          return NULL;
       if(oswindowCapture == get_handle())
@@ -4405,16 +4405,16 @@ ExitModal:
 
 
    // window
-   /* window::operator void *() const
+   /* window::operator oswindow() const
    { return this == NULL ? NULL : get_handle(); }*/
    bool window::operator==(const ::ca::window& wnd) const
    { 
-      return ((void *) WIN_WINDOW(const_cast < ::ca::window * > (&wnd))->get_handle()) == get_handle(); 
+      return (WIN_WINDOW(const_cast < ::ca::window * > (&wnd))->get_handle()) == get_handle(); 
    }
 
    bool window::operator!=(const ::ca::window& wnd) const
    { 
-      return ((void *) WIN_WINDOW(const_cast < ::ca::window * > (&wnd))->get_handle()) != get_handle(); 
+      return (WIN_WINDOW(const_cast < ::ca::window * > (&wnd))->get_handle()) != get_handle(); 
    }
 
    DWORD window::GetStyle()
@@ -4548,13 +4548,13 @@ ExitModal:
    void window::MapWindowPoints(::ca::window * pwndTo, LPPOINT lpPoint, UINT nCount)
    {
       ASSERT(::IsWindow(get_handle())); 
-      ::MapWindowPoints((oswindow) get_handle(), (oswindow) pwndTo->get_os_data(), lpPoint, nCount); 
+      ::MapWindowPoints(get_handle(), pwndTo->get_handle()(), lpPoint, nCount); 
    }
 
    void window::MapWindowPoints(::ca::window * pwndTo, LPRECT lpRect)
    { 
       ASSERT(::IsWindow(get_handle())); 
-      ::MapWindowPoints(get_handle(), (oswindow) pwndTo->get_os_data(), (LPPOINT)lpRect, 2); 
+      ::MapWindowPoints(get_handle(), pwndTo->get_handle()(), (LPPOINT)lpRect, 2); 
    }
 
    ::ca::graphics * window::GetDC()
@@ -4585,7 +4585,7 @@ ExitModal:
       if(pgraphics == NULL)
          return false;
 
-      if(((Gdiplus::Graphics *)(dynamic_cast<::win::graphics * >(pgraphics))->get_os_data()) == NULL)
+      if(((Gdiplus::Graphics *)(dynamic_cast<::win::graphics * >(pgraphics))->get_handle()()) == NULL)
          return false;
 
       ::ReleaseDC(get_handle(), (dynamic_cast<::win::graphics * >(pgraphics))->m_hdc); 
@@ -4618,7 +4618,7 @@ ExitModal:
    int window::GetUpdateRgn(::ca::region* pRgn, bool bErase)
    { 
       ASSERT(::IsWindow(get_handle())); 
-      return ::GetUpdateRgn(get_handle(), (HRGN)pRgn->get_os_data(), bErase); 
+      return ::GetUpdateRgn(get_handle(), (HRGN)pRgn->get_handle()(), bErase); 
    }
 
    void window::Invalidate(bool bErase)
@@ -4636,13 +4636,13 @@ ExitModal:
    void window::InvalidateRgn(::ca::region* pRgn, bool bErase)
    {
       ASSERT(::IsWindow(get_handle())); 
-      ::InvalidateRgn(get_handle(), (HRGN)pRgn->get_os_data(), bErase); 
+      ::InvalidateRgn(get_handle(), (HRGN)pRgn->get_handle()(), bErase); 
    }
 
    void window::ValidateRect(LPCRECT lpRect)
    { ASSERT(::IsWindow(get_handle())); ::ValidateRect(get_handle(), lpRect); }
    void window::ValidateRgn(::ca::region* pRgn)
-   { ASSERT(::IsWindow(get_handle())); ::ValidateRgn(get_handle(), (HRGN)pRgn->get_os_data()); }
+   { ASSERT(::IsWindow(get_handle())); ::ValidateRgn(get_handle(), (HRGN)pRgn->get_handle()()); }
 
    bool window::IsWindowVisible()
    {
@@ -4729,7 +4729,7 @@ ExitModal:
 
       ASSERT(::IsWindow(get_handle())); 
       ::ca::graphics_sp g(get_app());
-      g->attach(::GetDCEx(get_handle(), (HRGN)prgnClip->get_os_data(), flags));
+      g->attach(::GetDCEx(get_handle(), (HRGN)prgnClip->get_handle()(), flags));
       return g.detach(); 
 
    }
@@ -4763,7 +4763,7 @@ ExitModal:
 
       ASSERT(::IsWindow(get_handle())); 
 
-      return ::RedrawWindow(get_handle(), lpRectUpdate, prgnUpdate == NULL ? NULL : (HRGN)prgnUpdate->get_os_data(), flags) != FALSE;
+      return ::RedrawWindow(get_handle(), lpRectUpdate, prgnUpdate == NULL ? NULL : (HRGN)prgnUpdate->get_handle()(), flags) != FALSE;
 
    }
 
@@ -4790,7 +4790,7 @@ ExitModal:
 
       ASSERT(::IsWindow(get_handle())); 
 
-      return ::DrawCaption(get_handle(), (HDC)(dynamic_cast<::win::graphics * >(pgraphics))->get_os_data(), lprc, uFlags) != FALSE;
+      return ::DrawCaption(get_handle(), (HDC)(dynamic_cast<::win::graphics * >(pgraphics))->get_handle()(), lprc, uFlags) != FALSE;
 
    }
 
@@ -4956,7 +4956,7 @@ ExitModal:
 
    }
 
-   void window::get_child_by_id(id id, void ** poswindow_) const
+   void window::get_child_by_id(id id, oswindow* poswindow_) const
    {
 
       ASSERT(::IsWindow(get_handle())); 
@@ -4980,13 +4980,13 @@ ExitModal:
    ::ca::window * window::GetNextDlgGroupItem(::ca::window * pWndCtl, bool bPrevious) const
    {
       ASSERT(::IsWindow(get_handle()));
-      return ::win::window::from_handle(::GetNextDlgGroupItem(get_handle(), (oswindow) pWndCtl->get_os_data(), bPrevious)); 
+      return ::win::window::from_handle(::GetNextDlgGroupItem(get_handle(), pWndCtl->get_handle()(), bPrevious)); 
    }
 
    ::ca::window * window::GetNextDlgTabItem(::ca::window * pWndCtl, bool bPrevious) const
    {
       ASSERT(::IsWindow(get_handle())); 
-      return ::win::window::from_handle(::GetNextDlgTabItem(get_handle(), (oswindow) pWndCtl->get_os_data(), bPrevious)); 
+      return ::win::window::from_handle(::GetNextDlgTabItem(get_handle(), pWndCtl->get_handle()(), bPrevious)); 
    }
 
    UINT window::IsDlgButtonChecked(int nIDButton) const
@@ -5001,7 +5001,7 @@ ExitModal:
       LPCRECT lpRectScroll, LPCRECT lpRectClip,
       ::ca::region* prgnUpdate, LPRECT lpRectUpdate, UINT flags)
    { ASSERT(::IsWindow(get_handle())); return ::ScrollWindowEx(get_handle(), dx, dy, lpRectScroll, lpRectClip,
-   (HRGN)prgnUpdate->get_os_data(), lpRectUpdate, flags); }
+   (HRGN)prgnUpdate->get_handle()(), lpRectUpdate, flags); }
 
    void window::ShowScrollBar(UINT nBar, bool bShow)
    { ASSERT(::IsWindow(get_handle())); ::ShowScrollBar(get_handle(), nBar, bShow); }
@@ -5011,8 +5011,8 @@ ExitModal:
    { ASSERT(::IsWindow(get_handle())); return ::win::window::from_handle(::ChildWindowFromPointEx(get_handle(), point, nFlags)); }
    ::ca::window * PASCAL window::FindWindow(const char * lpszClassName, const char * lpszWindowName)
    { return ::win::window::from_handle(::FindWindow(lpszClassName, lpszWindowName)); }
-   ::ca::window * window::FindWindowEx(void * oswindowParent, void * oswindowChildAfter, const char * lpszClass, const char * lpszWindow)
-   { return ::win::window::from_handle(::FindWindowEx((oswindow) oswindowParent, (oswindow) oswindowChildAfter, lpszClass, lpszWindow)); }
+   ::ca::window * window::FindWindowEx(oswindow oswindowParent, oswindow oswindowChildAfter, const char * lpszClass, const char * lpszWindow)
+   { return ::win::window::from_handle(::FindWindowEx(oswindowParent, oswindowChildAfter, lpszClass, lpszWindow)); }
 
    ::user::interaction* window::GetNextWindow(UINT nFlag)
    { ASSERT(::IsWindow(get_handle())); return ::win::window::from_handle(::GetNextWindow(get_handle(), nFlag)); }
@@ -5026,7 +5026,7 @@ ExitModal:
    ::ca::window * window::SetParent(::ca::window * pWndNewParent)
    {
       ASSERT(::IsWindow(get_handle())); 
-      return ::win::window::from_handle(::SetParent((oswindow) get_handle(), (oswindow) pWndNewParent->get_os_data())); 
+      return ::win::window::from_handle(::SetParent(get_handle(), pWndNewParent->get_handle()())); 
    }
 
    ::ca::window * PASCAL window::WindowFromPoint(POINT point)
@@ -5045,21 +5045,21 @@ ExitModal:
 
    }
 
-   bool window::ChangeClipboardChain(void * oswindow_Next)
+   bool window::ChangeClipboardChain(oswindow oswindow_Next)
    {
 
       ASSERT(::IsWindow(get_handle())); 
 
-      return ::ChangeClipboardChain((oswindow) get_handle(), (oswindow) oswindow_Next) != FALSE;
+      return ::ChangeClipboardChain(get_handle(), oswindow_Next) != FALSE;
 
    }
 
-   void * window::SetClipboardViewer()
+   oswindow window::SetClipboardViewer()
    {
 
       ASSERT(::IsWindow(get_handle()));
 
-      return ::SetClipboardViewer((oswindow) get_handle());
+      return ::SetClipboardViewer(get_handle());
 
    }
 
@@ -5098,7 +5098,7 @@ ExitModal:
 
       ASSERT(::IsWindow(get_handle())); 
 
-      ::CreateCaret(get_handle(), (HBITMAP)pBitmap->get_os_data(), 0, 0);
+      ::CreateCaret(get_handle(), (HBITMAP)pBitmap->get_handle()(), 0, 0);
 
    }
 
@@ -5193,7 +5193,7 @@ ExitModal:
 
       ASSERT(::IsWindow(get_handle()));
 
-      const_cast < window * > (this)->send_message(WM_PRINT, (WPARAM)(dynamic_cast<::win::graphics * >(pgraphics))->get_os_data(), dwFlags);
+      const_cast < window * > (this)->send_message(WM_PRINT, (WPARAM)(dynamic_cast<::win::graphics * >(pgraphics))->get_handle()(), dwFlags);
 
    }
 
@@ -5202,7 +5202,7 @@ ExitModal:
 
       ASSERT(::IsWindow(get_handle()));
 
-      const_cast < window * > (this)->send_message(WM_PRINTCLIENT, (WPARAM)(dynamic_cast<::win::graphics * >(pgraphics))->get_os_data(), dwFlags);
+      const_cast < window * > (this)->send_message(WM_PRINTCLIENT, (WPARAM)(dynamic_cast<::win::graphics * >(pgraphics))->get_handle()(), dwFlags);
 
    }
 
@@ -5438,7 +5438,7 @@ ExitModal:
       }
       Default(); 
    }
-   void window::OnChangeCbChain(void *, void *)
+   void window::OnChangeCbChain(oswindow, oswindow)
    { Default(); }
    void window::OnDestroyClipboard()
    { Default(); }
@@ -5542,10 +5542,10 @@ ExitModal:
    ////////////////////////////////////////////////////////////////////////////
    // UI related ::ca::window functions
 
-   void * PASCAL window::get_safe_owner(void * hParent, void ** pWndTop)
+   oswindow PASCAL window::get_safe_owner(oswindow hParent, oswindow* pWndTop)
    {
       // get ::ca::window to start with
-      void * oswindow = hParent;
+      oswindow oswindow = hParent;
       if (oswindow == NULL)
       {
          /* trans      frame_window* pFrame = command_target::GetRoutingFrame_();
@@ -5556,38 +5556,38 @@ ExitModal:
       }
 
       // a popup ::ca::window cannot be owned by a child ::ca::window
-      while (oswindow != NULL && (::GetWindowLong((oswindow) oswindow, GWL_STYLE) & WS_CHILD))
-         oswindow = ::GetParent((oswindow) oswindow);
+      while (oswindow != NULL && (::GetWindowLong(oswindow, GWL_STYLE) & WS_CHILD))
+         oswindow = ::GetParent(oswindow);
 
       // determine toplevel ::ca::window to disable as well
-      void * oswindow_Top = oswindow;
-      void * oswindow_Temp = oswindow;
+      oswindow oswindow_Top = oswindow;
+      oswindow oswindow_Temp = oswindow;
       for (;;)
       {
          if (oswindow_Temp == NULL)
             break;
          else
             oswindow_Top = oswindow_Temp;
-         oswindow_Temp = ::GetParent((oswindow) oswindow_Top);
+         oswindow_Temp = ::GetParent(oswindow_Top);
       }
 
       // get last active popup of first non-child that was found
       if (hParent == NULL && oswindow != NULL)
-         oswindow = ::GetLastActivePopup((oswindow) oswindow);
+         oswindow = ::GetLastActivePopup(oswindow);
 
       // disable and store top level parent ::ca::window if specified
       if (pWndTop != NULL)
       {
-         if (oswindow_Top != NULL && ::IsWindowEnabled((oswindow) oswindow_Top) && oswindow_Top != oswindow)
+         if (oswindow_Top != NULL && ::IsWindowEnabled(oswindow_Top) && oswindow_Top != oswindow)
          {
             *pWndTop = oswindow_Top;
-            ::EnableWindow((oswindow) oswindow_Top, FALSE);
+            ::EnableWindow(oswindow_Top, FALSE);
          }
          else
             *pWndTop = NULL;
       }
 
-      return oswindow;    // return the owner as void *
+      return oswindow;    // return the owner as oswindow
    }
 
    void window::on_delete(::ca::ca * pui)
@@ -5599,11 +5599,11 @@ ExitModal:
    /////////////////////////////////////////////////////////////////////////////
    // Official way to send message to a window
 
-   CLASS_DECL_win LRESULT __call_window_procedure(::user::interaction * pinteraction, void * oswindow, UINT nMsg, WPARAM wParam, LPARAM lParam)
+   CLASS_DECL_win LRESULT __call_window_procedure(::user::interaction * pinteraction, oswindow oswindow, UINT nMsg, WPARAM wParam, LPARAM lParam)
    {
       ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
       MSG oldState = pThreadState->m_lastSentMsg;   // save for nesting
-      pThreadState->m_lastSentMsg.oswindow = (oswindow) oswindow;
+      pThreadState->m_lastSentMsg.oswindow = oswindow;
       pThreadState->m_lastSentMsg.message = nMsg;
       pThreadState->m_lastSentMsg.wParam = wParam;
       pThreadState->m_lastSentMsg.lParam = lParam;
@@ -5717,7 +5717,7 @@ ExitModal:
          //if (gen_DBCS)
          {
             // check for cheap CS_IME style first...
-            if (GetClassLong((oswindow) wParam, GCL_STYLE) & CS_IME)
+            if (GetClassLong(wParam, GCL_STYLE) & CS_IME)
                goto lCallNextHook;
 
             // get class name of the window that is being created
@@ -5739,13 +5739,13 @@ ExitModal:
                goto lCallNextHook;
          }
 
-         ASSERT(wParam != NULL); // should be non-NULL void *
-         void * oswindow = (void *)wParam;
+         ASSERT(wParam != NULL); // should be non-NULL oswindow
+         oswindow oswindow = (oswindow)wParam;
          WNDPROC oldWndProc;
          if (pWndInit != NULL)
          {
             // the window should not be in the permanent ::collection::map at this time
-            ASSERT(::win::window::FromHandlePermanent(oswindow) == NULL);
+            ASSERT(::win::window::FromHandlePermanent== NULL);
 
             pWndInit->m_pthread = dynamic_cast < ::radix::thread * > (::win::get_thread());
             if(pWndInit->m_pthread != NULL)
@@ -5759,7 +5759,7 @@ ExitModal:
             }
             pWndInit->m_pguie->m_pimpl = pWndInit;
 
-            // connect the void * to pWndInit...
+            // connect the oswindow to pWndInit...
             pWndInit->attach(oswindow);
             // allow other subclassing to occur first
             pWndInit->pre_subclass_window();
@@ -5769,7 +5769,7 @@ ExitModal:
 
             // subclass the window with standard __window_procedure
             WNDPROC afxWndProc = __get_window_procedure();
-            oldWndProc = (WNDPROC)SetWindowLongPtr((oswindow) oswindow, GWLP_WNDPROC,
+            oldWndProc = (WNDPROC)SetWindowLongPtr(oswindow, GWLP_WNDPROC,
                (dword_ptr)afxWndProc);
             ASSERT(oldWndProc != NULL);
             if (oldWndProc != afxWndProc)
@@ -5795,14 +5795,14 @@ ExitModal:
             // Do not subclass menus.
             if (s_atomMenu != 0)
             {
-               ATOM atomWnd = (ATOM)::GetClassLongPtr((oswindow) oswindow, GCW_ATOM);
+               ATOM atomWnd = (ATOM)::GetClassLongPtr(oswindow, GCW_ATOM);
                if (atomWnd == s_atomMenu)
                   bSubclass = false;
             }
             else
             {         
                char szClassName[256];
-               if (::GetClassName((oswindow) oswindow, szClassName, 256))
+               if (::GetClassName(oswindow, szClassName, 256))
                {
                   szClassName[255] = NULL;
                   if (_tcscmp(szClassName, "#32768") == 0)
@@ -5812,14 +5812,14 @@ ExitModal:
             if (bSubclass)
             {
                // subclass the window with the proc which does gray backgrounds
-               oldWndProc = (WNDPROC)GetWindowLongPtr((oswindow) oswindow, GWLP_WNDPROC);
-               if (oldWndProc != NULL && GetProp((oswindow) oswindow, gen_OldWndProc) == NULL)
+               oldWndProc = (WNDPROC)GetWindowLongPtr(oswindow, GWLP_WNDPROC);
+               if (oldWndProc != NULL && GetProp(oswindow, gen_OldWndProc) == NULL)
                {
-                  SetProp((oswindow) oswindow, gen_OldWndProc, oldWndProc);
-                  if ((WNDPROC)GetProp((oswindow) oswindow, gen_OldWndProc) == oldWndProc)
+                  SetProp(oswindow, gen_OldWndProc, oldWndProc);
+                  if ((WNDPROC)GetProp(oswindow, gen_OldWndProc) == oldWndProc)
                   {
                      GlobalAddAtom(gen_OldWndProc);
-                     SetWindowLongPtr((oswindow) oswindow, GWLP_WNDPROC, (dword_ptr)__activation_window_procedure);
+                     SetWindowLongPtr(oswindow, GWLP_WNDPROC, (dword_ptr)__activation_window_procedure);
                      ASSERT(oldWndProc != NULL);
                   }
                }
@@ -5894,7 +5894,7 @@ void CTestCmdUI::SetText(const char *)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// Map from void * to ::ca::window *
+// Map from oswindow to ::ca::window *
 
 oswindow_map* PASCAL get_oswindow_map(bool bCreate)
 {
@@ -5944,7 +5944,7 @@ LRESULT CALLBACK __window_procedure(oswindow oswindow, UINT nMsg, WPARAM wParam,
    //ASSERT(pWnd != NULL);               
    //ASSERT(pWnd==NULL || WIN_WINDOW(pWnd)->get_handle() == oswindow);
    if (pWnd == NULL || WIN_WINDOW(pWnd)->get_handle() != oswindow)
-      return ::DefWindowProc((oswindow) oswindow, nMsg, wParam, lParam);
+      return ::DefWindowProc(oswindow, nMsg, wParam, lParam);
    return win::__call_window_procedure(pWnd, oswindow, nMsg, wParam, lParam);
 }
 
@@ -6097,7 +6097,7 @@ __STATIC void CLASS_DECL_win
       {
          // lParam points to window getting the WM_ACTIVATE message and
          //  oswindow_Other from the WM_ACTIVATE.
-         void * oswindow_2[2];
+         oswindow oswindow_2[2];
          oswindow_2[0] = WIN_WINDOW(pWnd)->get_handle();
          if(pWndOther == NULL || WIN_WINDOW(pWndOther) == NULL)
          {
@@ -6289,9 +6289,9 @@ bool CLASS_DECL_win __end_defer_register_class(LONG fToRegisterParam, const char
 
 
 LRESULT CALLBACK
-   __activation_window_procedure(void * oswindow, UINT nMsg, WPARAM wParam, LPARAM lParam)
+   __activation_window_procedure(oswindow oswindow, UINT nMsg, WPARAM wParam, LPARAM lParam)
 {
-   WNDPROC oldWndProc = (WNDPROC)::GetProp((oswindow) oswindow, gen_OldWndProc);
+   WNDPROC oldWndProc = (WNDPROC)::GetProp(oswindow, gen_OldWndProc);
    ASSERT(oldWndProc != NULL);   
 
    LRESULT lResult = 0;
@@ -6307,14 +6307,14 @@ LRESULT CALLBACK
             ::ca::window * pWnd = ::win::window::from_handle(oswindow);
             __pre_init_dialog(pWnd, &rectOld, &dwStyle);
             bCallDefault = FALSE;
-            lResult = CallWindowProc(oldWndProc, (oswindow) oswindow, nMsg, wParam, lParam);
+            lResult = CallWindowProc(oldWndProc, oswindow, nMsg, wParam, lParam);
             __post_init_dialog(pWnd, rectOld, dwStyle);
          }
          break;
 
       case WM_ACTIVATE:
          __handle_activate(::win::window::from_handle(oswindow), wParam,
-            ::win::window::from_handle((void *)lParam));
+            ::win::window::from_handle((oswindow)lParam));
          break;
 
       case WM_SETCURSOR:
@@ -6323,21 +6323,21 @@ LRESULT CALLBACK
          break;
 
       case WM_NCDESTROY:
-         SetWindowLongPtr((oswindow) oswindow, GWLP_WNDPROC, reinterpret_cast<int_ptr>(oldWndProc));
-         RemoveProp((oswindow) oswindow, gen_OldWndProc);
+         SetWindowLongPtr(oswindow, GWLP_WNDPROC, reinterpret_cast<int_ptr>(oldWndProc));
+         RemoveProp(oswindow, gen_OldWndProc);
          GlobalDeleteAtom(GlobalFindAtom(gen_OldWndProc));
          break;
       }
 
       // call original wndproc for default handling
       if (bCallDefault)
-         lResult = CallWindowProc(oldWndProc, (oswindow) oswindow, nMsg, wParam, lParam);
+         lResult = CallWindowProc(oldWndProc, oswindow, nMsg, wParam, lParam);
    }
    catch(base_exception * pe)
    {
       // handle exception
       MSG msg;
-      msg.oswindow = (oswindow) oswindow;
+      msg.oswindow = oswindow;
       msg.message = nMsg;
       msg.wParam = wParam;
       msg.lParam = lParam;
@@ -6451,7 +6451,7 @@ namespace win
       info.bmiHeader.biCompression   = BI_RGB;
       info.bmiHeader.biSizeImage     = cx * cy * 4;
 
-      HBITMAP hbitmap = CreateDIBSection(NULL, &info, DIB_RGB_COLORS, (void **) &pcolorref, NULL, NULL);
+      HBITMAP hbitmap = CreateDIBSection(NULL, &info, DIB_RGB_COLORS, (oswindow*) &pcolorref, NULL, NULL);
 
       {
 

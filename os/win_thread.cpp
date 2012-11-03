@@ -1648,7 +1648,7 @@ stop_run:
       dumpcontext << "\nm_pMainWnd = " << m_puiMain;
 
    dumpcontext << "\nm_msgCur = {";
-   dumpcontext << "\n\toswindow = " << (void *)pState->m_msgCur.oswindow;
+   dumpcontext << "\n\toswindow = " << (void *)pState->m_msgCur.hwnd;
    dumpcontext << "\n\tmessage = " << (UINT)pState->m_msgCur.message;
    dumpcontext << "\n\twParam = " << (UINT)pState->m_msgCur.wParam;
    dumpcontext << "\n\tlParam = " << (void *)pState->m_msgCur.lParam;
@@ -1708,7 +1708,7 @@ stop_run:
 
       ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
       MSG oldState = pThreadState->m_lastSentMsg;   // save for nesting
-      pThreadState->m_lastSentMsg.oswindow       = (oswindow) pbase->m_pwnd->get_safe_handle();
+      pThreadState->m_lastSentMsg.hwnd       = (oswindow) pbase->m_pwnd->get_safe_handle();
       pThreadState->m_lastSentMsg.message    = pbase->m_uiMessage;
       pThreadState->m_lastSentMsg.wParam     = pbase->m_wparam;
       pThreadState->m_lastSentMsg.lParam     = pbase->m_lparam;

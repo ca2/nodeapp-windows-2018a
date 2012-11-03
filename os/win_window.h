@@ -60,7 +60,7 @@ namespace win
       //virtual ::user::interaction * GetOwner();
       virtual void SetOwner(::user::interaction * pOwnerWnd);
 
-      virtual oswindow get_handle();
+      virtual oswindow get_handle() const;
 
       virtual bool _001OnCmdMsg(BaseCmdMsg * pcmdmsg);   
 
@@ -398,7 +398,7 @@ namespace win
 
    // Clipboard Functions
       virtual bool ChangeClipboardChain(oswindow oswindow_Next);
-      virtual void*  SetClipboardViewer();
+      virtual ::oswindow  SetClipboardViewer();
       virtual bool OpenClipboard();
       static ::ca::window * PASCAL GetClipboardOwner();
       static ::ca::window * PASCAL GetClipboardViewer();
@@ -648,11 +648,11 @@ namespace win
       static void PASCAL SendMessageToDescendants(void*  oswindow, UINT message, WPARAM wParam, LPARAM lParam, bool bDeep, bool bOnlyPerm);
       virtual bool IsFrameWnd(); // is_kind_of(System.template type_info < frame_window > ()))
       virtual void on_final_release();
-      static bool PASCAL ModifyStyle(oswindow * oswindow, DWORD dwRemove, DWORD dwAdd, UINT nFlags);
-      static bool PASCAL ModifyStyleEx(oswindow * oswindow, DWORD dwRemove, DWORD dwAdd, UINT nFlags);
+      static bool PASCAL ModifyStyle(oswindow oswindow, DWORD dwRemove, DWORD dwAdd, UINT nFlags);
+      static bool PASCAL ModifyStyleEx(oswindow oswindow, DWORD dwRemove, DWORD dwAdd, UINT nFlags);
       static void PASCAL _FilterToolTipMessage(MSG* pMsg, ::ca::window * pWnd);
       bool _EnableToolTips(bool bEnable, UINT nFlag);
-      static void * PASCAL get_safe_owner(oswindow * oswindow, oswindow ** pWndTop);
+      static oswindow PASCAL get_safe_owner(::oswindow oswindow, ::oswindow * pWndTop);
       void PrepareForHelp();
 
       //UINT m_nFlags;      // see WF_ flags above

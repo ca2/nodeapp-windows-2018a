@@ -32,7 +32,7 @@ namespace win
       critical_section                       m_csWndInterfaceMap;
       typed_pointer_map <
          map_ptr_to_ptr,
-         void *, 
+         oswindow, 
          ::user::window_interface *>
                                              m_wndinterfacemap;
       DWORD                                  m_dwLastUpdate;
@@ -46,7 +46,7 @@ namespace win
       virtual bool start();
 
       bool UpdateBuffer(LPCRECT lpcrect);
-      //void OnPaint(void * oswindow, CPaintDC & spgraphics);
+      //void OnPaint(oswindow oswindow, CPaintDC & spgraphics);
 
       semaphore * TwfGetBufferSemaphore();
 
@@ -95,28 +95,28 @@ namespace win
          LPCRECT lpcrect);
 
       void TwfGetTopWindow(
-         void * oswindow,
+         oswindow oswindow,
          user::oswindow_array & oswindowa,
          base_array < HRGN, HRGN > & hrgna,
          user::oswindow_tree::Array & oswindowtreea,
          LPCRECT lpcrect);
 
       bool TwfGetTopWindow(
-         void * oswindow,
+         oswindow oswindow,
          user::oswindow_array & oswindowa,
          base_array < HRGN, HRGN > & hrgna,
          user::oswindow_tree::Array & oswindowtreea,
          HRGN hrgn);
 
       bool TwfGetTopWindow(
-         void * oswindow,
+         oswindow oswindow,
          user::oswindow_array & oswindowa,
          base_array < HRGN, HRGN > & hrgna,
          user::oswindow_tree & oswindowtree,
          HRGN hrgn);
 
       void TwfGetTopWindowOptimizeOpaque(
-         void * oswindowOpaque,
+         oswindow oswindowOpaque,
          user::oswindow_array & oswindowa,
          base_array < HRGN, HRGN > & hrgna);
 

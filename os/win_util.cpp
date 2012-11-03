@@ -53,7 +53,7 @@ oswindow CLASS_DECL_win __child_window_from_point(oswindow oswindow, POINT pt)
 
    // check child windows
    ::ClientToScreen(oswindow, &pt);
-   oswindow oswindow_Child = ::GetWindow(oswindow, GW_CHILD);
+   ::oswindow oswindow_Child = ::GetWindow(oswindow, GW_CHILD);
    for (; oswindow_Child != NULL; oswindow_Child = ::GetWindow(oswindow_Child, GW_HWNDNEXT))
    {
       if (__get_dialog_control_id(oswindow_Child) != (WORD)0 &&
