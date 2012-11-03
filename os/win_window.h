@@ -6,9 +6,9 @@ namespace win
 
 
    CLASS_DECL_win LRESULT CALLBACK __send_message_hook(int, WPARAM, LPARAM);
-   //CLASS_DECL_win void _gen::StandardSubclass(void *);
+   //CLASS_DECL_win void _gen::StandardSubclass(oswindow);
    CLASS_DECL_win LRESULT CALLBACK __cbt_filter_hook(int, WPARAM, LPARAM);
-   CLASS_DECL_win LRESULT __call_window_procedure(::user::interaction * pWnd, void * oswindow, UINT nMsg, WPARAM wParam, LPARAM lParam);
+   CLASS_DECL_win LRESULT __call_window_procedure(::user::interaction * pWnd, oswindow oswindow, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
 
    class CLASS_DECL_win window : 
@@ -27,9 +27,18 @@ namespace win
 
       window();
       window(::ca::application * papp);
-      virtual void construct(void * oswindow);
+      virtual ~window();
+
+
+      virtual void construct(oswindow oswindow);
+
 
       virtual void on_delete(::ca::ca * poc);
+
+
+      virtual void assert_valid() const;
+      virtual void dump(dump_context & dumpcontext) const;
+
 
       virtual void mouse_hover_add(::user::interaction* pinterface);
       virtual void mouse_hover_remove(::user::interaction* pinterface);
@@ -51,7 +60,7 @@ namespace win
       //virtual ::user::interaction * GetOwner();
       virtual void SetOwner(::user::interaction * pOwnerWnd);
 
-      virtual void * get_handle();
+      virtual oswindow get_handle();
 
       virtual bool _001OnCmdMsg(BaseCmdMsg * pcmdmsg);   
 
@@ -78,17 +87,17 @@ namespace win
       virtual ::ca::window * from_os_data(void * pdata);
       virtual void * get_os_data() const;
 
-      static window * PASCAL from_handle(void * oswindow);
-      static window * PASCAL FromHandlePermanent(void * oswindow);
+      static window * PASCAL from_handle(oswindow oswindow);
+      static window * PASCAL FromHandlePermanent(oswindow oswindow);
       static void PASCAL DeleteTempMap();
-      bool attach(void * oswindow_New);
-      void * detach();
+      bool attach(oswindow oswindow_New);
+      oswindow detach();
 
       // subclassing/unsubclassing functions
       virtual void pre_subclass_window();
-      bool SubclassWindow(void * oswindow);
+      bool subclass_window(oswindow oswindow);
       bool SubclassDlgItem(UINT nID, ::ca::window * pParent);
-      void * UnsubclassWindow();
+      oswindow unsubclass_window();
 
       // handling of RT_DLGINIT resource (extension to RT_DIALOG)
       bool ExecuteDlgInit(const char * lpszResourceName);
@@ -106,7 +115,7 @@ namespace win
       virtual bool CreateEx(DWORD dwExStyle, const char * lpszClassName,
          const char * lpszWindowName, DWORD dwStyle,
          int x, int y, int nWidth, int nHeight,
-         void * oswindow_Parent, id id, LPVOID lpParam = NULL);
+         oswindow oswindow_Parent, id id, LPVOID lpParam = NULL);
 
       virtual bool CreateEx(DWORD dwExStyle, const char * lpszClassName,
          const char * lpszWindowName, DWORD dwStyle,
@@ -126,8 +135,8 @@ namespace win
       
          // get immediate child with given ID
       using ::user::interaction::get_child_by_id;
-      void get_child_by_id(id id, void ** poswindow_) const;
-         // as above, but returns void *
+      void get_child_by_id(id id, oswindow* poswindow_) const;
+         // as above, but returns oswindow
       using ::user::interaction::GetDescendantWindow;
       ::user::interaction * GetDescendantWindow(id id);
          // like get_child_by_id but recursive
@@ -140,7 +149,7 @@ namespace win
       ::user::interaction* GetTopLevelOwner();
       ::user::interaction* GetParentOwner();
       frame_window* GetTopLevelFrame();
-      static ::ca::window * PASCAL GetSafeOwner(::ca::window * pParent = NULL, void ** pWndTop = NULL);
+      static ::ca::window * PASCAL get_safe_owner(::ca::window * pParent = NULL, oswindow* pWndTop = NULL);
 
       virtual bool IsWindow();
 
@@ -360,7 +369,7 @@ namespace win
       virtual ::ca::window * ChildWindowFromPoint(POINT point);
       virtual ::ca::window * ChildWindowFromPoint(POINT point, UINT nFlags);
       static ::ca::window * PASCAL FindWindow(const char * lpszClassName, const char * lpszWindowName);
-      static ::ca::window * FindWindowEx(void * oswindowParent, void * oswindowChildAfter, const char * lpszClass, const char * lpszWindow);
+      static ::ca::window * FindWindowEx(oswindow oswindowParent, oswindow oswindowChildAfter, const char * lpszClass, const char * lpszWindow);
 
       virtual ::user::interaction * GetNextWindow(UINT nFlag = GW_HWNDNEXT);
       virtual ::user::interaction * GetTopWindow();
@@ -388,7 +397,7 @@ namespace win
    #endif   // WINVER >= 0x0500
 
    // Clipboard Functions
-      virtual bool ChangeClipboardChain(void * oswindow_Next);
+      virtual bool ChangeClipboardChain(oswindow oswindow_Next);
       virtual void*  SetClipboardViewer();
       virtual bool OpenClipboard();
       static ::ca::window * PASCAL GetClipboardOwner();
@@ -559,7 +568,7 @@ namespace win
 
    // Clipboard message handler member functions
       void OnAskCbFormatName(__in UINT nMaxCount, __out_ecount_z(nMaxCount) LPTSTR lpszString);
-      void OnChangeCbChain(void * oswindow_Remove, void * oswindow_After);
+      void OnChangeCbChain(oswindow oswindow_Remove, oswindow oswindow_After);
       void OnDestroyClipboard();
       void OnDrawClipboard();
       void OnHScrollClipboard(::ca::window * pClipAppWnd, UINT nSBCode, UINT nPos);
@@ -622,14 +631,11 @@ namespace win
       virtual bool OnChildNotify(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
          // return TRUE if parent should not process this message
       bool ReflectChildNotify(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
-      static bool PASCAL ReflectLastMsg(void * oswindow_Child, LRESULT* pResult = NULL);
+      static bool PASCAL ReflectLastMsg(oswindow oswindow_Child, LRESULT* pResult = NULL);
 
    // Implementation
-      virtual ~window();
       virtual bool CheckAutoCenter();
-      virtual void assert_valid() const;
-      virtual void dump(dump_context & dumpcontext) const;
-      static bool PASCAL GrayCtlColor(HDC hDC, void * oswindow, UINT nCtlColor,
+      static bool PASCAL GrayCtlColor(HDC hDC, oswindow oswindow, UINT nCtlColor,
          HBRUSH hbrGray, COLORREF clrText);
 
 
@@ -642,11 +648,11 @@ namespace win
       static void PASCAL SendMessageToDescendants(void*  oswindow, UINT message, WPARAM wParam, LPARAM lParam, bool bDeep, bool bOnlyPerm);
       virtual bool IsFrameWnd(); // is_kind_of(System.template type_info < frame_window > ()))
       virtual void on_final_release();
-      static bool PASCAL ModifyStyle(void * oswindow, DWORD dwRemove, DWORD dwAdd, UINT nFlags);
-      static bool PASCAL ModifyStyleEx(void * oswindow, DWORD dwRemove, DWORD dwAdd, UINT nFlags);
+      static bool PASCAL ModifyStyle(oswindow * oswindow, DWORD dwRemove, DWORD dwAdd, UINT nFlags);
+      static bool PASCAL ModifyStyleEx(oswindow * oswindow, DWORD dwRemove, DWORD dwAdd, UINT nFlags);
       static void PASCAL _FilterToolTipMessage(MSG* pMsg, ::ca::window * pWnd);
       bool _EnableToolTips(bool bEnable, UINT nFlag);
-      static void * PASCAL GetSafeOwner_(void * oswindow, void ** pWndTop);
+      static void * PASCAL get_safe_owner(oswindow * oswindow, oswindow ** pWndTop);
       void PrepareForHelp();
 
       //UINT m_nFlags;      // see WF_ flags above
@@ -667,9 +673,9 @@ namespace win
 
       // implementation of message dispatch/hooking
       CLASS_DECL_win friend LRESULT CALLBACK __send_message_hook(int, WPARAM, LPARAM);
-      //CLASS_DECL_win friend void _gen::StandardSubclass(void *);
+      //CLASS_DECL_win friend void _gen::StandardSubclass(oswindow);
       CLASS_DECL_win friend LRESULT CALLBACK __cbt_filter_hook(int, WPARAM, LPARAM);
-      CLASS_DECL_win friend LRESULT __call_window_procedure(::user::interaction * pWnd, void * oswindow, UINT nMsg, WPARAM wParam, LPARAM lParam);
+      CLASS_DECL_win friend LRESULT __call_window_procedure(::user::interaction * pWnd, oswindow oswindow, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
       // standard message implementation
       LRESULT OnNTCtlColor(WPARAM wParam, LPARAM lParam);

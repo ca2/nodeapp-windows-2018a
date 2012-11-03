@@ -2042,9 +2042,9 @@ restart_mouse_hover_check:
       return pFrameWnd;
    }
 
-   ::ca::window * PASCAL window::GetSafeOwner(::ca::window * pParent, void ** pWndTop)
+   ::ca::window * PASCAL window::get_safe_owner(::ca::window * pParent, void ** pWndTop)
    {
-      void * oswindow = GetSafeOwner_((void *) pParent->get_os_data(), pWndTop);
+      void * oswindow = get_safe_owner((void *) pParent->get_os_data(), pWndTop);
       return ::win::window::from_handle(oswindow);
    }
 
@@ -3874,7 +3874,7 @@ ExitModal:
    /////////////////////////////////////////////////////////////////////////////
    // Extra window support for dynamic subclassing of controls
 
-   bool window::SubclassWindow(void * oswindow)
+   bool window::subclass_window(void * oswindow)
    {
       if (!attach(oswindow))
          return FALSE;
@@ -3895,7 +3895,7 @@ ExitModal:
       else if (*lplpfn != oldWndProc)
       {
 
-         TRACE(::radix::trace::category_AppMsg, 0, "p: Trying to use SubclassWindow with incorrect window\n");
+         TRACE(::radix::trace::category_AppMsg, 0, "p: Trying to use subclass_window with incorrect window\n");
          TRACE(::radix::trace::category_AppMsg, 0, "\tderived class.\n");
          TRACE(::radix::trace::category_AppMsg, 0, "\toswindow_ = $%08X (nIDC=$%08X) is not a %hs.\n", (UINT)(uint_ptr)oswindow, __get_dialog_control_id((oswindow) oswindow), typeid(*this).name());
 
@@ -3920,13 +3920,13 @@ ExitModal:
       // check for normal dialog control first
       void * oswindow_Control = ::GetDlgItem(WIN_WINDOW(pParent)->get_handle(), nID);
       if (oswindow_Control != NULL)
-         return SubclassWindow(oswindow_Control);
+         return subclass_window(oswindow_Control);
 
 
       return FALSE;   // control not found
    }
 
-   void * window::UnsubclassWindow()
+   void * window::unsubclass_window()
    {
       ASSERT(::IsWindow(get_handle()));
 
@@ -5542,7 +5542,7 @@ ExitModal:
    ////////////////////////////////////////////////////////////////////////////
    // UI related ::ca::window functions
 
-   void * PASCAL window::GetSafeOwner_(void * hParent, void ** pWndTop)
+   void * PASCAL window::get_safe_owner(void * hParent, void ** pWndTop)
    {
       // get ::ca::window to start with
       void * oswindow = hParent;
