@@ -1936,7 +1936,7 @@ restart_mouse_hover_check:
    /* trans oswindow CLASS_DECL_win __get_parent_owner(::user::interaction * oswindow)
    {
    // check for permanent-owned window first
-   ::ca::window * pWnd = ::win::window::FromHandlePermanent;
+   ::ca::window * pWnd = ::win::window::FromHandlePermanent(oswindow);
    if (pWnd != NULL)
    return WIN_WINDOW(pWnd)->get_owner();
 
@@ -3968,7 +3968,7 @@ ExitModal:
 
    oswindow window::get_handle() const
    {
-      return get_handle();
+      return ::win::oswindow_handle::get_handle();
    }
 
    bool window::SetWindowPos(int z, int x, int y, int cx, int cy, UINT nFlags)
@@ -4322,7 +4322,7 @@ ExitModal:
    }
 
 
-   ::user::interaction * window::get_parent()
+   ::user::interaction * window::get_parent() const
    {
       if(!::IsWindow(get_handle()))
          return NULL;
@@ -5745,7 +5745,7 @@ ExitModal:
          if (pWndInit != NULL)
          {
             // the window should not be in the permanent ::collection::map at this time
-            ASSERT(::win::window::FromHandlePermanent== NULL);
+            ASSERT(::win::window::FromHandlePermanent(oswindow) == NULL);
 
             pWndInit->m_pthread = dynamic_cast < ::radix::thread * > (::win::get_thread());
             if(pWndInit->m_pthread != NULL)

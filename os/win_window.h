@@ -378,7 +378,7 @@ namespace win
       virtual ::user::interaction * GetLastActivePopup();
 
       virtual bool IsChild(::user::interaction *  pWnd);
-      virtual ::user::interaction * get_parent();
+      virtual ::user::interaction * get_parent() const;
       using ::user::interaction::set_parent;
       ::ca::window * set_parent(::ca::window * pWndNewParent);
       static ::ca::window * PASCAL WindowFromPoint(POINT point);

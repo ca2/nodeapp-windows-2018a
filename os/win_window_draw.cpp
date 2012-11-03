@@ -802,7 +802,7 @@ namespace win
          return OptimizeNone;
       }
 
-   //    ::ca::window * pwnd = window::FromHandlePermanent;
+   //    ::ca::window * pwnd = window::FromHandlePermanent(oswindow);
        
       
       if(ptwi == NULL)
