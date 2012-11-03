@@ -530,12 +530,12 @@ namespace win
 
    ::ca::window * application::window_from_os_data(void * pdata)
    {
-      return ::win::window::from_handle(pdata);
+      return ::win::window::from_handle((oswindow) pdata);
    }
 
    ::ca::window * application::window_from_os_data_permanent(void * pdata)
    {
-      ::ca::window * pwnd = ::win::window::FromHandlePermanent(pdata);
+      ::ca::window * pwnd = ::win::window::FromHandlePermanent((oswindow) pdata);
       if(pwnd != NULL)
          return pwnd;
       user::interaction_ptr_array wndptra = System.frames();

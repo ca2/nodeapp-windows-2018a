@@ -645,7 +645,7 @@ namespace win
       void ActivateTopParent();
       virtual void WalkPreTranslateTree(::user::interaction * puiStop, gen::signal_object * pobj);
       static ::user::interaction * PASCAL GetDescendantWindow(::user::interaction * oswindow, id id);
-      static void PASCAL SendMessageToDescendants(void*  oswindow, UINT message, WPARAM wParam, LPARAM lParam, bool bDeep, bool bOnlyPerm);
+      static void PASCAL SendMessageToDescendants(oswindow  oswindow, UINT message, WPARAM wParam, LPARAM lParam, bool bDeep, bool bOnlyPerm);
       virtual bool IsFrameWnd(); // is_kind_of(System.template type_info < frame_window > ()))
       virtual void on_final_release();
       static bool PASCAL ModifyStyle(oswindow oswindow, DWORD dwRemove, DWORD dwAdd, UINT nFlags);

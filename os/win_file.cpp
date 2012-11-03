@@ -1386,7 +1386,7 @@ bool CLASS_DECL_win vfxResolveShortcut(string & strTarget, const char * pszSourc
       if (SUCCEEDED(ppf->Load(wstrFileIn, STGM_READ)))
       {
          /* Resolve the link, this may post UI to find the link */
-         if (SUCCEEDED(psl->Resolve(pui == NULL ? NULL : pui->get_os_data(),
+         if (SUCCEEDED(psl->Resolve(pui == NULL ? NULL : pui->get_handle(),
             SLR_ANY_MATCH | (pui == NULL ? (SLR_NO_UI | (8400 << 16)) : 0))))
          {
             wstrFileOut.alloc(MAX_PATH);

@@ -25,9 +25,9 @@ namespace win
          ::win::window * pTemp;
          pMap->m_temporaryMap.get_next_assoc(pos, h, pTemp);
 
-         if(!::IsWindow(h))
+         if(!::IsWindow((oswindow) h))
          {
-            oswindowaRemove.add(h);
+            oswindowaRemove.add((oswindow) h);
             wndptraRemove.add(pTemp);
          }
 

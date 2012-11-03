@@ -773,7 +773,7 @@ namespace win
 
       ::user::window_interface * ptwi = System.window_map().get((int_ptr) oswindow);
 
-      if(!::IsWindowVisible)
+      if(!::IsWindowVisible(oswindow))
       {
          return OptimizeThis;
       }
@@ -881,7 +881,7 @@ namespace win
       oswindow oswindow = oswindowtree.m_oswindow;
 
 
-      if(!::IsWindowVisible)
+      if(!::IsWindowVisible(oswindow))
       {
          return true;
       }
@@ -943,7 +943,7 @@ namespace win
 
          ::ScreenToClient(oswindow, &ptOffset);
 
-         oswindowa.add;
+         oswindowa.add(oswindow);
          ::OffsetRgn(hrgnIntersect, ptOffset.x, ptOffset.y);
          hrgna.add(hrgnIntersect);
 
@@ -1258,7 +1258,7 @@ namespace win
             
             if(pwnd->m_pguie != NULL && (bool) pwnd->m_pguie->oprop("pending_layout"))
             {
-               oswindow oswindowZOrder = pwnd->m_pguie->oprop("pending_zorder").get_integer();
+               ::oswindow oswindowZOrder = (oswindow) pwnd->m_pguie->oprop("pending_zorder").get_integer();
                ::SetWindowPos(oswindowParam, HWND_TOPMOST, 
                   (int) rectWindow.left, (int) rectWindow.top, (int) rectWindow.width(), (int) rectWindow.height(), SWP_SHOWWINDOW);
                ::SetWindowPos(oswindowParam, HWND_NOTOPMOST, 
