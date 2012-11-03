@@ -696,7 +696,7 @@ namespace win
    }
 
 
-   oswindow_ shell::_CreateWindowEx(
+   oswindow shell::_CreateWindowEx(
       DWORD dwExStyle,
       const wchar_t * lpClassName,
       const wchar_t * lpWindowName,
@@ -705,7 +705,7 @@ namespace win
       int y,
       int nWidth,
       int nHeight,
-      oswindow_ hWndParent,
+      oswindow oswindow_Parent,
       HMENU hMenu,
       HINSTANCE hInstance,
       LPVOID lpParam)
@@ -734,7 +734,7 @@ namespace win
          y,
          nWidth,
          nHeight,
-         hWndParent,
+         oswindow_Parent,
          hMenu,
          hInstance,
          lpParam);

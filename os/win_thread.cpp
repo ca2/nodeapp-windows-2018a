@@ -92,8 +92,8 @@ UINT APIENTRY __thread_entry(void * pParam)
          // thread inherits cast's main ::ca::window if not already set
          //if (papp != NULL && GetMainWnd() == NULL)
          {
-            // just attach the oswindow_
-            // trans         threadWnd.Attach(pApp->GetMainWnd()->get_handle());
+            // just attach the oswindow
+            // trans         threadWnd.attach(pApp->GetMainWnd()->get_handle());
             //GetMainWnd() = pApp->GetMainWnd();
          }
       }
@@ -105,7 +105,7 @@ UINT APIENTRY __thread_entry(void * pParam)
          //TRACE(::radix::trace::category_AppMsg, 0, "Warning: Error during thread initialization!\n");
 
          // set error flag and allow the creating thread to notice the error
-   //         threadWnd.Detach();
+   //         threadWnd.detach();
          pStartup->bError = TRUE;
          VERIFY(::SetEvent(pStartup->hEvent));
          __end_thread(dynamic_cast < ::radix::application * > (pThread->m_papp), (UINT)-1, FALSE);
@@ -200,7 +200,7 @@ CLASS_DECL_win void __internal_process_wnd_proc_exception(base_exception*, gen::
    else if (pbase->m_uiMessage == WM_PAINT)
    {
       // force validation of ::ca::window to prevent getting WM_PAINT again
-      ValidateRect((oswindow_) pbase->m_pwnd->get_safe_handle(), NULL);
+      ValidateRect((oswindow) pbase->m_pwnd->get_safe_handle(), NULL);
       pbase->set_lresult(0);
       return;
    }
@@ -549,7 +549,7 @@ namespace win
 
       m_frameList.Construct(offsetof(frame_window, m_pNextFrameWnd));
       m_ptimera = new ::user::interaction::timer_array(get_app());
-      m_puiptra = new user::LPWndArray;
+      m_puiptra = new user::interaction_ptr_array;
 
    }
 
@@ -559,7 +559,7 @@ namespace win
       if(m_puiptra != NULL)
       {
          single_lock sl(&m_mutexUiPtra, TRUE);
-         ::user::LPWndArray * puiptra = m_puiptra;
+         ::user::interaction_ptr_array * puiptra = m_puiptra;
          m_puiptra = NULL;
          for(int i = 0; i < puiptra->get_size(); i++)
          {
@@ -1152,7 +1152,7 @@ stop_run:
          if(m_puiptra != NULL)
          {
             single_lock sl(&m_mutexUiPtra, TRUE);
-            ::user::LPWndArray * puiptra = m_puiptra;
+            ::user::interaction_ptr_array * puiptra = m_puiptra;
             m_puiptra = NULL;
             for(int i = 0; i < puiptra->get_size(); i++)
             {
@@ -1648,7 +1648,7 @@ stop_run:
       dumpcontext << "\nm_pMainWnd = " << m_puiMain;
 
    dumpcontext << "\nm_msgCur = {";
-   dumpcontext << "\n\thwnd = " << (void *)pState->m_msgCur.hwnd;
+   dumpcontext << "\n\toswindow = " << (void *)pState->m_msgCur.oswindow;
    dumpcontext << "\n\tmessage = " << (UINT)pState->m_msgCur.message;
    dumpcontext << "\n\twParam = " << (UINT)pState->m_msgCur.wParam;
    dumpcontext << "\n\tlParam = " << (void *)pState->m_msgCur.lParam;
@@ -1702,13 +1702,13 @@ stop_run:
 
       if(pwindow == NULL || pwindow != pbase->m_pwnd->m_pimpl)
       {
-         pbase->set_lresult(::DefWindowProc((oswindow_) pbase->m_pwnd->get_safe_handle(), pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));
+         pbase->set_lresult(::DefWindowProc((oswindow) pbase->m_pwnd->get_safe_handle(), pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));
          return;
       }
 
       ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
       MSG oldState = pThreadState->m_lastSentMsg;   // save for nesting
-      pThreadState->m_lastSentMsg.hwnd       = (oswindow_) pbase->m_pwnd->get_safe_handle();
+      pThreadState->m_lastSentMsg.oswindow       = (oswindow) pbase->m_pwnd->get_safe_handle();
       pThreadState->m_lastSentMsg.message    = pbase->m_uiMessage;
       pThreadState->m_lastSentMsg.wParam     = pbase->m_wparam;
       pThreadState->m_lastSentMsg.lParam     = pbase->m_lparam;
@@ -1985,7 +1985,7 @@ stop_run:
       ::ca::window threadWnd;
 
       m_ptimera            = new ::user::interaction::timer_array(get_app());
-      m_puiptra            = new user::LPWndArray;
+      m_puiptra            = new user::interaction_ptr_array;
 
       m_ptimera->m_papp    = m_papp;
       m_puiptra->m_papp    = m_papp;
@@ -2091,7 +2091,7 @@ run:
       try
       {
          // cleanup and shutdown the thread
-//         threadWnd.Detach();
+//         threadWnd.detach();
          __end_thread(dynamic_cast < ::radix::application * > (m_papp), nResult);
       }
       catch(...)
@@ -2234,7 +2234,7 @@ return -1;  // just fail
 else if (pMsg->message == WM_PAINT)
 {
 // force validation of ::ca::window to prevent getting WM_PAINT again
-ValidateRect(pMsg->hwnd, NULL);
+ValidateRect(pMsg->oswindow, NULL);
 return 0;
 }
 return 0;   // sensible default for rest of commands
@@ -2256,20 +2256,20 @@ thread *pThread = System.GetThread();
 if( pThread )
 {
 // if this is a thread-message, short-circuit this function
-if (pMsg->hwnd == NULL && pThread->DispatchThreadMessageEx(pMsg))
+if (pMsg->oswindow == NULL && pThread->DispatchThreadMessageEx(pMsg))
 return TRUE;
 }
 
 // walk from target to main ::ca::window
 ::user::interaction* pMainWnd = System.GetMainWnd();
-/* trans   if (::ca::window::WalkPreTranslateTree(pMainWnd->GetSafeHwnd(), pMsg))
+/* trans   if (::ca::window::WalkPreTranslateTree(pMainWnd->GetSafeoswindow_(), pMsg))
 return TRUE; */
 
 // in case of modeless dialogs, last chance route through main
 //   ::ca::window's accelerator table
 /*   if (pMainWnd != NULL)
 {
-::ca::window * pWnd = ::win::window::from_handle(pMsg->hwnd);
+::ca::window * pWnd = ::win::window::from_handle(pMsg->oswindow);
 if (pWnd != NULL && WIN_WINDOW(pWnd)->GetTopLevelParent() != pMainWnd)
 return pMainWnd->pre_translate_message(pMsg);
 }
@@ -2784,7 +2784,7 @@ __STATIC inline bool IsButtonUp(LPMSG lpMsg)
       return FALSE;
 
    case MSGF_MENU:
-      pMsgWnd = ::win::window::from_handle(lpMsg->hwnd);
+      pMsgWnd = ::win::window::from_handle(lpMsg->oswindow);
       if (pMsgWnd != NULL)
       {
          pTopFrameWnd = pMsgWnd->GetTopLevelFrame();
@@ -2887,7 +2887,7 @@ if (System.GetThread() == this)
 dumpcontext << "\nm_pMainWnd = " << GetMainWnd();
 
 dumpcontext << "\nm_msgCur = {";
-dumpcontext << "\n\thwnd = " << (void *)pState->m_msgCur.hwnd;
+dumpcontext << "\n\toswindow = " << (void *)pState->m_msgCur.oswindow;
 dumpcontext << "\n\tmessage = " << (UINT)pState->m_msgCur.message;
 dumpcontext << "\n\twParam = " << (UINT)pState->m_msgCur.wParam;
 dumpcontext << "\n\tlParam = " << (void *)pState->m_msgCur.lParam;

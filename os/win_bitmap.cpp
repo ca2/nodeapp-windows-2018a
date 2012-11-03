@@ -120,7 +120,7 @@ namespace win
    }
    bool bitmap::LoadBitmap(const char * lpszResourceName)
    { 
-   //   return Attach(::LoadBitmap(gen::FindResourceHandle(
+   //   return attach(::LoadBitmap(gen::FindResourceHandle(
    //lpszResourceName, RT_BITMAP), lpszResourceName));
       return FALSE;
    
@@ -151,12 +151,12 @@ namespace win
 
    bool bitmap::LoadBitmap(UINT nIDResource)
    { 
-      //return Attach(::LoadBitmap(gen::FindResourceHandle(MAKEINTRESOURCE(nIDResource), RT_BITMAP), MAKEINTRESOURCE(nIDResource))); 
+      //return attach(::LoadBitmap(gen::FindResourceHandle(MAKEINTRESOURCE(nIDResource), RT_BITMAP), MAKEINTRESOURCE(nIDResource))); 
       return FALSE;
    }
    bool bitmap::LoadOEMBitmap(UINT nIDBitmap)
    { 
-      //return Attach(::LoadBitmap(NULL, MAKEINTRESOURCE(nIDBitmap))); 
+      //return attach(::LoadBitmap(NULL, MAKEINTRESOURCE(nIDBitmap))); 
       return FALSE;
    }
    bool bitmap::CreateCompatibleBitmap(::ca::graphics * pgraphics, int nWidth, int nHeight)
@@ -247,7 +247,7 @@ namespace win
 
    }
 
-   bool bitmap::Attach(HBITMAP hbitmap)
+   bool bitmap::attach(HBITMAP hbitmap)
    {
       if(m_pbitmap != NULL)
       {

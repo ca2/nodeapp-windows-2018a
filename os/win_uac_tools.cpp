@@ -142,7 +142,7 @@ namespace VistaTools
 // to be able to specify the verb easily.
 
 bool 
-MyShellExec(   oswindow_ hwnd, 
+MyShellExec(   oswindow oswindow, 
             const char * pszVerb, 
             const char * pszPath, 
             const char * pszParameters,   // = NULL
@@ -155,7 +155,7 @@ MyShellExec(   oswindow_ hwnd,
 
    shex.cbSize         = sizeof( SHELLEXECUTEINFO ); 
    shex.fMask         = (phProcess ? SEE_MASK_NOCLOSEPROCESS : 0);
-   shex.hwnd         = hwnd;
+   shex.oswindow         = oswindow;
    shex.lpVerb         = pszVerb; 
    shex.lpFile         = pszPath; 
    shex.lpParameters   = pszParameters; 
@@ -302,14 +302,14 @@ IsElevated( __out_opt bool * pbElevated ) //= NULL )
 
 bool 
 RunElevated( 
-   __in      oswindow_   hwnd, 
+   __in      oswindow   oswindow, 
    __in      const char * pszPath, 
    __in_opt   const char * pszParameters,   //   = NULL, 
    __in_opt   const char * pszDirectory,   //   = NULL,
    __out_opt   HANDLE *phProcess )      //   = NULL );
 {
    return MyShellExec( 
-            hwnd, 
+            oswindow, 
             IsVista() ? "runas" : NULL,
             pszPath, 
             pszParameters, 
@@ -364,7 +364,7 @@ VistaEelevator_HookProc_MsgRet( int code, WPARAM wParam, LPARAM lParam )
         if (pwrs->message == uVEMsg )
       {
          bVESuccess = VistaTools::MyShellExec( 
-                     pwrs->hwnd, 
+                     pwrs->oswindow, 
                      NULL, 
                      szVE_Path, 
                      szVE_Parameters, 
@@ -396,7 +396,7 @@ static PGetModuleHandleExW pGetModuleHandleExW = NULL;
 
 bool 
 RunNonElevated(
-   __in      oswindow_   hwnd, 
+   __in      oswindow   oswindow, 
    __in      const char * pszPath, 
    __in_opt   const char * pszParameters,   //   = NULL, 
    __in_opt   const char * pszDirectory,   //   = NULL,
@@ -419,7 +419,7 @@ RunNonElevated(
    {
       // if the current process is not elevated, we can use ShellExecuteEx directly! 
    
-      return MyShellExec( hwnd, 
+      return MyShellExec( oswindow, 
                      NULL, 
                      pszPath, 
                      pszParameters, 
@@ -466,16 +466,16 @@ RunNonElevated(
    //////////////////////////////////////
    // find the shell ::ca::window (the desktop)
 
-   oswindow_ hwndShell = ::FindWindow( "Progman", NULL);
+   oswindow oswindowShell = ::FindWindow( "Progman", NULL);
 
-   if ( !hwndShell )
+   if ( !oswindowShell )
    {
       ASSERT_HERE;
       return FALSE;
    }
 
-   if ( !hwnd )
-      hwnd = ::GetForegroundWindow();
+   if ( !oswindow )
+      oswindow = ::GetForegroundWindow();
 
    // Link (dynamically) to the GetModuleHandleExW API:
 
@@ -552,7 +552,7 @@ RunNonElevated(
 
    bVESuccess = FALSE; // assume failure
 
-   ::SendMessage( hwndShell, uVEMsg, 0, 0 );
+   ::SendMessage( oswindowShell, uVEMsg, 0, 0 );
 
    ////////////////////////////////////////////////////////
    // At this point our hook procedure has been executed!

@@ -25,66 +25,66 @@
    return TRUE;
 }*/
 
-bool CLASS_DECL_win __is_combo_box_control(oswindow_ hWnd, UINT nStyle)
+bool CLASS_DECL_win __is_combo_box_control(oswindow oswindow, UINT nStyle)
 {
-   if (hWnd == NULL)
+   if (oswindow == NULL)
       return FALSE;
    // do cheap style compare first
-   if ((UINT)(::GetWindowLong(hWnd, GWL_STYLE) & 0x0F) != nStyle)
+   if ((UINT)(::GetWindowLong(oswindow, GWL_STYLE) & 0x0F) != nStyle)
       return FALSE;
 
    // do expensive classname compare next
    char szCompare[_countof("combobox")+1];
-   ::GetClassName(hWnd, szCompare, _countof(szCompare));
+   ::GetClassName(oswindow, szCompare, _countof(szCompare));
    return ::__invariant_stricmp(szCompare, "combobox") == 0;
 }
 
-bool CLASS_DECL_win __compare_class_name(oswindow_ hWnd, const char * lpszClassName)
+bool CLASS_DECL_win __compare_class_name(oswindow oswindow, const char * lpszClassName)
 {
-   ASSERT(::IsWindow(hWnd));
+   ASSERT(::IsWindow(oswindow));
    char szTemp[32];
-   ::GetClassName(hWnd, szTemp, _countof(szTemp));
+   ::GetClassName(oswindow, szTemp, _countof(szTemp));
    return ::__invariant_stricmp(szTemp, lpszClassName) == 0;
 }
 
-oswindow_ CLASS_DECL_win __child_window_from_point(oswindow_ hWnd, POINT pt)
+oswindow CLASS_DECL_win __child_window_from_point(oswindow oswindow, POINT pt)
 {
-   ASSERT(hWnd != NULL);
+   ASSERT(oswindow != NULL);
 
    // check child windows
-   ::ClientToScreen(hWnd, &pt);
-   oswindow_ hWndChild = ::GetWindow(hWnd, GW_CHILD);
-   for (; hWndChild != NULL; hWndChild = ::GetWindow(hWndChild, GW_HWNDNEXT))
+   ::ClientToScreen(oswindow, &pt);
+   oswindow oswindow_Child = ::GetWindow(oswindow, GW_CHILD);
+   for (; oswindow_Child != NULL; oswindow_Child = ::GetWindow(oswindow_Child, GW_HWNDNEXT))
    {
-      if (__get_dialog_control_id(hWndChild) != (WORD)0 &&
-         (::GetWindowLong(hWndChild, GWL_STYLE) & WS_VISIBLE))
+      if (__get_dialog_control_id(oswindow_Child) != (WORD)0 &&
+         (::GetWindowLong(oswindow_Child, GWL_STYLE) & WS_VISIBLE))
       {
          // see if point hits the child ::ca::window
          rect rect;
-         ::GetWindowRect(hWndChild, rect);
+         ::GetWindowRect(oswindow_Child, rect);
          if (rect.contains(pt))
-            return hWndChild;
+            return oswindow_Child;
       }
    }
 
    return NULL;    // not found
 }
 
-void CLASS_DECL_win __set_window_text(::user::interaction * hWndCtrl, const char * lpszNew)
+void CLASS_DECL_win __set_window_text(::user::interaction * oswindow_Ctrl, const char * lpszNew)
 {
-   hWndCtrl->SetWindowText(lpszNew);
-   /*ENSURE(hWndCtrl);
+   oswindow_Ctrl->SetWindowText(lpszNew);
+   /*ENSURE(oswindow_Ctrl);
    ENSURE(lpszNew);
 
    int nNewLen = lstrlen(lpszNew);
    char szOld[256]="";
    // fast check to see if text really changes (reduces flash in controls)
    if (nNewLen > _countof(szOld) ||
-      ::GetWindowText(hWndCtrl, szOld, _countof(szOld)) != nNewLen ||
+      ::GetWindowText(oswindow_Ctrl, szOld, _countof(szOld)) != nNewLen ||
       lstrcmp(szOld, lpszNew) != 0)
    {
       // change it
-      ::SetWindowText(hWndCtrl, lpszNew);
+      ::SetWindowText(oswindow_Ctrl, lpszNew);
    }*/
 }
 
@@ -98,37 +98,37 @@ void CLASS_DECL_win __delete_object(HGDIOBJ* pObject)
    }
 }
 /*
-void CLASS_DECL_win __cancel_modes(oswindow_ hWndRcvr)
+void CLASS_DECL_win __cancel_modes(oswindow oswindow_Rcvr)
 {
    // if we receive a message destined for a ::ca::window, cancel any combobox
    //  popups that could be in toolbars or dialog bars
-   oswindow_ hWndCancel = ::GetFocus();
-   if (hWndCancel == NULL)
+   oswindow oswindow_Cancel = ::GetFocus();
+   if (oswindow_Cancel == NULL)
       return;     // nothing to cancel
 
-   if (hWndCancel == hWndRcvr)
+   if (oswindow_Cancel == oswindow_Rcvr)
       return;     // let input go to ::ca::window with focus
 
    // focus is in part of a combo-box
-   if (!__is_combo_box_control(hWndCancel, (UINT)CBS_DROPDOWNLIST))
+   if (!__is_combo_box_control(oswindow_Cancel, (UINT)CBS_DROPDOWNLIST))
    {
       // check as a dropdown
-      hWndCancel = ::GetParent(hWndCancel);   // parent of edit is combo
-      if (hWndCancel == hWndRcvr)
+      oswindow_Cancel = ::GetParent(oswindow_Cancel);   // parent of edit is combo
+      if (oswindow_Cancel == oswindow_Rcvr)
          return;     // let input go to part of combo
 
-      if (!__is_combo_box_control(hWndCancel, (UINT)CBS_DROPDOWN))
+      if (!__is_combo_box_control(oswindow_Cancel, (UINT)CBS_DROPDOWN))
          return;     // not a combo-box that is active
    }
 
    // combo-box is active, but if receiver is a popup, do nothing
-   if (hWndRcvr != NULL &&
-     (::GetWindowLong(hWndRcvr, GWL_STYLE) & WS_CHILD) != 0 &&
-     ::GetParent(hWndRcvr) == ::GetDesktopWindow())
+   if (oswindow_Rcvr != NULL &&
+     (::GetWindowLong(oswindow_Rcvr, GWL_STYLE) & WS_CHILD) != 0 &&
+     ::GetParent(oswindow_Rcvr) == ::GetDesktopWindow())
       return;
   
    // finally, we should cancel the mode!
-   ::SendMessage(hWndCancel, CB_SHOWDROPDOWN, FALSE, 0L);
+   ::SendMessage(oswindow_Cancel, CB_SHOWDROPDOWN, FALSE, 0L);
 }*/
 
 void CLASS_DECL_win __global_free(HGLOBAL hGlobal)

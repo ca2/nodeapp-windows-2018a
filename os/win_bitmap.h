@@ -47,7 +47,7 @@ namespace win
       virtual void dump(dump_context & dumpcontext) const;
 
 
-      virtual bool Attach(HBITMAP hbitmap);
+      virtual bool attach(HBITMAP hbitmap);
 
 
    };

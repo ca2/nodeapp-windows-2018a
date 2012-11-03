@@ -4,14 +4,14 @@
 int spaboot_start();
 
 
-oswindow_ g_hwndMessage = NULL;
+oswindow g_oswindowMessage = NULL;
 stra_dup * g_pstraRestartCommandLine;
 MSG g_msgSentinel;
 HANDLE g_hmutexSpabootInstall;
 
 ATOM sentinel_RegisterClass(HINSTANCE hInstance);
 
-LRESULT CALLBACK sentinel_WndProc(oswindow_ hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK sentinel_WndProc(oswindow oswindow, UINT message, WPARAM wParam, LPARAM lParam);
 
 
 extern "C" int WinMainCRTStartup()
@@ -38,9 +38,9 @@ extern "C" int WinMainCRTStartup()
       return -1;
 
 
-   g_hwndMessage = ::CreateWindowExA(0, "ca2::fontopus::ccvotagus::spaboot:callback_window", "ca2::fontopus::ccvotagus::spaboot:callback_window", 0, 0, 0, 0, 0, HWND_MESSAGE, NULL, NULL, NULL);
+   g_oswindowMessage = ::CreateWindowExA(0, "ca2::fontopus::ccvotagus::spaboot:callback_window", "ca2::fontopus::ccvotagus::spaboot:callback_window", 0, 0, 0, 0, 0, HWND_MESSAGE, NULL, NULL, NULL);
 
-   if(g_hwndMessage == NULL)
+   if(g_oswindowMessage == NULL)
    {
       DWORD dw = GetLastError();
       return -1;
@@ -50,7 +50,7 @@ extern "C" int WinMainCRTStartup()
    int iRet = spaboot_start();
 
 
-   SetTimer(g_hwndMessage, 1245, (1977 + 1984) * 8, NULL);
+   SetTimer(g_oswindowMessage, 1245, (1977 + 1984) * 8, NULL);
 
 
 	while(true)
@@ -97,7 +97,7 @@ ATOM sentinel_RegisterClass(HINSTANCE hInstance)
 }
 
 
-LRESULT CALLBACK sentinel_WndProc(oswindow_ hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK sentinel_WndProc(oswindow oswindow, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -119,14 +119,14 @@ LRESULT CALLBACK sentinel_WndProc(oswindow_ hWnd, UINT message, WPARAM wParam, L
       {
          if(wParam == 1245)
          {
-            KillTimer(g_hwndMessage, 12);
+            KillTimer(g_oswindowMessage, 12);
             spa::installer::spa();
-            SetTimer(g_hwndMessage, 1245, (1984 + 1977) * 8, NULL);
+            SetTimer(g_oswindowMessage, 1245, (1984 + 1977) * 8, NULL);
          }
       }
       break;
    default:
-      return DefWindowProc(hWnd, message, wParam, lParam);
+      return DefWindowProc(oswindow, message, wParam, lParam);
    }
 	return 0;
 }

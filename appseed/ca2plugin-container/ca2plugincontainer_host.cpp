@@ -37,7 +37,7 @@ namespace ca2plugin_container
 
       ::ca2plugin_container::register_class((HINSTANCE) ::GetModuleHandleA("ca2plugin_container.dll"));
 
-      m_hwndMessage = ::CreateWindowExA(0, "npca2_message_window", "npca2_message_window", 0, 0, 0, 0, 0, HWND_MESSAGE, NULL, NULL, NULL);
+      m_oswindowMessage = ::CreateWindowExA(0, "npca2_message_window", "npca2_message_window", 0, 0, 0, 0, 0, HWND_MESSAGE, NULL, NULL, NULL);
 
       m_pfile           = NULL;
 
@@ -45,7 +45,7 @@ namespace ca2plugin_container
       m_iMemory = -1;
 
 
-      m_hwnd = NULL;
+      m_oswindow = NULL;
       m_bStream = false;
 
 
@@ -57,7 +57,7 @@ namespace ca2plugin_container
 
    host::~host()
    {
-      ::DestroyWindow(m_hwndMessage);
+      ::DestroyWindow(m_oswindowMessage);
    }
 
 
@@ -72,9 +72,9 @@ namespace ca2plugin_container
       m_rect.right = m_rect.left + aWindow->width;
       m_rect.bottom = m_rect.top + aWindow->height;
 
-      m_hwnd = (oswindow_)aWindow->window;
+      m_oswindow = (oswindow)aWindow->window;
 
-      if(m_hwnd == NULL)
+      if(m_oswindow == NULL)
          return FALSE;
 
 
@@ -82,7 +82,7 @@ namespace ca2plugin_container
 //      m_bReload         = false;
 
 
-      //NPN_GetValue(m_instance, NPNVnetscapeWindow, &m_hwnd);
+      //NPN_GetValue(m_instance, NPNVnetscapeWindow, &m_oswindow);
 
 
       //Sleep(15 * 1000);
@@ -112,7 +112,7 @@ namespace ca2plugin_container
    void host::post_message(UINT uiMessage, WPARAM wparam, LPARAM lparam)
    {
       
-      ::PostMessage(m_hwnd, uiMessage, wparam, lparam);
+      ::PostMessage(m_oswindow, uiMessage, wparam, lparam);
 
    }
 
@@ -122,11 +122,11 @@ namespace ca2plugin_container
 
       m_bInitialized = false;
       
-      ::KillTimer(m_hwndMessage, (uint_ptr) this);
+      ::KillTimer(m_oswindowMessage, (uint_ptr) this);
 
       finalize();
 
-      m_hwnd = NULL;
+      m_oswindow = NULL;
 
    }
 
@@ -182,9 +182,9 @@ namespace ca2plugin_container
       return "";
    }
 
-   oswindow_ host::get_host_window()
+   oswindow host::get_host_window()
    {
-      return m_hwnd;
+      return m_oswindow;
    }
 
    uint_ptr host::message_handler(uint_ptr uiMessage, WPARAM wparam, LPARAM lparam)
@@ -195,9 +195,9 @@ namespace ca2plugin_container
    }
 
 
-   LRESULT CALLBACK window_proc(oswindow_ hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+   LRESULT CALLBACK window_proc(oswindow oswindow, UINT message, WPARAM wParam, LPARAM lParam)
    {
-      return DefWindowProc(hWnd, message, wParam, lParam);
+      return DefWindowProc(oswindow, message, wParam, lParam);
    }
 
    ATOM register_class(HINSTANCE hInstance)
@@ -225,7 +225,7 @@ namespace ca2plugin_container
    bool host::finalize()
    {
       
-      ::KillTimer(m_hwndMessage, (uint_ptr) this);
+      ::KillTimer(m_oswindowMessage, (uint_ptr) this);
 
       return ::hotplugin::host::finalize();
 

@@ -26,12 +26,12 @@ namespace win
    }
 
    /*bool pen::CreatePen(int nPenStyle, int nWidth, COLORREF crColor)
-   { return Attach(::CreatePen(nPenStyle, nWidth, crColor)); }
+   { return attach(::CreatePen(nPenStyle, nWidth, crColor)); }
    bool pen::CreatePenIndirect(LPLOGPEN lpLogPen)
-   { return Attach(::CreatePenIndirect(lpLogPen)); }
+   { return attach(::CreatePenIndirect(lpLogPen)); }
    bool pen::CreatePen(int nPenStyle, int nWidth, const LOGBRUSH* pLogBrush,
       int nStyleCount, const DWORD* lpStyle)
-   { return Attach(::ExtCreatePen(nPenStyle, nWidth, pLogBrush, nStyleCount,
+   { return attach(::ExtCreatePen(nPenStyle, nWidth, pLogBrush, nStyleCount,
    lpStyle)); }
    int pen::GetExtLogPen(EXTLOGPEN* pLogPen)
    { ASSERT(get_handle() != NULL);
@@ -61,7 +61,7 @@ namespace win
    void pen::construct(int nPenStyle, int nWidth, const LOGBRUSH* pLogBrush,
       int nStyleCount, const DWORD* lpStyle)
    {
-      if (!Attach(::ExtCreatePen(nPenStyle, nWidth, pLogBrush, nStyleCount,
+      if (!attach(::ExtCreatePen(nPenStyle, nWidth, pLogBrush, nStyleCount,
          lpStyle)))
          throw resource_exception();
    }*/

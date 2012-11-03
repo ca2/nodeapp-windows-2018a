@@ -39,27 +39,27 @@ namespace win
 
    // bool brush::CreateHatchBrush(int nIndex, COLORREF crColor)
    // { 
-   //    //return Attach(::CreateHatchBrush(nIndex, crColor));
+   //    //return attach(::CreateHatchBrush(nIndex, crColor));
    //    return FALSE;
    // }
 //    bool brush::CreateBrushIndirect(const LOGBRUSH* lpLogBrush)
   //  {
-       //return Attach(::CreateBrushIndirect(lpLogBrush)); 
+       //return attach(::CreateBrushIndirect(lpLogBrush)); 
     //   return FALSE;
     //}
     //bool brush::CreatePatternBrush(::ca::bitmap* pBitmap)
     //{ 
-    //   //return Attach(::CreatePatternBrush((HBITMAP)pBitmap->get_os_data()));
+    //   //return attach(::CreatePatternBrush((HBITMAP)pBitmap->get_os_data()));
     //   return FALSE;
     //}
     //bool brush::CreateDIBPatternBrush(const void * lpPackedDIB, UINT nUsage)
     //{ 
-    //   //return Attach(::CreateDIBPatternBrushPt(lpPackedDIB, nUsage));
+    //   //return attach(::CreateDIBPatternBrushPt(lpPackedDIB, nUsage));
     //   return FALSE;
     //}
     //bool brush::CreateSysColorBrush(int nIndex)
     //{ 
-    //   //return Attach(::GetSysColorBrush(nIndex));
+    //   //return attach(::GetSysColorBrush(nIndex));
     //   return FALSE;
 
     //}
@@ -73,13 +73,13 @@ namespace win
 
 //   void brush::construct(COLORREF crColor)
 //   {
-////      if (!Attach(::create_solid(crColor)))
+////      if (!attach(::create_solid(crColor)))
 //  //       throw resource_exception();
 //   }
 //
 //   void brush::construct(int nIndex, COLORREF crColor)
 //   {
-//    //  if (!Attach(::CreateHatchBrush(nIndex, crColor)))
+//    //  if (!attach(::CreateHatchBrush(nIndex, crColor)))
 //      //   throw resource_exception();
 //   }
 //
@@ -87,7 +87,7 @@ namespace win
 //   {
 //      //ASSERT_VALID(pBitmap);
 //
-//      //if (!Attach(::CreatePatternBrush((HBITMAP)pBitmap->get_os_data())))
+//      //if (!attach(::CreatePatternBrush((HBITMAP)pBitmap->get_os_data())))
 //        // throw resource_exception();
 //   }
 //
@@ -96,7 +96,7 @@ namespace win
 //      //ASSERT(hPackedDIB != NULL);
 //      //const void * lpPackedDIB = ::GlobalLock(hPackedDIB);
 //      //ASSERT(lpPackedDIB != NULL);
-//      //bool bResult = Attach(::CreateDIBPatternBrushPt(lpPackedDIB, nUsage));
+//      //bool bResult = attach(::CreateDIBPatternBrushPt(lpPackedDIB, nUsage));
 //      //::GlobalUnlock(hPackedDIB);
 //      //return bResult;
 //      return FALSE;

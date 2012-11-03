@@ -8,12 +8,12 @@ namespace win
    CLASS_DECL_win LRESULT CALLBACK __send_message_hook(int, WPARAM, LPARAM);
    //CLASS_DECL_win void _gen::StandardSubclass(void *);
    CLASS_DECL_win LRESULT CALLBACK __cbt_filter_hook(int, WPARAM, LPARAM);
-   CLASS_DECL_win LRESULT __call_window_procedure(::user::interaction * pWnd, void * hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
+   CLASS_DECL_win LRESULT __call_window_procedure(::user::interaction * pWnd, void * oswindow, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
 
    class CLASS_DECL_win window : 
       virtual public ::ca::window,
-      virtual public hwnd_handle
+      virtual public oswindow_handle
    {
    public:
 
@@ -27,7 +27,7 @@ namespace win
 
       window();
       window(::ca::application * papp);
-      virtual void construct(void * hwnd);
+      virtual void construct(void * oswindow);
 
       virtual void on_delete(::ca::ca * poc);
 
@@ -51,7 +51,7 @@ namespace win
       //virtual ::user::interaction * GetOwner();
       virtual void SetOwner(::user::interaction * pOwnerWnd);
 
-      virtual void * _get_handle();
+      virtual void * get_handle();
 
       virtual bool _001OnCmdMsg(BaseCmdMsg * pcmdmsg);   
 
@@ -78,15 +78,15 @@ namespace win
       virtual ::ca::window * from_os_data(void * pdata);
       virtual void * get_os_data() const;
 
-      static window * PASCAL from_handle(void * hWnd);
-      static window * PASCAL FromHandlePermanent(void * hWnd);
+      static window * PASCAL from_handle(void * oswindow);
+      static window * PASCAL FromHandlePermanent(void * oswindow);
       static void PASCAL DeleteTempMap();
-      bool Attach(void * hWndNew);
-      void * Detach();
+      bool attach(void * oswindow_New);
+      void * detach();
 
       // subclassing/unsubclassing functions
       virtual void pre_subclass_window();
-      bool SubclassWindow(void * hWnd);
+      bool SubclassWindow(void * oswindow);
       bool SubclassDlgItem(UINT nID, ::ca::window * pParent);
       void * UnsubclassWindow();
 
@@ -106,7 +106,7 @@ namespace win
       virtual bool CreateEx(DWORD dwExStyle, const char * lpszClassName,
          const char * lpszWindowName, DWORD dwStyle,
          int x, int y, int nWidth, int nHeight,
-         void * hWndParent, id id, LPVOID lpParam = NULL);
+         void * oswindow_Parent, id id, LPVOID lpParam = NULL);
 
       virtual bool CreateEx(DWORD dwExStyle, const char * lpszClassName,
          const char * lpszWindowName, DWORD dwStyle,
@@ -126,7 +126,7 @@ namespace win
       
          // get immediate child with given ID
       using ::user::interaction::get_child_by_id;
-      void get_child_by_id(id id, void ** phWnd) const;
+      void get_child_by_id(id id, void ** poswindow_) const;
          // as above, but returns void *
       using ::user::interaction::GetDescendantWindow;
       ::user::interaction * GetDescendantWindow(id id);
@@ -271,7 +271,7 @@ namespace win
 
    // Timer Functions
       virtual uint_ptr SetTimer(uint_ptr nIDEvent, UINT nElapse,
-         void (CALLBACK* lpfnTimer)(oswindow_, UINT, uint_ptr, DWORD));
+         void (CALLBACK* lpfnTimer)(oswindow, UINT, uint_ptr, DWORD));
       virtual bool KillTimer(uint_ptr nIDEvent);
 
    // Window State Functions
@@ -360,7 +360,7 @@ namespace win
       virtual ::ca::window * ChildWindowFromPoint(POINT point);
       virtual ::ca::window * ChildWindowFromPoint(POINT point, UINT nFlags);
       static ::ca::window * PASCAL FindWindow(const char * lpszClassName, const char * lpszWindowName);
-      static ::ca::window * FindWindowEx(void * hwndParent, void * hwndChildAfter, const char * lpszClass, const char * lpszWindow);
+      static ::ca::window * FindWindowEx(void * oswindowParent, void * oswindowChildAfter, const char * lpszClass, const char * lpszWindow);
 
       virtual ::user::interaction * GetNextWindow(UINT nFlag = GW_HWNDNEXT);
       virtual ::user::interaction * GetTopWindow();
@@ -388,7 +388,7 @@ namespace win
    #endif   // WINVER >= 0x0500
 
    // Clipboard Functions
-      virtual bool ChangeClipboardChain(void * hWndNext);
+      virtual bool ChangeClipboardChain(void * oswindow_Next);
       virtual void*  SetClipboardViewer();
       virtual bool OpenClipboard();
       static ::ca::window * PASCAL GetClipboardOwner();
@@ -559,7 +559,7 @@ namespace win
 
    // Clipboard message handler member functions
       void OnAskCbFormatName(__in UINT nMaxCount, __out_ecount_z(nMaxCount) LPTSTR lpszString);
-      void OnChangeCbChain(void * hWndRemove, void * hWndAfter);
+      void OnChangeCbChain(void * oswindow_Remove, void * oswindow_After);
       void OnDestroyClipboard();
       void OnDrawClipboard();
       void OnHScrollClipboard(::ca::window * pClipAppWnd, UINT nSBCode, UINT nPos);
@@ -622,14 +622,14 @@ namespace win
       virtual bool OnChildNotify(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
          // return TRUE if parent should not process this message
       bool ReflectChildNotify(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
-      static bool PASCAL ReflectLastMsg(void * hWndChild, LRESULT* pResult = NULL);
+      static bool PASCAL ReflectLastMsg(void * oswindow_Child, LRESULT* pResult = NULL);
 
    // Implementation
       virtual ~window();
       virtual bool CheckAutoCenter();
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
-      static bool PASCAL GrayCtlColor(HDC hDC, void * hWnd, UINT nCtlColor,
+      static bool PASCAL GrayCtlColor(HDC hDC, void * oswindow, UINT nCtlColor,
          HBRUSH hbrGray, COLORREF clrText);
 
 
@@ -638,15 +638,15 @@ namespace win
       bool IsTopParentActive();
       void ActivateTopParent();
       virtual void WalkPreTranslateTree(::user::interaction * puiStop, gen::signal_object * pobj);
-      static ::user::interaction * PASCAL GetDescendantWindow(::user::interaction * hWnd, id id);
-      static void PASCAL SendMessageToDescendants(void*  hWnd, UINT message, WPARAM wParam, LPARAM lParam, bool bDeep, bool bOnlyPerm);
+      static ::user::interaction * PASCAL GetDescendantWindow(::user::interaction * oswindow, id id);
+      static void PASCAL SendMessageToDescendants(void*  oswindow, UINT message, WPARAM wParam, LPARAM lParam, bool bDeep, bool bOnlyPerm);
       virtual bool IsFrameWnd(); // is_kind_of(System.template type_info < frame_window > ()))
       virtual void on_final_release();
-      static bool PASCAL ModifyStyle(void * hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags);
-      static bool PASCAL ModifyStyleEx(void * hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags);
+      static bool PASCAL ModifyStyle(void * oswindow, DWORD dwRemove, DWORD dwAdd, UINT nFlags);
+      static bool PASCAL ModifyStyleEx(void * oswindow, DWORD dwRemove, DWORD dwAdd, UINT nFlags);
       static void PASCAL _FilterToolTipMessage(MSG* pMsg, ::ca::window * pWnd);
       bool _EnableToolTips(bool bEnable, UINT nFlag);
-      static void * PASCAL GetSafeOwner_(void * hWnd, void ** pWndTop);
+      static void * PASCAL GetSafeOwner_(void * oswindow, void ** pWndTop);
       void PrepareForHelp();
 
       //UINT m_nFlags;      // see WF_ flags above
@@ -669,14 +669,14 @@ namespace win
       CLASS_DECL_win friend LRESULT CALLBACK __send_message_hook(int, WPARAM, LPARAM);
       //CLASS_DECL_win friend void _gen::StandardSubclass(void *);
       CLASS_DECL_win friend LRESULT CALLBACK __cbt_filter_hook(int, WPARAM, LPARAM);
-      CLASS_DECL_win friend LRESULT __call_window_procedure(::user::interaction * pWnd, void * hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
+      CLASS_DECL_win friend LRESULT __call_window_procedure(::user::interaction * pWnd, void * oswindow, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
       // standard message implementation
       LRESULT OnNTCtlColor(WPARAM wParam, LPARAM lParam);
       LRESULT OnDisplayChange(WPARAM, LPARAM);
       LRESULT OnDragList(WPARAM, LPARAM);
 
-      static BOOL CALLBACK GetAppsEnumWindowsProc(oswindow_ hwnd, LPARAM lParam);
+      static BOOL CALLBACK GetAppsEnumWindowsProc(oswindow oswindow, LPARAM lParam);
 
 
       static void get_app_wnda(user::oswindow_array & wnda);

@@ -412,8 +412,8 @@ namespace win
       {
          if(__get_module_state()->m_pmapHWND == NULL)
          {
-            __get_module_state()->m_pmapHWND = new hwnd_map(this);
-            __get_module_state()->m_pmutexHwnd = new mutex(this);
+            __get_module_state()->m_pmapHWND = new oswindow_map(this);
+            __get_module_state()->m_pmutexoswindow_ = new mutex(this);
          }
 /*         if(__get_module_state()->m_pmapHDC == NULL)
          {
@@ -436,7 +436,7 @@ namespace win
    bool application::initialize1()
    {
       WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_ptimera = new ::user::interaction::timer_array(this);
-      WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_puiptra = new user::LPWndArray;
+      WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_puiptra = new user::interaction_ptr_array;
 
       WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_ptimera->m_papp = dynamic_cast < ::plane::application * >  (::ca::smart_pointer < ::ex2::application >::m_p);
       WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_puiptra->m_papp = dynamic_cast < ::plane::application * >  (::ca::smart_pointer < ::ex2::application >::m_p);
@@ -530,18 +530,18 @@ namespace win
 
    ::ca::window * application::window_from_os_data(void * pdata)
    {
-      return ::win::window::from_handle((oswindow_) pdata);
+      return ::win::window::from_handle((oswindow) pdata);
    }
 
    ::ca::window * application::window_from_os_data_permanent(void * pdata)
    {
-      ::ca::window * pwnd = ::win::window::FromHandlePermanent((oswindow_) pdata);
+      ::ca::window * pwnd = ::win::window::FromHandlePermanent((oswindow) pdata);
       if(pwnd != NULL)
          return pwnd;
-      user::LPWndArray wndptra = System.frames();
+      user::interaction_ptr_array wndptra = System.frames();
       for(int i = 0; i < wndptra.get_count(); i++)
       {
-         if(wndptra[i]->get_safe_handle() == (oswindow_) pdata)
+         if(wndptra[i]->get_safe_handle() == (oswindow) pdata)
          {
             return wndptra[i]->get_wnd();
          }
@@ -636,9 +636,9 @@ namespace win
       return window::FindWindow(lpszClassName, lpszWindowName);
    }
 
-   ::ca::window * application::FindWindowEx(oswindow_ hwndParent, oswindow_ hwndChildAfter, const char * lpszClass, const char * lpszWindow)
+   ::ca::window * application::FindWindowEx(oswindow oswindowParent, oswindow oswindowChildAfter, const char * lpszClass, const char * lpszWindow)
    {
-      return window::FindWindowEx(hwndParent, hwndChildAfter, lpszClass, lpszWindow);
+      return window::FindWindowEx(oswindowParent, oswindowChildAfter, lpszClass, lpszWindow);
    }
 
 

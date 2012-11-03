@@ -17,10 +17,10 @@
 //      necessary for the definition of WindowsThread.
 //
 //  Most Windows objects are represented with a HANDLE, including
-//      the most important ones, oswindow_, HDC, HPEN, HFONT etc.
+//      the most important ones, oswindow, HDC, HPEN, HFONT etc.
 //  We want C++ objects to wrap these handle based objects whenever we can.
 //  Since Windows objects can be created outside of C++ (eg: calling
-//      ::CreateWindow will return an oswindow_ with no C++ wrapper) we must
+//      ::CreateWindow will return an oswindow with no C++ wrapper) we must
 //      support a reasonably uniform mapping from permanent handles
 //      (i.e. the ones allocated in C++) and temporary handles (i.e.
 //      the ones allocated in C, but passed through a C++ interface.
@@ -40,7 +40,7 @@
 #pragma once
 
 template <>
-inline UINT HashKey < oswindow_ >(oswindow_ key)
+inline UINT HashKey < oswindow >(oswindow key)
 {
    // default identity hash - works for most primitive values
    return (DWORD)((dword_ptr)key);
@@ -113,7 +113,7 @@ namespace win
       inline H2 set_handle2(H2 h) { return static_cast < H2 > (m_handlea[1] = static_cast < HANDLE > (h)); }
    };
 
-   typedef handle1 < oswindow_ > hwnd_handle;
+   typedef handle1 < oswindow > oswindow_handle;
    typedef handle1 < HMENU > hmenu_handle;
    typedef handle2 < HDC, HDC > hdc_handle;
    typedef handle1 < HGDIOBJ > hgdiobj_handle;
@@ -186,11 +186,11 @@ public:
    friend class ::radix::thread;
 };
 
-class CLASS_DECL_win hwnd_map :
-   public handle_map < ::win::hwnd_handle, ::win::window >
+class CLASS_DECL_win oswindow_map :
+   public handle_map < ::win::oswindow_handle, ::win::window >
 {
 public:
-   hwnd_map(::ca::application * papp) : handle_map < ::win::hwnd_handle, ::win::window >(papp) {}
+   oswindow_map(::ca::application * papp) : handle_map < ::win::oswindow_handle, ::win::window >(papp) {}
 };
 
 /*class CLASS_DECL_win hdc_map :
@@ -445,8 +445,8 @@ inline CT* handle_map <HT, CT>::lookup_temporary(HANDLE h)
 }
 
 
-CLASS_DECL_win hwnd_map * PASCAL afxMapHWND(bool bCreate = FALSE);
-CLASS_DECL_win mutex * PASCAL afxMutexHwnd();
+CLASS_DECL_win oswindow_map * PASCAL get_oswindow_map(bool bCreate = FALSE);
+CLASS_DECL_win mutex * PASCAL afxMutexoswindow_();
 CLASS_DECL_win himagelist_map * PASCAL afxMapHIMAGELIST(bool bCreate = FALSE);
 //CLASS_DECL_win hdc_map * PASCAL afxMapHDC(bool bCreate = FALSE);
 //CLASS_DECL_win hgdiobj_map * PASCAL afxMapHGDIOBJ(bool bCreate = FALSE);

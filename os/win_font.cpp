@@ -49,7 +49,7 @@ namespace win
       m_bStrikeout = lpLogFont->lfStrikeOut != FALSE;
 
       return TRUE;
-      //return Attach(::CreateFontIndirect(lpLogFont)); 
+      //return attach(::CreateFontIndirect(lpLogFont)); 
    }
    bool font::CreateFont(int nHeight, int nWidth, int nEscapement,
       int nOrientation, int nWeight, BYTE bItalic, BYTE bUnderline,
@@ -58,7 +58,7 @@ namespace win
       const char * lpszFacename)
    { 
       return FALSE;
-      //return Attach(::CreateFont(nHeight, nWidth, nEscapement,
+      //return attach(::CreateFont(nHeight, nWidth, nEscapement,
    //nOrientation, nWeight, bItalic, bUnderline, cStrikeOut,
    //nCharSet, nOutPrecision, nClipPrecision, nQuality,
    //nPitchAndFamily, lpszFacename)); 

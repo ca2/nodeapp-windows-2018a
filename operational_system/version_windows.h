@@ -164,7 +164,10 @@
 #endif
 
 #include <windows.h>
-   #include <shlwapi.h>
+
+typedef HWND oswindow;
+
+#include <shlwapi.h>
 
 
 #if core_level > 1
@@ -231,16 +234,16 @@ typedef struct HKEY__ *HKEY;
 #ifdef GetWindowTask
 #undef GetWindowTask
 #ifdef _WIN32
-__INLINE HTASK GetWindowTask(oswindow_ hWnd)
-	{ return (HTASK)(DWORD_PTR)GetWindowThreadProcessId(hWnd, NULL); }
+__INLINE HTASK GetWindowTask(oswindow oswindow)
+	{ return (HTASK)(DWORD_PTR)GetWindowThreadProcessId(oswindow, NULL); }
 #endif
 #endif
 
 // Win32 uses macros with parameters for this, which breaks C++ code.
 #ifdef GetNextWindow
 #undef GetNextWindow
-__INLINE oswindow_ GetNextWindow(oswindow_ hWnd, UINT nDirection)
-	{ return GetWindow(hWnd, nDirection); }
+__INLINE oswindow GetNextWindow(oswindow oswindow, UINT nDirection)
+	{ return GetWindow(oswindow, nDirection); }
 #endif
 #endif
 

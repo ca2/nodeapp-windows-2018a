@@ -20,13 +20,13 @@ namespace win
    }
    bool palette::CreatePalette(LPLOGPALETTE lpLogPalette)
    { 
-      //return Attach(::CreatePalette(lpLogPalette)); 
+      //return attach(::CreatePalette(lpLogPalette)); 
       return FALSE;
    }
    bool palette::CreateHalftonePalette(::ca::graphics * pgraphics)
    {
       //ASSERT(pgraphics != NULL && (dynamic_cast<::win::graphics * >(pgraphics))->get_handle1() != NULL); 
-      //return Attach(::CreateHalftonePalette((dynamic_cast<::win::graphics * >(pgraphics))->get_handle1())); 
+      //return attach(::CreateHalftonePalette((dynamic_cast<::win::graphics * >(pgraphics))->get_handle1())); 
       return FALSE;
 
    }

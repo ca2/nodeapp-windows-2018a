@@ -77,7 +77,7 @@ namespace win
       static ATOM WINAPI _RegisterClass(
          CONST WNDCLASSW *lpWndClass);
 
-      static oswindow_ WINAPI _CreateWindowEx(
+      static oswindow WINAPI _CreateWindowEx(
          DWORD dwExStyle,
          const wchar_t * lpClassName,
          const wchar_t * lpWindowName,
@@ -86,7 +86,7 @@ namespace win
          int y,
          int nWidth,
          int nHeight,
-         oswindow_ hWndParent,
+         oswindow oswindow_Parent,
          HMENU hMenu,
          HINSTANCE hInstance,
          LPVOID lpParam);
@@ -155,7 +155,7 @@ namespace win
       ATOM (WINAPI * m_pfnRegisterClass)(
          CONST WNDCLASSW *lpWndClass);
 
-      oswindow_ (WINAPI * m_pfnCreateWindowEx)(
+      oswindow (WINAPI * m_pfnCreateWindowEx)(
          DWORD dwExStyle,
          const wchar_t * lpClassName,
          const wchar_t * lpWindowName,
@@ -164,7 +164,7 @@ namespace win
          int y,
          int nWidth,
          int nHeight,
-         oswindow_ hWndParent,
+         oswindow oswindow_Parent,
          HMENU hMenu,
          HINSTANCE hInstance,
          LPVOID lpParam);
@@ -240,7 +240,7 @@ namespace win
       static ATOM WINAPI RegisterClass(
          CONST WNDCLASSW *lpWndClass);
 
-      static oswindow_ WINAPI CreateWindowEx(
+      static oswindow WINAPI CreateWindowEx(
          DWORD dwExStyle,
          const wchar_t * lpClassName,
          const wchar_t * lpWindowName,
@@ -249,7 +249,7 @@ namespace win
          int y,
          int nWidth,
          int nHeight,
-         oswindow_ hWndParent,
+         oswindow oswindow_Parent,
          HMENU hMenu,
          HINSTANCE hInstance,
          LPVOID lpParam);
@@ -423,7 +423,7 @@ namespace win
          lpWndClass);
    }
 
-   inline oswindow_ shell::CreateWindowEx(
+   inline oswindow shell::CreateWindowEx(
       DWORD dwExStyle,
       const wchar_t * lpClassName,
       const wchar_t * lpWindowName,
@@ -432,7 +432,7 @@ namespace win
       int y,
       int nWidth,
       int nHeight,
-      oswindow_ hWndParent,
+      oswindow oswindow_Parent,
       HMENU hMenu,
       HINSTANCE hInstance,
       LPVOID lpParam)
@@ -446,7 +446,7 @@ namespace win
          y,
          nWidth,
          nHeight,
-         hWndParent,
+         oswindow_Parent,
          hMenu,
          hInstance,
          lpParam);

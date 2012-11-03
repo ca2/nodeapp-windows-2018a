@@ -199,7 +199,7 @@ namespace win
       virtual void set_thread(::radix::thread * pthread);
 
       virtual ::ca::window * FindWindow(const char * lpszClassName, const char * lpszWindowName);
-      virtual ::ca::window * FindWindowEx(oswindow_ hwndParent, oswindow_ hwndChildAfter, const char * lpszClass, const char * lpszWindow);
+      virtual ::ca::window * FindWindowEx(oswindow oswindowParent, oswindow oswindowChildAfter, const char * lpszClass, const char * lpszWindow);
 
       virtual void get_time(struct timeval *p);
       virtual void set_env_var(const string & var,const string & value);

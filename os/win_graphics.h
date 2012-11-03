@@ -44,8 +44,8 @@ namespace win
 
       //static ::ca::graphics * PASCAL from_handle(HDC hDC);
       //static void PASCAL DeleteTempMap();
-      bool Attach(HDC hdc);   // Attach/Detach affects only the Output DC
-      HDC Detach();
+      bool attach(HDC hdc);   // attach/detach affects only the Output DC
+      HDC detach();
 
       virtual void SetAttribDC(HDC hDC);  // Set the Attribute DC
       virtual void SetOutputDC(HDC hDC);  // Set the Output DC

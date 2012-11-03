@@ -103,7 +103,7 @@ Return Values
 
 bool CLASS_DECL_win
 RunElevated(
-   __in      oswindow_   hwnd, 
+   __in      oswindow   oswindow, 
    __in      const char * pszPath, 
    __in_opt   const char * pszParameters   = NULL, 
    __in_opt   const char * pszDirectory   = NULL,
@@ -115,7 +115,7 @@ to start the elevated process.
 
 Parameters:
 
-hwnd
+oswindow
    [in] Window handle to any message boxes that the system might produce while executing this function.
 
 pszPath
@@ -154,7 +154,7 @@ there is no such attribute at all.
 
 bool CLASS_DECL_win
 RunNonElevated(
-   __in      oswindow_   hwnd, 
+   __in      oswindow   oswindow, 
    __in      const char * pszPath, 
    __in_opt   const char * pszParameters   = NULL, 
    __in_opt   const char * pszDirectory   = NULL,
@@ -167,7 +167,7 @@ it injects itself into the (non-elevated) shell process, and starts a non-elevat
 
 Parameters:
 
-hwnd
+oswindow
    [in] Window handle to any message boxes that the system might produce while executing this function.
 
 pszPath
@@ -203,7 +203,7 @@ as requireAdministrator, it will be started elevated!
 // to be able to specify the verb easily.
 
 bool CLASS_DECL_win
-MyShellExec(   oswindow_ hwnd, 
+MyShellExec(   oswindow oswindow, 
             const char * pszVerb, 
             const char * pszPath, 
             const char * pszParameters   = NULL,

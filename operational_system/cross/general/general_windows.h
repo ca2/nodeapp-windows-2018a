@@ -1,9 +1,9 @@
 #pragma once
 
-/*#define HWND_TOP        ((oswindow_)0)
-#define HWND_BOTTOM     ((oswindow_)1)
-#define HWND_TOPMOST    ((oswindow_)-1)
-#define HWND_NOTOPMOST  ((oswindow_)-2)*/
+/*#define HWND_TOP        ((oswindow)0)
+#define HWND_BOTTOM     ((oswindow)1)
+#define HWND_TOPMOST    ((oswindow)-1)
+#define HWND_NOTOPMOST  ((oswindow)-2)*/
 
 
 #define ZORDER_TOP (0)

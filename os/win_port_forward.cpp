@@ -44,11 +44,11 @@ namespace win
 	   m_pEditMappingThread = NULL;
 	   m_pDeleteMappingThread = NULL;
 	
-	   m_hWndForPortMappingThread = NULL;
-	   m_hWndForDeviceInfoThread = NULL;
-	   m_hWndForAddMappingThread = NULL;
-	   m_hWndForEditMappingThread = NULL;
-	   m_hWndForDeleteMappingThread = NULL;
+	   m_oswindow_ForPortMappingThread = NULL;
+	   m_oswindow_ForDeviceInfoThread = NULL;
+	   m_oswindow_ForAddMappingThread = NULL;
+	   m_oswindow_ForEditMappingThread = NULL;
+	   m_oswindow_ForDeleteMappingThread = NULL;
 	
 	   m_bListeningForUpnpChanges = FALSE;
    }
@@ -267,11 +267,11 @@ namespace win
    // Port Forward Engine creates when running COM requests for device information or for
    // retreival/change of port mappings.
    //
-   // There are five functions that create threads, and each function takes a oswindow_ as a 
-   // parameter.  During execution of the thread, each thread will post messages to this oswindow_,
+   // There are five functions that create threads, and each function takes a oswindow as a 
+   // parameter.  During execution of the thread, each thread will post messages to this oswindow,
    // so as to notify the HWMND of the thread's progress through the needed COM tasks.  The 
    // message is always the same: a UINT named UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION.
-   // Encodings of the WPARAM and LPARAM within the message will enable the oswindow_ to determine
+   // Encodings of the WPARAM and LPARAM within the message will enable the oswindow to determine
    // what's going on inside the thread.  The five functions are:
    //
    //   GetMappingsUsingThread()
@@ -308,7 +308,7 @@ namespace win
    //
    // To use this function, your program must be able to receive (and process)
    // a registered window message posted from the thread when the thread is finished.
-   // Thus, you must pass in a oswindow_ of one of your windows that will receive the message.  Typically,
+   // Thus, you must pass in a oswindow of one of your windows that will receive the message.  Typically,
    // you would choose your CMainFrame window (use the ::__get_main_window() function).  However, you might
    // choose a different window, such as your CView-derived window for SDI applications
    //
@@ -340,15 +340,15 @@ namespace win
    //        GetPortMappingVector() function to get a copy of the current contents of
    //        std::vector< port_forward::port_map > m_MappingContainer
 
-   bool port_forward::GetMappingsUsingThread( oswindow_ hWnd )
+   bool port_forward::GetMappingsUsingThread( oswindow oswindow )
    {
 
 	   // returns TRUE if thread was started successfully
 	
-	   if ( (m_pPortMappingThread!=NULL) || (hWnd==NULL) || (!IsWindow(hWnd)) )
+	   if ( (m_pPortMappingThread!=NULL) || (oswindow==NULL) || (!IsWindow(oswindow)) )
 		   return FALSE;
 	
-	   m_hWndForPortMappingThread = hWnd;
+	   m_oswindow_ForPortMappingThread = oswindow;
 	
 	   m_pPortMappingThread = ::__begin_thread(get_app(), ThreadForPortRetrieval, this, ::ca::thread_priority_below_normal, 0, CREATE_SUSPENDED );
 	
@@ -380,17 +380,17 @@ namespace win
    //      LPARAM signifies if the thread was or was not successful (S_OK or E_FAIL). 
 
 
-   bool port_forward::EditMappingUsingThread( port_forward::port_map& oldMapping, port_forward::port_map& newMapping, oswindow_ hWnd )
+   bool port_forward::EditMappingUsingThread( port_forward::port_map& oldMapping, port_forward::port_map& newMapping, oswindow oswindow )
    {
 	   // returns TRUE if thread was started successfully
 	
-	   if ( (m_pEditMappingThread!=NULL) || (hWnd==NULL) || (!IsWindow(hWnd)) )
+	   if ( (m_pEditMappingThread!=NULL) || (oswindow==NULL) || (!IsWindow(oswindow)) )
 		   return FALSE;
 	
 	   m_scratchpadOldMapping = oldMapping;
 	   m_scratchpadNewMapping = newMapping;	
 	
-	   m_hWndForEditMappingThread = hWnd;
+	   m_oswindow_ForEditMappingThread = oswindow;
 	
 	   m_pEditMappingThread = ::__begin_thread(get_app(), ThreadToEditMapping, this, ::ca::thread_priority_below_normal, 0, CREATE_SUSPENDED );
 	
@@ -422,16 +422,16 @@ namespace win
    //  WPARAM == port_forward::EnumAddMappingDone when the thread is finished, where
    //      LPARAM signifies if the thread was or was not successful (S_OK or E_FAIL). 
 
-   bool port_forward::AddMappingUsingThread( port_forward::port_map& newMapping, oswindow_ hWnd )
+   bool port_forward::AddMappingUsingThread( port_forward::port_map& newMapping, oswindow oswindow )
    {
 	   // returns TRUE if thread was started successfully
 	
-	   if ( (m_pAddMappingThread!=NULL) || (hWnd==NULL) || (!IsWindow(hWnd)) )
+	   if ( (m_pAddMappingThread!=NULL) || (oswindow==NULL) || (!IsWindow(oswindow)) )
 		   return FALSE;
 	
 	   m_scratchpadAddedMapping = newMapping;	
 	
-	   m_hWndForAddMappingThread = hWnd;
+	   m_oswindow_ForAddMappingThread = oswindow;
 	
 	   m_pAddMappingThread = ::__begin_thread(get_app(), ThreadToAddMapping, this, ::ca::thread_priority_below_normal, 0, CREATE_SUSPENDED);
 	
@@ -463,16 +463,16 @@ namespace win
    //  WPARAM == port_forward::EnumDeleteMappingDone when the thread is finished, where
    //      LPARAM signifies if the thread was or was not successful (S_OK or E_FAIL). 
 
-   bool port_forward::DeleteMappingUsingThread( port_forward::port_map& oldMapping, oswindow_ hWnd )
+   bool port_forward::DeleteMappingUsingThread( port_forward::port_map& oldMapping, oswindow oswindow )
    {
 	   // returns TRUE if thread was started successfully
 	
-	   if ( (m_pDeleteMappingThread!=NULL) || (hWnd==NULL) || (!IsWindow(hWnd)) )
+	   if ( (m_pDeleteMappingThread!=NULL) || (oswindow==NULL) || (!IsWindow(oswindow)) )
 		   return FALSE;
 	
 	   m_scratchpadDeletedMapping = oldMapping;
 	
-	   m_hWndForDeleteMappingThread = hWnd;
+	   m_oswindow_ForDeleteMappingThread = oswindow;
 	
 	   m_pDeleteMappingThread = ::__begin_thread(get_app(), ThreadToDeleteMapping, this, ::ca::thread_priority_below_normal, 0, CREATE_SUSPENDED );
 	
@@ -505,14 +505,14 @@ namespace win
    //      GetDeviceInformationContainer() function to retrieve a copy of the current contents of 
    //      port_forward::DeviceInformationContainer m_DeviceInfo
 
-   bool port_forward::GetDeviceInformationUsingThread( oswindow_ hWnd )
+   bool port_forward::GetDeviceInformationUsingThread( oswindow oswindow )
    {	
 	   // returns TRUE if thread was started successfully
 	
-	   if ( (m_pDeviceInfoThread!=NULL) || (hWnd==NULL) || (!IsWindow(hWnd)) )
+	   if ( (m_pDeviceInfoThread!=NULL) || (oswindow==NULL) || (!IsWindow(oswindow)) )
 		   return FALSE;
 	
-	   m_hWndForDeviceInfoThread = hWnd;
+	   m_oswindow_ForDeviceInfoThread = oswindow;
 	
 	   m_pDeviceInfoThread = ::__begin_thread(get_app(), ThreadForDeviceInformationRetrieval, this,  ::ca::thread_priority_below_normal, 0, CREATE_SUSPENDED );
 	
@@ -542,12 +542,12 @@ namespace win
 	
 	   // local copies of shared variables
 	
-	   oswindow_ hWndForPosting = pThis->m_hWndForPortMappingThread;
+	   oswindow oswindow_ForPosting = pThis->m_oswindow_ForPortMappingThread;
 
 	   WPARAM wp = EnumPortRetrieveInterval;
 	   LPARAM lp = 0;
 	
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	
 	   // initialize COM
 	
@@ -573,7 +573,7 @@ namespace win
 	
 	
 	   lp = 1;
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	
 	   // Get mapping enumerator and reset the list of mappings
 	
@@ -590,7 +590,7 @@ namespace win
 		   bContinue = FALSE;
 	
 	   lp = 2;
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	
 	
 	   // get count of static mappings
@@ -603,7 +603,7 @@ namespace win
 	   if ( cMappings <= 0 ) cMappings = 4;  // arbitrary non-zero value, so we can divide by non-zero value
 	
 	   lp = 3;
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	
 	
 	   HRESULT result = S_OK;
@@ -628,7 +628,7 @@ namespace win
 		   }
 		
 		   lp = 3 + (10-3)*(++iii)/cMappings;
-		   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+		   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	   }
 	
 	   // release COM objects and de-initialize COM
@@ -658,10 +658,10 @@ namespace win
 	
 	   lp = (bContinue ? S_OK : E_FAIL);
 	   wp = EnumPortRetrieveDone;
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	
 	   pThis->m_pPortMappingThread = NULL;
-	   pThis->m_hWndForPortMappingThread = NULL;
+	   pThis->m_oswindow_ForPortMappingThread = NULL;
 	
 	
 	   return 0;
@@ -679,12 +679,12 @@ namespace win
 
 	   // local copies of shared variables
 
-	   oswindow_ hWndForPosting = pThis->m_hWndForDeviceInfoThread;
+	   oswindow oswindow_ForPosting = pThis->m_oswindow_ForDeviceInfoThread;
 
 	   WPARAM wp = EnumDeviceInfoInterval;
 	   LPARAM lp = 0;	
 	
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	
 	
 	   // initialize COM
@@ -701,7 +701,7 @@ namespace win
 		   bContinue = FALSE;
 	
 	   lp = 1;	
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	
 	
 	   // get devices of the desired type, using the PnP schema
@@ -718,7 +718,7 @@ namespace win
 	
 	
 	   lp = 5;	
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	
 	
 	   // now traverse the collection of piFoundDevices
@@ -757,12 +757,12 @@ namespace win
 					   // finally, post interval notification message and get all the needed information
 					
 					   lp = 6;
-					   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+					   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 
 	               // allocate and fill local devInfo into class member
                   ::EnterCriticalSection( &(pThis->m_cs) );
                   device * pdevice = pThis->m_DeviceInfo.add_new();
-   			      result = pThis->PopulateDeviceInfoContainer( pDevice, *pdevice, hWndForPosting );
+   			      result = pThis->PopulateDeviceInfoContainer( pDevice, *pdevice, oswindow_ForPosting );
             	   ::LeaveCriticalSection( &(pThis->m_cs) );
 					
                    }
@@ -793,10 +793,10 @@ namespace win
 	   lp = (bContinue ? S_OK : E_FAIL);
 	   wp = EnumDeviceInfoDone;
 	
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	
 	   pThis->m_pDeviceInfoThread = NULL;
-	   pThis->m_hWndForDeviceInfoThread = NULL;
+	   pThis->m_oswindow_ForDeviceInfoThread = NULL;
 	
 	   return 0;
    }
@@ -815,12 +815,12 @@ namespace win
 	
 	   port_map oldMapping = pThis->m_scratchpadOldMapping;
 	   port_map newMapping = pThis->m_scratchpadNewMapping;
-	   oswindow_ hWndForPosting = pThis->m_hWndForEditMappingThread;
+	   oswindow oswindow_ForPosting = pThis->m_oswindow_ForEditMappingThread;
 	
 	   WPARAM wp = EnumEditMappingInterval;
 	   LPARAM lp = 0;
 	
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	
 	   // initialize COM
 	
@@ -843,7 +843,7 @@ namespace win
 	
 	
 	   lp = 1;
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	
 	
 	   // get the target old mapping from the collection of mappings
@@ -857,7 +857,7 @@ namespace win
 	
 	
 	   lp = 2;
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	
 	
 	   // update the mapping
@@ -869,19 +869,19 @@ namespace win
 		
 		   hr |= piStaticPortMapping->Enable( vb );
 		   lp = 4;
-		   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+		   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 		
          hr |= piStaticPortMapping->EditDescription( newMapping.Description.AllocSysString() );
 		   lp = 6;
-		   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+		   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 		
 		   hr |= piStaticPortMapping->EditInternalPort( _ttol(newMapping.InternalPort) );
 		   lp = 8;
-		   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+		   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 		
          hr |= piStaticPortMapping->EditInternalClient( newMapping.InternalClient.AllocSysString() );
 		   lp = 10;
-		   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+		   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 		
 		   if ( !SUCCEEDED(hr) )
 			   bContinue = FALSE;
@@ -916,10 +916,10 @@ namespace win
 	
 	   lp = (bContinue ? S_OK : E_FAIL);
 	   wp = EnumEditMappingDone;
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	
 	   pThis->m_pEditMappingThread = NULL;
-	   pThis->m_hWndForEditMappingThread = NULL;
+	   pThis->m_oswindow_ForEditMappingThread = NULL;
 	
 	   return 0;
    }
@@ -936,12 +936,12 @@ namespace win
 	   // local copies of shared variables
 
 	   port_map oldMapping = pThis->m_scratchpadDeletedMapping;
-	   oswindow_ hWndForPosting = pThis->m_hWndForDeleteMappingThread;
+	   oswindow oswindow_ForPosting = pThis->m_oswindow_ForDeleteMappingThread;
 		
 	   WPARAM wp = EnumDeleteMappingInterval;
 	   LPARAM lp = 0;
 	
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	
 	   // initialize COM
 	
@@ -964,7 +964,7 @@ namespace win
 	
 	
 	   lp = 1;
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	
 	
 	   // get the target old mapping from the collection of mappings
@@ -975,7 +975,7 @@ namespace win
 	
 	   oldMapping.Protocol.ReleaseBuffer();
 	   lp = 2;
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	
 	
 	
@@ -1001,10 +1001,10 @@ namespace win
 	
 	   lp = (bContinue ? S_OK : E_FAIL);
 	   wp = EnumDeleteMappingDone;
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	
 	   pThis->m_pDeleteMappingThread = NULL;
-	   pThis->m_hWndForDeleteMappingThread = NULL;
+	   pThis->m_oswindow_ForDeleteMappingThread = NULL;
 	
 	   return 0;
    }
@@ -1024,7 +1024,7 @@ namespace win
 	   WPARAM wp = EnumAddMappingInterval;
 	   LPARAM lp = 0;
 	
-	   ::PostMessage( pThis->m_hWndForAddMappingThread, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( pThis->m_oswindow_ForAddMappingThread, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	
 	   // initialize COM
 	
@@ -1047,7 +1047,7 @@ namespace win
 	
 	
 	   lp = 1;
-	   ::PostMessage( pThis->m_hWndForAddMappingThread, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( pThis->m_oswindow_ForAddMappingThread, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	
 	
 	   // add the new mapping
@@ -1074,7 +1074,7 @@ namespace win
 	   newMapping.Description.ReleaseBuffer();
 	
 	   lp = 2;
-	   ::PostMessage( pThis->m_hWndForAddMappingThread, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( pThis->m_oswindow_ForAddMappingThread, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	
 	
 	
@@ -1106,10 +1106,10 @@ namespace win
 	
 	   lp = (bContinue ? S_OK : E_FAIL);
 	   wp = EnumAddMappingDone;
-	   ::PostMessage( pThis->m_hWndForAddMappingThread, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( pThis->m_oswindow_ForAddMappingThread, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	
 	   pThis->m_pAddMappingThread = NULL;
-	   pThis->m_hWndForAddMappingThread = NULL;
+	   pThis->m_oswindow_ForAddMappingThread = NULL;
 	
 	   return 0;
    }
@@ -1275,7 +1275,7 @@ namespace win
 
 
    HRESULT port_forward::PopulateDeviceInfoContainer( IUPnPDevice* piDevice, 
-				   port_forward::device & deviceInfo, oswindow_ hWnd /* =NULL */ )
+				   port_forward::device & deviceInfo, oswindow oswindow /* =NULL */ )
    {
 	
 	   HRESULT result=S_OK, hrReturn=S_OK;
@@ -1317,8 +1317,8 @@ namespace win
 		   lValue = 0;
 	   }
 	
-	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+	   if ( oswindow!=NULL )
+		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
 	   // Get Description
@@ -1332,9 +1332,9 @@ namespace win
 		   bStr = NULL;
 	   }
 	
-	   if ( hWnd!=NULL )
+	   if ( oswindow!=NULL )
       {
-		   bool b = ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) ) != FALSE;
+		   bool b = ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) ) != FALSE;
          if(!b)
          {
             DWORD dw = ::GetLastError();
@@ -1354,8 +1354,8 @@ namespace win
 		   bStr = NULL;
 	   }
 	
-	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+	   if ( oswindow!=NULL )
+		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
 	   // Get HasChildren
@@ -1368,8 +1368,8 @@ namespace win
 		   bValue = VARIANT_FALSE;
 	   }
 	
-	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+	   if ( oswindow!=NULL )
+		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
 	   // Get IconURL
@@ -1389,8 +1389,8 @@ namespace win
 	   SysFreeString(bStrMime);
 	   bStrMime = NULL;
 	
-	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+	   if ( oswindow!=NULL )
+		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
 	   // Get IsRootDevice
@@ -1403,8 +1403,8 @@ namespace win
 		   bValue = VARIANT_FALSE;
 	   }
 	
-	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+	   if ( oswindow!=NULL )
+		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
 	   // Get ManufacturerName
@@ -1418,8 +1418,8 @@ namespace win
 		   bStr = NULL;
 	   }
 	
-	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+	   if ( oswindow!=NULL )
+		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
 	   // Get ManufacturerURL
@@ -1433,8 +1433,8 @@ namespace win
 		   bStr = NULL;
 	   }
 	
-	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+	   if ( oswindow!=NULL )
+		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
 	   // Get ModelName
@@ -1448,8 +1448,8 @@ namespace win
 		   bStr = NULL;
 	   }
 	
-	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+	   if ( oswindow!=NULL )
+		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
 	   // Get ModelNumber
@@ -1463,8 +1463,8 @@ namespace win
 		   bStr = NULL;
 	   }
 	
-	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+	   if ( oswindow!=NULL )
+		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
 	   // Get ModelURL
@@ -1478,8 +1478,8 @@ namespace win
 		   bStr = NULL;
 	   }
 	
-	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+	   if ( oswindow!=NULL )
+		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
 	   // Get ParentDevice.  Actually, we will only get the FriendlyName of the parent device,
@@ -1508,8 +1508,8 @@ namespace win
 		   }
 	   }
 	
-	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+	   if ( oswindow!=NULL )
+		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
 	   // Get PresentationURL
@@ -1523,8 +1523,8 @@ namespace win
 		   bStr = NULL;
 	   }
 	
-	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+	   if ( oswindow!=NULL )
+		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
 	   // Get RootDevice.  Actually, we will only get the FriendlyName of the root device,
@@ -1551,8 +1551,8 @@ namespace win
 		   }
 	   }
 	
-	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+	   if ( oswindow!=NULL )
+		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
 	
@@ -1567,8 +1567,8 @@ namespace win
 		   bStr = NULL;
 	   }
 	
-	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+	   if ( oswindow!=NULL )
+		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
 	   // Get Services.  Actually, we will NOT enumerate through all the services that are contained
@@ -1598,8 +1598,8 @@ namespace win
 		   lValue = 0;
 	   }
 	
-	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+	   if ( oswindow!=NULL )
+		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
 	   // Get Type
@@ -1613,8 +1613,8 @@ namespace win
 		   bStr = NULL;
 	   }
 	
-	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+	   if ( oswindow!=NULL )
+		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
 	   // Get UniqueDeviceName
@@ -1628,8 +1628,8 @@ namespace win
 		   bStr = NULL;
 	   }
 	
-	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+	   if ( oswindow!=NULL )
+		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
 	   // Get UPC
@@ -1643,8 +1643,8 @@ namespace win
 		   bStr = NULL;
 	   }
 	
-	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+	   if ( oswindow!=NULL )
+		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	   return hrReturn;
    }

@@ -209,10 +209,10 @@ namespace win
       try
       {
          ::ca::bitmap_sp bitmap(get_app());
-         bitmap->Attach(hbitmap);
+         bitmap->attach(hbitmap);
          //HDC hdc = ::CreateCompatibleDC(NULL);
          //::ca::graphics_sp g(get_app());
-         //g->Attach(hdc);
+         //g->attach(hdc);
          //::ca::graphics * pgraphics = Application.graphics_from_os_data(hdc);
          //g->SelectObject(hbitmap);
        //  BITMAP bm;

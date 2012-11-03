@@ -49,7 +49,7 @@ EXTERN_PROCESS_LOCAL(___WIN_STATE, gen_WinState)
 // __MODULE_STATE : portion of state that is pushed/popped
 // forward references required for __MODULE_THREAD_STATE definition
 //class CHandleMap;
-class hwnd_map;
+class oswindow_map;
 class hmenu_map;
 //class hdc_map;
 //class hgdiobj_map;
@@ -139,8 +139,8 @@ public:
 
    mutex       m_mutexRegClassList;
 
-   hwnd_map       * m_pmapHWND;
-   mutex             * m_pmutexHwnd;
+   oswindow_map       * m_pmapHWND;
+   mutex             * m_pmutexoswindow_;
 //   hdc_map        * m_pmapHDC;
 //   hgdiobj_map    * m_pmapHGDIOBJ;
    hmenu_map      * m_pmapHMENU;
@@ -250,7 +250,7 @@ public:
    ::ca::window * m_pAlternateWndInit;      // special case commdlg hooking
    DWORD m_dwPropStyle;
    DWORD m_dwPropExStyle;
-   oswindow_ m_hWndInit;
+   oswindow m_oswindow_Init;
    HHOOK m_hHookOldCbtFilter;
    HHOOK m_hHookOldMsgFilter;
 
@@ -265,10 +265,10 @@ public:
 
    // other ::ca::window modal data
    MSG m_lastSentMsg;              // see ::ca::window::message_handler
-   oswindow_ m_hTrackingWindow;         // see ::ca::window::TrackPopupMenu
+   oswindow m_hTrackingWindow;         // see ::ca::window::TrackPopupMenu
    HMENU m_hTrackingMenu;
    char m_szTempClassName[___TEMP_CLASS_NAME_SIZE];    // see System.RegisterWndClass
-   oswindow_ m_hLockoutNotifyWindow;    // see ::ca::window::OnCommand
+   oswindow m_hLockoutNotifyWindow;    // see ::ca::window::OnCommand
    bool m_bInMsgFilter;
 
    // other framework modal data

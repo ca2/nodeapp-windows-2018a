@@ -8,14 +8,14 @@ namespace win
    void PASCAL window::DeleteTempMap()
    {
       
-      hwnd_map* pMap = __get_module_state()->m_pmapHWND;
+      oswindow_map* pMap = __get_module_state()->m_pmapHWND;
 
       if(::ca::is_null(pMap))
          return;
 
       single_lock sl(&pMap->m_mutex, TRUE);
 
-      raw_array < oswindow_ > hwndaRemove;
+      raw_array < oswindow > oswindowaRemove;
       raw_array < ::win::window * > wndptraRemove;
 
       POSITION pos = pMap->m_temporaryMap.get_start_position();
@@ -25,9 +25,9 @@ namespace win
          ::win::window * pTemp;
          pMap->m_temporaryMap.get_next_assoc(pos, h, pTemp);
 
-         if(!::IsWindow((oswindow_) h))
+         if(!::IsWindow((oswindow) h))
          {
-            hwndaRemove.add((oswindow_) h);
+            oswindowaRemove.add((oswindow) h);
             wndptraRemove.add(pTemp);
          }
 
@@ -41,9 +41,9 @@ namespace win
          (*pMap->m_pfnDestructObject)(wndptraRemove[i]);   // destruct the object
       }
 
-      for(int i = 0; i < hwndaRemove.get_count(); i++)
+      for(int i = 0; i < oswindowaRemove.get_count(); i++)
       {
-         pMap->m_temporaryMap.remove_key(hwndaRemove[i]);
+         pMap->m_temporaryMap.remove_key(oswindowaRemove[i]);
       }
 
    }

@@ -76,7 +76,7 @@ namespace win
       return pObject;
    }
 
-   bool graphics_object::Attach(HGDIOBJ hObject)
+   bool graphics_object::attach(HGDIOBJ hObject)
    {
       if (hObject == NULL)
       {
@@ -94,7 +94,7 @@ namespace win
       return TRUE;
    }
 
-   HGDIOBJ graphics_object::Detach()
+   HGDIOBJ graphics_object::detach()
    {
       HGDIOBJ hObject = get_os_data();
       if (hObject != NULL)
@@ -112,7 +112,7 @@ namespace win
    {
       //if (get_os_data() == NULL)
         // return FALSE;
-      //return ::DeleteObject(Detach());
+      //return ::DeleteObject(detach());
       return FALSE;
    }
 
@@ -138,7 +138,7 @@ namespace win
 
    /*void * graphics_object::detach_os_data()
    {
-      return Detach();
+      return detach();
    }*/
 
    /*void * graphics_object::get_os_data() const

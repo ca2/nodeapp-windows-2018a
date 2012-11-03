@@ -22,15 +22,15 @@ extern CLASS_DECL_win const char gen_WndOleControl[];
 /////////////////////////////////////////////////////////////////////////////
 // Special helpers
 
-CLASS_DECL_win void __cancel_modes(oswindow_ hWndRcvr);
+CLASS_DECL_win void __cancel_modes(oswindow oswindow_Rcvr);
 CLASS_DECL_win bool __help_enabled();  // determine if ID_HELP handler exists
 CLASS_DECL_win bool __custom_log_font(UINT nIDS, LOGFONT* pLogFont);
 CLASS_DECL_win bool __get_prop_sheet_font(string & strFace, WORD& wSize, bool bWizard);
 
-CLASS_DECL_win bool __is_combo_box_control(oswindow_ hWnd, UINT nStyle);
+CLASS_DECL_win bool __is_combo_box_control(oswindow oswindow, UINT nStyle);
 CLASS_DECL_win bool __check_center_dialog(const char * lpszResource);
-CLASS_DECL_win bool __compare_class_name(oswindow_ hWnd, const char * lpszClassName);
-CLASS_DECL_win oswindow_ __child_window_from_point(oswindow_, POINT);
+CLASS_DECL_win bool __compare_class_name(oswindow oswindow, const char * lpszClassName);
+CLASS_DECL_win oswindow __child_window_from_point(oswindow, POINT);
 
 // for determining version of COMCTL32.DLL
 #define VERSION_WIN4    MAKELONG(0, 4)

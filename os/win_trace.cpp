@@ -326,24 +326,24 @@ void __trace_message(const char * lpszPrefix, gen::signal_object * pobj)
    if (lpszMsgName != NULL)
    {
 #ifdef _WIN64
-      //TRACE(::radix::trace::category_WinMsg, 4, "%s: hwnd=%p, msg = %s (%p, %p)\n",
-        // lpszPrefix, pbase->m_hwnd, lpszMsgName,
+      //TRACE(::radix::trace::category_WinMsg, 4, "%s: oswindow=%p, msg = %s (%p, %p)\n",
+        // lpszPrefix, pbase->m_oswindow, lpszMsgName,
          //pbase->m_wparam, pbase->m_lparam);
 #else
-    //  ::OutputDebugString(::radix::trace::category_WinMsg, 4, "%s: hwnd=0x%08X, msg = %s (0x%08X, 0x%08X)\n",
-//         lpszPrefix, pbase->m_hwnd, lpszMsgName,
+    //  ::OutputDebugString(::radix::trace::category_WinMsg, 4, "%s: oswindow=0x%08X, msg = %s (0x%08X, 0x%08X)\n",
+//         lpszPrefix, pbase->m_oswindow, lpszMsgName,
   //       pbase->m_wparam, pbase->m_lparam);
 #endif
    }
    else
    {
 #ifdef _WIN64
-//      ::OutputDebugString(::radix::trace::category_WinMsg, 4, "%s: hwnd=%p, msg = 0x%04X (%p, %p)\n",
-  //       lpszPrefix, pbase->m_hwnd, lpszMsgName,
+//      ::OutputDebugString(::radix::trace::category_WinMsg, 4, "%s: oswindow=%p, msg = 0x%04X (%p, %p)\n",
+  //       lpszPrefix, pbase->m_oswindow, lpszMsgName,
     //     pbase->m_wparam, pbase->m_lparam);
 #else
-//      ::OutputDebugString(::radix::trace::category_WinMsg, 4, "%s: hwnd=0x%08X, msg = 0x%04X (0x%08X, 0x%08X)\n",
-  //       lpszPrefix, pbase->m_hwnd, lpszMsgName,
+//      ::OutputDebugString(::radix::trace::category_WinMsg, 4, "%s: oswindow=0x%08X, msg = 0x%04X (0x%08X, 0x%08X)\n",
+  //       lpszPrefix, pbase->m_oswindow, lpszMsgName,
     //     pbase->m_wparam, pbase->m_lparam);
 #endif
    }
@@ -408,24 +408,24 @@ void __trace_message(const char * lpszPrefix, LPMSG lpmsg)
    if (lpszMsgName != NULL)
    {
 #ifdef WIN64
-//      TRACE(::radix::trace::category_WinMsg, 4, "%s: hwnd=%p, msg = %hs (%p, %p)\n",
-  //       lpszPrefix, pMsg->hwnd, lpszMsgName,
+//      TRACE(::radix::trace::category_WinMsg, 4, "%s: oswindow=%p, msg = %hs (%p, %p)\n",
+  //       lpszPrefix, pMsg->oswindow, lpszMsgName,
     //     pMsg->wParam, pMsg->lParam);
 #else
-//      ::OutputDebugString(::radix::trace::category_WinMsg, 4, "%s: hwnd=0x%08X, msg = %hs (0x%08X, 0x%08X)\n",
-  //       lpszPrefix, lpmsg->hwnd, lpszMsgName,
+//      ::OutputDebugString(::radix::trace::category_WinMsg, 4, "%s: oswindow=0x%08X, msg = %hs (0x%08X, 0x%08X)\n",
+  //       lpszPrefix, lpmsg->oswindow, lpszMsgName,
     //     lpmsg->wParam, lpmsg->lParam);
 #endif
    }
    else
    {
 #ifdef WIN64
-      //::OutputDebugString(::radix::trace::category_WinMsg, 4, "%s: hwnd=%p, msg = 0x%04X (%p, %p)\n",
-        // lpszPrefix, pMsg->hwnd, lpszMsgName,
+      //::OutputDebugString(::radix::trace::category_WinMsg, 4, "%s: oswindow=%p, msg = 0x%04X (%p, %p)\n",
+        // lpszPrefix, pMsg->oswindow, lpszMsgName,
          //pMsg->wParam, pMsg->lParam);
 #else
-      //::OutputDebugString(::radix::trace::category_WinMsg, 4, "%s: hwnd=0x%08X, msg = 0x%04X (0x%08X, 0x%08X)\n",
-        // lpszPrefix, lpmsg->hwnd, lpszMsgName,
+      //::OutputDebugString(::radix::trace::category_WinMsg, 4, "%s: oswindow=0x%08X, msg = 0x%04X (0x%08X, 0x%08X)\n",
+        // lpszPrefix, lpmsg->oswindow, lpszMsgName,
          //lpmsg->wParam, lpmsg->lParam);
 #endif
    }

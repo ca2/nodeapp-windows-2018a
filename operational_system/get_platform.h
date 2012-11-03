@@ -1,7 +1,7 @@
 #pragma once
 
 
-#define oswindow_ HWND
+
 
 #ifdef _DEBUG
 #define DEBUG

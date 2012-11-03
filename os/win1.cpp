@@ -13,9 +13,9 @@ namespace win
       return ::LoadLibraryW(gen::international::utf8_to_unicode(lpsz));
    }
 
-   bool CLASS_DECL_win SHGetSpecialFolderPath(oswindow_ hwnd, string &str, int csidl, bool fCreate)
+   bool CLASS_DECL_win SHGetSpecialFolderPath(oswindow oswindow, string &str, int csidl, bool fCreate)
    {
-      return ::SHGetSpecialFolderPathW(hwnd, wstringtou(str, MAX_PATH * 8), csidl, fCreate) != FALSE;
+      return ::SHGetSpecialFolderPathW(oswindow, wstringtou(str, MAX_PATH * 8), csidl, fCreate) != FALSE;
    }
 
    DWORD GetFileAttributes(const char * lpFileName)

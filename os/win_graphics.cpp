@@ -58,7 +58,7 @@ namespace win
    graphics::~graphics()
    {
       
-      HDC hdc = Detach();
+      HDC hdc = detach();
       
       if(hdc != NULL)
       {
@@ -103,12 +103,12 @@ namespace win
    bool graphics::CreateDC(const char * lpszDriverName,
       const char * lpszDeviceName, const char * lpszOutput, const void * lpInitData)
    {
-      return Attach(::CreateDC(lpszDriverName, lpszDeviceName, lpszOutput, (const DEVMODE*)lpInitData)); 
+      return attach(::CreateDC(lpszDriverName, lpszDeviceName, lpszOutput, (const DEVMODE*)lpInitData)); 
    }
    
    bool graphics::CreateIC(const char * lpszDriverName, const char * lpszDeviceName, const char * lpszOutput, const void * lpInitData)
    { 
-      return Attach(::CreateIC(lpszDriverName, lpszDeviceName, lpszOutput, (const DEVMODE*) lpInitData)); 
+      return attach(::CreateIC(lpszDriverName, lpszDeviceName, lpszOutput, (const DEVMODE*) lpInitData)); 
    }
 
    bool graphics::CreateCompatibleDC(::ca::graphics * pgraphics)
@@ -125,7 +125,7 @@ namespace win
          hdc = ::CreateCompatibleDC((HDC)(dynamic_cast<::win::graphics * >(pgraphics))->get_handle1()); 
       }
 
-      if(!Attach(hdc))
+      if(!attach(hdc))
       {
          ::DeleteDC(hdc);
          return FALSE;
@@ -2148,7 +2148,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
      // return NULL;
    //}
 
-   bool graphics::Attach(HDC hdc)
+   bool graphics::attach(HDC hdc)
    {
 
       if(hdc == NULL)
@@ -2192,7 +2192,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return TRUE;*/
    }
 
-   HDC graphics::Detach()
+   HDC graphics::detach()
    {
 
       if(m_hdc == NULL)
@@ -2217,7 +2217,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if(get_handle() == NULL)
          return FALSE;
 
-      return ::DeleteDC(Detach()) != FALSE;
+      return ::DeleteDC(detach()) != FALSE;
    }
 
 
@@ -3614,14 +3614,14 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    void CClientDC::assert_valid() const
    {
       graphics::assert_valid();
-      ASSERT(m_hWnd == NULL || ::IsWindow(m_hWnd));
+      ASSERT(m_oswindow_ == NULL || ::IsWindow(m_oswindow_));
    }
 
    void CClientDC::dump(dump_context & dumpcontext) const
    {
       graphics::dump(dumpcontext);
 
-      dumpcontext << "get_handle1() = " << m_hWnd;
+      dumpcontext << "get_handle1() = " << m_oswindow_;
       dumpcontext << "\n";
    }
 
@@ -3630,28 +3630,28 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    {
       ASSERT(pWnd == NULL || ::IsWindow(WIN_WINDOW(pWnd)->get_handle1()));
 
-      if (!Attach(::GetDC(m_hWnd = WIN_WINDOW(pWnd)->GetSafeHwnd())))
+      if (!attach(::GetDC(m_oswindow_ = WIN_WINDOW(pWnd)->GetSafeoswindow_())))
          throw resource_exception();
    }
 
    CClientDC::~CClientDC()
    {
       ASSERT(get_handle1() != NULL);
-      ::ReleaseDC(m_hWnd, Detach());
+      ::ReleaseDC(m_oswindow_, detach());
    }
 
 
    void CWindowDC::assert_valid() const
    {
       graphics::assert_valid();
-      ASSERT(m_hWnd == NULL || ::IsWindow(m_hWnd));
+      ASSERT(m_oswindow_ == NULL || ::IsWindow(m_oswindow_));
    }
 
    void CWindowDC::dump(dump_context & dumpcontext) const
    {
       graphics::dump(dumpcontext);
 
-      dumpcontext << "get_handle1() = " << m_hWnd;
+      dumpcontext << "get_handle1() = " << m_oswindow_;
       dumpcontext << "\n";
    }
 
@@ -3660,28 +3660,28 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    {
       ASSERT(pWnd == NULL || ::IsWindow(WIN_WINDOW(pWnd)->get_handle1()));
 
-      if (!Attach(::GetWindowDC(m_hWnd = WIN_WINDOW(pWnd)->GetSafeHwnd())))
+      if (!attach(::GetWindowDC(m_oswindow_ = WIN_WINDOW(pWnd)->GetSafeoswindow_())))
          throw resource_exception();
    }
 
    CWindowDC::~CWindowDC()
    {
       ASSERT(get_handle1() != NULL);
-      ::ReleaseDC(m_hWnd, Detach());
+      ::ReleaseDC(m_oswindow_, detach());
    }
 
 
    void CPaintDC::assert_valid() const
    {
       graphics::assert_valid();
-      ASSERT(::IsWindow(m_hWnd));
+      ASSERT(::IsWindow(m_oswindow_));
    }
 
    void CPaintDC::dump(dump_context & dumpcontext) const
    {
       graphics::dump(dumpcontext);
 
-      dumpcontext << "get_handle1() = " << m_hWnd;
+      dumpcontext << "get_handle1() = " << m_oswindow_;
       dumpcontext << "\nm_ps.hdc = " << m_ps.hdc;
       dumpcontext << "\nm_ps.fErase = " << m_ps.fErase;
       dumpcontext << "\nm_ps.rcPaint = " << (rect)m_ps.rcPaint;
@@ -3695,17 +3695,17 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       ASSERT_VALID(pWnd);
       ASSERT(::IsWindow(WIN_WINDOW(pWnd)->get_handle1()));
 
-      if (!Attach(::BeginPaint(m_hWnd = WIN_WINDOW(pWnd)->get_handle1(), &m_ps)))
+      if (!attach(::BeginPaint(m_oswindow_ = WIN_WINDOW(pWnd)->get_handle1(), &m_ps)))
          throw resource_exception();
    }
 
    CPaintDC::~CPaintDC()
    {
       ASSERT(get_handle1() != NULL);
-      ASSERT(::IsWindow(m_hWnd));
+      ASSERT(::IsWindow(m_oswindow_));
 
-      ::EndPaint(m_hWnd, &m_ps);
-      Detach();
+      ::EndPaint(m_oswindow_, &m_ps);
+      detach();
    }
 
 */
