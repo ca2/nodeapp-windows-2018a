@@ -28,7 +28,7 @@ namespace win
 
    }
 
-
+/*
    int region::GetRegionData(LPRGNDATA lpRgnData, int nDataSize) const
    { ASSERT(get_os_data() != NULL); return (int)::GetRegionData((HRGN)get_os_data(), nDataSize, lpRgnData); }
    void region::SetRectRgn(int x1, int y1, int x2, int y2)
@@ -58,9 +58,27 @@ namespace win
    { ASSERT(get_os_data() != NULL); return ::OffsetRgn((HRGN)get_os_data(), x, y); }
    int region::OffsetRgn(POINT point)
    { ASSERT(get_os_data() != NULL); return ::OffsetRgn((HRGN)get_os_data(), point.x, point.y); }
-   int region::GetRgnBox(LPRECT lpRect) const
-   { ASSERT(get_os_data() != NULL); return ::GetRgnBox((HRGN)get_os_data(), lpRect); }
-   
+
+   */
+   bool region::get_bounding_box(LPRECT lprect) const
+   {
+
+      ((region *)this)->defer_update();
+
+      Gdiplus::Rect rect;
+
+      ((region *) this)->m_pregion->GetBounds(&rect, &Gdiplus::Graphics((HDC) NULL));
+
+
+      lprect->left = rect.X;
+      lprect->top = rect.Y;
+      lprect->right = rect.X + rect.Width;
+      lprect->bottom = rect.Y + rect.Height;
+      
+      return true;
+
+   }
+   /*
    bool region::PtInRegion(int x, int y) const
    { 
 
@@ -71,19 +89,20 @@ namespace win
       return m_pregion->IsVisible(pointf)  != FALSE;
    
    }
-
-   bool region::PtInRegion(POINT point) const
+   */
+   bool region::contains(POINT point) const
    { 
 
-      //return ::PtInRegion((HRGN)get_os_data(), point.x, point.y); 
+      ((region *) (this))->defer_update();
+
       Gdiplus::PointF pointf((Gdiplus::REAL) point.x, (Gdiplus::REAL) point.y);
       
-      ASSERT(get_os_data() != NULL); //return ::PtInRegion((HRGN)get_os_data(), x, y); 
+      ASSERT(get_os_data() != NULL);
 
       return m_pregion->IsVisible(pointf)  != FALSE;
 
    }
-
+   /*
    bool region::RectInRegion(LPCRECT lpRect) const
    { 
       //ASSERT(get_os_data() != NULL); return ::RectInRegion((HRGN)get_os_data(), lpRect); 
@@ -95,62 +114,192 @@ namespace win
       return m_pregion->IsVisible(rectf)  != FALSE;
 
    }
+   */
 
    void * region::get_os_data() const
    {
 
+      ((region *) this)->defer_update();
+
+      return m_pregion;
+
+   }
+
+
+   void region::defer_update()
+   {
+      
       if(m_pregion == NULL || !m_bUpdated)
       {
+
          if(m_pregion != NULL)
          {
             delete m_pregion;
          }
 
-         Gdiplus::GraphicsPath path;
+         m_pregion = get();
 
-         if(m_etype == type_oval)
-         {
-            path.AddEllipse((INT) m_x1, m_y1, (INT) (m_x2 - m_x1), (INT) (m_y2 - m_y1));
-         }
-         else if(m_etype == type_polygon)
-         {
-            raw_array < Gdiplus::PointF > pa;
-
-            for(int i = 0; i < m_nCount; i++)
-            {
-               pa.add(Gdiplus::PointF((Gdiplus::REAL) m_lppoints[i].x, (Gdiplus::REAL) m_lppoints[i].y));
-            }
-
-            path.AddPolygon(pa.get_data(), (int) pa.get_count());
-         }
-         else if(m_etype == type_rect)
-         {
-            
-            Gdiplus::RectF rect;
-
-            rect.X      = (Gdiplus::REAL) m_x1;
-            rect.Y      = (Gdiplus::REAL) m_y1;
-            rect.Width  = (Gdiplus::REAL) (m_x2 - m_x1);
-            rect.Height = (Gdiplus::REAL) (m_y2 - m_y1);
-
-            path.AddRectangle(rect);
-
-         }
-
-         ((region *) this)->m_pregion = new Gdiplus::Region(&path);
-         
       }
-
-      if(m_pregion != NULL)
-      {
-         ((region *) this)->m_bUpdated = true;
-      }
-
-
-
-      return (void *) (Gdiplus::Region *) m_pregion;
 
    }
 
+
+   bool region::destroy()
+   {
+
+      if(m_pregion != NULL)
+      {
+
+         delete m_pregion;
+
+         m_pregion = NULL;
+
+      }
+
+      return ::ca::region::destroy();
+
+   }
+
+   Gdiplus::Region * region::get()
+   {
+      
+      switch(m_etype)
+      {
+      case type_none:
+         return new Gdiplus::Region();
+      case type_rect:
+         return get_rect();
+      case type_oval:
+         return get_oval();
+      case type_polygon:
+         return get_polygon();
+      case type_poly_polygon:
+         return get_polygon();
+      case type_combine:
+         return get_combine();
+      default:
+         throw not_implemented(get_app());
+      }
+
+      return NULL;
+
+   }
+
+   Gdiplus::Region * region::get_rect()
+   {
+
+      Gdiplus::GraphicsPath path;
+
+      Gdiplus::RectF rect;
+
+      rect.X      = (Gdiplus::REAL) m_x1;
+      rect.Y      = (Gdiplus::REAL) m_y1;
+      rect.Width  = (Gdiplus::REAL) (m_x2 - m_x1);
+      rect.Height = (Gdiplus::REAL) (m_y2 - m_y1);
+
+      path.AddRectangle(rect);
+
+      return new Gdiplus::Region(&path);
+         
+   }
+
+   Gdiplus::Region * region::get_oval()
+   {
+      
+      Gdiplus::GraphicsPath path;
+
+      path.AddEllipse((INT) m_x1, m_y1, (INT) (m_x2 - m_x1), (INT) (m_y2 - m_y1));
+
+      return new Gdiplus::Region(&path);
+
+   }
+
+   Gdiplus::Region * region::get_polygon()
+   {
+
+      Gdiplus::GraphicsPath path;
+
+      raw_array < Gdiplus::PointF > pa;
+
+      for(int i = 0; i < m_nCount; i++)
+      {
+         pa.add(Gdiplus::PointF((Gdiplus::REAL) m_lppoints[i].x, (Gdiplus::REAL) m_lppoints[i].y));
+      }
+
+      if(m_efillmode == ::ca::fill_mode_alternate)
+      {
+         path.SetFillMode(Gdiplus::FillModeAlternate);
+      }
+      else
+      {
+         path.SetFillMode(Gdiplus::FillModeWinding);
+      }
+
+      path.AddPolygon(pa.get_data(), (int) pa.get_count());
+
+      return new Gdiplus::Region(&path);
+
+   }
+
+   Gdiplus::Region * region::get_poly_polygon()
+   {
+      Gdiplus::GraphicsPath path;
+
+      raw_array < Gdiplus::PointF > pa;
+
+      if(m_efillmode == ::ca::fill_mode_alternate)
+      {
+         path.SetFillMode(Gdiplus::FillModeAlternate);
+      }
+      else
+      {
+         path.SetFillMode(Gdiplus::FillModeWinding);
+      }
+
+      int n = 0;
+
+      for(int i = 0; i < m_nCount; i++)
+      {
+         int jCount = m_lppolycounts[i];
+         pa.remove_all();
+         for(int j = 0; j < jCount; j++)
+         {
+            pa.add(Gdiplus::PointF((Gdiplus::REAL) m_lppoints[n].x, (Gdiplus::REAL) m_lppoints[n].y));
+            n++;
+         }
+         path.AddPolygon(pa.get_data(), (int) pa.get_count());
+         path.CloseFigure();
+      }
+
+      return new Gdiplus::Region(&path);
+
+   }
+
+   Gdiplus::Region * region::get_combine()
+   {
+
+      Gdiplus::Region * pregion = ((Gdiplus::Region *) m_pregion1->get_os_data())->Clone();
+      Gdiplus::Region * pregionOp = (Gdiplus::Region *) m_pregion2->get_os_data();
+
+      if(m_ecombine == combine_add)
+      {
+         pregion->Union(pregionOp);
+      }
+      else if(m_ecombine == combine_exclude)
+      {
+         pregion->Exclude(pregionOp);
+      }
+      else if(m_ecombine == combine_intersect)
+      {
+         pregion->Intersect(pregionOp);
+      }
+      else
+      {
+         pregion->Union(pregionOp);
+      }
+      
+      return pregion;
+
+   }
 
 } // namespace win
