@@ -679,7 +679,7 @@ namespace win
       static BOOL CALLBACK GetAppsEnumWindowsProc(oswindow_ hwnd, LPARAM lParam);
 
 
-      static void get_app_wnda(user::HWNDArray & wnda);
+      static void get_app_wnda(user::oswindow_array & wnda);
 
       virtual void _001DeferPaintLayeredWindowBackground(HDC hdc);
 

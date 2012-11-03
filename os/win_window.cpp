@@ -1298,7 +1298,7 @@ restart_mouse_hover_check:
                return;
             }
          }
-         user::HWNDArray hwnda;
+         user::oswindow_array hwnda;
          user::LPWndArray wnda;
          wnda = System.frames();
          wnda.get_wnda(hwnda);
@@ -2842,7 +2842,7 @@ restart_mouse_hover_check:
    BOOL CALLBACK window::GetAppsEnumWindowsProc(oswindow_ hwnd, LPARAM lParam)
    {
 
-      user::HWNDArray * phwnda = (user::HWNDArray *) lParam;
+      user::oswindow_array * phwnda = (user::oswindow_array *) lParam;
 
       phwnda->add(hwnd);
 
@@ -2850,7 +2850,7 @@ restart_mouse_hover_check:
 
    }
 
-   void window::get_app_wnda(user::HWNDArray & wnda)
+   void window::get_app_wnda(user::oswindow_array & wnda)
    {
       EnumWindows(GetAppsEnumWindowsProc, (LPARAM) &wnda);
    }
@@ -2930,7 +2930,7 @@ restart_mouse_hover_check:
       rect rectPaint;
       rectPaint = rectUpdate;
       ScreenToClient(rectPaint);
-      user::HWNDArray wndaApp;
+      user::oswindow_array wndaApp;
 
 
       HRGN rgnWindow;

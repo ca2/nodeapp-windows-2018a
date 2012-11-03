@@ -416,7 +416,7 @@ namespace win
       }
 
 
-      user::HWNDArray hwnda;
+      user::oswindow_array hwnda;
 
       get_wnda(hwnda);
 
@@ -447,7 +447,7 @@ namespace win
       rect rectWindow;
       rect rect9;
 
-      user::HWNDArray wndaApp;
+      user::oswindow_array wndaApp;
 
       m_wndpaOut.remove_all();
 
@@ -849,7 +849,7 @@ namespace win
 
    bool window_draw::TwfGetTopWindow(
       void * hwnd,
-      user::HWNDArray & hwnda,
+      user::oswindow_array & hwnda,
       base_array < HRGN, HRGN > & hrgna,
       user::HwndTree::Array & hwndtreea,
       HRGN hrgn)
@@ -873,7 +873,7 @@ namespace win
 
    bool window_draw::TwfGetTopWindow(
       void * hwndParam,
-      user::HWNDArray & hwnda,
+      user::oswindow_array & hwnda,
       base_array < HRGN, HRGN > & hrgna,
       user::HwndTree & hwndtree,
       HRGN hrgn)
@@ -975,7 +975,7 @@ namespace win
    // lpcrect must be in screen coordinates
    void window_draw::TwfGetTopWindow(
       void * hwnd,
-      user::HWNDArray & hwnda,
+      user::oswindow_array & hwnda,
       base_array < HRGN, HRGN > & hrgna,
       user::HwndTree::Array & hwndtreea,
       LPCRECT lpcrect)
@@ -992,7 +992,7 @@ namespace win
 
    void window_draw::TwfGetTopWindowOptimizeOpaque(
       void * hwndOpaque,
-      user::HWNDArray & hwnda,
+      user::oswindow_array & hwnda,
       base_array < HRGN, HRGN > & hrgna)
    {
       rect rectWindow;
@@ -1035,7 +1035,7 @@ namespace win
       wndpa = System.frames();
    }
 
-   void window_draw::get_wnda(user::HWNDArray & hwnda)
+   void window_draw::get_wnda(user::oswindow_array & hwnda)
    {
       System.frames().get_wnda(hwnda);
    }
@@ -1055,7 +1055,7 @@ namespace win
 
 //      DWORD dwTimeIn = GetTickCount();
 
-      user::HWNDArray hwnda;
+      user::oswindow_array hwnda;
       
       get_wnda(hwnda);
 

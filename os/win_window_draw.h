@@ -96,28 +96,28 @@ namespace win
 
       void TwfGetTopWindow(
          void * hwnd,
-         user::HWNDArray & hwnda,
+         user::oswindow_array & hwnda,
          base_array < HRGN, HRGN > & hrgna,
          user::HwndTree::Array & hwndtreea,
          LPCRECT lpcrect);
 
       bool TwfGetTopWindow(
          void * hwnd,
-         user::HWNDArray & hwnda,
+         user::oswindow_array & hwnda,
          base_array < HRGN, HRGN > & hrgna,
          user::HwndTree::Array & hwndtreea,
          HRGN hrgn);
 
       bool TwfGetTopWindow(
          void * hwnd,
-         user::HWNDArray & hwnda,
+         user::oswindow_array & hwnda,
          base_array < HRGN, HRGN > & hrgna,
          user::HwndTree & hwndtree,
          HRGN hrgn);
 
       void TwfGetTopWindowOptimizeOpaque(
          void * hwndOpaque,
-         user::HWNDArray & hwnda,
+         user::oswindow_array & hwnda,
          base_array < HRGN, HRGN > & hrgna);
 
 
@@ -127,7 +127,7 @@ namespace win
          LPCRECT lpcrect);
 
       void get_wnda(user::LPWndArray & wndpa);
-      void get_wnda(user::HWNDArray & hwnda);
+      void get_wnda(user::oswindow_array & hwnda);
       
       static UINT c_cdecl ThreadProcRedraw(LPVOID lpv);
 

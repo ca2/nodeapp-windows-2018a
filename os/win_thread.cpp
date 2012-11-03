@@ -1297,7 +1297,7 @@ stop_run:
       SCAST_PTR(::gen::message::base, pbase, pobj);
       if(!pbase->m_bRet && pbase->m_uiMessage == WM_APP + 1984 && pbase->m_wparam == 77)
       {
-         gen::scoped_ptr < message > spmessage(pbase->m_lparam);
+         gen::scoped_ptr < ::user::message > spmessage(pbase->m_lparam);
          spmessage->send();
          pbase->m_uiMessage   = 0;    // ssshhhh.... - self-healing - sh...
          pbase->m_wparam      = 0;    // ssshhhh.... - self-healing - sh...
@@ -1669,7 +1669,7 @@ stop_run:
    {
       if(m_hThread == NULL)
          return false;
-      message * pmessage = new message;
+      ::user::message * pmessage = new ::user::message;
       pmessage->m_pguie       = pguie;
       pmessage->m_uiMessage   = uiMessage;
       pmessage->m_wparam      = wparam;
