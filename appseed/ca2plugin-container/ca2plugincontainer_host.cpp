@@ -72,7 +72,7 @@ namespace ca2plugin_container
       m_rect.right = m_rect.left + aWindow->width;
       m_rect.bottom = m_rect.top + aWindow->height;
 
-      m_oswindow = (oswindow)aWindow->window;
+      m_oswindow = aWindow->window;
 
       if(m_oswindow == NULL)
          return FALSE;

@@ -58,7 +58,7 @@ namespace win
    /*
    void window_draw::OnPaint(oswindow oswindow, CPaintDC & spgraphics)
    {
-      UNREFERENCED_PARAMETER(oswindow);
+      UNREFERENCED_PARAMETER;
       UNREFERENCED_PARAMETER(spgraphics);
    }
    */
@@ -773,7 +773,7 @@ namespace win
 
       ::user::window_interface * ptwi = System.window_map().get((int_ptr) oswindow);
 
-      if(!::IsWindowVisible(oswindow))
+      if(!::IsWindowVisible)
       {
          return OptimizeThis;
       }
@@ -802,7 +802,7 @@ namespace win
          return OptimizeNone;
       }
 
-   //    ::ca::window * pwnd = window::FromHandlePermanent(oswindow);
+   //    ::ca::window * pwnd = window::FromHandlePermanent;
        
       
       if(ptwi == NULL)
@@ -881,7 +881,7 @@ namespace win
       oswindow oswindow = oswindowtree.m_oswindow;
 
 
-      if(!::IsWindowVisible(oswindow))
+      if(!::IsWindowVisible)
       {
          return true;
       }
@@ -894,7 +894,7 @@ namespace win
       ::GetWindowRect(oswindow, rectWindow);
 
 
-   //   ::ca::window * pwnd = ::win::window::from_handle(oswindow);
+   //   ::ca::window * pwnd = ::win::window::from_handle;
 
       if(!TwfGetTopWindow(
             oswindowParam,
@@ -943,7 +943,7 @@ namespace win
 
          ::ScreenToClient(oswindow, &ptOffset);
 
-         oswindowa.add(oswindow);
+         oswindowa.add;
          ::OffsetRgn(hrgnIntersect, ptOffset.x, ptOffset.y);
          hrgna.add(hrgnIntersect);
 
@@ -1113,7 +1113,7 @@ namespace win
          }
       }
 
-      oswindow oswindowParam = (oswindow) pwnd->get_handle();
+      oswindow oswindowParam = pwnd->get_handle();
 
       HDC hdcScreen = ::GetDCEx(oswindowParam, NULL,  DCX_CLIPSIBLINGS | DCX_WINDOW);
 
@@ -1258,7 +1258,7 @@ namespace win
             
             if(pwnd->m_pguie != NULL && (bool) pwnd->m_pguie->oprop("pending_layout"))
             {
-               oswindow oswindowZOrder = (oswindow) pwnd->m_pguie->oprop("pending_zorder").get_integer();
+               oswindow oswindowZOrder = pwnd->m_pguie->oprop("pending_zorder").get_integer();
                ::SetWindowPos(oswindowParam, HWND_TOPMOST, 
                   (int) rectWindow.left, (int) rectWindow.top, (int) rectWindow.width(), (int) rectWindow.height(), SWP_SHOWWINDOW);
                ::SetWindowPos(oswindowParam, HWND_NOTOPMOST, 

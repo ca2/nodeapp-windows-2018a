@@ -345,7 +345,7 @@ namespace win
 
 	   // returns TRUE if thread was started successfully
 	
-	   if ( (m_pPortMappingThread!=NULL) || (oswindow==NULL) || (!IsWindow(oswindow)) )
+	   if ( (m_pPortMappingThread!=NULL) || (oswindow==NULL) || (!IsWindow) )
 		   return FALSE;
 	
 	   m_oswindow_ForPortMappingThread = oswindow;
@@ -384,7 +384,7 @@ namespace win
    {
 	   // returns TRUE if thread was started successfully
 	
-	   if ( (m_pEditMappingThread!=NULL) || (oswindow==NULL) || (!IsWindow(oswindow)) )
+	   if ( (m_pEditMappingThread!=NULL) || (oswindow==NULL) || (!IsWindow) )
 		   return FALSE;
 	
 	   m_scratchpadOldMapping = oldMapping;
@@ -426,7 +426,7 @@ namespace win
    {
 	   // returns TRUE if thread was started successfully
 	
-	   if ( (m_pAddMappingThread!=NULL) || (oswindow==NULL) || (!IsWindow(oswindow)) )
+	   if ( (m_pAddMappingThread!=NULL) || (oswindow==NULL) || (!IsWindow) )
 		   return FALSE;
 	
 	   m_scratchpadAddedMapping = newMapping;	
@@ -467,7 +467,7 @@ namespace win
    {
 	   // returns TRUE if thread was started successfully
 	
-	   if ( (m_pDeleteMappingThread!=NULL) || (oswindow==NULL) || (!IsWindow(oswindow)) )
+	   if ( (m_pDeleteMappingThread!=NULL) || (oswindow==NULL) || (!IsWindow) )
 		   return FALSE;
 	
 	   m_scratchpadDeletedMapping = oldMapping;
@@ -509,7 +509,7 @@ namespace win
    {	
 	   // returns TRUE if thread was started successfully
 	
-	   if ( (m_pDeviceInfoThread!=NULL) || (oswindow==NULL) || (!IsWindow(oswindow)) )
+	   if ( (m_pDeviceInfoThread!=NULL) || (oswindow==NULL) || (!IsWindow) )
 		   return FALSE;
 	
 	   m_oswindow_ForDeviceInfoThread = oswindow;

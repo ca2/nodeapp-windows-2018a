@@ -530,18 +530,18 @@ namespace win
 
    ::ca::window * application::window_from_os_data(void * pdata)
    {
-      return ::win::window::from_handle((oswindow) pdata);
+      return ::win::window::from_handle(pdata);
    }
 
    ::ca::window * application::window_from_os_data_permanent(void * pdata)
    {
-      ::ca::window * pwnd = ::win::window::FromHandlePermanent((oswindow) pdata);
+      ::ca::window * pwnd = ::win::window::FromHandlePermanent(pdata);
       if(pwnd != NULL)
          return pwnd;
       user::interaction_ptr_array wndptra = System.frames();
       for(int i = 0; i < wndptra.get_count(); i++)
       {
-         if(wndptra[i]->get_safe_handle() == (oswindow) pdata)
+         if(wndptra[i]->get_safe_handle() == pdata)
          {
             return wndptra[i]->get_wnd();
          }

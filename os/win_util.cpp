@@ -41,7 +41,7 @@ bool CLASS_DECL_win __is_combo_box_control(oswindow oswindow, UINT nStyle)
 
 bool CLASS_DECL_win __compare_class_name(oswindow oswindow, const char * lpszClassName)
 {
-   ASSERT(::IsWindow(oswindow));
+   ASSERT(::IsWindow);
    char szTemp[32];
    ::GetClassName(oswindow, szTemp, _countof(szTemp));
    return ::__invariant_stricmp(szTemp, lpszClassName) == 0;

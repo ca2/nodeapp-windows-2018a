@@ -6,7 +6,7 @@ namespace win
 
 
    CLASS_DECL_win LRESULT CALLBACK __send_message_hook(int, WPARAM, LPARAM);
-   //CLASS_DECL_win void _gen::StandardSubclass(oswindow);
+   //CLASS_DECL_win void _gen::StandardSubclass;
    CLASS_DECL_win LRESULT CALLBACK __cbt_filter_hook(int, WPARAM, LPARAM);
    CLASS_DECL_win LRESULT __call_window_procedure(::user::interaction * pWnd, oswindow oswindow, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
@@ -673,7 +673,7 @@ namespace win
 
       // implementation of message dispatch/hooking
       CLASS_DECL_win friend LRESULT CALLBACK __send_message_hook(int, WPARAM, LPARAM);
-      //CLASS_DECL_win friend void _gen::StandardSubclass(oswindow);
+      //CLASS_DECL_win friend void _gen::StandardSubclass;
       CLASS_DECL_win friend LRESULT CALLBACK __cbt_filter_hook(int, WPARAM, LPARAM);
       CLASS_DECL_win friend LRESULT __call_window_procedure(::user::interaction * pWnd, oswindow oswindow, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
