@@ -23,6 +23,8 @@ namespace win
 
       virtual point last_point();
 
+      virtual point current_point();
+
 
       virtual bool start_figure();
       virtual bool close_figure();

@@ -78,6 +78,14 @@ namespace win
 
    }
 
+   point graphics_path::current_point()
+   {
+
+      return last_point();
+
+   }
+
+
 } // namespace win
 
 #define new DEBUG_NEW
