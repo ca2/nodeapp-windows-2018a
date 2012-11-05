@@ -165,7 +165,7 @@
 
 #include <windows.h>
 
-typedef HWND oswindow;
+#include "oswindow.h"
 
 #include <shlwapi.h>
 

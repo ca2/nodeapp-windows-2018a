@@ -227,6 +227,9 @@
     <ClInclude Include="win_file_find.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\operational_system\oswindow.h">
+      <Filter>Header Files\operational_system</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="framework.cpp">

@@ -924,6 +924,7 @@
     <ClInclude Include="..\operational_system\get_platform.h" />
     <ClInclude Include="..\operational_system\inttypes.h" />
     <ClInclude Include="..\operational_system\operational_system.h" />
+    <ClInclude Include="..\operational_system\oswindow.h" />
     <ClInclude Include="..\operational_system\stdint.h" />
     <ClInclude Include="..\operational_system\version.h" />
     <ClInclude Include="..\operational_system\version_configuration.h" />

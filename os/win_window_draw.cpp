@@ -427,7 +427,7 @@ namespace win
       get_wnda(wndpa);
 
 
-      user::oswindow_util::SortByZOrder(oswindowa);
+      user::window_util::SortByZOrder(oswindowa);
 
       user::oswindow_tree::Array oswindowtreea;
       //oswindowtreea = oswindowa;
@@ -1059,7 +1059,7 @@ namespace win
       
       get_wnda(oswindowa);
 
-      user::oswindow_util::SortByZOrder(oswindowa);
+      user::window_util::SortByZOrder(oswindowa);
 
       ASSERT(FALSE);
       /*for(int i = 0; i  < oswindowa.get_size(); i++)

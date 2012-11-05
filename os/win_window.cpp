@@ -1302,7 +1302,7 @@ restart_mouse_hover_check:
          user::interaction_ptr_array wnda;
          wnda = System.frames();
          wnda.get_wnda(oswindowa);
-         user::oswindow_util::SortByZOrder(oswindowa);
+         user::window_util::SortByZOrder(oswindowa);
          for(int i = 0; i < oswindowa.get_size(); i++)
          {
             ::user::interaction * pguie = wnda.find_first(oswindowa[i]);
