@@ -1953,12 +1953,12 @@ restart_mouse_hover_check:
 
       ASSERT_VALID(this);
 
-      ::user::interaction * oswindow_Parent = this;
-      ::user::interaction * oswindow_T;
-      while ((oswindow_T = __get_parent_owner(oswindow_Parent)) != NULL)
-         oswindow_Parent = oswindow_T;
+      ::user::interaction * puiParent = this;
+      ::user::interaction * pui;
+      while ((pui = ::user::get_parent_owner(puiParent)) != NULL)
+         puiParent = pui;
 
-      return oswindow_Parent;
+      return puiParent;
    }
 
    ::user::interaction * window::GetTopLevelOwner()
