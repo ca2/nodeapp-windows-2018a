@@ -186,7 +186,7 @@ namespace win
             {*/
 
 
-            vfxThrowFileException(get_app(), ::win::file_exception::OsErrorToException(dwLastError), dwLastError, m_strFileName);
+            vfxThrowFileException(get_app(), ::win::file_exception::OsErrorToException(dwLastError), dwLastError, lpszFileName);
 
             //}
 
@@ -224,7 +224,7 @@ namespace win
 
 
             DWORD dwLastError = ::GetLastError();
-            vfxThrowFileException(get_app(), ::win::file_exception::OsErrorToException(dwLastError), dwLastError, m_strFileName);
+            vfxThrowFileException(get_app(), ::win::file_exception::OsErrorToException(dwLastError), dwLastError, lpszFileName);
 
 
             //}
