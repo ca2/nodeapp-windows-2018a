@@ -247,7 +247,7 @@ namespace win
 
    }
 
-   bool bitmap::attach(HBITMAP hbitmap)
+   bool bitmap::attach(void * posdata)
    {
       if(m_pbitmap != NULL)
       {
@@ -255,7 +255,7 @@ namespace win
          m_pbitmap = NULL;
       }
       
-      m_pbitmap = new Gdiplus::Bitmap(hbitmap, NULL);
+      m_pbitmap = (Gdiplus::Bitmap *) posdata;
 
 
       return true;

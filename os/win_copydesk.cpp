@@ -1,5 +1,8 @@
 #include "framework.h"
+
 #include <shlobj.h>
+
+
 
 
 namespace win
@@ -200,6 +203,8 @@ namespace win
       }
    }
 
+   #undef new
+
    bool copydesk::desk_to_dib(::ca::dib * pdib)
    {
       if(!m_p->OpenClipboard())
@@ -209,7 +214,7 @@ namespace win
       try
       {
          ::ca::bitmap_sp bitmap(get_app());
-         bitmap->attach(hbitmap);
+         bitmap->attach(new Gdiplus::Bitmap(hbitmap, NULL));
          //HDC hdc = ::CreateCompatibleDC(NULL);
          //::ca::graphics_sp g(get_app());
          //g->attach(hdc);
@@ -235,6 +240,8 @@ namespace win
       ::CloseClipboard();
       return bOk;
    }
+
+#define new DEBUG_NEW
 
 
 } // namespace win
