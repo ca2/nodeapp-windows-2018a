@@ -487,6 +487,9 @@ namespace win
 
       bool blur(bool bExpand, double dRadius, LPCRECT lpcrect);
 
+
+      virtual bool flush();
+
    //protected:
       // used for implementation of non-virtual SelectObject calls
       //static ::ca::graphics_object* PASCAL SelectGdiObject(::ca::application * papp, HDC hDC, HGDIOBJ h);

@@ -262,5 +262,16 @@ namespace win
 
    }
 
+   void * bitmap::detach()
+   {
+
+      Gdiplus::Bitmap * pbitmap = m_pbitmap;
+
+      m_pbitmap = NULL;
+
+      return m_pbitmap;
+
+   }
+
 
 } // namespace win

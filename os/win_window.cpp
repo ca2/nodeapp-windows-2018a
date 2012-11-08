@@ -6463,7 +6463,15 @@ namespace win
 
          (dynamic_cast < ::win::graphics * > (spg.m_p))->attach(new Gdiplus::Graphics(&b));
 
+         ::ca::bitmap_sp spb(get_app());
+
+         spb->attach(&b);
+
+         spg->SelectObject(spb);
+
          _001Print(spg);
+
+         spb->detach();
 
       }
 

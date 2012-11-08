@@ -48,6 +48,7 @@ namespace win
 
 
       virtual bool attach(void * posdata);
+      virtual void * detach();
 
 
    };

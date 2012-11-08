@@ -2373,7 +2373,11 @@ namespace win
 
    ::ca::graphics * dib::get_graphics()
    {
+
+//      m_spgraphics->SelectObject(m_spbitmap);
+
       return m_spgraphics;
+
    }
 
    double dib::pi()
@@ -2388,7 +2392,7 @@ namespace win
 
       BYTE * pb;
 
-      int iSize32 = size / 32;
+      int iSize32 = size;
       int i;
       for (i=0; i < iSize32; i+=32 )
       {
@@ -2427,7 +2431,7 @@ namespace win
          pb[31 * 4] = (byte) intensity;
       }
 
-      for (i=0; i<size; i++ )
+      for (; i<size; i++ )
       {
          *(((BYTE * ) &m_pcolorref[i]) + offset) = (byte) intensity;
       }

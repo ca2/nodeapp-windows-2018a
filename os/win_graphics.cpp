@@ -4219,4 +4219,14 @@ namespace win
       return m_pgraphics->GetDpiX();
    }
 
+
+   bool graphics::flush()
+   {
+      
+      m_pgraphics->Flush();
+
+      return true;
+
+   }
+
 } // namespace win
