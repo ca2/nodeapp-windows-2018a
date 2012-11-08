@@ -971,10 +971,11 @@ namespace win
             return FALSE;
 
          if(&pgraphicsSrc->GetCurrentBitmap() == NULL)
-            return FALSE;
+            goto gdi_fallback;
 
          if(pgraphicsSrc->GetCurrentBitmap().get_os_data() == NULL)
-            return FALSE;
+            goto gdi_fallback;
+
 
          return m_pgraphics->DrawImage(
             (Gdiplus::Bitmap *) pgraphicsSrc->GetCurrentBitmap().get_os_data(),
@@ -987,6 +988,20 @@ namespace win
       }
 
       //return ::BitBlt(get_handle1(), x, y, nWidth, nHeight, WIN_HDC(pgraphicsSrc), xSrc, ySrc, dwRop); 
+
+gdi_fallback:
+      
+      HDC hdcDst = m_pgraphics->GetHDC();
+
+      HDC hdcSrc = ((Gdiplus::Graphics *) (pgraphicsSrc->get_os_data()))->GetHDC();
+
+      bool bOk = ::BitBlt(hdcDst, x, y, nWidth, nHeight, hdcSrc, x, y, dwRop) != FALSE;
+
+      ((Gdiplus::Graphics *) (pgraphicsSrc->get_os_data()))->ReleaseHDC(hdcSrc);
+
+      m_pgraphics->ReleaseHDC(hdcDst);
+
+      return bOk;
 
    }
 
