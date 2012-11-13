@@ -254,35 +254,7 @@ namespace win
 
    bool shell::Initialize()
    {
-      DWORD dwVersion = GetVersion();
-
-      // get the Windows version.
-
-      DWORD dwWindowsMajorVersion =  (DWORD)(LOBYTE(LOWORD(dwVersion)));
-      //   DWORD dwWindowsMinorVersion =  (DWORD)(HIBYTE(LOWORD(dwVersion)));
-
-      // get the build number.
-
-      DWORD dwBuild;
-
-      if (dwVersion < 0x80000000)              // Windows NT
-         dwBuild = (DWORD)(HIWORD(dwVersion));
-      else if (dwWindowsMajorVersion < 4)      // Win32s
-         dwBuild = (DWORD)(HIWORD(dwVersion) & ~0x8000);
-      else                                     // Windows Me/98/95
-         dwBuild =  0;
-
-      bool bNativeUnicode;
-      if (dwVersion < 0x80000000)              // Windows NT
-         bNativeUnicode = TRUE;
-      else if (dwWindowsMajorVersion < 4)      // Win32s
-         bNativeUnicode = FALSE;
-      else                                     // Windows Me/98/95
-         bNativeUnicode = FALSE;
-
-
-      if(bNativeUnicode)
-      {
+      
          theWindowsShell.m_pfnSHGetPathFromIDList = ::SHGetPathFromIDListW;
          theWindowsShell.m_pfnFindFirstFile = ::FindFirstFileW;
          theWindowsShell.m_pfnFindNextFile = ::FindNextFileW;
@@ -299,50 +271,29 @@ namespace win
          theWindowsShell.m_pfnGetClassInfo = ::GetClassInfoW;
          theWindowsShell.m_pfnRegisterClass = ::RegisterClassW;
          theWindowsShell.m_pfnCreateWindowEx = ::CreateWindowExW;
-      }
-      else
-      {
-         theWindowsShell.m_pfnSHGetPathFromIDList = _SHGetPathFromIDList;
-         theWindowsShell.m_pfnFindFirstFile = _FindFirstFile;
-         theWindowsShell.m_pfnFindNextFile = _FindNextFile;
-         theWindowsShell.m_pfnMoveFile = _MoveFile;
-         theWindowsShell.m_pfn_fullpath = __fullpath;
-         theWindowsShell.m_pfnGetFullPathName = _GetFullPathName;
-         theWindowsShell.m_pfnGetVolumeInformation = _GetVolumeInformation;
-         theWindowsShell.m_pfnSHGetFileInfo = _SHGetFileInfo;
-         theWindowsShell.m_pfnGetStringTypeEx = _GetStringTypeEx;
-         theWindowsShell.m_pfnGetTempPath = _GetTempPath;
-         theWindowsShell.m_pfnGetTempFileName = _GetTempFileName;
-         theWindowsShell.m_pfnCreateFile = _CreateFile;
-         theWindowsShell.m_pfnGetModuleFileName = _GetModuleFileName;
-         theWindowsShell.m_pfnGetClassInfo = _GetClassInfo;
-         theWindowsShell.m_pfnRegisterClass = _RegisterClass;
-         theWindowsShell.m_pfnCreateWindowEx = _CreateWindowEx;
-      }
-
       return true;
    }
 
-   BOOL shell::_SHGetPathFromIDList(LPCITEMIDLIST pidl, wchar_t * pszPath)
+/*   BOOL shell::_SHGetPathFromIDList(LPCITEMIDLIST pidl, wchar_t * pszPath)
    {
       CHAR pszPathA[MAX_PATH * 2];
       if(!::SHGetPathFromIDListA(pidl, pszPathA))
          return FALSE;
-      return gen::international::ACPToUnicode(pszPath, MAX_PATH * 2, pszPathA) ? TRUE : FALSE;
+      return gen::international::utf8_to_unicode(pszPath, MAX_PATH * 2, pszPathA) ? TRUE : FALSE;
    }
 
    BOOL shell::_MoveFile(const wchar_t * lpExistingFileName, const wchar_t * lpNewFileName)
    {
       string str1, str2;
-      gen::international::UnicodeToACP(str1, lpExistingFileName);
-      gen::international::UnicodeToACP(str2, lpNewFileName);
+      gen::international::unicode_to_utf8(str1, lpExistingFileName);
+      gen::international::unicode_to_utf8(str2, lpNewFileName);
       return ::MoveFileA(str1, str2);
    }
 
    HANDLE shell::_FindFirstFile(const wchar_t * lpcsz, WIN32_FIND_DATAW * lpdata)
    {
-      CHAR pszPathA[MAX_PATH * 2];
-      gen::international::UnicodeToACP(pszPathA, MAX_PATH * 2, lpcsz);
+      string 
+      gen::international::unicode_to_utf8(pszPathA, MAX_PATH * 2, lpcsz);
       WIN32_FIND_DATAA data;
       HANDLE handle = ::FindFirstFileA(pszPathA, &data);
       if(handle == INVALID_HANDLE_VALUE)
@@ -397,350 +348,350 @@ namespace win
 
 
       if ( !path || !*path )  /* no work to do */
-         return( _wgetcwd( UserBuf, (int) maxlen ) );
+/*         return( _wgetcwd( UserBuf, (int) maxlen ) );
 
       /* allocate buffer if necessary */
 
-      if ( !UserBuf )
-         if ( !(buf = (WCHAR *) malloc(_MAX_PATH * sizeof(WCHAR))) ) {
-            //                errno = ENOMEM;
-            return( NULL );
-         }
-         else
-            maxlen = _MAX_PATH;
-      else
-         buf = UserBuf;
+   //   if ( !UserBuf )
+   //      if ( !(buf = (WCHAR *) malloc(_MAX_PATH * sizeof(WCHAR))) ) {
+   //         //                errno = ENOMEM;
+   //         return( NULL );
+   //      }
+   //      else
+   //         maxlen = _MAX_PATH;
+   //   else
+   //      buf = UserBuf;
 
-      count = GetFullPathName ( path,
-         (int) maxlen,
-         buf,
-         &pfname );
+   //   count = GetFullPathName ( path,
+   //      (int) maxlen,
+   //      buf,
+   //      &pfname );
 
-      if ( count >= maxlen ) {
-         if ( !UserBuf )
-            free(buf);
-         //errno = ERANGE;
-         return( NULL );
-      }
-      else if ( count == 0 ) {
-         if ( !UserBuf )
-            free(buf);
-         //_dosmaperr( GetLastError() );
-         return( NULL );
-      }
+   //   if ( count >= maxlen ) {
+   //      if ( !UserBuf )
+   //         free(buf);
+   //      //errno = ERANGE;
+   //      return( NULL );
+   //   }
+   //   else if ( count == 0 ) {
+   //      if ( !UserBuf )
+   //         free(buf);
+   //      //_dosmaperr( GetLastError() );
+   //      return( NULL );
+   //   }
 
-      return( buf );
+   //   return( buf );
 
-   }
-
-
-   DWORD WINAPI shell::_GetFullPathName(
-      const wchar_t * lpFileName, 
-      DWORD nBufferLength, 
-      wchar_t * lpBuffer, 
-      wchar_t ** lpFilePart)
-   {
-      CHAR pszPathA[MAX_PATH * 2];
-      gen::international::UnicodeToACP(pszPathA, MAX_PATH * 2, lpFileName);
-      string str;
-      LPTSTR lpsz = str.GetBuffer(nBufferLength * 2);
-      LPTSTR lpszFilePart;
-      DWORD dw = ::GetFullPathName(pszPathA, nBufferLength, lpsz, &lpszFilePart);
-      str.ReleaseBuffer();
-      gen::international::ACPToUnicode(lpBuffer, nBufferLength, str);
-      *lpFilePart = lpBuffer + ((int) (lpszFilePart - lpsz));
-      return dw;
-   }
-
-   BOOL WINAPI shell::_GetVolumeInformation(
-      const wchar_t * lpRootPathName,           // root directory
-      wchar_t * lpVolumeNameBuffer,        // volume name buffer
-      DWORD nVolumeNameSize,            // length of name buffer
-      LPDWORD lpVolumeSerialNumber,     // volume serial number
-      LPDWORD lpMaximumComponentLength, // maximum file name length
-      LPDWORD lpFileSystemFlags,        // file system options
-      wchar_t * lpFileSystemNameBuffer,    // file system name buffer
-      DWORD nFileSystemNameSize)         // length of file system name buffer
-   {
-      string strRootPathName;
-      string strVolumeNameBuffer;
-      string strFileSystemNameBuffer;
-      gen::international::UnicodeToACP(strRootPathName, lpRootPathName);
-      bool b = ::GetVolumeInformation(
-         strRootPathName,
-         strVolumeNameBuffer.GetBuffer(nVolumeNameSize),
-         nVolumeNameSize,
-         lpVolumeSerialNumber,
-         lpMaximumComponentLength,
-         lpFileSystemFlags,
-         strFileSystemNameBuffer.GetBuffer(nFileSystemNameSize),
-         nFileSystemNameSize) != FALSE;
-
-      strVolumeNameBuffer.ReleaseBuffer();
-      strFileSystemNameBuffer.ReleaseBuffer();
-      gen::international::ACPToUnicode(
-         lpVolumeNameBuffer, 
-         nVolumeNameSize, 
-         strVolumeNameBuffer);
-      gen::international::ACPToUnicode(
-         lpFileSystemNameBuffer, 
-         nFileSystemNameSize, 
-         strFileSystemNameBuffer);
-      return b;
-   }
-
-   dword_ptr shell::_SHGetFileInfo(      
-      const wchar_t * pszPath,
-      DWORD dwFileAttributes,
-      SHFILEINFOW *psfi,
-      UINT cbFileInfo,
-      UINT uFlags)
-   {
-      UNREFERENCED_PARAMETER(cbFileInfo);
-      string strPath;
-      gen::international::UnicodeToACP(strPath, pszPath);
-      SHFILEINFOA shia;
-      if(!::SHGetFileInfoA(strPath, dwFileAttributes, 
-         &shia,
-         sizeof(shia),
-         uFlags))
-         return FALSE;
-      gen::international::ACPToUnicode(
-         psfi->szDisplayName, 
-         sizeof(psfi->szDisplayName) / sizeof(WCHAR),
-         shia.szDisplayName);
-      gen::international::ACPToUnicode(
-         psfi->szTypeName, 
-         sizeof(psfi->szTypeName) / sizeof(WCHAR),
-         shia.szTypeName);
-      return TRUE;
-   }
+   //}
 
 
-   BOOL shell::_GetStringTypeEx(      
-      LCID uiCodePage,
-      DWORD dwInfoType,
-      const wchar_t * lpSrcStr,
-      int cchSrc,
-      LPWORD lpCharType)
-   {
-      strsize iCount = cchSrc;
-      if(iCount < 0)
-         iCount = gen::international::UnicodeToMultiByteCount(uiCodePage, lpSrcStr);
-      string str;
-      LPTSTR lpsz = str.GetBuffer(iCount);
-      if(gen::international::UnicodeToMultiByte(uiCodePage, lpsz, iCount, lpSrcStr))
-      {
-         //str.ReleaseBuffer();
-         //return true;
-      }
-      else
-      {
-         return false;
-      }
-      if(!GetStringTypeA(uiCodePage, dwInfoType, lpsz, (int) iCount, lpCharType))
-      {
-         return FALSE;
-      }
-      return TRUE;
-   }
+   //DWORD WINAPI shell::_GetFullPathName(
+   //   const wchar_t * lpFileName, 
+   //   DWORD nBufferLength, 
+   //   wchar_t * lpBuffer, 
+   //   wchar_t ** lpFilePart)
+   //{
+   //   CHAR pszPathA[MAX_PATH * 2];
+   //   gen::international::UnicodeToACP(pszPathA, MAX_PATH * 2, lpFileName);
+   //   string str;
+   //   LPTSTR lpsz = str.GetBuffer(nBufferLength * 2);
+   //   LPTSTR lpszFilePart;
+   //   DWORD dw = ::GetFullPathName(pszPathA, nBufferLength, lpsz, &lpszFilePart);
+   //   str.ReleaseBuffer();
+   //   gen::international::ACPToUnicode(lpBuffer, nBufferLength, str);
+   //   *lpFilePart = lpBuffer + ((int) (lpszFilePart - lpsz));
+   //   return dw;
+   //}
+
+   //BOOL WINAPI shell::_GetVolumeInformation(
+   //   const wchar_t * lpRootPathName,           // root directory
+   //   wchar_t * lpVolumeNameBuffer,        // volume name buffer
+   //   DWORD nVolumeNameSize,            // length of name buffer
+   //   LPDWORD lpVolumeSerialNumber,     // volume serial number
+   //   LPDWORD lpMaximumComponentLength, // maximum file name length
+   //   LPDWORD lpFileSystemFlags,        // file system options
+   //   wchar_t * lpFileSystemNameBuffer,    // file system name buffer
+   //   DWORD nFileSystemNameSize)         // length of file system name buffer
+   //{
+   //   string strRootPathName;
+   //   string strVolumeNameBuffer;
+   //   string strFileSystemNameBuffer;
+   //   gen::international::UnicodeToACP(strRootPathName, lpRootPathName);
+   //   bool b = ::GetVolumeInformation(
+   //      strRootPathName,
+   //      strVolumeNameBuffer.GetBuffer(nVolumeNameSize),
+   //      nVolumeNameSize,
+   //      lpVolumeSerialNumber,
+   //      lpMaximumComponentLength,
+   //      lpFileSystemFlags,
+   //      strFileSystemNameBuffer.GetBuffer(nFileSystemNameSize),
+   //      nFileSystemNameSize) != FALSE;
+
+   //   strVolumeNameBuffer.ReleaseBuffer();
+   //   strFileSystemNameBuffer.ReleaseBuffer();
+   //   gen::international::ACPToUnicode(
+   //      lpVolumeNameBuffer, 
+   //      nVolumeNameSize, 
+   //      strVolumeNameBuffer);
+   //   gen::international::ACPToUnicode(
+   //      lpFileSystemNameBuffer, 
+   //      nFileSystemNameSize, 
+   //      strFileSystemNameBuffer);
+   //   return b;
+   //}
+
+   //dword_ptr shell::_SHGetFileInfo(      
+   //   const wchar_t * pszPath,
+   //   DWORD dwFileAttributes,
+   //   SHFILEINFOW *psfi,
+   //   UINT cbFileInfo,
+   //   UINT uFlags)
+   //{
+   //   UNREFERENCED_PARAMETER(cbFileInfo);
+   //   string strPath;
+   //   gen::international::UnicodeToACP(strPath, pszPath);
+   //   SHFILEINFOA shia;
+   //   if(!::SHGetFileInfoA(strPath, dwFileAttributes, 
+   //      &shia,
+   //      sizeof(shia),
+   //      uFlags))
+   //      return FALSE;
+   //   gen::international::ACPToUnicode(
+   //      psfi->szDisplayName, 
+   //      sizeof(psfi->szDisplayName) / sizeof(WCHAR),
+   //      shia.szDisplayName);
+   //   gen::international::ACPToUnicode(
+   //      psfi->szTypeName, 
+   //      sizeof(psfi->szTypeName) / sizeof(WCHAR),
+   //      shia.szTypeName);
+   //   return TRUE;
+   //}
 
 
-   DWORD shell::_GetTempPath(
-      DWORD nBufferLength,
-      wchar_t * lpBuffer)
-   {
-      string str;
-      DWORD dw = ::GetTempPathA(nBufferLength, str.GetBuffer(nBufferLength * 2));
-      str.ReleaseBuffer();
-      gen::international::ACPToUnicode(lpBuffer, nBufferLength, str);
-      return dw;
-   }
-
-   UINT shell::_GetTempFileName(
-      const wchar_t * lpPathName,
-      const wchar_t * lpPrefixString,
-      UINT uUnique,
-      wchar_t * lpTempFileName)
-   {
-      string strPathName;
-      string strPrefixString;
-      string strTempFileName;
-      gen::international::UnicodeToACP(strPathName, lpPathName);
-      gen::international::UnicodeToACP(strPrefixString, lpPrefixString);
-      UINT user = ::GetTempFileNameA(
-         strPathName,
-         strPrefixString,
-         uUnique,
-         strTempFileName.GetBuffer(MAX_PATH));
-      if(user == 0)
-      {
-         return 0;
-      }
-      strTempFileName.ReleaseBuffer();
-      gen::international::ACPToUnicode(
-         lpTempFileName,
-         MAX_PATH,
-         strTempFileName);
-      return user;
-   }
+   //BOOL shell::_GetStringTypeEx(      
+   //   LCID uiCodePage,
+   //   DWORD dwInfoType,
+   //   const wchar_t * lpSrcStr,
+   //   int cchSrc,
+   //   LPWORD lpCharType)
+   //{
+   //   strsize iCount = cchSrc;
+   //   if(iCount < 0)
+   //      iCount = gen::international::UnicodeToMultiByteCount(uiCodePage, lpSrcStr);
+   //   string str;
+   //   LPTSTR lpsz = str.GetBuffer(iCount);
+   //   if(gen::international::UnicodeToMultiByte(uiCodePage, lpsz, iCount, lpSrcStr))
+   //   {
+   //      //str.ReleaseBuffer();
+   //      //return true;
+   //   }
+   //   else
+   //   {
+   //      return false;
+   //   }
+   //   if(!GetStringTypeA(uiCodePage, dwInfoType, lpsz, (int) iCount, lpCharType))
+   //   {
+   //      return FALSE;
+   //   }
+   //   return TRUE;
+   //}
 
 
-   HANDLE shell::_CreateFile(
-      const wchar_t * lpFileName,
-      DWORD dwDesiredAccess,
-      DWORD dwShareMode,
-      LPSECURITY_ATTRIBUTES lpSecurityAttributes,
-      DWORD dwCreationDisposition,
-      DWORD dwFlagsAndAttributes,
-      HANDLE hTemplateFile
-      )
-   {
-      string strFileName;
-      gen::international::UnicodeToACP(strFileName, lpFileName);
-      HANDLE handle = ::CreateFileA(
-         strFileName,
-         dwDesiredAccess,
-         dwShareMode,
-         lpSecurityAttributes,
-         dwCreationDisposition,
-         dwFlagsAndAttributes,
-         hTemplateFile);
-      return handle;
-   }
+   //DWORD shell::_GetTempPath(
+   //   DWORD nBufferLength,
+   //   wchar_t * lpBuffer)
+   //{
+   //   string str;
+   //   DWORD dw = ::GetTempPathA(nBufferLength, str.GetBuffer(nBufferLength * 2));
+   //   str.ReleaseBuffer();
+   //   gen::international::ACPToUnicode(lpBuffer, nBufferLength, str);
+   //   return dw;
+   //}
+
+   //UINT shell::_GetTempFileName(
+   //   const wchar_t * lpPathName,
+   //   const wchar_t * lpPrefixString,
+   //   UINT uUnique,
+   //   wchar_t * lpTempFileName)
+   //{
+   //   string strPathName;
+   //   string strPrefixString;
+   //   string strTempFileName;
+   //   gen::international::UnicodeToACP(strPathName, lpPathName);
+   //   gen::international::UnicodeToACP(strPrefixString, lpPrefixString);
+   //   UINT user = ::GetTempFileNameA(
+   //      strPathName,
+   //      strPrefixString,
+   //      uUnique,
+   //      strTempFileName.GetBuffer(MAX_PATH));
+   //   if(user == 0)
+   //   {
+   //      return 0;
+   //   }
+   //   strTempFileName.ReleaseBuffer();
+   //   gen::international::ACPToUnicode(
+   //      lpTempFileName,
+   //      MAX_PATH,
+   //      strTempFileName);
+   //   return user;
+   //}
 
 
-   DWORD shell::_GetModuleFileName(
-      HMODULE hModule,
-      wchar_t * lpFilename,
-      DWORD nSize
-      )
-   {
-      string str;
-      DWORD dw = ::GetModuleFileNameA(hModule, str.GetBuffer(nSize * 2), nSize * 2);
-      str.ReleaseBuffer();
-      gen::international::ACPToUnicode(lpFilename, nSize, str);
-      return dw;
-   }
-
-   BOOL shell::_GetClassInfo(HINSTANCE hInstance , const wchar_t * lpClassName, LPWNDCLASSW lpWndClass)
-   {
-      WNDCLASS wndclass;
-
-      string strClassName;
-      const char * lpszClassName;
-      if(((DWORD) lpClassName) >> 16 == 0)
-      {
-         lpszClassName = (const char *) lpClassName;
-      }
-      else
-      {
-         strClassName = lpClassName;
-         lpszClassName = strClassName;
-      }
-      if(!::GetClassInfoA(hInstance, lpszClassName, &wndclass))
-         return FALSE;
-
-      lpWndClass->style = wndclass.style;
-      lpWndClass->lpfnWndProc = wndclass.lpfnWndProc;
-      lpWndClass->lpfnWndProc = wndclass.lpfnWndProc;
-      lpWndClass->cbClsExtra = wndclass.cbClsExtra;
-      lpWndClass->cbWndExtra = wndclass.cbWndExtra;
-      lpWndClass->hInstance = wndclass.hInstance;
-      lpWndClass->hIcon = wndclass.hIcon;
-      lpWndClass->hCursor = wndclass.hCursor;
-      lpWndClass->hbrBackground = wndclass.hbrBackground;
-
-      /*   if(((DWORD) wndclass) >> 16 == 0)
-      {
-      lpszClassName = (const char *) lpClassName;
-      }
-      else
-      {
-      strClassName = lpClassName;
-      lpszClassName = strClassName
-      }
-      string strMenuName;*/
-      //strMenuName = wndclass->lpszMenuName;
-      lpWndClass->lpszMenuName = (const wchar_t *) wndclass.lpszMenuName;
-
-      lpWndClass->lpszClassName = (const wchar_t *) wndclass.lpszClassName;
-
-      return TRUE;
-
-   }
-   ATOM shell::_RegisterClass(
-      CONST WNDCLASSW *lpWndClass)
-   {
-      WNDCLASS wndclass;
-
-      wndclass.style = lpWndClass->style;
-      wndclass.lpfnWndProc = lpWndClass->lpfnWndProc;
-      wndclass.lpfnWndProc = lpWndClass->lpfnWndProc;
-      wndclass.cbClsExtra = lpWndClass->cbClsExtra;
-      wndclass.cbWndExtra = lpWndClass->cbWndExtra;
-      wndclass.hInstance = lpWndClass->hInstance;
-      wndclass.hIcon = lpWndClass->hIcon;
-      wndclass.hCursor = lpWndClass->hCursor;
-      wndclass.hbrBackground = lpWndClass->hbrBackground;
-
-      string strMenuName;
-      strMenuName = lpWndClass->lpszMenuName;
-      wndclass.lpszMenuName = strMenuName;
-
-      string strClassName;
-      strClassName = lpWndClass->lpszClassName;
-      wndclass.lpszClassName = strClassName;
-
-      return ::RegisterClassA(&wndclass);
-   }
+   //HANDLE shell::_CreateFile(
+   //   const wchar_t * lpFileName,
+   //   DWORD dwDesiredAccess,
+   //   DWORD dwShareMode,
+   //   LPSECURITY_ATTRIBUTES lpSecurityAttributes,
+   //   DWORD dwCreationDisposition,
+   //   DWORD dwFlagsAndAttributes,
+   //   HANDLE hTemplateFile
+   //   )
+   //{
+   //   string strFileName;
+   //   gen::international::UnicodeToACP(strFileName, lpFileName);
+   //   HANDLE handle = ::CreateFileA(
+   //      strFileName,
+   //      dwDesiredAccess,
+   //      dwShareMode,
+   //      lpSecurityAttributes,
+   //      dwCreationDisposition,
+   //      dwFlagsAndAttributes,
+   //      hTemplateFile);
+   //   return handle;
+   //}
 
 
-   oswindow shell::_CreateWindowEx(
-      DWORD dwExStyle,
-      const wchar_t * lpClassName,
-      const wchar_t * lpWindowName,
-      DWORD dwStyle,
-      int x,
-      int y,
-      int nWidth,
-      int nHeight,
-      oswindow oswindow_Parent,
-      HMENU hMenu,
-      HINSTANCE hInstance,
-      LPVOID lpParam)
-   {
-      string strClassName;
-      const char * lpszClassName;
-      if(((DWORD) lpClassName) >> 16 == 0)
-      {
-         lpszClassName = (const char *) lpClassName;
-      }
-      else
-      {
-         strClassName = lpClassName;
-         lpszClassName = strClassName;
-      }
+   //DWORD shell::_GetModuleFileName(
+   //   HMODULE hModule,
+   //   wchar_t * lpFilename,
+   //   DWORD nSize
+   //   )
+   //{
+   //   string str;
+   //   DWORD dw = ::GetModuleFileNameA(hModule, str.GetBuffer(nSize * 2), nSize * 2);
+   //   str.ReleaseBuffer();
+   //   gen::international::ACPToUnicode(lpFilename, nSize, str);
+   //   return dw;
+   //}
 
-      string strWindowName;
-      strWindowName = lpWindowName;
+   //BOOL shell::_GetClassInfo(HINSTANCE hInstance , const wchar_t * lpClassName, LPWNDCLASSW lpWndClass)
+   //{
+   //   WNDCLASS wndclass;
 
-      return ::CreateWindowExA(
-         dwExStyle,
-         lpszClassName,
-         strWindowName,
-         dwStyle,
-         x,
-         y,
-         nWidth,
-         nHeight,
-         oswindow_Parent,
-         hMenu,
-         hInstance,
-         lpParam);
+   //   string strClassName;
+   //   const char * lpszClassName;
+   //   if(((DWORD) lpClassName) >> 16 == 0)
+   //   {
+   //      lpszClassName = (const char *) lpClassName;
+   //   }
+   //   else
+   //   {
+   //      strClassName = lpClassName;
+   //      lpszClassName = strClassName;
+   //   }
+   //   if(!::GetClassInfoA(hInstance, lpszClassName, &wndclass))
+   //      return FALSE;
 
-   }
+   //   lpWndClass->style = wndclass.style;
+   //   lpWndClass->lpfnWndProc = wndclass.lpfnWndProc;
+   //   lpWndClass->lpfnWndProc = wndclass.lpfnWndProc;
+   //   lpWndClass->cbClsExtra = wndclass.cbClsExtra;
+   //   lpWndClass->cbWndExtra = wndclass.cbWndExtra;
+   //   lpWndClass->hInstance = wndclass.hInstance;
+   //   lpWndClass->hIcon = wndclass.hIcon;
+   //   lpWndClass->hCursor = wndclass.hCursor;
+   //   lpWndClass->hbrBackground = wndclass.hbrBackground;
 
+   //   /*   if(((DWORD) wndclass) >> 16 == 0)
+   //   {
+   //   lpszClassName = (const char *) lpClassName;
+   //   }
+   //   else
+   //   {
+   //   strClassName = lpClassName;
+   //   lpszClassName = strClassName
+   //   }
+   //   string strMenuName;*/
+   //   //strMenuName = wndclass->lpszMenuName;
+   //   lpWndClass->lpszMenuName = (const wchar_t *) wndclass.lpszMenuName;
+
+   //   lpWndClass->lpszClassName = (const wchar_t *) wndclass.lpszClassName;
+
+   //   return TRUE;
+
+   //}
+   //ATOM shell::_RegisterClass(
+   //   CONST WNDCLASSW *lpWndClass)
+   //{
+   //   WNDCLASS wndclass;
+
+   //   wndclass.style = lpWndClass->style;
+   //   wndclass.lpfnWndProc = lpWndClass->lpfnWndProc;
+   //   wndclass.lpfnWndProc = lpWndClass->lpfnWndProc;
+   //   wndclass.cbClsExtra = lpWndClass->cbClsExtra;
+   //   wndclass.cbWndExtra = lpWndClass->cbWndExtra;
+   //   wndclass.hInstance = lpWndClass->hInstance;
+   //   wndclass.hIcon = lpWndClass->hIcon;
+   //   wndclass.hCursor = lpWndClass->hCursor;
+   //   wndclass.hbrBackground = lpWndClass->hbrBackground;
+
+   //   string strMenuName;
+   //   strMenuName = lpWndClass->lpszMenuName;
+   //   wndclass.lpszMenuName = strMenuName;
+
+   //   string strClassName;
+   //   strClassName = lpWndClass->lpszClassName;
+   //   wndclass.lpszClassName = strClassName;
+
+   //   return ::RegisterClassA(&wndclass);
+   //}
+
+
+   //oswindow shell::_CreateWindowEx(
+   //   DWORD dwExStyle,
+   //   const wchar_t * lpClassName,
+   //   const wchar_t * lpWindowName,
+   //   DWORD dwStyle,
+   //   int x,
+   //   int y,
+   //   int nWidth,
+   //   int nHeight,
+   //   oswindow oswindow_Parent,
+   //   HMENU hMenu,
+   //   HINSTANCE hInstance,
+   //   LPVOID lpParam)
+   //{
+   //   string strClassName;
+   //   const char * lpszClassName;
+   //   if(((DWORD) lpClassName) >> 16 == 0)
+   //   {
+   //      lpszClassName = (const char *) lpClassName;
+   //   }
+   //   else
+   //   {
+   //      strClassName = lpClassName;
+   //      lpszClassName = strClassName;
+   //   }
+
+   //   string strWindowName;
+   //   strWindowName = lpWindowName;
+
+   //   return ::CreateWindowExA(
+   //      dwExStyle,
+   //      lpszClassName,
+   //      strWindowName,
+   //      dwStyle,
+   //      x,
+   //      y,
+   //      nWidth,
+   //      nHeight,
+   //      oswindow_Parent,
+   //      hMenu,
+   //      hInstance,
+   //      lpParam);
+
+   //}
+   //*/
 
 } // namespace win
 

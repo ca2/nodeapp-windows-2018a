@@ -21,7 +21,7 @@ namespace win
 
 
       static bool Initialize();
-      static BOOL WINAPI _SHGetPathFromIDList(LPCITEMIDLIST pidl, wchar_t * pszPath);
+/*      static BOOL WINAPI _SHGetPathFromIDList(LPCITEMIDLIST pidl, wchar_t * pszPath);
       static HANDLE WINAPI _FindFirstFile(const wchar_t * lpcsz, WIN32_FIND_DATAW * lpdata);
       static BOOL WINAPI _FindNextFile(HANDLE handle, WIN32_FIND_DATAW * lpdata);
       static BOOL WINAPI _MoveFile(const wchar_t * lpExistingFileName, const wchar_t * lpNewFileName);
@@ -89,7 +89,7 @@ namespace win
          oswindow oswindow_Parent,
          HMENU hMenu,
          HINSTANCE hInstance,
-         LPVOID lpParam);
+         LPVOID lpParam);*/
 
 
 
