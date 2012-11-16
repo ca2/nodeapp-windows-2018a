@@ -4024,14 +4024,21 @@ ExitModal:
          {
             send_message(WM_SIZE, 0, 0);
          }
+         
 
       }
       if(GetExStyle() & WS_EX_LAYERED)
       {
          nFlags |= SWP_NOCOPYBITS;
          nFlags |= SWP_NOREDRAW;
-         nFlags |= SWP_NOMOVE;
-         nFlags |= SWP_NOSIZE;
+         if(rectWindowOld.top_left() == m_rectParentClient.top_left())
+         {
+            nFlags |= SWP_NOMOVE;
+         }
+         if(rectWindowOld.size() == m_rectParentClient.size())
+         {
+            nFlags |= SWP_NOSIZE;
+         }
          //nFlags |= SWP_NOZORDER;
          //nFlags |= SWP_FRAMECHANGED;
 
@@ -6470,6 +6477,8 @@ namespace win
          spg->SelectObject(spb);
 
          _001Print(spg);
+
+         //spg->FillSolidRect(0, 0, 85, 85, ARGB(255, 0, 0, 0));
 
          spb->detach();
 
