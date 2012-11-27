@@ -184,9 +184,57 @@ namespace win
       }
    }
 
-   bool path::is_equal(const char * lpcsz1, const char * lpcsz2)
+   bool path::is_equal(const char * lpszPath1, const char * lpszPath2)
    {
-      return System.file_system().ComparePath(lpcsz1, lpcsz2);
+      // use case insensitive compare as a starter
+      if (lstrcmpi(lpszPath1, lpszPath2) != 0)
+      return FALSE;
+
+      // on non-DBCS systems, we are done
+      if (!GetSystemMetrics(SM_DBCSENABLED))
+      return TRUE;
+
+      // on DBCS systems, the file name may not actually be the same
+      // in particular, the file system is case sensitive with respect to
+      // "full width" roman characters.
+      // (ie. fullwidth-R is different from fullwidth-r).
+      int nLen = lstrlen(lpszPath1);
+      if (nLen != lstrlen(lpszPath2))
+      return FALSE;
+      ASSERT(nLen < _MAX_PATH);
+
+      // need to get both CT_CTYPE1 and CT_CTYPE3 for each filename
+      LCID lcid = GetThreadLocale();
+      WORD aCharType11[_MAX_PATH];
+      VERIFY(GetStringTypeEx(lcid, CT_CTYPE1, lpszPath1, -1, aCharType11));
+      WORD aCharType13[_MAX_PATH];
+      VERIFY(GetStringTypeEx(lcid, CT_CTYPE3, lpszPath1, -1, aCharType13));
+      WORD aCharType21[_MAX_PATH];
+      VERIFY(GetStringTypeEx(lcid, CT_CTYPE1, lpszPath2, -1, aCharType21));
+      #ifdef DEBUG
+      WORD aCharType23[_MAX_PATH];
+      VERIFY(GetStringTypeEx(lcid, CT_CTYPE3, lpszPath2, -1, aCharType23));
+      #endif
+
+      // for every C3_FULLWIDTH character, make sure it has same C1 value
+      int i = 0;
+      for (const char * lpsz = lpszPath1; *lpsz != 0; lpsz = _tcsinc(lpsz))
+      {
+      // check for C3_FULLWIDTH characters only
+      if (aCharType13[i] & C3_FULLWIDTH)
+      {
+      #ifdef DEBUG
+      ASSERT(aCharType23[i] & C3_FULLWIDTH); // should always match!
+      #endif
+
+      // if CT_CTYPE1 is different then file system considers these
+      // file names different.
+      if (aCharType11[i] != aCharType21[i])
+      return FALSE;
+      }
+      ++i; // look at next character type
+      }
+      return TRUE; // otherwise file name is truly the same
    }
 
    void dir::root_ones(stringa & stra, ::ca::application * papp)
@@ -431,8 +479,16 @@ namespace win
       
       bool bIsDir;
 
-      if(m_isdirmap.lookup(lpcszPath, bIsDir))
+      DWORD dwLastError;
+
+      if(m_isdirmap.lookup(lpcszPath, bIsDir, dwLastError))
+      {
+         if(!bIsDir)
+         {
+            ::SetLastError(dwLastError);
+         }
          return bIsDir;
+      }
 
       if(::ca::dir::system::is(lpcszPath, papp))
          return true;
@@ -459,7 +515,7 @@ namespace win
       
       bIsDir = (dwAttrib != INVALID_FILE_ATTRIBUTES) && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY);
       
-      m_isdirmap.set(lpcszPath, bIsDir);
+      m_isdirmap.set(lpcszPath, bIsDir, bIsDir ? 0 : ::GetLastError());
 
       return bIsDir;
    }
@@ -472,8 +528,16 @@ namespace win
 
       bool bIsDir;
 
-      if(m_isdirmap.lookup(strPath, bIsDir))
+      DWORD dwLastError;
+
+      if(m_isdirmap.lookup(strPath, bIsDir, dwLastError))
+      {
+         if(!bIsDir)
+         {
+            ::SetLastError(dwLastError);
+         }
          return bIsDir;
+      }
 
       wstring wstrPath;
       
@@ -500,7 +564,7 @@ namespace win
       
       bIsDir = (dwAttrib != INVALID_FILE_ATTRIBUTES) && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY);
       
-      m_isdirmap.set(strPath, bIsDir);
+      m_isdirmap.set(strPath, bIsDir, bIsDir ? 0 : ::GetLastError());
 
       return bIsDir;
    }
@@ -542,13 +606,21 @@ namespace win
       bool bIsDir;
 
 
-      if(m_isdirmap.lookup(str, bIsDir, (int) iLast))
+      DWORD dwLastError;
+
+      if(m_isdirmap.lookup(str, bIsDir, dwLastError, (int) iLast))
+      {
+         if(!bIsDir)
+         {
+            ::SetLastError(dwLastError);
+         }
          return bIsDir;
+      }
 
 
       if(papp->m_bZipIsDir && iLast >= 3  && !strnicmp_dup(&((const char *) str)[iLast - 3], ".zip", 4))
       {
-         m_isdirmap.set(str.Left(iLast + 1), true);
+         m_isdirmap.set(str.Left(iLast + 1), true, 0);
          return true;
       }
       
@@ -557,10 +629,16 @@ namespace win
       if(papp->m_bZipIsDir && iFind >= 0 && iFind < iLast)
       {
          bool bHasSubFolder;
-         if(m_isdirmap.lookup(str, bHasSubFolder))
+         if(m_isdirmap.lookup(str, bHasSubFolder, dwLastError))
+         {
+            if(!bHasSubFolder)
+            {
+               ::SetLastError(dwLastError);
+            }
             return bHasSubFolder;
+         }
          bHasSubFolder = m_pziputil->HasSubFolder(papp, str);
-         m_isdirmap.set(str.Left(iLast + 1), bHasSubFolder);
+         m_isdirmap.set(str.Left(iLast + 1), bHasSubFolder, bHasSubFolder ? 0 : ::GetLastError());
          return bHasSubFolder;
       }
 
@@ -595,7 +673,7 @@ namespace win
       
       bIsDir = (dwAttrib != INVALID_FILE_ATTRIBUTES) && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY);
       
-      m_isdirmap.set(str.Left(iLast + 1), bIsDir);
+      m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::GetLastError());
 
       return bIsDir;
    }
@@ -747,7 +825,7 @@ namespace win
                   }
                   if(::CreateDirectoryW(gen::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
                   {
-                     m_isdirmap.set(stra[i], true);
+                     m_isdirmap.set(stra[i], true, 0);
                      goto try1;
                   }
                   else
@@ -764,7 +842,7 @@ namespace win
             }
             else
             {
-               m_isdirmap.set(stra[i], true);
+               m_isdirmap.set(stra[i], true, 0);
             }
             try1:
             

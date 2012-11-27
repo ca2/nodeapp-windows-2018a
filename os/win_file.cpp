@@ -194,7 +194,8 @@ namespace win
 
          try
          {
-            m_psystem->m_spfilesystem.m_p->FullPath(m_wstrFileName, m_wstrFileName);
+            ::win::file_system fs(get_app());
+            fs.FullPath(m_wstrFileName, m_wstrFileName);
          }
          catch(...)
          {
@@ -547,9 +548,7 @@ namespace win
 
       ::ex1::file_status status;
       GetStatus(status);
-      string wstrResult;
-      System.file_system().GetFileName(status.m_strFullName, wstrResult);
-      return wstrResult;
+      return System.file().name_(status.m_strFullName);
    }
 
    string file::GetFileTitle() const
@@ -558,9 +557,7 @@ namespace win
 
       ::ex1::file_status status;
       GetStatus(status);
-      string wstrResult;
-      System.file_system().GetFileTitle(status.m_strFullName, wstrResult);
-      return wstrResult;
+      return System.file().title_(status.m_strFullName);
    }
 
    string file::GetFilePath() const

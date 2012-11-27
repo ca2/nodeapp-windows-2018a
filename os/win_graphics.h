@@ -44,8 +44,11 @@ namespace win
 
       //static ::ca::graphics * PASCAL from_handle(HDC hDC);
       //static void PASCAL DeleteTempMap();
-      bool attach(HDC hdc);   // attach/detach affects only the Output DC
-      HDC detach();
+      virtual bool attach(void * pgraphics) override;   // attach/detach affects only the Output DC
+      virtual void * detach() override;
+
+      virtual bool Attach(HDC hdc);   // attach/detach affects only the Output DC
+      virtual HDC Detach();
 
       virtual void SetAttribDC(HDC hDC);  // Set the Attribute DC
       virtual void SetOutputDC(HDC hDC);  // Set the Output DC
@@ -480,7 +483,7 @@ namespace win
       virtual HDC get_handle1() const;
       virtual HDC get_handle2() const;
 
-      virtual void attach(void * pdata);
+//      virtual bool attach(void * pdata);
 
 
       virtual Gdiplus::FillMode gdiplus_get_fill_mode();

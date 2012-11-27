@@ -42,7 +42,7 @@ namespace win
    }
 
 
-   ::count ip_enum::enumerate(ip_array & ipa)
+/*   ::count ip_enum::enumerate(ip_array & ipa)
    {
       //get this machines host name
       char szHostname[256];
@@ -86,22 +86,90 @@ namespace win
 
       return TRUE;
    }
-
+*/
    ::count ip_enum::enumerate(stringa & stra)
    {
 
-      ip_array ipa;
-      
-      ::count c = enumerate(ipa);
-
-      for(int i = 0; i < ipa.get_count(); i++)
+      //get this machines host name
+      char szHostname[256];
+      if (gethostname(szHostname, sizeof(szHostname)))
       {
-         
-         stra.add(inet_ntoa(ipa[i].m_addr));
-
+         TRACE("Failed in call to gethostname, WSAGetLastError returns %d\n", WSAGetLastError());
+         return FALSE;
       }
 
-      return c;
+      //get host information from the host name
+      HOSTENT* pent = gethostbyname(szHostname);
+      if (pent == NULL)
+      {
+         TRACE("Failed in call to gethostbyname, WSAGetLastError returns %d\n", WSAGetLastError());
+         return FALSE;
+      }
+
+      int nAdapter = 0;
+
+      string str;
+
+      //check the length of the IP adress
+      if (pent->h_length == 4)
+      {
+
+         in_addr a;
+
+         while(pent->h_addr_list[nAdapter])
+         {
+         
+            memcpy(&a, pent->h_addr_list[nAdapter], 4);
+
+            str = to_string(&a);
+
+            if(str.has_char())
+            {
+
+               stra.add(str);
+
+            }
+
+            nAdapter++;
+
+         }
+         return FALSE;
+      }
+      else if (pent->h_length == 32)
+      {
+
+         in6_addr a;
+
+         while(pent->h_addr_list[nAdapter])
+         {
+         
+            memcpy(&a, pent->h_addr_list[nAdapter], 32);
+
+            str = to_string(&a);
+
+            if(str.has_char())
+            {
+
+               stra.add(str);
+
+            }
+
+            nAdapter++;
+
+         }
+
+         return FALSE;
+
+      }
+      else
+      {
+         TRACE("IP address returned is neither 32 bits or 128 bits !!\n");
+         return FALSE;
+      }
+      //call the virtual callback function in a loop
+      
+
+      return stra.get_size();
 
    }
 

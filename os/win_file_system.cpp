@@ -21,8 +21,8 @@ namespace win
    bool file_system::FullPath(string &str, const char * lpszFileIn)
    {
 
-      if(::ex1::file_system::FullPath(str, lpszFileIn))
-         return true;
+      //if(::ex1::file_system::FullPath(str, lpszFileIn))
+        // return true;
 
       if(gen::str::begins_ci(lpszFileIn, "http://"))
       {
@@ -54,8 +54,8 @@ namespace win
    bool file_system::FullPath(wstring & wstrFullPath, const wstring & wstrPath)
    {
 
-      if(::ex1::file_system::FullPath(wstrFullPath, wstrPath))
-         return true;
+/*      if(::ex1::file_system::FullPath(wstrFullPath, wstrPath))
+         return true;*/
 
       if(gen::str::begins_ci(wstrPath, L"http://"))
       {

@@ -58,7 +58,7 @@ namespace win
    graphics::~graphics()
    {
       
-      HDC hdc = detach();
+      HDC hdc = (HDC) detach();
       
       if(hdc != NULL)
       {
@@ -103,12 +103,12 @@ namespace win
    bool graphics::CreateDC(const char * lpszDriverName,
       const char * lpszDeviceName, const char * lpszOutput, const void * lpInitData)
    {
-      return attach(::CreateDC(lpszDriverName, lpszDeviceName, lpszOutput, (const DEVMODE*)lpInitData)); 
+      return Attach(::CreateDC(lpszDriverName, lpszDeviceName, lpszOutput, (const DEVMODE*)lpInitData)); 
    }
    
    bool graphics::CreateIC(const char * lpszDriverName, const char * lpszDeviceName, const char * lpszOutput, const void * lpInitData)
    { 
-      return attach(::CreateIC(lpszDriverName, lpszDeviceName, lpszOutput, (const DEVMODE*) lpInitData)); 
+      return Attach(::CreateIC(lpszDriverName, lpszDeviceName, lpszOutput, (const DEVMODE*) lpInitData)); 
    }
 
    bool graphics::CreateCompatibleDC(::ca::graphics * pgraphics)
@@ -125,7 +125,7 @@ namespace win
          hdc = ::CreateCompatibleDC((HDC)(dynamic_cast<::win::graphics * >(pgraphics))->get_handle1()); 
       }
 
-      if(!attach(hdc))
+      if(!Attach(hdc))
       {
          ::DeleteDC(hdc);
          return FALSE;
@@ -2163,7 +2163,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
      // return NULL;
    //}
 
-   bool graphics::attach(HDC hdc)
+   bool graphics::Attach(HDC hdc)
    {
 
       if(hdc == NULL)
@@ -2180,11 +2180,11 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if(hdc != NULL)
       {
          
-         m_pgraphics = new ::Gdiplus::Graphics(hdc);
+         m_pgraphics = new ::Gdiplus::Graphics((HDC) hdc);
 
          set_text_rendering(::ca::text_rendering_anti_alias_grid_fit);
 
-         m_hdc = hdc;
+         m_hdc = (HDC) hdc;
 
       }
 
@@ -2207,7 +2207,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return TRUE;*/
    }
 
-   HDC graphics::detach()
+   HDC graphics::Detach()
    {
 
       if(m_hdc == NULL)
@@ -2232,7 +2232,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if(get_handle() == NULL)
          return FALSE;
 
-      return ::DeleteDC(detach()) != FALSE;
+      return ::DeleteDC((HDC) detach()) != FALSE;
    }
 
 
@@ -4123,15 +4123,28 @@ namespace win
       return get_handle();
    }
 
-   void graphics::attach(void * pdata)
+   bool graphics::attach(void * pdata)
    {
       if(m_pgraphics != NULL)
       {
          delete m_pgraphics;
       }
       m_pgraphics = (Gdiplus::Graphics *) pdata;
+      return false;
    }
 
+   void * graphics::detach()
+   {
+      
+      Gdiplus::Graphics * pgraphics = m_pgraphics;
+
+      m_pgraphics = NULL;
+
+      m_hdc = NULL;
+
+      return pgraphics;
+
+   }
 
    Gdiplus::Font * graphics::gdiplus_font()
    {
