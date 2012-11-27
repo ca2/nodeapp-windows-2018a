@@ -29,10 +29,8 @@ namespace win
       virtual bool start_figure();
       virtual bool close_figure();
 
-
       virtual bool add_line(int x1, int y1, int x2, int y2);
-      virtual bool add_line(point p1, point p2);
-
+      virtual bool add_line(int x, int y);
 
    };
 

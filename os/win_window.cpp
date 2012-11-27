@@ -4569,11 +4569,11 @@ ExitModal:
       ::ca::graphics_sp g(get_app());
       if(get_handle() == NULL)
       {
-         (dynamic_cast < ::win::graphics * >(g.m_p))->attach(::GetDC(NULL));
+         (dynamic_cast < ::win::graphics * >(g.m_p))->Attach(::GetDC(NULL));
       }
       else
       {
-         (dynamic_cast < ::win::graphics * >(g.m_p))->attach(::GetDC(get_handle()));
+         (dynamic_cast < ::win::graphics * >(g.m_p))->Attach(::GetDC(get_handle()));
       }
       return g.detach();
    }
@@ -4582,7 +4582,7 @@ ExitModal:
    {
       ASSERT(::IsWindow(get_handle())); 
       ::ca::graphics_sp g(get_app());
-      g->attach(::GetWindowDC(get_handle()));
+      (dynamic_cast < ::win::graphics * >(g.m_p))->Attach(::GetWindowDC(get_handle()));
       return g.detach();
    }
 

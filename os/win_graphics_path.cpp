@@ -63,18 +63,19 @@ namespace win
 
    }
 
-   
    bool graphics_path::add_line(int x1, int y1, int x2, int y2)
    {
 
       return m_ppath->AddLine(x1, y1, x2, y2) == Gdiplus::Status::Ok;
 
    }
-
-   bool graphics_path::add_line(point p1, point p2)
+   
+   bool graphics_path::add_line(int x, int y)
    {
 
-      return m_ppath->AddLine(p1.x, p1.y, p2.x, p2.y) == Gdiplus::Status::Ok;
+      point pt = last_point();
+
+      return m_ppath->AddLine(pt.x, pt.y, x, y) == Gdiplus::Status::Ok;
 
    }
 

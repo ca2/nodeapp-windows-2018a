@@ -1272,7 +1272,7 @@ gdi_fallback:
       ::Gdiplus::Font font2(pfamilyMono, pfamilyMono->GetEmHeight(((graphics * )this)->gdiplus_font()->GetStyle()));
       
       wstring wstr(L"123AWZwmc123AWZwmcpQçg");
-      Gdiplus::RectF rect;
+      Gdiplus::RectF rect(0.f, 0.f, 1024.f * 1024.f, 1024.f * 1024.f);
       Gdiplus::RectF rect2;
       Gdiplus::PointF origin(0, 0);
 
