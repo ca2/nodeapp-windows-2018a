@@ -66,8 +66,8 @@ namespace win
       int dxDst, int dyDst, UINT wFlags)
    {
       return ::DrawDibDraw( m_hdrawdib, (HDC)pdc->get_os_data(), xDst, yDst, dxDst, dyDst, 
-         &((dynamic_cast < ::win::dib * > (dib))->m_info.bmiHeader), dib->get_data(), 0, 0, dib->width(),
-         dib->height(), wFlags ) != FALSE;
+         &((dynamic_cast < ::win::dib * > (dib))->m_info.bmiHeader), dib->get_data(), 0, 0, dib->cx,
+         dib->cy, wFlags ) != FALSE;
    }
 
    bool draw_dib::draw (
