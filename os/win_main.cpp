@@ -34,6 +34,8 @@ int CLASS_DECL_win __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTS
    if(!main_initialize())
       return -1;
 
+   //Sleep(15 * 1000);
+
 
    _set_purecall_handler(_ca2_purecall);
 
