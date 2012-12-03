@@ -1705,7 +1705,7 @@ namespace win
       // Black blend dib
       ::ca::dib_sp spdib2(get_app());
       spdib2->create(cx, cy);
-      spdib2->Fill(0, 0, 0);
+      spdib2->Fill(0, 0, 0, 0);
 
       spdib2->get_graphics()->DrawIcon(
          0, 0,
@@ -2353,7 +2353,7 @@ namespace win
 
       Gdiplus::RectF rectDest(0, 0, (Gdiplus::REAL) width(), (Gdiplus::REAL) height());
 
-      Gdiplus::RectF rectSource(0, 0, (Gdiplus::REAL) pdib->width(), (Gdiplus::REAL) pdib->height());
+      Gdiplus::RectF rectSource(0, 0, (Gdiplus::REAL) pdib->cx, (Gdiplus::REAL) pdib->cy);
 
       ((Gdiplus::Graphics * ) m_spgraphics->get_os_data())->DrawImage(((Gdiplus::Bitmap *)pdib->get_bitmap()->get_os_data()), rectDest, rectSource, Gdiplus::UnitPixel);
 

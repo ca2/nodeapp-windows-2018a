@@ -933,7 +933,7 @@ namespace win
             
          pdibWork4->from(point(max(0, m_ptAlphaBlend.x - x), max(0, m_ptAlphaBlend.y - y)),
             m_pdibAlphaBlend->get_graphics(), point(max(0, x - m_ptAlphaBlend.x), max(0, y - m_ptAlphaBlend.y)), 
-                               class size(max(0, m_pdibAlphaBlend->width() - max(0, x - m_ptAlphaBlend.x)), max(0, m_pdibAlphaBlend->height() - max(0, y - m_ptAlphaBlend.y))));
+                               class size(max(0, m_pdibAlphaBlend->cx - max(0, x - m_ptAlphaBlend.x)), max(0, m_pdibAlphaBlend->cy - max(0, y - m_ptAlphaBlend.y))));
    
          pdibWork->channel_multiply(visual::rgba::channel_alpha, pdibWork4);
 
@@ -1085,8 +1085,8 @@ gdi_fallback:
                dib2->get_graphics()->set_alpha_mode(::ca::alpha_mode_set);
                dib2->from(point(max(0, m_ptAlphaBlend.x - x), max(0, m_ptAlphaBlend.y - y)),
                   m_pdibAlphaBlend->get_graphics(), point(max(0, x - m_ptAlphaBlend.x), max(0, y - m_ptAlphaBlend.y)), 
-                  size(max(0, m_pdibAlphaBlend->width()-max(0, x - m_ptAlphaBlend.x)),
-                        max(0, m_pdibAlphaBlend->height()-max(0, y - m_ptAlphaBlend.y))));
+                  size(max(0, m_pdibAlphaBlend->cx-max(0, x - m_ptAlphaBlend.x)),
+                        max(0, m_pdibAlphaBlend->cy-max(0, y - m_ptAlphaBlend.y))));
                dib1->channel_multiply(visual::rgba::channel_alpha, dib2);
                /*::ca::dib_sp dib3(get_app());
                dib1->mult_alpha(dib3);*/
