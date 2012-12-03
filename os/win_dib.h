@@ -26,8 +26,6 @@ namespace win
       BITMAPINFO           m_info;
       ::ca::bitmap_sp      m_spbitmap;
       ::ca::graphics_sp    m_spgraphics;
-      class size           m_size;
-      //HBITMAP              m_hbitmapOriginal;
 
       virtual ::ca::graphics * get_graphics();
       virtual ::ca::bitmap_sp get_bitmap();
@@ -143,8 +141,6 @@ namespace win
       void xor_dib_frame2(void * lpdata, int iFrame, int iFrameCount);
 
 
-      int width();
-      int height();
       double pi();
 
       virtual bool from(::ca::graphics * pgraphics, FIBITMAP *pfibitmap, bool bUnloadFI);
