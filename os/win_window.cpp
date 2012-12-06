@@ -4016,31 +4016,31 @@ ExitModal:
 
       if(GetExStyle() & WS_EX_LAYERED)
       {
+
          if(rectWindowOld.top_left() != m_rectParentClient.top_left())
          {
+
             send_message(WM_MOVE, 0, 0);
+
          }
+
          if(rectWindowOld.size() != m_rectParentClient.size())
          {
+
             send_message(WM_SIZE, 0, 0);
+
          }
-         
 
       }
+
       if(GetExStyle() & WS_EX_LAYERED)
       {
-         nFlags |= SWP_NOCOPYBITS;
+         /*nFlags |= SWP_NOCOPYBITS;
          nFlags |= SWP_NOREDRAW;
-         if(rectWindowOld.top_left() == m_rectParentClient.top_left())
-         {
-            nFlags |= SWP_NOMOVE;
-         }
-         if(rectWindowOld.size() == m_rectParentClient.size())
-         {
-            nFlags |= SWP_NOSIZE;
-         }
-         //nFlags |= SWP_NOZORDER;
-         //nFlags |= SWP_FRAMECHANGED;
+         nFlags |= SWP_NOMOVE;
+         nFlags |= SWP_NOSIZE;
+         nFlags |= SWP_NOZORDER;
+         nFlags |= SWP_FRAMECHANGED;
 
          if(nFlags & SWP_SHOWWINDOW)
          {
@@ -4054,6 +4054,24 @@ ExitModal:
          {
 
             ::SetWindowPos(get_handle(),(oswindow)  z, x, y, cx, cy, nFlags);
+
+         }*/
+         if(nFlags & SWP_SHOWWINDOW)
+         {
+
+//            ::SetWindowPos(get_handle(), (oswindow) z, x, y, cx, cy, nFlags);
+            if(!IsWindowVisible())
+            {
+
+               ShowWindow(SW_SHOW);
+
+            }
+
+         }
+         else
+         {
+
+          //  ::SetWindowPos(get_handle(),(oswindow)  z, x, y, cx, cy, nFlags);
 
          }
 
