@@ -143,7 +143,7 @@ namespace win
          while(pent->h_addr_list[nAdapter])
          {
          
-            memcpy(&a, pent->h_addr_list[nAdapter], 32);
+            memcpy(&a, pent->h_addr_list[nAdapter], sizeof(in6_addr));
 
             str = to_string(&a);
 

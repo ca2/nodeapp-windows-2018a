@@ -1782,8 +1782,8 @@ namespace win
      // ::ca::dib_sp spdib(get_app());
    //   spdib->Paste(this);
 
-      int cx = cx;
-      int cy = cy;
+      int cx = this->cx;
+      int cy = this->cy;
 
       int l = max(cx, cy);
 
@@ -1867,8 +1867,8 @@ namespace win
    void dib::Rotate034(::ca::dib * pdib, double dAngle, double dScale)
    {
      
-      int cx = cx;
-      int cy = cy;
+      int cx = this->cx;
+      int cy = this->cy;
 
       int l = max(cx, cy);
 

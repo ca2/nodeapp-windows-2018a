@@ -1188,17 +1188,17 @@ namespace win
          ::gen::message::mouse * pmouse = (::gen::message::mouse *) pbase;
 
          Application.m_ptCursor = pmouse->m_pt;
-         if(m_psession != NULL)
+         if(m_papp != NULL && m_papp->m_psession != NULL)
          {
             Session.m_ptCursor = pmouse->m_pt;
-            if(m_psession->m_pbergedgeInterface != NULL)
+            if(m_papp->m_psession->m_pbergedgeInterface != NULL)
             {
-               m_psession->m_pbergedgeInterface->m_ptCursor = pmouse->m_pt;
+               m_papp->m_psession->m_pbergedgeInterface->m_ptCursor = pmouse->m_pt;
             }
          }
-         if(m_pguie != NULL && m_pguie != this && m_pguie->m_psession != NULL && m_pguie->m_psession != m_psession)
+         if(m_pguie != NULL && m_pguie != this && m_pguie->m_papp->m_psession != NULL && m_pguie->m_papp->m_psession != m_papp->m_psession)
          {
-            Sess(m_pguie->m_psession).m_ptCursor = pmouse->m_pt;
+            Sess(m_pguie->m_papp->m_psession).m_ptCursor = pmouse->m_pt;
          }
 
          ::plane::session * psession = NULL;
