@@ -58,7 +58,7 @@ namespace win
    graphics::~graphics()
    {
       
-      HDC hdc = (HDC) detach();
+      /*HDC hdc = (HDC) detach();
       
       if(hdc != NULL)
       {
@@ -67,7 +67,7 @@ namespace win
          {
             TRACE("Failed to delete GDI device context");
          }
-      }
+      }*/
 
       if(m_pgraphics != NULL)
       {
