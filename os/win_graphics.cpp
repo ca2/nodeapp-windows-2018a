@@ -58,21 +58,40 @@ namespace win
    graphics::~graphics()
    {
       
-      /*HDC hdc = (HDC) detach();
+      HDC hdc = Detach();
       
       if(hdc != NULL)
       {
+
          bool bDeleted = ::DeleteDC(hdc) != FALSE;
+
          if(!bDeleted)
          {
+         
             TRACE("Failed to delete GDI device context");
+
          }
-      }*/
+
+      }
 
       if(m_pgraphics != NULL)
       {
-         delete m_pgraphics;
+
+         try
+         {
+            
+            delete m_pgraphics;
+
+         }
+         catch(...)
+         {
+
+            TRACE("graphics::~graphics : Failed to delete Gdiplus::Graphics");
+
+         }
+
          m_pgraphics = NULL;
+
       }
 
       if(m_ppath != NULL)
@@ -176,7 +195,7 @@ namespace win
       return ::EnumObjects(get_handle2(), nObjectType, (GOBJENUMPROC)lpfn, lpData); 
    }
 
-   ::ca::bitmap* graphics::SelectObject(::ca::bitmap* pBitmap)
+   ::ca::bitmap* graphics::SelectObject(::ca::bitmap * pBitmap)
    { 
 
       
@@ -190,7 +209,21 @@ namespace win
       return dynamic_cast < ::ca::bitmap* > (SelectGdiObject(get_app(), get_handle1(), pBitmap->get_os_data()));*/
       if(m_pgraphics != NULL)
       {
-         delete m_pgraphics;
+         try
+         {
+   
+            delete m_pgraphics;
+
+         }
+         catch(...)
+         {
+
+            TRACE("graphics::SelectObject(::ca::bitmap *) : Failed to delete Gdiplus::Graphics");
+
+         }
+
+         m_pgraphics = NULL;
+
       }
 
       m_pgraphics = new Gdiplus::Graphics((Gdiplus::Bitmap *) pBitmap->get_os_data());
@@ -232,7 +265,22 @@ namespace win
 
          if(m_pgraphics != NULL)
          {
-            delete m_pgraphics;
+            
+            try
+            {
+               
+               delete m_pgraphics;
+
+            }
+            catch(...)
+            {
+
+               TRACE("graphics::SelectObject(HGDIOBJ) OBJ_BITMAP : Failed to delete Gdiplus::Graphics");
+
+            }
+
+            m_pgraphics = NULL;
+
          }
 
          m_pgraphics = new Gdiplus::Graphics((Gdiplus::Bitmap *) m_bitmap->get_os_data());
@@ -776,6 +824,7 @@ namespace win
          }
    
          bOk1 = m_pgraphics->FillPolygon(gdiplus_brush(), ppoints, nCount, gdiplus_get_fill_mode()) == Gdiplus::Status::Ok;
+
          bOk2 = m_pgraphics->DrawPolygon(gdiplus_pen(), ppoints, nCount) == Gdiplus::Status::Ok;
 
       }
@@ -2216,7 +2265,19 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if(m_pgraphics == NULL)
          return NULL;
 
-      delete m_pgraphics;
+      try
+      {
+
+         delete m_pgraphics;
+
+      }
+      catch(...)
+      {
+
+         TRACE("graphics::Detach : Failed to delete Gdiplus::Graphics");
+
+      }
+
       m_pgraphics = NULL;
 
       HDC hdc = m_hdc;
@@ -4125,13 +4186,33 @@ namespace win
 
    bool graphics::attach(void * pdata)
    {
+
       if(m_pgraphics != NULL)
       {
-         delete m_pgraphics;
+
+         try
+         {
+      
+            delete m_pgraphics;
+
+         }
+         catch(...)
+         {
+            
+            TRACE("graphics::attach : Failed to delete Gdiplus::Graphics");
+
+         }
+
+         m_pgraphics = NULL;
+
       }
+
       m_pgraphics = (Gdiplus::Graphics *) pdata;
+
       return false;
+
    }
+
 
    void * graphics::detach()
    {
@@ -4244,7 +4325,9 @@ namespace win
 
    double graphics::get_dpix() const
    {
+
       return m_pgraphics->GetDpiX();
+
    }
 
 
