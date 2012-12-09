@@ -4077,8 +4077,7 @@ namespace win
 
       gdiplus_pen()->SetAlignment(Gdiplus::PenAlignment::PenAlignmentCenter);
 
-      m_pgraphics->DrawLine(gdiplus_pen(), Gdiplus::Point(m_x, m_y), Gdiplus::Point(x, y));
-
+      m_pgraphics->DrawLine(gdiplus_pen(), Gdiplus::PointF((Gdiplus::REAL) m_x, (Gdiplus::REAL)  m_y), Gdiplus::PointF((Gdiplus::REAL) x, (Gdiplus::REAL) y));
 
       m_x = x;
       m_y = y;

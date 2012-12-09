@@ -133,8 +133,8 @@ namespace win
    bool graphics_path::add_move(int x, int y)
    {
 
-      m_point.X   = x;
-      m_point.Y   = y;
+      m_point.X   = (Gdiplus::REAL) x;
+      m_point.Y   = (Gdiplus::REAL) y;
       m_bMove     = true;
 
       return true;

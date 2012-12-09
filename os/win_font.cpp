@@ -137,54 +137,6 @@ namespace win
       }
 
 
-   /////////////////////////////////////////////////////////////////////////////
-   // out-of-line ::ca::brush, font, etc. helpers
-
-   // nPointSize is actually scaled 10x
-/*   bool font::CreatePointFont(int nPointSize, const char * lpszFaceName, ::ca::graphics * pgraphics)
-   {
-      ASSERT(__is_valid_string(lpszFaceName));
-
-      LOGFONT logFont;
-      memset(&logFont, 0, sizeof(LOGFONT));
-      logFont.lfCharSet = DEFAULT_CHARSET;
-      logFont.lfHeight = nPointSize;
-      ::gen::strncpy_s(logFont.lfFaceName, _countof(logFont.lfFaceName), lpszFaceName, _TRUNCATE);
-
-      return CreatePointFontIndirect(&logFont, pgraphics);
-   }
-
-   // pLogFont->nHeight is interpreted as PointSize * 10
-   bool font::CreatePointFontIndirect(const LOGFONT* lpLogFont, ::ca::graphics * pgraphics)
-   {
-      return ::ca::font::CreatePointFontIndirect(lpLogFont, pgraphics);
-     /* ASSERT(__is_valid_address(lpLogFont, sizeof(LOGFONT), FALSE));
-      HDC hDC;
-      if (pgraphics != NULL)
-      {
-         ASSERT_VALID(pgraphics);
-         ASSERT((dynamic_cast<::win::graphics * >(pgraphics))->get_handle2() != NULL);
-         hDC = (dynamic_cast<::win::graphics * >(pgraphics))->get_handle2();
-      }
-      else
-         hDC = ::GetDC(NULL);
-
-      // convert nPointSize to logical units based on pgraphics
-      LOGFONT logFont = *lpLogFont;
-      POINT pt;
-      // 72 points/inch, 10 decipoints/point
-      pt.y = ::MulDiv(::GetDeviceCaps(hDC, LOGPIXELSY), logFont.lfHeight, 720);
-      pt.x = 0;
-      ::DPtoLP(hDC, &pt, 1);
-      POINT ptOrg = { 0, 0 };
-      ::DPtoLP(hDC, &ptOrg, 1);
-      logFont.lfHeight = -abs(pt.y - ptOrg.y);
-
-      if (pgraphics == NULL)
-         ReleaseDC(NULL, hDC);
-
-      return CreateFontIndirect(&logFont);
-   }*/
 
 
    void * font::get_os_data() const

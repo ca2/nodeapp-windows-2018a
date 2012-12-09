@@ -6586,6 +6586,7 @@ namespace win
 
 
          {
+
             HDC hdcScreen = ::GetDC(get_handle());
 
             HDC hdcMem = ::CreateCompatibleDC(NULL);
@@ -6605,6 +6606,7 @@ namespace win
             ::DeleteDC(hdcMem);
 
             ::ReleaseDC(get_handle(), hdcScreen);
+
          }
 
 
