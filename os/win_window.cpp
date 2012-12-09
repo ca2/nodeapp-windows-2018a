@@ -4035,28 +4035,34 @@ ExitModal:
 
       if(GetExStyle() & WS_EX_LAYERED)
       {
-         /*nFlags |= SWP_NOCOPYBITS;
+         nFlags |= SWP_NOCOPYBITS;
          nFlags |= SWP_NOREDRAW;
-         nFlags |= SWP_NOMOVE;
-         nFlags |= SWP_NOSIZE;
-         nFlags |= SWP_NOZORDER;
-         nFlags |= SWP_FRAMECHANGED;
+         //nFlags |= SWP_NOMOVE;
+         //nFlags |= SWP_NOSIZE;
+         if(z == 0)
+         {
+         
+            nFlags |= SWP_NOZORDER;
 
-         if(nFlags & SWP_SHOWWINDOW)
+         }
+
+         //nFlags |= SWP_FRAMECHANGED;
+
+         //if(nFlags & SWP_SHOWWINDOW)
          {
 
             ::SetWindowPos(get_handle(), (oswindow) z, x, y, cx, cy, nFlags);
 
-            ShowWindow(SW_SHOW);
+            //ShowWindow(SW_SHOW);
 
          }
-         else
+         //else
          {
 
-            ::SetWindowPos(get_handle(),(oswindow)  z, x, y, cx, cy, nFlags);
+           // ::SetWindowPos(get_handle(),(oswindow)  z, x, y, cx, cy, nFlags);
 
-         }*/
-         if(nFlags & SWP_SHOWWINDOW)
+         }
+/*         if(nFlags & SWP_SHOWWINDOW)
          {
 
 //            ::SetWindowPos(get_handle(), (oswindow) z, x, y, cx, cy, nFlags);
@@ -4073,7 +4079,7 @@ ExitModal:
 
           //  ::SetWindowPos(get_handle(),(oswindow)  z, x, y, cx, cy, nFlags);
 
-         }
+         }*/
 
          /*if(m_pguie != NULL)
          {
