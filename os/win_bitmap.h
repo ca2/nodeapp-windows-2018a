@@ -28,7 +28,7 @@ namespace win
    #ifndef ___NO_AFXCMN_SUPPORT
       bool LoadMappedBitmap(UINT nIDBitmap, UINT nFlags = 0, LPCOLORMAP lpColorMap = NULL, int nMapSize = 0);
    #endif
-      bool CreateBitmap(::ca::graphics * pdc, int nWidth, int nHeight, UINT nPlanes, UINT nBitcount, const void * lpBits);
+      bool CreateBitmap(::ca::graphics * pdc, int nWidth, int nHeight, UINT nPlanes, UINT nBitcount, const void * lpBits, int stride);
       bool CreateBitmapIndirect(::ca::graphics * pdc, LPBITMAP lpBitmap);
       bool CreateCompatibleBitmap(::ca::graphics * pgraphics, int nWidth, int nHeight);
       bool CreateDiscardableBitmap(::ca::graphics * pgraphics, int nWidth, int nHeight);

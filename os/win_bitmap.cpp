@@ -34,7 +34,7 @@ namespace win
 
    }
 
-   bool bitmap::CreateBitmap(::ca::graphics * pgraphics, int nWidth, int nHeight, UINT nPlanes, UINT nBitcount, const void * lpBits)
+   bool bitmap::CreateBitmap(::ca::graphics * pgraphics, int nWidth, int nHeight, UINT nPlanes, UINT nBitcount, const void * lpBits, int stride)
    { 
 
       UNREFERENCED_PARAMETER(pgraphics);
