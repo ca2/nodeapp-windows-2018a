@@ -17,6 +17,7 @@ namespace win
       m_pdibAlphaBlend  = NULL;
       m_pgraphics       = NULL;
       m_hdc             = NULL;
+      m_hdcGraphics     = NULL;
       m_ppath           = NULL;
       m_ppathPaint      = NULL;
       m_etextrendering  = ::ca::text_rendering_anti_alias_grid_fit;
@@ -130,29 +131,95 @@ namespace win
       return Attach(::CreateIC(lpszDriverName, lpszDeviceName, lpszOutput, (const DEVMODE*) lpInitData)); 
    }
 
+
    bool graphics::CreateCompatibleDC(::ca::graphics * pgraphics)
    { 
 
-      HDC hdc = NULL;
+      HDC hdc = Detach();
+      
+      if(hdc != NULL)
+      {
+
+         bool bDeleted = ::DeleteDC(hdc) != FALSE;
+
+         if(!bDeleted)
+         {
+         
+            TRACE("Failed to delete GDI device context");
+
+         }
+
+      }
+
+      if(m_hdcGraphics != NULL)
+      {
+         
+         m_pgraphics->ReleaseHDC(m_hdcGraphics);
+
+         m_hdcGraphics = NULL;
+
+      }
+
+      if(m_pgraphics != NULL)
+      {
+
+         try
+         {
+            
+            delete m_pgraphics;
+
+         }
+         catch(...)
+         {
+            
+            TRACE("graphics::CreateCompatibleDC(::ca::graphics * ) : Failed to delete Gdiplus::Graphics");
+
+         }
+
+         m_pgraphics = NULL;
+
+      }
 
       if(pgraphics == NULL)
       {
+
          hdc = ::CreateCompatibleDC(NULL);
+
+      }
+      else if(WIN_DC(pgraphics)->m_hdc != NULL)
+      {
+         
+         hdc = ::CreateCompatibleDC(WIN_DC(pgraphics)->m_hdc);
+
+      }
+      else if(WIN_DC(pgraphics)->m_hdcGraphics != NULL)
+      {
+         
+         hdc = ::CreateCompatibleDC(WIN_DC(pgraphics)->m_hdcGraphics);
+
       }
       else
       {
-         hdc = ::CreateCompatibleDC((HDC)(dynamic_cast<::win::graphics * >(pgraphics))->get_handle1()); 
+
+         HDC hdcTemplate = ((Gdiplus::Graphics *) pgraphics->get_os_data())->GetHDC();
+
+         hdc = ::CreateCompatibleDC(hdcTemplate);
+
+         ((Gdiplus::Graphics *) pgraphics->get_os_data())->ReleaseHDC(hdc);
+
       }
 
-      if(!Attach(hdc))
-      {
-         ::DeleteDC(hdc);
-         return FALSE;
-      }
+      if(hdc == NULL)
+         return false;
+
+      m_hdc = hdc;
+
+      m_pgraphics = new Gdiplus::Graphics(m_hdc);
 
       return true;
 
    }
+
 
    int graphics::ExcludeUpdateRgn(::ca::window * pWnd)
    { 
@@ -3681,135 +3748,6 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    
 
-/*
-
-   /////////////////////////////////////////////////////////////////////////////
-   // Helper DCs
-
-
-   void CClientDC::assert_valid() const
-   {
-      graphics::assert_valid();
-      ASSERT(m_oswindow_ == NULL || ::IsWindow(m_oswindow_));
-   }
-
-   void CClientDC::dump(dump_context & dumpcontext) const
-   {
-      graphics::dump(dumpcontext);
-
-      dumpcontext << "get_handle1() = " << m_oswindow_;
-      dumpcontext << "\n";
-   }
-
-
-   CClientDC::CClientDC(window * pWnd)
-   {
-      ASSERT(pWnd == NULL || ::IsWindow(WIN_WINDOW(pWnd)->get_handle1()));
-
-      if (!attach(::GetDC(m_oswindow_ = WIN_WINDOW(pWnd)->GetSafeoswindow_())))
-         throw resource_exception();
-   }
-
-   CClientDC::~CClientDC()
-   {
-      ASSERT(get_handle1() != NULL);
-      ::ReleaseDC(m_oswindow_, detach());
-   }
-
-
-   void CWindowDC::assert_valid() const
-   {
-      graphics::assert_valid();
-      ASSERT(m_oswindow_ == NULL || ::IsWindow(m_oswindow_));
-   }
-
-   void CWindowDC::dump(dump_context & dumpcontext) const
-   {
-      graphics::dump(dumpcontext);
-
-      dumpcontext << "get_handle1() = " << m_oswindow_;
-      dumpcontext << "\n";
-   }
-
-
-   CWindowDC::CWindowDC(window * pWnd)
-   {
-      ASSERT(pWnd == NULL || ::IsWindow(WIN_WINDOW(pWnd)->get_handle1()));
-
-      if (!attach(::GetWindowDC(m_oswindow_ = WIN_WINDOW(pWnd)->GetSafeoswindow_())))
-         throw resource_exception();
-   }
-
-   CWindowDC::~CWindowDC()
-   {
-      ASSERT(get_handle1() != NULL);
-      ::ReleaseDC(m_oswindow_, detach());
-   }
-
-
-   void CPaintDC::assert_valid() const
-   {
-      graphics::assert_valid();
-      ASSERT(::IsWindow(m_oswindow_));
-   }
-
-   void CPaintDC::dump(dump_context & dumpcontext) const
-   {
-      graphics::dump(dumpcontext);
-
-      dumpcontext << "get_handle1() = " << m_oswindow_;
-      dumpcontext << "\nm_ps.hdc = " << m_ps.hdc;
-      dumpcontext << "\nm_ps.fErase = " << m_ps.fErase;
-      dumpcontext << "\nm_ps.rcPaint = " << (rect)m_ps.rcPaint;
-
-      dumpcontext << "\n";
-   }
-
-
-   CPaintDC::CPaintDC(window * pWnd)
-   {
-      ASSERT_VALID(pWnd);
-      ASSERT(::IsWindow(WIN_WINDOW(pWnd)->get_handle1()));
-
-      if (!attach(::BeginPaint(m_oswindow_ = WIN_WINDOW(pWnd)->get_handle1(), &m_ps)))
-         throw resource_exception();
-   }
-
-   CPaintDC::~CPaintDC()
-   {
-      ASSERT(get_handle1() != NULL);
-      ASSERT(::IsWindow(m_oswindow_));
-
-      ::EndPaint(m_oswindow_, &m_ps);
-      detach();
-   }
-
-*/
-
-
-
-
-
-
-
-   // IMPLEMENT_DYNAMIC(resource_exception, base_exception)
-   //resource_exception _simpleResourceException(FALSE, __IDS_RESOURCE_EXCEPTION);
-
-   // IMPLEMENT_DYNAMIC(user_exception, base_exception)
-   //user_exception _simpleUserException(FALSE, __IDS_USER_EXCEPTION);
-
-   // IMPLEMENT_DYNCREATE(graphics, ::radix::object)
-   // IMPLEMENT_DYNAMIC(CClientDC, graphics)
-   // IMPLEMENT_DYNAMIC(CWindowDC, graphics)
-   // IMPLEMENT_DYNAMIC(CPaintDC, graphics)
-   // IMPLEMENT_DYNCREATE(::ca::graphics_object, ::radix::object)
-
-   // IMPLEMENT_DYNAMIC(pen, ::ca::graphics_object)
-   // IMPLEMENT_DYNAMIC(::ca::brush, ::ca::graphics_object)
-   // IMPLEMENT_DYNAMIC(::ca::font, ::ca::graphics_object)
-   // IMPLEMENT_DYNAMIC(::ca::bitmap, ::ca::graphics_object)
-   // IMPLEMENT_DYNAMIC(::ca::palette, ::ca::graphics_object)
-   // IMPLEMENT_DYNAMIC(::ca::region, ::ca::graphics_object)
 
 
 } // namespace win

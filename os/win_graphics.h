@@ -20,6 +20,7 @@ namespace win
       ::Gdiplus::GraphicsPath *     m_ppath;
       ::Gdiplus::GraphicsPath *     m_ppathPaint;
       HDC                           m_hdc;
+      HDC                           m_hdcGraphics;
 
       // advanced use and implementation
       bool                          m_bPrinting;
