@@ -4613,11 +4613,33 @@ ExitModal:
       if(((Gdiplus::Graphics *)(dynamic_cast<::win::graphics * >(pgraphics))->get_handle()) == NULL)
          return false;
 
-      ::ReleaseDC(get_handle(), (dynamic_cast<::win::graphics * >(pgraphics))->m_hdc); 
+      try
+      {
+
+         delete (dynamic_cast<::win::graphics * >(pgraphics))->m_pgraphics;
+
+      }
+      catch(...)
+      {
+
+         TRACE("::win::window::ReleaseDC : Failed to delete Gdiplus::Graphics");
+
+      }
+
+      (dynamic_cast<::win::graphics * >(pgraphics))->m_pgraphics = NULL;
+
+      BOOL bOk = ::ReleaseDC(get_handle(), (dynamic_cast<::win::graphics * >(pgraphics))->m_hdc); 
+
+      if(!bOk)
+      {
+
+         TRACE("::win::window::ReleaseDC : Failed to Release window dc");
+
+      }
 
       (dynamic_cast<::win::graphics * >(pgraphics))->m_hdc = NULL;
 
-      pgraphics->release();
+      
 
       return true;
 

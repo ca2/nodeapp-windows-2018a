@@ -58,55 +58,9 @@ namespace win
 
    graphics::~graphics()
    {
-      
-      HDC hdc = Detach();
-      
-      if(hdc != NULL)
-      {
-
-         bool bDeleted = ::DeleteDC(hdc) != FALSE;
-
-         if(!bDeleted)
-         {
-         
-            TRACE("Failed to delete GDI device context");
-
-         }
-
-      }
-
-      if(m_pgraphics != NULL)
-      {
-
-         try
-         {
-            
-            delete m_pgraphics;
-
-         }
-         catch(...)
-         {
-
-            TRACE("graphics::~graphics : Failed to delete Gdiplus::Graphics");
-
-         }
-
-         m_pgraphics = NULL;
-
-      }
-
-      if(m_ppath != NULL)
-      {
-         delete m_ppath;
-         m_ppath = NULL;
-      }
-
-      if(m_ppathPaint != NULL)
-      {
-         delete m_ppathPaint;
-         m_ppathPaint = NULL;
-      }
-
+   
+      DeleteDC();
+   
    }
 
 
@@ -2357,10 +2311,80 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    bool graphics::DeleteDC()
    {
 
-      if(get_handle() == NULL)
-         return FALSE;
+      HDC hdc = Detach();
+      
+      if(hdc != NULL)
+      {
 
-      return ::DeleteDC((HDC) detach()) != FALSE;
+         bool bDeleted = ::DeleteDC(hdc) != FALSE;
+
+         if(!bDeleted)
+         {
+         
+            TRACE("graphics::DeleteDC : Failed to delete GDI device context");
+
+         }
+
+      }
+
+      if(m_pgraphics != NULL)
+      {
+
+         try
+         {
+            
+            delete m_pgraphics;
+
+         }
+         catch(...)
+         {
+
+            TRACE("graphics::DeleteDC : Failed to delete Gdiplus::Graphics");
+
+         }
+
+         m_pgraphics = NULL;
+
+      }
+
+      if(m_ppath != NULL)
+      {
+
+         try
+         {
+            
+            delete m_ppath;
+
+         }
+         catch(...)
+         {
+
+         }
+
+         m_ppath = NULL;
+
+      }
+
+      if(m_ppathPaint != NULL)
+      {
+
+         try
+         {
+            
+            delete m_ppathPaint;
+
+         }
+         catch(...)
+         {
+
+         }
+
+         m_ppathPaint = NULL;
+
+      }
+
+      return true;
+
    }
 
 
