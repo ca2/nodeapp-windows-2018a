@@ -568,9 +568,9 @@ namespace win
             {
                try
                {
-                  if(WIN_THREAD(pui->m_pthread) == this 
-                     || WIN_THREAD(pui->m_pthread->m_p) == WIN_THREAD(m_p)
-                     || WIN_THREAD(pui->m_pthread) == WIN_THREAD(m_p))
+                  if(WIN_THREAD(pui->m_pthread->m_pthread) == this 
+                     || WIN_THREAD(pui->m_pthread->m_pthread->m_p) == WIN_THREAD(m_p)
+                     || WIN_THREAD(pui->m_pthread->m_pthread) == WIN_THREAD(m_p))
                   {
                      pui->m_pthread = NULL;
                   }
@@ -581,9 +581,9 @@ namespace win
                try
                {
                   ::user::interaction * puie = pui->m_pguie;
-                  if(WIN_THREAD(puie->m_pthread) == this 
-                     || WIN_THREAD(puie->m_pthread->m_p) == WIN_THREAD(m_p)
-                     || WIN_THREAD(puie->m_pthread) == WIN_THREAD(m_p))
+                  if(WIN_THREAD(puie->m_pthread->m_pthread) == this 
+                     || WIN_THREAD(puie->m_pthread->m_pthread->m_p) == WIN_THREAD(m_p)
+                     || WIN_THREAD(puie->m_pthread->m_pthread) == WIN_THREAD(m_p))
                   {
                      puie->m_pthread = NULL;
                   }
@@ -1165,9 +1165,9 @@ stop_run:
                ::user::interaction * pui = puiptra->element_at(i);
                if(pui->m_pthread != NULL)
                {
-                  if(WIN_THREAD(pui->m_pthread) == this 
-                     || WIN_THREAD(pui->m_pthread->m_p) == WIN_THREAD(m_p)
-                     || WIN_THREAD(pui->m_pthread) == WIN_THREAD(m_p))
+                  if(WIN_THREAD(pui->m_pthread->m_pthread) == this 
+                     || WIN_THREAD(pui->m_pthread->m_pthread->m_p) == WIN_THREAD(m_p)
+                     || WIN_THREAD(pui->m_pthread->m_pthread) == WIN_THREAD(m_p))
                   {
                      pui->m_pthread = NULL;
                   }
