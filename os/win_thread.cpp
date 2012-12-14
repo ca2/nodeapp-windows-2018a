@@ -425,7 +425,7 @@ void CLASS_DECL_win __end_thread(::radix::application * papp, UINT nExitCode, bo
    }
 }
 
-extern thread_local_storage * gen_ThreadData;
+extern thread_local_storage * __thread_data;
 
 void CLASS_DECL_win __term_thread(::radix::application * papp, HINSTANCE hInstTerm)
 {
@@ -446,8 +446,8 @@ void CLASS_DECL_win __term_thread(::radix::application * papp, HINSTANCE hInstTe
    try
    {
       // cleanup the rest of the thread local data
-      if (gen_ThreadData != NULL)
-         gen_ThreadData->delete_data();
+      if (__thread_data != NULL)
+         __thread_data->delete_data();
    }
    catch( base_exception* e )
    {
