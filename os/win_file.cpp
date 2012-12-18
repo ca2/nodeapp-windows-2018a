@@ -74,6 +74,12 @@ namespace win
 
    bool file::open(const char * lpszFileName, UINT nOpenFlags)
    {
+         
+      if(lpszFileName == NULL || *lpszFileName == '\0') 
+      {
+         TRACE("win::file::open file with empty name!!");
+         return false;
+      }
 
       if (m_hFile != (UINT)hFileNull)
          close();
@@ -801,12 +807,12 @@ namespace win
                rStatus.m_attribute = 0;
             else
             {
-               rStatus.m_attribute = (BYTE) dwAttribute;
-#ifdef DEBUG
+               rStatus.m_attribute = (BYTE) dwAttribute & 0xff;
+//#ifdef DEBUG
                // ca2 API BUG: m_attribute is only a BYTE wide
-               if (dwAttribute & ~0xFF)
-                  TRACE0("Warning: file::GetStatus() returns m_attribute without high-order flags.\n");
-#endif
+  //             if (dwAttribute & ~0xFF)
+//                  TRACE0("Warning: file::GetStatus() returns m_attribute without high-order flags.\n");
+//#endif
             }
          }
 
