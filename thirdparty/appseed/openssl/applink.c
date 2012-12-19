@@ -1,3 +1,5 @@
+#pragma once
+
 #define APPLINK_STDIN	1
 #define APPLINK_STDOUT	2
 #define APPLINK_STDERR	3

@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "sal.h"
 
+
 /////////////////////////////////////////////////////////////////////////////
 // export WinMain to force linkage to this module
 extern int CLASS_DECL_win __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance,
@@ -31,3 +32,5 @@ CLASS_DECL_win bool __initialize(bool bDLL, DWORD dwVersion)
 
 
 char gen_InitAppState = (char)(__initialize(FALSE, _MFC_VER));
+
+
