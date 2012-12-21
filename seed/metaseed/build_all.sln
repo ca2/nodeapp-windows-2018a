@@ -2106,20 +2106,20 @@ Global
 		{52881C91-1BB5-45E2-8D1A-F589146157B0}.basis|Win32.Build.0 = basis|Win32
 		{52881C91-1BB5-45E2-8D1A-F589146157B0}.basis|x64.ActiveCfg = basis|x64
 		{52881C91-1BB5-45E2-8D1A-F589146157B0}.basis|x64.Build.0 = basis|x64
-		{52881C91-1BB5-45E2-8D1A-F589146157B0}.codeanalysis|Win32.ActiveCfg = basis|Win32
-		{52881C91-1BB5-45E2-8D1A-F589146157B0}.codeanalysis|Win32.Build.0 = basis|Win32
+		{52881C91-1BB5-45E2-8D1A-F589146157B0}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
+		{52881C91-1BB5-45E2-8D1A-F589146157B0}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
 		{52881C91-1BB5-45E2-8D1A-F589146157B0}.codeanalysis|x64.ActiveCfg = basis|x64
 		{52881C91-1BB5-45E2-8D1A-F589146157B0}.codeanalysis|x64.Build.0 = basis|x64
 		{52881C91-1BB5-45E2-8D1A-F589146157B0}.Debug|Win32.ActiveCfg = basis|Win32
 		{52881C91-1BB5-45E2-8D1A-F589146157B0}.Debug|Win32.Build.0 = basis|Win32
 		{52881C91-1BB5-45E2-8D1A-F589146157B0}.Debug|x64.ActiveCfg = basis|x64
 		{52881C91-1BB5-45E2-8D1A-F589146157B0}.Debug|x64.Build.0 = basis|x64
-		{52881C91-1BB5-45E2-8D1A-F589146157B0}.memdleak|Win32.ActiveCfg = basis|Win32
-		{52881C91-1BB5-45E2-8D1A-F589146157B0}.memdleak|Win32.Build.0 = basis|Win32
+		{52881C91-1BB5-45E2-8D1A-F589146157B0}.memdleak|Win32.ActiveCfg = memdleak|Win32
+		{52881C91-1BB5-45E2-8D1A-F589146157B0}.memdleak|Win32.Build.0 = memdleak|Win32
 		{52881C91-1BB5-45E2-8D1A-F589146157B0}.memdleak|x64.ActiveCfg = basis|x64
 		{52881C91-1BB5-45E2-8D1A-F589146157B0}.memdleak|x64.Build.0 = basis|x64
-		{52881C91-1BB5-45E2-8D1A-F589146157B0}.profiler|Win32.ActiveCfg = basis|Win32
-		{52881C91-1BB5-45E2-8D1A-F589146157B0}.profiler|Win32.Build.0 = basis|Win32
+		{52881C91-1BB5-45E2-8D1A-F589146157B0}.profiler|Win32.ActiveCfg = profiler|Win32
+		{52881C91-1BB5-45E2-8D1A-F589146157B0}.profiler|Win32.Build.0 = profiler|Win32
 		{52881C91-1BB5-45E2-8D1A-F589146157B0}.profiler|x64.ActiveCfg = basis|x64
 		{52881C91-1BB5-45E2-8D1A-F589146157B0}.profiler|x64.Build.0 = basis|x64
 		{52881C91-1BB5-45E2-8D1A-F589146157B0}.Release|Win32.ActiveCfg = basis|Win32
@@ -2129,5 +2129,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal
