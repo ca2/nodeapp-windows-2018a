@@ -1,1 +1,1 @@
-app.exe : app=app-core/projection countries=br,ru,us,se,jp br.link="http://ca2.etc.br" ru.link="http://ca2.ru" us.link="http://ca2.us" se.link="http://ca2.se" jp.link="http://ca2.jp"
+app.exe : app=app-core/projection countries=br,ru,us,se,jp br.link="http://ca2.etc.br" ru.link="http://ca2.ru" us.link="http://ca2.us" se.link="http://ca2.se" jp.link="http://ca2.jp" build_number=basis
