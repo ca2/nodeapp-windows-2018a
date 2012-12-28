@@ -27,20 +27,20 @@ namespace win
       bool open ();
       bool close ();
       
-      bool Begin ( ::ca::graphics * pdc, int dxDest, int dyDest,
-         LPBITMAPINFOHEADER lpbi, int dxSrc, int dySrc, UINT wFlags );
+      bool Begin ( ::ca::graphics * pdc, int32_t dxDest, int32_t dyDest,
+         LPBITMAPINFOHEADER lpbi, int32_t dxSrc, int32_t dySrc, UINT wFlags );
       bool End ();
 
-      bool draw(::ca::graphics * pdc, int xDst, int yDst,
-         int dxDst, int dyDst, LPBITMAPINFOHEADER lpbi, LPVOID lpBits,
-         int xSrc, int ySrc, int dxSrc, int dySrc, UINT wFlags );
-      bool draw(::ca::dib * pdib, ::ca::graphics * pdc, int xDst, int yDst,
-         int dxDst, int dyDst, UINT wFlags );
+      bool draw(::ca::graphics * pdc, int32_t xDst, int32_t yDst,
+         int32_t dxDst, int32_t dyDst, LPBITMAPINFOHEADER lpbi, LPVOID lpBits,
+         int32_t xSrc, int32_t ySrc, int32_t dxSrc, int32_t dySrc, UINT wFlags );
+      bool draw(::ca::dib * pdib, ::ca::graphics * pdc, int32_t xDst, int32_t yDst,
+         int32_t dxDst, int32_t dyDst, UINT wFlags );
 
-      bool draw(::ca::graphics * pdc, int xDst, int yDst,
-         int dxDst, int dyDst, 
-          ::ca::dib * dib, int xSrc, int ySrc,
-         int dxSrc, int dySrc, UINT wFlags );
+      bool draw(::ca::graphics * pdc, int32_t xDst, int32_t yDst,
+         int32_t dxDst, int32_t dyDst, 
+          ::ca::dib * dib, int32_t xSrc, int32_t ySrc,
+         int32_t dxSrc, int32_t dySrc, UINT wFlags );
       
       LPVOID GetBuffer ( LPBITMAPINFOHEADER lpbi,
          DWORD dwSize, DWORD dwFlags );
@@ -49,7 +49,7 @@ namespace win
 
       ::ca::palette * get_palette();
       bool set_palette ( ::ca::palette * ppal );
-      bool ChangePalette ( ::ca::draw_dib * pdd, int iStart, int iLen,
+      bool ChangePalette ( ::ca::draw_dib * pdd, int32_t iStart, int32_t iLen,
          LPPALETTEENTRY lppe );
       UINT Realize ( ::ca::graphics * pdc, bool fBackground );
 

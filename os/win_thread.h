@@ -87,9 +87,9 @@ namespace win
 
       virtual ::user::interaction * SetMainWnd(::user::interaction * pui);
 
-      virtual int thread_entry(::ca::thread_startup * pstartup);
-      virtual int main();
-      virtual int thread_term(int nResult);
+      virtual int32_t thread_entry(::ca::thread_startup * pstartup);
+      virtual int32_t main();
+      virtual int32_t thread_term(int32_t nResult);
 
 
       virtual void add(::user::interaction * pui);
@@ -141,7 +141,7 @@ namespace win
       virtual ::gen::message::e_prototype thread::GetMessagePrototype(UINT uiMessage, UINT uiCode); 
 
       // running and idle processing
-      virtual int run();
+      virtual int32_t run();
       virtual void pre_translate_message(gen::signal_object * pobj);
       virtual bool pump_message();     // low level message pump
       virtual bool on_idle(LONG lCount); // return TRUE if more idle processing
@@ -150,13 +150,13 @@ namespace win
       virtual void message_handler(gen::signal_object * pobj);
 
       // thread termination
-      virtual int exit_instance(); // default will 'delete this'
+      virtual int32_t exit_instance(); // default will 'delete this'
 
       // Advanced: exception handling
       virtual void ProcessWndProcException(base_exception * e, gen::signal_object * pMsg);
 
       // Advanced: handling messages sent to message filter hook
-      virtual void ProcessMessageFilter(int code, gen::signal_object * pobj);
+      virtual void ProcessMessageFilter(int32_t code, gen::signal_object * pobj);
 
       // Advanced: virtual access to GetMainWnd()
       virtual ::user::interaction* GetMainWnd();
@@ -189,11 +189,11 @@ namespace win
 
 		///  \brief		sets thread priority
 		///  \param		new priority
-		void set_priority(int priority);
+		void set_priority(int32_t priority);
 
 		///  \brief		gets thread priority
 		///  \param		priority
-		int priority();
+		int32_t priority();
 
 
       virtual bool has_message();

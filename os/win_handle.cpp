@@ -33,7 +33,7 @@ namespace win
 
       }
 
-      for(int i = 0; i < wndptraRemove.get_count(); i++)
+      for(int32_t i = 0; i < wndptraRemove.get_count(); i++)
       {
          wndptraRemove[i]->m_handlea[0] = NULL;
          wndptraRemove[i]->m_handlea[1] = NULL;
@@ -41,7 +41,7 @@ namespace win
          (*pMap->m_pfnDestructObject)(wndptraRemove[i]);   // destruct the object
       }
 
-      for(int i = 0; i < oswindowaRemove.get_count(); i++)
+      for(int32_t i = 0; i < oswindowaRemove.get_count(); i++)
       {
          pMap->m_temporaryMap.remove_key(oswindowaRemove[i]);
       }

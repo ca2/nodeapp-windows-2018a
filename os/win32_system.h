@@ -8,7 +8,7 @@
 
 extern "C"
 {
-   __declspec(selectany)  int _forceCRTManifest;
+   __declspec(selectany)  int32_t _forceCRTManifest;
 }
 
 

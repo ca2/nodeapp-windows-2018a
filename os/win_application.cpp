@@ -117,7 +117,7 @@ namespace win
 
             string strKey;
             //for( i=0; i < (cbTranslate/sizeof(struct LANGANDCODEPAGE)); i++ )
-            for(int i=0; i < 1; i++ )
+            for(int32_t i=0; i < 1; i++ )
             {
                LPTSTR lpsz;
                UINT uiSize;
@@ -319,7 +319,7 @@ namespace win
    }
 
 
-   bool application::Begin(int nPriority, UINT nStackSize,
+   bool application::Begin(int32_t nPriority, UINT nStackSize,
                            DWORD dwCreateFlags, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
    {
       return ::win::thread::Begin(nPriority, nStackSize, dwCreateFlags, lpSecurityAttrs);
@@ -333,11 +333,11 @@ namespace win
 
 
 
-   int application::GetThreadPriority()
+   int32_t application::GetThreadPriority()
    {
       return ::win::thread::GetThreadPriority();
    }
-   bool application::SetThreadPriority(int nPriority)
+   bool application::SetThreadPriority(int32_t nPriority)
    {
       return ::win::thread::SetThreadPriority(nPriority);
    }
@@ -385,7 +385,7 @@ namespace win
    }
 
    // running and idle processing
-   int application::run()
+   int32_t application::run()
    {
       return ::win::thread::run();
    }
@@ -456,7 +456,7 @@ namespace win
    }
 
    // thread termination
-   int application::exit_instance() // default will 'delete this'
+   int32_t application::exit_instance() // default will 'delete this'
    {
 
       // avoid calling CloseHandle() on our own thread handle
@@ -466,7 +466,7 @@ namespace win
       WIN_THREAD(::ca::thread_sp::m_p)->m_bRun = false;
       WIN_THREAD(::ca::smart_pointer<::ex2::application>::m_p->::ca::thread_sp::m_p)->m_bRun = false;
 
-      int iRet = ::gen::application::exit_instance();
+      int32_t iRet = ::gen::application::exit_instance();
 
       //::ca::smart_pointer<::ex2::application>::destroy();
 
@@ -483,7 +483,7 @@ namespace win
 
 
    // Advanced: handling messages sent to message filter hook
-   bool application::ProcessMessageFilter(int code, LPMSG lpMsg)
+   bool application::ProcessMessageFilter(int32_t code, LPMSG lpMsg)
    {
       return  ::win::thread::ProcessMessageFilter(code, lpMsg);
    }
@@ -539,7 +539,7 @@ namespace win
       if(pwnd != NULL)
          return pwnd;
       user::interaction_ptr_array wndptra = System.frames();
-      for(int i = 0; i < wndptra.get_count(); i++)
+      for(int32_t i = 0; i < wndptra.get_count(); i++)
       {
          if(wndptra[i]->get_safe_handle() == pdata)
          {

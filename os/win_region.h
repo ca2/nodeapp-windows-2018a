@@ -22,18 +22,18 @@ namespace win
 
       void defer_update();
 
-      //void SetRectRgn(int x1, int y1, int x2, int y2);
+      //void SetRectRgn(int32_t x1, int32_t y1, int32_t x2, int32_t y2);
       //void SetRectRgn(LPCRECT lpRect);
-      //int CombineRgn(const ::ca::region* pRgn1, const ::ca::region* pRgn2, int nCombineMode);
-      //int CopyRgn(const ::ca::region* pRgnSrc);
+      //int32_t CombineRgn(const ::ca::region* pRgn1, const ::ca::region* pRgn2, int32_t nCombineMode);
+      //int32_t CopyRgn(const ::ca::region* pRgnSrc);
       //bool EqualRgn(const ::ca::region* pRgn) const;
-      int OffsetRgn(int x, int y);
-      //int OffsetRgn(POINT point);
+      int32_t OffsetRgn(int32_t x, int32_t y);
+      //int32_t OffsetRgn(POINT point);
       bool get_bounding_box(LPRECT lpRect) const;
-      //bool PtInRegion(int x, int y) const;
+      //bool PtInRegion(int32_t x, int32_t y) const;
       bool contains(POINT point) const;
       //bool RectInRegion(LPCRECT lpRect) const;
-      //int GetRegionData(LPRGNDATA lpRgnData, int nCount) const;
+      //int32_t GetRegionData(LPRGNDATA lpRgnData, int32_t nCount) const;
 
       virtual bool destroy();
 

@@ -3,7 +3,7 @@
 
 namespace win
 {
-   int win::function()
+   int32_t win::function()
    {
       return 0;
    }
@@ -13,7 +13,7 @@ namespace win
       return ::LoadLibraryW(gen::international::utf8_to_unicode(lpsz));
    }
 
-   bool CLASS_DECL_win SHGetSpecialFolderPath(oswindow oswindow, string &str, int csidl, bool fCreate)
+   bool CLASS_DECL_win SHGetSpecialFolderPath(oswindow oswindow, string &str, int32_t csidl, bool fCreate)
    {
       return ::SHGetSpecialFolderPathW(oswindow, wstringtou(str, MAX_PATH * 8), csidl, fCreate) != FALSE;
    }
@@ -68,10 +68,10 @@ namespace win
       return ::DeleteFileW(gen::international::utf8_to_unicode(lpFileName)) != FALSE;
    }
 
-/*   int GetMenuString(HMENU hmenu, UINT uIDItem, string & str, UINT flags)
+/*   int32_t GetMenuString(HMENU hmenu, UINT uIDItem, string & str, UINT flags)
    {
       wstring str;
-      int iLen = _GetMenuString(hmenu, uIDItem, wstr, flags);
+      int32_t iLen = _GetMenuString(hmenu, uIDItem, wstr, flags);
       gen::international::unicode_to_utf8(str, str);
       return iLen;
    }*/

@@ -51,7 +51,7 @@ namespace win
       ASSERT(m_bCloseOnDelete);
 
       char szMode[4]; // C-runtime open string
-      int nMode = 0;
+      int32_t nMode = 0;
 
       // determine read/write mode depending on ex1::filesp mode
       if (nOpenFlags & mode_create)
@@ -75,7 +75,7 @@ namespace win
       }
 
       // will be inverted if not necessary
-      int nFlags = _O_RDONLY|_O_TEXT;
+      int32_t nFlags = _O_RDONLY|_O_TEXT;
       if (nOpenFlags & (mode_write|mode_read_write))
          nFlags ^= _O_RDONLY;
 
@@ -86,7 +86,7 @@ namespace win
       szMode[nMode++] = '\0';
 
       // open a C-runtime low-level file handle
-      int nHandle = _open_osfhandle(m_hFile, nFlags);
+      int32_t nHandle = _open_osfhandle(m_hFile, nFlags);
 
       // open a C-runtime stream from that handle
       if (nHandle != -1)
@@ -170,7 +170,7 @@ namespace win
 
       //rString = &afxWchNil;    // is_empty string without deallocating
       rString.Empty();
-      const int nMaxSize = 128;
+      const int32_t nMaxSize = 128;
       char * lpsz = rString.GetBuffer(nMaxSize);
       char * lpszResult;
       ::primitive::memory_size nLen = 0;
@@ -270,7 +270,7 @@ namespace win
       ASSERT_VALID(this);
       ASSERT(m_pStream != NULL);
 
-      int nErr = 0;
+      int32_t nErr = 0;
 
       if (m_pStream != NULL)
          nErr = fclose(m_pStream);

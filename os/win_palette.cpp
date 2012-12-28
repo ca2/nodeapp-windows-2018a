@@ -51,8 +51,8 @@ namespace win
       return ::ResizePalette((HPALETTE)get_os_data(), nNumEntries) != FALSE;
    }
 
-   int palette::GetEntryCount()
+   int32_t palette::GetEntryCount()
    { ASSERT(get_os_data() != NULL); WORD nEntries;
-   ::GetObject((HANDLE) get_os_data(), sizeof(WORD), &nEntries); return (int)nEntries; }
+   ::GetObject((HANDLE) get_os_data(), sizeof(WORD), &nEntries); return (int32_t)nEntries; }
 
 } // namespace win

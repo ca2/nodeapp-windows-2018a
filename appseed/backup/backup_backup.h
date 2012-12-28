@@ -16,7 +16,7 @@ namespace backup
       backup(::ca::application * papp);
       virtual ~backup();
 
-      virtual int run();
+      virtual int32_t run();
 
       bool hotcopy_repos(const char * psz);
       bool compress_repos(const char * psz);

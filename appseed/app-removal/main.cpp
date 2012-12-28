@@ -37,9 +37,9 @@ public:
    char *                     m_modpath;
    char *                     m_pszDllEnds;
    DWORD *                    m_dwaProcess;
-   int                        m_iSizeProcess;
+   int32_t                        m_iSizeProcess;
    HMODULE *                  m_hmodulea;
-   int                        m_iSizeModule;
+   int32_t                        m_iSizeModule;
    bool                       m_bInstallerInstalling;
 
    removal();
@@ -49,11 +49,11 @@ public:
 
    ATOM spaboot_message_register_class(HINSTANCE hInstance);
 
-   int cube_run(const char * id);
+   int32_t cube_run(const char * id);
 
    void call_self_privileged_sync(const char * param);
 
-   int spaboot_registry_register(const char * lpszFile);
+   int32_t spaboot_registry_register(const char * lpszFile);
 
    void call_sync(const char * path, const char * param);
 
@@ -72,16 +72,16 @@ public:
 };
 
 // if MSVC CRT is used
-extern "C" int WINAPI
+extern "C" int32_t WINAPI
 _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
-   __in LPTSTR lpCmdLine, int nCmdShow)
+   __in LPTSTR lpCmdLine, int32_t nCmdShow)
 {
    // call shared/exported WinMain
    return simple_app::s_main < removal > ();
 }
 
 // if MSVC CRT is stripped
-/*extern "C" int WinMainCRTStartup() \
+/*extern "C" int32_t WinMainCRTStartup() \
 { 
 
    ExitProcess(simple_app::s_main < removal > ());
@@ -127,7 +127,7 @@ removal::~removal()
 //                properties.
 
 
-HRESULT CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc, LPCWSTR lpszIconPath = NULL, int iIcon = 0) 
+HRESULT CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc, LPCWSTR lpszIconPath = NULL, int32_t iIcon = 0) 
 { 
     HRESULT hres; 
     IShellLinkW* psl; 
@@ -266,7 +266,7 @@ bool removal::initialize()
 
    if(::CopyFile(szFile, strTarget, TRUE))
    {
-      int i = MessageBox(NULL, "Do you want to place a shortcut to ca2 app-removal in Desktop?\n\nProgram has already been copied to Program Files Folder.", "app-removal installation", MB_ICONQUESTION | MB_YESNOCANCEL);
+      int32_t i = MessageBox(NULL, "Do you want to place a shortcut to ca2 app-removal in Desktop?\n\nProgram has already been copied to Program Files Folder.", "app-removal installation", MB_ICONQUESTION | MB_YESNOCANCEL);
 
       if(i == IDCANCEL)
          return false;
@@ -424,7 +424,7 @@ bool removal::is_user_using(const char * pszDll)
 void removal::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMessage)
 {
    vsstring strMessage(pszMessage);
-   int iRet = 0;
+   int32_t iRet = 0;
    const char * pszSuffix;
    if((pszSuffix = str_begins_inc_dup(strMessage, "synch_spaadmin:")) != NULL)
    {

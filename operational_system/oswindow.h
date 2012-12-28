@@ -41,7 +41,7 @@ public:
 
 
    static oswindow_dataptra * s_pdataptra;
-   static int find(Windows::UI::Core::CoreWindow ^ window);
+   static int32_t find(Windows::UI::Core::CoreWindow ^ window);
    static oswindow_data * get(Windows::UI::Core::CoreWindow ^ window);
 
 

@@ -32,9 +32,9 @@ public:
    char *                     m_modpath;
    char *                     m_pszDllEnds;
    DWORD *                    m_dwaProcess;
-   int                        m_iSizeProcess;
+   int32_t                        m_iSizeProcess;
    HMODULE *                  m_hmodulea;
-   int                        m_iSizeModule;
+   int32_t                        m_iSizeModule;
    bool                       m_bInstallerInstalling;
 
    installer();
@@ -46,11 +46,11 @@ public:
 
    ATOM spaboot_message_register_class(HINSTANCE hInstance);
 
-   int cube_run(const char * id);
+   int32_t cube_run(const char * id);
 
    void call_self_privileged_sync(const char * param);
 
-   int spaboot_registry_register(const char * lpszFile);
+   int32_t spaboot_registry_register(const char * lpszFile);
 
    void call_sync(const char * path, const char * param);
 
@@ -69,16 +69,16 @@ public:
 };
 
 // if MSVC CRT is used
-extern "C" int WINAPI
+extern "C" int32_t WINAPI
 _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
-   __in LPTSTR lpCmdLine, int nCmdShow)
+   __in LPTSTR lpCmdLine, int32_t nCmdShow)
 {
    // call shared/exported WinMain
    return simple_app::s_main < installer > ();
 }
 
 // if MSVC CRT is stripped
-/*extern "C" int WinMainCRTStartup() \
+/*extern "C" int32_t WinMainCRTStartup() \
 { 
 
    ExitProcess(simple_app::s_main < installer > ());
@@ -119,7 +119,7 @@ bool installer::initialize()
 
          vsstring strCommandLine;
 
-         for(int i = 1; i < __argc; i++)
+         for(int32_t i = 1; i < __argc; i++)
          {
 
             if(i == 1)
@@ -195,7 +195,7 @@ void installer::install_defer_file_transfer()
 }
 
 
-typedef int (__cdecl * PFN_SPAADMIN_MAIN)(const char * pszCommandLine);
+typedef int32_t (__cdecl * PFN_SPAADMIN_MAIN)(const char * pszCommandLine);
 
 
 // non-thread safe
@@ -279,7 +279,7 @@ bool installer::is_user_using(const char * pszDll)
 void installer::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMessage)
 {
    vsstring strMessage(pszMessage);
-   int iRet = 0;
+   int32_t iRet = 0;
    const char * pszSuffix;
    if((pszSuffix = str_begins_inc_dup(strMessage, "synch_spaadmin:")) != NULL)
    {

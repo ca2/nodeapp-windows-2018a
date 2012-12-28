@@ -102,7 +102,7 @@ namespace win
 
    // Change a window's style
 
-   __STATIC bool CLASS_DECL_win __modify_style(oswindow oswindow, int nStyleOffset,
+   __STATIC bool CLASS_DECL_win __modify_style(oswindow oswindow, int32_t nStyleOffset,
       DWORD dwRemove, DWORD dwAdd, UINT nFlags)
    {
       ASSERT(oswindow != NULL);
@@ -240,7 +240,7 @@ namespace win
 
    bool window::CreateEx(DWORD dwExStyle, const char * lpszClassName,
       const char * lpszWindowName, DWORD dwStyle,
-      int x, int y, int nWidth, int nHeight,
+      int32_t x, int32_t y, int32_t nWidth, int32_t nHeight,
       oswindow oswindow_Parent, id id, LPVOID lpParam)
    {
       UNREFERENCED_PARAMETER(id);
@@ -769,14 +769,14 @@ namespace win
    {
       /*ASSERT(::IsWindow(get_handle()));
 
-      int nLen = ::GetWindowTextLength(get_handle());
+      int32_t nLen = ::GetWindowTextLength(get_handle());
       ::GetWindowText(get_handle(), rString.GetBufferSetLength(nLen), nLen+1);
       rString.ReleaseBuffer();*/
       rString = m_strWindowText;
 
    }
 
-   int window::GetChildByIdText(int nID, string & rString) const
+   int32_t window::GetChildByIdText(int32_t nID, string & rString) const
    {
       ASSERT(::IsWindow(((window *)this)->get_handle()));
       rString = "";    // is_empty without deallocating
@@ -784,12 +784,12 @@ namespace win
       oswindow oswindow = ::GetDlgItem(((window *)this)->get_handle(), nID);
       if (oswindow != NULL)
       {
-         int nLen = ::GetWindowTextLength(oswindow);
+         int32_t nLen = ::GetWindowTextLength(oswindow);
          ::GetWindowText(oswindow, rString.GetBufferSetLength(nLen), nLen+1);
          rString.ReleaseBuffer();
       }
 
-      return (int)rString.get_length();
+      return (int32_t)rString.get_length();
    }
 
    bool window::GetWindowPlacement(WINDOWPLACEMENT* lpwndpl) 
@@ -810,7 +810,7 @@ namespace win
    // window will delegate owner draw messages to self drawing controls
 
    // Drawing: for all 4 control types
-   void window::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct)
+   void window::OnDrawItem(int32_t /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct)
    {
 
       // reflect notification to child window control
@@ -822,18 +822,18 @@ namespace win
    }
 
    // Drawing: for all 4 control types
-   int window::OnCompareItem(int /*nIDCtl*/, LPCOMPAREITEMSTRUCT lpCompareItemStruct)
+   int32_t window::OnCompareItem(int32_t /*nIDCtl*/, LPCOMPAREITEMSTRUCT lpCompareItemStruct)
    {
       // reflect notification to child window control
       LRESULT lResult;
       if (ReflectLastMsg(lpCompareItemStruct->hwndItem, &lResult))
-         return (int)lResult;        // eat it
+         return (int32_t)lResult;        // eat it
 
       // not handled - do default
-      return (int)Default();
+      return (int32_t)Default();
    }
 
-   void window::OnDeleteItem(int /*nIDCtl*/, LPDELETEITEMSTRUCT lpDeleteItemStruct)
+   void window::OnDeleteItem(int32_t /*nIDCtl*/, LPDELETEITEMSTRUCT lpDeleteItemStruct)
    {
       // reflect notification to child window control
       if (ReflectLastMsg(lpDeleteItemStruct->hwndItem))
@@ -851,7 +851,7 @@ namespace win
 
 
    // Measure item implementation relies on unique control/menu IDs
-   void window::OnMeasureItem(int /*nIDCtl*/, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
+   void window::OnMeasureItem(int32_t /*nIDCtl*/, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
    {
       if (lpMeasureItemStruct->CtlType == ODT_MENU)
       {
@@ -1142,7 +1142,7 @@ namespace win
       if(pbase->m_uiMessage == WM_MOUSELEAVE)
       {
          m_bMouseHover = false;
-         for(int i = 0; i < m_guieptraMouseHover.get_size(); i++)
+         for(int32_t i = 0; i < m_guieptraMouseHover.get_size(); i++)
          {
             if(m_guieptraMouseHover[i] == this 
                || m_guieptraMouseHover[i]->m_pimpl == this 
@@ -1253,7 +1253,7 @@ namespace win
             pmouse->m_ecursor = visual::cursor_default;
          }
 restart_mouse_hover_check:
-         for(int i = 0; i < m_guieptraMouseHover.get_size(); i++)
+         for(int32_t i = 0; i < m_guieptraMouseHover.get_size(); i++)
          {
             if(!m_guieptraMouseHover[i]->_001IsPointInside(pmouse->m_pt))
             {
@@ -1303,7 +1303,7 @@ restart_mouse_hover_check:
          wnda = System.frames();
          wnda.get_wnda(oswindowa);
          user::window_util::SortByZOrder(oswindowa);
-         for(int i = 0; i < oswindowa.get_size(); i++)
+         for(int32_t i = 0; i < oswindowa.get_size(); i++)
          {
             ::user::interaction * pguie = wnda.find_first(oswindowa[i]);
             if(pguie != NULL && pguie->m_pguie != NULL)
@@ -1325,7 +1325,7 @@ restart_mouse_hover_check:
          {
             try
             {
-               Application.set_key_pressed((int) pbase->m_wparam, true);
+               Application.set_key_pressed((int32_t) pbase->m_wparam, true);
             }
             catch(...)
             {
@@ -1335,7 +1335,7 @@ restart_mouse_hover_check:
          {
             try
             {
-               Application.set_key_pressed((int) pbase->m_wparam, false);
+               Application.set_key_pressed((int32_t) pbase->m_wparam, false);
             }
             catch(...)
             {
@@ -1731,8 +1731,8 @@ restart_mouse_hover_check:
    // special case for WM_VSCROLL and WM_HSCROLL
    ASSERT(message == WM_VSCROLL || message == WM_HSCROLL ||
    message == WM_VSCROLL+WM_REFLECT_BASE || message == WM_HSCROLL+WM_REFLECT_BASE);
-   int nScrollCode = (short)LOWORD(wParam);
-   int nPos = (short)HIWORD(wParam);
+   int32_t nScrollCode = (short)LOWORD(wParam);
+   int32_t nPos = (short)HIWORD(wParam);
    if (lpEntry->nSig == gen::Sig_SCROLL)
    (this->*mmf.pfn_v_u_u_W)(nScrollCode, nPos,
    ::win::window::from_handle(reinterpret_cast<oswindow>(lParam)));
@@ -1750,12 +1750,12 @@ restart_mouse_hover_check:
    break;
 
    case gen::Sig_OWNERDRAW:
-   (this->*mmf.pfn_v_i_s)(static_cast<int>(wParam), reinterpret_cast<LPTSTR>(lParam));
+   (this->*mmf.pfn_v_i_s)(static_cast<int32_t>(wParam), reinterpret_cast<LPTSTR>(lParam));
    lResult = TRUE;
    break;
 
    case gen::Sig_i_i_s:
-   lResult = (this->*mmf.pfn_i_i_s)(static_cast<int>(wParam), reinterpret_cast<LPTSTR>(lParam));
+   lResult = (this->*mmf.pfn_i_i_s)(static_cast<int32_t>(wParam), reinterpret_cast<LPTSTR>(lParam));
    break;
 
    case gen::Sig_u_v_p:
@@ -1832,7 +1832,7 @@ restart_mouse_hover_check:
       UNREFERENCED_PARAMETER(lParam);
       /*   UINT nID = LOWORD(wParam);
       oswindow oswindow_Ctrl = lParam;
-      int nCode = HIWORD(wParam);
+      int32_t nCode = HIWORD(wParam);
 
       // default routing for command messages (through closure table)
 
@@ -1873,7 +1873,7 @@ restart_mouse_hover_check:
       }
 
       #ifdef DEBUG
-      if (nCode < 0 && nCode != (int)0x8000)
+      if (nCode < 0 && nCode != (int32_t)0x8000)
       TRACE(::radix::trace::category_AppMsg, 0, "Implementation Warning: control notification = $%X.\n",
       nCode);
       #endif
@@ -1890,7 +1890,7 @@ restart_mouse_hover_check:
 
       // get the child ID from the window itself
       //      uint_ptr nID = __get_dialog_control_id(oswindow_Ctrl);
-      //      int nCode = pNMHDR->code;
+      //      int32_t nCode = pNMHDR->code;
 
       ASSERT(oswindow_Ctrl != NULL);
       ASSERT(::IsWindow(oswindow_Ctrl));
@@ -2048,11 +2048,11 @@ restart_mouse_hover_check:
       return ::win::window::from_handle(oswindow);
    }
 
-   int window::message_box(const char * lpszText, const char * lpszCaption, UINT nType)
+   int32_t window::message_box(const char * lpszText, const char * lpszCaption, UINT nType)
    {
       if (lpszCaption == NULL)
          lpszCaption = __get_app_name();
-      int nResult = ::MessageBox(get_handle(), lpszText, lpszCaption, nType);
+      int32_t nResult = ::MessageBox(get_handle(), lpszText, lpszCaption, nType);
       return nResult;
    }
 
@@ -2077,7 +2077,7 @@ restart_mouse_hover_check:
             return pWndChild;
       }
 
-      for(int i = 0; i < oswindow->m_uiptraChild.get_count(); i++)
+      for(int32_t i = 0; i < oswindow->m_uiptraChild.get_count(); i++)
       {
          if(oswindow->m_uiptraChild[i]->GetDlgCtrlId() == id)
          {
@@ -2154,27 +2154,27 @@ restart_mouse_hover_check:
    // if the window doesn't have a _visible_ windows scrollbar - then
    //   look for a sibling with the appropriate ID
 
-   CScrollBar* window::GetScrollBarCtrl(int) const
+   CScrollBar* window::GetScrollBarCtrl(int32_t) const
    {
       return NULL;        // no special scrollers supported
    }
 
-   int window::SetScrollPos(int nBar, int nPos, bool bRedraw)
+   int32_t window::SetScrollPos(int32_t nBar, int32_t nPos, bool bRedraw)
    {
       return ::SetScrollPos(get_handle(), nBar, nPos, bRedraw);
    }
 
-   int window::GetScrollPos(int nBar) const
+   int32_t window::GetScrollPos(int32_t nBar) const
    {
       return ::GetScrollPos(((window *) this)->get_handle(), nBar);
    }
 
-   void window::SetScrollRange(int nBar, int nMinPos, int nMaxPos, bool bRedraw)
+   void window::SetScrollRange(int32_t nBar, int32_t nMinPos, int32_t nMaxPos, bool bRedraw)
    {
       ::SetScrollRange(get_handle(), nBar, nMinPos, nMaxPos, bRedraw);
    }
 
-   void window::GetScrollRange(int nBar, LPINT lpMinPos, LPINT lpMaxPos) const
+   void window::GetScrollRange(int32_t nBar, LPINT lpMinPos, LPINT lpMaxPos) const
    {
       ::GetScrollRange(((window *) this)->get_handle(), nBar, lpMinPos, lpMaxPos);
    }
@@ -2182,13 +2182,13 @@ restart_mouse_hover_check:
    // Turn on/off non-control scrollbars
    //   for WS_?SCROLL scrollbars - show/hide them
    //   for control scrollbar - enable/disable them
-   void window::EnableScrollBarCtrl(int nBar, bool bEnable)
+   void window::EnableScrollBarCtrl(int32_t nBar, bool bEnable)
    {
       // WS_?SCROLL scrollbar - show or hide
       ShowScrollBar(nBar, bEnable);
    }
 
-   bool window::SetScrollInfo(int nBar, LPSCROLLINFO lpScrollInfo, bool bRedraw)
+   bool window::SetScrollInfo(int32_t nBar, LPSCROLLINFO lpScrollInfo, bool bRedraw)
    {
       ASSERT(lpScrollInfo != NULL);
 
@@ -2198,7 +2198,7 @@ restart_mouse_hover_check:
       return true;
    }
 
-   bool window::GetScrollInfo(int nBar, LPSCROLLINFO lpScrollInfo, UINT nMask)
+   bool window::GetScrollInfo(int32_t nBar, LPSCROLLINFO lpScrollInfo, UINT nMask)
    {
       UNREFERENCED_PARAMETER(nMask);
       ASSERT(lpScrollInfo != NULL);
@@ -2207,9 +2207,9 @@ restart_mouse_hover_check:
       return ::GetScrollInfo(oswindow, nBar, lpScrollInfo) != FALSE;
    }
 
-   int window::GetScrollLimit(int nBar)
+   int32_t window::GetScrollLimit(int32_t nBar)
    {
-      int nMin, nMax;
+      int32_t nMin, nMax;
       GetScrollRange(nBar, &nMin, &nMax);
       SCROLLINFO info;
       if (GetScrollInfo(nBar, &info, SIF_PAGE))
@@ -2219,7 +2219,7 @@ restart_mouse_hover_check:
       return nMax;
    }
 
-   void window::ScrollWindow(int xAmount, int yAmount,
+   void window::ScrollWindow(int32_t xAmount, int32_t yAmount,
       LPCRECT lpRect, LPCRECT lpClipRect)
    {
       ASSERT(::IsWindow(get_handle()));
@@ -2300,7 +2300,7 @@ restart_mouse_hover_check:
    else if (gen::str::begins(strIdc, pszPrefix) && pWnd != NULL)
    oswindow_Child->SendMessage(WM_SIZEPARENT, 0, (LPARAM)&layout);
    }
-   for (int i = 0; i < m_pguie->m_uiptra.get_count();   i++)
+   for (int32_t i = 0; i < m_pguie->m_uiptra.get_count();   i++)
    {
    ::user::interaction * oswindow_Child = m_pguie->m_uiptra[i];
    string strIdc = oswindow_Child->GetDlgCtrlId();
@@ -2323,7 +2323,7 @@ restart_mouse_hover_check:
    else if (gen::str::begins(strIdc, pszPrefix) && pWnd != NULL)
    oswindow_Child->SendMessage(WM_SIZEPARENT, 0, (LPARAM)&layout);
    }
-   for (int i = 0; i < m_uiptra.get_count();   i++)
+   for (int32_t i = 0; i < m_uiptra.get_count();   i++)
    {
    ::user::interaction * oswindow_Child = m_uiptra[i];
    string strIdc = oswindow_Child->GetDlgCtrlId();
@@ -2419,7 +2419,7 @@ restart_mouse_hover_check:
          {
             id id = oswindow_Child->GetDlgCtrlId();
             ::user::interaction * pWnd = oswindow_Child;
-            if (id == (int) nIdLeftOver)
+            if (id == (int32_t) nIdLeftOver)
                oswindow_LeftOver = oswindow_Child;
             else if (pWnd != NULL)
                oswindow_Child->send_message(WM_SIZEPARENT, 0, (LPARAM)&layout);
@@ -2644,7 +2644,7 @@ restart_mouse_hover_check:
       case WM_COMMAND:
          {
             // reflect the message through the message ::collection::map as OCM_COMMAND
-            /* xxx         int nCode = HIWORD(wParam);
+            /* xxx         int32_t nCode = HIWORD(wParam);
             if (window::_001OnCommand(0, MAKELONG(nCode, WM_REFLECT_BASE+WM_COMMAND), NULL, NULL))
             {
             if (pResult != NULL)
@@ -2659,7 +2659,7 @@ restart_mouse_hover_check:
          {
             // reflect the message through the message ::collection::map as OCM_NOTIFY
             NMHDR* pNMHDR = (NMHDR*)lParam;
-            //            int nCode = pNMHDR->code;
+            //            int32_t nCode = pNMHDR->code;
             //            __NOTIFY notify;
             //          notify.pResult = pResult;
             //        notify.pNMHDR = pNMHDR;
@@ -2815,10 +2815,10 @@ restart_mouse_hover_check:
 
       LRESULT lResult;
       if (ReflectLastMsg(lpInfo->hWnd, &lResult))
-         return (int)lResult;    // eat it
+         return (int32_t)lResult;    // eat it
 
       // not handled - do default
-      return (int)Default();
+      return (int32_t)Default();
    }
 
    void window::_001OnCreate(gen::signal_object * pobj)
@@ -2941,7 +2941,7 @@ restart_mouse_hover_check:
       rgnWindow = CreateRectRgn(0, 0, 0, 0);
       rgnIntersect = CreateRectRgn(0, 0, 0, 0);
 
-      //      int iCount = wndaApp.get_count();
+      //      int32_t iCount = wndaApp.get_count();
 
       try
       {
@@ -3042,7 +3042,7 @@ restart_mouse_hover_check:
                   if(pwnd == NULL)
                   {
 
-                  for(int l = 0; l < wndpa.get_count(); l++)
+                  for(int32_t l = 0; l < wndpa.get_count(); l++)
                   {
                   if(wndpa[l]->get_safe_handle() == oswindow)
                   {
@@ -3487,8 +3487,8 @@ restart_mouse_hover_check:
       }
 
       // find dialog's upper left based on rcCenter
-      int xLeft = (rcCenter.left + rcCenter.right) / 2 - rcDlg.width() / 2;
-      int yTop = (rcCenter.top + rcCenter.bottom) / 2 - rcDlg.height() / 2;
+      int32_t xLeft = (rcCenter.left + rcCenter.right) / 2 - rcDlg.width() / 2;
+      int32_t yTop = (rcCenter.top + rcCenter.bottom) / 2 - rcDlg.height() / 2;
 
       // if the dialog is outside the screen, move it inside
       if (xLeft < rcArea.left)
@@ -3684,7 +3684,7 @@ restart_mouse_hover_check:
       bool bShowIdle = (dwFlags & MLF_SHOWONIDLE) && !(GetStyle() & WS_VISIBLE);
       oswindow oswindow_Parent = ::GetParent(get_handle());
       m_iModal = m_iModalCount;
-      int iLevel = m_iModal;
+      int32_t iLevel = m_iModal;
       oprop(string("RunModalLoop.thread(") + gen::str::from(iLevel) + ")") = System.GetThread();
       m_iModalCount++;
 
@@ -3810,7 +3810,7 @@ ExitModal:
       return m_nModalResult;
    }
 
-   bool window::ContinueModal(int iLevel)
+   bool window::ContinueModal(int32_t iLevel)
    {
       return iLevel < m_iModalCount;
    }
@@ -3820,7 +3820,7 @@ ExitModal:
       ASSERT(::IsWindow(get_handle()));
 
       // this result will be returned from window::RunModalLoop
-      m_nModalResult = (int) nResult;
+      m_nModalResult = (int32_t) nResult;
 
       // make sure a message goes through to exit the modal loop
       if(m_iModalCount > 0)
@@ -3845,11 +3845,11 @@ ExitModal:
       // make sure a message goes through to exit the modal loop
       if(m_iModalCount > 0)
       {
-         int iLevel = m_iModalCount - 1;
+         int32_t iLevel = m_iModalCount - 1;
          m_iModalCount = 0;
          PostMessage(WM_NULL);
          System.GetThread()->post_thread_message(WM_NULL, 0, 0);
-         for(int i = iLevel; i >= 0; i--)
+         for(int32_t i = iLevel; i >= 0; i--)
          {
             ::ca::thread * pthread = oprop(string("RunModalLoop.thread(") + gen::str::from(i) + ")").ca2 < ::ca::thread > ();
             try
@@ -3971,7 +3971,7 @@ ExitModal:
       return ::win::oswindow_handle::get_handle();
    }
 
-   bool window::SetWindowPos(int z, int x, int y, int cx, int cy, UINT nFlags)
+   bool window::SetWindowPos(int32_t z, int32_t x, int32_t y, int32_t cx, int32_t cy, UINT nFlags)
    {
       /*bool b;
       bool * pb = &b;
@@ -4112,7 +4112,7 @@ ExitModal:
 
    }
 
-   void window::MoveWindow(int x, int y, int nWidth, int nHeight, bool bRepaint)
+   void window::MoveWindow(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, bool bRepaint)
    {
       ASSERT(::IsWindow(get_handle())); 
       SetWindowPos(NULL, x, y, nWidth, nHeight, bRepaint ? SWP_SHOWWINDOW : 0);
@@ -4282,7 +4282,7 @@ ExitModal:
       ::ShowWindow(get_handle(), SW_RESTORE);
    }
 
-   bool window::ShowWindow(int nCmdShow)
+   bool window::ShowWindow(int32_t nCmdShow)
    {
       if(!::IsWindow(get_handle()))
          return false;
@@ -4362,12 +4362,12 @@ ExitModal:
       return ::win::window::from_handle(::GetParent(get_handle()));
    }
 
-   LONG window::GetWindowLong(int nIndex)
+   LONG window::GetWindowLong(int32_t nIndex)
    {
       return ::GetWindowLong(get_handle(), nIndex);
    }
 
-   LONG window::SetWindowLong(int nIndex, LONG lValue)
+   LONG window::SetWindowLong(int32_t nIndex, LONG lValue)
    {
       return ::SetWindowLong(get_handle(), nIndex, lValue);
    }
@@ -4559,12 +4559,12 @@ ExitModal:
       ASSERT(::IsWindow(get_handle())); return ::ArrangeIconicWindows(get_handle()); 
    }
 
-   int window::SetWindowRgn(HRGN hRgn, bool bRedraw)
+   int32_t window::SetWindowRgn(HRGN hRgn, bool bRedraw)
    {
       ASSERT(::IsWindow(get_handle())); return ::SetWindowRgn(get_handle(), hRgn, bRedraw); 
    }
 
-   int window::GetWindowRgn(HRGN hRgn)
+   int32_t window::GetWindowRgn(HRGN hRgn)
    {
       ASSERT(::IsWindow(get_handle()) && hRgn != NULL); return ::GetWindowRgn(get_handle(), hRgn); 
    }
@@ -4668,7 +4668,7 @@ ExitModal:
       return ::GetUpdateRect(get_handle(), lpRect, bErase) != FALSE; 
    }
 
-   int window::GetUpdateRgn(::ca::region* pRgn, bool bErase)
+   int32_t window::GetUpdateRgn(::ca::region* pRgn, bool bErase)
    { 
       ASSERT(::IsWindow(get_handle())); 
       return ::GetUpdateRgn(get_handle(), (HRGN)pRgn->get_os_data(), bErase); 
@@ -4820,7 +4820,7 @@ ExitModal:
 
    }
 
-   bool window::EnableScrollBar(int nSBFlags, UINT nArrowFlags)
+   bool window::EnableScrollBar(int32_t nSBFlags, UINT nArrowFlags)
    {
 
       ASSERT(::IsWindow(get_handle())); 
@@ -4829,7 +4829,7 @@ ExitModal:
 
    }
 
-   bool window::DrawAnimatedRects(int idAni, CONST RECT *lprcFrom, CONST RECT *lprcTo)
+   bool window::DrawAnimatedRects(int32_t idAni, CONST RECT *lprcFrom, CONST RECT *lprcTo)
    { 
 
       ASSERT(::IsWindow(get_handle()));
@@ -4945,9 +4945,9 @@ ExitModal:
 
 
    // Helper for radio buttons
-   int window::GetCheckedRadioButton(int nIDFirstButton, int nIDLastButton)
+   int32_t window::GetCheckedRadioButton(int32_t nIDFirstButton, int32_t nIDLastButton)
    {
-      for (int nID = nIDFirstButton; nID <= nIDLastButton; nID++)
+      for (int32_t nID = nIDFirstButton; nID <= nIDLastButton; nID++)
       {
          if (IsDlgButtonChecked(nID))
             return nID; // id that matched
@@ -4955,7 +4955,7 @@ ExitModal:
       return 0; // invalid ID
    }
 
-   void window::CheckDlgButton(int nIDButton, UINT nCheck)
+   void window::CheckDlgButton(int32_t nIDButton, UINT nCheck)
    { 
 
       ASSERT(::IsWindow(get_handle())); 
@@ -4964,7 +4964,7 @@ ExitModal:
 
    }
 
-   void window::CheckRadioButton(int nIDFirstButton, int nIDLastButton, int nIDCheckButton)
+   void window::CheckRadioButton(int32_t nIDFirstButton, int32_t nIDLastButton, int32_t nIDCheckButton)
    { 
 
       ASSERT(::IsWindow(get_handle())); 
@@ -4973,8 +4973,8 @@ ExitModal:
 
    }
 
-   int window::DlgDirList(__inout_z LPTSTR lpPathSpec, __in int nIDListBox,
-      __in int nIDStaticPath, __in UINT nFileType)
+   int32_t window::DlgDirList(__inout_z LPTSTR lpPathSpec, __in int32_t nIDListBox,
+      __in int32_t nIDStaticPath, __in UINT nFileType)
    {
       ASSERT(::IsWindow(get_handle()));
 
@@ -4982,7 +4982,7 @@ ExitModal:
 
    }
 
-   int window::DlgDirListComboBox(__inout_z LPTSTR lpPathSpec, __in int nIDComboBox,  __in int nIDStaticPath, __in UINT nFileType)
+   int32_t window::DlgDirListComboBox(__inout_z LPTSTR lpPathSpec, __in int32_t nIDComboBox,  __in int32_t nIDStaticPath, __in UINT nFileType)
    { 
 
       ASSERT(::IsWindow(get_handle())); 
@@ -4991,7 +4991,7 @@ ExitModal:
 
    }
 
-   bool window::DlgDirSelect(LPTSTR lpString, int nSize, int nIDListBox)
+   bool window::DlgDirSelect(LPTSTR lpString, int32_t nSize, int32_t nIDListBox)
    { 
 
       ASSERT(::IsWindow(get_handle())); 
@@ -5000,7 +5000,7 @@ ExitModal:
 
    }
 
-   bool window::DlgDirSelectComboBox(LPTSTR lpString, int nSize, int nIDComboBox)
+   bool window::DlgDirSelectComboBox(LPTSTR lpString, int32_t nSize, int32_t nIDComboBox)
    {
 
       ASSERT(::IsWindow(get_handle())); 
@@ -5014,11 +5014,11 @@ ExitModal:
 
       ASSERT(::IsWindow(get_handle())); 
       ASSERT(poswindow_ != NULL); 
-      *poswindow_ = ::GetDlgItem(get_handle(), (int) id);
+      *poswindow_ = ::GetDlgItem(get_handle(), (int32_t) id);
 
    }
 
-   UINT window::GetChildByIdInt(int nID, BOOL * lpTrans, bool bSigned) const
+   UINT window::GetChildByIdInt(int32_t nID, BOOL * lpTrans, bool bSigned) const
    {
 
       ASSERT(::IsWindow(get_handle())); 
@@ -5027,7 +5027,7 @@ ExitModal:
 
    }
 
-   int window::GetChildByIdText(__in int nID, __out_ecount_part_z(nMaxCount, return + 1) LPTSTR lpStr, __in int nMaxCount) const
+   int32_t window::GetChildByIdText(__in int32_t nID, __out_ecount_part_z(nMaxCount, return + 1) LPTSTR lpStr, __in int32_t nMaxCount) const
    { ASSERT(::IsWindow(get_handle())); return ::GetDlgItemText(get_handle(), nID, lpStr, nMaxCount);}
 
    ::ca::window * window::GetNextDlgGroupItem(::ca::window * pWndCtl, bool bPrevious) const
@@ -5042,15 +5042,15 @@ ExitModal:
       return ::win::window::from_handle(::GetNextDlgTabItem(get_handle(), pWndCtl->get_handle(), bPrevious)); 
    }
 
-   UINT window::IsDlgButtonChecked(int nIDButton) const
+   UINT window::IsDlgButtonChecked(int32_t nIDButton) const
    { ASSERT(::IsWindow(get_handle())); return ::IsDlgButtonChecked(get_handle(), nIDButton); }
-   LPARAM window::SendDlgItemMessage(int nID, UINT message, WPARAM wParam, LPARAM lParam)
+   LPARAM window::SendDlgItemMessage(int32_t nID, UINT message, WPARAM wParam, LPARAM lParam)
    { ASSERT(::IsWindow(get_handle())); return ::SendDlgItemMessage(get_handle(), nID, message, wParam, lParam); }
-   void window::SetDlgItemInt(int nID, UINT nValue, bool bSigned)
+   void window::SetDlgItemInt(int32_t nID, UINT nValue, bool bSigned)
    { ASSERT(::IsWindow(get_handle())); ::SetDlgItemInt(get_handle(), nID, nValue, bSigned); }
-   void window::SetDlgItemText(int nID, const char * lpszString)
+   void window::SetDlgItemText(int32_t nID, const char * lpszString)
    { ASSERT(::IsWindow(get_handle())); ::SetDlgItemText(get_handle(), nID, lpszString); }
-   int window::ScrollWindowEx(int dx, int dy,
+   int32_t window::ScrollWindowEx(int32_t dx, int32_t dy,
       LPCRECT lpRectScroll, LPCRECT lpRectClip,
       ::ca::region* prgnUpdate, LPRECT lpRectUpdate, UINT flags)
    { ASSERT(::IsWindow(get_handle())); return ::ScrollWindowEx(get_handle(), dx, dy, lpRectScroll, lpRectClip,
@@ -5155,7 +5155,7 @@ ExitModal:
 
    }
 
-   void window::CreateSolidCaret(int nWidth, int nHeight)
+   void window::CreateSolidCaret(int32_t nWidth, int32_t nHeight)
    {
 
       ASSERT(::IsWindow(get_handle())); 
@@ -5164,7 +5164,7 @@ ExitModal:
 
    }
 
-   void window::CreateGrayCaret(int nWidth, int nHeight)
+   void window::CreateGrayCaret(int32_t nWidth, int32_t nHeight)
    {
 
       ASSERT(::IsWindow(get_handle()));
@@ -5321,7 +5321,7 @@ ExitModal:
    { return Default(); }
    void window::OnMenuSelect(UINT, UINT, HMENU)
    { Default(); }
-   void window::OnMove(int, int)
+   void window::OnMove(int32_t, int32_t)
    { Default(); }
    HCURSOR window::OnQueryDragIcon()
    { return (HCURSOR)Default(); }
@@ -5361,7 +5361,7 @@ ExitModal:
    }
    void window::OnShowWindow(bool, UINT)
    { Default(); }
-   void window::OnSize(UINT, int, int)
+   void window::OnSize(UINT, int32_t, int32_t)
    { Default(); }
    void window::OnTCard(UINT, DWORD)
    { Default(); }
@@ -5455,8 +5455,8 @@ ExitModal:
    { Default(); }
    void window::OnMButtonUp(UINT, point)
    { Default(); }
-   int window::OnMouseActivate(::ca::window *, UINT, UINT)
-   { return (int)Default(); }
+   int32_t window::OnMouseActivate(::ca::window *, UINT, UINT)
+   { return (int32_t)Default(); }
    void window::OnMouseMove(UINT, point)
    { Default(); }
 
@@ -5518,9 +5518,9 @@ ExitModal:
    void window::OnExitMenuLoop(bool)
    { Default(); }
    // Win4 support
-   void window::OnStyleChanged(int, LPSTYLESTRUCT)
+   void window::OnStyleChanged(int32_t, LPSTYLESTRUCT)
    { Default(); }
-   void window::OnStyleChanging(int, LPSTYLESTRUCT)
+   void window::OnStyleChanging(int32_t, LPSTYLESTRUCT)
    { Default(); }
    void window::OnSizing(UINT, LPRECT)
    { Default(); }
@@ -5748,7 +5748,7 @@ ExitModal:
    /////////////////////////////////////////////////////////////////////////////
    // Window creation hooks
 
-   LRESULT CALLBACK __cbt_filter_hook(int code, WPARAM wParam, LPARAM lParam)
+   LRESULT CALLBACK __cbt_filter_hook(int32_t code, WPARAM wParam, LPARAM lParam)
    {
       ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
       if (code != HCBT_CREATEWND)
@@ -5930,7 +5930,7 @@ void CTestCmdUI::Enable(bool bOn)
    m_bEnableChanged = TRUE;
 }
 
-void CTestCmdUI::SetCheck(int)
+void CTestCmdUI::SetCheck(int32_t)
 {
    // do nothing -- just want to know about calls to Enable
 }
@@ -6488,8 +6488,8 @@ namespace win
       sz.cx = rectWindow.right - rectWindow.left;
       sz.cy = rectWindow.bottom - rectWindow.top;
 
-      int cx = sz.cx;
-      int cy = sz.cy;
+      int32_t cx = sz.cx;
+      int32_t cy = sz.cy;
 
       BITMAPINFO info;
       COLORREF * pcolorref;
@@ -6541,46 +6541,46 @@ namespace win
 
          while (size >= 8)
          {
-            dst[0] = LOBYTE(((int)dst[0] * (int)dst[3])>> 8);
-            dst[1] = LOBYTE(((int)dst[1] * (int)dst[3])>> 8);
-            dst[2] = LOBYTE(((int)dst[2] * (int)dst[3])>> 8);
+            dst[0] = LOBYTE(((int32_t)dst[0] * (int32_t)dst[3])>> 8);
+            dst[1] = LOBYTE(((int32_t)dst[1] * (int32_t)dst[3])>> 8);
+            dst[2] = LOBYTE(((int32_t)dst[2] * (int32_t)dst[3])>> 8);
 
-            dst[4+0] = LOBYTE(((int)dst[4+0] * (int)dst[4+3])>> 8);
-            dst[4+1] = LOBYTE(((int)dst[4+1] * (int)dst[4+3])>> 8);
-            dst[4+2] = LOBYTE(((int)dst[4+2] * (int)dst[4+3])>> 8);
+            dst[4+0] = LOBYTE(((int32_t)dst[4+0] * (int32_t)dst[4+3])>> 8);
+            dst[4+1] = LOBYTE(((int32_t)dst[4+1] * (int32_t)dst[4+3])>> 8);
+            dst[4+2] = LOBYTE(((int32_t)dst[4+2] * (int32_t)dst[4+3])>> 8);
 
-            dst[8+0] = LOBYTE(((int)dst[8+0] * (int)dst[8+3])>> 8);
-            dst[8+1] = LOBYTE(((int)dst[8+1] * (int)dst[8+3])>> 8);
-            dst[8+2] = LOBYTE(((int)dst[8+2] * (int)dst[8+3])>> 8);
+            dst[8+0] = LOBYTE(((int32_t)dst[8+0] * (int32_t)dst[8+3])>> 8);
+            dst[8+1] = LOBYTE(((int32_t)dst[8+1] * (int32_t)dst[8+3])>> 8);
+            dst[8+2] = LOBYTE(((int32_t)dst[8+2] * (int32_t)dst[8+3])>> 8);
 
-            dst[12+0] = LOBYTE(((int)dst[12+0] * (int)dst[12+3])>> 8);
-            dst[12+1] = LOBYTE(((int)dst[12+1] * (int)dst[12+3])>> 8);
-            dst[12+2] = LOBYTE(((int)dst[12+2] * (int)dst[12+3])>> 8);
+            dst[12+0] = LOBYTE(((int32_t)dst[12+0] * (int32_t)dst[12+3])>> 8);
+            dst[12+1] = LOBYTE(((int32_t)dst[12+1] * (int32_t)dst[12+3])>> 8);
+            dst[12+2] = LOBYTE(((int32_t)dst[12+2] * (int32_t)dst[12+3])>> 8);
 
-            dst[16+0] = LOBYTE(((int)dst[16+0] * (int)dst[16+3])>> 8);
-            dst[16+1] = LOBYTE(((int)dst[16+1] * (int)dst[16+3])>> 8);
-            dst[16+2] = LOBYTE(((int)dst[16+2] * (int)dst[16+3])>> 8);
+            dst[16+0] = LOBYTE(((int32_t)dst[16+0] * (int32_t)dst[16+3])>> 8);
+            dst[16+1] = LOBYTE(((int32_t)dst[16+1] * (int32_t)dst[16+3])>> 8);
+            dst[16+2] = LOBYTE(((int32_t)dst[16+2] * (int32_t)dst[16+3])>> 8);
 
-            dst[20+0] = LOBYTE(((int)dst[20+0] * (int)dst[20+3])>> 8);
-            dst[20+1] = LOBYTE(((int)dst[20+1] * (int)dst[20+3])>> 8);
-            dst[20+2] = LOBYTE(((int)dst[20+2] * (int)dst[20+3])>> 8);
+            dst[20+0] = LOBYTE(((int32_t)dst[20+0] * (int32_t)dst[20+3])>> 8);
+            dst[20+1] = LOBYTE(((int32_t)dst[20+1] * (int32_t)dst[20+3])>> 8);
+            dst[20+2] = LOBYTE(((int32_t)dst[20+2] * (int32_t)dst[20+3])>> 8);
 
-            dst[24+0] = LOBYTE(((int)dst[24+0] * (int)dst[24+3])>> 8);
-            dst[24+1] = LOBYTE(((int)dst[24+1] * (int)dst[24+3])>> 8);
-            dst[24+2] = LOBYTE(((int)dst[24+2] * (int)dst[24+3])>> 8);
+            dst[24+0] = LOBYTE(((int32_t)dst[24+0] * (int32_t)dst[24+3])>> 8);
+            dst[24+1] = LOBYTE(((int32_t)dst[24+1] * (int32_t)dst[24+3])>> 8);
+            dst[24+2] = LOBYTE(((int32_t)dst[24+2] * (int32_t)dst[24+3])>> 8);
 
-            dst[28+0] = LOBYTE(((int)dst[28+0] * (int)dst[28+3])>> 8);
-            dst[28+1] = LOBYTE(((int)dst[28+1] * (int)dst[28+3])>> 8);
-            dst[28+2] = LOBYTE(((int)dst[28+2] * (int)dst[28+3])>> 8);
+            dst[28+0] = LOBYTE(((int32_t)dst[28+0] * (int32_t)dst[28+3])>> 8);
+            dst[28+1] = LOBYTE(((int32_t)dst[28+1] * (int32_t)dst[28+3])>> 8);
+            dst[28+2] = LOBYTE(((int32_t)dst[28+2] * (int32_t)dst[28+3])>> 8);
 
             dst += 4 * 8;
             size -= 8;
          }
          while(size--)
          {
-            dst[0] = LOBYTE(((int)dst[0] * (int)dst[3])>> 8);
-            dst[1] = LOBYTE(((int)dst[1] * (int)dst[3])>> 8);
-            dst[2] = LOBYTE(((int)dst[2] * (int)dst[3])>> 8);
+            dst[0] = LOBYTE(((int32_t)dst[0] * (int32_t)dst[3])>> 8);
+            dst[1] = LOBYTE(((int32_t)dst[1] * (int32_t)dst[3])>> 8);
+            dst[2] = LOBYTE(((int32_t)dst[2] * (int32_t)dst[3])>> 8);
             dst += 4;
          }
 

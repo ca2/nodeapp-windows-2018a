@@ -16,7 +16,7 @@
 /////////////////////////////////////////////////////////////////////////////
 
 /*bool CLASS_DECL_win gen::WinInit(HINSTANCE hInstance, HINSTANCE hPrevInstance,
-   __in LPTSTR lpCmdLine, int nCmdShow)
+   __in LPTSTR lpCmdLine, int32_t nCmdShow)
 {
 }*/
 

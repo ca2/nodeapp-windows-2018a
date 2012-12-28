@@ -89,7 +89,7 @@ namespace win
 
    }
 
-   bool graphics_path::add_line(int x1, int y1, int x2, int y2)
+   bool graphics_path::add_line(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    {
 
       bool bOk1 = true;
@@ -109,7 +109,7 @@ namespace win
 
    }
    
-   bool graphics_path::add_line(int x, int y)
+   bool graphics_path::add_line(int32_t x, int32_t y)
    {
 
       point pt = last_point();
@@ -130,7 +130,7 @@ namespace win
    }
 
 
-   bool graphics_path::add_move(int x, int y)
+   bool graphics_path::add_move(int32_t x, int32_t y)
    {
 
       m_point.X   = (Gdiplus::REAL) x;

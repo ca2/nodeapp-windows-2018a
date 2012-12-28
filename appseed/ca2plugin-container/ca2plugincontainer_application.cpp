@@ -53,7 +53,7 @@ namespace ca2plugin_container
 
    }
 
-   void application::on_receive(small_ipc_rx_channel * prxchannel, int message, void * pdata, int len)
+   void application::on_receive(small_ipc_rx_channel * prxchannel, int32_t message, void * pdata, int32_t len)
    {
 
       if(m_phost != NULL)
@@ -74,7 +74,7 @@ namespace ca2plugin_container
 
    }
 
-   int application::run()
+   int32_t application::run()
    {
 
       MSG msg;

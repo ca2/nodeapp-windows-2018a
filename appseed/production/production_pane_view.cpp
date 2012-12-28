@@ -88,7 +88,7 @@ namespace production
             else if(puh->is_type_of(pane_view_update_hint::TypeOnShowView))
             {
                
-//               int iTab;
+//               int32_t iTab;
    //            if(puh->m_eview == PaneViewContextMenu)
      //          {
        //           m_tab._001AddSel(0);
@@ -417,7 +417,7 @@ namespace production
       UNREFERENCED_PARAMETER(pdata);
       if(itema.get_size() > 0)
       {
-         int i = (int) ::ShellExecuteW(
+         int32_t i = (int32_t) ::ShellExecuteW(
             NULL, 
             NULL, 
             gen::international::utf8_to_unicode("\"" + itema[0].m_strPath + "\""),

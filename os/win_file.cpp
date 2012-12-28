@@ -23,7 +23,7 @@ namespace win
 
    }
 
-   file::file(::ca::application * papp, int hFile) :
+   file::file(::ca::application * papp, int32_t hFile) :
       ca(papp)
    {
 
@@ -483,7 +483,7 @@ namespace win
 #endif
 
 
-   /*void CLASS_DECL_win vfxThrowFileException(int cause, LONG lOsError,
+   /*void CLASS_DECL_win vfxThrowFileException(int32_t cause, LONG lOsError,
    //   const char * lpszFileName /* == NULL */
    /*{
    #ifdef DEBUG
@@ -590,7 +590,7 @@ namespace win
          vfxThrowFileException(papp, ::win::file_exception::OsErrorToException(lOsError), lOsError, lpszFileName);
    }
 
-   void PASCAL ::win::file_exception::ThrowErrno(::ca::application * papp, int nErrno, const char * lpszFileName /* = NULL */)
+   void PASCAL ::win::file_exception::ThrowErrno(::ca::application * papp, int32_t nErrno, const char * lpszFileName /* = NULL */)
    {
       if (nErrno != 0)
          vfxThrowFileException(papp, ::win::file_exception::ErrnoToException(nErrno), _doserrno, lpszFileName);
@@ -598,7 +598,7 @@ namespace win
 
 
 
-   int PASCAL ::win::file_exception::OsErrorToException(LONG lOsErr)
+   int32_t PASCAL ::win::file_exception::OsErrorToException(LONG lOsErr)
    {
       // NT Error codes
       switch ((UINT)lOsErr)
@@ -910,7 +910,7 @@ namespace win
    // in particular, the file system is case sensitive with respect to
    // "full width" roman characters.
    // (ie. fullwidth-R is different from fullwidth-r).
-   int nLen = lstrlenW(lpszPath1);
+   int32_t nLen = lstrlenW(lpszPath1);
    if (nLen != lstrlenW(lpszPath2))
    return FALSE;
    ASSERT(nLen < _MAX_PATH);
@@ -929,7 +929,7 @@ namespace win
    #endif
 
    // for every C3_FULLWIDTH character, make sure it has same C1 value
-   int i = 0;
+   int32_t i = 0;
    for (const wchar_t * lpsz = lpszPath1; *lpsz != 0; lpsz = _wcsinc(lpsz))
    {
    // check for C3_FULLWIDTH characters only
@@ -1135,13 +1135,13 @@ bool CLASS_DECL_win vfxFullPath(wstring & wstrFullPath, const wstring & wstrPath
       if (h != INVALID_HANDLE_VALUE)
       {
          FindClose(h);
-         int iLenFileName = lstrlenW(data.cFileName);
+         int32_t iLenFileName = lstrlenW(data.cFileName);
          if(iLenFileName >=  MAX_PATH)
          {
             wstring wstrBackup = wstrFullPath;
             strsize iFilePart = lpszFilePart - wstrFullPath;
             wstrFullPath.alloc(iFilePart + iLenFileName + 32); // arrange more space with more 32 extra wchars
-            lstrcpynW(wstrFullPath, wstrBackup, (int) iFilePart);
+            lstrcpynW(wstrFullPath, wstrBackup, (int32_t) iFilePart);
             lpszFilePart = (wchar_t *) wstrFullPath + iFilePart;
          }
          lstrcpyW(lpszFilePart, data.cFileName);
@@ -1208,7 +1208,7 @@ return TRUE;
 // in particular, the file system is case sensitive with respect to
 // "full width" roman characters.
 // (ie. fullwidth-R is different from fullwidth-r).
-int nLen = lstrlen(lpszPath1);
+int32_t nLen = lstrlen(lpszPath1);
 if (nLen != lstrlen(lpszPath2))
 return FALSE;
 ASSERT(nLen < _MAX_PATH);
@@ -1227,7 +1227,7 @@ VERIFY(GetStringTypeEx(lcid, CT_CTYPE3, lpszPath2, -1, aCharType23));
 #endif
 
 // for every C3_FULLWIDTH character, make sure it has same C1 value
-int i = 0;
+int32_t i = 0;
 for (const char * lpsz = lpszPath1; *lpsz != 0; lpsz = _tcsinc(lpsz))
 {
 // check for C3_FULLWIDTH characters only
@@ -1642,7 +1642,7 @@ UINT CLASS_DECL_win vfxGetFileName(const wchar_t * lpszPathName, wchar_t * lpszT
 /////////////////////////////////////////////////////////////////////////////
 // WinFileException helpers
 
-void CLASS_DECL_win vfxThrowFileException(::ca::application * papp, int cause, LONG lOsError, const char * lpszFileName /* == NULL */)
+void CLASS_DECL_win vfxThrowFileException(::ca::application * papp, int32_t cause, LONG lOsError, const char * lpszFileName /* == NULL */)
 {
 #ifdef DEBUG
    const char * lpsz;
@@ -1655,7 +1655,7 @@ void CLASS_DECL_win vfxThrowFileException(::ca::application * papp, int cause, L
    throw ::ex1::file_exception(papp, cause, lOsError, lpszFileName);
 }
 
-int PASCAL ::win::file_exception::ErrnoToException(int nErrno)
+int32_t PASCAL ::win::file_exception::ErrnoToException(int32_t nErrno)
 {
    switch(nErrno)
    {

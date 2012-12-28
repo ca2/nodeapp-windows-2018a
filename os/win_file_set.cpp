@@ -95,7 +95,7 @@ namespace win
 
       string strFilter;
 
-      int i, j;
+      int32_t i, j;
 
       file_find file_find;
 

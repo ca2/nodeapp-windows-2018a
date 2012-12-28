@@ -31,10 +31,10 @@ namespace win
       virtual bool begin_figure(bool bFill, ::ca::e_fill_mode efillmode);
       virtual bool end_figure(bool bClose);
 
-      virtual bool add_line(int x1, int y1, int x2, int y2);
-      virtual bool add_line(int x, int y);
+      virtual bool add_line(int32_t x1, int32_t y1, int32_t x2, int32_t y2);
+      virtual bool add_line(int32_t x, int32_t y);
 
-      virtual bool add_move(int x, int y);
+      virtual bool add_move(int32_t x, int32_t y);
 
    };
 

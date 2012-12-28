@@ -18,7 +18,7 @@ namespace production
       virtual void construct();
 
       virtual bool initialize_instance();
-      virtual int  exit_instance();
+      virtual int32_t  exit_instance();
 
       virtual bool bergedge_start();
 

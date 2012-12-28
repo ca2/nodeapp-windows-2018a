@@ -154,18 +154,18 @@ namespace production
       rect rectClient;
       GetClientRect(rectClient);
       rectClient.deflate(2, 2);
-      int iW = rectClient.width() / 2;
-      int iH = rectClient.height() / 2;
+      int32_t iW = rectClient.width() / 2;
+      int32_t iH = rectClient.height() / 2;
       iH = min(iH, 120);
       double r = (double) iW / (double) iH;
       double rScreen = (double) rectDesktop.width() / (double) rectDesktop.height();
       if(r < rScreen)
       {
-         iH = (int) (iW / rScreen);
+         iH = (int32_t) (iW / rScreen);
       }
       else if(r > rScreen)
       {
-         iW = (int) (iH * rScreen);
+         iW = (int32_t) (iH * rScreen);
       }
       m_iW = iW;
       m_iH = iH;
@@ -200,8 +200,8 @@ namespace production
 
       rect rcItem;
 
-      int iStart = m_scrollinfo.m_ptScroll.y / m_iLineHeight;
-      int y = m_iLineHeight - m_scrollinfo.m_ptScroll.y % m_iLineHeight;
+      int32_t iStart = m_scrollinfo.m_ptScroll.y / m_iLineHeight;
+      int32_t y = m_iLineHeight - m_scrollinfo.m_ptScroll.y % m_iLineHeight;
       if(m_scrollinfo.m_ptScroll.y > m_iLineHeight)
       {
          iStart--;
@@ -215,7 +215,7 @@ namespace production
       pdc->SelectClipRgn(rgnClip);
       //single_lock sl(&m_pproduction->m_mutexStatus, TRUE);
       pdc->set_color(ARGB(0xcc, 84, 84, 84));
-      for(int i = iStart; i < m_pproduction->m_straStatus.get_size() && y < rectText.bottom; i++)
+      for(int32_t i = iStart; i < m_pproduction->m_straStatus.get_size() && y < rectText.bottom; i++)
       {
          rcItem = rectText;
          rcItem.bottom = y + m_iLineHeight;
@@ -320,7 +320,7 @@ namespace production
    }
 
 
-   void view::_001OnTabClick(int iTab)
+   void view::_001OnTabClick(int32_t iTab)
    {
       if(iTab == 1)
       {
@@ -339,7 +339,7 @@ namespace production
       return dynamic_cast < document * > (::userbase::view::get_document());
    }
 
-   void view::GetAreaThumbRect(LPRECT lprect, int iArea)
+   void view::GetAreaThumbRect(LPRECT lprect, int32_t iArea)
    {
       rect rectClient;
       GetClientRect(rectClient);
@@ -383,7 +383,7 @@ namespace production
       UNREFERENCED_PARAMETER(pobj);
   //    SCAST_PTR(::gen::message::mouse, pmouse, pobj)
 
-//      int iHitArea = hit_test(pmouse->m_pt);
+//      int32_t iHitArea = hit_test(pmouse->m_pt);
 
    }
 
@@ -394,7 +394,7 @@ namespace production
       class point point = pmouse->m_pt;
       ScreenToClient(&point);
       ::user::control::e_element eelement;
-      int iHitArea = hit_test(point, eelement);
+      int32_t iHitArea = hit_test(point, eelement);
       if(iHitArea == m_iV)
       {
          make_production();
@@ -411,7 +411,7 @@ namespace production
       UNREFERENCED_PARAMETER(pobj);
   //    SCAST_PTR(::gen::message::mouse, pmouse, pobj)
 
-//      int iHitArea = hit_test(pmouse->m_pt);
+//      int32_t iHitArea = hit_test(pmouse->m_pt);
    /*   {
          ::userbase::menu menu;
          menu.LoadXmlMenu(get_app(), "production\\popup_production.xml");
@@ -476,7 +476,7 @@ namespace production
    }
 
 
-   void view::production_loop(int iLoopCount)
+   void view::production_loop(int32_t iLoopCount)
    {
       m_iStep = 1;
       application * papp = dynamic_cast < application * > (get_app());
@@ -488,7 +488,7 @@ namespace production
       SCAST_PTR(::gen::message::base, pbase, pobj);
       if(pbase->m_wparam == 1)
       {
-         int iLineHeight = m_iLineHeight;
+         int32_t iLineHeight = m_iLineHeight;
          single_lock sl(&m_pproduction->m_mutexStatus, TRUE);
          if(m_pproduction->m_straStatus.get_size() > 0)
          {

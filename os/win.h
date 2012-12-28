@@ -82,12 +82,12 @@ namespace win
    class graphics;
    class graphics_object;
 
-   template < int t_iHandleCount >
+   template < int32_t t_iHandleCount >
    class handle_base
    {
    public:
       HANDLE m_handlea[t_iHandleCount];
-      static const int s_iHandleCount = t_iHandleCount;
+      static const int32_t s_iHandleCount = t_iHandleCount;
    };
 
    template < class H >

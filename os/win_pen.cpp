@@ -25,19 +25,19 @@ namespace win
       }
    }
 
-   /*bool pen::CreatePen(int nPenStyle, int nWidth, COLORREF crColor)
+   /*bool pen::CreatePen(int32_t nPenStyle, int32_t nWidth, COLORREF crColor)
    { return attach(::CreatePen(nPenStyle, nWidth, crColor)); }
    bool pen::CreatePenIndirect(LPLOGPEN lpLogPen)
    { return attach(::CreatePenIndirect(lpLogPen)); }
-   bool pen::CreatePen(int nPenStyle, int nWidth, const LOGBRUSH* pLogBrush,
-      int nStyleCount, const DWORD* lpStyle)
+   bool pen::CreatePen(int32_t nPenStyle, int32_t nWidth, const LOGBRUSH* pLogBrush,
+      int32_t nStyleCount, const DWORD* lpStyle)
    { return attach(::ExtCreatePen(nPenStyle, nWidth, pLogBrush, nStyleCount,
    lpStyle)); }
-   int pen::GetExtLogPen(EXTLOGPEN* pLogPen)
+   int32_t pen::GetExtLogPen(EXTLOGPEN* pLogPen)
    { ASSERT(get_handle() != NULL);
    return ::GetObject(get_handle(), sizeof(EXTLOGPEN), pLogPen); }
    
-   int pen::GetLogPen(LOGPEN* pLogPen)
+   int32_t pen::GetLogPen(LOGPEN* pLogPen)
    { 
       if(get_handle() == NULL)
          return 0;
@@ -45,7 +45,7 @@ namespace win
    }
 
 
-   void pen::construct(int nPenStyle, double dWidth, COLORREF crColor)
+   void pen::construct(int32_t nPenStyle, double dWidth, COLORREF crColor)
    {
       
       if(m_ppen == NULL)
@@ -58,8 +58,8 @@ namespace win
 
    }
 
-   void pen::construct(int nPenStyle, int nWidth, const LOGBRUSH* pLogBrush,
-      int nStyleCount, const DWORD* lpStyle)
+   void pen::construct(int32_t nPenStyle, int32_t nWidth, const LOGBRUSH* pLogBrush,
+      int32_t nStyleCount, const DWORD* lpStyle)
    {
       if (!attach(::ExtCreatePen(nPenStyle, nWidth, pLogBrush, nStyleCount,
          lpStyle)))
@@ -177,7 +177,7 @@ namespace win
       }
    }
 
-   void __draw_gray_bitmap(::ca::application * papp, ::ca::graphics * pgraphics, int x, int y, const ::ca::bitmap &rSrc, COLORREF crBackground)
+   void __draw_gray_bitmap(::ca::application * papp, ::ca::graphics * pgraphics, int32_t x, int32_t y, const ::ca::bitmap &rSrc, COLORREF crBackground)
    {
       ASSERT(pgraphics);
       ASSERT_KINDOF(::ca::graphics_sp, pgraphics);
@@ -294,7 +294,7 @@ namespace win
       }
    }
 
-   void __draw_dithered_bitmap(::ca::application * papp, ::ca::graphics * pgraphics, int x, int y, const ::ca::bitmap &rSrc, COLORREF cr1, COLORREF cr2)
+   void __draw_dithered_bitmap(::ca::application * papp, ::ca::graphics * pgraphics, int32_t x, int32_t y, const ::ca::bitmap &rSrc, COLORREF cr1, COLORREF cr2)
    {
       ASSERT(pgraphics);
       ASSERT_KINDOF(::ca::graphics_sp, pgraphics);

@@ -198,7 +198,7 @@ namespace win
       // in particular, the file system is case sensitive with respect to
       // "full width" roman characters.
       // (ie. fullwidth-R is different from fullwidth-r).
-      int nLen = lstrlen(lpszPath1);
+      int32_t nLen = lstrlen(lpszPath1);
       if (nLen != lstrlen(lpszPath2))
       return FALSE;
       ASSERT(nLen < _MAX_PATH);
@@ -217,7 +217,7 @@ namespace win
       #endif
 
       // for every C3_FULLWIDTH character, make sure it has same C1 value
-      int i = 0;
+      int32_t i = 0;
       for (const char * lpsz = lpszPath1; *lpsz != 0; lpsz = _tcsinc(lpsz))
       {
       // check for C3_FULLWIDTH characters only
@@ -303,7 +303,7 @@ namespace win
    {
       stringa straDir;
       ls_dir(papp, lpcsz, &straDir);
-      for(int i = 0; i < straDir.get_count(); i++)
+      for(int32_t i = 0; i < straDir.get_count(); i++)
       {
          string strDir = straDir[i];
          if(strDir == lpcsz)
@@ -354,7 +354,7 @@ namespace win
                }
                /*if(file_find.IsDirectory())
                {
-                  int iStart = 0;
+                  int32_t iStart = 0;
                   if(pstraRelative != NULL)
                   {
                      iStart = pstraRelative->get_size();
@@ -362,7 +362,7 @@ namespace win
                   rls_pattern(file_find.GetFilePath(), lpszPattern, pstraPath, pstraTitle, pstraRelative, pbaIsDir, piaSize);
                   if(pstraRelative != NULL)
                   {
-                     for(int i = iStart; i < pstraRelative->get_size(); i++)
+                     for(int32_t i = iStart; i < pstraRelative->get_size(); i++)
                      {
                         pstraRelative->element_at(i) = System.dir().path(file_find.GetFileName(), pstraRelative->element_at(i));
                      }
@@ -608,7 +608,7 @@ namespace win
 
       DWORD dwLastError;
 
-      if(m_isdirmap.lookup(str, bIsDir, dwLastError, (int) iLast))
+      if(m_isdirmap.lookup(str, bIsDir, dwLastError, (int32_t) iLast))
       {
          if(!bIsDir)
          {
@@ -794,7 +794,7 @@ namespace win
 
       stringa stra;
       System.file().get_ascendants_path(lpcsz, stra);
-      for(int i = 0; i < stra.get_size(); i++)
+      for(int32_t i = 0; i < stra.get_size(); i++)
       {
          if(!is(stra[i], papp))
          {
@@ -863,7 +863,7 @@ namespace win
          stringa straPath;
          stringa straTitle;
          ls(papp, psz, &straPath, &straTitle);         
-         for(int i = 0; i < straPath.get_count(); i++)
+         for(int32_t i = 0; i < straPath.get_count(); i++)
          {
             if(is(straPath[i], papp))
             {

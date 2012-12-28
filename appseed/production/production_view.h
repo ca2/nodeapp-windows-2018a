@@ -11,28 +11,28 @@ namespace production
    {
    public:
 
-      int                     m_iStep;
+      int32_t                     m_iStep;
       bool                    m_bLayout;
 
-      int                     m_iLineHeight;
+      int32_t                     m_iLineHeight;
 
       production *      m_pproduction;
       DWORD                   m_dwLastSnapshotUpdate;
-      int                     m_iW;
-      int                     m_iH;
-      int                     m_iWScreen;
-      int                     m_iHScreen;
-      int                     m_iArea;
-      int                     m_iItemHeight;
-      int                     m_iTaskOffset;
+      int32_t                     m_iW;
+      int32_t                     m_iH;
+      int32_t                     m_iWScreen;
+      int32_t                     m_iHScreen;
+      int32_t                     m_iArea;
+      int32_t                     m_iItemHeight;
+      int32_t                     m_iTaskOffset;
       // veriwell votagus vida
-      int                     m_iV; 
-      int                     m_iVH;
-      int                     m_iVW;
+      int32_t                     m_iV; 
+      int32_t                     m_iVH;
+      int32_t                     m_iVW;
       // veriwell votagus ca2 out world stage
-      int                     m_iVs;
-      int                     m_iVsH;
-      int                     m_iVsW;
+      int32_t                     m_iVs;
+      int32_t                     m_iVsH;
+      int32_t                     m_iVsW;
       visual::dib_sp             m_dibV;
       visual::dib_sp             m_dibVs;
       ::ca::brush_sp          m_brushBkActive;
@@ -65,19 +65,19 @@ namespace production
 
       
 
-      void GetAreaThumbRect(LPRECT lprect, int iArea);
+      void GetAreaThumbRect(LPRECT lprect, int32_t iArea);
       index hit_test(point pt, ::user::control::e_element & eelement);
 
 
 
       void make_production();
-      void production_loop(int iLoopCount);
+      void production_loop(int32_t iLoopCount);
 
 
 
       virtual void _001OnDraw(::ca::graphics * pdc);
 
-      virtual void _001OnTabClick(int iTab);
+      virtual void _001OnTabClick(int32_t iTab);
       virtual void install_message_handling(::gen::message::dispatch * pinterface);
       virtual bool pre_create_window(CREATESTRUCT& cs);
       virtual void on_update(::view * pSender, LPARAM lHint, ::radix::object * pHint);

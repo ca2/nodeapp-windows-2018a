@@ -347,7 +347,7 @@ namespace win
          {
             __get_thread()->pump_message();
          }
-         int iUiDataWriteWindowTimeForTheApplicationInThisMachine = 8;
+         int32_t iUiDataWriteWindowTimeForTheApplicationInThisMachine = 8;
          if(m_iFramesPerSecond == 0)
          {
             Sleep(1000);
@@ -507,7 +507,7 @@ namespace win
       }
          */
       
-      for(int l = 0; l < wndpa.get_count();)
+      for(int32_t l = 0; l < wndpa.get_count();)
       {
          try
          {
@@ -542,7 +542,7 @@ namespace win
          //::ca::window * pwnd = dynamic_cast < ::ca::window * > (System.window_map().get((int_ptr) oswindowTopic));
          //if(pwnd == NULL)
          //{
-         for(int l = 0; l < wndpa.get_count(); l++)
+         for(int32_t l = 0; l < wndpa.get_count(); l++)
          {
             if(wndpa[l]->get_safe_handle() == oswindowTopic)
             {
@@ -649,7 +649,7 @@ namespace win
    
       static bool bTest = false;
 
-      for(int i = 0; i < m_wndpaOut.get_count(); i++)
+      for(int32_t i = 0; i < m_wndpaOut.get_count(); i++)
       {
          ::user::interaction* pwnd = m_wndpaOut[i];
 
@@ -688,7 +688,7 @@ namespace win
       const rect rectUpdate(*lpcrect);
 
       rect rectClient;
-      for(int i = 0; i < oswindowtreea.get_size();)
+      for(int32_t i = 0; i < oswindowtreea.get_size();)
       {
          user::oswindow_tree & oswindowtree = oswindowtreea[i];
          switch(TwfOptimizeRender(
@@ -728,14 +728,14 @@ namespace win
 
    window_draw::EOptimize window_draw::TwfOptimizeRenderRemoveNextProper(
       user::oswindow_tree::Array & oswindowtreea,
-      int iIndex,
+      int32_t iIndex,
       LPCRECT lpcrect)
    {
 
       
       const rect rectOptimize(*lpcrect);
       rect rectClient;
-      for(int i = iIndex; i < oswindowtreea.get_size();)
+      for(int32_t i = iIndex; i < oswindowtreea.get_size();)
       {
          user::oswindow_tree & oswindowtree = oswindowtreea[i];
          ::oswindow oswindow = oswindowtree.m_oswindow;
@@ -855,7 +855,7 @@ namespace win
       HRGN hrgn)
    {
       rect rectClient;
-      for(int i = 0; i < oswindowtreea.get_size(); i++)
+      for(int32_t i = 0; i < oswindowtreea.get_size(); i++)
       {
          user::oswindow_tree & oswindowtree = oswindowtreea[i];
          if(!TwfGetTopWindow(
@@ -910,7 +910,7 @@ namespace win
 
       hrgnIntersect = ::CreateRectRgnIndirect(rectWindow);
 
-      int iCombine = ::CombineRgn(hrgnIntersect, hrgn, hrgnIntersect, RGN_AND);
+      int32_t iCombine = ::CombineRgn(hrgnIntersect, hrgn, hrgnIntersect, RGN_AND);
 
       if(iCombine == NULLREGION)
       {
@@ -1004,7 +1004,7 @@ namespace win
       HRGN hrgnOpaque = ::CreateRectRgnIndirect(rectWindow);
 
       point ptOffset;
-      for(int i = 0; i < hrgna.get_size(); )
+      for(int32_t i = 0; i < hrgna.get_size(); )
       {
          oswindow oswindow = oswindowa[i];
          HRGN hrgn = hrgna[i];
@@ -1062,7 +1062,7 @@ namespace win
       user::window_util::SortByZOrder(oswindowa);
 
       ASSERT(FALSE);
-      /*for(int i = 0; i  < oswindowa.get_size(); i++)
+      /*for(int32_t i = 0; i  < oswindowa.get_size(); i++)
       {
          oswindow oswindow = oswindowa[i];
          ScreenOutput(
@@ -1260,11 +1260,11 @@ namespace win
             {
                ::oswindow oswindowZOrder = (oswindow) pwnd->m_pguie->oprop("pending_zorder").get_integer();
                ::SetWindowPos(oswindowParam, HWND_TOPMOST, 
-                  (int) rectWindow.left, (int) rectWindow.top, (int) rectWindow.width(), (int) rectWindow.height(), SWP_SHOWWINDOW);
+                  (int32_t) rectWindow.left, (int32_t) rectWindow.top, (int32_t) rectWindow.width(), (int32_t) rectWindow.height(), SWP_SHOWWINDOW);
                ::SetWindowPos(oswindowParam, HWND_NOTOPMOST, 
-                  (int) rectWindow.left, (int) rectWindow.top, (int) rectWindow.width(), (int) rectWindow.height(), SWP_SHOWWINDOW);
+                  (int32_t) rectWindow.left, (int32_t) rectWindow.top, (int32_t) rectWindow.width(), (int32_t) rectWindow.height(), SWP_SHOWWINDOW);
                ::SetWindowPos(oswindowParam, oswindowZOrder, 
-                  (int) rectWindow.left, (int) rectWindow.top, (int) rectWindow.width(), (int) rectWindow.height(), SWP_SHOWWINDOW | SWP_FRAMECHANGED);
+                  (int32_t) rectWindow.left, (int32_t) rectWindow.top, (int32_t) rectWindow.width(), (int32_t) rectWindow.height(), SWP_SHOWWINDOW | SWP_FRAMECHANGED);
                /*simple_frame_window * pframe = dynamic_cast < simple_frame_window * > (pwnd->m_pguie);
                if(pframe != NULL)
                {
@@ -1274,7 +1274,7 @@ namespace win
             }
             else
             {
-               ::SetWindowPos(oswindowParam, NULL, (int) rectWindow.left, (int) rectWindow.top, (int) rectWindow.width(), (int) rectWindow.height(), SWP_SHOWWINDOW);
+               ::SetWindowPos(oswindowParam, NULL, (int32_t) rectWindow.left, (int32_t) rectWindow.top, (int32_t) rectWindow.width(), (int32_t) rectWindow.height(), SWP_SHOWWINDOW);
             }
          }
 
@@ -1283,13 +1283,13 @@ namespace win
       {
          ::BitBlt(
          hdcScreen,
-         (int) rectOutputClient.left,
-         (int) rectOutputClient.top,
-         (int) rectOutputClient.width(),
-         (int) rectOutputClient.height(), 
+         (int32_t) rectOutputClient.left,
+         (int32_t) rectOutputClient.top,
+         (int32_t) rectOutputClient.width(),
+         (int32_t) rectOutputClient.height(), 
          (HDC)(dynamic_cast<::win::graphics * >(m_pbuffer->GetBuffer()))->get_os_data(),
-         (int) rectWindow.left,
-         (int) rectWindow.top,
+         (int32_t) rectWindow.left,
+         (int32_t) rectWindow.top,
          SRCCOPY);
       }
 

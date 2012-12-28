@@ -16,7 +16,7 @@ namespace win
 
    // Attributes
       operator HPALETTE() const;
-      int GetEntryCount();
+      int32_t GetEntryCount();
       UINT GetPaletteEntries(UINT nStartIndex, UINT nNumEntries,
             LPPALETTEENTRY lpPaletteColors) const;
       UINT SetPaletteEntries(UINT nStartIndex, UINT nNumEntries,

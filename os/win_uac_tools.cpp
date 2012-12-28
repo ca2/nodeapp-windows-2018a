@@ -355,7 +355,7 @@ __declspec(allocate("ve_shared"))
 // the hook callback procedure, it is called in the context of th shell proces
 
 LRESULT CALLBACK 
-VistaEelevator_HookProc_MsgRet( int code, WPARAM wParam, LPARAM lParam )
+VistaEelevator_HookProc_MsgRet( int32_t code, WPARAM wParam, LPARAM lParam )
 {
     if ( code >= 0 && lParam )
     {

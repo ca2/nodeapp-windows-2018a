@@ -10,7 +10,7 @@ namespace ca2plugin_container
    public:
 
 
-      int                        m_iReturn;
+      int32_t                        m_iReturn;
 
       string                     m_strChannel;
 
@@ -22,14 +22,14 @@ namespace ca2plugin_container
 
 
       virtual void on_receive(small_ipc_rx_channel * prxchannel, const char * pszMessage);
-      virtual void on_receive(small_ipc_rx_channel * prxchannel, int message, void * pdata, int len);
+      virtual void on_receive(small_ipc_rx_channel * prxchannel, int32_t message, void * pdata, int32_t len);
 
       virtual bool initialize(const char * pszChannel);
 
       virtual bool finalize();
 
 
-      virtual int run();
+      virtual int32_t run();
 
 
       virtual void restart_small_ipc_channel();

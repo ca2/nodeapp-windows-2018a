@@ -1,7 +1,7 @@
 #include "framework.h"
 #include "sal.h"
 
-CLASS_DECL_ca int ca2_main();
+CLASS_DECL_ca int32_t ca2_main();
 
 //CLASS_DECL_ca extern fixed_alloc_array * g_pfixedallocaWstring;
 
@@ -13,18 +13,18 @@ void CLASS_DECL_win __cdecl _ca2_purecall()
 }
 
 
-void __cdecl _null_se_translator(unsigned int uiCode, EXCEPTION_POINTERS * ppointers);
+void __cdecl _null_se_translator(unsigned int32_t uiCode, EXCEPTION_POINTERS * ppointers);
 
 
 //::ca::application *     win_application_create(::ca::application * pappSystem, const char * pszId);
 //::ca::application *     win_instantiate_application(::ca::application * pappSystem, const char * pszId);
-//int                     win_application_procedure(::ca::application * pappSystem)
+//int32_t                     win_application_procedure(::ca::application * pappSystem)
 //UINT c_cdecl          win_application_thread_proc(LPVOID);
 /////////////////////////////////////////////////////////////////////////////
 // Standard WinMain implementation
 //  Can be replaced as long as 'gen::WinInit' is called first
 
-int CLASS_DECL_win __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
+int32_t CLASS_DECL_win __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
 {
 
    UNREFERENCED_PARAMETER(lpCmdLine);
@@ -43,7 +43,7 @@ int CLASS_DECL_win __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTS
 
    ASSERT(hPrevInstance == NULL);
 
-   int nReturnCode = 0;
+   int32_t nReturnCode = 0;
 
 
    ::win::main_init_data * pinitmaindata  = new ::win::main_init_data;
@@ -147,7 +147,7 @@ int CLASS_DECL_win __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTS
 }
 
 
-int CLASS_DECL_win ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, const char * lpCmdLine, int nCmdShow)
+int32_t CLASS_DECL_win ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, const char * lpCmdLine, int32_t nCmdShow)
 {
    try
    {
@@ -162,7 +162,7 @@ int CLASS_DECL_win ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, const 
 
       ASSERT(hPrevInstance == NULL);
 
-      int nReturnCode = 0;
+      int32_t nReturnCode = 0;
 
       ::win::main_init_data * pinitmaindata  = new ::win::main_init_data;
 
@@ -248,7 +248,7 @@ int CLASS_DECL_win ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, const 
 
 
 
-void __cdecl _null_se_translator(unsigned int uiCode, EXCEPTION_POINTERS * ppointers)
+void __cdecl _null_se_translator(unsigned int32_t uiCode, EXCEPTION_POINTERS * ppointers)
 {
    UNREFERENCED_PARAMETER(uiCode);
    UNREFERENCED_PARAMETER(ppointers);

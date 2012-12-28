@@ -28,7 +28,7 @@ namespace production
          string m_strRelease;
          production * m_pproduction;
          bool initialize_instance();
-         int run();
+         int32_t run();
       };
 
       class compress_thread :
@@ -40,15 +40,15 @@ namespace production
          manual_reset_event * m_pevFinished;
          production *   m_pproduction;
          DWORD                m_dwThreadAffinityMask;
-         int run();
+         int32_t run();
       };
 
 
       mutex                   m_mutexStatus;
       stringa                 m_straStatus;
       bool                    m_bLoop;
-      int                     m_iLoop;
-      int                     m_iLoopCount;
+      int32_t                     m_iLoop;
+      int32_t                     m_iLoopCount;
       string                  m_strSubversionRevision;
       stringa                 m_straCompress;
       mutex                   m_mutexCompress;
@@ -63,11 +63,11 @@ namespace production
       string                  m_strEmpPostColor;
       string                  m_strVersion;
       string                  m_strStatusEmail;
-      int                     m_iGlobalRetry;
+      int32_t                     m_iGlobalRetry;
       string                  m_strTry;
       string                  m_strDownloadSite;
 
-      int                     m_iRelease;
+      int32_t                     m_iRelease;
 
       e_version               m_eversion;
 
@@ -76,7 +76,7 @@ namespace production
 
       stringa                 m_straStageDirAcceptedFileExtensions;
 
-      int                     m_iStep;
+      int32_t                     m_iStep;
                               
       ::view *                m_pview;
       bool                    m_bFinished;
@@ -125,7 +125,7 @@ namespace production
 
 
       void start_production(e_version eversion);
-      void start_loop(e_version eversion, int iLoopCount);
+      void start_loop(e_version eversion, int32_t iLoopCount);
       void step();
 
       void defer_quit();
@@ -136,13 +136,13 @@ namespace production
       string version_to_international_datetime(const char * psz);
 
 
-      virtual int run();
+      virtual int32_t run();
 
 
-      virtual int produce();
+      virtual int32_t produce();
 
       bool get_file_list(const char * pszBase, const char * pszDir,string &  strRemote, stringa & stra, stringa & straTitle, stringa & straRelative, bool bFileSet = false);
-      // bool ftp_put_dir(CFtpConnection & ftpconn, const char * pszBase, const char * pszDir, int iMode);
+      // bool ftp_put_dir(CFtpConnection & ftpconn, const char * pszBase, const char * pszDir, int32_t iMode);
 
       virtual void compress();
       virtual bool compress_next();

@@ -40,7 +40,7 @@ namespace win
 
       m_strFontFamilyName = lpLogFont->lfFaceName;
       if(lpLogFont->lfHeight < 0)
-         m_dFontSize = (int) abs(lpLogFont->lfHeight);
+         m_dFontSize = (int32_t) abs(lpLogFont->lfHeight);
       else
          m_dFontSize = lpLogFont->lfHeight / 10.0;
       m_eunitFontSize = ::ca::unit_point;
@@ -51,8 +51,8 @@ namespace win
       return TRUE;
       //return attach(::CreateFontIndirect(lpLogFont)); 
    }
-   bool font::CreateFont(int nHeight, int nWidth, int nEscapement,
-      int nOrientation, int nWeight, BYTE bItalic, BYTE bUnderline,
+   bool font::CreateFont(int32_t nHeight, int32_t nWidth, int32_t nEscapement,
+      int32_t nOrientation, int32_t nWeight, BYTE bItalic, BYTE bUnderline,
       BYTE cStrikeOut, BYTE nCharSet, BYTE nOutPrecision,
       BYTE nClipPrecision, BYTE nQuality, BYTE nPitchAndFamily,
       const char * lpszFacename)
@@ -64,7 +64,7 @@ namespace win
    //nPitchAndFamily, lpszFacename)); 
    }
    
-   int font::GetLogFont(LOGFONT* pLogFont)
+   int32_t font::GetLogFont(LOGFONT* pLogFont)
    { 
 
       return 0;
@@ -123,14 +123,14 @@ namespace win
          dumpcontext << "\nlf.lfEscapement = " << lf.lfEscapement;
          dumpcontext << "\nlf.lfOrientation = " << lf.lfOrientation;
          dumpcontext << "\nlf.lfWeight = " << lf.lfWeight;
-         dumpcontext << "\nlf.lfItalic = " << (int)lf.lfItalic;
-         dumpcontext << "\nlf.lfUnderline = " << (int)lf.lfUnderline;
-         dumpcontext << "\nlf.lfStrikeOut = " << (int)lf.lfStrikeOut;
-         dumpcontext << "\nlf.lfCharSet = " << (int)lf.lfCharSet;
-         dumpcontext << "\nlf.lfOutPrecision = " << (int)lf.lfOutPrecision;
-         dumpcontext << "\nlf.lfClipPrecision = " << (int)lf.lfClipPrecision;
-         dumpcontext << "\nlf.lfQuality = " << (int)lf.lfQuality;
-         dumpcontext << "\nlf.lfPitchAndFamily = " << (int)lf.lfPitchAndFamily;
+         dumpcontext << "\nlf.lfItalic = " << (int32_t)lf.lfItalic;
+         dumpcontext << "\nlf.lfUnderline = " << (int32_t)lf.lfUnderline;
+         dumpcontext << "\nlf.lfStrikeOut = " << (int32_t)lf.lfStrikeOut;
+         dumpcontext << "\nlf.lfCharSet = " << (int32_t)lf.lfCharSet;
+         dumpcontext << "\nlf.lfOutPrecision = " << (int32_t)lf.lfOutPrecision;
+         dumpcontext << "\nlf.lfClipPrecision = " << (int32_t)lf.lfClipPrecision;
+         dumpcontext << "\nlf.lfQuality = " << (int32_t)lf.lfQuality;
+         dumpcontext << "\nlf.lfPitchAndFamily = " << (int32_t)lf.lfPitchAndFamily;
          dumpcontext << "\nlf.lfFaceName = " << (const char *)lf.lfFaceName;
 
          dumpcontext << "\n";*/
@@ -157,26 +157,26 @@ namespace win
          }
 
 
-         int iStyle = 0;
+         int32_t iStyle = 0;
 
          if(m_iFontWeight >= 600)
          {
-            iStyle |= (int) Gdiplus::FontStyleBold;
+            iStyle |= (int32_t) Gdiplus::FontStyleBold;
          }
 
          if(m_bItalic)
          {
-            iStyle |= (int) Gdiplus::FontStyleItalic;
+            iStyle |= (int32_t) Gdiplus::FontStyleItalic;
          }
 
          if(m_bUnderline)
          {
-            iStyle |= (int) Gdiplus::FontStyleUnderline;
+            iStyle |= (int32_t) Gdiplus::FontStyleUnderline;
          }
 
          if(m_bStrikeout)
          {
-            iStyle |= (int) Gdiplus::FontStyleStrikeout;
+            iStyle |= (int32_t) Gdiplus::FontStyleStrikeout;
          }
 
          Gdiplus::Unit unit;

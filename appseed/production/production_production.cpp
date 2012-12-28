@@ -42,7 +42,7 @@ namespace production
    {
    }
 
-   void production::start_loop(e_version eversion, int iLoopCount)
+   void production::start_loop(e_version eversion, int32_t iLoopCount)
    {
       m_bLoop = true;
       if(m_iRelease > 0)
@@ -120,7 +120,7 @@ namespace production
 
 
 
-   int production::run()
+   int32_t production::run()
    {
 
       string str;
@@ -129,7 +129,7 @@ namespace production
       gen::property_set headers;
       gen::property_set params;
 
-      int iProduce;
+      int32_t iProduce;
 
       string strBackPostColor   = "background-color: #CCCCC2;";
 
@@ -247,10 +247,10 @@ namespace production
    }
 
 
-   int production::produce()
+   int32_t production::produce()
    {
 
-      int iRetry = 0;
+      int32_t iRetry = 0;
 
 restart:
 
@@ -334,7 +334,7 @@ restart:
          if(m_iGlobalRetry <= 0)
          {
 
-            for(int i = 0; i < m_straRoot.get_size(); i++)
+            for(int32_t i = 0; i < m_straRoot.get_size(); i++)
             {
 
                if(!sync_source(m_straRoot[i], NULL))
@@ -374,7 +374,7 @@ restart:
 
          strSVNKey = "app:" + strSVN;
 
-         for(int i = 1; i < m_straRoot.get_size(); i++)
+         for(int32_t i = 1; i < m_straRoot.get_size(); i++)
          {
 
             strSvnVersionCmd.Format("svnversion %s", System.dir().path(m_strBase, m_straRoot[i]));
@@ -469,7 +469,7 @@ restart:
 
          DWORD dwExitCode;
 
-         int i;
+         int32_t i;
          if(m_bClean)
          {
             add_status("Cleaning ca2 fontopus ccvotagus ...");
@@ -574,7 +574,7 @@ restart:
 
 
          ::count iCount = m_straFiles.get_size();
-         for(int i = 0; i < iCount;)
+         for(int32_t i = 0; i < iCount;)
          {
             if(m_straFiles[i].find("\\.svn\\") >= 0 || (m_straFiles[i].get_length() < 5 || m_straFiles[i].Right(5) == "\\.svn"))
             {
@@ -586,7 +586,7 @@ restart:
             }
          }
          TRACE("\n");
-         for(int i = 0; i < m_straFiles.get_size(); i++)
+         for(int32_t i = 0; i < m_straFiles.get_size(); i++)
          {
             const char * lpcsz = m_straFiles[i];
             TRACE("file(%05d)=%s\n", i, lpcsz);
@@ -697,7 +697,7 @@ restart:
                return 0;   
             }
 
-            int i = 1;
+            int32_t i = 1;
 
             string str;
 
@@ -735,7 +735,7 @@ restart:
                return 0;   
             }
 
-            int i = 1;
+            int32_t i = 1;
 
             string str;
 
@@ -1008,7 +1008,7 @@ restart:
          add_status("Signing driver code ...");
 
       }
-      int iRetry = 0;
+      int32_t iRetry = 0;
 retry2:
       try
       {
@@ -1047,7 +1047,7 @@ retry2:
       string strRelative;
       string strBz;
       string strUn;
-      int i = 0;
+      int32_t i = 0;
       single_lock sl(&m_mutexCompress, TRUE);
       for(;i < m_straFiles.get_size();i++)
       {
@@ -1137,7 +1137,7 @@ retry2:
       m_pproduction = pproduction;
    }
 
-   int production::compress_thread::run()
+   int32_t production::compress_thread::run()
    {
 
       SetThreadAffinityMask(::GetCurrentThread(), m_dwThreadAffinityMask);
@@ -1160,7 +1160,7 @@ retry2:
    strStatus = "Compressing";
    add_status(strStatus);
 
-   int i = 0;
+   int32_t i = 0;
    while(i < m_straCC.get_size())
    {
    string strUrl;
@@ -1214,7 +1214,7 @@ retry2:
       }
 
       DWORD dwExitCode;
-      int i = 1;
+      int32_t i = 1;
       while(true)
       {
          if(!GetExitCodeProcess(pi.hProcess, &dwExitCode))
@@ -1236,7 +1236,7 @@ retry2:
       add_status(strStatus);
 
 
-      for(int i = 0; i < m_straRoot.get_size(); i++)
+      for(int32_t i = 0; i < m_straRoot.get_size(); i++)
       {
 
          if(!commit_source(m_straRoot[i]))
@@ -1273,7 +1273,7 @@ retry2:
       }
 
       DWORD dwExitCode;
-      int i = 1;
+      int32_t i = 1;
       while(true)
       {
          if(!GetExitCodeProcess(pi.hProcess, &dwExitCode))
@@ -1318,7 +1318,7 @@ retry2:
          stringa stra1;
          stringa stra2;
          Application.dir().rls(strRelease, &stra1, NULL, &stra2);
-         for(int i = 0; i < stra1.get_size();)
+         for(int32_t i = 0; i < stra1.get_size();)
          {
             if(stra1[i].find("\\.svn\\") >= 0 || (stra1[i].get_length() < 5 || stra1[i].Right(5) == "\\.svn"))
             {
@@ -1369,7 +1369,7 @@ retry2:
       string strMd5;
       var varBzSize;
       string strContents;
-      int i = 0;
+      int32_t i = 0;
       for(;i < m_straFiles.get_size();i++)
       {
          string & strFile = m_straFiles[i];
@@ -1452,7 +1452,7 @@ retry2:
    void production::generate_appmatter_spa()
    {
 
-      for(int i = 0; i < m_straRoot.get_size(); i++)
+      for(int32_t i = 0; i < m_straRoot.get_size(); i++)
       {
          generate_appmatter_spa(m_straRoot[i]);
       }
@@ -1468,7 +1468,7 @@ retry2:
 
       Application.dir().ls_dir(strBase, NULL, &straRelative);
 
-      for(int i = 0; i < straRelative.get_count(); i++)
+      for(int32_t i = 0; i < straRelative.get_count(); i++)
       {
          if(gen::str::begins(straRelative[i], "_"))
          {
@@ -1493,7 +1493,7 @@ retry2:
 
       Application.dir().ls_dir(strBase, NULL, &straRelative);
 
-      for(int i = 0; i < straRelative.get_count(); i++)
+      for(int32_t i = 0; i < straRelative.get_count(); i++)
       {
          if(gen::str::begins(straRelative[i], "_") && straRelative[i] != "_std")
          {
@@ -1517,7 +1517,7 @@ retry2:
 
       Application.dir().ls_dir(strBase, NULL, &straRelative);
 
-      for(int i = 0; i < straRelative.get_count(); i++)
+      for(int32_t i = 0; i < straRelative.get_count(); i++)
       {
 
          generate_appmatter_spa_style(pszRoot, System.dir().path(pszRelative, straRelative[i]));
@@ -1537,7 +1537,7 @@ retry2:
 
       Application.dir().ls_dir(strBase, NULL, &straRelative);
 
-      for(int i = 0; i < straRelative.get_count(); i++)
+      for(int32_t i = 0; i < straRelative.get_count(); i++)
       {
 
          generate_appmatter_spa(pszRoot, System.dir().path(pszRelative, straRelative[i]));
@@ -1579,7 +1579,7 @@ retry2:
       string strMd5;
       var varBzSize;
       string strContents;
-      int i = 0;
+      int32_t i = 0;
       for(;i < straFiles.get_size();i++)
       {
          string & strFile = straFiles[i];
@@ -1795,7 +1795,7 @@ retry2:
 
       primitive::memory mem;
 
-      for(int i = 0; i < m_straPath.get_count(); i++)
+      for(int32_t i = 0; i < m_straPath.get_count(); i++)
       {
          string strRelative = m_straRelative[i];
          if(gen::str::begins_ci(strRelative, "META-INF\\"))
@@ -1817,7 +1817,7 @@ retry2:
       X509 * signer = NULL;
       {
          string strSigner = Application.file().as_string(strSignerPath);
-         BIO * pbio = BIO_new_mem_buf((void *) (LPCTSTR) strSigner, (int) strSigner.get_length());
+         BIO * pbio = BIO_new_mem_buf((void *) (LPCTSTR) strSigner, (int32_t) strSigner.get_length());
          //signer = PEM_read_bio_X509_AUX(pbio, NULL, 0, NULL);
          signer = PEM_read_bio_X509(pbio, NULL, 0, NULL);
          BIO_free(pbio);
@@ -1826,7 +1826,7 @@ retry2:
       EVP_PKEY * pkey;
       {
          string strKey = Application.file().as_string(strKeyPath);
-         BIO * pbio = BIO_new_mem_buf((void *) (LPCTSTR) strKey, (int) strKey.get_length());
+         BIO * pbio = BIO_new_mem_buf((void *) (LPCTSTR) strKey, (int32_t) strKey.get_length());
          pkey = PEM_read_bio_PrivateKey(pbio, NULL, NULL, NULL);
          BIO_free(pbio);
       }
@@ -1864,13 +1864,13 @@ retry2:
          }
          pstack509 = sk_X509_new_null();
 
-         for(int i = 0; i < xptra.get_count(); i++)
+         for(int32_t i = 0; i < xptra.get_count(); i++)
          {
             sk_X509_push(pstack509, xptra[i]);
          }
       }
 
-      BIO * input = BIO_new_mem_buf((void *) (LPCTSTR) strSignature, (int) strSignature.get_length());
+      BIO * input = BIO_new_mem_buf((void *) (LPCTSTR) strSignature, (int32_t) strSignature.get_length());
 
       PKCS7 * pkcs7 = PKCS7_sign(signer, pkey, pstack509, input, PKCS7_BINARY | PKCS7_DETACHED);
 
@@ -2032,7 +2032,7 @@ retry2:
 
       DWORD dwExitCode;
 
-      for(int i = 0; i < m_straRelative.get_count(); i++)
+      for(int32_t i = 0; i < m_straRelative.get_count(); i++)
       {
          strPath = "zip \"" + strXpi + "\" \"" + m_straRelative[i] + "\"";
          if(!process.create_child_process(strPath, false,  System.dir().path(strDir, "npca2/")))
@@ -2075,7 +2075,7 @@ retry2:
          add_status(str);
          return 0;   
       }
-      int i = 1;
+      int32_t i = 1;
       while(!process.has_exited(&dwExitCode))
       {
          Sleep(284);
@@ -2113,7 +2113,7 @@ retry2:
          add_status(str);
          return 0;   
       }
-      int i;
+      int32_t i;
       i = 1;
       while(!process.has_exited(&dwExitCode))
       {
@@ -2238,7 +2238,7 @@ retry2:
    {
       return true;
    }
-   int production::release::run()
+   int32_t production::release::run()
    {
       string str;
       gen::property_set post(get_app());
@@ -2385,7 +2385,7 @@ retry2:
    string production::twitter_twit(const char * pszMessage)
    {
 
-      int iRetry = 0;
+      int32_t iRetry = 0;
 
 Retry2:
 
@@ -2586,7 +2586,7 @@ retry1:
          add_status(str);
          return;   
       }
-      int i = 1;
+      int32_t i = 1;
       DWORD dwExitCode;
       string str;
       while(!process.has_exited(&dwExitCode))

@@ -1,7 +1,7 @@
 #include "framework.h"
 
 
-int spaboot_start();
+int32_t spaboot_start();
 
 
 oswindow g_oswindowMessage = NULL;
@@ -14,7 +14,7 @@ ATOM sentinel_RegisterClass(HINSTANCE hInstance);
 LRESULT CALLBACK sentinel_WndProc(oswindow oswindow, UINT message, WPARAM wParam, LPARAM lParam);
 
 
-extern "C" int WinMainCRTStartup()
+extern "C" int32_t WinMainCRTStartup()
 {
 
    initialize_primitive_heap();
@@ -47,7 +47,7 @@ extern "C" int WinMainCRTStartup()
    }
 
 
-   int iRet = spaboot_start();
+   int32_t iRet = spaboot_start();
 
 
    SetTimer(g_oswindowMessage, 1245, (1977 + 1984) * 8, NULL);
@@ -139,10 +139,10 @@ LRESULT CALLBACK sentinel_WndProc(oswindow oswindow, UINT message, WPARAM wParam
 vsstring calc_id();
 
 
-int installer(const char * param);
-int APIENTRY ca2_cube_install(const char * pszId);
+int32_t installer(const char * param);
+int32_t APIENTRY ca2_cube_install(const char * pszId);
 
-int spaboot_start()
+int32_t spaboot_start()
 {
 
 
@@ -154,9 +154,9 @@ int spaboot_start()
    if(id == NULL || id.is_empty())
       id = "spaboot_install";
 
-   int iRetry = 0;
+   int32_t iRetry = 0;
 
-   int iRetryLimit;
+   int32_t iRetryLimit;
 
    bool bBackground;
 

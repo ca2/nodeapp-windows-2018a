@@ -38,5 +38,5 @@ CLASS_DECL_win oswindow __child_window_from_point(oswindow, POINT);
 #define VERSION_IE4             MAKELONG(71, 4)
 #define VERSION_IE401   MAKELONG(72, 4)
 #define VERSION_6      MAKELONG(0, 6)
-extern int gen_ComCtlVersion;
+extern int32_t gen_ComCtlVersion;
 DWORD __get_common_controls_version();

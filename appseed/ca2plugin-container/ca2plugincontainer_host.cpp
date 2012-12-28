@@ -361,7 +361,7 @@ namespace ca2plugin_container
    }
 
 
-   void host::on_receive(small_ipc_rx_channel * prxchannel, int message, void * pdata, int len)
+   void host::on_receive(small_ipc_rx_channel * prxchannel, int32_t message, void * pdata, int32_t len)
    {
 
       if(prxchannel == &m_rxchannel)

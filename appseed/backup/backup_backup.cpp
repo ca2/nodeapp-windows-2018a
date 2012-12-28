@@ -34,7 +34,7 @@ namespace backup
       return strNewRepos;
    }
 
-   int backup::run()
+   int32_t backup::run()
    {
       if(m_iStep == 1)
       {
@@ -172,7 +172,7 @@ namespace backup
       }
 
       DWORD dwExitCode;
-      int i = 1;
+      int32_t i = 1;
       while(true)
       {
          if(!GetExitCodeProcess(pi.hProcess, &dwExitCode))
@@ -219,7 +219,7 @@ namespace backup
       }
 
       DWORD dwExitCode;
-      int i = 1;
+      int32_t i = 1;
       while(true)
       {
          if(!GetExitCodeProcess(pi.hProcess, &dwExitCode))
@@ -263,7 +263,7 @@ namespace backup
       }
 
       DWORD dwExitCode;
-      int i = 1;
+      int32_t i = 1;
       while(true)
       {
          if(!GetExitCodeProcess(pi.hProcess, &dwExitCode))

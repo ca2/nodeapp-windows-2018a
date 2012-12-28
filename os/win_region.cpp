@@ -29,9 +29,9 @@ namespace win
    }
 
 /*
-   int region::GetRegionData(LPRGNDATA lpRgnData, int nDataSize) const
-   { ASSERT(get_os_data() != NULL); return (int)::GetRegionData((HRGN)get_os_data(), nDataSize, lpRgnData); }
-   void region::SetRectRgn(int x1, int y1, int x2, int y2)
+   int32_t region::GetRegionData(LPRGNDATA lpRgnData, int32_t nDataSize) const
+   { ASSERT(get_os_data() != NULL); return (int32_t)::GetRegionData((HRGN)get_os_data(), nDataSize, lpRgnData); }
+   void region::SetRectRgn(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    { ASSERT(get_os_data() != NULL); ::SetRectRgn((HRGN)get_os_data(), x1, y1, x2, y2); }
    
    void region::SetRectRgn(LPCRECT lpRect)
@@ -39,10 +39,10 @@ namespace win
       ::SetRectRgn((HRGN)get_os_data(), lpRect->left, lpRect->top, lpRect->right, lpRect->bottom); 
    }
 
-   int region::CombineRgn(const ::ca::region* pRgn1, const ::ca::region* pRgn2, int nCombineMode)
+   int32_t region::CombineRgn(const ::ca::region* pRgn1, const ::ca::region* pRgn2, int32_t nCombineMode)
    { ASSERT(get_os_data() != NULL); return ::CombineRgn((HRGN)get_os_data(), (HRGN)pRgn1->get_os_data(),
    (HRGN)pRgn2->get_os_data(), nCombineMode); }
-   int region::CopyRgn(const ::ca::region* pRgnSrc)
+   int32_t region::CopyRgn(const ::ca::region* pRgnSrc)
    { ASSERT(get_os_data() != NULL); return ::CombineRgn((HRGN)get_os_data(), (HRGN)pRgnSrc->get_os_data(), NULL, RGN_COPY); }
 
    bool region::EqualRgn(const ::ca::region* pRgn) const
@@ -54,9 +54,9 @@ namespace win
 
    }
 
-   int region::OffsetRgn(int x, int y)
+   int32_t region::OffsetRgn(int32_t x, int32_t y)
    { ASSERT(get_os_data() != NULL); return ::OffsetRgn((HRGN)get_os_data(), x, y); }
-   int region::OffsetRgn(POINT point)
+   int32_t region::OffsetRgn(POINT point)
    { ASSERT(get_os_data() != NULL); return ::OffsetRgn((HRGN)get_os_data(), point.x, point.y); }
 
    */
@@ -79,7 +79,7 @@ namespace win
 
    }
    /*
-   bool region::PtInRegion(int x, int y) const
+   bool region::PtInRegion(int32_t x, int32_t y) const
    { 
 
       Gdiplus::PointF pointf((Gdiplus::REAL) x, (Gdiplus::REAL) y);
@@ -221,7 +221,7 @@ namespace win
 
       raw_array < Gdiplus::PointF > pa;
 
-      for(int i = 0; i < m_nCount; i++)
+      for(int32_t i = 0; i < m_nCount; i++)
       {
          pa.add(Gdiplus::PointF((Gdiplus::REAL) m_lppoints[i].x, (Gdiplus::REAL) m_lppoints[i].y));
       }
@@ -235,7 +235,7 @@ namespace win
          path.SetFillMode(Gdiplus::FillModeWinding);
       }
 
-      path.AddPolygon(pa.get_data(), (int) pa.get_count());
+      path.AddPolygon(pa.get_data(), (int32_t) pa.get_count());
 
       return new Gdiplus::Region(&path);
 
@@ -256,18 +256,18 @@ namespace win
          path.SetFillMode(Gdiplus::FillModeWinding);
       }
 
-      int n = 0;
+      int32_t n = 0;
 
-      for(int i = 0; i < m_nCount; i++)
+      for(int32_t i = 0; i < m_nCount; i++)
       {
-         int jCount = m_lppolycounts[i];
+         int32_t jCount = m_lppolycounts[i];
          pa.remove_all();
-         for(int j = 0; j < jCount; j++)
+         for(int32_t j = 0; j < jCount; j++)
          {
             pa.add(Gdiplus::PointF((Gdiplus::REAL) m_lppoints[n].x, (Gdiplus::REAL) m_lppoints[n].y));
             n++;
          }
-         path.AddPolygon(pa.get_data(), (int) pa.get_count());
+         path.AddPolygon(pa.get_data(), (int32_t) pa.get_count());
          path.CloseFigure();
       }
 

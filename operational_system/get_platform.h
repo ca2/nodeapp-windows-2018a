@@ -54,7 +54,7 @@
 BEGIN_EXTERN_C
 
 
-__declspec(selectany)  int _forceCRTManifest;
+__declspec(selectany)  int32_t _forceCRTManifest;
 
 
 END_EXTERN_C

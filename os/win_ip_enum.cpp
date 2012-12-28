@@ -15,7 +15,7 @@ namespace win
       //Initialise the winsock stack
       WORD wVersionRequested = MAKEWORD(1, 1);  
       WSADATA wsaData; 
-      int err = WSAStartup(wVersionRequested, &wsaData); 
+      int32_t err = WSAStartup(wVersionRequested, &wsaData); 
       if (err != 0) 
       {
          TRACE("Failed in call to WSAStartup, return value was %d\n", err);
@@ -69,7 +69,7 @@ namespace win
 
       //call the virtual callback function in a loop
       
-      int nAdapter = 0;
+      int32_t nAdapter = 0;
 
       while(pHostEnt->h_addr_list[nAdapter])
       {
@@ -106,7 +106,7 @@ namespace win
          return FALSE;
       }
 
-      int nAdapter = 0;
+      int32_t nAdapter = 0;
 
       string str;
 

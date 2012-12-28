@@ -75,7 +75,7 @@ namespace win
 
    UINT file_system::GetFileName(const char * lpszPathName, string & str)
    {
-      int nMax = MAX_PATH * 8;
+      int32_t nMax = MAX_PATH * 8;
       wstring wstrPathName;
       wstrPathName = gen::international::utf8_to_unicode(lpszPathName);
       wstring wstrTitle;

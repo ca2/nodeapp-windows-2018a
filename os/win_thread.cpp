@@ -130,7 +130,7 @@ UINT APIENTRY __thread_entry(void * pParam)
       VERIFY(::WaitForSingleObject(hEvent2, INFINITE) == WAIT_OBJECT_0);
       ::CloseHandle(hEvent2);
 
-      int n;
+      int32_t n;
 
       try
       {
@@ -244,7 +244,7 @@ void __internal_pre_translate_message(gen::signal_object * pobj)
          {
             try
             {
-               for(int i = 0; i < pthread->m_papp->m_psession->frames().get_count(); i++)
+               for(int32_t i = 0; i < pthread->m_papp->m_psession->frames().get_count(); i++)
                {
                   try
                   {
@@ -374,7 +374,7 @@ bool __cdecl __is_idle_message(MSG* pMsg)
 
 
 /*thread* CLASS_DECL_win __begin_thread(::ca::application * papp, __THREADPROC pfnThreadProc, LPVOID pParam,
-int nPriority, UINT nStackSize, DWORD dwCreateFlags,
+int32_t nPriority, UINT nStackSize, DWORD dwCreateFlags,
 LPSECURITY_ATTRIBUTES lpSecurityAttrs)
 {
 ASSERT(pfnThreadProc != NULL);
@@ -459,7 +459,7 @@ void CLASS_DECL_win __term_thread(::radix::application * papp, HINSTANCE hInstTe
 /////////////////////////////////////////////////////////////////////////////
 // Global functions for thread initialization and thread cleanup
 
-LRESULT CALLBACK __message_filter_hook(int code, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK __message_filter_hook(int32_t code, WPARAM wParam, LPARAM lParam);
 
 void CLASS_DECL_win __init_thread()
 {
@@ -561,7 +561,7 @@ namespace win
          single_lock sl(&m_mutexUiPtra, TRUE);
          ::user::interaction_ptr_array * puiptra = m_puiptra;
          m_puiptra = NULL;
-         for(int i = 0; i < puiptra->get_size(); i++)
+         for(int32_t i = 0; i < puiptra->get_size(); i++)
          {
             ::user::interaction * pui = puiptra->element_at(i);
             if(pui->m_pthread != NULL)
@@ -602,7 +602,7 @@ namespace win
       pState->m_pmapHDC->delete_temp();
       pState->m_pmapHWND->delete_temp();*/
 
-      for(int i = 0; i < m_captraDeletePool.get_count(); i++)
+      for(int32_t i = 0; i < m_captraDeletePool.get_count(); i++)
       {
          try
          {
@@ -780,8 +780,8 @@ namespace win
       }
       m_ptimera->set(pui, nIDEvent, nEllapse);
       single_lock sl(&m_ptimera->m_mutex, TRUE);
-      int iMin = 100;
-      for(int i = 0; i < m_ptimera->m_timera.get_count(); i++)
+      int32_t iMin = 100;
+      for(int32_t i = 0; i < m_ptimera->m_timera.get_count(); i++)
       {
          if(m_ptimera->m_timera.element_at(i).m_uiElapse < natural(iMin))
          {
@@ -1010,7 +1010,7 @@ namespace win
    }
 
    // main running routine until thread exits
-   int thread::run()
+   int32_t thread::run()
    {
 
       ASSERT_VALID(this);
@@ -1131,7 +1131,7 @@ stop_run:
    }
 
 
-   int thread::exit_instance()
+   int32_t thread::exit_instance()
    {
       ASSERT_VALID(this);
 
@@ -1160,7 +1160,7 @@ stop_run:
             single_lock sl(&m_mutexUiPtra, TRUE);
             ::user::interaction_ptr_array * puiptra = m_puiptra;
             m_puiptra = NULL;
-            for(int i = 0; i < puiptra->get_size(); i++)
+            for(int32_t i = 0; i < puiptra->get_size(); i++)
             {
                ::user::interaction * pui = puiptra->element_at(i);
                if(pui->m_pthread != NULL)
@@ -1193,7 +1193,7 @@ stop_run:
 
 
 
-      int nResult = (int)__get_current_message()->wParam;  // returns the value from PostQuitMessage
+      int32_t nResult = (int32_t)__get_current_message()->wParam;  // returns the value from PostQuitMessage
       return nResult;
    }
 
@@ -1212,7 +1212,7 @@ stop_run:
 
       if(lCount <= 0 && m_puiptra != NULL)
       {
-         for(int i = 0; i < m_puiptra->get_count(); i++)
+         for(int32_t i = 0; i < m_puiptra->get_count(); i++)
          {
             ::user::interaction* pui = m_puiptra->element_at(i);
             try
@@ -1355,7 +1355,7 @@ stop_run:
       LRESULT lresult;
       SignalPtrArray signalptra;
       m_signala.GetSignalsByMessage(signalptra, pbase->m_uiMessage, 0, 0);
-      for(int i = 0; i < signalptra.get_size(); i++)
+      for(int32_t i = 0; i < signalptra.get_size(); i++)
       {
          Signal & signal = *signalptra[i];
          gen::signal * psignal = signal.m_psignal;
@@ -1398,7 +1398,7 @@ stop_run:
       return pbase->m_uiMessage == WM_LBUTTONUP; 
    }
 
-   void thread::ProcessMessageFilter(int code, gen::signal_object * pobj)
+   void thread::ProcessMessageFilter(int32_t code, gen::signal_object * pobj)
    {
 
       if(pobj == NULL)
@@ -1779,7 +1779,7 @@ run:
 
       ASSERT(m_hThread != NULL); 
 
-      int nPriority = THREAD_PRIORITY_NORMAL;
+      int32_t nPriority = THREAD_PRIORITY_NORMAL;
 
       switch(epriority)
       {
@@ -1825,7 +1825,7 @@ run:
 
       ASSERT(m_hThread != NULL); 
 
-      int nPriority = ::GetThreadPriority(m_hThread);
+      int32_t nPriority = ::GetThreadPriority(m_hThread);
 
       ::ca::e_thread_priority epriority;
 
@@ -1972,7 +1972,7 @@ run:
       return m_nTempMapLock != 0;
    }
 
-   int thread::thread_entry(::ca::thread_startup * pstartup)
+   int32_t thread::thread_entry(::ca::thread_startup * pstartup)
    {
 
       ___THREAD_STARTUP* pStartup = (___THREAD_STARTUP*)pstartup;
@@ -2006,7 +2006,7 @@ run:
 
    }
 
-   int thread::main()
+   int32_t thread::main()
    {
 
       /*      ___THREAD_STARTUP* pStartup = (___THREAD_STARTUP*)pstartup;
@@ -2084,7 +2084,7 @@ run:
       return 0;   // not reached
    }
 
-   int thread::thread_term(int nResult)
+   int32_t thread::thread_term(int32_t nResult)
    {
       try
       {
@@ -2136,7 +2136,7 @@ run:
 
    ///  \brief		sets thread priority
    ///  \param		new priority
-   void thread::set_priority(int priority)
+   void thread::set_priority(int32_t priority)
    {
       if ( ::SetThreadPriority(item(), priority) == 0)
          throw runtime_error(get_app(), "Thread::set_priority: Couldn't set thread priority.");
@@ -2144,7 +2144,7 @@ run:
 
    ///  \brief		gets thread priority
    ///  \param		priority
-   int thread::priority()
+   int32_t thread::priority()
    { 
       return ::GetThreadPriority(item());
    }
@@ -2327,7 +2327,7 @@ return __internal_is_idle_message( pMsg );
 
 /*
 thread* CLASS_DECL_win __begin_thread(::ca::type_info pThreadClass,
-int nPriority, UINT nStackSize, DWORD dwCreateFlags,
+int32_t nPriority, UINT nStackSize, DWORD dwCreateFlags,
 LPSECURITY_ATTRIBUTES lpSecurityAttrs)
 {
 #ifndef _MT
@@ -2390,7 +2390,7 @@ _endthreadex(nExitCode);
 /////////////////////////////////////////////////////////////////////////////
 // Global functions for thread initialization and thread cleanup
 
-LRESULT CALLBACK __message_filter_hook(int code, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK __message_filter_hook(int32_t code, WPARAM wParam, LPARAM lParam);
 
 void CLASS_DECL_win __init_thread()
 {
@@ -2515,7 +2515,7 @@ return true;   // by default enter run loop
 }
 
 // main running routine until thread exits
-int thread::run()
+int32_t thread::run()
 {
 ASSERT_VALID(this);
 ___THREAD_STATE* pState = __get_thread_state();
@@ -2563,12 +2563,12 @@ bool thread::is_idle_message(MSG* pMsg)
 return __internal_is_idle_message(pMsg);
 }
 
-int thread::exit_instance()
+int32_t thread::exit_instance()
 {
 ASSERT_VALID(this);
 ASSERT(&System != this);
 
-for(int i = 0; i < m_puieptra->get_count(); i++)
+for(int32_t i = 0; i < m_puieptra->get_count(); i++)
 {
 m_puieptra->element_at(i)->m_pthread = NULL;
 }
@@ -2576,7 +2576,7 @@ m_puieptra->element_at(i)->m_pthread = NULL;
 delete m_ptimera;
 delete m_puieptra;
 
-int nResult = (int)__get_current_message()->wParam;  // returns the value from PostQuitMessage
+int32_t nResult = (int32_t)__get_current_message()->wParam;  // returns the value from PostQuitMessage
 return nResult;
 }
 
@@ -2705,7 +2705,7 @@ mmf.pfn = lpEntry->pfn;
 /*LRESULT lresult;
 SignalPtrArray signalptra;
 m_signala.GetSignalsByMessage(signalptra, pmsg->message, 0, 0);
-for(int i = 0; i < signalptra.get_size(); i++)
+for(int32_t i = 0; i < signalptra.get_size(); i++)
 {
 Signal & signal = *signalptra[i];
 gen::signal * psignal = signal.m_psignal;
@@ -2740,7 +2740,7 @@ return __internal_process_wnd_proc_exception( e, pMsg );
 /////////////////////////////////////////////////////////////////////////////
 // Message Filter processing (WH_MSGFILTER)
 
-LRESULT CALLBACK __message_filter_hook(int code, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK __message_filter_hook(int32_t code, WPARAM wParam, LPARAM lParam)
 {
    ::radix::thread* pthread;
    if (afxContextIsDLL || (code < 0 && code != MSGF_DDEMGR) || (pthread = dynamic_cast < ::radix::thread * > (::win::get_thread())) == NULL)
@@ -2772,7 +2772,7 @@ __STATIC inline bool IsEnterKey(LPMSG lpMsg)
 __STATIC inline bool IsButtonUp(LPMSG lpMsg)
 { return lpMsg->message == WM_LBUTTONUP; }
 
-/*&bool thread::ProcessMessageFilter(int code, LPMSG lpMsg)
+/*&bool thread::ProcessMessageFilter(int32_t code, LPMSG lpMsg)
 {
 if (lpMsg == NULL)
 return FALSE;   // not handled
@@ -2942,7 +2942,7 @@ delete pmessage;
 return 0;
 }
 
-void message::post(::user::interaction * puie, UINT uiMessage, WPARAM wparam, LPARAM lparam, int nPriority)
+void message::post(::user::interaction * puie, UINT uiMessage, WPARAM wparam, LPARAM lparam, int32_t nPriority)
 {
 message * pmessage = new message;
 pmessage->m_pguie = puie;

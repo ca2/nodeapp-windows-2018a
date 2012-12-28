@@ -50,13 +50,13 @@ namespace ca2plugin_container
 #ifdef WINDOWS
       uint_ptr message_handler(uint_ptr uiMessage, WPARAM wparam, LPARAM lparam);
 #else
-      int message_handler(XEvent * pevent);
+      int32_t message_handler(XEvent * pevent);
 #endif
 
       virtual void * get_system();
       virtual void set_system(void * pvoidPluginSystem);
 
-      virtual void on_receive(small_ipc_rx_channel * prxchannel, int message, void * pdata, int len);
+      virtual void on_receive(small_ipc_rx_channel * prxchannel, int32_t message, void * pdata, int32_t len);
 
 
       virtual void start_ca2();

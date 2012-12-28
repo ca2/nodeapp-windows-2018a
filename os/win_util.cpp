@@ -76,7 +76,7 @@ void CLASS_DECL_win __set_window_text(::user::interaction * oswindow_Ctrl, const
    /*ENSURE(oswindow_Ctrl);
    ENSURE(lpszNew);
 
-   int nNewLen = lstrlen(lpszNew);
+   int32_t nNewLen = lstrlen(lpszNew);
    char szOld[256]="";
    // fast check to see if text really changes (reduces flash in controls)
    if (nNewLen > _countof(szOld) ||
@@ -153,7 +153,7 @@ void CLASS_DECL_win __global_free(HGLOBAL hGlobal)
 
 #define MIN_MALLOC_OVERHEAD 4   // LocalAlloc or other overhead
 
-int c_cdecl __critical_new_handler(size_t nSize)
+int32_t c_cdecl __critical_new_handler(size_t nSize)
    // nSize is already rounded
 {
    // called during critical primitive::memory allocation

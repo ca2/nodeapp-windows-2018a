@@ -23,7 +23,7 @@ namespace win
 
       HINSTANCE   m_hInstance;
       HINSTANCE   m_hPrevInstance;
-      int         m_nCmdShow;
+      int32_t         m_nCmdShow;
 
 
    };
@@ -91,7 +91,7 @@ namespace win
       virtual bool initialize1();
       virtual bool initialize2();
       virtual bool initialize3();
-      virtual int  exit_instance();
+      virtual int32_t  exit_instance();
 
 
 
@@ -130,7 +130,7 @@ namespace win
 
       /*virtual void construct(__THREADPROC pfnThreadProc, LPVOID pParam);
 
-      virtual bool Begin(int nPriority = THREAD_PRIORITY_NORMAL, UINT nStackSize = 0,
+      virtual bool Begin(int32_t nPriority = THREAD_PRIORITY_NORMAL, UINT nStackSize = 0,
          DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
       bool create_thread(DWORD dwCreateFlags = 0, UINT nStackSize = 0,
@@ -140,8 +140,8 @@ namespace win
       virtual int_ptr get_os_int();
 
 
-      int GetThreadPriority();
-      bool SetThreadPriority(int nPriority);
+      int32_t GetThreadPriority();
+      bool SetThreadPriority(int32_t nPriority);
 
    // Operations
       DWORD SuspendThread();
@@ -162,20 +162,20 @@ namespace win
       virtual ::gen::message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode); 
 
       // running and idle processing
-      virtual int run();
+      virtual int32_t run();
       virtual void pre_translate_message(gen::signal_object * pobj);
       virtual bool pump_message();     // low level message pump
       virtual bool on_idle(LONG lCount); // return TRUE if more idle processing
       virtual bool is_idle_message(MSG* pMsg);  // checks for special messages
 
       // thread termination
-      virtual int exit_instance(); // default will 'delete this'
+      virtual int32_t exit_instance(); // default will 'delete this'
 
       // Advanced: exception handling
       virtual LRESULT ProcessWndProcException(base_exception* e, const MSG* pMsg);
 
       // Advanced: handling messages sent to message filter hook
-      virtual bool ProcessMessageFilter(int code, LPMSG lpMsg);
+      virtual bool ProcessMessageFilter(int32_t code, LPMSG lpMsg);
 
       // Advanced: virtual access to GetMainWnd()
       virtual ::user::interaction* GetMainWnd();

@@ -123,7 +123,7 @@ namespace win
 
       EOptimize TwfOptimizeRenderRemoveNextProper(
          user::oswindow_tree::Array & oswindowtreea,
-         int iIndex,
+         int32_t iIndex,
          LPCRECT lpcrect);
 
       void get_wnda(user::interaction_ptr_array & wndpa);

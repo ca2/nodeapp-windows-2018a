@@ -20,7 +20,7 @@ namespace win
       return true;
    }
 
-   int folder_watch::run() // thread procedure
+   int32_t folder_watch::run() // thread procedure
    {
       HANDLE hDirectory = ::CreateFileW(gen::international::utf8_to_unicode(m_strPath), 
                       FILE_LIST_DIRECTORY,
@@ -66,7 +66,7 @@ namespace win
       return 0;
    }
 
-   folder_watch::e_action folder_watch::translate_os_action(int iAction)
+   folder_watch::e_action folder_watch::translate_os_action(int32_t iAction)
    {
       switch(iAction)
       {

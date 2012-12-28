@@ -137,7 +137,7 @@ namespace win
    {
       dword_array dwa;
       get_all_processes(dwa);
-      for(int i = 0; i < dwa.get_count(); i++)
+      for(int32_t i = 0; i < dwa.get_count(); i++)
       {
          if(get_process_path(dwa[i]).CompareNoCase(pszName) == 0)
          {
@@ -152,7 +152,7 @@ namespace win
    {
       dword_array dwa;
       get_all_processes(dwa);
-      for(int i = 0; i < dwa.get_count(); i++)
+      for(int32_t i = 0; i < dwa.get_count(); i++)
       {
          if(System.file().title_(get_process_path(dwa[i]))
             .CompareNoCase(pszName) == 0)

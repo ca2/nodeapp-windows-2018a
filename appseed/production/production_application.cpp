@@ -60,10 +60,10 @@ namespace production
    }
 
 
-   int application::exit_instance()
+   int32_t application::exit_instance()
    {
 
-      int iExitCode = 0;
+      int32_t iExitCode = 0;
 
       try
       {

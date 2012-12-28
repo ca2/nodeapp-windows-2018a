@@ -9,11 +9,11 @@ namespace win
 
    class win
    {
-      int function();
+      int32_t function();
    };
 
    CLASS_DECL_win HINSTANCE   LoadLibrary(const char * lpsz);
-   CLASS_DECL_win bool        SHGetSpecialFolderPath(oswindow oswindow, string &str, int csidl, bool fCreate);
+   CLASS_DECL_win bool        SHGetSpecialFolderPath(oswindow oswindow, string &str, int32_t csidl, bool fCreate);
    CLASS_DECL_win DWORD       GetFileAttributes(const char * lpFileName);
    CLASS_DECL_win bool        CreateDirectory(const char * lpPathName, LPSECURITY_ATTRIBUTES lpSecurityAttributes);
    CLASS_DECL_win DWORD       GetCurrentDirectory(string & str);
@@ -21,7 +21,7 @@ namespace win
    CLASS_DECL_win LONG        RegQueryValue(HKEY hkey, const char * lpszSubKey, string & str);
    CLASS_DECL_win HICON       ExtractIcon(HINSTANCE hInst, const char * lpszExeFileName, UINT nIconIndex);
    CLASS_DECL_win bool        DeleteFile(const char * lpFileName);
-   CLASS_DECL_win int         GetMenuStringW(HMENU hMenu, UINT uIDItem, string & str, UINT flags);
+   CLASS_DECL_win int32_t         GetMenuStringW(HMENU hMenu, UINT uIDItem, string & str, UINT flags);
    CLASS_DECL_win void        TimeToFileTime(::ca::application * papp, const ::datetime::time& time, LPFILETIME pFileTime);
 
 
@@ -49,13 +49,13 @@ struct CLASS_DECL_win __EXCEPTION_CONTEXT
 };
 
 #ifndef _PNH_DEFINED
-typedef int (__cdecl * _PNH)( size_t );
+typedef int32_t (__cdecl * _PNH)( size_t );
 #define _PNH_DEFINED
 #endif
 
 _PNH CLASS_DECL_win __get_new_handler();
 _PNH CLASS_DECL_win __set_new_handler(_PNH pfnNewHandler);
-CLASS_DECL_ca int c_cdecl __new_handler(size_t nSize);
+CLASS_DECL_ca int32_t c_cdecl __new_handler(size_t nSize);
 
 void CLASS_DECL_win __abort();
 
@@ -109,7 +109,7 @@ CLASS_DECL_win void __term_thread(::radix::application * papp, HINSTANCE hInstTe
 
 // Advanced initialization: for overriding default WinMain
 //CLASS_DECL_win bool gen::WinInit(__in HINSTANCE hInstance, __in HINSTANCE hPrevInstance,
-  // __in_z LPTSTR lpCmdLine, __in int nCmdShow);
+  // __in_z LPTSTR lpCmdLine, __in int32_t nCmdShow);
 CLASS_DECL_win void __win_term();
 
 CLASS_DECL_win ::radix::application* __get_app();

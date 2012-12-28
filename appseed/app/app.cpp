@@ -5,12 +5,12 @@
 
 /////////////////////////////////////////////////////////////////////////////
 // export WinMain to force linkage to this module
-extern int CLASS_DECL_win __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance,
-   __in LPTSTR lpCmdLine, int nCmdShow);
+extern int32_t CLASS_DECL_win __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+   __in LPTSTR lpCmdLine, int32_t nCmdShow);
 
-extern "C" int WINAPI
+extern "C" int32_t WINAPI
 _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
-   __in LPTSTR lpCmdLine, int nCmdShow)
+   __in LPTSTR lpCmdLine, int32_t nCmdShow)
 {
    // call shared/exported WinMain
    return __win_main(hInstance, hPrevInstance, lpCmdLine, nCmdShow);

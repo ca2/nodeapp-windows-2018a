@@ -18,14 +18,14 @@ DWORD WINAPI thread_proc_app(LPVOID lpParam)
    if(!papp->initialize(*pstrChannel))
       return -1;
 
-   int nReturnCode = papp->run();
+   int32_t nReturnCode = papp->run();
 
    return nReturnCode;
 
 }
 
 
-int __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
+int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
 {
 
    //Sleep(15 * 1000);
@@ -48,7 +48,7 @@ int __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, i
 
    ASSERT(hPrevInstance == NULL);
 
-   int nReturnCode = 0;
+   int32_t nReturnCode = 0;
 
 
    vsstring * pstrChannel = new vsstring(get_command_line_param(::GetCommandLine(), "channel"));
@@ -164,7 +164,7 @@ int __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, i
 }
 
 
-extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
+extern "C" int32_t WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
 {
 
    return __win_main(hInstance, hPrevInstance, lpCmdLine, nCmdShow);

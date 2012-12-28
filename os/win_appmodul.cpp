@@ -4,8 +4,8 @@
 
 /////////////////////////////////////////////////////////////////////////////
 // export WinMain to force linkage to this module
-extern int CLASS_DECL_win __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance,
-   __in LPTSTR lpCmdLine, int nCmdShow);
+extern int32_t CLASS_DECL_win __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+   __in LPTSTR lpCmdLine, int32_t nCmdShow);
 
 
 /////////////////////////////////////////////////////////////////////////////

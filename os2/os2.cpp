@@ -2,7 +2,7 @@
 
 
 
-extern "C" int APIENTRY
+extern "C" int32_t APIENTRY
 DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 {
    

@@ -13,9 +13,9 @@ namespace win
 
       virtual bool watch(const char * pszPath);
 
-      virtual e_action translate_os_action(int iAction);
+      virtual e_action translate_os_action(int32_t iAction);
 
-      virtual int run();
+      virtual int32_t run();
 
    };
 

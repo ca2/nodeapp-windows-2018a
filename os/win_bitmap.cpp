@@ -34,7 +34,7 @@ namespace win
 
    }
 
-   bool bitmap::CreateBitmap(::ca::graphics * pgraphics, int nWidth, int nHeight, UINT nPlanes, UINT nBitcount, const void * lpBits, int stride)
+   bool bitmap::CreateBitmap(::ca::graphics * pgraphics, int32_t nWidth, int32_t nHeight, UINT nPlanes, UINT nBitcount, const void * lpBits, int32_t stride)
    { 
 
       UNREFERENCED_PARAMETER(pgraphics);
@@ -126,7 +126,7 @@ namespace win
    
    }
    
-   size bitmap::SetBitmapDimension(int nWidth, int nHeight)
+   size bitmap::SetBitmapDimension(int32_t nWidth, int32_t nHeight)
    {
 
 
@@ -159,7 +159,7 @@ namespace win
       //return attach(::LoadBitmap(NULL, MAKEINTRESOURCE(nIDBitmap))); 
       return FALSE;
    }
-   bool bitmap::CreateCompatibleBitmap(::ca::graphics * pgraphics, int nWidth, int nHeight)
+   bool bitmap::CreateCompatibleBitmap(::ca::graphics * pgraphics, int32_t nWidth, int32_t nHeight)
    {
 
       if(m_pdata != NULL)
@@ -179,7 +179,7 @@ namespace win
       return TRUE;
    
    }
-   bool bitmap::CreateDiscardableBitmap(::ca::graphics * pgraphics, int nWidth, int nHeight)
+   bool bitmap::CreateDiscardableBitmap(::ca::graphics * pgraphics, int32_t nWidth, int32_t nHeight)
    { 
 
       if(m_pdata != NULL)
@@ -200,7 +200,7 @@ namespace win
    }
 
 
-   int bitmap::GetBitmap(BITMAP* pBitMap)
+   int32_t bitmap::GetBitmap(BITMAP* pBitMap)
    { 
    //   ASSERT(get_handle() != NULL);
      // return ::GetObject(get_handle(), sizeof(BITMAP), pBitMap); 
