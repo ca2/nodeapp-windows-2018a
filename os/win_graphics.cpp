@@ -1664,8 +1664,8 @@ gdi_fallback:
 
 /*bool CALLBACK metaCallback(
    EmfPlusRecordType recordType, 
-   unsigned int32_t flags, 
-   unsigned int32_t dataSize, 
+   uint32_t flags, 
+   uint32_t dataSize, 
    const unsigned char* pStr, 
    void* callbackData)
 { 

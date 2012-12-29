@@ -1258,7 +1258,7 @@ namespace win
             
             if(pwnd->m_pguie != NULL && (bool) pwnd->m_pguie->oprop("pending_layout"))
             {
-               ::oswindow oswindowZOrder = (oswindow) pwnd->m_pguie->oprop("pending_zorder").get_integer();
+               ::oswindow oswindowZOrder = (oswindow) pwnd->m_pguie->oprop("pending_zorder").int32();
                ::SetWindowPos(oswindowParam, HWND_TOPMOST, 
                   (int32_t) rectWindow.left, (int32_t) rectWindow.top, (int32_t) rectWindow.width(), (int32_t) rectWindow.height(), SWP_SHOWWINDOW);
                ::SetWindowPos(oswindowParam, HWND_NOTOPMOST, 
