@@ -394,7 +394,7 @@ namespace production
       class point point = pmouse->m_pt;
       ScreenToClient(&point);
       ::user::control::e_element eelement;
-      int32_t iHitArea = hit_test(point, eelement);
+      index iHitArea = hit_test(point, eelement);
       if(iHitArea == m_iV)
       {
          make_production();

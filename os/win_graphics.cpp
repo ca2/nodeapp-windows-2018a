@@ -3519,7 +3519,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       class sized size;
 
-      if(!GetTextExtent(size, str, str.get_length(), str.get_length()))
+      if(!GetTextExtent(size, str, (int32_t) str.get_length(), (int32_t) str.get_length()))
          return class size(0, 0);
 
       return class size((long) size.cx, (long) size.cy);
