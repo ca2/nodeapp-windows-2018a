@@ -187,7 +187,8 @@ namespace ca2plugin_container
       return m_oswindow;
    }
 
-   uint_ptr host::message_handler(uint_ptr uiMessage, WPARAM wparam, LPARAM lparam)
+
+   LRESULT host::message_handler(UINT uiMessage, WPARAM wparam, LPARAM lparam)
    {
 
       return ::hotplugin::host::message_handler(uiMessage, wparam, lparam);      

@@ -48,10 +48,15 @@ namespace ca2plugin_container
 
 
 #ifdef WINDOWS
-      uint_ptr message_handler(uint_ptr uiMessage, WPARAM wparam, LPARAM lparam);
+
+      LRESULT message_handler(UINT uiMessage, WPARAM wparam, LPARAM lparam);
+
 #else
+
       int32_t message_handler(XEvent * pevent);
+
 #endif
+
 
       virtual void * get_system();
       virtual void set_system(void * pvoidPluginSystem);
@@ -66,5 +71,8 @@ namespace ca2plugin_container
 
    };
 
+
 } // namespace ca2plugin_container
+
+
 
