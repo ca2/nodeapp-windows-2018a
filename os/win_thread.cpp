@@ -112,9 +112,11 @@ UINT APIENTRY __thread_entry(void * pParam)
          ASSERT(FALSE);  // unreachable
       }
 
-
-      ::win::thread::s_haThread.add(::GetCurrentThread());
-      ::win::thread::s_threadptra.add(pThread);
+      {
+         single_lock sl(&::win::thread::s_mutex, true);
+         ::win::thread::s_haThread.add(::GetCurrentThread());
+         ::win::thread::s_threadptra.add(pThread);
+      }
 
 
       pThread->thread_entry(pStartup);
@@ -409,8 +411,11 @@ void CLASS_DECL_win __end_thread(::radix::application * papp, UINT nExitCode, bo
       pState->m_pCurrentWinThread = NULL;
    }
 
-   ::win::thread::s_haThread.remove(::GetCurrentThread());
-   ::win::thread::s_threadptra.remove(pThread);
+   {
+      single_lock sl(&::win::thread::s_mutex, true);
+      ::win::thread::s_haThread.remove(::GetCurrentThread());
+      ::win::thread::s_threadptra.remove(pThread);
+   }
 
    // allow cleanup of any thread local objects
    __term_thread(papp);
@@ -479,6 +484,8 @@ namespace win
 
    comparable_array < HANDLE > thread::s_haThread;
    comparable_array < ::ca::thread * > thread::s_threadptra;
+   mutex thread::s_mutex(NULL);
+
 
 
    void thread::set_p(::radix::thread * p)

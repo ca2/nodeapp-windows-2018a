@@ -737,7 +737,9 @@ namespace win
       if(message == WM_QUIT)
       {
          
+         single_lock sl(&::win::thread::s_mutex, true);
          comparable_array < ::ca::thread * > threadptra = ::win::thread::s_threadptra;
+         sl.unlock();
 
          for(index i = 0; i < threadptra.get_size(); i++)
          {
@@ -758,6 +760,8 @@ namespace win
       }
 
 
+      single_lock sl(&::win::thread::s_mutex);
+
       for(index i = 0; i < ::win::thread::s_haThread.get_size(); )
       {
 
@@ -777,10 +781,16 @@ repeat:
                   if(::win::thread::s_haThread[i] != ::GetCurrentThread())
                   {
 
+                     sl.unlock();
+
                      DWORD dwRet = ::WaitForSingleObject(::win::thread::s_haThread[i], (1984 + 1977) * 2);
+
+                     sl.lock();
 
                      if((dwRet != WAIT_OBJECT_0) && (dwRet != WAIT_FAILED) && i < ::win::thread::s_haThread.get_size())
                         goto repeat;
+
+
 
                   }
 
@@ -795,6 +805,8 @@ repeat:
             bOk = false;
 
          }
+
+         sl.lock();
 
          try
          {
