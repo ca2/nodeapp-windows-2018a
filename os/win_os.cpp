@@ -135,7 +135,7 @@ namespace win
 
    bool os::get_pid_by_path(const char * pszName, DWORD & dwPid)
    {
-      dword_array dwa;
+      uint32_array dwa;
       get_all_processes(dwa);
       for(int32_t i = 0; i < dwa.get_count(); i++)
       {
@@ -150,7 +150,7 @@ namespace win
 
    bool os::get_pid_by_title(const char * pszName, DWORD & dwPid)
    {
-      dword_array dwa;
+      uint32_array dwa;
       get_all_processes(dwa);
       for(int32_t i = 0; i < dwa.get_count(); i++)
       {
@@ -190,7 +190,7 @@ namespace win
       return strName;
    }
 
-   void os::get_all_processes(dword_array & dwa )
+   void os::get_all_processes(uint32_array & dwa )
    {
       dwa.set_size(0);
       DWORD cbNeeded = 0;
