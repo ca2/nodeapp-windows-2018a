@@ -3,7 +3,7 @@
 
 
 /***
-*int32_t _validdrive( unsigned drive ) -
+*int32_t _validdrive( uint32_t drive ) -
 *
 *Purpose: returns non zero if drive is a valid drive number.
 *
@@ -16,10 +16,10 @@
 *******************************************************************************/
 
 int32_t __cdecl _validdrive (
-   unsigned drive
+   uint32_t drive
    )
 {
-   unsigned retcode;
+   uint32_t retcode;
    char drvstr[4];
 
    if ( drive == 0 )
@@ -202,7 +202,7 @@ return wcscpy(p, dirbuf);
 /*#ifndef WPRFLAG
 
 /***
-*int32_t _validdrive( unsigned drive ) -
+*int32_t _validdrive( uint32_t drive ) -
 *
 *Purpose: returns non zero if drive is a valid drive number.
 *
@@ -215,10 +215,10 @@ return wcscpy(p, dirbuf);
 *******************************************************************************/
 
 /*int32_t __cdecl _validdrive (
-unsigned drive
+uint32_t drive
 )
 {
-unsigned retcode;
+uint32_t retcode;
 char drvstr[4];
 
 if ( drive == 0 )
@@ -344,7 +344,7 @@ namespace win
    {
       WCHAR *buf;
       WCHAR *pfname;
-      unsigned long count;
+      uint32_t long count;
 
 
       if ( !path || !*path )  /* no work to do */

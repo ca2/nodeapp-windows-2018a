@@ -554,7 +554,7 @@ namespace win
       void OnMButtonUp(UINT nFlags, point point);
       int32_t OnMouseActivate(::ca::window * pDesktopWnd, UINT nHitTest, UINT message);
       void OnMouseMove(UINT nFlags, point point);
-      bool OnMouseWheel(UINT nFlags, short zDelta, point pt);
+      bool OnMouseWheel(UINT nFlags, int16_t zDelta, point pt);
       LRESULT OnRegisteredMouseWheel(WPARAM wParam, LPARAM lParam);
       void OnRButtonDblClk(UINT nFlags, point point);
       void OnRButtonDown(UINT nFlags, point point);

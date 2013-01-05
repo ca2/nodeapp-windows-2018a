@@ -2061,7 +2061,7 @@ retry2:
       string strDir;
       strDir = System.dir().path(m_strBase, "time/npca2/" + strPlatform);
 
-      add_status("Creating unsigned extension ...");
+      add_status("Creating uint32_t extension ...");
       string str;
       DWORD dwExitCode;
       string strXpi = System.dir().path(strDir, "npca2.xpi") ;

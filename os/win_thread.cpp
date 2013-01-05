@@ -229,7 +229,7 @@ void __internal_pre_translate_message(gen::signal_object * pobj)
       ::ca::thread * pthread = ::win::get_thread();
       if(pthread)
       {
-         // if this is a thread-message, short-circuit this function
+         // if this is a thread-message, int16_t-circuit this function
          if (pbase->m_pwnd == NULL)
          {
             pthread->DispatchThreadMessageEx(pobj);
@@ -2268,7 +2268,7 @@ bool __internal_pre_translate_message(MSG* pMsg)
 thread *pThread = System.GetThread();
 if( pThread )
 {
-// if this is a thread-message, short-circuit this function
+// if this is a thread-message, int16_t-circuit this function
 if (pMsg->oswindow == NULL && pThread->DispatchThreadMessageEx(pMsg))
 return TRUE;
 }

@@ -88,7 +88,7 @@ typedef struct {
 #define PRIdPTR     "Id"
 #define PRIiPTR     "Ii"
 
-// The fprintf macros for unsigned integers are:
+// The fprintf macros for uint32_t integers are:
 #define PRIo8       "o"
 #define PRIu8       "u"
 #define PRIx8       "x"
@@ -191,7 +191,7 @@ typedef struct {
 #  define SCNiPTR     "li"
 #endif  // _WIN64 ]
 
-// The fscanf macros for unsigned integers are:
+// The fscanf macros for uint32_t integers are:
 #define SCNo8       "o"
 #define SCNu8       "u"
 #define SCNx8       "x"

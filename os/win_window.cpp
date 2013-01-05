@@ -1429,7 +1429,7 @@ restart_mouse_hover_check:
 
    // special case for set cursor HTERROR
    if (message == WM_SETCURSOR &&
-   __handle_set_cursor(this, (short)LOWORD(lParam), HIWORD(lParam)))
+   __handle_set_cursor(this, (int16_t)LOWORD(lParam), HIWORD(lParam)))
    {
    lResult = 1;
    goto LReturnTrue;
@@ -1731,8 +1731,8 @@ restart_mouse_hover_check:
    // special case for WM_VSCROLL and WM_HSCROLL
    ASSERT(message == WM_VSCROLL || message == WM_HSCROLL ||
    message == WM_VSCROLL+WM_REFLECT_BASE || message == WM_HSCROLL+WM_REFLECT_BASE);
-   int32_t nScrollCode = (short)LOWORD(wParam);
-   int32_t nPos = (short)HIWORD(wParam);
+   int32_t nScrollCode = (int16_t)LOWORD(wParam);
+   int32_t nPos = (int16_t)HIWORD(wParam);
    if (lpEntry->nSig == gen::Sig_SCROLL)
    (this->*mmf.pfn_v_u_u_W)(nScrollCode, nPos,
    ::win::window::from_handle(reinterpret_cast<oswindow>(lParam)));
@@ -1795,7 +1795,7 @@ restart_mouse_hover_check:
    break;
 
    case gen::Sig_MOUSEWHEEL:
-   lResult = (this->*mmf.pfn_b_u_s_p)(LOWORD(wParam), (short)HIWORD(wParam),
+   lResult = (this->*mmf.pfn_b_u_s_p)(LOWORD(wParam), (int16_t)HIWORD(wParam),
    point(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)));
    if (!lResult)
    return FALSE;
@@ -5460,7 +5460,7 @@ ExitModal:
    void window::OnMouseMove(UINT, point)
    { Default(); }
 
-   bool window::OnMouseWheel(UINT, short, point)
+   bool window::OnMouseWheel(UINT, int16_t, point)
    {
 
       return Default() != FALSE;
@@ -6372,7 +6372,7 @@ LRESULT CALLBACK
 
       case WM_SETCURSOR:
          bCallDefault = !__handle_set_cursor(::win::window::from_handle(oswindow),
-            (short)LOWORD(lParam), HIWORD(lParam));
+            (int16_t)LOWORD(lParam), HIWORD(lParam));
          break;
 
       case WM_NCDESTROY:

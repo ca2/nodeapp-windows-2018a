@@ -1666,7 +1666,7 @@ gdi_fallback:
    EmfPlusRecordType recordType, 
    uint32_t flags, 
    uint32_t dataSize, 
-   const unsigned char* pStr, 
+   const uchar* pStr, 
    void* callbackData)
 { 
    // Play only EmfPlusRecordTypeFillEllipse records.
@@ -3106,43 +3106,43 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       {
          // these records have effects different for each graphics derived class
       case META_SETMAPMODE:
-         (dynamic_cast<::win::graphics * >(pgraphics))->SetMapMode((int32_t)(short)pMetaRec->rdParm[0]);
+         (dynamic_cast<::win::graphics * >(pgraphics))->SetMapMode((int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SETWINDOWEXT:
          (dynamic_cast<::win::graphics * >(pgraphics))->SetWindowExt(
-            (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
+            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SETWINDOWORG:
          (dynamic_cast<::win::graphics * >(pgraphics))->SetWindowOrg(
-            (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
+            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SETVIEWPORTEXT:
          (dynamic_cast<::win::graphics * >(pgraphics))->SetViewportExt(
-            (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
+            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SETVIEWPORTORG:
          (dynamic_cast<::win::graphics * >(pgraphics))->SetViewportOrg(
-            (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
+            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SCALEWINDOWEXT:
          (dynamic_cast<::win::graphics * >(pgraphics))->ScaleWindowExt(
-            (int32_t)(short)pMetaRec->rdParm[3], (int32_t)(short)pMetaRec->rdParm[2],
-            (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
+            (int32_t)(int16_t)pMetaRec->rdParm[3], (int32_t)(int16_t)pMetaRec->rdParm[2],
+            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SCALEVIEWPORTEXT:
          (dynamic_cast<::win::graphics * >(pgraphics))->ScaleViewportExt(
-            (int32_t)(short)pMetaRec->rdParm[3], (int32_t)(short)pMetaRec->rdParm[2],
-            (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
+            (int32_t)(int16_t)pMetaRec->rdParm[3], (int32_t)(int16_t)pMetaRec->rdParm[2],
+            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_OFFSETVIEWPORTORG:
          (dynamic_cast<::win::graphics * >(pgraphics))->OffsetViewportOrg(
-            (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
+            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SAVEDC:
          (dynamic_cast<::win::graphics * >(pgraphics))->SaveDC();
          break;
       case META_RESTOREDC:
-         (dynamic_cast<::win::graphics * >(pgraphics))->RestoreDC((int32_t)(short)pMetaRec->rdParm[0]);
+         (dynamic_cast<::win::graphics * >(pgraphics))->RestoreDC((int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SETBKCOLOR:
          (dynamic_cast<::win::graphics * >(pgraphics))->SetBkColor(*(UNALIGNED COLORREF*)&pMetaRec->rdParm[0]);

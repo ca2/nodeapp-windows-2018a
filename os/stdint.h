@@ -72,10 +72,10 @@ typedef __int8            int8_t;
 typedef __int16           int16_t;
 typedef __int32           int32_t;
 typedef __int64           int64_t;
-typedef unsigned __int8   uint8_t;
-typedef unsigned __int16  uint16_t;
-typedef unsigned __int32  uint32_t;
-typedef unsigned __int64  uint64_t;
+typedef uint32_t __int8   uint8_t;
+typedef uint32_t __int16  uint16_t;
+typedef uint32_t __int32  uint32_t;
+typedef uint32_t __int64  uint64_t;
 
 // 7.18.1.2 Minimum-width integer types
 typedef int8_t    int_least8_t;
@@ -100,7 +100,7 @@ typedef uint64_t  uint_fast64_t;
 // 7.18.1.4 Integer types capable of holding object pointers
 #ifdef _WIN64 // [
    typedef __int64           intptr_t;
-   typedef unsigned __int64  uintptr_t;
+   typedef uint32_t __int64  uintptr_t;
 #else // _WIN64 ][
    typedef _W64 int32_t               intptr_t;
    typedef _W64 uint32_t      uintptr_t;

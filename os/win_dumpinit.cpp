@@ -54,7 +54,7 @@ void __cdecl __crt_dump_client(void * pvData, size_t nBytes)
       if(false) // else
       {
          ::radix::object & obj = *pobject;
-         // short form
+         // int16_t form
          C_RUNTIME_ERRORCHECK_SPRINTF(_snprintf_s(sz, _countof(sz), _countof(sz) - 1, "a %hs object at $%p, %u bytes long\n", typeid(obj).name(), pvData, nBytes));
          g_dumpcontext << sz;
       }
@@ -66,7 +66,7 @@ void __cdecl __crt_dump_client(void * pvData, size_t nBytes)
    }
    catch(...)
    {
-      // short form for trashed objects
+      // int16_t form for trashed objects
       sprintf_s(sz, _countof(sz), "faulted while dumping object at $%p, %u bytes long\n", pvData, nBytes);
       g_dumpcontext << sz;
    }
