@@ -209,7 +209,7 @@ protected:
    __MODULE_STATE* m_pPrevModuleState;
    ___THREAD_STATE* m_pThreadState;
 
-   ulong_ptr m_ulActCtxCookie;
+   uint_ptr m_ulActCtxCookie;
    bool m_bValidActCtxCookie;
 };
 #define __MANAGE_STATE(p) _gen::InitManaged(); __MAINTAIN_STATE2 _ctlState(p);

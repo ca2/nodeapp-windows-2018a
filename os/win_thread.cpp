@@ -884,7 +884,7 @@ namespace win
          return FALSE;
       }
 
-      m_hThread = (HANDLE) (ulong_ptr) ::create_thread(lpSecurityAttrs, nStackSize, (DWORD (__stdcall *)(LPVOID)) &__thread_entry, &startup, dwCreateFlags | CREATE_SUSPENDED, &m_nThreadID);
+      m_hThread = (HANDLE) (uint_ptr) ::create_thread(lpSecurityAttrs, nStackSize, (DWORD (__stdcall *)(LPVOID)) &__thread_entry, &startup, dwCreateFlags | CREATE_SUSPENDED, &m_nThreadID);
 
       if (m_hThread == NULL)
          return FALSE;
@@ -2447,7 +2447,7 @@ return FALSE;
 #ifdef _WIN32
 //   m_thread = ::create_thread(NULL, 0, StartThread, this, 0, &m_dwThreadId);
 // create the thread (it may or may not start to run)
-m_hThread = (HANDLE)(ulong_ptr)_beginthreadex(lpSecurityAttrs, nStackSize,  
+m_hThread = (HANDLE)(uint_ptr)_beginthreadex(lpSecurityAttrs, nStackSize,  
 &__thread_entry, &startup, dwCreateFlags | CREATE_SUSPENDED, (UINT*)&m_nThreadID);
 #else
 pthread_attr_t attr;

@@ -165,8 +165,8 @@ __MODULE_STATE::__MODULE_STATE(bool bDLL, WNDPROC pfn_window_procedure, DWORD dw
 
 __ACTCTX_API_PTR_DEFINE(CreateActCtxW, HANDLE, (PCACTCTXW));
 __ACTCTX_API_PTR_DEFINE(ReleaseActCtx, void, (HANDLE));
-__ACTCTX_API_PTR_DEFINE(ActivateActCtx, bool, (HANDLE, ulong_ptr*));
-__ACTCTX_API_PTR_DEFINE(DeactivateActCtx, bool, (DWORD, ulong_ptr));
+__ACTCTX_API_PTR_DEFINE(ActivateActCtx, bool, (HANDLE, uint_ptr*));
+__ACTCTX_API_PTR_DEFINE(DeactivateActCtx, bool, (DWORD, uint_ptr));
 
 __STATIC void CLASS_DECL_win __init_context_api()
 {
@@ -204,13 +204,13 @@ void CLASS_DECL_win __release_act_ctx(HANDLE hActCtx)
    }
 }
 
-CLASS_DECL_win bool __activate_act_ctx(HANDLE hActCtx, ulong_ptr *lpCookie) 
+CLASS_DECL_win bool __activate_act_ctx(HANDLE hActCtx, uint_ptr *lpCookie) 
 {   
    bool rc = pfnActivateActCtx != 0 ? pfnActivateActCtx(hActCtx, lpCookie) : FALSE;   
    return rc;
 }
 
-CLASS_DECL_win bool __deactivate_act_ctx(DWORD dwFlags, ulong_ptr ulCookie)
+CLASS_DECL_win bool __deactivate_act_ctx(DWORD dwFlags, uint_ptr ulCookie)
 {   
    bool rc = pfnDeactivateActCtx != 0 ? pfnDeactivateActCtx(dwFlags, ulCookie) : FALSE;
    return rc;

@@ -23,7 +23,7 @@
 
 #undef __window_procedure
 
-//#define MAX_DWORD_PTR ((dword_ptr)(-1))
+//#define MAX_DWORD_PTR ((uint_ptr)(-1))
 
 
 

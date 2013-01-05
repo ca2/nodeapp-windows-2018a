@@ -440,7 +440,7 @@ namespace win
    //   return b;
    //}
 
-   //dword_ptr shell::_SHGetFileInfo(      
+   //uint_ptr shell::_SHGetFileInfo(      
    //   const wchar_t * pszPath,
    //   DWORD dwFileAttributes,
    //   SHFILEINFOW *psfi,

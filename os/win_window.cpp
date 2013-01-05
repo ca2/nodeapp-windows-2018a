@@ -666,7 +666,7 @@ namespace win
       dumpcontext << "\nrect = " << rect;
       dumpcontext << "\nparent ::ca::window * = " << ((::ca::window *) this)->get_parent();
 
-      dumpcontext << "\nstyle = " << (dword_ptr)::GetWindowLong(((window *)this)->get_handle(), GWL_STYLE);
+      dumpcontext << "\nstyle = " << (uint_ptr)::GetWindowLong(((window *)this)->get_handle(), GWL_STYLE);
       if (::GetWindowLong(((window *)this)->get_handle(), GWL_STYLE) & WS_CHILD)
          dumpcontext << "\nid = " << __get_dialog_control_id(((window *)this)->get_handle());
 
@@ -964,7 +964,7 @@ namespace win
    /////////////////////////////////////////////////////////////////////////////
    // window extensions for help support
 
-   void window::WinHelp(dword_ptr dwData, UINT nCmd)
+   void window::WinHelp(uint_ptr dwData, UINT nCmd)
    {
       UNREFERENCED_PARAMETER(dwData);
       UNREFERENCED_PARAMETER(nCmd);
@@ -992,7 +992,7 @@ namespace win
       }*/
    }
 
-   //void window::HtmlHelp(dword_ptr dwData, UINT nCmd)
+   //void window::HtmlHelp(uint_ptr dwData, UINT nCmd)
    //{
    // throw not_implemented(get_app());
    /*
@@ -1045,7 +1045,7 @@ namespace win
    }
 
 
-   void window::WinHelpInternal(dword_ptr dwData, UINT nCmd)
+   void window::WinHelpInternal(uint_ptr dwData, UINT nCmd)
    {
       UNREFERENCED_PARAMETER(dwData);
       UNREFERENCED_PARAMETER(nCmd);
@@ -1441,7 +1441,7 @@ restart_mouse_hover_check:
    bHandled = FALSE;
 
    const __MSGMAP* pMessageMap; pMessageMap = GetMessageMap();
-   UINT iHash; iHash = (LOWORD((dword_ptr)pMessageMap) ^ message) & (iHashMax-1);
+   UINT iHash; iHash = (LOWORD((uint_ptr)pMessageMap) ^ message) & (iHashMax-1);
    winMsgLock.lock(CRIT_WINMSGCACHE);
    __MSG_CACHE* pMsgCache; pMsgCache = &gen_MsgCache[iHash];
    const __MSGMAP_ENTRY* lpEntry;
@@ -5529,7 +5529,7 @@ ExitModal:
    void window::OnCaptureChanged(::ca::window *)
    { Default(); }
 
-   bool window::OnDeviceChange(UINT, dword_ptr)
+   bool window::OnDeviceChange(UINT, uint_ptr)
    {
 
       return Default() != FALSE;
@@ -5776,7 +5776,7 @@ ExitModal:
             // get class name of the window that is being created
             const char * pszClassName;
             char szClassName[_countof("ime")+1];
-            if (dword_ptr(lpcs->lpszClass) > 0xffff)
+            if (uint_ptr(lpcs->lpszClass) > 0xffff)
             {
                pszClassName = lpcs->lpszClass;
             }
@@ -5823,7 +5823,7 @@ ExitModal:
             // subclass the window with standard __window_procedure
             WNDPROC afxWndProc = __get_window_procedure();
             oldWndProc = (WNDPROC)SetWindowLongPtr(oswindow, GWLP_WNDPROC,
-               (dword_ptr)afxWndProc);
+               (uint_ptr)afxWndProc);
             ASSERT(oldWndProc != NULL);
             if (oldWndProc != afxWndProc)
                *pOldWndProc = oldWndProc;
@@ -5872,7 +5872,7 @@ ExitModal:
                   if ((WNDPROC)GetProp(oswindow, gen_OldWndProc) == oldWndProc)
                   {
                      GlobalAddAtom(gen_OldWndProc);
-                     SetWindowLongPtr(oswindow, GWLP_WNDPROC, (dword_ptr)__activation_window_procedure);
+                     SetWindowLongPtr(oswindow, GWLP_WNDPROC, (uint_ptr)__activation_window_procedure);
                      ASSERT(oldWndProc != NULL);
                   }
                }

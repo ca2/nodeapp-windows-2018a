@@ -433,9 +433,9 @@ namespace win
       void OnHelpIndex();     // ID_HELP_INDEX
       void OnHelpFinder();    // ID_HELP_FINDER, ID_DEFAULT_HELP
       void OnHelpUsing();     // ID_HELP_USING
-      virtual void WinHelp(dword_ptr dwData, UINT nCmd = HELP_CONTEXT);
-      //virtual void HtmlHelp(dword_ptr dwData, UINT nCmd = 0x000F);
-      virtual void WinHelpInternal(dword_ptr dwData, UINT nCmd = HELP_CONTEXT);
+      virtual void WinHelp(uint_ptr dwData, UINT nCmd = HELP_CONTEXT);
+      //virtual void HtmlHelp(uint_ptr dwData, UINT nCmd = 0x000F);
+      virtual void WinHelpInternal(uint_ptr dwData, UINT nCmd = HELP_CONTEXT);
 
    // layout and other functions
    /*   void RepositionBars(const char * pszPrefix, const char * pszIdLeftOver,
@@ -599,7 +599,7 @@ namespace win
       void OnSizing(UINT nSide, LPRECT lpRect);
       void OnMoving(UINT nSide, LPRECT lpRect);
       void OnCaptureChanged(::ca::window * pWnd);
-      bool OnDeviceChange(UINT nEventType, dword_ptr dwData);
+      bool OnDeviceChange(UINT nEventType, uint_ptr dwData);
 
    // Overridables and other helpers (for implementation of derived classes)
       // for deriving from a standard control

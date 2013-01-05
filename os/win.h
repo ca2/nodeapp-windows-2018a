@@ -43,35 +43,35 @@ template <>
 inline UINT HashKey < oswindow >(oswindow key)
 {
    // default identity hash - works for most primitive values
-   return (DWORD)((dword_ptr)key);
+   return (DWORD)((uint_ptr)key);
 }
 
 template <>
 inline UINT HashKey < HMENU >(HMENU key)
 {
    // default identity hash - works for most primitive values
-   return (DWORD)((dword_ptr)key);
+   return (DWORD)((uint_ptr)key);
 }
 
 template <>
 inline UINT HashKey < HDC >(HDC key)
 {
    // default identity hash - works for most primitive values
-   return (DWORD)((dword_ptr)key);
+   return (DWORD)((uint_ptr)key);
 }
 
 template <>
 inline UINT HashKey < HGDIOBJ >(HGDIOBJ key)
 {
    // default identity hash - works for most primitive values
-   return (DWORD)((dword_ptr)key);
+   return (DWORD)((uint_ptr)key);
 }
 
 template <>
 inline UINT HashKey < HIMAGELIST >(HIMAGELIST key)
 {
    // default identity hash - works for most primitive values
-   return (DWORD)((dword_ptr)key);
+   return (DWORD)((uint_ptr)key);
 }
 
 
