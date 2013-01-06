@@ -238,8 +238,8 @@ namespace production
       if(!m_pproduction->m_bFinished)
       {
          string strTime;
-         DWORD dwMin = (m_pproduction->m_dwEndTick - m_pproduction->m_dwStartTick) / 1000 / 60;
-         DWORD dwSeg = ((m_pproduction->m_dwEndTick - m_pproduction->m_dwStartTick) / 1000) % 60;
+         uint32_t dwMin = (m_pproduction->m_dwEndTick - m_pproduction->m_dwStartTick) / 1000 / 60;
+         uint32_t dwSeg = ((m_pproduction->m_dwEndTick - m_pproduction->m_dwStartTick) / 1000) % 60;
          strTime.Format("%dm %ds", dwMin, dwSeg);
          pdc->TextOut(rectArea.right + 23, rectArea.top, strTime);
       }

@@ -31,7 +31,7 @@ public:
    
    char *                     m_modpath;
    char *                     m_pszDllEnds;
-   DWORD *                    m_dwaProcess;
+   uint32_t *                    m_dwaProcess;
    int32_t                        m_iSizeProcess;
    HMODULE *                  m_hmodulea;
    int32_t                        m_iSizeModule;
@@ -58,7 +58,7 @@ public:
 
    bool are_there_user_files_in_use();
 
-   bool is_user_using(DWORD processid, const char * pszDll);
+   bool is_user_using(uint32_t processid, const char * pszDll);
 
    virtual void on_receive(small_ipc_rx_channel * prxchannel, const char * pszMessage);
 
@@ -136,7 +136,7 @@ bool installer::initialize()
          
          xxdebug_box(strCommandLine, "simple_app::body", 0);
 
-         DWORD dwStartError;
+         uint32_t dwStartError;
          
          spa::ca2_app_install_run(strCommandLine, dwStartError, true);
          
@@ -161,7 +161,7 @@ bool installer::initialize()
    m_modpath      = (char *) ca2_alloc(MAX_PATH * 8);
    m_pszDllEnds   = (char *) ca2_alloc(MAX_PATH * 8);
    m_iSizeProcess = 1024;
-   m_dwaProcess   = (DWORD *) ca2_alloc(m_iSizeProcess);
+   m_dwaProcess   = (uint32_t *) ca2_alloc(m_iSizeProcess);
    m_iSizeModule  = 1024;
    m_hmodulea     = (HMODULE *) ca2_alloc(m_iSizeModule);
 
@@ -199,7 +199,7 @@ typedef int32_t (__cdecl * PFN_SPAADMIN_MAIN)(const char * pszCommandLine);
 
 
 // non-thread safe
-bool installer::is_user_using(DWORD processid, const char * pszDll)
+bool installer::is_user_using(uint32_t processid, const char * pszDll)
 {
 
    HANDLE hModuleSnap = INVALID_HANDLE_VALUE;

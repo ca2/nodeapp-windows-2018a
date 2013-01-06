@@ -36,7 +36,7 @@ public:
    
    char *                     m_modpath;
    char *                     m_pszDllEnds;
-   DWORD *                    m_dwaProcess;
+   uint32_t *                    m_dwaProcess;
    int32_t                        m_iSizeProcess;
    HMODULE *                  m_hmodulea;
    int32_t                        m_iSizeModule;
@@ -61,7 +61,7 @@ public:
 
    bool are_there_user_files_in_use();
 
-   bool is_user_using(DWORD processid, const char * pszDll);
+   bool is_user_using(uint32_t processid, const char * pszDll);
 
    virtual void on_receive(small_ipc_rx_channel * prxchannel, const char * pszMessage);
 
@@ -344,7 +344,7 @@ bool removal::initialize()
 
 
 // non-thread safe
-bool removal::is_user_using(DWORD processid, const char * pszDll)
+bool removal::is_user_using(uint32_t processid, const char * pszDll)
 {
 
    HANDLE hModuleSnap = INVALID_HANDLE_VALUE;

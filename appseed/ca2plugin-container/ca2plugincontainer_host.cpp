@@ -1,7 +1,7 @@
 ﻿#include "framework.h"
 #include <eh.h>
 
-UINT g_nRedrawThreadID;
+uint32_t g_nRedrawThreadID;
 extern bool g_bAppStarted;
 extern void * g_pvoidPluginSystem;
 
@@ -109,7 +109,7 @@ namespace ca2plugin_container
    }
    
 
-   void host::post_message(UINT uiMessage, WPARAM wparam, LPARAM lparam)
+   void host::post_message(uint32_t uiMessage, WPARAM wparam, LPARAM lparam)
    {
       
       ::PostMessage(m_oswindow, uiMessage, wparam, lparam);
@@ -188,7 +188,7 @@ namespace ca2plugin_container
    }
 
 
-   LRESULT host::message_handler(UINT uiMessage, WPARAM wparam, LPARAM lparam)
+   LRESULT host::message_handler(uint32_t uiMessage, WPARAM wparam, LPARAM lparam)
    {
 
       return ::hotplugin::host::message_handler(uiMessage, wparam, lparam);      
@@ -196,7 +196,7 @@ namespace ca2plugin_container
    }
 
 
-   LRESULT CALLBACK window_proc(oswindow oswindow, UINT message, WPARAM wParam, LPARAM lParam)
+   LRESULT CALLBACK window_proc(oswindow oswindow, uint32_t message, WPARAM wParam, LPARAM lParam)
    {
       return DefWindowProc(oswindow, message, wParam, lParam);
    }

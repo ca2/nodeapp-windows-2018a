@@ -17,7 +17,7 @@ namespace production
       int32_t                     m_iLineHeight;
 
       production *      m_pproduction;
-      DWORD                   m_dwLastSnapshotUpdate;
+      uint32_t                   m_dwLastSnapshotUpdate;
       int32_t                     m_iW;
       int32_t                     m_iH;
       int32_t                     m_iWScreen;

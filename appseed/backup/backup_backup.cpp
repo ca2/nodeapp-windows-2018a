@@ -122,8 +122,8 @@ namespace backup
          m_bFinished = true;
          m_timeEnd = ::datetime::time::get_current_time();
          m_dwEndTick = ::GetTickCount();
-         DWORD dwMin = (m_dwEndTick - m_dwStartTick) / 1000 / 60;
-         DWORD dwSeg = ((m_dwEndTick - m_dwStartTick) / 1000) % 60;
+         uint32_t dwMin = (m_dwEndTick - m_dwStartTick) / 1000 / 60;
+         uint32_t dwSeg = ((m_dwEndTick - m_dwStartTick) / 1000) % 60;
          string strTime;
 
          m_timeStart.Format(strStartTime, "%Y-%m-%d %H-%M-%S");
@@ -171,7 +171,7 @@ namespace backup
          return false;
       }
 
-      DWORD dwExitCode;
+      uint32_t dwExitCode;
       int32_t i = 1;
       while(true)
       {
@@ -218,7 +218,7 @@ namespace backup
          return false;
       }
 
-      DWORD dwExitCode;
+      uint32_t dwExitCode;
       int32_t i = 1;
       while(true)
       {
@@ -262,7 +262,7 @@ namespace backup
          return false;
       }
 
-      DWORD dwExitCode;
+      uint32_t dwExitCode;
       int32_t i = 1;
       while(true)
       {

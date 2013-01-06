@@ -39,7 +39,7 @@ namespace production
 
          manual_reset_event * m_pevFinished;
          production *   m_pproduction;
-         DWORD                m_dwThreadAffinityMask;
+         uint32_t                m_dwThreadAffinityMask;
          int32_t run();
       };
 
@@ -80,8 +80,8 @@ namespace production
                               
       ::view *                m_pview;
       bool                    m_bFinished;
-      DWORD                   m_dwStartTick;
-      DWORD                   m_dwEndTick;
+      uint32_t                   m_dwStartTick;
+      uint32_t                   m_dwEndTick;
       stringa                 m_straCC;
       stringa                 m_straBB;
       string                  m_strBuild;

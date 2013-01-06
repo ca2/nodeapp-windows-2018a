@@ -7,7 +7,7 @@ void * g_pvoidPluginSystem = NULL;
 HANDLE g_hmutex = NULL;
 
 
-DWORD WINAPI thread_proc_app(LPVOID lpParam)
+uint32_t WINAPI thread_proc_app(LPVOID lpParam)
 {
 
    vsstring * pstrChannel = (vsstring *) lpParam;

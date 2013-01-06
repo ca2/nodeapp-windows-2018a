@@ -29,7 +29,7 @@ namespace ca2plugin_container
 
       virtual oswindow get_host_window();
       virtual bool is_ok();
-      virtual void post_message(UINT uiMessage, WPARAM wparam, LPARAM lparam);
+      virtual void post_message(uint32_t uiMessage, WPARAM wparam, LPARAM lparam);
       
 
       NPBool init(NPWindow* aWindow);
@@ -49,7 +49,7 @@ namespace ca2plugin_container
 
 #ifdef WINDOWS
 
-      LRESULT message_handler(UINT uiMessage, WPARAM wparam, LPARAM lparam);
+      LRESULT message_handler(uint32_t uiMessage, WPARAM wparam, LPARAM lparam);
 
 #else
 

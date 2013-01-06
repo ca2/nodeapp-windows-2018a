@@ -11,7 +11,7 @@ HANDLE g_hmutexSpabootInstall;
 
 ATOM sentinel_RegisterClass(HINSTANCE hInstance);
 
-LRESULT CALLBACK sentinel_WndProc(oswindow oswindow, UINT message, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK sentinel_WndProc(oswindow oswindow, uint32_t message, WPARAM wParam, LPARAM lParam);
 
 
 extern "C" int32_t WinMainCRTStartup()
@@ -42,7 +42,7 @@ extern "C" int32_t WinMainCRTStartup()
 
    if(g_oswindowMessage == NULL)
    {
-      DWORD dw = GetLastError();
+      uint32_t dw = GetLastError();
       return -1;
    }
 
@@ -97,7 +97,7 @@ ATOM sentinel_RegisterClass(HINSTANCE hInstance)
 }
 
 
-LRESULT CALLBACK sentinel_WndProc(oswindow oswindow, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK sentinel_WndProc(oswindow oswindow, uint32_t message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{

@@ -467,7 +467,7 @@ restart:
          m_strCCVrel = "C:\\home\\ccvotagus\\ca2_spa\\stage";
          m_strCCVrelNew = "C:\\home\\ccvotagus\\ca2_spa\\ccvrelnew\\stage\\" + m_strFormatBuild;
 
-         DWORD dwExitCode;
+         uint32_t dwExitCode;
 
          int32_t i;
          if(m_bClean)
@@ -489,7 +489,7 @@ restart:
             strPath = System.dir().ca2("nodeapp\\stage\\script\\stage_clean.bat");
             if(!process.create_child_process(strPath, false))
             {
-               DWORD dw = GetLastError();
+               uint32_t dw = GetLastError();
                string str;
                str.Format("Error creating clean process: %d", dw);
                add_status(str);
@@ -547,7 +547,7 @@ restart:
          Application.file().put_contents(strPath, "rmdir /s /q C:\\ca2\\vrel\\stage");
          if(!process.create_child_process(strPath, false))
          {
-            DWORD dw = GetLastError();
+            uint32_t dw = GetLastError();
             string str;
             str.Format("Error creating process: %d", dw);
             add_status(str);
@@ -681,7 +681,7 @@ restart:
 
             add_status("Storing Symbols x86...");
 
-            DWORD dwExitCode;
+            uint32_t dwExitCode;
 
             string strPath = System.dir().ca2("time\\stage\\app\\matter\\store_symbols_job_x86.bat");
 
@@ -690,7 +690,7 @@ restart:
             Application.file().put_contents(strPath, strCommand);
             if(!process.create_child_process(strPath, false))
             {
-               DWORD dw = GetLastError();
+               uint32_t dw = GetLastError();
                string str;
                str.Format("Error creating process: %d", dw);
                add_status(str);
@@ -719,7 +719,7 @@ restart:
 
             add_status("Storing Symbols x64...");
 
-            DWORD dwExitCode;
+            uint32_t dwExitCode;
 
             string strPath = System.dir().ca2("time\\stage\\app\\matter\\store_symbols_job_x64.bat");
 
@@ -728,7 +728,7 @@ restart:
             Application.file().put_contents(strPath, strCommand);
             if(!process.create_child_process(strPath, false))
             {
-               DWORD dw = GetLastError();
+               uint32_t dw = GetLastError();
                string str;
                str.Format("Error creating process: %d", dw);
                add_status(str);
@@ -940,8 +940,8 @@ restart:
          m_bFinished = true;
          m_timeEnd = ::datetime::time::get_current_time();
          m_dwEndTick = ::GetTickCount();
-         DWORD dwMin = (m_dwEndTick - m_dwStartTick) / 1000 / 60;
-         DWORD dwSeg = ((m_dwEndTick - m_dwStartTick) / 1000) % 60;
+         uint32_t dwMin = (m_dwEndTick - m_dwStartTick) / 1000 / 60;
+         uint32_t dwSeg = ((m_dwEndTick - m_dwStartTick) / 1000) % 60;
          string strTime;
 
          string strEndTime;
@@ -1073,7 +1073,7 @@ retry2:
       }
       sl.unlock();
 
-      UINT uiProcessorCount = get_current_process_affinity_order();
+      uint32_t uiProcessorCount = get_current_process_affinity_order();
 
       base_array < compress_thread * > threada;
       if(uiProcessorCount == 0)
@@ -1087,7 +1087,7 @@ retry2:
          array_app_alloc < manual_reset_event > eventa(get_app());
          eventa.set_size(uiProcessorCount);
          sync_object_ptra syncobjectptra;
-         for(UINT ui = 0; ui < uiProcessorCount; ui++)
+         for(uint32_t ui = 0; ui < uiProcessorCount; ui++)
          {
             compress_thread * pthread = new compress_thread(this, eventa.ptr_at(ui));
             threada.add(pthread);
@@ -1213,7 +1213,7 @@ retry2:
          return false;
       }
 
-      DWORD dwExitCode;
+      uint32_t dwExitCode;
       int32_t i = 1;
       while(true)
       {
@@ -1272,7 +1272,7 @@ retry2:
          return false;
       }
 
-      DWORD dwExitCode;
+      uint32_t dwExitCode;
       int32_t i = 1;
       while(true)
       {
@@ -2030,14 +2030,14 @@ retry2:
 
       gen::process process;
 
-      DWORD dwExitCode;
+      uint32_t dwExitCode;
 
       for(int32_t i = 0; i < m_straRelative.get_count(); i++)
       {
          strPath = "zip \"" + strXpi + "\" \"" + m_straRelative[i] + "\"";
          if(!process.create_child_process(strPath, false,  System.dir().path(strDir, "npca2/")))
          {
-            DWORD dw = GetLastError();
+            uint32_t dw = GetLastError();
             string str;
             str.Format("Error compressing npca2: %d", dw);
             add_status(str);
@@ -2063,13 +2063,13 @@ retry2:
 
       add_status("Creating uint32_t extension ...");
       string str;
-      DWORD dwExitCode;
+      uint32_t dwExitCode;
       string strXpi = System.dir().path(strDir, "npca2.xpi") ;
       gen::process process;
       string strPath = "zip -r -D \""+strXpi+"\" * ";
       if(!process.create_child_process(strPath, false,  System.dir().path(strDir, "npca2/")))
       {
-         DWORD dw = GetLastError();
+         uint32_t dw = GetLastError();
          string str;
          str.Format("Error compressing npca2: %d", dw);
          add_status(str);
@@ -2100,14 +2100,14 @@ retry2:
 
       Application.dir().mk(System.dir().path(m_strBase, "time\\iexca2\\"+strPlatform));
 
-      DWORD dwExitCode;
+      uint32_t dwExitCode;
       string str;
       gen::process process;
       string strPath;
       strPath = System.dir().path(m_strBase, "nodeapp\\stage\\script\\makecab" + string(pszPlatform) + ".bat");
       if(!process.create_child_process(strPath, false, System.dir().name(strPath)))
       {
-         DWORD dw = GetLastError();
+         uint32_t dw = GetLastError();
          string str;
          str.Format("Error creating iexca2.cab: %d", dw);
          add_status(str);
@@ -2580,14 +2580,14 @@ retry1:
       }
       if(!process.create_child_process(strPath, false))
       {
-         DWORD dw = GetLastError();
+         uint32_t dw = GetLastError();
          string str;
          str.Format("Error creating build process: %d for build of " + strApp, dw);
          add_status(str);
          return;   
       }
       int32_t i = 1;
-      DWORD dwExitCode;
+      uint32_t dwExitCode;
       string str;
       while(!process.has_exited(&dwExitCode))
       {
