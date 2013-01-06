@@ -3336,8 +3336,7 @@ restart_mouse_hover_check:
    //  return value of FALSE means caller must call DefWindowProc's default
    //  TRUE means that 'hbrGray' will be used and the appropriate text
    //    ('clrText') and background colors are set.
-   bool PASCAL window::GrayCtlColor(HDC hDC, oswindow oswindow, UINT nCtlColor,
-      HBRUSH hbrGray, COLORREF clrText)
+   bool window::GrayCtlColor(HDC hDC, oswindow oswindow, UINT nCtlColor, HBRUSH hbrGray, COLORREF clrText)
    {
       if (hDC == NULL)
       {
@@ -3366,7 +3365,7 @@ restart_mouse_hover_check:
       VERIFY(::GetObject(hbrGray, sizeof(LOGBRUSH), (LPVOID)&logbrush));
       ::SetBkColor(hDC, logbrush.lbColor);
       if (clrText == (COLORREF)-1)
-         clrText = ::GetSysColor(COLOR_WINDOWTEXT);  // normal text
+         clrText = Session.get_default_color(COLOR_WINDOWTEXT);  // normal text
       ::SetTextColor(hDC, clrText);
       return TRUE;
    }

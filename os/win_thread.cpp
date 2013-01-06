@@ -51,7 +51,7 @@ struct ___THREAD_STARTUP : ::ca::thread_startup
    bool bError;    // TRUE if error during startup
 };
 
-uint32_t APIENTRY __thread_entry(void * pParam)
+uint32_t __thread_entry(void * pParam)
 {
 
    UINT uiRet = 0;

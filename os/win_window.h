@@ -635,7 +635,7 @@ namespace win
 
    // Implementation
       virtual bool CheckAutoCenter();
-      static bool PASCAL GrayCtlColor(HDC hDC, oswindow oswindow, UINT nCtlColor,
+      virtual bool GrayCtlColor(HDC hDC, oswindow oswindow, UINT nCtlColor,
          HBRUSH hbrGray, COLORREF clrText);
 
 

@@ -130,8 +130,8 @@ namespace win
       ::ca::bitmap_sp bmpMask(papp);
       ::ca::bitmap *pOldMask, *pOldMem;
       const DWORD   CP_ROP = 0xE20746;
-      ::ca::brush_sp brHighLight(papp, ::GetSysColor(COLOR_3DHIGHLIGHT)),
-         brShadow(papp, ::GetSysColor(COLOR_3DSHADOW)), spbr;
+      ::ca::brush_sp brHighLight(papp, Session.get_default_color(COLOR_3DHIGHLIGHT)),
+         brShadow(papp, Session.get_default_color(COLOR_3DSHADOW)), spbr;
 
       if(graphicsMem->CreateCompatibleDC(NULL) &&
          graphicsMask->CreateCompatibleDC(NULL))
@@ -188,8 +188,8 @@ namespace win
       ::ca::bitmap_sp bmpMask(papp);
       ::ca::bitmap *pOldMask, *pOldMem;
       const DWORD   CP_ROP = 0xE20746;
-      ::ca::brush_sp brHighLight(papp, ::GetSysColor(COLOR_3DHIGHLIGHT)),
-         brShadow(papp, ::GetSysColor(COLOR_3DSHADOW)), spbr;
+      ::ca::brush_sp brHighLight(papp, Session.get_default_color(COLOR_3DHIGHLIGHT)),
+         brShadow(papp, Session.get_default_color(COLOR_3DSHADOW)), spbr;
 
       if(graphicsMem->CreateCompatibleDC(pgraphics) &&
          graphicsMask->CreateCompatibleDC(pgraphics) &&
