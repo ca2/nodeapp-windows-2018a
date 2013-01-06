@@ -7,9 +7,9 @@
 
 
 __STATIC void CLASS_DECL_win __pre_init_dialog(
-   ::user::interaction * pWnd, LPRECT lpRectOld, DWORD* pdwStyleOld);
+   ::user::interaction * pWnd, LPRECT lpRectOld, uint32_t* pdwStyleOld);
 __STATIC void CLASS_DECL_win __post_init_dialog(
-   ::user::interaction * pWnd, const RECT& rectOld, DWORD dwStyleOld);
+   ::user::interaction * pWnd, const RECT& rectOld, uint32_t dwStyleOld);
 LRESULT CALLBACK
    __activation_window_procedure(oswindow oswindow, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
@@ -103,11 +103,11 @@ namespace win
    // Change a window's style
 
    __STATIC bool CLASS_DECL_win __modify_style(oswindow oswindow, int32_t nStyleOffset,
-      DWORD dwRemove, DWORD dwAdd, UINT nFlags)
+      uint32_t dwRemove, uint32_t dwAdd, UINT nFlags)
    {
       ASSERT(oswindow != NULL);
-      DWORD dwStyle = ::GetWindowLong(oswindow, nStyleOffset);
-      DWORD dwNewStyle = (dwStyle & ~dwRemove) | dwAdd;
+      uint32_t dwStyle = ::GetWindowLong(oswindow, nStyleOffset);
+      uint32_t dwNewStyle = (dwStyle & ~dwRemove) | dwAdd;
       if (dwStyle == dwNewStyle)
          return FALSE;
 
@@ -120,12 +120,12 @@ namespace win
       return TRUE;
    }
 
-   bool PASCAL window::ModifyStyle(oswindow oswindow, DWORD dwRemove, DWORD dwAdd, UINT nFlags)
+   bool PASCAL window::ModifyStyle(oswindow oswindow, uint32_t dwRemove, uint32_t dwAdd, UINT nFlags)
    {
       return __modify_style(oswindow, GWL_STYLE, dwRemove, dwAdd, nFlags);
    }
 
-   bool PASCAL window::ModifyStyleEx(oswindow oswindow, DWORD dwRemove, DWORD dwAdd, UINT nFlags)
+   bool PASCAL window::ModifyStyleEx(oswindow oswindow, uint32_t dwRemove, uint32_t dwAdd, UINT nFlags)
    {
       return __modify_style(oswindow, GWL_EXSTYLE, dwRemove, dwAdd, nFlags);
    }
@@ -228,8 +228,8 @@ namespace win
    /////////////////////////////////////////////////////////////////////////////
    // window creation
 
-   bool window::CreateEx(DWORD dwExStyle, const char * lpszClassName,
-      const char * lpszWindowName, DWORD dwStyle,
+   bool window::CreateEx(uint32_t dwExStyle, const char * lpszClassName,
+      const char * lpszWindowName, uint32_t dwStyle,
       const RECT& rect, ::user::interaction* pParentWnd, id id,
       LPVOID lpParam /* = NULL */)
    {
@@ -238,8 +238,8 @@ namespace win
          pParentWnd->get_safe_handle(), id, lpParam);
    }
 
-   bool window::CreateEx(DWORD dwExStyle, const char * lpszClassName,
-      const char * lpszWindowName, DWORD dwStyle,
+   bool window::CreateEx(uint32_t dwExStyle, const char * lpszClassName,
+      const char * lpszWindowName, uint32_t dwStyle,
       int32_t x, int32_t y, int32_t nWidth, int32_t nHeight,
       oswindow oswindow_Parent, id id, LPVOID lpParam)
    {
@@ -293,7 +293,7 @@ namespace win
 #ifdef DEBUG
       if (oswindow == NULL)
       {
-         DWORD dwLastError = GetLastError();
+         uint32_t dwLastError = GetLastError();
          string strLastError = FormatMessageFromSystem(dwLastError);
          string strMessage;
          strMessage.Format("%s\n\nSystem Error Code: %d", strLastError, dwLastError);
@@ -353,7 +353,7 @@ namespace win
    }
 
    bool window::create(const char * lpszClassName,
-      const char * lpszWindowName, DWORD dwStyle,
+      const char * lpszWindowName, uint32_t dwStyle,
       const RECT& rect,
       ::user::interaction* pParentWnd, id id,
       ::ca::create_context* pContext)
@@ -892,13 +892,13 @@ namespace win
       return ::GetTitleBarInfo(get_handle(), pti) != FALSE;
    }
 
-   bool window::AnimateWindow(DWORD dwTime, DWORD dwFlags) 
+   bool window::AnimateWindow(uint32_t dwTime, uint32_t dwFlags) 
    {
       ASSERT(::IsWindow(get_handle())); 
       return ::AnimateWindow(get_handle(), dwTime, dwFlags) != FALSE;
    }
 
-   bool window::FlashWindowEx(DWORD dwFlags, UINT  uCount, DWORD dwTimeout)
+   bool window::FlashWindowEx(uint32_t dwFlags, UINT  uCount, uint32_t dwTimeout)
    {
       ASSERT(::IsWindow(get_handle())); 
       FLASHWINFO fwi;
@@ -913,14 +913,14 @@ namespace win
 
 
 
-   bool window::SetLayeredWindowAttributes(COLORREF crKey, BYTE bAlpha, DWORD dwFlags)
+   bool window::SetLayeredWindowAttributes(COLORREF crKey, BYTE bAlpha, uint32_t dwFlags)
    {
       ASSERT(::IsWindow(get_handle())); 
       return ::SetLayeredWindowAttributes(get_handle(), crKey, bAlpha, dwFlags) != FALSE;
    }
 
    bool window::UpdateLayeredWindow(::ca::graphics * pDCDst, POINT *pptDst, SIZE *psize, 
-      ::ca::graphics * pDCSrc, POINT *pptSrc, COLORREF crKey, BLENDFUNCTION *pblend, DWORD dwFlags)
+      ::ca::graphics * pDCSrc, POINT *pptSrc, COLORREF crKey, BLENDFUNCTION *pblend, uint32_t dwFlags)
    {
       ASSERT(::IsWindow(get_handle())); 
       return ::UpdateLayeredWindow(get_handle(), WIN_HDC(pDCDst), pptDst, psize,
@@ -928,10 +928,10 @@ namespace win
    }
 
 
-   bool window::GetLayeredWindowAttributes(COLORREF *pcrKey, BYTE *pbAlpha, DWORD *pdwFlags) const
+   bool window::GetLayeredWindowAttributes(COLORREF *pcrKey, BYTE *pbAlpha, uint32_t *pdwFlags) const
    {
       ASSERT(::IsWindow(get_handle())); 
-      return ::GetLayeredWindowAttributes(get_handle(), pcrKey, pbAlpha, pdwFlags) != FALSE;
+      return ::GetLayeredWindowAttributes(get_handle(), pcrKey, pbAlpha, (LPDWORD) pdwFlags) != FALSE;
    }
 
    bool window::PrintWindow(::ca::graphics * pgraphics, UINT nFlags) const
@@ -2504,7 +2504,7 @@ restart_mouse_hover_check:
 
    void window::CalcWindowRect(LPRECT lpClientRect, UINT nAdjustType)
    {
-      DWORD dwExStyle = GetExStyle();
+      uint32_t dwExStyle = GetExStyle();
       if (nAdjustType == 0)
          dwExStyle &= ~WS_EX_CLIENTEDGE;
       ::AdjustWindowRectEx(lpClientRect, GetStyle(), FALSE, dwExStyle);
@@ -2872,7 +2872,7 @@ restart_mouse_hover_check:
       oswindow m_oswindow;
       HDC m_hdc;
 
-      print_window(::ca::application * papp, oswindow oswindow, HDC hdc, DWORD dwTimeout) :
+      print_window(::ca::application * papp, oswindow oswindow, HDC hdc, uint32_t dwTimeout) :
          ca(papp),
          m_event(papp)
       {
@@ -3245,7 +3245,7 @@ restart_mouse_hover_check:
       rect rectx;
       ::ca::bitmap * pbitmap = &graphics->GetCurrentBitmap();
       ::GetCurrentObject((HDC) pbase->m_wparam, OBJ_BITMAP);
-      //      DWORD dw = ::GetLastError();
+      //      uint32_t dw = ::GetLastError();
       class size size = pbitmap->get_size();
       rectx.left = 0;
       rectx.top = 0;
@@ -3421,7 +3421,7 @@ restart_mouse_hover_check:
       ASSERT(::IsWindow(get_handle()));
 
       // determine owner window to center against
-      DWORD dwStyle = GetStyle();
+      uint32_t dwStyle = GetStyle();
       ::user::interaction * oswindow_Center = pAlternateOwner;
       if (pAlternateOwner == NULL)
       {
@@ -3450,7 +3450,7 @@ restart_mouse_hover_check:
          // don't center against invisible or minimized windows
          if (oswindow_Center != NULL)
          {
-            DWORD dwAlternateStyle = oswindow_Center->GetWindowLong(GWL_STYLE);
+            uint32_t dwAlternateStyle = oswindow_Center->GetWindowLong(GWL_STYLE);
             if (!(dwAlternateStyle & WS_VISIBLE) || (dwAlternateStyle & WS_MINIMIZE))
                oswindow_Center = NULL;
          }
@@ -3676,7 +3676,7 @@ restart_mouse_hover_check:
    }
 
 
-   id window::RunModalLoop(DWORD dwFlags, ::ca::live_object * pliveobject)
+   id window::RunModalLoop(uint32_t dwFlags, ::ca::live_object * pliveobject)
    {
       // for tracking the idle time state
       bool bIdle = TRUE;
@@ -4448,25 +4448,25 @@ ExitModal:
       return (WIN_WINDOW(const_cast < ::ca::window * > (&wnd))->get_handle()) != get_handle(); 
    }
 
-   DWORD window::GetStyle()
+   uint32_t window::GetStyle()
    {
       ASSERT(::IsWindow(get_handle())); 
-      return (DWORD)::GetWindowLong(get_handle(), GWL_STYLE); 
+      return (uint32_t)::GetWindowLong(get_handle(), GWL_STYLE); 
    }
 
-   DWORD window::GetExStyle()
+   uint32_t window::GetExStyle()
    {
       ASSERT(::IsWindow(get_handle())); 
-      return (DWORD)::GetWindowLong(get_handle(), GWL_EXSTYLE); 
+      return (uint32_t)::GetWindowLong(get_handle(), GWL_EXSTYLE); 
    }
 
-   bool window::ModifyStyle(DWORD dwRemove, DWORD dwAdd, UINT nFlags)
+   bool window::ModifyStyle(uint32_t dwRemove, uint32_t dwAdd, UINT nFlags)
    { 
       ASSERT(::IsWindow(get_handle())); 
       return ModifyStyle(get_handle(), dwRemove, dwAdd, nFlags); 
    }
 
-   bool window::ModifyStyleEx(DWORD dwRemove, DWORD dwAdd, UINT nFlags)
+   bool window::ModifyStyleEx(uint32_t dwRemove, uint32_t dwAdd, UINT nFlags)
    { 
       ASSERT(::IsWindow(get_handle())); 
       return ModifyStyleEx(get_handle(), dwRemove, dwAdd, nFlags); 
@@ -4777,7 +4777,7 @@ ExitModal:
    }
 
 
-   ::ca::graphics * window::GetDCEx(::ca::region* prgnClip, DWORD flags)
+   ::ca::graphics * window::GetDCEx(::ca::region* prgnClip, uint32_t flags)
    {
 
       ASSERT(::IsWindow(get_handle())); 
@@ -4847,12 +4847,12 @@ ExitModal:
 
    }
 
-   uint_ptr window::SetTimer(uint_ptr nIDEvent, UINT nElapse, void (CALLBACK* lpfnTimer)(oswindow, UINT, uint_ptr, DWORD))
+   uint_ptr window::SetTimer(uint_ptr nIDEvent, UINT nElapse, void (CALLBACK* lpfnTimer)(oswindow, UINT, uint_ptr, uint32_t))
    { 
 
       ASSERT(::IsWindow(get_handle())); 
 
-      return ::SetTimer(get_handle(), nIDEvent, nElapse, lpfnTimer); 
+      return ::SetTimer(get_handle(), nIDEvent, nElapse, (TIMERPROC) lpfnTimer); 
 
    }
 
@@ -5241,7 +5241,7 @@ ExitModal:
 
    }
 
-   void window::Print(::ca::graphics * pgraphics, DWORD dwFlags) const
+   void window::Print(::ca::graphics * pgraphics, uint32_t dwFlags) const
    { 
 
       ASSERT(::IsWindow(get_handle()));
@@ -5250,7 +5250,7 @@ ExitModal:
 
    }
 
-   void window::PrintClient(::ca::graphics * pgraphics, DWORD dwFlags) const
+   void window::PrintClient(::ca::graphics * pgraphics, uint32_t dwFlags) const
    { 
 
       ASSERT(::IsWindow(get_handle()));
@@ -5259,7 +5259,7 @@ ExitModal:
 
    }
 
-   bool window::SetWindowContextHelpId(DWORD dwContextHelpId)
+   bool window::SetWindowContextHelpId(uint32_t dwContextHelpId)
    { 
 
       ASSERT(::IsWindow(get_handle()));
@@ -5268,7 +5268,7 @@ ExitModal:
 
    }
 
-   DWORD window::GetWindowContextHelpId() const
+   uint32_t window::GetWindowContextHelpId() const
    {
 
       ASSERT(::IsWindow(get_handle()));
@@ -5279,7 +5279,7 @@ ExitModal:
 
 
    // Default message ::collection::map implementations
-   void window::OnActivateApp(bool, DWORD)
+   void window::OnActivateApp(bool, uint32_t)
    { Default(); }
    void window::OnActivate(UINT, ::ca::window *, bool)
    { Default(); }
@@ -5363,7 +5363,7 @@ ExitModal:
    { Default(); }
    void window::OnSize(UINT, int32_t, int32_t)
    { Default(); }
-   void window::OnTCard(UINT, DWORD)
+   void window::OnTCard(UINT, uint32_t)
    { Default(); }
    void window::OnWindowPosChanging(WINDOWPOS*)
    { Default(); }
@@ -5674,7 +5674,7 @@ ExitModal:
 
          // special case for WM_INITDIALOG
          rect rectOld;
-         DWORD dwStyle = 0;
+         uint32_t dwStyle = 0;
          if (nMsg == WM_INITDIALOG)
             __pre_init_dialog(pinteraction, &rectOld, &dwStyle);
 
@@ -6010,7 +6010,7 @@ WNDPROC CLASS_DECL_win __get_window_procedure()
 // Special helpers for certain windows messages
 
 __STATIC void CLASS_DECL_win __pre_init_dialog(
-   ::user::interaction * pWnd, LPRECT lpRectOld, DWORD* pdwStyleOld)
+   ::user::interaction * pWnd, LPRECT lpRectOld, uint32_t* pdwStyleOld)
 {
    ASSERT(lpRectOld != NULL);   
    ASSERT(pdwStyleOld != NULL);
@@ -6020,7 +6020,7 @@ __STATIC void CLASS_DECL_win __pre_init_dialog(
 }
 
 __STATIC void CLASS_DECL_win __post_init_dialog(
-   ::user::interaction * pWnd, const RECT& rectOld, DWORD dwStyleOld)
+   ::user::interaction * pWnd, const RECT& rectOld, uint32_t dwStyleOld)
 {
    // must be hidden to start with      
    if (dwStyleOld & WS_VISIBLE)
@@ -6355,7 +6355,7 @@ LRESULT CALLBACK
       {
       case WM_INITDIALOG:
          {
-            DWORD dwStyle;
+            uint32_t dwStyle;
             rect rectOld;
             ::ca::window * pWnd = ::win::window::from_handle(oswindow);
             __pre_init_dialog(pWnd, &rectOld, &dwStyle);

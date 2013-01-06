@@ -33,7 +33,7 @@ namespace win
 
       // only valid while running
       HANDLE m_hThread;       // this thread's HANDLE
-      DWORD m_nThreadID;      // this thread's ID
+      uint32_t  m_nThreadID;      // this thread's ID
 
 
       static comparable_array < HANDLE > s_haThread;
@@ -81,9 +81,9 @@ namespace win
 
       virtual void set_p(::radix::thread * p);
 
-      virtual bool Begin(::ca::e_thread_priority epriority = get_thread_priority_normal(), UINT nStackSize = 0, DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
+      virtual bool Begin(::ca::e_thread_priority epriority = get_thread_priority_normal(), UINT nStackSize = 0, uint32_t dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
-      bool create_thread(::ca::e_thread_priority epriority = get_thread_priority_normal(), DWORD dwCreateFlags = 0, UINT nStackSize = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL) override;
+      bool create_thread(::ca::e_thread_priority epriority = get_thread_priority_normal(), uint32_t dwCreateFlags = 0, UINT nStackSize = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL) override;
 
 
       virtual ::user::interaction * SetMainWnd(::user::interaction * pui);
@@ -124,8 +124,8 @@ namespace win
       bool set_thread_priority(::ca::e_thread_priority epriority);
 
    // Operations
-      DWORD SuspendThread();
-      DWORD ResumeThread();
+      //DWORD SuspendThread();
+      uint32_t ResumeThread();
       bool post_thread_message(UINT message, WPARAM wParam, LPARAM lParam);
       bool post_message(::user::interaction * pguie, UINT message, WPARAM wParam, LPARAM lParam);
 

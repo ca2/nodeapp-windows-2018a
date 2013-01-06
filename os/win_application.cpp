@@ -680,7 +680,7 @@ namespace win
    #endif
    }
 
-   uint32_t long application::get_thread_id()
+   uint32_t application::get_thread_id()
    {
       return ::GetCurrentThreadId();
    }

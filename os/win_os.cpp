@@ -198,7 +198,7 @@ namespace win
       {
          dwa.set_size(dwa.get_count() + 1024);
          if(!EnumProcesses(
-            dwa.get_data(), 
+            (DWORD *) dwa.get_data(), 
             (DWORD) (dwa.get_count() * sizeof(DWORD)),
             &cbNeeded))
          {

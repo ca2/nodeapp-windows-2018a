@@ -11,8 +11,8 @@ bool CLASS_DECL_win __internal_pump_message();
 LRESULT CLASS_DECL_win __internal_process_wnd_proc_exception(base_exception*, const MSG* pMsg);
 bool __internal_pre_translate_message(MSG* pMsg);
 bool __internal_is_idle_message(MSG* pMsg);
-__STATIC void CLASS_DECL_win __pre_init_dialog(::user::interaction * pWnd, LPRECT lpRectOld, DWORD* pdwStyleOld);
-__STATIC void CLASS_DECL_win __post_init_dialog(::user::interaction * pWnd, const RECT& rectOld, DWORD dwStyleOld);
+__STATIC void CLASS_DECL_win __pre_init_dialog(::user::interaction * pWnd, LPRECT lpRectOld, uint32_t * pdwStyleOld);
+__STATIC void CLASS_DECL_win __post_init_dialog(::user::interaction * pWnd, const RECT& rectOld, uint32_t dwStyleOld);
 
 namespace ca
 {
@@ -51,7 +51,7 @@ struct ___THREAD_STARTUP : ::ca::thread_startup
    bool bError;    // TRUE if error during startup
 };
 
-UINT APIENTRY __thread_entry(void * pParam)
+uint32_t APIENTRY __thread_entry(void * pParam)
 {
 
    UINT uiRet = 0;
@@ -670,7 +670,7 @@ namespace win
       return m_hThread;
    }
 
-   bool thread::Begin(::ca::e_thread_priority epriority, UINT nStackSize, DWORD dwCreateFlags, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
+   bool thread::Begin(::ca::e_thread_priority epriority, UINT nStackSize, uint32_t dwCreateFlags, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
    {
 
       if(!create_thread(epriority, dwCreateFlags, nStackSize, lpSecurityAttrs))
@@ -851,7 +851,7 @@ namespace win
       m_ptimera->check();
    }
 
-   bool thread::create_thread(::ca::e_thread_priority epriority, DWORD dwCreateFlagsParam, UINT nStackSize, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
+   bool thread::create_thread(::ca::e_thread_priority epriority, uint32_t dwCreateFlagsParam, UINT nStackSize, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
    {
 
       DWORD dwCreateFlags = dwCreateFlagsParam;
@@ -884,19 +884,19 @@ namespace win
          return FALSE;
       }
 
-      m_hThread = (HANDLE) (uint_ptr) ::create_thread(lpSecurityAttrs, nStackSize, (DWORD (__stdcall *)(LPVOID)) &__thread_entry, &startup, dwCreateFlags | CREATE_SUSPENDED, &m_nThreadID);
+      m_hThread = (HANDLE) (uint_ptr) ::create_thread(lpSecurityAttrs, nStackSize,  &__thread_entry, &startup, dwCreateFlags | CREATE_SUSPENDED, &m_nThreadID);
 
       if (m_hThread == NULL)
          return FALSE;
 
       // start the thread just for ca2 API initialization
-      VERIFY(ResumeThread() != (DWORD)-1);
+      VERIFY(::ResumeThread(m_hThread) != (DWORD)-1);
       VERIFY(::WaitForSingleObject(startup.hEvent, INFINITE) == WAIT_OBJECT_0);
       ::CloseHandle(startup.hEvent);
 
       // if created suspended, suspend it until resume thread wakes it up
-      if (dwCreateFlags & CREATE_SUSPENDED)
-         VERIFY(::SuspendThread(m_hThread) != (DWORD)-1);
+      //if (dwCreateFlags & CREATE_SUSPENDED)
+        // VERIFY(::SuspendThread(m_hThread) != (DWORD)-1);
 
       // if error during startup, shut things down
       if (startup.bError)
@@ -916,10 +916,10 @@ namespace win
 
          VERIFY(set_thread_priority(epriority));
 
-         if (!(dwCreateFlagsParam & CREATE_SUSPENDED))
-         {
-            ENSURE(ResumeThread() != (DWORD)-1);
-         }
+//         if (!(dwCreateFlagsParam & CREATE_SUSPENDED))
+  //       {
+    //        ENSURE(ResumeThread() != (DWORD)-1);
+      //   }
 
       }
 
@@ -1665,7 +1665,7 @@ stop_run:
       dumpcontext << "\n\tmessage = " << (UINT)pState->m_msgCur.message;
       dumpcontext << "\n\twParam = " << (UINT)pState->m_msgCur.wParam;
       dumpcontext << "\n\tlParam = " << (void *)pState->m_msgCur.lParam;
-      dumpcontext << "\n\ttime = " << pState->m_msgCur.time;
+      dumpcontext << "\n\ttime = " << (uint_ptr) pState->m_msgCur.time;
       dumpcontext << "\n\tpt = " << point(pState->m_msgCur.pt);
       dumpcontext << "\n}";
 
@@ -1735,7 +1735,7 @@ stop_run:
 
          // special case for WM_INITDIALOG
          rect rectOld;
-         DWORD dwStyle = 0;
+         uint32_t dwStyle = 0;
          if(pbase->m_uiMessage == WM_INITDIALOG)
             __pre_init_dialog(pwindow, &rectOld, &dwStyle);
 
@@ -1819,7 +1819,7 @@ run:
 
       if(!bOk)
       {
-         DWORD dwLastError = ::GetLastError();
+         uint32_t dwLastError = ::GetLastError();
          ::OutputDebugString("thread::SetThreadPriority LastError = " + gen::str::from(dwLastError));
       }
 
@@ -1868,11 +1868,11 @@ run:
       return epriority;
 
    }
-   DWORD thread::ResumeThread()
+   uint32_t thread::ResumeThread()
    { ASSERT(m_hThread != NULL); return ::ResumeThread(m_hThread); }
-   DWORD thread::SuspendThread()
+/*   DWORD thread::SuspendThread()
    { ASSERT(m_hThread != NULL); return ::SuspendThread(m_hThread); }
-
+   */
    bool thread::post_thread_message(UINT message, WPARAM wParam, LPARAM lParam)
    {
       ASSERT(m_hThread != NULL);
@@ -2138,7 +2138,7 @@ run:
    wait_result thread::wait(const duration & duration)
    {
       DWORD timeout = duration.is_pos_infinity() ? INFINITE : static_cast<DWORD>(duration.total_milliseconds());
-      return wait_result(::WaitForSingleObject(item(),timeout));
+      return wait_result((uint32_t) ::WaitForSingleObject(item(),timeout));
    }
 
    ///  \brief		sets thread priority

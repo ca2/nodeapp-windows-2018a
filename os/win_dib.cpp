@@ -1361,7 +1361,7 @@ namespace win
       }
    }
 
-   DWORD dib::GetPixel(int32_t x, int32_t y)
+   uint32_t dib::GetPixel(int32_t x, int32_t y)
    {
       DWORD dw = *(m_pcolorref + x + (cy - y - 1) * cx);
       return RGB(rgba_get_b(dw), rgba_get_g(dw), rgba_get_r(dw));
@@ -1416,24 +1416,24 @@ namespace win
          int32_t dxE, dyE;
          int32_t dxF, dyF;
 
-         uint32_t long dr;
-         uint32_t long dq;
-         uint32_t long dr0, dq0;
-         uint32_t long dr1, dq1;
-         uint32_t long dr2, dq2;
-         uint32_t long dr3, dq3;
-         uint32_t long dr4, dq4;
-         uint32_t long dr5, dq5;
-         uint32_t long dr6, dq6;
-         uint32_t long dr7, dq7;
-         uint32_t long dr8, dq8;
-         uint32_t long dr9, dq9;
-         uint32_t long drA, dqA;
-         uint32_t long drB, dqB;
-         uint32_t long drC, dqC;
-         uint32_t long drD, dqD;
-         uint32_t long drE, dqE;
-         uint32_t long drF, dqF;
+         unsigned long dr;
+         unsigned long dq;
+         unsigned long dr0, dq0;
+         unsigned long dr1, dq1;
+         unsigned long dr2, dq2;
+         unsigned long dr3, dq3;
+         unsigned long dr4, dq4;
+         unsigned long dr5, dq5;
+         unsigned long dr6, dq6;
+         unsigned long dr7, dq7;
+         unsigned long dr8, dq8;
+         unsigned long dr9, dq9;
+         unsigned long drA, dqA;
+         unsigned long drB, dqB;
+         unsigned long drC, dqC;
+         unsigned long drD, dqD;
+         unsigned long drE, dqE;
+         unsigned long drF, dqF;
          int32_t x, y;
 
          {
@@ -1576,24 +1576,24 @@ namespace win
          int32_t dxE, dyE;
          int32_t dxF, dyF;
 
-         uint32_t long dr;
-         uint32_t long dq;
-         uint32_t long dr0, dq0;
-         uint32_t long dr1, dq1;
-         uint32_t long dr2, dq2;
-         uint32_t long dr3, dq3;
-         uint32_t long dr4, dq4;
-         uint32_t long dr5, dq5;
-         uint32_t long dr6, dq6;
-         uint32_t long dr7, dq7;
-         uint32_t long dr8, dq8;
-         uint32_t long dr9, dq9;
-         uint32_t long drA, dqA;
-         uint32_t long drB, dqB;
-         uint32_t long drC, dqC;
-         uint32_t long drD, dqD;
-         uint32_t long drE, dqE;
-         uint32_t long drF, dqF;
+         unsigned long dr;
+         unsigned long dq;
+         unsigned long dr0, dq0;
+         unsigned long dr1, dq1;
+         unsigned long dr2, dq2;
+         unsigned long dr3, dq3;
+         unsigned long dr4, dq4;
+         unsigned long dr5, dq5;
+         unsigned long dr6, dq6;
+         unsigned long dr7, dq7;
+         unsigned long dr8, dq8;
+         unsigned long dr9, dq9;
+         unsigned long drA, dqA;
+         unsigned long drB, dqB;
+         unsigned long drC, dqC;
+         unsigned long drD, dqD;
+         unsigned long drE, dqE;
+         unsigned long drF, dqF;
          int32_t x, y;
 
          {

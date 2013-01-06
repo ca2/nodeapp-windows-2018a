@@ -350,11 +350,10 @@ namespace win
 	
 	   m_oswindow_ForPortMappingThread = oswindow;
 	
-	   m_pPortMappingThread = ::__begin_thread(get_app(), ThreadForPortRetrieval, this, ::ca::thread_priority_below_normal, 0, CREATE_SUSPENDED );
+	   m_pPortMappingThread = ::__begin_thread(get_app(), ThreadForPortRetrieval, this, ::ca::thread_priority_below_normal, 0);
 	
-	   if ( m_pPortMappingThread != NULL )
+	   if(m_pPortMappingThread != NULL )
 	   {
-		   m_pPortMappingThread->ResumeThread();
 		   return TRUE;
 	   }
 	   else
@@ -392,11 +391,10 @@ namespace win
 	
 	   m_oswindow_ForEditMappingThread = oswindow;
 	
-	   m_pEditMappingThread = ::__begin_thread(get_app(), ThreadToEditMapping, this, ::ca::thread_priority_below_normal, 0, CREATE_SUSPENDED );
+	   m_pEditMappingThread = ::__begin_thread(get_app(), ThreadToEditMapping, this, ::ca::thread_priority_below_normal, 0, 0);
 	
-	   if ( m_pEditMappingThread != NULL )
+	   if(m_pEditMappingThread != NULL)
 	   {
-		   m_pEditMappingThread->ResumeThread();
 		   return TRUE;
 	   }
 	   else
@@ -433,11 +431,10 @@ namespace win
 	
 	   m_oswindow_ForAddMappingThread = oswindow;
 	
-	   m_pAddMappingThread = ::__begin_thread(get_app(), ThreadToAddMapping, this, ::ca::thread_priority_below_normal, 0, CREATE_SUSPENDED);
+	   m_pAddMappingThread = ::__begin_thread(get_app(), ThreadToAddMapping, this, ::ca::thread_priority_below_normal, 0, 0);
 	
-	   if ( m_pAddMappingThread != NULL )
+	   if(m_pAddMappingThread != NULL)
 	   {
-		   m_pAddMappingThread->ResumeThread();
 		   return TRUE;
 	   }
 	   else
@@ -474,11 +471,10 @@ namespace win
 	
 	   m_oswindow_ForDeleteMappingThread = oswindow;
 	
-	   m_pDeleteMappingThread = ::__begin_thread(get_app(), ThreadToDeleteMapping, this, ::ca::thread_priority_below_normal, 0, CREATE_SUSPENDED );
+	   m_pDeleteMappingThread = ::__begin_thread(get_app(), ThreadToDeleteMapping, this, ::ca::thread_priority_below_normal, 0, 0);
 	
-	   if ( m_pDeleteMappingThread != NULL )
+	   if(m_pDeleteMappingThread != NULL)
 	   {
-		   m_pDeleteMappingThread->ResumeThread();
 		   return TRUE;
 	   }
 	   else
@@ -514,11 +510,10 @@ namespace win
 	
 	   m_oswindow_ForDeviceInfoThread = oswindow;
 	
-	   m_pDeviceInfoThread = ::__begin_thread(get_app(), ThreadForDeviceInformationRetrieval, this,  ::ca::thread_priority_below_normal, 0, CREATE_SUSPENDED );
+	   m_pDeviceInfoThread = ::__begin_thread(get_app(), ThreadForDeviceInformationRetrieval, this,  ::ca::thread_priority_below_normal, 0, 0);
 	
-	   if ( m_pDeviceInfoThread != NULL )
+	   if(m_pDeviceInfoThread != NULL)
 	   {
-		   m_pDeviceInfoThread->ResumeThread();
 		   return TRUE;
 	   }
 	   else
@@ -1338,7 +1333,7 @@ namespace win
          if(!b)
          {
             DWORD dw = ::GetLastError();
-            ::MessageBoxA(NULL, gen::str::from(dw), gen::str::from(dw), 0);
+            ::MessageBoxA(NULL, gen::str::from((uint32_t) dw), gen::str::from((uint32_t) dw), 0);
          }
       }
 	
@@ -1732,7 +1727,7 @@ namespace win
 	
 	   __try
 	   {
-		   RaiseException( 0x406D1388, 0, sizeof(info)/sizeof(DWORD), (uint_ptr*)&info );
+		   RaiseException( 0x406D1388, 0, sizeof(info)/sizeof(DWORD), (DWORD *) &info );
 	   }
 	   __except(EXCEPTION_CONTINUE_EXECUTION)
 	   {

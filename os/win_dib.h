@@ -75,7 +75,7 @@ namespace win
          BYTE a2, BYTE r2, BYTE g2, BYTE b2, // border colors
          int32_t x, int32_t y, int32_t iRadius);
 
-      DWORD GetPixel(int32_t x, int32_t y);
+      uint32_t GetPixel(int32_t x, int32_t y);
       void Mask(COLORREF crMask, COLORREF crInMask, COLORREF crOutMask);
       void channel_mask(BYTE uchFind, BYTE uchSet, BYTE uchUnset, visual::rgba::echannel echannel);
       void transparent_color(color color);

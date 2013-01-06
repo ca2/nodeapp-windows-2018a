@@ -13,7 +13,7 @@ namespace win
 
 
    class file_system :
-      virtual public ex1::file_system
+      virtual public ::ca::file::system
    {
    public:
 
@@ -26,7 +26,7 @@ namespace win
       virtual bool FullPath(wstring & wstrFullPath, const wstring & wstrPath);
       virtual UINT GetFileName(const char * lpszPathName, string & str);
       virtual void GetModuleShortFileName(HINSTANCE hInst, string & strShortName);
-
+      virtual var length(const char * pszPath);
 
    };
 

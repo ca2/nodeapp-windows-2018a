@@ -110,7 +110,7 @@ bool WinResource::ReadResource(ex1::file & spfile, HINSTANCE hinst, UINT nID,  c
 
            // write the ::fontopus::user-defined resource to the .mdb file
            spfile.write(lpnRes, dwResSize);
-           spfile.Flush();
+           spfile.flush();
         }
         catch(base_exception &)
         {

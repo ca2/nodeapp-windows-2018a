@@ -70,8 +70,8 @@ namespace win
       Gdiplus::Font *      gdiplus_font();
 
       // for bidi and mirrored localization
-      DWORD GetLayout() const;
-      DWORD SetLayout(DWORD dwLayout);
+      uint32_t GetLayout() const;
+      uint32_t SetLayout(uint32_t dwLayout);
 
 
       virtual double get_dpix() const;
@@ -151,7 +151,7 @@ namespace win
 
       // World transform
       bool SetWorldTransform(const XFORM* pXform);
-      bool ModifyWorldTransform(const XFORM* pXform,DWORD iMode);
+      bool ModifyWorldTransform(const XFORM* pXform,uint32_t iMode);
       bool GetWorldTransform(XFORM* pXform) const;
 
       // Mapping Functions
@@ -235,7 +235,7 @@ namespace win
       bool PolyDraw(const POINT* lpPoints, const BYTE* lpTypes, int32_t nCount);
       bool PolylineTo(const POINT* lpPoints, int32_t nCount);
       bool PolyPolyline(const POINT* lpPoints,
-         const DWORD* lpPolyPoints, int32_t nCount);
+         const uint32_t* lpPolyPoints, int32_t nCount);
 
       bool PolyBezier(const POINT* lpPoints, int32_t nCount);
       bool PolyBezierTo(const POINT* lpPoints, int32_t nCount);
@@ -289,11 +289,11 @@ namespace win
       bool RoundRect(LPCRECT lpRect, POINT point);
 
    // Bitmap Functions
-      bool PatBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, DWORD dwRop);
+      bool PatBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, uint32_t dwRop);
       bool BitBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::ca::graphics * pgraphicsSrc,
-         int32_t xSrc, int32_t ySrc, DWORD dwRop);
+         int32_t xSrc, int32_t ySrc, uint32_t dwRop);
       bool StretchBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::ca::graphics * pgraphicsSrc,
-         int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, DWORD dwRop);
+         int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, uint32_t dwRop);
       COLORREF GetPixel(int32_t x, int32_t y) const;
       COLORREF GetPixel(POINT point) const;
       COLORREF SetPixel(int32_t x, int32_t y, COLORREF crColor);
@@ -302,13 +302,13 @@ namespace win
       bool ExtFloodFill(int32_t x, int32_t y, COLORREF crColor, UINT nFillType);
       bool MaskBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::ca::graphics * pgraphicsSrc,
          int32_t xSrc, int32_t ySrc, ::ca::bitmap& maskBitmap, int32_t xMask, int32_t yMask,
-         DWORD dwRop);
+         uint32_t dwRop);
       bool PlgBlt(LPPOINT lpPoint, ::ca::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc,
          int32_t nWidth, int32_t nHeight, ::ca::bitmap& maskBitmap, int32_t xMask, int32_t yMask);
       bool SetPixelV(int32_t x, int32_t y, COLORREF crColor);
       bool SetPixelV(POINT point, COLORREF crColor);
       bool GradientFill(TRIVERTEX* pVertices, ULONG nVertices, 
-        void * pMesh, ULONG nMeshElements, DWORD dwMode);
+        void * pMesh, ULONG nMeshElements, uint32_t dwMode);
       bool TransparentBlt(int32_t xDest, int32_t yDest, int32_t nDestWidth, int32_t nDestHeight,
         ::ca::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, 
         UINT clrTransparent);
@@ -364,8 +364,8 @@ namespace win
       int32_t GetTextCharacterExtra() const;
       int32_t SetTextCharacterExtra(int32_t nCharExtra);
 
-      DWORD GetCharacterPlacement(const char * lpString, int32_t nCount, int32_t nMaxExtent, LPGCP_RESULTS lpResults, DWORD dwFlags) const;
-      DWORD GetCharacterPlacement(string & str, int32_t nMaxExtent, LPGCP_RESULTS lpResults, DWORD dwFlags) const;
+      uint32_t GetCharacterPlacement(const char * lpString, int32_t nCount, int32_t nMaxExtent, LPGCP_RESULTS lpResults, uint32_t dwFlags) const;
+      uint32_t GetCharacterPlacement(string & str, int32_t nMaxExtent, LPGCP_RESULTS lpResults, uint32_t dwFlags) const;
 
    #if (_WIN32_WINNT >= 0x0500)
 
@@ -387,22 +387,22 @@ namespace win
    // font Functions
       bool GetCharWidth(UINT nFirstChar, UINT nLastChar, LPINT lpBuffer) const;
       bool GetOutputCharWidth(UINT nFirstChar, UINT nLastChar, LPINT lpBuffer) const;
-      DWORD SetMapperFlags(DWORD dwFlag);
+      uint32_t SetMapperFlags(uint32_t dwFlag);
       size GetAspectRatioFilter() const;
 
       bool GetCharABCWidths(UINT nFirstChar, UINT nLastChar, LPABC lpabc) const;
-      DWORD GetFontData(DWORD dwTable, DWORD dwOffset, LPVOID lpData, DWORD cbData) const;
+      uint32_t GetFontData(uint32_t dwTable, uint32_t dwOffset, LPVOID lpData, uint32_t cbData) const;
       int32_t GetKerningPairs(int32_t nPairs, LPKERNINGPAIR lpkrnpair) const;
       UINT GetOutlineTextMetrics(UINT cbData, LPOUTLINETEXTMETRIC lpotm) const;
-      DWORD GetGlyphOutline(UINT nChar, UINT nFormat, LPGLYPHMETRICS lpgm,
-         DWORD cbBuffer, LPVOID lpBuffer, const MAT2* lpmat2) const;
+      uint32_t GetGlyphOutline(UINT nChar, UINT nFormat, LPGLYPHMETRICS lpgm,
+         uint32_t cbBuffer, LPVOID lpBuffer, const MAT2* lpmat2) const;
 
       bool GetCharABCWidths(UINT nFirstChar, UINT nLastChar,
          LPABCFLOAT lpABCF) const;
       bool GetCharWidth(UINT nFirstChar, UINT nLastChar,
          float* lpFloatBuffer) const;
 
-      DWORD GetFontLanguageInfo() const;
+      uint32_t GetFontLanguageInfo() const;
 
    #if (_WIN32_WINNT >= 0x0500)
 

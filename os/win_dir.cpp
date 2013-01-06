@@ -479,13 +479,13 @@ namespace win
       
       bool bIsDir;
 
-      DWORD dwLastError;
+      uint32_t uiLastError;
 
-      if(m_isdirmap.lookup(lpcszPath, bIsDir, dwLastError))
+      if(m_isdirmap.lookup(lpcszPath, bIsDir, uiLastError))
       {
          if(!bIsDir)
          {
-            ::SetLastError(dwLastError);
+            ::SetLastError(uiLastError);
          }
          return bIsDir;
       }
@@ -528,13 +528,13 @@ namespace win
 
       bool bIsDir;
 
-      DWORD dwLastError;
+      uint32_t uiLastError;
 
-      if(m_isdirmap.lookup(strPath, bIsDir, dwLastError))
+      if(m_isdirmap.lookup(strPath, bIsDir, uiLastError))
       {
          if(!bIsDir)
          {
-            ::SetLastError(dwLastError);
+            ::SetLastError(uiLastError);
          }
          return bIsDir;
       }
@@ -606,13 +606,13 @@ namespace win
       bool bIsDir;
 
 
-      DWORD dwLastError;
+      uint32_t uiLastError;
 
-      if(m_isdirmap.lookup(str, bIsDir, dwLastError, (int32_t) iLast))
+      if(m_isdirmap.lookup(str, bIsDir, uiLastError, (int32_t) iLast))
       {
          if(!bIsDir)
          {
-            ::SetLastError(dwLastError);
+            ::SetLastError(uiLastError);
          }
          return bIsDir;
       }
@@ -629,11 +629,11 @@ namespace win
       if(papp->m_bZipIsDir && iFind >= 0 && iFind < iLast)
       {
          bool bHasSubFolder;
-         if(m_isdirmap.lookup(str, bHasSubFolder, dwLastError))
+         if(m_isdirmap.lookup(str, bHasSubFolder, uiLastError))
          {
             if(!bHasSubFolder)
             {
-               ::SetLastError(dwLastError);
+               ::SetLastError(uiLastError);
             }
             return bHasSubFolder;
          }

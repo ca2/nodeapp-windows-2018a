@@ -52,10 +52,10 @@ namespace win
       bool operator==(const ::ca::window& wnd) const;
       bool operator!=(const ::ca::window& wnd) const;
 
-      DWORD GetStyle();
-      DWORD GetExStyle();
-      bool ModifyStyle(DWORD dwRemove, DWORD dwAdd, UINT nFlags = 0);
-      bool ModifyStyleEx(DWORD dwRemove, DWORD dwAdd, UINT nFlags = 0);
+      uint32_t GetStyle();
+      uint32_t GetExStyle();
+      bool ModifyStyle(uint32_t dwRemove, uint32_t dwAdd, UINT nFlags = 0);
+      bool ModifyStyleEx(uint32_t dwRemove, uint32_t dwAdd, UINT nFlags = 0);
 
       //virtual ::user::interaction * get_owner();
       virtual void set_owner(::user::interaction * pOwnerWnd);
@@ -106,19 +106,19 @@ namespace win
       using ::user::interaction::create;
       // for child windows, views, panes etc
       virtual bool create(const char * lpszClassName,
-         const char * lpszWindowName, DWORD dwStyle,
+         const char * lpszWindowName, uint32_t dwStyle,
          const RECT& rect,
          ::user::interaction * pParentWnd, id id,
          ::ca::create_context* pContext = NULL);
 
       // advanced creation (allows access to extended styles)
-      virtual bool CreateEx(DWORD dwExStyle, const char * lpszClassName,
-         const char * lpszWindowName, DWORD dwStyle,
+      virtual bool CreateEx(uint32_t dwExStyle, const char * lpszClassName,
+         const char * lpszWindowName, uint32_t dwStyle,
          int32_t x, int32_t y, int32_t nWidth, int32_t nHeight,
          oswindow oswindow_Parent, id id, LPVOID lpParam = NULL);
 
-      virtual bool CreateEx(DWORD dwExStyle, const char * lpszClassName,
-         const char * lpszWindowName, DWORD dwStyle,
+      virtual bool CreateEx(uint32_t dwExStyle, const char * lpszClassName,
+         const char * lpszWindowName, uint32_t dwStyle,
          const RECT& rect,
          ::user::interaction* pParentWnd, id id,
          LPVOID lpParam = NULL);
@@ -220,8 +220,8 @@ namespace win
       virtual ::ca::graphics * GetDC();
       virtual ::ca::graphics * GetWindowDC();
       virtual bool ReleaseDC(::ca::graphics * pgraphics);
-      virtual void Print(::ca::graphics * pgraphics, DWORD dwFlags) const;
-      virtual void PrintClient(::ca::graphics * pgraphics, DWORD dwFlags) const;
+      virtual void Print(::ca::graphics * pgraphics, uint32_t dwFlags) const;
+      virtual void PrintClient(::ca::graphics * pgraphics, uint32_t dwFlags) const;
 
       virtual void UpdateWindow();
       virtual void SetRedraw(bool bRedraw = TRUE);
@@ -238,7 +238,7 @@ namespace win
       virtual bool IsWindowVisible();
       virtual void ShowOwnedPopups(bool bShow = TRUE);
 
-      virtual ::ca::graphics * GetDCEx(::ca::region* prgnClip, DWORD flags);
+      virtual ::ca::graphics * GetDCEx(::ca::region* prgnClip, uint32_t flags);
       virtual bool LockWindowUpdate();
       virtual void UnlockWindowUpdate();
       virtual bool RedrawWindow(LPCRECT lpRectUpdate = NULL,
@@ -251,7 +251,7 @@ namespace win
 
    #if(WINVER >= 0x0500)
 
-      virtual bool AnimateWindow(DWORD dwTime, DWORD dwFlags);
+      virtual bool AnimateWindow(uint32_t dwTime, uint32_t dwFlags);
 
    #endif   // WINVER >= 0x0500
 
@@ -265,22 +265,22 @@ namespace win
 
    #if(_WIN32_WINNT >= 0x0500)
 
-      virtual bool SetLayeredWindowAttributes(COLORREF crKey, BYTE bAlpha, DWORD dwFlags);
+      virtual bool SetLayeredWindowAttributes(COLORREF crKey, BYTE bAlpha, uint32_t dwFlags);
       virtual bool UpdateLayeredWindow(::ca::graphics * pDCDst, POINT *pptDst, SIZE *psize, 
-         ::ca::graphics * pDCSrc, POINT *pptSrc, COLORREF crKey, BLENDFUNCTION *pblend, DWORD dwFlags);
+         ::ca::graphics * pDCSrc, POINT *pptSrc, COLORREF crKey, BLENDFUNCTION *pblend, uint32_t dwFlags);
 
    #endif   // _WIN32_WINNT >= 0x0500
 
    #if(_WIN32_WINNT >= 0x0501)
 
-      virtual bool GetLayeredWindowAttributes(COLORREF *pcrKey, BYTE *pbAlpha, DWORD *pdwFlags) const;
+      virtual bool GetLayeredWindowAttributes(COLORREF *pcrKey, BYTE *pbAlpha, uint32_t *pdwFlags) const;
 
    #endif   // _WIN32_WINNT >= 0x0501
 
 
    // Timer Functions
       virtual uint_ptr SetTimer(uint_ptr nIDEvent, UINT nElapse,
-         void (CALLBACK* lpfnTimer)(oswindow, UINT, uint_ptr, DWORD));
+         void (CALLBACK* lpfnTimer)(oswindow, UINT, uint_ptr, uint32_t));
       virtual bool KillTimer(uint_ptr nIDEvent);
 
    // Window State Functions
@@ -392,7 +392,7 @@ namespace win
 
    #if(WINVER >= 0x0500)
 
-      virtual bool FlashWindowEx(DWORD dwFlags, UINT  uCount, DWORD dwTimeout);
+      virtual bool FlashWindowEx(uint32_t dwFlags, UINT  uCount, uint32_t dwTimeout);
 
    #endif   // WINVER >= 0x0500
 
@@ -421,8 +421,8 @@ namespace win
       virtual HICON GetIcon(bool bBigIcon) const;
 
    // Context Help Functions
-      virtual bool SetWindowContextHelpId(DWORD dwContextHelpId);
-      virtual DWORD GetWindowContextHelpId() const;
+      virtual bool SetWindowContextHelpId(uint32_t dwContextHelpId);
+      virtual uint32_t GetWindowContextHelpId() const;
 
    // Dialog Data support
       //virtual bool update_data(bool bSaveAndValidate = TRUE);
@@ -450,7 +450,7 @@ namespace win
       // dialog support
       void UpdateDialogControls(command_target* pTarget, bool bDisableIfNoHndler);
       void CenterWindow(::user::interaction * pAlternateOwner = NULL);
-      virtual id   RunModalLoop(DWORD dwFlags = 0, ::ca::live_object * pliveobject = NULL);
+      virtual id   RunModalLoop(uint32_t dwFlags = 0, ::ca::live_object * pliveobject = NULL);
       virtual bool ContinueModal(int32_t iLevel);
       virtual void EndModalLoop(id nResult);
       virtual void EndAllModalLoops(id nResult);
@@ -460,7 +460,7 @@ namespace win
       virtual bool OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult);
 
       void OnActivate(UINT nState, ::ca::window * pWndOther, bool bMinimized);
-      void OnActivateApp(bool bActive, DWORD dwThreadID);
+      void OnActivateApp(bool bActive, uint32_t dwThreadID);
       LRESULT OnActivateTopLevel(WPARAM, LPARAM);
       void OnCancelMode();
       void OnChildActivate();
@@ -495,7 +495,7 @@ namespace win
       void OnSetFocus(::ca::window * pOldWnd);
       void OnShowWindow(bool bShow, UINT nStatus);
       void OnSize(UINT nType, int32_t cx, int32_t cy);
-      void OnTCard(UINT idAction, DWORD dwActionData);
+      void OnTCard(UINT idAction, uint32_t dwActionData);
       void OnWindowPosChanging(WINDOWPOS* lpwndpos);
       void OnWindowPosChanged(WINDOWPOS* lpwndpos);
 
@@ -648,8 +648,8 @@ namespace win
       static void PASCAL SendMessageToDescendants(oswindow  oswindow, UINT message, WPARAM wParam, LPARAM lParam, bool bDeep, bool bOnlyPerm);
       virtual bool IsFrameWnd(); // is_kind_of(System.template type_info < frame_window > ()))
       virtual void on_final_release();
-      static bool PASCAL ModifyStyle(oswindow oswindow, DWORD dwRemove, DWORD dwAdd, UINT nFlags);
-      static bool PASCAL ModifyStyleEx(oswindow oswindow, DWORD dwRemove, DWORD dwAdd, UINT nFlags);
+      static bool PASCAL ModifyStyle(oswindow oswindow, uint32_t dwRemove, uint32_t dwAdd, UINT nFlags);
+      static bool PASCAL ModifyStyleEx(oswindow oswindow, uint32_t dwRemove, uint32_t dwAdd, UINT nFlags);
       static void PASCAL _FilterToolTipMessage(MSG* pMsg, ::ca::window * pWnd);
       bool _EnableToolTips(bool bEnable, UINT nFlag);
       static oswindow PASCAL get_safe_owner(::oswindow oswindow, ::oswindow * pWndTop);

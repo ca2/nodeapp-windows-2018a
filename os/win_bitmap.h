@@ -32,15 +32,15 @@ namespace win
       bool CreateBitmapIndirect(::ca::graphics * pdc, LPBITMAP lpBitmap);
       bool CreateCompatibleBitmap(::ca::graphics * pgraphics, int32_t nWidth, int32_t nHeight);
       bool CreateDiscardableBitmap(::ca::graphics * pgraphics, int32_t nWidth, int32_t nHeight);
-      bool CreateDIBSection(::ca::graphics * pdc, const BITMAPINFO * lpbmi, UINT usage, void **ppvBits, HANDLE hSection, DWORD offset);
-      bool CreateDIBitmap(::ca::graphics * pdc, const BITMAPINFOHEADER *pbmih, DWORD flInit, const void *pjBits, const BITMAPINFO *pbmi, UINT iUsage);
+      bool CreateDIBSection(::ca::graphics * pdc, const BITMAPINFO * lpbmi, UINT usage, void **ppvBits, HANDLE hSection, uint32_t offset);
+      bool CreateDIBitmap(::ca::graphics * pdc, const BITMAPINFOHEADER *pbmih, uint32_t flInit, const void *pjBits, const BITMAPINFO *pbmi, UINT iUsage);
 
 
       int32_t GetBitmap(BITMAP* pBitMap);
 
 
-      DWORD SetBitmapBits(DWORD dwCount, const void * lpBits);
-      DWORD GetBitmapBits(DWORD dwCount, LPVOID lpBits) const;
+      uint32_t SetBitmapBits(uint32_t dwCount, const void * lpBits);
+      uint32_t GetBitmapBits(uint32_t dwCount, LPVOID lpBits) const;
       class size SetBitmapDimension(int32_t nWidth, int32_t nHeight);
       class size GetBitmapDimension() const;
 

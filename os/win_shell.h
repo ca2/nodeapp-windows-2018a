@@ -111,7 +111,7 @@ namespace win
          wchar_t * lpFileSystemNameBuffer,    // file system name buffer
          DWORD nFileSystemNameSize);         // length of file system name buffer
 
-      uint_ptr (__stdcall * m_pfnSHGetFileInfo)(      
+      DWORD_PTR (__stdcall * m_pfnSHGetFileInfo)(      
          const wchar_t * pszPath,
          DWORD dwFileAttributes,
          SHFILEINFOW *psfi,

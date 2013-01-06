@@ -929,11 +929,11 @@ namespace win
    bool graphics::RoundRect(LPCRECT lpRect, POINT point)
    { ASSERT(get_handle1() != NULL); return ::RoundRect(get_handle1(), lpRect->left, lpRect->top,
    lpRect->right, lpRect->bottom, point.x, point.y) != FALSE; }
-   bool graphics::PatBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, DWORD dwRop)
+   bool graphics::PatBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, uint32_t dwRop)
    { ASSERT(get_handle1() != NULL); return ::PatBlt(get_handle1(), x, y, nWidth, nHeight, dwRop) != FALSE; }
    
    
-   bool graphics::BitBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::ca::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, DWORD dwRop)
+   bool graphics::BitBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::ca::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, uint32_t dwRop)
    { 
       
 
@@ -1076,7 +1076,7 @@ gdi_fallback:
    }
 
 
-   bool graphics::StretchBlt(int32_t xDst, int32_t yDst, int32_t nDstWidth, int32_t nDstHeight, ::ca::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, DWORD dwRop)
+   bool graphics::StretchBlt(int32_t xDst, int32_t yDst, int32_t nDstWidth, int32_t nDstHeight, ::ca::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, uint32_t dwRop)
    { 
 
       if(pgraphicsSrc == NULL)
@@ -1375,13 +1375,13 @@ gdi_fallback:
    { ASSERT(get_handle2() != NULL); return ::GetCharWidth(get_handle2(), nFirstChar, nLastChar, lpBuffer) != FALSE; }
    bool graphics::GetOutputCharWidth(UINT nFirstChar, UINT nLastChar, LPINT lpBuffer) const
    { ASSERT(get_handle1() != NULL); return ::GetCharWidth(get_handle1(), nFirstChar, nLastChar, lpBuffer) != FALSE; }
-   DWORD graphics::GetFontLanguageInfo() const
+   uint32_t graphics::GetFontLanguageInfo() const
    { ASSERT(get_handle1() != NULL); return ::GetFontLanguageInfo(get_handle1()); }
 
-   DWORD graphics::GetCharacterPlacement(const char * lpString, int32_t nCount, int32_t nMaxExtent, LPGCP_RESULTS lpResults, DWORD dwFlags) const
+   uint32_t graphics::GetCharacterPlacement(const char * lpString, int32_t nCount, int32_t nMaxExtent, LPGCP_RESULTS lpResults, uint32_t dwFlags) const
    { ASSERT(get_handle1() != NULL); return ::GetCharacterPlacement(get_handle1(), lpString, nCount, nMaxExtent, lpResults, dwFlags); }
    
-   DWORD graphics::GetCharacterPlacement(string & str, int32_t nMaxExtent, LPGCP_RESULTS lpResults, DWORD dwFlags) const
+   uint32_t graphics::GetCharacterPlacement(string & str, int32_t nMaxExtent, LPGCP_RESULTS lpResults, uint32_t dwFlags) const
    { 
       
       ASSERT(get_handle1() != NULL); 
@@ -1419,13 +1419,13 @@ gdi_fallback:
    { ASSERT(get_handle2() != NULL); return ::GetOutlineTextMetrics(get_handle2(), cbData, lpotm); }
    bool graphics::GetCharABCWidths(UINT nFirstChar, UINT nLastChar, LPABC lpabc) const
    { ASSERT(get_handle2() != NULL); return ::GetCharABCWidths(get_handle2(), nFirstChar, nLastChar, lpabc) != FALSE; }
-   DWORD graphics::GetFontData(DWORD dwTable, DWORD dwOffset, LPVOID lpData,
-      DWORD cbData) const
+   uint32_t graphics::GetFontData(uint32_t dwTable, uint32_t dwOffset, LPVOID lpData,
+      uint32_t cbData) const
    { ASSERT(get_handle2() != NULL); return ::GetFontData(get_handle2(), dwTable, dwOffset, lpData, cbData); }
    int32_t graphics::GetKerningPairs(int32_t nPairs, LPKERNINGPAIR lpkrnpair) const
    { ASSERT(get_handle2() != NULL); return ::GetKerningPairs(get_handle2(), nPairs, lpkrnpair); }
-   DWORD graphics::GetGlyphOutline(UINT nChar, UINT nFormat, LPGLYPHMETRICS lpgm,
-      DWORD cbBuffer, LPVOID lpBuffer, const MAT2* lpmat2) const
+   uint32_t graphics::GetGlyphOutline(UINT nChar, UINT nFormat, LPGLYPHMETRICS lpgm,
+      uint32_t cbBuffer, LPVOID lpBuffer, const MAT2* lpmat2) const
    { ASSERT(get_handle2() != NULL); return ::GetGlyphOutline(get_handle2(), nChar, nFormat,
    lpgm, cbBuffer, lpBuffer, lpmat2); }
 
@@ -1444,7 +1444,7 @@ gdi_fallback:
    { ASSERT(get_handle1() != NULL); return ::EndDoc(get_handle1()); }
 
    bool graphics::MaskBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::ca::graphics * pgraphicsSrc,
-      int32_t xSrc, int32_t ySrc, ::ca::bitmap& maskBitmap, int32_t xMask, int32_t yMask, DWORD dwRop)
+      int32_t xSrc, int32_t ySrc, ::ca::bitmap& maskBitmap, int32_t xMask, int32_t yMask, uint32_t dwRop)
    { ASSERT(get_handle1() != NULL); return ::MaskBlt(get_handle1(), x, y, nWidth, nHeight, WIN_HDC(pgraphicsSrc),
    xSrc, ySrc,  (HBITMAP)maskBitmap.get_os_data(), xMask, yMask, dwRop) != FALSE; }
    bool graphics::PlgBlt(LPPOINT lpPoint, ::ca::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc,
@@ -1469,10 +1469,10 @@ gdi_fallback:
    int32_t graphics::GetArcDirection() const
    { ASSERT(get_handle2() != NULL);
    return ::GetArcDirection(get_handle2()); }
-   bool graphics::PolyPolyline(const POINT* lpPoints, const DWORD* lpPolyPoints,
+   bool graphics::PolyPolyline(const POINT* lpPoints, const uint32_t* lpPolyPoints,
       int32_t nCount)
    { ASSERT(get_handle1() != NULL); 
-   return ::PolyPolyline(get_handle1(), lpPoints, lpPolyPoints, nCount) != FALSE; }
+   return ::PolyPolyline(get_handle1(), lpPoints, (LPDWORD) lpPolyPoints, nCount) != FALSE; }
    bool graphics::GetColorAdjustment(LPCOLORADJUSTMENT lpColorAdjust) const
    { ASSERT(get_handle2() != NULL); 
    return ::GetColorAdjustment(get_handle2(), lpColorAdjust) != FALSE; }
@@ -1922,7 +1922,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    nDestWidth, nDestHeight, WIN_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth, 
    nSrcHeight, crTransparent) != FALSE; }
    
-   bool graphics::GradientFill(TRIVERTEX* pVertices, ULONG nVertices, void * pMesh, ULONG nMeshElements, DWORD dwMode)
+   bool graphics::GradientFill(TRIVERTEX* pVertices, ULONG nVertices, void * pMesh, ULONG nMeshElements, uint32_t dwMode)
    {
 
       ASSERT(get_handle1() != NULL); return ::GradientFill(get_handle1(), pVertices, nVertices, pMesh, nMeshElements, dwMode) != FALSE;
@@ -2654,7 +2654,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return nRetVal;
    }
 
-   bool graphics::ModifyWorldTransform(const XFORM* pXform,DWORD iMode)
+   bool graphics::ModifyWorldTransform(const XFORM* pXform,uint32_t iMode)
    {
       bool nRetVal = 0;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
@@ -2911,10 +2911,10 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return nRetVal;
    }
 
-   DWORD graphics::SetMapperFlags(DWORD dwFlag)
+   uint32_t graphics::SetMapperFlags(uint32_t dwFlag)
    {
       ASSERT(get_handle1() != NULL);
-      DWORD dwRetVal = GDI_ERROR;
+      uint32_t dwRetVal = GDI_ERROR;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          dwRetVal = ::SetMapperFlags(get_handle1(), dwFlag);
       if(get_handle2() != NULL)
@@ -2922,14 +2922,14 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return dwRetVal;
    }
 
-   typedef DWORD (CALLBACK* __GDIGETLAYOUTPROC)(HDC);
-   typedef DWORD (CALLBACK* __GDISETLAYOUTPROC)(HDC, DWORD);
+   typedef uint32_t (CALLBACK* __GDIGETLAYOUTPROC)(HDC);
+   typedef uint32_t (CALLBACK* __GDISETLAYOUTPROC)(HDC, uint32_t);
 
-   DWORD graphics::GetLayout() const
+   uint32_t graphics::GetLayout() const
    {
       HINSTANCE hInst = ::GetModuleHandleA("GDI32.DLL");
       ASSERT(hInst != NULL);
-      DWORD dwGetLayout = LAYOUT_LTR;
+      uint32_t dwGetLayout = LAYOUT_LTR;
       __GDIGETLAYOUTPROC pfn;
       pfn = (__GDIGETLAYOUTPROC) GetProcAddress(hInst, "GetLayout");
       // if they API is available, just call it. If it is not
@@ -2944,11 +2944,11 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return dwGetLayout;
    }
 
-   DWORD graphics::SetLayout(DWORD dwSetLayout)
+   uint32_t graphics::SetLayout(uint32_t dwSetLayout)
    {
       HINSTANCE hInst = ::GetModuleHandleA("GDI32.DLL");
       ASSERT(hInst != NULL);
-      DWORD dwGetLayout = LAYOUT_LTR;
+      uint32_t dwGetLayout = LAYOUT_LTR;
       __GDISETLAYOUTPROC pfn;
       pfn = (__GDISETLAYOUTPROC) GetProcAddress(hInst, "SetLayout");
       // If the API is availalbe, just call it. If it's not available,

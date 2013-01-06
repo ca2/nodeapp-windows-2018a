@@ -344,7 +344,7 @@ namespace win
    {
       WCHAR *buf;
       WCHAR *pfname;
-      uint32_t long count;
+      unsigned long count;
 
 
       if ( !path || !*path )  /* no work to do */
