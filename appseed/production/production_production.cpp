@@ -1213,7 +1213,7 @@ retry2:
          return false;
       }
 
-      uint32_t dwExitCode;
+      DWORD dwExitCode;
       int32_t i = 1;
       while(true)
       {
@@ -1272,7 +1272,7 @@ retry2:
          return false;
       }
 
-      uint32_t dwExitCode;
+      DWORD dwExitCode;
       int32_t i = 1;
       while(true)
       {
