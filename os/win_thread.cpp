@@ -895,8 +895,8 @@ namespace win
       ::CloseHandle(startup.hEvent);
 
       // if created suspended, suspend it until resume thread wakes it up
-      //if (dwCreateFlags & CREATE_SUSPENDED)
-        // VERIFY(::SuspendThread(m_hThread) != (DWORD)-1);
+      if (dwCreateFlags & CREATE_SUSPENDED)
+         VERIFY(::SuspendThread(m_hThread) != (DWORD)-1);
 
       // if error during startup, shut things down
       if (startup.bError)
@@ -916,10 +916,10 @@ namespace win
 
          VERIFY(set_thread_priority(epriority));
 
-//         if (!(dwCreateFlagsParam & CREATE_SUSPENDED))
-  //       {
-    //        ENSURE(ResumeThread() != (DWORD)-1);
-      //   }
+         if (!(dwCreateFlagsParam & CREATE_SUSPENDED))
+         {
+            ENSURE(ResumeThread() != (DWORD)-1);
+         }
 
       }
 
@@ -1041,7 +1041,7 @@ namespace win
             if (!on_idle(lIdleCount++))
                bIdle = FALSE; // assume "no idle" state
             step_timer();
-            m_p->m_dwAlive = m_dwAlive = ::GetTickCount();
+            m_p->m_dwAlive = m_dwAlive = ::get_tick_count();
             if(pappThis1 != NULL)
             {
                pappThis1->m_dwAlive = m_dwAlive;
@@ -1100,7 +1100,7 @@ namespace win
             }
 
             step_timer();
-            m_p->m_dwAlive = m_dwAlive = ::GetTickCount();
+            m_p->m_dwAlive = m_dwAlive = ::get_tick_count();
             if(pappThis1 != NULL)
             {
                pappThis1->m_dwAlive = m_dwAlive;

@@ -3723,7 +3723,7 @@ restart_mouse_hover_check:
                bIdle = FALSE;
             }
 
-            m_pthread->m_pthread->m_p->m_dwAlive = m_pthread->m_pthread->m_dwAlive = ::GetTickCount();
+            m_pthread->m_pthread->m_p->m_dwAlive = m_pthread->m_pthread->m_dwAlive = ::get_tick_count();
             if(pappThis1 != NULL)
             {
                pappThis1->m_dwAlive = m_pthread->m_pthread->m_dwAlive;
@@ -3771,7 +3771,7 @@ restart_mouse_hover_check:
                lIdleCount = 0;
             }
 
-            m_pthread->m_pthread->m_p->m_dwAlive = m_pthread->m_pthread->m_dwAlive = ::GetTickCount();
+            m_pthread->m_pthread->m_p->m_dwAlive = m_pthread->m_pthread->m_dwAlive = ::get_tick_count();
             if(pappThis1 != NULL)
             {
                pappThis1->m_dwAlive = m_pthread->m_pthread->m_dwAlive;

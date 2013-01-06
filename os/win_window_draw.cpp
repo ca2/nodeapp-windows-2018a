@@ -33,7 +33,7 @@ namespace win
       m_semaphoreBuffer(papp),
       m_mutexRender(papp)
    {
-      m_dwLastRedrawRequest = ::GetTickCount();
+      m_dwLastRedrawRequest = ::get_tick_count();
       m_bRender = false;
       m_pbuffer = new user::buffer(papp);
       m_pbuffer->m_spdib.create(papp);
@@ -74,7 +74,7 @@ namespace win
 
    void window_draw::asynch_redraw()
    {
-      DWORD dwTick = ::GetTickCount();
+      DWORD dwTick = ::get_tick_count();
       if(m_iFramesPerSecond == 0)
       {
          if(dwTick - m_dwLastUpdate < 1000)
@@ -122,7 +122,7 @@ namespace win
       {
          iFailureTime = 1000 / m_iFramesPerSecond;
       }
-      m_dwLastUpdate = ::GetTickCount();
+      m_dwLastUpdate = ::get_tick_count();
       UpdateBuffer();
       return;
       if(m_pbuffer->GetBuffer()->get_os_data() != NULL)
@@ -130,7 +130,7 @@ namespace win
          //m_pbuffer->m_spdib->fill_channel(255, visual::rgba::channel_alpha);
          //ScreenOutput();
       }
-      DWORD dwTakeTime = ::GetTickCount() - m_dwLastUpdate;
+      DWORD dwTakeTime = ::get_tick_count() - m_dwLastUpdate;
       m_dwLastDelay = dwTakeTime;
       if(dwTakeTime > iFailureTime)
       {
@@ -233,7 +233,7 @@ namespace win
       single_lock sl(&m_mutexRender, TRUE);
       rect rectUpdate(*lpcrectUpdate);
 
-//      DWORD dwTimeIn = GetTickCount();
+//      DWORD dwTimeIn = get_tick_count();
 
       oswindow oswindowParam = oswindowtree.m_oswindow;
 
@@ -304,7 +304,7 @@ namespace win
 
       
 
-//      DWORD dwTimeOut = GetTickCount();
+//      DWORD dwTimeOut = get_tick_count();
    //   TRACE("// Average Window Rendering time\n");
    //   TRACE("// Window Class: %s\n", (pwnd!=NULL) ? pwnd->GetRuntimeClass()->m_lpszClassName : "(Not available)");
    //   TRACE("// TickCount: %d \n", dwTimeOut - dwTimeIn);
@@ -387,7 +387,7 @@ namespace win
    //   TRACE("// window_draw::TwfRender\n");
    //   TRACE("//\n");
 
-//      DWORD dwTimeIn = GetTickCount();
+//      DWORD dwTimeIn = get_tick_count();
 
       static bool bTest = false;
       semaphore * psemaphore = TwfGetBufferSemaphore();
@@ -625,7 +625,7 @@ namespace win
 
    //    TwfReleaseDC(pdc);
 
-//      DWORD dwTimeOut = GetTickCount();
+//      DWORD dwTimeOut = get_tick_count();
    //   TRACE("//\n");
    //   TRACE("// Rendering Finished\n");
    //   TRACE("// TickCount: %d \n", dwTimeOut - dwTimeIn);
@@ -1053,7 +1053,7 @@ namespace win
    //   TRACE("window_draw::TwfScreenOutput\n");
    //   TRACE("//\n");
 
-//      DWORD dwTimeIn = GetTickCount();
+//      DWORD dwTimeIn = get_tick_count();
 
       user::oswindow_array oswindowa;
       
@@ -1070,7 +1070,7 @@ namespace win
             oswindow,
             rgnUpdate);
       }*/
-//      DWORD dwTimeOut = GetTickCount();
+//      DWORD dwTimeOut = get_tick_count();
    //   TRACE("//\n");
    //   TRACE("// window_draw::TwfRender\n");
    //   TRACE("// TickCount = %d \n", dwTimeOut - dwTimeIn);
@@ -1302,7 +1302,7 @@ namespace win
 
       ::ReleaseDC(oswindowParam, hdcScreen);
 
-//      DWORD dwTimeOut = GetTickCount();
+//      DWORD dwTimeOut = get_tick_count();
    //   TRACE("//\n");
    //   TRACE("// window_draw::TwfOuputScreen\n");
    //   TRACE("// TickCount = %d \n", dwTimeOut - dwTimeIn);
