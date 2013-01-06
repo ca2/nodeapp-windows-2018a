@@ -5,23 +5,27 @@ namespace win
 {
 
 
-   file_system::file_system(::ca::application * papp) :
+   namespace file
+   {
+
+
+   system::system(::ca::application * papp) :
       ca(papp)
    {
 
    }
 
 
-   file_system::~file_system()
+   system::~system()
    {
 
    }
 
 
-   bool file_system::FullPath(string &str, const char * lpszFileIn)
+   bool system::FullPath(string &str, const char * lpszFileIn)
    {
 
-      //if(::ex1::file_system::FullPath(str, lpszFileIn))
+      //if(::ex1::system::FullPath(str, lpszFileIn))
         // return true;
 
       if(gen::str::begins_ci(lpszFileIn, "http://"))
@@ -51,10 +55,10 @@ namespace win
       return b;
    }
 
-   bool file_system::FullPath(wstring & wstrFullPath, const wstring & wstrPath)
+   bool system::FullPath(wstring & wstrFullPath, const wstring & wstrPath)
    {
 
-/*      if(::ex1::file_system::FullPath(wstrFullPath, wstrPath))
+/*      if(::ex1::system::FullPath(wstrFullPath, wstrPath))
          return true;*/
 
       if(gen::str::begins_ci(wstrPath, L"http://"))
@@ -73,7 +77,7 @@ namespace win
    }
 
 
-   UINT file_system::GetFileName(const char * lpszPathName, string & str)
+   UINT system::GetFileName(const char * lpszPathName, string & str)
    {
       int32_t nMax = MAX_PATH * 8;
       wstring wstrPathName;
@@ -84,12 +88,49 @@ namespace win
       return user;
    }
 
-   void file_system::GetModuleShortFileName(HINSTANCE hInst, string & strShortName)
+   void system::GetModuleShortFileName(HINSTANCE hInst, string & strShortName)
    {
       vfxGetModuleShortFileName(hInst, strShortName);
    }
 
+      var system::length(const char * pszPath)
+      {
 
+         var varRet;
+
+#ifdef WINDOWS
+
+         WIN32_FILE_ATTRIBUTE_DATA data;
+
+         if(!GetFileAttributesExW(gen::international::utf8_to_unicode(pszPath), GetFileExInfoStandard, &data))
+         {
+            varRet.set_type(var::type_null);
+         }
+         else
+         {
+            varRet = (uint32_t) data.nFileSizeLow;
+         }
+
+#else
+
+         struct stat stat;
+
+         if(::stat(pszPath, &stat)  == -1)
+         {
+            varRet.set_type(var::type_null);
+         }
+         else
+         {
+            varRet = stat.st_size;
+         }
+
+#endif
+
+         return varRet;
+
+      }
+
+   }
 
 } // namespace win
 
