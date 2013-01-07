@@ -141,9 +141,9 @@
 	#define SIZE_T_MAX  UINT_MAX
 #endif
 
-// PASCAL is used for static member functions
+// is used for static member functions
 #ifndef PASCAL
-	#define PASCAL  __stdcall
+	#define  __stdcall
 #endif
 
 // FASTCALL is used for static member functions with little or no params
