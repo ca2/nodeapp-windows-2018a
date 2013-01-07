@@ -8,12 +8,12 @@
 
 #if defined(DEBUG) && !defined(___NO_DEBUG_CRT)
 #undef new
-void * PASCAL no_track_object::operator new(size_t nSize, const char *, int32_t)
+void * no_track_object::operator new(size_t nSize, const char *, int32_t)
 {
    return no_track_object::operator new(nSize);
 }
 #define new DEBUG_NEW
-void PASCAL no_track_object::operator delete(void * pObject, const char *, int32_t)
+void no_track_object::operator delete(void * pObject, const char *, int32_t)
 {
    if (pObject != NULL)
       ::LocalFree(pObject);
@@ -21,7 +21,7 @@ void PASCAL no_track_object::operator delete(void * pObject, const char *, int32
 #endif
 
 #undef new
-void * PASCAL no_track_object::operator new(size_t nSize)
+void * no_track_object::operator new(size_t nSize)
 {
    void * p = ::LocalAlloc(LPTR, nSize);
    if (p == NULL)
@@ -30,7 +30,7 @@ void * PASCAL no_track_object::operator new(size_t nSize)
 }
 #define new DEBUG_NEW
 
-void PASCAL no_track_object::operator delete(void * p)
+void no_track_object::operator delete(void * p)
 {
    if (p != NULL)
       ::LocalFree(p);
