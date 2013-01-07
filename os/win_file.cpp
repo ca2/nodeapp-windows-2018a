@@ -418,13 +418,13 @@ namespace win
    }
 
    /*
-   void PASCAL file::Rename(const char * lpszOldName, const char * lpszNewName)
+   void file::Rename(const char * lpszOldName, const char * lpszNewName)
    {
    if (!::MoveFile((LPTSTR)lpszOldName, (LPTSTR)lpszNewName))
    ::win::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
    }
 
-   void PASCAL file::remove(const char * lpszFileName)
+   void file::remove(const char * lpszFileName)
    {
    if (!::DeleteFile((LPTSTR)lpszFileName))
    ::win::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
@@ -584,13 +584,13 @@ namespace win
 
 
 
-   void PASCAL ::win::file_exception::ThrowOsError(::ca::application * papp, LONG lOsError, const char * lpszFileName /* = NULL */)
+   void ::win::file_exception::ThrowOsError(::ca::application * papp, LONG lOsError, const char * lpszFileName /* = NULL */)
    {
       if (lOsError != 0)
          vfxThrowFileException(papp, ::win::file_exception::OsErrorToException(lOsError), lOsError, lpszFileName);
    }
 
-   void PASCAL ::win::file_exception::ThrowErrno(::ca::application * papp, int32_t nErrno, const char * lpszFileName /* = NULL */)
+   void ::win::file_exception::ThrowErrno(::ca::application * papp, int32_t nErrno, const char * lpszFileName /* = NULL */)
    {
       if (nErrno != 0)
          vfxThrowFileException(papp, ::win::file_exception::ErrnoToException(nErrno), _doserrno, lpszFileName);
@@ -598,7 +598,7 @@ namespace win
 
 
 
-   int32_t PASCAL ::win::file_exception::OsErrorToException(LONG lOsErr)
+   int32_t ::win::file_exception::OsErrorToException(LONG lOsErr)
    {
       // NT Error codes
       switch ((UINT)lOsErr)
@@ -831,7 +831,7 @@ namespace win
    }
 
 
-   bool PASCAL file::GetStatus(const char * lpszFileName, ::ex1::file_status& rStatus)
+   bool file::GetStatus(const char * lpszFileName, ::ex1::file_status& rStatus)
    {
       // attempt to fully qualify path first
       wstring wstrFullName;
@@ -951,7 +951,7 @@ namespace win
    */
 
    /*
-   void PASCAL file::SetStatus(const char * lpszFileName, const ::ex1::file_status& status)
+   void file::SetStatus(const char * lpszFileName, const ::ex1::file_status& status)
    {
    DWORD wAttr;
    FILETIME creationTime;
@@ -1655,7 +1655,7 @@ void CLASS_DECL_win vfxThrowFileException(::ca::application * papp, int32_t caus
    throw ::ex1::file_exception(papp, cause, lOsError, lpszFileName);
 }
 
-int32_t PASCAL ::win::file_exception::ErrnoToException(int32_t nErrno)
+int32_t ::win::file_exception::ErrnoToException(int32_t nErrno)
 {
    switch(nErrno)
    {
