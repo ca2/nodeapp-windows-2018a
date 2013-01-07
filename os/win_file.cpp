@@ -183,7 +183,7 @@ namespace win
             if(pfe != NULL)
             {
             pfe->m_lOsError = dwLastError;
-            pfe->m_cause = ::win::file_exception::OsErrorToException(pfe->m_lOsError);
+            pfe->m_cause = file_exception::OsErrorToException(pfe->m_lOsError);
             pfe->m_strFileName = lpszFileName;
             }
             return FALSE;
@@ -192,7 +192,7 @@ namespace win
             {*/
 
 
-            vfxThrowFileException(get_app(), ::win::file_exception::OsErrorToException(dwLastError), dwLastError, lpszFileName);
+            vfxThrowFileException(get_app(), file_exception::OsErrorToException(dwLastError), dwLastError, lpszFileName);
 
             //}
 
@@ -221,7 +221,7 @@ namespace win
             if(pfe != NULL)
             {
             pfe->m_lOsError = ::GetLastError();
-            pfe->m_cause = ::win::file_exception::OsErrorToException(pfe->m_lOsError);
+            pfe->m_cause = file_exception::OsErrorToException(pfe->m_lOsError);
             pfe->m_strFileName = lpszFileName;
             }
             return FALSE;
@@ -231,7 +231,7 @@ namespace win
 
 
             DWORD dwLastError = ::GetLastError();
-            vfxThrowFileException(get_app(), ::win::file_exception::OsErrorToException(dwLastError), dwLastError, lpszFileName);
+            vfxThrowFileException(get_app(), file_exception::OsErrorToException(dwLastError), dwLastError, lpszFileName);
 
 
             //}
@@ -260,7 +260,7 @@ namespace win
 
       DWORD dwRead;
       if (!::ReadFile((HANDLE)m_hFile, lpBuf, (DWORD) nCount, &dwRead, NULL))
-         ::win::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+         file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
 
       return (UINT)dwRead;
    }
@@ -278,7 +278,7 @@ namespace win
 
       DWORD nWritten;
       if (!::WriteFile((HANDLE)m_hFile, lpBuf, (DWORD) nCount, &nWritten, NULL))
-         ::win::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError(), m_strFileName);
+         file_exception::ThrowOsError(get_app(), (LONG)::GetLastError(), m_strFileName);
 
       // Win32s will not return an error all the time (usually DISK_FULL)
       if (nWritten != nCount)
@@ -289,7 +289,7 @@ namespace win
    {
 
       if(m_hFile == (UINT)hFileNull)
-         ::win::file_exception::ThrowOsError(get_app(), (LONG)0);
+         file_exception::ThrowOsError(get_app(), (LONG)0);
 
       ASSERT_VALID(this);
       ASSERT(m_hFile != (UINT)hFileNull);
@@ -302,7 +302,7 @@ namespace win
       file_position posNew = ::SetFilePointer((HANDLE)m_hFile, lLoOffset, &lHiOffset, (DWORD)nFrom);
       posNew |= ((file_position) lHiOffset) << 32;
       if(posNew  == (file_position)-1)
-         ::win::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+         file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
 
       return posNew;
    }
@@ -318,7 +318,7 @@ namespace win
       file_position pos = ::SetFilePointer((HANDLE)m_hFile, lLoOffset, &lHiOffset, FILE_CURRENT);
       pos |= ((file_position)lHiOffset) << 32;
       if(pos  == (file_position)-1)
-         ::win::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+         file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
 
       return pos;
    }
@@ -331,7 +331,7 @@ namespace win
          return;
 
       if (!::FlushFileBuffers((HANDLE)m_hFile))
-         ::win::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+         file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
    }
 
    void file::close()
@@ -348,7 +348,7 @@ namespace win
       m_strFileName.Empty();
 
       if (bError)
-         ::win::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+         file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
    }
 
    void file::Abort()
@@ -369,7 +369,7 @@ namespace win
       ASSERT(m_hFile != (UINT)hFileNull);
 
       if (!::LockFile((HANDLE)m_hFile, LODWORD(dwPos), HIDWORD(dwPos), LODWORD(dwCount), HIDWORD(dwCount)))
-         ::win::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+         file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
    }
 
    void file::UnlockRange(file_position dwPos, file_size dwCount)
@@ -378,7 +378,7 @@ namespace win
       ASSERT(m_hFile != (UINT)hFileNull);
 
       if (!::UnlockFile((HANDLE)m_hFile,  LODWORD(dwPos), HIDWORD(dwPos), LODWORD(dwCount), HIDWORD(dwCount)))
-         ::win::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+         file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
    }
 
    void file::set_length(file_size dwNewLen)
@@ -389,7 +389,7 @@ namespace win
       seek((LONG)dwNewLen, (ex1::e_seek)::ex1::seek_begin);
 
       if (!::SetEndOfFile((HANDLE)m_hFile))
-         ::win::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+         file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
    }
 
    file_size file::get_length() const
@@ -421,13 +421,13 @@ namespace win
    void file::Rename(const char * lpszOldName, const char * lpszNewName)
    {
    if (!::MoveFile((LPTSTR)lpszOldName, (LPTSTR)lpszNewName))
-   ::win::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+   file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
    }
 
    void file::remove(const char * lpszFileName)
    {
    if (!::DeleteFile((LPTSTR)lpszFileName))
-   ::win::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+   file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
    }
    */
 
@@ -584,21 +584,21 @@ namespace win
 
 
 
-   void ::win::file_exception::ThrowOsError(::ca::application * papp, LONG lOsError, const char * lpszFileName /* = NULL */)
+   void file_exception::ThrowOsError(::ca::application * papp, LONG lOsError, const char * lpszFileName /* = NULL */)
    {
       if (lOsError != 0)
-         vfxThrowFileException(papp, ::win::file_exception::OsErrorToException(lOsError), lOsError, lpszFileName);
+         vfxThrowFileException(papp, file_exception::OsErrorToException(lOsError), lOsError, lpszFileName);
    }
 
-   void ::win::file_exception::ThrowErrno(::ca::application * papp, int32_t nErrno, const char * lpszFileName /* = NULL */)
+   void file_exception::ThrowErrno(::ca::application * papp, int32_t nErrno, const char * lpszFileName /* = NULL */)
    {
       if (nErrno != 0)
-         vfxThrowFileException(papp, ::win::file_exception::ErrnoToException(nErrno), _doserrno, lpszFileName);
+         vfxThrowFileException(papp, file_exception::ErrnoToException(nErrno), _doserrno, lpszFileName);
    }
 
 
 
-   int32_t ::win::file_exception::OsErrorToException(LONG lOsErr)
+   int32_t file_exception::OsErrorToException(LONG lOsErr)
    {
       // NT Error codes
       switch ((UINT)lOsErr)
@@ -962,7 +962,7 @@ namespace win
    LPFILETIME lpLastWriteTime = NULL;
 
    if ((wAttr = GetFileAttributes((LPTSTR)lpszFileName)) == (DWORD)-1L)
-   ::win::file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
+   file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
 
    if ((DWORD)status.m_attribute != wAttr && (wAttr & readOnly))
    {
@@ -971,7 +971,7 @@ namespace win
    // caller changed the file from readonly.
 
    if (!SetFileAttributes((LPTSTR)lpszFileName, (DWORD)status.m_attribute))
-   ::win::file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
+   file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
    }
 
    // last modification time
@@ -999,19 +999,19 @@ namespace win
    NULL);
 
    if (hFile == INVALID_HANDLE_VALUE)
-   ::win::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+   file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
 
    if (!SetFileTime((HANDLE)hFile, lpCreationTime, lpLastAccessTime, lpLastWriteTime))
-   ::win::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+   file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
 
    if (!::CloseHandle(hFile))
-   ::win::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+   file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
    }
 
    if ((DWORD)status.m_attribute != wAttr && !(wAttr & readOnly))
    {
    if (!SetFileAttributes((LPTSTR)lpszFileName, (DWORD)status.m_attribute))
-   ::win::file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
+   file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
    }
    }
    */
@@ -1655,7 +1655,7 @@ void CLASS_DECL_win vfxThrowFileException(::ca::application * papp, int32_t caus
    throw ::ex1::file_exception(papp, cause, lOsError, lpszFileName);
 }
 
-int32_t ::win::file_exception::ErrnoToException(int32_t nErrno)
+int32_t file_exception::ErrnoToException(int32_t nErrno)
 {
    switch(nErrno)
    {
