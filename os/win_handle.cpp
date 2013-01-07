@@ -5,7 +5,7 @@ namespace win
 {
 
 
-   void PASCAL window::DeleteTempMap()
+   void window::DeleteTempMap()
    {
       
       oswindow_map* pMap = __get_module_state()->m_pmapHWND;
