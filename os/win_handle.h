@@ -127,22 +127,22 @@ namespace win
 template<class TYPE>
 struct ConstructDestruct
 {
-   static void PASCAL Construct(::radix::object* pObject)
+   static void Construct(::radix::object* pObject)
    { 
       new (pObject) TYPE; 
    }
-   static void PASCAL Destruct(::radix::object* pObject)
+   static void Destruct(::radix::object* pObject)
    {
       TYPE* p = dynamic_cast < TYPE * > (pObject);
       p->~TYPE();
    }
-   static void PASCAL Construct(TYPE * pObject)
+   static void Construct(TYPE * pObject)
    { 
 #undef new
       new (pObject) TYPE; 
 #define new DEBUG_NEW
    }
-   static void PASCAL Destruct(TYPE * pObject)
+   static void Destruct(TYPE * pObject)
    {
       TYPE* p = dynamic_cast < TYPE * > (pObject);
       p->~TYPE();
@@ -445,9 +445,9 @@ inline CT* handle_map <HT, CT>::lookup_temporary(HANDLE h)
 }
 
 
-CLASS_DECL_win oswindow_map * PASCAL get_oswindow_map(bool bCreate = FALSE);
-CLASS_DECL_win mutex * PASCAL afxMutexoswindow_();
-CLASS_DECL_win himagelist_map * PASCAL afxMapHIMAGELIST(bool bCreate = FALSE);
-//CLASS_DECL_win hdc_map * PASCAL afxMapHDC(bool bCreate = FALSE);
-//CLASS_DECL_win hgdiobj_map * PASCAL afxMapHGDIOBJ(bool bCreate = FALSE);
-//CLASS_DECL_win hmenu_map * PASCAL afx_map_HMENU(bool bCreate = FALSE);
+CLASS_DECL_win oswindow_map * get_oswindow_map(bool bCreate = FALSE);
+CLASS_DECL_win mutex * afxMutexoswindow_();
+CLASS_DECL_win himagelist_map * afxMapHIMAGELIST(bool bCreate = FALSE);
+//CLASS_DECL_win hdc_map * afxMapHDC(bool bCreate = FALSE);
+//CLASS_DECL_win hgdiobj_map * afxMapHGDIOBJ(bool bCreate = FALSE);
+//CLASS_DECL_win hmenu_map * afx_map_HMENU(bool bCreate = FALSE);
