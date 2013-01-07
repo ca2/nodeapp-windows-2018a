@@ -40,7 +40,7 @@ namespace win
       wchar_t * lpwsz = NULL;
 
       //--------------------------------------------------------------------
-      //  Begin protect phase. Note that the encryption key is created
+      //  begin protect phase. Note that the encryption key is created
       //  by the function and is not passed.
 
       if(CryptUnprotectData(
@@ -94,7 +94,7 @@ namespace win
 //      wchar_t * lpwsz = NULL;
 
       //--------------------------------------------------------------------
-      //  Begin protect phase. Note that the encryption key is created
+      //  begin protect phase. Note that the encryption key is created
       //  by the function and is not passed.
 
       if(CryptProtectData(
