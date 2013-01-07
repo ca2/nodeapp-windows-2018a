@@ -670,7 +670,7 @@ namespace win
       return m_hThread;
    }
 
-   bool thread::begin(::ca::e_thread_priority epriority, UINT nStackSize, uint32_t dwCreateFlags, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
+   bool thread::begin(::ca::e_thread_priority epriority, uint_ptr nStackSize, uint32_t dwCreateFlags, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
    {
 
       if(!create_thread(epriority, dwCreateFlags, nStackSize, lpSecurityAttrs))
@@ -851,7 +851,7 @@ namespace win
       m_ptimera->check();
    }
 
-   bool thread::create_thread(::ca::e_thread_priority epriority, uint32_t dwCreateFlagsParam, UINT nStackSize, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
+   bool thread::create_thread(::ca::e_thread_priority epriority, uint32_t dwCreateFlagsParam, uint_ptr nStackSize, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
    {
 
       DWORD dwCreateFlags = dwCreateFlagsParam;
