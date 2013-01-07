@@ -160,8 +160,8 @@ public:
 
    fixed_alloc_no_sync     m_alloc;
    mutex                   m_mutex;
-   void (PASCAL* m_pfnConstructObject)(CT* pObject);
-   void (PASCAL* m_pfnDestructObject)(CT* pObject);
+   void (* m_pfnConstructObject)(CT* pObject);
+   void (* m_pfnDestructObject)(CT* pObject);
    ::collection::map < HANDLE, HANDLE, CT *, CT *> m_permanentMap;
    ::collection::map < HANDLE, HANDLE, CT *, CT *> m_temporaryMap;
 
