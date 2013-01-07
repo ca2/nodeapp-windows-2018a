@@ -67,7 +67,7 @@ namespace win
       return NULL;
    }
 
-   /*graphics_object* PASCAL graphics_object::from_handle(::ca::application * papp, HGDIOBJ h)
+   /*graphics_object* graphics_object::from_handle(::ca::application * papp, HGDIOBJ h)
    {
       hgdiobj_map* pMap = afxMapHGDIOBJ(TRUE); //create ::collection::map if not exist
       ASSERT(pMap != NULL);
@@ -158,7 +158,7 @@ namespace win
 } // namespace win
 
 
-/*hgdiobj_map * PASCAL afxMapHGDIOBJ(bool bCreate)
+/*hgdiobj_map * afxMapHGDIOBJ(bool bCreate)
 {
    UNREFERENCED_PARAMETER(bCreate);
    try
