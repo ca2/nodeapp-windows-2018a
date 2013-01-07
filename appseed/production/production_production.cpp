@@ -64,7 +64,7 @@ namespace production
       //twitter_auth();
 
 
-      Begin();
+      begin();
 
 
 
@@ -92,7 +92,7 @@ namespace production
 
       //twitter_auth();
 
-      Begin();
+      begin();
 
 
    }
@@ -100,7 +100,7 @@ namespace production
    void production::step()
    {
       m_iStep++;
-      Begin();
+      begin();
    }
 
    void production::defer_quit()
@@ -783,14 +783,14 @@ restart:
          class release * prelease = new class release(this);
          prelease->m_strRelease = "http://production.server1serves.ccvotagus.net/release_ca2_ccvotagus_spa?authnone=1&version_shift="
          + m_strVersionShift + "&format_build=" + m_strFormatBuild;
-         prelease->Begin();
+         prelease->begin();
 
 
          add_status("_002cst - releasing at United States, GoDaddy, cst...");
          prelease = new class release(this);
          prelease->m_strRelease = "http://production.server2serves.ccvotagus.net/release_ca2_ccvotagus_spa?authnone=1&version_shift="
          + m_strVersionShift + "&format_build=" + m_strFormatBuild;
-         prelease->Begin();*/
+         prelease->begin();*/
 
 
          {
@@ -814,13 +814,13 @@ restart:
          add_status("ca2.se - freigeben auf Deutschland, Hessen, Frankfurt, ServerLoft...");
          prelease = new class release(this);
          prelease->m_strRelease = "http://production.server4serves.ccvotagus.net/release_ca2_ccvotagus_spa?secure=0&authnone=1&format_build=" + m_strFormatBuild;
-         prelease->Begin();
+         prelease->begin();
 
          add_status(unitext("ca2.cl - lançando no Brasil, Rio Grande do Sul, Porto Alegre, RedeHost..."));
          //add_status("ca2.cl - lancando no Brasil, Rio Grande do Sul, Porto Alegre, RedeHost...");
          prelease = new class release(this);
          prelease->m_strRelease = "http://production.server5serves.ccvotagus.net/release_ca2_ccvotagus_spa?secure=0&authnone=1&format_build=" + m_strFormatBuild;
-         prelease->Begin();
+         prelease->begin();
 
          /*
          add_status("releasing in server1serves.ccvotagus.net - United States...");
@@ -1094,7 +1094,7 @@ retry2:
             pthread->m_dwThreadAffinityMask = 1 << ui;
             pthread->m_bAutoDelete = FALSE;
             pthread->m_p->m_bAutoDelete = FALSE;
-            pthread->Begin();
+            pthread->begin();
             syncobjectptra.add(dynamic_cast < waitable * > (eventa.ptr_at(ui)));
          }
          multi_lock ml(syncobjectptra);
