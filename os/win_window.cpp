@@ -1,7 +1,7 @@
 #include "framework.h"
 
 #define COMPILE_MULTIMON_STUBS
-#include <multimon.h>
+//#include <multimon.h>
 
 #include "sal.h"
 
@@ -120,19 +120,19 @@ namespace win
       return TRUE;
    }
 
-   bool PASCAL window::ModifyStyle(oswindow oswindow, uint32_t dwRemove, uint32_t dwAdd, UINT nFlags)
+   bool window::ModifyStyle(oswindow oswindow, uint32_t dwRemove, uint32_t dwAdd, UINT nFlags)
    {
       return __modify_style(oswindow, GWL_STYLE, dwRemove, dwAdd, nFlags);
    }
 
-   bool PASCAL window::ModifyStyleEx(oswindow oswindow, uint32_t dwRemove, uint32_t dwAdd, UINT nFlags)
+   bool window::ModifyStyleEx(oswindow oswindow, uint32_t dwRemove, uint32_t dwAdd, UINT nFlags)
    {
       return __modify_style(oswindow, GWL_EXSTYLE, dwRemove, dwAdd, nFlags);
    }
 
 
 
-   const MSG* PASCAL window::GetCurrentMessage()
+   const MSG* window::GetCurrentMessage()
    {
       // fill in time and position when asked for
       ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
@@ -150,7 +150,7 @@ namespace win
    }
 
 
-   window * PASCAL window::from_handle(oswindow oswindow)
+   window * window::from_handle(oswindow oswindow)
    {
       single_lock sl(afxMutexoswindow_(), TRUE);
       oswindow_map* pMap = get_oswindow_map(TRUE); //create ::collection::map if not exist
@@ -168,7 +168,7 @@ namespace win
       }
    }
 
-   window * PASCAL window::FromHandlePermanent(oswindow oswindow)
+   window * window::FromHandlePermanent(oswindow oswindow)
    {
       single_lock sl(afxMutexoswindow_(), TRUE);
       oswindow_map* pMap = get_oswindow_map();
@@ -2042,7 +2042,7 @@ restart_mouse_hover_check:
       return pFrameWnd;
    }
 
-   ::ca::window * PASCAL window::get_safe_owner(::ca::window * pParent, oswindow* pWndTop)
+   ::ca::window * window::get_safe_owner(::ca::window * pParent, oswindow* pWndTop)
    {
       oswindow oswindow = get_safe_owner(pParent->get_handle(), pWndTop);
       return ::win::window::from_handle(oswindow);
@@ -2056,7 +2056,7 @@ restart_mouse_hover_check:
       return nResult;
    }
 
-   ::user::interaction * PASCAL window::GetDescendantWindow(::user::interaction * oswindow, id id)
+   ::user::interaction * window::GetDescendantWindow(::user::interaction * oswindow, id id)
    {
       single_lock sl(&oswindow->m_pthread->m_pthread->m_mutex, TRUE);
       // get_child_by_id recursive (return first found)
@@ -2102,7 +2102,7 @@ restart_mouse_hover_check:
       return NULL;    // not found
    }
 
-   void PASCAL window::SendMessageToDescendants(oswindow oswindow, UINT message,
+   void window::SendMessageToDescendants(oswindow oswindow, UINT message,
       WPARAM wParam, LPARAM lParam, bool bDeep, bool bOnlyPerm)
    {
       // walk through HWNDs to avoid creating temporary window objects
@@ -2590,7 +2590,7 @@ restart_mouse_hover_check:
          pThreadState->m_lastSentMsg.wParam, pThreadState->m_lastSentMsg.lParam, pResult);
    }
 
-   bool PASCAL window::ReflectLastMsg(oswindow oswindow_Child, LRESULT* pResult)
+   bool window::ReflectLastMsg(oswindow oswindow_Child, LRESULT* pResult)
    {
       // get the ::collection::map, and if no ::collection::map, then this message does not need reflection
       single_lock sl(afxMutexoswindow_(), TRUE);
@@ -4900,7 +4900,7 @@ ExitModal:
 
    }
 
-   ::ca::window * PASCAL window::GetCapture()
+   ::ca::window * window::GetCapture()
    {
 
       return ::win::window::from_handle(::GetCapture());
@@ -4919,7 +4919,7 @@ ExitModal:
 
    }
 
-   ::ca::window * PASCAL window::GetFocus()
+   ::ca::window * window::GetFocus()
    { 
 
       return ::win::window::from_handle(::GetFocus());
@@ -4935,7 +4935,7 @@ ExitModal:
 
    }
 
-   ::ca::window * PASCAL window::GetDesktopWindow()
+   ::ca::window * window::GetDesktopWindow()
    {
 
       return ::win::window::from_handle(::GetDesktopWindow());
@@ -5061,7 +5061,7 @@ ExitModal:
    { ASSERT(::IsWindow(get_handle())); return ::win::window::from_handle(::ChildWindowFromPoint(get_handle(), point)); }
    ::ca::window * window::ChildWindowFromPoint(POINT point, UINT nFlags)
    { ASSERT(::IsWindow(get_handle())); return ::win::window::from_handle(::ChildWindowFromPointEx(get_handle(), point, nFlags)); }
-   ::ca::window * PASCAL window::FindWindow(const char * lpszClassName, const char * lpszWindowName)
+   ::ca::window * window::FindWindow(const char * lpszClassName, const char * lpszWindowName)
    { return ::win::window::from_handle(::FindWindow(lpszClassName, lpszWindowName)); }
    ::ca::window * window::FindWindowEx(oswindow oswindowParent, oswindow oswindowChildAfter, const char * lpszClass, const char * lpszWindow)
    { return ::win::window::from_handle(::FindWindowEx(oswindowParent, oswindowChildAfter, lpszClass, lpszWindow)); }
@@ -5081,7 +5081,7 @@ ExitModal:
       return ::win::window::from_handle(::SetParent(get_handle(), pWndNewParent->get_handle())); 
    }
 
-   ::ca::window * PASCAL window::WindowFromPoint(POINT point)
+   ::ca::window * window::WindowFromPoint(POINT point)
    { 
 
       return ::win::window::from_handle(::WindowFromPoint(point));
@@ -5124,21 +5124,21 @@ ExitModal:
 
    }
 
-   ::ca::window * PASCAL window::GetOpenClipboardWindow()
+   ::ca::window * window::GetOpenClipboardWindow()
    {
 
       return ::win::window::from_handle(::GetOpenClipboardWindow());
 
    }
 
-   ::ca::window * PASCAL window::GetClipboardOwner()
+   ::ca::window * window::GetClipboardOwner()
    {
 
       return ::win::window::from_handle(::GetClipboardOwner());
 
    }
 
-   ::ca::window * PASCAL window::GetClipboardViewer()
+   ::ca::window * window::GetClipboardViewer()
    {
 
       return ::win::window::from_handle(::GetClipboardViewer());
@@ -5172,7 +5172,7 @@ ExitModal:
 
    }
 
-   point PASCAL window::GetCaretPos()
+   point window::GetCaretPos()
    { 
 
       point point;
@@ -5181,7 +5181,7 @@ ExitModal:
 
    }
 
-   void PASCAL window::SetCaretPos(POINT point)
+   void window::SetCaretPos(POINT point)
    { 
 
       ::SetCaretPos(point.x, point.y);
@@ -5209,7 +5209,7 @@ ExitModal:
 
    }
 
-   ::ca::window * PASCAL window::GetForegroundWindow()
+   ::ca::window * window::GetForegroundWindow()
    {
 
       return ::win::window::from_handle(::GetForegroundWindow());
@@ -5594,7 +5594,7 @@ ExitModal:
    ////////////////////////////////////////////////////////////////////////////
    // UI related ::ca::window functions
 
-   oswindow PASCAL window::get_safe_owner(oswindow hParent, oswindow* pWndTop)
+   oswindow window::get_safe_owner(oswindow hParent, oswindow* pWndTop)
    {
       // get ::ca::window to start with
       oswindow oswindow = hParent;
@@ -5948,7 +5948,7 @@ void CTestCmdUI::SetText(const char *)
 /////////////////////////////////////////////////////////////////////////////
 // Map from oswindow to ::ca::window *
 
-oswindow_map* PASCAL get_oswindow_map(bool bCreate)
+oswindow_map* get_oswindow_map(bool bCreate)
 {
    UNREFERENCED_PARAMETER(bCreate);
    try
@@ -5965,7 +5965,7 @@ oswindow_map* PASCAL get_oswindow_map(bool bCreate)
 }
 
 
-mutex * PASCAL afxMutexoswindow_()
+mutex * afxMutexoswindow_()
 {
    try
    {
