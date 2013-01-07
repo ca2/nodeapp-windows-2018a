@@ -33,7 +33,6 @@
 #pragma component(browser, off, references, "LPCSTR")
 #pragma component(browser, off, references, "LPCTSTR")
 #pragma component(browser, off, references, "NULL")
-#pragma component(browser, off, references, "PASCAL")
 #pragma component(browser, off, references, "THIS_FILE")
 #pragma component(browser, off, references, "TRUE")
 #pragma component(browser, off, references, "UINT")
@@ -122,11 +121,6 @@
 // SIZE_T_MAX is used by the collection classes
 #ifndef SIZE_T_MAX
 	#define SIZE_T_MAX  UINT_MAX
-#endif
-
-// is used for static member functions
-#ifndef PASCAL
-	#define  __stdcall
 #endif
 
 // FASTCALL is used for static member functions with little or no params
