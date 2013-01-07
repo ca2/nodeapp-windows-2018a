@@ -52,7 +52,7 @@ public:
 
    thread_slot_data * get_slot_data(); 
 #undef new
-   void * PASCAL operator new(size_t, void * p)
+   void * operator new(size_t, void * p)
       { return p; }
 #define new DEBUG_NEW
 };
@@ -66,15 +66,15 @@ class CLASS_DECL_win __NOVTABLE no_track_object
 {
 public:
 #undef new
-   void * PASCAL operator new(size_t nSize);
+   void * operator new(size_t nSize);
 #define new DEBUG_NEW
-   void PASCAL operator delete(void *);
+   void operator delete(void *);
 
 #if defined(DEBUG) && !defined(___NO_DEBUG_CRT)
 #undef new
-   void * PASCAL operator new(size_t nSize, const char *, int32_t);
+   void * operator new(size_t nSize, const char *, int32_t);
 #define new DEBUG_NEW
-   void PASCAL operator delete(void * pObject, const char *, int32_t);
+   void operator delete(void * pObject, const char *, int32_t);
 #endif
     virtual ~no_track_object() {};
 };
