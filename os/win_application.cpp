@@ -319,10 +319,10 @@ namespace win
    }
 
 
-   bool application::Begin(int32_t nPriority, UINT nStackSize,
+   bool application::begin(int32_t nPriority, UINT nStackSize,
                            DWORD dwCreateFlags, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
    {
-      return ::win::thread::Begin(nPriority, nStackSize, dwCreateFlags, lpSecurityAttrs);
+      return ::win::thread::begin(nPriority, nStackSize, dwCreateFlags, lpSecurityAttrs);
    }
 
    bool application::create_thread(DWORD dwCreateFlags, UINT nStackSize,
