@@ -42,7 +42,7 @@ namespace win
       return b;
    }
       
-   bool draw_dib::Begin (::ca::graphics * pdc, int32_t dxDest, int32_t dyDest,
+   bool draw_dib::begin (::ca::graphics * pdc, int32_t dxDest, int32_t dyDest,
       LPBITMAPINFOHEADER lpbi, int32_t dxSrc, int32_t dySrc, UINT wFlags )
    {
       return DrawDibBegin ( m_hdrawdib, (HDC)pdc->get_os_data(), dxDest, dyDest, lpbi, 
