@@ -161,7 +161,7 @@ public:
 
    // variables related to a given process in a module
    //  (used to be __MODULE_PROCESS_STATE)
-   void (PASCAL *m_pfnFilterToolTipMessage)(MSG*, ::ca::window *);
+   void (*m_pfnFilterToolTipMessage)(MSG*, ::ca::window *);
 
 
    // define thread local portions of module state
