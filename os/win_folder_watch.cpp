@@ -14,7 +14,7 @@ namespace win
       if(!::ex2::folder_watch::watch(pszPath))
          return false;
 
-      if(!Begin())
+      if(!begin())
          return false;
 
       return true;
