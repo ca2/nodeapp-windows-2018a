@@ -75,7 +75,7 @@ namespace win
 
       virtual bool open(const char * lpszFileName, UINT nOpenFlags);
 
-      virtual bool PASCAL GetStatus(const char * lpszFileName, ::ex1::file_status& rStatus);
+      virtual bool GetStatus(const char * lpszFileName, ::ex1::file_status& rStatus);
 
       uint64_t ReadHuge(void * lpBuffer, uint64_t dwCount);
       void WriteHuge(const void * lpBuffer, uint64_t dwCount);
@@ -110,10 +110,10 @@ namespace win
    {
 
 
-      int32_t PASCAL OsErrorToException(LONG lOsError);
-      int32_t PASCAL ErrnoToException(int32_t nErrno);
-      void PASCAL ThrowOsError(::ca::application * papp, LONG lOsError, const char * lpszFileName = NULL);
-      void PASCAL ThrowErrno(::ca::application * papp, int32_t nErrno, const char * lpszFileName = NULL);
+      int32_t OsErrorToException(LONG lOsError);
+      int32_t ErrnoToException(int32_t nErrno);
+      void ThrowOsError(::ca::application * papp, LONG lOsError, const char * lpszFileName = NULL);
+      void ThrowErrno(::ca::application * papp, int32_t nErrno, const char * lpszFileName = NULL);
 
 
    }  // namespace file_exception
