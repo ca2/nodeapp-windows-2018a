@@ -8,7 +8,7 @@ namespace win
       virtual public ::ca::palette
    {
    public:
-      static palette* PASCAL from_handle(::ca::application * papp, HPALETTE hPalette);
+      static palette* from_handle(::ca::application * papp, HPALETTE hPalette);
 
       palette(::ca::application * papp);
       bool CreatePalette(LPLOGPALETTE lpLogPalette);
