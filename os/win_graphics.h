@@ -43,8 +43,8 @@ namespace win
 
       ::ca::window * GetWindow() const;
 
-      //static ::ca::graphics * PASCAL from_handle(HDC hDC);
-      //static void PASCAL DeleteTempMap();
+      //static ::ca::graphics * from_handle(HDC hDC);
+      //static void DeleteTempMap();
       virtual bool attach(void * pgraphics) override;   // attach/detach affects only the Output DC
       virtual void * detach() override;
 
@@ -454,7 +454,7 @@ namespace win
       bool SelectClipPath(int32_t nMode);
 
    // Misc Helper Functions
-      static ::ca::brush* PASCAL GetHalftoneBrush(::ca::application * papp);
+      static ::ca::brush* GetHalftoneBrush(::ca::application * papp);
       void DrawDragRect(LPCRECT lpRect, SIZE size,
          LPCRECT lpRectLast, SIZE sizeLast,
          ::ca::brush* pBrush = NULL, ::ca::brush* pBrushLast = NULL);
@@ -496,7 +496,7 @@ namespace win
 
    //protected:
       // used for implementation of non-virtual SelectObject calls
-      //static ::ca::graphics_object* PASCAL SelectGdiObject(::ca::application * papp, HDC hDC, HGDIOBJ h);
+      //static ::ca::graphics_object* SelectGdiObject(::ca::application * papp, HDC hDC, HGDIOBJ h);
 
    };
 
