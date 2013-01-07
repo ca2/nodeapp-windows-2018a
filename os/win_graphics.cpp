@@ -2076,7 +2076,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    /////////////////////////////////////////////////////////////////////////////
    // special graphics drawing primitives/helpers
 
-   ::ca::brush* PASCAL graphics::GetHalftoneBrush(::ca::application * papp)
+   ::ca::brush* graphics::GetHalftoneBrush(::ca::application * papp)
    {
 /*      gen::LockGlobals(CRIT_HALFTONEBRUSH);
       if (gen_HalftoneBrush == NULL)
@@ -2223,7 +2223,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 
 
-   //::ca::graphics * PASCAL ::win::graphics::from_handle(HDC hDC)
+   //::ca::graphics * ::win::graphics::from_handle(HDC hDC)
    //{
       //hdc_map* pMap = afxMapHDC(TRUE); //create ::collection::map if not exist
       //ASSERT(pMap != NULL);
@@ -2457,7 +2457,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return bRetVal;
    }
 
-//   ::ca::graphics_object* PASCAL graphics::SelectGdiObject(::ca::application * papp, HDC hDC, HGDIOBJ h)
+//   ::ca::graphics_object* graphics::SelectGdiObject(::ca::application * papp, HDC hDC, HGDIOBJ h)
   // {
 //      return ::win::graphics_object::from_handle(papp, ::SelectObject(hDC, h));
    //}
@@ -3778,7 +3778,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 
 
-/*hdc_map* PASCAL afxMapHDC(bool bCreate)
+/*hdc_map* afxMapHDC(bool bCreate)
 {
    UNREFERENCED_PARAMETER(bCreate);
    try
