@@ -45,7 +45,7 @@ namespace win
 
       bool create_message_window(const char * pszName, ::ca::window_callback * pcallback = NULL);
 
-      static const MSG* PASCAL GetCurrentMessage();
+      static const MSG* GetCurrentMessage();
 
       virtual void install_message_handling(::gen::message::dispatch * pinterface);
 
@@ -87,9 +87,9 @@ namespace win
       virtual ::ca::window * from_os_data(void * pdata);
       virtual void * get_os_data() const;
 
-      static window * PASCAL from_handle(oswindow oswindow);
-      static window * PASCAL FromHandlePermanent(oswindow oswindow);
-      static void PASCAL DeleteTempMap();
+      static window * from_handle(oswindow oswindow);
+      static window * FromHandlePermanent(oswindow oswindow);
+      static void DeleteTempMap();
       bool attach(oswindow oswindow_New);
       oswindow detach();
 
@@ -149,7 +149,7 @@ namespace win
       ::user::interaction* GetTopLevelOwner();
       ::user::interaction* GetParentOwner();
       frame_window* GetTopLevelFrame();
-      static ::ca::window * PASCAL get_safe_owner(::ca::window * pParent = NULL, oswindow* pWndTop = NULL);
+      static ::ca::window * get_safe_owner(::ca::window * pParent = NULL, oswindow* pWndTop = NULL);
 
       virtual bool IsWindow();
 
@@ -293,7 +293,7 @@ namespace win
 
       // the foreground ::ca::window applies only to top-level windows (frame windows)
       virtual bool SetForegroundWindow();
-      static ::ca::window * PASCAL GetForegroundWindow();
+      static ::ca::window * GetForegroundWindow();
 
       virtual id SetDlgCtrlId(id id);
       virtual id GetDlgCtrlId();
@@ -301,14 +301,14 @@ namespace win
       
 
       // capture and focus apply to all windows
-      static ::ca::window * PASCAL GetCapture();
+      static ::ca::window * GetCapture();
       virtual ::user::interaction * set_capture(::user::interaction * pinterface = NULL);
       virtual ::user::interaction * release_capture();
       virtual ::user::interaction * get_capture();
-      static ::ca::window * PASCAL GetFocus();
+      static ::ca::window * GetFocus();
       ::ca::window * SetFocus();
 
-      static ::ca::window * PASCAL GetDesktopWindow();
+      static ::ca::window * GetDesktopWindow();
 
    // Obsolete and non-portable APIs - not recommended for new code
       virtual void CloseWindow();
@@ -368,7 +368,7 @@ namespace win
    // Window Access Functions
       virtual ::ca::window * ChildWindowFromPoint(POINT point);
       virtual ::ca::window * ChildWindowFromPoint(POINT point, UINT nFlags);
-      static ::ca::window * PASCAL FindWindow(const char * lpszClassName, const char * lpszWindowName);
+      static ::ca::window * FindWindow(const char * lpszClassName, const char * lpszWindowName);
       static ::ca::window * FindWindowEx(oswindow oswindowParent, oswindow oswindowChildAfter, const char * lpszClass, const char * lpszWindow);
 
       virtual ::user::interaction * GetNextWindow(UINT nFlag = GW_HWNDNEXT);
@@ -381,7 +381,7 @@ namespace win
       virtual ::user::interaction * get_parent() const;
       using ::user::interaction::set_parent;
       ::ca::window * set_parent(::ca::window * pWndNewParent);
-      static ::ca::window * PASCAL WindowFromPoint(POINT point);
+      static ::ca::window * WindowFromPoint(POINT point);
 
    // Alert Functions
 
@@ -400,16 +400,16 @@ namespace win
       virtual bool ChangeClipboardChain(oswindow oswindow_Next);
       virtual ::oswindow  SetClipboardViewer();
       virtual bool OpenClipboard();
-      static ::ca::window * PASCAL GetClipboardOwner();
-      static ::ca::window * PASCAL GetClipboardViewer();
-      static ::ca::window * PASCAL GetOpenClipboardWindow();
+      static ::ca::window * GetClipboardOwner();
+      static ::ca::window * GetClipboardViewer();
+      static ::ca::window * GetOpenClipboardWindow();
 
    // Caret Functions
       virtual void CreateCaret(::ca::bitmap* pBitmap);
       virtual void CreateSolidCaret(int32_t nWidth, int32_t nHeight);
       virtual void CreateGrayCaret(int32_t nWidth, int32_t nHeight);
-      static point PASCAL GetCaretPos();
-      static void PASCAL SetCaretPos(POINT point);
+      static point GetCaretPos();
+      static void SetCaretPos(POINT point);
       virtual void HideCaret();
       virtual void ShowCaret();
 
@@ -631,7 +631,7 @@ namespace win
       virtual bool OnChildNotify(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
          // return TRUE if parent should not process this message
       bool ReflectChildNotify(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
-      static bool PASCAL ReflectLastMsg(oswindow oswindow_Child, LRESULT* pResult = NULL);
+      static bool ReflectLastMsg(oswindow oswindow_Child, LRESULT* pResult = NULL);
 
    // Implementation
       virtual bool CheckAutoCenter();
@@ -644,15 +644,15 @@ namespace win
       bool IsTopParentActive();
       void ActivateTopParent();
       virtual void WalkPreTranslateTree(::user::interaction * puiStop, gen::signal_object * pobj);
-      static ::user::interaction * PASCAL GetDescendantWindow(::user::interaction * oswindow, id id);
-      static void PASCAL SendMessageToDescendants(oswindow  oswindow, UINT message, WPARAM wParam, LPARAM lParam, bool bDeep, bool bOnlyPerm);
+      static ::user::interaction * GetDescendantWindow(::user::interaction * oswindow, id id);
+      static void SendMessageToDescendants(oswindow  oswindow, UINT message, WPARAM wParam, LPARAM lParam, bool bDeep, bool bOnlyPerm);
       virtual bool IsFrameWnd(); // is_kind_of(System.template type_info < frame_window > ()))
       virtual void on_final_release();
-      static bool PASCAL ModifyStyle(oswindow oswindow, uint32_t dwRemove, uint32_t dwAdd, UINT nFlags);
-      static bool PASCAL ModifyStyleEx(oswindow oswindow, uint32_t dwRemove, uint32_t dwAdd, UINT nFlags);
-      static void PASCAL _FilterToolTipMessage(MSG* pMsg, ::ca::window * pWnd);
+      static bool ModifyStyle(oswindow oswindow, uint32_t dwRemove, uint32_t dwAdd, UINT nFlags);
+      static bool ModifyStyleEx(oswindow oswindow, uint32_t dwRemove, uint32_t dwAdd, UINT nFlags);
+      static void _FilterToolTipMessage(MSG* pMsg, ::ca::window * pWnd);
       bool _EnableToolTips(bool bEnable, UINT nFlag);
-      static oswindow PASCAL get_safe_owner(::oswindow oswindow, ::oswindow * pWndTop);
+      static oswindow get_safe_owner(::oswindow oswindow, ::oswindow * pWndTop);
       void PrepareForHelp();
 
       //UINT m_nFlags;      // see WF_ flags above
