@@ -74,7 +74,7 @@ namespace win
 
    bool file::open(const char * lpszFileName, UINT nOpenFlags)
    {
-         
+
       if(lpszFileName == NULL || *lpszFileName == '\0') 
       {
          TRACE("win::file::open file with empty name!!");
@@ -808,11 +808,11 @@ namespace win
             else
             {
                rStatus.m_attribute = (BYTE) dwAttribute & 0xff;
-//#ifdef DEBUG
+               //#ifdef DEBUG
                // ca2 API BUG: m_attribute is only a BYTE wide
-  //             if (dwAttribute & ~0xFF)
-//                  TRACE0("Warning: file::GetStatus() returns m_attribute without high-order flags.\n");
-//#endif
+               //             if (dwAttribute & ~0xFF)
+               //                  TRACE0("Warning: file::GetStatus() returns m_attribute without high-order flags.\n");
+               //#endif
             }
          }
 
@@ -1655,29 +1655,41 @@ void CLASS_DECL_win vfxThrowFileException(::ca::application * papp, int32_t caus
    throw ::ex1::file_exception(papp, cause, lOsError, lpszFileName);
 }
 
-int32_t file_exception::ErrnoToException(int32_t nErrno)
+namespace win
 {
-   switch(nErrno)
+
+   int32_t file_exception::ErrnoToException(int32_t nErrno)
    {
-   case EPERM:
-   case EACCES:
-      return ::ex1::file_exception::accessDenied;
-   case EBADF:
-      return ::ex1::file_exception::invalidFile;
-   case EDEADLOCK:
-      return ::ex1::file_exception::sharingViolation;
-   case EMFILE:
-      return ::ex1::file_exception::tooManyOpenFiles;
-   case ENOENT:
-   case ENFILE:
-      return ::ex1::file_exception::fileNotFound;
-   case ENOSPC:
-      return ::ex1::file_exception::diskFull;
-   case EINVAL:
-   case EIO:
-      return ::ex1::file_exception::hardIO;
-   default:
-      return ::ex1::file_exception::type_generic;
+      switch(nErrno)
+      {
+      case EPERM:
+      case EACCES:
+         return ::ex1::file_exception::accessDenied;
+      case EBADF:
+         return ::ex1::file_exception::invalidFile;
+      case EDEADLOCK:
+         return ::ex1::file_exception::sharingViolation;
+      case EMFILE:
+         return ::ex1::file_exception::tooManyOpenFiles;
+      case ENOENT:
+      case ENFILE:
+         return ::ex1::file_exception::fileNotFound;
+      case ENOSPC:
+         return ::ex1::file_exception::diskFull;
+      case EINVAL:
+      case EIO:
+         return ::ex1::file_exception::hardIO;
+      default:
+         return ::ex1::file_exception::type_generic;
+      }
+
    }
-}
+
+
+} // namespace win
+
+
+
+
+
 
