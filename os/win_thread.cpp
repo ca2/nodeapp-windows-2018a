@@ -403,18 +403,19 @@ void CLASS_DECL_win __end_thread(::radix::application * papp, UINT nExitCode, bo
    ::win::thread* pThread = pState->m_pCurrentWinThread;
    if (pThread != NULL)
    {
+
+      {
+         single_lock sl(&::win::thread::s_mutex, true);
+         ::win::thread::s_haThread.remove(::GetCurrentThread());
+         ::win::thread::s_threadptra.remove(pThread);
+      }
+
       ASSERT_VALID(pThread);
       //ASSERT(pThread != System::smart_pointer < ex2::application *>::m_p);
 
       if (bDelete)
          pThread->Delete();
       pState->m_pCurrentWinThread = NULL;
-   }
-
-   {
-      single_lock sl(&::win::thread::s_mutex, true);
-      ::win::thread::s_haThread.remove(::GetCurrentThread());
-      ::win::thread::s_threadptra.remove(pThread);
    }
 
    // allow cleanup of any thread local objects
