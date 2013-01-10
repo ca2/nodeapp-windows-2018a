@@ -1393,7 +1393,14 @@ restart_mouse_hover_check:
       return;
       }
       */
-      pbase->set_lresult(DefWindowProc(pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));
+      if(m_pguie != NULL)
+      {
+         pbase->set_lresult(m_pguie->DefWindowProc(pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));
+      }
+      else
+      {
+         pbase->set_lresult(DefWindowProc(pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));
+      }
    }
 
    /*
