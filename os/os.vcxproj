@@ -962,7 +962,6 @@
     <ClInclude Include="win_crypt.h" />
     <ClInclude Include="win_dib.h" />
     <ClInclude Include="win_dir.h" />
-    <ClInclude Include="win_draw_dib.h" />
     <ClInclude Include="win_exception.h" />
     <ClInclude Include="win_factory_exchange.h" />
     <ClInclude Include="win_folder_watch.h" />
@@ -1022,7 +1021,6 @@
     <ClCompile Include="win_crypt.cpp" />
     <ClCompile Include="win_dib.cpp" />
     <ClCompile Include="win_dir.cpp" />
-    <ClCompile Include="win_draw_dib.cpp" />
     <ClCompile Include="win_dumpinit.cpp" />
     <ClCompile Include="win_error.cpp" />
     <ClCompile Include="win_exception.cpp" />
