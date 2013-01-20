@@ -128,9 +128,6 @@
     <ClInclude Include="win_dir.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="win_draw_dib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="win_exception.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -278,9 +275,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="win_dir.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_draw_dib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="win_dumpinit.cpp">
