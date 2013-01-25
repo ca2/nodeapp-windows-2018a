@@ -14,7 +14,9 @@ ATOM sentinel_RegisterClass(HINSTANCE hInstance);
 LRESULT CALLBACK sentinel_WndProc(oswindow oswindow, uint32_t message, WPARAM wParam, LPARAM lParam);
 
 
-extern "C" int32_t WinMainCRTStartup()
+extern "C" int32_t WINAPI
+_tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+   __in LPTSTR lpCmdLine, int32_t nCmdShow)
 {
 
    initialize_primitive_heap();
