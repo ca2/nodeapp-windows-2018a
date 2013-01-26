@@ -4145,6 +4145,35 @@ namespace win
       return get_handle();
    }
 
+   bool graphics::attach(simple_graphics & g)
+   {
+      
+      if(m_pgraphics != NULL)
+      {
+
+         try
+         {
+      
+            delete m_pgraphics;
+
+         }
+         catch(...)
+         {
+            
+            TRACE("graphics::attach : Failed to delete Gdiplus::Graphics");
+
+         }
+
+         m_pgraphics = NULL;
+
+      }
+
+      m_pgraphics = g.m_pgraphics;
+
+      return false;
+
+   }
+
    bool graphics::attach(void * pdata)
    {
 
