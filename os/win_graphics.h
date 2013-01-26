@@ -46,6 +46,7 @@ namespace win
       //static ::ca::graphics * from_handle(HDC hDC);
       //static void DeleteTempMap();
       virtual bool attach(void * pgraphics) override;   // attach/detach affects only the Output DC
+      virtual bool attach(simple_graphics & g);
       virtual void * detach() override;
 
       virtual bool Attach(HDC hdc);   // attach/detach affects only the Output DC
