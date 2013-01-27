@@ -61,7 +61,7 @@ namespace production
       m_iStep = 1;
       m_iGlobalRetry = 0;
 
-      //twitter_auth();
+      twitter_auth();
 
 
       begin();
@@ -90,7 +90,7 @@ namespace production
       m_iStep = 1;
       m_iGlobalRetry = 0;
 
-      //twitter_auth();
+      twitter_auth();
 
       begin();
 
@@ -172,9 +172,9 @@ namespace production
             Application.http().get("http://api.ca2.cc/status/insert", str, post, headers, params);
 
 
-/*            string strTwit = "Retried " + gen::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!";
+            string strTwit = "Retried " + gen::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!";
 
-            twitter_twit(strTwit);*/
+            twitter_twit(strTwit);
 
             return -1;
 
@@ -226,9 +226,9 @@ namespace production
 
          Application.http().get("http://api.ca2.cc/status/insert", str, post, headers, params);
 
-/*         string strTwit = "General failure of build " + version_to_international_datetime(m_strBuild) + ". Starting " + m_strTry + " retry of build " + m_strVersion + ". More details at http://api.ca2.cc/status/insert?email=" + System.url().url_encode(m_strStatusEmail);
+         string strTwit = "General failure of build " + version_to_international_datetime(m_strBuild) + ". Starting " + m_strTry + " retry of build " + m_strVersion + ". More details at http://status.ca2.cc/" + System.url().url_encode(m_strStatusEmail);
 
-         twitter_twit(strTwit);*/
+         twitter_twit(strTwit);
 
       }
 
@@ -409,18 +409,18 @@ restart:
 
             Application.http().get("http://api.ca2.cc/status/insert", str, post, headers, params);
 
-/*            string strTwit;
+            string strTwit;
 
             if(m_iGlobalRetry <= 0)
             {
-               strTwit = "ca2twit-lib : new " + m_strVersion + " build starting " + version_to_international_datetime(m_strBuild) + ". More details at http://api.ca2.cc/status/insert?email=" + System.url().url_encode(m_strStatusEmail);
+               strTwit = "ca2twit-lib : new " + m_strVersion + " build starting " + version_to_international_datetime(m_strBuild) + ". More details at http://status.ca2.cc/" + System.url().url_encode(m_strStatusEmail);
             }
             else
             {
-               strTwit = "ca2twit-lib : " + m_strTry + " automatic retry " + m_strVersion + " build starting " + version_to_international_datetime(m_strBuild) + ". More details at http://api.ca2.cc/status/insert?email=" + System.url().url_encode(m_strStatusEmail);
+               strTwit = "ca2twit-lib : " + m_strTry + " automatic retry " + m_strVersion + " build starting " + version_to_international_datetime(m_strBuild) + ". More details at http://status.ca2.cc/" + System.url().url_encode(m_strStatusEmail);
             }
 
-            twitter_twit(strTwit);*/
+            twitter_twit(strTwit);
 
          }
 
@@ -2185,10 +2185,28 @@ retry2:
       System.process().synch(strCmd);
 
       add_status("Creating crxca2.crx for Chrome ...");
-      strCmd = "C:\\Users\\production\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe --no-message-box --pack-extension=\"" +strDir + "\" --pack-extension-key=\"X:\\sensitive\\sensitive\\certificate\\npca2pk.pem\"";
+
+      WCHAR * pwsz;
+
+      if(FAILED(SHGetKnownFolderPath(FOLDERID_ProgramFilesX86, 0, NULL, &pwsz)))
+      {
+   
+         add_status("Chrome not found...");
+
+         return false;
+
+      }
+
+      strCmd = pwsz;
+
+      CoTaskMemFree(pwsz);
+
+      strCmd += "\\Google\\Chrome\\Application\\chrome.exe --no-message-box --pack-extension=\"" +strDir + "\" --pack-extension-key=\"X:\\sensitive\\sensitive\\certificate\\npca2pk.pem\"";
+
       System.process().synch(strCmd);
 
       string strVersion;
+
       if(m_eversion == version_basis)
       {
          strVersion = "\\basis";
@@ -2276,7 +2294,7 @@ retry2:
          string str;
          Application.http().get("http://api.ca2.cc/status/insert", str, post, headers, params);
 
-/*         string strTwit;
+         string strTwit;
 
          strTwit = "New build " + m_strBuild;
 
@@ -2293,9 +2311,9 @@ retry2:
             }
          }
 
-         strTwit += " : http://api.ca2.cc/status/insert?email=" + System.url().url_encode(m_strStatusEmail);
+         strTwit += " : http://status.ca2.cc/" + System.url().url_encode(m_strStatusEmail);
 
-         twitter_twit(strTwit);*/
+         twitter_twit(strTwit);
 
          m_bReleased = true;
 
@@ -2313,9 +2331,14 @@ retry2:
 
    bool production::twitter_auth()
    {
+
+
       ::ca4::twit twitterObj(get_app());
+
+
       string tmpStr( "" );
       string replyMsg( "" );
+
 
       /* OAuth flow begins */
       /* Step 0: Set OAuth related params. These are got by registering your app at twitter.com */
@@ -2435,8 +2458,14 @@ Retry2:
       replyMsg = "";
       if( twitterObj.statusUpdate( tmpStr ) )
       {
-         replyMsg=twitterObj.get_response(  );
-         xml::document document(get_app());
+         //replyMsg=twitterObj.get_response(  );
+
+         //gen::property_set set(get_app());
+
+         //set.parse_json(replyMsg);
+
+         //set[""]
+         /*xml::document document(get_app());
          if(document.load(replyMsg))
          {
             if(document.get_root() != NULL)
@@ -2452,7 +2481,7 @@ Retry2:
                   }
                }
             }
-         }
+         }*/
          //printf( "\ntwitterClient:: twitCurl::statusUpdate web response:\n%s\n", replyMsg.c_str() );
       }
       else
