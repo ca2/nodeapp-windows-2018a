@@ -20,9 +20,20 @@ namespace win2
 
    bool printer::open(const char * pszDeviceName)
    {
+      
       if(is_opened())
          close();
-      return OpenPrinter((LPSTR) (LPCSTR) pszDeviceName, &m_hPrinter, NULL) != FALSE && m_hPrinter != NULL;
+      
+      if(!OpenPrinter((LPSTR) (LPCSTR) pszDeviceName, &m_hPrinter, NULL))
+         return false;
+
+      if(m_hPrinter == NULL)
+         return false;
+
+      m_strName = pszDeviceName;
+
+      return true;
+
    }
 
    bool printer::is_opened()
@@ -104,7 +115,7 @@ namespace win2
          return NULL;
       m_hdc = ::CreateDC("WINSPOOL", (LPCSTR) m_pdevmode->dmDeviceName, NULL, m_pdevmode);
       ::ca::graphics_sp g(get_app());
-      g->attach(new ::Gdiplus::Graphics(m_hdc));
+      WIN_DC(g.m_p)->Attach(m_hdc);
       return g.detach();
    }
 
