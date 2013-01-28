@@ -5,11 +5,16 @@ namespace win2
 {
 
 
-   application::application(::ca::application * papp) :
-      ca(papp)
+   application::application(::ca::application * papp)
    {
 
-      m_bLicense = false;
+      set_app(papp);
+
+      m_psystem      = papp->m_psystem;
+
+      m_psession     = papp->m_psession;
+      
+      m_bLicense     = false;
 
    }
 
