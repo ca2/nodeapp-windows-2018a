@@ -1431,7 +1431,14 @@ gdi_fallback:
 
    // ::userbase::document handling functions
    int32_t graphics::StartDoc(LPDOCINFO lpDocInfo)
-   { ASSERT(get_handle1() != NULL); return ::StartDoc(get_handle1(), lpDocInfo); }
+   { 
+
+      ASSERT(m_hdc != NULL);
+
+      return ::StartDoc(m_hdc, lpDocInfo);
+   
+   }
+
    int32_t graphics::StartPage()
    { ASSERT(get_handle1() != NULL); return ::StartPage(get_handle1()); }
    int32_t graphics::EndPage()
