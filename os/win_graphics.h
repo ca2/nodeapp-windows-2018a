@@ -75,6 +75,10 @@ namespace win
       uint32_t SetLayout(uint32_t dwLayout);
 
 
+      HDC get_hdc();
+      void release_hdc(HDC hdc);
+
+
       virtual double get_dpix() const;
 
    // Constructors

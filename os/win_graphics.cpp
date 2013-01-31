@@ -1061,15 +1061,27 @@ namespace win
 
 gdi_fallback:
       
-      HDC hdcDst = m_pgraphics->GetHDC();
+      HDC hdcDst = get_hdc();
 
-      HDC hdcSrc = ((Gdiplus::Graphics *) (pgraphicsSrc->get_os_data()))->GetHDC();
+      if(hdcDst == NULL)
+         return false;
+
+      HDC hdcSrc = WIN_DC(pgraphicsSrc)->get_hdc();
+
+      if(hdcSrc == NULL)
+      {
+
+         release_hdc(hdcDst);
+
+         return false;
+
+      }
 
       bool bOk = ::BitBlt(hdcDst, x, y, nWidth, nHeight, hdcSrc, x, y, dwRop) != FALSE;
 
-      ((Gdiplus::Graphics *) (pgraphicsSrc->get_os_data()))->ReleaseHDC(hdcSrc);
+      WIN_DC(pgraphicsSrc)->release_hdc(hdcSrc);
 
-      m_pgraphics->ReleaseHDC(hdcDst);
+      release_hdc(hdcDst);
 
       return bOk;
 
@@ -4334,6 +4346,29 @@ namespace win
       m_pgraphics->Flush();
 
       return true;
+
+   }
+
+   HDC graphics::get_hdc()
+   {
+      
+      if(m_hdc != NULL)
+         return m_hdc;
+
+      if(m_pgraphics == NULL)
+         return NULL;
+
+      return m_pgraphics->GetHDC();
+
+   }
+   
+   void graphics::release_hdc(HDC hdc)
+   {
+      
+      if(m_hdc != NULL)
+         return;
+
+      m_pgraphics->ReleaseHDC(hdc);
 
    }
 
