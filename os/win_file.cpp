@@ -336,19 +336,27 @@ namespace win
 
    void file::close()
    {
+
       ASSERT_VALID(this);
       ASSERT(m_hFile != (UINT)hFileNull);
 
       bool bError = FALSE;
+      DWORD dwLastError = 0;
       if (m_hFile != (UINT)hFileNull)
+      {
          bError = !::CloseHandle((HANDLE)m_hFile);
+         if(bError)
+         {
+            dwLastError = ::GetLastError();
+         }
+      }
 
       m_hFile = (UINT) hFileNull;
       m_bCloseOnDelete = FALSE;
-      m_strFileName.Empty();
 
       if (bError)
-         file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+         file_exception::ThrowOsError(get_app(), dwLastError, m_strFileName);
+
    }
 
    void file::Abort()
