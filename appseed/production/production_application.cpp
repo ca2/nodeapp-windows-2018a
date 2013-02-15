@@ -140,6 +140,7 @@ namespace production
 } // namespace production
 
 
+extern "C"
 ::ca2::library * get_new_library()
 {
 
