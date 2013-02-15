@@ -128,7 +128,7 @@ namespace win
          return false;
       }
       
-      if(!m_spbitmap->CreateDIBSection(NULL, &m_info, DIB_RGB_COLORS, (void **) &m_pcolorref, NULL, NULL))
+      if(!m_spbitmap->CreateDIBSection(NULL, &m_info, DIB_RGB_COLORS, (void **) &m_pcolorref, &scan, NULL, NULL))
       {
          cx       = 0;
          cy       = 0;
@@ -149,7 +149,6 @@ namespace win
          ((Gdiplus::Bitmap *)pbitmap->get_os_data())->GetHBITMAP(Gdiplus::Color(0, 0, 0, 0), &m_hbitmapOriginal);*/
          cx       = width;
          cy       = height;
-         scan     = cx * sizeof(COLORREF);
          return true;
       }
       else
