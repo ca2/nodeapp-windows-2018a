@@ -60,7 +60,7 @@ namespace win
    }
 
 
-   bool bitmap::CreateDIBSection(::ca::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void **ppvBits, HANDLE hSection, uint32_t offset)
+   bool bitmap::CreateDIBSection(::ca::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void **ppvBits, int * stride, HANDLE hSection, uint32_t offset)
    { 
 
       UNREFERENCED_PARAMETER(pgraphics);
@@ -93,6 +93,11 @@ namespace win
       if(ppvBits != NULL)
       {
          *ppvBits = m_pdata; 
+      }
+
+      if(stride != NULL)
+      {
+         *stride = lpbmi->bmiHeader.biWidth * sizeof(COLORREF);
       }
 
       return TRUE;
