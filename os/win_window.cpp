@@ -5920,6 +5920,18 @@ lCallNextHook:
    }
 
 
+
+   void window::set_view_port_org(::ca::graphics * pgraphics)
+   {
+
+      // graphics will be already set its view port to the window for linux - cairo with xlib
+
+      pgraphics->SetViewportOrg(point(0, 0));
+      pgraphics->SelectClipRgn(NULL);
+
+   }
+
+
 } // namespace win
 
 
