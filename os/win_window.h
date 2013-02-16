@@ -700,6 +700,7 @@ namespace win
 
       void _001OnTriggerMouseInside();
 
+      void set_view_port_org(::ca::graphics * pgraphics);
 
    };
 
