@@ -265,7 +265,7 @@ namespace win
       }
       else
       {
-         ::user::window_interface * ptwi = System.window_map().get((int_ptr) oswindowParam);
+         ::user::window_interface * ptwi = System.user().window_map().get((int_ptr) oswindowParam);
          ::user::interaction * pguie = dynamic_cast < ::user::interaction * > (ptwi);
          rect rectWindow;
          ::GetWindowRect(oswindowParam, rectWindow);
@@ -539,7 +539,7 @@ namespace win
          oswindow oswindowTopic = wndaApp[j];
 
          ::ca::window * pwnd = NULL;
-         //::ca::window * pwnd = dynamic_cast < ::ca::window * > (System.window_map().get((int_ptr) oswindowTopic));
+         //::ca::window * pwnd = dynamic_cast < ::ca::window * > (System.user().window_map().get((int_ptr) oswindowTopic));
          //if(pwnd == NULL)
          //{
          for(int32_t l = 0; l < wndpa.get_count(); l++)
@@ -771,7 +771,7 @@ namespace win
 
       oswindow oswindow = oswindowtree.m_oswindow;
 
-      ::user::window_interface * ptwi = System.window_map().get((int_ptr) oswindow);
+      ::user::window_interface * ptwi = System.user().window_map().get((int_ptr) oswindow);
 
       if(!::IsWindowVisible(oswindow))
       {
@@ -920,7 +920,7 @@ namespace win
 
       
 
-      ::user::window_interface * pwndi = System.window_map().get((int_ptr) oswindow);
+      ::user::window_interface * pwndi = System.user().window_map().get((int_ptr) oswindow);
 
       if(pwndi == NULL)
       {
