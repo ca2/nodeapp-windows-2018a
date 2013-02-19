@@ -391,9 +391,9 @@ namespace win
    window::~window()
    {
 
-      if(m_papp != NULL && m_papp->m_psystem != NULL && Sys(m_papp).m_pwindowmap != NULL)
+      if(m_papp != NULL && m_papp->m_psystem != NULL && Sys(m_papp).user().m_pwindowmap != NULL)
       {
-         Sys(m_papp).m_pwindowmap->m_map.remove_key((int_ptr) get_handle());
+         Sys(m_papp).user().m_pwindowmap->m_map.remove_key((int_ptr) get_handle());
       }
 
       single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_pthread->m_mutex, TRUE);
@@ -1343,7 +1343,7 @@ restart_mouse_hover_check:
          }
 
          ::gen::message::key * pkey = (::gen::message::key *) pbase;
-         ::user::interaction * puiFocus = dynamic_cast < ::user::interaction * > (Application.get_keyboard_focus());
+         ::user::interaction * puiFocus = dynamic_cast < ::user::interaction * > (Application.user().get_keyboard_focus());
          if(puiFocus != NULL 
             && puiFocus->IsWindow()
             && puiFocus->GetTopLevelParent() != NULL)
@@ -5356,8 +5356,8 @@ ExitModal:
    void window::_001OnSetCursor(gen::signal_object * pobj)
    {
       SCAST_PTR(::gen::message::base, pbase, pobj);
-      if(System.get_cursor() != NULL
-         && System.get_cursor()->m_ecursor != ::visual::cursor_system)
+      if(System.visual().get_cursor() != NULL
+         && System.visual().get_cursor()->m_ecursor != ::visual::cursor_system)
       {
          ::SetCursor(NULL);
       }
@@ -5904,7 +5904,7 @@ lCallNextHook:
 
    void window::_001BaseWndInterfaceMap()
    {
-      System.window_map().set((int_ptr)get_handle(), this);
+      System.user().window_map().set((int_ptr)get_handle(), this);
    }
 
 
