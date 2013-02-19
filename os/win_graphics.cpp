@@ -1028,7 +1028,7 @@ namespace win
 
          return bOk;
 
-         //return System.imaging().true_blend(this, ptDest, size, pdibWork->get_graphics(), null_point()); 
+         //return System.visual().imaging().true_blend(this, ptDest, size, pdibWork->get_graphics(), null_point()); 
 
 
       }
@@ -1175,7 +1175,7 @@ gdi_fallback:
 
                keeper < ::ca::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
 
-               return System.imaging().true_blend(this, point(x, y), rectText.size(), dib1->get_graphics(), null_point());
+               return System.visual().imaging().true_blend(this, point(x, y), rectText.size(), dib1->get_graphics(), null_point());
 
                /*BLENDFUNCTION bf;
                bf.BlendOp     = AC_SRC_OVER;
@@ -1231,7 +1231,7 @@ gdi_fallback:
 
                keeper < ::ca::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
 
-               return System.imaging().true_blend(this, point((int64_t) x, (int64_t) y), rectText.size(), dib1->get_graphics(), null_point());
+               return System.visual().imaging().true_blend(this, point((int64_t) x, (int64_t) y), rectText.size(), dib1->get_graphics(), null_point());
 
                /*BLENDFUNCTION bf;
                bf.BlendOp     = AC_SRC_OVER;
@@ -1818,7 +1818,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          keeper < ::ca::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
 
 
-         return System.imaging().true_blend(this, ptDest, size, pdibWork->get_graphics(), ptSrc); 
+         return System.visual().imaging().true_blend(this, ptDest, size, pdibWork->get_graphics(), ptSrc); 
 
 
       }
@@ -1923,7 +1923,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          keeper < ::ca::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
 
 
-         return System.imaging().true_blend(this, ptDest, size, pdibWork->get_graphics(), ptSrc); 
+         return System.visual().imaging().true_blend(this, ptDest, size, pdibWork->get_graphics(), ptSrc); 
 
 
       }
