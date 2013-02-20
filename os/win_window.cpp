@@ -4354,7 +4354,8 @@ ExitModal:
 
    bool window::IsZoomed()
    {
-      ASSERT(::IsWindow(get_handle())); 
+      if(!::IsWindow(get_handle()))
+         return false;
       return m_pguie->m_eappearance == appearance_zoomed;
    }
 
@@ -4456,26 +4457,44 @@ ExitModal:
 
    uint32_t window::GetStyle()
    {
-      ASSERT(::IsWindow(get_handle())); 
+
+      if(!::IsWindow(get_handle()))
+         return 0;
+
       return (uint32_t)::GetWindowLong(get_handle(), GWL_STYLE); 
+
    }
 
    uint32_t window::GetExStyle()
    {
-      ASSERT(::IsWindow(get_handle())); 
+
+      if(!::IsWindow(get_handle()))
+         return 0;
+
       return (uint32_t)::GetWindowLong(get_handle(), GWL_EXSTYLE); 
+
    }
+
 
    bool window::ModifyStyle(uint32_t dwRemove, uint32_t dwAdd, UINT nFlags)
    { 
-      ASSERT(::IsWindow(get_handle())); 
+      
+      if(!::IsWindow(get_handle()))
+         return false;
+
       return ModifyStyle(get_handle(), dwRemove, dwAdd, nFlags); 
+
    }
+
 
    bool window::ModifyStyleEx(uint32_t dwRemove, uint32_t dwAdd, UINT nFlags)
    { 
-      ASSERT(::IsWindow(get_handle())); 
+      
+      if(!::IsWindow(get_handle()))
+         return false;
+
       return ModifyStyleEx(get_handle(), dwRemove, dwAdd, nFlags); 
+
    }
 
    void window::set_owner(::user::interaction * pOwnerWnd)
