@@ -18,7 +18,7 @@ namespace backup
    bool application::initialize_instance()
    {
 
-      if(!cube2::application::initialize_instance())
+      if(!::cube::application::initialize_instance())
          return false;
 
 
