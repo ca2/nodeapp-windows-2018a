@@ -422,7 +422,7 @@ namespace win
 
       user::interaction_ptr_array wndpa;
 
-      
+      wndpa.set_app(get_app());
 
       get_wnda(wndpa);
 
@@ -513,7 +513,15 @@ namespace win
          {
             if(wndpa[l]->oprop("session").is_new())
             {
-               dynamic_cast < ::ca::window * > (wndpa[l]->m_pimpl)->_001UpdateWindow();
+               try
+               {
+                  dynamic_cast < ::ca::window * > (wndpa[l]->m_pimpl)->_001UpdateWindow();
+               }
+               catch(...)
+               {
+               }
+
+
             }
             l++;
          }
