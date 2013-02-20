@@ -37,7 +37,7 @@ namespace production
       System.factory().creatable_small < pane_view >();
 
 
-      if(!cube2::application::initialize_instance())
+      if(!::cube::application::initialize_instance())
          return false;
 
       GetStdFileManagerTemplate()->m_strLevelUp = "levelup";
