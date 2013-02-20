@@ -1874,13 +1874,18 @@ run:
 /*   DWORD thread::SuspendThread()
    { ASSERT(m_hThread != NULL); return ::SuspendThread(m_hThread); }
    */
+
+
    bool thread::post_thread_message(UINT message, WPARAM wParam, LPARAM lParam)
    {
-      ASSERT(m_hThread != NULL);
+      
+      if(m_hThread == NULL)
+         return false;
 
       return ::PostThreadMessageA(m_nThreadID, message, wParam, lParam)  != FALSE;
 
    }
+
 
    void thread::set_os_data(void * pvoidOsData)
    {
