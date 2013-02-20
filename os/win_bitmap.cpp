@@ -68,6 +68,7 @@ namespace win
       if(m_pbitmap != NULL)
       {
          delete m_pbitmap;
+         m_pbitmap = NULL;
       }
 
       if(m_pdata != NULL)
