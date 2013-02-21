@@ -12,7 +12,7 @@ namespace win2
 
 
       class CLASS_DECL_win2 document_properties :
-         virtual public ::radix::object
+         virtual public ::gen::object
       {
       public:
 
