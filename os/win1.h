@@ -73,7 +73,7 @@ CLASS_DECL_win WNDPROC __get_window_procedure();
 typedef void (__MSG_CALL ::ca::window::*__PMSGW)();
    // like '__PMSG' but for ::ca::window derived classes only
 
-typedef void (__MSG_CALL ::radix::thread::*__PMSGT)();
+typedef void (__MSG_CALL ::gen::thread::*__PMSGT)();
    // like '__PMSG' but for thread-derived classes only
 
 
@@ -87,13 +87,13 @@ CLASS_DECL_win LONG delete_registry_tree_helper(HKEY hParentKey, const string & 
 
 
 CLASS_DECL_win ::win::thread * __get_thread();
-CLASS_DECL_win void __set_thread(::radix::thread * pthread);
+CLASS_DECL_win void __set_thread(::gen::thread * pthread);
 CLASS_DECL_win MSG* __get_current_message();
 
-CLASS_DECL_win void __end_thread(::radix::application * papp, UINT nExitCode, bool bDelete = TRUE);
+CLASS_DECL_win void __end_thread(::gen::application * papp, UINT nExitCode, bool bDelete = TRUE);
 
 CLASS_DECL_win void __init_thread();
-CLASS_DECL_win void __term_thread(::radix::application * papp, HINSTANCE hInstTerm = NULL);
+CLASS_DECL_win void __term_thread(::gen::application * papp, HINSTANCE hInstTerm = NULL);
 
 /////////////////////////////////////////////////////////////////////////////
 // Global functions for access to the one and only application
@@ -112,7 +112,7 @@ CLASS_DECL_win void __term_thread(::radix::application * papp, HINSTANCE hInstTe
   // __in_z LPTSTR lpCmdLine, __in int32_t nCmdShow);
 CLASS_DECL_win void __win_term();
 
-CLASS_DECL_win ::radix::application* __get_app();
+CLASS_DECL_win ::gen::application* __get_app();
 CLASS_DECL_win ::user::interaction* __get_main_window();
 //CLASS_DECL_win HINSTANCE CLASS_DECL_win System.m_hInstance;
 CLASS_DECL_win HINSTANCE __get_resource_handle();
