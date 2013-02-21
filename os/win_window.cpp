@@ -298,8 +298,8 @@ namespace win
          string strMessage;
          strMessage.Format("%s\n\nSystem Error Code: %d", strLastError, dwLastError);
 
-         TRACE(::radix::trace::category_AppMsg, 0, "Warning: Window creation failed: GetLastError returned:\n");
-         TRACE(::radix::trace::category_AppMsg, 0, "%s\n", strMessage);
+         TRACE(::gen::trace::category_AppMsg, 0, "Warning: Window creation failed: GetLastError returned:\n");
+         TRACE(::gen::trace::category_AppMsg, 0, "%s\n", strMessage);
          try
          {
             if(dwLastError == 0x0000057e)
@@ -404,7 +404,7 @@ namespace win
       sl.unlock();
       if (get_handle() != NULL)
       {
-         TRACE(::radix::trace::category_AppMsg, 0, "Warning: calling DestroyWindow in window::~window; "
+         TRACE(::gen::trace::category_AppMsg, 0, "Warning: calling DestroyWindow in window::~window; "
             "OnDestroy or PostNcDestroy in derived class will not be called.\n");
          m_pcallback = NULL;
          DestroyWindow();
@@ -598,7 +598,7 @@ namespace win
             return; // let go
          ASSERT(pMap != NULL);
 
-         //         ::radix::object* p=NULL;
+         //         ::gen::object* p=NULL;
          /*if(pMap)
          {
          ASSERT( (p = pMap->lookup_permanent(get_handle())) != NULL ||
@@ -626,7 +626,7 @@ namespace win
 
    void window::dump(dump_context & dumpcontext) const
    {
-      ::radix::object::dump(dumpcontext);
+      ::gen::object::dump(dumpcontext);
 
       dumpcontext << "\nm_oswindow_ = " << ((window *)this)->get_handle();
 
@@ -982,7 +982,7 @@ namespace win
       // need to use top level parent (for the case where get_handle() is in DLL)
       ::user::interaction * pWnd = EnsureTopLevelParent();
 
-      TRACE(::radix::trace::category_AppMsg, 0, "WinHelp: pszHelpFile = '%s', dwData: $%lx, fuCommand: %d.\n", pApp->m_pszHelpFilePath, dwData, nCmd);
+      TRACE(::gen::trace::category_AppMsg, 0, "WinHelp: pszHelpFile = '%s', dwData: $%lx, fuCommand: %d.\n", pApp->m_pszHelpFilePath, dwData, nCmd);
 
       // finally, run the Windows Help engine
       /* trans   if (!::WinHelp(WIN_WINDOW(pWnd)->get_handle(), pApp->m_pszHelpFilePath, nCmd, dwData))
@@ -1010,7 +1010,7 @@ namespace win
    // need to use top level parent (for the case where get_handle() is in DLL)
    ::user::interaction * pWnd = EnsureTopLevelParent();
 
-   TRACE(::radix::trace::category_AppMsg, 0, "HtmlHelp: pszHelpFile = '%s', dwData: $%lx, fuCommand: %d.\n", pApp->m_pszHelpFilePath, dwData, nCmd);
+   TRACE(::gen::trace::category_AppMsg, 0, "HtmlHelp: pszHelpFile = '%s', dwData: $%lx, fuCommand: %d.\n", pApp->m_pszHelpFilePath, dwData, nCmd);
 
    // run the HTML Help engine
    /* trans   if (!gen::HtmlHelp(WIN_WINDOW(pWnd)->get_handle(), pApp->m_pszHelpFilePath, nCmd, dwData))
@@ -1855,7 +1855,7 @@ restart_mouse_hover_check:
       _001OnCommand(nID, CN_UPDATE_COMMAND_UI, &state, NULL);
       if (!state.m_bEnabled)
       {
-      TRACE(::radix::trace::category_AppMsg, 0, "Warning: not executing disabled command %d\n", nID);
+      TRACE(::gen::trace::category_AppMsg, 0, "Warning: not executing disabled command %d\n", nID);
       return TRUE;
       }
 
@@ -1881,7 +1881,7 @@ restart_mouse_hover_check:
 
       #ifdef DEBUG
       if (nCode < 0 && nCode != (int32_t)0x8000)
-      TRACE(::radix::trace::category_AppMsg, 0, "Implementation Warning: control notification = $%X.\n",
+      TRACE(::gen::trace::category_AppMsg, 0, "Implementation Warning: control notification = $%X.\n",
       nCode);
       #endif
 
@@ -2380,7 +2380,7 @@ restart_mouse_hover_check:
 
    // move and resize all the windows at once!
    if (layout.hDWP == NULL || !::EndDeferWindowPos(layout.hDWP))
-   TRACE(::radix::trace::category_AppMsg, 0, "Warning: DeferWindowPos failed - low system resources.\n");
+   TRACE(::gen::trace::category_AppMsg, 0, "Warning: DeferWindowPos failed - low system resources.\n");
    }
 
    */
@@ -2504,7 +2504,7 @@ restart_mouse_hover_check:
 
       // move and resize all the windows at once!
       if (layout.hDWP == NULL || !::EndDeferWindowPos(layout.hDWP))
-         TRACE(::radix::trace::category_AppMsg, 0, "Warning: DeferWindowPos failed - low system resources.\n");
+         TRACE(::gen::trace::category_AppMsg, 0, "Warning: DeferWindowPos failed - low system resources.\n");
    }
 
 
@@ -2869,7 +2869,7 @@ restart_mouse_hover_check:
 
 
    class print_window :
-      virtual ::radix::object
+      virtual ::gen::object
    {
    public:
 
@@ -3348,7 +3348,7 @@ restart_mouse_hover_check:
       if (hDC == NULL)
       {
          // sometimes Win32 passes a NULL hDC in the WM_CTLCOLOR message.
-         //         TRACE(::radix::trace::category_AppMsg, 0, "Warning: hDC is NULL in window::GrayCtlColor; WM_CTLCOLOR not processed.\n");
+         //         TRACE(::gen::trace::category_AppMsg, 0, "Warning: hDC is NULL in window::GrayCtlColor; WM_CTLCOLOR not processed.\n");
          return FALSE;
       }
 
@@ -3695,8 +3695,8 @@ restart_mouse_hover_check:
       m_iModalCount++;
 
       m_iaModalThread.add(::GetCurrentThreadId());
-      ::radix::application * pappThis1 = dynamic_cast < ::radix::application * > (m_pthread->m_pthread->m_p);
-      ::radix::application * pappThis2 = dynamic_cast < ::radix::application * > (m_pthread->m_pthread);
+      ::gen::application * pappThis1 = dynamic_cast < ::gen::application * > (m_pthread->m_pthread->m_p);
+      ::gen::application * pappThis2 = dynamic_cast < ::gen::application * > (m_pthread->m_pthread);
       // acquire and dispatch messages until the modal state is done
       MSG msg;
       for (;;)
@@ -3901,9 +3901,9 @@ ExitModal:
       else if (*lplpfn != oldWndProc)
       {
 
-         TRACE(::radix::trace::category_AppMsg, 0, "p: Trying to use subclass_window with incorrect window\n");
-         TRACE(::radix::trace::category_AppMsg, 0, "\tderived class.\n");
-         TRACE(::radix::trace::category_AppMsg, 0, "\toswindow_ = $%08X (nIDC=$%08X) is not a %hs.\n", (UINT)(uint_ptr)oswindow, __get_dialog_control_id(oswindow), typeid(*this).name());
+         TRACE(::gen::trace::category_AppMsg, 0, "p: Trying to use subclass_window with incorrect window\n");
+         TRACE(::gen::trace::category_AppMsg, 0, "\tderived class.\n");
+         TRACE(::gen::trace::category_AppMsg, 0, "\toswindow_ = $%08X (nIDC=$%08X) is not a %hs.\n", (UINT)(uint_ptr)oswindow, __get_dialog_control_id(oswindow), typeid(*this).name());
 
          ASSERT(FALSE);
 
@@ -5742,7 +5742,7 @@ ExitModal:
       catch(base_exception * pe)
       {
          __process_window_procedure_exception(pe, spbase);
-         //         TRACE(::radix::trace::category_AppMsg, 0, "Warning: Uncaught exception in message_handler (returning %ld).\n", spbase->get_lresult());
+         //         TRACE(::gen::trace::category_AppMsg, 0, "Warning: Uncaught exception in message_handler (returning %ld).\n", spbase->get_lresult());
          pe->Delete();
       }
       catch(...)
@@ -5825,7 +5825,7 @@ ExitModal:
             // the window should not be in the permanent ::collection::map at this time
             ASSERT(::win::window::FromHandlePermanent(oswindow) == NULL);
 
-            pWndInit->m_pthread = dynamic_cast < ::radix::thread * > (::win::get_thread());
+            pWndInit->m_pthread = dynamic_cast < ::gen::thread * > (::win::get_thread());
             if(pWndInit->m_pthread != NULL)
             {
                pWndInit->m_pthread->m_pthread->add(pWndInit);
@@ -6433,7 +6433,7 @@ LRESULT CALLBACK
       msg.lParam = lParam;
 
       //lResult = __process_window_procedure_exception(pe, &msg);
-      //      TRACE(::radix::trace::category_AppMsg, 0, "Warning: Uncaught exception in __activation_window_procedure (returning %ld).\n",
+      //      TRACE(::gen::trace::category_AppMsg, 0, "Warning: Uncaught exception in __activation_window_procedure (returning %ld).\n",
       //       lResult);
       pe->Delete();
    }
@@ -6461,7 +6461,7 @@ bool CLASS_DECL_win __register_class(WNDCLASS* lpWndClass)
 
    if (!::RegisterClass(lpWndClass))
    {
-      //      TRACE(::radix::trace::category_AppMsg, 0, "Can't register window class named %s\n",
+      //      TRACE(::gen::trace::category_AppMsg, 0, "Can't register window class named %s\n",
       //       lpWndClass->lpszClassName);
       return FALSE;
    }

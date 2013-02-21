@@ -13,7 +13,7 @@ WinResource::~WinResource()
 
 
 /*bool WinResource::ReadResource(
-   ex1::filesp & file, 
+   gen::filesp & file, 
    UINT nID, 
    const char * lpcszType)
 {
@@ -26,7 +26,7 @@ WinResource::~WinResource()
 
 /*bool WinResource::ReadResource(
    HINSTANCE hinst,
-   ex1::filesp & file, 
+   gen::filesp & file, 
    UINT nID, 
    const char * lpcszType)
 {
@@ -48,13 +48,13 @@ WinResource::~WinResource()
         try
         {
            // create the .mdb file
-//           ex1::filesp f(lpcszFilePath, ::ex1::file::mode_create | ::ex1::file::mode_write );
+//           gen::filesp f(lpcszFilePath, ::gen::file::mode_create | ::gen::file::mode_write );
 
            // write the ::fontopus::user-defined resource to the .mdb file
            spfile->write(lpnRes, dwResSize);
            spfile->Flush();
         }
-        catch(ex1::file_exception_sp * pe)
+        catch(gen::file_exception_sp * pe)
         {
       #ifdef DEBUG
          g_dumpcontext << "File could not be opened " << e->m_cause << "\n";
@@ -86,7 +86,7 @@ bool WinResource::ReadResource(string & str, HINSTANCE hinst,  UINT nID, const c
 
 
 
-bool WinResource::ReadResource(ex1::file & spfile, HINSTANCE hinst, UINT nID,  const char * lpcszType)
+bool WinResource::ReadResource(gen::file & spfile, HINSTANCE hinst, UINT nID,  const char * lpcszType)
 {
 
    HRSRC hrsrc = ::FindResource(

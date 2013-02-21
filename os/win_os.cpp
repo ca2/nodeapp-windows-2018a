@@ -728,7 +728,7 @@ namespace win
 
       ::count c;
 
-      ::radix::thread * pthread;
+      ::gen::thread * pthread;
 
       c = ::win::thread::s_threadptra.get_size();
 
@@ -746,7 +746,7 @@ namespace win
 
             try
             {
-               pthread = dynamic_cast < ::radix::thread * >(threadptra[i]);
+               pthread = dynamic_cast < ::gen::thread * >(threadptra[i]);
                pthread->m_bRun = false;
                pthread->m_p->m_bRun = false;
             }
@@ -837,7 +837,7 @@ repeat:
    }
 
 
-   void os::set_file_status(const char * lpszFileName, const ::ex1::file_status& status)
+   void os::set_file_status(const char * lpszFileName, const ::gen::file_status& status)
    {
 
       DWORD wAttr;

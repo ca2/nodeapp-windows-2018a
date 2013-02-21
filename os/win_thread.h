@@ -26,7 +26,7 @@ namespace win
 
 
    class CLASS_DECL_win thread :
-      virtual public ::radix::thread,
+      virtual public ::gen::thread,
       virtual public ::ca::message_window_simple_callback
    {
    public:
@@ -79,7 +79,7 @@ namespace win
       void set_os_data(void * pvoidOsData);
       void set_os_int(int_ptr iData);
 
-      virtual void set_p(::radix::thread * p);
+      virtual void set_p(::gen::thread * p);
 
       virtual bool begin(::ca::e_thread_priority epriority = get_thread_priority_normal(), uint_ptr nStackSize = 0, uint32_t dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 

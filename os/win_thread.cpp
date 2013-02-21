@@ -102,13 +102,13 @@ uint32_t __thread_entry(void * pParam)
          // Note: DELETE_EXCEPTION(e) not required.
 
          // exception happened during thread initialization!!
-         //TRACE(::radix::trace::category_AppMsg, 0, "Warning: Error during thread initialization!\n");
+         //TRACE(::gen::trace::category_AppMsg, 0, "Warning: Error during thread initialization!\n");
 
          // set error flag and allow the creating thread to notice the error
          //         threadWnd.detach();
          pStartup->bError = TRUE;
          VERIFY(::SetEvent(pStartup->hEvent));
-         __end_thread(dynamic_cast < ::radix::application * > (pThread->m_papp), (UINT)-1, FALSE);
+         __end_thread(dynamic_cast < ::gen::application * > (pThread->m_papp), (UINT)-1, FALSE);
          ASSERT(FALSE);  // unreachable
       }
 
@@ -173,7 +173,7 @@ CLASS_DECL_win ::win::thread * __get_thread()
 }
 
 
-CLASS_DECL_win void __set_thread(::radix::thread * pthread)
+CLASS_DECL_win void __set_thread(::gen::thread * pthread)
 {
    // check for current thread in module thread state
    __MODULE_THREAD_STATE* pState = __get_module_thread_state();
@@ -211,7 +211,7 @@ CLASS_DECL_win void __internal_process_wnd_proc_exception(base_exception*, gen::
 
 CLASS_DECL_win void __process_window_procedure_exception(base_exception* e, gen::signal_object * pobj)
 {
-   ::radix::thread *pThread = App(pobj->get_app()).GetThread();
+   ::gen::thread *pThread = App(pobj->get_app()).GetThread();
    if( pThread )
       return pThread->ProcessWndProcException( e, pobj );
    else
@@ -290,7 +290,7 @@ void __internal_pre_translate_message(gen::signal_object * pobj)
 
 void __cdecl __pre_translate_message(gen::signal_object * pobj)
 {
-   ::radix::thread *pThread = App(pobj->get_app()).GetThread();
+   ::gen::thread *pThread = App(pobj->get_app()).GetThread();
    if( pThread )
       return pThread->pre_translate_message( pobj );
    else
@@ -358,7 +358,7 @@ bool __internal_is_idle_message(LPMSG lpmsg)
 
 bool __cdecl __is_idle_message(gen::signal_object * pobj)
 {
-   ::radix::thread *pThread = App(pobj->get_app()).GetThread();
+   ::gen::thread *pThread = App(pobj->get_app()).GetThread();
    if( pThread )
       return pThread->is_idle_message(pobj);
    else
@@ -396,7 +396,7 @@ VERIFY(pThread->ResumeThread() != (DWORD)-1);
 
 return pThread;
 }*/
-void CLASS_DECL_win __end_thread(::radix::application * papp, UINT nExitCode, bool bDelete)
+void CLASS_DECL_win __end_thread(::gen::application * papp, UINT nExitCode, bool bDelete)
 {
    // remove current thread object from primitive::memory
    __MODULE_THREAD_STATE* pState = __get_module_thread_state();
@@ -411,7 +411,7 @@ void CLASS_DECL_win __end_thread(::radix::application * papp, UINT nExitCode, bo
       }
 
       ASSERT_VALID(pThread);
-      //ASSERT(pThread != System::smart_pointer < ex2::application *>::m_p);
+      //ASSERT(pThread != System::smart_pointer < gen::application *>::m_p);
 
       if (bDelete)
          pThread->Delete();
@@ -433,7 +433,7 @@ void CLASS_DECL_win __end_thread(::radix::application * papp, UINT nExitCode, bo
 
 extern thread_local_storage * __thread_data;
 
-void CLASS_DECL_win __term_thread(::radix::application * papp, HINSTANCE hInstTerm)
+void CLASS_DECL_win __term_thread(::gen::application * papp, HINSTANCE hInstTerm)
 {
    UNREFERENCED_PARAMETER(papp);
    try
@@ -489,7 +489,7 @@ namespace win
 
 
 
-   void thread::set_p(::radix::thread * p)
+   void thread::set_p(::gen::thread * p)
    {
       m_p = p;
    }
@@ -519,7 +519,7 @@ namespace win
       ca(papp),
       message_window_simple_callback(papp),//,
       //m_evFinish(FALSE, TRUE)
-      radix::thread(NULL),
+      gen::thread(NULL),
       m_evFinish(papp),
       m_mutexUiPtra(papp)
    {
@@ -877,7 +877,7 @@ namespace win
       startup.dwCreateFlags = dwCreateFlags;
       if (startup.hEvent == NULL || startup.hEvent2 == NULL)
       {
-         TRACE(::radix::trace::category_AppMsg, 0, "Warning: CreateEvent failed in thread::create_thread.\n");
+         TRACE(::gen::trace::category_AppMsg, 0, "Warning: CreateEvent failed in thread::create_thread.\n");
          if (startup.hEvent != NULL)
             ::CloseHandle(startup.hEvent);
          if (startup.hEvent2 != NULL)
@@ -962,7 +962,7 @@ namespace win
       {
          if(m_p != NULL)
          {
-            ::radix::thread * pthread = dynamic_cast < ::radix::thread * > (m_p);
+            ::gen::thread * pthread = dynamic_cast < ::gen::thread * > (m_p);
             if(pthread != NULL && pthread->m_pbReady != NULL)
             {
                *pthread->m_pbReady = true;
@@ -1027,8 +1027,8 @@ namespace win
       // for tracking the idle time state
       bool bIdle = TRUE;
       LONG lIdleCount = 0;
-      ::radix::application * pappThis1 = dynamic_cast < ::radix::application * > (this);
-      ::radix::application * pappThis2 = dynamic_cast < ::radix::application * > (m_p);
+      ::gen::application * pappThis1 = dynamic_cast < ::gen::application * > (this);
+      ::gen::application * pappThis2 = dynamic_cast < ::gen::application * > (m_p);
 
       // acquire and dispatch messages until a WM_QUIT message is received.
       MSG msg;
@@ -1150,7 +1150,7 @@ stop_run:
          // Check for missing LockTempMap calls
          if(m_nTempMapLock != 0)
          {
-            TRACE(::radix::trace::category_AppMsg, 0, "Warning: Temp ::collection::map lock count non-zero (%ld).\n", m_nTempMapLock);
+            TRACE(::gen::trace::category_AppMsg, 0, "Warning: Temp ::collection::map lock count non-zero (%ld).\n", m_nTempMapLock);
          }
          LockTempMaps();
          UnlockTempMaps(true);
@@ -1282,8 +1282,8 @@ stop_run:
          if (pState->m_nTempMapLock == 0)
          {
          // free temp maps, OLE DLLs, etc.
-         gen::LockTempMaps(dynamic_cast < ::radix::application * > (m_p->m_papp));
-         gen::UnlockTempMaps(dynamic_cast < ::radix::application * > (m_p->m_papp));
+         gen::LockTempMaps(dynamic_cast < ::gen::application * > (m_p->m_papp));
+         gen::UnlockTempMaps(dynamic_cast < ::gen::application * > (m_p->m_papp));
          }*/
       }
 
@@ -1498,7 +1498,7 @@ stop_run:
          MSG msg;
          if(!::GetMessage(&msg, NULL, NULL, NULL))
          {
-            TRACE(::radix::trace::category_AppMsg, 1, "thread::pump_message - Received WM_QUIT.\n");
+            TRACE(::gen::trace::category_AppMsg, 1, "thread::pump_message - Received WM_QUIT.\n");
             m_nDisablePumpCount++; // application must die
             // Note: prevents calling message loop things in 'exit_instance'
             // will never be decremented
@@ -1507,7 +1507,7 @@ stop_run:
 
          if(m_nDisablePumpCount != 0)
          {
-            TRACE(::radix::trace::category_AppMsg, 0, "Error: thread::pump_message called when not permitted.\n");
+            TRACE(::gen::trace::category_AppMsg, 0, "Error: thread::pump_message called when not permitted.\n");
             ASSERT(FALSE);
          }
 
@@ -1767,7 +1767,7 @@ stop_run:
       catch(base_exception * pe)
       {
          __process_window_procedure_exception(pe, pbase);
-         TRACE(::radix::trace::category_AppMsg, 0, "Warning: Uncaught exception in message_handler (returning %ld).\n", pbase->get_lresult());
+         TRACE(::gen::trace::category_AppMsg, 0, "Warning: Uncaught exception in message_handler (returning %ld).\n", pbase->get_lresult());
          pe->Delete();
       }
 run:
@@ -1935,7 +1935,7 @@ run:
 
 
 #ifndef ___PORTABLE
-         ::radix::application * papp = dynamic_cast < ::radix::application * > (get_app());
+         ::gen::application * papp = dynamic_cast < ::gen::application * > (get_app());
          ___THREAD_STATE* pThreadState = gen_ThreadState.GetDataNA();
          if( pThreadState != NULL )
          {
@@ -1960,7 +1960,7 @@ run:
                   pThreadState->m_pSafetyPoolBuffer = malloc(papp->m_nSafetyPoolSize);
                   if (pThreadState->m_pSafetyPoolBuffer == NULL)
                   {
-                     //                  TRACE(::radix::trace::category_AppMsg, 0, "Warning: failed to reclaim %d bytes for primitive::memory safety pool.\n",
+                     //                  TRACE(::gen::trace::category_AppMsg, 0, "Warning: failed to reclaim %d bytes for primitive::memory safety pool.\n",
                      //                   pApp->m_nSafetyPoolSize);
                      // at least get the old buffer back
                      if (nOldSize != 0)
@@ -1996,7 +1996,7 @@ run:
 
       ::win::thread* pThread = pStartup->pThread;
 
-      //      ::radix::application* papp = dynamic_cast < ::radix::application * > (get_app());
+      //      ::gen::application* papp = dynamic_cast < ::gen::application * > (get_app());
       m_evFinish.ResetEvent();
       install_message_handling(pThread);
       m_p->install_message_handling(pThread);
@@ -2111,7 +2111,7 @@ run:
       {
          // cleanup and shutdown the thread
          //         threadWnd.detach();
-         __end_thread(dynamic_cast < ::radix::application * > (m_papp), nResult);
+         __end_thread(dynamic_cast < ::gen::application * > (m_papp), nResult);
       }
       catch(...)
       {
@@ -2205,7 +2205,7 @@ ___THREAD_STATE *pState = __get_thread_state();
 if (!::GetMessage(&(pState->m_msgCur), NULL, NULL, NULL))
 {
 #ifdef DEBUG
-TRACE(::radix::trace::category_AppMsg, 1, "thread::pump_message - Received WM_QUIT.\n");
+TRACE(::gen::trace::category_AppMsg, 1, "thread::pump_message - Received WM_QUIT.\n");
 pState->m_nDisablePumpCount++; // application must die
 #endif
 // Note: prevents calling message loop things in 'exit_instance'
@@ -2216,7 +2216,7 @@ return FALSE;
 #ifdef DEBUG
 if (pState->m_nDisablePumpCount != 0)
 {
-TRACE(::radix::trace::category_AppMsg, 0, "Error: thread::pump_message called when not permitted.\n");
+TRACE(::gen::trace::category_AppMsg, 0, "Error: thread::pump_message called when not permitted.\n");
 ASSERT(FALSE);
 }
 #endif
@@ -2442,7 +2442,7 @@ startup.hEvent2 = ::CreateEvent(NULL, TRUE, FALSE, NULL);
 startup.dwCreateFlags = dwCreateFlags;
 if (startup.hEvent == NULL || startup.hEvent2 == NULL)
 {
-TRACE(::radix::trace::category_AppMsg, 0, "Warning: CreateEvent failed in thread::create_thread.\n");
+TRACE(::gen::trace::category_AppMsg, 0, "Warning: CreateEvent failed in thread::create_thread.\n");
 if (startup.hEvent != NULL)
 ::CloseHandle(startup.hEvent);
 if (startup.hEvent2 != NULL)
@@ -2755,8 +2755,8 @@ return __internal_process_wnd_proc_exception( e, pMsg );
 
 LRESULT CALLBACK __message_filter_hook(int32_t code, WPARAM wParam, LPARAM lParam)
 {
-   ::radix::thread* pthread;
-   if (afxContextIsDLL || (code < 0 && code != MSGF_DDEMGR) || (pthread = dynamic_cast < ::radix::thread * > (::win::get_thread())) == NULL)
+   ::gen::thread* pthread;
+   if (afxContextIsDLL || (code < 0 && code != MSGF_DDEMGR) || (pthread = dynamic_cast < ::gen::thread * > (::win::get_thread())) == NULL)
    {
       return ::CallNextHookEx(gen_ThreadState->m_hHookOldMsgFilter, code, wParam, lParam);
    }
