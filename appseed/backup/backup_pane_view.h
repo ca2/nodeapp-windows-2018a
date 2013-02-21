@@ -20,7 +20,7 @@ namespace backup
       void on_create_view(::user::view_creator_data * pcreatordata);
       void install_message_handling(::gen::message::dispatch * pinterface);
 
-	   virtual void on_update(::view * pSender, LPARAM lHint, ::radix::object* pHint);
+	   virtual void on_update(::view * pSender, LPARAM lHint, ::gen::object* pHint);
 
 
 
