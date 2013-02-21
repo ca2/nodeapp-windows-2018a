@@ -10,7 +10,7 @@ namespace production
       form_callback();
       virtual ~form_callback();
 
-      void on_update(::user::form * pview, ::view* pSender, LPARAM lHint, ::radix::object* phint);
+      void on_update(::user::form * pview, ::view* pSender, LPARAM lHint, ::gen::object* phint);
       virtual bool BaseOnControlEvent(::user::form * pview, ::user::control_event * pevent);
    };
 
