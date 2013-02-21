@@ -5,7 +5,7 @@ namespace win
 {
 
 
-   class CLASS_DECL_win file_find : public ::radix::object
+   class CLASS_DECL_win file_find : public ::gen::object
    {
    // ementation
    protected:
