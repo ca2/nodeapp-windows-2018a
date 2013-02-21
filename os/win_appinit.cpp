@@ -22,7 +22,7 @@
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ex1::filesp implementation helpers
+// gen::filesp implementation helpers
 
 //#ifdef gen::GetFileName
 //#undef gen::GetFileName
