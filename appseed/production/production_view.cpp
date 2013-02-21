@@ -187,7 +187,7 @@ namespace production
       rect rectClient;
       GetClientRect(rectClient);
 
-      pdc->SelectObject(Application.font_central().GetListCtrlFont());
+      pdc->SelectObject(Application.visual().font_central().GetListCtrlFont());
 
       size sz = pdc->GetTextExtent("¡Õqg");
       m_iLineHeight = max(1, sz.cy);
@@ -282,10 +282,10 @@ namespace production
       SetTimer(3003, 300, NULL);
       SetTimer(543218, 200, NULL);
       m_dibV.load_from_matter("votagus_mountains_and_valleys-123.png");
-      //Application.imaging().free(pfi);
+      //Application.visual().imaging().free(pfi);
 
       m_dibVs.load_from_matter("bambu49transr.png");
-      //Application.imaging().free(pfi);
+      //Application.visual().imaging().free(pfi);
 
       
 

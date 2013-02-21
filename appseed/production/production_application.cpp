@@ -40,7 +40,7 @@ namespace production
       if(!::cube::application::initialize_instance())
          return false;
 
-      GetStdFileManagerTemplate()->m_strLevelUp = "levelup";
+      filemanager().GetStdFileManagerTemplate()->m_strLevelUp = "levelup";
 
 
 	   m_pdoctemplateMain = new ::userbase::single_document_template(
@@ -50,13 +50,10 @@ namespace production
 		   System.template type_info < frame > (),
 		   System.template type_info < pane_view > ());
 
-      add_document_template(m_pdoctemplateMain);
-
-
-
-      
+      userbase().add_document_template(m_pdoctemplateMain);
 
       return true;
+
    }
 
 

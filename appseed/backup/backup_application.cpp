@@ -30,7 +30,7 @@ namespace backup
       System.factory().creatable_small < view > ();
       System.factory().creatable_small < pane_view > ();
 
-      GetStdFileManagerTemplate()->m_strLevelUp = "levelup";
+      filemanager().GetStdFileManagerTemplate()->m_strLevelUp = "levelup";
 
 
 	   m_pdoctemplateMain = new ::userbase::single_document_template(
@@ -72,7 +72,7 @@ namespace backup
 
    void application::_001OnFileNew()
    {
-      userbase::application::m_pdocmanager->_001OnFileNew();
+      m_pdocmanager->_001OnFileNew();
    }
 
 
