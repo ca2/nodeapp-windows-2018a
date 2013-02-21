@@ -41,12 +41,12 @@ namespace win
 
    void graphics::assert_valid() const
    {
-      ::radix::object::assert_valid();
+      ::gen::object::assert_valid();
    }
 
    void graphics::dump(dump_context & dumpcontext) const
    {
-      ::radix::object::dump(dumpcontext);
+      ::gen::object::dump(dumpcontext);
 
       dumpcontext << "get_handle1() = " << get_handle1();
       dumpcontext << "\nm_hAttribDC = " << get_handle2();
@@ -2419,7 +2419,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 /*      hdc_map* pMap = afxMapHDC();
       if (pMap != NULL && pMap->lookup_permanent(get_handle1()) == this)
       {
-         TRACE(::radix::trace::category_AppMsg, 0, "Cannot Set Output hDC on Attached graphics.\n");
+         TRACE(::gen::trace::category_AppMsg, 0, "Cannot Set Output hDC on Attached graphics.\n");
          ASSERT(FALSE);
       }*/
 #endif
@@ -2437,7 +2437,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 /*      hdc_map* pMap = afxMapHDC();
       if (pMap != NULL && pMap->lookup_permanent(get_handle1()) == this)
       {
-         TRACE(::radix::trace::category_AppMsg, 0, "Cannot Release Output hDC on Attached graphics.\n");
+         TRACE(::gen::trace::category_AppMsg, 0, "Cannot Release Output hDC on Attached graphics.\n");
          ASSERT(FALSE);
       }*/
 #endif
@@ -3093,7 +3093,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          HRGN hRgn = ::CreateRectRgn(0, 0, 0, 0);
          if (::GetClipRgn(get_handle1(), hRgn) < 0 || !::SelectClipRgn(get_handle2(), hRgn))
          {
-            TRACE(::radix::trace::category_AppMsg, 0, "Error: unable to transfer clip region in graphics::SelectClipPath!\n");
+            TRACE(::gen::trace::category_AppMsg, 0, "Error: unable to transfer clip region in graphics::SelectClipPath!\n");
             bResult = FALSE;
          }
          ::DeleteObject(hRgn);
