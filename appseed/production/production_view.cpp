@@ -111,7 +111,7 @@ namespace production
       ::userbase::view::_001OnInitialUpdate(pobj);
    }
 
-   void view::on_update(::view * pSender, LPARAM lHint, ::radix::object * phint) 
+   void view::on_update(::view * pSender, LPARAM lHint, ::gen::object * phint) 
    {
       UNREFERENCED_PARAMETER(pSender);
       if(lHint == 5432108)
