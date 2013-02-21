@@ -4,7 +4,7 @@ namespace production
 {
 
    class CLASS_DECL_CA2_PRODUCTION view_update_hint :
-      virtual public ::radix::object
+      virtual public ::gen::object
    {
    public:
       enum EOption
