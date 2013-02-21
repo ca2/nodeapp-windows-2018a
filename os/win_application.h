@@ -30,7 +30,7 @@ namespace win
 
 
    class CLASS_DECL_win application :
-      virtual public ::ex2::application
+      virtual public ::gen::application
    {
    public:
 
@@ -195,8 +195,8 @@ namespace win
       ::ca::window * window_from_os_data(void * pdata);
       ::ca::window * window_from_os_data_permanent(void * pdata);
 
-      virtual ::radix::thread * GetThread();
-      virtual void set_thread(::radix::thread * pthread);
+      virtual ::gen::thread * GetThread();
+      virtual void set_thread(::gen::thread * pthread);
 
       virtual ::ca::window * FindWindow(const char * lpszClassName, const char * lpszWindowName);
       virtual ::ca::window * FindWindowEx(oswindow oswindowParent, oswindow oswindowChildAfter, const char * lpszClass, const char * lpszWindow);
