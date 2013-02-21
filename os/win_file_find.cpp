@@ -318,7 +318,7 @@ namespace win
 
    void file_find::dump(dump_context & dumpcontext) const
    {
-      ::radix::object::dump(dumpcontext);
+      ::gen::object::dump(dumpcontext);
       dumpcontext << "\nm_hContext = " << (UINT) m_hContext;
    }
 
