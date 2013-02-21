@@ -16,7 +16,7 @@ enum EPaneView
 
 
 class CLASS_DECL_CA2_PRODUCTION pane_view_update_hint :
-   public ::radix::object  
+   public ::gen::object  
 {
 public:
    enum e_type
