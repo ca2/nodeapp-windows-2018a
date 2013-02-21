@@ -34,7 +34,7 @@ namespace production
 
       virtual void install_message_handling(::gen::message::dispatch * pinterface);
 
-	   virtual void on_update(::view * pSender, LPARAM lHint, ::radix::object* pHint);
+	   virtual void on_update(::view * pSender, LPARAM lHint, ::gen::object* pHint);
 	   virtual bool pre_create_window(CREATESTRUCT& cs);
 
 
