@@ -40,7 +40,7 @@ namespace win
       ASSERT(__is_valid_string(lpszFileName));
 
       if(!open(lpszFileName, nOpenFlags))
-         throw ex1::file_exception(papp, ::ex1::file_exception::none, -1, lpszFileName);
+         throw gen::file_exception(papp, ::gen::file_exception::none, -1, lpszFileName);
 
    }
 
@@ -52,7 +52,7 @@ namespace win
 
    }
 
-   ex1::file * file::Duplicate() const
+   gen::file * file::Duplicate() const
    {
       ASSERT_VALID(this);
       ASSERT(m_hFile != (UINT)hFileNull);
@@ -92,7 +92,7 @@ namespace win
       nOpenFlags &= ~(UINT)type_binary;
 
 
-      if(nOpenFlags & ex1::file::defer_create_directory)
+      if(nOpenFlags & gen::file::defer_create_directory)
       {
          System.dir_mk(System.dir_name(lpszFileName));
       }
@@ -179,7 +179,7 @@ namespace win
             /*         if (pException != NULL)
             {
             pException->create(get_app());
-            ::ex1::file_exception * pfe = dynamic_cast < ::ex1::file_exception * > (pException->m_p);
+            ::gen::file_exception * pfe = dynamic_cast < ::gen::file_exception * > (pException->m_p);
             if(pfe != NULL)
             {
             pfe->m_lOsError = dwLastError;
@@ -217,7 +217,7 @@ namespace win
             /*if (pException != NULL)
             {
             pException->create(get_app());
-            ::ex1::file_exception * pfe = dynamic_cast < ::ex1::file_exception * > (pException->m_p);
+            ::gen::file_exception * pfe = dynamic_cast < ::gen::file_exception * > (pException->m_p);
             if(pfe != NULL)
             {
             pfe->m_lOsError = ::GetLastError();
@@ -282,10 +282,10 @@ namespace win
 
       // Win32s will not return an error all the time (usually DISK_FULL)
       if (nWritten != nCount)
-         vfxThrowFileException(get_app(), ::ex1::file_exception::diskFull, -1, m_strFileName);
+         vfxThrowFileException(get_app(), ::gen::file_exception::diskFull, -1, m_strFileName);
    }
 
-   file_position file::seek(file_offset lOff, ex1::e_seek nFrom)
+   file_position file::seek(file_offset lOff, gen::e_seek nFrom)
    {
 
       if(m_hFile == (UINT)hFileNull)
@@ -293,8 +293,8 @@ namespace win
 
       ASSERT_VALID(this);
       ASSERT(m_hFile != (UINT)hFileNull);
-      ASSERT(nFrom == ::ex1::seek_begin || nFrom == ::ex1::seek_end || nFrom == ::ex1::seek_current);
-      ASSERT(::ex1::seek_begin == FILE_BEGIN && ::ex1::seek_end == FILE_END && ::ex1::seek_current == FILE_CURRENT);
+      ASSERT(nFrom == ::gen::seek_begin || nFrom == ::gen::seek_end || nFrom == ::gen::seek_current);
+      ASSERT(::gen::seek_begin == FILE_BEGIN && ::gen::seek_end == FILE_END && ::gen::seek_current == FILE_CURRENT);
 
       LONG lLoOffset = lOff & 0xffffffff;
       LONG lHiOffset = (lOff >> 32) & 0xffffffff;
@@ -394,7 +394,7 @@ namespace win
       ASSERT_VALID(this);
       ASSERT(m_hFile != (UINT)hFileNull);
 
-      seek((LONG)dwNewLen, (ex1::e_seek)::ex1::seek_begin);
+      seek((LONG)dwNewLen, (gen::e_seek)::gen::seek_begin);
 
       if (!::SetEndOfFile((HANDLE)m_hFile))
          file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
@@ -408,9 +408,9 @@ namespace win
 
       // seek is a non const operation
       file* pFile = (file*)this;
-      dwCur = pFile->seek(0L, ::ex1::seek_current);
+      dwCur = pFile->seek(0L, ::gen::seek_current);
       dwLen = pFile->seek_to_end();
-      VERIFY(dwCur == (uint64_t)pFile->seek((file_offset) dwCur, ::ex1::seek_begin));
+      VERIFY(dwCur == (uint64_t)pFile->seek((file_offset) dwCur, ::gen::seek_begin));
 
       return (file_size) dwLen;
    }
@@ -449,13 +449,13 @@ namespace win
 
    void file::assert_valid() const
    {
-      ::radix::object::assert_valid();
+      ::gen::object::assert_valid();
       // we permit the descriptor m_hFile to be any value for derived classes
    }
 
    void file::dump(dump_context & dumpcontext) const
    {
-      ::radix::object::dump(dumpcontext);
+      ::gen::object::dump(dumpcontext);
 
       dumpcontext << "with handle " << (UINT)m_hFile;
       dumpcontext << " and name \"" << m_strFileName << "\"";
@@ -560,7 +560,7 @@ namespace win
    {
       ASSERT_VALID(this);
 
-      ::ex1::file_status status;
+      ::gen::file_status status;
       GetStatus(status);
       return System.file().name_(status.m_strFullName);
    }
@@ -569,7 +569,7 @@ namespace win
    {
       ASSERT_VALID(this);
 
-      ::ex1::file_status status;
+      ::gen::file_status status;
       GetStatus(status);
       return System.file().title_(status.m_strFullName);
    }
@@ -578,7 +578,7 @@ namespace win
    {
       ASSERT_VALID(this);
 
-      ::ex1::file_status status;
+      ::gen::file_status status;
       GetStatus(status);
       return status.m_strFullName;
    }
@@ -612,165 +612,165 @@ namespace win
       switch ((UINT)lOsErr)
       {
       case NO_ERROR:
-         return ::ex1::file_exception::none;
+         return ::gen::file_exception::none;
       case ERROR_FILE_NOT_FOUND:
-         return ::ex1::file_exception::fileNotFound;
+         return ::gen::file_exception::fileNotFound;
       case ERROR_PATH_NOT_FOUND:
-         return ::ex1::file_exception::badPath;
+         return ::gen::file_exception::badPath;
       case ERROR_TOO_MANY_OPEN_FILES:
-         return ::ex1::file_exception::tooManyOpenFiles;
+         return ::gen::file_exception::tooManyOpenFiles;
       case ERROR_ACCESS_DENIED:
-         return ::ex1::file_exception::accessDenied;
+         return ::gen::file_exception::accessDenied;
       case ERROR_INVALID_HANDLE:
-         return ::ex1::file_exception::fileNotFound;
+         return ::gen::file_exception::fileNotFound;
       case ERROR_BAD_FORMAT:
-         return ::ex1::file_exception::invalidFile;
+         return ::gen::file_exception::invalidFile;
       case ERROR_INVALID_ACCESS:
-         return ::ex1::file_exception::accessDenied;
+         return ::gen::file_exception::accessDenied;
       case ERROR_INVALID_DRIVE:
-         return ::ex1::file_exception::badPath;
+         return ::gen::file_exception::badPath;
       case ERROR_CURRENT_DIRECTORY:
-         return ::ex1::file_exception::removeCurrentDir;
+         return ::gen::file_exception::removeCurrentDir;
       case ERROR_NOT_SAME_DEVICE:
-         return ::ex1::file_exception::badPath;
+         return ::gen::file_exception::badPath;
       case ERROR_NO_MORE_FILES:
-         return ::ex1::file_exception::fileNotFound;
+         return ::gen::file_exception::fileNotFound;
       case ERROR_WRITE_PROTECT:
-         return ::ex1::file_exception::accessDenied;
+         return ::gen::file_exception::accessDenied;
       case ERROR_BAD_UNIT:
-         return ::ex1::file_exception::hardIO;
+         return ::gen::file_exception::hardIO;
       case ERROR_NOT_READY:
-         return ::ex1::file_exception::hardIO;
+         return ::gen::file_exception::hardIO;
       case ERROR_BAD_COMMAND:
-         return ::ex1::file_exception::hardIO;
+         return ::gen::file_exception::hardIO;
       case ERROR_CRC:
-         return ::ex1::file_exception::hardIO;
+         return ::gen::file_exception::hardIO;
       case ERROR_BAD_LENGTH:
-         return ::ex1::file_exception::badSeek;
+         return ::gen::file_exception::badSeek;
       case ERROR_SEEK:
-         return ::ex1::file_exception::badSeek;
+         return ::gen::file_exception::badSeek;
       case ERROR_NOT_DOS_DISK:
-         return ::ex1::file_exception::invalidFile;
+         return ::gen::file_exception::invalidFile;
       case ERROR_SECTOR_NOT_FOUND:
-         return ::ex1::file_exception::badSeek;
+         return ::gen::file_exception::badSeek;
       case ERROR_WRITE_FAULT:
-         return ::ex1::file_exception::accessDenied;
+         return ::gen::file_exception::accessDenied;
       case ERROR_READ_FAULT:
-         return ::ex1::file_exception::badSeek;
+         return ::gen::file_exception::badSeek;
       case ERROR_SHARING_VIOLATION:
-         return ::ex1::file_exception::sharingViolation;
+         return ::gen::file_exception::sharingViolation;
       case ERROR_LOCK_VIOLATION:
-         return ::ex1::file_exception::lockViolation;
+         return ::gen::file_exception::lockViolation;
       case ERROR_WRONG_DISK:
-         return ::ex1::file_exception::badPath;
+         return ::gen::file_exception::badPath;
       case ERROR_SHARING_BUFFER_EXCEEDED:
-         return ::ex1::file_exception::tooManyOpenFiles;
+         return ::gen::file_exception::tooManyOpenFiles;
       case ERROR_HANDLE_EOF:
-         return ::ex1::file_exception::endOfFile;
+         return ::gen::file_exception::endOfFile;
       case ERROR_HANDLE_DISK_FULL:
-         return ::ex1::file_exception::diskFull;
+         return ::gen::file_exception::diskFull;
       case ERROR_DUP_NAME:
-         return ::ex1::file_exception::badPath;
+         return ::gen::file_exception::badPath;
       case ERROR_BAD_NETPATH:
-         return ::ex1::file_exception::badPath;
+         return ::gen::file_exception::badPath;
       case ERROR_NETWORK_BUSY:
-         return ::ex1::file_exception::accessDenied;
+         return ::gen::file_exception::accessDenied;
       case ERROR_DEV_NOT_EXIST:
-         return ::ex1::file_exception::badPath;
+         return ::gen::file_exception::badPath;
       case ERROR_ADAP_HDW_ERR:
-         return ::ex1::file_exception::hardIO;
+         return ::gen::file_exception::hardIO;
       case ERROR_BAD_NET_RESP:
-         return ::ex1::file_exception::accessDenied;
+         return ::gen::file_exception::accessDenied;
       case ERROR_UNEXP_NET_ERR:
-         return ::ex1::file_exception::hardIO;
+         return ::gen::file_exception::hardIO;
       case ERROR_BAD_REM_ADAP:
-         return ::ex1::file_exception::invalidFile;
+         return ::gen::file_exception::invalidFile;
       case ERROR_NO_SPOOL_SPACE:
-         return ::ex1::file_exception::directoryFull;
+         return ::gen::file_exception::directoryFull;
       case ERROR_NETNAME_DELETED:
-         return ::ex1::file_exception::accessDenied;
+         return ::gen::file_exception::accessDenied;
       case ERROR_NETWORK_ACCESS_DENIED:
-         return ::ex1::file_exception::accessDenied;
+         return ::gen::file_exception::accessDenied;
       case ERROR_BAD_DEV_TYPE:
-         return ::ex1::file_exception::invalidFile;
+         return ::gen::file_exception::invalidFile;
       case ERROR_BAD_NET_NAME:
-         return ::ex1::file_exception::badPath;
+         return ::gen::file_exception::badPath;
       case ERROR_TOO_MANY_NAMES:
-         return ::ex1::file_exception::tooManyOpenFiles;
+         return ::gen::file_exception::tooManyOpenFiles;
       case ERROR_SHARING_PAUSED:
-         return ::ex1::file_exception::badPath;
+         return ::gen::file_exception::badPath;
       case ERROR_REQ_NOT_ACCEP:
-         return ::ex1::file_exception::accessDenied;
+         return ::gen::file_exception::accessDenied;
       case ERROR_FILE_EXISTS:
-         return ::ex1::file_exception::accessDenied;
+         return ::gen::file_exception::accessDenied;
       case ERROR_CANNOT_MAKE:
-         return ::ex1::file_exception::accessDenied;
+         return ::gen::file_exception::accessDenied;
       case ERROR_ALREADY_ASSIGNED:
-         return ::ex1::file_exception::badPath;
+         return ::gen::file_exception::badPath;
       case ERROR_INVALID_PASSWORD:
-         return ::ex1::file_exception::accessDenied;
+         return ::gen::file_exception::accessDenied;
       case ERROR_NET_WRITE_FAULT:
-         return ::ex1::file_exception::hardIO;
+         return ::gen::file_exception::hardIO;
       case ERROR_DISK_CHANGE:
-         return ::ex1::file_exception::fileNotFound;
+         return ::gen::file_exception::fileNotFound;
       case ERROR_DRIVE_LOCKED:
-         return ::ex1::file_exception::lockViolation;
+         return ::gen::file_exception::lockViolation;
       case ERROR_BUFFER_OVERFLOW:
-         return ::ex1::file_exception::badPath;
+         return ::gen::file_exception::badPath;
       case ERROR_DISK_FULL:
-         return ::ex1::file_exception::diskFull;
+         return ::gen::file_exception::diskFull;
       case ERROR_NO_MORE_SEARCH_HANDLES:
-         return ::ex1::file_exception::tooManyOpenFiles;
+         return ::gen::file_exception::tooManyOpenFiles;
       case ERROR_INVALID_TARGET_HANDLE:
-         return ::ex1::file_exception::invalidFile;
+         return ::gen::file_exception::invalidFile;
       case ERROR_INVALID_CATEGORY:
-         return ::ex1::file_exception::hardIO;
+         return ::gen::file_exception::hardIO;
       case ERROR_INVALID_NAME:
-         return ::ex1::file_exception::badPath;
+         return ::gen::file_exception::badPath;
       case ERROR_INVALID_LEVEL:
-         return ::ex1::file_exception::badPath;
+         return ::gen::file_exception::badPath;
       case ERROR_NO_VOLUME_LABEL:
-         return ::ex1::file_exception::badPath;
+         return ::gen::file_exception::badPath;
       case ERROR_NEGATIVE_SEEK:
-         return ::ex1::file_exception::badSeek;
+         return ::gen::file_exception::badSeek;
       case ERROR_SEEK_ON_DEVICE:
-         return ::ex1::file_exception::badSeek;
+         return ::gen::file_exception::badSeek;
       case ERROR_DIR_NOT_ROOT:
-         return ::ex1::file_exception::badPath;
+         return ::gen::file_exception::badPath;
       case ERROR_DIR_NOT_EMPTY:
-         return ::ex1::file_exception::removeCurrentDir;
+         return ::gen::file_exception::removeCurrentDir;
       case ERROR_LABEL_TOO_LONG:
-         return ::ex1::file_exception::badPath;
+         return ::gen::file_exception::badPath;
       case ERROR_BAD_PATHNAME:
-         return ::ex1::file_exception::badPath;
+         return ::gen::file_exception::badPath;
       case ERROR_LOCK_FAILED:
-         return ::ex1::file_exception::lockViolation;
+         return ::gen::file_exception::lockViolation;
       case ERROR_BUSY:
-         return ::ex1::file_exception::accessDenied;
+         return ::gen::file_exception::accessDenied;
       case ERROR_INVALID_ORDINAL:
-         return ::ex1::file_exception::invalidFile;
+         return ::gen::file_exception::invalidFile;
       case ERROR_ALREADY_EXISTS:
-         return ::ex1::file_exception::accessDenied;
+         return ::gen::file_exception::accessDenied;
       case ERROR_INVALID_EXE_SIGNATURE:
-         return ::ex1::file_exception::invalidFile;
+         return ::gen::file_exception::invalidFile;
       case ERROR_BAD_EXE_FORMAT:
-         return ::ex1::file_exception::invalidFile;
+         return ::gen::file_exception::invalidFile;
       case ERROR_FILENAME_EXCED_RANGE:
-         return ::ex1::file_exception::badPath;
+         return ::gen::file_exception::badPath;
       case ERROR_META_EXPANSION_TOO_LONG:
-         return ::ex1::file_exception::badPath;
+         return ::gen::file_exception::badPath;
       case ERROR_DIRECTORY:
-         return ::ex1::file_exception::badPath;
+         return ::gen::file_exception::badPath;
       case ERROR_OPERATION_ABORTED:
-         return ::ex1::file_exception::hardIO;
+         return ::gen::file_exception::hardIO;
       case ERROR_IO_INCOMPLETE:
-         return ::ex1::file_exception::hardIO;
+         return ::gen::file_exception::hardIO;
       case ERROR_IO_PENDING:
-         return ::ex1::file_exception::hardIO;
+         return ::gen::file_exception::hardIO;
       case ERROR_SWAPERROR:
-         return ::ex1::file_exception::accessDenied;
+         return ::gen::file_exception::accessDenied;
       default:
-         return ::ex1::file_exception::type_generic;
+         return ::gen::file_exception::type_generic;
       }
    }
 
@@ -785,18 +785,18 @@ namespace win
    /////////////////////////////////////////////////////////////////////////////
    // file Status implementation
 
-   bool file::GetStatus(::ex1::file_status& rStatus) const
+   bool file::GetStatus(::gen::file_status& rStatus) const
    {
       ASSERT_VALID(this);
 
-      //memset(&rStatus, 0, sizeof(::ex1::file_status));
+      //memset(&rStatus, 0, sizeof(::gen::file_status));
 
       // copy file name from cached m_strFileName
       rStatus.m_strFullName = gen::international::unicode_to_utf8(m_wstrFileName);
 
       if (m_hFile != hFileNull)
       {
-         // get time ::ex1::seek_current file size
+         // get time ::gen::seek_current file size
          FILETIME ftCreate, ftAccess, ftModify;
          if (!::GetFileTime((HANDLE)m_hFile, &ftCreate, &ftAccess, &ftModify))
             return FALSE;
@@ -839,7 +839,7 @@ namespace win
    }
 
 
-   bool file::GetStatus(const char * lpszFileName, ::ex1::file_status& rStatus)
+   bool file::GetStatus(const char * lpszFileName, ::gen::file_status& rStatus)
    {
       // attempt to fully qualify path first
       wstring wstrFullName;
@@ -959,7 +959,7 @@ namespace win
    */
 
    /*
-   void file::SetStatus(const char * lpszFileName, const ::ex1::file_status& status)
+   void file::SetStatus(const char * lpszFileName, const ::gen::file_status& status)
    {
    DWORD wAttr;
    FILETIME creationTime;
@@ -1039,7 +1039,7 @@ namespace win
 
 
 
-   // ex1::filesp
+   // gen::filesp
    file::operator HFILE() const
    {
 
@@ -1660,7 +1660,7 @@ void CLASS_DECL_win vfxThrowFileException(::ca::application * papp, int32_t caus
       lpsz = ::win::szUnknown;
    //   TRACE3("file exception: %hs, file %s, App error information = %ld.\n", lpsz, (lpszFileName == NULL) ? "Unknown" : lpszFileName, lOsError);
 #endif
-   throw ::ex1::file_exception(papp, cause, lOsError, lpszFileName);
+   throw ::gen::file_exception(papp, cause, lOsError, lpszFileName);
 }
 
 namespace win
@@ -1672,23 +1672,23 @@ namespace win
       {
       case EPERM:
       case EACCES:
-         return ::ex1::file_exception::accessDenied;
+         return ::gen::file_exception::accessDenied;
       case EBADF:
-         return ::ex1::file_exception::invalidFile;
+         return ::gen::file_exception::invalidFile;
       case EDEADLOCK:
-         return ::ex1::file_exception::sharingViolation;
+         return ::gen::file_exception::sharingViolation;
       case EMFILE:
-         return ::ex1::file_exception::tooManyOpenFiles;
+         return ::gen::file_exception::tooManyOpenFiles;
       case ENOENT:
       case ENFILE:
-         return ::ex1::file_exception::fileNotFound;
+         return ::gen::file_exception::fileNotFound;
       case ENOSPC:
-         return ::ex1::file_exception::diskFull;
+         return ::gen::file_exception::diskFull;
       case EINVAL:
       case EIO:
-         return ::ex1::file_exception::hardIO;
+         return ::gen::file_exception::hardIO;
       default:
-         return ::ex1::file_exception::type_generic;
+         return ::gen::file_exception::type_generic;
       }
 
    }
