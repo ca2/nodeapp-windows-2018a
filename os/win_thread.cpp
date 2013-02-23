@@ -267,19 +267,35 @@ void __internal_pre_translate_message(gen::signal_object * pobj)
                         }
                      }
                   }
+                  catch(exit_exception & e)
+                  {
+                     throw e;
+                  }
                   catch(...)
                   {
                   }
                }
+            }
+            catch(exit_exception & e)
+            {
+               throw e;
             }
             catch(...)
             {
             }
          }
       }
+      catch(exit_exception & e)
+      {
+         throw e;
+      }
       catch(...)
       {
       }
+   }
+   catch(exit_exception & e)
+   {
+      throw e;
    }
    catch(...)
    {
@@ -589,9 +605,12 @@ namespace win
                try
                {
                   ::user::interaction * puie = pui->m_pguie;
-                  if(WIN_THREAD(puie->m_pthread->m_pthread) == this 
+                  if(puie != NULL 
+                     && puie->m_pthread != NULL
+                     && puie->m_pthread->m_pthread != NULL
+                     && (WIN_THREAD(puie->m_pthread->m_pthread) == this 
                      || WIN_THREAD(puie->m_pthread->m_pthread->m_p) == WIN_THREAD(m_p)
-                     || WIN_THREAD(puie->m_pthread->m_pthread) == WIN_THREAD(m_p))
+                     || WIN_THREAD(puie->m_pthread->m_pthread) == WIN_THREAD(m_p)))
                   {
                      puie->m_pthread = NULL;
                   }
@@ -1515,42 +1534,79 @@ stop_run:
 
          if(msg.message != WM_KICKIDLE)
          {
+
             {
+
                ::ca::smart_pointer < ::gen::message::base > spbase;
 
                spbase(get_base(&msg));
 
-               try
+               if(spbase.is_set())
                {
-                  if(m_p != NULL)
-                  {
-                     m_p->pre_translate_message(spbase);
-                     if(spbase->m_bRet)
-                        return TRUE;
-                  }
-               }
-               catch(...)
-               {
-               }
 
-               if(true)
-               {
                   try
                   {
-                     if(m_papp != NULL)
+                     if(m_p != NULL)
                      {
-                        try
+                        m_p->pre_translate_message(spbase);
+                        if(spbase->m_bRet)
+                           return TRUE;
+                     }
+                  }
+                  catch(exit_exception & e)
+                  {
+                     throw e;
+                  }
+                  catch(...)
+                  {
+                  }
+
+                  if(true)
+                  {
+                     try
+                     {
+                        if(m_papp != NULL)
                         {
-                           if(m_papp->m_psystem != NULL)
+                           try
                            {
-                              m_papp->m_psystem->pre_translate_message(spbase);
-                              if(spbase->m_bRet)
-                                 return TRUE;
+                              if(m_papp->m_psystem != NULL)
+                              {
+                                 m_papp->m_psystem->pre_translate_message(spbase);
+                                 if(spbase->m_bRet)
+                                    return TRUE;
+                                 try
+                                 {
+                                    if(m_papp->m_psystem->m_pcube != NULL)
+                                    {
+                                       m_papp->m_psystem->m_pcubeInterface->pre_translate_message(spbase);
+                                       if(spbase->m_bRet)
+                                          return TRUE;
+                                    }
+                                 }
+                                 catch(...)
+                                 {
+                                 }
+                              }
+                           }
+                           catch(...)
+                           {
+                           }
+                           if(m_papp->m_psession != NULL)
+                           {
                               try
                               {
-                                 if(m_papp->m_psystem->m_pcube != NULL)
+                                 m_papp->m_psession->pre_translate_message(spbase);
+                                 if(spbase->m_bRet)
+                                    return TRUE;
+                              }
+                              catch(...)
+                              {
+                              }
+                              try
+                              {
+                                 if(m_papp->m_psession->m_pbergedge != NULL)
                                  {
-                                    m_papp->m_psystem->m_pcubeInterface->pre_translate_message(spbase);
+                                    m_papp->m_psession->m_pbergedgeInterface->pre_translate_message(spbase);
                                     if(spbase->m_bRet)
                                        return TRUE;
                                  }
@@ -1560,59 +1616,33 @@ stop_run:
                               }
                            }
                         }
-                        catch(...)
-                        {
-                        }
-                        if(m_papp->m_psession != NULL)
-                        {
-                           try
-                           {
-                              m_papp->m_psession->pre_translate_message(spbase);
-                              if(spbase->m_bRet)
-                                 return TRUE;
-                           }
-                           catch(...)
-                           {
-                           }
-                           try
-                           {
-                              if(m_papp->m_psession->m_pbergedge != NULL)
-                              {
-                                 m_papp->m_psession->m_pbergedgeInterface->pre_translate_message(spbase);
-                                 if(spbase->m_bRet)
-                                    return TRUE;
-                              }
-                           }
-                           catch(...)
-                           {
-                           }
-                        }
                      }
-                  }
-                  catch(...)
-                  {
-                  }
-                  try
-                  {
-                     if(!m_papp->is_system() && m_papp->is_bergedge())
+                     catch(...)
                      {
-                        m_papp->pre_translate_message(spbase);
-                        if(spbase->m_bRet)
-                           return TRUE;
                      }
-                  }
-                  catch(...)
-                  {
+                     try
+                     {
+                        if(!m_papp->is_system() && m_papp->is_bergedge())
+                        {
+                           m_papp->pre_translate_message(spbase);
+                           if(spbase->m_bRet)
+                              return TRUE;
+                        }
+                     }
+                     catch(...)
+                     {
+                     }
+
                   }
 
+
+
+                  __pre_translate_message(spbase);
+                  if(spbase->m_bRet)
+                     return TRUE;
+
+                  spbase.destroy();
                }
-
-
-               __pre_translate_message(spbase);
-               if(spbase->m_bRet)
-                  return TRUE;
-
-               spbase.destroy();
             }
             {
                ::TranslateMessage(&msg);
@@ -1620,6 +1650,10 @@ stop_run:
             }
          }
          return TRUE;
+      }
+      catch(exit_exception & e)
+      {
+         throw e;
       }
       catch(const ::ca::exception & e)
       {
@@ -1871,14 +1905,14 @@ run:
    }
    uint32_t thread::ResumeThread()
    { ASSERT(m_hThread != NULL); return ::ResumeThread(m_hThread); }
-/*   DWORD thread::SuspendThread()
+   /*   DWORD thread::SuspendThread()
    { ASSERT(m_hThread != NULL); return ::SuspendThread(m_hThread); }
    */
 
 
    bool thread::post_thread_message(UINT message, WPARAM wParam, LPARAM lParam)
    {
-      
+
       if(m_hThread == NULL)
          return false;
 

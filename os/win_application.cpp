@@ -464,7 +464,6 @@ namespace win
       ::ca::thread_sp::m_p->set_os_data(NULL);
 
       WIN_THREAD(::ca::thread_sp::m_p)->m_bRun = false;
-      WIN_THREAD(::ca::smart_pointer<::gen::application>::m_p->::ca::thread_sp::m_p)->m_bRun = false;
 
       int32_t iRet = ::gen::application::exit_instance();
 
