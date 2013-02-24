@@ -147,7 +147,7 @@ bool installer::initialize()
    }
 
 
-   m_hmutexSpabootInstall = ::CreateMutex(NULL, FALSE, "Global\\ca2::fontopus::ccvotagus_ca2_spaboot_install::7807e510-5579-11dd-ae16-0800200c7784");
+   m_hmutexSpabootInstall = ::CreateMutex(NULL, FALSE, "Global\\ca::fontopus::ccvotagus_ca2_spaboot_install::7807e510-5579-11dd-ae16-0800200c7784");
    if(::GetLastError() == ERROR_ALREADY_EXISTS)
    {
       m_iError = -202;
@@ -169,7 +169,7 @@ bool installer::initialize()
 
    prepare_small_bell();
 
-   if(!m_rxchannel.create("ca2/fontopus/ccvotagus/spaboot_install", "app-install.exe"))
+   if(!m_rxchannel.create("ca/fontopus/ccvotagus/spaboot_install", "app-install.exe"))
    {
       m_iError = -1;
       return false;
@@ -339,26 +339,26 @@ void installer::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMe
 bool installer::are_there_user_files_in_use()
 {
 #ifdef X86
-   if(is_user_using(dir::ca2("stage\\x86\\msvcp110d.dll")))
+   if(is_user_using(dir::ca("stage\\x86\\msvcp110d.dll")))
       return true;
-   if(is_user_using(dir::ca2("stage\\x86\\msvcr110d.dll")))
+   if(is_user_using(dir::ca("stage\\x86\\msvcr110d.dll")))
       return true;
-   if(is_user_using(dir::ca2("stage\\x86\\c.dll")))
+   if(is_user_using(dir::ca("stage\\x86\\c.dll")))
       return true;
-   if(is_user_using(dir::ca2("stage\\x86\\ca.dll")))
+   if(is_user_using(dir::ca("stage\\x86\\ca.dll")))
       return true;
-   if(is_user_using(dir::ca2("stage\\x86\\ca2.dll")))
+   if(is_user_using(dir::ca("stage\\x86\\ca.dll")))
       return true;
 #else
-   if(is_user_using(dir::ca2("stage\\x64\\msvcp110d.dll")))
+   if(is_user_using(dir::ca("stage\\x64\\msvcp110d.dll")))
       return true;
-   if(is_user_using(dir::ca2("stage\\x64\\msvcr110d.dll")))
+   if(is_user_using(dir::ca("stage\\x64\\msvcr110d.dll")))
       return true;
-   if(is_user_using(dir::ca2("stage\\x64\\c.dll")))
+   if(is_user_using(dir::ca("stage\\x64\\c.dll")))
       return true;
-   if(is_user_using(dir::ca2("stage\\x64\\ca.dll")))
+   if(is_user_using(dir::ca("stage\\x64\\ca.dll")))
       return true;
-   if(is_user_using(dir::ca2("stage\\x64\\ca2.dll")))
+   if(is_user_using(dir::ca("stage\\x64\\ca.dll")))
       return true;
 #endif
    return false;

@@ -34,9 +34,9 @@ namespace backup
    }
    #endif //DEBUG
 
-   void pane_view::_001OnCreate(gen::signal_object * pobj) 
+   void pane_view::_001OnCreate(ca::signal_object * pobj) 
    {
-//      SCAST_PTR(::gen::message::create, pcreate, pobj)
+//      SCAST_PTR(::ca::message::create, pcreate, pobj)
 
       if(pobj->previous())
          return;
@@ -48,7 +48,7 @@ namespace backup
       
    }
 
-   void pane_view::on_update(::view* pSender, LPARAM lHint, ::gen::object* pHint) 
+   void pane_view::on_update(::view* pSender, LPARAM lHint, ::ca::object* pHint) 
    {
       ::userbase::tab_view::on_update(pSender, lHint, pHint);
       if(lHint == 543218)
@@ -142,7 +142,7 @@ namespace backup
    }
 
 
-   void pane_view::install_message_handling(::gen::message::dispatch * pinterface)
+   void pane_view::install_message_handling(::ca::message::dispatch * pinterface)
    {
       ::userex::pane_tab_view::install_message_handling(pinterface);
 	   IGUI_WIN_MSG_LINK(WM_CREATE       , pinterface, this, &pane_view::_001OnCreate);

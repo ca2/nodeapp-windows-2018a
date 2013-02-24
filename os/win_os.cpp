@@ -325,21 +325,21 @@ namespace win
 
          registry::Key keyPlugin;
 
-         if(keyPlugin.OpenKey(keyPlugins, "@ca2.cc/npca2", true))
+         if(keyPlugin.OpenKey(keyPlugins, "@ca.cc/npca2", true))
          {
 
-            keyPlugin.SetValue("Description", "ca2 plugin for NPAPI");
+            keyPlugin.SetValue("Description", "ca plugin for NPAPI");
             keyPlugin.SetValue("Path", System.dir().ca2module("npca2.dll"));
-            keyPlugin.SetValue("ProductName", "ca2 plugin for NPAPI");
-            keyPlugin.SetValue("Vendor", "ca2 Desenvolvimento de Software Ltda.");
-            keyPlugin.SetValue("Version", Application.file().as_string(System.dir().ca2("appdata/x86/ca2_build.txt")));
+            keyPlugin.SetValue("ProductName", "ca plugin for NPAPI");
+            keyPlugin.SetValue("Vendor", "ca Desenvolvimento de Software Ltda.");
+            keyPlugin.SetValue("Version", Application.file().as_string(System.dir().ca("appdata/x86/ca2_build.txt")));
 
             registry::Key keyApplicationCa2;
 
-            if(keyApplicationCa2.OpenKey(keyPlugin, "application/ca2", true))
+            if(keyApplicationCa2.OpenKey(keyPlugin, "application/ca", true))
             {
 
-               keyApplicationCa2.SetValue("Description", "ca2 Document");
+               keyApplicationCa2.SetValue("Description", "ca Document");
 
             }
 
@@ -453,9 +453,9 @@ namespace win
          try
          {
 
-            strCommand = gen::str::consume_quoted_value(psz);
-            gen::str::consume_spaces(psz);
-            gen::str::consume(psz, "\"%L\"");
+            strCommand = ca::str::consume_quoted_value(psz);
+            ca::str::consume_spaces(psz);
+            ca::str::consume(psz, "\"%L\"");
             strParam = psz;
 
          }
@@ -533,7 +533,7 @@ namespace win
          return false;
       }
 
-      string strServiceName = "ca2-" + papp->m_strAppId;
+      string strServiceName = "ca-" + papp->m_strAppId;
 
       strServiceName.replace("/", "-");
       strServiceName.replace("\\", "-");
@@ -542,7 +542,7 @@ namespace win
       SC_HANDLE hdlServ = ::CreateService(
          hdlSCM,                    // SCManager database 
          strServiceName,
-         "ca2 : " + papp->m_strAppId,        // service name to display 
+         "ca : " + papp->m_strAppId,        // service name to display 
          STANDARD_RIGHTS_REQUIRED,  // desired access 
          SERVICE_WIN32_OWN_PROCESS | SERVICE_INTERACTIVE_PROCESS, // service type 
          SERVICE_AUTO_START,      // start type 
@@ -585,7 +585,7 @@ namespace win
          //::GetLastError();
          return false;
       }
-      string strServiceName = "ca2-" + papp->m_strAppId;
+      string strServiceName = "ca-" + papp->m_strAppId;
 
       strServiceName.replace("/", "-");
       strServiceName.replace("\\", "-");
@@ -629,7 +629,7 @@ namespace win
          return false;
       }
 
-      string strServiceName = "ca2-" + papp->m_strAppId;
+      string strServiceName = "ca-" + papp->m_strAppId;
 
       strServiceName.replace("/", "-");
       strServiceName.replace("\\", "-");
@@ -671,7 +671,7 @@ namespace win
          return false;
       }
 
-      string strServiceName = "ca2-" + papp->m_strAppId;
+      string strServiceName = "ca-" + papp->m_strAppId;
 
       strServiceName.replace("/", "-");
       strServiceName.replace("\\", "-");
@@ -728,7 +728,7 @@ namespace win
 
       ::count c;
 
-      ::gen::thread * pthread;
+      ::ca::thread * pthread;
 
       c = ::win::thread::s_threadptra.get_size();
 
@@ -746,7 +746,7 @@ namespace win
 
             try
             {
-               pthread = dynamic_cast < ::gen::thread * >(threadptra[i]);
+               pthread = dynamic_cast < ::ca::thread * >(threadptra[i]);
                pthread->m_bRun = false;
                pthread->m_p->m_bRun = false;
             }
@@ -837,7 +837,7 @@ repeat:
    }
 
 
-   void os::set_file_status(const char * lpszFileName, const ::gen::file_status& status)
+   void os::set_file_status(const char * lpszFileName, const ::ca::file_status& status)
    {
 
       DWORD wAttr;

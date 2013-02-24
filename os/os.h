@@ -114,15 +114,15 @@ CLASS_DECL_win WNDPROC __get_window_procedure();
 #pragma comment(lib, "Msimg32.lib") 
 #pragma comment(lib, "Psapi.lib") 
 
-CLASS_DECL_win void __trace_message(const char * lpszPrefix, gen::signal_object * pobj);
+CLASS_DECL_win void __trace_message(const char * lpszPrefix, ca::signal_object * pobj);
 CLASS_DECL_win void __trace_message(const char * lpszPrefix, LPMSG lpmsg);
 
-CLASS_DECL_win bool __cdecl __is_idle_message(gen::signal_object * pobj);
+CLASS_DECL_win bool __cdecl __is_idle_message(ca::signal_object * pobj);
 CLASS_DECL_win bool __cdecl __is_idle_message(MSG* pMsg);
 
 
-CLASS_DECL_win void __process_window_procedure_exception(base_exception*, gen::signal_object * pobj);
-CLASS_DECL_win void __cdecl __pre_translate_message(gen::signal_object * pobj);
+CLASS_DECL_win void __process_window_procedure_exception(base_exception*, ca::signal_object * pobj);
+CLASS_DECL_win void __cdecl __pre_translate_message(ca::signal_object * pobj);
 
 //#include "win_printer.h"
 

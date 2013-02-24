@@ -9,7 +9,7 @@ DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 
    if (dwReason == DLL_PROCESS_ATTACH)
    {
-      ::OutputDebugString("::ca2:: win.dll :: initializing!\n");
+      ::OutputDebugString("::ca:: win.dll :: initializing!\n");
       
 
       ::ca::g_pfn_get_thread = &::win::get_thread;
@@ -45,7 +45,7 @@ DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
       {
       }
 
-      ::OutputDebugString("::ca2:: win.dll :: terminating!\n");
+      ::OutputDebugString("::ca:: win.dll :: terminating!\n");
 
    }
 

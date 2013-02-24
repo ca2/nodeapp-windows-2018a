@@ -29,7 +29,7 @@ namespace production
       int32_t                     m_iV; 
       int32_t                     m_iVH;
       int32_t                     m_iVW;
-      // veriwell votagus ca2 out world stage
+      // veriwell votagus ca out world stage
       int32_t                     m_iVs;
       int32_t                     m_iVsH;
       int32_t                     m_iVsW;
@@ -78,9 +78,9 @@ namespace production
       virtual void _001OnDraw(::ca::graphics * pdc);
 
       virtual void _001OnTabClick(int32_t iTab);
-      virtual void install_message_handling(::gen::message::dispatch * pinterface);
+      virtual void install_message_handling(::ca::message::dispatch * pinterface);
       virtual bool pre_create_window(CREATESTRUCT& cs);
-      virtual void on_update(::view * pSender, LPARAM lHint, ::gen::object * pHint);
+      virtual void on_update(::view * pSender, LPARAM lHint, ::ca::object * pHint);
 
       document * get_document();
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ca2.h"
+#include "ca.h"
 
 #ifdef _CA2_FONTOPUS_PRODUCTION_DLL
     #define CLASS_DECL_CA2_PRODUCTION  _declspec(dllexport)

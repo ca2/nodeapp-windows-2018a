@@ -6,7 +6,7 @@ namespace win
 
 
    class CLASS_DECL_win copydesk : 
-      virtual public ::ca2::copydesk,
+      virtual public ::ca::copydesk,
       virtual public ::ca::window_sp
    {
    public:

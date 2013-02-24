@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace gen
+namespace ca
 {
 
 
@@ -26,4 +26,4 @@ namespace gen
 
    #endif  // no exception handling
 
-}  // namespace gen
+}  // namespace ca

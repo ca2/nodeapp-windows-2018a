@@ -156,13 +156,13 @@ namespace win
    string dir::relpath(const char * lpcszSource, const char * lpcszRelative, const char * psz2)
    {
       const char * pszRequest;
-      if(::ca2::is_url(lpcszSource, &pszRequest))
+      if(::ca::is_url(lpcszSource, &pszRequest))
       {
-         if(gen::str::begins(lpcszRelative, "/"))
+         if(ca::str::begins(lpcszRelative, "/"))
          {
             return path((const char *) string(lpcszSource, pszRequest - lpcszSource), lpcszRelative);
          }
-         else if(*pszRequest == '\0' || gen::str::ends(lpcszSource, "/"))
+         else if(*pszRequest == '\0' || ca::str::ends(lpcszSource, "/"))
          {
             return path(lpcszSource, lpcszRelative, psz2);
          }
@@ -173,7 +173,7 @@ namespace win
       }
       else
       {
-         if(gen::str::ends(lpcszSource, "\\") || gen::str::ends(lpcszSource, "/"))
+         if(ca::str::ends(lpcszSource, "\\") || ca::str::ends(lpcszSource, "/"))
          {
             return path(lpcszSource, lpcszRelative, psz2);
          }
@@ -497,7 +497,7 @@ namespace win
       string strPath(lpcszPath);
       if(strPath.get_length() >= MAX_PATH)
       {
-         if(gen::str::begins(strPath, "\\\\"))
+         if(ca::str::begins(strPath, "\\\\"))
          {
             strPath = "\\\\?\\UNC" + strPath.Mid(1);
          }
@@ -507,7 +507,7 @@ namespace win
          }
       }
       DWORD dwAttrib;
-      dwAttrib = GetFileAttributesW(gen::international::utf8_to_unicode(strPath));
+      dwAttrib = GetFileAttributesW(ca::international::utf8_to_unicode(strPath));
       /*if(dwAttrib == INVALID_FILE_ATTRIBUTES)
       {
          dwAttrib = GetFileAttributes(lpcszPath);
@@ -541,18 +541,18 @@ namespace win
 
       wstring wstrPath;
       
-      //strsize iLen = ::gen::international::utf8_to_unicode_count(strPath);
+      //strsize iLen = ::ca::international::utf8_to_unicode_count(strPath);
       //wstrPath.alloc(iLen + 32);
-      wstrPath = ::gen::international::utf8_to_unicode(strPath);
+      wstrPath = ::ca::international::utf8_to_unicode(strPath);
       if(wstrPath.get_length() >= MAX_PATH)
       {
-         if(::gen::str::begins(wstrPath, L"\\\\"))
+         if(::ca::str::begins(wstrPath, L"\\\\"))
          {
-            ::gen::str::begin(wstrPath, L"\\\\?\\UNC");
+            ::ca::str::begin(wstrPath, L"\\\\?\\UNC");
          }
          else
          {
-            ::gen::str::begin(wstrPath, L"\\\\?\\");
+            ::ca::str::begin(wstrPath, L"\\\\?\\");
          }
       }
       DWORD dwAttrib;
@@ -624,7 +624,7 @@ namespace win
          return true;
       }
       
-      strsize iFind = gen::str::find_ci(".zip:", str);
+      strsize iFind = ca::str::find_ci(".zip:", str);
 
       if(papp->m_bZipIsDir && iFind >= 0 && iFind < iLast)
       {
@@ -645,23 +645,23 @@ namespace win
 
       wstring wstrPath;
       
-      //strsize iLen = ::gen::international::utf8_to_unicode_count(str, iLast + 1);
+      //strsize iLen = ::ca::international::utf8_to_unicode_count(str, iLast + 1);
 
       //wstrPath.alloc(iLen + 32);
 
-      wstrPath = ::gen::international::utf8_to_unicode(str, iLast + 1);
+      wstrPath = ::ca::international::utf8_to_unicode(str, iLast + 1);
 
       //OutputDebugStringW(wstrPath);
 
       if(wstrPath.get_length() >= MAX_PATH)
       {
-         if(::gen::str::begins(wstrPath, L"\\\\"))
+         if(::ca::str::begins(wstrPath, L"\\\\"))
          {
-            ::gen::str::begin(wstrPath, L"\\\\?\\UNC");
+            ::ca::str::begin(wstrPath, L"\\\\?\\UNC");
          }
          else
          {
-            ::gen::str::begin(wstrPath, L"\\\\?\\");
+            ::ca::str::begin(wstrPath, L"\\\\?\\");
          }
       }
       DWORD dwAttrib;
@@ -692,7 +692,7 @@ namespace win
 
    string dir::stage(const char * lpcsz, const char * lpcsz2)
    {
-      return dir::path(ca2("stage"), lpcsz, lpcsz2);
+      return dir::path(ca("stage"), lpcsz, lpcsz2);
    }
 
    string dir::stageapp(const char * lpcsz, const char * lpcsz2)
@@ -706,7 +706,7 @@ namespace win
    }
 
    // stage in ccvotagus spalib
-   string dir::ca2(const char * lpcsz, const char * lpcsz2)
+   string dir::ca(const char * lpcsz, const char * lpcsz2)
    {
       
       single_lock sl(&m_mutex, true);
@@ -715,7 +715,7 @@ namespace win
 
    }
 
-   string dir::ca2(const string & str, const char * lpcsz2)
+   string dir::ca(const string & str, const char * lpcsz2)
    {
       
       single_lock sl(&m_mutex, true);
@@ -724,7 +724,7 @@ namespace win
 
    }
 
-   string dir::ca2(const char * lpcsz, const string & str2)
+   string dir::ca(const char * lpcsz, const string & str2)
    {
       
       single_lock sl(&m_mutex, true);
@@ -733,7 +733,7 @@ namespace win
 
    }
 
-   string dir::ca2(const string & str, const string & str2)
+   string dir::ca(const string & str, const string & str2)
    {
       
       single_lock sl(&m_mutex, true);
@@ -742,7 +742,7 @@ namespace win
 
    }
 
-   string dir::ca2(const string & str)
+   string dir::ca(const string & str)
    {
       
       single_lock sl(&m_mutex, true);
@@ -751,7 +751,7 @@ namespace win
 
    }
 
-   string dir::ca2()
+   string dir::ca()
    {
       
       single_lock sl(&m_mutex, true);
@@ -799,7 +799,7 @@ namespace win
          if(!is(stra[i], papp))
          {
             
-            if(!::CreateDirectoryW(gen::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
+            if(!::CreateDirectoryW(ca::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
             {
                DWORD dwError = ::GetLastError();
                if(dwError == ERROR_ALREADY_EXISTS)
@@ -823,7 +823,7 @@ namespace win
                   catch(...)
                   {
                   }
-                  if(::CreateDirectoryW(gen::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
+                  if(::CreateDirectoryW(ca::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
                   {
                      m_isdirmap.set(stra[i], true, 0);
                      goto try1;
@@ -970,7 +970,7 @@ namespace win
          m_strTimeFolder = appdata("time");
 
       if(m_strNetSeedFolder.is_empty())
-         m_strNetSeedFolder = ca2("net/netseed");
+         m_strNetSeedFolder = ca("net/netseed");
 
       mk(m_strTimeFolder, get_app());
 
@@ -1022,7 +1022,7 @@ namespace win
          CSIDL_COMMON_APPDATA,
          FALSE);
       string strRelative;
-      strRelative = ca2();
+      strRelative = ca();
       index iFind = strRelative.find(':');
       if(iFind >= 0)
       {
@@ -1031,7 +1031,7 @@ namespace win
          strsize iStart = max(iFind1 + 1, iFind2 + 1);
          strRelative = strRelative.Left(iFind - 1) + "_" + strRelative.Mid(iStart, iFind - iStart) + strRelative.Mid(iFind + 1);
       }
-      return path(path(str, "ca2", strRelative), lpcsz, lpcsz2);
+      return path(path(str, "ca", strRelative), lpcsz, lpcsz2);
    }
 
    string dir::usersystemappdata(::ca::application * papp, const char * lpcszPrefix, const char * lpcsz, const char * lpcsz2)
@@ -1062,7 +1062,7 @@ namespace win
 
 
       string strRelative;
-      strRelative = ca2();
+      strRelative = ca();
       index iFind = strRelative.find(':');
       if(iFind >= 0)
       {
@@ -1083,9 +1083,9 @@ namespace win
          strUserFolderShift = strRelative;
       }
 
-      return path(path(str, "ca2", strUserFolderShift), lpcsz, lpcsz2);
+      return path(path(str, "ca", strUserFolderShift), lpcsz, lpcsz2);
 
-//      return path(path(str, "ca2"), lpcsz);
+//      return path(path(str, "ca"), lpcsz);
 /*      if(&AppUser(papp) == NULL)
       {
          string str;
@@ -1094,7 +1094,7 @@ namespace win
             str,
             CSIDL_PROFILE,
             FALSE);
-         return path(path(str, "ca2\\_____default"), lpcsz);
+         return path(path(str, "ca\\_____default"), lpcsz);
       }
       else
       {
@@ -1114,7 +1114,7 @@ namespace win
             memset(buf, 0, sizeof(buf));
          }
       }
-      return gen::international::unicode_to_utf8(buf);
+      return ca::international::unicode_to_utf8(buf);
    }
 
    string dir::default_userappdata(::ca::application * papp, const char * lpcszPrefix, const char * lpcszLogin, const char * pszRelativePath)
@@ -1139,7 +1139,7 @@ namespace win
          str,
          CSIDL_APPDATA,
          FALSE);
-      return path(path(str, "ca2\\user", lpcszPrefix), lpcszLogin, pszRelativePath);*/
+      return path(path(str, "ca\\user", lpcszPrefix), lpcszLogin, pszRelativePath);*/
    }
 
    string dir::userquicklaunch(::ca::application * papp, const char * lpcszRelativePath, const char * lpcsz2)
@@ -1185,7 +1185,7 @@ namespace win
 
    bool dir::is_inside(const char * pszDir, const char * pszPath, ::ca::application * papp)
    {
-      return gen::str::begins_ci(pszDir, pszPath);
+      return ca::str::begins_ci(pszDir, pszPath);
    }
 
    bool dir::has_subdir(::ca::application * papp, const char * pszDir)

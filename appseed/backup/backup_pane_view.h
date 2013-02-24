@@ -18,9 +18,9 @@ namespace backup
    #endif
 
       void on_create_view(::user::view_creator_data * pcreatordata);
-      void install_message_handling(::gen::message::dispatch * pinterface);
+      void install_message_handling(::ca::message::dispatch * pinterface);
 
-	   virtual void on_update(::view * pSender, LPARAM lHint, ::gen::object* pHint);
+	   virtual void on_update(::view * pSender, LPARAM lHint, ::ca::object* pHint);
 
 
 

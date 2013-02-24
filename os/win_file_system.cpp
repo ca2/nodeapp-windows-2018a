@@ -21,10 +21,10 @@ namespace win
    bool file_system::FullPath(string &str, const char * lpszFileIn)
    {
 
-      //if(::gen::file_system::FullPath(str, lpszFileIn))
+      //if(::ca::file_system::FullPath(str, lpszFileIn))
       // return true;
 
-      if(gen::str::begins_ci(lpszFileIn, "http://"))
+      if(ca::str::begins_ci(lpszFileIn, "http://"))
       {
 
          str = lpszFileIn;
@@ -32,7 +32,7 @@ namespace win
          return true;
 
       }
-      else if(gen::str::begins_ci(lpszFileIn, "https://"))
+      else if(ca::str::begins_ci(lpszFileIn, "https://"))
       {
 
          str = lpszFileIn;
@@ -41,12 +41,12 @@ namespace win
 
       }
       wstring wstrFileIn;
-      wstrFileIn = gen::international::utf8_to_unicode(lpszFileIn);
+      wstrFileIn = ca::international::utf8_to_unicode(lpszFileIn);
       wstring wstrFileOut;
       bool b = vfxFullPath(wstrFileOut.alloc(MAX_PATH * 8), wstrFileIn) != FALSE;
       if(b)
       {
-         gen::international::unicode_to_utf8(str, wstrFileOut);
+         ca::international::unicode_to_utf8(str, wstrFileOut);
       }
       return b;
    }
@@ -54,15 +54,15 @@ namespace win
    bool file_system::FullPath(wstring & wstrFullPath, const wstring & wstrPath)
    {
 
-      /*      if(::gen::file_system::FullPath(wstrFullPath, wstrPath))
+      /*      if(::ca::file_system::FullPath(wstrFullPath, wstrPath))
       return true;*/
 
-      if(gen::str::begins_ci(wstrPath, L"http://"))
+      if(ca::str::begins_ci(wstrPath, L"http://"))
       {
          wstrFullPath = wstrPath;
          return true;
       }
-      else if(gen::str::begins_ci(wstrPath, L"https://"))
+      else if(ca::str::begins_ci(wstrPath, L"https://"))
       {
          wstrFullPath = wstrPath;
          return true;
@@ -77,10 +77,10 @@ namespace win
    {
       int32_t nMax = MAX_PATH * 8;
       wstring wstrPathName;
-      wstrPathName = gen::international::utf8_to_unicode(lpszPathName);
+      wstrPathName = ca::international::utf8_to_unicode(lpszPathName);
       wstring wstrTitle;
       UINT user = vfxGetFileName(wstrPathName, wstrTitle.alloc(nMax), nMax);
-      str = gen::international::unicode_to_utf8(wstrTitle);
+      str = ca::international::unicode_to_utf8(wstrTitle);
       return user;
    }
 
@@ -98,7 +98,7 @@ namespace win
 
       WIN32_FILE_ATTRIBUTE_DATA data;
 
-      if(!GetFileAttributesExW(gen::international::utf8_to_unicode(pszPath), GetFileExInfoStandard, &data))
+      if(!GetFileAttributesExW(ca::international::utf8_to_unicode(pszPath), GetFileExInfoStandard, &data))
       {
          varRet.set_type(var::type_null);
       }

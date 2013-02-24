@@ -9,7 +9,7 @@
    ASSERT(nIDS != 0);
 
    char szFontInfo[256];
-   if (!gen::LoadString(nIDS, szFontInfo,_countof(szFontInfo)))
+   if (!ca::LoadString(nIDS, szFontInfo,_countof(szFontInfo)))
       return FALSE;
 
    LPTSTR lpszSize = _tcschr(szFontInfo, '\n');
@@ -21,7 +21,7 @@
          MulDiv(pLogFont->lfHeight, afxData.cyPixelsPerInch, 72);
       *lpszSize = '\0';
    }
-   ::gen::tcsncpy_s(pLogFont->lfFaceName, _countof(pLogFont->lfFaceName), szFontInfo, _TRUNCATE);
+   ::ca::tcsncpy_s(pLogFont->lfFaceName, _countof(pLogFont->lfFaceName), szFontInfo, _TRUNCATE);
    return TRUE;
 }*/
 
@@ -158,7 +158,7 @@ int32_t c_cdecl __critical_new_handler(size_t nSize)
 {
    // called during critical primitive::memory allocation
    //  free up part of the cast's safety cache
-//   TRACE(::gen::trace::category_Memory, 0, "Warning: Critical primitive::memory allocation failed!\n");
+//   TRACE(::ca::trace::category_Memory, 0, "Warning: Critical primitive::memory allocation failed!\n");
    ___THREAD_STATE* pThreadState = __get_thread_state();
    if (pThreadState != NULL && pThreadState->m_pSafetyPoolBuffer != NULL)
    {
@@ -166,7 +166,7 @@ int32_t c_cdecl __critical_new_handler(size_t nSize)
       if (nOldBufferSize <= nSize + MIN_MALLOC_OVERHEAD)
       {
          // give it all up
-  ///       TRACE(::gen::trace::category_Memory, 0, "Warning: Freeing application's primitive::memory safety pool!\n");
+  ///       TRACE(::ca::trace::category_Memory, 0, "Warning: Freeing application's primitive::memory safety pool!\n");
          free(pThreadState->m_pSafetyPoolBuffer);
          pThreadState->m_pSafetyPoolBuffer = NULL;
       }
@@ -176,13 +176,13 @@ int32_t c_cdecl __critical_new_handler(size_t nSize)
          _expand(pThreadState->m_pSafetyPoolBuffer,
             nOldBufferSize - (nSize + MIN_MALLOC_OVERHEAD));
          //__enable_memory_tracking(bEnable);
-//         TRACE(::gen::trace::category_Memory, 0, "Warning: Shrinking safety pool from %d to %d to satisfy request of %d bytes.\n",
+//         TRACE(::ca::trace::category_Memory, 0, "Warning: Shrinking safety pool from %d to %d to satisfy request of %d bytes.\n",
   //           nOldBufferSize, _msize(pThreadState->m_pSafetyPoolBuffer), nSize);
       }
       return 1;       // retry it
    }
 
-//   TRACE(::gen::trace::category_Memory, 0, "ERROR: Critical primitive::memory allocation from safety pool failed!\n");
+//   TRACE(::ca::trace::category_Memory, 0, "ERROR: Critical primitive::memory allocation from safety pool failed!\n");
    throw memory_exception(::ca::get_thread_app());      // oops
 }
 #endif // !___PORTABLE

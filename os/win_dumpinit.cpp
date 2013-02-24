@@ -19,15 +19,15 @@ void __cdecl __crt_dump_client(void * pvData, size_t nBytes)
       if(_CrtReportBlockType(pvData) != ___CLIENT_BLOCK)
          return;
 
-//      ::gen::object * pca = (::gen::object * ) pvData;
+//      ::ca::object * pca = (::ca::object * ) pvData;
 
-      ::gen::object * pobject = NULL;
+      ::ca::object * pobject = NULL;
 
       /*for(int32_t i = 0; i < 256; i++)
       {
          try
          {
-            pobject = dynamic_cast < ::gen::object * > ((::gen::object *)&((int_ptr *)pca)[i]);
+            pobject = dynamic_cast < ::ca::object * > ((::ca::object *)&((int_ptr *)pca)[i]);
          }
          catch(std::__non_rtti_object & e)
          {
@@ -53,7 +53,7 @@ void __cdecl __crt_dump_client(void * pvData, size_t nBytes)
       }
       if(false) // else
       {
-         ::gen::object & obj = *pobject;
+         ::ca::object & obj = *pobject;
          // int16_t form
          C_RUNTIME_ERRORCHECK_SPRINTF(_snprintf_s(sz, _countof(sz), _countof(sz) - 1, "a %hs object at $%p, %u bytes long\n", typeid(obj).name(), pvData, nBytes));
          g_dumpcontext << sz;

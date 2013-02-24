@@ -8,7 +8,7 @@ namespace win
    application::application(::ca::application * papp) :
       ca(papp)
    {
-      ::ca::smart_pointer < gen::application >::set_app(papp);
+      ::ca::smart_pointer < ca::application >::set_app(papp);
       ::ca::thread_sp::create(papp);
       WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_pAppThread = this;
 
@@ -53,19 +53,19 @@ namespace win
 
    void application::_001OnFileNew()
    {
-      ::ca::smart_pointer<::gen::application>::m_p->_001OnFileNew(NULL);
+      ::ca::smart_pointer<::ca::application>::m_p->_001OnFileNew(NULL);
    }
 
    ::user::document_interface * application::_001OpenDocumentFile(var varFile)
    {
-      return ::ca::smart_pointer<::gen::application>::m_p->_001OpenDocumentFile(varFile);
+      return ::ca::smart_pointer<::ca::application>::m_p->_001OpenDocumentFile(varFile);
    }
 
    void application::_001EnableShellOpen()
    {
       ASSERT(m_atomApp == NULL && m_atomSystemTopic == NULL); // do once
 
-      m_atomApp            = ::GlobalAddAtomW(gen::international::utf8_to_unicode(m_strAppName));
+      m_atomApp            = ::GlobalAddAtomW(ca::international::utf8_to_unicode(m_strAppName));
       m_atomSystemTopic    = ::GlobalAddAtomW(L"system");
    }
 
@@ -207,15 +207,15 @@ namespace win
 /*      try
       {
    #ifdef DEBUG
-         // check for missing gen::LockTempMap calls
+         // check for missing ca::LockTempMap calls
          if (__get_module_thread_state()->m_pCurrentWinThread->m_nTempMapLock != 0)
          {
-            TRACE(::gen::trace::category_AppMsg, 0, "Warning: Temp ::collection::map lock count non-zero (%ld).\n",
+            TRACE(::ca::trace::category_AppMsg, 0, "Warning: Temp ::collection::map lock count non-zero (%ld).\n",
                __get_module_thread_state()->m_pCurrentWinThread->m_nTempMapLock);
          }
    #endif
-         gen::LockTempMaps(::ca::smart_pointer < ::gen::application >::m_p);
-         gen::UnlockTempMaps(::ca::smart_pointer < ::gen::application >::m_p, -1);
+         ca::LockTempMaps(::ca::smart_pointer < ::ca::application >::m_p);
+         ca::UnlockTempMaps(::ca::smart_pointer < ::ca::application >::m_p, -1);
       }
       catch( base_exception* e )
       {
@@ -379,7 +379,7 @@ namespace win
       return ::win::thread::initialize_instance();
    }
 
-   ::gen::message::e_prototype application::GetMessagePrototype(UINT uiMessage, UINT uiCode)
+   ::ca::message::e_prototype application::GetMessagePrototype(UINT uiMessage, UINT uiCode)
    {
       return ::win::thread::GetMessagePrototype(uiMessage, uiCode);
    }
@@ -389,7 +389,7 @@ namespace win
    {
       return ::win::thread::run();
    }
-   bool application::pre_translate_message(gen::signal_object * pobj)
+   bool application::pre_translate_message(ca::signal_object * pobj)
    {
       return ::win::thread::pre_translate_message(pMsg);
    }
@@ -408,7 +408,7 @@ namespace win
 */
    bool application::process_initialize()
    {
-      if(::ca::smart_pointer < gen::application > ::m_p->is_system())
+      if(::ca::smart_pointer < ca::application > ::m_p->is_system())
       {
          if(__get_module_state()->m_pmapHWND == NULL)
          {
@@ -438,8 +438,8 @@ namespace win
       WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_ptimera = new ::user::interaction::timer_array(this);
       WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_puiptra = new user::interaction_ptr_array;
 
-      WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_ptimera->m_papp = dynamic_cast < ::plane::application * >  (::ca::smart_pointer < ::gen::application >::m_p);
-      WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_puiptra->m_papp = dynamic_cast < ::plane::application * >  (::ca::smart_pointer < ::gen::application >::m_p);
+      WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_ptimera->m_papp = dynamic_cast < ::plane::application * >  (::ca::smart_pointer < ::ca::application >::m_p);
+      WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_puiptra->m_papp = dynamic_cast < ::plane::application * >  (::ca::smart_pointer < ::ca::application >::m_p);
 
       WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->set_run();
       return true;
@@ -465,9 +465,9 @@ namespace win
 
       WIN_THREAD(::ca::thread_sp::m_p)->m_bRun = false;
 
-      int32_t iRet = ::gen::application::exit_instance();
+      int32_t iRet = ::ca::application::exit_instance();
 
-      //::ca::smart_pointer<::gen::application>::destroy();
+      //::ca::smart_pointer<::ca::application>::destroy();
 
 
 
@@ -548,15 +548,15 @@ namespace win
       return NULL;
    }
 
-   ::gen::thread * application::GetThread()
+   ::ca::thread * application::GetThread()
    {
       if(__get_thread() == NULL)
          return NULL;
       else
-         return dynamic_cast < ::gen::thread * > (__get_thread()->m_p);
+         return dynamic_cast < ::ca::thread * > (__get_thread()->m_p);
    }
 
-   void application::set_thread(::gen::thread * pthread)
+   void application::set_thread(::ca::thread * pthread)
    {
       __set_thread(pthread);
    }
@@ -574,7 +574,7 @@ namespace win
 
       // Note: there are a number of _tcsdup (aka _strdup) calls that are
       // made here for the exe path, help file path, etc.  In previous
-      // versions of ca2 API, this primitive::memory was never freed.  In this and future
+      // versions of ca API, this primitive::memory was never freed.  In this and future
       // versions this primitive::memory is automatically freed during application's
       // destructor.  If you are freeing the primitive::memory yourself, you should
       // either remove the code or set the pointers to NULL after freeing
@@ -622,8 +622,8 @@ namespace win
       }
 
 
-//      dynamic_cast < ::win::thread * > ((smart_pointer < ::gen::application >::m_p->::ca::thread_sp::m_p))->m_hThread = __get_thread()->m_hThread;
-  //    dynamic_cast < ::win::thread * > ((smart_pointer < ::gen::application >::m_p->::ca::thread_sp::m_p))->m_nThreadID = __get_thread()->m_nThreadID;
+//      dynamic_cast < ::win::thread * > ((smart_pointer < ::ca::application >::m_p->::ca::thread_sp::m_p))->m_hThread = __get_thread()->m_hThread;
+  //    dynamic_cast < ::win::thread * > ((smart_pointer < ::ca::application >::m_p->::ca::thread_sp::m_p))->m_nThreadID = __get_thread()->m_nThreadID;
       dynamic_cast < class ::win::thread * > (::ca::thread_sp::m_p)->m_hThread      =  ::GetCurrentThread();
       dynamic_cast < class ::win::thread * > (::ca::thread_sp::m_p)->m_nThreadID    =  ::GetCurrentThreadId();
       
@@ -691,7 +691,7 @@ namespace win
 
       m_pmaininitdata = (::win::main_init_data *) pdata;
 
-      if(m_pmaininitdata != NULL && ::ca::smart_pointer < ::gen::application >::m_p->is_system())
+      if(m_pmaininitdata != NULL && ::ca::smart_pointer < ::ca::application >::m_p->is_system())
       {
          if(!win_init(m_pmaininitdata))
             return false;
@@ -722,7 +722,7 @@ namespace win
          // fill in the initial state for the application
          // Windows specific initialization (not done if no application)
          m_hInstance = hInstance;
-         (dynamic_cast < ::gen::application * >(m_papp))->m_hInstance = hInstance;
+         (dynamic_cast < ::ca::application * >(m_papp))->m_hInstance = hInstance;
          //hPrevInstance; // Obsolete.
          m_strCmdLine = strCmdLine;
          m_nCmdShow = nCmdShow;

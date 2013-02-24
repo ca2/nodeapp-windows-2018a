@@ -30,7 +30,7 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 
    //Sleep(15 * 1000);
 
-   xxdebug_box("ca2 plugin container win_main", "ca2 plugin container", 0);
+   xxdebug_box("ca plugin container win_main", "ca plugin container", 0);
 	
    UNREFERENCED_PARAMETER(lpCmdLine);
 
@@ -49,7 +49,7 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 
    vsstring * pstrChannel = new vsstring(get_command_line_param(::GetCommandLine(), "channel"));
 
-   g_hmutex = ::CreateMutex(NULL, FALSE, "Global\\ca2::fontopus::ca2plugin-container::" + *pstrChannel);
+   g_hmutex = ::CreateMutex(NULL, FALSE, "Global\\ca::fontopus::ca2plugin-container::" + *pstrChannel);
 
    if(::GetLastError() == ERROR_ALREADY_EXISTS)
    {

@@ -108,7 +108,7 @@ namespace production
    bool application::_001OnCmdMsg(BaseCmdMsg * pcmdmsg)
    		
    {
-      return gen::application::_001OnCmdMsg(pcmdmsg);
+      return ca::application::_001OnCmdMsg(pcmdmsg);
    }
 
 
@@ -125,9 +125,9 @@ namespace production
          ::ShellExecuteW(
             NULL, 
             L"open", 
-            gen::international::utf8_to_unicode(itema[0].m_strPath),
+            ca::international::utf8_to_unicode(itema[0].m_strPath),
             NULL,
-            gen::international::utf8_to_unicode(System.dir().name(itema[0].m_strPath)),
+            ca::international::utf8_to_unicode(System.dir().name(itema[0].m_strPath)),
             SW_SHOW);
       }
       
@@ -138,10 +138,10 @@ namespace production
 
 
 extern "C"
-::ca2::library * get_new_library()
+::ca::library * get_new_library()
 {
 
-   return new ::ca2::single_application_library < production::application > ("nodeapp");
+   return new ::ca::single_application_library < production::application > ("nodeapp");
 
 }
 

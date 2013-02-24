@@ -2,7 +2,7 @@
 
 #define SECURITY_WIN32
 
-#include "ca2/ca2.h"
+#include "ca/ca.h"
 #include "nodeapp/os/os.h"
 
 

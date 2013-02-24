@@ -40,7 +40,7 @@ namespace win
       ASSERT(__is_valid_string(lpszFileName));
 
       if(!open(lpszFileName, nOpenFlags))
-         throw gen::file_exception(papp, ::gen::file_exception::none, -1, lpszFileName);
+         throw ca::file_exception(papp, ::ca::file_exception::none, -1, lpszFileName);
 
    }
 
@@ -52,7 +52,7 @@ namespace win
 
    }
 
-   gen::file * file::Duplicate() const
+   ca::file * file::Duplicate() const
    {
       ASSERT_VALID(this);
       ASSERT(m_hFile != (UINT)hFileNull);
@@ -92,7 +92,7 @@ namespace win
       nOpenFlags &= ~(UINT)type_binary;
 
 
-      if(nOpenFlags & gen::file::defer_create_directory)
+      if(nOpenFlags & ca::file::defer_create_directory)
       {
          System.dir_mk(System.dir_name(lpszFileName));
       }
@@ -102,7 +102,7 @@ namespace win
       m_strFileName.Empty();
 
       m_strFileName     = lpszFileName;
-      m_wstrFileName    = gen::international::utf8_to_unicode(m_strFileName);
+      m_wstrFileName    = ca::international::utf8_to_unicode(m_strFileName);
 
       ASSERT(sizeof(HANDLE) == sizeof(uint_ptr));
       ASSERT(shareCompat == 0);
@@ -168,7 +168,7 @@ namespace win
          dwCreateFlag = OPEN_EXISTING;
 
       // attempt file creation
-      //HANDLE hFile = shell::CreateFile(gen::international::utf8_to_unicode(m_strFileName), dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
+      //HANDLE hFile = shell::CreateFile(ca::international::utf8_to_unicode(m_strFileName), dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
       HANDLE hFile = ::CreateFileW(m_wstrFileName, dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
       if (hFile == INVALID_HANDLE_VALUE)
       {
@@ -179,7 +179,7 @@ namespace win
             /*         if (pException != NULL)
             {
             pException->create(get_app());
-            ::gen::file_exception * pfe = dynamic_cast < ::gen::file_exception * > (pException->m_p);
+            ::ca::file_exception * pfe = dynamic_cast < ::ca::file_exception * > (pException->m_p);
             if(pfe != NULL)
             {
             pfe->m_lOsError = dwLastError;
@@ -208,7 +208,7 @@ namespace win
             return FALSE;
          }
 
-         m_strFileName = ::gen::international::unicode_to_utf8(m_wstrFileName);
+         m_strFileName = ::ca::international::unicode_to_utf8(m_wstrFileName);
 
          hFile = ::CreateFileW(m_wstrFileName, dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
 
@@ -217,7 +217,7 @@ namespace win
             /*if (pException != NULL)
             {
             pException->create(get_app());
-            ::gen::file_exception * pfe = dynamic_cast < ::gen::file_exception * > (pException->m_p);
+            ::ca::file_exception * pfe = dynamic_cast < ::ca::file_exception * > (pException->m_p);
             if(pfe != NULL)
             {
             pfe->m_lOsError = ::GetLastError();
@@ -282,10 +282,10 @@ namespace win
 
       // Win32s will not return an error all the time (usually DISK_FULL)
       if (nWritten != nCount)
-         vfxThrowFileException(get_app(), ::gen::file_exception::diskFull, -1, m_strFileName);
+         vfxThrowFileException(get_app(), ::ca::file_exception::diskFull, -1, m_strFileName);
    }
 
-   file_position file::seek(file_offset lOff, gen::e_seek nFrom)
+   file_position file::seek(file_offset lOff, ca::e_seek nFrom)
    {
 
       if(m_hFile == (UINT)hFileNull)
@@ -293,8 +293,8 @@ namespace win
 
       ASSERT_VALID(this);
       ASSERT(m_hFile != (UINT)hFileNull);
-      ASSERT(nFrom == ::gen::seek_begin || nFrom == ::gen::seek_end || nFrom == ::gen::seek_current);
-      ASSERT(::gen::seek_begin == FILE_BEGIN && ::gen::seek_end == FILE_END && ::gen::seek_current == FILE_CURRENT);
+      ASSERT(nFrom == ::ca::seek_begin || nFrom == ::ca::seek_end || nFrom == ::ca::seek_current);
+      ASSERT(::ca::seek_begin == FILE_BEGIN && ::ca::seek_end == FILE_END && ::ca::seek_current == FILE_CURRENT);
 
       LONG lLoOffset = lOff & 0xffffffff;
       LONG lHiOffset = (lOff >> 32) & 0xffffffff;
@@ -394,7 +394,7 @@ namespace win
       ASSERT_VALID(this);
       ASSERT(m_hFile != (UINT)hFileNull);
 
-      seek((LONG)dwNewLen, (gen::e_seek)::gen::seek_begin);
+      seek((LONG)dwNewLen, (ca::e_seek)::ca::seek_begin);
 
       if (!::SetEndOfFile((HANDLE)m_hFile))
          file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
@@ -408,9 +408,9 @@ namespace win
 
       // seek is a non const operation
       file* pFile = (file*)this;
-      dwCur = pFile->seek(0L, ::gen::seek_current);
+      dwCur = pFile->seek(0L, ::ca::seek_current);
       dwLen = pFile->seek_to_end();
-      VERIFY(dwCur == (uint64_t)pFile->seek((file_offset) dwCur, ::gen::seek_begin));
+      VERIFY(dwCur == (uint64_t)pFile->seek((file_offset) dwCur, ::ca::seek_begin));
 
       return (file_size) dwLen;
    }
@@ -449,13 +449,13 @@ namespace win
 
    void file::assert_valid() const
    {
-      ::gen::object::assert_valid();
+      ::ca::object::assert_valid();
       // we permit the descriptor m_hFile to be any value for derived classes
    }
 
    void file::dump(dump_context & dumpcontext) const
    {
-      ::gen::object::dump(dumpcontext);
+      ::ca::object::dump(dumpcontext);
 
       dumpcontext << "with handle " << (UINT)m_hFile;
       dumpcontext << " and name \"" << m_strFileName << "\"";
@@ -560,7 +560,7 @@ namespace win
    {
       ASSERT_VALID(this);
 
-      ::gen::file_status status;
+      ::ca::file_status status;
       GetStatus(status);
       return System.file().name_(status.m_strFullName);
    }
@@ -569,7 +569,7 @@ namespace win
    {
       ASSERT_VALID(this);
 
-      ::gen::file_status status;
+      ::ca::file_status status;
       GetStatus(status);
       return System.file().title_(status.m_strFullName);
    }
@@ -578,7 +578,7 @@ namespace win
    {
       ASSERT_VALID(this);
 
-      ::gen::file_status status;
+      ::ca::file_status status;
       GetStatus(status);
       return status.m_strFullName;
    }
@@ -612,165 +612,165 @@ namespace win
       switch ((UINT)lOsErr)
       {
       case NO_ERROR:
-         return ::gen::file_exception::none;
+         return ::ca::file_exception::none;
       case ERROR_FILE_NOT_FOUND:
-         return ::gen::file_exception::fileNotFound;
+         return ::ca::file_exception::fileNotFound;
       case ERROR_PATH_NOT_FOUND:
-         return ::gen::file_exception::badPath;
+         return ::ca::file_exception::badPath;
       case ERROR_TOO_MANY_OPEN_FILES:
-         return ::gen::file_exception::tooManyOpenFiles;
+         return ::ca::file_exception::tooManyOpenFiles;
       case ERROR_ACCESS_DENIED:
-         return ::gen::file_exception::accessDenied;
+         return ::ca::file_exception::accessDenied;
       case ERROR_INVALID_HANDLE:
-         return ::gen::file_exception::fileNotFound;
+         return ::ca::file_exception::fileNotFound;
       case ERROR_BAD_FORMAT:
-         return ::gen::file_exception::invalidFile;
+         return ::ca::file_exception::invalidFile;
       case ERROR_INVALID_ACCESS:
-         return ::gen::file_exception::accessDenied;
+         return ::ca::file_exception::accessDenied;
       case ERROR_INVALID_DRIVE:
-         return ::gen::file_exception::badPath;
+         return ::ca::file_exception::badPath;
       case ERROR_CURRENT_DIRECTORY:
-         return ::gen::file_exception::removeCurrentDir;
+         return ::ca::file_exception::removeCurrentDir;
       case ERROR_NOT_SAME_DEVICE:
-         return ::gen::file_exception::badPath;
+         return ::ca::file_exception::badPath;
       case ERROR_NO_MORE_FILES:
-         return ::gen::file_exception::fileNotFound;
+         return ::ca::file_exception::fileNotFound;
       case ERROR_WRITE_PROTECT:
-         return ::gen::file_exception::accessDenied;
+         return ::ca::file_exception::accessDenied;
       case ERROR_BAD_UNIT:
-         return ::gen::file_exception::hardIO;
+         return ::ca::file_exception::hardIO;
       case ERROR_NOT_READY:
-         return ::gen::file_exception::hardIO;
+         return ::ca::file_exception::hardIO;
       case ERROR_BAD_COMMAND:
-         return ::gen::file_exception::hardIO;
+         return ::ca::file_exception::hardIO;
       case ERROR_CRC:
-         return ::gen::file_exception::hardIO;
+         return ::ca::file_exception::hardIO;
       case ERROR_BAD_LENGTH:
-         return ::gen::file_exception::badSeek;
+         return ::ca::file_exception::badSeek;
       case ERROR_SEEK:
-         return ::gen::file_exception::badSeek;
+         return ::ca::file_exception::badSeek;
       case ERROR_NOT_DOS_DISK:
-         return ::gen::file_exception::invalidFile;
+         return ::ca::file_exception::invalidFile;
       case ERROR_SECTOR_NOT_FOUND:
-         return ::gen::file_exception::badSeek;
+         return ::ca::file_exception::badSeek;
       case ERROR_WRITE_FAULT:
-         return ::gen::file_exception::accessDenied;
+         return ::ca::file_exception::accessDenied;
       case ERROR_READ_FAULT:
-         return ::gen::file_exception::badSeek;
+         return ::ca::file_exception::badSeek;
       case ERROR_SHARING_VIOLATION:
-         return ::gen::file_exception::sharingViolation;
+         return ::ca::file_exception::sharingViolation;
       case ERROR_LOCK_VIOLATION:
-         return ::gen::file_exception::lockViolation;
+         return ::ca::file_exception::lockViolation;
       case ERROR_WRONG_DISK:
-         return ::gen::file_exception::badPath;
+         return ::ca::file_exception::badPath;
       case ERROR_SHARING_BUFFER_EXCEEDED:
-         return ::gen::file_exception::tooManyOpenFiles;
+         return ::ca::file_exception::tooManyOpenFiles;
       case ERROR_HANDLE_EOF:
-         return ::gen::file_exception::endOfFile;
+         return ::ca::file_exception::endOfFile;
       case ERROR_HANDLE_DISK_FULL:
-         return ::gen::file_exception::diskFull;
+         return ::ca::file_exception::diskFull;
       case ERROR_DUP_NAME:
-         return ::gen::file_exception::badPath;
+         return ::ca::file_exception::badPath;
       case ERROR_BAD_NETPATH:
-         return ::gen::file_exception::badPath;
+         return ::ca::file_exception::badPath;
       case ERROR_NETWORK_BUSY:
-         return ::gen::file_exception::accessDenied;
+         return ::ca::file_exception::accessDenied;
       case ERROR_DEV_NOT_EXIST:
-         return ::gen::file_exception::badPath;
+         return ::ca::file_exception::badPath;
       case ERROR_ADAP_HDW_ERR:
-         return ::gen::file_exception::hardIO;
+         return ::ca::file_exception::hardIO;
       case ERROR_BAD_NET_RESP:
-         return ::gen::file_exception::accessDenied;
+         return ::ca::file_exception::accessDenied;
       case ERROR_UNEXP_NET_ERR:
-         return ::gen::file_exception::hardIO;
+         return ::ca::file_exception::hardIO;
       case ERROR_BAD_REM_ADAP:
-         return ::gen::file_exception::invalidFile;
+         return ::ca::file_exception::invalidFile;
       case ERROR_NO_SPOOL_SPACE:
-         return ::gen::file_exception::directoryFull;
+         return ::ca::file_exception::directoryFull;
       case ERROR_NETNAME_DELETED:
-         return ::gen::file_exception::accessDenied;
+         return ::ca::file_exception::accessDenied;
       case ERROR_NETWORK_ACCESS_DENIED:
-         return ::gen::file_exception::accessDenied;
+         return ::ca::file_exception::accessDenied;
       case ERROR_BAD_DEV_TYPE:
-         return ::gen::file_exception::invalidFile;
+         return ::ca::file_exception::invalidFile;
       case ERROR_BAD_NET_NAME:
-         return ::gen::file_exception::badPath;
+         return ::ca::file_exception::badPath;
       case ERROR_TOO_MANY_NAMES:
-         return ::gen::file_exception::tooManyOpenFiles;
+         return ::ca::file_exception::tooManyOpenFiles;
       case ERROR_SHARING_PAUSED:
-         return ::gen::file_exception::badPath;
+         return ::ca::file_exception::badPath;
       case ERROR_REQ_NOT_ACCEP:
-         return ::gen::file_exception::accessDenied;
+         return ::ca::file_exception::accessDenied;
       case ERROR_FILE_EXISTS:
-         return ::gen::file_exception::accessDenied;
+         return ::ca::file_exception::accessDenied;
       case ERROR_CANNOT_MAKE:
-         return ::gen::file_exception::accessDenied;
+         return ::ca::file_exception::accessDenied;
       case ERROR_ALREADY_ASSIGNED:
-         return ::gen::file_exception::badPath;
+         return ::ca::file_exception::badPath;
       case ERROR_INVALID_PASSWORD:
-         return ::gen::file_exception::accessDenied;
+         return ::ca::file_exception::accessDenied;
       case ERROR_NET_WRITE_FAULT:
-         return ::gen::file_exception::hardIO;
+         return ::ca::file_exception::hardIO;
       case ERROR_DISK_CHANGE:
-         return ::gen::file_exception::fileNotFound;
+         return ::ca::file_exception::fileNotFound;
       case ERROR_DRIVE_LOCKED:
-         return ::gen::file_exception::lockViolation;
+         return ::ca::file_exception::lockViolation;
       case ERROR_BUFFER_OVERFLOW:
-         return ::gen::file_exception::badPath;
+         return ::ca::file_exception::badPath;
       case ERROR_DISK_FULL:
-         return ::gen::file_exception::diskFull;
+         return ::ca::file_exception::diskFull;
       case ERROR_NO_MORE_SEARCH_HANDLES:
-         return ::gen::file_exception::tooManyOpenFiles;
+         return ::ca::file_exception::tooManyOpenFiles;
       case ERROR_INVALID_TARGET_HANDLE:
-         return ::gen::file_exception::invalidFile;
+         return ::ca::file_exception::invalidFile;
       case ERROR_INVALID_CATEGORY:
-         return ::gen::file_exception::hardIO;
+         return ::ca::file_exception::hardIO;
       case ERROR_INVALID_NAME:
-         return ::gen::file_exception::badPath;
+         return ::ca::file_exception::badPath;
       case ERROR_INVALID_LEVEL:
-         return ::gen::file_exception::badPath;
+         return ::ca::file_exception::badPath;
       case ERROR_NO_VOLUME_LABEL:
-         return ::gen::file_exception::badPath;
+         return ::ca::file_exception::badPath;
       case ERROR_NEGATIVE_SEEK:
-         return ::gen::file_exception::badSeek;
+         return ::ca::file_exception::badSeek;
       case ERROR_SEEK_ON_DEVICE:
-         return ::gen::file_exception::badSeek;
+         return ::ca::file_exception::badSeek;
       case ERROR_DIR_NOT_ROOT:
-         return ::gen::file_exception::badPath;
+         return ::ca::file_exception::badPath;
       case ERROR_DIR_NOT_EMPTY:
-         return ::gen::file_exception::removeCurrentDir;
+         return ::ca::file_exception::removeCurrentDir;
       case ERROR_LABEL_TOO_LONG:
-         return ::gen::file_exception::badPath;
+         return ::ca::file_exception::badPath;
       case ERROR_BAD_PATHNAME:
-         return ::gen::file_exception::badPath;
+         return ::ca::file_exception::badPath;
       case ERROR_LOCK_FAILED:
-         return ::gen::file_exception::lockViolation;
+         return ::ca::file_exception::lockViolation;
       case ERROR_BUSY:
-         return ::gen::file_exception::accessDenied;
+         return ::ca::file_exception::accessDenied;
       case ERROR_INVALID_ORDINAL:
-         return ::gen::file_exception::invalidFile;
+         return ::ca::file_exception::invalidFile;
       case ERROR_ALREADY_EXISTS:
-         return ::gen::file_exception::accessDenied;
+         return ::ca::file_exception::accessDenied;
       case ERROR_INVALID_EXE_SIGNATURE:
-         return ::gen::file_exception::invalidFile;
+         return ::ca::file_exception::invalidFile;
       case ERROR_BAD_EXE_FORMAT:
-         return ::gen::file_exception::invalidFile;
+         return ::ca::file_exception::invalidFile;
       case ERROR_FILENAME_EXCED_RANGE:
-         return ::gen::file_exception::badPath;
+         return ::ca::file_exception::badPath;
       case ERROR_META_EXPANSION_TOO_LONG:
-         return ::gen::file_exception::badPath;
+         return ::ca::file_exception::badPath;
       case ERROR_DIRECTORY:
-         return ::gen::file_exception::badPath;
+         return ::ca::file_exception::badPath;
       case ERROR_OPERATION_ABORTED:
-         return ::gen::file_exception::hardIO;
+         return ::ca::file_exception::hardIO;
       case ERROR_IO_INCOMPLETE:
-         return ::gen::file_exception::hardIO;
+         return ::ca::file_exception::hardIO;
       case ERROR_IO_PENDING:
-         return ::gen::file_exception::hardIO;
+         return ::ca::file_exception::hardIO;
       case ERROR_SWAPERROR:
-         return ::gen::file_exception::accessDenied;
+         return ::ca::file_exception::accessDenied;
       default:
-         return ::gen::file_exception::type_generic;
+         return ::ca::file_exception::type_generic;
       }
    }
 
@@ -785,18 +785,18 @@ namespace win
    /////////////////////////////////////////////////////////////////////////////
    // file Status implementation
 
-   bool file::GetStatus(::gen::file_status& rStatus) const
+   bool file::GetStatus(::ca::file_status& rStatus) const
    {
       ASSERT_VALID(this);
 
-      //memset(&rStatus, 0, sizeof(::gen::file_status));
+      //memset(&rStatus, 0, sizeof(::ca::file_status));
 
       // copy file name from cached m_strFileName
-      rStatus.m_strFullName = gen::international::unicode_to_utf8(m_wstrFileName);
+      rStatus.m_strFullName = ca::international::unicode_to_utf8(m_wstrFileName);
 
       if (m_hFile != hFileNull)
       {
-         // get time ::gen::seek_current file size
+         // get time ::ca::seek_current file size
          FILETIME ftCreate, ftAccess, ftModify;
          if (!::GetFileTime((HANDLE)m_hFile, &ftCreate, &ftAccess, &ftModify))
             return FALSE;
@@ -808,16 +808,16 @@ namespace win
             rStatus.m_attribute = 0;
          else
          {
-            DWORD dwAttribute = ::GetFileAttributesW(gen::international::utf8_to_unicode(m_strFileName));
+            DWORD dwAttribute = ::GetFileAttributesW(ca::international::utf8_to_unicode(m_strFileName));
 
-            // don't return an error for this because previous versions of ca2 API didn't
+            // don't return an error for this because previous versions of ca API didn't
             if (dwAttribute == 0xFFFFFFFF)
                rStatus.m_attribute = 0;
             else
             {
                rStatus.m_attribute = (BYTE) dwAttribute & 0xff;
                //#ifdef DEBUG
-               // ca2 API BUG: m_attribute is only a BYTE wide
+               // ca API BUG: m_attribute is only a BYTE wide
                //             if (dwAttribute & ~0xFF)
                //                  TRACE0("Warning: file::GetStatus() returns m_attribute without high-order flags.\n");
                //#endif
@@ -839,18 +839,18 @@ namespace win
    }
 
 
-   bool file::GetStatus(const char * lpszFileName, ::gen::file_status& rStatus)
+   bool file::GetStatus(const char * lpszFileName, ::ca::file_status& rStatus)
    {
       // attempt to fully qualify path first
       wstring wstrFullName;
       wstring wstrFileName;
-      wstrFileName = gen::international::utf8_to_unicode(lpszFileName);
+      wstrFileName = ca::international::utf8_to_unicode(lpszFileName);
       if (!vfxFullPath(wstrFullName, wstrFileName))
       {
          rStatus.m_strFullName.Empty();
          return FALSE;
       }
-      gen::international::unicode_to_utf8(rStatus.m_strFullName, wstrFullName);
+      ca::international::unicode_to_utf8(rStatus.m_strFullName, wstrFullName);
 
       WIN32_FIND_DATA findFileData;
       HANDLE hFind = FindFirstFile((LPTSTR)lpszFileName, &findFileData);
@@ -959,7 +959,7 @@ namespace win
    */
 
    /*
-   void file::SetStatus(const char * lpszFileName, const ::gen::file_status& status)
+   void file::SetStatus(const char * lpszFileName, const ::ca::file_status& status)
    {
    DWORD wAttr;
    FILETIME creationTime;
@@ -985,20 +985,20 @@ namespace win
    // last modification time
    if (status.m_mtime.get_time() != 0)
    {
-   gen::TimeToFileTime(status.m_mtime, &lastWriteTime);
+   ca::TimeToFileTime(status.m_mtime, &lastWriteTime);
    lpLastWriteTime = &lastWriteTime;
 
    // last access time
    if (status.m_atime.get_time() != 0)
    {
-   gen::TimeToFileTime(status.m_atime, &lastAccessTime);
+   ca::TimeToFileTime(status.m_atime, &lastAccessTime);
    lpLastAccessTime = &lastAccessTime;
    }
 
    // create time
    if (status.m_ctime.get_time() != 0)
    {
-   gen::TimeToFileTime(status.m_ctime, &creationTime);
+   ca::TimeToFileTime(status.m_ctime, &creationTime);
    lpCreationTime = &creationTime;
    }
 
@@ -1039,7 +1039,7 @@ namespace win
 
 
 
-   // gen::filesp
+   // ca::filesp
    file::operator HFILE() const
    {
 
@@ -1202,7 +1202,7 @@ lpsz[1] = '\0';
 strRoot.ReleaseBuffer();
 }*/
 
-/*bool CLASS_DECL_win gen::ComparePath(const char * lpszPath1, const char * lpszPath2)
+/*bool CLASS_DECL_win ca::ComparePath(const char * lpszPath1, const char * lpszPath2)
 {
 // use case insensitive compare as a starter
 if (lstrcmpi(lpszPath1, lpszPath2) != 0)
@@ -1272,7 +1272,7 @@ nMax = _countof(szTemp);
 if (::GetFileTitle(lpszPathName, lpszTemp, (WORD)nMax) != 0)
 {
 // when ::GetFileTitle fails, use cheap imitation
-return gen::GetFileName(lpszPathName, lpszTitle, nMax);
+return ca::GetFileName(lpszPathName, lpszTitle, nMax);
 }
 return lpszTitle == NULL ? lstrlen(lpszTemp)+1 : 0;
 }*/
@@ -1285,12 +1285,12 @@ void CLASS_DECL_win vfxGetModuleShortFileName(HINSTANCE hInst, string& strShortN
    if(::GetShortPathNameW(szLongPathName, wstrShortName.alloc(_MAX_PATH * 4), _MAX_PATH * 4) == 0)
    {
       // rare failure case (especially on not-so-modern file systems)
-      gen::international::unicode_to_utf8(strShortName, szLongPathName);
+      ca::international::unicode_to_utf8(strShortName, szLongPathName);
    }
    else
    {
       wstrShortName.release_buffer();
-      gen::international::unicode_to_utf8(strShortName, wstrShortName);
+      ca::international::unicode_to_utf8(strShortName, wstrShortName);
    }
 }
 
@@ -1344,7 +1344,7 @@ bool CLASS_DECL_win vfxResolveShortcut(string & strTarget, const char * pszSourc
    ::user::interaction * pui = puiMessageParentOptional;
 
    wstring wstrFileOut;
-   wstring wstrFileIn = gen::international::utf8_to_unicode(pszSource);
+   wstring wstrFileIn = ca::international::utf8_to_unicode(pszSource);
 
    DWORD dwVersion = GetVersion();
 
@@ -1406,7 +1406,7 @@ bool CLASS_DECL_win vfxResolveShortcut(string & strTarget, const char * pszSourc
             {
                bOk = true;
                wstrFileOut.release_buffer();
-               strTarget = gen::international::unicode_to_utf8((LPCWSTR) wstrFileOut);
+               strTarget = ca::international::unicode_to_utf8((LPCWSTR) wstrFileOut);
             }
             else
             {
@@ -1449,7 +1449,7 @@ bool CLASS_DECL_win vfxFullPath(wchar_t * lpszPathOut, const wchar_t * lpszFileI
 
    // get file system information for the volume
    DWORD dwFlags, dwDummy;
-   if (!GetVolumeInformationW(gen::international::utf8_to_unicode(strRoot), NULL, 0, NULL, &dwDummy, &dwFlags, NULL, 0))
+   if (!GetVolumeInformationW(ca::international::utf8_to_unicode(strRoot), NULL, 0, NULL, &dwDummy, &dwFlags, NULL, 0))
    {
       //      TRACE1("Warning: could not get volume information '%s'.\n", strRoot);
       return FALSE;   // preserving case may not be correct
@@ -1560,7 +1560,7 @@ void CLASS_DECL_win vfxGetRoot(const wchar_t * lpszPath, string& strRoot)
       if (*lpsz != '\0')
          lpsz[1] = '\0';
    }
-   gen::international::unicode_to_utf8(strRoot, wstrRoot);
+   ca::international::unicode_to_utf8(strRoot, wstrRoot);
 }
 
 
@@ -1660,7 +1660,7 @@ void CLASS_DECL_win vfxThrowFileException(::ca::application * papp, int32_t caus
       lpsz = ::win::szUnknown;
    //   TRACE3("file exception: %hs, file %s, App error information = %ld.\n", lpsz, (lpszFileName == NULL) ? "Unknown" : lpszFileName, lOsError);
 #endif
-   throw ::gen::file_exception(papp, cause, lOsError, lpszFileName);
+   throw ::ca::file_exception(papp, cause, lOsError, lpszFileName);
 }
 
 namespace win
@@ -1672,23 +1672,23 @@ namespace win
       {
       case EPERM:
       case EACCES:
-         return ::gen::file_exception::accessDenied;
+         return ::ca::file_exception::accessDenied;
       case EBADF:
-         return ::gen::file_exception::invalidFile;
+         return ::ca::file_exception::invalidFile;
       case EDEADLOCK:
-         return ::gen::file_exception::sharingViolation;
+         return ::ca::file_exception::sharingViolation;
       case EMFILE:
-         return ::gen::file_exception::tooManyOpenFiles;
+         return ::ca::file_exception::tooManyOpenFiles;
       case ENOENT:
       case ENFILE:
-         return ::gen::file_exception::fileNotFound;
+         return ::ca::file_exception::fileNotFound;
       case ENOSPC:
-         return ::gen::file_exception::diskFull;
+         return ::ca::file_exception::diskFull;
       case EINVAL:
       case EIO:
-         return ::gen::file_exception::hardIO;
+         return ::ca::file_exception::hardIO;
       default:
-         return ::gen::file_exception::type_generic;
+         return ::ca::file_exception::type_generic;
       }
 
    }

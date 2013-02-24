@@ -4,7 +4,7 @@ namespace production
 {
 
    class CLASS_DECL_CA2_PRODUCTION view_update_hint :
-      virtual public ::gen::object
+      virtual public ::ca::object
    {
    public:
       enum EOption

@@ -1,14 +1,14 @@
 #pragma once
 
 
-namespace gen
+namespace ca
 {
 
 
    class command_line;
 
 
-} // namespace gen
+} // namespace ca
 
 
 namespace win
@@ -30,7 +30,7 @@ namespace win
 
 
    class CLASS_DECL_win application :
-      virtual public ::gen::application
+      virtual public ::ca::application
    {
    public:
 
@@ -159,11 +159,11 @@ namespace win
       // thread initialization
       virtual bool initialize_instance();
 
-      virtual ::gen::message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode); 
+      virtual ::ca::message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode); 
 
       // running and idle processing
       virtual int32_t run();
-      virtual void pre_translate_message(gen::signal_object * pobj);
+      virtual void pre_translate_message(ca::signal_object * pobj);
       virtual bool pump_message();     // low level message pump
       virtual bool on_idle(LONG lCount); // return TRUE if more idle processing
       virtual bool is_idle_message(MSG* pMsg);  // checks for special messages
@@ -195,8 +195,8 @@ namespace win
       ::ca::window * window_from_os_data(void * pdata);
       ::ca::window * window_from_os_data_permanent(void * pdata);
 
-      virtual ::gen::thread * GetThread();
-      virtual void set_thread(::gen::thread * pthread);
+      virtual ::ca::thread * GetThread();
+      virtual void set_thread(::ca::thread * pthread);
 
       virtual ::ca::window * FindWindow(const char * lpszClassName, const char * lpszWindowName);
       virtual ::ca::window * FindWindowEx(oswindow oswindowParent, oswindow oswindowChildAfter, const char * lpszClass, const char * lpszWindow);

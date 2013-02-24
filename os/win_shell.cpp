@@ -279,21 +279,21 @@ namespace win
       CHAR pszPathA[MAX_PATH * 2];
       if(!::SHGetPathFromIDListA(pidl, pszPathA))
          return FALSE;
-      return gen::international::utf8_to_unicode(pszPath, MAX_PATH * 2, pszPathA) ? TRUE : FALSE;
+      return ca::international::utf8_to_unicode(pszPath, MAX_PATH * 2, pszPathA) ? TRUE : FALSE;
    }
 
    BOOL shell::_MoveFile(const wchar_t * lpExistingFileName, const wchar_t * lpNewFileName)
    {
       string str1, str2;
-      gen::international::unicode_to_utf8(str1, lpExistingFileName);
-      gen::international::unicode_to_utf8(str2, lpNewFileName);
+      ca::international::unicode_to_utf8(str1, lpExistingFileName);
+      ca::international::unicode_to_utf8(str2, lpNewFileName);
       return ::MoveFileA(str1, str2);
    }
 
    HANDLE shell::_FindFirstFile(const wchar_t * lpcsz, WIN32_FIND_DATAW * lpdata)
    {
       string 
-      gen::international::unicode_to_utf8(pszPathA, MAX_PATH * 2, lpcsz);
+      ca::international::unicode_to_utf8(pszPathA, MAX_PATH * 2, lpcsz);
       WIN32_FIND_DATAA data;
       HANDLE handle = ::FindFirstFileA(pszPathA, &data);
       if(handle == INVALID_HANDLE_VALUE)
@@ -307,8 +307,8 @@ namespace win
       lpdata->nFileSizeLow = data.nFileSizeLow;
       lpdata->dwReserved0 = data.dwReserved0;
       lpdata->dwReserved1 = data.dwReserved1;
-      gen::international::ACPToUnicode(lpdata->cFileName, MAX_PATH, data.cFileName);
-      gen::international::ACPToUnicode(lpdata->cAlternateFileName, MAX_PATH, data.cAlternateFileName);
+      ca::international::ACPToUnicode(lpdata->cFileName, MAX_PATH, data.cFileName);
+      ca::international::ACPToUnicode(lpdata->cAlternateFileName, MAX_PATH, data.cAlternateFileName);
 
       return handle;
    }
@@ -329,8 +329,8 @@ namespace win
       lpdata->nFileSizeLow = data.nFileSizeLow;
       lpdata->dwReserved0 = data.dwReserved0;
       lpdata->dwReserved1 = data.dwReserved1;
-      gen::international::ACPToUnicode(lpdata->cFileName, MAX_PATH, data.cFileName);
-      gen::international::ACPToUnicode(lpdata->cAlternateFileName, MAX_PATH, data.cAlternateFileName);
+      ca::international::ACPToUnicode(lpdata->cFileName, MAX_PATH, data.cFileName);
+      ca::international::ACPToUnicode(lpdata->cAlternateFileName, MAX_PATH, data.cAlternateFileName);
 
       return b;
    }
@@ -392,13 +392,13 @@ namespace win
    //   wchar_t ** lpFilePart)
    //{
    //   CHAR pszPathA[MAX_PATH * 2];
-   //   gen::international::UnicodeToACP(pszPathA, MAX_PATH * 2, lpFileName);
+   //   ca::international::UnicodeToACP(pszPathA, MAX_PATH * 2, lpFileName);
    //   string str;
    //   LPTSTR lpsz = str.GetBuffer(nBufferLength * 2);
    //   LPTSTR lpszFilePart;
    //   DWORD dw = ::GetFullPathName(pszPathA, nBufferLength, lpsz, &lpszFilePart);
    //   str.ReleaseBuffer();
-   //   gen::international::ACPToUnicode(lpBuffer, nBufferLength, str);
+   //   ca::international::ACPToUnicode(lpBuffer, nBufferLength, str);
    //   *lpFilePart = lpBuffer + ((int32_t) (lpszFilePart - lpsz));
    //   return dw;
    //}
@@ -416,7 +416,7 @@ namespace win
    //   string strRootPathName;
    //   string strVolumeNameBuffer;
    //   string strFileSystemNameBuffer;
-   //   gen::international::UnicodeToACP(strRootPathName, lpRootPathName);
+   //   ca::international::UnicodeToACP(strRootPathName, lpRootPathName);
    //   bool b = ::GetVolumeInformation(
    //      strRootPathName,
    //      strVolumeNameBuffer.GetBuffer(nVolumeNameSize),
@@ -429,11 +429,11 @@ namespace win
 
    //   strVolumeNameBuffer.ReleaseBuffer();
    //   strFileSystemNameBuffer.ReleaseBuffer();
-   //   gen::international::ACPToUnicode(
+   //   ca::international::ACPToUnicode(
    //      lpVolumeNameBuffer, 
    //      nVolumeNameSize, 
    //      strVolumeNameBuffer);
-   //   gen::international::ACPToUnicode(
+   //   ca::international::ACPToUnicode(
    //      lpFileSystemNameBuffer, 
    //      nFileSystemNameSize, 
    //      strFileSystemNameBuffer);
@@ -449,18 +449,18 @@ namespace win
    //{
    //   UNREFERENCED_PARAMETER(cbFileInfo);
    //   string strPath;
-   //   gen::international::UnicodeToACP(strPath, pszPath);
+   //   ca::international::UnicodeToACP(strPath, pszPath);
    //   SHFILEINFOA shia;
    //   if(!::SHGetFileInfoA(strPath, dwFileAttributes, 
    //      &shia,
    //      sizeof(shia),
    //      uFlags))
    //      return FALSE;
-   //   gen::international::ACPToUnicode(
+   //   ca::international::ACPToUnicode(
    //      psfi->szDisplayName, 
    //      sizeof(psfi->szDisplayName) / sizeof(WCHAR),
    //      shia.szDisplayName);
-   //   gen::international::ACPToUnicode(
+   //   ca::international::ACPToUnicode(
    //      psfi->szTypeName, 
    //      sizeof(psfi->szTypeName) / sizeof(WCHAR),
    //      shia.szTypeName);
@@ -477,10 +477,10 @@ namespace win
    //{
    //   strsize iCount = cchSrc;
    //   if(iCount < 0)
-   //      iCount = gen::international::UnicodeToMultiByteCount(uiCodePage, lpSrcStr);
+   //      iCount = ca::international::UnicodeToMultiByteCount(uiCodePage, lpSrcStr);
    //   string str;
    //   LPTSTR lpsz = str.GetBuffer(iCount);
-   //   if(gen::international::UnicodeToMultiByte(uiCodePage, lpsz, iCount, lpSrcStr))
+   //   if(ca::international::UnicodeToMultiByte(uiCodePage, lpsz, iCount, lpSrcStr))
    //   {
    //      //str.ReleaseBuffer();
    //      //return true;
@@ -504,7 +504,7 @@ namespace win
    //   string str;
    //   DWORD dw = ::GetTempPathA(nBufferLength, str.GetBuffer(nBufferLength * 2));
    //   str.ReleaseBuffer();
-   //   gen::international::ACPToUnicode(lpBuffer, nBufferLength, str);
+   //   ca::international::ACPToUnicode(lpBuffer, nBufferLength, str);
    //   return dw;
    //}
 
@@ -517,8 +517,8 @@ namespace win
    //   string strPathName;
    //   string strPrefixString;
    //   string strTempFileName;
-   //   gen::international::UnicodeToACP(strPathName, lpPathName);
-   //   gen::international::UnicodeToACP(strPrefixString, lpPrefixString);
+   //   ca::international::UnicodeToACP(strPathName, lpPathName);
+   //   ca::international::UnicodeToACP(strPrefixString, lpPrefixString);
    //   UINT user = ::GetTempFileNameA(
    //      strPathName,
    //      strPrefixString,
@@ -529,7 +529,7 @@ namespace win
    //      return 0;
    //   }
    //   strTempFileName.ReleaseBuffer();
-   //   gen::international::ACPToUnicode(
+   //   ca::international::ACPToUnicode(
    //      lpTempFileName,
    //      MAX_PATH,
    //      strTempFileName);
@@ -548,7 +548,7 @@ namespace win
    //   )
    //{
    //   string strFileName;
-   //   gen::international::UnicodeToACP(strFileName, lpFileName);
+   //   ca::international::UnicodeToACP(strFileName, lpFileName);
    //   HANDLE handle = ::CreateFileA(
    //      strFileName,
    //      dwDesiredAccess,
@@ -570,7 +570,7 @@ namespace win
    //   string str;
    //   DWORD dw = ::GetModuleFileNameA(hModule, str.GetBuffer(nSize * 2), nSize * 2);
    //   str.ReleaseBuffer();
-   //   gen::international::ACPToUnicode(lpFilename, nSize, str);
+   //   ca::international::ACPToUnicode(lpFilename, nSize, str);
    //   return dw;
    //}
 

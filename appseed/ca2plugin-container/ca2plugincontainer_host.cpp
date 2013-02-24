@@ -32,8 +32,8 @@ namespace ca2plugin_container
 
       m_papp = papp;
 
-      m_vssPluginName = "ca2 plugin";
-      m_vssPluginDescription = "ca2 plugin for Firefox";
+      m_vssPluginName = "ca plugin";
+      m_vssPluginDescription = "ca plugin for Firefox";
 
       ::ca2plugin_container::register_class((HINSTANCE) ::GetModuleHandleA("ca2plugin_container.dll"));
 
@@ -324,7 +324,7 @@ namespace ca2plugin_container
          if(!m_bInstalling)
          {
             m_bInstalling = true;
-            // shouldn't do advanced operations using ca2
+            // shouldn't do advanced operations using ca
             // starter_start will only kick a default app-install.exe if one isn't already running, cleaning file lock if any
             starter_start(": app=session session_start=session app_type=application install");
          }
@@ -338,9 +338,9 @@ namespace ca2plugin_container
          
 #ifdef WINDOWS
 #ifdef X86
-         ::SetDllDirectory(dir::ca2("stage\\x86"));
+         ::SetDllDirectory(dir::ca("stage\\x86"));
 #else
-         ::SetDllDirectory(dir::ca2("stage\\x64"));
+         ::SetDllDirectory(dir::ca("stage\\x64"));
 #endif
 #endif
          //Sleep(15 * 1000);

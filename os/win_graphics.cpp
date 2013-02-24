@@ -41,12 +41,12 @@ namespace win
 
    void graphics::assert_valid() const
    {
-      ::gen::object::assert_valid();
+      ::ca::object::assert_valid();
    }
 
    void graphics::dump(dump_context & dumpcontext) const
    {
-      ::gen::object::dump(dumpcontext);
+      ::ca::object::dump(dumpcontext);
 
       dumpcontext << "get_handle1() = " << get_handle1();
       dumpcontext << "\nm_hAttribDC = " << get_handle2();
@@ -1190,7 +1190,7 @@ gdi_fallback:
       }
       
       //ASSERT(get_handle1() != NULL); 
-      //wstring wstr = gen::international::utf8_to_unicode(str);
+      //wstring wstr = ca::international::utf8_to_unicode(str);
       return TextOut(x, y, str, (int32_t) str.get_length()); 
    
    } // call virtual
@@ -1246,7 +1246,7 @@ gdi_fallback:
       }
       
       //ASSERT(get_handle1() != NULL); 
-      //wstring wstr = gen::international::utf8_to_unicode(str);
+      //wstring wstr = ca::international::utf8_to_unicode(str);
       return TextOut(x, y, str, (int32_t) str.get_length()); 
    
    } // call virtual
@@ -1948,7 +1948,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   // This is ca2 API library.
+   // This is ca API library.
    // 
    // 
    //
@@ -2097,7 +2097,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    ::ca::brush* graphics::GetHalftoneBrush(::ca::application * papp)
    {
-/*      gen::LockGlobals(CRIT_HALFTONEBRUSH);
+/*      ca::LockGlobals(CRIT_HALFTONEBRUSH);
       if (gen_HalftoneBrush == NULL)
       {
          WORD grayPattern[8];
@@ -2112,7 +2112,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       }
       if (!gen_WingdixTerm)
          gen_WingdixTerm = (char)!atexit(&__win_gdi_x_term);
-      gen::UnlockGlobals(CRIT_HALFTONEBRUSH);
+      ca::UnlockGlobals(CRIT_HALFTONEBRUSH);
 
 //      return ::win::brush::from_handle(papp, gen_HalftoneBrush);*/
       return NULL;
@@ -2419,7 +2419,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 /*      hdc_map* pMap = afxMapHDC();
       if (pMap != NULL && pMap->lookup_permanent(get_handle1()) == this)
       {
-         TRACE(::gen::trace::category_AppMsg, 0, "Cannot Set Output hDC on Attached graphics.\n");
+         TRACE(::ca::trace::category_AppMsg, 0, "Cannot Set Output hDC on Attached graphics.\n");
          ASSERT(FALSE);
       }*/
 #endif
@@ -2437,7 +2437,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 /*      hdc_map* pMap = afxMapHDC();
       if (pMap != NULL && pMap->lookup_permanent(get_handle1()) == this)
       {
-         TRACE(::gen::trace::category_AppMsg, 0, "Cannot Release Output hDC on Attached graphics.\n");
+         TRACE(::ca::trace::category_AppMsg, 0, "Cannot Release Output hDC on Attached graphics.\n");
          ASSERT(FALSE);
       }*/
 #endif
@@ -3093,7 +3093,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          HRGN hRgn = ::CreateRectRgn(0, 0, 0, 0);
          if (::GetClipRgn(get_handle1(), hRgn) < 0 || !::SelectClipRgn(get_handle2(), hRgn))
          {
-            TRACE(::gen::trace::category_AppMsg, 0, "Error: unable to transfer clip region in graphics::SelectClipPath!\n");
+            TRACE(::ca::trace::category_AppMsg, 0, "Error: unable to transfer clip region in graphics::SelectClipPath!\n");
             bResult = FALSE;
          }
          ::DeleteObject(hRgn);
@@ -3258,7 +3258,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       // these flags would modify the string
       ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
       ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
-      wstring wstr = gen::international::utf8_to_unicode(string(lpszString, nCount));
+      wstring wstr = ca::international::utf8_to_unicode(string(lpszString, nCount));
       return ::DrawTextW(get_handle1(), wstr, (int32_t) wcslen(wstr), lpRect, nFormat); */
 
       return draw_text(string(lpszString, nCount), lpRect, nFormat);
@@ -3273,7 +3273,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       // these flags would modify the string
       ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
       ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
-      wstring wstr = gen::international::utf8_to_unicode(str);
+      wstring wstr = ca::international::utf8_to_unicode(str);
       return ::DrawTextW(get_handle1(), (const wchar_t *)wstr, (int32_t)wcslen(wstr), lpRect, nFormat); */
 
       try
@@ -3364,7 +3364,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       m_pgraphics->SetTransform(pmNew);
 
-      m_pgraphics->DrawString(gen::international::utf8_to_unicode(str), -1, gdiplus_font(), rectf, &format, gdiplus_brush());
+      m_pgraphics->DrawString(ca::international::utf8_to_unicode(str), -1, gdiplus_font(), rectf, &format, gdiplus_brush());
 
       m_pgraphics->SetTransform(&m);
 
@@ -3381,7 +3381,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       // these flags would modify the string
       ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
       ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
-      wstring wstr = gen::international::utf8_to_unicode(string(lpszString, nCount));
+      wstring wstr = ca::international::utf8_to_unicode(string(lpszString, nCount));
       return ::DrawTextExW(get_handle1(), const_cast<wchar_t *>((const wchar_t *)wstr), (int32_t)wcslen(wstr), lpRect, nFormat, lpDTParams); 
    }
 
@@ -3391,7 +3391,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       // these flags would modify the string
       ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
       ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
-      wstring wstr = gen::international::utf8_to_unicode(str);
+      wstring wstr = ca::international::utf8_to_unicode(str);
       return ::DrawTextExW(get_handle1(), const_cast<wchar_t *>((const wchar_t *)wstr), (int32_t)wcslen(wstr), lpRect, nFormat, lpDTParams); 
    }
 
@@ -3410,7 +3410,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if(iIndex < 0)
          return size(0, 0);
 
-      wstring wstr = gen::international::utf8_to_unicode(lpszString, nCount);
+      wstring wstr = ca::international::utf8_to_unicode(lpszString, nCount);
 
       strsize iRange = 0;
       strsize i = 0;
@@ -3418,10 +3418,10 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       const char * psz = lpszString;
       while(i < iIndex)
       {
-         iLen = gen::str::utf8_char(psz).length();
+         iLen = ca::str::utf8_char(psz).length();
          iRange++;
          i += iLen;
-         psz = gen::str::utf8_inc(psz);
+         psz = ca::str::utf8_inc(psz);
          if(psz == NULL)
             break;
          if(*psz == '\0')
@@ -3496,7 +3496,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       //retry_single_lock slGdiplus(&System.s_mutexGdiplus, millis(1), millis(1));
 
-      wstring wstr = gen::international::utf8_to_unicode(lpszString, nCount);
+      wstring wstr = ca::international::utf8_to_unicode(lpszString, nCount);
 
       Gdiplus::RectF box;
 
@@ -3516,7 +3516,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          return size(0, 0);
       SIZE size;
       string str(lpszString, nCount);
-      wstring wstr = gen::international::utf8_to_unicode(str);
+      wstring wstr = ca::international::utf8_to_unicode(str);
       if(!::GetTextExtentPoint32W(get_handle2(), wstr, (int32_t)wstr.get_length(), &size))
       {
          return class size(0, 0);
@@ -3529,7 +3529,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 /*      if(get_handle2() == NULL)
          return size(0, 0);
       SIZE size;
-      wstring wstr = gen::international::utf8_to_unicode(str);
+      wstring wstr = ca::international::utf8_to_unicode(str);
       if(!::GetTextExtentPoint32W(get_handle2(), wstr, (int32_t)wstr.get_length(), &size))
       {
          return class size(0, 0);
@@ -3546,7 +3546,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       /*if(m_pgraphics == NULL)
          return size(0, 0);
 
-      wstring wstr = gen::international::utf8_to_unicode(str);
+      wstring wstr = ca::international::utf8_to_unicode(str);
 
       Gdiplus::RectF box;
 
@@ -3574,7 +3574,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       ASSERT(get_handle1() != NULL);
       SIZE size;
       string str(lpszString, nCount);
-      wstring wstr = gen::international::utf8_to_unicode(str);
+      wstring wstr = ca::international::utf8_to_unicode(str);
       VERIFY(::GetTextExtentPoint32W(get_handle1(), wstr, (int32_t)wstr.get_length(), &size));
       return size;
    }
@@ -3583,7 +3583,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    {
       ASSERT(get_handle1() != NULL);
       SIZE size;
-      wstring wstr = gen::international::utf8_to_unicode(str);
+      wstring wstr = ca::international::utf8_to_unicode(str);
       VERIFY(::GetTextExtentPoint32W(get_handle1(), wstr, (int32_t)wstr.get_length(), &size));
       return size;
    }
@@ -3605,7 +3605,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if(iIndex < 0)
          return false;
 
-      wstring wstr = gen::international::utf8_to_unicode(lpszString, nCount);
+      wstring wstr = ca::international::utf8_to_unicode(lpszString, nCount);
 
       strsize iRange = 0;
       strsize i = 0;
@@ -3615,7 +3615,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       {
          try
          {
-            iLen = gen::str::utf8_char(psz).length();
+            iLen = ca::str::utf8_char(psz).length();
          }
          catch(...)
          {
@@ -3625,7 +3625,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          i += iLen;
          try
          {
-            psz = gen::str::utf8_inc(psz);
+            psz = ca::str::utf8_inc(psz);
          }
          catch(...)
          {
@@ -3716,7 +3716,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       //retry_single_lock slGdiplus(&System.s_mutexGdiplus, millis(1), millis(1));
 
-      wstring wstr = gen::international::utf8_to_unicode(lpszString, nCount);
+      wstring wstr = ca::international::utf8_to_unicode(lpszString, nCount);
 
       Gdiplus::RectF box;
 
@@ -3756,7 +3756,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if(m_pgraphics == NULL)
          return false;
 
-      wstring wstr = gen::international::utf8_to_unicode(str);
+      wstring wstr = ca::international::utf8_to_unicode(str);
 
       Gdiplus::RectF box;
 
@@ -3867,7 +3867,7 @@ namespace win
 
       string str(lpszString, nCount);
       
-      wstring wstr = gen::international::utf8_to_unicode(str);
+      wstring wstr = ca::international::utf8_to_unicode(str);
 
 
       try
@@ -3950,7 +3950,7 @@ namespace win
          double d2 = fontfamily.GetEmHeight(gdiplus_font()->GetStyle());
          double d3 = d1 * d2;
 
-         status = path.AddString(gen::international::utf8_to_unicode(str), -1, &fontfamily, gdiplus_font()->GetStyle(), (Gdiplus::REAL) d1, origin, &format);
+         status = path.AddString(ca::international::utf8_to_unicode(str), -1, &fontfamily, gdiplus_font()->GetStyle(), (Gdiplus::REAL) d1, origin, &format);
 
          path.Transform(pmNew);
 
@@ -3963,7 +3963,7 @@ namespace win
 
          m_pgraphics->SetTransform(pmNew);
 
-         status = m_pgraphics->DrawString(gen::international::utf8_to_unicode(str), -1, gdiplus_font(), origin, &format, gdiplus_brush());
+         status = m_pgraphics->DrawString(ca::international::utf8_to_unicode(str), -1, gdiplus_font(), origin, &format, gdiplus_brush());
 
          m_pgraphics->SetTransform(&m);
 
@@ -3982,7 +3982,7 @@ namespace win
 
       string str(lpszString, nCount);
       
-      wstring wstr = gen::international::utf8_to_unicode(str);
+      wstring wstr = ca::international::utf8_to_unicode(str);
 
 
       try
@@ -4062,7 +4062,7 @@ namespace win
          double d2 = fontfamily.GetEmHeight(gdiplus_font()->GetStyle());
          double d3 = d1 * d2;
 
-         status = path.AddString(gen::international::utf8_to_unicode(str), -1, &fontfamily, gdiplus_font()->GetStyle(), (Gdiplus::REAL) d1, origin, &format);
+         status = path.AddString(ca::international::utf8_to_unicode(str), -1, &fontfamily, gdiplus_font()->GetStyle(), (Gdiplus::REAL) d1, origin, &format);
 
          path.Transform(pmNew);
 
@@ -4075,7 +4075,7 @@ namespace win
 
          m_pgraphics->SetTransform(pmNew);
 
-         status = m_pgraphics->DrawString(gen::international::utf8_to_unicode(str), -1, gdiplus_font(), origin, &format, gdiplus_brush());
+         status = m_pgraphics->DrawString(ca::international::utf8_to_unicode(str), -1, gdiplus_font(), origin, &format, gdiplus_brush());
 
          m_pgraphics->SetTransform(&m);
 

@@ -54,7 +54,7 @@ namespace production
    {
    }
 
-   void view::install_message_handling(::gen::message::dispatch * pinterface)
+   void view::install_message_handling(::ca::message::dispatch * pinterface)
    {
       ::userbase::scroll_view::install_message_handling(pinterface);
 
@@ -106,12 +106,12 @@ namespace production
 	   return ::userbase::view::pre_create_window(cs);
    }
 
-   void view::_001OnInitialUpdate(gen::signal_object * pobj) 
+   void view::_001OnInitialUpdate(ca::signal_object * pobj) 
    {
       ::userbase::view::_001OnInitialUpdate(pobj);
    }
 
-   void view::on_update(::view * pSender, LPARAM lHint, ::gen::object * phint) 
+   void view::on_update(::view * pSender, LPARAM lHint, ::ca::object * phint) 
    {
       UNREFERENCED_PARAMETER(pSender);
       if(lHint == 5432108)
@@ -136,15 +136,15 @@ namespace production
    	
    }
 
-   void view::_001OnDestroy(gen::signal_object * pobj) 
+   void view::_001OnDestroy(ca::signal_object * pobj) 
    {
 	   ::userbase::view::_001OnDestroy(pobj);
    }
 
-   void view::_001OnSize(gen::signal_object * pobj) 
+   void view::_001OnSize(ca::signal_object * pobj) 
    {
       UNREFERENCED_PARAMETER(pobj);
-//      SCAST_PTR(::gen::message::size, psize, pobj)
+//      SCAST_PTR(::ca::message::size, psize, pobj)
 
       rect rectDesktop;
       Application.get_screen_rect(rectDesktop);
@@ -172,7 +172,7 @@ namespace production
    }
 
    /* trans
-   void view::_001OnPaint(gen::signal_object * pobj) 
+   void view::_001OnPaint(ca::signal_object * pobj) 
    {
 	   CPaintDC spgraphics(this); // device context for productioning
       spgraphics->TextOut(20, 20, "Carlos Gustavo Cecyn Lundgren é minha Vida Eterna, meu Coração Eterno, Todo meu tesouro eterno, meu Universo eterno, meu tudo eterno!!");
@@ -246,7 +246,7 @@ namespace production
 
    }
 
-   void view::_001OnCreate(gen::signal_object * pobj) 
+   void view::_001OnCreate(ca::signal_object * pobj) 
    {
       if(pobj->previous())
          return;
@@ -297,7 +297,7 @@ namespace production
       m_pproduction->m_pview  = this;
 
       //m_pproduction->twitter_auth();
-//      m_pproduction->twitter_twit("starting ca2 production application");
+//      m_pproduction->twitter_twit("starting ca production application");
 
 
 
@@ -313,9 +313,9 @@ namespace production
    }
 
 
-   void view::_001OnContextMenu(gen::signal_object * pobj) 
+   void view::_001OnContextMenu(ca::signal_object * pobj) 
    {
-      SCAST_PTR(::gen::message::context_menu, pcontextmenu, pobj)
+      SCAST_PTR(::ca::message::context_menu, pcontextmenu, pobj)
       point point = pcontextmenu->GetPoint();
    }
 
@@ -327,7 +327,7 @@ namespace production
       }
    }
 
-   void view::_001OnSetCursor(gen::signal_object * pobj) 
+   void view::_001OnSetCursor(ca::signal_object * pobj) 
    {
       ::SetCursor(::LoadCursor(NULL, IDC_ARROW));
    	
@@ -378,18 +378,18 @@ namespace production
       return -1;
    }
 
-   void view::_001OnLButtonDown(gen::signal_object * pobj)
+   void view::_001OnLButtonDown(ca::signal_object * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
-  //    SCAST_PTR(::gen::message::mouse, pmouse, pobj)
+  //    SCAST_PTR(::ca::message::mouse, pmouse, pobj)
 
 //      int32_t iHitArea = hit_test(pmouse->m_pt);
 
    }
 
-   void view::_001OnLButtonUp(gen::signal_object * pobj)
+   void view::_001OnLButtonUp(ca::signal_object * pobj)
    {
-      SCAST_PTR(::gen::message::mouse, pmouse, pobj)
+      SCAST_PTR(::ca::message::mouse, pmouse, pobj)
 
       class point point = pmouse->m_pt;
       ScreenToClient(&point);
@@ -406,10 +406,10 @@ namespace production
 
    }
 
-   void view::_001OnRButtonUp(gen::signal_object * pobj)
+   void view::_001OnRButtonUp(ca::signal_object * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
-  //    SCAST_PTR(::gen::message::mouse, pmouse, pobj)
+  //    SCAST_PTR(::ca::message::mouse, pmouse, pobj)
 
 //      int32_t iHitArea = hit_test(pmouse->m_pt);
    /*   {
@@ -426,9 +426,9 @@ namespace production
 
 
 
-   void view::_001OnTimer(gen::signal_object * pobj)
+   void view::_001OnTimer(ca::signal_object * pobj)
    {
-      SCAST_PTR(::gen::message::timer, ptimer, pobj)
+      SCAST_PTR(::ca::message::timer, ptimer, pobj)
       if(ptimer->m_nIDEvent == 543218)
       {
          if(IsWindowVisible())
@@ -462,10 +462,10 @@ namespace production
 
 
 
-   void view::_001OnShowWindow(gen::signal_object * pobj) 
+   void view::_001OnShowWindow(ca::signal_object * pobj) 
    {
       UNREFERENCED_PARAMETER(pobj);
-//      SCAST_PTR(::gen::message::show_window, pshowwindow, pobj)
+//      SCAST_PTR(::ca::message::show_window, pshowwindow, pobj)
    }
 
    void view::make_production()
@@ -483,9 +483,9 @@ namespace production
       m_pproduction->start_loop(papp->m_eversion, iLoopCount);
    }
 
-   void view::_001OnUser(gen::signal_object * pobj)
+   void view::_001OnUser(ca::signal_object * pobj)
    {
-      SCAST_PTR(::gen::message::base, pbase, pobj);
+      SCAST_PTR(::ca::message::base, pbase, pobj);
       if(pbase->m_wparam == 1)
       {
          int32_t iLineHeight = m_iLineHeight;
@@ -524,7 +524,7 @@ namespace production
 
          pdoc->get_operation_doc(true)->m_thread.queue_copy(
             m_pproduction->m_straFiles, 
-            "C:\\ca2\\vrel\\stage\\" + m_pproduction->m_strFormatBuild, 
+            "C:\\ca\\vrel\\stage\\" + m_pproduction->m_strFormatBuild, 
             strBase,
             false, 
             this);

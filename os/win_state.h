@@ -92,7 +92,7 @@ public:
 
 
 
-   // thread-local ca2 API new handler (separate from C-runtime)
+   // thread-local ca API new handler (separate from C-runtime)
    _PNH m_pfnNewHandler;
 
 
@@ -127,7 +127,7 @@ public:
       bool bSystem = FALSE);
    ~__MODULE_STATE();
 
-   ::gen::application* m_pCurrentWinApp;
+   ::ca::application* m_pCurrentWinApp;
    HINSTANCE m_hCurrentInstanceHandle;
    HINSTANCE m_hCurrentResourceHandle;
    const char * m_lpszCurrentAppName;
@@ -169,7 +169,7 @@ public:
 
    //Fusion: declare pointer to base_array of pointers to isolation aware dll wrappers (ex: comctl32).
    CDllIsolationWrapperBase** m_pDllIsolationWrappers;
-   //Defaults to TRUE. When FALSE - ca2 API will not activate context in __MAINTAIN_STATE2 (used by __MANAGE_STATE).
+   //Defaults to TRUE. When FALSE - ca API will not activate context in __MAINTAIN_STATE2 (used by __MANAGE_STATE).
    bool   m_bSetAmbientActCtx;
    //Handle of the module context.
    HANDLE   m_hActCtx;
@@ -274,7 +274,7 @@ public:
    // other framework modal data
    CPushRoutingView* m_pPushRoutingView;
 
-   // ca2 API/DB thread-local data
+   // ca API/DB thread-local data
    bool m_bWaitForDataSource;
 
    // OLE control thread-local data

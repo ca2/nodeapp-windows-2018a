@@ -64,7 +64,7 @@ void CLASS_DECL_win __throw_last_cleanup()
 
 
 
-namespace gen
+namespace ca
 {
 
 #if defined( _CUSTOM_THROW )  // You can define your own throw hresult_exception to throw a custom exception.
@@ -79,7 +79,7 @@ CLASS_DECL_ca void WINAPI atl_throw_impl( HRESULT hr )
    }
    else
    {
-//      gen::ThrowOleException( hr );
+//      ca::ThrowOleException( hr );
    }
 #else
    throw atl_exception( hr );
@@ -117,4 +117,4 @@ CLASS_DECL_ca void WINAPI atl_throw_impl( HRESULT hr )
 #endif
 
 
-} // namespace gen
+} // namespace ca

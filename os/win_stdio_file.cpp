@@ -38,13 +38,13 @@ namespace win
 
       ASSERT(__is_valid_string(lpszFileName));
 
-      if(nOpenFlags  & ::gen::file::defer_create_directory)
+      if(nOpenFlags  & ::ca::file::defer_create_directory)
       {
          Application.dir().mk(System.dir().name(lpszFileName));
       }
 
       m_pStream = NULL;
-      if (!::win::file::open(lpszFileName, (nOpenFlags & ~::gen::file::type_text)))
+      if (!::win::file::open(lpszFileName, (nOpenFlags & ~::ca::file::type_text)))
          return FALSE;
 
       ASSERT(m_hFile != hFileNull);
@@ -53,7 +53,7 @@ namespace win
       char szMode[4]; // C-runtime open string
       int32_t nMode = 0;
 
-      // determine read/write mode depending on gen::filesp mode
+      // determine read/write mode depending on ca::filesp mode
       if (nOpenFlags & mode_create)
       {
          if (nOpenFlags & modeNoTruncate)
@@ -70,7 +70,7 @@ namespace win
       if (szMode[0] == 'r' && (nOpenFlags & mode_read_write) ||
          szMode[0] != 'r' && !(nOpenFlags & mode_write))
       {
-         // ::gen::seek_current szMode mismatched, need to add '+' to fix
+         // ::ca::seek_current szMode mismatched, need to add '+' to fix
          szMode[nMode++] = '+';
       }
 
@@ -98,7 +98,7 @@ namespace win
          //      if (pException != NULL)
          //    {
          //         pException->m_lOsError = _doserrno;
-         //         pException->m_cause = ::gen::file_exception::OsErrorToException(_doserrno);
+         //         pException->m_cause = ::ca::file_exception::OsErrorToException(_doserrno);
          //  }
 
          ::win::file::Abort(); // close m_hFile
@@ -121,11 +121,11 @@ namespace win
       primitive::memory_size nRead = 0;
 
       if ((nRead = fread(lpBuf, sizeof(BYTE), nCount, m_pStream)) == 0 && !feof(m_pStream))
-         vfxThrowFileException(get_app(), ::gen::file_exception::type_generic, _doserrno, m_strFileName);
+         vfxThrowFileException(get_app(), ::ca::file_exception::type_generic, _doserrno, m_strFileName);
       if (ferror(m_pStream))
       {
          clearerr(m_pStream);
-         vfxThrowFileException(get_app(), ::gen::file_exception::type_generic, _doserrno, m_strFileName);
+         vfxThrowFileException(get_app(), ::ca::file_exception::type_generic, _doserrno, m_strFileName);
       }
       return nRead;
    }
@@ -137,7 +137,7 @@ namespace win
       ASSERT(__is_valid_address(lpBuf, nCount, FALSE));
 
       if (fwrite(lpBuf, sizeof(BYTE), nCount, m_pStream) != nCount)
-         vfxThrowFileException(get_app(), ::gen::file_exception::type_generic, _doserrno, m_strFileName);
+         vfxThrowFileException(get_app(), ::ca::file_exception::type_generic, _doserrno, m_strFileName);
    }
 
    void stdio_file::write_string(const char * lpsz)
@@ -146,7 +146,7 @@ namespace win
       ASSERT(m_pStream != NULL);
 
       if (_fputts(lpsz, m_pStream) == _TEOF)
-         vfxThrowFileException(get_app(), ::gen::file_exception::diskFull, _doserrno, m_strFileName);
+         vfxThrowFileException(get_app(), ::ca::file_exception::diskFull, _doserrno, m_strFileName);
    }
 
    LPTSTR stdio_file::read_string(LPTSTR lpsz, UINT nMax)
@@ -159,7 +159,7 @@ namespace win
       if (lpszResult == NULL && !feof(m_pStream))
       {
          clearerr(m_pStream);
-         vfxThrowFileException(get_app(), ::gen::file_exception::type_generic, _doserrno, m_strFileName);
+         vfxThrowFileException(get_app(), ::ca::file_exception::type_generic, _doserrno, m_strFileName);
       }
       return lpszResult;
    }
@@ -183,7 +183,7 @@ namespace win
          if (lpszResult == NULL && !feof(m_pStream))
          {
             clearerr(m_pStream);
-            vfxThrowFileException(get_app(), ::gen::file_exception::type_generic, _doserrno,
+            vfxThrowFileException(get_app(), ::ca::file_exception::type_generic, _doserrno,
                m_strFileName);
          }
 
@@ -197,7 +197,7 @@ namespace win
          lpsz = rString.GetBuffer(nMaxSize + nLen) + nLen;
       }
 
-      // remov '\n' from ::gen::seek_end of string if present
+      // remov '\n' from ::ca::seek_end of string if present
       lpsz = rString.GetBuffer(0);
       nLen = rString.get_length();
       if (nLen != 0 && lpsz[nLen-1] == '\n')
@@ -212,7 +212,7 @@ namespace win
    ASSERT(m_pStream != NULL);
 
    if (fputws(lpsz, m_pStream) == _TEOF)
-   vfxThrowFileException(get_app(), ::gen::file_exception::diskFull, _doserrno, m_strFileName);
+   vfxThrowFileException(get_app(), ::ca::file_exception::diskFull, _doserrno, m_strFileName);
    }*/
 
    /*wchar_t * stdio_file::read_string(wchar_t * lpsz, UINT nMax)
@@ -225,19 +225,19 @@ namespace win
    if (lpszResult == NULL && !feof(m_pStream))
    {
    clearerr(m_pStream);
-   vfxThrowFileException(get_app(), ::gen::file_exception::generic, _doserrno, m_strFileName);
+   vfxThrowFileException(get_app(), ::ca::file_exception::generic, _doserrno, m_strFileName);
    }
    return lpszResult;
    }*/
 
-   file_position stdio_file::seek(file_offset lOff, ::gen::e_seek nFrom)
+   file_position stdio_file::seek(file_offset lOff, ::ca::e_seek nFrom)
    {
       ASSERT_VALID(this);
-      ASSERT(nFrom == ::gen::seek_begin || nFrom == ::gen::seek_end || nFrom == ::gen::seek_current);
+      ASSERT(nFrom == ::ca::seek_begin || nFrom == ::ca::seek_end || nFrom == ::ca::seek_current);
       ASSERT(m_pStream != NULL);
 
       if (fseek(m_pStream, (long) lOff, nFrom) != 0)
-         vfxThrowFileException(get_app(), ::gen::file_exception::badSeek, _doserrno,
+         vfxThrowFileException(get_app(), ::ca::file_exception::badSeek, _doserrno,
          m_strFileName);
 
       long pos = ftell(m_pStream);
@@ -251,7 +251,7 @@ namespace win
 
       long pos = ftell(m_pStream);
       if (pos == -1)
-         vfxThrowFileException(get_app(), ::gen::file_exception::invalidFile, _doserrno,
+         vfxThrowFileException(get_app(), ::ca::file_exception::invalidFile, _doserrno,
          m_strFileName);
       return pos;
    }
@@ -261,7 +261,7 @@ namespace win
       ASSERT_VALID(this);
 
       if (m_pStream != NULL && fflush(m_pStream) != 0)
-         vfxThrowFileException(get_app(), ::gen::file_exception::diskFull, _doserrno,
+         vfxThrowFileException(get_app(), ::ca::file_exception::diskFull, _doserrno,
          m_strFileName);
    }
 
@@ -280,7 +280,7 @@ namespace win
       m_pStream = NULL;
 
       if (nErr != 0)
-         vfxThrowFileException(get_app(), ::gen::file_exception::diskFull, _doserrno,
+         vfxThrowFileException(get_app(), ::ca::file_exception::diskFull, _doserrno,
          m_strFileName);
    }
 
@@ -295,7 +295,7 @@ namespace win
       m_bCloseOnDelete = FALSE;
    }
 
-   gen::file * stdio_file::Duplicate() const
+   ca::file * stdio_file::Duplicate() const
    {
       ASSERT_VALID(this);
       ASSERT(m_pStream != NULL);
@@ -342,21 +342,21 @@ namespace win
 
       nCurrent = ftell(m_pStream);
       if (nCurrent == -1)
-         vfxThrowFileException(get_app(), ::gen::file_exception::invalidFile, _doserrno,
+         vfxThrowFileException(get_app(), ::ca::file_exception::invalidFile, _doserrno,
          m_strFileName);
 
       nResult = fseek(m_pStream, 0, SEEK_END);
       if (nResult != 0)
-         vfxThrowFileException(get_app(), ::gen::file_exception::badSeek, _doserrno,
+         vfxThrowFileException(get_app(), ::ca::file_exception::badSeek, _doserrno,
          m_strFileName);
 
       nLength = ftell(m_pStream);
       if (nLength == -1)
-         vfxThrowFileException(get_app(), ::gen::file_exception::invalidFile, _doserrno,
+         vfxThrowFileException(get_app(), ::ca::file_exception::invalidFile, _doserrno,
          m_strFileName);
       nResult = fseek(m_pStream, nCurrent, SEEK_SET);
       if (nResult != 0)
-         vfxThrowFileException(get_app(), ::gen::file_exception::badSeek, _doserrno,
+         vfxThrowFileException(get_app(), ::ca::file_exception::badSeek, _doserrno,
          m_strFileName);
 
       return nLength;

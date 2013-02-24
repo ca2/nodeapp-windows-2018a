@@ -22,7 +22,7 @@ void __cdecl _null_se_translator(uint32_t uiCode, EXCEPTION_POINTERS * ppointers
 //UINT c_cdecl          win_application_thread_proc(LPVOID);
 /////////////////////////////////////////////////////////////////////////////
 // Standard WinMain implementation
-//  Can be replaced as long as 'gen::WinInit' is called first
+//  Can be replaced as long as 'ca::WinInit' is called first
 
 int32_t CLASS_DECL_win __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
 {
@@ -51,7 +51,7 @@ int32_t CLASS_DECL_win __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, 
 
    pinitmaindata->m_hInstance             = hInstance;
    pinitmaindata->m_hPrevInstance         = hPrevInstance;
-   pinitmaindata->m_vssCommandLine        = gen::international::unicode_to_utf8(::GetCommandLineW());
+   pinitmaindata->m_vssCommandLine        = ca::international::unicode_to_utf8(::GetCommandLineW());
    pinitmaindata->m_nCmdShow              = nCmdShow;
 
    

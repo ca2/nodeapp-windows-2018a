@@ -6,7 +6,7 @@ namespace win2
 
    
    class CLASS_DECL_win2 factory_exchange :
-      virtual public ::gen::object
+      virtual public ::ca::object
    {
    public:
 

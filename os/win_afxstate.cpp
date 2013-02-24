@@ -158,7 +158,7 @@ __MODULE_STATE::__MODULE_STATE(bool bDLL, WNDPROC pfn_window_procedure, DWORD dw
    
 
 /////////////////////////////////////////////////////////////////////////////
-// Global function pointers for Context (WinSxS/Manifest) API, to be init during ca2 API global init.
+// Global function pointers for Context (WinSxS/Manifest) API, to be init during ca API global init.
 #define __ACTCTX_API_PTR_DEFINE(name, type, params) \
    typedef type (WINAPI* PFN_##name)params; \
    PFN_##name pfn##name = NULL;
@@ -349,7 +349,7 @@ bool CLASS_DECL_win __is_module_dll()
 
 bool CLASS_DECL_win __init_current_state_app()
 {
-   ::gen::application* pApp = __get_module_state()->m_pCurrentWinApp;
+   ::ca::application* pApp = __get_module_state()->m_pCurrentWinApp;
    if (pApp != NULL && !pApp->initialize_instance())
    {
       // Init Failed

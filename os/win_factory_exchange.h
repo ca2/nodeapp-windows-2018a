@@ -4,7 +4,7 @@ namespace win
 {
 
    class CLASS_DECL_win factory_exchange :
-      virtual public ::gen::object
+      virtual public ::ca::object
    {
    public:
       factory_exchange(::ca::application * papp);

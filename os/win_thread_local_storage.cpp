@@ -146,7 +146,7 @@ process_local_object::~process_local_object()
 /////////////////////////////////////////////////////////////////////////////
 // Init/Term for thread/process local data
 
-/*void CLASS_DECL_win gen::InitLocalData(HINSTANCE hInst)
+/*void CLASS_DECL_win ca::InitLocalData(HINSTANCE hInst)
 {
    if (__thread_data != NULL)
       __thread_data->AssignInstance(hInst);
@@ -161,7 +161,7 @@ void CLASS_DECL_win __term_local_data(HINSTANCE hInst, bool bAll)
 // This reference count is needed to support Win32s, such that the
 // thread-local and process-local data is not destroyed prematurely.
 // It is basically a reference count of the number of processes that
-// have attached to the ca2 API DLL.
+// have attached to the ca API DLL.
 
 __STATIC_DATA long gen_TlsRef = 0;
 

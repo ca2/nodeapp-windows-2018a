@@ -6,7 +6,7 @@ namespace win
 
 
    class CLASS_DECL_win registry :
-      virtual public ::gen::object
+      virtual public ::ca::object
    {
    public:
 

@@ -246,10 +246,10 @@ bool removal::initialize()
 {
 
 
-   m_hmutex_app_removal = ::CreateMutex(NULL, FALSE, "Global\\ca2::fontopus::ccvotagus_ca2_spa_app_removal::7807e510-5579-11dd-ae16-0800200c7784");
+   m_hmutex_app_removal = ::CreateMutex(NULL, FALSE, "Global\\ca::fontopus::ccvotagus_ca2_spa_app_removal::7807e510-5579-11dd-ae16-0800200c7784");
    if(::GetLastError() == ERROR_ALREADY_EXISTS)
    {
-      ::MessageBox(NULL, "ca2 app-removal.exe is already running.\n\nPlease wait for app-removal to finish or close it - using Task Manager - Ctrl+Shift+ESC - to continue.", "app-install.exe is running!", MB_ICONEXCLAMATION);
+      ::MessageBox(NULL, "ca app-removal.exe is already running.\n\nPlease wait for app-removal to finish or close it - using Task Manager - Ctrl+Shift+ESC - to continue.", "app-install.exe is running!", MB_ICONEXCLAMATION);
       m_iError = -202;
       return false;
    }
@@ -258,7 +258,7 @@ bool removal::initialize()
 
    ::GetModuleFileName(NULL, szFile, sizeof(szFile));
 
-   vsstring strTargetDir = get_dir(FOLDERID_ProgramFilesX86, "ca2-app-removal");
+   vsstring strTargetDir = get_dir(FOLDERID_ProgramFilesX86, "ca-app-removal");
 
    dir::mk(strTargetDir);
 
@@ -266,18 +266,18 @@ bool removal::initialize()
 
    if(::CopyFile(szFile, strTarget, TRUE))
    {
-      int32_t i = MessageBox(NULL, "Do you want to place a shortcut to ca2 app-removal in Desktop?\n\nProgram has already been copied to Program Files Folder.", "app-removal installation", MB_ICONQUESTION | MB_YESNOCANCEL);
+      int32_t i = MessageBox(NULL, "Do you want to place a shortcut to ca app-removal in Desktop?\n\nProgram has already been copied to Program Files Folder.", "app-removal installation", MB_ICONQUESTION | MB_YESNOCANCEL);
 
       if(i == IDCANCEL)
          return false;
 
       if(i == IDYES)
       {
-         vsstring strLink= get_dir(FOLDERID_Desktop, "ca2 app-removal Tool.lnk");
+         vsstring strLink= get_dir(FOLDERID_Desktop, "ca app-removal Tool.lnk");
          wstring wstrTarget(strTarget);
          wstring wstrLink(strLink);
          // create shortcurt;
-         CreateLink(wstrTarget, wstrLink, L"ca2 app-removal Tool", wstrTarget, 0);
+         CreateLink(wstrTarget, wstrLink, L"ca app-removal Tool", wstrTarget, 0);
       }
    }
 
@@ -288,52 +288,52 @@ bool removal::initialize()
    my_system("taskkill /F /IM plugin-container.exe");
    my_system("taskkill /F /IM iexplore.exe");
    my_system("taskkill /F /IM firefox.exe");
-   g_n_rmdir_n_v(FOLDERID_ProgramFilesX86, "ca2");
-   g_n_rmdir_n_v(FOLDERID_ProgramData, "ca2");
+   g_n_rmdir_n_v(FOLDERID_ProgramFilesX86, "ca");
+   g_n_rmdir_n_v(FOLDERID_ProgramData, "ca");
 
    vsstring str;
 
-   g_n_rmdir_n_v(FOLDERID_Profile, "ca2");
-//rmdir /S /Q "C:\Users\votagus\ca2"
-   g_n_rmdir_n_v(FOLDERID_LocalAppData, "ca2");
-//rmdir /S /Q "C:\Users\votagus\AppData\Local\ca2"
-//rmdir /S /Q "C:\Users\votagus\AppData\Local\VirtualStore\Program Files (x86)\ca2"
-   g_n_rmdir_n_v(FOLDERID_LocalAppData, "VirtualStore\\Program Files (x86)\\ca2");
-//rmdir /S /Q "C:\Users\votagus\AppData\Local\VirtualStore\ProgramData\ca2"
-   g_n_rmdir_n_v(FOLDERID_LocalAppData, "VirtualStore\\ProgramData\\ca2");
-//rmdir /S /Q "C:\Users\votagus\AppData\LocalLow\ca2"
-   g_n_rmdir_n_v(FOLDERID_LocalAppDataLow, "ca2");
-//rmdir /S /Q "C:\Users\votagus\AppData\Roaming\ca2"
-   g_n_rmdir_n_v(FOLDERID_RoamingAppData, "ca2");
+   g_n_rmdir_n_v(FOLDERID_Profile, "ca");
+//rmdir /S /Q "C:\Users\votagus\ca"
+   g_n_rmdir_n_v(FOLDERID_LocalAppData, "ca");
+//rmdir /S /Q "C:\Users\votagus\AppData\Local\ca"
+//rmdir /S /Q "C:\Users\votagus\AppData\Local\VirtualStore\Program Files (x86)\ca"
+   g_n_rmdir_n_v(FOLDERID_LocalAppData, "VirtualStore\\Program Files (x86)\\ca");
+//rmdir /S /Q "C:\Users\votagus\AppData\Local\VirtualStore\ProgramData\ca"
+   g_n_rmdir_n_v(FOLDERID_LocalAppData, "VirtualStore\\ProgramData\\ca");
+//rmdir /S /Q "C:\Users\votagus\AppData\LocalLow\ca"
+   g_n_rmdir_n_v(FOLDERID_LocalAppDataLow, "ca");
+//rmdir /S /Q "C:\Users\votagus\AppData\Roaming\ca"
+   g_n_rmdir_n_v(FOLDERID_RoamingAppData, "ca");
 //del "C:\Windows\Downloaded Program Files\iexca2.dll"
    ::DeleteFile("C:\\Windows\\Downloaded Program Files\\iexca2.dll");
 //del "C:\Windows\Downloaded Program Files\iexca2.inf"
    ::DeleteFile("C:\\Windows\\Downloaded Program Files\\iexca2.inf");
 //del "C:\Windows\Downloaded Program Files\app-install.exe"
    ::DeleteFile("C:\\Windows\\Downloaded Program Files\\app-install.exe");
-//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\ProgramData\ca2"
-   //str = get_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Tempoarary Internet Files\\Virtualized\\VirtualStore\\ProgramsData\\ca2");
+//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\ProgramData\ca"
+   //str = get_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Tempoarary Internet Files\\Virtualized\\VirtualStore\\ProgramsData\\ca");
    //rmdir(str);
-//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Program Files (x86)\ca2"
-   //str = get_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Tempoarary Internet Files\\Virtualized\\VirtualStore\\Programs Files(x86)\\ca2");
+//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Program Files (x86)\ca"
+   //str = get_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Tempoarary Internet Files\\Virtualized\\VirtualStore\\Programs Files(x86)\\ca");
    //rmdir(str);
-//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\votagus\ca2"
-   //str = get_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Tempoarary Internet Files\\Virtualized\\VirtualStore\\ProgramsData\\ca2");
+//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\votagus\ca"
+   //str = get_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Tempoarary Internet Files\\Virtualized\\VirtualStore\\ProgramsData\\ca");
    //rmdir(str);
-//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\votagus\AppData\Local\ca2"
-//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\votagus\AppData\Local\VirtualStore\Program Files (x86)\ca2"
-//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\votagus\AppData\Local\VirtualStore\ProgramData\ca2"
-//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\votagus\AppData\Roaming\ca2"
+//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\votagus\AppData\Local\ca"
+//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\votagus\AppData\Local\VirtualStore\Program Files (x86)\ca"
+//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\votagus\AppData\Local\VirtualStore\ProgramData\ca"
+//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\votagus\AppData\Roaming\ca"
 //call ".\windows_registry\delete_global_npca2.bat"
 //call ".\windows_registry\delete_activex_iexca2.bat"
 
-   ::reg_delete_tree_dup(HKEY_LOCAL_MACHINE, "SOFTWARE\\Wow6432Node\\MozillaPlugins\\@ca2.cc/npca2");
+   ::reg_delete_tree_dup(HKEY_LOCAL_MACHINE, "SOFTWARE\\Wow6432Node\\MozillaPlugins\\@ca.cc/npca2");
    ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "Wow6432Node\\CLSID\\{CA211984-1984-1977-A861-F8AA2A7AEE4B}");
-   ::reg_delete_tree_dup(HKEY_LOCAL_MACHINE, "SOFTWARE\\MozillaPlugins\\@ca2.cc/npca2");
+   ::reg_delete_tree_dup(HKEY_LOCAL_MACHINE, "SOFTWARE\\MozillaPlugins\\@ca.cc/npca2");
    ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "CLSID\\{CA211984-1984-1977-A861-F8AA2A7AEE4B}");
 
-   ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "ccvotagus.ca2.fontopus.iexca2");
-   ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "ccvotagus.ca2.fontopus.iexca2.2");
+   ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "ccvotagus.ca.fontopus.iexca2");
+   ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "ccvotagus.ca.fontopus.iexca2.2");
    ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "ccvotagus_ca2_spaboot_file");
 
    //MessageBox(NULL, "Hope Helped!", "Hope Helped!", MB_ICONINFORMATION);
@@ -484,26 +484,26 @@ void removal::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMess
 bool removal::are_there_user_files_in_use()
 {
 #ifdef X86
-   if(is_user_using(dir::ca2("stage\\x86\\msvcp110d.dll")))
+   if(is_user_using(dir::ca("stage\\x86\\msvcp110d.dll")))
       return true;
-   if(is_user_using(dir::ca2("stage\\x86\\msvcr110d.dll")))
+   if(is_user_using(dir::ca("stage\\x86\\msvcr110d.dll")))
       return true;
-   if(is_user_using(dir::ca2("stage\\x86\\c.dll")))
+   if(is_user_using(dir::ca("stage\\x86\\c.dll")))
       return true;
-   if(is_user_using(dir::ca2("stage\\x86\\ca.dll")))
+   if(is_user_using(dir::ca("stage\\x86\\ca.dll")))
       return true;
-   if(is_user_using(dir::ca2("stage\\x86\\ca2.dll")))
+   if(is_user_using(dir::ca("stage\\x86\\ca.dll")))
       return true;
 #else
-   if(is_user_using(dir::ca2("stage\\x64\\msvcp110d.dll")))
+   if(is_user_using(dir::ca("stage\\x64\\msvcp110d.dll")))
       return true;
-   if(is_user_using(dir::ca2("stage\\x64\\msvcr110d.dll")))
+   if(is_user_using(dir::ca("stage\\x64\\msvcr110d.dll")))
       return true;
-   if(is_user_using(dir::ca2("stage\\x64\\c.dll")))
+   if(is_user_using(dir::ca("stage\\x64\\c.dll")))
       return true;
-   if(is_user_using(dir::ca2("stage\\x64\\ca.dll")))
+   if(is_user_using(dir::ca("stage\\x64\\ca.dll")))
       return true;
-   if(is_user_using(dir::ca2("stage\\x64\\ca2.dll")))
+   if(is_user_using(dir::ca("stage\\x64\\ca.dll")))
       return true;
 #endif
    return false;
