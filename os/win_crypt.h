@@ -6,7 +6,7 @@ namespace win
 
 
    class CLASS_DECL_win crypt :
-      virtual public ::ca4::crypt
+      virtual public ::ca2::crypt
    {
    public:
 
@@ -22,7 +22,7 @@ namespace win
    }; 
 
 
-} // namespace ca4
+} // namespace ca2
 
 
 

@@ -2333,7 +2333,7 @@ retry2:
    {
 
 
-      ::ca4::twit twitterObj(get_app());
+      ::ca2::twit twitterObj(get_app());
 
 
       string tmpStr( "" );
@@ -2412,7 +2412,7 @@ retry2:
 
 Retry2:
 
-      ::ca4::twit twitterObj(get_app());
+      ::ca2::twit twitterObj(get_app());
       string tmpStr( "" );
       string replyMsg( "" );
 

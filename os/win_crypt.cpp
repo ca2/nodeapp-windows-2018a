@@ -7,7 +7,7 @@ namespace win
 
    crypt::crypt(::ca::application * papp) :
       ca(papp),
-      ::ca4::crypt(papp)
+      ::ca2::crypt(papp)
    {
    }
 

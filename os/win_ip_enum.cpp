@@ -7,7 +7,7 @@ namespace win
 
    ip_enum::ip_enum(::ca::application * papp) :
       ca(papp),
-      ::ca4::ip_enum(papp)
+      ::ca2::ip_enum(papp)
    {
 
       m_bWinsockInitialized = false;

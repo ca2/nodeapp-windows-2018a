@@ -85,7 +85,7 @@ namespace win
 	   CoUninitialize();  // balancing call for CoInitialize
    }
 
-   HRESULT port_forward::ListenForUpnpChanges(::ca4::port_forward_change_callbacks *pCallbacks /* =NULL */ )
+   HRESULT port_forward::ListenForUpnpChanges(::ca2::port_forward_change_callbacks *pCallbacks /* =NULL */ )
    {
 	   // check if we are already listening
 	
@@ -97,7 +97,7 @@ namespace win
 	
 	   if ( pCallbacks==NULL )
 	   {
-		   SetChangeEventCallbackPointer(	new ::ca4::port_forward_change_callbacks );
+		   SetChangeEventCallbackPointer(	new ::ca2::port_forward_change_callbacks );
 	   }
 	   else
 	   {
@@ -190,7 +190,7 @@ namespace win
 
 
 
-   HRESULT port_forward::SetChangeEventCallbackPointer(::ca4::port_forward_change_callbacks *pCallbacks)
+   HRESULT port_forward::SetChangeEventCallbackPointer(::ca2::port_forward_change_callbacks *pCallbacks)
    {
 	   ASSERT( pCallbacks!=NULL );
 	

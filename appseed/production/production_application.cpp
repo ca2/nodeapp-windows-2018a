@@ -65,7 +65,7 @@ namespace production
       try
       {
 
-         iExitCode = cube8::application::exit_instance();
+         iExitCode = ::cube::application::exit_instance();
 
       }
       catch(...)

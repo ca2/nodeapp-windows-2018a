@@ -15,7 +15,7 @@ namespace win
 
 
    class CLASS_DECL_win ip_enum :
-      virtual public ::ca4::ip_enum
+      virtual public ::ca2::ip_enum
    {
    public:
 

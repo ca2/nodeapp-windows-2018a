@@ -11,7 +11,7 @@ namespace win
 
    copydesk::copydesk(::ca::application * papp) :
       ca(papp),
-      ca4::copydesk(papp),
+      ca2::copydesk(papp),
       ::ca::window_sp(papp)
    {
    }
@@ -107,7 +107,7 @@ namespace win
    bool copydesk::initialize()
    {
       
-      if(!::ca4::copydesk::initialize())
+      if(!::ca2::copydesk::initialize())
          return false;
 
       if(!m_p->CreateEx(0, System.RegisterWndClass(0), NULL, 0, rect(0, 0, 0, 0), NULL, id()))
@@ -123,7 +123,7 @@ namespace win
 
       bool bOk;
       
-      bOk = ::ca4::copydesk::finalize();
+      bOk = ::ca2::copydesk::finalize();
 
       if(::ca::window_sp::is_set() && ::ca::window_sp::m_p->IsWindow())
       {

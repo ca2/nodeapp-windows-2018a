@@ -30,10 +30,10 @@ namespace win
       System.factory().creatable_large < thread                >  (System.template type_info < ::ca::thread             > ());
       System.factory().creatable_large < window                >  (System.template type_info < ::ca::window             > ());
       System.factory().creatable < os                          >  (System.template type_info < ::ca::os                 > (), 1);
-      System.factory().creatable < port_forward                >  (System.template type_info < ::ca4::port_forward      > (), 1);
-      System.factory().creatable_small < copydesk              >  (System.template type_info < ::ca4::copydesk          > (), 1);
-      System.factory().creatable_small < crypt                 >  (System.template type_info < ::ca4::crypt             > (), 1);
-      System.factory().creatable_small < ip_enum               >  (System.template type_info < ::ca4::ip_enum           > ());
+      System.factory().creatable < port_forward                >  (System.template type_info < ::ca2::port_forward      > (), 1);
+      System.factory().creatable_small < copydesk              >  (System.template type_info < ::ca2::copydesk          > (), 1);
+      System.factory().creatable_small < crypt                 >  (System.template type_info < ::ca2::crypt             > (), 1);
+      System.factory().creatable_small < ip_enum               >  (System.template type_info < ::ca2::ip_enum           > ());
       
       ::win::dib::s_initialize();
 
