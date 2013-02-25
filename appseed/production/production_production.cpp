@@ -505,7 +505,6 @@ restart:
             }
          }
 
-         //string strCgclcst = Application.file().as_string("G:/cecyn1.at.hotmail.com/carlos/CarlosGustavoCecynLundgrenVidaDeCamiloSasukeTsumanuma.txt");
          //string strDedicaverse = Application.file().as_string("G:/cecyn1.at.hotmail.com/carlos/dedicaverse.txt");
 
          //Application.dir().mk(System.dir().path(m_strBase, "time"));
