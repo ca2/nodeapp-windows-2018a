@@ -699,7 +699,7 @@ namespace win
       return dir::path(m_strNetSeedFolder, lpcsz, lpcsz2);
    }
 
-   // stage in ccvotagus spalib
+   // stage in ca2os spalib
    string dir::ca(const char * lpcsz, const char * lpcsz2)
    {
       

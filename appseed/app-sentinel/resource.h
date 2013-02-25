@@ -1,1 +1,1 @@
-#define IDI_CCVOTAGUS_CA2_SPA			128
+#define IDI_CA2_SPA			128

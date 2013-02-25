@@ -8,7 +8,7 @@ namespace backup
    application::application()
    {
       m_strAppName            = "backup";
-      m_strBaseSupportId      = "votagus_ca2_backup";
+      m_strBaseSupportId      = "ca2_backup";
    }
 
    application::~application()

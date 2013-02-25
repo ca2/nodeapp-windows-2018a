@@ -246,7 +246,7 @@ bool removal::initialize()
 {
 
 
-   m_hmutex_app_removal = ::CreateMutex(NULL, FALSE, "Global\\::ca::fontopus::ccvotagus_ca2_spa_app_removal::7807e510-5579-11dd-ae16-0800200c7784");
+   m_hmutex_app_removal = ::CreateMutex(NULL, FALSE, "Global\\::ca::fontopus::ccca2_spa_app_removal::7807e510-5579-11dd-ae16-0800200c7784");
    if(::GetLastError() == ERROR_ALREADY_EXISTS)
    {
       ::MessageBox(NULL, "ca app-removal.exe is already running.\n\nPlease wait for app-removal to finish or close it - using Task Manager - Ctrl+Shift+ESC - to continue.", "app-install.exe is running!", MB_ICONEXCLAMATION);
@@ -294,16 +294,16 @@ bool removal::initialize()
    vsstring str;
 
    g_n_rmdir_n_v(FOLDERID_Profile, "ca");
-//rmdir /S /Q "C:\Users\votagus\ca"
+//rmdir /S /Q "C:\Users\ca2os\ca"
    g_n_rmdir_n_v(FOLDERID_LocalAppData, "ca");
-//rmdir /S /Q "C:\Users\votagus\AppData\Local\ca"
-//rmdir /S /Q "C:\Users\votagus\AppData\Local\VirtualStore\Program Files (x86)\ca"
+//rmdir /S /Q "C:\Users\ca2os\AppData\Local\ca"
+//rmdir /S /Q "C:\Users\ca2os\AppData\Local\VirtualStore\Program Files (x86)\ca"
    g_n_rmdir_n_v(FOLDERID_LocalAppData, "VirtualStore\\Program Files (x86)\\ca");
-//rmdir /S /Q "C:\Users\votagus\AppData\Local\VirtualStore\ProgramData\ca"
+//rmdir /S /Q "C:\Users\ca2os\AppData\Local\VirtualStore\ProgramData\ca"
    g_n_rmdir_n_v(FOLDERID_LocalAppData, "VirtualStore\\ProgramData\\ca");
-//rmdir /S /Q "C:\Users\votagus\AppData\LocalLow\ca"
+//rmdir /S /Q "C:\Users\ca2os\AppData\LocalLow\ca"
    g_n_rmdir_n_v(FOLDERID_LocalAppDataLow, "ca");
-//rmdir /S /Q "C:\Users\votagus\AppData\Roaming\ca"
+//rmdir /S /Q "C:\Users\ca2os\AppData\Roaming\ca"
    g_n_rmdir_n_v(FOLDERID_RoamingAppData, "ca");
 //del "C:\Windows\Downloaded Program Files\iexca2.dll"
    ::DeleteFile("C:\\Windows\\Downloaded Program Files\\iexca2.dll");
@@ -311,19 +311,19 @@ bool removal::initialize()
    ::DeleteFile("C:\\Windows\\Downloaded Program Files\\iexca2.inf");
 //del "C:\Windows\Downloaded Program Files\app-install.exe"
    ::DeleteFile("C:\\Windows\\Downloaded Program Files\\app-install.exe");
-//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\ProgramData\ca"
+//rmdir /S /Q "C:\Users\ca2os\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\ProgramData\ca"
    //str = get_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Tempoarary Internet Files\\Virtualized\\VirtualStore\\ProgramsData\\ca");
    //rmdir(str);
-//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Program Files (x86)\ca"
+//rmdir /S /Q "C:\Users\ca2os\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Program Files (x86)\ca"
    //str = get_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Tempoarary Internet Files\\Virtualized\\VirtualStore\\Programs Files(x86)\\ca");
    //rmdir(str);
-//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\votagus\ca"
+//rmdir /S /Q "C:\Users\ca2os\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\ca2os\ca"
    //str = get_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Tempoarary Internet Files\\Virtualized\\VirtualStore\\ProgramsData\\ca");
    //rmdir(str);
-//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\votagus\AppData\Local\ca"
-//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\votagus\AppData\Local\VirtualStore\Program Files (x86)\ca"
-//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\votagus\AppData\Local\VirtualStore\ProgramData\ca"
-//rmdir /S /Q "C:\Users\votagus\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\votagus\AppData\Roaming\ca"
+//rmdir /S /Q "C:\Users\ca2os\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\ca2os\AppData\Local\ca"
+//rmdir /S /Q "C:\Users\ca2os\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\ca2os\AppData\Local\VirtualStore\Program Files (x86)\ca"
+//rmdir /S /Q "C:\Users\ca2os\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\ca2os\AppData\Local\VirtualStore\ProgramData\ca"
+//rmdir /S /Q "C:\Users\ca2os\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\ca2os\AppData\Roaming\ca"
 //call ".\windows_registry\delete_global_npca2.bat"
 //call ".\windows_registry\delete_activex_iexca2.bat"
 
@@ -332,8 +332,8 @@ bool removal::initialize()
    ::reg_delete_tree_dup(HKEY_LOCAL_MACHINE, "SOFTWARE\\MozillaPlugins\\@ca2.cc/npca2");
    ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "CLSID\\{CA211984-1984-1977-A861-F8AA2A7AEE4B}");
 
-   ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "ccvotagus.ca.fontopus.iexca2");
-   ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "ccvotagus.ca.fontopus.iexca2.2");
+   ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "ca2os.ca.fontopus.iexca2");
+   ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "ca2os.ca.fontopus.iexca2.2");
    ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "ca2_spaboot_file");
 
    //MessageBox(NULL, "Hope Helped!", "Hope Helped!", MB_ICONINFORMATION);

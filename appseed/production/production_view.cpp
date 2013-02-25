@@ -22,7 +22,7 @@ namespace production
    {
       m_pproduction = NULL;
       
-      //System.file().ftd("C:\\home2\\ccvotagus\\ca2_spa\\stage", "C:\\teste.fileset");
+      //System.file().ftd("C:\\home2\\ca2os\\ca2_spa\\stage", "C:\\teste.fileset");
 
 
       m_iLineHeight = 1;
@@ -273,7 +273,7 @@ namespace production
       SetTimer(31, 230, NULL);
       SetTimer(3003, 300, NULL);
       SetTimer(543218, 200, NULL);
-      m_dibV.load_from_matter("votagus_mountains_and_valleys-123.png");
+      m_dibV.load_from_matter("wild_mountains_and_valleys-123.png");
       //Application.visual().imaging().free(pfi);
 
       m_dibVs.load_from_matter("bambu49transr.png");

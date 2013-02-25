@@ -9,7 +9,7 @@ namespace production
    {
       
       m_strAppName         = "production";
-      m_strBaseSupportId   = "votagus_ca2_production";
+      m_strBaseSupportId   = "ca2_production";
       m_bZipIsDir          = false;
       m_bLicense           = false;
 

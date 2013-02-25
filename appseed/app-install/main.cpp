@@ -169,7 +169,7 @@ bool installer::initialize()
 
    prepare_small_bell();
 
-   if(!m_rxchannel.create("ca/fontopus/ccvotagus/spaboot_install", "app-install.exe"))
+   if(!m_rxchannel.create("ca2/spaboot_install", "app-install.exe"))
    {
       m_iError = -1;
       return false;

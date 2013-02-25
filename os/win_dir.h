@@ -57,7 +57,7 @@ namespace win
       virtual string stageapp(const char * lpcsz = NULL, const char * lpcsz2 = NULL);
       virtual string netseed(const char * lpcsz = NULL, const char * lpcsz2 = NULL);
       
-      // stage in ccvotagus spalib
+      // stage in ca2os spalib
       virtual string ca(const char * lpcsz, const char * lpcsz2 = NULL);
       virtual string ca();
       virtual string ca(const string & str);

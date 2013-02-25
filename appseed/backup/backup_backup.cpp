@@ -48,7 +48,7 @@ namespace backup
          keeper < bool > keepFinishedFalse(&m_bFinished, false, true, true);
          string str;
 
-         string strFile = System.dir().sensitive_ccvotagus("basis/ca/app/dbbk.bat");
+         string strFile = System.dir().sensitive_ccauth("basis/ca/app/dbbk.bat");
          if(!Application.file().exists(strFile))
          {
             string str;
@@ -57,7 +57,7 @@ namespace backup
             return 0;
          }
 
-         if(!hotcopy_repos("ccvotagus"))
+         if(!hotcopy_repos("ca2os"))
             return 0;
          if(!hotcopy_repos("app"))
             return 0;
@@ -74,7 +74,7 @@ namespace backup
          if(!all_db_dump())
             return 0;
 
-         if(!compress_repos("ccvotagus"))
+         if(!compress_repos("ca2os"))
             return 0;
          if(!compress_repos("app"))
             return 0;
@@ -113,7 +113,7 @@ namespace backup
          CFtpConnection ftpconn(
          &session,
          strServer,
-         "ccvotagusbk",
+         "ccauthbk",
          "gustavo514Lund");
          ftp_put_dir(ftpconn, "C:\\", "ca/bk/"  + m_strTag, 0);
          }*/
@@ -206,7 +206,7 @@ namespace backup
       Application.dir().mk(System.dir().name(strdump));
 
       str.Format("%s \"%s\"",
-         System.dir().sensitive_ccvotagus("basis/ca/app/dbbk.bat"),
+         System.dir().sensitive_ccauth("basis/ca/app/dbbk.bat"),
          strdump);
 
       if(!::CreateProcess(NULL, (LPTSTR) (const char *) str,

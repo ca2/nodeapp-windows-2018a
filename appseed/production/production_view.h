@@ -25,11 +25,11 @@ namespace production
       int32_t                     m_iArea;
       int32_t                     m_iItemHeight;
       int32_t                     m_iTaskOffset;
-      // veriwell votagus vida
+      
       int32_t                     m_iV; 
       int32_t                     m_iVH;
       int32_t                     m_iVW;
-      // veriwell votagus ca out world stage
+      // veriwell ca2os ca out world stage
       int32_t                     m_iVs;
       int32_t                     m_iVsH;
       int32_t                     m_iVsW;

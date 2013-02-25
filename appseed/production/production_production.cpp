@@ -458,16 +458,16 @@ restart:
 
          m_strVrel = "C:\\ca\\vrel\\stage\\" + m_strFormatBuild;
 
-         m_strCCVotagus = "C:\\home\\ccvotagus\\ca2_spa\\stage\\" + m_strFormatBuild;
-         m_strCCVrel = "C:\\home\\ccvotagus\\ca2_spa\\stage";
-         m_strCCVrelNew = "C:\\home\\ccvotagus\\ca2_spa\\ccvrelnew\\stage\\" + m_strFormatBuild;
+         m_strCCAuth = "C:\\home\\ca2os\\ca2_spa\\stage\\" + m_strFormatBuild;
+         m_strCCVrel = "C:\\home\\ca2os\\ca2_spa\\stage";
+         m_strCCVrelNew = "C:\\home\\ca2os\\ca2_spa\\ccvrelnew\\stage\\" + m_strFormatBuild;
 
          uint32_t dwExitCode;
 
          int32_t i;
          if(m_bClean)
          {
-            add_status("Cleaning ca fontopus ccvotagus ...");
+            add_status("Cleaning ca fontopus ca2os ...");
             {
                string str;
                ::ca::property_set post;
@@ -494,7 +494,7 @@ restart:
             while(!process.has_exited(&dwExitCode))
             {
                Sleep(5000);
-               str.Format("%d Cleaning ca fontopus ccvotagus ...", i);
+               str.Format("%d Cleaning ca fontopus ca2os ...", i);
                add_status(str);
                i++;
             }
@@ -533,8 +533,8 @@ restart:
 
 
          //System.http().ms_download("http://api.ca2.cc/spaignition/clean", 
-         //   System.dir().votagus("time\\spaignition_update.txt"), NULL, post, headers, ::ca::app(get_app()).user().get_user());
-         add_status("Cleaning ccvotagus folder...");
+         //   System.dir().ca("time\\spaignition_update.txt"), NULL, post, headers, ::ca::app(get_app()).user().get_user());
+         add_status("Cleaning ca2os folder...");
          ::ca::process process;
          Application.file().put_contents(strPath, "rmdir /s /q C:\\ca\\vrel\\stage");
          if(!process.create_child_process(strPath, false))
@@ -549,7 +549,7 @@ restart:
          while(!process.has_exited(&dwExitCode))
          {
             Sleep(500);
-            str.Format("%d Cleaning ccvotagus folder ...", i);
+            str.Format("%d Cleaning ca2os folder ...", i);
             add_status(str);
             i++;
          }
@@ -649,8 +649,8 @@ restart:
          {
          return 1;
          }*/
-         Application.dir().mk("C:\\home\\ccvotagus\\ca2_spa\\stage\\app\\");
-         Application.file().put_contents("C:\\home\\ccvotagus\\ca2_spa\\stage\\app\\build.txt", m_strBuild);
+         Application.dir().mk("C:\\home\\ca2os\\ca2_spa\\stage\\app\\");
+         Application.file().put_contents("C:\\home\\ca2os\\ca2_spa\\stage\\app\\build.txt", m_strBuild);
          Application.file().put_contents(m_strCCVrelNew + "\\app\\build.txt", m_strBuild);
          Application.dir().mk(System.dir().name(m_strTagPath));
          Application.file().put_contents(m_strTagPath, m_strTag);
@@ -773,14 +773,14 @@ restart:
 
          /*      add_status("_001cgcl - releasing at United States, GoDaddy, cgcl...");
          class release * prelease = new class release(this);
-         prelease->m_strRelease = "http://production.server1serves.ca2os.com/release_ca2_ccvotagus_spa?authnone=1&version_shift="
+         prelease->m_strRelease = "http://production.server1serves.ca2os.com/release_ca2_ccauth_spa?authnone=1&version_shift="
          + m_strVersionShift + "&format_build=" + m_strFormatBuild;
          prelease->begin();
 
 
          add_status("_002cst - releasing at United States, GoDaddy, cst...");
          prelease = new class release(this);
-         prelease->m_strRelease = "http://production.server2serves.ca2os.com/release_ca2_ccvotagus_spa?authnone=1&version_shift="
+         prelease->m_strRelease = "http://production.server2serves.ca2os.com/release_ca2_ccauth_spa?authnone=1&version_shift="
          + m_strVersionShift + "&format_build=" + m_strFormatBuild;
          prelease->begin();*/
 
@@ -805,13 +805,13 @@ restart:
 
          add_status("ca.se - freigeben auf Deutschland, Hessen, Frankfurt, ServerLoft...");
          prelease = new class release(this);
-         prelease->m_strRelease = "http://production.server4serves.ca2os.com/release_ca2_ccvotagus_spa?secure=0&authnone=1&format_build=" + m_strFormatBuild;
+         prelease->m_strRelease = "http://production.server4serves.ca2os.com/release_ca2_ccauth_spa?secure=0&authnone=1&format_build=" + m_strFormatBuild;
          prelease->begin();
 
          add_status(unitext("ca.cl - lançando no Brasil, Rio Grande do Sul, Porto Alegre, RedeHost..."));
          //add_status("ca.cl - lancando no Brasil, Rio Grande do Sul, Porto Alegre, RedeHost...");
          prelease = new class release(this);
-         prelease->m_strRelease = "http://production.server5serves.ca2os.com/release_ca2_ccvotagus_spa?secure=0&authnone=1&format_build=" + m_strFormatBuild;
+         prelease->m_strRelease = "http://production.server5serves.ca2os.com/release_ca2_ccauth_spa?secure=0&authnone=1&format_build=" + m_strFormatBuild;
          prelease->begin();
 
          /*
@@ -821,10 +821,10 @@ restart:
          CFtpConnection ftpconn(
          &session,
          "server1serves.ca2os.com",
-         "ccvotagus",
-         "ccvotagus514Lund");
-         ftp_put_dir(ftpconn, "C:\\home\\ccvotagus", "ca2_spa/" + m_strVersionShiftFwd + "stage", 0);
-         ftp_put_dir(ftpconn, "C:\\home\\ccvotagus", "ca2_spa/" + m_strVersionShiftFwd + "app", 0);
+         "ca2os",
+         "ccauth514Lund");
+         ftp_put_dir(ftpconn, "C:\\home\\ca2os", "ca2_spa/" + m_strVersionShiftFwd + "stage", 0);
+         ftp_put_dir(ftpconn, "C:\\home\\ca2os", "ca2_spa/" + m_strVersionShiftFwd + "app", 0);
          }
          */
 
@@ -835,10 +835,10 @@ restart:
          CFtpConnection ftpconn(
          &session,
          "server2serves.ca2os.com",
-         "ccvotagus",
-         "ccvotagus514Lund");
-         ftp_put_dir(ftpconn, "C:\\home\\ccvotagus", "ca2_spa/" + m_strVersionShiftFwd + "stage", 0);
-         ftp_put_dir(ftpconn, "C:\\home\\ccvotagus", "ca2_spa/" + m_strVersionShiftFwd + "app", 0);
+         "ca2os",
+         "ccauth514Lund");
+         ftp_put_dir(ftpconn, "C:\\home\\ca2os", "ca2_spa/" + m_strVersionShiftFwd + "stage", 0);
+         ftp_put_dir(ftpconn, "C:\\home\\ca2os", "ca2_spa/" + m_strVersionShiftFwd + "app", 0);
          }
          */
 
@@ -849,25 +849,25 @@ restart:
          CFtpConnection ftpconn(
          &session,
          "server3serves.ca2os.com",
-         "ccvotagus",
-         "ccvotagus514Lund");
-         ftp_put_dir(ftpconn, "C:\\home\\ccvotagus", "ca2_spa/" + m_strVersionShiftFwd + "stage", 0);
-         ftp_put_dir(ftpconn, "C:\\home\\ccvotagus", "ca2_spa/" + m_strVersionShiftFwd + "app", 0);
+         "ca2os",
+         "ccauth514Lund");
+         ftp_put_dir(ftpconn, "C:\\home\\ca2os", "ca2_spa/" + m_strVersionShiftFwd + "stage", 0);
+         ftp_put_dir(ftpconn, "C:\\home\\ca2os", "ca2_spa/" + m_strVersionShiftFwd + "app", 0);
          }
          */
 
-         /*System.http().ms_get("http://veriwell.us/release_ca2_ccvotagus_spa?authnone=1");
+         /*System.http().ms_get("http://veriwell.us/release_ca2_ccauth_spa?authnone=1");
          try
          {
          CFtpConnection ftpconn(
          &session,
          "veriwell.de",
-         "ccvotagus",
-         "ccvotagus514Lund");
+         "ca2os",
+         "ccauth514Lund");
          add_status("send app to Germany...");
-         ftpconn.PutFile("C:\\home\\ccvotagus\\ca2_spa_app.fileset.gz", "ca2_spa_app.fileset.gz");
+         ftpconn.PutFile("C:\\home\\ca2os\\ca2_spa_app.fileset.gz", "ca2_spa_app.fileset.gz");
          add_status("send stage to Germany...");
-         ftpconn.PutFile("C:\\home\\ccvotagus\\ca2_spa_stage.fileset.gz", "ca2_spa_stage.fileset.gz");
+         ftpconn.PutFile("C:\\home\\ca2os\\ca2_spa_stage.fileset.gz", "ca2_spa_stage.fileset.gz");
 
 
          }
@@ -875,18 +875,18 @@ restart:
          {
          }
          add_status("releasing in Germany...");
-         System.http().ms_get("http://veriwell.de/release_ca2_ccvotagus_spa?authnone=1");
+         System.http().ms_get("http://veriwell.de/release_ca2_ccauth_spa?authnone=1");
          try
          {
          CFtpConnection ftpconn(
          &session,
          "veriwell.co.uk",
-         "ccvotagus",
-         "ccvotagus514Lund");
+         "ca2os",
+         "ccauth514Lund");
          add_status("send app to United Kingdom...");
-         ftpconn.PutFile("C:\\home\\ccvotagus\\ca2_spa_app.fileset.gz", "ca2_spa_app.fileset.gz");
+         ftpconn.PutFile("C:\\home\\ca2os\\ca2_spa_app.fileset.gz", "ca2_spa_app.fileset.gz");
          add_status("send stage to United Kingdom...");
-         ftpconn.PutFile("C:\\home\\ccvotagus\\ca2_spa_stage.fileset.gz", "ca2_spa_stage.fileset.gz");
+         ftpconn.PutFile("C:\\home\\ca2os\\ca2_spa_stage.fileset.gz", "ca2_spa_stage.fileset.gz");
 
 
          }
@@ -894,41 +894,41 @@ restart:
          {
          }
          add_status("releasing in United Kingdom...");
-         System.http().ms_get("http://veriwell.co.uk/release_ca2_ccvotagus_spa?authnone=1");
+         System.http().ms_get("http://veriwell.co.uk/release_ca2_ccauth_spa?authnone=1");
          try
          {
          CFtpConnection ftpconn(
          &session,
          "veriwell.jp",
-         "ccvotagus",
-         "ccvotagus514Lund");
+         "ca2os",
+         "ccauth514Lund");
          add_status("send app to Japan...");
-         ftpconn.PutFile("C:\\home\\ccvotagus\\ca2_spa_app.fileset.gz", "ca2_spa_app.fileset.gz");
+         ftpconn.PutFile("C:\\home\\ca2os\\ca2_spa_app.fileset.gz", "ca2_spa_app.fileset.gz");
          add_status("send stage to Japan...");
-         ftpconn.PutFile("C:\\home\\ccvotagus\\ca2_spa_stage.fileset.gz", "ca2_spa_stage.fileset.gz");
+         ftpconn.PutFile("C:\\home\\ca2os\\ca2_spa_stage.fileset.gz", "ca2_spa_stage.fileset.gz");
          }
          catch(...)
          {
          }
          add_status("releasing in Japan...");
-         System.http().ms_get("http://xn--gckc2msch3hc.jp/release_ca2_ccvotagus_spa?authnone=1");
+         System.http().ms_get("http://xn--gckc2msch3hc.jp/release_ca2_ccauth_spa?authnone=1");
          try
          {
          CFtpConnection ftpconn(
          &session,
          "veriwell.com.br",
-         "ccvotagus",
-         "ccvotagus514Lund");
+         "ca2os",
+         "ccauth514Lund");
          add_status("send app to Brazil...");
-         ftpconn.PutFile("C:\\home\\ccvotagus\\ca2_spa_app.fileset.gz", "ca2_spa_app.fileset.gz");
+         ftpconn.PutFile("C:\\home\\ca2os\\ca2_spa_app.fileset.gz", "ca2_spa_app.fileset.gz");
          add_status("send stage to Brazil...");
-         ftpconn.PutFile("C:\\home\\ccvotagus\\ca2_spa_stage.fileset.gz", "ca2_spa_stage.fileset.gz");
+         ftpconn.PutFile("C:\\home\\ca2os\\ca2_spa_stage.fileset.gz", "ca2_spa_stage.fileset.gz");
          }
          catch(...)
          {
          }
          add_status("releasing in Brazil...");
-         System.http().ms_get("http://veriwell.com.br/release_ca2_ccvotagus_spa?authnone=1");*/
+         System.http().ms_get("http://veriwell.com.br/release_ca2_ccauth_spa?authnone=1");*/
          m_bFinished = true;
          m_timeEnd = ::datetime::time::get_current_time();
          m_dwEndTick = ::GetTickCount();
@@ -1004,7 +1004,7 @@ restart:
 retry2:
       try
       {
-         System.compress().bz(get_app(), System.dir().path(m_strCCVotagus, lpcszRelative) + ".bz", strSrcFile);
+         System.compress().bz(get_app(), System.dir().path(m_strCCAuth, lpcszRelative) + ".bz", strSrcFile);
       }
       catch(...)
       {
@@ -1033,8 +1033,8 @@ retry2:
       string strVrel;
       strVrel = "C:\\ca\\vrel\\stage\\" + m_strFormatBuild;
 
-      string strCCVotagus;
-      strCCVotagus = "C:\\home\\ccvotagus\\ca2_spa\\stage\\" + m_strFormatBuild;
+      string strCCAuth;
+      strCCAuth = "C:\\home\\ca2os\\ca2_spa\\stage\\" + m_strFormatBuild;
 
       string strRelative;
       string strBz;
@@ -1169,7 +1169,7 @@ retry2:
 
    ::ca::property_set headers;
    System.http().ms_download(strUrl, 
-   System.dir().votagus("time\\spaignition_update.txt"), NULL, post, headers, System.user().get_user());
+   System.dir().ca("time\\spaignition_update.txt"), NULL, post, headers, System.user().get_user());
    i += 8;
    }
    }*/
@@ -1381,7 +1381,7 @@ retry2:
          //strStatus.Format("compressing %s", strFile);
          //add_status(strStatus);
          strRelative = strFile.Mid(iBaseLen);
-         strBz = System.dir().path(m_strCCVotagus, strRelative) + ".bz";
+         strBz = System.dir().path(m_strCCAuth, strRelative) + ".bz";
          strUn = System.dir().path(m_strVrel, strRelative);
          strMd5 = System.file().md5(strUn);
          varUnSize = System.file().length(strUn);
@@ -1415,7 +1415,7 @@ retry2:
 
       m_strIndexMd5 = System.file().md5(strIndex);
 
-      strBz = System.dir().path(m_strCCVotagus, strRelative) + ".bz"; 
+      strBz = System.dir().path(m_strCCAuth, strRelative) + ".bz"; 
       ::DeleteFileW(::ca::international::utf8_to_unicode(strBz));
       compress(strRelative);
 
@@ -1423,7 +1423,7 @@ retry2:
       strMd5 =  System.dir().path(m_strVrel, strRelativeMd5);
       Application.file().put_contents(strMd5 , m_strIndexMd5);
 
-      //string strStage = System.dir().path("C:\\home\\ccvotagus\\ca2_spa\\" + m_strVersionShift, strRelative) + ".bz"; 
+      //string strStage = System.dir().path("C:\\home\\ca2os\\ca2_spa\\" + m_strVersionShift, strRelative) + ".bz"; 
       //::DeleteFileW(::ca::international::utf8_to_unicode(
       // strStage));
       //System.file().copy(strStage, strBz);
@@ -2577,7 +2577,7 @@ retry1:
 
       string strApp(psz);
 
-      add_status("Building ca fontopus ccvotagus " + strApp + "...");
+      add_status("Building ca fontopus ca2os " + strApp + "...");
       {
          string str;
          ::ca::property_set post;
@@ -2613,7 +2613,7 @@ retry1:
       while(!process.has_exited(&dwExitCode))
       {
          Sleep(5000);
-         str.Format("%d Building ca fontopus ccvotagus " + strApp + "...", i);
+         str.Format("%d Building ca fontopus ca2os " + strApp + "...", i);
          add_status(str);
          i++;
       }

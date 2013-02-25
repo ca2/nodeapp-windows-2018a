@@ -110,7 +110,7 @@ namespace production
                               
                               
       string                  m_strVrel;
-      string                  m_strCCVotagus;
+      string                  m_strCCAuth;
       string                  m_strCCVrel;
       string                  m_strCCVrelNew;
       string                  m_strIndexMd5;
