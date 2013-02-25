@@ -1120,6 +1120,8 @@ namespace win
             }
 
             step_timer();
+            if(m_p == NULL)
+               goto stop_run;
             m_p->m_dwAlive = m_dwAlive = ::get_tick_count();
             if(pappThis1 != NULL)
             {
