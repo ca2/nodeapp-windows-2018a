@@ -678,12 +678,6 @@ namespace win
       return bIsDir;
    }
 
-   string dir::votagus(const char * lpcsz, const char * lpcsz2)
-   {
-      string strVotagusFolder = System.get_ca2_module_folder();
-      System.file().path().eat_end_level(strVotagusFolder, 2, "\\");
-      return dir::path(strVotagusFolder, lpcsz, lpcsz2);
-   }
 
    string dir::time(const char * lpcsz, const char * lpcsz2)
    {

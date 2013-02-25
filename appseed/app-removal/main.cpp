@@ -334,7 +334,7 @@ bool removal::initialize()
 
    ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "ccvotagus.ca.fontopus.iexca2");
    ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "ccvotagus.ca.fontopus.iexca2.2");
-   ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "ccvotagus_ca2_spaboot_file");
+   ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "ca2_spaboot_file");
 
    //MessageBox(NULL, "Hope Helped!", "Hope Helped!", MB_ICONINFORMATION);
 

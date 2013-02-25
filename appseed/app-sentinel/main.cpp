@@ -40,7 +40,7 @@ _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
       return -1;
 
 
-   g_oswindowMessage = ::CreateWindowExA(0, "::ca::fontopus::ccvotagus::spaboot:callback_window", "::ca::fontopus::ccvotagus::spaboot:callback_window", 0, 0, 0, 0, 0, HWND_MESSAGE, NULL, NULL, NULL);
+   g_oswindowMessage = ::CreateWindowExA(0, "::ca2::spaboot:callback_window", "::ca2::spaboot:callback_window", 0, 0, 0, 0, 0, HWND_MESSAGE, NULL, NULL, NULL);
 
    if(g_oswindowMessage == NULL)
    {
@@ -92,7 +92,7 @@ ATOM sentinel_RegisterClass(HINSTANCE hInstance)
 	wcex.hCursor		   = LoadCursor(NULL, IDC_ARROW);
 	wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
    wcex.lpszMenuName	   = NULL;
-	wcex.lpszClassName	= "::ca::fontopus::ccvotagus::spaboot:callback_window";
+	wcex.lpszClassName	= "::ca2::spaboot:callback_window";
 	wcex.hIconSm		   = NULL;
 
 	return RegisterClassEx(&wcex);

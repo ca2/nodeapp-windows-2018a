@@ -773,14 +773,14 @@ restart:
 
          /*      add_status("_001cgcl - releasing at United States, GoDaddy, cgcl...");
          class release * prelease = new class release(this);
-         prelease->m_strRelease = "http://production.server1serves.ccvotagus.net/release_ca2_ccvotagus_spa?authnone=1&version_shift="
+         prelease->m_strRelease = "http://production.server1serves.ca2os.com/release_ca2_ccvotagus_spa?authnone=1&version_shift="
          + m_strVersionShift + "&format_build=" + m_strFormatBuild;
          prelease->begin();
 
 
          add_status("_002cst - releasing at United States, GoDaddy, cst...");
          prelease = new class release(this);
-         prelease->m_strRelease = "http://production.server2serves.ccvotagus.net/release_ca2_ccvotagus_spa?authnone=1&version_shift="
+         prelease->m_strRelease = "http://production.server2serves.ca2os.com/release_ca2_ccvotagus_spa?authnone=1&version_shift="
          + m_strVersionShift + "&format_build=" + m_strFormatBuild;
          prelease->begin();*/
 
@@ -805,22 +805,22 @@ restart:
 
          add_status("ca.se - freigeben auf Deutschland, Hessen, Frankfurt, ServerLoft...");
          prelease = new class release(this);
-         prelease->m_strRelease = "http://production.server4serves.ccvotagus.net/release_ca2_ccvotagus_spa?secure=0&authnone=1&format_build=" + m_strFormatBuild;
+         prelease->m_strRelease = "http://production.server4serves.ca2os.com/release_ca2_ccvotagus_spa?secure=0&authnone=1&format_build=" + m_strFormatBuild;
          prelease->begin();
 
          add_status(unitext("ca.cl - lançando no Brasil, Rio Grande do Sul, Porto Alegre, RedeHost..."));
          //add_status("ca.cl - lancando no Brasil, Rio Grande do Sul, Porto Alegre, RedeHost...");
          prelease = new class release(this);
-         prelease->m_strRelease = "http://production.server5serves.ccvotagus.net/release_ca2_ccvotagus_spa?secure=0&authnone=1&format_build=" + m_strFormatBuild;
+         prelease->m_strRelease = "http://production.server5serves.ca2os.com/release_ca2_ccvotagus_spa?secure=0&authnone=1&format_build=" + m_strFormatBuild;
          prelease->begin();
 
          /*
-         add_status("releasing in server1serves.ccvotagus.net - United States...");
+         add_status("releasing in server1serves.ca2os.com - United States...");
          {
          CInternetSession session;
          CFtpConnection ftpconn(
          &session,
-         "server1serves.ccvotagus.net",
+         "server1serves.ca2os.com",
          "ccvotagus",
          "ccvotagus514Lund");
          ftp_put_dir(ftpconn, "C:\\home\\ccvotagus", "ca2_spa/" + m_strVersionShiftFwd + "stage", 0);
@@ -829,12 +829,12 @@ restart:
          */
 
          /*
-         add_status("releasing in server2serves.ccvotagus.net - United States...");
+         add_status("releasing in server2serves.ca2os.com - United States...");
          {
          CInternetSession session;
          CFtpConnection ftpconn(
          &session,
-         "server2serves.ccvotagus.net",
+         "server2serves.ca2os.com",
          "ccvotagus",
          "ccvotagus514Lund");
          ftp_put_dir(ftpconn, "C:\\home\\ccvotagus", "ca2_spa/" + m_strVersionShiftFwd + "stage", 0);
@@ -843,12 +843,12 @@ restart:
          */
 
          /*
-         add_status("releasing in server3serves.ccvotagus.net - United States...");
+         add_status("releasing in server3serves.ca2os.com - United States...");
          {
          CInternetSession session;
          CFtpConnection ftpconn(
          &session,
-         "server3serves.ccvotagus.net",
+         "server3serves.ca2os.com",
          "ccvotagus",
          "ccvotagus514Lund");
          ftp_put_dir(ftpconn, "C:\\home\\ccvotagus", "ca2_spa/" + m_strVersionShiftFwd + "stage", 0);

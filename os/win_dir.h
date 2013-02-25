@@ -52,7 +52,6 @@ namespace win
       virtual string name(const char * lpcsz);
       virtual string name(const string & str);
 
-      virtual string votagus(const char * lpcsz = NULL, const char * lpcsz2 = NULL);
       virtual string time(const char * lpcsz = NULL, const char * lpcsz2 = NULL);
       virtual string stage(const char * lpcsz = NULL, const char * lpcsz2 = NULL);
       virtual string stageapp(const char * lpcsz = NULL, const char * lpcsz2 = NULL);
