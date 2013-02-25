@@ -769,9 +769,9 @@ restart:
 
 
          add_status("dtf - fileset - file from directory app");
-         System.file36().dtf(m_strCCVrelNew + "\\ca2_spa_app.fileset", m_strCCVrelNew + "\\app", get_app());
+         System.file().dtf(m_strCCVrelNew + "\\ca2_spa_app.fileset", m_strCCVrelNew + "\\app", get_app());
          add_status("dtf - fileset - file from directory stage");
-         System.file36().dtf(m_strCCVrelNew + "\\ca2_spa_stage.fileset", m_strCCVrelNew + "\\stage", get_app());
+         System.file().dtf(m_strCCVrelNew + "\\ca2_spa_stage.fileset", m_strCCVrelNew + "\\stage", get_app());
          add_status("bz - bzip - compressing app");
          System.compress().bz(get_app(), m_strCCVrelNew + "\\ca2_spa_app.fileset.bz", m_strCCVrelNew + "\\ca2_spa_app.fileset");
          add_status("bz - bzip - compressing stage");
@@ -1330,7 +1330,7 @@ retry2:
                i++;
             }
          }
-         System.file36().dtf(strFile, stra1, stra2, get_app());
+         System.file().dtf(strFile, stra1, stra2, get_app());
          stra.add(strFile);
          straTitle.add(strTitle);
          straRelative.add(strRelative);
@@ -1391,7 +1391,7 @@ retry2:
          strRelative = strFile.Mid(iBaseLen);
          strBz = System.dir().path(m_strCCVotagus, strRelative) + ".bz";
          strUn = System.dir().path(m_strVrel, strRelative);
-         strMd5 = System.file36().md5(strUn);
+         strMd5 = System.file().md5(strUn);
          varUnSize = System.file().length(strUn);
          varBzSize = System.file().length(strBz);
          strRelease = System.dir().path(m_strCCVrel, strRelative);
@@ -1421,7 +1421,7 @@ retry2:
          strIndex,
          strContents);
 
-      m_strIndexMd5 = System.file36().md5(strIndex);
+      m_strIndexMd5 = System.file().md5(strIndex);
 
       strBz = System.dir().path(m_strCCVotagus, strRelative) + ".bz"; 
       ::DeleteFileW(::ca::international::utf8_to_unicode(strBz));
@@ -1637,7 +1637,7 @@ retry2:
       strFile = System.dir().path(m_strBase, strRelative + ".expand_fileset");
 
 
-      System.file36().dtf(strFile, stra1, stra2, get_app());
+      System.file().dtf(strFile, stra1, stra2, get_app());
       m_straFiles.add(strFile);
       m_straTitle.add(System.file().title_(strFile));
       m_straRelative.add(strRelative + ".expand_fileset.spa");

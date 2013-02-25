@@ -1,6 +1,8 @@
 #pragma once
 
-#include "ca.h"
+
+#include "ca2.h"
+
 
 #ifdef _CA2_FONTOPUS_PRODUCTION_DLL
     #define CLASS_DECL_CA2_PRODUCTION  _declspec(dllexport)
@@ -8,10 +10,14 @@
     #define CLASS_DECL_CA2_PRODUCTION  _declspec(dllimport)
 #endif
 
+
 namespace production
 {
+
    class application;
+
 } // namespace production
+
 
 #undef App
 #define App(pcaapp) (pcaapp->cast_app < ::production::application > ())

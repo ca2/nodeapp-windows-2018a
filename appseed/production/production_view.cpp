@@ -22,7 +22,7 @@ namespace production
    {
       m_pproduction = NULL;
       
-      //System.file36().ftd("C:\\home2\\ccvotagus\\ca2_spa\\stage", "C:\\teste.fileset");
+      //System.file().ftd("C:\\home2\\ccvotagus\\ca2_spa\\stage", "C:\\teste.fileset");
 
 
       m_iLineHeight = 1;
