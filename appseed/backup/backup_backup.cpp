@@ -41,7 +41,7 @@ namespace backup
          string strStartTime;
          m_timeStart.Format(strStartTime, "%Y-%m-%d %H-%M-%S");
          add_status("Backup starting at " + strStartTime);
-         add_status(unitext("by Grace of God and CGCL1984+kaarurosu日歩路主!!"));
+         add_status(unitext("Thank you!!"));
          m_dwStartTick = ::GetTickCount();
          m_timeStart.Format(m_strTag, "%Y-%m-%d_%H-%M-%S");
 
@@ -133,7 +133,7 @@ namespace backup
          add_status("Backup ending at " + strEndTime);
          strTime.Format("Backup took: %dm %ds", dwMin, dwSeg);
          add_status(strTime);
-         add_status(unitext("Finished!! Thanks to God, Thanks to CGCL CGCL1984+kaarurosu日歩路主!!"));
+         add_status(unitext("Finished!! Thank you!!"));
          add_status("");
          add_status("");
          add_status("");

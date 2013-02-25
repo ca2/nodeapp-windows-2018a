@@ -424,7 +424,7 @@ restart:
 
          }
 
-         add_status(unitext("by Grace of God and CGCL1984+kaarurosu日歩路主!!"));
+         add_status(unitext("Thank you!!"));
          m_dwStartTick = ::GetTickCount();
 
          m_bEndStatus = false;
@@ -445,11 +445,6 @@ restart:
          strBuildH.Format("-c1-production -c2-producer -t12n-producing -mmmi- %s", m_strTag);
          strBuildH += " - ";
          strBuildH += Application.file().as_string(System.dir().path(m_strBase, "app/stage", "build_machine_pp_comment.txt"));
-         strBuildH += unitext("// CarlosGustavoCecynLundgren1984+kaarurosu日歩路主\r\n");
-         strBuildH += "// <==! Thanks and dedicated to &lt; <\r\n";
-         strBuildH += "// Thanks to and in honor of God > &gt; ==>\r\n";
-         strBuildH += "// for ca and 5!!\r\n";
-         strBuildH += "// you(*) and me(*) and God(***) make 5...\r\n";
          strBuildH += "#define THIS_PRODUCT_VERSION \"" + m_strTag + "\\0\"\r\n#define THIS_FILE_VERSION \""+ m_strTag +"\\0\"\r\n";
          strBuildH += "#define __THIS_PRODUCT_VERSION " + strVerWin + "\r\n#define __THIS_FILE_VERSION "+ strVerWin +"\r\n";
          strBuildH += "\r\n";
@@ -504,8 +499,6 @@ restart:
                i++;
             }
          }
-
-         //string strDedicaverse = Application.file().as_string("G:/cecyn1.at.hotmail.com/carlos/dedicaverse.txt");
 
          //Application.dir().mk(System.dir().path(m_strBase, "time"));
          Application.file().put_contents(System.dir().path(m_strBase, "app\\build.txt"), m_strBuild);
@@ -950,7 +943,7 @@ restart:
          strTime.Format("Build took: %dm %ds", dwMin, dwSeg);
          add_status(strTime);
          m_strBuildTook = strTime;
-         add_status(unitext("Finished!! Thanks to God, Thanks to CGCL1984+kaarurosu日歩路主!!"));
+         add_status(unitext("Finished!! Thank you!!"));
          add_status("");
          add_status("");
          add_status("");
@@ -1231,7 +1224,7 @@ retry2:
    bool production::commit_for_new_build_and_new_release()
    {
       string strStatus;
-      strStatus = unitext("Commit for new Build and new Release!! signature CGCL1984+kaarurosu日歩路主!!");
+      strStatus = unitext("Commit for new Build and new Release!!");
       add_status(strStatus);
 
 

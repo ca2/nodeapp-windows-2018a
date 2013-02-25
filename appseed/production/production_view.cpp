@@ -171,14 +171,6 @@ namespace production
       m_iH = iH;
    }
 
-   /* trans
-   void view::_001OnPaint(::ca::signal_object * pobj) 
-   {
-	   CPaintDC spgraphics(this); // device context for productioning
-      spgraphics->TextOut(20, 20, "Carlos Gustavo Cecyn Lundgren é minha Vida Eterna, meu Coração Eterno, Todo meu tesouro eterno, meu Universo eterno, meu tudo eterno!!");
-   }
-   */
-
 
    void view:: _001OnDraw(::ca::graphics * pdc)
    {
