@@ -3623,6 +3623,8 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          }
          iRange++;
          i += iLen;
+         if(i >= iIndex)
+            break;
          try
          {
             psz = ::ca::str::utf8_inc(psz);
