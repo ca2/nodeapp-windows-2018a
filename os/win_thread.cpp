@@ -191,7 +191,7 @@ CLASS_DECL_win MSG * __get_current_message()
 
 
 
-CLASS_DECL_win void __internal_process_wnd_proc_exception(base_exception*, ca::signal_object * pobj)
+CLASS_DECL_win void __internal_process_wnd_proc_exception(base_exception*, ::ca::signal_object * pobj)
 {
    SCAST_PTR(::ca::message::base, pbase, pobj);
    if (pbase->m_uiMessage == WM_CREATE)
@@ -209,7 +209,7 @@ CLASS_DECL_win void __internal_process_wnd_proc_exception(base_exception*, ca::s
    return;   // sensible default for rest of commands
 }
 
-CLASS_DECL_win void __process_window_procedure_exception(base_exception* e, ca::signal_object * pobj)
+CLASS_DECL_win void __process_window_procedure_exception(base_exception* e, ::ca::signal_object * pobj)
 {
    ::ca::thread *pThread = App(pobj->get_app()).GetThread();
    if( pThread )
@@ -218,7 +218,7 @@ CLASS_DECL_win void __process_window_procedure_exception(base_exception* e, ca::
       return __internal_process_wnd_proc_exception( e, pobj );
 }
 
-void __internal_pre_translate_message(ca::signal_object * pobj)
+void __internal_pre_translate_message(::ca::signal_object * pobj)
 {
    try
    {
@@ -304,7 +304,7 @@ void __internal_pre_translate_message(ca::signal_object * pobj)
    // no special processing
 }
 
-void __cdecl __pre_translate_message(ca::signal_object * pobj)
+void __cdecl __pre_translate_message(::ca::signal_object * pobj)
 {
    ::ca::thread *pThread = App(pobj->get_app()).GetThread();
    if( pThread )
@@ -313,7 +313,7 @@ void __cdecl __pre_translate_message(ca::signal_object * pobj)
       return __internal_pre_translate_message( pobj );
 }
 
-bool __internal_is_idle_message(ca::signal_object * pobj)
+bool __internal_is_idle_message(::ca::signal_object * pobj)
 {
    SCAST_PTR(::ca::message::base, pbase, pobj);
    // Return FALSE if the message just dispatched should _not_
@@ -372,7 +372,7 @@ bool __internal_is_idle_message(LPMSG lpmsg)
    return lpmsg->message != WM_PAINT && lpmsg->message != 0x0118;
 }
 
-bool __cdecl __is_idle_message(ca::signal_object * pobj)
+bool __cdecl __is_idle_message(::ca::signal_object * pobj)
 {
    ::ca::thread *pThread = App(pobj->get_app()).GetThread();
    if( pThread )
@@ -427,7 +427,7 @@ void CLASS_DECL_win __end_thread(::ca::application * papp, UINT nExitCode, bool 
       }
 
       ASSERT_VALID(pThread);
-      //ASSERT(pThread != System::smart_pointer < ca::application *>::m_p);
+      //ASSERT(pThread != System::smart_pointer < ::ca::application *>::m_p);
 
       if (bDelete)
          pThread->Delete();
@@ -535,7 +535,7 @@ namespace win
       ca(papp),
       message_window_simple_callback(papp),//,
       //m_evFinish(FALSE, TRUE)
-      ca::thread(NULL),
+      ::ca::thread(NULL),
       m_evFinish(papp),
       m_mutexUiPtra(papp)
    {
@@ -1013,7 +1013,7 @@ namespace win
       {
          // delete thread if it is auto-deleting
          //pthread->::ca::smart_pointer < ::ca::thread >::m_p = NULL;
-         ca::release(m_p);
+         ::ca::release(m_p);
          // delete_this();
       }
       else
@@ -1138,7 +1138,7 @@ stop_run:
       return 0;
    }
 
-   bool thread::is_idle_message(ca::signal_object * pobj)
+   bool thread::is_idle_message(::ca::signal_object * pobj)
    {
       return __internal_is_idle_message(pobj);
    }
@@ -1301,8 +1301,8 @@ stop_run:
          if (pState->m_nTempMapLock == 0)
          {
          // free temp maps, OLE DLLs, etc.
-         ca::LockTempMaps(dynamic_cast < ::ca::application * > (m_p->m_papp));
-         ca::UnlockTempMaps(dynamic_cast < ::ca::application * > (m_p->m_papp));
+         ::ca::LockTempMaps(dynamic_cast < ::ca::application * > (m_p->m_papp));
+         ::ca::UnlockTempMaps(dynamic_cast < ::ca::application * > (m_p->m_papp));
          }*/
       }
 
@@ -1325,12 +1325,12 @@ stop_run:
    }
 
 
-   void thread::DispatchThreadMessageEx(ca::signal_object * pobj)
+   void thread::DispatchThreadMessageEx(::ca::signal_object * pobj)
    {
       SCAST_PTR(::ca::message::base, pbase, pobj);
       if(!pbase->m_bRet && pbase->m_uiMessage == WM_APP + 1984 && pbase->m_wparam == 77)
       {
-         ca::scoped_ptr < ::user::message > spmessage(pbase->m_lparam);
+         ::ca::scoped_ptr < ::user::message > spmessage(pbase->m_lparam);
          spmessage->send();
          pbase->m_uiMessage   = 0;    // ssshhhh.... - self-healing - sh...
          pbase->m_wparam      = 0;    // ssshhhh.... - self-healing - sh...
@@ -1350,7 +1350,7 @@ stop_run:
       if (pMsg->message < 0xC000)
       {
       // constant window message
-      if ((lpEntry = ca::FindMessageEntry(pMessageMap->lpEntries,
+      if ((lpEntry = ::ca::FindMessageEntry(pMessageMap->lpEntries,
       pMsg->message, 0, 0)) != NULL)
       goto LDispatch;
       }
@@ -1358,7 +1358,7 @@ stop_run:
       {
       // registered windows message
       lpEntry = pMessageMap->lpEntries;
-      while ((lpEntry = ca::FindMessageEntry(lpEntry, 0xC000, 0, 0)) != NULL)
+      while ((lpEntry = ::ca::FindMessageEntry(lpEntry, 0xC000, 0, 0)) != NULL)
       {
       UINT* pnID = (UINT*)(lpEntry->nSig);
       ASSERT(*pnID >= 0xC000);
@@ -1385,7 +1385,7 @@ stop_run:
       for(int32_t i = 0; i < signalptra.get_size(); i++)
       {
          Signal & signal = *signalptra[i];
-         ca::signal * psignal = signal.m_psignal;
+         ::ca::signal * psignal = signal.m_psignal;
          ::ca::message::e_prototype eprototype = signal.m_eprototype;
          if(eprototype == ::ca::message::PrototypeNone)
          {
@@ -1402,30 +1402,30 @@ stop_run:
       pbase->m_bRet = true;
    }
 
-   void thread::pre_translate_message(ca::signal_object * pobj)
+   void thread::pre_translate_message(::ca::signal_object * pobj)
    {
       ASSERT_VALID(this);
       return __internal_pre_translate_message(pobj);
    }
 
-   void thread::ProcessWndProcException(base_exception* e, ca::signal_object * pobj)
+   void thread::ProcessWndProcException(base_exception* e, ::ca::signal_object * pobj)
    {
       return __internal_process_wnd_proc_exception(e, pobj);
    }
 
-   __STATIC inline bool IsEnterKey(ca::signal_object * pobj)
+   __STATIC inline bool IsEnterKey(::ca::signal_object * pobj)
    { 
       SCAST_PTR(::ca::message::base, pbase, pobj);
       return pbase->m_uiMessage == WM_KEYDOWN && pbase->m_wparam == VK_RETURN; 
    }
 
-   __STATIC inline bool IsButtonUp(ca::signal_object * pobj)
+   __STATIC inline bool IsButtonUp(::ca::signal_object * pobj)
    { 
       SCAST_PTR(::ca::message::base, pbase, pobj);
       return pbase->m_uiMessage == WM_LBUTTONUP; 
    }
 
-   void thread::ProcessMessageFilter(int32_t code, ca::signal_object * pobj)
+   void thread::ProcessMessageFilter(int32_t code, ::ca::signal_object * pobj)
    {
 
       if(pobj == NULL)
@@ -1733,7 +1733,7 @@ stop_run:
    }
 
 
-   void thread::message_handler(ca::signal_object * pobj)
+   void thread::message_handler(::ca::signal_object * pobj)
    {
       SCAST_PTR(::ca::message::base, pbase, pobj);
       // special message which identifies the window as using __window_procedure
@@ -1855,7 +1855,7 @@ run:
       if(!bOk)
       {
          uint32_t dwLastError = ::GetLastError();
-         ::OutputDebugString("thread::SetThreadPriority LastError = " + ca::str::from(dwLastError));
+         ::OutputDebugString("thread::SetThreadPriority LastError = " + ::ca::str::from(dwLastError));
       }
 
       return bOk;
@@ -1931,7 +1931,7 @@ run:
       m_nThreadID = (DWORD) iData;
    }
 
-   void thread::message_window_message_handler(ca::signal_object * pobj)
+   void thread::message_window_message_handler(::ca::signal_object * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
@@ -2212,8 +2212,8 @@ run:
 
 bool CLASS_DECL_win __internal_pump_message();
 LRESULT CLASS_DECL_win __internal_process_wnd_proc_exception(base_exception*, const MSG* pMsg);
-void __internal_pre_translate_message(ca::signal_object * pobj);
-bool __internal_is_idle_message(ca::signal_object * pobj);
+void __internal_pre_translate_message(::ca::signal_object * pobj);
+bool __internal_is_idle_message(::ca::signal_object * pobj);
 bool __internal_is_idle_message(LPMSG lpmsg);
 
 
@@ -2269,7 +2269,7 @@ if (pState->m_msgCur.message != WM_KICKIDLE && !__pre_translate_message(&(pState
 return TRUE;
 }
 
-bool CLASS_DECL_win ca::PumpMessage()
+bool CLASS_DECL_win ::ca::PumpMessage()
 {
 thread *pThread = System.GetThread();
 if( pThread )
@@ -2679,8 +2679,8 @@ __MODULE_THREAD_STATE* pState = __get_module_thread_state();
 if (pState->m_nTempMapLock == 0)
 {
 // free temp maps, OLE DLLs, etc.
-ca::LockTempMaps();
-ca::UnlockTempMaps();
+::ca::LockTempMaps();
+::ca::UnlockTempMaps();
 }
 }
 
@@ -2703,7 +2703,7 @@ bool thread::DispatchThreadMessageEx(MSG* pmsg)
 {
 if(pmsg->message == WM_APP + 1984 && pmsg->wParam == 77)
 {
-ca::scoped_ptr < win::message > spmessage(pmsg->lParam);
+::ca::scoped_ptr < win::message > spmessage(pmsg->lParam);
 spmessage->send();
 return TRUE;
 }
@@ -2720,7 +2720,7 @@ ASSERT(pMessageMap != (*pMessageMap->pfnGetBaseMap)());
 if (pMsg->message < 0xC000)
 {
 // constant ::ca::window message
-if ((lpEntry = ca::FindMessageEntry(pMessageMap->lpEntries,
+if ((lpEntry = ::ca::FindMessageEntry(pMessageMap->lpEntries,
 pMsg->message, 0, 0)) != NULL)
 goto LDispatch;
 }
@@ -2728,7 +2728,7 @@ else
 {
 // registered windows message
 lpEntry = pMessageMap->lpEntries;
-while ((lpEntry = ca::FindMessageEntry(lpEntry, 0xC000, 0, 0)) != NULL)
+while ((lpEntry = ::ca::FindMessageEntry(lpEntry, 0xC000, 0, 0)) != NULL)
 {
 UINT* pnID = (UINT*)(lpEntry->nSig);
 ASSERT(*pnID >= 0xC000);
@@ -2755,7 +2755,7 @@ m_signala.GetSignalsByMessage(signalptra, pmsg->message, 0, 0);
 for(int32_t i = 0; i < signalptra.get_size(); i++)
 {
 Signal & signal = *signalptra[i];
-ca::signal * psignal = signal.m_psignal;
+::ca::signal * psignal = signal.m_psignal;
 ::ca::message::e_prototype eprototype = signal.m_eprototype;
 if(eprototype == ::ca::message::PrototypeNone)
 {
@@ -2772,7 +2772,7 @@ break;
 return true;
 }
 
-bool thread::pre_translate_message(ca::signal_object * pobj)
+bool thread::pre_translate_message(::ca::signal_object * pobj)
 {
 ASSERT_VALID(this);
 return __internal_pre_translate_message( pMsg );

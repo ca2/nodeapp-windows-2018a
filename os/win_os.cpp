@@ -453,9 +453,9 @@ namespace win
          try
          {
 
-            strCommand = ca::str::consume_quoted_value(psz);
-            ca::str::consume_spaces(psz);
-            ca::str::consume(psz, "\"%L\"");
+            strCommand = ::ca::str::consume_quoted_value(psz);
+            ::ca::str::consume_spaces(psz);
+            ::ca::str::consume(psz, "\"%L\"");
             strParam = psz;
 
          }

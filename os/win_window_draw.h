@@ -138,7 +138,7 @@ namespace win
       virtual void synch_redraw();
       virtual void _synch_redraw();
 
-      virtual void message_window_message_handler(ca::signal_object * pobj);
+      virtual void message_window_message_handler(::ca::signal_object * pobj);
 
    };
 

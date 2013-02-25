@@ -28,7 +28,7 @@ _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
       return -1;
 
    
-   g_hmutexSpabootInstall = ::CreateMutex(NULL, FALSE, "Local\\ca::fontopus::ccvotagus_ca2_spaboot_install_sentinel::7807e510-5579-11dd-ae16-0800200c7784");
+   g_hmutexSpabootInstall = ::CreateMutex(NULL, FALSE, "Local\\::ca::fontopus::ccvotagus_ca2_spaboot_install_sentinel::7807e510-5579-11dd-ae16-0800200c7784");
    if(::GetLastError() == ERROR_ALREADY_EXISTS)
    {
       return false;
@@ -40,7 +40,7 @@ _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
       return -1;
 
 
-   g_oswindowMessage = ::CreateWindowExA(0, "ca::fontopus::ccvotagus::spaboot:callback_window", "ca::fontopus::ccvotagus::spaboot:callback_window", 0, 0, 0, 0, 0, HWND_MESSAGE, NULL, NULL, NULL);
+   g_oswindowMessage = ::CreateWindowExA(0, "::ca::fontopus::ccvotagus::spaboot:callback_window", "::ca::fontopus::ccvotagus::spaboot:callback_window", 0, 0, 0, 0, 0, HWND_MESSAGE, NULL, NULL, NULL);
 
    if(g_oswindowMessage == NULL)
    {
@@ -92,7 +92,7 @@ ATOM sentinel_RegisterClass(HINSTANCE hInstance)
 	wcex.hCursor		   = LoadCursor(NULL, IDC_ARROW);
 	wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
    wcex.lpszMenuName	   = NULL;
-	wcex.lpszClassName	= "ca::fontopus::ccvotagus::spaboot:callback_window";
+	wcex.lpszClassName	= "::ca::fontopus::ccvotagus::spaboot:callback_window";
 	wcex.hIconSm		   = NULL;
 
 	return RegisterClassEx(&wcex);

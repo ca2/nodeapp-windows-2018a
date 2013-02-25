@@ -11,7 +11,7 @@ namespace win
 
    copydesk::copydesk(::ca::application * papp) :
       ca(papp),
-      ca::copydesk(papp),
+      ::ca::copydesk(papp),
       ::ca::window_sp(papp)
    {
    }
@@ -49,7 +49,7 @@ namespace win
          UINT uiLen = ::DragQueryFileW(hdrop, i, NULL, 0);
          wchar_t * lpwsz = (wchar_t *) malloc(sizeof(wchar_t) * (uiLen + 1));
          ::DragQueryFileW(hdrop, i, lpwsz, uiLen + 1);
-         stra.add(ca::international::unicode_to_utf8(lpwsz));
+         stra.add(::ca::international::unicode_to_utf8(lpwsz));
          free(lpwsz);
       }
       ::CloseClipboard();
@@ -64,7 +64,7 @@ namespace win
 
       for(int32_t i = 0; i < stra.get_size(); i++)
       {
-         iLen += ca::international::utf8_to_unicode_count(stra[i]) + 1;
+         iLen += ::ca::international::utf8_to_unicode_count(stra[i]) + 1;
       }
 
 
@@ -82,7 +82,7 @@ namespace win
       for(int32_t i = 0; i < stra.get_size(); i++)
       {
          ASSERT(m_p->IsWindow());
-         ca::international::utf8_to_unicode(lpwstrCopy, ca::international::utf8_to_unicode_count(stra[i]) + 1, stra[i]);
+         ::ca::international::utf8_to_unicode(lpwstrCopy, ::ca::international::utf8_to_unicode_count(stra[i]) + 1, stra[i]);
          ASSERT(m_p->IsWindow());
          lpwstrCopy += (stra[i].get_length() + 1);
       }
@@ -144,7 +144,7 @@ namespace win
    //   int32_t iLen = 0;
 
       string str;
-      str = ca::international::utf8_to_unicode(psz);
+      str = ::ca::international::utf8_to_unicode(psz);
 
 
 
@@ -156,10 +156,10 @@ namespace win
       EmptyClipboard();
 
 
-      count iCount = ca::international::utf8_to_unicode_count(str) + 1;
+      count iCount = ::ca::international::utf8_to_unicode_count(str) + 1;
       HGLOBAL hglbCopy = ::GlobalAlloc(GMEM_MOVEABLE, iCount * sizeof(WCHAR));
       wchar_t * lpwstrCopy  = (wchar_t *) ::GlobalLock(hglbCopy);
-      ca::international::utf8_to_unicode(lpwstrCopy, iCount, str);
+      ::ca::international::utf8_to_unicode(lpwstrCopy, iCount, str);
       ::GlobalUnlock(hglbCopy);
 
       HGLOBAL hglbCopy2 = ::GlobalAlloc(GMEM_MOVEABLE, sizeof(CHAR) * (strlen(psz) + 1));
@@ -182,7 +182,7 @@ namespace win
          if(!m_p->OpenClipboard())
             return "";
          HGLOBAL hglb = GetClipboardData(CF_UNICODETEXT);
-         string str(ca::international::unicode_to_utf8((const wchar_t *) GlobalLock(hglb)));
+         string str(::ca::international::unicode_to_utf8((const wchar_t *) GlobalLock(hglb)));
          GlobalUnlock(hglb);
          VERIFY(::CloseClipboard());
          return str;

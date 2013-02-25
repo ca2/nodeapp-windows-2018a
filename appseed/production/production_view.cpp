@@ -106,7 +106,7 @@ namespace production
 	   return ::userbase::view::pre_create_window(cs);
    }
 
-   void view::_001OnInitialUpdate(ca::signal_object * pobj) 
+   void view::_001OnInitialUpdate(::ca::signal_object * pobj) 
    {
       ::userbase::view::_001OnInitialUpdate(pobj);
    }
@@ -136,12 +136,12 @@ namespace production
    	
    }
 
-   void view::_001OnDestroy(ca::signal_object * pobj) 
+   void view::_001OnDestroy(::ca::signal_object * pobj) 
    {
 	   ::userbase::view::_001OnDestroy(pobj);
    }
 
-   void view::_001OnSize(ca::signal_object * pobj) 
+   void view::_001OnSize(::ca::signal_object * pobj) 
    {
       UNREFERENCED_PARAMETER(pobj);
 //      SCAST_PTR(::ca::message::size, psize, pobj)
@@ -172,7 +172,7 @@ namespace production
    }
 
    /* trans
-   void view::_001OnPaint(ca::signal_object * pobj) 
+   void view::_001OnPaint(::ca::signal_object * pobj) 
    {
 	   CPaintDC spgraphics(this); // device context for productioning
       spgraphics->TextOut(20, 20, "Carlos Gustavo Cecyn Lundgren é minha Vida Eterna, meu Coração Eterno, Todo meu tesouro eterno, meu Universo eterno, meu tudo eterno!!");
@@ -246,7 +246,7 @@ namespace production
 
    }
 
-   void view::_001OnCreate(ca::signal_object * pobj) 
+   void view::_001OnCreate(::ca::signal_object * pobj) 
    {
       if(pobj->previous())
          return;
@@ -313,7 +313,7 @@ namespace production
    }
 
 
-   void view::_001OnContextMenu(ca::signal_object * pobj) 
+   void view::_001OnContextMenu(::ca::signal_object * pobj) 
    {
       SCAST_PTR(::ca::message::context_menu, pcontextmenu, pobj)
       point point = pcontextmenu->GetPoint();
@@ -327,7 +327,7 @@ namespace production
       }
    }
 
-   void view::_001OnSetCursor(ca::signal_object * pobj) 
+   void view::_001OnSetCursor(::ca::signal_object * pobj) 
    {
       ::SetCursor(::LoadCursor(NULL, IDC_ARROW));
    	
@@ -378,7 +378,7 @@ namespace production
       return -1;
    }
 
-   void view::_001OnLButtonDown(ca::signal_object * pobj)
+   void view::_001OnLButtonDown(::ca::signal_object * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
   //    SCAST_PTR(::ca::message::mouse, pmouse, pobj)
@@ -387,7 +387,7 @@ namespace production
 
    }
 
-   void view::_001OnLButtonUp(ca::signal_object * pobj)
+   void view::_001OnLButtonUp(::ca::signal_object * pobj)
    {
       SCAST_PTR(::ca::message::mouse, pmouse, pobj)
 
@@ -406,7 +406,7 @@ namespace production
 
    }
 
-   void view::_001OnRButtonUp(ca::signal_object * pobj)
+   void view::_001OnRButtonUp(::ca::signal_object * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
   //    SCAST_PTR(::ca::message::mouse, pmouse, pobj)
@@ -426,7 +426,7 @@ namespace production
 
 
 
-   void view::_001OnTimer(ca::signal_object * pobj)
+   void view::_001OnTimer(::ca::signal_object * pobj)
    {
       SCAST_PTR(::ca::message::timer, ptimer, pobj)
       if(ptimer->m_nIDEvent == 543218)
@@ -462,7 +462,7 @@ namespace production
 
 
 
-   void view::_001OnShowWindow(ca::signal_object * pobj) 
+   void view::_001OnShowWindow(::ca::signal_object * pobj) 
    {
       UNREFERENCED_PARAMETER(pobj);
 //      SCAST_PTR(::ca::message::show_window, pshowwindow, pobj)
@@ -483,7 +483,7 @@ namespace production
       m_pproduction->start_loop(papp->m_eversion, iLoopCount);
    }
 
-   void view::_001OnUser(ca::signal_object * pobj)
+   void view::_001OnUser(::ca::signal_object * pobj)
    {
       SCAST_PTR(::ca::message::base, pbase, pobj);
       if(pbase->m_wparam == 1)

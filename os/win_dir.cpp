@@ -6,7 +6,7 @@ namespace win
 
 
    dir::dir(::ca::application * papp) :
-      ca(papp),
+      ::ca::ca(papp),
       ::ca::dir::system(papp),
       m_path(papp)
    {
@@ -158,11 +158,11 @@ namespace win
       const char * pszRequest;
       if(::ca::is_url(lpcszSource, &pszRequest))
       {
-         if(ca::str::begins(lpcszRelative, "/"))
+         if(::ca::str::begins(lpcszRelative, "/"))
          {
             return path((const char *) string(lpcszSource, pszRequest - lpcszSource), lpcszRelative);
          }
-         else if(*pszRequest == '\0' || ca::str::ends(lpcszSource, "/"))
+         else if(*pszRequest == '\0' || ::ca::str::ends(lpcszSource, "/"))
          {
             return path(lpcszSource, lpcszRelative, psz2);
          }
@@ -173,7 +173,7 @@ namespace win
       }
       else
       {
-         if(ca::str::ends(lpcszSource, "\\") || ca::str::ends(lpcszSource, "/"))
+         if(::ca::str::ends(lpcszSource, "\\") || ::ca::str::ends(lpcszSource, "/"))
          {
             return path(lpcszSource, lpcszRelative, psz2);
          }
@@ -497,7 +497,7 @@ namespace win
       string strPath(lpcszPath);
       if(strPath.get_length() >= MAX_PATH)
       {
-         if(ca::str::begins(strPath, "\\\\"))
+         if(::ca::str::begins(strPath, "\\\\"))
          {
             strPath = "\\\\?\\UNC" + strPath.Mid(1);
          }
@@ -507,7 +507,7 @@ namespace win
          }
       }
       DWORD dwAttrib;
-      dwAttrib = GetFileAttributesW(ca::international::utf8_to_unicode(strPath));
+      dwAttrib = GetFileAttributesW(::ca::international::utf8_to_unicode(strPath));
       /*if(dwAttrib == INVALID_FILE_ATTRIBUTES)
       {
          dwAttrib = GetFileAttributes(lpcszPath);
@@ -624,7 +624,7 @@ namespace win
          return true;
       }
       
-      strsize iFind = ca::str::find_ci(".zip:", str);
+      strsize iFind = ::ca::str::find_ci(".zip:", str);
 
       if(papp->m_bZipIsDir && iFind >= 0 && iFind < iLast)
       {
@@ -799,7 +799,7 @@ namespace win
          if(!is(stra[i], papp))
          {
             
-            if(!::CreateDirectoryW(ca::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
+            if(!::CreateDirectoryW(::ca::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
             {
                DWORD dwError = ::GetLastError();
                if(dwError == ERROR_ALREADY_EXISTS)
@@ -823,7 +823,7 @@ namespace win
                   catch(...)
                   {
                   }
-                  if(::CreateDirectoryW(ca::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
+                  if(::CreateDirectoryW(::ca::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
                   {
                      m_isdirmap.set(stra[i], true, 0);
                      goto try1;
@@ -1114,7 +1114,7 @@ namespace win
             memset(buf, 0, sizeof(buf));
          }
       }
-      return ca::international::unicode_to_utf8(buf);
+      return ::ca::international::unicode_to_utf8(buf);
    }
 
    string dir::default_userappdata(::ca::application * papp, const char * lpcszPrefix, const char * lpcszLogin, const char * pszRelativePath)
@@ -1185,7 +1185,7 @@ namespace win
 
    bool dir::is_inside(const char * pszDir, const char * pszPath, ::ca::application * papp)
    {
-      return ca::str::begins_ci(pszDir, pszPath);
+      return ::ca::str::begins_ci(pszDir, pszPath);
    }
 
    bool dir::has_subdir(::ca::application * papp, const char * pszDir)

@@ -246,7 +246,7 @@ bool removal::initialize()
 {
 
 
-   m_hmutex_app_removal = ::CreateMutex(NULL, FALSE, "Global\\ca::fontopus::ccvotagus_ca2_spa_app_removal::7807e510-5579-11dd-ae16-0800200c7784");
+   m_hmutex_app_removal = ::CreateMutex(NULL, FALSE, "Global\\::ca::fontopus::ccvotagus_ca2_spa_app_removal::7807e510-5579-11dd-ae16-0800200c7784");
    if(::GetLastError() == ERROR_ALREADY_EXISTS)
    {
       ::MessageBox(NULL, "ca app-removal.exe is already running.\n\nPlease wait for app-removal to finish or close it - using Task Manager - Ctrl+Shift+ESC - to continue.", "app-install.exe is running!", MB_ICONEXCLAMATION);

@@ -40,7 +40,7 @@ namespace win
       ASSERT(__is_valid_string(lpszFileName));
 
       if(!open(lpszFileName, nOpenFlags))
-         throw ca::file_exception(papp, ::ca::file_exception::none, -1, lpszFileName);
+         throw ::ca::file_exception(papp, ::ca::file_exception::none, -1, lpszFileName);
 
    }
 
@@ -52,7 +52,7 @@ namespace win
 
    }
 
-   ca::file * file::Duplicate() const
+   ::ca::file * file::Duplicate() const
    {
       ASSERT_VALID(this);
       ASSERT(m_hFile != (UINT)hFileNull);
@@ -92,7 +92,7 @@ namespace win
       nOpenFlags &= ~(UINT)type_binary;
 
 
-      if(nOpenFlags & ca::file::defer_create_directory)
+      if(nOpenFlags & ::ca::file::defer_create_directory)
       {
          System.dir_mk(System.dir_name(lpszFileName));
       }
@@ -102,7 +102,7 @@ namespace win
       m_strFileName.Empty();
 
       m_strFileName     = lpszFileName;
-      m_wstrFileName    = ca::international::utf8_to_unicode(m_strFileName);
+      m_wstrFileName    = ::ca::international::utf8_to_unicode(m_strFileName);
 
       ASSERT(sizeof(HANDLE) == sizeof(uint_ptr));
       ASSERT(shareCompat == 0);
@@ -168,7 +168,7 @@ namespace win
          dwCreateFlag = OPEN_EXISTING;
 
       // attempt file creation
-      //HANDLE hFile = shell::CreateFile(ca::international::utf8_to_unicode(m_strFileName), dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
+      //HANDLE hFile = shell::CreateFile(::ca::international::utf8_to_unicode(m_strFileName), dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
       HANDLE hFile = ::CreateFileW(m_wstrFileName, dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
       if (hFile == INVALID_HANDLE_VALUE)
       {
@@ -285,7 +285,7 @@ namespace win
          vfxThrowFileException(get_app(), ::ca::file_exception::diskFull, -1, m_strFileName);
    }
 
-   file_position file::seek(file_offset lOff, ca::e_seek nFrom)
+   file_position file::seek(file_offset lOff, ::ca::e_seek nFrom)
    {
 
       if(m_hFile == (UINT)hFileNull)
@@ -394,7 +394,7 @@ namespace win
       ASSERT_VALID(this);
       ASSERT(m_hFile != (UINT)hFileNull);
 
-      seek((LONG)dwNewLen, (ca::e_seek)::ca::seek_begin);
+      seek((LONG)dwNewLen, (::ca::e_seek)::ca::seek_begin);
 
       if (!::SetEndOfFile((HANDLE)m_hFile))
          file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
@@ -792,7 +792,7 @@ namespace win
       //memset(&rStatus, 0, sizeof(::ca::file_status));
 
       // copy file name from cached m_strFileName
-      rStatus.m_strFullName = ca::international::unicode_to_utf8(m_wstrFileName);
+      rStatus.m_strFullName = ::ca::international::unicode_to_utf8(m_wstrFileName);
 
       if (m_hFile != hFileNull)
       {
@@ -808,7 +808,7 @@ namespace win
             rStatus.m_attribute = 0;
          else
          {
-            DWORD dwAttribute = ::GetFileAttributesW(ca::international::utf8_to_unicode(m_strFileName));
+            DWORD dwAttribute = ::GetFileAttributesW(::ca::international::utf8_to_unicode(m_strFileName));
 
             // don't return an error for this because previous versions of ca API didn't
             if (dwAttribute == 0xFFFFFFFF)
@@ -844,13 +844,13 @@ namespace win
       // attempt to fully qualify path first
       wstring wstrFullName;
       wstring wstrFileName;
-      wstrFileName = ca::international::utf8_to_unicode(lpszFileName);
+      wstrFileName = ::ca::international::utf8_to_unicode(lpszFileName);
       if (!vfxFullPath(wstrFullName, wstrFileName))
       {
          rStatus.m_strFullName.Empty();
          return FALSE;
       }
-      ca::international::unicode_to_utf8(rStatus.m_strFullName, wstrFullName);
+      ::ca::international::unicode_to_utf8(rStatus.m_strFullName, wstrFullName);
 
       WIN32_FIND_DATA findFileData;
       HANDLE hFind = FindFirstFile((LPTSTR)lpszFileName, &findFileData);
@@ -985,20 +985,20 @@ namespace win
    // last modification time
    if (status.m_mtime.get_time() != 0)
    {
-   ca::TimeToFileTime(status.m_mtime, &lastWriteTime);
+   ::ca::TimeToFileTime(status.m_mtime, &lastWriteTime);
    lpLastWriteTime = &lastWriteTime;
 
    // last access time
    if (status.m_atime.get_time() != 0)
    {
-   ca::TimeToFileTime(status.m_atime, &lastAccessTime);
+   ::ca::TimeToFileTime(status.m_atime, &lastAccessTime);
    lpLastAccessTime = &lastAccessTime;
    }
 
    // create time
    if (status.m_ctime.get_time() != 0)
    {
-   ca::TimeToFileTime(status.m_ctime, &creationTime);
+   ::ca::TimeToFileTime(status.m_ctime, &creationTime);
    lpCreationTime = &creationTime;
    }
 
@@ -1039,7 +1039,7 @@ namespace win
 
 
 
-   // ca::filesp
+   // ::ca::filesp
    file::operator HFILE() const
    {
 
@@ -1202,7 +1202,7 @@ lpsz[1] = '\0';
 strRoot.ReleaseBuffer();
 }*/
 
-/*bool CLASS_DECL_win ca::ComparePath(const char * lpszPath1, const char * lpszPath2)
+/*bool CLASS_DECL_win ::ca::ComparePath(const char * lpszPath1, const char * lpszPath2)
 {
 // use case insensitive compare as a starter
 if (lstrcmpi(lpszPath1, lpszPath2) != 0)
@@ -1272,7 +1272,7 @@ nMax = _countof(szTemp);
 if (::GetFileTitle(lpszPathName, lpszTemp, (WORD)nMax) != 0)
 {
 // when ::GetFileTitle fails, use cheap imitation
-return ca::GetFileName(lpszPathName, lpszTitle, nMax);
+return ::ca::GetFileName(lpszPathName, lpszTitle, nMax);
 }
 return lpszTitle == NULL ? lstrlen(lpszTemp)+1 : 0;
 }*/
@@ -1285,12 +1285,12 @@ void CLASS_DECL_win vfxGetModuleShortFileName(HINSTANCE hInst, string& strShortN
    if(::GetShortPathNameW(szLongPathName, wstrShortName.alloc(_MAX_PATH * 4), _MAX_PATH * 4) == 0)
    {
       // rare failure case (especially on not-so-modern file systems)
-      ca::international::unicode_to_utf8(strShortName, szLongPathName);
+      ::ca::international::unicode_to_utf8(strShortName, szLongPathName);
    }
    else
    {
       wstrShortName.release_buffer();
-      ca::international::unicode_to_utf8(strShortName, wstrShortName);
+      ::ca::international::unicode_to_utf8(strShortName, wstrShortName);
    }
 }
 
@@ -1344,7 +1344,7 @@ bool CLASS_DECL_win vfxResolveShortcut(string & strTarget, const char * pszSourc
    ::user::interaction * pui = puiMessageParentOptional;
 
    wstring wstrFileOut;
-   wstring wstrFileIn = ca::international::utf8_to_unicode(pszSource);
+   wstring wstrFileIn = ::ca::international::utf8_to_unicode(pszSource);
 
    DWORD dwVersion = GetVersion();
 
@@ -1406,7 +1406,7 @@ bool CLASS_DECL_win vfxResolveShortcut(string & strTarget, const char * pszSourc
             {
                bOk = true;
                wstrFileOut.release_buffer();
-               strTarget = ca::international::unicode_to_utf8((LPCWSTR) wstrFileOut);
+               strTarget = ::ca::international::unicode_to_utf8((LPCWSTR) wstrFileOut);
             }
             else
             {
@@ -1449,7 +1449,7 @@ bool CLASS_DECL_win vfxFullPath(wchar_t * lpszPathOut, const wchar_t * lpszFileI
 
    // get file system information for the volume
    DWORD dwFlags, dwDummy;
-   if (!GetVolumeInformationW(ca::international::utf8_to_unicode(strRoot), NULL, 0, NULL, &dwDummy, &dwFlags, NULL, 0))
+   if (!GetVolumeInformationW(::ca::international::utf8_to_unicode(strRoot), NULL, 0, NULL, &dwDummy, &dwFlags, NULL, 0))
    {
       //      TRACE1("Warning: could not get volume information '%s'.\n", strRoot);
       return FALSE;   // preserving case may not be correct
@@ -1560,7 +1560,7 @@ void CLASS_DECL_win vfxGetRoot(const wchar_t * lpszPath, string& strRoot)
       if (*lpsz != '\0')
          lpsz[1] = '\0';
    }
-   ca::international::unicode_to_utf8(strRoot, wstrRoot);
+   ::ca::international::unicode_to_utf8(strRoot, wstrRoot);
 }
 
 

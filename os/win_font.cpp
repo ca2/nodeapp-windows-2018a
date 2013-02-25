@@ -197,7 +197,7 @@ namespace win
          //retry_single_lock slGdiplus(&System.s_mutexGdiplus, millis(1), millis(1));
 
          ((font *) this)->m_pfont = new Gdiplus::Font(
-               ca::international::utf8_to_unicode(m_strFontFamilyName),
+               ::ca::international::utf8_to_unicode(m_strFontFamilyName),
                (Gdiplus::REAL) m_dFontSize,
                iStyle,
                unit);

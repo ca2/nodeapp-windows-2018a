@@ -270,7 +270,7 @@ static void TraceDDE(const char * lpszPrefix, const MSG* pMsg)
 
 /////////////////////////////////////////////////////////////////////////////
 
-void __trace_message(const char * lpszPrefix, ca::signal_object * pobj)
+void __trace_message(const char * lpszPrefix, ::ca::signal_object * pobj)
 {
    ENSURE_ARG(__is_valid_string(lpszPrefix));
    ENSURE_ARG(pobj != NULL);

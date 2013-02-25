@@ -34,7 +34,7 @@ namespace backup
    }
    #endif //DEBUG
 
-   void pane_view::_001OnCreate(ca::signal_object * pobj) 
+   void pane_view::_001OnCreate(::ca::signal_object * pobj) 
    {
 //      SCAST_PTR(::ca::message::create, pcreate, pobj)
 

@@ -52,9 +52,9 @@ namespace win
 
       if (pstrName == NULL)
          pstrName = "*.*";
-      ca::international::MultiByteToUnicode(CP_UTF8, ((WIN32_FIND_DATAW*) m_pNextInfo)->cFileName, MAX_PATH, pstrName);
+      ::ca::international::MultiByteToUnicode(CP_UTF8, ((WIN32_FIND_DATAW*) m_pNextInfo)->cFileName, MAX_PATH, pstrName);
 
-      wstring wstrName = ca::international::utf8_to_unicode(pstrName);
+      wstring wstrName = ::ca::international::utf8_to_unicode(pstrName);
 
       m_hContext = ::win::shell::FindFirstFile(wstrName, (WIN32_FIND_DATAW*) m_pNextInfo);
 
@@ -101,7 +101,7 @@ namespace win
          }
          wstrRoot.release_buffer();
       }
-      m_strRoot = ca::international::unicode_to_utf8(wstrRoot);
+      m_strRoot = ::ca::international::unicode_to_utf8(wstrRoot);
       return TRUE;
    }
 
@@ -298,7 +298,7 @@ namespace win
 
       if (m_pFoundInfo != NULL)
       {
-         ca::international::unicode_to_utf8(ret, ((LPWIN32_FIND_DATAW) m_pFoundInfo)->cFileName);
+         ::ca::international::unicode_to_utf8(ret, ((LPWIN32_FIND_DATAW) m_pFoundInfo)->cFileName);
       }
       return ret;
    }

@@ -6,8 +6,8 @@ CLASS_DECL_win bool __end_defer_register_class(LONG fToRegister, const char ** p
 
 
 // Temporary ::collection::map management (locks temp ::collection::map on current thread)
-//CLASS_DECL_win void ca::LockTempMaps(::ca::application * papp);
-//CLASS_DECL_win bool ca::UnlockTempMaps(::ca::application * papp, bool bDeleteTemps = TRUE);
+//CLASS_DECL_win void ::ca::LockTempMaps(::ca::application * papp);
+//CLASS_DECL_win bool ::ca::UnlockTempMaps(::ca::application * papp, bool bDeleteTemps = TRUE);
 
 
 

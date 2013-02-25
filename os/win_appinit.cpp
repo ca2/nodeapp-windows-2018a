@@ -15,21 +15,21 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-/*bool CLASS_DECL_win ca::WinInit(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+/*bool CLASS_DECL_win ::ca::WinInit(HINSTANCE hInstance, HINSTANCE hPrevInstance,
    __in LPTSTR lpCmdLine, int32_t nCmdShow)
 {
 }*/
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ca::filesp implementation helpers
+// ::ca::filesp implementation helpers
 
-//#ifdef ca::GetFileName
-//#undef ca::GetFileName
+//#ifdef ::ca::GetFileName
+//#undef ::ca::GetFileName
 //#endif
 
 
-/*UINT CLASS_DECL_win ca::GetFileName(const char * lpszPathName, __out_ecount_opt(nMax) LPTSTR lpszTitle, UINT nMax)
+/*UINT CLASS_DECL_win ::ca::GetFileName(const char * lpszPathName, __out_ecount_opt(nMax) LPTSTR lpszTitle, UINT nMax)
 {
    ASSERT(lpszTitle == NULL ||
       __is_valid_address(lpszTitle, nMax));

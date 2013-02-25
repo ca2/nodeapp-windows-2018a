@@ -9,7 +9,7 @@
    ASSERT(nIDS != 0);
 
    char szFontInfo[256];
-   if (!ca::LoadString(nIDS, szFontInfo,_countof(szFontInfo)))
+   if (!::ca::LoadString(nIDS, szFontInfo,_countof(szFontInfo)))
       return FALSE;
 
    LPTSTR lpszSize = _tcschr(szFontInfo, '\n');

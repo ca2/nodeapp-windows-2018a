@@ -108,7 +108,7 @@ CLASS_DECL_win void __term_thread(::ca::application * papp, HINSTANCE hInstTerm 
 
 
 // Advanced initialization: for overriding default WinMain
-//CLASS_DECL_win bool ca::WinInit(__in HINSTANCE hInstance, __in HINSTANCE hPrevInstance,
+//CLASS_DECL_win bool ::ca::WinInit(__in HINSTANCE hInstance, __in HINSTANCE hPrevInstance,
   // __in_z LPTSTR lpCmdLine, __in int32_t nCmdShow);
 CLASS_DECL_win void __win_term();
 

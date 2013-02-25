@@ -985,9 +985,9 @@ void preview_dc::PrinterDPtoScreenDP(LPPOINT lpPoint) const
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// ca::CreateDC
+// ::ca::CreateDC
 
-HDC CLASS_DECL_win ca::CreateDC(HGLOBAL hDevNames, HGLOBAL hDevMode)
+HDC CLASS_DECL_win ::ca::CreateDC(HGLOBAL hDevNames, HGLOBAL hDevMode)
 {
    if (hDevNames == NULL)
       return NULL;

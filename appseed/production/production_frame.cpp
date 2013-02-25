@@ -9,7 +9,7 @@ namespace production
       ca(papp),
       simple_frame_window(papp)
    {
-      m_dataid = "ca::production::frame";
+      m_dataid = "::ca::production::frame";
    }
 
    frame::~frame()
@@ -40,7 +40,7 @@ namespace production
       IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &frame::_001OnCreate);
    }
 
-   void frame::_001OnCreate(ca::signal_object * pobj)
+   void frame::_001OnCreate(::ca::signal_object * pobj)
    {
 
       pobj->previous();

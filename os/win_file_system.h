@@ -13,7 +13,7 @@ namespace win
 
 
    class file_system :
-      virtual public ::ca::file::system
+      virtual public ::ca::file_system
    {
    public:
 

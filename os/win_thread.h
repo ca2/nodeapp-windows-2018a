@@ -143,21 +143,21 @@ namespace win
 
       // running and idle processing
       virtual int32_t run();
-      virtual void pre_translate_message(ca::signal_object * pobj);
+      virtual void pre_translate_message(::ca::signal_object * pobj);
       virtual bool pump_message();     // low level message pump
       virtual bool on_idle(LONG lCount); // return TRUE if more idle processing
-      virtual bool is_idle_message(ca::signal_object * pobj);  // checks for special messages
+      virtual bool is_idle_message(::ca::signal_object * pobj);  // checks for special messages
       virtual bool is_idle_message(LPMSG lpmsg);  // checks for special messages
-      virtual void message_handler(ca::signal_object * pobj);
+      virtual void message_handler(::ca::signal_object * pobj);
 
       // thread termination
       virtual int32_t exit_instance(); // default will 'delete this'
 
       // Advanced: exception handling
-      virtual void ProcessWndProcException(base_exception * e, ca::signal_object * pMsg);
+      virtual void ProcessWndProcException(base_exception * e, ::ca::signal_object * pMsg);
 
       // Advanced: handling messages sent to message filter hook
-      virtual void ProcessMessageFilter(int32_t code, ca::signal_object * pobj);
+      virtual void ProcessMessageFilter(int32_t code, ::ca::signal_object * pobj);
 
       // Advanced: virtual access to GetMainWnd()
       virtual ::user::interaction* GetMainWnd();
@@ -170,8 +170,8 @@ namespace win
 
 
 
-      virtual void DispatchThreadMessageEx(ca::signal_object * pobj);  // helper
-      virtual void message_window_message_handler(ca::signal_object * pobj);
+      virtual void DispatchThreadMessageEx(::ca::signal_object * pobj);  // helper
+      virtual void message_window_message_handler(::ca::signal_object * pobj);
 
       virtual void delete_temp();
 

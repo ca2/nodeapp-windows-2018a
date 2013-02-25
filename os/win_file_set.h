@@ -6,7 +6,7 @@ namespace win
 
 
    class CLASS_DECL_win file_set : 
-      public ca::file_set
+      public ::ca::file_set
    {
    public:
 

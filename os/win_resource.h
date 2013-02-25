@@ -2,7 +2,7 @@
 
 
 class CLASS_DECL_win WinResource :
-   virtual public ca::resource
+   virtual public ::ca::resource
 {
 public:
 
@@ -11,7 +11,7 @@ public:
    virtual ~WinResource();
    
    bool ReadResource(string & str, HINSTANCE hinst, UINT nID, const char * lpcszType);
-   bool ReadResource(ca::file & file, HINSTANCE hinst, UINT nID, const char * lpcszType);
+   bool ReadResource(::ca::file & file, HINSTANCE hinst, UINT nID, const char * lpcszType);
 
 
 };

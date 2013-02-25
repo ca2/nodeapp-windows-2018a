@@ -282,7 +282,7 @@ namespace win
          free(pwszPath);
          return FALSE;
       }
-      ca::international::unicode_to_utf8(str, pwszPath);
+      ::ca::international::unicode_to_utf8(str, pwszPath);
       free(pwszPath);
       return TRUE;
    }
@@ -457,25 +457,25 @@ namespace win
    {
       wchar_t * pwsz = (wchar_t *) malloc(sizeof(wchar_t) * MAX_PATH * 4);
       DWORD dwResult = (*theWindowsShell.m_pfnGetTempPath)(sizeof(wchar_t) * MAX_PATH * 4, pwsz);
-      ca::international::unicode_to_utf8(str, pwsz);
+      ::ca::international::unicode_to_utf8(str, pwsz);
       free(pwsz);
       return dwResult;
    }
 
    inline UINT shell::GetTempFileName(const char * lpPathName, const char * lpPrefixString, UINT uUnique, string & str)
    {
-      wstring wstrPathName = ca::international::utf8_to_unicode(lpPathName);
-      wstring wstrPrefixString = ca::international::utf8_to_unicode(lpPrefixString);
+      wstring wstrPathName = ::ca::international::utf8_to_unicode(lpPathName);
+      wstring wstrPrefixString = ::ca::international::utf8_to_unicode(lpPrefixString);
       wstring wstr;
       wstr.alloc(MAX_PATH * 4);
       UINT uiResult = (*theWindowsShell.m_pfnGetTempFileName)(wstrPathName, wstrPrefixString, uUnique, wstr);
-      ca::international::unicode_to_utf8(str, wstr);
+      ::ca::international::unicode_to_utf8(str, wstr);
       return uiResult;
    }
 
    inline bool shell::MoveFile(const char * lpExistingFileName, const char * lpNewFileName)
    {
-      return MoveFile(ca::international::utf8_to_unicode(lpExistingFileName), ca::international::utf8_to_unicode(lpNewFileName));
+      return MoveFile(::ca::international::utf8_to_unicode(lpExistingFileName), ::ca::international::utf8_to_unicode(lpNewFileName));
    }
 
 
