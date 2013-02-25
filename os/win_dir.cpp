@@ -686,7 +686,7 @@ namespace win
 
    string dir::stage(const char * lpcsz, const char * lpcsz2)
    {
-      return dir::path(ca("stage"), lpcsz, lpcsz2);
+      return dir::path(ca2("stage"), lpcsz, lpcsz2);
    }
 
    string dir::stageapp(const char * lpcsz, const char * lpcsz2)
@@ -700,7 +700,7 @@ namespace win
    }
 
    // stage in ca2os spalib
-   string dir::ca(const char * lpcsz, const char * lpcsz2)
+   string dir::ca2(const char * lpcsz, const char * lpcsz2)
    {
       
       single_lock sl(&m_mutex, true);
@@ -709,7 +709,7 @@ namespace win
 
    }
 
-   string dir::ca(const string & str, const char * lpcsz2)
+   string dir::ca2(const string & str, const char * lpcsz2)
    {
       
       single_lock sl(&m_mutex, true);
@@ -718,7 +718,7 @@ namespace win
 
    }
 
-   string dir::ca(const char * lpcsz, const string & str2)
+   string dir::ca2(const char * lpcsz, const string & str2)
    {
       
       single_lock sl(&m_mutex, true);
@@ -727,7 +727,7 @@ namespace win
 
    }
 
-   string dir::ca(const string & str, const string & str2)
+   string dir::ca2(const string & str, const string & str2)
    {
       
       single_lock sl(&m_mutex, true);
@@ -736,7 +736,7 @@ namespace win
 
    }
 
-   string dir::ca(const string & str)
+   string dir::ca2(const string & str)
    {
       
       single_lock sl(&m_mutex, true);
@@ -745,7 +745,7 @@ namespace win
 
    }
 
-   string dir::ca()
+   string dir::ca2()
    {
       
       single_lock sl(&m_mutex, true);
@@ -964,7 +964,7 @@ namespace win
          m_strTimeFolder = appdata("time");
 
       if(m_strNetSeedFolder.is_empty())
-         m_strNetSeedFolder = ca("net/netseed");
+         m_strNetSeedFolder = ca2("net/netseed");
 
       mk(m_strTimeFolder, get_app());
 
@@ -1016,7 +1016,7 @@ namespace win
          CSIDL_COMMON_APPDATA,
          FALSE);
       string strRelative;
-      strRelative = ca();
+      strRelative = ca2();
       index iFind = strRelative.find(':');
       if(iFind >= 0)
       {
@@ -1056,7 +1056,7 @@ namespace win
 
 
       string strRelative;
-      strRelative = ca();
+      strRelative = ca2();
       index iFind = strRelative.find(':');
       if(iFind >= 0)
       {

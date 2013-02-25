@@ -48,7 +48,7 @@ namespace backup
          keeper < bool > keepFinishedFalse(&m_bFinished, false, true, true);
          string str;
 
-         string strFile = System.dir().sensitive_ccauth("basis/ca/app/dbbk.bat");
+         string strFile = System.dir().ca2("basis/ca/app/dbbk.bat");
          if(!Application.file().exists(strFile))
          {
             string str;
@@ -206,7 +206,7 @@ namespace backup
       Application.dir().mk(System.dir().name(strdump));
 
       str.Format("%s \"%s\"",
-         System.dir().sensitive_ccauth("basis/ca/app/dbbk.bat"),
+         System.dir().ca2("basis/ca/app/dbbk.bat"),
          strdump);
 
       if(!::CreateProcess(NULL, (LPTSTR) (const char *) str,

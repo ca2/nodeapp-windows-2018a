@@ -311,7 +311,7 @@ restart:
          }
 
 
-         m_strSignTool = System.dir().ca("nodeapp/thirdparty/binary/signtool.exe");
+         m_strSignTool = System.dir().ca2("nodeapp/thirdparty/binary/signtool.exe");
          m_strSpc = "X:\\sensitive\\sensitive\\certificate\\ca.p12";
          m_strSignPass = Application.file().as_string("X:\\sensitive\\sensitive\\certificate\\2011-05-ca.pass");
 
@@ -481,7 +481,7 @@ restart:
             }
             ::ca::process process;
             string strPath;
-            strPath = System.dir().ca("nodeapp\\stage\\script\\stage_clean.bat");
+            strPath = System.dir().ca2("nodeapp\\stage\\script\\stage_clean.bat");
             if(!process.create_child_process(strPath, false))
             {
                uint32_t dw = GetLastError();
@@ -529,11 +529,11 @@ restart:
          }
 
          add_status("Cleaning site...");
-         string strPath = System.dir().ca("time\\stage\\app\\matter\\job.bat");
+         string strPath = System.dir().ca2("time\\stage\\app\\matter\\job.bat");
 
 
          //System.http().ms_download("http://api.ca2.cc/spaignition/clean", 
-         //   System.dir().ca("time\\spaignition_update.txt"), NULL, post, headers, ::ca::app(get_app()).user().get_user());
+         //   System.dir().ca2("time\\spaignition_update.txt"), NULL, post, headers, ::ca::app(get_app()).user().get_user());
          add_status("Cleaning ca2os folder...");
          ::ca::process process;
          Application.file().put_contents(strPath, "rmdir /s /q C:\\ca\\vrel\\stage");
@@ -675,7 +675,7 @@ restart:
 
             uint32_t dwExitCode;
 
-            string strPath = System.dir().ca("time\\stage\\app\\matter\\store_symbols_job_x86.bat");
+            string strPath = System.dir().ca2("time\\stage\\app\\matter\\store_symbols_job_x86.bat");
 
             ::ca::process process;
             string strCommand = "\"C:\\Program Files (x86)\\Windows Kits\\8.0\\Debuggers\\x86\\symstore.exe\"  add /r  -:REL /f \\\\sewindows\\stage\\" + m_strFormatBuild + "\\stage\\x86\\ /s \\\\sewindows\\SymbolServer\\ /t \"ca\" /v \"" + m_strFormatBuild + "\"";
@@ -713,7 +713,7 @@ restart:
 
             uint32_t dwExitCode;
 
-            string strPath = System.dir().ca("time\\stage\\app\\matter\\store_symbols_job_x64.bat");
+            string strPath = System.dir().ca2("time\\stage\\app\\matter\\store_symbols_job_x64.bat");
 
             ::ca::process process;
             string strCommand = "\"C:\\Program Files (x86)\\Windows Kits\\8.0\\Debuggers\\x64\\symstore.exe\"  add /r  -:REL /f \\\\sewindows\\stage\\" + m_strFormatBuild + "\\stage\\x64\\ /s \\\\sewindows\\SymbolServer\\ /t \"ca\" /v \"" + m_strFormatBuild + "\"";
@@ -1169,7 +1169,7 @@ retry2:
 
    ::ca::property_set headers;
    System.http().ms_download(strUrl, 
-   System.dir().ca("time\\spaignition_update.txt"), NULL, post, headers, System.user().get_user());
+   System.dir().ca2("time\\spaignition_update.txt"), NULL, post, headers, System.user().get_user());
    i += 8;
    }
    }*/
@@ -2593,11 +2593,11 @@ retry1:
       string strPath;
       if(Application.m_eversion == version_basis)
       {
-         strPath = System.dir().ca(strApp + "\\stage\\script\\stage_build.bat");
+         strPath = System.dir().ca2(strApp + "\\stage\\script\\stage_build.bat");
       }
       else
       {
-         strPath = System.dir().ca(strApp + "\\stage\\script\\basis_build.bat");
+         strPath = System.dir().ca2(strApp + "\\stage\\script\\basis_build.bat");
       }
       if(!process.create_child_process(strPath, false))
       {
