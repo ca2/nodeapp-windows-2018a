@@ -325,7 +325,7 @@ namespace win
 
          registry::Key keyPlugin;
 
-         if(keyPlugin.OpenKey(keyPlugins, "@ca.cc/npca2", true))
+         if(keyPlugin.OpenKey(keyPlugins, "@ca2.cc/npca2", true))
          {
 
             keyPlugin.SetValue("Description", "ca plugin for NPAPI");

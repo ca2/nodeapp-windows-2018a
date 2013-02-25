@@ -1031,7 +1031,7 @@ namespace win
          strsize iStart = max(iFind1 + 1, iFind2 + 1);
          strRelative = strRelative.Left(iFind - 1) + "_" + strRelative.Mid(iStart, iFind - iStart) + strRelative.Mid(iFind + 1);
       }
-      return path(path(str, "ca", strRelative), lpcsz, lpcsz2);
+      return path(path(str, "ca2", strRelative), lpcsz, lpcsz2);
    }
 
    string dir::usersystemappdata(::ca::application * papp, const char * lpcszPrefix, const char * lpcsz, const char * lpcsz2)
@@ -1083,9 +1083,9 @@ namespace win
          strUserFolderShift = strRelative;
       }
 
-      return path(path(str, "ca", strUserFolderShift), lpcsz, lpcsz2);
+      return path(path(str, "ca2", strUserFolderShift), lpcsz, lpcsz2);
 
-//      return path(path(str, "ca"), lpcsz);
+//      return path(path(str, "ca2"), lpcsz);
 /*      if(&AppUser(papp) == NULL)
       {
          string str;
