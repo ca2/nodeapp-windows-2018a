@@ -2159,7 +2159,6 @@ run:
    /**
    * \file		src/lib/pal/windows/thread_windows.hpp
    * \brief	Platform independent threads and synchronization objects (windows version)
-   * \author	Thomas Nass
    */
 
    ///  \brief		starts thread on first call
