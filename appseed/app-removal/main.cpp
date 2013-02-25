@@ -327,9 +327,9 @@ bool removal::initialize()
 //call ".\windows_registry\delete_global_npca2.bat"
 //call ".\windows_registry\delete_activex_iexca2.bat"
 
-   ::reg_delete_tree_dup(HKEY_LOCAL_MACHINE, "SOFTWARE\\Wow6432Node\\MozillaPlugins\\@ca.cc/npca2");
+   ::reg_delete_tree_dup(HKEY_LOCAL_MACHINE, "SOFTWARE\\Wow6432Node\\MozillaPlugins\\@ca2.cc/npca2");
    ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "Wow6432Node\\CLSID\\{CA211984-1984-1977-A861-F8AA2A7AEE4B}");
-   ::reg_delete_tree_dup(HKEY_LOCAL_MACHINE, "SOFTWARE\\MozillaPlugins\\@ca.cc/npca2");
+   ::reg_delete_tree_dup(HKEY_LOCAL_MACHINE, "SOFTWARE\\MozillaPlugins\\@ca2.cc/npca2");
    ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "CLSID\\{CA211984-1984-1977-A861-F8AA2A7AEE4B}");
 
    ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "ccvotagus.ca.fontopus.iexca2");

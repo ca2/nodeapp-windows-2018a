@@ -106,7 +106,7 @@ namespace backup
          "gustavo514Lund");
          ftp_put_dir(ftpconn, "C:\\", "ca/bk/"  + m_strTag, 0);
          }
-         strServer = "netnode.ca.cc";
+         strServer = "netnode.ca2.cc";
          add_status("ftp-putting in backup server " + strServer);
          {
          CInternetSession session;
