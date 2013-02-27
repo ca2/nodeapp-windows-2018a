@@ -16,7 +16,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\ap
 		{19841977-8E11-42A4-B923-08D809A03F4F} = {19841977-8E11-42A4-B923-08D809A03F4F}
 		{15111984-C807-4AE2-957A-50089268664D} = {15111984-C807-4AE2-957A-50089268664D}
 		{19849599-9D62-40FB-8056-D48F32C1CAB6} = {19849599-9D62-40FB-8056-D48F32C1CAB6}
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F} = {AFF9FDD2-1F13-4951-815B-61BC0C9A774F}
 		{BF8721E4-B851-4F18-97E1-3E4E0C32F695} = {BF8721E4-B851-4F18-97E1-3E4E0C32F695}
 	EndProjectSection
 EndProject
@@ -25,8 +24,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "netnodelite_library", "..\..\..\app-core\appseed\netnodelite_library\netnodelite_library.vcxproj", "{19849599-9D62-40FB-8056-D48F32C1CAB6}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "netnodelite_script", "..\..\..\app-core\appseed\netnodelite_script\netnodelite_script.vcxproj", "{19841977-8E11-42A4-B923-08D809A03F4F}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_alatel", "..\..\..\app-core\appseed\alatel\alatel.vcxproj", "{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ca2", "..\..\..\app\appseed\ca2\ca2.vcxproj", "{AFC48570-75E4-46BD-B8AB-4590B257E1C8}"
 EndProject
@@ -253,30 +250,6 @@ Global
 		{19841977-8E11-42A4-B923-08D809A03F4F}.Release|Win32.Build.0 = profiler|Win32
 		{19841977-8E11-42A4-B923-08D809A03F4F}.Release|x64.ActiveCfg = profiler|x64
 		{19841977-8E11-42A4-B923-08D809A03F4F}.Release|x64.Build.0 = profiler|x64
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.basis|Win32.ActiveCfg = basis|Win32
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.basis|Win32.Build.0 = basis|Win32
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.basis|x64.ActiveCfg = basis|x64
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.basis|x64.Build.0 = basis|x64
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.codeanalysis|x64.Build.0 = codeanalysis|x64
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.Debug|Win32.ActiveCfg = profiler|Win32
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.Debug|Win32.Build.0 = profiler|Win32
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.Debug|x64.ActiveCfg = profiler|x64
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.Debug|x64.Build.0 = profiler|x64
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.memdleak|Win32.ActiveCfg = memdleak|Win32
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.memdleak|Win32.Build.0 = memdleak|Win32
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.memdleak|x64.ActiveCfg = memdleak|x64
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.memdleak|x64.Build.0 = memdleak|x64
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.profiler|Win32.ActiveCfg = profiler|Win32
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.profiler|Win32.Build.0 = profiler|Win32
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.profiler|x64.ActiveCfg = profiler|x64
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.profiler|x64.Build.0 = profiler|x64
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.Release|Win32.ActiveCfg = profiler|Win32
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.Release|Win32.Build.0 = profiler|Win32
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.Release|x64.ActiveCfg = profiler|x64
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.Release|x64.Build.0 = profiler|x64
 		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.basis|Win32.ActiveCfg = basis|Win32
 		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.basis|Win32.Build.0 = basis|Win32
 		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.basis|x64.ActiveCfg = basis|x64
