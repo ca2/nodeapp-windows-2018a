@@ -1088,7 +1088,7 @@ namespace win
             str,
             CSIDL_PROFILE,
             FALSE);
-         return path(path(str, "ca\\_____default"), lpcsz);
+         return path(path(str, "ca2\\_____default"), lpcsz);
       }
       else
       {
@@ -1133,7 +1133,7 @@ namespace win
          str,
          CSIDL_APPDATA,
          FALSE);
-      return path(path(str, "ca\\user", lpcszPrefix), lpcszLogin, pszRelativePath);*/
+      return path(path(str, "ca2\\user", lpcszPrefix), lpcszLogin, pszRelativePath);*/
    }
 
    string dir::userquicklaunch(::ca::application * papp, const char * lpcszRelativePath, const char * lpcsz2)
