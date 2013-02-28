@@ -26,6 +26,7 @@ namespace win
 
    window_draw::window_draw(::ca::application * papp) : 
       ca(papp),
+      ::ca::thread(papp),
       ::ca::window_draw(papp),
       message_window_simple_callback(papp),
       m_mutexRendering(papp),
@@ -49,12 +50,7 @@ namespace win
    }
 
 
-   bool window_draw::start()
-   {
-      __begin_thread(get_app(), &window_draw::ThreadProcRedraw, (LPVOID) this);
-      return true;
-   }
-
+   
    /*
    void window_draw::OnPaint(oswindow oswindow, CPaintDC & spgraphics)
    {
@@ -331,7 +327,7 @@ namespace win
       ::AttachThreadInput(::GetCurrentThreadId(), WIN_THREAD(System.::ca::thread_sp::m_p)->m_nThreadID, TRUE);
       MSG msg;
       s_bRunning = true;
-      while(m_bRun && ::ca::get_thread()->m_bRun)
+      while(m_bRun)
       {
          try
          {
@@ -345,8 +341,11 @@ namespace win
          }
          while(::PeekMessageA(&msg, NULL, NULL, NULL, PM_NOREMOVE))
          {
-            __get_thread()->pump_message();
+            if(!__get_thread()->pump_message())
+               break;
          }
+         if(msg.message == WM_QUIT)
+            break;
          int32_t iUiDataWriteWindowTimeForTheApplicationInThisMachine = 8;
          if(m_iFramesPerSecond == 0)
          {
@@ -366,10 +365,9 @@ namespace win
       return 0;
    }
 
-   UINT c_cdecl window_draw::ThreadProcRedraw(LPVOID lpv)
+   int32_t window_draw::run()
    {
-      window_draw * pdraw = (window_draw *) lpv;
-      return pdraw->RedrawProc();
+      return RedrawProc();
    }
 
 

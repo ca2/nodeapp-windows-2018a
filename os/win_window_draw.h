@@ -43,8 +43,6 @@ namespace win
       virtual ~window_draw();
 
 
-      virtual bool start();
-
       bool UpdateBuffer(LPCRECT lpcrect);
       //void OnPaint(oswindow oswindow, CPaintDC & spgraphics);
 
@@ -129,7 +127,7 @@ namespace win
       void get_wnda(user::interaction_ptr_array & wndpa);
       void get_wnda(user::oswindow_array & oswindowa);
       
-      static UINT c_cdecl ThreadProcRedraw(LPVOID lpv);
+      virtual int32_t run();
 
       virtual UINT RedrawProc();
 

@@ -414,7 +414,6 @@ namespace win
    void window::install_message_handling(::ca::message::dispatch * pinterface)
    {
       //m_pbuffer->InstallMessageHandling(pinterface);
-      IGUI_WIN_MSG_LINK(WM_DESTROY           , pinterface, this, &window::_001OnDestroy);
       IGUI_WIN_MSG_LINK(WM_NCDESTROY         , pinterface, this, &window::_001OnNcDestroy);
       IGUI_WIN_MSG_LINK(WM_PAINT             , pinterface, this, &window::_001OnPaint);
       IGUI_WIN_MSG_LINK(WM_PRINT             , pinterface, this, &window::_001OnPrint);
@@ -430,6 +429,7 @@ namespace win
       IGUI_WIN_MSG_LINK(WM_SIZE              , pinterface, this, &window::_001OnSize);
       IGUI_WIN_MSG_LINK(WM_SHOWWINDOW        , pinterface, this, &window::_001OnShowWindow);
       IGUI_WIN_MSG_LINK(ca2m_PRODEVIAN_SYNCH , pinterface, this, &window::_001OnProdevianSynch);
+      IGUI_WIN_MSG_LINK(WM_DESTROY           , pinterface, this, &window::_001OnDestroy);
    }
 
    void window::_001OnMove(::ca::signal_object * pobj)
@@ -490,12 +490,15 @@ namespace win
    {
       UNREFERENCED_PARAMETER(pobj);
       Default();
-      ::win::window_draw * pdraw = dynamic_cast < ::win::window_draw * > (System.get_twf());
-      if(pdraw != NULL)
+      if(System.get_twf() != NULL)
       {
-         retry_single_lock sl(&pdraw->m_eventFree, millis(84), millis(84));
-         pdraw->m_wndpaOut.remove(this);
-         pdraw->m_wndpaOut.remove(m_pguie);
+         ::win::window_draw * pdraw = dynamic_cast < ::win::window_draw * > (System.get_twf());
+         if(pdraw != NULL)
+         {
+            retry_single_lock sl(&pdraw->m_eventFree, millis(84), millis(84));
+            pdraw->m_wndpaOut.remove(this);
+            pdraw->m_wndpaOut.remove(m_pguie);
+         }
       }
    }
 
