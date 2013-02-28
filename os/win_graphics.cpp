@@ -21,6 +21,7 @@ namespace win
       m_ppath           = NULL;
       m_ppathPaint      = NULL;
       m_etextrendering  = ::ca::text_rendering_anti_alias_grid_fit;
+      m_dFontFactor     = 1.0;
 
    }
 
