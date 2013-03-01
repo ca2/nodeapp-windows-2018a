@@ -1107,7 +1107,37 @@ namespace win
 
    void window::message_handler(::ca::signal_object * pobj)
    {
+
       SCAST_PTR(::ca::message::base, pbase, pobj);
+
+      if(pbase->m_uiMessage == WM_KEYDOWN ||
+         pbase->m_uiMessage == WM_KEYUP ||
+         pbase->m_uiMessage == WM_CHAR)
+      {
+
+         if(pbase->m_uiMessage == WM_KEYDOWN)
+         {
+            try
+            {
+               Application.set_key_pressed((int32_t) pbase->m_wparam, true);
+            }
+            catch(...)
+            {
+            }
+         }
+         else if(pbase->m_uiMessage == WM_KEYUP)
+         {
+            try
+            {
+               Application.set_key_pressed((int32_t) pbase->m_wparam, false);
+            }
+            catch(...)
+            {
+            }
+         }
+       }
+
+      
 
       if(m_pguie != NULL)
       {
@@ -1323,27 +1353,6 @@ restart_mouse_hover_check:
          pbase->m_uiMessage == WM_KEYUP ||
          pbase->m_uiMessage == WM_CHAR)
       {
-
-         if(pbase->m_uiMessage == WM_KEYDOWN)
-         {
-            try
-            {
-               Application.set_key_pressed((int32_t) pbase->m_wparam, true);
-            }
-            catch(...)
-            {
-            }
-         }
-         else if(pbase->m_uiMessage == WM_KEYUP)
-         {
-            try
-            {
-               Application.set_key_pressed((int32_t) pbase->m_wparam, false);
-            }
-            catch(...)
-            {
-            }
-         }
 
          ::ca::message::key * pkey = (::ca::message::key *) pbase;
          ::user::interaction * puiFocus = dynamic_cast < ::user::interaction * > (Application.user().get_keyboard_focus());
