@@ -54,6 +54,13 @@ namespace win
       m_bMouseHover = false;
       m_pfont = NULL;
       m_pguieCapture = NULL;
+      m_hbitmap = NULL;
+      ZERO(m_size);
+      ZERO(m_pt);
+      m_pcolorref = NULL;
+      m_pbitmap = NULL;
+      ZERO(m_bitmapinfo);
+      m_pmutexGraphics = NULL;
    }
 
    void window::construct(oswindow oswindow)
@@ -67,6 +74,13 @@ namespace win
       m_bMouseHover = false;
       m_pfont = NULL;
       m_pguieCapture = NULL;
+      m_hbitmap = NULL;
+      ZERO(m_size);
+      ZERO(m_pt);
+      m_pcolorref = NULL;
+      m_pbitmap = NULL;
+      ZERO(m_bitmapinfo);
+      m_pmutexGraphics = NULL;
    }
 
    window::window(::ca::application * papp) :
@@ -83,6 +97,13 @@ namespace win
       m_bMouseHover = false;
       m_pfont = NULL;
       m_pguieCapture = NULL;
+      m_hbitmap = NULL;
+      ZERO(m_size);
+      ZERO(m_pt);
+      m_pcolorref = NULL;
+      m_pbitmap = NULL;
+      ZERO(m_bitmapinfo);
+      m_pmutexGraphics = NULL;
    }
 
    ::ca::window * window::from_os_data(void * pdata)
@@ -444,6 +465,70 @@ namespace win
       }
    }
 
+   void window::win_update_graphics()
+   {
+      single_lock sl(mutex_graphics(), true);
+
+      rect rectWindow;
+
+      GetWindowRect(rectWindow);
+
+      if(rectWindow.area() <= 0)
+         return;
+
+      if(m_size != rectWindow.size())
+      {
+
+         m_spg.destroy();
+
+         m_spb.destroy();
+
+         //if(m_pbitmap != NULL)
+         //{
+           // delete m_pbitmap;
+         //}
+
+         if(m_hbitmap != NULL)
+            ::DeleteObject(m_hbitmap);
+
+         m_size = rectWindow.size();
+
+         ZeroMemory(&m_bitmapinfo, sizeof (BITMAPINFO));
+
+         m_bitmapinfo.bmiHeader.biSize          = sizeof (BITMAPINFOHEADER);
+         m_bitmapinfo.bmiHeader.biWidth         = m_size.cx;
+         m_bitmapinfo.bmiHeader.biHeight        = -m_size.cy;
+         m_bitmapinfo.bmiHeader.biPlanes        = 1;
+         m_bitmapinfo.bmiHeader.biBitCount      = 32; 
+         m_bitmapinfo.bmiHeader.biCompression   = BI_RGB;
+         m_bitmapinfo.bmiHeader.biSizeImage     = m_size.cx * m_size.cy * 4;
+
+
+         m_hbitmap = CreateDIBSection(NULL, &m_bitmapinfo, DIB_RGB_COLORS, (void **) &m_pcolorref, NULL, NULL);
+
+
+
+#undef new
+         m_pbitmap =  new  Gdiplus::Bitmap(m_size.cx, m_size.cy, m_size.cx *4 , PixelFormat32bppARGB, (BYTE *) m_pcolorref);
+#define new DEBUG_NEW
+
+
+         m_spg.create(get_app());
+
+#undef new
+         (dynamic_cast < ::win::graphics * > (m_spg.m_p))->attach(new Gdiplus::Graphics(m_pbitmap));
+#define new DEBUG_NEW
+
+         m_spb.create(get_app());
+
+         m_spb->attach(m_pbitmap);
+
+         m_spg->SelectObject(m_spb);
+
+      }
+
+   }
+
    void window::_001OnSize(::ca::signal_object * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
@@ -471,6 +556,8 @@ namespace win
       {
       m_spdib->create(m_rectParentClient.size());
       }*/
+
+
 
       m_pguie->layout();
 
@@ -1109,6 +1196,18 @@ namespace win
    {
 
       SCAST_PTR(::ca::message::base, pbase, pobj);
+
+      if(pbase->m_uiMessage == WM_SIZE)
+      {
+         win_update_graphics();
+      }
+      else if(pbase->m_uiMessage == WM_MOVE)
+      {
+         class rect rectWindow;
+         ::GetWindowRect(get_handle(), rectWindow);
+         single_lock sl(mutex_graphics(), true);
+         m_pt = rectWindow.top_left();
+      }
 
       if(pbase->m_uiMessage == WM_KEYDOWN ||
          pbase->m_uiMessage == WM_KEYUP ||
@@ -5391,8 +5490,8 @@ ExitModal:
    void window::_001OnSetCursor(::ca::signal_object * pobj)
    {
       SCAST_PTR(::ca::message::base, pbase, pobj);
-      if(System.visual().get_cursor() != NULL
-         && System.visual().get_cursor()->m_ecursor != ::visual::cursor_system)
+      if(Session.get_cursor() != NULL
+         && Session.get_cursor()->m_ecursor != ::visual::cursor_system)
       {
          ::SetCursor(NULL);
       }
@@ -6525,68 +6624,29 @@ namespace win
    void window::_001UpdateWindow()
    {
 
-      rect rectWindow;
+      if(m_pcolorref == NULL)
+         return;
 
-      GetWindowRect(rectWindow);
+      single_lock sl(mutex_graphics(), false);
 
-      if(rectWindow.area() <= 0)
+      if(!sl.lock(millis(84)))
          return;
 
 
-      POINT pt;
-      SIZE sz;
-
-      pt.x = rectWindow.left;
-      pt.y = rectWindow.top;
-      sz.cx = rectWindow.right - rectWindow.left;
-      sz.cy = rectWindow.bottom - rectWindow.top;
-
-      int32_t cx = sz.cx;
-      int32_t cy = sz.cy;
-
-      BITMAPINFO info;
-      COLORREF * pcolorref;
-
-      ZeroMemory(&info, sizeof (BITMAPINFO));
-
-      info.bmiHeader.biSize          = sizeof (BITMAPINFOHEADER);
-      info.bmiHeader.biWidth         = cx;
-      info.bmiHeader.biHeight        = - cy;
-      info.bmiHeader.biPlanes        = 1;
-      info.bmiHeader.biBitCount      = 32; 
-      info.bmiHeader.biCompression   = BI_RGB;
-      info.bmiHeader.biSizeImage     = cx * cy * 4;
-
-      HBITMAP hbitmap = CreateDIBSection(NULL, &info, DIB_RGB_COLORS, (void **) &pcolorref, NULL, NULL);
 
       {
 
-         memset(pcolorref, 0, cx * cy * 4);
+         memset(m_pcolorref, 0, m_size.area() * 4);
 
-         Gdiplus::Bitmap b(cx, cy, cx *4 , PixelFormat32bppARGB, (BYTE *) pcolorref);
+         _001Print(m_spg);
 
-         ::ca::graphics_sp spg(get_app());
-
-         (dynamic_cast < ::win::graphics * > (spg.m_p))->attach(new Gdiplus::Graphics(&b));
-
-         ::ca::bitmap_sp spb(get_app());
-
-         spb->attach(&b);
-
-         spg->SelectObject(spb);
-
-         _001Print(spg);
-
-         //spg->FillSolidRect(0, 0, 85, 85, ARGB(255, 0, 0, 0));
-
-         spb->detach();
 
       }
 
       if(GetExStyle() & WS_EX_LAYERED)
       {
-         BYTE *dst=(BYTE*)pcolorref;
-         int64_t size = cx * cy;
+         BYTE *dst=(BYTE*)m_pcolorref;
+         int64_t size = m_size.area();
 
 
          // >> 8 instead of / 255 subsequent alpha_blend operations say thanks on true_blend because (255) * (1/254) + (255) * (254/255) > 255
@@ -6644,7 +6704,7 @@ namespace win
 
             HDC hdcMem = ::CreateCompatibleDC(NULL);
 
-            HBITMAP hbitmapOld = (HBITMAP) ::SelectObject(hdcMem, hbitmap);
+            HBITMAP hbitmapOld = (HBITMAP) ::SelectObject(hdcMem, m_hbitmap);
 
             BLENDFUNCTION blendPixelFunction = { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
 
@@ -6652,7 +6712,7 @@ namespace win
 
             point ptSrc(0, 0);
 
-            bool bOk = ::UpdateLayeredWindow(get_handle(), hdcScreen, &pt, &sz, hdcMem, &ptSrc, RGB(0, 0, 0), &blendPixelFunction, ULW_ALPHA) != FALSE;
+            bool bOk = ::UpdateLayeredWindow(get_handle(), hdcScreen, &m_pt, &m_size, hdcMem, &ptSrc, RGB(0, 0, 0), &blendPixelFunction, ULW_ALPHA) != FALSE;
 
             ::SelectObject(hdcMem, hbitmapOld);
 
@@ -6672,7 +6732,7 @@ namespace win
 
             HDC hdcMem = ::CreateCompatibleDC(NULL);
 
-            HBITMAP hbitmapOld = (HBITMAP) ::SelectObject(hdcMem, hbitmap);
+            HBITMAP hbitmapOld = (HBITMAP) ::SelectObject(hdcMem, m_hbitmap);
 
             BLENDFUNCTION blendPixelFunction = { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
 
@@ -6680,7 +6740,7 @@ namespace win
 
             point ptSrc(0, 0);
 
-            ::BitBlt(hdcScreen, 0, 0, sz.cx, sz.cy, hdcMem, 0, 0, SRCCOPY);
+            ::BitBlt(hdcScreen, 0, 0, m_size.cx, m_size.cy, hdcMem, 0, 0, SRCCOPY);
 
             ::SelectObject(hdcMem, hbitmapOld);
 
@@ -6691,7 +6751,6 @@ namespace win
 
       }
 
-      ::DeleteObject(hbitmap);
    }
 
 }

@@ -21,6 +21,11 @@ namespace win
 
 
       string      m_strCa2;
+      string      m_strCommonAppData;
+      string      m_strProfile;
+      string      m_strAppData;
+      string      m_strPrograms;
+      string      m_strCommonPrograms;
 
 
       dir(::ca::application * papp);

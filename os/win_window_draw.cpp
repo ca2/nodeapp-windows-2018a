@@ -333,7 +333,10 @@ namespace win
          {
             if(m_bProDevianMode)
             {
+               uint32_t ui1 = ::get_tick_count();
                _synch_redraw();
+               uint32_t ui2 = ::get_tick_count();
+               m_dwLastDelay = ui2 - ui1;
             }
          }
          catch(...)
@@ -509,7 +512,7 @@ namespace win
       {
          try
          {
-            if(wndpa[l]->oprop("session").is_new())
+            if(wndpa[l]->m_psession == NULL)
             {
                try
                {

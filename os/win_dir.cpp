@@ -16,6 +16,31 @@ namespace win
       m_strCa2 = strCa2Module;
 
       System.file().path().eat_end_level(m_strCa2, 2, "\\");
+      SHGetSpecialFolderPath(
+         NULL,
+         m_strCommonAppData,
+         CSIDL_COMMON_APPDATA,
+         FALSE);
+      SHGetSpecialFolderPath(
+         NULL,
+         m_strProfile,
+         CSIDL_PROFILE,
+         FALSE);
+      SHGetSpecialFolderPath(
+         NULL,
+         m_strAppData,
+         CSIDL_APPDATA,
+         FALSE);
+      SHGetSpecialFolderPath(
+         NULL,
+         m_strPrograms,
+         CSIDL_PROGRAMS,
+         FALSE);
+      SHGetSpecialFolderPath(
+         NULL,
+         m_strCommonPrograms,
+         CSIDL_COMMON_PROGRAMS,
+         FALSE);
 
    }
 
@@ -1010,11 +1035,8 @@ namespace win
    string dir::appdata(const char * lpcsz, const char * lpcsz2)
    {
       string str;
-      SHGetSpecialFolderPath(
-         NULL,
-         str,
-         CSIDL_COMMON_APPDATA,
-         FALSE);
+      str = m_strCommonAppData;
+
       string strRelative;
       strRelative = ca2();
       index iFind = strRelative.find(':');
@@ -1048,11 +1070,7 @@ namespace win
    {
 
       string str;
-      SHGetSpecialFolderPath(
-         NULL,
-         str,
-         CSIDL_PROFILE,
-         FALSE);
+      str = m_strProfile;
 
 
       string strRelative;
@@ -1140,11 +1158,7 @@ namespace win
    {
       UNREFERENCED_PARAMETER(papp);
       string str;
-      SHGetSpecialFolderPath(
-         NULL,
-         str,
-         CSIDL_APPDATA,
-         FALSE);
+      str = m_strAppData;
       str = path(str, "Microsoft\\Internet Explorer\\Quick Launch");
       return path(str, lpcszRelativePath, lpcsz2);
    }
@@ -1153,22 +1167,14 @@ namespace win
    {
       UNREFERENCED_PARAMETER(papp);
       string str;
-      SHGetSpecialFolderPath(
-         NULL,
-         str,
-         CSIDL_PROGRAMS,
-         FALSE);
+      str = m_strPrograms;
       return path(str, lpcszRelativePath, lpcsz2);
    }
 
    string dir::commonprograms(const char * lpcszRelativePath, const char * lpcsz2)
    {
       string str;
-      SHGetSpecialFolderPath(
-         NULL,
-         str,
-         CSIDL_COMMON_PROGRAMS,
-         FALSE);
+      str = m_strCommonPrograms;
       return path(str, lpcszRelativePath, lpcsz2);
    }
 

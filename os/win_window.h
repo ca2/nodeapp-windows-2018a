@@ -24,6 +24,18 @@ namespace win
       //visual::dib_sp                m_spdib;
       //visual::dib_sp                m_spdibMultAlphaWork;
 
+      mutex *                       m_pmutexGraphics;
+      HBITMAP                       m_hbitmap;
+      Gdiplus::Bitmap *             m_pbitmap;
+      ::ca::graphics_sp             m_spg;
+      ::ca::bitmap_sp               m_spb;
+      BITMAPINFO m_bitmapinfo;
+      COLORREF * m_pcolorref;
+      size m_size;
+      point m_pt;
+      
+
+
 
       window();
       window(::ca::application * papp);
@@ -76,6 +88,8 @@ namespace win
 
       ::user::window_interface *      m_pbasewnd;
       ::user::interaction *        m_pguieCapture;
+
+      virtual void win_update_graphics();
 
    #if(WINVER >= 0x0500)
 
@@ -177,6 +191,7 @@ namespace win
       void SetFont(::ca::font* pFont, bool bRedraw = TRUE);
       ::ca::font* GetFont();
 
+      inline mutex * mutex_graphics() { if(m_pmutexGraphics != NULL) return m_pmutexGraphics; m_pmutexGraphics = new mutex(get_app()); return m_pmutexGraphics; }
 
    // Window size and position Functions
       virtual bool IsIconic();
