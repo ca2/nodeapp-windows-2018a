@@ -467,11 +467,14 @@ namespace win
 
    void window::win_update_graphics()
    {
+
       single_lock sl(mutex_graphics(), true);
 
       rect rectWindow;
 
       GetWindowRect(rectWindow);
+
+      m_pt = rectWindow.top_left();
 
       if(rectWindow.area() <= 0)
          return;
@@ -1197,16 +1200,11 @@ namespace win
 
       SCAST_PTR(::ca::message::base, pbase, pobj);
 
-      if(pbase->m_uiMessage == WM_SIZE)
+      if(pbase->m_uiMessage == WM_SIZE || pbase->m_uiMessage == WM_MOVE)
       {
+
          win_update_graphics();
-      }
-      else if(pbase->m_uiMessage == WM_MOVE)
-      {
-         class rect rectWindow;
-         ::GetWindowRect(get_handle(), rectWindow);
-         single_lock sl(mutex_graphics(), true);
-         m_pt = rectWindow.top_left();
+
       }
 
       if(pbase->m_uiMessage == WM_KEYDOWN ||
@@ -4090,16 +4088,26 @@ ExitModal:
 
    bool window::SetWindowPos(int32_t z, int32_t x, int32_t y, int32_t cx, int32_t cy, UINT nFlags)
    {
-      /*bool b;
+      
+      single_lock sl(mutex_graphics(), true);
+
+      /*
+      bool b;
       bool * pb = &b;
       if(m_papp->s_ptwf != NULL)
       pb = &m_papp->s_ptwf->m_bProDevianMode;
       keeper < bool > keepOnDemandDraw(pb, false, *pb, true);
       */
+
       ASSERT(::IsWindow(get_handle())); 
-      /*   return ::SetWindowPos(get_handle(), pWndInsertAfter->get_handle(),
-      x, y, cx, cy, nFlags) != FALSE; */
+
+      /*
+      return ::SetWindowPos(get_handle(), pWndInsertAfter->get_handle(),
+      x, y, cx, cy, nFlags) != FALSE; 
+      */
+
       rect64 rectWindowOld = m_rectParentClient;
+
       if(nFlags & SWP_NOMOVE)
       {
          if(nFlags & SWP_NOSIZE)
@@ -4125,14 +4133,29 @@ ExitModal:
             m_rectParentClient.bottom  = m_rectParentClient.top + cy;
          }
       }
-      if(m_pguie != this
-         && m_pguie != NULL)
+
+      if(m_pguie != this && m_pguie != NULL)
       {
          m_pguie->m_rectParentClient = m_rectParentClient;
       }
 
       if(GetExStyle() & WS_EX_LAYERED)
       {
+
+         nFlags |= SWP_NOCOPYBITS;
+
+         nFlags |= SWP_NOREDRAW;
+
+         //nFlags |= SWP_NOMOVE;
+
+         //nFlags |= SWP_NOSIZE;
+
+         if(z == 0)
+         {
+         
+            nFlags |= SWP_NOZORDER;
+
+         }
 
          if(rectWindowOld.top_left() != m_rectParentClient.top_left())
          {
@@ -4148,27 +4171,12 @@ ExitModal:
 
          }
 
-      }
-
-      if(GetExStyle() & WS_EX_LAYERED)
-      {
-         nFlags |= SWP_NOCOPYBITS;
-         nFlags |= SWP_NOREDRAW;
-         //nFlags |= SWP_NOMOVE;
-         //nFlags |= SWP_NOSIZE;
-         if(z == 0)
-         {
-         
-            nFlags |= SWP_NOZORDER;
-
-         }
-
          //nFlags |= SWP_FRAMECHANGED;
 
          //if(nFlags & SWP_SHOWWINDOW)
          {
 
-            ::SetWindowPos(get_handle(), (oswindow) z, x, y, cx, cy, nFlags);
+            //::SetWindowPos(get_handle(), (oswindow) z, x, y, cx, cy, nFlags);
 
             //ShowWindow(SW_SHOW);
 
