@@ -4173,12 +4173,17 @@ ExitModal:
 
          //nFlags |= SWP_FRAMECHANGED;
 
-         //if(nFlags & SWP_SHOWWINDOW)
+         if(nFlags & SWP_SHOWWINDOW)
          {
 
-            //::SetWindowPos(get_handle(), (oswindow) z, x, y, cx, cy, nFlags);
+            if(!IsWindowVisible())
+            {
+             
+               ::SetWindowPos(get_handle(), (oswindow) z, x, y, cx, cy, nFlags);
 
-            //ShowWindow(SW_SHOW);
+               ShowWindow(SW_SHOW);
+
+            }
 
          }
          //else
