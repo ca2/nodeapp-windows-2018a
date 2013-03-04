@@ -20,7 +20,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\ap
 		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF} = {51F51C57-0947-4D1D-850E-2F4BE6C88DCF}
 		{AFC48570-75E4-46BD-B8AB-4590B257E1C8} = {AFC48570-75E4-46BD-B8AB-4590B257E1C8}
 		{A4122E96-400B-4A1A-ACE1-021CC5556A3F} = {A4122E96-400B-4A1A-ACE1-021CC5556A3F}
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F} = {AFF9FDD2-1F13-4951-815B-61BC0C9A774F}
+		{19841511-0204-1977-A73E-2CD949AA3AF6} = {19841511-0204-1977-A73E-2CD949AA3AF6}
 		{BF8721E4-B851-4F18-97E1-3E4E0C32F695} = {BF8721E4-B851-4F18-97E1-3E4E0C32F695}
 	EndProjectSection
 EndProject
@@ -30,7 +30,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_deepfish", "..\..\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_deepfish_alatel", "..\..\..\app-core\appseed\deepfish_alatel\deepfish_alatel.vcxproj", "{52F96A19-6F3A-45AC-926B-256082D8FF5D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_alatel", "..\..\..\app-core\appseed\alatel\alatel.vcxproj", "{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_alatel", "..\..\..\app-core\appseed\alatel\alatel.vcxproj", "{19841511-0204-1977-A73E-2CD949AA3AF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -204,22 +204,22 @@ Global
 		{52F96A19-6F3A-45AC-926B-256082D8FF5D}.profiler|Win32.Build.0 = profiler|Win32
 		{52F96A19-6F3A-45AC-926B-256082D8FF5D}.profiler|x64.ActiveCfg = profiler|x64
 		{52F96A19-6F3A-45AC-926B-256082D8FF5D}.profiler|x64.Build.0 = profiler|x64
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.basis|Win32.ActiveCfg = basis|Win32
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.basis|Win32.Build.0 = basis|Win32
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.basis|x64.ActiveCfg = basis|x64
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.basis|x64.Build.0 = basis|x64
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.codeanalysis|x64.Build.0 = codeanalysis|x64
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.memdleak|Win32.ActiveCfg = memdleak|Win32
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.memdleak|Win32.Build.0 = memdleak|Win32
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.memdleak|x64.ActiveCfg = memdleak|x64
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.memdleak|x64.Build.0 = memdleak|x64
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.profiler|Win32.ActiveCfg = profiler|Win32
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.profiler|Win32.Build.0 = profiler|Win32
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.profiler|x64.ActiveCfg = profiler|x64
-		{AFF9FDD2-1F13-4951-815B-61BC0C9A774F}.profiler|x64.Build.0 = profiler|x64
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.basis|Win32.ActiveCfg = basis|Win32
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.basis|Win32.Build.0 = basis|Win32
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.basis|x64.ActiveCfg = basis|x64
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.basis|x64.Build.0 = basis|x64
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.codeanalysis|x64.Build.0 = codeanalysis|x64
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.memdleak|Win32.ActiveCfg = memdleak|Win32
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.memdleak|Win32.Build.0 = memdleak|Win32
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.memdleak|x64.ActiveCfg = memdleak|x64
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.memdleak|x64.Build.0 = memdleak|x64
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.profiler|Win32.ActiveCfg = profiler|Win32
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.profiler|Win32.Build.0 = profiler|Win32
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.profiler|x64.ActiveCfg = profiler|x64
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.profiler|x64.Build.0 = profiler|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
