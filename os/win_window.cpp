@@ -6649,7 +6649,7 @@ namespace win
 
       {
 
-         memset(m_pcolorref, 0, m_size.area() * 4);
+         memset(m_pcolorref, 0, (size_t) (m_size.area() * 4));
 
          _001Print(m_spg);
 
