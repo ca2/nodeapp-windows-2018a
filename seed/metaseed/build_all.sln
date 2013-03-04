@@ -253,6 +253,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_deepfish_alarm", "
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_netshareservercfg", "..\..\..\app-core\appseed\netshareservercfg\netshareservercfg.vcxproj", "{04742068-D5D8-428F-9F2D-A62888E6E678}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "filemanager_iconoverlay_syllomatter", "..\..\..\app-core\appseed\filemanager.iconoverlay.syllomatter\syllomatter.vcxproj", "{A901C6AD-E421-4569-B892-668E5D63A4BA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
@@ -2262,6 +2264,30 @@ Global
 		{04742068-D5D8-428F-9F2D-A62888E6E678}.Release|Win32.Build.0 = basis|Win32
 		{04742068-D5D8-428F-9F2D-A62888E6E678}.Release|x64.ActiveCfg = basis|x64
 		{04742068-D5D8-428F-9F2D-A62888E6E678}.Release|x64.Build.0 = basis|x64
+		{A901C6AD-E421-4569-B892-668E5D63A4BA}.basis|Win32.ActiveCfg = basis|Win32
+		{A901C6AD-E421-4569-B892-668E5D63A4BA}.basis|Win32.Build.0 = basis|Win32
+		{A901C6AD-E421-4569-B892-668E5D63A4BA}.basis|x64.ActiveCfg = basis|x64
+		{A901C6AD-E421-4569-B892-668E5D63A4BA}.basis|x64.Build.0 = basis|x64
+		{A901C6AD-E421-4569-B892-668E5D63A4BA}.codeanalysis|Win32.ActiveCfg = basis|Win32
+		{A901C6AD-E421-4569-B892-668E5D63A4BA}.codeanalysis|Win32.Build.0 = basis|Win32
+		{A901C6AD-E421-4569-B892-668E5D63A4BA}.codeanalysis|x64.ActiveCfg = basis|x64
+		{A901C6AD-E421-4569-B892-668E5D63A4BA}.codeanalysis|x64.Build.0 = basis|x64
+		{A901C6AD-E421-4569-B892-668E5D63A4BA}.Debug|Win32.ActiveCfg = basis|Win32
+		{A901C6AD-E421-4569-B892-668E5D63A4BA}.Debug|Win32.Build.0 = basis|Win32
+		{A901C6AD-E421-4569-B892-668E5D63A4BA}.Debug|x64.ActiveCfg = basis|x64
+		{A901C6AD-E421-4569-B892-668E5D63A4BA}.Debug|x64.Build.0 = basis|x64
+		{A901C6AD-E421-4569-B892-668E5D63A4BA}.memdleak|Win32.ActiveCfg = basis|Win32
+		{A901C6AD-E421-4569-B892-668E5D63A4BA}.memdleak|Win32.Build.0 = basis|Win32
+		{A901C6AD-E421-4569-B892-668E5D63A4BA}.memdleak|x64.ActiveCfg = basis|x64
+		{A901C6AD-E421-4569-B892-668E5D63A4BA}.memdleak|x64.Build.0 = basis|x64
+		{A901C6AD-E421-4569-B892-668E5D63A4BA}.profiler|Win32.ActiveCfg = basis|Win32
+		{A901C6AD-E421-4569-B892-668E5D63A4BA}.profiler|Win32.Build.0 = basis|Win32
+		{A901C6AD-E421-4569-B892-668E5D63A4BA}.profiler|x64.ActiveCfg = basis|x64
+		{A901C6AD-E421-4569-B892-668E5D63A4BA}.profiler|x64.Build.0 = basis|x64
+		{A901C6AD-E421-4569-B892-668E5D63A4BA}.Release|Win32.ActiveCfg = basis|Win32
+		{A901C6AD-E421-4569-B892-668E5D63A4BA}.Release|Win32.Build.0 = basis|Win32
+		{A901C6AD-E421-4569-B892-668E5D63A4BA}.Release|x64.ActiveCfg = basis|x64
+		{A901C6AD-E421-4569-B892-668E5D63A4BA}.Release|x64.Build.0 = basis|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
