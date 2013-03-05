@@ -142,6 +142,108 @@ namespace win
    }
 
 
+
+   bool graphics::set(const ::ca::graphics_path * ppathParam)
+   {
+
+      ::lnx::graphics_path * ppath = dynamic_cast < ::lnx::graphics_path * > ((::ca::graphics_path *) ppathParam);
+
+      for(int32_t i = 0; i < ppath->m_elementa.get_count(); i++)
+      {
+
+         set(ppath->m_elementa[i]);
+
+      }
+
+      if(ppath->m_efillmode == ::ca::fill_mode_alternate)
+      {
+
+         cairo_set_fill_rule(m_pdc, CAIRO_FILL_RULE_EVEN_ODD);
+
+      }
+      else
+      {
+
+         cairo_set_fill_rule(m_pdc, CAIRO_FILL_RULE_WINDING);
+
+      }
+
+
+      return true;
+
+   }
+
+
+   bool graphics::set(const ::lnx::graphics_path::element & e)
+   {
+
+      switch(e.m_etype)
+      {
+      case simple_path::element::type_arc:
+         set(e.m_arc);
+         break;
+      case simple_path::element::type_line:
+         set(e.m_line);
+         break;
+      case simple_path::element::type_close:
+         cairo_close_path(m_pdc);
+         break;
+      default:
+         throw "unexpected simple os graphics element type";
+      }
+
+      return false;
+
+   }
+
+   bool graphics::set(const ::lnx::graphics_path::arc & a)
+   {
+
+      cairo_translate(m_pdc, a.m_xCenter, a.m_yCenter);
+
+      cairo_scale(m_pdc, 1.0, a.m_dRadiusY / a.m_dRadiusX);
+
+      cairo_arc(m_pdc, 0.0, 0.0, a.m_dRadiusX, a.m_dAngle1, a.m_dAngle2);
+
+      cairo_scale(m_pdc, 1.0, a.m_dRadiusX / a.m_dRadiusY);
+
+      cairo_translate(m_pdc, -a.m_xCenter, -a.m_yCenter);
+
+      return true;
+
+   }
+
+   bool graphics::set(const ::lnx::graphics_path::line & l)
+   {
+
+      if(!cairo_has_current_point(m_pdc))
+      {
+
+         cairo_move_to(m_pdc, l.m_x, l.m_y);
+
+      }
+      else
+      {
+
+         cairo_line_to(m_pdc, l.m_x, l.m_y);
+
+      }
+
+      return true;
+
+   }
+
+
+   bool graphics::set(const ::lnx::graphics_path::move & p)
+   {
+
+      cairo_move_to(m_pdc, p.m_x, p.m_y);
+
+
+      return true;
+
+   }
+
 } // namespace win
 
 #define new DEBUG_NEW

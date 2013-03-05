@@ -36,6 +36,18 @@ namespace win
 
       virtual bool add_move(int32_t x, int32_t y);
 
+
+      virtual bool update();
+
+      bool set(const ::ca::graphics_path::element & e);
+   
+      bool set(const ::ca::graphics_path::arc & a);
+
+      bool set(const ::ca::graphics_path::line & l);
+
+      bool set(const ::ca::graphics_path::move & p);
+
+
    };
 
 
