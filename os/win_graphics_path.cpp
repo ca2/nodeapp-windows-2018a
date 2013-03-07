@@ -7,12 +7,14 @@
 namespace win
 {
 
+
+
    graphics_path::graphics_path(::ca::application * papp)
    {
 
       m_ppath = new Gdiplus::GraphicsPath();
 
-      m_bMove = false;
+      m_bHasPoint = false;
 
    }
 
@@ -40,7 +42,7 @@ namespace win
    }
 
 
-   point graphics_path::last_point()
+   point graphics_path::internal_last_point()
    {
 
       Gdiplus::PointF pf;
@@ -64,14 +66,14 @@ namespace win
    }
 
 
-   bool graphics_path::begin_figure(bool bFill, ::ca::e_fill_mode efillmode)
+   bool graphics_path::internal_begin_figure(bool bFill, ::ca::e_fill_mode efillmode)
    {
 
       return m_ppath->StartFigure() == Gdiplus::Status::Ok;
 
    }
 
-   bool graphics_path::end_figure(bool bClose)
+   bool graphics_path::internal_end_figure(bool bClose)
    {
 
       if(bClose)
@@ -89,7 +91,7 @@ namespace win
 
    }
 
-   bool graphics_path::add_line(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
+   bool graphics_path::internal_add_line(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    {
 
       bool bOk1 = true;
@@ -109,7 +111,7 @@ namespace win
 
    }
    
-   bool graphics_path::add_line(int32_t x, int32_t y)
+   bool graphics_path::internal_add_line(int32_t x, int32_t y)
    {
 
       point pt = last_point();
@@ -122,7 +124,7 @@ namespace win
 
    }
 
-   point graphics_path::current_point()
+   point graphics_path::internal_current_point()
    {
 
       return last_point();
@@ -130,7 +132,7 @@ namespace win
    }
 
 
-   bool graphics_path::add_move(int32_t x, int32_t y)
+   bool graphics_path::internal_add_move(int32_t x, int32_t y)
    {
 
       m_point.X   = (Gdiplus::REAL) x;
@@ -143,50 +145,36 @@ namespace win
 
 
 
-   bool graphics::set(const ::ca::graphics_path * ppathParam)
+   bool graphics_path::update()
    {
 
-      ::lnx::graphics_path * ppath = dynamic_cast < ::lnx::graphics_path * > ((::ca::graphics_path *) ppathParam);
+      internal_begin_figure(m_bFill, m_efillmode);
 
-      for(int32_t i = 0; i < ppath->m_elementa.get_count(); i++)
+      for(int32_t i = 0; i < m_elementa.get_count(); i++)
       {
 
-         set(ppath->m_elementa[i]);
+         set(m_elementa[i]);
 
       }
-
-      if(ppath->m_efillmode == ::ca::fill_mode_alternate)
-      {
-
-         cairo_set_fill_rule(m_pdc, CAIRO_FILL_RULE_EVEN_ODD);
-
-      }
-      else
-      {
-
-         cairo_set_fill_rule(m_pdc, CAIRO_FILL_RULE_WINDING);
-
-      }
-
 
       return true;
 
    }
 
 
-   bool graphics::set(const ::lnx::graphics_path::element & e)
+   bool graphics_path::set(const ::ca::graphics_path::element & e)
    {
 
       switch(e.m_etype)
       {
-      case simple_path::element::type_arc:
+      case ::ca::graphics_path::element::type_arc:
          set(e.m_arc);
          break;
-      case simple_path::element::type_line:
+      case ::ca::graphics_path::element::type_line:
          set(e.m_line);
          break;
-      case simple_path::element::type_close:
-         cairo_close_path(m_pdc);
+      case ::ca::graphics_path::element::type_end:
+         internal_end_figure(e.m_end.m_bClose);
          break;
       default:
          throw "unexpected simple os graphics element type";
@@ -196,54 +184,37 @@ namespace win
 
    }
 
-   bool graphics::set(const ::lnx::graphics_path::arc & a)
+   bool graphics_path::set(const ::ca::graphics_path::arc & a)
    {
 
-      cairo_translate(m_pdc, a.m_xCenter, a.m_yCenter);
-
-      cairo_scale(m_pdc, 1.0, a.m_dRadiusY / a.m_dRadiusX);
-
-      cairo_arc(m_pdc, 0.0, 0.0, a.m_dRadiusX, a.m_dAngle1, a.m_dAngle2);
-
-      cairo_scale(m_pdc, 1.0, a.m_dRadiusX / a.m_dRadiusY);
-
-      cairo_translate(m_pdc, -a.m_xCenter, -a.m_yCenter);
+      //internal_add_arc();
 
       return true;
 
    }
 
-   bool graphics::set(const ::lnx::graphics_path::line & l)
+   bool graphics_path::set(const ::ca::graphics_path::line & l)
    {
 
-      if(!cairo_has_current_point(m_pdc))
-      {
-
-         cairo_move_to(m_pdc, l.m_x, l.m_y);
-
-      }
-      else
-      {
-
-         cairo_line_to(m_pdc, l.m_x, l.m_y);
-
-      }
+      internal_add_line((int32_t) l.m_x, (int32_t) l.m_y);
 
       return true;
 
    }
 
 
-   bool graphics::set(const ::lnx::graphics_path::move & p)
+   bool graphics_path::set(const ::ca::graphics_path::move & p)
    {
 
-      cairo_move_to(m_pdc, p.m_x, p.m_y);
+      internal_add_move(p.m_x, p.m_y);
 
 
       return true;
 
    }
+
 
 } // namespace win
+
 
 #define new DEBUG_NEW
