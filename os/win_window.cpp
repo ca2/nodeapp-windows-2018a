@@ -1212,11 +1212,13 @@ namespace win
          pbase->m_uiMessage == WM_CHAR)
       {
 
+         SCAST_PTR(::ca::message::key, pkey, pobj);
+
          if(pbase->m_uiMessage == WM_KEYDOWN)
          {
             try
             {
-               Application.set_key_pressed((int32_t) pbase->m_wparam, true);
+               Application.set_key_pressed(pkey->m_ekey, true);
             }
             catch(...)
             {
@@ -1226,7 +1228,7 @@ namespace win
          {
             try
             {
-               Application.set_key_pressed((int32_t) pbase->m_wparam, false);
+               Application.set_key_pressed(pkey->m_ekey, false);
             }
             catch(...)
             {
