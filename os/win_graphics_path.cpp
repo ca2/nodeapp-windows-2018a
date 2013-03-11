@@ -206,7 +206,7 @@ namespace win
    bool graphics_path::set(const ::ca::graphics_path::move & p)
    {
 
-      internal_add_move(p.m_x, p.m_y);
+      internal_add_move((int32_t) p.m_x, (int32_t) p.m_y);
 
 
       return true;
