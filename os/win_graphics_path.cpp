@@ -16,6 +16,12 @@ namespace win
 
       m_bHasPoint = false;
 
+      m_ptInternal.X = 69;
+
+      m_ptInternal.Y = 69;
+
+      m_bHasPointInternal = false;
+
    }
 
 
@@ -37,6 +43,11 @@ namespace win
    void * graphics_path::get_os_data() const
    {
 
+      if(!m_bUpdated)
+      {
+         ((graphics_path *)this)->defer_update();
+      }
+
       return (void *) m_ppath;
 
    }
@@ -45,23 +56,18 @@ namespace win
    point graphics_path::internal_last_point()
    {
 
-      Gdiplus::PointF pf;
-
-      if(m_bMove)
+      if(m_bHasPointInternal)
       {
 
-         pf = m_point;
+         return point((LONG) m_ptInternal.X, (LONG) m_ptInternal.Y);
 
       }
       else
       {
 
-         if(m_ppath->GetLastPoint(&pf) != Gdiplus::Status::Ok)
-            throw simple_exception(get_app(), "could not get last point from path");
+        throw simple_exception(get_app(), "path does not have last point");
 
       }
-
-      return point((long) pf.X, (long) pf.Y);
 
    }
 
@@ -96,16 +102,19 @@ namespace win
 
       bool bOk1 = true;
 
-      if(m_bMove)
+      if(m_bHasPointInternal)
       {
-         
-         bOk1 = m_ppath->AddLine(m_point.X, m_point.Y, (FLOAT) x1, (FLOAT) y1) == Gdiplus::Status::Ok;
 
-         m_bMove = false;
+         bOk1 = m_ppath->AddLine(m_ptInternal.X, m_ptInternal.Y, (FLOAT) x1, (FLOAT) y1) == Gdiplus::Status::Ok;
 
       }
 
       bool bOk2 = m_ppath->AddLine(x1, y1, x2, y2) == Gdiplus::Status::Ok;
+
+      m_ptInternal.X = (Gdiplus::REAL) x2;
+      m_ptInternal.Y = (Gdiplus::REAL) y2;
+
+      m_bHasPointInternal = true;
 
       return bOk1 && bOk2;
 
@@ -114,13 +123,21 @@ namespace win
    bool graphics_path::internal_add_line(int32_t x, int32_t y)
    {
 
-      point pt = last_point();
+      bool bOk1 = true;
 
-      bool bOk = m_ppath->AddLine(pt.x, pt.y, x, y) == Gdiplus::Status::Ok;
+      if(m_bHasPointInternal)
+      {
 
-      m_bMove = false;
+         bOk1 = m_ppath->AddLine(m_ptInternal.X, m_ptInternal.Y, (FLOAT) x, (FLOAT) y) == Gdiplus::Status::Ok;
 
-      return bOk;
+      }
+
+      m_bHasPointInternal = true;
+
+      m_ptInternal.X = (Gdiplus::REAL) x;
+      m_ptInternal.Y = (Gdiplus::REAL) y;
+
+      return bOk1;
 
    }
 
@@ -135,9 +152,10 @@ namespace win
    bool graphics_path::internal_add_move(int32_t x, int32_t y)
    {
 
-      m_point.X   = (Gdiplus::REAL) x;
-      m_point.Y   = (Gdiplus::REAL) y;
-      m_bMove     = true;
+      m_ptInternal.X   = (Gdiplus::REAL) x;
+      m_ptInternal.Y   = (Gdiplus::REAL) y;
+      m_bHasPointInternal     = true;
+
 
       return true;
 
@@ -169,6 +187,9 @@ namespace win
       {
       case ::ca::graphics_path::element::type_arc:
          set(e.m_arc);
+         break;
+      case ::ca::graphics_path::element::type_move:
+         set(e.m_move);
          break;
       case ::ca::graphics_path::element::type_line:
          set(e.m_line);

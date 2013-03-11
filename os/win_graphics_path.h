@@ -12,8 +12,8 @@ namespace win
 
       
       Gdiplus::GraphicsPath *    m_ppath;
-      bool                       m_bMove;
-      Gdiplus::PointF            m_point;
+      Gdiplus::PointF            m_ptInternal;
+      bool                       m_bHasPointInternal;
 
 
 
