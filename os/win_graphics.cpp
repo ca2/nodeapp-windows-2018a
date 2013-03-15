@@ -3419,7 +3419,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       const char * psz = lpszString;
       while(i < iIndex)
       {
-         iLen = ::ca::str::utf8_char(psz).length();
+         iLen = ::ca::str::get_utf8_char(psz).length();
          iRange++;
          i += iLen;
          psz = ::ca::str::utf8_inc(psz);
@@ -3616,7 +3616,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       {
          try
          {
-            iLen = ::ca::str::utf8_char(psz).length();
+            iLen = ::ca::str::get_utf8_char(psz).length();
          }
          catch(...)
          {
