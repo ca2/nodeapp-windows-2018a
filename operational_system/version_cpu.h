@@ -19,20 +19,6 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-#ifdef _ALPHA_
-// specific overrides for ALPHA...
-#define ___PACKING    8       // default AXP alignment (required)
-#ifdef ___NO_DEBUG_CRT
-extern "C" void _BPT();
-#pragma intrinsic(_BPT)
-#define __debug_break() _BPT()
-#else
-#define __debug_break() _CrtDbgBreak()
-#endif
-#endif  //_ALPHA_
-
-/////////////////////////////////////////////////////////////////////////////
-
 #ifdef _PPC_
 // specific overrides for PPC...
 #define ___PACKING    8       // default PPC alignment (required)

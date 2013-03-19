@@ -21,7 +21,6 @@
 #ifndef ___PORTABLE
 #pragma component(browser, off, references, "ASSERT")
 #pragma component(browser, off, references, "__assert_failed_line")
-#pragma component(browser, off, references, "__debug_break")
 #pragma component(browser, off, references, "bool")
 #pragma component(browser, off, references, "BYTE")
 #pragma component(browser, off, references, "DECLSPEC_IMPORT")
@@ -89,30 +88,8 @@
 #define VK_KANA             0x15
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
-// Special __debug_break: used to break into debugger at critical times
+#define __debug_break {::DebugBreak();};
 
-#ifndef __debug_break
-#if core_level_1
-#define __debug_break() DebugBreak()
-#elif ___NO_DEBUG_CRT
-// by default, debug break is asm int32_t 3, or a call to DebugBreak, or nothing
-#if defined(_M_IX86) && !defined(___PORTABLE)
-#define __debug_break() _asm { int32_t 3 }
-#else
-#define __debug_break() DebugBreak()
-#endif
-#else
-#define __debug_break() _CrtDbgBreak()
-#endif
-#endif
-
-/*#ifndef DEBUG
-#ifdef __debug_break
-#undef __debug_break
-#endif
-#define __debug_break()
-#endif  // DEBUG*/
 
 /////////////////////////////////////////////////////////////////////////////
 // Standard preprocessor symbols if not already defined
