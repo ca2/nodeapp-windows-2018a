@@ -261,13 +261,12 @@
       </SDLCheck>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>Secur32.lib;Crypt32.lib;libeay32MTd.lib;Ole32.lib;Gdiplus.lib;msimg32.lib;gdi32.lib;psapi.lib;user32.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;msimg32.lib;gdi32.lib;psapi.lib;user32.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>$(SolutionDir)../../../time/library/x86/$(ConfigurationName);$(SolutionDir)../../../nodeapp/thirdparty/library;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>AsInvoker</UACExecutionLevel>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <IgnoreSpecificDefaultLibraries>
-      </IgnoreSpecificDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>msvcrtd.lib</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -666,6 +665,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\app\appseed\c\_.vcxproj">
       <Project>{d9e0a96e-c666-45c1-aabe-609ddc85ec33}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\app\thirdparty\appseed\openssl\_openssl.vcxproj">
+      <Project>{927486e9-5ae9-46c5-b423-06e8b016b33c}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
