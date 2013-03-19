@@ -1,2 +1,2 @@
 call _setup
-app : app=app-core/tesseract/netnodecfg build_number=basis install
+app : app=app-core/netnodecfg build_number=basis install
