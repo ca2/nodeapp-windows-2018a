@@ -7,6 +7,7 @@
 #define DEBUG
 #endif
 
+#define NO_VARIADIC_TEMPLATE
 
 #define WINDOWS
 #define WINDOWSEX
