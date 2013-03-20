@@ -775,12 +775,12 @@ namespace win
          dumpcontext << " (permanent window)";
 
       // dump out window specific statistics
-      char szBuf [64];
-      if (!const_cast < window * > (this)->send_message(WM_QUERYAFXWNDPROC, 0, 0) && pWnd == this)
-         ((::ca::window *) this)->GetWindowText(szBuf, _countof(szBuf));
-      else
-         ::DefWindowProc(((window *)this)->get_handle(), WM_GETTEXT, _countof(szBuf), (LPARAM)&szBuf[0]);
-      dumpcontext << "\ncaption = \"" << szBuf << "\"";
+      //char szBuf [64];
+      //if (!const_cast < window * > (this)->send_message(WM_QUERYAFXWNDPROC, 0, 0) && pWnd == this)
+        // ((::ca::window *) this)->GetWindowText(szBuf, _countof(szBuf));
+      //else
+        // ::DefWindowProc(((window *)this)->get_handle(), WM_GETTEXT, _countof(szBuf), (LPARAM)&szBuf[0]);
+      //dumpcontext << "\ncaption = \"" << szBuf << "\"";
 
       ::GetClassName(((window *)this)->get_handle(), szBuf, _countof(szBuf));
       dumpcontext << "\nclass name = \"" << szBuf << "\"";
