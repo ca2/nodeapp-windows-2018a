@@ -319,12 +319,18 @@ namespace production
       }
    }
 
+
    void view::_001OnSetCursor(::ca::signal_object * pobj) 
    {
-      ::SetCursor(::LoadCursor(NULL, IDC_ARROW));
+
+      SCAST_PTR(::ca::message::mouse, pmouse, pobj);
+
+      pmouse->m_ecursor = ::visual::cursor_arrow;
    	
 	   pobj->previous();
+
    }
+
 
    document * view::get_document()
    {
