@@ -775,7 +775,7 @@ namespace win
          dumpcontext << " (permanent window)";
 
       // dump out window specific statistics
-      //char szBuf [64];
+      char szBuf [64];    
       //if (!const_cast < window * > (this)->send_message(WM_QUERYAFXWNDPROC, 0, 0) && pWnd == this)
         // ((::ca::window *) this)->GetWindowText(szBuf, _countof(szBuf));
       //else
@@ -5955,7 +5955,7 @@ ExitModal:
       LPCREATESTRUCT lpcs = ((LPCBT_CREATEWND)lParam)->lpcs;
       ASSERT(lpcs != NULL);
 
-      ::user::interaction * pWndInit = pThreadState->m_pWndInit;
+      ::win::window * pWndInit = pThreadState->m_pWndInit;
       bool bContextIsDLL = afxContextIsDLL;
       if (pWndInit != NULL || (!(lpcs->style & WS_CHILD) && !bContextIsDLL))
       {
@@ -6194,8 +6194,8 @@ mutex * afxMutexoswindow_()
 LRESULT CALLBACK __window_procedure(oswindow oswindow, UINT nMsg, WPARAM wParam, LPARAM lParam)
 {
    // special message which identifies the window as using __window_procedure
-   if (nMsg == WM_QUERYAFXWNDPROC)
-      return 1;
+//   if (nMsg == WM_QUERYAFXWNDPROC)
+  //    return 1;
 
    // all other messages route through message ::collection::map
    ::ca::window * pWnd = ::win::window::FromHandlePermanent(oswindow);
@@ -6255,7 +6255,7 @@ __STATIC void CLASS_DECL_win __post_init_dialog(
 
 
 
-CLASS_DECL_win void hook_window_create(::user::interaction * pWnd)
+CLASS_DECL_win void hook_window_create(::win::window * pwindow)
 {
    ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
    if (pThreadState->m_pWndInit == pWnd)
@@ -6269,11 +6269,11 @@ CLASS_DECL_win void hook_window_create(::user::interaction * pWnd)
          throw memory_exception(pWnd->get_app());
    }
    ASSERT(pThreadState->m_hHookOldCbtFilter != NULL);
-   ASSERT(pWnd != NULL);
+   ASSERT(pwindow != NULL);
    // trans   ASSERT(WIN_WINDOW(pWnd)->get_handle() == NULL);   // only do once
 
    ASSERT(pThreadState->m_pWndInit == NULL);   // hook not already in progress
-   pThreadState->m_pWndInit = pWnd;
+   pThreadState->m_pWndInit = pwindow;
 }
 
 CLASS_DECL_win bool unhook_window_create()
