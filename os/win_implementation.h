@@ -1,8 +1,6 @@
 #pragma once
 
-#define __defer_register_class(fClass) __end_defer_register_class(fClass)
-
-CLASS_DECL_win bool __end_defer_register_class(LONG fToRegister, const char ** ppszClass);
+CLASS_DECL_win string get_user_interaction_window_class(::user::interaction * pui);
 
 
 // Temporary ::collection::map management (locks temp ::collection::map on current thread)
