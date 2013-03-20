@@ -224,6 +224,15 @@ class ::userbase::control_bar;
 class push_routing_frame;
 class CPushRoutingView;
 
+namespace win
+
+{
+
+
+   class window;
+
+} // namespace win
+
 #define ___TEMP_CLASS_NAME_SIZE 96
 class CLASS_DECL_win ___THREAD_STATE : 
    public no_track_object,
@@ -246,7 +255,7 @@ public:
    __EXCEPTION_CONTEXT m_exceptionContext;
 
    // ::ca::window create, gray dialog hook, and other hook data
-   ::user::interaction * m_pWndInit;
+   ::win::window * m_pWndInit;
    ::ca::window * m_pAlternateWndInit;      // special case commdlg hooking
    DWORD m_dwPropStyle;
    DWORD m_dwPropExStyle;
