@@ -745,6 +745,38 @@ namespace win
 
    }
 
+   void application::DoWaitCursor(int32_t nCode)
+   {
+         // 0 => restore, 1=> begin, -1=> end
+      ENSURE_ARG(nCode == 0 || nCode == 1 || nCode == -1);
+//      ENSURE(afxData.hcurWait != NULL);
+//      ::ca::LockGlobals(CRIT_WAITCURSOR);
+      m_nWaitCursorCount += nCode;
+      if (m_nWaitCursorCount > 0)
+      {
+         //HCURSOR hcurPrev = ::SetCursor(afxData.hcurWait);
+         //if (nCode > 0 && m_nWaitCursorCount == 1)
+           // m_hcurWaitCursorRestore = hcurPrev;
+      }
+      else
+      {
+         // turn everything off
+         m_nWaitCursorCount = 0;     // prevent underflow
 
+#ifdef WINDOWSEX
+
+         ::SetCursor(m_hcurWaitCursorRestore);
+
+#else
+
+         // throw not_implemented(get_app());
+         // throw todo(get_app());
+
+#endif
+
+      }
+  //    ::ca::UnlockGlobals(CRIT_WAITCURSOR);
+
+   }
 
 } // namespace win
