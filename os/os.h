@@ -57,8 +57,10 @@ CLASS_DECL_win void __try_cleanup();
 /////////////////////////////////////////////////////////////////////////////
 // Global implementation helpers
 
+
+
 // window creation hooking
-CLASS_DECL_win void hook_window_create(::user::interaction * pWnd);
+CLASS_DECL_win void hook_window_create(::win::window * pWnd);
 CLASS_DECL_win bool unhook_window_create();
 CLASS_DECL_win void reset_message_cache();
 
