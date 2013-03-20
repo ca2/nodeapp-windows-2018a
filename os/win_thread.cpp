@@ -1739,11 +1739,11 @@ stop_run:
    {
       SCAST_PTR(::ca::message::base, pbase, pobj);
       // special message which identifies the window as using __window_procedure
-      if(pbase->m_uiMessage == WM_QUERYAFXWNDPROC)
-      {
-         pbase->set_lresult(0);
-         return;
-      }
+//      if(pbase->m_uiMessage == WM_QUERYAFXWNDPROC)
+  //    {
+    //     pbase->set_lresult(0);
+      //   return;
+     // }
 
       // all other messages route through message ::collection::map
       ::ca::window * pwindow = pbase->m_pwnd->get_wnd();
