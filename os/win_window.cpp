@@ -6258,7 +6258,7 @@ __STATIC void CLASS_DECL_win __post_init_dialog(
 CLASS_DECL_win void hook_window_create(::win::window * pwindow)
 {
    ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
-   if (pThreadState->m_pWndInit == pWnd)
+   if (pThreadState->m_pWndInit == pwindow)
       return;
 
    if (pThreadState->m_hHookOldCbtFilter == NULL)
@@ -6266,7 +6266,7 @@ CLASS_DECL_win void hook_window_create(::win::window * pwindow)
       pThreadState->m_hHookOldCbtFilter = ::SetWindowsHookEx(WH_CBT,
          win::__cbt_filter_hook, NULL, ::GetCurrentThreadId());
       if (pThreadState->m_hHookOldCbtFilter == NULL)
-         throw memory_exception(pWnd->get_app());
+         throw memory_exception(pwindow->get_app());
    }
    ASSERT(pThreadState->m_hHookOldCbtFilter != NULL);
    ASSERT(pwindow != NULL);
