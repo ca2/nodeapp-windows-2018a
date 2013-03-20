@@ -717,6 +717,9 @@ namespace win
 
       void set_view_port_org(::ca::graphics * pgraphics);
 
+      string calc_icon_window_class(uint32_t dwDefaultStyle, const char * pszMatter);
+      string calc_window_class();
+
    };
 
 
