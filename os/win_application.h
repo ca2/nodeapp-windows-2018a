@@ -205,6 +205,8 @@ namespace win
       virtual void set_env_var(const string & var,const string & value);
       virtual uint32_t get_thread_id();
 
+      virtual void DoWaitCursor(int32_t nCode);
+
    };
 
 
