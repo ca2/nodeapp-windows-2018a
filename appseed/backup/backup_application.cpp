@@ -36,9 +36,9 @@ namespace backup
 	   m_pdoctemplateMain = new ::userbase::single_document_template(
          this,
 		   "production/frame",
-         System.template type_info < document > (),
-		   System.template type_info < frame > (),
-		   System.template type_info < pane_view > ());
+         System.type_info < document > (),
+		   System.type_info < frame > (),
+		   System.type_info < pane_view > ());
 
       return true;
    }

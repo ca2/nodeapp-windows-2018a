@@ -9,7 +9,7 @@ namespace win2
       ca(papp)
    {
       
-      System.factory().creatable < ::win2::application         >  (System.template type_info < ::cubebase::application > (), 1);
+      System.factory().creatable < ::win2::application         >  (System.type_info < ::cubebase::application > (), 1);
       
    }
 

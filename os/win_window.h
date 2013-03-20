@@ -661,7 +661,7 @@ namespace win
       virtual void WalkPreTranslateTree(::user::interaction * puiStop, ::ca::signal_object * pobj);
       static ::user::interaction * GetDescendantWindow(::user::interaction * oswindow, id id);
       static void SendMessageToDescendants(oswindow  oswindow, UINT message, WPARAM wParam, LPARAM lParam, bool bDeep, bool bOnlyPerm);
-      virtual bool IsFrameWnd(); // is_kind_of(System.template type_info < frame_window > ()))
+      virtual bool IsFrameWnd(); // is_kind_of(System.type_info < frame_window > ()))
       virtual void on_final_release();
       static bool ModifyStyle(oswindow oswindow, uint32_t dwRemove, uint32_t dwAdd, UINT nFlags);
       static bool ModifyStyleEx(oswindow oswindow, uint32_t dwRemove, uint32_t dwAdd, UINT nFlags);
