@@ -106,6 +106,30 @@ namespace win
       m_pmutexGraphics = NULL;
    }
 
+
+   window::~window()
+   {
+
+      if(m_papp != NULL && m_papp->m_psystem != NULL && Sys(m_papp).user().m_pwindowmap != NULL)
+      {
+         Sys(m_papp).user().m_pwindowmap->m_map.remove_key((int_ptr) get_handle());
+      }
+
+      single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_pthread->m_mutex, TRUE);
+      if(m_pfont != NULL)
+      {
+         delete m_pfont;
+      }
+      sl.unlock();
+      if (get_handle() != NULL)
+      {
+         TRACE(::ca::trace::category_AppMsg, 0, "Warning: calling DestroyWindow in window::~window; "
+            "OnDestroy or PostNcDestroy in derived class will not be called.\n");
+         m_pcallback = NULL;
+         DestroyWindow();
+      }
+   }
+
    ::ca::window * window::from_os_data(void * pdata)
    {
       return dynamic_cast <::ca::window *>(from_handle((oswindow) pdata));   
@@ -272,7 +296,8 @@ namespace win
       // allow modification of several common create parameters
       CREATESTRUCT cs;
       cs.dwExStyle = dwExStyle;
-      cs.lpszClass = lpszClassName;
+
+      cs.lpszClass = calc_window_class();
       cs.lpszName = lpszWindowName;
       cs.style = dwStyle;
       cs.x = x;
@@ -362,14 +387,6 @@ namespace win
    // for child windows
    bool window::pre_create_window(CREATESTRUCT& cs)
    {
-      if (cs.lpszClass == NULL)
-      {
-         // make sure the default window class is registered
-         VERIFY(__end_defer_register_class(__WND_REG, &cs.lpszClass));
-
-         // no WNDCLASS provided - use child window default
-         ASSERT(cs.style & WS_CHILD);
-      }
       return TRUE;
    }
 
@@ -408,29 +425,43 @@ namespace win
       return true;
    }
 
-
-   window::~window()
+   string window:: calc_window_class()
    {
 
-      if(m_papp != NULL && m_papp->m_psystem != NULL && Sys(m_papp).user().m_pwindowmap != NULL)
+      return calc_icon_window_class(m_pguie->get_window_default_style(), m_pguie->get_window_icon_matter());
+
+   }
+
+
+   string window::calc_icon_window_class(uint32_t dwDefaultStyle, const char * pszMatter)
+   {
+
+      HICON hIcon = (HICON) ::LoadImage(
+         NULL,
+         Application.dir().matter(pszMatter, "icon.ico"), IMAGE_ICON,
+         16, 16,
+         LR_LOADFROMFILE);
+
+      if(hIcon != NULL)
       {
-         Sys(m_papp).user().m_pwindowmap->m_map.remove_key((int_ptr) get_handle());
+
+         string strClass = get_user_interaction_window_class(m_pguie);
+
+         // will fill lpszClassName with default WNDCLASS name
+         // ignore instance handle from pre_create_window.
+
+         WNDCLASS wndcls;
+         if(strClass.has_char() &&  GetClassInfo(System.m_hInstance, strClass, &wndcls) && wndcls.hIcon != hIcon)
+         {
+            // register a very similar WNDCLASS
+            return __register_window_class(wndcls.style, wndcls.hCursor, wndcls.hbrBackground, hIcon);
+         }
       }
 
-      single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_pthread->m_mutex, TRUE);
-      if(m_pfont != NULL)
-      {
-         delete m_pfont;
-      }
-      sl.unlock();
-      if (get_handle() != NULL)
-      {
-         TRACE(::ca::trace::category_AppMsg, 0, "Warning: calling DestroyWindow in window::~window; "
-            "OnDestroy or PostNcDestroy in derived class will not be called.\n");
-         m_pcallback = NULL;
-         DestroyWindow();
-      }
+      return "";
+
    }
+
 
    void window::install_message_handling(::ca::message::dispatch * pinterface)
    {
@@ -488,7 +519,7 @@ namespace win
 
          //if(m_pbitmap != NULL)
          //{
-           // delete m_pbitmap;
+         // delete m_pbitmap;
          //}
 
          if(m_hbitmap != NULL)
@@ -1234,9 +1265,9 @@ namespace win
             {
             }
          }
-       }
+      }
 
-      
+
 
       if(m_pguie != NULL)
       {
@@ -3173,7 +3204,7 @@ restart_mouse_hover_check:
                   {
                   pwnd->_001Print(pdc);
                   }*/
-                  
+
                   //if(::GetWindowLong(wndaApp[j], GWL_EXSTYLE) & WS_EX_LAYERED)
 
                   if(true)
@@ -3272,8 +3303,8 @@ restart_mouse_hover_check:
    void window::_001OnProdevianSynch(::ca::signal_object * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
-//      System.get_event(m_pthread)->SetEvent();
-  //    System.get_event(System.get_twf())->wait(millis(8400));
+      //      System.get_event(m_pthread)->SetEvent();
+      //    System.get_event(System.get_twf())->wait(millis(8400));
    }
 
    void window::_001OnPaint(::ca::signal_object * pobj)
@@ -4090,7 +4121,7 @@ ExitModal:
 
    bool window::SetWindowPos(int32_t z, int32_t x, int32_t y, int32_t cx, int32_t cy, UINT nFlags)
    {
-      
+
       single_lock sl(mutex_graphics(), true);
 
       /*
@@ -4154,7 +4185,7 @@ ExitModal:
 
          if(z == 0)
          {
-         
+
             nFlags |= SWP_NOZORDER;
 
          }
@@ -4180,7 +4211,7 @@ ExitModal:
 
             if(!IsWindowVisible())
             {
-             
+
                ::SetWindowPos(get_handle(), (oswindow) z, x, y, cx, cy, nFlags);
 
                ShowWindow(SW_SHOW);
@@ -4191,25 +4222,25 @@ ExitModal:
          //else
          {
 
-           // ::SetWindowPos(get_handle(),(oswindow)  z, x, y, cx, cy, nFlags);
+            // ::SetWindowPos(get_handle(),(oswindow)  z, x, y, cx, cy, nFlags);
 
          }
-/*         if(nFlags & SWP_SHOWWINDOW)
+         /*         if(nFlags & SWP_SHOWWINDOW)
          {
 
-//            ::SetWindowPos(get_handle(), (oswindow) z, x, y, cx, cy, nFlags);
-            if(!IsWindowVisible())
-            {
+         //            ::SetWindowPos(get_handle(), (oswindow) z, x, y, cx, cy, nFlags);
+         if(!IsWindowVisible())
+         {
 
-               ShowWindow(SW_SHOW);
+         ShowWindow(SW_SHOW);
 
-            }
+         }
 
          }
          else
          {
 
-          //  ::SetWindowPos(get_handle(),(oswindow)  z, x, y, cx, cy, nFlags);
+         //  ::SetWindowPos(get_handle(),(oswindow)  z, x, y, cx, cy, nFlags);
 
          }*/
 
@@ -4341,12 +4372,12 @@ ExitModal:
 
    void window::GetWindowRect(__rect64 * lprect)
    {
-      
+
       if(!::IsWindow(get_handle()))
          return;
 
       //if(!::IsWindow(get_handle()))
-         //throw simple_exception(get_app(), "no more a window");
+      //throw simple_exception(get_app(), "no more a window");
       // if it is temporary window - probably not ca wrapped window
       if(m_pguie == NULL || m_pguie == this)
       {
@@ -4608,7 +4639,7 @@ ExitModal:
 
    bool window::ModifyStyle(uint32_t dwRemove, uint32_t dwAdd, UINT nFlags)
    { 
-      
+
       if(!::IsWindow(get_handle()))
          return false;
 
@@ -4619,7 +4650,7 @@ ExitModal:
 
    bool window::ModifyStyleEx(uint32_t dwRemove, uint32_t dwAdd, UINT nFlags)
    { 
-      
+
       if(!::IsWindow(get_handle()))
          return false;
 
@@ -4800,7 +4831,7 @@ ExitModal:
 
       (dynamic_cast<::win::graphics * >(pgraphics))->m_hdc = NULL;
 
-      
+
 
       return true;
 
@@ -5513,8 +5544,16 @@ ExitModal:
       pbase->m_bRet = true;
       //(bool)Default(); 
    }
+
+
    void window::OnShowWindow(bool, UINT)
-   { Default(); }
+   { 
+
+      Default(); 
+
+   }
+
+
    void window::OnSize(UINT, int32_t, int32_t)
    { Default(); }
    void window::OnTCard(UINT, uint32_t)
@@ -5847,7 +5886,7 @@ ExitModal:
       }
       catch(::exit_exception &)
       {
-            
+
          Sys(pinteraction->m_papp).os().post_to_all_threads(WM_QUIT, 0, 0);
 
          return -1;
@@ -6368,11 +6407,12 @@ __STATIC bool CLASS_DECL_win __register_with_icon(WNDCLASS* pWndCls,
 }
 
 
-bool CLASS_DECL_win __end_defer_register_class(LONG fToRegisterParam, const char ** ppszClass)
+string CLASS_DECL_win get_user_interaction_window_class(::user::interaction * pui)
 {
+   ::user::interaction::e_type etype = pui->get_window_type();
    // mask off all classes that are already registered
-   __MODULE_STATE* pModuleState = __get_module_state();
-   LONG fToRegister = fToRegisterParam & ~pModuleState->m_fRegisteredClasses;
+   //__MODULE_STATE* pModuleState = __get_module_state();
+/*   LONG fToRegister = fToRegisterParam & ~pModuleState->m_fRegisteredClasses;
    if (fToRegister == 0)
    {
       fToRegister = fToRegisterParam;
@@ -6405,6 +6445,7 @@ bool CLASS_DECL_win __end_defer_register_class(LONG fToRegisterParam, const char
    LONG fRegisteredClasses = 0;
 
    // common initialization
+   */
    WNDCLASS wndcls;
    memset(&wndcls, 0, sizeof(WNDCLASS));   // start with NULL defaults
    wndcls.lpfnWndProc = DefWindowProc;
@@ -6413,7 +6454,7 @@ bool CLASS_DECL_win __end_defer_register_class(LONG fToRegisterParam, const char
 
    INITCOMMONCONTROLSEX init;
    init.dwSize = sizeof(init);
-
+   /*
    // work to register classes as specified by fToRegister, populate fRegisteredClasses as we go
    if (fToRegister & __WND_REG)
    {
@@ -6470,24 +6511,21 @@ bool CLASS_DECL_win __end_defer_register_class(LONG fToRegisterParam, const char
       *ppszClass = gen_WndMDIFrame;
       }
       fRegisteredClasses |= __WNDMDIFRAME_REG;
-      }*/
-   }
-   if (fToRegister & __WNDFRAMEORVIEW_REG)
+      }
+   }*/
+   if (etype == ::user::interaction::type_frame || etype == ::user::interaction::type_view)
    {
       // SDI Frame or MDI Child windows or views - normal colors
       wndcls.style = CS_DBLCLKS | CS_HREDRAW | CS_VREDRAW;
       wndcls.hbrBackground = (HBRUSH) (COLOR_WINDOW + 1);
-      if (__register_with_icon(&wndcls, gen_WndFrameOrView, 123))
+      if (__register_with_icon(&wndcls, gen_WndFrameOrView, NULL))
       {
-         if(ppszClass != NULL)
-         {
-            *ppszClass = gen_WndFrameOrView;
-         }
-         fRegisteredClasses |= __WNDFRAMEORVIEW_REG;
+         return gen_WndFrameOrView;
       }
    }
 
-
+   return "";
+   /*
    // save new state of registered controls
    pModuleState->m_fRegisteredClasses |= fRegisteredClasses;
 
@@ -6499,7 +6537,7 @@ bool CLASS_DECL_win __end_defer_register_class(LONG fToRegisterParam, const char
    }
 
    // must have registered at least as mamy classes as requested
-   return (fToRegister & fRegisteredClasses) == fToRegister;
+   return (fToRegister & fRegisteredClasses) == fToRegister;*/
 }
 
 
