@@ -297,7 +297,8 @@ namespace win
       CREATESTRUCT cs;
       cs.dwExStyle = dwExStyle;
 
-      cs.lpszClass = calc_window_class();
+      string strClass = calc_window_class();
+      cs.lpszClass = strClass.is_empty() ? NULL : (const char *) strClass;
       cs.lpszName = lpszWindowName;
       cs.style = dwStyle;
       cs.x = x;
@@ -436,16 +437,15 @@ namespace win
    string window::calc_icon_window_class(uint32_t dwDefaultStyle, const char * pszMatter)
    {
 
-      HICON hIcon = (HICON) ::LoadImage(
-         NULL,
-         Application.dir().matter(pszMatter, "icon.ico"), IMAGE_ICON,
-         16, 16,
-         LR_LOADFROMFILE);
+      string strPath = Application.dir().matter(pszMatter, "icon.ico");
+
+      HICON hIcon = (HICON) ::LoadImage(NULL, strPath, IMAGE_ICON, 256, 256, LR_LOADFROMFILE);
+
+      string strClass = get_user_interaction_window_class(m_pguie);
 
       if(hIcon != NULL)
       {
 
-         string strClass = get_user_interaction_window_class(m_pguie);
 
          // will fill lpszClassName with default WNDCLASS name
          // ignore instance handle from pre_create_window.
@@ -458,7 +458,7 @@ namespace win
          }
       }
 
-      return "";
+      return strClass;
 
    }
 
@@ -6524,7 +6524,7 @@ string CLASS_DECL_win get_user_interaction_window_class(::user::interaction * pu
       }
    }
 
-   return "";
+   return __register_window_class(0);
    /*
    // save new state of registered controls
    pModuleState->m_fRegisteredClasses |= fRegisteredClasses;
