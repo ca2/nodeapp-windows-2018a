@@ -186,12 +186,6 @@ namespace win
       return true;
    }
 
-   bool application::DeferRegisterClass(LONG fToRegister, const char ** ppszClass)
-   {
-      return __end_defer_register_class(fToRegister, ppszClass);
-   }
-
-
    void application::LockTempMaps()
    {
       WIN_THREAD(::ca::smart_pointer < ::ca::thread >::m_p)->LockTempMaps();
@@ -246,12 +240,6 @@ namespace win
       {
          e->Delete();
       }
-   }
-
-
-   const char * application::RegisterWndClass(UINT nClassStyle, HCURSOR hCursor, HBRUSH hbrBackground, HICON hIcon)
-   {
-      return __register_window_class(nClassStyle, hCursor, hbrBackground, hIcon);
    }
 
 
