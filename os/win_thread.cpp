@@ -2096,6 +2096,8 @@ run:
 run:
          try
          {
+            m_bReady = true;
+            m_p->m_bReady = true;
             m_bRun = true;
             m_p->m_bRun = true;
             nResult = m_p->run();
