@@ -189,7 +189,7 @@ void CLASS_DECL_win __tls_release()
 // thread_slot_data
 
 // global __thread_data used to allocate thread local indexes
-BYTE _gen_ThreadData[sizeof(thread_local_storage)];
-thread_local_storage * __thread_data;
+__declspec(thread) BYTE _gen_ThreadData[sizeof(thread_local_storage)];
+__declspec(thread) thread_local_storage * __thread_data;
 
 

@@ -58,8 +58,8 @@ public:
 };
 
 
-extern BYTE _gen_ThreadData[sizeof(thread_local_storage)];
-extern thread_local_storage * __thread_data;
+extern __declspec(thread) BYTE _gen_ThreadData[sizeof(thread_local_storage)];
+extern __declspec(thread) thread_local_storage * __thread_data;
 
 
 class CLASS_DECL_win __NOVTABLE no_track_object
@@ -185,9 +185,9 @@ public:
 };
 
 #define THREAD_LOCAL(class_name, ident_name, slot) \
-   __declspec(thread) thread_local<class_name, slot> ident_name;
+   thread_local<class_name, slot> ident_name;
 #define EXTERN_THREAD_LOCAL(class_name, ident_name, slot) \
-   extern CLASS_DECL_win __declspec(thread) thread_local<class_name, slot> ident_name;
+   extern CLASS_DECL_win  thread_local<class_name, slot> ident_name;
 
 template<class TYPE>
 class process_local : public process_local_object
