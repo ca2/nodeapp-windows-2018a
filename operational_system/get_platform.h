@@ -23,6 +23,10 @@
 #define _WIDEN(x) L#x
 
 
+#define CLASS_DECL_EXPORT _declspec(dllexport)
+#define CLASS_DECL_IMPORT
+
+
 
 #if defined(_M_X64)  // X64
 
