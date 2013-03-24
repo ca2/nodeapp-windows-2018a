@@ -152,7 +152,7 @@
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='memdleak|x64'">false</IgnoreImportLibrary>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='codeanalysis|x64'">false</IgnoreImportLibrary>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='profiler|x64'">false</IgnoreImportLibrary>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='memdleak|Win32'">true</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='codeanalysis|Win32'">true</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='profiler|Win32'">false</LinkIncremental>
