@@ -1,2 +1,2 @@
 call _setup
-app : app=app-core/tesseract/veriedit build_number=basis install
+app : app=app-core/veriedit build_number=basis install

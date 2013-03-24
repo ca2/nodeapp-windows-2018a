@@ -4122,7 +4122,7 @@ ExitModal:
    bool window::SetWindowPos(int32_t z, int32_t x, int32_t y, int32_t cx, int32_t cy, UINT nFlags)
    {
 
-      single_lock sl(mutex_graphics(), true);
+      single_lock sl(mutex_graphics());
 
       /*
       bool b;
@@ -4148,6 +4148,7 @@ ExitModal:
          }
          else
          {
+            sl.lock();
             m_rectParentClient.right   = m_rectParentClient.left + cx;
             m_rectParentClient.bottom  = m_rectParentClient.top + cy;
          }
@@ -4156,10 +4157,12 @@ ExitModal:
       {
          if(nFlags & SWP_NOSIZE)
          {
+            sl.lock();
             m_rectParentClient.offset(x - m_rectParentClient.left, y - m_rectParentClient.top);
          }
          else
          {
+            sl.lock();
             m_rectParentClient.left    = x;
             m_rectParentClient.top     = y;
             m_rectParentClient.right   = m_rectParentClient.left + cx;
