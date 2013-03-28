@@ -24,8 +24,10 @@ void __cdecl _null_se_translator(uint32_t uiCode, EXCEPTION_POINTERS * ppointers
 // Standard WinMain implementation
 //  Can be replaced as long as '::ca::WinInit' is called first
 
-int32_t CLASS_DECL_win __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
+int32_t CLASS_DECL_win __win_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
 {
+
+   g_hinstance = hinstance;
 
    UNREFERENCED_PARAMETER(lpCmdLine);
 
@@ -49,7 +51,7 @@ int32_t CLASS_DECL_win __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, 
    ::win::main_init_data * pinitmaindata  = new ::win::main_init_data;
 
 
-   pinitmaindata->m_hInstance             = hInstance;
+   pinitmaindata->m_hInstance             = hinstance;
    pinitmaindata->m_hPrevInstance         = hPrevInstance;
    pinitmaindata->m_vssCommandLine        = ::ca::international::unicode_to_utf8(::GetCommandLineW());
    pinitmaindata->m_nCmdShow              = nCmdShow;
@@ -253,3 +255,7 @@ void __cdecl _null_se_translator(uint32_t uiCode, EXCEPTION_POINTERS * ppointers
    UNREFERENCED_PARAMETER(uiCode);
    UNREFERENCED_PARAMETER(ppointers);
 }
+
+
+
+HINSTANCE g_hinstance = NULL;

@@ -139,3 +139,7 @@ CLASS_DECL_win void __cdecl __pre_translate_message(::ca::signal_object * pobj);
 //#include "win_printer.h"
 
 #include "win_application.h"
+
+
+
+extern HINSTANCE g_hinstance;

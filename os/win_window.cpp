@@ -6452,7 +6452,7 @@ string CLASS_DECL_win get_user_interaction_window_class(::user::interaction * pu
    WNDCLASS wndcls;
    memset(&wndcls, 0, sizeof(WNDCLASS));   // start with NULL defaults
    wndcls.lpfnWndProc = DefWindowProc;
-   wndcls.hInstance = Sys(::win::get_thread()->m_papp).m_hInstance;
+   wndcls.hInstance = g_hinstance;
    //wndcls.hCursor = afxData.hcurArrow;
 
    INITCOMMONCONTROLSEX init;
