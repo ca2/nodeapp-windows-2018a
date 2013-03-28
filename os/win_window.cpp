@@ -297,6 +297,7 @@ namespace win
       CREATESTRUCT cs;
       cs.dwExStyle = dwExStyle;
 
+
       string strClass = calc_window_class();
       cs.lpszClass = strClass.is_empty() ? NULL : (const char *) strClass;
       cs.lpszName = lpszWindowName;
@@ -429,7 +430,22 @@ namespace win
    string window:: calc_window_class()
    {
 
-      return calc_icon_window_class(m_pguie->get_window_default_style(), m_pguie->get_window_icon_matter());
+      uint32_t uiStyle = m_pguie->get_window_default_style();
+
+      string strIcon = m_pguie->get_window_icon_matter();
+
+      if(strIcon.has_char())
+      {
+
+         return calc_icon_window_class(uiStyle, strIcon);
+
+      }
+      else
+      {
+
+         return get_user_interaction_window_class(m_pguie);
+
+      }
 
    }
 
@@ -6300,7 +6316,7 @@ CLASS_DECL_win const char * __register_window_class(UINT nClassStyle,
    LPTSTR lpszName = __get_thread_state()->m_szTempClassName;
 
    // generate a synthetic name for this class
-   HINSTANCE hInst = Sys(::win::get_thread()->m_papp).m_hInstance;
+   HINSTANCE hInst = g_hinstance;
 
    if (hCursor == NULL && hbrBackground == NULL && hIcon == NULL)
    {

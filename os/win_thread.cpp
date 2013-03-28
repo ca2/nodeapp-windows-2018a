@@ -801,7 +801,7 @@ namespace win
 
    void thread::set_timer(::user::interaction * pui, uint_ptr nIDEvent, UINT nEllapse)
    {
-      if(m_spwindowMessage.is_null())
+      if(!m_uiMessage.IsWindow())
       {
          return;
       }
@@ -816,9 +816,9 @@ namespace win
          }
       }
       sl.unlock();
-      if(m_spwindowMessage->IsWindow())
+      if(m_uiMessage.IsWindow())
       {
-         m_spwindowMessage->SetTimer((uint_ptr)-2, iMin, NULL);
+         m_uiMessage.SetTimer((uint_ptr)-2, iMin, NULL);
       }
    }
 

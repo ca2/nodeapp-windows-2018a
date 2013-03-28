@@ -1,5 +1,9 @@
 #include "framework.h"
 
+extern void _001DeferPaintLayeredWindowBackground(oswindow oswindow, ::ca::graphics * pdc);
+
+
+
 class keep_event_reset
 {
 public:
@@ -41,11 +45,11 @@ namespace win
       m_dwLastUpdate = false;
    }
 
-   extern void _001DeferPaintLayeredWindowBackground(oswindow oswindow, ::ca::graphics * pdc);
+   
    window_draw::~window_draw()
    {
 
-      ::DestroyWindow(m_spwindowMessage->detach());
+      m_uiMessage.DestroyWindow();
 
    }
 
@@ -88,15 +92,15 @@ namespace win
    {
       if(!m_bProDevianMode)
       {
-         m_spwindowMessage->PostMessage(WM_USER + 1984 + 1977);
+         m_uiMessage.PostMessage(WM_USER + 1984 + 1977);
       }
    }
 
    void window_draw::synch_redraw()
    {
-      if(!m_bProDevianMode && ::IsWindow(m_spwindowMessage->get_handle()))
+      if(!m_bProDevianMode && ::IsWindow(m_uiMessage.get_handle()))
       {
-         m_spwindowMessage->send_message(WM_USER + 1984 + 1977);
+         m_uiMessage.send_message(WM_USER + 1984 + 1977);
       }
    }
 
