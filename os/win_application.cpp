@@ -29,7 +29,6 @@ namespace win
 //      m_pCmdInfo = NULL;
 
       // initialize wait cursor state
-      m_nWaitCursorCount = 0;
       m_hcurWaitCursorRestore = NULL;
 
       // initialize current printer state
@@ -733,38 +732,27 @@ namespace win
 
    }
 
-   void application::DoWaitCursor(int32_t nCode)
+   void application::ShowWaitCursor(bool bShow)
    {
-         // 0 => restore, 1=> begin, -1=> end
-      ENSURE_ARG(nCode == 0 || nCode == 1 || nCode == -1);
-//      ENSURE(afxData.hcurWait != NULL);
-//      ::ca::LockGlobals(CRIT_WAITCURSOR);
-      m_nWaitCursorCount += nCode;
-      if (m_nWaitCursorCount > 0)
+
+      if(bShow)
       {
-         //HCURSOR hcurPrev = ::SetCursor(afxData.hcurWait);
-         //if (nCode > 0 && m_nWaitCursorCount == 1)
-           // m_hcurWaitCursorRestore = hcurPrev;
+
+         HCURSOR hcursorWait =  ::LoadCursor(NULL, IDC_WAIT);
+
+         HCURSOR hcursorPrevious = ::SetCursor(hcursorWait);
+         
+         if(hcursorPrevious != hcursorWait)
+           m_hcurWaitCursorRestore = hcursorPrevious;
+
       }
       else
       {
-         // turn everything off
-         m_nWaitCursorCount = 0;     // prevent underflow
-
-#ifdef WINDOWSEX
 
          ::SetCursor(m_hcurWaitCursorRestore);
-
-#else
-
-         // throw not_implemented(get_app());
-         // throw todo(get_app());
-
-#endif
-
       }
-  //    ::ca::UnlockGlobals(CRIT_WAITCURSOR);
 
    }
+
 
 } // namespace win
