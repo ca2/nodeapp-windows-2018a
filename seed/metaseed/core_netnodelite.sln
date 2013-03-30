@@ -22,6 +22,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_netnodelite", "..\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "netnodelite_script", "..\..\..\app-core\appseed\netnodelite_script\netnodelite_script.vcxproj", "{19841977-8E11-42A4-B923-08D809A03F4F}"
 	ProjectSection(ProjectDependencies) = postProject
+		{19841511-0204-1977-A73E-2CD949AA3AF6} = {19841511-0204-1977-A73E-2CD949AA3AF6}
 		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
 		{9163E31A-2D5A-4F18-AD6F-B561C76E5054} = {9163E31A-2D5A-4F18-AD6F-B561C76E5054}
 		{771F4B49-CAD1-438F-B272-20F3EB8E88F1} = {771F4B49-CAD1-438F-B272-20F3EB8E88F1}
@@ -50,6 +51,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_ca2openssl", "..\..\..\app\thirdparty\appseed\openssl\openssl.vcxproj", "{AC98B756-E84C-4A70-9CDB-E9812FEF9B98}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_ca2freetype", "..\..\..\app\thirdparty\appseed\freetype\freetype.vcxproj", "{771F4B49-CAD1-438F-B272-20F3EB8E88F1}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_alarm", "..\..\..\app-core\appseed\alarm\alarm.vcxproj", "{19841511-0204-1977-A73E-2CD949AA3AF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -287,6 +290,22 @@ Global
 		{771F4B49-CAD1-438F-B272-20F3EB8E88F1}.profiler|Win32.Build.0 = profiler|Win32
 		{771F4B49-CAD1-438F-B272-20F3EB8E88F1}.profiler|x64.ActiveCfg = profiler|x64
 		{771F4B49-CAD1-438F-B272-20F3EB8E88F1}.profiler|x64.Build.0 = profiler|x64
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.basis|Win32.ActiveCfg = basis|Win32
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.basis|Win32.Build.0 = basis|Win32
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.basis|x64.ActiveCfg = basis|x64
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.basis|x64.Build.0 = basis|x64
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.codeanalysis|x64.Build.0 = codeanalysis|x64
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.memdleak|Win32.ActiveCfg = memdleak|Win32
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.memdleak|Win32.Build.0 = memdleak|Win32
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.memdleak|x64.ActiveCfg = memdleak|x64
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.memdleak|x64.Build.0 = memdleak|x64
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.profiler|Win32.ActiveCfg = profiler|Win32
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.profiler|Win32.Build.0 = profiler|Win32
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.profiler|x64.ActiveCfg = profiler|x64
+		{19841511-0204-1977-A73E-2CD949AA3AF6}.profiler|x64.Build.0 = profiler|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
