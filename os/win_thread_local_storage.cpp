@@ -56,39 +56,42 @@ struct slot_data
 
 thread_local_storage::thread_local_storage()
 {
-   m_tlsIndex = TlsAlloc();
-   if (m_tlsIndex == (DWORD)-1)
-      throw memory_exception(::ca::get_thread_app());
+
+   m_pthreadslotdata = new thread_slot_data();
+
 }
 
 
 thread_local_storage::~thread_local_storage()
 {
-   if (m_tlsIndex != (DWORD)-1)
-   {
-      TlsFree(m_tlsIndex);
-      DEBUG_ONLY(m_tlsIndex = (DWORD)-1);
-   }
+
+   __thread_data = NULL;
+   
 }
 
 void thread_local_storage::delete_data()
 {
-   get_slot_data()->delete_data();
+   
+   if(m_pthreadslotdata != NULL)
+   {
+      
+      delete m_pthreadslotdata;
+
+      m_pthreadslotdata = NULL;
+
+   }
+
 }
 
 #undef new
 
 thread_slot_data * thread_local_storage::get_slot_data()
 {
-   thread_slot_data * pdata = (thread_slot_data *) TlsGetValue(m_tlsIndex);
-   if(pdata == NULL)
-   {
-      void * p = malloc(sizeof(thread_slot_data));
-      pdata = ::new(p) thread_slot_data();
-      TlsSetValue(m_tlsIndex, (LPVOID) pdata);
-   }
-   return pdata;
+
+   return m_pthreadslotdata;
+
 }
+
 #define new DEBUG_NEW
 
 

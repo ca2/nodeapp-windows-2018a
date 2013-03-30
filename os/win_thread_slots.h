@@ -42,7 +42,7 @@ class CLASS_DECL_win thread_local_storage
 {
 public:
 
-   DWORD                            m_tlsIndex;   // used to access system thread-local storage
+   //DWORD                            m_tlsIndex;   // used to access system thread-local storage
    thread_slot_data *               m_pthreadslotdata;
 
 
