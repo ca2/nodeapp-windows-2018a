@@ -520,7 +520,7 @@ namespace win
             {
                try
                {
-                  dynamic_cast < ::ca::window * > (wndpa[l]->m_pimpl)->_001UpdateWindow();
+                  dynamic_cast < ::ca::window * > (wndpa[l]->m_pimpl.m_p)->_001UpdateWindow();
                }
                catch(...)
                {
@@ -559,7 +559,7 @@ namespace win
          {
             if(wndpa[l]->get_safe_handle() == oswindowTopic)
             {
-               pwnd = dynamic_cast < ::ca::window * > (wndpa[l]->m_pimpl);
+               pwnd = dynamic_cast < ::ca::window * > (wndpa[l]->m_pimpl.m_p);
                break;
             }
          }

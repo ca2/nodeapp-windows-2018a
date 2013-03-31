@@ -815,9 +815,9 @@ namespace win
       int32_t iMin = 100;
       for(int32_t i = 0; i < m_ptimera->m_timera.get_count(); i++)
       {
-         if(m_ptimera->m_timera.element_at(i).m_uiElapse < natural(iMin))
+         if(m_ptimera->m_timera.element_at(i)->m_uiElapse < natural(iMin))
          {
-            iMin = m_ptimera->m_timera.element_at(i).m_uiElapse;
+            iMin = m_ptimera->m_timera.element_at(i)->m_uiElapse;
          }
       }
       sl.unlock();
