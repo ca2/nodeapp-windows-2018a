@@ -71,7 +71,7 @@ thread_local_storage::~thread_local_storage()
 
 void thread_local_storage::delete_data()
 {
-   
+
    if(m_pthreadslotdata != NULL)
    {
       
@@ -80,6 +80,8 @@ void thread_local_storage::delete_data()
       m_pthreadslotdata = NULL;
 
    }
+
+
 
 }
 
@@ -100,7 +102,7 @@ thread_slot_data::thread_slot_data()
    memset(m_pa, 0, sizeof(m_pa));
 }
 
-void thread_slot_data::delete_data()
+thread_slot_data::~thread_slot_data()
 {
    for(int32_t i = 0; i < 1024; i++)
    {
@@ -109,7 +111,6 @@ void thread_slot_data::delete_data()
          delete m_pa[i];
       }
    }
-   free(this);
 }
 
 

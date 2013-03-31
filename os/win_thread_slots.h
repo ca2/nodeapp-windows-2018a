@@ -33,7 +33,7 @@ public:
 
 
    thread_slot_data();
-   void delete_data();
+   ~thread_slot_data();
 
 };
 
@@ -88,7 +88,6 @@ public:
    no_track_object* GetDataNA();
 
 // Implementation
-   //int32_t m_nSlot;
    ~thread_local_object();
 };
 
@@ -122,18 +121,24 @@ no_track_object* thread_local_object < iSlot> ::get_data(no_track_object* ( * pf
    return pValue;
 
 }
+
+
 template < int32_t iSlot >
 no_track_object* thread_local_object < iSlot > ::GetDataNA()
 {
+
    return __thread_data->get_slot_data()->m_pa[iSlot];
+
 }
+
+
 template < int32_t iSlot >
 thread_local_object < iSlot > ::~thread_local_object()
 {
-//   if (m_nSlot != 0 && __thread_data != NULL)
-  //    __thread_data->FreeSlot(m_nSlot);
-   //m_nSlot = 0;
+
 }
+
+
 
 
 class CLASS_DECL_win __NOVTABLE process_local_object
