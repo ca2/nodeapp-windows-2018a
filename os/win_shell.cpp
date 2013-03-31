@@ -171,7 +171,7 @@ dirbuf,
 return NULL;
 
 /*
-* Set up the buffer.
+* set up the buffer.
 */
 /*    if ( (p = pnbuf) == NULL ) {
 /*

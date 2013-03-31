@@ -52,8 +52,8 @@ namespace win
       virtual bool Attach(HDC hdc);   // attach/detach affects only the Output DC
       virtual HDC Detach();
 
-      virtual void SetAttribDC(HDC hDC);  // Set the Attribute DC
-      virtual void SetOutputDC(HDC hDC);  // Set the Output DC
+      virtual void SetAttribDC(HDC hDC);  // set the Attribute DC
+      virtual void SetOutputDC(HDC hDC);  // set the Output DC
       virtual void ReleaseAttribDC();     // Release the Attribute DC
       virtual void ReleaseOutputDC();     // Release the Output DC
 

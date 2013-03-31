@@ -2333,7 +2333,7 @@ retry2:
 
 
       /* OAuth flow begins */
-      /* Step 0: Set OAuth related params. These are got by registering your app at twitter.com */
+      /* Step 0: set OAuth related params. These are got by registering your app at twitter.com */
       if(m_eversion == version_basis)
       {
          twitterObj.get_oauth().setConsumerKey(string( "mKYvWA6cZkUEUwjoygUuVw" ) );
@@ -2409,7 +2409,7 @@ Retry2:
       string replyMsg( "" );
 
       /* OAuth flow begins */
-      /* Step 0: Set OAuth related params. These are got by registering your app at twitter.com */
+      /* Step 0: set OAuth related params. These are got by registering your app at twitter.com */
       if(m_eversion == version_basis)
       {
          twitterObj.get_oauth().setConsumerKey(string( "mKYvWA6cZkUEUwjoygUuVw" ) );
@@ -2441,7 +2441,7 @@ Retry2:
 
       /* OAuth flow ends */
 
-      // /* Set twitter username and password */
+      // /* set twitter username and password */
       //twitterObj.setTwitterUsername( userName );
       //twitterObj.setTwitterPassword( passWord );
 

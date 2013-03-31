@@ -222,7 +222,7 @@ namespace win
 
 
 
-   array_ptr_alloc < port_forward::port_map > port_forward::get_port_map() const
+   ::ca::smart_pointer_array < port_forward::port_map > port_forward::get_port_map() const
    {
 	   // returns a copy of the current mappings (note: thread-awareness is needed)
 	
@@ -231,7 +231,7 @@ namespace win
 	
 	   ::EnterCriticalSection( &(pThis->m_cs) );
 	
-	   array_ptr_alloc < port_forward::port_map > retVector;
+	   ::ca::smart_pointer_array < port_forward::port_map > retVector;
 	   retVector = m_MappingContainer;
 	
 	   ::LeaveCriticalSection( &(pThis->m_cs) );
@@ -239,7 +239,7 @@ namespace win
 	   return retVector;
    }
 
-   array_ptr_alloc < port_forward::device > port_forward::get_igd() const
+   ::ca::smart_pointer_array < port_forward::device > port_forward::get_igd() const
    {	
 	   // returns a copy of the current device information (note: thread-awareness is needed)
 	
@@ -248,7 +248,7 @@ namespace win
 	
 	   ::EnterCriticalSection( &(pThis->m_cs) );
 	
-	   array_ptr_alloc < device > retDeviceInfo;
+	   ::ca::smart_pointer_array < device > retDeviceInfo;
 	   retDeviceInfo = m_DeviceInfo;
 	
 	   ::LeaveCriticalSection( &(pThis->m_cs) );

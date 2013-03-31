@@ -2409,18 +2409,18 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 
 
-   void graphics::SetAttribDC(HDC hDC)  // Set the Attribute DC
+   void graphics::SetAttribDC(HDC hDC)  // set the Attribute DC
    {
 //      set_handle2(hDC);
    }
 
-   void graphics::SetOutputDC(HDC hDC)  // Set the Output DC
+   void graphics::SetOutputDC(HDC hDC)  // set the Output DC
    {
 #ifdef DEBUG
 /*      hdc_map* pMap = afxMapHDC();
       if (pMap != NULL && pMap->lookup_permanent(get_handle1()) == this)
       {
-         TRACE(::ca::trace::category_AppMsg, 0, "Cannot Set Output hDC on Attached graphics.\n");
+         TRACE(::ca::trace::category_AppMsg, 0, "Cannot set Output hDC on Attached graphics.\n");
          ASSERT(FALSE);
       }*/
 #endif
@@ -2735,7 +2735,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       
       point point = GetViewportOrg();
 
-      point.Offset(nWidth, nHeight);
+      point.offset(nWidth, nHeight);
 
       return SetViewportOrg(point.x, point.y);
 

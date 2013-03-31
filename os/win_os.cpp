@@ -860,7 +860,7 @@ repeat:
       if ((DWORD)status.m_attribute != wAttr && (wAttr & ::win::file::readOnly))
       {
 
-         // Set file attribute, only if currently readonly.
+         // set file attribute, only if currently readonly.
          // This way we will be able to modify the time assuming the
          // caller changed the file from readonly.
 

@@ -139,7 +139,7 @@ HRESULT CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc, 
     { 
         IPersistFile* ppf; 
  
-        // Set the path to the shortcut target and add the description. 
+        // set the path to the shortcut target and add the description. 
         psl->SetPath(lpszPathObj); 
         psl->SetDescription(lpszDesc); 
         if(lpszIconPath!= NULL)

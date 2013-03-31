@@ -300,7 +300,7 @@ void preview_dc::MirrorFont()
    GetTextFace(LF_FACESIZE, (LPTSTR)&logFont.lfFaceName[0]);
    GetTextMetrics(&tm);
 
-   // Set real values based on the Printer's text metrics.
+   // set real values based on the Printer's text metrics.
 
    if (tm.tmHeight < 0)
       logFont.lfHeight = tm.tmHeight;
@@ -949,7 +949,7 @@ void preview_dc::ClipToPage()
             ::GetDeviceCaps(get_handle2(), VERTRES));
    PrinterDPtoScreenDP(&pt);
 
-   // Set the screen dumpcontext <<to MM_TEXT and no WindowOrg for the interesection
+   // set the screen dumpcontext <<to MM_TEXT and no WindowOrg for the interesection
 
    ::SetMapMode(get_os_data(), MM_TEXT);
    ::SetWindowOrgEx(get_os_data(), 0, 0, NULL);

@@ -91,8 +91,8 @@ namespace win
 	   virtual bool AddMappingUsingThread( port_map& newMapping, oswindow oswindow );  // starts a thread that will add one new mapping; the thread posts a UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION message to oswindow when it's done
 	   virtual bool DeleteMappingUsingThread( port_map& oldMapping, oswindow oswindow );  // starts a thread that will delete one specific mapping; the thread posts a UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION message to oswindow when it's done
 	
-	   virtual array_ptr_alloc < port_map > get_port_map() const;  // gets a copy of currently-known port mappings
-	   virtual array_ptr_alloc < device >  get_igd() const;  // gets a copy of currently-know device information
+	   virtual ::ca::smart_pointer_array < port_map > get_port_map() const;  // gets a copy of currently-known port mappings
+	   virtual ::ca::smart_pointer_array < device >  get_igd() const;  // gets a copy of currently-know device information
 	
 	   virtual bool IsAnyThreadRunning() const;  // returns TRUE if there is any thread currently running
 	
@@ -134,7 +134,7 @@ namespace win
 	   ::ca::thread_sp m_pEditMappingThread;
 	   ::ca::thread_sp m_pDeleteMappingThread;
 	
-	   array_ptr_alloc<port_map> m_MappingContainer;
+	   ::ca::smart_pointer_array<port_map> m_MappingContainer;
 	
 	   CRITICAL_SECTION m_cs;
 	
@@ -142,7 +142,7 @@ namespace win
 	   // some more protected members, most of which could not be declared until after full-declaration
 	   // of the device_information_container and port_map nested classes
 	
-	   array_ptr_alloc<device> m_DeviceInfo;
+	   ::ca::smart_pointer_array<device> m_DeviceInfo;
 	
 	   // good-enough method for inter-thread transfer of information, since only
 	   // one thread of each type is ever permitted at one time
