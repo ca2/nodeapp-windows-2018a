@@ -848,7 +848,7 @@ namespace win
       {
          // Note that 'this' may have been deleted at this point,
          //  (but only if pWnd != NULL)
-         if (pWnd != NULL)
+         if (pWnd != NULL && bResult)
          {
             // Should have been detached by OnNcDestroy
 #ifdef DEBUG

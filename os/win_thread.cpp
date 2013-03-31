@@ -621,6 +621,11 @@ namespace win
             }
          }
          sl.unlock();
+
+         single_lock slWinThreadMutex(&::win::thread::s_mutex, true);
+         ::win::thread::s_haThread.remove(m_hThread);
+         ::win::thread::s_threadptra.remove(this);
+
       }
 
       __MODULE_THREAD_STATE* pState = __get_module_thread_state();

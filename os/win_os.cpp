@@ -739,7 +739,6 @@ namespace win
          
          single_lock sl(&::win::thread::s_mutex, true);
          comparable_array < ::ca::thread * > threadptra = ::win::thread::s_threadptra;
-         sl.unlock();
 
          for(index i = 0; i < threadptra.get_size(); i++)
          {
@@ -756,6 +755,7 @@ namespace win
 
 
          }
+         sl.unlock();
 
       }
 
