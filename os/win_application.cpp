@@ -528,9 +528,9 @@ namespace win
       user::interaction_ptr_array wndptra = System.frames();
       for(int32_t i = 0; i < wndptra.get_count(); i++)
       {
-         if(wndptra[i]->get_safe_handle() == pdata)
+         if(wndptra[i].get_safe_handle() == pdata)
          {
-            return wndptra[i]->get_wnd();
+            return wndptra[i].get_wnd();
          }
       }
       return NULL;

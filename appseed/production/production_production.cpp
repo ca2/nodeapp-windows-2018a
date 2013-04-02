@@ -213,7 +213,7 @@ namespace production
          {
 
             post["new_status"] = post["new_status"] + "Last Stati:<br />";
-            for(count i = min(5, m_straStatus.get_count() - 1); i >= 1 ; i--)
+            for(::count i = min(5, m_straStatus.get_count() - 1); i >= 1 ; i--)
             {
                post["new_status"] = post["new_status"] + System.html().entities(m_straStatus.last_element(i));
                post["new_status"] = post["new_status"] + "<br />";
@@ -1076,18 +1076,18 @@ retry2:
       }
       else
       {
-         array_app_alloc < manual_reset_event > eventa(get_app());
+         ::collection::smart_pointer_array < manual_reset_event > eventa(get_app());
          eventa.set_size(uiProcessorCount);
          sync_object_ptra syncobjectptra;
          for(uint32_t ui = 0; ui < uiProcessorCount; ui++)
          {
-            compress_thread * pthread = new compress_thread(this, eventa.ptr_at(ui));
+            compress_thread * pthread = new compress_thread(this, eventa(ui));
             threada.add(pthread);
             pthread->m_dwThreadAffinityMask = 1 << ui;
             pthread->m_bAutoDelete = FALSE;
             pthread->m_p->m_bAutoDelete = FALSE;
             pthread->begin();
-            syncobjectptra.add(dynamic_cast < waitable * > (eventa.ptr_at(ui)));
+            syncobjectptra.add(dynamic_cast < waitable * > (eventa(ui).m_p));
          }
          multi_lock ml(syncobjectptra);
          ml.lock();

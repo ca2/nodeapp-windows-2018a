@@ -516,11 +516,11 @@ namespace win
       {
          try
          {
-            if(wndpa[l]->m_psession == NULL)
+            if(wndpa[l].m_psession == NULL)
             {
                try
                {
-                  dynamic_cast < ::ca::window * > (wndpa[l]->m_pimpl.m_p)->_001UpdateWindow();
+                  dynamic_cast < ::ca::window * > (wndpa[l].m_pimpl.m_p)->_001UpdateWindow();
                }
                catch(...)
                {
@@ -534,14 +534,14 @@ namespace win
          {
             if(se.m_strMessage == "no more a window")
             {
-               System.frames().remove(wndpa[l]);
+               System.frames().remove(wndpa(l));
                wndpa.remove_at(l);
                
             }
          }
          catch(...)
          {
-            System.frames().remove(wndpa[l]);
+            System.frames().remove(wndpa(l));
             wndpa.remove_at(l);
          }
       }
@@ -557,9 +557,9 @@ namespace win
          //{
          for(int32_t l = 0; l < wndpa.get_count(); l++)
          {
-            if(wndpa[l]->get_safe_handle() == oswindowTopic)
+            if(wndpa[l].get_safe_handle() == oswindowTopic)
             {
-               pwnd = dynamic_cast < ::ca::window * > (wndpa[l]->m_pimpl.m_p);
+               pwnd = dynamic_cast < ::ca::window * > (wndpa[l].m_pimpl.m_p);
                break;
             }
          }
@@ -664,7 +664,7 @@ namespace win
 
       for(int32_t i = 0; i < m_wndpaOut.get_count(); i++)
       {
-         ::user::interaction* pwnd = m_wndpaOut[i];
+         ::user::interaction* pwnd = m_wndpaOut(i);
 
          ScreenOutput(m_pbuffer, pwnd);
       
@@ -1232,11 +1232,8 @@ namespace win
          rect64 rectWindow;
          rectWindow = pwnd->m_rectParentClient;
 
-         point pt;
-         size sz;
-
-         pt = point(rectWindow.top_left());
-         sz = size(rectWindow.size());
+         point pt(rectWindow.top_left());
+         ::size sz(rectWindow.size());
 
          if(pt.x < 0)
          {

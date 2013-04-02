@@ -1323,11 +1323,11 @@ namespace win
          m_bMouseHover = false;
          for(int32_t i = 0; i < m_guieptraMouseHover.get_size(); i++)
          {
-            if(m_guieptraMouseHover[i] == this 
-               || m_guieptraMouseHover[i]->m_pimpl == this 
-               || m_guieptraMouseHover[i]->m_pguie == this)
+            if(m_guieptraMouseHover(i) == this 
+               || m_guieptraMouseHover[i].m_pimpl == this 
+               || m_guieptraMouseHover[i].m_pguie == this)
                continue;
-            m_guieptraMouseHover[i]->send_message(WM_MOUSELEAVE);
+            m_guieptraMouseHover[i].send_message(WM_MOUSELEAVE);
          }
          m_guieptraMouseHover.remove_all();
       }
@@ -1434,9 +1434,9 @@ namespace win
 restart_mouse_hover_check:
          for(int32_t i = 0; i < m_guieptraMouseHover.get_size(); i++)
          {
-            if(!m_guieptraMouseHover[i]->_001IsPointInside(pmouse->m_pt))
+            if(!m_guieptraMouseHover(i)->_001IsPointInside(pmouse->m_pt))
             {
-               ::user::interaction * pui = m_guieptraMouseHover[i];
+               ::user::interaction * pui = m_guieptraMouseHover(i);
                pui->send_message(WM_MOUSELEAVE);
                m_guieptraMouseHover.remove(pui);
                goto restart_mouse_hover_check;
@@ -2244,12 +2244,12 @@ restart_mouse_hover_check:
 
       for(int32_t i = 0; i < oswindow->m_uiptraChild.get_count(); i++)
       {
-         if(oswindow->m_uiptraChild[i]->GetDlgCtrlId() == id)
+         if(oswindow->m_uiptraChild[i].GetDlgCtrlId() == id)
          {
-            if(oswindow->m_uiptraChild[i]->GetDescendantWindow(id))
-               return oswindow->m_uiptraChild[i]->GetDescendantWindow(id);
+            if(oswindow->m_uiptraChild[i].GetDescendantWindow(id))
+               return oswindow->m_uiptraChild[i].GetDescendantWindow(id);
             else
-               return oswindow->m_uiptraChild[i];
+               return oswindow->m_uiptraChild(i);
          }
       }
 

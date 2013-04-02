@@ -250,7 +250,7 @@ void __internal_pre_translate_message(::ca::signal_object * pobj)
                {
                   try
                   {
-                     ::user::interaction * pui = pthread->m_papp->m_psession->frames()[i];
+                     ::user::interaction * pui = pthread->m_papp->m_psession->frames()(i);
                      if(pui != NULL)
                      {
                         if(pui->m_pguie != NULL)

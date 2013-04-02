@@ -18,7 +18,7 @@ namespace win
    public:
 
 
-      pha(::user::interaction)      m_guieptraMouseHover;
+      spa(::user::interaction)      m_guieptraMouseHover;
       ::ca::window_callback *       m_pcallback;
       string                        m_strWindowText;
       //visual::dib_sp                m_spdib;
