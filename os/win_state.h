@@ -167,7 +167,7 @@ public:
    // define thread local portions of module state
    thread_local<__MODULE_THREAD_STATE, slot___MODULE_THREAD_STATE> m_thread;
 
-   //Fusion: declare pointer to base_array of pointers to isolation aware dll wrappers (ex: comctl32).
+   //Fusion: declare pointer to array of pointers to isolation aware dll wrappers (ex: comctl32).
    CDllIsolationWrapperBase** m_pDllIsolationWrappers;
    //Defaults to TRUE. When FALSE - ca API will not activate context in __MAINTAIN_STATE2 (used by __MANAGE_STATE).
    bool   m_bSetAmbientActCtx;
@@ -288,7 +288,7 @@ public:
 
    // OLE control thread-local data
    ::ca::window * m_pWndPark;       // "parking space" ::ca::window
-   long m_nCtrlRef;        // reference count on parking ::ca::window
+   long m_nCtrlRef;        // reference ::count on parking ::ca::window
    bool m_bNeedTerm;       // TRUE if OleUninitialize needs to be called
 };
 

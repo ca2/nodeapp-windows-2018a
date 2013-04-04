@@ -204,7 +204,7 @@ namespace win
          // check for missing ::ca::LockTempMap calls
          if (__get_module_thread_state()->m_pCurrentWinThread->m_nTempMapLock != 0)
          {
-            TRACE(::ca::trace::category_AppMsg, 0, "Warning: Temp ::collection::map lock count non-zero (%ld).\n",
+            TRACE(::ca::trace::category_AppMsg, 0, "Warning: Temp map lock ::count non-zero (%ld).\n",
                __get_module_thread_state()->m_pCurrentWinThread->m_nTempMapLock);
          }
    #endif
@@ -423,14 +423,11 @@ namespace win
 
    bool application::initialize1()
    {
-      WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_ptimera = new ::user::interaction::timer_array(this);
-      WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_puiptra = new user::interaction_ptr_array;
-
-      WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_ptimera->m_papp = dynamic_cast < ::plane::application * >  (::ca::smart_pointer < application_base >::m_p);
-      WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_puiptra->m_papp = dynamic_cast < ::plane::application * >  (::ca::smart_pointer < application_base >::m_p);
 
       WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->set_run();
+
       return true;
+
    }
 
    bool application::initialize2()
@@ -648,7 +645,7 @@ namespace win
    {
    #if (defined(SOLARIS8) || defined(SOLARIS))
       {
-         static std::collection::map<string, char *> vmap;
+         static stdmap<string, char *> vmap;
          if (vmap.find(var) != vmap.end())
          {
             delete[] vmap[var];

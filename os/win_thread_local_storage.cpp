@@ -162,9 +162,9 @@ void CLASS_DECL_win __term_local_data(HINSTANCE hInst, bool bAll)
       __thread_data->DeleteValues(hInst, bAll);
 }*/
 
-// This reference count is needed to support Win32s, such that the
+// This reference ::count is needed to support Win32s, such that the
 // thread-local and process-local data is not destroyed prematurely.
-// It is basically a reference count of the number of processes that
+// It is basically a reference ::count of the number of processes that
 // have attached to the ca API DLL.
 
 __STATIC_DATA long gen_TlsRef = 0;

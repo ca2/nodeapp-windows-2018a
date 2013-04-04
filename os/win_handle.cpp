@@ -15,8 +15,8 @@ namespace win
 
       single_lock sl(&pMap->m_mutex, TRUE);
 
-      raw_array < oswindow > oswindowaRemove;
-      raw_array < ::win::window * > wndptraRemove;
+      array < oswindow > oswindowaRemove;
+      array < ::win::window * > wndptraRemove;
 
       POSITION pos = pMap->m_temporaryMap.get_start_position();
       while (pos != NULL)

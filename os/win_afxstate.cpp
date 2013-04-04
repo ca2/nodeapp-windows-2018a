@@ -143,7 +143,7 @@ __MODULE_STATE::__MODULE_STATE(bool bDLL, WNDPROC pfn_window_procedure, DWORD dw
    
 
    //bEnable = __enable_memory_tracking(FALSE);      
-   //Fusion: allocate dll wrappers base_array.
+   //Fusion: allocate dll wrappers array.
    m_pDllIsolationWrappers = NULL;
    //__enable_memory_tracking(bEnable);
    m_bSetAmbientActCtx = TRUE;

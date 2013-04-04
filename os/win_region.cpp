@@ -219,7 +219,7 @@ namespace win
 
       Gdiplus::GraphicsPath path;
 
-      raw_array < Gdiplus::PointF > pa;
+      array < Gdiplus::PointF > pa;
 
       for(int32_t i = 0; i < m_nCount; i++)
       {
@@ -245,7 +245,7 @@ namespace win
    {
       Gdiplus::GraphicsPath path;
 
-      raw_array < Gdiplus::PointF > pa;
+      array < Gdiplus::PointF > pa;
 
       if(m_efillmode == ::ca::fill_mode_alternate)
       {

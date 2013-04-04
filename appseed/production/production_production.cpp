@@ -1067,7 +1067,7 @@ retry2:
 
       uint32_t uiProcessorCount = get_current_process_affinity_order();
 
-      base_array < compress_thread * > threada;
+      array < compress_thread * > threada;
       if(uiProcessorCount == 0)
       {
          while(compress_next())
@@ -1076,7 +1076,7 @@ retry2:
       }
       else
       {
-         ::collection::smart_pointer_array < manual_reset_event > eventa(get_app());
+         smart_pointer_array < manual_reset_event > eventa(get_app());
          eventa.set_size(uiProcessorCount);
          sync_object_ptra syncobjectptra;
          for(uint32_t ui = 0; ui < uiProcessorCount; ui++)
@@ -1169,7 +1169,7 @@ retry2:
 
    ::ca::property_set headers;
    System.http().ms_download(strUrl, 
-   System.dir().ca2("time\\spaignition_update.txt"), NULL, post, headers, System.user().get_user());
+   System.dir().ca2("time\\spaignition_update.txt"), NULL, post, headers, System.user()->get_user());
    i += 8;
    }
    }*/
@@ -1827,7 +1827,7 @@ retry2:
       stack_st_X509 * pstack509 = NULL;
       {
          string strOthers = Application.file().as_string(strOthersPath);
-         raw_array < X509 * > xptra;
+         array < X509 * > xptra;
          strsize iStart = 0;
          strsize iFind;
          string strEnd = "-----END CERTIFICATE-----";

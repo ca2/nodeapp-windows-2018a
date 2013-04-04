@@ -222,7 +222,7 @@ namespace win
 
 
 
-   ::collection::smart_pointer_array < port_forward::port_map > port_forward::get_port_map() const
+   smart_pointer_array < port_forward::port_map > port_forward::get_port_map() const
    {
 	   // returns a copy of the current mappings (note: thread-awareness is needed)
 	
@@ -231,7 +231,7 @@ namespace win
 	
 	   ::EnterCriticalSection( &(pThis->m_cs) );
 	
-	   ::collection::smart_pointer_array < port_forward::port_map > retVector;
+	   smart_pointer_array < port_forward::port_map > retVector;
 	   retVector = m_MappingContainer;
 	
 	   ::LeaveCriticalSection( &(pThis->m_cs) );
@@ -239,7 +239,7 @@ namespace win
 	   return retVector;
    }
 
-   ::collection::smart_pointer_array < port_forward::device > port_forward::get_igd() const
+   smart_pointer_array < port_forward::device > port_forward::get_igd() const
    {	
 	   // returns a copy of the current device information (note: thread-awareness is needed)
 	
@@ -248,7 +248,7 @@ namespace win
 	
 	   ::EnterCriticalSection( &(pThis->m_cs) );
 	
-	   ::collection::smart_pointer_array < device > retDeviceInfo;
+	   smart_pointer_array < device > retDeviceInfo;
 	   retDeviceInfo = m_DeviceInfo;
 	
 	   ::LeaveCriticalSection( &(pThis->m_cs) );
@@ -588,7 +588,7 @@ namespace win
 	   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	
 	
-	   // get count of static mappings
+	   // get ::count of static mappings
 	
 	   long cMappings = 0;
 	
@@ -1567,7 +1567,7 @@ namespace win
 	
 	
 	   // Get Services.  Actually, we will NOT enumerate through all the services that are contained
-	   // in the IUPnPServices collection.  Rather, we will only get a count of services
+	   // in the IUPnPServices collection.  Rather, we will only get a ::count of services
 	
 	   IUPnPServices* piServices = NULL;
 	

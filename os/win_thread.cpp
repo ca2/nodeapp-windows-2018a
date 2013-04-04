@@ -573,7 +573,7 @@ namespace win
 
       m_frameList.Construct(offsetof(frame_window, m_pNextFrameWnd));
       m_ptimera = new ::user::interaction::timer_array(get_app());
-      m_puiptra = new user::interaction_ptr_array;
+      m_puiptra = new user::interaction_ptr_array(get_app());
 
    }
 
@@ -633,21 +633,6 @@ namespace win
       pState->m_pmapHGDIOBJ->delete_temp();
       pState->m_pmapHDC->delete_temp();
       pState->m_pmapHWND->delete_temp();*/
-
-      for(int32_t i = 0; i < m_captraDeletePool.get_count(); i++)
-      {
-         try
-         {
-            ::ca::ca * pca = m_captraDeletePool[i];            
-            if(dynamic_cast < ::ca::application * > (pca) == m_papp)
-            {
-               m_papp = NULL;
-            }
-         }
-         catch(...)
-         {
-         }
-      }
 
       // free thread object
       if (m_hThread != NULL)
@@ -806,7 +791,7 @@ namespace win
 
    void thread::set_timer(::user::interaction * pui, uint_ptr nIDEvent, UINT nEllapse)
    {
-      if(!m_uiMessage.IsWindow())
+      if(!m_spuiMessage->IsWindow())
       {
          return;
       }
@@ -821,9 +806,9 @@ namespace win
          }
       }
       sl.unlock();
-      if(m_uiMessage.IsWindow())
+      if(m_spuiMessage->IsWindow())
       {
-         m_uiMessage.SetTimer((uint_ptr)-2, iMin, NULL);
+         m_spuiMessage->SetTimer((uint_ptr)-2, iMin, NULL);
       }
    }
 
@@ -1176,7 +1161,7 @@ stop_run:
          // Check for missing LockTempMap calls
          if(m_nTempMapLock != 0)
          {
-            TRACE(::ca::trace::category_AppMsg, 0, "Warning: Temp ::collection::map lock count non-zero (%ld).\n", m_nTempMapLock);
+            TRACE(::ca::trace::category_AppMsg, 0, "Warning: Temp map lock ::count non-zero (%ld).\n", m_nTempMapLock);
          }
          LockTempMaps();
          UnlockTempMaps(true);
@@ -1337,7 +1322,7 @@ stop_run:
       SCAST_PTR(::ca::message::base, pbase, pobj);
       if(!pbase->m_bRet && pbase->m_uiMessage == WM_APP + 1984 && pbase->m_wparam == 77)
       {
-         ::ca::scoped_ptr < ::user::message > spmessage(pbase->m_lparam);
+         ::ca::smart_pointer < ::user::message > spmessage(pbase->m_lparam);
          spmessage->send();
          pbase->m_uiMessage   = 0;    // ssshhhh.... - self-healing - sh...
          pbase->m_wparam      = 0;    // ssshhhh.... - self-healing - sh...
@@ -1546,7 +1531,7 @@ stop_run:
 
                ::ca::smart_pointer < ::ca::message::base > spbase;
 
-               spbase(get_base(&msg));
+               spbase = get_base(&msg);
 
                if(spbase.is_set())
                {
@@ -1750,7 +1735,7 @@ stop_run:
       //   return;
      // }
 
-      // all other messages route through message ::collection::map
+      // all other messages route through message map
       ::ca::window * pwindow = pbase->m_pwnd->get_wnd();
 
       ASSERT(pwindow == NULL || pwindow == pbase->m_pwnd->m_pimpl);
@@ -2043,14 +2028,6 @@ run:
       m_p->install_message_handling(pThread);
 
       ::ca::window threadWnd;
-
-      m_ptimera            = new ::user::interaction::timer_array(get_app());
-      m_puiptra            = new user::interaction_ptr_array;
-
-      m_ptimera->m_papp    = m_papp;
-      m_puiptra->m_papp    = m_papp;
-
-
 
       if(!initialize_message_window(get_app(), ""))
          return -1;
@@ -2711,7 +2688,7 @@ bool thread::DispatchThreadMessageEx(MSG* pmsg)
 {
 if(pmsg->message == WM_APP + 1984 && pmsg->wParam == 77)
 {
-::ca::scoped_ptr < win::message > spmessage(pmsg->lParam);
+::ca::smart_pointer < win::message > spmessage(pmsg->lParam);
 spmessage->send();
 return TRUE;
 }
@@ -2804,7 +2781,7 @@ LRESULT CALLBACK __message_filter_hook(int32_t code, WPARAM wParam, LPARAM lPara
    }
    ASSERT(pthread != NULL);
    ::ca::smart_pointer < ::ca::message::base > spbase;
-   spbase(pthread->get_base((LPMSG)lParam));
+   spbase = pthread->get_base((LPMSG)lParam);
    pthread->ProcessMessageFilter(code, spbase);
    LRESULT lresult = spbase->m_bRet ? 1 : 0;
    return lresult;

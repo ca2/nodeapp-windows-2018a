@@ -69,7 +69,7 @@ namespace win
 
    /*graphics_object* graphics_object::from_handle(::ca::application * papp, HGDIOBJ h)
    {
-      hgdiobj_map* pMap = afxMapHGDIOBJ(TRUE); //create ::collection::map if not exist
+      hgdiobj_map* pMap = afxMapHGDIOBJ(TRUE); //create map if not exist
       ASSERT(pMap != NULL);
       graphics_object* pObject = (::win::graphics_object*)pMap->from_handle(h, &graphics_object_allocator, papp);
       ASSERT(pObject == NULL || pObject->get_os_data() == h);
@@ -88,7 +88,7 @@ namespace win
       }
       // remember early to avoid leak
       set_handle(hObject);
-      hgdiobj_map* pMap = afxMapHGDIOBJ(TRUE); // create ::collection::map if not exist
+      hgdiobj_map* pMap = afxMapHGDIOBJ(TRUE); // create map if not exist
       ASSERT(pMap != NULL);
       pMap->set_permanent(get_os_data(), this);
       return TRUE;

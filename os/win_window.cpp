@@ -110,9 +110,9 @@ namespace win
    window::~window()
    {
 
-      if(m_papp != NULL && m_papp->m_psystem != NULL && Sys(m_papp).user().m_pwindowmap != NULL)
+      if(m_papp != NULL && m_papp->m_psystem != NULL && Sys(m_papp).user().is_set() && Sys(m_papp).user()->m_pwindowmap != NULL)
       {
-         Sys(m_papp).user().m_pwindowmap->m_map.remove_key((int_ptr) get_handle());
+         Sys(m_papp).user()->m_pwindowmap->m_map.remove_key((int_ptr) get_handle());
       }
 
       single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_pthread->m_mutex, TRUE);
@@ -198,7 +198,7 @@ namespace win
    window * window::from_handle(oswindow oswindow)
    {
       single_lock sl(afxMutexoswindow_(), TRUE);
-      oswindow_map* pMap = get_oswindow_map(TRUE); //create ::collection::map if not exist
+      oswindow_map* pMap = get_oswindow_map(TRUE); //create map if not exist
       try
       {
          ASSERT(pMap != NULL);
@@ -220,7 +220,7 @@ namespace win
       window * pWnd = NULL;
       if (pMap != NULL)
       {
-         // only look in the permanent ::collection::map - does no allocations
+         // only look in the permanent map - does no allocations
          pWnd = pMap->lookup_permanent(oswindow);
          if(pWnd != NULL && WIN_WINDOW(pWnd)->get_handle() != oswindow)
             return NULL;
@@ -232,12 +232,12 @@ namespace win
    {
       ASSERT(get_handle() == NULL);     // only attach once, detach on destroy
       ASSERT(FromHandlePermanent(oswindow_New) == NULL);
-      // must not already be in permanent ::collection::map
+      // must not already be in permanent map
 
       if (oswindow_New == NULL)
          return FALSE;
       single_lock sl(afxMutexoswindow_(), TRUE);
-      oswindow_map * pMap = get_oswindow_map(TRUE); // create ::collection::map if not exist
+      oswindow_map * pMap = get_oswindow_map(TRUE); // create map if not exist
       ASSERT(pMap != NULL);
 
       pMap->set_permanent(set_handle(oswindow_New), this);
@@ -676,7 +676,7 @@ namespace win
          }
       }
 
-      // call default, unsubclass, and detach from the ::collection::map
+      // call default, unsubclass, and detach from the map
       WNDPROC pfnWndProc = WNDPROC(GetWindowLongPtr(get_handle(), GWLP_WNDPROC));
       Default();
       if (WNDPROC(GetWindowLongPtr(get_handle(), GWLP_WNDPROC)) == pfnWndProc)
@@ -731,7 +731,7 @@ namespace win
          // should be a normal window
          ASSERT(::IsWindow(((window *)this)->get_handle()));
 
-         // should also be in the permanent or temporary handle ::collection::map
+         // should also be in the permanent or temporary handle map
          single_lock sl(afxMutexoswindow_(), TRUE);
          oswindow_map * pMap = get_oswindow_map();
          if(pMap == NULL) // inside thread not having windows
@@ -1347,7 +1347,7 @@ namespace win
             || pbase->m_uiMessage == WM_MBUTTONDOWN
             || pbase->m_uiMessage == WM_MOUSEMOVE)
          {
-            if(Session.m_puser != NULL)
+            if(Session.fontopus().m_puser != NULL)
             {
                if(&ApplicationUser != NULL)
                {
@@ -1478,7 +1478,7 @@ restart_mouse_hover_check:
             }
          }
          user::oswindow_array oswindowa;
-         user::interaction_ptr_array wnda;
+         user::interaction_ptr_array wnda(get_app());
          wnda = System.frames();
          wnda.get_wnda(oswindowa);
          user::window_util::SortByZOrder(oswindowa);
@@ -1501,7 +1501,7 @@ restart_mouse_hover_check:
       {
 
          ::ca::message::key * pkey = (::ca::message::key *) pbase;
-         ::user::interaction * puiFocus = dynamic_cast < ::user::interaction * > (Application.user().get_keyboard_focus());
+         ::user::interaction * puiFocus = dynamic_cast < ::user::interaction * > (Application.user()->get_keyboard_focus());
          if(puiFocus != NULL 
             && puiFocus->IsWindow()
             && puiFocus->GetTopLevelParent() != NULL)
@@ -2398,7 +2398,7 @@ restart_mouse_hover_check:
       {
          // Windows does not perform any scrolling if the window is
          // not visible.  This leaves child windows unscrolled.
-         // To account for this oversight, the child windows are moved
+         // To ac::count for this oversight, the child windows are moved
          // directly instead.
          oswindow oswindow_Child = ::GetWindow(get_handle(), GW_CHILD);
          if (oswindow_Child != NULL)
@@ -2757,13 +2757,13 @@ restart_mouse_hover_check:
 
    bool window::ReflectLastMsg(oswindow oswindow_Child, LRESULT* pResult)
    {
-      // get the ::collection::map, and if no ::collection::map, then this message does not need reflection
+      // get the map, and if no map, then this message does not need reflection
       single_lock sl(afxMutexoswindow_(), TRUE);
       oswindow_map * pMap = get_oswindow_map();
       if (pMap == NULL)
          return FALSE;
 
-      // check if in permanent ::collection::map, if it is reflect it (could be OLE control)
+      // check if in permanent map, if it is reflect it (could be OLE control)
       ::ca::window * pWnd = dynamic_cast < ::ca::window * > (pMap->lookup_permanent(oswindow_Child));
       ASSERT(pWnd == NULL || WIN_WINDOW(pWnd)->get_handle() == oswindow_Child);
       if (pWnd == NULL)
@@ -2801,14 +2801,14 @@ restart_mouse_hover_check:
       case WM_VKEYTOITEM:
       case WM_CHARTOITEM:
       case WM_COMPAREITEM:
-         // reflect the message through the message ::collection::map as WM_REFLECT_BASE+uMsg
+         // reflect the message through the message map as WM_REFLECT_BASE+uMsg
          //return window::OnWndMsg(WM_REFLECT_BASE+uMsg, wParam, lParam, pResult);
          return FALSE;
 
          // special case for WM_COMMAND
       case WM_COMMAND:
          {
-            // reflect the message through the message ::collection::map as OCM_COMMAND
+            // reflect the message through the message map as OCM_COMMAND
             /* xxx         int32_t nCode = HIWORD(wParam);
             if (window::_001OnCommand(0, MAKELONG(nCode, WM_REFLECT_BASE+WM_COMMAND), NULL, NULL))
             {
@@ -2822,7 +2822,7 @@ restart_mouse_hover_check:
          // special case for WM_NOTIFY
       case WM_NOTIFY:
          {
-            // reflect the message through the message ::collection::map as OCM_NOTIFY
+            // reflect the message through the message map as OCM_NOTIFY
             NMHDR* pNMHDR = (NMHDR*)lParam;
             //            int32_t nCode = pNMHDR->code;
             //            __NOTIFY notify;
@@ -2842,7 +2842,7 @@ restart_mouse_hover_check:
             //ASSERT(ctl.nCtlType >= CTLCOLOR_MSGBOX);
             ASSERT(ctl.nCtlType <= CTLCOLOR_STATIC);
 
-            // reflect the message through the message ::collection::map as OCM_CTLCOLOR
+            // reflect the message through the message map as OCM_CTLCOLOR
             bool bResult = window::OnWndMsg(WM_REFLECT_BASE+WM_CTLCOLOR, 0, (LPARAM)&ctl, pResult);
             if ((HBRUSH)*pResult == NULL)
             bResult = FALSE;
@@ -3665,7 +3665,7 @@ restart_mouse_hover_check:
       else if (yTop + rcDlg.height() > rcArea.bottom)
          yTop = rcArea.bottom - rcDlg.height();
 
-      // ::collection::map screen coordinates to child coordinates
+      // map screen coordinates to child coordinates
       SetWindowPos(NULL, xLeft, yTop, -1, -1,
          SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
    }
@@ -3744,7 +3744,7 @@ restart_mouse_hover_check:
                nMsg == CBEM_INSERTITEM);
 
 #ifdef DEBUG
-            // For AddStrings, the count must exactly delimit the
+            // For AddStrings, the ::count must exactly delimit the
             // string, including the NULL termination.  This check
             // will not catch all mal-formed ADDSTRINGs, but will
             // catch some.
@@ -5483,7 +5483,7 @@ ExitModal:
    }
 
 
-   // Default message ::collection::map implementations
+   // Default message map implementations
    void window::OnActivateApp(bool, uint32_t)
    { Default(); }
    void window::OnActivate(UINT, ::ca::window *, bool)
@@ -5877,7 +5877,7 @@ ExitModal:
       // in debug builds and warn the ::fontopus::user.
       ::ca::smart_pointer < ::ca::message::base > spbase;
 
-      spbase(pinteraction->get_base(pinteraction, nMsg, wParam, lParam));
+      spbase = pinteraction->get_base(pinteraction, nMsg, wParam, lParam);
 
       __trace_message("WndProc", spbase);
 
@@ -6009,7 +6009,7 @@ ExitModal:
          WNDPROC oldWndProc;
          if (pWndInit != NULL)
          {
-            // the window should not be in the permanent ::collection::map at this time
+            // the window should not be in the permanent map at this time
             ASSERT(::win::window::FromHandlePermanent(oswindow) == NULL);
 
             pWndInit->m_pthread = dynamic_cast < ::ca::thread * > (::win::get_thread());
@@ -6110,7 +6110,7 @@ lCallNextHook:
 
    void window::_001BaseWndInterfaceMap()
    {
-      System.user().window_map().set((int_ptr)get_handle(), this);
+      System.user()->window_map().set((int_ptr)get_handle(), this);
    }
 
 
@@ -6216,7 +6216,7 @@ LRESULT CALLBACK __window_procedure(oswindow oswindow, UINT nMsg, WPARAM wParam,
 //   if (nMsg == WM_QUERYAFXWNDPROC)
   //    return 1;
 
-   // all other messages route through message ::collection::map
+   // all other messages route through message map
    ::ca::window * pWnd = ::win::window::FromHandlePermanent(oswindow);
    //ASSERT(pWnd != NULL);               
    //ASSERT(pWnd==NULL || WIN_WINDOW(pWnd)->get_handle() == oswindow);

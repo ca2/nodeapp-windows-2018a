@@ -95,28 +95,28 @@ namespace win
       void TwfGetTopWindow(
          oswindow oswindow,
          user::oswindow_array & oswindowa,
-         base_array < HRGN, HRGN > & hrgna,
+         array < HRGN, HRGN > & hrgna,
          user::oswindow_tree::Array & oswindowtreea,
          LPCRECT lpcrect);
 
       bool TwfGetTopWindow(
          oswindow oswindow,
          user::oswindow_array & oswindowa,
-         base_array < HRGN, HRGN > & hrgna,
+         array < HRGN, HRGN > & hrgna,
          user::oswindow_tree::Array & oswindowtreea,
          HRGN hrgn);
 
       bool TwfGetTopWindow(
          oswindow oswindow,
          user::oswindow_array & oswindowa,
-         base_array < HRGN, HRGN > & hrgna,
+         array < HRGN, HRGN > & hrgna,
          user::oswindow_tree & oswindowtree,
          HRGN hrgn);
 
       void TwfGetTopWindowOptimizeOpaque(
          oswindow oswindowOpaque,
          user::oswindow_array & oswindowa,
-         base_array < HRGN, HRGN > & hrgna);
+         array < HRGN, HRGN > & hrgna);
 
 
       EOptimize TwfOptimizeRenderRemoveNextProper(

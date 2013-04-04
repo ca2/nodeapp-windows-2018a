@@ -107,7 +107,7 @@ namespace win
       ASSERT(sizeof(HANDLE) == sizeof(uint_ptr));
       ASSERT(shareCompat == 0);
 
-      // ::collection::map read/write mode
+      // map read/write mode
       ASSERT((mode_read|mode_write|mode_read_write) == 3);
       DWORD dwAccess = 0;
       switch (nOpenFlags & 3)
@@ -126,9 +126,9 @@ namespace win
          break;
       }
 
-      // ::collection::map share mode
+      // map share mode
       DWORD dwShareMode = 0;
-      switch (nOpenFlags & 0x70)    // ::collection::map compatibility mode to exclusive
+      switch (nOpenFlags & 0x70)    // map compatibility mode to exclusive
       {
       default:
          ASSERT(FALSE);  // invalid share mode?
@@ -149,13 +149,13 @@ namespace win
 
       // Note: type_text and type_binary are used in derived classes only.
 
-      // ::collection::map modeNoInherit flag
+      // map modeNoInherit flag
       SECURITY_ATTRIBUTES sa;
       sa.nLength = sizeof(sa);
       sa.lpSecurityDescriptor = NULL;
       sa.bInheritHandle = (nOpenFlags & modeNoInherit) == 0;
 
-      // ::collection::map creation flags
+      // map creation flags
       DWORD dwCreateFlag;
       if (nOpenFlags & mode_create)
       {

@@ -44,7 +44,7 @@ namespace win
       // list of frame_window objects for thread
       simple_list < frame_window * >   m_frameList;
 
-      // temporary/permanent ::collection::map state
+      // temporary/permanent map state
       DWORD m_nTempMapLock;           // if not 0, temp maps locked
 
 

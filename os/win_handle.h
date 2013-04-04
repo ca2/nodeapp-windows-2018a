@@ -163,8 +163,8 @@ public:
    mutex                   m_mutex;
    void (* m_pfnConstructObject)(CT* pObject);
    void (* m_pfnDestructObject)(CT* pObject);
-   ::collection::map < HANDLE, HANDLE, CT *, CT *> m_permanentMap;
-   ::collection::map < HANDLE, HANDLE, CT *, CT *> m_temporaryMap;
+   map < HANDLE, HANDLE, CT *, CT *> m_permanentMap;
+   map < HANDLE, HANDLE, CT *, CT *> m_temporaryMap;
 
    handle_map(::ca::application * papp);
    virtual ~handle_map()
@@ -291,7 +291,7 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (::ca::app
          (*m_pfnConstructObject)(pTemp);
       }
 
-      // set it in the ::collection::map
+      // set it in the map
       m_temporaryMap.set_at(h, pTemp);
    }
    catch(base_exception * pe)
@@ -358,7 +358,7 @@ void handle_map < HT, CT > ::remove_handle(HANDLE h)
       ASSERT(ph[0] == h);
       // permanent object may have secondary handles that are different
    }
-   // remove only from permanent ::collection::map -- temporary objects are removed
+   // remove only from permanent map -- temporary objects are removed
    //  at idle in CHandleMap::delete_temp, always!
    m_permanentMap.remove_key((LPVOID)h);
 }
@@ -410,7 +410,7 @@ inline void handle_map < HT, CT >::set_permanent(HANDLE h, CT * permOb)
 template < class HT, class CT >
 inline void handle_map < HT, CT >::remove_handle(HANDLE h)
 {
-   // remove only from permanent ::collection::map -- temporary objects are removed
+   // remove only from permanent map -- temporary objects are removed
    //  at idle in CHandleMap::delete_temp, always!
    m_permanentMap.remove_key((HANDLE)h);
 }

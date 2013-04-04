@@ -408,7 +408,7 @@ RunNonElevated(
 
    // Determine whether we can use the regular ShellExecuteEx
    // We can use it if we are not running Vista, or if this process is already non-elevated,
-   // or if the current ::fontopus::user account has no "split" token (and therefore has no distinction 
+   // or if the current ::fontopus::user ac::count has no "split" token (and therefore has no distinction 
    // between the elevated and non-elevated proceses
 
    TOKEN_ELEVATION_TYPE tet;

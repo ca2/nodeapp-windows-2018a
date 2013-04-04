@@ -2015,14 +2015,14 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if (this != NULL && (nMapMode = GetMapMode()) < MM_ISOTROPIC &&
          nMapMode != MM_TEXT)
       {
-         // when using a constrained ::collection::map mode, ::collection::map against physical inch
+         // when using a constrained map mode, map against physical inch
          ((::ca::graphics *)this)->SetMapMode(MM_HIMETRIC);
          DPtoLP(lpSize);
          ((::ca::graphics *)this)->SetMapMode(nMapMode);
       }
       else
       {
-         // ::collection::map against logical inch for non-constrained mapping modes
+         // map against logical inch for non-constrained mapping modes
          int32_t cxPerInch, cyPerInch;
          if (this != NULL)
          {
@@ -2050,14 +2050,14 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if (this != NULL && (nMapMode = GetMapMode()) < MM_ISOTROPIC &&
          nMapMode != MM_TEXT)
       {
-         // when using a constrained ::collection::map mode, ::collection::map against physical inch
+         // when using a constrained map mode, map against physical inch
          ((::ca::graphics *)this)->SetMapMode(MM_HIMETRIC);
          LPtoDP(lpSize);
          ((::ca::graphics *)this)->SetMapMode(nMapMode);
       }
       else
       {
-         // ::collection::map against logical inch for non-constrained mapping modes
+         // map against logical inch for non-constrained mapping modes
          int32_t cxPerInch, cyPerInch;
          if (this != NULL)
          {
@@ -2245,7 +2245,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    //::ca::graphics * ::win::graphics::from_handle(HDC hDC)
    //{
-      //hdc_map* pMap = afxMapHDC(TRUE); //create ::collection::map if not exist
+      //hdc_map* pMap = afxMapHDC(TRUE); //create map if not exist
       //ASSERT(pMap != NULL);
 //      ::ca::graphics * pgraphics = (::ca::graphics *)pMap->from_handle(hDC);
   //    ASSERT(pgraphics == NULL || (dynamic_cast<::win::graphics * >(pgraphics))->get_handle1() == hDC);
@@ -2289,7 +2289,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       }
       // remember early to avoid leak
       set_handle1(hDC);
-      hdc_map* pMap = afxMapHDC(TRUE); // create ::collection::map if not exist
+      hdc_map* pMap = afxMapHDC(TRUE); // create map if not exist
       ASSERT(pMap != NULL);
       pMap->set_permanent(get_handle1(), this);
 

@@ -156,7 +156,7 @@ namespace win
       EmptyClipboard();
 
 
-      count iCount = ::ca::international::utf8_to_unicode_count(str) + 1;
+      ::count iCount = ::ca::international::utf8_to_unicode_count(str) + 1;
       HGLOBAL hglbCopy = ::GlobalAlloc(GMEM_MOVEABLE, iCount * sizeof(WCHAR));
       wchar_t * lpwstrCopy  = (wchar_t *) ::GlobalLock(hglbCopy);
       ::ca::international::utf8_to_unicode(lpwstrCopy, iCount, str);

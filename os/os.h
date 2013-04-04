@@ -98,7 +98,6 @@ CLASS_DECL_win void reset_message_cache();
 #include "win_window.h"
 #include "win_port_forward.h"
 
-#define NULL_REF(class) (*((class *) NULL))
 CLASS_DECL_win WNDPROC __get_window_procedure();
 #define __window_procedure (*__get_window_procedure())
 

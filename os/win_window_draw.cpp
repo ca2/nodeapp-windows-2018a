@@ -36,7 +36,8 @@ namespace win
       m_mutexRendering(papp),
       m_mutexRgnUpdate(papp),
       m_semaphoreBuffer(papp),
-      m_mutexRender(papp)
+      m_mutexRender(papp),
+      m_wndpaOut(papp)
    {
       m_dwLastRedrawRequest = ::get_tick_count();
       m_bRender = false;
@@ -48,8 +49,6 @@ namespace win
    
    window_draw::~window_draw()
    {
-
-      m_uiMessage.DestroyWindow();
 
    }
 
@@ -92,15 +91,15 @@ namespace win
    {
       if(!m_bProDevianMode)
       {
-         m_uiMessage.PostMessage(WM_USER + 1984 + 1977);
+         m_spuiMessage->PostMessage(WM_USER + 1984 + 1977);
       }
    }
 
    void window_draw::synch_redraw()
    {
-      if(!m_bProDevianMode && ::IsWindow(m_uiMessage.get_handle()))
+      if(!m_bProDevianMode && ::IsWindow(m_spuiMessage->get_handle()))
       {
-         m_uiMessage.send_message(WM_USER + 1984 + 1977);
+         m_spuiMessage->send_message(WM_USER + 1984 + 1977);
       }
    }
 
@@ -160,7 +159,7 @@ namespace win
             if(s_iFrameFailureCount > iMaxFailureCount)
             {
                TRACE("window_draw::_synch_redraw :: during prodevian Performance Analysis Time Frame - %d milliseconds -,", iTimeFrame);
-               TRACE("window_draw::_synch_redraw :: failure count has exceeded the maximum count - %d", iMaxFailureCount);
+               TRACE("window_draw::_synch_redraw :: failure ::count has exceeded the maximum count - %d", iMaxFailureCount);
                TRACE("window_draw::_synch_redraw :: Going to try to save some resource that may favor drawing perfomance");
                if(!System.savings().is_trying_to_save(::ca::resource_blur_background))
                {
@@ -265,7 +264,7 @@ namespace win
       }
       else
       {
-         ::user::window_interface * ptwi = System.user().window_map().get((int_ptr) oswindowParam);
+         ::user::window_interface * ptwi = System.user()->window_map().get((int_ptr) oswindowParam);
          ::user::interaction * pguie = dynamic_cast < ::user::interaction * > (ptwi);
          rect rectWindow;
          ::GetWindowRect(oswindowParam, rectWindow);
@@ -425,12 +424,9 @@ namespace win
 
       get_wnda(oswindowa);
 
-      user::interaction_ptr_array wndpa;
-
-      wndpa.set_app(get_app());
+      user::interaction_ptr_array wndpa(get_app());
 
       get_wnda(wndpa);
-
 
       user::window_util::SortByZOrder(oswindowa);
 
@@ -552,7 +548,7 @@ namespace win
          oswindow oswindowTopic = wndaApp[j];
 
          ::ca::window * pwnd = NULL;
-         //::ca::window * pwnd = dynamic_cast < ::ca::window * > (System.user().window_map().get((int_ptr) oswindowTopic));
+         //::ca::window * pwnd = dynamic_cast < ::ca::window * > (System.user()->window_map().get((int_ptr) oswindowTopic));
          //if(pwnd == NULL)
          //{
          for(int32_t l = 0; l < wndpa.get_count(); l++)
@@ -680,7 +676,7 @@ namespace win
       return &m_semaphoreBuffer;
    }
 
-   // The first ::ca::window handle in the base_array must belong
+   // The first ::ca::window handle in the array must belong
    // to the higher z order ::ca::window.
    // The rectangle must contain all update region.
    // It must be in screen coordinates.
@@ -784,7 +780,7 @@ namespace win
 
       oswindow oswindow = oswindowtree.m_oswindow;
 
-      ::user::window_interface * ptwi = System.user().window_map().get((int_ptr) oswindow);
+      ::user::window_interface * ptwi = System.user()->window_map().get((int_ptr) oswindow);
 
       if(!::IsWindowVisible(oswindow))
       {
@@ -863,7 +859,7 @@ namespace win
    bool window_draw::TwfGetTopWindow(
       oswindow oswindow,
       user::oswindow_array & oswindowa,
-      base_array < HRGN, HRGN > & hrgna,
+      array < HRGN, HRGN > & hrgna,
       user::oswindow_tree::Array & oswindowtreea,
       HRGN hrgn)
    {
@@ -887,7 +883,7 @@ namespace win
    bool window_draw::TwfGetTopWindow(
       oswindow oswindowParam,
       user::oswindow_array & oswindowa,
-      base_array < HRGN, HRGN > & hrgna,
+      array < HRGN, HRGN > & hrgna,
       user::oswindow_tree & oswindowtree,
       HRGN hrgn)
    {
@@ -933,7 +929,7 @@ namespace win
 
       
 
-      ::user::window_interface * pwndi = System.user().window_map().get((int_ptr) oswindow);
+      ::user::window_interface * pwndi = System.user()->window_map().get((int_ptr) oswindow);
 
       if(pwndi == NULL)
       {
@@ -989,7 +985,7 @@ namespace win
    void window_draw::TwfGetTopWindow(
       oswindow oswindow,
       user::oswindow_array & oswindowa,
-      base_array < HRGN, HRGN > & hrgna,
+      array < HRGN, HRGN > & hrgna,
       user::oswindow_tree::Array & oswindowtreea,
       LPCRECT lpcrect)
    {
@@ -1006,7 +1002,7 @@ namespace win
    void window_draw::TwfGetTopWindowOptimizeOpaque(
       oswindow oswindowOpaque,
       user::oswindow_array & oswindowa,
-      base_array < HRGN, HRGN > & hrgna)
+      array < HRGN, HRGN > & hrgna)
    {
       rect rectWindow;
 
@@ -1324,7 +1320,7 @@ namespace win
 
 
 
-   // The first ::ca::window handle in the base_array must belong
+   // The first ::ca::window handle in the array must belong
    // to the higher z order ::ca::window.
    // The rectangle must contain all update region.
    // It must be in screen coordinates.

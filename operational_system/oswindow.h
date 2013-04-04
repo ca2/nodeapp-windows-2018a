@@ -14,14 +14,52 @@ namespace ca
 
       null() {}
 
-      operator HWND() { return NULL; }
+      null(const null &&) {}
+
+      null & operator = (const null && n)
+      {
+         return *this;
+      }
+
+      template < typename T >
+      operator T *() { return (T *) (uint_ptr) 0; }
+
+      operator HWND () { return NULL; }
 
 
    };
 
+
 } // namespace
 
+inline ::ca::null null()
+{
+   return ::ca::null();
+}
 
+template < typename T >
+inline bool operator != (const T t, const ::ca::null & n)
+{
+   return t != ((int_ptr) 0);
+}
+
+template < typename T >
+inline bool operator != (const ::ca::null & n, const T t)
+{
+   return t != ((int_ptr) 0);
+}
+
+template < typename T >
+inline bool operator == (const T t, const ::ca::null & n)
+{
+   return t != ((int_ptr) 0);
+}
+
+template < typename T >
+inline bool operator == (const ::ca::null & n, const T t)
+{
+   return t != ((int_ptr) 0);
+}
 
 typedef HWND oswindow;
 
