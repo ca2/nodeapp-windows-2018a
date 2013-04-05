@@ -98,7 +98,7 @@ public:
 
    // common controls thread state
    CToolTipCtrl* m_pToolTip;
-   ::ca::window * m_pLastHit;       // last ::ca::window to own tooltip
+   sp(::ca::window) m_pLastHit;       // last ::ca::window to own tooltip
    int_ptr m_nLastHit;         // last hittest code
    TOOLINFO* m_pLastInfo;    // last TOOLINFO structure
    int_ptr m_nLastStatus;      // last flyby status message
@@ -127,7 +127,7 @@ public:
       bool bSystem = FALSE);
    ~__MODULE_STATE();
 
-   ::ca::application* m_pCurrentWinApp;
+   ::ca::applicationsp m_pCurrentWinApp;
    HINSTANCE m_hCurrentInstanceHandle;
    HINSTANCE m_hCurrentResourceHandle;
    const char * m_lpszCurrentAppName;
@@ -161,7 +161,7 @@ public:
 
    // variables related to a given process in a module
    //  (used to be __MODULE_PROCESS_STATE)
-   void (*m_pfnFilterToolTipMessage)(MSG*, ::ca::window *);
+   void (*m_pfnFilterToolTipMessage)(MSG*, sp(::ca::window));
 
 
    // define thread local portions of module state
@@ -255,8 +255,8 @@ public:
    __EXCEPTION_CONTEXT m_exceptionContext;
 
    // ::ca::window create, gray dialog hook, and other hook data
-   ::win::window * m_pWndInit;
-   ::ca::window * m_pAlternateWndInit;      // special case commdlg hooking
+   sp(::win::window) m_pWndInit;
+   sp(::ca::window) m_pAlternateWndInit;      // special case commdlg hooking
    DWORD m_dwPropStyle;
    DWORD m_dwPropExStyle;
    oswindow m_oswindow_Init;
@@ -287,7 +287,7 @@ public:
    bool m_bWaitForDataSource;
 
    // OLE control thread-local data
-   ::ca::window * m_pWndPark;       // "parking space" ::ca::window
+   sp(::ca::window) m_pWndPark;       // "parking space" ::ca::window
    long m_nCtrlRef;        // reference ::count on parking ::ca::window
    bool m_bNeedTerm;       // TRUE if OleUninitialize needs to be called
 };

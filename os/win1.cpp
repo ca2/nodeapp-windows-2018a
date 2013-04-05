@@ -76,7 +76,7 @@ namespace win
       return iLen;
    }*/
 
-   CLASS_DECL_win void TimeToFileTime(::ca::application * papp, const ::datetime::time& time, LPFILETIME pFileTime)
+   CLASS_DECL_win void TimeToFileTime(::ca::applicationsp papp, const ::datetime::time& time, LPFILETIME pFileTime)
    {
          SYSTEMTIME sysTime;
          sysTime.wYear           = (WORD)time.GetYear();

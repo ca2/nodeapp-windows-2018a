@@ -6,7 +6,7 @@ namespace win
 {
 
 
-   brush::brush(::ca::application * papp) :
+   brush::brush(::ca::applicationsp papp) :
       ca(papp)
    { 
 

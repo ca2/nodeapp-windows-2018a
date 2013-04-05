@@ -5,10 +5,9 @@ extern thread_local_storage * __thread_data;
 namespace win
 {
 
-   application::application(::ca::application * papp) :
+   application::application(::ca::applicationsp papp) :
       ca(papp)
    {
-      ::ca::smart_pointer < application_base >::set_app(papp);
       ::ca::thread_sp::create(papp);
       WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_pAppThread = this;
 
@@ -55,7 +54,7 @@ namespace win
       //::ca::smart_pointer < application_base >::m_p->_001OnFileNew(NULL);
    }
 
-   ::user::document_interface * application::_001OpenDocumentFile(var varFile)
+   sp(::user::document_interface) application::_001OpenDocumentFile(var varFile)
    {
       //return ::ca::smart_pointer < application_base >::m_p->_001OpenDocumentFile(varFile);
       return NULL;
@@ -343,7 +342,7 @@ namespace win
    {
       return ::win::thread::post_thread_message(message, wParam, lParam);
    }
-   bool application::post_message(::user::interaction * pguie, UINT message, WPARAM wParam, LPARAM lParam)
+   bool application::post_message(sp(::user::interaction) pguie, UINT message, WPARAM wParam, LPARAM lParam)
    {
       return ::win::thread::post_message(pguie, message, wParam, lParam);
    }
@@ -474,7 +473,7 @@ namespace win
 
 
    // Advanced: access to GetMainWnd()
-   ::user::interaction* application::GetMainWnd()
+   sp(::user::interaction) application::GetMainWnd()
    {
       return ::win::thread::GetMainWnd();
    }
@@ -512,14 +511,14 @@ namespace win
       return ::win::graphics::from_handle((HDC) pdata);
    }*/
 
-   ::ca::window * application::window_from_os_data(void * pdata)
+   sp(::ca::window) application::window_from_os_data(void * pdata)
    {
       return ::win::window::from_handle((oswindow) pdata);
    }
 
-   ::ca::window * application::window_from_os_data_permanent(void * pdata)
+   sp(::ca::window) application::window_from_os_data_permanent(void * pdata)
    {
-      ::ca::window * pwnd = ::win::window::FromHandlePermanent((oswindow) pdata);
+      sp(::ca::window) pwnd = ::win::window::FromHandlePermanent((oswindow) pdata);
       if(pwnd != NULL)
          return pwnd;
       user::interaction_ptr_array wndptra = System.frames();
@@ -615,12 +614,12 @@ namespace win
 
    }
 
-   ::ca::window * application::FindWindow(const char * lpszClassName, const char * lpszWindowName)
+   sp(::ca::window) application::FindWindow(const char * lpszClassName, const char * lpszWindowName)
    {
       return window::FindWindow(lpszClassName, lpszWindowName);
    }
 
-   ::ca::window * application::FindWindowEx(oswindow oswindowParent, oswindow oswindowChildAfter, const char * lpszClass, const char * lpszWindow)
+   sp(::ca::window) application::FindWindowEx(oswindow oswindowParent, oswindow oswindowChildAfter, const char * lpszClass, const char * lpszWindow)
    {
       return window::FindWindowEx(oswindowParent, oswindowChildAfter, lpszClass, lpszWindow);
    }
@@ -707,7 +706,7 @@ namespace win
          // fill in the initial state for the application
          // Windows specific initialization (not done if no application)
          m_hInstance = hInstance;
-         (dynamic_cast < ::ca::application * >(m_papp))->m_hInstance = hInstance;
+         m_papp->m_hInstance = hInstance;
          //hPrevInstance; // Obsolete.
          m_strCmdLine = strCmdLine;
          m_nCmdShow = nCmdShow;

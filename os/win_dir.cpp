@@ -5,7 +5,7 @@ namespace win
 {
 
 
-   dir::dir(::ca::application * papp) :
+   dir::dir(::ca::applicationsp papp) :
       ::ca::ca(papp),
       ::ca::dir::system(papp),
       m_path(papp)
@@ -44,7 +44,7 @@ namespace win
 
    }
 
-   path::path(::ca::application * papp) :
+   path::path(::ca::applicationsp papp) :
       ca(papp)
    {
    }
@@ -262,7 +262,7 @@ namespace win
       return TRUE; // otherwise file name is truly the same
    }
 
-   void dir::root_ones(stringa & stra, ::ca::application * papp)
+   void dir::root_ones(stringa & stra, ::ca::applicationsp papp)
    {
       DWORD dwSize = ::GetLogicalDriveStrings(0, NULL);
       LPTSTR lpszAlloc = (LPTSTR) malloc(dwSize + 1);
@@ -285,7 +285,7 @@ namespace win
       free(lpszAlloc);
    }
 
-   void dir::ls_pattern(::ca::application * papp, const char * lpcsz, const char * pszPattern, stringa * pstraPath, stringa * pstraTitle, array < bool, bool > * pbaIsDir, array < int64_t, int64_t > * piaSize)
+   void dir::ls_pattern(::ca::applicationsp papp, const char * lpcsz, const char * pszPattern, stringa * pstraPath, stringa * pstraTitle, array < bool, bool > * pbaIsDir, array < int64_t, int64_t > * piaSize)
    {
       if(::ca::dir::system::is(lpcsz, papp)) // if base class "already" "says" it is a dir, let it handle it: may be not a operational system dir, e.g., zip or compressed directory...
       {
@@ -319,12 +319,12 @@ namespace win
       }
    }
 
-   void dir::rls(::ca::application * papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle, stringa * pstraRelative, e_extract eextract)
+   void dir::rls(::ca::applicationsp papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle, stringa * pstraRelative, e_extract eextract)
    {
       rls_pattern(papp, lpcsz, "*.*", pstraPath, pstraTitle, pstraRelative, NULL, NULL, eextract);
    }
 
-   void dir::rls_pattern(::ca::application * papp, const char * lpcsz, const char * lpszPattern, stringa * pstraPath, stringa * pstraTitle, stringa * pstraRelative, array < bool, bool > * pbaIsDir, array < int64_t, int64_t > * piaSize, e_extract eextract)
+   void dir::rls_pattern(::ca::applicationsp papp, const char * lpcsz, const char * lpszPattern, stringa * pstraPath, stringa * pstraTitle, stringa * pstraRelative, array < bool, bool > * pbaIsDir, array < int64_t, int64_t > * piaSize, e_extract eextract)
    {
       stringa straDir;
       ls_dir(papp, lpcsz, &straDir);
@@ -402,7 +402,7 @@ namespace win
       }
    }
 
-   void dir::rls_dir(::ca::application * papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle, stringa * pstraRelative)
+   void dir::rls_dir(::ca::applicationsp papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle, stringa * pstraRelative)
    {
       file_find file_find;
       bool bWorking;
@@ -444,7 +444,7 @@ namespace win
       }
    }
 
-   void dir::ls_dir(::ca::application * papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle)
+   void dir::ls_dir(::ca::applicationsp papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle)
    {
       
       file_find file_find;
@@ -472,7 +472,7 @@ namespace win
       }
    }
 
-   void dir::ls_file(::ca::application * papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle)
+   void dir::ls_file(::ca::applicationsp papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle)
    {
       file_find file_find;
       bool bWorking;
@@ -494,12 +494,12 @@ namespace win
       }
    }
 
-   void dir::ls(::ca::application * papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle, array < bool, bool > * pbaIsDir, array < int64_t, int64_t > * piaSize)
+   void dir::ls(::ca::applicationsp papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle, array < bool, bool > * pbaIsDir, array < int64_t, int64_t > * piaSize)
    {
       return ls_pattern(papp, lpcsz, "*.*", pstraPath, pstraTitle, pbaIsDir, piaSize);
    }
 
-   bool dir::is(const char * lpcszPath, ::ca::application * papp)
+   bool dir::is(const char * lpcszPath, ::ca::applicationsp papp)
    {
       
       bool bIsDir;
@@ -545,7 +545,7 @@ namespace win
       return bIsDir;
    }
       
-   bool dir::is(const string & strPath, ::ca::application * papp)
+   bool dir::is(const string & strPath, ::ca::applicationsp papp)
    {
       
       if(::ca::dir::system::is(strPath, papp))
@@ -594,7 +594,7 @@ namespace win
       return bIsDir;
    }
 
-   bool dir::name_is(const string & str, ::ca::application * papp)
+   bool dir::name_is(const string & str, ::ca::applicationsp papp)
    {
       //OutputDebugString(str);
       strsize iLast = str.get_length() - 1;
@@ -805,7 +805,7 @@ namespace win
       return path(strLogBaseDir, pszId);
    }
 
-   bool dir::mk(const char * lpcsz, ::ca::application * papp)
+   bool dir::mk(const char * lpcsz, ::ca::applicationsp papp)
    {
 
       if(is(lpcsz, papp))
@@ -875,7 +875,7 @@ namespace win
       return true;
    }
 
-   bool dir::rm(::ca::application * papp, const char * psz, bool bRecursive)
+   bool dir::rm(::ca::applicationsp papp, const char * psz, bool bRecursive)
    {
       if(bRecursive)
       {
@@ -1050,23 +1050,23 @@ namespace win
       return path(path(str, "ca2", strRelative), lpcsz, lpcsz2);
    }
 
-   string dir::usersystemappdata(::ca::application * papp, const char * lpcszPrefix, const char * lpcsz, const char * lpcsz2)
+   string dir::usersystemappdata(::ca::applicationsp papp, const char * lpcszPrefix, const char * lpcsz, const char * lpcsz2)
    {
       UNREFERENCED_PARAMETER(papp);
       return path(appdata(lpcszPrefix), lpcsz, lpcsz2);
    }
 
-   string dir::userappdata(::ca::application * papp, const char * lpcsz, const char * lpcsz2)
+   string dir::userappdata(::ca::applicationsp papp, const char * lpcsz, const char * lpcsz2)
    {
       return path(userfolder(papp, "appdata"), lpcsz, lpcsz2);
    }
 
-   string dir::userdata(::ca::application * papp, const char * lpcsz, const char * lpcsz2)
+   string dir::userdata(::ca::applicationsp papp, const char * lpcsz, const char * lpcsz2)
    {
       return path(userfolder(papp, "data"), lpcsz, lpcsz2);
    }
 
-   string dir::userfolder(::ca::application * papp, const char * lpcsz, const char * lpcsz2)
+   string dir::userfolder(::ca::applicationsp papp, const char * lpcsz, const char * lpcsz2)
    {
 
       string str;
@@ -1114,7 +1114,7 @@ namespace win
       }*/
    }
 
-   string dir::default_os_user_path_prefix(::ca::application * papp)
+   string dir::default_os_user_path_prefix(::ca::applicationsp papp)
    {
       UNREFERENCED_PARAMETER(papp);
       wchar_t buf[MAX_PATH];
@@ -1129,17 +1129,17 @@ namespace win
       return ::ca::international::unicode_to_utf8(buf);
    }
 
-   string dir::default_userappdata(::ca::application * papp, const char * lpcszPrefix, const char * lpcszLogin, const char * pszRelativePath)
+   string dir::default_userappdata(::ca::applicationsp papp, const char * lpcszPrefix, const char * lpcszLogin, const char * pszRelativePath)
    {
       return path(default_userfolder(papp, lpcszPrefix, lpcszLogin, "appdata"), pszRelativePath);
    }
 
-   string dir::default_userdata(::ca::application * papp, const char * lpcszPrefix, const char * lpcszLogin, const char * pszRelativePath)
+   string dir::default_userdata(::ca::applicationsp papp, const char * lpcszPrefix, const char * lpcszLogin, const char * pszRelativePath)
    {
       return path(default_userfolder(papp, lpcszPrefix, lpcszLogin, "data"), pszRelativePath);
    }
 
-   string dir::default_userfolder(::ca::application * papp, const char * lpcszPrefix, const char * lpcszLogin, const char * pszRelativePath)
+   string dir::default_userfolder(::ca::applicationsp papp, const char * lpcszPrefix, const char * lpcszLogin, const char * pszRelativePath)
    {
 
       return userfolder(papp, pszRelativePath);
@@ -1154,7 +1154,7 @@ namespace win
       return path(path(str, "ca2\\user", lpcszPrefix), lpcszLogin, pszRelativePath);*/
    }
 
-   string dir::userquicklaunch(::ca::application * papp, const char * lpcszRelativePath, const char * lpcsz2)
+   string dir::userquicklaunch(::ca::applicationsp papp, const char * lpcszRelativePath, const char * lpcsz2)
    {
       UNREFERENCED_PARAMETER(papp);
       string str;
@@ -1163,7 +1163,7 @@ namespace win
       return path(str, lpcszRelativePath, lpcsz2);
    }
 
-   string dir::userprograms(::ca::application * papp, const char * lpcszRelativePath, const char * lpcsz2)
+   string dir::userprograms(::ca::applicationsp papp, const char * lpcszRelativePath, const char * lpcsz2)
    {
       UNREFERENCED_PARAMETER(papp);
       string str;
@@ -1178,17 +1178,17 @@ namespace win
       return path(str, lpcszRelativePath, lpcsz2);
    }
 
-   bool dir::is_inside_time(const char * pszPath, ::ca::application * papp)
+   bool dir::is_inside_time(const char * pszPath, ::ca::applicationsp papp)
    {
       return is_inside(time(), pszPath, papp);
    }
 
-   bool dir::is_inside(const char * pszDir, const char * pszPath, ::ca::application * papp)
+   bool dir::is_inside(const char * pszDir, const char * pszPath, ::ca::applicationsp papp)
    {
       return ::ca::str::begins_ci(pszDir, pszPath);
    }
 
-   bool dir::has_subdir(::ca::application * papp, const char * pszDir)
+   bool dir::has_subdir(::ca::applicationsp papp, const char * pszDir)
    {
       file_find file_find;
       bool bWorking;

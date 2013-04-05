@@ -9,7 +9,7 @@ namespace win
 {
 
 
-   graphics::graphics(::ca::application * papp) :
+   graphics::graphics(::ca::applicationsp papp) :
       ca(papp)
    {
 
@@ -65,7 +65,7 @@ namespace win
    }
 
 
-   ::ca::window * graphics::GetWindow() const
+   sp(::ca::window) graphics::GetWindow() const
    { 
       ASSERT(get_handle1() != NULL); return ::win::window::from_handle(::WindowFromDC(get_handle1())); 
    }
@@ -176,7 +176,7 @@ namespace win
    }
 
 
-   int32_t graphics::ExcludeUpdateRgn(::ca::window * pWnd)
+   int32_t graphics::ExcludeUpdateRgn(sp(::ca::window) pWnd)
    { 
       ASSERT(get_handle1() != NULL); 
       return ::ExcludeUpdateRgn(get_handle1(), WIN_WINDOW(pWnd)->get_handle()); 
@@ -2096,7 +2096,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    /////////////////////////////////////////////////////////////////////////////
    // special graphics drawing primitives/helpers
 
-   ::ca::brush* graphics::GetHalftoneBrush(::ca::application * papp)
+   ::ca::brush* graphics::GetHalftoneBrush(::ca::applicationsp papp)
    {
 /*      ::ca::LockGlobals(CRIT_HALFTONEBRUSH);
       if (gen_HalftoneBrush == NULL)
@@ -2477,7 +2477,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return bRetVal;
    }
 
-//   ::ca::graphics_object* graphics::SelectGdiObject(::ca::application * papp, HDC hDC, HGDIOBJ h)
+//   ::ca::graphics_object* graphics::SelectGdiObject(::ca::applicationsp papp, HDC hDC, HGDIOBJ h)
   // {
 //      return ::win::graphics_object::from_handle(papp, ::SelectObject(hDC, h));
    //}

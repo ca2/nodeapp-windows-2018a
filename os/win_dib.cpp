@@ -22,7 +22,7 @@ namespace win
 
    double dib::dPi;
 
-   dib::dib(::ca::application * papp) :
+   dib::dib(::ca::applicationsp papp) :
       ca(papp),
       m_spbitmap(papp),
       m_spgraphics(papp)

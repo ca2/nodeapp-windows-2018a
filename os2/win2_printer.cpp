@@ -7,7 +7,7 @@ namespace win2
 {
 
 
-   printer::printer(::ca::application * papp) :
+   printer::printer(::ca::applicationsp papp) :
       ca(papp),
       ::user::printer(papp),
       m_documentproperties(papp)
@@ -61,7 +61,7 @@ namespace win2
    }
 
 
-   printer::document_properties::document_properties(::ca::application * papp) :
+   printer::document_properties::document_properties(::ca::applicationsp papp) :
       ca(papp)
    {
       m_hdc = NULL;

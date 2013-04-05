@@ -6,7 +6,7 @@ namespace win
 {
 
 
-   font::font(::ca::application * papp) :
+   font::font(::ca::applicationsp papp) :
    ca(papp)
    {
 
@@ -31,7 +31,7 @@ namespace win
   // {
     //  return (HFONT)(this == NULL ? NULL : get_handle()); 
    //}
-   //font* font::from_handle(::ca::application * papp, HFONT hFont)
+   //font* font::from_handle(::ca::applicationsp papp, HFONT hFont)
    //{
      // return dynamic_cast < font * > (::win::graphics_object::from_handle(papp, hFont)); 
    //}

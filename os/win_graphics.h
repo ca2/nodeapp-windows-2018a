@@ -28,7 +28,7 @@ namespace win
 
 
       graphics();
-      graphics(::ca::application * papp);
+      graphics(::ca::applicationsp papp);
       virtual ~graphics();
 
 
@@ -41,7 +41,7 @@ namespace win
          return *m_pgraphics;
       }
 
-      ::ca::window * GetWindow() const;
+      sp(::ca::window) GetWindow() const;
 
       //static ::ca::graphics * from_handle(HDC hDC);
       //static void DeleteTempMap();
@@ -214,7 +214,7 @@ namespace win
             int32_t SelectClipRgn(::ca::region* pRgn);
             int32_t ExcludeClipRect(int32_t x1, int32_t y1, int32_t x2, int32_t y2);
             int32_t ExcludeClipRect(LPCRECT lpRect);
-            int32_t ExcludeUpdateRgn(::ca::window * pWnd);
+            int32_t ExcludeUpdateRgn(sp(::ca::window) pWnd);
             int32_t IntersectClipRect(int32_t x1, int32_t y1, int32_t x2, int32_t y2);
             int32_t IntersectClipRect(LPCRECT lpRect);
             int32_t OffsetClipRgn(int32_t x, int32_t y);
@@ -459,7 +459,7 @@ namespace win
       bool SelectClipPath(int32_t nMode);
 
    // Misc Helper Functions
-      static ::ca::brush* GetHalftoneBrush(::ca::application * papp);
+      static ::ca::brush* GetHalftoneBrush(::ca::applicationsp papp);
       void DrawDragRect(LPCRECT lpRect, SIZE size,
          LPCRECT lpRectLast, SIZE sizeLast,
          ::ca::brush* pBrush = NULL, ::ca::brush* pBrushLast = NULL);
@@ -501,7 +501,7 @@ namespace win
 
    //protected:
       // used for implementation of non-virtual SelectObject calls
-      //static ::ca::graphics_object* SelectGdiObject(::ca::application * papp, HDC hDC, HGDIOBJ h);
+      //static ::ca::graphics_object* SelectGdiObject(::ca::applicationsp papp, HDC hDC, HGDIOBJ h);
 
    };
 

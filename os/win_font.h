@@ -14,7 +14,7 @@ namespace win
       Gdiplus::Font *   m_pfont;
 
 
-      font(::ca::application * papp);
+      font(::ca::applicationsp papp);
       virtual ~font();
 
 

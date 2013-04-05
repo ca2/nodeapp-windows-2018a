@@ -15,7 +15,7 @@ namespace win
       void *               m_pdata;
 
 
-      bitmap(::ca::application * papp);
+      bitmap(::ca::applicationsp papp);
       virtual ~bitmap();
 
 

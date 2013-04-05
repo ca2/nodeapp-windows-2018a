@@ -21,7 +21,7 @@
 
 string get_error_message(DWORD dwError);
 
-//::ca::application *     win_instantiate_application(::ca::application * pappSystem, const char * pszId);
+//::ca::applicationsp     win_instantiate_application(::ca::applicationsp pappSystem, const char * pszId);
 
 /////////////////////////////////////////////////////////////////////////////
 // explicit initialization for general purpose classes
@@ -70,7 +70,7 @@ namespace win
 
 
 // window creation hooking
-CLASS_DECL_win void hook_window_create(::win::window * pwindow);
+CLASS_DECL_win void hook_window_create(sp(::win::window) pwindow);
 CLASS_DECL_win bool unhook_window_create();
 CLASS_DECL_win void reset_message_cache();
 
@@ -102,7 +102,7 @@ CLASS_DECL_win WNDPROC __get_window_procedure();
 #define __window_procedure (*__get_window_procedure())
 
 #define WIN_THREAD(pthread) (dynamic_cast < ::win::thread * > (dynamic_cast < ::ca::thread * >(pthread)))
-#define WIN_WINDOW(pwnd) (dynamic_cast < ::win::window * > (dynamic_cast < ::ca::window * >(pwnd)))
+#define WIN_WINDOW(pwnd) ((sp(::win::window))(pwnd))
 #define WIN_DC(pgraphics) (dynamic_cast < ::win::graphics * > (dynamic_cast < ::ca::graphics * > (pgraphics)))
 #define SP_DC(pgraphics) (dynamic_cast < ::win::graphics * > (( ::ca::graphics * )(pgraphics)))
 #define WIN_HDC(pgraphics) ((dynamic_cast < ::win::graphics * > (dynamic_cast < ::ca::graphics * > (pgraphics)))->get_handle())

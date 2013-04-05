@@ -173,7 +173,7 @@ public:
 
 // Operations
 public:
-   CT * from_handle(HANDLE h, CT * (* pfnAllocator) (::ca::application *, HANDLE) = NULL, ::ca::application * papp = NULL);
+   CT * from_handle(HANDLE h, CT * (* pfnAllocator) (::ca::applicationsp, HANDLE) = NULL, ::ca::applicationsp papp = NULL);
    void delete_temp();
 
    void set_permanent(HANDLE h, CT * permOb);
@@ -230,7 +230,7 @@ handle_map < HT, CT > ::handle_map() :
 }
 
 template < class HT, class CT >
-CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (::ca::application *, HANDLE), ::ca::application * papp)
+CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (::ca::applicationsp, HANDLE), ::ca::applicationsp papp)
 {
    
    single_lock sl(&m_mutex, TRUE);

@@ -8,7 +8,7 @@ namespace win
 {
 
    
-   region::region(::ca::application * papp) :
+   region::region(::ca::applicationsp papp) :
       ca(papp)
    { 
       

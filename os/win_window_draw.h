@@ -39,7 +39,7 @@ namespace win
       DWORD                                  m_dwLastDelay;
 
 
-      window_draw(::ca::application * papp);
+      window_draw(::ca::applicationsp papp);
       virtual ~window_draw();
 
 
@@ -55,7 +55,7 @@ namespace win
 
       virtual bool ScreenOutput();
 
-      virtual bool ScreenOutput(user::buffer *, ::user::interaction* pwnd);
+      virtual bool ScreenOutput(user::buffer *, sp(::user::interaction) pwnd);
 
       // Transparent drawing operations
       // controllers

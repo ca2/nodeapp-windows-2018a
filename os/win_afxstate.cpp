@@ -349,7 +349,7 @@ bool CLASS_DECL_win __is_module_dll()
 
 bool CLASS_DECL_win __init_current_state_app()
 {
-   ::ca::application* pApp = __get_module_state()->m_pCurrentWinApp;
+   ::ca::applicationsp pApp = __get_module_state()->m_pCurrentWinApp;
    if (pApp != NULL && !pApp->initialize_instance())
    {
       // Init Failed

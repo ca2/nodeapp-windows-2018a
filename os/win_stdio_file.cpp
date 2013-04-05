@@ -10,7 +10,7 @@ namespace win
 {
 
 
-   stdio_file::stdio_file(::ca::application * papp) :
+   stdio_file::stdio_file(::ca::applicationsp papp) :
       ca(papp),
       ::win::file(papp)
    {

@@ -15,7 +15,7 @@ namespace win
    // Construction/Destruction
    //////////////////////////////////////////////////////////////////////
 
-   port_forward::port_forward(::ca::application * papp) :
+   port_forward::port_forward(::ca::applicationsp papp) :
       ca(papp)
    {
 	   InitializeMembersToNull();
@@ -618,7 +618,7 @@ namespace win
 		   if ( SUCCEEDED(result) )
 		   {
 			   ::EnterCriticalSection( &(pThis->m_cs) );
-			   pThis->m_MappingContainer.add( mapCont );
+			   pThis->m_MappingContainer.add(new port_forward::port_map(mapCont));
 			   ::LeaveCriticalSection( &(pThis->m_cs) );
 		   }
 		

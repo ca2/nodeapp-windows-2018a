@@ -9,7 +9,7 @@ namespace win
 {
 
 
-   copydesk::copydesk(::ca::application * papp) :
+   copydesk::copydesk(::ca::applicationsp papp) :
       ca(papp),
       ::ca::copydesk(papp),
       ::ca::window_sp(papp)

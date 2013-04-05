@@ -1,7 +1,7 @@
 #include "framework.h"
 
 
-WinResource::WinResource(::ca::application * papp) :
+WinResource::WinResource(::ca::applicationsp papp) :
    ca(papp)
 {
 }

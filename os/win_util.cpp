@@ -70,7 +70,7 @@ oswindow CLASS_DECL_win __child_window_from_point(oswindow oswindow, POINT pt)
    return NULL;    // not found
 }
 
-void CLASS_DECL_win __set_window_text(::user::interaction * oswindow_Ctrl, const char * lpszNew)
+void CLASS_DECL_win __set_window_text(sp(::user::interaction) oswindow_Ctrl, const char * lpszNew)
 {
    oswindow_Ctrl->SetWindowText(lpszNew);
    /*ENSURE(oswindow_Ctrl);

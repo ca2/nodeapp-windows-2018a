@@ -8,7 +8,7 @@ namespace win
       virtual public ::ca::path
    {
    public:
-      path(::ca::application * papp);
+      path(::ca::applicationsp papp);
       virtual bool  is_equal(const char * lpszFilPathA, const char * lpszFilPathB);
    };
 
@@ -28,7 +28,7 @@ namespace win
       string      m_strCommonPrograms;
 
 
-      dir(::ca::application * papp);
+      dir(::ca::applicationsp papp);
 
 
       using ::ca::dir::system::path;
@@ -36,22 +36,22 @@ namespace win
       virtual string path(const char * pszFolder, strsize iLenFolder, const char * pszRelative, strsize iLenRelative, const char * psz2, strsize iLen2, bool bUrl);
 
       virtual string relpath(const char * lpcszSource, const char * lpcszRelative, const char * lpcsz2 = NULL);
-      virtual void  ls_pattern(::ca::application * papp, const char * lpcsz, const char * lpcszPattern, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, array < bool, bool > * pbaIsDir = NULL, array < int64_t, int64_t > * piaSize = NULL);
-      virtual void  ls(::ca::application * papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, array < bool, bool > * pbaIsDir = NULL, array < int64_t, int64_t > * piaSize = NULL);
-      virtual void  rls_pattern(::ca::application * papp, const char * lpcsz, const char * lpcszPattern, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, stringa * pstraRelative = NULL, array < bool, bool > * pbaIsDir = NULL, array < int64_t, int64_t > * piaSize = NULL, e_extract eextract = extract_first);
-      virtual void  rls(::ca::application * papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, stringa * pstraRelative = NULL, e_extract eextract = extract_first);
-      virtual void  rls_dir(::ca::application * papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, stringa * pstraRelative = NULL);
-      virtual void  ls_dir(::ca::application * papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL);
-      virtual bool  has_subdir(::ca::application * papp, const char * lpcsz);
-      virtual void  ls_file(::ca::application * papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL);
-      virtual bool  is(const char * lpcsz, ::ca::application * papp);
-      virtual bool  is(const string & str, ::ca::application * papp);
-      virtual bool  name_is(const string & str, ::ca::application * papp);
-      virtual bool  is_inside(const char * lpcszDir, const char * lpcszPath, ::ca::application * papp);
-      virtual bool  is_inside_time(const char * lpcsz, ::ca::application * papp);
-      virtual void root_ones(stringa & stra, ::ca::application * papp);
-      virtual bool mk(const char * lpcsz, ::ca::application * papp);
-      virtual bool rm(::ca::application * papp, const char * psz, bool bRecursive = true);
+      virtual void  ls_pattern(::ca::applicationsp papp, const char * lpcsz, const char * lpcszPattern, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, array < bool, bool > * pbaIsDir = NULL, array < int64_t, int64_t > * piaSize = NULL);
+      virtual void  ls(::ca::applicationsp papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, array < bool, bool > * pbaIsDir = NULL, array < int64_t, int64_t > * piaSize = NULL);
+      virtual void  rls_pattern(::ca::applicationsp papp, const char * lpcsz, const char * lpcszPattern, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, stringa * pstraRelative = NULL, array < bool, bool > * pbaIsDir = NULL, array < int64_t, int64_t > * piaSize = NULL, e_extract eextract = extract_first);
+      virtual void  rls(::ca::applicationsp papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, stringa * pstraRelative = NULL, e_extract eextract = extract_first);
+      virtual void  rls_dir(::ca::applicationsp papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, stringa * pstraRelative = NULL);
+      virtual void  ls_dir(::ca::applicationsp papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL);
+      virtual bool  has_subdir(::ca::applicationsp papp, const char * lpcsz);
+      virtual void  ls_file(::ca::applicationsp papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL);
+      virtual bool  is(const char * lpcsz, ::ca::applicationsp papp);
+      virtual bool  is(const string & str, ::ca::applicationsp papp);
+      virtual bool  name_is(const string & str, ::ca::applicationsp papp);
+      virtual bool  is_inside(const char * lpcszDir, const char * lpcszPath, ::ca::applicationsp papp);
+      virtual bool  is_inside_time(const char * lpcsz, ::ca::applicationsp papp);
+      virtual void root_ones(stringa & stra, ::ca::applicationsp papp);
+      virtual bool mk(const char * lpcsz, ::ca::applicationsp papp);
+      virtual bool rm(::ca::applicationsp papp, const char * psz, bool bRecursive = true);
       
 
       virtual string name(const char * lpcsz);
@@ -80,16 +80,16 @@ namespace win
 
       virtual string appdata(const char * lpcsz = NULL, const char * lpcsz2 = NULL);
 
-      virtual string usersystemappdata(::ca::application * papp, const char * lpcszPrefix, const char * lpcsz = NULL, const char * lpcsz2 = NULL);
-      virtual string userappdata(::ca::application * papp, const char * lpcsz = NULL, const char * lpcsz2 = NULL);
-      virtual string userdata(::ca::application * papp, const char * lpcsz = NULL, const char * lpcsz2 = NULL);
-      virtual string userfolder(::ca::application * papp, const char * lpcsz = NULL, const char * lpcsz2 = NULL);
-      virtual string default_os_user_path_prefix(::ca::application * papp);
-      virtual string default_userappdata(::ca::application * papp, const char * lpcszPrefix, const char * lpcszLogin , const char * pszRelativePath = NULL);
-      virtual string default_userdata(::ca::application * papp, const char * lpcszPrefix, const char * lpcszLogin, const char * pszRelativePath = NULL);
-      virtual string default_userfolder(::ca::application * papp, const char * lpcszPrefix, const char * lpcszLogin, const char * pszRelativePath = NULL);
-      virtual string userquicklaunch(::ca::application * papp, const char * pszRelativePath = NULL, const char * lpcsz2 = NULL);
-      virtual string userprograms(::ca::application * papp, const char * pszRelativePath = NULL, const char * lpcsz2 = NULL);
+      virtual string usersystemappdata(::ca::applicationsp papp, const char * lpcszPrefix, const char * lpcsz = NULL, const char * lpcsz2 = NULL);
+      virtual string userappdata(::ca::applicationsp papp, const char * lpcsz = NULL, const char * lpcsz2 = NULL);
+      virtual string userdata(::ca::applicationsp papp, const char * lpcsz = NULL, const char * lpcsz2 = NULL);
+      virtual string userfolder(::ca::applicationsp papp, const char * lpcsz = NULL, const char * lpcsz2 = NULL);
+      virtual string default_os_user_path_prefix(::ca::applicationsp papp);
+      virtual string default_userappdata(::ca::applicationsp papp, const char * lpcszPrefix, const char * lpcszLogin , const char * pszRelativePath = NULL);
+      virtual string default_userdata(::ca::applicationsp papp, const char * lpcszPrefix, const char * lpcszLogin, const char * pszRelativePath = NULL);
+      virtual string default_userfolder(::ca::applicationsp papp, const char * lpcszPrefix, const char * lpcszLogin, const char * pszRelativePath = NULL);
+      virtual string userquicklaunch(::ca::applicationsp papp, const char * pszRelativePath = NULL, const char * lpcsz2 = NULL);
+      virtual string userprograms(::ca::applicationsp papp, const char * pszRelativePath = NULL, const char * lpcsz2 = NULL);
 
       virtual string commonprograms(const char * pszRelativePath = NULL, const char * lpcsz2 = NULL);
 

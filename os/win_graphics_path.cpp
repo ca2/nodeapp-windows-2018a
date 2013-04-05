@@ -9,7 +9,7 @@ namespace win
 
 
 
-   graphics_path::graphics_path(::ca::application * papp)
+   graphics_path::graphics_path(::ca::applicationsp papp)
    {
 
       m_ppath = new Gdiplus::GraphicsPath();

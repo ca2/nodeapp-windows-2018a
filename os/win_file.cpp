@@ -13,7 +13,7 @@ namespace win
 {
 
 
-   file::file(::ca::application * papp) :
+   file::file(::ca::applicationsp papp) :
       ca(papp)
    {
 
@@ -23,7 +23,7 @@ namespace win
 
    }
 
-   file::file(::ca::application * papp, int32_t hFile) :
+   file::file(::ca::applicationsp papp, int32_t hFile) :
       ca(papp)
    {
 
@@ -33,7 +33,7 @@ namespace win
 
    }
 
-   file::file(::ca::application * papp, const char * lpszFileName, UINT nOpenFlags) :
+   file::file(::ca::applicationsp papp, const char * lpszFileName, UINT nOpenFlags) :
       ca(papp)
    {
 
@@ -592,13 +592,13 @@ namespace win
 
 
 
-   void file_exception::ThrowOsError(::ca::application * papp, LONG lOsError, const char * lpszFileName /* = NULL */)
+   void file_exception::ThrowOsError(::ca::applicationsp papp, LONG lOsError, const char * lpszFileName /* = NULL */)
    {
       if (lOsError != 0)
          vfxThrowFileException(papp, file_exception::OsErrorToException(lOsError), lOsError, lpszFileName);
    }
 
-   void file_exception::ThrowErrno(::ca::application * papp, int32_t nErrno, const char * lpszFileName /* = NULL */)
+   void file_exception::ThrowErrno(::ca::applicationsp papp, int32_t nErrno, const char * lpszFileName /* = NULL */)
    {
       if (nErrno != 0)
          vfxThrowFileException(papp, file_exception::ErrnoToException(nErrno), _doserrno, lpszFileName);
@@ -1338,10 +1338,10 @@ bool CLASS_DECL_win vfxGetInProcServer(const char * lpszCLSID, string & str)
 //#endif  //!___NO_OLE_SUPPORT
 
 
-bool CLASS_DECL_win vfxResolveShortcut(string & strTarget, const char * pszSource, ::user::interaction * puiMessageParentOptional)
+bool CLASS_DECL_win vfxResolveShortcut(string & strTarget, const char * pszSource, sp(::user::interaction) puiMessageParentOptional)
 {
 
-   ::user::interaction * pui = puiMessageParentOptional;
+   sp(::user::interaction) pui = puiMessageParentOptional;
 
    wstring wstrFileOut;
    wstring wstrFileIn = ::ca::international::utf8_to_unicode(pszSource);
@@ -1650,7 +1650,7 @@ UINT CLASS_DECL_win vfxGetFileName(const wchar_t * lpszPathName, wchar_t * lpszT
 /////////////////////////////////////////////////////////////////////////////
 // WinFileException helpers
 
-void CLASS_DECL_win vfxThrowFileException(::ca::application * papp, int32_t cause, LONG lOsError, const char * lpszFileName /* == NULL */)
+void CLASS_DECL_win vfxThrowFileException(::ca::applicationsp papp, int32_t cause, LONG lOsError, const char * lpszFileName /* == NULL */)
 {
 #ifdef DEBUG
    const char * lpsz;

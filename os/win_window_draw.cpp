@@ -28,7 +28,7 @@ public:
 namespace win
 {
 
-   window_draw::window_draw(::ca::application * papp) : 
+   window_draw::window_draw(::ca::applicationsp papp) : 
       ca(papp),
       ::ca::thread(papp),
       ::ca::window_draw(papp),
@@ -265,7 +265,7 @@ namespace win
       else
       {
          ::user::window_interface * ptwi = System.user()->window_map().get((int_ptr) oswindowParam);
-         ::user::interaction * pguie = dynamic_cast < ::user::interaction * > (ptwi);
+         sp(::user::interaction) pguie = dynamic_cast < ::user::interaction * > (ptwi);
          rect rectWindow;
          ::GetWindowRect(oswindowParam, rectWindow);
          //::GetClientRect(oswindowParam, rectWindow);
@@ -420,15 +420,15 @@ namespace win
       }
 
 
-      user::oswindow_array oswindowa;
+      //user::oswindow_array oswindowa;
 
-      get_wnda(oswindowa);
+      //get_wnda(oswindowa);
 
       user::interaction_ptr_array wndpa(get_app());
 
       get_wnda(wndpa);
 
-      user::window_util::SortByZOrder(oswindowa);
+      //user::window_util::SortByZOrder(oswindowa);
 
       user::oswindow_tree::Array oswindowtreea;
       //oswindowtreea = oswindowa;
@@ -516,7 +516,7 @@ namespace win
             {
                try
                {
-                  dynamic_cast < ::ca::window * > (wndpa[l].m_pimpl.m_p)->_001UpdateWindow();
+                  WIN_WINDOW(wndpa[l].m_pimpl)->_001UpdateWindow();
                }
                catch(...)
                {
@@ -547,15 +547,15 @@ namespace win
       {
          oswindow oswindowTopic = wndaApp[j];
 
-         ::ca::window * pwnd = NULL;
-         //::ca::window * pwnd = dynamic_cast < ::ca::window * > (System.user()->window_map().get((int_ptr) oswindowTopic));
+         sp(::ca::window) pwnd = NULL;
+         //sp(::ca::window) pwnd = (System.user()->window_map().get((int_ptr) oswindowTopic));
          //if(pwnd == NULL)
          //{
          for(int32_t l = 0; l < wndpa.get_count(); l++)
          {
             if(wndpa[l].get_safe_handle() == oswindowTopic)
             {
-               pwnd = dynamic_cast < ::ca::window * > (wndpa[l].m_pimpl.m_p);
+               pwnd = (wndpa[l].m_pimpl.m_p);
                break;
             }
          }
@@ -596,7 +596,7 @@ namespace win
 
 
 
-            /*simple_frame_window * pframe = dynamic_cast < simple_frame_window * > (pwnd);
+            /*sp(simple_frame_window) pframe =  (pwnd);
             if(pframe != NULL)
             {
                pframe->InitialFramePosition(true);
@@ -660,7 +660,7 @@ namespace win
 
       for(int32_t i = 0; i < m_wndpaOut.get_count(); i++)
       {
-         ::user::interaction* pwnd = m_wndpaOut(i);
+         sp(::user::interaction) pwnd = m_wndpaOut(i);
 
          ScreenOutput(m_pbuffer, pwnd);
       
@@ -790,7 +790,7 @@ namespace win
 
       rect rectClient;
 
-      ::user::interaction * pguie = dynamic_cast < ::user::interaction * > (ptwi);
+      sp(::user::interaction) pguie = dynamic_cast < ::user::interaction * > (ptwi);
 
       pguie->GetClientRect(rectClient);
       pguie->ClientToScreen(rectClient);
@@ -811,7 +811,7 @@ namespace win
          return OptimizeNone;
       }
 
-   //    ::ca::window * pwnd = window::FromHandlePermanent(oswindow);
+   //    sp(::ca::window) pwnd = window::FromHandlePermanent(oswindow);
        
       
       if(ptwi == NULL)
@@ -903,7 +903,7 @@ namespace win
       ::GetWindowRect(oswindow, rectWindow);
 
 
-   //   ::ca::window * pwnd = ::win::window::from_handle;
+   //   sp(::ca::window) pwnd = ::win::window::from_handle;
 
       if(!TwfGetTopWindow(
             oswindowParam,
@@ -1006,7 +1006,7 @@ namespace win
    {
       rect rectWindow;
 
-   //   ::ca::window * pwndOpaque = window::FromHandlePermanent(oswindowOpaque);
+   //   sp(::ca::window) pwndOpaque = window::FromHandlePermanent(oswindowOpaque);
 
       ::GetWindowRect(oswindowOpaque, rectWindow);
 
@@ -1096,7 +1096,7 @@ namespace win
       user::buffer * pbuffer,
       // oswindowParam ::ca::window device context
       // is used from screen output
-      ::user::interaction* pwnd)
+      sp(::user::interaction) pwnd)
    {
       if(pwnd != NULL)
       {
@@ -1271,7 +1271,7 @@ namespace win
                   (int32_t) rectWindow.left, (int32_t) rectWindow.top, (int32_t) rectWindow.width(), (int32_t) rectWindow.height(), SWP_SHOWWINDOW);
                ::SetWindowPos(oswindowParam, oswindowZOrder, 
                   (int32_t) rectWindow.left, (int32_t) rectWindow.top, (int32_t) rectWindow.width(), (int32_t) rectWindow.height(), SWP_SHOWWINDOW | SWP_FRAMECHANGED);
-               /*simple_frame_window * pframe = dynamic_cast < simple_frame_window * > (pwnd->m_pguie);
+               /*sp(simple_frame_window) pframe =  (pwnd->m_pguie);
                if(pframe != NULL)
                {
                   pframe->ActivateFrame();

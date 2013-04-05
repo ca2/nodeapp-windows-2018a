@@ -8,7 +8,7 @@ namespace win
 {
 
 
-   bitmap::bitmap(::ca::application * papp) :
+   bitmap::bitmap(::ca::applicationsp papp) :
       ca(papp)
    { 
 

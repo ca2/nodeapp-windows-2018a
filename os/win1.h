@@ -22,7 +22,7 @@ namespace win
    CLASS_DECL_win HICON       ExtractIcon(HINSTANCE hInst, const char * lpszExeFileName, UINT nIconIndex);
    CLASS_DECL_win bool        DeleteFile(const char * lpFileName);
    CLASS_DECL_win int32_t         GetMenuStringW(HMENU hMenu, UINT uIDItem, string & str, UINT flags);
-   CLASS_DECL_win void        TimeToFileTime(::ca::application * papp, const ::datetime::time& time, LPFILETIME pFileTime);
+   CLASS_DECL_win void        TimeToFileTime(::ca::applicationsp papp, const ::datetime::time& time, LPFILETIME pFileTime);
 
 
 } // namespace win
@@ -90,10 +90,10 @@ CLASS_DECL_win ::win::thread * __get_thread();
 CLASS_DECL_win void __set_thread(::ca::thread * pthread);
 CLASS_DECL_win MSG* __get_current_message();
 
-CLASS_DECL_win void __end_thread(::ca::application * papp, UINT nExitCode, bool bDelete = TRUE);
+CLASS_DECL_win void __end_thread(::ca::applicationsp papp, UINT nExitCode, bool bDelete = TRUE);
 
 CLASS_DECL_win void __init_thread();
-CLASS_DECL_win void __term_thread(::ca::application * papp, HINSTANCE hInstTerm = NULL);
+CLASS_DECL_win void __term_thread(::ca::applicationsp papp, HINSTANCE hInstTerm = NULL);
 
 /////////////////////////////////////////////////////////////////////////////
 // Global functions for access to the one and only application
@@ -112,8 +112,8 @@ CLASS_DECL_win void __term_thread(::ca::application * papp, HINSTANCE hInstTerm 
   // __in_z LPTSTR lpCmdLine, __in int32_t nCmdShow);
 CLASS_DECL_win void __win_term();
 
-CLASS_DECL_win ::ca::application* __get_app();
-CLASS_DECL_win ::user::interaction* __get_main_window();
+CLASS_DECL_win ::ca::applicationsp __get_app();
+CLASS_DECL_win sp(::user::interaction) __get_main_window();
 //CLASS_DECL_win HINSTANCE CLASS_DECL_win System.m_hInstance;
 CLASS_DECL_win HINSTANCE __get_resource_handle();
 CLASS_DECL_win void __set_resource_handle(HINSTANCE hInstResource);

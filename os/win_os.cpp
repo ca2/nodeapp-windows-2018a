@@ -12,7 +12,7 @@ namespace win
 {
 
 
-   os::os(::ca::application * papp) :
+   os::os(::ca::applicationsp papp) :
       ca(papp),
       ::ca::os(papp)
    {
@@ -703,7 +703,7 @@ namespace win
       return bOk != FALSE;
    }
 
-   bool os::resolve_link(string & strTarget, const char * pszSource, ::user::interaction * puiMessageParentOptional)
+   bool os::resolve_link(string & strTarget, const char * pszSource, sp(::user::interaction) puiMessageParentOptional)
    {
 
       return vfxResolveShortcut(strTarget, pszSource, puiMessageParentOptional);

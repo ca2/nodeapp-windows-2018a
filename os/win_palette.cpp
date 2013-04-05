@@ -3,7 +3,7 @@
 namespace win
 {
 
-   palette::palette(::ca::application * papp) :
+   palette::palette(::ca::applicationsp papp) :
       ca(papp)
    { }
    palette::~palette()
@@ -13,7 +13,7 @@ namespace win
    { 
       return (HPALETTE)(this == NULL ? NULL : get_os_data()); 
    }
-   palette* palette::from_handle(::ca::application * papp, HPALETTE hPalette)
+   palette* palette::from_handle(::ca::applicationsp papp, HPALETTE hPalette)
    { 
       //return dynamic_cast < palette * > (::win::graphics_object::from_handle(papp, hPalette)); 
       return NULL;

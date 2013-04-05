@@ -166,7 +166,7 @@ public:
    map < HANDLE, HANDLE, CT *, CT *> m_permanentMap;
    map < HANDLE, HANDLE, CT *, CT *> m_temporaryMap;
 
-   handle_map(::ca::application * papp);
+   handle_map(::ca::applicationsp papp);
    virtual ~handle_map()
    { 
       delete_temp();
@@ -174,7 +174,7 @@ public:
 
 // Operations
 public:
-   CT * from_handle(HANDLE h, CT * (* pfnAllocator) (::ca::application *, HANDLE) = NULL, ::ca::application * papp = NULL);
+   CT * from_handle(HANDLE h, CT * (* pfnAllocator) (::ca::applicationsp, HANDLE) = NULL, ::ca::applicationsp papp = NULL);
    void delete_temp();
 
    void set_permanent(HANDLE h, CT * permOb);
@@ -190,7 +190,7 @@ class CLASS_DECL_win oswindow_map :
    public handle_map < ::win::oswindow_handle, ::win::window >
 {
 public:
-   oswindow_map(::ca::application * papp) : handle_map < ::win::oswindow_handle, ::win::window >(papp) {}
+   oswindow_map(::ca::applicationsp papp) : handle_map < ::win::oswindow_handle, ::win::window >(papp) {}
 };
 
 /*class CLASS_DECL_win hdc_map :
@@ -215,7 +215,7 @@ public:
 
 
 template < class HT, class CT >
-handle_map < HT, CT > ::handle_map(::ca::application * papp) : 
+handle_map < HT, CT > ::handle_map(::ca::applicationsp papp) : 
    ca(papp),
    m_permanentMap(1024), 
    m_temporaryMap(1024), 
@@ -234,7 +234,7 @@ handle_map < HT, CT > ::handle_map(::ca::application * papp) :
 }
 
 template < class HT, class CT >
-CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (::ca::application *, HANDLE), ::ca::application * papp)
+CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (::ca::applicationsp, HANDLE), ::ca::applicationsp papp)
 {
    
    single_lock sl(&m_mutex, TRUE);

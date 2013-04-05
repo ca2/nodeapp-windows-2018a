@@ -1,8 +1,8 @@
 #include "framework.h"
 
 // Global helper functions
- CLASS_DECL_win ::ca::application * __get_app()
-{ return dynamic_cast < ::ca::application * > (afxCurrentWinApp); }
+ CLASS_DECL_win ::ca::applicationsp __get_app()
+{ return (afxCurrentWinApp); }
 
  CLASS_DECL_win HINSTANCE __get_instance_handle()
    { ASSERT(afxCurrentInstanceHandle != NULL);
@@ -14,7 +14,7 @@
    { ASSERT(hInstResource != NULL); afxCurrentResourceHandle = hInstResource; }
  CLASS_DECL_win const char * __get_app_name()
    { ASSERT(afxCurrentAppName != NULL); return afxCurrentAppName; }
- CLASS_DECL_win ::user::interaction * __get_main_window()
+ CLASS_DECL_win sp(::user::interaction) __get_main_window()
 {
       ::ca::thread* pThread = dynamic_cast < ::ca::thread * > (::win::get_thread());
       return pThread != NULL ? pThread->GetMainWnd() : NULL; 

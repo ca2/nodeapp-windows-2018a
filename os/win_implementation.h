@@ -1,11 +1,11 @@
 #pragma once
 
-CLASS_DECL_win string get_user_interaction_window_class(::user::interaction * pui);
+CLASS_DECL_win string get_user_interaction_window_class(sp(::user::interaction) pui);
 
 
 // Temporary map management (locks temp map on current thread)
-//CLASS_DECL_win void ::ca::LockTempMaps(::ca::application * papp);
-//CLASS_DECL_win bool ::ca::UnlockTempMaps(::ca::application * papp, bool bDeleteTemps = TRUE);
+//CLASS_DECL_win void ::ca::LockTempMaps(::ca::applicationsp papp);
+//CLASS_DECL_win bool ::ca::UnlockTempMaps(::ca::applicationsp papp, bool bDeleteTemps = TRUE);
 
 
 

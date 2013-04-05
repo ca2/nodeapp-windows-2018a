@@ -7,7 +7,7 @@ namespace win
       virtual public ::ca::object
    {
    public:
-      factory_exchange(::ca::application * papp);
+      factory_exchange(::ca::applicationsp papp);
       virtual ~factory_exchange();
    };
 

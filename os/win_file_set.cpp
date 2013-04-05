@@ -5,7 +5,7 @@ namespace win
 {
 
 
-   file_set::file_set(::ca::application * papp) :
+   file_set::file_set(::ca::applicationsp papp) :
       ca(papp)
    {
 

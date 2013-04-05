@@ -34,7 +34,7 @@ namespace win
 
       virtual COLORREF * get_data();
 
-      dib(::ca::application * papp);
+      dib(::ca::applicationsp papp);
       virtual void construct(int32_t cx, int32_t cy);
       virtual ~dib();
 

@@ -8,7 +8,7 @@ namespace win
 {
 
 
-   pen::pen(::ca::application * papp) :
+   pen::pen(::ca::applicationsp papp) :
       ca(papp)
    { 
 
@@ -119,7 +119,7 @@ namespace win
       // Standard exception processing
 
 
-   /*void __get_gray_bitmap(::ca::application * papp, const ::ca::bitmap &rSrc, ::ca::bitmap *pDest, COLORREF crBackground)
+   /*void __get_gray_bitmap(::ca::applicationsp papp, const ::ca::bitmap &rSrc, ::ca::bitmap *pDest, COLORREF crBackground)
    {
       ASSERT(pDest);
       ASSERT_KINDOF(::ca::bitmap, pDest);
@@ -177,7 +177,7 @@ namespace win
       }
    }
 
-   void __draw_gray_bitmap(::ca::application * papp, ::ca::graphics * pgraphics, int32_t x, int32_t y, const ::ca::bitmap &rSrc, COLORREF crBackground)
+   void __draw_gray_bitmap(::ca::applicationsp papp, ::ca::graphics * pgraphics, int32_t x, int32_t y, const ::ca::bitmap &rSrc, COLORREF crBackground)
    {
       ASSERT(pgraphics);
       ASSERT_KINDOF(::ca::graphics_sp, pgraphics);
@@ -225,7 +225,7 @@ namespace win
       }
    }
 
-   void __get_dithered_bitmap(::ca::application * papp, const ::ca::bitmap &rSrc, ::ca::bitmap *pDest, COLORREF cr1, COLORREF cr2)
+   void __get_dithered_bitmap(::ca::applicationsp papp, const ::ca::bitmap &rSrc, ::ca::bitmap *pDest, COLORREF cr1, COLORREF cr2)
    {
       ASSERT(pDest);
       ASSERT_KINDOF(::ca::bitmap, pDest);
@@ -294,7 +294,7 @@ namespace win
       }
    }
 
-   void __draw_dithered_bitmap(::ca::application * papp, ::ca::graphics * pgraphics, int32_t x, int32_t y, const ::ca::bitmap &rSrc, COLORREF cr1, COLORREF cr2)
+   void __draw_dithered_bitmap(::ca::applicationsp papp, ::ca::graphics * pgraphics, int32_t x, int32_t y, const ::ca::bitmap &rSrc, COLORREF cr1, COLORREF cr2)
    {
       ASSERT(pgraphics);
       ASSERT_KINDOF(::ca::graphics_sp, pgraphics);

@@ -42,7 +42,7 @@ namespace win
 
 
       // list of frame_window objects for thread
-      simple_list < frame_window * >   m_frameList;
+      simple_list < sp(::frame_window) >   m_frameList;
 
       // temporary/permanent map state
       DWORD m_nTempMapLock;           // if not 0, temp maps locked
@@ -61,7 +61,7 @@ namespace win
       UINT                                m_dwFinishTimeout;
 
 
-      thread(::ca::application * papp);
+      thread(::ca::applicationsp papp);
       virtual ~thread();
 
 
@@ -86,26 +86,26 @@ namespace win
       bool create_thread(::ca::e_thread_priority epriority = get_thread_priority_normal(), uint32_t dwCreateFlags = 0, uint_ptr nStackSize = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL) override;
 
 
-      virtual ::user::interaction * SetMainWnd(::user::interaction * pui);
+      virtual sp(::user::interaction) SetMainWnd(sp(::user::interaction) pui);
 
       virtual int32_t thread_entry(::ca::thread_startup * pstartup);
       virtual int32_t main();
       virtual int32_t thread_term(int32_t nResult);
 
 
-      virtual void add(::user::interaction * pui);
-      virtual void remove(::user::interaction * pui);
+      virtual void add(sp(::user::interaction) pui);
+      virtual void remove(sp(::user::interaction) pui);
       virtual ::count get_ui_count();
-      virtual ::user::interaction * get_ui(::index iIndex);
-      virtual void set_timer(::user::interaction * pui, uint_ptr nIDEvent, UINT nEllapse);
-      virtual void unset_timer(::user::interaction * pui, uint_ptr nIDEvent);
+      virtual sp(::user::interaction) get_ui(::index iIndex);
+      virtual void set_timer(sp(::user::interaction) pui, uint_ptr nIDEvent, UINT nEllapse);
+      virtual void unset_timer(sp(::user::interaction) pui, uint_ptr nIDEvent);
       virtual void set_auto_delete(bool bAutoDelete = true);
       virtual void set_run(bool bRun = true);
       virtual event & get_finish_event();
       virtual bool get_run();
       virtual ::ca::thread * get_app_thread();
-      virtual ::user::interaction * get_active_ui();
-      virtual ::user::interaction * set_active_ui(::user::interaction * pui);
+      virtual sp(::user::interaction) get_active_ui();
+      virtual sp(::user::interaction) set_active_ui(sp(::user::interaction) pui);
       virtual void step_timer();
 
 
@@ -114,7 +114,7 @@ namespace win
 * \brief	Platform independent threads and synchronization objects (linux version)
 */
 
-      virtual void on_delete(::ca::ca * poc);
+      virtual void on_delete(sp(::ca::ca) poc);
 
 
       virtual void start();
@@ -126,7 +126,7 @@ namespace win
       //DWORD SuspendThread();
       uint32_t ResumeThread();
       bool post_thread_message(UINT message, WPARAM wParam, LPARAM lParam);
-      bool post_message(::user::interaction * pguie, UINT message, WPARAM wParam, LPARAM lParam);
+      bool post_message(sp(::user::interaction) pguie, UINT message, WPARAM wParam, LPARAM lParam);
 
       virtual bool PreInitInstance();
 
@@ -159,7 +159,7 @@ namespace win
       virtual void ProcessMessageFilter(int32_t code, ::ca::signal_object * pobj);
 
       // Advanced: virtual access to GetMainWnd()
-      virtual ::user::interaction* GetMainWnd();
+      virtual sp(::user::interaction) GetMainWnd();
 
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;

@@ -46,7 +46,7 @@ namespace win
    }
 
 
-   graphics_object * graphics_object_allocator(::ca::application * papp, HANDLE h)
+   graphics_object * graphics_object_allocator(::ca::applicationsp papp, HANDLE h)
    {
       /*switch(::GetObjectType(h))
       {
@@ -67,7 +67,7 @@ namespace win
       return NULL;
    }
 
-   /*graphics_object* graphics_object::from_handle(::ca::application * papp, HGDIOBJ h)
+   /*graphics_object* graphics_object::from_handle(::ca::applicationsp papp, HGDIOBJ h)
    {
       hgdiobj_map* pMap = afxMapHGDIOBJ(TRUE); //create map if not exist
       ASSERT(pMap != NULL);
