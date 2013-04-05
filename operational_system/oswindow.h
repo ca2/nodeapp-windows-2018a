@@ -52,13 +52,13 @@ inline bool operator != (const ::ca::null & n, const T t)
 template < typename T >
 inline bool operator == (const T t, const ::ca::null & n)
 {
-   return t != ((int_ptr) 0);
+   return t == ((int_ptr) 0);
 }
 
 template < typename T >
 inline bool operator == (const ::ca::null & n, const T t)
 {
-   return t != ((int_ptr) 0);
+   return t == ((int_ptr) 0);
 }
 
 typedef HWND oswindow;
