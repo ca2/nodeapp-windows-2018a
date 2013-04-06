@@ -5,7 +5,7 @@ namespace win2
 {
 
 
-   factory_exchange::factory_exchange(::ca::applicationsp papp) :
+   factory_exchange::factory_exchange(sp(::ca::application) papp) :
       ca(papp)
    {
       
@@ -22,7 +22,7 @@ namespace win2
 
 
 
-void ca2_factory_exchange(::ca::applicationsp papp)
+void ca2_factory_exchange(sp(::ca::application) papp)
 {
 
    win2::factory_exchange factoryexchange(papp);

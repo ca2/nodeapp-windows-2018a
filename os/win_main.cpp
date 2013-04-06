@@ -16,9 +16,9 @@ void CLASS_DECL_win __cdecl _ca2_purecall()
 void __cdecl _null_se_translator(uint32_t uiCode, EXCEPTION_POINTERS * ppointers);
 
 
-//::ca::applicationsp     win_application_create(::ca::applicationsp pappSystem, const char * pszId);
-//::ca::applicationsp     win_instantiate_application(::ca::applicationsp pappSystem, const char * pszId);
-//int32_t                     win_application_procedure(::ca::applicationsp pappSystem)
+//sp(::ca::application)     win_application_create(sp(::ca::application) pappSystem, const char * pszId);
+//sp(::ca::application)     win_instantiate_application(sp(::ca::application) pappSystem, const char * pszId);
+//int32_t                     win_application_procedure(sp(::ca::application) pappSystem)
 //UINT c_cdecl          win_application_thread_proc(LPVOID);
 /////////////////////////////////////////////////////////////////////////////
 // Standard WinMain implementation
@@ -31,7 +31,7 @@ int32_t CLASS_DECL_win __win_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, 
 
    UNREFERENCED_PARAMETER(lpCmdLine);
 
-   ::CoInitialize(NULL);
+   ::CoInitialize(::null());
 
    if(!main_initialize())
       return -1;
@@ -41,9 +41,9 @@ int32_t CLASS_DECL_win __win_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, 
 
    _set_purecall_handler(_ca2_purecall);
 
-   ::plane::system * psystem = new ::plane::system();
+   sp(::plane::system) psystem = canew(::plane::system());
 
-   ASSERT(hPrevInstance == NULL);
+   ASSERT(hPrevInstance == ::null());
 
    int32_t nReturnCode = 0;
 
@@ -92,7 +92,7 @@ int32_t CLASS_DECL_win __win_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, 
    {
    }
 
-   psystem = NULL;
+   psystem = ::null();
 
 
    try
@@ -120,28 +120,28 @@ int32_t CLASS_DECL_win __win_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, 
 
    try
    {
-      __get_module_state()->m_pmapHWND     = NULL;
+      __get_module_state()->m_pmapHWND     = ::null();
    }
    catch(...)
    {
    }
 /*   try
    {
-      __get_module_state()->m_pmapHDC      = NULL;
+      __get_module_state()->m_pmapHDC      = ::null();
    }
    catch(...)
    {
    }*/
 /*   try
    {
-      __get_module_state()->m_pmapHGDIOBJ  = NULL;
+      __get_module_state()->m_pmapHGDIOBJ  = ::null();
    }
    catch(...)
    {
    }*/
 
 
-   set_heap_mutex(NULL);
+   set_heap_mutex(::null());
 
    return nReturnCode;
 
@@ -162,7 +162,7 @@ int32_t CLASS_DECL_win ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, co
       //Sleep(30 * 1000);
 
 
-      ASSERT(hPrevInstance == NULL);
+      ASSERT(hPrevInstance == ::null());
 
       int32_t nReturnCode = 0;
 
@@ -191,7 +191,7 @@ int32_t CLASS_DECL_win ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, co
       {
       }
 
-      psystem = NULL;
+      psystem = ::null();
 
       try
       {
@@ -217,27 +217,27 @@ int32_t CLASS_DECL_win ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, co
 //      delete __get_module_state()->m_pmapHMENU;
       try
       {
-         __get_module_state()->m_pmapHWND     = NULL;
+         __get_module_state()->m_pmapHWND     = ::null();
       }
       catch(...)
       {
       }
 /*      try
       {
-         __get_module_state()->m_pmapHDC      = NULL;
+         __get_module_state()->m_pmapHDC      = ::null();
       }
       catch(...)
       {
       }
       try
       {
-         __get_module_state()->m_pmapHGDIOBJ  = NULL;
+         __get_module_state()->m_pmapHGDIOBJ  = ::null();
       }
       catch(...)
       {
       }*/
 
-      set_heap_mutex(NULL);
+      set_heap_mutex(::null());
 
 
       return nReturnCode;
@@ -258,4 +258,4 @@ void __cdecl _null_se_translator(uint32_t uiCode, EXCEPTION_POINTERS * ppointers
 
 
 
-HINSTANCE g_hinstance = NULL;
+HINSTANCE g_hinstance = ::null();

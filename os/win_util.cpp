@@ -5,7 +5,7 @@
 // interesting function
 /*bool CLASS_DECL_win __custom_log_font(UINT nIDS, LOGFONT* pLogFont)
 {
-   ENSURE_ARG(pLogFont != NULL);
+   ENSURE_ARG(pLogFont != ::null());
    ASSERT(nIDS != 0);
 
    char szFontInfo[256];
@@ -13,7 +13,7 @@
       return FALSE;
 
    LPTSTR lpszSize = _tcschr(szFontInfo, '\n');
-   if (lpszSize != NULL)
+   if (lpszSize != ::null())
    {
       // get point size and convert to pixels
       pLogFont->lfHeight = _ttoi(lpszSize+1);
@@ -27,7 +27,7 @@
 
 bool CLASS_DECL_win __is_combo_box_control(oswindow oswindow, UINT nStyle)
 {
-   if (oswindow == NULL)
+   if (oswindow == ::null())
       return FALSE;
    // do cheap style compare first
    if ((UINT)(::GetWindowLong(oswindow, GWL_STYLE) & 0x0F) != nStyle)
@@ -49,12 +49,12 @@ bool CLASS_DECL_win __compare_class_name(oswindow oswindow, const char * lpszCla
 
 oswindow CLASS_DECL_win __child_window_from_point(oswindow oswindow, POINT pt)
 {
-   ASSERT(oswindow != NULL);
+   ASSERT(oswindow != ::null());
 
    // check child windows
    ::ClientToScreen(oswindow, &pt);
    ::oswindow oswindow_Child = ::GetWindow(oswindow, GW_CHILD);
-   for (; oswindow_Child != NULL; oswindow_Child = ::GetWindow(oswindow_Child, GW_HWNDNEXT))
+   for (; oswindow_Child != ::null(); oswindow_Child = ::GetWindow(oswindow_Child, GW_HWNDNEXT))
    {
       if (__get_dialog_control_id(oswindow_Child) != (WORD)0 &&
          (::GetWindowLong(oswindow_Child, GWL_STYLE) & WS_VISIBLE))
@@ -67,7 +67,7 @@ oswindow CLASS_DECL_win __child_window_from_point(oswindow oswindow, POINT pt)
       }
    }
 
-   return NULL;    // not found
+   return ::null();    // not found
 }
 
 void CLASS_DECL_win __set_window_text(sp(::user::interaction) oswindow_Ctrl, const char * lpszNew)
@@ -90,11 +90,11 @@ void CLASS_DECL_win __set_window_text(sp(::user::interaction) oswindow_Ctrl, con
 
 void CLASS_DECL_win __delete_object(HGDIOBJ* pObject)
 {
-   ENSURE_ARG(pObject != NULL);   
-   if (*pObject != NULL)
+   ENSURE_ARG(pObject != ::null());   
+   if (*pObject != ::null())
    {
       ::DeleteObject(*pObject);
-      *pObject = NULL;
+      *pObject = ::null();
    }
 }
 /*
@@ -103,7 +103,7 @@ void CLASS_DECL_win __cancel_modes(oswindow oswindow_Rcvr)
    // if we receive a message destined for a ::ca::window, cancel any combobox
    //  popups that could be in toolbars or dialog bars
    oswindow oswindow_Cancel = ::GetFocus();
-   if (oswindow_Cancel == NULL)
+   if (oswindow_Cancel == ::null())
       return;     // nothing to cancel
 
    if (oswindow_Cancel == oswindow_Rcvr)
@@ -122,7 +122,7 @@ void CLASS_DECL_win __cancel_modes(oswindow oswindow_Rcvr)
    }
 
    // combo-box is active, but if receiver is a popup, do nothing
-   if (oswindow_Rcvr != NULL &&
+   if (oswindow_Rcvr != ::null() &&
      (::GetWindowLong(oswindow_Rcvr, GWL_STYLE) & WS_CHILD) != 0 &&
      ::get_parent(oswindow_Rcvr) == ::GetDesktopWindow())
       return;
@@ -133,7 +133,7 @@ void CLASS_DECL_win __cancel_modes(oswindow oswindow_Rcvr)
 
 void CLASS_DECL_win __global_free(HGLOBAL hGlobal)
 {
-   if (hGlobal == NULL)
+   if (hGlobal == ::null())
       return;
 
    // avoid bogus warning error messages from various debugging tools
@@ -160,7 +160,7 @@ int32_t c_cdecl __critical_new_handler(size_t nSize)
    //  free up part of the cast's safety cache
 //   TRACE(::ca::trace::category_Memory, 0, "Warning: Critical primitive::memory allocation failed!\n");
    ___THREAD_STATE* pThreadState = __get_thread_state();
-   if (pThreadState != NULL && pThreadState->m_pSafetyPoolBuffer != NULL)
+   if (pThreadState != ::null() && pThreadState->m_pSafetyPoolBuffer != ::null())
    {
       size_t nOldBufferSize = _msize(pThreadState->m_pSafetyPoolBuffer);
       if (nOldBufferSize <= nSize + MIN_MALLOC_OVERHEAD)
@@ -168,7 +168,7 @@ int32_t c_cdecl __critical_new_handler(size_t nSize)
          // give it all up
   ///       TRACE(::ca::trace::category_Memory, 0, "Warning: Freeing application's primitive::memory safety pool!\n");
          free(pThreadState->m_pSafetyPoolBuffer);
-         pThreadState->m_pSafetyPoolBuffer = NULL;
+         pThreadState->m_pSafetyPoolBuffer = ::null();
       }
       else
       {

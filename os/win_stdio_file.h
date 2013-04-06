@@ -21,7 +21,7 @@ namespace win
 
 
 
-      stdio_file(::ca::applicationsp papp);
+      stdio_file(sp(::ca::application) papp);
       virtual ~stdio_file();
 
       virtual void write_string(const char * lpsz);

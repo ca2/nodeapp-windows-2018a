@@ -21,7 +21,7 @@
 
 string get_error_message(DWORD dwError);
 
-//::ca::applicationsp     win_instantiate_application(::ca::applicationsp pappSystem, const char * pszId);
+//sp(::ca::application)     win_instantiate_application(sp(::ca::application) pappSystem, const char * pszId);
 
 /////////////////////////////////////////////////////////////////////////////
 // explicit initialization for general purpose classes
@@ -42,7 +42,7 @@ CLASS_DECL_win void __set_alloc_stop(LONG lRequestNumber);
 CLASS_DECL_win bool __check_memory();
 
 // Return TRUE if valid primitive::memory block of nBytes
-CLASS_DECL_win bool __is_memory_block(const void * p, UINT nBytes, LONG* plRequestNumber = NULL);
+CLASS_DECL_win bool __is_memory_block(const void * p, UINT nBytes, LONG* plRequestNumber = ::null());
 
 #endif
 

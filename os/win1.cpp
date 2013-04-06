@@ -42,13 +42,13 @@ namespace win
    {
       DWORD dwType = 0;
       DWORD dwSize = 0;
-      LONG lResult = RegQueryValueEx(hkey, lpszSubKey, NULL, &dwType, NULL, &dwSize);
+      LONG lResult = RegQueryValueEx(hkey, lpszSubKey, ::null(), &dwType, ::null(), &dwSize);
       if(lResult != ERROR_SUCCESS)
          return lResult;
       ASSERT(dwType == REG_SZ || dwType == REG_MULTI_SZ || dwType == REG_EXPAND_SZ);
       if(dwType == REG_SZ || dwType == REG_MULTI_SZ || dwType == REG_EXPAND_SZ)
       {
-         lResult = RegQueryValueEx(hkey, lpszSubKey, NULL, &dwType, (LPBYTE) str.GetBufferSetLength(dwSize), &dwSize);
+         lResult = RegQueryValueEx(hkey, lpszSubKey, ::null(), &dwType, (LPBYTE) str.GetBufferSetLength(dwSize), &dwSize);
          str.ReleaseBuffer(dwSize);
          return lResult;
       }
@@ -76,7 +76,7 @@ namespace win
       return iLen;
    }*/
 
-   CLASS_DECL_win void TimeToFileTime(::ca::applicationsp papp, const ::datetime::time& time, LPFILETIME pFileTime)
+   CLASS_DECL_win void TimeToFileTime(sp(::ca::application) papp, const ::datetime::time& time, LPFILETIME pFileTime)
    {
          SYSTEMTIME sysTime;
          sysTime.wYear           = (WORD)time.GetYear();

@@ -17,7 +17,7 @@ inline __EXCEPTION_CONTEXT* __get_exception_context()
 __exception_link::__exception_link()
 {
    // setup initial link state
-   m_pException = NULL;    // no current exception yet
+   m_pException = ::null();    // no current exception yet
 
    // wire into top of exception link stack
    __EXCEPTION_CONTEXT* pContext = __get_exception_context();
@@ -33,10 +33,10 @@ CLASS_DECL_win void __try_cleanup()
    __exception_link* pLinkTop = pContext->m_pLinkTop;
 
    // delete current exception
-   ASSERT(pLinkTop != NULL);
-   if (pLinkTop == NULL)
+   ASSERT(pLinkTop != ::null());
+   if (pLinkTop == ::null())
       return;
-   if (pLinkTop->m_pException != NULL)
+   if (pLinkTop->m_pException != ::null())
       pLinkTop->m_pException->Delete();
 
    // remove ourself from the top of the chain
@@ -50,10 +50,10 @@ void CLASS_DECL_win __throw_last_cleanup()
    __exception_link* pLinkTop = pContext->m_pLinkTop;
 
    // check for THROW_LAST inside of auto-delete block
-   if (pLinkTop != NULL)
+   if (pLinkTop != ::null())
    {
       // make sure current exception does not get auto-deleted
-      pLinkTop->m_pException = NULL;
+      pLinkTop->m_pException = ::null();
    }
 
    // THROW_LAST macro will do actual 'throw'

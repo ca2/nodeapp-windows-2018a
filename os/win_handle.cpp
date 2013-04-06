@@ -19,7 +19,7 @@ namespace win
       array < sp(::win::window) > wndptraRemove;
 
       POSITION pos = pMap->m_temporaryMap.get_start_position();
-      while (pos != NULL)
+      while (pos != ::null())
       {
          HANDLE h; // just used for asserts
          ::win::window * pTemp;
@@ -35,8 +35,8 @@ namespace win
 
       for(int32_t i = 0; i < wndptraRemove.get_count(); i++)
       {
-         wndptraRemove[i]->m_handlea[0] = NULL;
-         wndptraRemove[i]->m_handlea[1] = NULL;
+         wndptraRemove[i]->m_handlea[0] = ::null();
+         wndptraRemove[i]->m_handlea[1] = ::null();
 
          (*pMap->m_pfnDestructObject)(wndptraRemove[i]);   // destruct the object
       }

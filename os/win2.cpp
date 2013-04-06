@@ -1,23 +1,23 @@
 #include "framework.h"
 
 // Global helper functions
- CLASS_DECL_win ::ca::applicationsp __get_app()
+ CLASS_DECL_win sp(::ca::application) __get_app()
 { return (afxCurrentWinApp); }
 
  CLASS_DECL_win HINSTANCE __get_instance_handle()
-   { ASSERT(afxCurrentInstanceHandle != NULL);
+   { ASSERT(afxCurrentInstanceHandle != ::null());
       return afxCurrentInstanceHandle; }
  CLASS_DECL_win HINSTANCE __get_resource_handle()
-   { ASSERT(afxCurrentResourceHandle != NULL);
+   { ASSERT(afxCurrentResourceHandle != ::null());
       return afxCurrentResourceHandle; }
  CLASS_DECL_win void __set_resource_handle(HINSTANCE hInstResource)
-   { ASSERT(hInstResource != NULL); afxCurrentResourceHandle = hInstResource; }
+   { ASSERT(hInstResource != ::null()); afxCurrentResourceHandle = hInstResource; }
  CLASS_DECL_win const char * __get_app_name()
-   { ASSERT(afxCurrentAppName != NULL); return afxCurrentAppName; }
+   { ASSERT(afxCurrentAppName != ::null()); return afxCurrentAppName; }
  CLASS_DECL_win sp(::user::interaction) __get_main_window()
 {
       ::ca::thread* pThread = dynamic_cast < ::ca::thread * > (::win::get_thread());
-      return pThread != NULL ? pThread->GetMainWnd() : NULL; 
+      return pThread != ::null() ? pThread->GetMainWnd() : ::null(); 
  }
 
  CLASS_DECL_win bool __gen_get_ambient_act_ctx()

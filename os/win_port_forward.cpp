@@ -15,7 +15,7 @@ namespace win
    // Construction/Destruction
    //////////////////////////////////////////////////////////////////////
 
-   port_forward::port_forward(::ca::applicationsp papp) :
+   port_forward::port_forward(sp(::ca::application) papp) :
       ca(papp)
    {
 	   InitializeMembersToNull();
@@ -31,24 +31,24 @@ namespace win
 
    void port_forward::InitializeMembersToNull()
    {
-	   m_piNAT			= NULL;				
-	   m_piEventManager	= NULL;	
-	   m_piExternalIPAddressCallback= NULL;	
-	   m_piNumberOfEntriesCallback	= NULL;	
+	   m_piNAT			= ::null();				
+	   m_piEventManager	= ::null();	
+	   m_piExternalIPAddressCallback= ::null();	
+	   m_piNumberOfEntriesCallback	= ::null();	
 	
-	   m_pChangeCallbackFunctions	= NULL;	
+	   m_pChangeCallbackFunctions	= ::null();	
 	
-	   m_pPortMappingThread = NULL;
-	   m_pDeviceInfoThread = NULL;
-	   m_pAddMappingThread = NULL;
-	   m_pEditMappingThread = NULL;
-	   m_pDeleteMappingThread = NULL;
+	   m_pPortMappingThread = ::null();
+	   m_pDeviceInfoThread = ::null();
+	   m_pAddMappingThread = ::null();
+	   m_pEditMappingThread = ::null();
+	   m_pDeleteMappingThread = ::null();
 	
-	   m_oswindow_ForPortMappingThread = NULL;
-	   m_oswindow_ForDeviceInfoThread = NULL;
-	   m_oswindow_ForAddMappingThread = NULL;
-	   m_oswindow_ForEditMappingThread = NULL;
-	   m_oswindow_ForDeleteMappingThread = NULL;
+	   m_oswindow_ForPortMappingThread = ::null();
+	   m_oswindow_ForDeviceInfoThread = ::null();
+	   m_oswindow_ForAddMappingThread = ::null();
+	   m_oswindow_ForEditMappingThread = ::null();
+	   m_oswindow_ForDeleteMappingThread = ::null();
 	
 	   m_bListeningForUpnpChanges = FALSE;
    }
@@ -57,35 +57,35 @@ namespace win
    void port_forward::DeinitializeCom()
    {
 	
-	   if ( m_piExternalIPAddressCallback != NULL )
+	   if ( m_piExternalIPAddressCallback != ::null() )
 	   {
 		   m_piExternalIPAddressCallback->Release();
-		   m_piExternalIPAddressCallback = NULL;
+		   m_piExternalIPAddressCallback = ::null();
 	   }
 	
 	
-	   if ( m_piNumberOfEntriesCallback != NULL )
+	   if ( m_piNumberOfEntriesCallback != ::null() )
 	   {
 		   m_piNumberOfEntriesCallback->Release();
-		   m_piNumberOfEntriesCallback = NULL;
+		   m_piNumberOfEntriesCallback = ::null();
 	   }
 	
-	   if ( m_piEventManager != NULL )
+	   if ( m_piEventManager != ::null() )
 	   {
 		   m_piEventManager->Release();
-		   m_piEventManager = NULL;
+		   m_piEventManager = ::null();
 	   }
 	
-	   if ( m_piNAT != NULL )
+	   if ( m_piNAT != ::null() )
 	   {
 		   m_piNAT->Release();
-		   m_piNAT = NULL;
+		   m_piNAT = ::null();
 	   }
 	
 	   CoUninitialize();  // balancing call for CoInitialize
    }
 
-   HRESULT port_forward::ListenForUpnpChanges(::ca::port_forward_change_callbacks *pCallbacks /* =NULL */ )
+   HRESULT port_forward::ListenForUpnpChanges(::ca::port_forward_change_callbacks *pCallbacks /* =::null() */ )
    {
 	   // check if we are already listening
 	
@@ -95,7 +95,7 @@ namespace win
 	   m_bListeningForUpnpChanges = TRUE;
 	
 	
-	   if ( pCallbacks==NULL )
+	   if ( pCallbacks==::null() )
 	   {
 		   SetChangeEventCallbackPointer(	new ::ca::port_forward_change_callbacks );
 	   }
@@ -106,7 +106,7 @@ namespace win
 	
 	   // initialize COM for this thread
 	
-	   HRESULT result = CoInitialize(NULL);  // STA model
+	   HRESULT result = CoInitialize(::null());  // STA model
 	   if ( !SUCCEEDED(result) )
 	   {
 		   return E_FAIL;
@@ -114,8 +114,8 @@ namespace win
 	
 	   // create COM instance of IUPnPNAT
 	
-	   result = CoCreateInstance(__uuidof(UPnPNAT), NULL, CLSCTX_ALL, __uuidof(IUPnPNAT), (void **)&m_piNAT);
-	   if ( !SUCCEEDED(result) || ( m_piNAT==NULL ) )
+	   result = CoCreateInstance(__uuidof(UPnPNAT), ::null(), CLSCTX_ALL, __uuidof(IUPnPNAT), (void **)&m_piNAT);
+	   if ( !SUCCEEDED(result) || ( m_piNAT==::null() ) )
 	   {
 		   CoUninitialize();
 		   return E_FAIL;
@@ -125,10 +125,10 @@ namespace win
 	   // Get the INATEventManager interface
 	
 	   result = m_piNAT->get_NATEventManager(&m_piEventManager);
-	   if ( !SUCCEEDED(result) || (m_piEventManager==NULL ) )
+	   if ( !SUCCEEDED(result) || (m_piEventManager==::null() ) )
 	   {
 		   m_piNAT->Release();
-		   m_piNAT = NULL;
+		   m_piNAT = ::null();
 		   CoUninitialize();
 		   return E_FAIL;
 	   }
@@ -139,9 +139,9 @@ namespace win
 	   if ( !SUCCEEDED(result) )
 	   {
 		   m_piEventManager->Release();
-		   m_piEventManager = NULL;
+		   m_piEventManager = ::null();
 		   m_piNAT->Release();
-		   m_piNAT = NULL;
+		   m_piNAT = ::null();
 		   CoUninitialize();
 		   return E_FAIL;
 	   }
@@ -152,9 +152,9 @@ namespace win
 	   if ( !SUCCEEDED(result) )
 	   {
 		   m_piEventManager->Release();
-		   m_piEventManager = NULL;
+		   m_piEventManager = ::null();
 		   m_piNAT->Release();
-		   m_piNAT = NULL;
+		   m_piNAT = ::null();
 		   CoUninitialize();
 		   return E_FAIL;
 	   }
@@ -179,10 +179,10 @@ namespace win
 	
 	   DeinitializeCom( );
 	
-	   if ( m_pChangeCallbackFunctions != NULL )
+	   if ( m_pChangeCallbackFunctions != ::null() )
 	   {
 		   delete m_pChangeCallbackFunctions;
-		   m_pChangeCallbackFunctions = NULL;
+		   m_pChangeCallbackFunctions = ::null();
 	   }
 	
 	   return S_OK;
@@ -192,12 +192,12 @@ namespace win
 
    HRESULT port_forward::SetChangeEventCallbackPointer(::ca::port_forward_change_callbacks *pCallbacks)
    {
-	   ASSERT( pCallbacks!=NULL );
+	   ASSERT( pCallbacks!=::null() );
 	
-	   if ( m_pChangeCallbackFunctions != NULL )
+	   if ( m_pChangeCallbackFunctions != ::null() )
 	   {
 		   delete m_pChangeCallbackFunctions;
-		   m_pChangeCallbackFunctions = NULL;
+		   m_pChangeCallbackFunctions = ::null();
 	   }
 	
 	   m_pChangeCallbackFunctions = pCallbacks;
@@ -210,11 +210,11 @@ namespace win
    bool port_forward::IsAnyThreadRunning() const
    {
 	   bool bRet = FALSE;
-	   bRet |= ( m_pPortMappingThread != NULL );
-	   bRet |= ( m_pDeviceInfoThread != NULL );
-	   bRet |= ( m_pAddMappingThread != NULL );
-	   bRet |= ( m_pEditMappingThread != NULL );
-	   bRet |= ( m_pDeleteMappingThread != NULL );
+	   bRet |= ( m_pPortMappingThread != ::null() );
+	   bRet |= ( m_pDeviceInfoThread != ::null() );
+	   bRet |= ( m_pAddMappingThread != ::null() );
+	   bRet |= ( m_pEditMappingThread != ::null() );
+	   bRet |= ( m_pDeleteMappingThread != ::null() );
 	
 	   return bRet;
    }
@@ -345,14 +345,14 @@ namespace win
 
 	   // returns TRUE if thread was started successfully
 	
-	   if ( (m_pPortMappingThread!=NULL) || (oswindow==NULL) || (!IsWindow(oswindow)) )
+	   if ( (m_pPortMappingThread!=::null()) || (oswindow==::null()) || (!IsWindow(oswindow)) )
 		   return FALSE;
 	
 	   m_oswindow_ForPortMappingThread = oswindow;
 	
 	   m_pPortMappingThread = ::__begin_thread(get_app(), ThreadForPortRetrieval, this, ::ca::thread_priority_below_normal, 0);
 	
-	   if(m_pPortMappingThread != NULL )
+	   if(m_pPortMappingThread != ::null() )
 	   {
 		   return TRUE;
 	   }
@@ -383,7 +383,7 @@ namespace win
    {
 	   // returns TRUE if thread was started successfully
 	
-	   if ( (m_pEditMappingThread!=NULL) || (oswindow==NULL) || (!IsWindow(oswindow)) )
+	   if ( (m_pEditMappingThread!=::null()) || (oswindow==::null()) || (!IsWindow(oswindow)) )
 		   return FALSE;
 	
 	   m_scratchpadOldMapping = oldMapping;
@@ -393,7 +393,7 @@ namespace win
 	
 	   m_pEditMappingThread = ::__begin_thread(get_app(), ThreadToEditMapping, this, ::ca::thread_priority_below_normal, 0, 0);
 	
-	   if(m_pEditMappingThread != NULL)
+	   if(m_pEditMappingThread != ::null())
 	   {
 		   return TRUE;
 	   }
@@ -424,7 +424,7 @@ namespace win
    {
 	   // returns TRUE if thread was started successfully
 	
-	   if ( (m_pAddMappingThread!=NULL) || (oswindow==NULL) || (!IsWindow(oswindow)) )
+	   if ( (m_pAddMappingThread!=::null()) || (oswindow==::null()) || (!IsWindow(oswindow)) )
 		   return FALSE;
 	
 	   m_scratchpadAddedMapping = newMapping;	
@@ -433,7 +433,7 @@ namespace win
 	
 	   m_pAddMappingThread = ::__begin_thread(get_app(), ThreadToAddMapping, this, ::ca::thread_priority_below_normal, 0, 0);
 	
-	   if(m_pAddMappingThread != NULL)
+	   if(m_pAddMappingThread != ::null())
 	   {
 		   return TRUE;
 	   }
@@ -464,7 +464,7 @@ namespace win
    {
 	   // returns TRUE if thread was started successfully
 	
-	   if ( (m_pDeleteMappingThread!=NULL) || (oswindow==NULL) || (!IsWindow(oswindow)) )
+	   if ( (m_pDeleteMappingThread!=::null()) || (oswindow==::null()) || (!IsWindow(oswindow)) )
 		   return FALSE;
 	
 	   m_scratchpadDeletedMapping = oldMapping;
@@ -473,7 +473,7 @@ namespace win
 	
 	   m_pDeleteMappingThread = ::__begin_thread(get_app(), ThreadToDeleteMapping, this, ::ca::thread_priority_below_normal, 0, 0);
 	
-	   if(m_pDeleteMappingThread != NULL)
+	   if(m_pDeleteMappingThread != ::null())
 	   {
 		   return TRUE;
 	   }
@@ -505,14 +505,14 @@ namespace win
    {	
 	   // returns TRUE if thread was started successfully
 	
-	   if ( (m_pDeviceInfoThread!=NULL) || (oswindow==NULL) || (!IsWindow(oswindow)) )
+	   if ( (m_pDeviceInfoThread!=::null()) || (oswindow==::null()) || (!IsWindow(oswindow)) )
 		   return FALSE;
 	
 	   m_oswindow_ForDeviceInfoThread = oswindow;
 	
 	   m_pDeviceInfoThread = ::__begin_thread(get_app(), ThreadForDeviceInformationRetrieval, this,  ::ca::thread_priority_below_normal, 0, 0);
 	
-	   if(m_pDeviceInfoThread != NULL)
+	   if(m_pDeviceInfoThread != ::null())
 	   {
 		   return TRUE;
 	   }
@@ -546,24 +546,24 @@ namespace win
 	
 	   // initialize COM
 	
-	   if ( !SUCCEEDED( CoInitialize(NULL) ) )  // STA model
+	   if ( !SUCCEEDED( CoInitialize(::null()) ) )  // STA model
 		   bContinue = FALSE;
 	
 	
 	   // create COM instance of IUPnPNAT
 	
-	   IUPnPNAT* piNAT = NULL;
-	   IStaticPortMappingCollection* piPortMappingCollection = NULL;	
+	   IUPnPNAT* piNAT = ::null();
+	   IStaticPortMappingCollection* piPortMappingCollection = ::null();	
 
 
       HRESULT hr;
 	
-	   if ( !bContinue || !SUCCEEDED(hr= CoCreateInstance(__uuidof(UPnPNAT), NULL, CLSCTX_ALL, __uuidof(IUPnPNAT), (void **)&piNAT) ) || ( piNAT==NULL ) )
+	   if ( !bContinue || !SUCCEEDED(hr= CoCreateInstance(__uuidof(UPnPNAT), ::null(), CLSCTX_ALL, __uuidof(IUPnPNAT), (void **)&piNAT) ) || ( piNAT==::null() ) )
 		   bContinue = FALSE;
 	
 	   // Get the collection of forwarded ports 
 	
-	   if ( !bContinue || !SUCCEEDED(hr= piNAT->get_StaticPortMappingCollection(&piPortMappingCollection) ) || (piPortMappingCollection==NULL ) )
+	   if ( !bContinue || !SUCCEEDED(hr= piNAT->get_StaticPortMappingCollection(&piPortMappingCollection) ) || (piPortMappingCollection==::null() ) )
 		   bContinue = FALSE;
 	
 	
@@ -572,13 +572,13 @@ namespace win
 	
 	   // Get mapping enumerator and reset the list of mappings
 	
-	   IUnknown* piUnk = NULL;
-	   IEnumVARIANT* piEnumerator = NULL;
+	   IUnknown* piUnk = ::null();
+	   IEnumVARIANT* piEnumerator = ::null();
 	
-	   if ( !bContinue || !SUCCEEDED( piPortMappingCollection->get__NewEnum( &piUnk ) ) || piUnk==NULL )
+	   if ( !bContinue || !SUCCEEDED( piPortMappingCollection->get__NewEnum( &piUnk ) ) || piUnk==::null() )
 		   bContinue = FALSE;
 	
-	   if ( !bContinue || !SUCCEEDED( piUnk->QueryInterface(IID_IEnumVARIANT, (void **)&piEnumerator) ) || piEnumerator==NULL )
+	   if ( !bContinue || !SUCCEEDED( piUnk->QueryInterface(IID_IEnumVARIANT, (void **)&piEnumerator) ) || piEnumerator==::null() )
 		   bContinue = FALSE;
 	
 	   if ( !bContinue || !SUCCEEDED( piEnumerator->Reset() ) )
@@ -628,22 +628,22 @@ namespace win
 	
 	   // release COM objects and de-initialize COM
 	
-	   if ( piEnumerator != NULL )
+	   if ( piEnumerator != ::null() )
 	   {
 		   piEnumerator->Release();
-		   piEnumerator = NULL;
+		   piEnumerator = ::null();
 	   }
 	
-	   if ( piPortMappingCollection != NULL )
+	   if ( piPortMappingCollection != ::null() )
 	   {
 		   piPortMappingCollection->Release();
-		   piPortMappingCollection = NULL;
+		   piPortMappingCollection = ::null();
 	   }
 	
-	   if ( piNAT != NULL )
+	   if ( piNAT != ::null() )
 	   {
 		   piNAT->Release();
-		   piNAT = NULL;
+		   piNAT = ::null();
 	   }
 	
 	
@@ -655,8 +655,8 @@ namespace win
 	   wp = EnumPortRetrieveDone;
 	   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	
-	   pThis->m_pPortMappingThread = NULL;
-	   pThis->m_oswindow_ForPortMappingThread = NULL;
+	   pThis->m_pPortMappingThread = ::null();
+	   pThis->m_oswindow_ForPortMappingThread = ::null();
 	
 	
 	   return 0;
@@ -684,15 +684,15 @@ namespace win
 	
 	   // initialize COM
 	
-	   if ( !SUCCEEDED( CoInitialize(NULL) ) )  // STA model
+	   if ( !SUCCEEDED( CoInitialize(::null()) ) )  // STA model
 		   bContinue = FALSE;
 	
 	   // create COM instance of IUPnPDeviceFinder
 	
-	   IUPnPDeviceFinder* piDeviceFinder = NULL;
+	   IUPnPDeviceFinder* piDeviceFinder = ::null();
 	
-	   if ( !bContinue || !SUCCEEDED( CoCreateInstance( CLSID_UPnPDeviceFinder, NULL, CLSCTX_ALL, 
-		   IID_IUPnPDeviceFinder, (void**) &piDeviceFinder ) ) || ( piDeviceFinder==NULL ) )
+	   if ( !bContinue || !SUCCEEDED( CoCreateInstance( CLSID_UPnPDeviceFinder, ::null(), CLSCTX_ALL, 
+		   IID_IUPnPDeviceFinder, (void**) &piDeviceFinder ) ) || ( piDeviceFinder==::null() ) )
 		   bContinue = FALSE;
 	
 	   lp = 1;	
@@ -703,10 +703,10 @@ namespace win
 	   // < deviceType>urn:schemas-upnp-org:device:InternetGatewayDevice:1< /deviceType>
 	
 	   BSTR bStrDev = SysAllocString( L"urn:schemas-upnp-org:device:InternetGatewayDevice:1" );
-	   IUPnPDevices* piFoundDevices = NULL;
+	   IUPnPDevices* piFoundDevices = ::null();
 	
 	   if ( !bContinue || !SUCCEEDED( piDeviceFinder->FindByType( bStrDev, 0, &piFoundDevices ) ) 
-		   || ( piFoundDevices==NULL ) )
+		   || ( piFoundDevices==::null() ) )
 		   bContinue = FALSE;
     
 	   SysFreeString( bStrDev );
@@ -724,7 +724,7 @@ namespace win
 	
 	
 	   HRESULT result = S_OK;	
-      IUnknown * pUnk = NULL;
+      IUnknown * pUnk = ::null();
 
 	   // remove all local devInfo from class member
 	
@@ -733,9 +733,9 @@ namespace win
 	   ::LeaveCriticalSection( &(pThis->m_cs) );
 	   
 	
-       if ( bContinue && SUCCEEDED( piFoundDevices->get__NewEnum(&pUnk) ) && ( pUnk!=NULL ) )
+       if ( bContinue && SUCCEEDED( piFoundDevices->get__NewEnum(&pUnk) ) && ( pUnk!=::null() ) )
        {
-           IEnumVARIANT * pEnumVar = NULL;
+           IEnumVARIANT * pEnumVar = ::null();
            result = pUnk->QueryInterface(IID_IEnumVARIANT, (void **) &pEnumVar);
            if (SUCCEEDED(result))
            {
@@ -743,9 +743,9 @@ namespace win
                VariantInit(&varCurDevice);
                pEnumVar->Reset();
                // Loop through each device in the collection
-               while (S_OK == pEnumVar->Next(1, &varCurDevice, NULL))
+               while (S_OK == pEnumVar->Next(1, &varCurDevice, ::null()))
                {
-                   IUPnPDevice * pDevice = NULL;
+                   IUPnPDevice * pDevice = ::null();
                    IDispatch * pdispDevice = V_DISPATCH(&varCurDevice);
                    if (SUCCEEDED(pdispDevice->QueryInterface(IID_IUPnPDevice, (void **) &pDevice)))
                    {
@@ -771,10 +771,10 @@ namespace win
 	
 	   // release COM objects and de-initialize COM
 	
-	   if ( piDeviceFinder!=NULL )
+	   if ( piDeviceFinder!=::null() )
 	   {
 		   piDeviceFinder->Release();
-		   piDeviceFinder = NULL;
+		   piDeviceFinder = ::null();
 	   }
 	
 	   CoUninitialize();
@@ -790,8 +790,8 @@ namespace win
 	
 	   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	
-	   pThis->m_pDeviceInfoThread = NULL;
-	   pThis->m_oswindow_ForDeviceInfoThread = NULL;
+	   pThis->m_pDeviceInfoThread = ::null();
+	   pThis->m_oswindow_ForDeviceInfoThread = ::null();
 	
 	   return 0;
    }
@@ -819,21 +819,21 @@ namespace win
 	
 	   // initialize COM
 	
-	   if ( !SUCCEEDED( CoInitialize(NULL) ) )  // STA model
+	   if ( !SUCCEEDED( CoInitialize(::null()) ) )  // STA model
 		   bContinue = FALSE;
 	
 	
 	   // create COM instance of IUPnPNAT
 	
-	   IUPnPNAT* piNAT = NULL;
-	   IStaticPortMappingCollection* piPortMappingCollection = NULL;	
+	   IUPnPNAT* piNAT = ::null();
+	   IStaticPortMappingCollection* piPortMappingCollection = ::null();	
 	
-	   if ( !bContinue || !SUCCEEDED( CoCreateInstance(__uuidof(UPnPNAT), NULL, CLSCTX_ALL, __uuidof(IUPnPNAT), (void **)&piNAT) ) || ( piNAT==NULL ) )
+	   if ( !bContinue || !SUCCEEDED( CoCreateInstance(__uuidof(UPnPNAT), ::null(), CLSCTX_ALL, __uuidof(IUPnPNAT), (void **)&piNAT) ) || ( piNAT==::null() ) )
 		   bContinue = FALSE;
 	
 	   // Get the collection of forwarded ports 
 	
-	   if ( !bContinue || !SUCCEEDED( piNAT->get_StaticPortMappingCollection(&piPortMappingCollection) ) || (piPortMappingCollection==NULL ) )
+	   if ( !bContinue || !SUCCEEDED( piNAT->get_StaticPortMappingCollection(&piPortMappingCollection) ) || (piPortMappingCollection==::null() ) )
 		   bContinue = FALSE;
 	
 	
@@ -843,9 +843,9 @@ namespace win
 	
 	   // get the target old mapping from the collection of mappings
 	
-	   IStaticPortMapping* piStaticPortMapping = NULL;
+	   IStaticPortMapping* piStaticPortMapping = ::null();
 	
-	   if ( !bContinue || !SUCCEEDED( piPortMappingCollection->get_Item( _ttol(oldMapping.ExternalPort), oldMapping.Protocol.AllocSysString(), &piStaticPortMapping ) ) || (piStaticPortMapping==NULL) )
+	   if ( !bContinue || !SUCCEEDED( piPortMappingCollection->get_Item( _ttol(oldMapping.ExternalPort), oldMapping.Protocol.AllocSysString(), &piStaticPortMapping ) ) || (piStaticPortMapping==::null()) )
 		   bContinue = FALSE;
 	
 	   oldMapping.Protocol.ReleaseBuffer();
@@ -885,23 +885,23 @@ namespace win
 	
 	   // clean up and de-initialize COM
 	
-	   if ( piStaticPortMapping != NULL )
+	   if ( piStaticPortMapping != ::null() )
 	   {
 		   piStaticPortMapping->Release();
-		   piStaticPortMapping = NULL;
+		   piStaticPortMapping = ::null();
 	   }
 	
 	
-	   if ( piPortMappingCollection != NULL )
+	   if ( piPortMappingCollection != ::null() )
 	   {
 		   piPortMappingCollection->Release();
-		   piPortMappingCollection = NULL;
+		   piPortMappingCollection = ::null();
 	   }
 	
-	   if ( piNAT != NULL )
+	   if ( piNAT != ::null() )
 	   {
 		   piNAT->Release();
-		   piNAT = NULL;
+		   piNAT = ::null();
 	   }
 	
 	
@@ -913,8 +913,8 @@ namespace win
 	   wp = EnumEditMappingDone;
 	   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	
-	   pThis->m_pEditMappingThread = NULL;
-	   pThis->m_oswindow_ForEditMappingThread = NULL;
+	   pThis->m_pEditMappingThread = ::null();
+	   pThis->m_oswindow_ForEditMappingThread = ::null();
 	
 	   return 0;
    }
@@ -940,21 +940,21 @@ namespace win
 	
 	   // initialize COM
 	
-	   if ( !SUCCEEDED( CoInitialize(NULL) ) )  // STA model
+	   if ( !SUCCEEDED( CoInitialize(::null()) ) )  // STA model
 		   bContinue = FALSE;
 	
 	
 	   // create COM instance of IUPnPNAT
 	
-	   IUPnPNAT* piNAT = NULL;
-	   IStaticPortMappingCollection* piPortMappingCollection = NULL;	
+	   IUPnPNAT* piNAT = ::null();
+	   IStaticPortMappingCollection* piPortMappingCollection = ::null();	
 	
-	   if ( !bContinue || !SUCCEEDED( CoCreateInstance(__uuidof(UPnPNAT), NULL, CLSCTX_ALL, __uuidof(IUPnPNAT), (void **)&piNAT) ) || ( piNAT==NULL ) )
+	   if ( !bContinue || !SUCCEEDED( CoCreateInstance(__uuidof(UPnPNAT), ::null(), CLSCTX_ALL, __uuidof(IUPnPNAT), (void **)&piNAT) ) || ( piNAT==::null() ) )
 		   bContinue = FALSE;
 	
 	   // Get the collection of forwarded ports 
 	
-	   if ( !bContinue || !SUCCEEDED( piNAT->get_StaticPortMappingCollection(&piPortMappingCollection) ) || (piPortMappingCollection==NULL ) )
+	   if ( !bContinue || !SUCCEEDED( piNAT->get_StaticPortMappingCollection(&piPortMappingCollection) ) || (piPortMappingCollection==::null() ) )
 		   bContinue = FALSE;
 	
 	
@@ -977,16 +977,16 @@ namespace win
 	   // clean up and de-initialize COM
 	
 	
-	   if ( piPortMappingCollection != NULL )
+	   if ( piPortMappingCollection != ::null() )
 	   {
 		   piPortMappingCollection->Release();
-		   piPortMappingCollection = NULL;
+		   piPortMappingCollection = ::null();
 	   }
 	
-	   if ( piNAT != NULL )
+	   if ( piNAT != ::null() )
 	   {
 		   piNAT->Release();
-		   piNAT = NULL;
+		   piNAT = ::null();
 	   }
 	
 	
@@ -998,8 +998,8 @@ namespace win
 	   wp = EnumDeleteMappingDone;
 	   ::PostMessage( oswindow_ForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	
-	   pThis->m_pDeleteMappingThread = NULL;
-	   pThis->m_oswindow_ForDeleteMappingThread = NULL;
+	   pThis->m_pDeleteMappingThread = ::null();
+	   pThis->m_oswindow_ForDeleteMappingThread = ::null();
 	
 	   return 0;
    }
@@ -1023,21 +1023,21 @@ namespace win
 	
 	   // initialize COM
 	
-	   if ( !SUCCEEDED( CoInitialize(NULL) ) )  // STA model
+	   if ( !SUCCEEDED( CoInitialize(::null()) ) )  // STA model
 		   bContinue = FALSE;
 	
 	
 	   // create COM instance of IUPnPNAT
 	
-	   IUPnPNAT* piNAT = NULL;
-	   IStaticPortMappingCollection* piPortMappingCollection = NULL;	
+	   IUPnPNAT* piNAT = ::null();
+	   IStaticPortMappingCollection* piPortMappingCollection = ::null();	
 	
-	   if ( !bContinue || !SUCCEEDED( CoCreateInstance(__uuidof(UPnPNAT), NULL, CLSCTX_ALL, __uuidof(IUPnPNAT), (void **)&piNAT) ) || ( piNAT==NULL ) )
+	   if ( !bContinue || !SUCCEEDED( CoCreateInstance(__uuidof(UPnPNAT), ::null(), CLSCTX_ALL, __uuidof(IUPnPNAT), (void **)&piNAT) ) || ( piNAT==::null() ) )
 		   bContinue = FALSE;
 	
 	   // Get the collection of forwarded ports 
 	
-	   if ( !bContinue || !SUCCEEDED( piNAT->get_StaticPortMappingCollection(&piPortMappingCollection) ) || (piPortMappingCollection==NULL ) )
+	   if ( !bContinue || !SUCCEEDED( piNAT->get_StaticPortMappingCollection(&piPortMappingCollection) ) || (piPortMappingCollection==::null() ) )
 		   bContinue = FALSE;
 	
 	
@@ -1047,7 +1047,7 @@ namespace win
 	
 	   // add the new mapping
 	
-	   IStaticPortMapping* piStaticPortMapping = NULL;
+	   IStaticPortMapping* piStaticPortMapping = ::null();
 	
 	   VARIANT_BOOL vb = ( ( newMapping.Enabled == _T("Yes") ) ? VARIANT_TRUE : VARIANT_FALSE );
 	
@@ -1060,7 +1060,7 @@ namespace win
                   newMapping.InternalClient.AllocSysString(),
                   vb,
                   newMapping.Description.AllocSysString(),
-		            &piStaticPortMapping ) ) || (piStaticPortMapping==NULL) )
+		            &piStaticPortMapping ) ) || (piStaticPortMapping==::null()) )
 		
 		   bContinue = FALSE;
 	
@@ -1075,23 +1075,23 @@ namespace win
 	
 	   // clean up and de-initialize COM
 	
-	   if ( piStaticPortMapping != NULL )
+	   if ( piStaticPortMapping != ::null() )
 	   {
 		   piStaticPortMapping->Release();
-		   piStaticPortMapping = NULL;
+		   piStaticPortMapping = ::null();
 	   }
 	
 	
-	   if ( piPortMappingCollection != NULL )
+	   if ( piPortMappingCollection != ::null() )
 	   {
 		   piPortMappingCollection->Release();
-		   piPortMappingCollection = NULL;
+		   piPortMappingCollection = ::null();
 	   }
 	
-	   if ( piNAT != NULL )
+	   if ( piNAT != ::null() )
 	   {
 		   piNAT->Release();
-		   piNAT = NULL;
+		   piNAT = ::null();
 	   }
 	
 	
@@ -1103,8 +1103,8 @@ namespace win
 	   wp = EnumAddMappingDone;
 	   ::PostMessage( pThis->m_oswindow_ForAddMappingThread, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
 	
-	   pThis->m_pAddMappingThread = NULL;
-	   pThis->m_oswindow_ForAddMappingThread = NULL;
+	   pThis->m_pAddMappingThread = ::null();
+	   pThis->m_oswindow_ForAddMappingThread = ::null();
 	
 	   return 0;
    }
@@ -1115,7 +1115,7 @@ namespace win
    {
 	   // uses the enumerator to get the next mapping and fill in a mapping container structure
 	
-	   if ( piEnumerator == NULL )
+	   if ( piEnumerator == ::null() )
 	   {
 		   return E_FAIL;
 	   }
@@ -1123,7 +1123,7 @@ namespace win
 	   VARIANT varCurMapping;
 	   VariantInit(&varCurMapping);
 	
-	   HRESULT result = piEnumerator->Next( 1, &varCurMapping, NULL);
+	   HRESULT result = piEnumerator->Next( 1, &varCurMapping, ::null());
 	   if( !SUCCEEDED(result) )
 	   {
 		   return E_FAIL;
@@ -1134,7 +1134,7 @@ namespace win
 		   return E_FAIL;
 	   }
 	
-	   IStaticPortMapping* piMapping = NULL;
+	   IStaticPortMapping* piMapping = ::null();
 	   IDispatch* piDispMap = V_DISPATCH(&varCurMapping);
 	   result = piDispMap->QueryInterface(IID_IStaticPortMapping, (void **)&piMapping);
 	   if( !SUCCEEDED(result) )
@@ -1145,21 +1145,21 @@ namespace win
 	
 	   // get external address
 	
-	   BSTR bStr = NULL;
+	   BSTR bStr = ::null();
 	
 	   result = piMapping->get_ExternalIPAddress( &bStr );
 	   if( !SUCCEEDED(result) )
 	   {
 		   piMapping->Release();
-		   piMapping = NULL;
+		   piMapping = ::null();
 		   return E_FAIL;
 	   }
 	
-	   if( bStr != NULL )
+	   if( bStr != ::null() )
 		   mappingContainer.ExternalIPAddress = string( ::ca::international::unicode_to_utf8(bStr) );
 	
 	   SysFreeString(bStr);
-	   bStr = NULL;
+	   bStr = ::null();
 	
 	
 	   // get external port
@@ -1170,7 +1170,7 @@ namespace win
 	   if( !SUCCEEDED(result) )
 	   {	
 		   piMapping->Release();
-		   piMapping = NULL;
+		   piMapping = ::null();
 		   return E_FAIL;
 	   }
 	
@@ -1183,7 +1183,7 @@ namespace win
 	   if( !SUCCEEDED(result) )
 	   {
 		   piMapping->Release();
-		   piMapping = NULL;
+		   piMapping = ::null();
 		   return E_FAIL;
 	   }
 	
@@ -1196,15 +1196,15 @@ namespace win
 	   if( !SUCCEEDED(result) )
 	   {
 		   piMapping->Release();
-		   piMapping = NULL;
+		   piMapping = ::null();
 		   return E_FAIL;
 	   }
 	
-	   if( bStr != NULL )
+	   if( bStr != ::null() )
 		   mappingContainer.Protocol = ::ca::international::unicode_to_utf8(bStr);
 	
 	   SysFreeString(bStr);
-	   bStr = NULL;
+	   bStr = ::null();
 	
 	
 	   // get internal client
@@ -1213,15 +1213,15 @@ namespace win
 	   if( !SUCCEEDED(result) )
 	   {
 		   piMapping->Release();
-		   piMapping = NULL;
+		   piMapping = ::null();
 		   return E_FAIL;
 	   }
 	
-	   if( bStr != NULL )
+	   if( bStr != ::null() )
 		   mappingContainer.InternalClient = ::ca::international::unicode_to_utf8(bStr);
 	
 	   SysFreeString(bStr);
-	   bStr = NULL;
+	   bStr = ::null();
 	
 	
 	   // determine whether it's enabled
@@ -1232,7 +1232,7 @@ namespace win
 	   if( !SUCCEEDED(result) )
 	   {
 		   piMapping->Release();
-		   piMapping = NULL;
+		   piMapping = ::null();
 		   return E_FAIL;
 	   }
 	
@@ -1245,20 +1245,20 @@ namespace win
 	   if( !SUCCEEDED(result) )
 	   {
 		   piMapping->Release();
-		   piMapping = NULL;
+		   piMapping = ::null();
 		   return E_FAIL;
 	   }
 	
-	   if( bStr != NULL )
+	   if( bStr != ::null() )
 		   mappingContainer.Description = ::ca::international::unicode_to_utf8( bStr );
 	
 	   SysFreeString(bStr);
-	   bStr = NULL;
+	   bStr = ::null();
 	
 	   // clean up
 	
 	   piMapping->Release();
-	   piMapping = NULL;
+	   piMapping = ::null();
 	
 	
 	   VariantClear( &varCurMapping );
@@ -1270,14 +1270,14 @@ namespace win
 
 
    HRESULT port_forward::PopulateDeviceInfoContainer( IUPnPDevice* piDevice, 
-				   port_forward::device & deviceInfo, oswindow oswindow /* =NULL */ )
+				   port_forward::device & deviceInfo, oswindow oswindow /* =::null() */ )
    {
 	
 	   HRESULT result=S_OK, hrReturn=S_OK;
 	   long lValue = 0;
-	   BSTR bStr = NULL;
+	   BSTR bStr = ::null();
 	   VARIANT_BOOL bValue = VARIANT_FALSE;
-	   IUPnPDevices* piDevices = NULL;
+	   IUPnPDevices* piDevices = ::null();
 	
 	   // parameters for interval notification messages
 	
@@ -1292,7 +1292,7 @@ namespace win
 	
 	   result = piDevice->get_Children( &piDevices );
 	   hrReturn |= result;
-	   if ( SUCCEEDED(result) && (piDevices!=NULL) )
+	   if ( SUCCEEDED(result) && (piDevices!=::null()) )
 	   {
 		   piDevices->get_Count( &lValue );
 		   if ( lValue==0 )
@@ -1308,11 +1308,11 @@ namespace win
 			   deviceInfo.Children.Format( _T("Yes: %d children"), lValue );
 		   }
 		   piDevices->Release();
-		   piDevices = NULL;
+		   piDevices = ::null();
 		   lValue = 0;
 	   }
 	
-	   if ( oswindow!=NULL )
+	   if ( oswindow!=::null() )
 		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
@@ -1324,16 +1324,16 @@ namespace win
 	   {
 		   deviceInfo.Description = ::ca::international::unicode_to_utf8( bStr );
 		   SysFreeString(bStr);
-		   bStr = NULL;
+		   bStr = ::null();
 	   }
 	
-	   if ( oswindow!=NULL )
+	   if ( oswindow!=::null() )
       {
 		   bool b = ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) ) != FALSE;
          if(!b)
          {
             DWORD dw = ::GetLastError();
-            ::MessageBoxA(NULL, ::ca::str::from((uint32_t) dw), ::ca::str::from((uint32_t) dw), 0);
+            ::MessageBoxA(::null(), ::ca::str::from((uint32_t) dw), ::ca::str::from((uint32_t) dw), 0);
          }
       }
 	
@@ -1346,10 +1346,10 @@ namespace win
 	   {
 		   deviceInfo.FriendlyName = ::ca::international::unicode_to_utf8(bStr );	
 		   SysFreeString(bStr);
-		   bStr = NULL;
+		   bStr = ::null();
 	   }
 	
-	   if ( oswindow!=NULL )
+	   if ( oswindow!=::null() )
 		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
@@ -1363,7 +1363,7 @@ namespace win
 		   bValue = VARIANT_FALSE;
 	   }
 	
-	   if ( oswindow!=NULL )
+	   if ( oswindow!=::null() )
 		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
@@ -1378,13 +1378,13 @@ namespace win
 	   {
 		   deviceInfo.IconURL = ::ca::international::unicode_to_utf8( bStr );	
 		   SysFreeString(bStr);
-		   bStr = NULL;
+		   bStr = ::null();
 	   }
 	
 	   SysFreeString(bStrMime);
-	   bStrMime = NULL;
+	   bStrMime = ::null();
 	
-	   if ( oswindow!=NULL )
+	   if ( oswindow!=::null() )
 		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
@@ -1398,7 +1398,7 @@ namespace win
 		   bValue = VARIANT_FALSE;
 	   }
 	
-	   if ( oswindow!=NULL )
+	   if ( oswindow!=::null() )
 		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
@@ -1410,10 +1410,10 @@ namespace win
 	   {
 		   deviceInfo.ManufacturerName = ::ca::international::unicode_to_utf8(bStr);	
 		   SysFreeString(bStr);
-		   bStr = NULL;
+		   bStr = ::null();
 	   }
 	
-	   if ( oswindow!=NULL )
+	   if ( oswindow!=::null() )
 		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
@@ -1425,10 +1425,10 @@ namespace win
 	   {
 		   deviceInfo.ManufacturerURL = ::ca::international::unicode_to_utf8(bStr);	
 		   SysFreeString(bStr);
-		   bStr = NULL;
+		   bStr = ::null();
 	   }
 	
-	   if ( oswindow!=NULL )
+	   if ( oswindow!=::null() )
 		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
@@ -1440,10 +1440,10 @@ namespace win
 	   {
 		   deviceInfo.ModelName = ::ca::international::unicode_to_utf8(bStr);	
 		   SysFreeString(bStr);
-		   bStr = NULL;
+		   bStr = ::null();
 	   }
 	
-	   if ( oswindow!=NULL )
+	   if ( oswindow!=::null() )
 		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
@@ -1455,10 +1455,10 @@ namespace win
 	   {
 		   deviceInfo.ModelNumber = ::ca::international::unicode_to_utf8(bStr);	
 		   SysFreeString(bStr);
-		   bStr = NULL;
+		   bStr = ::null();
 	   }
 	
-	   if ( oswindow!=NULL )
+	   if ( oswindow!=::null() )
 		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
@@ -1470,23 +1470,23 @@ namespace win
 	   {
 		   deviceInfo.ModelURL = ::ca::international::unicode_to_utf8(bStr);	
 		   SysFreeString(bStr);
-		   bStr = NULL;
+		   bStr = ::null();
 	   }
 	
-	   if ( oswindow!=NULL )
+	   if ( oswindow!=::null() )
 		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
 	   // Get ParentDevice.  Actually, we will only get the FriendlyName of the parent device,
 	   // if there is one
 	
-	   IUPnPDevice* piDev = NULL;
+	   IUPnPDevice* piDev = ::null();
 	
 	   result = piDevice->get_ParentDevice( &piDev );
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-		   if ( piDev==NULL )
+		   if ( piDev==::null() )
 		   {
 			   deviceInfo.ParentDevice.Format( _T("This is a topmost device") );
 		   }
@@ -1496,14 +1496,14 @@ namespace win
 			   {
 				   deviceInfo.ParentDevice = ::ca::international::unicode_to_utf8(bStr);
 				   SysFreeString(bStr);
-				   bStr = NULL;
+				   bStr = ::null();
 			   }
 			   piDev->Release();
-			   piDev = NULL;
+			   piDev = ::null();
 		   }
 	   }
 	
-	   if ( oswindow!=NULL )
+	   if ( oswindow!=::null() )
 		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
@@ -1515,10 +1515,10 @@ namespace win
 	   {
 		   deviceInfo.PresentationURL = ::ca::international::unicode_to_utf8(bStr);	
 		   SysFreeString(bStr);
-		   bStr = NULL;
+		   bStr = ::null();
 	   }
 	
-	   if ( oswindow!=NULL )
+	   if ( oswindow!=::null() )
 		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
@@ -1529,7 +1529,7 @@ namespace win
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-		   if ( piDev==NULL )
+		   if ( piDev==::null() )
 		   {
 			   deviceInfo.RootDevice.Format( _T("This is a topmost device") );
 		   }
@@ -1539,14 +1539,14 @@ namespace win
 			   {
 				   deviceInfo.RootDevice = ::ca::international::unicode_to_utf8(bStr );
 				   SysFreeString(bStr);
-				   bStr = NULL;
+				   bStr = ::null();
 			   }
 			   piDev->Release();
-			   piDev = NULL;
+			   piDev = ::null();
 		   }
 	   }
 	
-	   if ( oswindow!=NULL )
+	   if ( oswindow!=::null() )
 		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
@@ -1559,21 +1559,21 @@ namespace win
 	   {
 		   deviceInfo.SerialNumber = ::ca::international::unicode_to_utf8(bStr);	
 		   SysFreeString(bStr);
-		   bStr = NULL;
+		   bStr = ::null();
 	   }
 	
-	   if ( oswindow!=NULL )
+	   if ( oswindow!=::null() )
 		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
 	   // Get Services.  Actually, we will NOT enumerate through all the services that are contained
 	   // in the IUPnPServices collection.  Rather, we will only get a ::count of services
 	
-	   IUPnPServices* piServices = NULL;
+	   IUPnPServices* piServices = ::null();
 	
 	   result = piDevice->get_Services( &piServices );
 	   hrReturn |= result;
-	   if ( SUCCEEDED(result) && (piServices!=NULL) )
+	   if ( SUCCEEDED(result) && (piServices!=::null()) )
 	   {
 		   piServices->get_Count( &lValue );
 		   if ( lValue==0 )
@@ -1589,11 +1589,11 @@ namespace win
 			   deviceInfo.Services.Format( _T("Yes: %d services"), lValue );
 		   }
 		   piServices->Release();
-		   piServices = NULL;
+		   piServices = ::null();
 		   lValue = 0;
 	   }
 	
-	   if ( oswindow!=NULL )
+	   if ( oswindow!=::null() )
 		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
@@ -1605,10 +1605,10 @@ namespace win
 	   {
 		   deviceInfo.Type = ::ca::international::unicode_to_utf8(bStr);	
 		   SysFreeString(bStr);
-		   bStr = NULL;
+		   bStr = ::null();
 	   }
 	
-	   if ( oswindow!=NULL )
+	   if ( oswindow!=::null() )
 		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
@@ -1620,10 +1620,10 @@ namespace win
 	   {
          deviceInfo.UniqueDeviceName = ::ca::international::unicode_to_utf8(bStr);	
 		   SysFreeString(bStr);
-		   bStr = NULL;
+		   bStr = ::null();
 	   }
 	
-	   if ( oswindow!=NULL )
+	   if ( oswindow!=::null() )
 		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	
@@ -1635,10 +1635,10 @@ namespace win
 	   {
 		   deviceInfo.UPC = ::ca::international::unicode_to_utf8(bStr);	
 		   SysFreeString(bStr);
-		   bStr = NULL;
+		   bStr = ::null();
 	   }
 	
-	   if ( oswindow!=NULL )
+	   if ( oswindow!=::null() )
 		   ::PostMessage( oswindow, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
 	
 	   return hrReturn;
@@ -1657,7 +1657,7 @@ namespace win
    HRESULT STDMETHODCALLTYPE port_forward::IDerivedNATNumberOfEntriesCallback::QueryInterface(REFIID iid, void ** ppvObject)
    {
 	   HRESULT hr = S_OK;
-	   *ppvObject = NULL;
+	   *ppvObject = ::null();
 	
 	   if ( iid == IID_IUnknown ||	iid == IID_INATNumberOfEntriesCallback )
 	   {
@@ -1677,7 +1677,7 @@ namespace win
    HRESULT STDMETHODCALLTYPE port_forward::IDerivedNATExternalIPAddressCallback::QueryInterface(REFIID iid, void ** ppvObject)
    {
 	   HRESULT hr = S_OK;
-	   *ppvObject = NULL;
+	   *ppvObject = ::null();
 	
 	   if ( iid == IID_IUnknown ||	iid == IID_INATExternalIPAddressCallback )
 	   {

@@ -127,7 +127,7 @@ public:
       bool bSystem = FALSE);
    ~__MODULE_STATE();
 
-   ::ca::applicationsp m_pCurrentWinApp;
+   sp(::ca::application) m_pCurrentWinApp;
    HINSTANCE m_hCurrentInstanceHandle;
    HINSTANCE m_hCurrentResourceHandle;
    const char * m_lpszCurrentAppName;

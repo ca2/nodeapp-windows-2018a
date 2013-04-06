@@ -14,7 +14,7 @@ namespace win
       Gdiplus::Brush * m_pbrush;
 
 
-      brush(::ca::applicationsp papp);
+      brush(sp(::ca::application) papp);
       //virtual void construct(COLORREF crColor);                // create_solid
       //virtual void construct(int32_t nIndex, COLORREF crColor);    // CreateHatchBrush
       //virtual void construct(::ca::bitmap * pbitmap);                // CreatePatternBrush

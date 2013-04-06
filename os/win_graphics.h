@@ -28,13 +28,13 @@ namespace win
 
 
       graphics();
-      graphics(::ca::applicationsp papp);
+      graphics(sp(::ca::application) papp);
       virtual ~graphics();
 
 
       Gdiplus::Graphics & g()
       {
-         if(m_pgraphics == NULL)
+         if(m_pgraphics == ::null())
          {
             m_pgraphics = ::Gdiplus::Graphics::FromHDC(get_handle1());
          }
@@ -253,21 +253,21 @@ namespace win
       bool DrawIcon(POINT point, ::visual::icon * picon);
       bool DrawIcon(int32_t x, int32_t y, ::visual::icon * picon, int32_t cx, int32_t cy, UINT istepIfAniCur, HBRUSH hbrFlickerFreeDraw, UINT diFlags);
       bool DrawState(point pt, size size, HBITMAP hBitmap, UINT nFlags,
-         HBRUSH hBrush = NULL);
+         HBRUSH hBrush = ::null());
       bool DrawState(point pt, size size, ::ca::bitmap* pBitmap, UINT nFlags,
-         ::ca::brush* pBrush = NULL);
+         ::ca::brush* pBrush = ::null());
       bool DrawState(point pt, size size, HICON hIcon, UINT nFlags,
-         HBRUSH hBrush = NULL);
+         HBRUSH hBrush = ::null());
       bool DrawState(point pt, size size, HICON hIcon, UINT nFlags,
-         ::ca::brush* pBrush = NULL);
+         ::ca::brush* pBrush = ::null());
       bool DrawState(point pt, size size, const char * lpszText, UINT nFlags,
-         bool bPrefixText = TRUE, int32_t nTextLen = 0, HBRUSH hBrush = NULL);
+         bool bPrefixText = TRUE, int32_t nTextLen = 0, HBRUSH hBrush = ::null());
       bool DrawState(point pt, size size, const char * lpszText, UINT nFlags,
-         bool bPrefixText = TRUE, int32_t nTextLen = 0, ::ca::brush* pBrush = NULL);
+         bool bPrefixText = TRUE, int32_t nTextLen = 0, ::ca::brush* pBrush = ::null());
       bool DrawState(point pt, size size, DRAWSTATEPROC lpDrawProc,
-         LPARAM lData, UINT nFlags, HBRUSH hBrush = NULL);
+         LPARAM lData, UINT nFlags, HBRUSH hBrush = ::null());
       bool DrawState(point pt, size size, DRAWSTATEPROC lpDrawProc,
-         LPARAM lData, UINT nFlags, ::ca::brush* pBrush = NULL);
+         LPARAM lData, UINT nFlags, ::ca::brush* pBrush = ::null());
 
    // Ellipse and Polygon Functions
       bool Chord(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3,
@@ -459,10 +459,10 @@ namespace win
       bool SelectClipPath(int32_t nMode);
 
    // Misc Helper Functions
-      static ::ca::brush* GetHalftoneBrush(::ca::applicationsp papp);
+      static ::ca::brush* GetHalftoneBrush(sp(::ca::application) papp);
       void DrawDragRect(LPCRECT lpRect, SIZE size,
          LPCRECT lpRectLast, SIZE sizeLast,
-         ::ca::brush* pBrush = NULL, ::ca::brush* pBrushLast = NULL);
+         ::ca::brush* pBrush = ::null(), ::ca::brush* pBrushLast = ::null());
       void FillSolidRect(const __rect64 * lpRect, COLORREF clr);
       void FillSolidRect(LPCRECT lpRect, COLORREF clr);
       void FillSolidRect(int32_t x, int32_t y, int32_t cx, int32_t cy, COLORREF clr);
@@ -501,7 +501,7 @@ namespace win
 
    //protected:
       // used for implementation of non-virtual SelectObject calls
-      //static ::ca::graphics_object* SelectGdiObject(::ca::applicationsp papp, HDC hDC, HGDIOBJ h);
+      //static ::ca::graphics_object* SelectGdiObject(sp(::ca::application) papp, HDC hDC, HGDIOBJ h);
 
    };
 

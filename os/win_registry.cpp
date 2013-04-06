@@ -22,12 +22,12 @@ namespace win
    {
       DWORD cbValue;
       DWORD dwType;
-      if(ERROR_SUCCESS != ::RegQueryValueEx(hKey, lpSubKey, NULL, &dwType , NULL, &cbValue))
+      if(ERROR_SUCCESS != ::RegQueryValueEx(hKey, lpSubKey, ::null(), &dwType , ::null(), &cbValue))
          return false;
       if(dwType != REG_SZ)
          return false;
       LPTSTR lpsz = str.GetBuffer(cbValue);
-      if(ERROR_SUCCESS != ::RegQueryValueEx(hKey, lpSubKey, NULL, &dwType, (LPBYTE) lpsz, &cbValue))
+      if(ERROR_SUCCESS != ::RegQueryValueEx(hKey, lpSubKey, ::null(), &dwType, (LPBYTE) lpsz, &cbValue))
       {
          str.ReleaseBuffer();
          return false;
@@ -40,18 +40,18 @@ namespace win
 
    registry::Key::Key()
    {
-      m_hkey = NULL;
+      m_hkey = ::null();
    }
 
    registry::Key::Key(HKEY hkey, const char * lpcszSubKey, bool bCreate)
    {
-      m_hkey = NULL;
+      m_hkey = ::null();
       OpenKey(hkey, lpcszSubKey, bCreate);
    }
 
    registry::Key::~Key()
    {
-      if(m_hkey != NULL)
+      if(m_hkey != ::null())
       {
          CloseKey();
       }
@@ -78,12 +78,12 @@ namespace win
 
    void registry::Key::CloseKey()
    {
-      if(m_hkey != NULL)
+      if(m_hkey != ::null())
       {
          if(ERROR_SUCCESS == ::RegCloseKey(
             m_hkey))
          {
-            m_hkey = NULL;
+            m_hkey = ::null();
          }
       }
    }
@@ -94,12 +94,12 @@ namespace win
    {
       DWORD cbValue;
       DWORD dwType;
-      if(ERROR_SUCCESS != ::RegQueryValueEx(m_hkey, lpcszValueName, NULL, &dwType , NULL, &cbValue))
+      if(ERROR_SUCCESS != ::RegQueryValueEx(m_hkey, lpcszValueName, ::null(), &dwType , ::null(), &cbValue))
          return false;
       if(dwType != REG_SZ)
          return false;
       LPTSTR lpsz = str.GetBuffer(cbValue);
-      if(ERROR_SUCCESS != ::RegQueryValueEx(m_hkey, lpcszValueName, NULL, &dwType, (LPBYTE) lpsz, &cbValue))
+      if(ERROR_SUCCESS != ::RegQueryValueEx(m_hkey, lpcszValueName, ::null(), &dwType, (LPBYTE) lpsz, &cbValue))
       {
          str.ReleaseBuffer();
          return false;
@@ -113,12 +113,12 @@ namespace win
    {
       DWORD cbValue;
       DWORD dwType;
-      if(ERROR_SUCCESS != ::RegQueryValueEx(m_hkey, lpcszValueName, NULL, &dwType , NULL, &cbValue))
+      if(ERROR_SUCCESS != ::RegQueryValueEx(m_hkey, lpcszValueName, ::null(), &dwType , ::null(), &cbValue))
          return false;
       if(dwType != REG_BINARY)
          return false;
       mem.allocate(cbValue);
-      if(ERROR_SUCCESS != ::RegQueryValueEx(m_hkey, lpcszValueName, NULL, &dwType, (LPBYTE) mem.get_data(), &cbValue))
+      if(ERROR_SUCCESS != ::RegQueryValueEx(m_hkey, lpcszValueName, ::null(), &dwType, (LPBYTE) mem.get_data(), &cbValue))
       {
          mem.allocate(0);
          return false;
@@ -132,7 +132,7 @@ namespace win
       const char * lpcszValue)
    {
       return ERROR_SUCCESS ==
-         RegSetValueEx(m_hkey, lpcszValueName, NULL, REG_SZ,
+         RegSetValueEx(m_hkey, lpcszValueName, 0, REG_SZ,
                (LPBYTE)lpcszValue, (lstrlen(lpcszValue)+1)*sizeof(char));
    }
 
@@ -148,10 +148,10 @@ namespace win
    {
       ASSERT(FALSE);
       // please verify if
-      // using NULL for the value parameter
+      // using ::null() for the value parameter
       // deletes the key.
       return ERROR_SUCCESS ==
-         ::RegDeleteKey(m_hkey, NULL);
+         ::RegDeleteKey(m_hkey, ::null());
    }
 
    ::count registry::Key::EnumKey(stringa & stra)
@@ -159,17 +159,17 @@ namespace win
       DWORD dwMaxSubKeyLen;
       RegQueryInfoKey(
          m_hkey,
-         NULL,
-         NULL,
-        NULL,
-        NULL,
+         ::null(),
+         ::null(),
+        ::null(),
+        ::null(),
         &dwMaxSubKeyLen,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL);
+        ::null(),
+        ::null(),
+        ::null(),
+        ::null(),
+        ::null(),
+        ::null());
       int32_t iSize = max(dwMaxSubKeyLen, 1024);
       char *buf = (char *) malloc(iSize);
       int32_t iKey = 0;
@@ -200,10 +200,10 @@ namespace win
          dwIndex,
          pszBuf,
          &dwLen,
-         NULL,
-         NULL,
-         NULL,
-         NULL)))
+         ::null(),
+         ::null(),
+         ::null(),
+         ::null())))
       {
          stra.add(pszBuf);
          dwIndex++;

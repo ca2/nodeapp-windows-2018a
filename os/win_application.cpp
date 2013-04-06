@@ -5,34 +5,36 @@ extern thread_local_storage * __thread_data;
 namespace win
 {
 
-   application::application(::ca::applicationsp papp) :
+   application::application(sp(::ca::application) papp) :
       ca(papp)
    {
-      ::ca::thread_sp::create(papp);
+
+      ::ca::thread_sp::create(allocer());
+
       WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_pAppThread = this;
 
-      m_pfilemanager = NULL;
+      m_pfilemanager = ::null();
 
 
 
       // in non-running state until WinMain
-      m_hInstance = NULL;
-//      m_hLangResourceDLL = NULL;
-      m_pszHelpFilePath = NULL;
-      m_pszProfileName = NULL;
-      m_pszRegistryKey = NULL;
-//      m_pRecentFileList = NULL;
-      m_pdocmanager = NULL;
+      m_hInstance = ::null();
+//      m_hLangResourceDLL = ::null();
+      m_pszHelpFilePath = ::null();
+      m_pszProfileName = ::null();
+      m_pszRegistryKey = ::null();
+//      m_pRecentFileList = ::null();
+      m_pdocmanager = ::null();
       m_atomApp = m_atomSystemTopic = NULL;
-      //m_lpCmdLine = NULL;
-//      m_pCmdInfo = NULL;
+      //m_lpCmdLine = ::null();
+//      m_pCmdInfo = ::null();
 
       // initialize wait cursor state
-      m_hcurWaitCursorRestore = NULL;
+      m_hcurWaitCursorRestore = ::null();
 
       // initialize current printer state
-      m_hDevMode = NULL;
-      m_hDevNames = NULL;
+      m_hDevMode = ::null();
+      m_hDevNames = ::null();
       m_nNumPreviewPages = 0;     // not specified (defaults to 1)
 
       // other initialization
@@ -51,18 +53,18 @@ namespace win
 
    void application::_001OnFileNew()
    {
-      //::ca::smart_pointer < application_base >::m_p->_001OnFileNew(NULL);
+      //::ca::smart_pointer < application_base >::m_p->_001OnFileNew(::null());
    }
 
    sp(::user::document_interface) application::_001OpenDocumentFile(var varFile)
    {
       //return ::ca::smart_pointer < application_base >::m_p->_001OpenDocumentFile(varFile);
-      return NULL;
+      return ::null();
    }
 
    void application::_001EnableShellOpen()
    {
-      ASSERT(m_atomApp == NULL && m_atomSystemTopic == NULL); // do once
+      ASSERT(m_atomApp == ::null() && m_atomSystemTopic == ::null()); // do once
 
       m_atomApp            = ::GlobalAddAtomW(::ca::international::utf8_to_unicode(m_strAppName));
       m_atomSystemTopic    = ::GlobalAddAtomW(L"system");
@@ -76,14 +78,14 @@ namespace win
 
    HINSTANCE application::GetHinstance()
    {
-      return NULL;
+      return ::null();
    }
 
    string application::get_version()
    {
 
       char lpszModuleFilePath[MAX_PATH + 1];
-      GetModuleFileName(NULL, lpszModuleFilePath, MAX_PATH + 1);
+      GetModuleFileName(::null(), lpszModuleFilePath, MAX_PATH + 1);
 
       DWORD dw;
 
@@ -218,7 +220,7 @@ namespace win
       try
       {
          // cleanup thread local tooltip ::ca::window
-         if (hInstTerm == NULL)
+         if (hInstTerm == ::null())
          {
 //            __MODULE_THREAD_STATE* pModuleThreadState = __get_module_thread_state();
          }
@@ -231,7 +233,7 @@ namespace win
       try
       {
          // cleanup the rest of the thread local data
-         if (__thread_data != NULL)
+         if (__thread_data != ::null())
             __thread_data->delete_data();
       }
       catch( base_exception* e )
@@ -246,44 +248,44 @@ namespace win
    // application
    HCURSOR application::LoadCursor(const char * lpszResourceName) const
    { 
-      return NULL;
+      return ::null();
    }
 
    HCURSOR application::LoadCursor(UINT nIDResource) const
    { 
-      return NULL;
+      return ::null();
    }
 
    HCURSOR application::LoadStandardCursor(const char * lpszCursorName) const
    { 
-      return ::LoadCursor(NULL, lpszCursorName);
+      return ::LoadCursor(::null(), lpszCursorName);
    }
 
    HCURSOR application::LoadOEMCursor(UINT nIDCursor) const
    { 
    
-      return ::LoadCursor(NULL, MAKEINTRESOURCE(nIDCursor));
+      return ::LoadCursor(::null(), MAKEINTRESOURCE(nIDCursor));
    
    }
 
    HICON application::LoadIcon(const char * lpszResourceName) const
    { 
-      return NULL;
+      return ::null();
    }
 
    HICON application::LoadIcon(UINT nIDResource) const
    { 
-      return NULL;
+      return ::null();
    }
 
    HICON application::LoadStandardIcon(const char * lpszIconName) const
    { 
-      return ::LoadIcon(NULL, lpszIconName);
+      return ::LoadIcon(::null(), lpszIconName);
    }
    
    HICON application::LoadOEMIcon(UINT nIDIcon) const
    { 
-      return ::LoadIcon(NULL, MAKEINTRESOURCE(nIDIcon));
+      return ::LoadIcon(::null(), MAKEINTRESOURCE(nIDIcon));
    }
 
 
@@ -397,20 +399,20 @@ namespace win
    {
       if(::ca::smart_pointer < application_base > ::m_p->is_system())
       {
-         if(__get_module_state()->m_pmapHWND == NULL)
+         if(__get_module_state()->m_pmapHWND == ::null())
          {
             __get_module_state()->m_pmapHWND = new oswindow_map(this);
             __get_module_state()->m_pmutexoswindow_ = new mutex(this);
          }
-/*         if(__get_module_state()->m_pmapHDC == NULL)
+/*         if(__get_module_state()->m_pmapHDC == ::null())
          {
             __get_module_state()->m_pmapHDC = new hdc_map;
          }
-         if(__get_module_state()->m_pmapHGDIOBJ == NULL)
+         if(__get_module_state()->m_pmapHGDIOBJ == ::null())
          {
             __get_module_state()->m_pmapHGDIOBJ = new hgdiobj_map;
          }*/
-/*         if(__get_module_state()->m_pmapHMENU == NULL)
+/*         if(__get_module_state()->m_pmapHMENU == ::null())
          {
             __get_module_state()->m_pmapHMENU = new hmenu_map;
          }*/
@@ -445,7 +447,7 @@ namespace win
 
       // avoid calling CloseHandle() on our own thread handle
       // during the thread destructor
-      ::ca::thread_sp::m_p->set_os_data(NULL);
+      ::ca::thread_sp::m_p->set_os_data(::null());
 
       WIN_THREAD(::ca::thread_sp::m_p)->m_bRun = false;
 
@@ -519,7 +521,7 @@ namespace win
    sp(::ca::window) application::window_from_os_data_permanent(void * pdata)
    {
       sp(::ca::window) pwnd = ::win::window::FromHandlePermanent((oswindow) pdata);
-      if(pwnd != NULL)
+      if(pwnd != ::null())
          return pwnd;
       user::interaction_ptr_array wndptra = System.frames();
       for(int32_t i = 0; i < wndptra.get_count(); i++)
@@ -529,13 +531,13 @@ namespace win
             return wndptra[i].get_wnd();
          }
       }
-      return NULL;
+      return ::null();
    }
 
    ::ca::thread * application::GetThread()
    {
-      if(__get_thread() == NULL)
-         return NULL;
+      if(__get_thread() == ::null())
+         return ::null();
       else
          return dynamic_cast < ::ca::thread * > (__get_thread()->m_p);
    }
@@ -551,9 +553,9 @@ namespace win
    void application::SetCurrentHandles()
    {
       //ASSERT(this == afxCurrentWinApp);
-      //if(afxCurrentAppName != NULL)
+      //if(afxCurrentAppName != ::null())
         // return;
-      //ASSERT(afxCurrentAppName == NULL);
+      //ASSERT(afxCurrentAppName == ::null());
 
 
       // Note: there are a number of _tcsdup (aka _strdup) calls that are
@@ -561,7 +563,7 @@ namespace win
       // versions of ca API, this primitive::memory was never freed.  In this and future
       // versions this primitive::memory is automatically freed during application's
       // destructor.  If you are freeing the primitive::memory yourself, you should
-      // either remove the code or set the pointers to NULL after freeing
+      // either remove the code or set the pointers to ::null() after freeing
       // the primitive::memory.
 
       // get path of executable
@@ -573,8 +575,8 @@ namespace win
 
       /*
       LPTSTR lpszExt = ::PathFindExtension(szBuff);
-      ASSERT(lpszExt != NULL);
-      if( lpszExt == NULL )
+      ASSERT(lpszExt != ::null());
+      if( lpszExt == ::null() )
          throw user_exception();
 
       ASSERT(*lpszExt == '.');
@@ -591,16 +593,16 @@ namespace win
       // initialize thread state
       __MODULE_STATE* pModuleState = __get_module_state();
       ENSURE(pModuleState);
-      if(pModuleState->m_pCurrentWinApp == NULL)
+      if(pModuleState->m_pCurrentWinApp == ::null())
       {
          __MODULE_THREAD_STATE* pThreadState = pModuleState->m_thread;
          ENSURE(pThreadState);
-//         ASSERT(System.GetThread() == NULL);
+//         ASSERT(System.GetThread() == ::null());
          pThreadState->m_pCurrentWinThread = dynamic_cast < class ::win::thread * > (::ca::thread_sp::m_p);
   //       ASSERT(System.GetThread() == this);
 
          // initialize application state
-         //ASSERT(afxCurrentWinApp == NULL); // only one application object please
+         //ASSERT(afxCurrentWinApp == ::null()); // only one application object please
          pModuleState->m_pCurrentWinApp = dynamic_cast < application * > (this);
          //ASSERT(&System == this);
       }
@@ -636,7 +638,7 @@ namespace win
       p->tv_sec = (long)tt / 1000000;
       p->tv_usec = (long)tt % 1000000;
    #else
-      gettimeofday(p, NULL);
+      gettimeofday(p, ::null());
    #endif
    }
 
@@ -675,7 +677,7 @@ namespace win
 
       m_pmaininitdata = (::win::main_init_data *) pdata;
 
-      if(m_pmaininitdata != NULL && ::ca::smart_pointer < application_base >::m_p->is_system())
+      if(m_pmaininitdata != ::null() && ::ca::smart_pointer < application_base >::m_p->is_system())
       {
          if(!win_init(m_pmaininitdata))
             return false;
@@ -687,7 +689,7 @@ namespace win
 
    bool application::win_init(main_init_data * pdata)
    {
-         ASSERT(pdata->m_hPrevInstance == NULL);
+         ASSERT(pdata->m_hPrevInstance == ::null());
 
          HINSTANCE hInstance        = pdata->m_hInstance;
 //         HINSTANCE hPrevInstance    = pdata->m_hPrevInstance;
@@ -719,7 +721,7 @@ namespace win
 
          // Initialize ::ca::window::m_pfnNotifyWinEvent
       /*   HMODULE hModule = ::GetModuleHandle("user32.dll");
-         if (hModule != NULL)
+         if (hModule != ::null())
          {
             ::ca::window::m_pfnNotifyWinEvent = (::ca::window::PFNNOTIFYWINEVENT)::GetProcAddress(hModule, "NotifyWinEvent");
          }*/
@@ -734,7 +736,7 @@ namespace win
       if(bShow)
       {
 
-         HCURSOR hcursorWait =  ::LoadCursor(NULL, IDC_WAIT);
+         HCURSOR hcursorWait =  ::LoadCursor(::null(), IDC_WAIT);
 
          HCURSOR hcursorPrevious = ::SetCursor(hcursorWait);
          

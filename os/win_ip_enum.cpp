@@ -5,7 +5,7 @@ namespace win
 {
 
 
-   ip_enum::ip_enum(::ca::applicationsp papp) :
+   ip_enum::ip_enum(sp(::ca::application) papp) :
       ca(papp),
       ::ca::ip_enum(papp)
    {
@@ -54,7 +54,7 @@ namespace win
 
       //get host information from the host name
       HOSTENT* pHostEnt = gethostbyname(szHostname);
-      if (pHostEnt == NULL)
+      if (pHostEnt == ::null())
       {
          TRACE("Failed in call to gethostbyname, WSAGetLastError returns %d\n", WSAGetLastError());
          return FALSE;
@@ -100,7 +100,7 @@ namespace win
 
       //get host information from the host name
       HOSTENT* pent = gethostbyname(szHostname);
-      if (pent == NULL)
+      if (pent == ::null())
       {
          TRACE("Failed in call to gethostbyname, WSAGetLastError returns %d\n", WSAGetLastError());
          return FALSE;

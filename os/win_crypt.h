@@ -11,7 +11,7 @@ namespace win
    public:
 
 
-      crypt(::ca::applicationsp papp);
+      crypt(sp(::ca::application) papp);
       virtual ~crypt();
 
 

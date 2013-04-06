@@ -21,7 +21,7 @@ namespace win2
          HDC            m_hdc;
 
 
-         document_properties(::ca::applicationsp papp);
+         document_properties(sp(::ca::application) papp);
          virtual ~document_properties();
 
 
@@ -36,7 +36,7 @@ namespace win2
       document_properties     m_documentproperties;
 
 
-      printer(::ca::applicationsp papp);
+      printer(sp(::ca::application) papp);
       virtual ~printer();
 
 

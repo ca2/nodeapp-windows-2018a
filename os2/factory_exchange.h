@@ -11,7 +11,7 @@ namespace win2
    public:
 
 
-      factory_exchange(::ca::applicationsp papp);
+      factory_exchange(sp(::ca::application) papp);
       virtual ~factory_exchange();
 
 

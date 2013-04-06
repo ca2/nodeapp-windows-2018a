@@ -235,7 +235,7 @@ typedef struct HKEY__ *HKEY;
 #undef GetWindowTask
 #ifdef _WIN32
 __INLINE HTASK GetWindowTask(oswindow oswindow)
-	{ return (HTASK)(DWORD_PTR)GetWindowThreadProcessId(oswindow, NULL); }
+	{ return (HTASK)(DWORD_PTR)GetWindowThreadProcessId(oswindow, ::null()); }
 #endif
 #endif
 

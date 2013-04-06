@@ -15,7 +15,7 @@ namespace win
       void *               m_pdata;
 
 
-      bitmap(::ca::applicationsp papp);
+      bitmap(sp(::ca::application) papp);
       virtual ~bitmap();
 
 
@@ -26,7 +26,7 @@ namespace win
       bool LoadBitmap(UINT nIDResource);
       bool LoadOEMBitmap(UINT nIDBitmap); // for OBM_/OCR_/OIC_
    #ifndef ___NO_AFXCMN_SUPPORT
-      bool LoadMappedBitmap(UINT nIDBitmap, UINT nFlags = 0, LPCOLORMAP lpColorMap = NULL, int32_t nMapSize = 0);
+      bool LoadMappedBitmap(UINT nIDBitmap, UINT nFlags = 0, LPCOLORMAP lpColorMap = ::null(), int32_t nMapSize = 0);
    #endif
       bool CreateBitmap(::ca::graphics * pdc, int32_t nWidth, int32_t nHeight, UINT nPlanes, UINT nBitcount, const void * lpBits, int32_t stride);
       bool CreateBitmapIndirect(::ca::graphics * pdc, LPBITMAP lpBitmap);

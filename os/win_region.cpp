@@ -8,11 +8,11 @@ namespace win
 {
 
    
-   region::region(::ca::applicationsp papp) :
+   region::region(sp(::ca::application) papp) :
       ca(papp)
    { 
       
-      m_pregion = NULL;
+      m_pregion = ::null();
       m_bUpdated = false;
 
    }
@@ -20,19 +20,19 @@ namespace win
    region::~region()
    {
       
-      if(m_pregion != NULL)
+      if(m_pregion != ::null())
       {
          delete m_pregion;
-         m_pregion = NULL;
+         m_pregion = ::null();
       }
 
    }
 
 /*
    int32_t region::GetRegionData(LPRGNDATA lpRgnData, int32_t nDataSize) const
-   { ASSERT(get_os_data() != NULL); return (int32_t)::GetRegionData((HRGN)get_os_data(), nDataSize, lpRgnData); }
+   { ASSERT(get_os_data() != ::null()); return (int32_t)::GetRegionData((HRGN)get_os_data(), nDataSize, lpRgnData); }
    void region::SetRectRgn(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
-   { ASSERT(get_os_data() != NULL); ::SetRectRgn((HRGN)get_os_data(), x1, y1, x2, y2); }
+   { ASSERT(get_os_data() != ::null()); ::SetRectRgn((HRGN)get_os_data(), x1, y1, x2, y2); }
    
    void region::SetRectRgn(LPCRECT lpRect)
    { 
@@ -40,24 +40,24 @@ namespace win
    }
 
    int32_t region::CombineRgn(const ::ca::region* pRgn1, const ::ca::region* pRgn2, int32_t nCombineMode)
-   { ASSERT(get_os_data() != NULL); return ::CombineRgn((HRGN)get_os_data(), (HRGN)pRgn1->get_os_data(),
+   { ASSERT(get_os_data() != ::null()); return ::CombineRgn((HRGN)get_os_data(), (HRGN)pRgn1->get_os_data(),
    (HRGN)pRgn2->get_os_data(), nCombineMode); }
    int32_t region::CopyRgn(const ::ca::region* pRgnSrc)
-   { ASSERT(get_os_data() != NULL); return ::CombineRgn((HRGN)get_os_data(), (HRGN)pRgnSrc->get_os_data(), NULL, RGN_COPY); }
+   { ASSERT(get_os_data() != ::null()); return ::CombineRgn((HRGN)get_os_data(), (HRGN)pRgnSrc->get_os_data(), ::null(), RGN_COPY); }
 
    bool region::EqualRgn(const ::ca::region* pRgn) const
    {
       
-      ASSERT(get_os_data() != NULL); 
+      ASSERT(get_os_data() != ::null()); 
       
       return ::EqualRgn((HRGN)get_os_data(), (HRGN)pRgn->get_os_data()) != FALSE;
 
    }
 
    int32_t region::OffsetRgn(int32_t x, int32_t y)
-   { ASSERT(get_os_data() != NULL); return ::OffsetRgn((HRGN)get_os_data(), x, y); }
+   { ASSERT(get_os_data() != ::null()); return ::OffsetRgn((HRGN)get_os_data(), x, y); }
    int32_t region::OffsetRgn(POINT point)
-   { ASSERT(get_os_data() != NULL); return ::OffsetRgn((HRGN)get_os_data(), point.x, point.y); }
+   { ASSERT(get_os_data() != ::null()); return ::OffsetRgn((HRGN)get_os_data(), point.x, point.y); }
 
    */
    bool region::get_bounding_box(LPRECT lprect) const
@@ -67,7 +67,7 @@ namespace win
 
       Gdiplus::Rect rect;
 
-      ((region *) this)->m_pregion->GetBounds(&rect, &Gdiplus::Graphics((HDC) NULL));
+      ((region *) this)->m_pregion->GetBounds(&rect, &Gdiplus::Graphics((HDC) ::null()));
 
 
       lprect->left = rect.X;
@@ -84,7 +84,7 @@ namespace win
 
       Gdiplus::PointF pointf((Gdiplus::REAL) x, (Gdiplus::REAL) y);
       
-      ASSERT(get_os_data() != NULL); //return ::PtInRegion((HRGN)get_os_data(), x, y); 
+      ASSERT(get_os_data() != ::null()); //return ::PtInRegion((HRGN)get_os_data(), x, y); 
 
       return m_pregion->IsVisible(pointf)  != FALSE;
    
@@ -97,7 +97,7 @@ namespace win
 
       Gdiplus::PointF pointf((Gdiplus::REAL) point.x, (Gdiplus::REAL) point.y);
       
-      ASSERT(get_os_data() != NULL);
+      ASSERT(get_os_data() != ::null());
 
       return m_pregion->IsVisible(pointf)  != FALSE;
 
@@ -105,11 +105,11 @@ namespace win
    /*
    bool region::RectInRegion(LPCRECT lpRect) const
    { 
-      //ASSERT(get_os_data() != NULL); return ::RectInRegion((HRGN)get_os_data(), lpRect); 
+      //ASSERT(get_os_data() != ::null()); return ::RectInRegion((HRGN)get_os_data(), lpRect); 
 
       Gdiplus::RectF rectf((Gdiplus::REAL) lpRect->left, (Gdiplus::REAL) lpRect->top, (Gdiplus::REAL) (lpRect->right - lpRect->left), (Gdiplus::REAL) (lpRect->bottom - lpRect->top));
       
-      ASSERT(get_os_data() != NULL); //return ::PtInRegion((HRGN)get_os_data(), x, y); 
+      ASSERT(get_os_data() != ::null()); //return ::PtInRegion((HRGN)get_os_data(), x, y); 
 
       return m_pregion->IsVisible(rectf)  != FALSE;
 
@@ -129,10 +129,10 @@ namespace win
    void region::defer_update()
    {
       
-      if(m_pregion == NULL || !m_bUpdated)
+      if(m_pregion == ::null() || !m_bUpdated)
       {
 
-         if(m_pregion != NULL)
+         if(m_pregion != ::null())
          {
             delete m_pregion;
          }
@@ -147,12 +147,12 @@ namespace win
    bool region::destroy()
    {
 
-      if(m_pregion != NULL)
+      if(m_pregion != ::null())
       {
 
          delete m_pregion;
 
-         m_pregion = NULL;
+         m_pregion = ::null();
 
       }
 
@@ -181,7 +181,7 @@ namespace win
          throw not_implemented(get_app());
       }
 
-      return NULL;
+      return ::null();
 
    }
 

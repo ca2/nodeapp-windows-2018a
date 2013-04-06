@@ -60,17 +60,17 @@ uint32_t __thread_entry(void * pParam)
    {
 
       ___THREAD_STARTUP* pStartup = (___THREAD_STARTUP*)pParam;
-      ASSERT(pStartup != NULL);
-      ASSERT(pStartup->pThreadState != NULL);
-      ASSERT(pStartup->pThread != NULL);
-      //ASSERT(pStartup->hEvent != NULL);
+      ASSERT(pStartup != ::null());
+      ASSERT(pStartup->pThreadState != ::null());
+      ASSERT(pStartup->pThread != ::null());
+      //ASSERT(pStartup->hEvent != ::null());
       ASSERT(!pStartup->bError);
 
 
       ::win::thread* pThread = pStartup->pThread;
 
 
-      ::CoInitialize(NULL);
+      ::CoInitialize(::null());
 
 
       pThread->::exception::translator::attach();
@@ -90,7 +90,7 @@ uint32_t __thread_entry(void * pParam)
          __init_thread();
 
          // thread inherits cast's main ::ca::window if not already set
-         //if (papp != NULL && GetMainWnd() == NULL)
+         //if (papp != ::null() && GetMainWnd() == ::null())
          {
             // just attach the oswindow
             // trans         threadWnd.attach(pApp->GetMainWnd()->get_handle());
@@ -202,7 +202,7 @@ CLASS_DECL_win void __internal_process_wnd_proc_exception(base_exception*, ::ca:
    else if (pbase->m_uiMessage == WM_PAINT)
    {
       // force validation of ::ca::window to prevent getting WM_PAINT again
-      ValidateRect(pbase->m_pwnd->get_safe_handle(), NULL);
+      ValidateRect(pbase->m_pwnd->get_safe_handle(), ::null());
       pbase->set_lresult(0);
       return;
    }
@@ -230,7 +230,7 @@ void __internal_pre_translate_message(::ca::signal_object * pobj)
       if(pthread)
       {
          // if this is a thread-message, int16_t-circuit this function
-         if (pbase->m_pwnd == NULL)
+         if (pbase->m_pwnd == ::null())
          {
             pthread->DispatchThreadMessageEx(pobj);
             if(pobj->m_bRet)
@@ -242,7 +242,7 @@ void __internal_pre_translate_message(::ca::signal_object * pobj)
 
       try
       {
-         if(pthread->m_papp->m_psession != NULL)
+         if(pthread->m_papp->m_psession != ::null())
          {
             try
             {
@@ -251,9 +251,9 @@ void __internal_pre_translate_message(::ca::signal_object * pobj)
                   try
                   {
                      sp(::user::interaction) pui = pthread->m_papp->m_psession->frames()(i);
-                     if(pui != NULL)
+                     if(pui != ::null())
                      {
-                        if(pui->m_pguie != NULL)
+                        if(pui->m_pguie != ::null())
                         {
                            pui->m_pguie->pre_translate_message(pobj);
                            if(pobj->m_bRet)
@@ -321,7 +321,7 @@ bool __internal_is_idle_message(::ca::signal_object * pobj)
    // affect the state of the ::fontopus::user interface and happen very
    // often are checked for.
 
-   if(pbase == NULL)
+   if(pbase == ::null())
       return FALSE;
 
    // redundant WM_MOUSEMOVE and WM_NCMOUSEMOVE
@@ -352,7 +352,7 @@ bool __internal_is_idle_message(LPMSG lpmsg)
    // affect the state of the ::fontopus::user interface and happen very
    // often are checked for.
 
-   if(lpmsg == NULL)
+   if(lpmsg == ::null())
       return FALSE;
 
    // redundant WM_MOUSEMOVE and WM_NCMOUSEMOVE
@@ -391,11 +391,11 @@ bool __cdecl __is_idle_message(MSG* pMsg)
 }
 
 
-/*thread* CLASS_DECL_win __begin_thread(::ca::applicationsp papp, __THREADPROC pfnThreadProc, LPVOID pParam,
+/*thread* CLASS_DECL_win __begin_thread(sp(::ca::application) papp, __THREADPROC pfnThreadProc, LPVOID pParam,
 int32_t nPriority, UINT nStackSize, DWORD dwCreateFlags,
 LPSECURITY_ATTRIBUTES lpSecurityAttrs)
 {
-ASSERT(pfnThreadProc != NULL);
+ASSERT(pfnThreadProc != ::null());
 
 thread* pThread = DEBUG_NEW thread(papp, pfnThreadProc, pParam);
 ASSERT_VALID(pThread);
@@ -404,7 +404,7 @@ if (!pThread->create_thread(dwCreateFlags|CREATE_SUSPENDED, nStackSize,
 lpSecurityAttrs))
 {
 pThread->Delete();
-return NULL;
+return ::null();
 }
 VERIFY(pThread->SetThreadPriority(nPriority));
 if (!(dwCreateFlags & CREATE_SUSPENDED))
@@ -412,12 +412,12 @@ VERIFY(pThread->ResumeThread() != (DWORD)-1);
 
 return pThread;
 }*/
-void CLASS_DECL_win __end_thread(::ca::applicationsp papp, UINT nExitCode, bool bDelete)
+void CLASS_DECL_win __end_thread(sp(::ca::application) papp, UINT nExitCode, bool bDelete)
 {
    // remove current thread object from primitive::memory
    __MODULE_THREAD_STATE* pState = __get_module_thread_state();
    ::win::thread* pThread = pState->m_pCurrentWinThread;
-   if (pThread != NULL)
+   if (pThread != ::null())
    {
 
       {
@@ -427,11 +427,11 @@ void CLASS_DECL_win __end_thread(::ca::applicationsp papp, UINT nExitCode, bool 
       }
 
       ASSERT_VALID(pThread);
-      //ASSERT(pThread != System::smart_pointer < ::ca::applicationsp>::m_p);
+      //ASSERT(pThread != System::smart_pointer < sp(::ca::application)>::m_p);
 
       if (bDelete)
          pThread->Delete();
-      pState->m_pCurrentWinThread = NULL;
+      pState->m_pCurrentWinThread = ::null();
    }
 
    // allow cleanup of any thread local objects
@@ -449,13 +449,13 @@ void CLASS_DECL_win __end_thread(::ca::applicationsp papp, UINT nExitCode, bool 
 
 extern thread_local_storage * __thread_data;
 
-void CLASS_DECL_win __term_thread(::ca::applicationsp papp, HINSTANCE hInstTerm)
+void CLASS_DECL_win __term_thread(sp(::ca::application) papp, HINSTANCE hInstTerm)
 {
    UNREFERENCED_PARAMETER(papp);
    try
    {
       // cleanup thread local tooltip window
-      if (hInstTerm == NULL)
+      if (hInstTerm == ::null())
       {
          //         __MODULE_THREAD_STATE* pModuleThreadState = __get_module_thread_state();
       }
@@ -468,7 +468,7 @@ void CLASS_DECL_win __term_thread(::ca::applicationsp papp, HINSTANCE hInstTerm)
    try
    {
       // cleanup the rest of the thread local data
-      if (__thread_data != NULL)
+      if (__thread_data != ::null())
          __thread_data->delete_data();
    }
    catch( base_exception* e )
@@ -489,9 +489,9 @@ void CLASS_DECL_win __init_thread()
    {
       // set message filter proc
       ___THREAD_STATE* pThreadState = __get_thread_state();
-      ASSERT(pThreadState->m_hHookOldMsgFilter == NULL);
+      ASSERT(pThreadState->m_hHookOldMsgFilter == ::null());
       pThreadState->m_hHookOldMsgFilter = ::SetWindowsHookEx(WH_MSGFILTER,
-         __message_filter_hook, NULL, ::GetCurrentThreadId());
+         __message_filter_hook, ::null(), ::GetCurrentThreadId());
    }
 }
 
@@ -501,7 +501,7 @@ namespace win
 
    comparable_array < HANDLE > thread::s_haThread;
    comparable_array < ::ca::thread * > thread::s_threadptra;
-   mutex thread::s_mutex(NULL);
+   mutex thread::s_mutex(::null());
 
 
 
@@ -517,13 +517,13 @@ namespace win
    void thread::construct(__THREADPROC pfnThreadProc, LPVOID pParam)
    {
       m_evFinish.SetEvent();
-      if(System.GetThread() != NULL)
+      if(System.GetThread() != ::null())
       {
          m_pAppThread = __get_thread()->m_pAppThread;
       }
       else
       {
-         m_pAppThread = NULL;
+         m_pAppThread = ::null();
       }
       m_pfnThreadProc = pfnThreadProc;
       m_pThreadParams = pParam;
@@ -531,18 +531,18 @@ namespace win
       CommonConstruct();
    }
 
-   thread::thread(::ca::applicationsp papp) :
+   thread::thread(sp(::ca::application) papp) :
       ca(papp),
       message_window_simple_callback(papp),//,
       //m_evFinish(FALSE, TRUE)
-      ::ca::thread(NULL),
+      ::ca::thread(::null()),
       m_evFinish(papp),
       m_mutexUiPtra(papp)
    {
       m_evFinish.SetEvent();
       m_pAppThread = dynamic_cast < ::ca::thread * > (papp.m_p);
-      m_pThreadParams = NULL;
-      m_pfnThreadProc = NULL;
+      m_pThreadParams = ::null();
+      m_pfnThreadProc = ::null();
 
       CommonConstruct();
    }
@@ -550,16 +550,16 @@ namespace win
    void thread::CommonConstruct()
    {
 
-      m_ptimera      = NULL; 
-      m_puiptra      = NULL;
-      m_puiMain      = NULL;
-      m_puiActive    = NULL;
+      m_ptimera      = ::null(); 
+      m_puiptra      = ::null();
+      m_puiMain      = ::null();
+      m_puiActive    = ::null();
 
 
       m_nDisablePumpCount  = 0;
 
       // no HTHREAD until it is created
-      m_hThread = NULL;
+      m_hThread = ::null();
       m_nThreadID = 0;
 
       ___THREAD_STATE* pState = __get_thread_state();
@@ -580,15 +580,15 @@ namespace win
 
    thread::~thread()
    {
-      if(m_puiptra != NULL)
+      if(m_puiptra != ::null())
       {
          single_lock sl(&m_mutexUiPtra, TRUE);
          ::user::interaction_ptr_array * puiptra = m_puiptra;
-         m_puiptra = NULL;
+         m_puiptra = ::null();
          for(int32_t i = 0; i < puiptra->get_size(); i++)
          {
             sp(::user::interaction) pui = puiptra->element_at(i);
-            if(pui->m_pthread != NULL)
+            if(pui->m_pthread != ::null())
             {
                try
                {
@@ -596,7 +596,7 @@ namespace win
                      || WIN_THREAD(pui->m_pthread->m_pthread->m_p) == WIN_THREAD(m_p)
                      || WIN_THREAD(pui->m_pthread->m_pthread) == WIN_THREAD(m_p))
                   {
-                     pui->m_pthread = NULL;
+                     pui->m_pthread = ::null();
                   }
                }
                catch(...)
@@ -605,14 +605,14 @@ namespace win
                try
                {
                   sp(::user::interaction) puie = pui->m_pguie;
-                  if(puie != NULL 
-                     && puie->m_pthread != NULL
-                     && puie->m_pthread->m_pthread != NULL
+                  if(puie != ::null() 
+                     && puie->m_pthread != ::null()
+                     && puie->m_pthread->m_pthread != ::null()
                      && (WIN_THREAD(puie->m_pthread->m_pthread) == this 
                      || WIN_THREAD(puie->m_pthread->m_pthread->m_p) == WIN_THREAD(m_p)
                      || WIN_THREAD(puie->m_pthread->m_pthread) == WIN_THREAD(m_p)))
                   {
-                     puie->m_pthread = NULL;
+                     puie->m_pthread = ::null();
                   }
                }
                catch(...)
@@ -635,12 +635,12 @@ namespace win
       pState->m_pmapHWND->delete_temp();*/
 
       // free thread object
-      if (m_hThread != NULL)
+      if (m_hThread != ::null())
          CloseHandle(m_hThread);
 
       // cleanup module state
       if (pState->m_pCurrentWinThread == this)
-         pState->m_pCurrentWinThread = NULL;
+         pState->m_pCurrentWinThread = ::null();
 
       window::DeleteTempMap();
       //      graphics::DeleteTempMap();
@@ -710,7 +710,7 @@ namespace win
    void thread::add(sp(::user::interaction) pui)
    {
       single_lock sl(&m_mutexUiPtra, TRUE);
-      if(m_puiptra != NULL)
+      if(m_puiptra != ::null())
       {
          m_puiptra->add(pui);
       }
@@ -718,21 +718,21 @@ namespace win
 
    void thread::remove(sp(::user::interaction) pui)
    {
-      if(pui == NULL)
+      if(pui == ::null())
          return;
       if(GetMainWnd() == pui)
       {
-         SetMainWnd(NULL);
+         SetMainWnd(::null());
       }
       single_lock sl(&m_mutexUiPtra, TRUE);
-      if(m_puiptra != NULL)
+      if(m_puiptra != ::null())
       {
          m_puiptra->remove(pui);
          m_puiptra->remove(pui->m_pguie);
          m_puiptra->remove(pui->m_pimpl);
       }
       sl.unlock();
-      if(m_ptimera != NULL)
+      if(m_ptimera != ::null())
       {
          m_ptimera->unset(pui);
          m_ptimera->unset(pui->m_pguie);
@@ -743,7 +743,7 @@ namespace win
       {
          if(WIN_THREAD(pui->m_pthread) == this)
          {
-            pui->m_pthread = NULL;
+            pui->m_pthread = ::null();
          }
       }
       catch(...)
@@ -751,11 +751,11 @@ namespace win
       }
       try
       {
-         if(pui->m_pimpl != NULL && pui->m_pimpl != pui)
+         if(pui->m_pimpl != ::null() && pui->m_pimpl != pui)
          {
             if(WIN_THREAD(pui->m_pimpl->m_pthread) == this)
             {
-               pui->m_pimpl->m_pthread = NULL;
+               pui->m_pimpl->m_pthread = ::null();
             }
          }
       }
@@ -764,11 +764,11 @@ namespace win
       }
       try
       {
-         if(pui->m_pguie != NULL && pui->m_pguie != pui)
+         if(pui->m_pguie != ::null() && pui->m_pguie != pui)
          {
             if(WIN_THREAD(pui->m_pguie->m_pthread) == this)
             {
-               pui->m_pguie->m_pthread = NULL;
+               pui->m_pguie->m_pthread = ::null();
             }
          }
       }
@@ -808,7 +808,7 @@ namespace win
       sl.unlock();
       if(m_spuiMessage->IsWindow())
       {
-         m_spuiMessage->SetTimer((uint_ptr)-2, iMin, NULL);
+         m_spuiMessage->SetTimer((uint_ptr)-2, iMin, ::null());
       }
    }
 
@@ -856,7 +856,7 @@ namespace win
 
    void thread::step_timer()
    {
-      if(m_ptimera == NULL)
+      if(m_ptimera == ::null())
          return;
       m_ptimera->check();
    }
@@ -871,32 +871,32 @@ namespace win
          dwCreateFlags |= CREATE_SUSPENDED;
       }
 
-      ENSURE(m_hThread == NULL);  // already created?
+      ENSURE(m_hThread == ::null());  // already created?
 
       // setup startup structure for thread initialization
       ___THREAD_STARTUP startup; 
       startup.bError = FALSE;
-      startup.pfnNewHandler = NULL;
+      startup.pfnNewHandler = ::null();
       //memset(&startup, 0, sizeof(startup));
       startup.pThreadState = __get_thread_state();
       startup.pThread = this;
-      startup.m_pthread = NULL;
-      startup.hEvent = ::CreateEvent(NULL, TRUE, FALSE, NULL);
-      startup.hEvent2 = ::CreateEvent(NULL, TRUE, FALSE, NULL);
+      startup.m_pthread = ::null();
+      startup.hEvent = ::CreateEvent(::null(), TRUE, FALSE, ::null());
+      startup.hEvent2 = ::CreateEvent(::null(), TRUE, FALSE, ::null());
       startup.dwCreateFlags = dwCreateFlags;
-      if (startup.hEvent == NULL || startup.hEvent2 == NULL)
+      if (startup.hEvent == ::null() || startup.hEvent2 == ::null())
       {
          TRACE(::ca::trace::category_AppMsg, 0, "Warning: CreateEvent failed in thread::create_thread.\n");
-         if (startup.hEvent != NULL)
+         if (startup.hEvent != ::null())
             ::CloseHandle(startup.hEvent);
-         if (startup.hEvent2 != NULL)
+         if (startup.hEvent2 != ::null())
             ::CloseHandle(startup.hEvent2);
          return FALSE;
       }
 
       m_hThread = (HANDLE) (uint_ptr) ::create_thread(lpSecurityAttrs, nStackSize,  &__thread_entry, &startup, dwCreateFlags | CREATE_SUSPENDED, &m_nThreadID);
 
-      if (m_hThread == NULL)
+      if (m_hThread == ::null())
          return FALSE;
 
       // start the thread just for ca API initialization
@@ -913,7 +913,7 @@ namespace win
       {
          VERIFY(::WaitForSingleObject(m_hThread, INFINITE) == WAIT_OBJECT_0);
          ::CloseHandle(m_hThread);
-         m_hThread = NULL;
+         m_hThread = ::null();
          ::CloseHandle(startup.hEvent2);
          return FALSE;
       }
@@ -943,7 +943,7 @@ namespace win
       {
          try
          {
-            if(m_pappDelete != NULL)
+            if(m_pappDelete != ::null())
                delete m_pappDelete;
          }
          catch(...)
@@ -954,7 +954,7 @@ namespace win
       {
          try
          {
-            m_hThread = NULL;
+            m_hThread = ::null();
          }
          catch(...)
          {
@@ -969,10 +969,10 @@ namespace win
       }
       try
       {
-         if(m_p != NULL)
+         if(m_p != ::null())
          {
             ::ca::thread * pthread = dynamic_cast < ::ca::thread * > (m_p);
-            if(pthread != NULL && pthread->m_pbReady != NULL)
+            if(pthread != ::null() && pthread->m_pbReady != ::null())
             {
                *pthread->m_pbReady = true;
             }
@@ -983,7 +983,7 @@ namespace win
       }
       try
       {
-         if(m_pbReady != NULL)
+         if(m_pbReady != ::null())
          {
             *m_pbReady = true;
          }
@@ -1002,7 +1002,7 @@ namespace win
       if(m_bAutoDelete)
       {
          // delete thread if it is auto-deleting
-         //pthread->::ca::smart_pointer < ::ca::thread >::m_p = NULL;
+         //pthread->::ca::smart_pointer < ::ca::thread >::m_p = ::null();
          ::ca::release(m_p);
          // delete_this();
       }
@@ -1036,8 +1036,8 @@ namespace win
       // for tracking the idle time state
       bool bIdle = TRUE;
       LONG lIdleCount = 0;
-      ::ca::applicationsp pappThis1 = (this);
-      ::ca::applicationsp pappThis2 = (m_p);
+      sp(::ca::application) pappThis1 = (this);
+      sp(::ca::application) pappThis2 = (m_p);
 
       // acquire and dispatch messages until a WM_QUIT message is received.
       MSG msg;
@@ -1045,18 +1045,18 @@ namespace win
       {
          // phase1: check to see if we can do idle work
          while (bIdle &&
-            !::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE))
+            !::PeekMessage(&msg, ::null(), 0,0, PM_NOREMOVE))
          {
             // call on_idle while in bIdle state
             if (!on_idle(lIdleCount++))
                bIdle = FALSE; // assume "no idle" state
             step_timer();
             m_p->m_dwAlive = m_dwAlive = ::get_tick_count();
-            if(pappThis1 != NULL)
+            if(pappThis1 != ::null())
             {
                pappThis1->m_dwAlive = m_dwAlive;
             }
-            if(pappThis2 != NULL)
+            if(pappThis2 != ::null())
             {
                pappThis2->m_dwAlive = m_dwAlive;
             }
@@ -1110,19 +1110,19 @@ namespace win
             }
 
             step_timer();
-            if(m_p == NULL)
+            if(m_p == ::null())
                goto stop_run;
             m_p->m_dwAlive = m_dwAlive = ::get_tick_count();
-            if(pappThis1 != NULL)
+            if(pappThis1 != ::null())
             {
                pappThis1->m_dwAlive = m_dwAlive;
             }
-            if(pappThis2 != NULL)
+            if(pappThis2 != ::null())
             {
                pappThis2->m_dwAlive = m_dwAlive;
             }
          }
-         while (::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE) != FALSE);
+         while (::PeekMessage(&msg, ::null(), 0, 0, PM_NOREMOVE) != FALSE);
 
       }
 stop_run:
@@ -1174,21 +1174,21 @@ stop_run:
 
       try
       {
-         if(m_puiptra != NULL)
+         if(m_puiptra != ::null())
          {
             single_lock sl(&m_mutexUiPtra, TRUE);
             ::user::interaction_ptr_array * puiptra = m_puiptra;
-            m_puiptra = NULL;
+            m_puiptra = ::null();
             for(int32_t i = 0; i < puiptra->get_size(); i++)
             {
                sp(::user::interaction) pui = puiptra->element_at(i);
-               if(pui->m_pthread != NULL)
+               if(pui->m_pthread != ::null())
                {
                   if(WIN_THREAD(pui->m_pthread->m_pthread) == this 
                      || WIN_THREAD(pui->m_pthread->m_pthread->m_p) == WIN_THREAD(m_p)
                      || WIN_THREAD(pui->m_pthread->m_pthread) == WIN_THREAD(m_p))
                   {
-                     pui->m_pthread = NULL;
+                     pui->m_pthread = ::null();
                   }
                }
             }
@@ -1203,7 +1203,7 @@ stop_run:
       try
       {
          ::user::interaction::timer_array * ptimera = m_ptimera;
-         m_ptimera = NULL;
+         m_ptimera = ::null();
          delete ptimera;
       }
       catch(...)
@@ -1229,14 +1229,14 @@ stop_run:
          ASSERT(__check_memory());
 #endif
 
-      if(lCount <= 0 && m_puiptra != NULL)
+      if(lCount <= 0 && m_puiptra != ::null())
       {
          for(int32_t i = 0; i < m_puiptra->get_count(); i++)
          {
             sp(::user::interaction) pui = m_puiptra->element_at(i);
             try
             {
-               if (pui != NULL && pui->IsWindowVisible())
+               if (pui != ::null() && pui->IsWindowVisible())
                {
                   /*__call_window_procedure(pMainWnd, pMainWnd->get_handle(),
                   WM_IDLEUPDATECMDUI, (WPARAM)TRUE, 0);*/
@@ -1254,7 +1254,7 @@ stop_run:
          // send WM_IDLEUPDATECMDUI to the main window
          /*
          sp(::user::interaction) pMainWnd = GetMainWnd();
-         if (pMainWnd != NULL && pMainWnd->IsWindowVisible())
+         if (pMainWnd != ::null() && pMainWnd->IsWindowVisible())
          {
          /*__call_window_procedure(pMainWnd, pMainWnd->get_handle(),
          WM_IDLEUPDATECMDUI, (WPARAM)TRUE, 0);*/
@@ -1266,9 +1266,9 @@ stop_run:
          // send WM_IDLEUPDATECMDUI to all frame windows
          /* linux __MODULE_THREAD_STATE* pState = ___CMDTARGET_GETSTATE()->m_thread;
          sp(frame_window) pFrameWnd = pState->m_frameList;
-         while (pFrameWnd != NULL)
+         while (pFrameWnd != ::null())
          {
-         if (pFrameWnd->get_handle() != NULL && pFrameWnd != pMainWnd)
+         if (pFrameWnd->get_handle() != ::null() && pFrameWnd != pMainWnd)
          {
          if (pFrameWnd->m_nShowDelay == SW_HIDE)
          pFrameWnd->ShowWindow(pFrameWnd->m_nShowDelay);
@@ -1332,7 +1332,7 @@ stop_run:
       /*   const __MSGMAP* pMessageMap; pMessageMap = GetMessageMap();
       const __MSGMAP_ENTRY* lpEntry;
 
-      for (/* pMessageMap already init'ed *//*; pMessageMap->pfnGetBaseMap != NULL;
+      for (/* pMessageMap already init'ed *//*; pMessageMap->pfnGetBaseMap != ::null();
       pMessageMap = (*pMessageMap->pfnGetBaseMap)())
       {
       // Note: catch not so common but fatal mistake!!
@@ -1343,14 +1343,14 @@ stop_run:
       {
       // constant window message
       if ((lpEntry = ::ca::FindMessageEntry(pMessageMap->lpEntries,
-      pMsg->message, 0, 0)) != NULL)
+      pMsg->message, 0, 0)) != ::null())
       goto LDispatch;
       }
       else
       {
       // registered windows message
       lpEntry = pMessageMap->lpEntries;
-      while ((lpEntry = ::ca::FindMessageEntry(lpEntry, 0xC000, 0, 0)) != NULL)
+      while ((lpEntry = ::ca::FindMessageEntry(lpEntry, 0xC000, 0, 0)) != ::null())
       {
       UINT* pnID = (UINT*)(lpEntry->nSig);
       ASSERT(*pnID >= 0xC000);
@@ -1420,7 +1420,7 @@ stop_run:
    void thread::ProcessMessageFilter(int32_t code, ::ca::signal_object * pobj)
    {
 
-      if(pobj == NULL)
+      if(pobj == ::null())
          return;   // not handled
 
       SCAST_PTR(::ca::message::base, pbase, pobj);
@@ -1439,14 +1439,14 @@ stop_run:
 
       case MSGF_MENU:
          pMsgWnd = pbase->m_pwnd;
-         if (pMsgWnd != NULL)
+         if (pMsgWnd != ::null())
          {
             pTopFrameWnd = pMsgWnd->GetTopLevelFrame();
-            if (pTopFrameWnd != NULL && pTopFrameWnd->IsTracking() &&
+            if (pTopFrameWnd != ::null() && pTopFrameWnd->IsTracking() &&
                pTopFrameWnd->m_bHelpMode)
             {
                pMainWnd = __get_main_window();
-               if ((GetMainWnd() != NULL) && (IsEnterKey(pbase) || IsButtonUp(pbase)))
+               if ((GetMainWnd() != ::null()) && (IsEnterKey(pbase) || IsButtonUp(pbase)))
                {
                   //                  pMainWnd->SendMessage(WM_COMMAND, ID_HELP);
                   pbase->m_bRet = true;
@@ -1458,7 +1458,7 @@ stop_run:
 
       case MSGF_DIALOGBOX:    // handles message boxes as well.
          pMainWnd = __get_main_window();
-         if (code == MSGF_DIALOGBOX && m_puiActive != NULL &&
+         if (code == MSGF_DIALOGBOX && m_puiActive != ::null() &&
             pbase->m_uiMessage >= WM_KEYFIRST && pbase->m_uiMessage <= WM_KEYLAST)
          {
             // need to translate messages for the in-place container
@@ -1489,11 +1489,11 @@ stop_run:
 
    sp(::user::interaction) thread::GetMainWnd()
    {
-      if (m_puiActive != NULL)
+      if (m_puiActive != ::null())
          return m_puiActive;    // probably in-place active
 
       // when not inplace active, just return main window
-      if (m_puiMain != NULL)
+      if (m_puiMain != ::null())
          return m_puiMain;
 
       return System.get_active_guie();
@@ -1507,7 +1507,7 @@ stop_run:
       try
       {
          MSG msg;
-         if(!::GetMessage(&msg, NULL, NULL, NULL))
+         if(!::GetMessage(&msg, ::null(), 0, 0))
          {
             TRACE(::ca::trace::category_AppMsg, 1, "thread::pump_message - Received WM_QUIT.\n");
             m_nDisablePumpCount++; // application must die
@@ -1538,7 +1538,7 @@ stop_run:
 
                   try
                   {
-                     if(m_p != NULL)
+                     if(m_p != ::null())
                      {
                         m_p->pre_translate_message(spbase);
                         if(spbase->m_bRet)
@@ -1557,18 +1557,18 @@ stop_run:
                   {
                      try
                      {
-                        if(m_papp != NULL)
+                        if(m_papp != ::null())
                         {
                            try
                            {
-                              if(m_papp->m_psystem != NULL)
+                              if(m_papp->m_psystem != ::null())
                               {
                                  m_papp->m_psystem->pre_translate_message(spbase);
                                  if(spbase->m_bRet)
                                     return TRUE;
                                  try
                                  {
-                                    if(m_papp->m_psystem->m_pcube != NULL)
+                                    if(m_papp->m_psystem->m_pcube != ::null())
                                     {
                                        m_papp->m_psystem->m_pcubeInterface->pre_translate_message(spbase);
                                        if(spbase->m_bRet)
@@ -1583,7 +1583,7 @@ stop_run:
                            catch(...)
                            {
                            }
-                           if(m_papp->m_psession != NULL)
+                           if(m_papp->m_psession != ::null())
                            {
                               try
                               {
@@ -1596,7 +1596,7 @@ stop_run:
                               }
                               try
                               {
-                                 if(m_papp->m_psession->m_pbergedge != NULL)
+                                 if(m_papp->m_psession->m_pbergedge != ::null())
                                  {
                                     m_papp->m_psession->m_pbergedgeInterface->pre_translate_message(spbase);
                                     if(spbase->m_bRet)
@@ -1707,7 +1707,7 @@ stop_run:
 
    bool thread::post_message(sp(::user::interaction) pguie, UINT uiMessage, WPARAM wparam, LPARAM lparam)
    {
-      if(m_hThread == NULL)
+      if(m_hThread == ::null())
          return false;
       ::user::message * pmessage = new ::user::message;
       pmessage->m_pguie       = pguie;
@@ -1738,9 +1738,9 @@ stop_run:
       // all other messages route through message map
       sp(::ca::window) pwindow = pbase->m_pwnd->get_wnd();
 
-      ASSERT(pwindow == NULL || pwindow == pbase->m_pwnd->m_pimpl);
+      ASSERT(pwindow == ::null() || pwindow == pbase->m_pwnd->m_pimpl);
 
-      if(pwindow == NULL || pwindow != pbase->m_pwnd->m_pimpl)
+      if(pwindow == ::null() || pwindow != pbase->m_pwnd->m_pimpl)
       {
          pbase->set_lresult(::DefWindowProc(pbase->m_pwnd->get_safe_handle(), pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));
          return;
@@ -1767,7 +1767,7 @@ stop_run:
             __pre_init_dialog(pwindow, &rectOld, &dwStyle);
 
          // delegate to object's message_handler
-         if(pwindow->m_pguie != NULL && pwindow->m_pguie != pwindow)
+         if(pwindow->m_pguie != ::null() && pwindow->m_pguie != pwindow)
          {
             pwindow->m_pguie->message_handler(pobj);
          }
@@ -1804,14 +1804,14 @@ run:
    thread::operator HANDLE() const
    { 
 
-      return this == NULL ? NULL : m_hThread; 
+      return this == ::null() ? ::null() : m_hThread; 
 
    }
 
    bool thread::set_thread_priority(::ca::e_thread_priority epriority)
    { 
 
-      ASSERT(m_hThread != NULL); 
+      ASSERT(m_hThread != ::null()); 
 
       int32_t nPriority = THREAD_PRIORITY_NORMAL;
 
@@ -1857,7 +1857,7 @@ run:
    ::ca::e_thread_priority thread::get_thread_priority()
    { 
 
-      ASSERT(m_hThread != NULL); 
+      ASSERT(m_hThread != ::null()); 
 
       int32_t nPriority = ::GetThreadPriority(m_hThread);
 
@@ -1896,16 +1896,16 @@ run:
 
    }
    uint32_t thread::ResumeThread()
-   { ASSERT(m_hThread != NULL); return ::ResumeThread(m_hThread); }
+   { ASSERT(m_hThread != ::null()); return ::ResumeThread(m_hThread); }
    /*   DWORD thread::SuspendThread()
-   { ASSERT(m_hThread != NULL); return ::SuspendThread(m_hThread); }
+   { ASSERT(m_hThread != ::null()); return ::SuspendThread(m_hThread); }
    */
 
 
    bool thread::post_thread_message(UINT message, WPARAM wParam, LPARAM lParam)
    {
 
-      if(m_hThread == NULL)
+      if(m_hThread == ::null())
          return false;
 
       return ::PostThreadMessageA(m_nThreadID, message, wParam, lParam)  != FALSE;
@@ -1932,8 +1932,8 @@ run:
    CLASS_DECL_win ::ca::thread * get_thread()
    {
       ::win::thread * pwinthread = __get_thread();
-      if(pwinthread == NULL)
-         return NULL;
+      if(pwinthread == ::null())
+         return ::null();
       return pwinthread->m_p;
    }
 
@@ -1961,19 +1961,19 @@ run:
 
 
 #ifndef ___PORTABLE
-         ::ca::applicationsp papp = (get_app());
+         sp(::ca::application) papp = (get_app());
          ___THREAD_STATE* pThreadState = gen_ThreadState.GetDataNA();
-         if( pThreadState != NULL )
+         if( pThreadState != ::null() )
          {
             // restore safety pool after temp objects destroyed
-            if(papp != NULL &&
-               (pThreadState->m_pSafetyPoolBuffer == NULL ||
+            if(papp != ::null() &&
+               (pThreadState->m_pSafetyPoolBuffer == ::null() ||
                _msize(pThreadState->m_pSafetyPoolBuffer) < papp->m_nSafetyPoolSize) &&
                papp->m_nSafetyPoolSize != 0)
             {
                // attempt to restore the safety pool to its max size
                size_t nOldSize = 0;
-               if (pThreadState->m_pSafetyPoolBuffer != NULL)
+               if (pThreadState->m_pSafetyPoolBuffer != ::null())
                {
                   nOldSize = _msize(pThreadState->m_pSafetyPoolBuffer);
                   free(pThreadState->m_pSafetyPoolBuffer);
@@ -1984,7 +1984,7 @@ run:
                try
                {
                   pThreadState->m_pSafetyPoolBuffer = malloc(papp->m_nSafetyPoolSize);
-                  if (pThreadState->m_pSafetyPoolBuffer == NULL)
+                  if (pThreadState->m_pSafetyPoolBuffer == ::null())
                   {
                      //                  TRACE(::ca::trace::category_AppMsg, 0, "Warning: failed to reclaim %d bytes for primitive::memory safety pool.\n",
                      //                   pApp->m_nSafetyPoolSize);
@@ -1993,7 +1993,7 @@ run:
                      {
                         //get it back
                         pThreadState->m_pSafetyPoolBuffer = malloc(nOldSize);
-                        ASSERT(pThreadState->m_pSafetyPoolBuffer != NULL);
+                        ASSERT(pThreadState->m_pSafetyPoolBuffer != ::null());
                      }
                   }
                }
@@ -2015,14 +2015,14 @@ run:
    {
 
       ___THREAD_STARTUP* pStartup = (___THREAD_STARTUP*)pstartup;
-      ASSERT(pStartup != NULL);
-      ASSERT(pStartup->pThreadState != NULL);
-      ASSERT(pStartup->pThread != NULL);
+      ASSERT(pStartup != ::null());
+      ASSERT(pStartup->pThreadState != ::null());
+      ASSERT(pStartup->pThread != ::null());
       ASSERT(!pStartup->bError);
 
       ::win::thread* pThread = pStartup->pThread;
 
-      //      ::ca::applicationsp papp = (get_app());
+      //      sp(::ca::application) papp = (get_app());
       m_evFinish.ResetEvent();
       install_message_handling(pThread);
       m_p->install_message_handling(pThread);
@@ -2039,9 +2039,9 @@ run:
    {
 
       /*      ___THREAD_STARTUP* pStartup = (___THREAD_STARTUP*)pstartup;
-      ASSERT(pStartup != NULL);
-      ASSERT(pStartup->pThreadState != NULL);
-      ASSERT(pStartup->pThread != NULL);
+      ASSERT(pStartup != ::null());
+      ASSERT(pStartup->pThreadState != ::null());
+      ASSERT(pStartup->pThread != ::null());
       ASSERT(!pStartup->bError);*/
 
       if(!m_p->PreInitInstance())
@@ -2051,7 +2051,7 @@ run:
 
       // first -- check for simple worker thread
       DWORD nResult = 0;
-      if (m_pfnThreadProc != NULL)
+      if (m_pfnThreadProc != ::null())
       {
          nResult = (*m_pfnThreadProc)(m_pThreadParams);
       }
@@ -2184,7 +2184,7 @@ run:
    {
       ASSERT(GetCurrentThreadId() == m_nThreadID);
       MSG msg;
-      return ::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE) != FALSE;
+      return ::PeekMessage(&msg, ::null(), 0, 0, PM_NOREMOVE) != FALSE;
    }
 
 
@@ -2219,7 +2219,7 @@ bool CLASS_DECL_win __internal_pump_message()
 {
 ___THREAD_STATE *pState = __get_thread_state();
 
-if (!::GetMessage(&(pState->m_msgCur), NULL, NULL, NULL))
+if (!::GetMessage(&(pState->m_msgCur), ::null(), ::null(), ::null()))
 {
 #ifdef DEBUG
 TRACE(::ca::trace::category_AppMsg, 1, "thread::pump_message - Received WM_QUIT.\n");
@@ -2270,7 +2270,7 @@ return -1;  // just fail
 else if (pMsg->message == WM_PAINT)
 {
 // force validation of ::ca::window to prevent getting WM_PAINT again
-ValidateRect(pMsg->oswindow, NULL);
+ValidateRect(pMsg->oswindow, ::null());
 return 0;
 }
 return 0;   // sensible default for rest of commands
@@ -2292,7 +2292,7 @@ thread *pThread = System.GetThread();
 if( pThread )
 {
 // if this is a thread-message, int16_t-circuit this function
-if (pMsg->oswindow == NULL && pThread->DispatchThreadMessageEx(pMsg))
+if (pMsg->oswindow == ::null() && pThread->DispatchThreadMessageEx(pMsg))
 return TRUE;
 }
 
@@ -2303,10 +2303,10 @@ return TRUE; */
 
 // in case of modeless dialogs, last chance route through main
 //   ::ca::window's accelerator table
-/*   if (pMainWnd != NULL)
+/*   if (pMainWnd != ::null())
 {
 sp(::ca::window) pWnd = ::win::window::from_handle(pMsg->oswindow);
-if (pWnd != NULL && WIN_WINDOW(pWnd)->GetTopLevelParent() != pMainWnd)
+if (pWnd != ::null() && WIN_WINDOW(pWnd)->GetTopLevelParent() != pMainWnd)
 return pMainWnd->pre_translate_message(pMsg);
 }
 
@@ -2367,17 +2367,17 @@ nStackSize;
 dwCreateFlags;
 lpSecurityAttrs;
 
-return NULL;
+return ::null();
 #else
-ASSERT(pThreadClass != NULL);
+ASSERT(pThreadClass != ::null());
 ASSERT(pThreadClass->IsDerivedFrom(System.type_info < thread > ()));
 
 thread* pThread = dynamic_cast < thread * > (App(get_app()).alloc(pThreadClass));
-if (pThread == NULL)
+if (pThread == ::null())
 throw memory_exception();
 ASSERT_VALID(pThread);
 
-pThread->m_pThreadParams = NULL;
+pThread->m_pThreadParams = ::null();
 if(pThread->begin(
 nPriority, 
 nStackSize, 
@@ -2385,7 +2385,7 @@ dwCreateFlags,
 lpSecurityAttrs))
 return pThread;
 else
-return NULL;
+return ::null();
 #endif //!_MT
 }*/
 
@@ -2399,14 +2399,14 @@ bDelete;
 // remove current thread object from primitive::memory
 __MODULE_THREAD_STATE* pState = __get_module_thread_state();
 // thread* pThread = pState->m_pCurrentWinThread;
-if (pThread != NULL)
+if (pThread != ::null())
 {
 ASSERT_VALID(pThread);
 ASSERT(pThread != &System);
 
 if (bDelete)
 pThread->Delete();
-// pState->m_pCurrentWinThread = NULL;
+// pState->m_pCurrentWinThread = ::null();
 }
 
 // allow cleanup of any thread local objects
@@ -2428,9 +2428,9 @@ if (!afxContextIsDLL)
 {
 // set message filter proc
 ___THREAD_STATE* pThreadState = __get_thread_state();
-ASSERT(pThreadState->m_hHookOldMsgFilter == NULL);
+ASSERT(pThreadState->m_hHookOldMsgFilter == ::null());
 pThreadState->m_hHookOldMsgFilter = ::SetWindowsHookEx(WH_MSGFILTER,
-__message_filter_hook, NULL, ::GetCurrentThreadId());
+__message_filter_hook, ::null(), ::GetCurrentThreadId());
 }
 }
 
@@ -2448,27 +2448,27 @@ lpSecurityAttrs;
 
 return FALSE;
 #else
-ENSURE(m_hThread == NULL);  // already created?
+ENSURE(m_hThread == ::null());  // already created?
 
 // setup startup structure for thread initialization
 ___THREAD_STARTUP startup; memset(&startup, 0, sizeof(startup));
 startup.pThreadState = __get_thread_state();
 startup.pThread = this;
-startup.hEvent = ::CreateEvent(NULL, TRUE, FALSE, NULL);
-startup.hEvent2 = ::CreateEvent(NULL, TRUE, FALSE, NULL);
+startup.hEvent = ::CreateEvent(::null(), TRUE, FALSE, ::null());
+startup.hEvent2 = ::CreateEvent(::null(), TRUE, FALSE, ::null());
 startup.dwCreateFlags = dwCreateFlags;
-if (startup.hEvent == NULL || startup.hEvent2 == NULL)
+if (startup.hEvent == ::null() || startup.hEvent2 == ::null())
 {
 TRACE(::ca::trace::category_AppMsg, 0, "Warning: CreateEvent failed in thread::create_thread.\n");
-if (startup.hEvent != NULL)
+if (startup.hEvent != ::null())
 ::CloseHandle(startup.hEvent);
-if (startup.hEvent2 != NULL)
+if (startup.hEvent2 != ::null())
 ::CloseHandle(startup.hEvent2);
 return FALSE;
 }
 
 #ifdef _WIN32
-//   m_thread = ::create_thread(NULL, 0, StartThread, this, 0, &m_dwThreadId);
+//   m_thread = ::create_thread(::null(), 0, StartThread, this, 0, &m_dwThreadId);
 // create the thread (it may or may not start to run)
 m_hThread = (HANDLE)(uint_ptr)_beginthreadex(lpSecurityAttrs, nStackSize,  
 &__thread_entry, &startup, dwCreateFlags | CREATE_SUSPENDED, (UINT*)&m_nThreadID);
@@ -2485,7 +2485,7 @@ SetRunning(false);
 //   pthread_attr_destroy(&attr);
 #endif
 
-if (m_hThread == NULL)
+if (m_hThread == ::null())
 return FALSE;
 
 // start the thread just for ca API initialization
@@ -2502,7 +2502,7 @@ if (startup.bError)
 {
 VERIFY(::WaitForSingleObject(m_hThread, INFINITE) == WAIT_OBJECT_0);
 ::CloseHandle(m_hThread);
-m_hThread = NULL;
+m_hThread = ::null();
 ::CloseHandle(startup.hEvent2);
 return FALSE;
 }
@@ -2524,7 +2524,7 @@ delete this;
 }
 else
 {
-m_hThread = NULL;
+m_hThread = ::null();
 m_evFinish.SetEvent();
 }
 }
@@ -2559,7 +2559,7 @@ while(m_bRun)
 {
 // phase1: check to see if we can do idle work
 while (bIdle &&
-!::PeekMessage(&(pState->m_msgCur), NULL, NULL, NULL, PM_NOREMOVE))
+!::PeekMessage(&(pState->m_msgCur), ::null(), ::null(), ::null(), PM_NOREMOVE))
 {
 // call on_idle while in bIdle state
 if (!on_idle(lIdleCount++))
@@ -2582,7 +2582,7 @@ lIdleCount = 0;
 }
 
 
-} while (::PeekMessage(&(pState->m_msgCur), NULL, NULL, NULL, PM_NOREMOVE));
+} while (::PeekMessage(&(pState->m_msgCur), ::null(), ::null(), ::null(), PM_NOREMOVE));
 
 m_ptimera->check();
 }
@@ -2600,7 +2600,7 @@ ASSERT(&System != this);
 
 for(int32_t i = 0; i < m_puieptra->get_count(); i++)
 {
-m_puieptra->element_at(i)->m_pthread = NULL;
+m_puieptra->element_at(i)->m_pthread = ::null();
 }
 
 delete m_ptimera;
@@ -2624,7 +2624,7 @@ if (lCount <= 0)
 {
 // send WM_IDLEUPDATECMDUI to the main ::ca::window
 sp(::user::interaction) pMainWnd = GetMainWnd();
-if (pMainWnd != NULL && pMainWnd->IsWindowVisible())
+if (pMainWnd != ::null() && pMainWnd->IsWindowVisible())
 {
 /*__call_window_procedure(pMainWnd, pMainWnd->get_handle(),
 WM_IDLEUPDATECMDUI, (WPARAM)TRUE, 0);*/
@@ -2635,9 +2635,9 @@ pMainWnd->SendMessageToDescendants(WM_IDLEUPDATECMDUI,
 // send WM_IDLEUPDATECMDUI to all frame windows
 /* linux __MODULE_THREAD_STATE* pState = ___CMDTARGET_GETSTATE()->m_thread;
 sp(frame_window) pFrameWnd = pState->m_frameList;
-while (pFrameWnd != NULL)
+while (pFrameWnd != ::null())
 {
-if (pFrameWnd->get_handle() != NULL && pFrameWnd != pMainWnd)
+if (pFrameWnd->get_handle() != ::null() && pFrameWnd != pMainWnd)
 {
 if (pFrameWnd->m_nShowDelay == SW_HIDE)
 pFrameWnd->ShowWindow(pFrameWnd->m_nShowDelay);
@@ -2693,7 +2693,7 @@ return TRUE;
 /*   const __MSGMAP* pMessageMap; pMessageMap = GetMessageMap();
 const __MSGMAP_ENTRY* lpEntry;
 
-for (/* pMessageMap already init'ed *//*; pMessageMap->pfnGetBaseMap != NULL;
+for (/* pMessageMap already init'ed *//*; pMessageMap->pfnGetBaseMap != ::null();
 pMessageMap = (*pMessageMap->pfnGetBaseMap)())
 {
 // Note: catch not so common but fatal mistake!!
@@ -2704,14 +2704,14 @@ if (pMsg->message < 0xC000)
 {
 // constant ::ca::window message
 if ((lpEntry = ::ca::FindMessageEntry(pMessageMap->lpEntries,
-pMsg->message, 0, 0)) != NULL)
+pMsg->message, 0, 0)) != ::null())
 goto LDispatch;
 }
 else
 {
 // registered windows message
 lpEntry = pMessageMap->lpEntries;
-while ((lpEntry = ::ca::FindMessageEntry(lpEntry, 0xC000, 0, 0)) != NULL)
+while ((lpEntry = ::ca::FindMessageEntry(lpEntry, 0xC000, 0, 0)) != ::null())
 {
 UINT* pnID = (UINT*)(lpEntry->nSig);
 ASSERT(*pnID >= 0xC000);
@@ -2773,11 +2773,11 @@ return __internal_process_wnd_proc_exception( e, pMsg );
 LRESULT CALLBACK __message_filter_hook(int32_t code, WPARAM wParam, LPARAM lParam)
 {
    ::ca::thread* pthread;
-   if (afxContextIsDLL || (code < 0 && code != MSGF_DDEMGR) || (pthread = dynamic_cast < ::ca::thread * > (::win::get_thread())) == NULL)
+   if (afxContextIsDLL || (code < 0 && code != MSGF_DDEMGR) || (pthread = dynamic_cast < ::ca::thread * > (::win::get_thread())) == ::null())
    {
       return ::CallNextHookEx(gen_ThreadState->m_hHookOldMsgFilter, code, wParam, lParam);
    }
-   ASSERT(pthread != NULL);
+   ASSERT(pthread != ::null());
    ::ca::smart_pointer < ::ca::message::base > spbase;
    spbase = pthread->get_base((LPMSG)lParam);
    pthread->ProcessMessageFilter(code, spbase);
@@ -2804,7 +2804,7 @@ __STATIC inline bool IsButtonUp(LPMSG lpMsg)
 
 /*&bool thread::ProcessMessageFilter(int32_t code, LPMSG lpMsg)
 {
-if (lpMsg == NULL)
+if (lpMsg == ::null())
 return FALSE;   // not handled
 
 sp(frame_window) pTopFrameWnd;
@@ -2821,14 +2821,14 @@ return FALSE;
 
 case MSGF_MENU:
 pMsgWnd = ::win::window::from_handle(lpMsg->oswindow);
-if (pMsgWnd != NULL)
+if (pMsgWnd != ::null())
 {
 pTopFrameWnd = pMsgWnd->GetTopLevelFrame();
-if (pTopFrameWnd != NULL && pTopFrameWnd->IsTracking() &&
+if (pTopFrameWnd != ::null() && pTopFrameWnd->IsTracking() &&
 pTopFrameWnd->m_bHelpMode)
 {
 pMainWnd = System.GetMainWnd();
-if ((GetMainWnd() != NULL) && (IsEnterKey(lpMsg) || IsButtonUp(lpMsg)))
+if ((GetMainWnd() != ::null()) && (IsEnterKey(lpMsg) || IsButtonUp(lpMsg)))
 {
 pMainWnd->SendMessage(WM_COMMAND, ID_HELP);
 return TRUE;
@@ -2839,7 +2839,7 @@ return TRUE;
 
 case MSGF_DIALOGBOX:    // handles message boxes as well.
 pMainWnd = System.GetMainWnd();
-if (code == MSGF_DIALOGBOX && m_pActiveWnd != NULL &&
+if (code == MSGF_DIALOGBOX && m_pActiveWnd != ::null() &&
 lpMsg->message >= WM_KEYFIRST && lpMsg->message <= WM_KEYLAST)
 {
 // need to translate messages for the in-place container
@@ -2869,11 +2869,11 @@ return FALSE;   // default to not handled
 
 sp(::user::interaction) thread::GetMainWnd()
 {
-if (m_pActiveWnd != NULL)
+if (m_pActiveWnd != ::null())
 return m_pActiveWnd;    // probably in-place active
 
 // when not inplace active, just return main ::ca::window
-if (GetMainWnd() != NULL)
+if (GetMainWnd() != ::null())
 return GetMainWnd();
 
 return System.get_active_guie();

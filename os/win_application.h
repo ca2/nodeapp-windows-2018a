@@ -42,7 +42,7 @@ namespace win
       main_init_data *     m_pmaininitdata;
 
 
-      application(::ca::applicationsp papp);
+      application(sp(::ca::application) papp);
       virtual ~application();
       
       virtual HINSTANCE GetHinstance();
@@ -129,10 +129,10 @@ namespace win
       /*virtual void construct(__THREADPROC pfnThreadProc, LPVOID pParam);
 
       virtual bool begin(int32_t nPriority = THREAD_PRIORITY_NORMAL, UINT nStackSize = 0,
-         DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
+         DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = ::null());
 
       bool create_thread(DWORD dwCreateFlags = 0, UINT nStackSize = 0,
-         LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
+         LPSECURITY_ATTRIBUTES lpSecurityAttrs = ::null());
 
       virtual int_ptr get_os_data();
       virtual int_ptr get_os_int();

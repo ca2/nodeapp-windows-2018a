@@ -145,9 +145,9 @@ bool
 MyShellExec(   oswindow oswindow, 
             const char * pszVerb, 
             const char * pszPath, 
-            const char * pszParameters,   // = NULL
-            const char * pszDirectory,   // = NULL
-            HANDLE * phProcess )   // = NULL
+            const char * pszParameters,   // = ::null()
+            const char * pszDirectory,   // = ::null()
+            HANDLE * phProcess )   // = ::null()
 {
    SHELLEXECUTEINFO shex;
 
@@ -196,7 +196,7 @@ IsWow64()
 {
     BOOL bIsWow64 = FALSE;
  
-    if (NULL != fnIsWow64Process)
+    if (::null() != fnIsWow64Process)
     {
       if ( !fnIsWow64Process( ::GetCurrentProcess(),&bIsWow64) )
         {
@@ -218,7 +218,7 @@ GetElevationType( __out TOKEN_ELEVATION_TYPE * ptet )
    ASSERT( ptet );
 
    HRESULT hResult = E_FAIL; // assume an error occurred
-   HANDLE hToken   = NULL;
+   HANDLE hToken   = ::null();
 
    if ( !::OpenProcessToken( 
             ::GetCurrentProcess(), 
@@ -252,13 +252,13 @@ GetElevationType( __out TOKEN_ELEVATION_TYPE * ptet )
 }
 
 HRESULT 
-IsElevated( __out_opt bool * pbElevated ) //= NULL )
+IsElevated( __out_opt bool * pbElevated ) //= ::null() )
 {
    if ( !IsVista() )
       return E_FAIL;
 
    HRESULT hResult = E_FAIL; // assume an error occurred
-   HANDLE hToken   = NULL;
+   HANDLE hToken   = ::null();
 
    if ( !::OpenProcessToken( 
             ::GetCurrentProcess(), 
@@ -304,13 +304,13 @@ bool
 RunElevated( 
    __in      oswindow   oswindow, 
    __in      const char * pszPath, 
-   __in_opt   const char * pszParameters,   //   = NULL, 
-   __in_opt   const char * pszDirectory,   //   = NULL,
-   __out_opt   HANDLE *phProcess )      //   = NULL );
+   __in_opt   const char * pszParameters,   //   = ::null(), 
+   __in_opt   const char * pszDirectory,   //   = ::null(),
+   __out_opt   HANDLE *phProcess )      //   = ::null() );
 {
    return MyShellExec( 
             oswindow, 
-            IsVista() ? "runas" : NULL,
+            IsVista() ? "runas" : ::null(),
             pszPath, 
             pszParameters, 
             pszDirectory,
@@ -328,7 +328,7 @@ RunElevated(
 #pragma section( "ve_shared", read, write, shared )
 
 __declspec(allocate("ve_shared")) 
-   HHOOK   hVEHook                     = NULL;
+   HHOOK   hVEHook                     = ::null();
 
 __declspec(allocate("ve_shared")) 
    UINT   uVEMsg                     = 0;
@@ -349,7 +349,7 @@ __declspec(allocate("ve_shared"))
    bool    bVE_NeedProcessHandle         = FALSE;
 
 __declspec(allocate("ve_shared")) 
-   HANDLE   hVE_Process               = NULL;
+   HANDLE   hVE_Process               = ::null();
 
 //////////////////////////////////e
 // the hook callback procedure, it is called in the context of th shell proces
@@ -365,11 +365,11 @@ VistaEelevator_HookProc_MsgRet( int32_t code, WPARAM wParam, LPARAM lParam )
       {
          bVESuccess = VistaTools::MyShellExec( 
             pwrs->hwnd, 
-                     NULL, 
+                     ::null(), 
                      szVE_Path, 
                      szVE_Parameters, 
                      szVE_Directory,
-                     bVE_NeedProcessHandle ? &hVE_Process : NULL );
+                     bVE_NeedProcessHandle ? &hVE_Process : ::null() );
       }
     }
 
@@ -392,15 +392,15 @@ bool
     __out HMODULE* phModule
     );
 
-static PGetModuleHandleExW pGetModuleHandleExW = NULL;
+static PGetModuleHandleExW pGetModuleHandleExW = ::null();
 
 bool 
 RunNonElevated(
    __in      oswindow   oswindow, 
    __in      const char * pszPath, 
-   __in_opt   const char * pszParameters,   //   = NULL, 
-   __in_opt   const char * pszDirectory,   //   = NULL,
-   __out_opt   HANDLE *phProcess)      //   = NULL );
+   __in_opt   const char * pszParameters,   //   = ::null(), 
+   __in_opt   const char * pszDirectory,   //   = ::null(),
+   __out_opt   HANDLE *phProcess)      //   = ::null() );
 {
    ASSERT( pszPath && *pszPath );   // other args are optional
 
@@ -420,7 +420,7 @@ RunNonElevated(
       // if the current process is not elevated, we can use ShellExecuteEx directly! 
    
       return MyShellExec( oswindow, 
-                     NULL, 
+                     ::null(), 
                      pszPath, 
                      pszParameters, 
                      pszDirectory,
@@ -466,7 +466,7 @@ RunNonElevated(
    //////////////////////////////////////
    // find the shell ::ca::window (the desktop)
 
-   ::oswindow oswindowShell = ::FindWindow( "Progman", NULL);
+   ::oswindow oswindowShell = ::FindWindow( "Progman", ::null());
 
    if ( !oswindowShell )
    {
@@ -491,7 +491,7 @@ RunNonElevated(
       return FALSE;
    }
 
-   HMODULE hModule = NULL;   // we need to know hModule of this DLL to install a global hook
+   HMODULE hModule = ::null();   // we need to know hModule of this DLL to install a global hook
 
    if ( !pGetModuleHandleExW( 
             GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
@@ -545,7 +545,7 @@ RunNonElevated(
       return FALSE;
    }
 
-   bVE_NeedProcessHandle = (phProcess != NULL);
+   bVE_NeedProcessHandle = (phProcess != ::null());
 
    /////////////////////////////////////////
    // Activate our hook callback procedure: 
@@ -564,7 +564,7 @@ RunNonElevated(
    // The hook is no longer needed, remov it:
 
    ::UnhookWindowsHookEx( hVEHook );
-   hVEHook = NULL;
+   hVEHook = ::null();
 
    //////////////////////
    // All done!

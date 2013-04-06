@@ -13,7 +13,7 @@ namespace win
 
       Gdiplus::Region *       m_pregion;
 
-      region(::ca::applicationsp papp);
+      region(sp(::ca::application) papp);
       virtual ~region();
 
 

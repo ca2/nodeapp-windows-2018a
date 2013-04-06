@@ -31,17 +31,17 @@
 
 /*UINT CLASS_DECL_win ::ca::GetFileName(const char * lpszPathName, __out_ecount_opt(nMax) LPTSTR lpszTitle, UINT nMax)
 {
-   ASSERT(lpszTitle == NULL ||
+   ASSERT(lpszTitle == ::null() ||
       __is_valid_address(lpszTitle, nMax));
    ASSERT(__is_valid_string(lpszPathName));
 
-   ENSURE_ARG(lpszPathName != NULL);
+   ENSURE_ARG(lpszPathName != ::null());
 
    // always capture the complete file name including extension (if present)
    LPTSTR lpszTemp = ::PathFindFileName(lpszPathName);
 
-   // lpszTitle can be NULL which just returns the number of bytes
-   if (lpszTitle == NULL)
+   // lpszTitle can be ::null() which just returns the number of bytes
+   if (lpszTitle == ::null())
       return lstrlen(lpszTemp)+1;
 
    // otherwise copy it into the buffer provided

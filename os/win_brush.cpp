@@ -6,34 +6,34 @@ namespace win
 {
 
 
-   brush::brush(::ca::applicationsp papp) :
+   brush::brush(sp(::ca::application) papp) :
       ca(papp)
    { 
 
-      m_pbrush = NULL;
+      m_pbrush = ::null();
 
    }
 
    brush::~brush()
    { 
-      if(m_pbrush != NULL)
+      if(m_pbrush != ::null())
       {
          delete m_pbrush;
-         m_pbrush = NULL;
+         m_pbrush = ::null();
       }
    }
 
    //bool brush::create_solid(COLORREF crColor)
    //{
 
-   //   if(m_pbrush != NULL)
+   //   if(m_pbrush != ::null())
    //   {
    //      delete m_pbrush;
    //   }
 
    //   m_pbrush = new Gdiplus::SolidBrush(Gdiplus::Color(GetAValue(crColor), GetRValue(crColor), GetGValue(crColor), GetBValue(crColor)));
 
-   //   return m_pbrush != NULL;
+   //   return m_pbrush != ::null();
    //      
    //}
 
@@ -65,7 +65,7 @@ namespace win
     //}
 /*    int32_t brush::GetLogBrush(LOGBRUSH* pLogBrush)
     { 
-       //ASSERT(get_os_data() != NULL);
+       //ASSERT(get_os_data() != ::null());
        //return ::GetObject(get_os_data(), sizeof(LOGBRUSH), pLogBrush); 
        return FALSE;
     }*/
@@ -93,9 +93,9 @@ namespace win
 //
 //   bool brush::CreateDIBPatternBrush(HGLOBAL hPackedDIB, UINT nUsage)
 //   {
-//      //ASSERT(hPackedDIB != NULL);
+//      //ASSERT(hPackedDIB != ::null());
 //      //const void * lpPackedDIB = ::GlobalLock(hPackedDIB);
-//      //ASSERT(lpPackedDIB != NULL);
+//      //ASSERT(lpPackedDIB != ::null());
 //      //bool bResult = attach(::CreateDIBPatternBrushPt(lpPackedDIB, nUsage));
 //      //::GlobalUnlock(hPackedDIB);
 //      //return bResult;
@@ -107,7 +107,7 @@ namespace win
    {
       ::ca::graphics_object::dump(dumpcontext);
 
-      //if (get_os_data() == NULL)
+      //if (get_os_data() == ::null())
         // return;
 
 /*      LOGBRUSH lb;
@@ -125,9 +125,9 @@ namespace win
    void * brush::get_os_data() const
    {
       
-      if(m_pbrush == NULL || !m_bUpdated)
+      if(m_pbrush == ::null() || !m_bUpdated)
       {
-         if(m_pbrush != NULL)
+         if(m_pbrush != ::null())
          {
             try
             {
@@ -173,7 +173,7 @@ namespace win
          }
       }
 
-      if(m_pbrush != NULL)
+      if(m_pbrush != ::null())
       {
          ((brush *) this)->m_bUpdated = true;
       }

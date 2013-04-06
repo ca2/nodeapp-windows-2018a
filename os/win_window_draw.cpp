@@ -28,7 +28,7 @@ public:
 namespace win
 {
 
-   window_draw::window_draw(::ca::applicationsp papp) : 
+   window_draw::window_draw(sp(::ca::application) papp) : 
       ca(papp),
       ::ca::thread(papp),
       ::ca::window_draw(papp),
@@ -124,7 +124,7 @@ namespace win
       m_dwLastUpdate = ::get_tick_count();
       UpdateBuffer();
       return;
-      if(m_pbuffer->GetBuffer()->get_os_data() != NULL)
+      if(m_pbuffer->GetBuffer()->get_os_data() != ::null())
       {
          //m_pbuffer->m_spdib->fill_channel(255, visual::rgba::channel_alpha);
          //ScreenOutput();
@@ -236,7 +236,7 @@ namespace win
 
       oswindow oswindowParam = oswindowtree.m_oswindow;
 
-      if(oswindowParam == NULL)
+      if(oswindowParam == ::null())
       {
          return false;
       }
@@ -265,7 +265,7 @@ namespace win
       else
       {
          ::user::window_interface * ptwi = System.user()->window_map().get((int_ptr) oswindowParam);
-         sp(::user::interaction) pguie = dynamic_cast < ::user::interaction * > (ptwi);
+         sp(::user::interaction) pguie =  (ptwi);
          rect rectWindow;
          ::GetWindowRect(oswindowParam, rectWindow);
          //::GetClientRect(oswindowParam, rectWindow);
@@ -275,12 +275,12 @@ namespace win
          (dynamic_cast<::win::graphics * >(pdc))->SetViewportOrg(rectWindow.left, rectWindow.top);
 
       
-         if(ptwi != NULL)
+         if(ptwi != ::null())
          {
 
        
             if(!bExcludeParamWnd &&
-               pguie != NULL )
+               pguie != ::null() )
             {
                pguie->_001OnDraw(pdc);
             }
@@ -296,7 +296,7 @@ namespace win
                (bWin4 ? WM_PRINT : WM_PAINT),
                (WPARAM)((dynamic_cast<::win::graphics * >(pdc))->get_os_data()),
                (LPARAM)(bWin4 ? PRF_CHILDREN | PRF_CLIENT : 0));
-            //::RedrawWindow(oswindowParam, NULL, rgnClient, RDW_INVALIDATE | RDW_UPDATENOW | RDW_NOCHILDREN);
+            //::RedrawWindow(oswindowParam, ::null(), rgnClient, RDW_INVALIDATE | RDW_UPDATENOW | RDW_NOCHILDREN);
          }
       }
 
@@ -305,7 +305,7 @@ namespace win
 
 //      DWORD dwTimeOut = get_tick_count();
    //   TRACE("// Average Window Rendering time\n");
-   //   TRACE("// Window Class: %s\n", (pwnd!=NULL) ? pwnd->GetRuntimeClass()->m_lpszClassName : "(Not available)");
+   //   TRACE("// Window Class: %s\n", (pwnd!=::null()) ? pwnd->GetRuntimeClass()->m_lpszClassName : "(Not available)");
    //   TRACE("// TickCount: %d \n", dwTimeOut - dwTimeIn);
    //   TRACE("// \n");
 
@@ -345,7 +345,7 @@ namespace win
          catch(...)
          {
          }
-         while(::PeekMessageA(&msg, NULL, NULL, NULL, PM_NOREMOVE))
+         while(::PeekMessageA(&msg, ::null(), 0, 0, PM_NOREMOVE))
          {
             if(!__get_thread()->pump_message())
                break;
@@ -409,12 +409,12 @@ namespace win
       rect rectScreen;
       System.get_screen_rect(&rectScreen);
       m_pbuffer->UpdateBuffer(rectScreen.bottom_right());
-      if(m_pbuffer->GetBuffer()->get_os_data() == NULL)
+      if(m_pbuffer->GetBuffer()->get_os_data() == ::null())
          return true;
 
       ::ca::graphics * pdc = (dynamic_cast<::win::graphics * >(m_pbuffer->GetBuffer()));
 
-      if(pdc == NULL)
+      if(pdc == ::null())
       {
          return false;
       }
@@ -464,7 +464,7 @@ namespace win
       oswindow oswindowOrder = ::GetWindow(::GetDesktopWindow(), GW_CHILD);
       for(;;)
       {
-         if(oswindowOrder == NULL)
+         if(oswindowOrder == ::null())
             break;
          //bool bVisible = ::IsWindowVisible(oswindowOrder);
          bool bVisible = ::IsWindowVisible(oswindowOrder);
@@ -512,7 +512,7 @@ namespace win
       {
          try
          {
-            if(wndpa[l].m_psession == NULL)
+            if(wndpa[l].m_psession == ::null())
             {
                try
                {
@@ -547,9 +547,9 @@ namespace win
       {
          oswindow oswindowTopic = wndaApp[j];
 
-         sp(::ca::window) pwnd = NULL;
+         sp(::ca::window) pwnd = ::null();
          //sp(::ca::window) pwnd = (System.user()->window_map().get((int_ptr) oswindowTopic));
-         //if(pwnd == NULL)
+         //if(pwnd == ::null())
          //{
          for(int32_t l = 0; l < wndpa.get_count(); l++)
          {
@@ -559,7 +559,7 @@ namespace win
                break;
             }
          }
-         if(!::IsWindowVisible(wndaApp[j]) || ::IsIconic(wndaApp[j]) || pwnd == NULL)
+         if(!::IsWindowVisible(wndaApp[j]) || ::IsIconic(wndaApp[j]) || pwnd == ::null())
             continue;
 
 
@@ -597,7 +597,7 @@ namespace win
 
 
             /*sp(simple_frame_window) pframe =  (pwnd);
-            if(pframe != NULL)
+            if(pframe != ::null())
             {
                pframe->InitialFramePosition(true);
             }
@@ -619,7 +619,7 @@ namespace win
       }
 
       //HDC hdc = (HDC) m_pbuffer->GetBuffer()->get_os_data();
-      //::SetViewportOrgEx(hdc, 0, 0, NULL);
+      //::SetViewportOrgEx(hdc, 0, 0, ::null());
 
 
 
@@ -790,7 +790,7 @@ namespace win
 
       rect rectClient;
 
-      sp(::user::interaction) pguie = dynamic_cast < ::user::interaction * > (ptwi);
+      sp(::user::interaction) pguie =  (ptwi);
 
       pguie->GetClientRect(rectClient);
       pguie->ClientToScreen(rectClient);
@@ -814,21 +814,21 @@ namespace win
    //    sp(::ca::window) pwnd = window::FromHandlePermanent(oswindow);
        
       
-      if(ptwi == NULL)
+      if(ptwi == ::null())
       {
 
    //      ::user::window_interface::GetProperty getp;
    //      getp.m_eproperty = CTransparentWndInterface::PropertyInterface;
    //      ::SendMessage(oswindow, CTransparentWndInterface::MessageGetProperty, 0, (LPARAM) &getp);
    //      ptwi = getp.m_pinterface;
-   //      if(ptwi != NULL)
+   //      if(ptwi != ::null())
    //      {
    //         pwnd = ptwi->TwiGetWnd();
    //      }
       }
       
       EOptimize eoptimize = OptimizeNone;
-      if(ptwi != NULL)
+      if(ptwi != ::null())
       {
          if(!ptwi->_001HasTranslucency())
             eoptimize = OptimizeAllNext;
@@ -931,7 +931,7 @@ namespace win
 
       ::user::window_interface * pwndi = System.user()->window_map().get((int_ptr) oswindow);
 
-      if(pwndi == NULL)
+      if(pwndi == ::null())
       {
          ::SendMessage(
             oswindow,
@@ -941,7 +941,7 @@ namespace win
       }
 
       if(oswindowParam == oswindow ||
-         (pwndi != NULL && 
+         (pwndi != ::null() && 
             pwndi->_001HasTranslucency()))
       {
       
@@ -1098,7 +1098,7 @@ namespace win
       // is used from screen output
       sp(::user::interaction) pwnd)
    {
-      if(pwnd != NULL)
+      if(pwnd != ::null())
       {
          if(pwnd->m_bVoidPaint)
          {
@@ -1112,11 +1112,11 @@ namespace win
          {
             return true;
          }
-         if(pwnd->m_pguie != NULL && pwnd->m_pguie != pwnd && !pwnd->m_pguie->m_bVisible)
+         if(pwnd->m_pguie != ::null() && pwnd->m_pguie != pwnd && !pwnd->m_pguie->m_bVisible)
          {
             return true;
          }
-         if(pwnd->m_pimpl != NULL && pwnd->m_pimpl != pwnd && !pwnd->m_pimpl->m_bVisible)
+         if(pwnd->m_pimpl != ::null() && pwnd->m_pimpl != pwnd && !pwnd->m_pimpl->m_bVisible)
          {
             return true;
          }
@@ -1124,23 +1124,23 @@ namespace win
 
       oswindow oswindowParam = pwnd->get_handle();
 
-      HDC hdcScreen = ::GetDCEx(oswindowParam, NULL,  DCX_CLIPSIBLINGS | DCX_WINDOW);
+      HDC hdcScreen = ::GetDCEx(oswindowParam, ::null(),  DCX_CLIPSIBLINGS | DCX_WINDOW);
 
-      if(hdcScreen == NULL)
+      if(hdcScreen == ::null())
       {
          // If it has failed to get ::ca::window
          // owned device context, try to get
          // a device context from the cache.
-         hdcScreen = ::GetDCEx(oswindowParam, NULL, DCX_CACHE | DCX_CLIPSIBLINGS | DCX_WINDOW);
+         hdcScreen = ::GetDCEx(oswindowParam, ::null(), DCX_CACHE | DCX_CLIPSIBLINGS | DCX_WINDOW);
 
          // If no device context could be retrieved,
          // nothing can be drawn at the screen.
          // The function failed.
-         if(hdcScreen == NULL)
+         if(hdcScreen == ::null())
             return false;
       }
 
-      ::SelectClipRgn(hdcScreen, NULL);
+      ::SelectClipRgn(hdcScreen, ::null());
 
 
 
@@ -1179,7 +1179,7 @@ namespace win
       // The ::ca::window owned device context is clipped
       // with the update region in screen coordinates
       // translated to ::ca::window client coordinates.
-      //::ca::region_sp rgnClip(get_app());
+      //::ca::region_sp rgnClip(allocer());
       //rgnClip->create_rect(0, 0, 0, 0);
       //rgnClip->CopyRgn(&rgnUpdate);
       //rgnClip->translate( - rectWnd.top_left());
@@ -1258,11 +1258,11 @@ namespace win
 
          class rect rectWin;
          ::GetWindowRect(oswindowParam, rectWin);
-         if(rect(rectWindow) != rectWin || (pwnd->m_pguie != NULL && (bool) pwnd->m_pguie->oprop("pending_layout")))
+         if(rect(rectWindow) != rectWin || (pwnd->m_pguie != ::null() && (bool) pwnd->m_pguie->oprop("pending_layout")))
          {
 
             
-            if(pwnd->m_pguie != NULL && (bool) pwnd->m_pguie->oprop("pending_layout"))
+            if(pwnd->m_pguie != ::null() && (bool) pwnd->m_pguie->oprop("pending_layout"))
             {
                ::oswindow oswindowZOrder = (oswindow) pwnd->m_pguie->oprop("pending_zorder").int32();
                ::SetWindowPos(oswindowParam, HWND_TOPMOST, 
@@ -1272,7 +1272,7 @@ namespace win
                ::SetWindowPos(oswindowParam, oswindowZOrder, 
                   (int32_t) rectWindow.left, (int32_t) rectWindow.top, (int32_t) rectWindow.width(), (int32_t) rectWindow.height(), SWP_SHOWWINDOW | SWP_FRAMECHANGED);
                /*sp(simple_frame_window) pframe =  (pwnd->m_pguie);
-               if(pframe != NULL)
+               if(pframe != ::null())
                {
                   pframe->ActivateFrame();
                }*/
@@ -1280,7 +1280,7 @@ namespace win
             }
             else
             {
-               ::SetWindowPos(oswindowParam, NULL, (int32_t) rectWindow.left, (int32_t) rectWindow.top, (int32_t) rectWindow.width(), (int32_t) rectWindow.height(), SWP_SHOWWINDOW);
+               ::SetWindowPos(oswindowParam, ::null(), (int32_t) rectWindow.left, (int32_t) rectWindow.top, (int32_t) rectWindow.width(), (int32_t) rectWindow.height(), SWP_SHOWWINDOW);
             }
          }
 

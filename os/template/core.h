@@ -26,15 +26,15 @@ namespace ca
       UINT iIndex;
 
       hGlobal = ::LoadResource( hInstance, hResource );
-      if( hGlobal == NULL )
+      if( hGlobal == ::null() )
       {
-         return( NULL );
+         return( ::null() );
       }
 
       pImage = (const STRINGRESOURCEIMAGE*)::LockResource( hGlobal );
-      if( pImage == NULL )
+      if( pImage == ::null() )
       {
-         return( NULL );
+         return( ::null() );
       }
 
       nResourceSize = ::SizeofResource( hInstance, hResource );
@@ -48,11 +48,11 @@ namespace ca
       }
       if( pImage >= pImageEnd )
       {
-         return( NULL );
+         return( ::null() );
       }
       if( pImage->nLength == 0 )
       {
-         return( NULL );
+         return( ::null() );
       }
 
       return( pImage );
@@ -63,9 +63,9 @@ namespace ca
       HRSRC hResource;
 
       hResource = ::FindResource( hInstance, MAKEINTRESOURCE( ((id>>4)+1) ), RT_STRING );
-      if( hResource == NULL )
+      if( hResource == ::null() )
       {
-         return( NULL );
+         return( ::null() );
       }
 
       return _gen_GetStringResourceImage( hInstance, hResource, id );
@@ -76,9 +76,9 @@ namespace ca
       HRSRC hResource;
 
       hResource = ::FindResourceEx( hInstance, RT_STRING, MAKEINTRESOURCE( ((id>>4)+1) ), wLanguage );
-      if( hResource == NULL )
+      if( hResource == ::null() )
       {
-         return( NULL );
+         return( ::null() );
       }
 
       return _gen_GetStringResourceImage( hInstance, hResource, id );

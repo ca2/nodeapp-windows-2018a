@@ -11,7 +11,7 @@ namespace win2
    public:
 
 
-      application(::ca::applicationsp papp);
+      application(sp(::ca::application) papp);
       virtual ~application();
       
       virtual ::user::printer * get_printer(const char * pszDeviceName);

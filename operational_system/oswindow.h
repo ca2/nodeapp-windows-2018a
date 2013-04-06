@@ -24,7 +24,7 @@ namespace ca
       template < typename T >
       operator T *() { return (T *) (uint_ptr) 0; }
 
-      operator HWND () { return NULL; }
+      operator HWND () { return 0; }
 
 
    };

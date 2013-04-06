@@ -5,7 +5,7 @@ namespace win
 {
 
 
-   crypt::crypt(::ca::applicationsp papp) :
+   crypt::crypt(sp(::ca::application) papp) :
       ca(papp),
       ::ca::crypt(papp)
    {
@@ -22,7 +22,7 @@ namespace win
       DATA_BLOB DataIn;
       DATA_BLOB DataOut;
 
-      if(pszSalt == NULL)
+      if(pszSalt == ::null())
          pszSalt = "";
 
       DATA_BLOB DataSalt;
@@ -37,7 +37,7 @@ namespace win
       DataIn.pbData = storageEncrypt.get_data();
       DataIn.cbData = (DWORD) storageEncrypt.get_size();
 
-      wchar_t * lpwsz = NULL;
+      wchar_t * lpwsz = ::null();
 
       //--------------------------------------------------------------------
       //  begin protect phase. Note that the encryption key is created
@@ -45,12 +45,12 @@ namespace win
 
       if(CryptUnprotectData(
          &DataIn,
-         NULL, // A description string
+         ::null(), // A description string
                                             // to be included with the
                                             // encrypted data.
          &DataSalt,                               // Optional entropy not used.
-         NULL,                               // Reserved.
-         NULL,                               // Pass NULL for the
+         ::null(),                               // Reserved.
+         ::null(),                               // Pass ::null() for the
                                             // prompt structure.
          0,
          &DataOut))
@@ -75,7 +75,7 @@ namespace win
       DATA_BLOB DataIn;
       DATA_BLOB DataOut;
 
-      if(pszSalt == NULL)
+      if(pszSalt == ::null())
          pszSalt = "";
 
       DATA_BLOB DataSalt;
@@ -91,7 +91,7 @@ namespace win
       DataIn.pbData = (BYTE *) storageDecrypt.get_data();
       DataIn.cbData = (DWORD) storageDecrypt.get_size();
 
-//      wchar_t * lpwsz = NULL;
+//      wchar_t * lpwsz = ::null();
 
       //--------------------------------------------------------------------
       //  begin protect phase. Note that the encryption key is created
@@ -99,12 +99,12 @@ namespace win
 
       if(CryptProtectData(
            &DataIn,
-           NULL, // A description string
+           ::null(), // A description string
                                                // to be included with the
                                                // encrypted data.
            &DataSalt,                               // Optional entropy not used.
-           NULL,                               // Reserved.
-           NULL,                               // Pass NULL for the
+           ::null(),                               // Reserved.
+           ::null(),                               // Pass ::null() for the
                                                // prompt structure.
            0,
            &DataOut))

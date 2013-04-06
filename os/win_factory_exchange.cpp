@@ -5,7 +5,7 @@ namespace win
 {
 
 
-   factory_exchange::factory_exchange(::ca::applicationsp papp) :
+   factory_exchange::factory_exchange(sp(::ca::application) papp) :
       ca(papp)
    {
 
@@ -49,7 +49,7 @@ namespace win
 
 
 
-void ca2_factory_exchange(::ca::applicationsp papp)
+void ca2_factory_exchange(sp(::ca::application) papp)
 {
    win::factory_exchange factoryexchange(papp);
 }

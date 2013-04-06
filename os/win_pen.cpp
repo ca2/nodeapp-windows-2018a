@@ -8,20 +8,20 @@ namespace win
 {
 
 
-   pen::pen(::ca::applicationsp papp) :
+   pen::pen(sp(::ca::application) papp) :
       ca(papp)
    { 
 
-      m_ppen = NULL;
+      m_ppen = ::null();
 
    }
 
    pen::~pen()
    { 
-      if(m_ppen != NULL)
+      if(m_ppen != ::null())
       {
          delete m_ppen;
-         m_ppen = NULL;
+         m_ppen = ::null();
       }
    }
 
@@ -34,12 +34,12 @@ namespace win
    { return attach(::ExtCreatePen(nPenStyle, nWidth, pLogBrush, nStyleCount,
    lpStyle)); }
    int32_t pen::GetExtLogPen(EXTLOGPEN* pLogPen)
-   { ASSERT(get_handle() != NULL);
+   { ASSERT(get_handle() != ::null());
    return ::GetObject(get_handle(), sizeof(EXTLOGPEN), pLogPen); }
    
    int32_t pen::GetLogPen(LOGPEN* pLogPen)
    { 
-      if(get_handle() == NULL)
+      if(get_handle() == ::null())
          return 0;
       return ::GetObject(get_handle(), sizeof(LOGPEN), pLogPen); 
    }
@@ -48,7 +48,7 @@ namespace win
    void pen::construct(int32_t nPenStyle, double dWidth, COLORREF crColor)
    {
       
-      if(m_ppen == NULL)
+      if(m_ppen == ::null())
          delete m_ppen;
 
       m_nPenStyle    = nPenStyle;
@@ -73,7 +73,7 @@ namespace win
    {
       ::ca::graphics_object::dump(dumpcontext);
 
-/*      if (get_handle() == NULL)
+/*      if (get_handle() == ::null())
          return;
 
       if (!afxData.bWin95 && ::GetObjectType(get_handle()) != OBJ_PEN)
@@ -119,7 +119,7 @@ namespace win
       // Standard exception processing
 
 
-   /*void __get_gray_bitmap(::ca::applicationsp papp, const ::ca::bitmap &rSrc, ::ca::bitmap *pDest, COLORREF crBackground)
+   /*void __get_gray_bitmap(sp(::ca::application) papp, const ::ca::bitmap &rSrc, ::ca::bitmap *pDest, COLORREF crBackground)
    {
       ASSERT(pDest);
       ASSERT_KINDOF(::ca::bitmap, pDest);
@@ -133,13 +133,13 @@ namespace win
       ::ca::brush_sp brHighLight(papp, Session.get_default_color(COLOR_3DHIGHLIGHT)),
          brShadow(papp, Session.get_default_color(COLOR_3DSHADOW)), spbr;
 
-      if(graphicsMem->CreateCompatibleDC(NULL) &&
-         graphicsMask->CreateCompatibleDC(NULL))
+      if(graphicsMem->CreateCompatibleDC(::null()) &&
+         graphicsMask->CreateCompatibleDC(::null()))
       {
          const_cast<::ca::bitmap &>(rSrc).GetBitmap(&bm);
 //         pDest->delete_object();
-         if(pDest->CreateBitmap(bm.bmWidth, bm.bmHeight, bm.bmPlanes, bm.bmBitsPixel, NULL) &&
-            bmpMask->CreateBitmap(bm.bmWidth, bm.bmHeight, 1, 1, NULL))
+         if(pDest->CreateBitmap(bm.bmWidth, bm.bmHeight, bm.bmPlanes, bm.bmBitsPixel, ::null()) &&
+            bmpMask->CreateBitmap(bm.bmWidth, bm.bmHeight, 1, 1, ::null()))
          {
             pOldMem = graphicsMem->SelectObject(const_cast<::ca::bitmap *>(&rSrc));
             pOldMask = graphicsMask->SelectObject(bmpMask);
@@ -177,7 +177,7 @@ namespace win
       }
    }
 
-   void __draw_gray_bitmap(::ca::applicationsp papp, ::ca::graphics * pgraphics, int32_t x, int32_t y, const ::ca::bitmap &rSrc, COLORREF crBackground)
+   void __draw_gray_bitmap(sp(::ca::application) papp, ::ca::graphics * pgraphics, int32_t x, int32_t y, const ::ca::bitmap &rSrc, COLORREF crBackground)
    {
       ASSERT(pgraphics);
       ASSERT_KINDOF(::ca::graphics_sp, pgraphics);
@@ -194,7 +194,7 @@ namespace win
       if(graphicsMem->CreateCompatibleDC(pgraphics) &&
          graphicsMask->CreateCompatibleDC(pgraphics) &&
          const_cast<::ca::bitmap &>(rSrc).GetBitmap(&bm) &&
-         bmpMask->CreateBitmap(bm.bmWidth, bm.bmHeight, 1, 1, NULL))
+         bmpMask->CreateBitmap(bm.bmWidth, bm.bmHeight, 1, 1, ::null()))
       {
          pOldMem = graphicsMem->SelectObject(const_cast<::ca::bitmap *>(&rSrc));
          pOldMask = graphicsMask->SelectObject(bmpMask);
@@ -225,7 +225,7 @@ namespace win
       }
    }
 
-   void __get_dithered_bitmap(::ca::applicationsp papp, const ::ca::bitmap &rSrc, ::ca::bitmap *pDest, COLORREF cr1, COLORREF cr2)
+   void __get_dithered_bitmap(sp(::ca::application) papp, const ::ca::bitmap &rSrc, ::ca::bitmap *pDest, COLORREF cr1, COLORREF cr2)
    {
       ASSERT(pDest);
       ASSERT_KINDOF(::ca::bitmap, pDest);
@@ -238,14 +238,14 @@ namespace win
       ::ca::brush brChecker;
       static const WORD wPat[8] = {0x55, 0xaa, 0x55, 0xaa, 0x55, 0xaa, 0x55, 0xaa};
 
-      if(graphicsSrc->CreateCompatibleDC(NULL) &&
-         graphicsMask->CreateCompatibleDC(NULL) &&
-         graphicsDest->CreateCompatibleDC(NULL))
+      if(graphicsSrc->CreateCompatibleDC(::null()) &&
+         graphicsMask->CreateCompatibleDC(::null()) &&
+         graphicsDest->CreateCompatibleDC(::null()))
       {
          if(const_cast<::ca::bitmap &>(rSrc).GetBitmap(&bm))
          {
             //pDest->delete_object();
-            if(pDest->CreateBitmap(bm.bmWidth, bm.bmHeight, bm.bmPlanes, bm.bmBitsPixel, NULL))
+            if(pDest->CreateBitmap(bm.bmWidth, bm.bmHeight, bm.bmPlanes, bm.bmBitsPixel, ::null()))
             {
                // create checker brush
                bmpMask->CreateBitmap(8, 8, 1, 1, wPat);
@@ -253,7 +253,7 @@ namespace win
                //bmpMask->delete_object();
 
                // Mask
-               bmpMask->CreateBitmap(bm.bmWidth, bm.bmHeight, 1, 1, NULL);
+               bmpMask->CreateBitmap(bm.bmWidth, bm.bmHeight, 1, 1, ::null());
 
                pOldSrc = graphicsSrc->SelectObject(const_cast<::ca::bitmap *>(&rSrc));
                pOldMask = graphicsMask->SelectObject(bmpMask);
@@ -294,7 +294,7 @@ namespace win
       }
    }
 
-   void __draw_dithered_bitmap(::ca::applicationsp papp, ::ca::graphics * pgraphics, int32_t x, int32_t y, const ::ca::bitmap &rSrc, COLORREF cr1, COLORREF cr2)
+   void __draw_dithered_bitmap(sp(::ca::application) papp, ::ca::graphics * pgraphics, int32_t x, int32_t y, const ::ca::bitmap &rSrc, COLORREF cr1, COLORREF cr2)
    {
       ASSERT(pgraphics);
       ASSERT_KINDOF(::ca::graphics_sp, pgraphics);
@@ -317,7 +317,7 @@ namespace win
          //bmpMask->delete_object();
 
          // Mask
-         bmpMask->CreateBitmap(bm.bmWidth, bm.bmHeight, 1, 1, NULL);
+         bmpMask->CreateBitmap(bm.bmWidth, bm.bmHeight, 1, 1, ::null());
 
          pOldSrc = graphicsSrc->SelectObject(const_cast<::ca::bitmap *>(&rSrc));
          pOldMask = graphicsMask->SelectObject(bmpMask);
@@ -356,9 +356,9 @@ namespace win
    void * pen::get_os_data() const
    {
       
-      if(m_ppen == NULL || !m_bUpdated)
+      if(m_ppen == ::null() || !m_bUpdated)
       {
-         if(m_ppen != NULL)
+         if(m_ppen != ::null())
          {
             delete m_ppen;
          }
@@ -393,7 +393,7 @@ namespace win
          }
       }
 
-      if(m_ppen != NULL)
+      if(m_ppen != ::null())
       {
          ((pen *) this)->m_bUpdated = true;
       }

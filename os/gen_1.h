@@ -18,7 +18,7 @@ public:
    }
    ~push_routing_frame()
    { 
-     if (pThreadState != NULL)
+     if (pThreadState != ::null())
      {
        ASSERT( pThreadState->m_pPushRoutingFrame == this );
        pThreadState->m_pRoutingFrame = pOldRoutingFrame;
@@ -27,10 +27,10 @@ public:
    }
    void pop()
    {
-     ENSURE( pThreadState != NULL );
+     ENSURE( pThreadState != ::null() );
      ASSERT( pThreadState->m_pPushRoutingFrame == this );
      pThreadState->m_pRoutingFrame = pOldRoutingFrame;
      pThreadState->m_pPushRoutingFrame = pOldPushRoutingFrame;
-     pThreadState = NULL;
+     pThreadState = ::null();
    }
 };

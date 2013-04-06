@@ -3,7 +3,7 @@
 namespace win
 {
 
-   folder_watch::folder_watch(::ca::applicationsp papp) :
+   folder_watch::folder_watch(sp(::ca::application) papp) :
       ca(papp),
       ::ca::thread(papp)
    {
@@ -25,7 +25,7 @@ namespace win
       HANDLE hDirectory = ::CreateFileW(::ca::international::utf8_to_unicode(m_strPath), 
                       FILE_LIST_DIRECTORY,
                       FILE_SHARE_READ|FILE_SHARE_WRITE|FILE_SHARE_DELETE,
-                      NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
+                      ::null(), OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, ::null());
    
       if(INVALID_HANDLE_VALUE == hDirectory)
       {
@@ -44,10 +44,10 @@ namespace win
                                     FILE_NOTIFY_CHANGE_FILE_NAME |
                                     FILE_NOTIFY_CHANGE_LAST_WRITE |
                                     FILE_NOTIFY_CHANGE_CREATION, &dwBytesReturned, 
-                                    NULL, NULL))
+                                    ::null(), ::null()))
       {
          DWORD dwNextEntryOffset = 0;
-         PFILE_NOTIFY_INFORMATION pfni = NULL;
+         PFILE_NOTIFY_INFORMATION pfni = ::null();
          do
          {
             pfni = (PFILE_NOTIFY_INFORMATION)(buffer + dwNextEntryOffset);

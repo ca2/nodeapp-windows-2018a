@@ -24,7 +24,7 @@
 #pragma component(browser, off, references, "LPTSTR")
 #pragma component(browser, off, references, "LPCSTR")
 #pragma component(browser, off, references, "LPCTSTR")
-#pragma component(browser, off, references, "NULL")
+#pragma component(browser, off, references, "::null()")
 #pragma component(browser, off, references, "THIS_FILE")
 #pragma component(browser, off, references, "TRUE")
 #pragma component(browser, off, references, "UINT")

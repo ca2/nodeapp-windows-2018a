@@ -1,7 +1,7 @@
 #pragma once
 
 
-bool CLASS_DECL_win vfxResolveShortcut(string & strTarget, const char * pszSource, sp(::user::interaction) puiMessageParentOptional = NULL);
+bool CLASS_DECL_win vfxResolveShortcut(string & strTarget, const char * pszSource, sp(::user::interaction) puiMessageParentOptional = ::null());
 
 
 namespace win
@@ -14,7 +14,7 @@ namespace win
    public:
    
       
-      os(::ca::applicationsp papp);
+      os(sp(::ca::application) papp);
       virtual ~os();
 
 
@@ -56,7 +56,7 @@ namespace win
       virtual bool start_service(::planebase::application * papp);
       virtual bool stop_service(::planebase::application * papp);
 
-      virtual bool resolve_link(string & strTarget, const char * pszSource, sp(::user::interaction) puiMessageParentOptional = NULL);
+      virtual bool resolve_link(string & strTarget, const char * pszSource, sp(::user::interaction) puiMessageParentOptional = ::null());
 
       DECLSPEC_NO_RETURN void raise_exception( DWORD dwExceptionCode, DWORD dwExceptionFlags);
 

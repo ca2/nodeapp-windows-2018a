@@ -17,7 +17,7 @@ namespace win
 
 
 
-      graphics_path(::ca::applicationsp papp);
+      graphics_path(sp(::ca::application) papp);
       virtual ~graphics_path();
 
 

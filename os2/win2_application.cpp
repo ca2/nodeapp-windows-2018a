@@ -5,7 +5,7 @@ namespace win2
 {
 
 
-   application::application(::ca::applicationsp papp)
+   application::application(sp(::ca::application) papp)
    {
 
       set_app(papp);

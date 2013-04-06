@@ -27,7 +27,7 @@ void CLASS_DECL_win __gen_unregister_window_classes()
 
    single_lock sl(&pModuleState->m_mutexRegClassList, TRUE);
 
-   if(pModuleState->m_pstrUnregisterList != NULL) 
+   if(pModuleState->m_pstrUnregisterList != ::null()) 
    {
       strsize start = 0;
       string className = pModuleState->m_pstrUnregisterList->Tokenize("\n",start);
@@ -37,7 +37,7 @@ void CLASS_DECL_win __gen_unregister_window_classes()
          className = pModuleState->m_pstrUnregisterList->Tokenize("\n",start);
       }
       pModuleState->m_pstrUnregisterList->Empty();
-      pModuleState->m_pstrUnregisterList = NULL;
+      pModuleState->m_pstrUnregisterList = ::null();
    }
 
 }
@@ -49,25 +49,25 @@ void CLASS_DECL_win __win_term()
 
    // cleanup thread local tooltip ::ca::window
 //   __MODULE_THREAD_STATE* pModuleThreadState = __get_module_thread_state();
-/*   if (pModuleThreadState->m_pToolTip != NULL)
+/*   if (pModuleThreadState->m_pToolTip != ::null())
    {
       if (pModuleThreadState->m_pToolTip->DestroyToolTipCtrl())
-         pModuleThreadState->m_pToolTip = NULL;
+         pModuleThreadState->m_pToolTip = ::null();
    }*/
 
    ___THREAD_STATE* pThreadState = __get_thread_state();
    if (!afxContextIsDLL)
    {
       // unhook windows hooks
-      if (pThreadState->m_hHookOldMsgFilter != NULL)
+      if (pThreadState->m_hHookOldMsgFilter != ::null())
       {
          ::UnhookWindowsHookEx(pThreadState->m_hHookOldMsgFilter);
-         pThreadState->m_hHookOldMsgFilter = NULL;
+         pThreadState->m_hHookOldMsgFilter = ::null();
       }
-      if (pThreadState->m_hHookOldCbtFilter != NULL)
+      if (pThreadState->m_hHookOldCbtFilter != ::null())
       {
          ::UnhookWindowsHookEx(pThreadState->m_hHookOldCbtFilter);
-         pThreadState->m_hHookOldCbtFilter = NULL;
+         pThreadState->m_hHookOldCbtFilter = ::null();
       }
    }
     // We used to suppress all exceptions here. But that's the wrong thing

@@ -36,7 +36,7 @@ bool CLASS_DECL_win __check_memory()
 bool CLASS_DECL_win __is_memory_block(const void * pData, UINT nBytes,
       LONG* plRequestNumber)
 {
-   return _CrtIsMemoryBlock(pData, nBytes, plRequestNumber, NULL, NULL);
+   return _CrtIsMemoryBlock(pData, nBytes, plRequestNumber, ::null(), ::null());
 }
 
 */

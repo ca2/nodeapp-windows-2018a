@@ -5,7 +5,7 @@
 // ___DEBUG_STATE implementation
 
 #ifndef ___NO_DEBUG_CRT
-static _CRT_DUMP_CLIENT pfnOldCrtDumpClient = NULL;
+static _CRT_DUMP_CLIENT pfnOldCrtDumpClient = ::null();
 
 #ifdef DEBUG
 
@@ -21,7 +21,7 @@ void __cdecl __crt_dump_client(void * pvData, size_t nBytes)
 
 //      ::ca::object * pca = (::ca::object * ) pvData;
 
-      ::ca::object * pobject = NULL;
+      ::ca::object * pobject = ::null();
 
       /*for(int32_t i = 0; i < 256; i++)
       {
@@ -31,17 +31,17 @@ void __cdecl __crt_dump_client(void * pvData, size_t nBytes)
          }
          catch(std::__non_rtti_object & e)
          {
-            pobject = NULL;
+            pobject = ::null();
          }
          catch(...)
          {
-            pobject = NULL;
+            pobject = ::null();
          }
-         if(pobject != NULL)
+         if(pobject != ::null())
             break;
       }*/
 
-      if(pobject == NULL)
+      if(pobject == ::null())
       {
             C_RUNTIME_ERRORCHECK_SPRINTF(_snprintf_s(sz, _countof(sz), _countof(sz) - 1, "unknown object at $%p, %u bytes long\n", pvData, nBytes));
       }
@@ -70,25 +70,25 @@ void __cdecl __crt_dump_client(void * pvData, size_t nBytes)
       sprintf_s(sz, _countof(sz), "faulted while dumping object at $%p, %u bytes long\n", pvData, nBytes);
       g_dumpcontext << sz;
    }
-   if (pfnOldCrtDumpClient != NULL)
+   if (pfnOldCrtDumpClient != ::null())
       (*pfnOldCrtDumpClient)(pvData, nBytes);
 }
 
 int32_t __cdecl __crt_report_hook(int32_t nRptType, __in char *szMsg, int32_t* pResult)
 {
-   // no hook on asserts or when m_pFile is NULL
-   if (nRptType == _CRT_ASSERT || g_dumpcontext.m_pfile == NULL)
+   // no hook on asserts or when m_pFile is ::null()
+   if (nRptType == _CRT_ASSERT || g_dumpcontext.m_pfile == ::null())
       return FALSE;
 
-   ASSERT( pResult != NULL );
-   if( pResult == NULL )
+   ASSERT( pResult != ::null() );
+   if( pResult == ::null() )
       throw invalid_argument_exception(::ca::get_thread_app());
 
-   ASSERT( szMsg != NULL );
-   if( szMsg == NULL )
+   ASSERT( szMsg != ::null() );
+   if( szMsg == ::null() )
       throw invalid_argument_exception(::ca::get_thread_app());
 
-   // non-NULL m_pFile, so go through g_dumpcontext for the message
+   // non-::null() m_pFile, so go through g_dumpcontext for the message
    *pResult = FALSE;
    g_dumpcontext << szMsg;
    //Allow other report hooks to be called.
@@ -104,7 +104,7 @@ int32_t __cdecl __crt_report_hook(int32_t nRptType, __in char *szMsg, int32_t* p
 ___DEBUG_STATE::___DEBUG_STATE()
 {
 #ifndef ___NO_DEBUG_CRT
-   ASSERT(pfnOldCrtDumpClient == NULL);
+   ASSERT(pfnOldCrtDumpClient == ::null());
    pfnOldCrtDumpClient = _CrtSetDumpClient(__crt_dump_client);
 
    ASSERT(_CrtSetReportHook2(_CRT_RPTHOOK_INSTALL,__crt_report_hook) != -1);
@@ -146,7 +146,7 @@ bool CLASS_DECL_win __diagnostic_init()
 {
    // just get the debug state to cause initialization
    ___DEBUG_STATE* pState = afxDebugState.get_data();
-   ASSERT(pState != NULL);
+   ASSERT(pState != ::null());
 
    return TRUE;
 }

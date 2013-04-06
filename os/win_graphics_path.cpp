@@ -9,7 +9,7 @@ namespace win
 
 
 
-   graphics_path::graphics_path(::ca::applicationsp papp)
+   graphics_path::graphics_path(sp(::ca::application) papp)
    {
 
       m_ppath = new Gdiplus::GraphicsPath();
@@ -28,12 +28,12 @@ namespace win
    graphics_path::~graphics_path()
    {
 
-      if(m_ppath != NULL)
+      if(m_ppath != ::null())
       {
 
          delete m_ppath;
 
-         m_ppath = NULL;
+         m_ppath = ::null();
 
       }
 

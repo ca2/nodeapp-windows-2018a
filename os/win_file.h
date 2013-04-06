@@ -58,9 +58,9 @@ namespace win
       UINT           m_hFile;
 
 
-      file(::ca::applicationsp papp);
-      file(::ca::applicationsp papp, int32_t hFile);
-      file(::ca::applicationsp papp, const char * lpszFileName, UINT nOpenFlags);
+      file(sp(::ca::application) papp);
+      file(sp(::ca::application) papp, int32_t hFile);
+      file(sp(::ca::application) papp, const char * lpszFileName, UINT nOpenFlags);
       virtual ~file();
 
 
@@ -100,7 +100,7 @@ namespace win
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
       
-      virtual uint64_t GetBufferPtr(UINT nCommand, uint64_t nCount = 0, void ** ppBufStart = NULL, void ** ppBufMax = NULL);
+      virtual uint64_t GetBufferPtr(UINT nCommand, uint64_t nCount = 0, void ** ppBufStart = ::null(), void ** ppBufMax = ::null());
 
 
    };
@@ -112,8 +112,8 @@ namespace win
 
       int32_t OsErrorToException(LONG lOsError);
       int32_t ErrnoToException(int32_t nErrno);
-      void ThrowOsError(::ca::applicationsp papp, LONG lOsError, const char * lpszFileName = NULL);
-      void ThrowErrno(::ca::applicationsp papp, int32_t nErrno, const char * lpszFileName = NULL);
+      void ThrowOsError(sp(::ca::application) papp, LONG lOsError, const char * lpszFileName = ::null());
+      void ThrowErrno(sp(::ca::application) papp, int32_t nErrno, const char * lpszFileName = ::null());
 
 
    }  // namespace file_exception

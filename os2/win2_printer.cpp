@@ -7,7 +7,7 @@ namespace win2
 {
 
 
-   printer::printer(::ca::applicationsp papp) :
+   printer::printer(sp(::ca::application) papp) :
       ca(papp),
       ::user::printer(papp),
       m_documentproperties(papp)
@@ -61,7 +61,7 @@ namespace win2
    }
 
 
-   printer::document_properties::document_properties(::ca::applicationsp papp) :
+   printer::document_properties::document_properties(sp(::ca::application) papp) :
       ca(papp)
    {
       m_hdc = NULL;
@@ -114,7 +114,7 @@ namespace win2
       if(m_hdc != NULL)
          return NULL;
       m_hdc = ::CreateDC("WINSPOOL", (LPCSTR) m_pdevmode->dmDeviceName, NULL, m_pdevmode);
-      ::ca::graphics_sp g(get_app());
+      ::ca::graphics_sp g(allocer());
       WIN_DC(g.m_p)->Attach(m_hdc);
       return g.detach();
    }

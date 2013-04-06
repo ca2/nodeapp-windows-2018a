@@ -73,7 +73,7 @@ Return Values:
 */
 
 HRESULT CLASS_DECL_win
-IsElevated( __out_opt bool * pbElevated = NULL );
+IsElevated( __out_opt bool * pbElevated = ::null() );
 
 /*
 Use IsElevated() to determine whether the current process is elevated or not.
@@ -81,7 +81,7 @@ Use IsElevated() to determine whether the current process is elevated or not.
 Parameters:
 
 pbElevated
-   [out] [optional] Pointer to a bool var that, if non-NULL, receives the result.
+   [out] [optional] Pointer to a bool var that, if non-::null(), receives the result.
 
    The possible values are:
 
@@ -105,9 +105,9 @@ bool CLASS_DECL_win
 RunElevated(
    __in      oswindow   oswindow, 
    __in      const char * pszPath, 
-   __in_opt   const char * pszParameters   = NULL, 
-   __in_opt   const char * pszDirectory   = NULL,
-   __out_opt   HANDLE *phProcess      = NULL );
+   __in_opt   const char * pszParameters   = ::null(), 
+   __in_opt   const char * pszDirectory   = ::null(),
+   __out_opt   HANDLE *phProcess      = ::null() );
 
 /*
 Use RunElevated() to start an elevated process. This function calls ShellExecEx() with the verb "runas" 
@@ -124,16 +124,16 @@ pszPath
 
 pszParameters
    [in] [optional] Address of a null-terminated string that contains the command-line parameters for the process. 
-      If NULL, no parameters are passed to the process.
+      If ::null(), no parameters are passed to the process.
 
 pszDirectory
    [in] [optional] Address of a null-terminated string that specifies the name of the working directory. 
-      If NULL, the current directory is used as the working directory. .
+      If ::null(), the current directory is used as the working directory. .
 
 phProcess
    [out] [optional] Address where to return the handle to the newly started process. 
       You must call CloseHandle( *phProcess ) when the handle is no longer needed.
-      If phProcess is NULL, no handle is returned.
+      If phProcess is ::null(), no handle is returned.
 
 Return Values
    If the function succeeds, the return value is TRUE. 
@@ -156,9 +156,9 @@ bool CLASS_DECL_win
 RunNonElevated(
    __in      oswindow   oswindow, 
    __in      const char * pszPath, 
-   __in_opt   const char * pszParameters   = NULL, 
-   __in_opt   const char * pszDirectory   = NULL,
-   __out_opt   HANDLE *phProcess      = NULL );
+   __in_opt   const char * pszParameters   = ::null(), 
+   __in_opt   const char * pszDirectory   = ::null(),
+   __out_opt   HANDLE *phProcess      = ::null() );
 
 /*
 Use RunNonElevated() to start a non-elevated process. If the current process is not elevated,
@@ -176,16 +176,16 @@ pszPath
 
 pszParameters
    [in] [optional] Address of a null-terminated string that contains the command-line parameters for 
-      the process. If NULL, no parameters are passed to the process.
+      the process. If ::null(), no parameters are passed to the process.
 
 pszDirectory
    [in] [optional] Address of a null-terminated string that specifies the name of the working directory. 
-      If NULL, the current directory is used as the working directory. .
+      If ::null(), the current directory is used as the working directory. .
 
 phProcess
    [out] [optional] Address where to return the handle to the newly started process. 
       You must call CloseHandle( *phProcess ) when the handle is no longer needed.
-      If phProcess is NULL, no handle is returned.
+      If phProcess is ::null(), no handle is returned.
 
 Return Values
    If the function succeeds, the return value is TRUE. 
@@ -206,9 +206,9 @@ bool CLASS_DECL_win
 MyShellExec(   oswindow oswindow, 
             const char * pszVerb, 
             const char * pszPath, 
-            const char * pszParameters   = NULL,
-            const char * pszDirectory   = NULL,
-            HANDLE * phProcess      = NULL );
+            const char * pszParameters   = ::null(),
+            const char * pszDirectory   = ::null(),
+            HANDLE * phProcess      = ::null() );
 
 } // namespace VistaTools 
 

@@ -20,7 +20,7 @@ CLASS_DECL_win __MODULE_STATE * __set_module_state(__MODULE_STATE* pNewState)
    }
    else
    {
-      return NULL;
+      return ::null();
    }
 }
 
@@ -47,8 +47,8 @@ __MAINTAIN_STATE2::__MAINTAIN_STATE2(__MODULE_STATE* pNewState)
    {
       // This is a very bad state; we have no good way to report the error at this moment
       // since exceptions from here are not expected
-      m_pPrevModuleState=NULL;
-      m_pThreadState=NULL;
+      m_pPrevModuleState=::null();
+      m_pThreadState=::null();
    }
 
 /*   if (__gen_get_ambient_act_ctx() && 
@@ -79,17 +79,17 @@ ___THREAD_STATE::___THREAD_STATE()
 ___THREAD_STATE::~___THREAD_STATE()
 {
    // unhook windows hooks
-   if (m_hHookOldMsgFilter != NULL)
+   if (m_hHookOldMsgFilter != ::null())
       ::UnhookWindowsHookEx(m_hHookOldMsgFilter);
-   if (m_hHookOldCbtFilter != NULL)
+   if (m_hHookOldCbtFilter != ::null())
       ::UnhookWindowsHookEx(m_hHookOldCbtFilter);
 
    // free safety pool buffer
-   if (m_pSafetyPoolBuffer != NULL)
+   if (m_pSafetyPoolBuffer != ::null())
       free(m_pSafetyPoolBuffer);
 
    // parking ::ca::window must have already been cleaned up by now!
-   ASSERT(m_pWndPark == NULL);
+   ASSERT(m_pWndPark == ::null());
 
 
 }
@@ -97,7 +97,7 @@ ___THREAD_STATE::~___THREAD_STATE()
 CLASS_DECL_win ___THREAD_STATE * __get_thread_state()
 {
    ___THREAD_STATE *pState =gen_ThreadState.get_data();
-   ENSURE(pState != NULL); 
+   ENSURE(pState != ::null()); 
    return pState;
 }
 
@@ -107,13 +107,13 @@ THREAD_LOCAL(___THREAD_STATE, gen_ThreadState, slot___THREAD_STATE)
 // __MODULE_STATE implementation
 
 __MODULE_STATE::__MODULE_STATE(bool bDLL, WNDPROC pfn_window_procedure, DWORD dwVersion, bool bSystem) :
-   m_mutexRegClassList(NULL)
+   m_mutexRegClassList(::null())
 {
-   m_pmapHWND              = NULL;
-//   m_pmapHDC               = NULL;
-//   m_pmapHGDIOBJ           = NULL;
-   m_pmapHMENU             = NULL;
-   m_pstrUnregisterList    = NULL;
+   m_pmapHWND              = ::null();
+//   m_pmapHDC               = ::null();
+//   m_pmapHGDIOBJ           = ::null();
+   m_pmapHMENU             = ::null();
+   m_pstrUnregisterList    = ::null();
    /* xxx xxx xxx
    m_classList.Construct(offsetof(::ca::type_info, m_pNextClass)); */
 
@@ -144,10 +144,10 @@ __MODULE_STATE::__MODULE_STATE(bool bDLL, WNDPROC pfn_window_procedure, DWORD dw
 
    //bEnable = __enable_memory_tracking(FALSE);      
    //Fusion: allocate dll wrappers array.
-   m_pDllIsolationWrappers = NULL;
+   m_pDllIsolationWrappers = ::null();
    //__enable_memory_tracking(bEnable);
    m_bSetAmbientActCtx = TRUE;
-   m_hActCtx = NULL;
+   m_hActCtx = ::null();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -161,7 +161,7 @@ __MODULE_STATE::__MODULE_STATE(bool bDLL, WNDPROC pfn_window_procedure, DWORD dw
 // Global function pointers for Context (WinSxS/Manifest) API, to be init during ca API global init.
 #define __ACTCTX_API_PTR_DEFINE(name, type, params) \
    typedef type (WINAPI* PFN_##name)params; \
-   PFN_##name pfn##name = NULL;
+   PFN_##name pfn##name = ::null();
 
 __ACTCTX_API_PTR_DEFINE(CreateActCtxW, HANDLE, (PCACTCTXW));
 __ACTCTX_API_PTR_DEFINE(ReleaseActCtx, void, (HANDLE));
@@ -170,11 +170,11 @@ __ACTCTX_API_PTR_DEFINE(DeactivateActCtx, bool, (DWORD, uint_ptr));
 
 __STATIC void CLASS_DECL_win __init_context_api()
 {
-   static HMODULE hKernel = NULL;
-   if (hKernel == NULL)
+   static HMODULE hKernel = ::null();
+   if (hKernel == ::null())
    {
       hKernel = GetModuleHandle("KERNEL32");
-      ENSURE(hKernel != NULL);
+      ENSURE(hKernel != ::null());
       __ACTCTX_API_INIT_PROCPTR(hKernel,CreateActCtxW);
       __ACTCTX_API_INIT_PROCPTR(hKernel,ReleaseActCtx);
       __ACTCTX_API_INIT_PROCPTR(hKernel,ActivateActCtx);
@@ -256,14 +256,14 @@ void __MODULE_STATE::CreateActivationContext()
    }
    if (m_hActCtx == INVALID_HANDLE_VALUE)
    {
-      m_hActCtx = NULL;
+      m_hActCtx = ::null();
    }      
 }
 
 __MODULE_STATE::~__MODULE_STATE()
 {
 
-   if (m_hActCtx != NULL && m_hActCtx != INVALID_HANDLE_VALUE)
+   if (m_hActCtx != ::null() && m_hActCtx != INVALID_HANDLE_VALUE)
    {
       __release_act_ctx(m_hActCtx);
       m_hActCtx = INVALID_HANDLE_VALUE;
@@ -275,7 +275,7 @@ __MODULE_THREAD_STATE::__MODULE_THREAD_STATE()
 {
    m_nLastHit = static_cast<int_ptr>(-1);
    m_nLastStatus = static_cast<int_ptr>(-1);
-   m_pLastInfo = NULL;
+   m_pLastInfo = ::null();
 
    // Note: it is only necessary to initialize non-zero data
    //m_pfnNewHandler = &__new_handler;
@@ -323,7 +323,7 @@ CLASS_DECL_win __MODULE_STATE * __get_module_state()
    ___THREAD_STATE* pState = gen_ThreadState;
    ENSURE(pState);
    __MODULE_STATE* pResult;
-   if (pState->m_pModuleState != NULL)
+   if (pState->m_pModuleState != ::null())
    {
       // thread state's module state serves as override
       pResult = pState->m_pModuleState;
@@ -333,7 +333,7 @@ CLASS_DECL_win __MODULE_STATE * __get_module_state()
       // otherwise, use global cast state
       pResult = gen_BaseModuleState.get_data();
    }
-   ENSURE(pResult != NULL);
+   ENSURE(pResult != ::null());
    return pResult;
 }
 
@@ -349,8 +349,8 @@ bool CLASS_DECL_win __is_module_dll()
 
 bool CLASS_DECL_win __init_current_state_app()
 {
-   ::ca::applicationsp pApp = __get_module_state()->m_pCurrentWinApp;
-   if (pApp != NULL && !pApp->initialize_instance())
+   sp(::ca::application) pApp = __get_module_state()->m_pCurrentWinApp;
+   if (pApp != ::null() && !pApp->initialize_instance())
    {
       // Init Failed
       try
@@ -369,7 +369,7 @@ bool CLASS_DECL_win __init_current_state_app()
 CLASS_DECL_win __MODULE_THREAD_STATE * __get_module_thread_state()
 {
    __MODULE_THREAD_STATE* pResult=__get_module_state()->m_thread.get_data();
-   ENSURE(pResult != NULL);
+   ENSURE(pResult != ::null());
    return pResult;
 }
 

@@ -52,12 +52,12 @@ int32_t maxlen
 *       placing it in the buffer pointed to by pnbuf.  It returns
 *       the length of the string put in the buffer.  If the length
 *       of the string exceeds the length of the buffer, maxlen,
-*       then NULL is returned.  If pnbuf = NULL, maxlen is ignored.
+*       then ::null() is returned.  If pnbuf = ::null(), maxlen is ignored.
 *       An entry point "_getdcwd()" is defined with takes the above
 *       parameters, plus a drive number.  "_getcwd()" is implemented
 *       as a call to "_getcwd()" with the default drive (0).
 *
-*       If pnbuf = NULL, maxlen is ignored, and a buffer is automatically
+*       If pnbuf = ::null(), maxlen is ignored, and a buffer is automatically
 *       allocated using malloc() -- a pointer to which is returned by
 *       _getcwd().
 *
@@ -69,7 +69,7 @@ int32_t maxlen
 *
 *Exit:
 *       Returns pointer to the buffer containing the c.w.d. name
-*       (same as pnbuf if non-NULL; otherwise, malloc is
+*       (same as pnbuf if non-::null(); otherwise, malloc is
 *       used to allocate a buffer)
 *
 *Exceptions:
@@ -98,7 +98,7 @@ return retval;
 *       placing it in the buffer pointed to by pnbuf.  It returns
 *       the length of the string put in the buffer.  If the length
 *       of the string exceeds the length of the buffer, maxlen,
-*       then NULL is returned.  If pnbuf = NULL, maxlen is ignored,
+*       then ::null() is returned.  If pnbuf = ::null(), maxlen is ignored,
 *       and a buffer is automatically allocated using malloc() --
 *       a pointer to which is returned by _getdcwd().
 *
@@ -112,7 +112,7 @@ return retval;
 *
 *Exit:
 *       Returns pointer to the buffer containing the c.w.d. name
-*       (same as pnbuf if non-NULL; otherwise, malloc is
+*       (same as pnbuf if non-::null(); otherwise, malloc is
 *       used to allocate a buffer)
 *
 *Exceptions:
@@ -142,7 +142,7 @@ WCHAR *pname; /* only used as argument to GetFullPathName */
 /*        if ( !_validdrive(drive) ) {
 _doserrno = ERROR_INVALID_DRIVE;
 //                errno = EACCES;
-return NULL;
+return ::null();
 }
 
 /*
@@ -168,20 +168,20 @@ dirbuf,
 
 /* API call failed, or buffer not large enough */
 /*      if ( len == 0 || ++len > sizeof(dirbuf)/sizeof(_TSCHAR) )
-return NULL;
+return ::null();
 
 /*
 * set up the buffer.
 */
-/*    if ( (p = pnbuf) == NULL ) {
+/*    if ( (p = pnbuf) == ::null() ) {
 /*
 * allocate a buffer for the ::fontopus::user.
 */
 /*      if ( (p = (WCHAR *)malloc(__max(len, maxlen) * sizeof(WCHAR)))
-== NULL )
+== ::null() )
 {
 //                errno = ENOMEM;
-return NULL;
+return ::null();
 }
 }
 else if ( len > maxlen ) {
@@ -189,7 +189,7 @@ else if ( len > maxlen ) {
 * Won't fit in the ::fontopus::user-supplied buffer!
 */
 //            errno = ERANGE; /* Won't fit in ::fontopus::user buffer */
-/*    return NULL;
+/*    return ::null();
 }
 
 /*
@@ -355,7 +355,7 @@ namespace win
    //   if ( !UserBuf )
    //      if ( !(buf = (WCHAR *) malloc(_MAX_PATH * sizeof(WCHAR))) ) {
    //         //                errno = ENOMEM;
-   //         return( NULL );
+   //         return( ::null() );
    //      }
    //      else
    //         maxlen = _MAX_PATH;
@@ -371,13 +371,13 @@ namespace win
    //      if ( !UserBuf )
    //         free(buf);
    //      //errno = ERANGE;
-   //      return( NULL );
+   //      return( ::null() );
    //   }
    //   else if ( count == 0 ) {
    //      if ( !UserBuf )
    //         free(buf);
    //      //_dosmaperr( GetLastError() );
-   //      return( NULL );
+   //      return( ::null() );
    //   }
 
    //   return( buf );

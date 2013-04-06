@@ -6,11 +6,11 @@ namespace win
 {
 
 
-   font::font(::ca::applicationsp papp) :
+   font::font(sp(::ca::application) papp) :
    ca(papp)
    {
 
-      m_pfont     = NULL;
+      m_pfont     = ::null();
       m_bUpdated  = false;
 
    }
@@ -19,19 +19,19 @@ namespace win
    font::~font()
    { 
 
-      if(m_pfont != NULL)
+      if(m_pfont != ::null())
       {
          delete m_pfont;
-         m_pfont = NULL;
+         m_pfont = ::null();
       }
    
    }
 
 //   font::operator HFONT() const
   // {
-    //  return (HFONT)(this == NULL ? NULL : get_handle()); 
+    //  return (HFONT)(this == ::null() ? ::null() : get_handle()); 
    //}
-   //font* font::from_handle(::ca::applicationsp papp, HFONT hFont)
+   //font* font::from_handle(sp(::ca::application) papp, HFONT hFont)
    //{
      // return dynamic_cast < font * > (::win::graphics_object::from_handle(papp, hFont)); 
    //}
@@ -78,21 +78,21 @@ namespace win
    void font::construct(const ::ca::font & fontParam)
       {
          class font & font = const_cast < ::win::font & > (dynamic_cast < const ::win::font & > (fontParam));
-         if(font.m_pfont == NULL)
+         if(font.m_pfont == ::null())
          {
-            if(m_pfont != NULL)
+            if(m_pfont != ::null())
             {
                delete m_pfont;
-               m_pfont = NULL;
+               m_pfont = ::null();
             }
          }
          else
          {
             m_pfont = font.m_pfont->Clone();
          }
-//         if(get_handle() != NULL)
+//         if(get_handle() != ::null())
   //          delete_object();
-    //     if(font.get_handle() != NULL)
+    //     if(font.get_handle() != ::null())
       /*   {
             LOGFONT lf;
             memset(&lf, 0, sizeof(lf));
@@ -106,7 +106,7 @@ namespace win
       {
          ::ca::graphics_object::dump(dumpcontext);
 
-/*         if (get_handle() == NULL)
+/*         if (get_handle() == ::null())
             return;
 
          if (!afxData.bWin95 && ::GetObjectType(get_handle()) != OBJ_FONT)
@@ -142,9 +142,9 @@ namespace win
    void * font::get_os_data() const
    {
       
-      if(m_pfont == NULL || !m_bUpdated)
+      if(m_pfont == ::null() || !m_bUpdated)
       {
-         if(m_pfont != NULL)
+         if(m_pfont != ::null())
          {
             try
             {
@@ -153,7 +153,7 @@ namespace win
             catch(...)
             {
             }
-            ((font *) this)->m_pfont = NULL;
+            ((font *) this)->m_pfont = ::null();
          }
 
 
@@ -205,7 +205,7 @@ namespace win
       }
 
 
-      if(m_pfont != NULL)
+      if(m_pfont != ::null())
       {
          ((font *) this)->m_bUpdated = true;
       }

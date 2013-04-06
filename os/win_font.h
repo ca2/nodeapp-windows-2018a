@@ -14,7 +14,7 @@ namespace win
       Gdiplus::Font *   m_pfont;
 
 
-      font(::ca::applicationsp papp);
+      font(sp(::ca::application) papp);
       virtual ~font();
 
 
@@ -30,8 +30,8 @@ namespace win
             BYTE cStrikeOut, BYTE nCharSet, BYTE nOutPrecision,
             BYTE nClipPrecision, BYTE nQuality, BYTE nPitchAndFamily,
             const char * lpszFacename);
-      virtual bool CreatePointFont(int32_t nPointSize, const char * lpszFaceName, ::ca::graphics * pgraphics = NULL);
-      virtual bool CreatePointFontIndirect(const LOGFONT* lpLogFont, ::ca::graphics * pgraphics = NULL);
+      virtual bool CreatePointFont(int32_t nPointSize, const char * lpszFaceName, ::ca::graphics * pgraphics = ::null());
+      virtual bool CreatePointFontIndirect(const LOGFONT* lpLogFont, ::ca::graphics * pgraphics = ::null());
       */
 
       //virtual int32_t GetLogFont(LOGFONT* pLogFont);
