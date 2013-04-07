@@ -65,7 +65,7 @@ __MAINTAIN_STATE2::__MAINTAIN_STATE2(__MODULE_STATE* pNewState)
 /////////////////////////////////////////////////////////////////////////////
 // ___THREAD_STATE implementation
 
-___THREAD_STATE::___THREAD_STATE()
+void ___THREAD_STATE::initialize()
 {
 #ifdef DEBUG
    m_nDisablePumpCount = 0;
@@ -76,7 +76,7 @@ ___THREAD_STATE::___THREAD_STATE()
    m_ptCursorLast = point(0,0);
 }
 
-___THREAD_STATE::~___THREAD_STATE()
+void ___THREAD_STATE::finalize()
 {
    // unhook windows hooks
    if (m_hHookOldMsgFilter != ::null())
@@ -94,14 +94,21 @@ ___THREAD_STATE::~___THREAD_STATE()
 
 }
 
+__declspec(thread) ___THREAD_STATE * gen_ThreadState = NULL;
+__declspec(thread) BYTE gen_ThreadStateAlloc[sizeof(___THREAD_STATE)];
+
 CLASS_DECL_win ___THREAD_STATE * __get_thread_state()
 {
-   ___THREAD_STATE *pState =gen_ThreadState.get_data();
-   ENSURE(pState != ::null()); 
+   ___THREAD_STATE *pState = gen_ThreadState;
+   if(pState == NULL)
+   {
+      pState = (___THREAD_STATE *) gen_ThreadStateAlloc;
+      pState->initialize();
+   }
    return pState;
 }
 
-THREAD_LOCAL(___THREAD_STATE, gen_ThreadState, slot___THREAD_STATE)
+
 
 /////////////////////////////////////////////////////////////////////////////
 // __MODULE_STATE implementation
@@ -115,7 +122,7 @@ __MODULE_STATE::__MODULE_STATE(bool bDLL, WNDPROC pfn_window_procedure, DWORD dw
    m_pmapHMENU             = ::null();
    m_pstrUnregisterList    = ::null();
    /* xxx xxx xxx
-   m_classList.Construct(offsetof(::ca::type_info, m_pNextClass)); */
+   m_classList.Construct(offsetof(sp(::ca::type_info), m_pNextClass)); */
 
    m_fRegisteredClasses = 0;
    m_bDLL = (BYTE)bDLL;
@@ -320,7 +327,7 @@ CLASS_DECL_win __MODULE_STATE * __get_app_module_state()
 
 CLASS_DECL_win __MODULE_STATE * __get_module_state()
 {
-   ___THREAD_STATE* pState = gen_ThreadState;
+   ___THREAD_STATE* pState = __get_thread_state();
    ENSURE(pState);
    __MODULE_STATE* pResult;
    if (pState->m_pModuleState != ::null())

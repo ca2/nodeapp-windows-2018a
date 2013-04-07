@@ -189,10 +189,6 @@ public:
       { return new TYPE; }
 };
 
-#define THREAD_LOCAL(class_name, ident_name, slot) \
-   thread_local<class_name, slot> ident_name;
-#define EXTERN_THREAD_LOCAL(class_name, ident_name, slot) \
-   extern CLASS_DECL_win  thread_local<class_name, slot> ident_name;
 
 template<class TYPE>
 class process_local : public process_local_object

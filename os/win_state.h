@@ -239,13 +239,15 @@ class CLASS_DECL_win ___THREAD_STATE :
    public ::ca::thread_state
 {
 public:
-   ___THREAD_STATE();
-   virtual ~___THREAD_STATE();
+   //___THREAD_STATE();
+   //virtual ~___THREAD_STATE();
 
    // override for m_pModuleState in ___APP_STATE
    __MODULE_STATE* m_pModuleState;
    __MODULE_STATE* m_pPrevModuleState;
 
+   void initialize();
+   void finalize();
 
 
    // primitive::memory safety pool for temp maps
@@ -292,6 +294,6 @@ public:
    bool m_bNeedTerm;       // TRUE if OleUninitialize needs to be called
 };
 
-EXTERN_THREAD_LOCAL(___THREAD_STATE, gen_ThreadState, slot___THREAD_STATE)
+extern __declspec(thread) ___THREAD_STATE * gen_ThreadState;
 
 CLASS_DECL_win ___THREAD_STATE* __get_thread_state();

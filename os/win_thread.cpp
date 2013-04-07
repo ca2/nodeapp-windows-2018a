@@ -53,7 +53,6 @@ struct ___THREAD_STARTUP : ::ca::thread_startup
 
 uint32_t __thread_entry(void * pParam)
 {
-
    UINT uiRet = 0;
 
    try
@@ -156,6 +155,12 @@ uint32_t __thread_entry(void * pParam)
    catch(...)
    {
       return -1;
+   }
+   
+   if(__get_thread_state()  != ::null())
+   {
+      __get_thread_state()->finalize();
+      gen_ThreadState = NULL;
    }
 
    return uiRet;
@@ -1462,7 +1467,7 @@ stop_run:
             pbase->m_uiMessage >= WM_KEYFIRST && pbase->m_uiMessage <= WM_KEYLAST)
          {
             // need to translate messages for the in-place container
-            ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
+            ___THREAD_STATE* pThreadState = __get_thread_state();
             ENSURE(pThreadState);
 
             if (pThreadState->m_bInMsgFilter)
@@ -1746,7 +1751,7 @@ stop_run:
          return;
       }
 
-      ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
+      ___THREAD_STATE* pThreadState = __get_thread_state();
       MSG oldState = pThreadState->m_lastSentMsg;   // save for nesting
       pThreadState->m_lastSentMsg.hwnd       = pbase->m_pwnd->get_safe_handle();
       pThreadState->m_lastSentMsg.message    = pbase->m_uiMessage;
@@ -1962,7 +1967,7 @@ run:
 
 #ifndef ___PORTABLE
          sp(::ca::application) papp = (get_app());
-         ___THREAD_STATE* pThreadState = gen_ThreadState.GetDataNA();
+         ___THREAD_STATE* pThreadState = __get_thread_state();
          if( pThreadState != ::null() )
          {
             // restore safety pool after temp objects destroyed
@@ -2356,7 +2361,7 @@ return __internal_is_idle_message( pMsg );
 }
 
 /*
-thread* CLASS_DECL_win __begin_thread(::ca::type_info pThreadClass,
+thread* CLASS_DECL_win __begin_thread(sp(::ca::type_info) pThreadClass,
 int32_t nPriority, UINT nStackSize, DWORD dwCreateFlags,
 LPSECURITY_ATTRIBUTES lpSecurityAttrs)
 {
@@ -2843,7 +2848,7 @@ if (code == MSGF_DIALOGBOX && m_pActiveWnd != ::null() &&
 lpMsg->message >= WM_KEYFIRST && lpMsg->message <= WM_KEYLAST)
 {
 // need to translate messages for the in-place container
-___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
+___THREAD_STATE* pThreadState = __get_thread_state();
 ENSURE(pThreadState);
 
 if (pThreadState->m_bInMsgFilter)

@@ -180,7 +180,7 @@ namespace win
    const MSG* window::GetCurrentMessage()
    {
       // fill in time and position when asked for
-      ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
+      ___THREAD_STATE* pThreadState = __get_thread_state();
       pThreadState->m_lastSentMsg.time = ::GetMessageTime();
       pThreadState->m_lastSentMsg.pt = point(::GetMessagePos());
       return &pThreadState->m_lastSentMsg;
@@ -189,7 +189,7 @@ namespace win
    LRESULT window::Default()
    {
       // call DefWindowProc with the last message
-      ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
+      ___THREAD_STATE* pThreadState = __get_thread_state();
       return DefWindowProc(pThreadState->m_lastSentMsg.message,
          pThreadState->m_lastSentMsg.wParam, pThreadState->m_lastSentMsg.lParam);
    }
@@ -1087,7 +1087,7 @@ namespace win
       __CTLCOLOR ctl;
       ctl.hDC = (HDC)wParam;
       ctl.oswindow = (oswindow) lParam;
-      ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
+      ___THREAD_STATE* pThreadState = __get_thread_state();
       ctl.nCtlType = pThreadState->m_lastSentMsg.message - WM_CTLCOLORMSGBOX;
       //ASSERT(ctl.nCtlType >= CTLCOLOR_MSGBOX);
       ASSERT(ctl.nCtlType <= CTLCOLOR_STATIC);
@@ -2765,7 +2765,7 @@ restart_mouse_hover_check:
 
    bool window::SendChildNotifyLastMsg(LRESULT* pResult)
    {
-      ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
+      ___THREAD_STATE* pThreadState = __get_thread_state();
       return OnChildNotify(pThreadState->m_lastSentMsg.message,
          pThreadState->m_lastSentMsg.wParam, pThreadState->m_lastSentMsg.lParam, pResult);
    }
@@ -5909,7 +5909,7 @@ ExitModal:
 
    CLASS_DECL_win LRESULT __call_window_procedure(sp(::user::interaction) pinteraction, oswindow oswindow, UINT nMsg, WPARAM wParam, LPARAM lParam)
    {
-      ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
+      ___THREAD_STATE* pThreadState = __get_thread_state();
       MSG oldState = pThreadState->m_lastSentMsg;   // save for nesting
       pThreadState->m_lastSentMsg.hwnd = oswindow;
       pThreadState->m_lastSentMsg.message = nMsg;
@@ -6005,7 +6005,7 @@ ExitModal:
 
    LRESULT CALLBACK __cbt_filter_hook(int32_t code, WPARAM wParam, LPARAM lParam)
    {
-      ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
+      ___THREAD_STATE* pThreadState = __get_thread_state();
       if (code != HCBT_CREATEWND)
       {
          // wait for HCBT_CREATEWND just pass others on...
@@ -6320,7 +6320,7 @@ __STATIC void CLASS_DECL_win __post_init_dialog(
 CLASS_DECL_win void hook_window_create(sp(::win::window) pwindow)
 {
 
-   ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
+   ___THREAD_STATE* pThreadState = __get_thread_state();
 
    if (pThreadState->m_pWndInit == pwindow)
       return;
@@ -6346,7 +6346,7 @@ CLASS_DECL_win void hook_window_create(sp(::win::window) pwindow)
 
 CLASS_DECL_win bool unhook_window_create()
 {
-   ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
+   ___THREAD_STATE* pThreadState = __get_thread_state();
    if (pThreadState->m_pWndInit != ::null())
    {
       pThreadState->m_pWndInit = ::null();
