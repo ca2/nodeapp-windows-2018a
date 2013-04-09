@@ -84,7 +84,7 @@ namespace production
       return true;
    }
 
-   void application::on_request(::ca::create_context * pcreatecontext)
+   void application::on_request(sp(::ca::create_context) pcreatecontext)
    {
 
       if(pcreatecontext->m_spCommandLine->m_varQuery["version"] == "stage")
@@ -123,10 +123,10 @@ namespace production
       if(itema.get_size() > 0)
       {
          ::ShellExecuteW(
-            NULL, 
+            ::null(), 
             L"open", 
             ::ca::international::utf8_to_unicode(itema[0].m_strPath),
-            NULL,
+            ::null(),
             ::ca::international::utf8_to_unicode(System.dir().name(itema[0].m_strPath)),
             SW_SHOW);
       }

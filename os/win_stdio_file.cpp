@@ -295,7 +295,7 @@ namespace win
       m_bCloseOnDelete = FALSE;
    }
 
-   ::ca::file * stdio_file::Duplicate() const
+   sp(::ca::file) stdio_file::Duplicate() const
    {
       ASSERT_VALID(this);
       ASSERT(m_pStream != ::null());

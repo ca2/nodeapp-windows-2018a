@@ -4,7 +4,7 @@
 namespace backup
 {
 
-   pane_view::pane_view(::ca::application * papp) :
+   pane_view::pane_view(sp(::ca::application) papp) :
       ca(papp),
       ::user::tab(papp),
       ::userbase::view(papp),
@@ -48,7 +48,7 @@ namespace backup
       
    }
 
-   void pane_view::on_update(::view* pSender, LPARAM lHint, ::ca::object* pHint) 
+   void pane_view::on_update(sp(::view) pSender, LPARAM lHint, ::ca::object* pHint) 
    {
       ::userbase::tab_view::on_update(pSender, lHint, pHint);
       if(lHint == 543218)
@@ -98,7 +98,7 @@ namespace backup
 
    void pane_view::on_create_view(::user::view_creator_data * pcreatordata)
    {
-//      application * papp = dynamic_cast < application * > (get_app());
+//      sp(application) papp =  (get_app());
       switch(pcreatordata->m_id)
       {
       case pane_view_backup:
@@ -112,10 +112,10 @@ namespace backup
          break;
       case pane_view_options:
       {
-         form_document * pdoc = App(get_app()).userex().create_form(this, this);
+         sp(form_document) pdoc = App(get_app()).userex().create_form(this, this);
          if(pdoc == NULL)
             return;
-         ::view * pview = pdoc->get_view();
+         sp(::view) pview = pdoc->get_view();
          form_update_hint uh;
          uh.m_etype = form_update_hint::type_browse;
          uh.m_strForm = "filemanager\\replace_name_in_file_system.xhtml";
@@ -129,7 +129,7 @@ namespace backup
 
 
          pcreatordata->m_pwnd = dynamic_cast < ::ca::window * >(pview->GetParentFrame());
-//         form_child_frame * pframe = dynamic_cast < form_child_frame * >(pcreatordata->m_pwnd);
+//         sp(form_child_frame) pframe = (pcreatordata->m_pwnd);
          pcreatordata->m_pdoc = pdoc;
 
       }

@@ -10,7 +10,7 @@ namespace backup
       public production::form_callback
    {
    public:
-	   pane_view(::ca::application * papp);
+	   pane_view(sp(::ca::application) papp);
 	   virtual ~pane_view();
    #ifdef DEBUG
 	   virtual void assert_valid() const;
@@ -20,7 +20,7 @@ namespace backup
       void on_create_view(::user::view_creator_data * pcreatordata);
       void install_message_handling(::ca::message::dispatch * pinterface);
 
-	   virtual void on_update(::view * pSender, LPARAM lHint, ::ca::object* pHint);
+	   virtual void on_update(sp(::view) pSender, LPARAM lHint, ::ca::object* pHint);
 
 
 

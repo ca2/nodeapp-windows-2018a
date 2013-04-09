@@ -14,8 +14,8 @@ namespace ca2plugin_container
    public:
 
    
-      oswindow                          m_oswindowMessage;
-      oswindow                          m_oswindow;
+      oswindow                      m_oswindowMessage;
+      oswindow                      m_oswindow;
       bool                          m_bStream;
 
       vsstring                      m_vssPluginName;

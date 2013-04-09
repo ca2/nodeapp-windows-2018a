@@ -5,7 +5,7 @@ namespace backup
 {
 
 
-   document::document(::ca::application * papp) :
+   document::document(sp(::ca::application) papp) :
       ca(papp),
       ::ca::data_container_base(papp),
       production::document(papp)

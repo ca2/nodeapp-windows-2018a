@@ -5,7 +5,7 @@ namespace production
 {
 
 
-   pane_view::pane_view(::ca::application * papp) :
+   pane_view::pane_view(sp(::ca::application) papp) :
       ca(papp),
       ::user::tab(papp),
       ::userbase::view(papp),
@@ -55,14 +55,14 @@ namespace production
       
    }
 
-   void pane_view::on_update(::view * pSender, LPARAM lHint, ::ca::object* pHint) 
+   void pane_view::on_update(sp(::view) pSender, LPARAM lHint, ::ca::object* pHint) 
    {
       ::userbase::tab_view::on_update(pSender, lHint, pHint);
       if(lHint == 543218)
       {
          set_cur_tab_by_id(PaneViewProduction);
       }
-      if(pHint != NULL)
+      if(pHint != ::null())
       {
          if(base < pane_view_update_hint >::bases(pHint))
          {
@@ -76,14 +76,14 @@ namespace production
             }
          }
       }
-	      if(pHint != NULL)
+	      if(pHint != ::null())
       {
    	   if(base < pane_view_update_hint >::bases(pHint))
          {
             pane_view_update_hint * puh = (pane_view_update_hint * ) pHint;
             if(puh->is_type_of(pane_view_update_hint::TypeOnShowKaraoke))
             {
-               (dynamic_cast < userbase::frame_window * > (GetTopLevelFrame()))->SetActiveView(this);
+               ( (GetTopLevelFrame()))->SetActiveView(this);
             }
             else if(puh->is_type_of(pane_view_update_hint::TypeOnShowView))
             {
@@ -113,7 +113,7 @@ namespace production
       }
       else if(m_pviewdata->m_id == PaneViewContextMenu)
       {
-         ::filemanager::document * pdoc = dynamic_cast < ::filemanager::document * > (m_pviewdata->m_pdoc);
+         sp(::filemanager::document) pdoc =  (m_pviewdata->m_pdoc);
          pdoc->FileManagerBrowse(Application.dir().userappdata("production\\menu"));
       }
       else
@@ -133,13 +133,13 @@ namespace production
 
    void pane_view::on_create_view(::user::view_creator_data * pcreatordata)
    {
-      application * papp = dynamic_cast < application * > ((dynamic_cast < userbase::frame_window * > (GetParentFrame()))->get_app());
+      sp(application) papp =  (( (GetParentFrame()))->get_app());
       switch(pcreatordata->m_id)
       {
       case PaneViewContextMenu:
          {
-            ::filemanager::document * pdoc = papp->filemanager().std().open_child_list(false, true);
-            if(pdoc != NULL)
+            sp(::filemanager::document) pdoc = papp->filemanager().std().open_child_list(false, true);
+            if(pdoc != ::null())
             {
                pdoc->get_filemanager_data()->m_iIconSize = 16;
                pdoc->get_filemanager_data()->m_bListText = true;
@@ -148,14 +148,14 @@ namespace production
                pdoc->get_filemanager_data()->m_strDISection = "production_menu";
                pdoc->get_filemanager_data()->m_pcallback = this;
                pdoc->Initialize(true);
-               pdoc->update_all_views(NULL, 1234);
-               pdoc->update_all_views(NULL, 123458);
-               ::view * pview = pdoc->get_view();
+               pdoc->update_all_views(::null(), 1234);
+               pdoc->update_all_views(::null(), 123458);
+               sp(::view) pview = pdoc->get_view();
                pdoc->FileManagerBrowse(Application.dir().userappdata("production\\menu"));
-               if(pview != NULL)
+               if(pview != ::null())
                {
-                  userbase::frame_window * pframe = dynamic_cast < userbase::frame_window * > (pview->GetParentFrame());
-                  if(pframe != NULL)
+                  sp(::userbase::frame_window) pframe =  (pview->GetParentFrame());
+                  if(pframe != ::null())
                   {
                      pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
                      pframe->set_parent(this);
@@ -168,8 +168,8 @@ namespace production
          break;
       case PaneViewProduction:
          {
-            ::user::interaction * puie = ::view::create_view < ::production::view > (get_document(), pcreatordata->m_pholder);
-            if(puie != NULL)
+            sp(::user::interaction) puie = ::view::create_view < ::production::view > (get_document(), pcreatordata->m_pholder);
+            if(puie != ::null())
             {
                pcreatordata->m_pdoc = get_document();
             }
@@ -177,24 +177,24 @@ namespace production
          break;
 /*      case PaneViewFileManager:
          {
-            ::ca::create_context_sp cc(get_app());
+            sp(::ca::create_context) cc(get_app());
             cc->m_bMakeVisible = false;
             cc->m_bTransparentBackground = true;
             cc->m_puiParent = this;
 
             get_document()->m_pfilemanagerdoc = papp->filemanager().std().open(papp, cc);
-            ::filemanager::document * pdoc = get_document()->m_pfilemanagerdoc;
-            if(pdoc != NULL)
+            sp(::filemanager::document) pdoc = get_document()->m_pfilemanagerdoc;
+            if(pdoc != ::null())
             {
                pdoc->get_filemanager_data()->m_strDISection = "production_filemanager";
                pdoc->Initialize(true);
-               pdoc->update_all_views(NULL, 1234);
-               pdoc->update_all_views(NULL, 123458);
-               ::view * pview = pdoc->get_view();
-               if(pview != NULL)
+               pdoc->update_all_views(::null(), 1234);
+               pdoc->update_all_views(::null(), 123458);
+               sp(::view) pview = pdoc->get_view();
+               if(pview != ::null())
                {
-                  userbase::frame_window * pframe = dynamic_cast < userbase::frame_window * > (pview->GetParentFrame());
-                  if(pframe != NULL)
+                  sp(::userbase::frame_window) pframe =  (pview->GetParentFrame());
+                  if(pframe != ::null())
                   {
                      //pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
                      //pframe->set_parent(this);
@@ -207,8 +207,8 @@ namespace production
          break;*/
       case PaneViewThreeActionLaunch:
          {
-            ::filemanager::document * pdoc = papp->filemanager().std().open_child_list(false, true);
-            if(pdoc != NULL)
+            sp(::filemanager::document) pdoc = papp->filemanager().std().open_child_list(false, true);
+            if(pdoc != ::null())
             {
                pdoc->get_filemanager_data()->m_iIconSize = 48;
                pdoc->get_filemanager_data()->m_bListText = false;
@@ -216,14 +216,14 @@ namespace production
                pdoc->get_filemanager_data()->m_pcallback = this;
                pdoc->get_filemanager_data()->m_strDISection = "production_3-action-launch";
                pdoc->Initialize(true);
-               pdoc->update_all_views(NULL, 1234);
-               pdoc->update_all_views(NULL, 123458);
-               ::view * pview = pdoc->get_view();
+               pdoc->update_all_views(::null(), 1234);
+               pdoc->update_all_views(::null(), 123458);
+               sp(::view) pview = pdoc->get_view();
                pdoc->FileManagerBrowse(Application.dir().userappdata("production\\3-action-launch"));
-               if(pview != NULL)
+               if(pview != ::null())
                {
-                  userbase::frame_window * pframe = dynamic_cast < userbase::frame_window * > (pview->GetParentFrame());
-                  if(pframe != NULL)
+                  sp(::userbase::frame_window) pframe =  (pview->GetParentFrame());
+                  if(pframe != ::null())
                   {
                      pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
                      pframe->set_parent(this);
@@ -236,28 +236,28 @@ namespace production
          break;
       case PaneViewConfiguration:
       {
-         form_document * pdoc = Cube.userex().create_form(this, pcreatordata->m_pholder);
-         if(pdoc == NULL)
+         sp(form_document) pdoc = Cube.userex().create_form(this, pcreatordata->m_pholder);
+         if(pdoc == ::null())
             return;
-         ::view * pview = pdoc->get_view();
-         m_pviewOptions = dynamic_cast < form_view * > (pview);
+         sp(::view) pview = pdoc->get_view();
+         m_pviewOptions =  (pview);
 
          m_pviewOptions->m_pcallback = this;
          
          form_update_hint uh;
          uh.m_etype = form_update_hint::type_browse;
          uh.m_strForm = "production\\options.xhtml";
-         pdoc->update_all_views(NULL, 0, &uh);
+         pdoc->update_all_views(::null(), 0, &uh);
          
          uh.m_etype = form_update_hint::type_get_form_view;
-         pdoc->update_all_views(NULL, 0, &uh);
+         pdoc->update_all_views(::null(), 0, &uh);
 
          uh.m_etype = form_update_hint::type_after_browse;
-         pdoc->update_all_views(NULL, 0, &uh);
+         pdoc->update_all_views(::null(), 0, &uh);
 
 
-         pcreatordata->m_pwnd = dynamic_cast < ::user::interaction * >(pview->GetParentFrame());
-         form_child_frame * pframe = dynamic_cast < form_child_frame * >(pcreatordata->m_pwnd);
+         pcreatordata->m_pwnd = (pview->GetParentFrame());
+         sp(form_child_frame) pframe = (pcreatordata->m_pwnd);
          pcreatordata->m_pdoc = pdoc;
          //pcreatordata->m_pwnd = pframe;
 
@@ -267,21 +267,21 @@ namespace production
          {
             PlaylistDoc * pdoc = ((MusicalPlayerLightApp *) &Application)->GetPlaylistCentral().GetCurrentPlaylist(true, false);
             
-            if(pdoc != NULL)
+            if(pdoc != ::null())
             {
                MusicalPlayerLightDoc * pplayerdoc = (MusicalPlayerLightDoc *) get_document();
-               if(pplayerdoc != NULL)
+               if(pplayerdoc != ::null())
                {
                   pplayerdoc->AttachPlaylist(pdoc);
                }
-               if(pdoc != NULL)
+               if(pdoc != ::null())
                {
                   POSITION pos = pdoc->get_view_count();
-                  ::view * pview = pdoc->get_view(pos);
-                  if(pview != NULL)
+                  sp(::view) pview = pdoc->get_view(pos);
+                  if(pview != ::null())
                   {
-                     userbase::frame_window * pframe = dynamic_cast < userbase::frame_window * > (pview->GetParentFrame());
-                     if(pframe != NULL)
+                     sp(::userbase::frame_window) pframe =  (pview->GetParentFrame());
+                     if(pframe != ::null())
                      {
                         pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
                         pframe->set_parent(this);
@@ -297,19 +297,19 @@ namespace production
          break;
       case PaneViewMediaLibrary:
          {
-            MediaLibraryDoc * pdoc = (MediaLibraryDoc *) m_pdoctemplateAlbum->open_document_file(NULL, FALSE);	
-            if(pdoc != NULL)
+            MediaLibraryDoc * pdoc = (MediaLibraryDoc *) m_pdoctemplateAlbum->open_document_file(::null(), FALSE);	
+            if(pdoc != ::null())
             {
                POSITION pos = pdoc->get_view_count();
-               ::view * pview = pdoc->get_view(pos);
-               if(pdoc != NULL)
+               sp(::view) pview = pdoc->get_view(pos);
+               if(pdoc != ::null())
                {
                   POSITION pos = pdoc->get_view_count();
-                  ::view * pview = pdoc->get_view(pos);
-                  if(pview != NULL)
+                  sp(::view) pview = pdoc->get_view(pos);
+                  if(pview != ::null())
                   {
-                     userbase::frame_window * pframe = dynamic_cast < userbase::frame_window * > (pview->GetParentFrame());
-                     if(pframe != NULL)
+                     sp(::userbase::frame_window) pframe =  (pview->GetParentFrame());
+                     if(pframe != ::null())
                      {
                         pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
                         pframe->ModifyStyleEx(WS_EX_CLIENTEDGE, 0);
@@ -326,19 +326,19 @@ namespace production
          break;
       case PaneViewAudioControl:
          {
-            GoodMixerDoc * pdoc = (GoodMixerDoc *) m_pdoctemplateAudioControl->open_document_file(NULL, FALSE);	
-            if(pdoc != NULL)
+            GoodMixerDoc * pdoc = (GoodMixerDoc *) m_pdoctemplateAudioControl->open_document_file(::null(), FALSE);	
+            if(pdoc != ::null())
             {
                POSITION pos = pdoc->get_view_count();
-               ::view * pview = pdoc->get_view(pos);
-               if(pdoc != NULL)
+               sp(::view) pview = pdoc->get_view(pos);
+               if(pdoc != ::null())
                {
                   POSITION pos = pdoc->get_view_count();
-                  ::view * pview = pdoc->get_view(pos);
-                  if(pview != NULL)
+                  sp(::view) pview = pdoc->get_view(pos);
+                  if(pview != ::null())
                   {
-                     userbase::frame_window * pframe = dynamic_cast < userbase::frame_window * > (pview->GetParentFrame());
-                     if(pframe != NULL)
+                     sp(::userbase::frame_window) pframe =  (pview->GetParentFrame());
+                     if(pframe != ::null())
                      {
                         pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
                         pframe->ModifyStyleEx(WS_EX_CLIENTEDGE, 0);
@@ -355,19 +355,19 @@ namespace production
          break;
       case PaneViewOptions:
          {
-            OptionsDoc * pdoc = (OptionsDoc *) m_pdoctemplateOptions->open_document_file(NULL, FALSE);	
-            if(pdoc != NULL)
+            OptionsDoc * pdoc = (OptionsDoc *) m_pdoctemplateOptions->open_document_file(::null(), FALSE);	
+            if(pdoc != ::null())
             {
                POSITION pos = pdoc->get_view_count();
-               ::view * pview = pdoc->get_view(pos);
-               if(pdoc != NULL)
+               sp(::view) pview = pdoc->get_view(pos);
+               if(pdoc != ::null())
                {
                   POSITION pos = pdoc->get_view_count();
-                  ::view * pview = pdoc->get_view(pos);
-                  if(pview != NULL)
+                  sp(::view) pview = pdoc->get_view(pos);
+                  if(pview != ::null())
                   {
-                     userbase::frame_window * pframe = dynamic_cast < userbase::frame_window * > (pview->GetParentFrame());
-                     if(pframe != NULL)
+                     sp(::userbase::frame_window) pframe =  (pview->GetParentFrame());
+                     if(pframe != ::null())
                      {
                         pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
                         pframe->ModifyStyleEx(WS_EX_CLIENTEDGE, 0);
@@ -418,10 +418,10 @@ namespace production
       if(itema.get_size() > 0)
       {
          int32_t i = (int32_t) ::ShellExecuteW(
-            NULL, 
-            NULL, 
+            ::null(), 
+            ::null(), 
             ::ca::international::utf8_to_unicode("\"" + itema[0].m_strPath + "\""),
-            NULL,
+            ::null(),
             ::ca::international::utf8_to_unicode("\"" + System.dir().name(itema[0].m_strPath) + "\""),
             SW_SHOWNORMAL);
          string str;
@@ -440,30 +440,30 @@ namespace production
       {
          if(pevent->m_puie->m_id == "clean")
          {
-            ::user::interaction* pguie = m_pviewOptions->get_child_by_id("clean");
-            ::user::check_box * pcheckbox = dynamic_cast < ::user::check_box * > (pguie);
+            sp(::user::interaction) pguie = m_pviewOptions->get_child_by_id("clean");
+            sp(::user::check_box) pcheckbox =  (pguie);
             view_update_hint uh;
             uh.m_eoption = view_update_hint::OptionClean;
             uh.m_bOption = pcheckbox->_001GetCheck() == check::checked;
-            get_document()->update_all_views(NULL, 0, &uh);
+            get_document()->update_all_views(::null(), 0, &uh);
          }
          else if(pevent->m_puie->m_id == "build")
          {
-            ::user::interaction* pguie = m_pviewOptions->get_child_by_id("build");
-            ::user::check_box * pcheckbox = dynamic_cast < ::user::check_box * > (pguie);
+            sp(::user::interaction) pguie = m_pviewOptions->get_child_by_id("build");
+            sp(::user::check_box) pcheckbox =  (pguie);
             view_update_hint uh;
             uh.m_eoption = view_update_hint::OptionBuild;
             uh.m_bOption = pcheckbox->_001GetCheck() == check::checked;
-            get_document()->update_all_views(NULL, 0, &uh);
+            get_document()->update_all_views(::null(), 0, &uh);
          }
       }
       return false;
    }
 
 
-     document * pane_view::get_document()
+     sp(document) pane_view::get_document()
      {
-        return dynamic_cast < document * > (::view::get_document());
+        return  (::view::get_document());
      }
 
      void pane_view::_001OnUserMessage(::ca::signal_object * pobj)

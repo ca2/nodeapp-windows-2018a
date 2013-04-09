@@ -11,7 +11,7 @@ namespace backup
    {
    	
    public:
-	   frame(::ca::application * papp);
+	   frame(sp(::ca::application) papp);
       virtual ~frame();
 
    };

@@ -52,12 +52,12 @@ namespace win
 
    }
 
-   ::ca::file * file::Duplicate() const
+   sp(::ca::file) file::Duplicate() const
    {
       ASSERT_VALID(this);
       ASSERT(m_hFile != (UINT)hFileNull);
 
-      file* pFile = new file(get_app(), hFileNull);
+      sp(::ca::file) pFile = new file(get_app(), hFileNull);
       HANDLE hFile;
       if (!::DuplicateHandle(::GetCurrentProcess(), (HANDLE)m_hFile,
          ::GetCurrentProcess(), &hFile, 0, FALSE, DUPLICATE_SAME_ACCESS))
@@ -407,7 +407,7 @@ namespace win
       file_position dwLen, dwCur;
 
       // seek is a non const operation
-      file* pFile = (file*)this;
+      sp(::ca::file) pFile = (sp(::ca::file))this;
       dwCur = pFile->seek(0L, ::ca::seek_current);
       dwLen = pFile->seek_to_end();
       VERIFY(dwCur == (uint64_t)pFile->seek((file_offset) dwCur, ::ca::seek_begin));

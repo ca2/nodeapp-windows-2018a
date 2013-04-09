@@ -7,7 +7,7 @@ namespace production
       public simple_frame_window
    {
    public:
-	   frame(::ca::application * papp);
+	   frame(sp(::ca::application) papp);
    public:
 	   virtual ~frame();
    #ifdef DEBUG

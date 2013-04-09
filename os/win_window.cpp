@@ -2139,7 +2139,7 @@ restart_mouse_hover_check:
       while ((oswindow_T = ::GetWindow(oswindow_Owner, GW_OWNER)) != ::null())
          oswindow_Owner = oswindow_T;
 
-      return (::user::interaction *) ::win::window::from_handle(oswindow_Owner).m_p;
+      return (sp(::user::interaction)) ::win::window::from_handle(oswindow_Owner).m_p;
 
    }
 
@@ -2158,7 +2158,7 @@ restart_mouse_hover_check:
          oswindow_Parent = oswindow_T;
       }
 
-      return (::user::interaction *)::win::window::from_handle(oswindow_Parent).m_p;
+      return (sp(::user::interaction))::win::window::from_handle(oswindow_Parent).m_p;
    }
 
    bool window::IsTopParentActive()
@@ -4569,7 +4569,7 @@ ExitModal:
       if(hwndParent == ::null())
          return ::null();
 
-      return (::user::interaction *) ::win::window::from_handle(hwndParent).m_p;
+      return (sp(::user::interaction)) ::win::window::from_handle(hwndParent).m_p;
 
    }
 
@@ -5117,7 +5117,7 @@ ExitModal:
    sp(::user::interaction) window::GetActiveWindow()
    {
 
-      return (::user::interaction *) ::win::window::from_handle(::GetActiveWindow()).m_p;
+      return (sp(::user::interaction)) ::win::window::from_handle(::GetActiveWindow()).m_p;
 
    }
 
@@ -5126,7 +5126,7 @@ ExitModal:
 
       ASSERT(::IsWindow(get_handle()));
 
-      return (::user::interaction *) ::win::window::from_handle(::SetActiveWindow(get_handle())).m_p;
+      return (sp(::user::interaction)) ::win::window::from_handle(::SetActiveWindow(get_handle())).m_p;
 
    }
 
@@ -5145,14 +5145,14 @@ ExitModal:
       if(pinterface != ::null()) 
          m_pguieCapture = pinterface; 
 
-      return  (::user::interaction *) ::win::window::from_handle(::SetCapture(get_handle())).m_p; 
+      return  (sp(::user::interaction)) ::win::window::from_handle(::SetCapture(get_handle())).m_p; 
 
    }
 
    sp(::user::interaction) window::GetFocus()
    { 
 
-      return (::user::interaction *) ::win::window::from_handle(::GetFocus()).m_p;
+      return (sp(::user::interaction)) ::win::window::from_handle(::GetFocus()).m_p;
 
    }
 
@@ -5161,7 +5161,7 @@ ExitModal:
 
       ASSERT(::IsWindow(get_handle()));
 
-      return (::user::interaction *) ::win::window::from_handle(::SetFocus(get_handle())).m_p;
+      return (sp(::user::interaction)) ::win::window::from_handle(::SetFocus(get_handle())).m_p;
 
    }
 
@@ -5291,7 +5291,7 @@ ExitModal:
    { 
       ASSERT(::IsWindow(get_handle())); 
       
-      return (::user::interaction *) ::win::window::from_handle(::ChildWindowFromPoint(get_handle(), point)).m_p; 
+      return (sp(::user::interaction)) ::win::window::from_handle(::ChildWindowFromPoint(get_handle(), point)).m_p; 
 
    
    }
@@ -5300,7 +5300,7 @@ ExitModal:
    {
       ASSERT(::IsWindow(get_handle())); 
       
-      return (::user::interaction *)  ::win::window::from_handle(::ChildWindowFromPointEx(get_handle(), point, nFlags)).m_p;
+      return (sp(::user::interaction))  ::win::window::from_handle(::ChildWindowFromPointEx(get_handle(), point, nFlags)).m_p;
 
 
    }
@@ -5314,15 +5314,15 @@ ExitModal:
    { 
       ASSERT(::IsWindow(get_handle())); 
       
-      return (::user::interaction *) ::win::window::from_handle(::GetNextWindow(get_handle(), nFlag)).m_p; 
+      return (sp(::user::interaction)) ::win::window::from_handle(::GetNextWindow(get_handle(), nFlag)).m_p; 
    }
 
    sp(::user::interaction) window::GetTopWindow()
-   { ASSERT(::IsWindow(get_handle())); return (::user::interaction *) ::win::window::from_handle(::GetTopWindow(get_handle())).m_p; }
+   { ASSERT(::IsWindow(get_handle())); return (sp(::user::interaction)) ::win::window::from_handle(::GetTopWindow(get_handle())).m_p; }
    sp(::user::interaction) window::GetWindow(UINT nCmd)
-   { ASSERT(::IsWindow(get_handle())); return (::user::interaction *) ::win::window::from_handle(::GetWindow(get_handle(), nCmd)).m_p; }
+   { ASSERT(::IsWindow(get_handle())); return (sp(::user::interaction)) ::win::window::from_handle(::GetWindow(get_handle(), nCmd)).m_p; }
    sp(::user::interaction) window::GetLastActivePopup()
-   { ASSERT(::IsWindow(get_handle())); return (::user::interaction *) ::win::window::from_handle(::GetLastActivePopup(get_handle())).m_p; }
+   { ASSERT(::IsWindow(get_handle())); return (sp(::user::interaction)) ::win::window::from_handle(::GetLastActivePopup(get_handle())).m_p; }
 
    sp(::ca::window) window::set_parent(sp(::ca::window) pWndNewParent)
    {

@@ -41,7 +41,7 @@ namespace production
       simple_scroll_bar         m_scrollbarHorz;
 
 
-	   view(::ca::application * papp);
+	   view(sp(::ca::application) papp);
 	   virtual ~view();
    #ifdef DEBUG
 	   virtual void assert_valid() const;
@@ -80,9 +80,9 @@ namespace production
       virtual void _001OnTabClick(int32_t iTab);
       virtual void install_message_handling(::ca::message::dispatch * pinterface);
       virtual bool pre_create_window(CREATESTRUCT& cs);
-      virtual void on_update(::view * pSender, LPARAM lHint, ::ca::object * pHint);
+      virtual void on_update(sp(::view) pSender, LPARAM lHint, ::ca::object * pHint);
 
-      document * get_document();
+      sp(document) get_document();
 
       DECL_GEN_SIGNAL(_001OnInitialUpdate)
       DECL_GEN_SIGNAL(_001OnLButtonDown)

@@ -78,7 +78,7 @@ namespace production
 
       int32_t                     m_iStep;
                               
-      ::view *                m_pview;
+      sp(::view)                m_pview;
       bool                    m_bFinished;
       uint32_t                   m_dwStartTick;
       uint32_t                   m_dwEndTick;
@@ -119,7 +119,7 @@ namespace production
       manual_reset_event      m_evFinish;
 
 
-      production(::ca::application * papp);
+      production(sp(::ca::application) papp);
       virtual ~production();
 
 

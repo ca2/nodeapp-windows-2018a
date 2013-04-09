@@ -5,7 +5,7 @@ namespace production
 {
 
 
-   frame::frame(::ca::application * papp) :
+   frame::frame(sp(::ca::application) papp) :
       ca(papp),
       simple_frame_window(papp)
    {

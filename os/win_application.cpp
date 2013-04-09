@@ -603,7 +603,7 @@ namespace win
 
          // initialize application state
          //ASSERT(afxCurrentWinApp == ::null()); // only one application object please
-         pModuleState->m_pCurrentWinApp = dynamic_cast < application * > (this);
+         pModuleState->m_pCurrentWinApp =  (this);
          //ASSERT(&System == this);
       }
 

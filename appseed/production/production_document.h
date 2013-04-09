@@ -11,7 +11,7 @@ namespace production
    public:
 
 
-      document(::ca::application * papp);
+      document(sp(::ca::application) papp);
 
       DECL_GEN_VSIGNAL(data_on_after_change)
 

@@ -1778,7 +1778,7 @@ namespace win
 
    void dib::rotate(::ca::dib * pdib, double dAngle, double dScale)
    {
-     // ::ca::dib_sp spdib(get_app());
+     // ::ca::dib_sp spdib(allocer());
    //   spdib->Paste(this);
 
       int32_t cx = this->cx;
@@ -1939,7 +1939,7 @@ namespace win
       double dAngle, 
       double dScale)
    {
-     // ::ca::dib_sp spdib(get_app());
+     // ::ca::dib_sp spdib(allocer());
    //   spdib->Paste(this);
 
 

@@ -11,7 +11,7 @@ form_callback::~form_callback()
 {
 }
 
-void form_callback::on_update(::user::form * pview, ::view* pSender, LPARAM lHint, ::ca::object* phint) 
+void form_callback::on_update(::user::form * pview, sp(::view) pSender, LPARAM lHint, ::ca::object* phint) 
 {
    UNREFERENCED_PARAMETER(pview);
    UNREFERENCED_PARAMETER(pSender);
@@ -31,8 +31,8 @@ bool form_callback::BaseOnControlEvent(::user::form * pview, ::user::control_eve
          uh.m_etype = form_update_hint::type_browse;
          uh.m_strForm = "filemanager_add_location_lfs.xhtml";
          pview->get_document()->update_all_views(NULL, 0, &uh);
-         ::user::interaction * pguie = pview->get_child_by_name("lfs");
-         text_interface * ptext = dynamic_cast < text_interface * > (pguie);
+         sp(::user::interaction) pguie = pview->get_child_by_name("lfs");
+         sp(text_interface) ptext =pguie;
          string strPath;
          ptext->_001SetText(strPath);
       }
@@ -50,7 +50,7 @@ bool form_callback::BaseOnControlEvent(::user::form * pview, ::user::control_eve
             stringa wstra;
             //VmsDataGet(m_pmanager->get_filemanager_data()->m_ptemplate->m_datakeyStatic, 0, 0, wstra);
             Ex1VirtualGuie * pguie = pview->get_child_by_name("lfs");
-            text_interface * ptext = dynamic_cast < text_interface * > (pguie);
+            sp(text_interface) ptext =pguie;
             string str;
             ptext->_001GetText(str);
             wstra.AddUnique(str);
@@ -64,10 +64,10 @@ bool form_callback::BaseOnControlEvent(::user::form * pview, ::user::control_eve
          {
             form_update_hint uh;
             Ex1VirtualGuieInterface * pguie = pview->get_child_by_name("encontrar");
-            text_interface * ptext = dynamic_cast < text_interface * > (pguie);
+            sp(text_interface) ptext =pguie;
             //ptext->_001GetText(uh.m_strFind);
             pguie = pview->get_child_by_name("substituir");
-            ptext = dynamic_cast < text_interface * > (pguie);
+            ptext =pguie;
             //ptext->_001GetText(uh.m_strReplace);
             pview->GetDocument()->update_all_views(NULL, 0, &uh);
          }*/

@@ -61,7 +61,7 @@ namespace win
       case OBJ_PAL:
          return dynamic_cast < graphics_object * > (new palette(papp));
       case OBJ_FONT:
-         return dynamic_cast < graphics_object * > (new font(papp));
+         return dynamic_cast < graphics_object * > (new font(allocer()));
       }
       return new graphics_object();*/
       return ::null();

@@ -9,7 +9,7 @@ namespace production
    public:
       
       
-      ::userbase::single_document_template * m_pdoctemplateMain;
+      sp(::userbase::single_document_template) m_pdoctemplateMain;
 
 
       application();
@@ -22,7 +22,7 @@ namespace production
 
       virtual bool bergedge_start();
 
-      virtual void on_request(::ca::create_context * pcreatecontext);
+      virtual void on_request(sp(::ca::create_context) pcreatecontext);
 
 	   virtual bool _001OnCmdMsg(BaseCmdMsg * pcmdmsg);
    		

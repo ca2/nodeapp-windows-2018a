@@ -7,7 +7,7 @@ namespace production
 {
 
 
-   view::view(::ca::application * papp) :
+   view::view(sp(::ca::application) papp) :
       ca(papp),
       ::user::interaction(papp), 
       ::user::scroll_view(papp),
@@ -15,12 +15,12 @@ namespace production
       ::userbase::scroll_view(papp),
       m_scrollbarVert(papp),
       m_scrollbarHorz(papp),
-      m_dibV(papp),
-      m_dibVs(papp),
-      m_brushBkActive(papp),
-      m_brushBkInactive(papp)
+      m_dibV(allocer()),
+      m_dibVs(allocer()),
+      m_brushBkActive(allocer()),
+      m_brushBkInactive(allocer())
    {
-      m_pproduction = NULL;
+      m_pproduction = ::null();
       
       //System.file().ftd("C:\\home2\\ca2os\\ca2_spa\\stage", "C:\\teste.fileset");
 
@@ -107,17 +107,17 @@ namespace production
       ::userbase::view::_001OnInitialUpdate(pobj);
    }
 
-   void view::on_update(::view * pSender, LPARAM lHint, ::ca::object * phint) 
+   void view::on_update(sp(::view) pSender, LPARAM lHint, ::ca::object * phint) 
    {
       UNREFERENCED_PARAMETER(pSender);
       if(lHint == 5432108)
       {
-         SetTimer(5432108, 100, NULL);
+         SetTimer(5432108, 100, ::null());
       }
-      else if(phint != NULL)
+      else if(phint != ::null())
       {
          view_update_hint * puh = dynamic_cast < view_update_hint * > (phint);
-         if(puh != NULL)
+         if(puh != ::null())
          {
             if(puh->m_eoption == view_update_hint::OptionClean)
             {
@@ -197,7 +197,7 @@ namespace production
       }
       rect rectClip(rectText);
       //ClientToScreen(rectClip);
-      ::ca::region_sp rgnClip(get_app());
+      ::ca::region_sp rgnClip(allocer());
       rgnClip->create_rect(rectClip);
       //pdc->Draw3dRect(rectText, RGB(200, 200, 200), RGB(200, 200, 200));
       pdc->SelectClipRgn(rgnClip);
@@ -211,7 +211,7 @@ namespace production
          pdc->draw_text(m_pproduction->m_straStatus[i], rcItem, DT_BOTTOM | DT_LEFT);
          y = rcItem.bottom;
       }
-      pdc->SelectClipRgn(NULL);
+      pdc->SelectClipRgn(::null());
 
 
 
@@ -266,9 +266,9 @@ namespace production
 		   return;
       }
 
-      SetTimer(31, 230, NULL);
-      SetTimer(3003, 300, NULL);
-      SetTimer(543218, 200, NULL);
+      SetTimer(31, 230, ::null());
+      SetTimer(3003, 300, ::null());
+      SetTimer(543218, 200, ::null());
       m_dibV.load_from_matter("wild_mountains_and_valleys-123.png");
       //System.visual().imaging().free(pfi);
 
@@ -289,13 +289,13 @@ namespace production
 
 
 
-      if(Application.command().m_varTopicQuery.has_property("start"))
+      if(Application.command()->m_varTopicQuery.has_property("start"))
       {
          make_production();
       }
-      else if(Application.command().m_varTopicQuery.has_property("start_deferred"))
+      else if(Application.command()->m_varTopicQuery.has_property("start_deferred"))
       {
-         production_loop(Application.command().m_varTopicQuery["start_deferred"]);
+         production_loop(Application.command()->m_varTopicQuery["start_deferred"]);
       }
 
    }
@@ -328,9 +328,9 @@ namespace production
    }
 
 
-   document * view::get_document()
+   sp(document) view::get_document()
    {
-      return dynamic_cast < document * > (::userbase::view::get_document());
+      return  (::userbase::view::get_document());
    }
 
    void view::GetAreaThumbRect(LPRECT lprect, int32_t iArea)
@@ -465,7 +465,7 @@ namespace production
    void view::make_production()
    {
       m_iStep = 1;
-      application * papp = dynamic_cast < application * > (get_app());
+      sp(application) papp =  (get_app());
       m_pproduction->start_production(papp->m_eversion);
    }
 
@@ -473,7 +473,7 @@ namespace production
    void view::production_loop(int32_t iLoopCount)
    {
       m_iStep = 1;
-      application * papp = dynamic_cast < application * > (get_app());
+      sp(application) papp =  (get_app());
       m_pproduction->start_loop(papp->m_eversion, iLoopCount);
    }
 
@@ -510,7 +510,7 @@ namespace production
 
          pview->set_cur_tab_by_id("tabbed_file_manager");
 
-         ::filemanager::document * pdoc = pview->get_tabbed_filemanager_document();
+         sp(::filemanager::document) pdoc = pview->get_tabbed_filemanager_document();
 
          string strBase = m_pproduction->m_strBase;
 

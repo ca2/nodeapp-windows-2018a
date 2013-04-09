@@ -41,7 +41,7 @@ namespace win
       virtual file_size get_length() const;
 
       // Unsupported APIs
-      virtual ::ca::file * Duplicate() const;
+      virtual sp(::ca::file) Duplicate() const;
       virtual void LockRange(file_position dwPos, file_size dwCount);
       virtual void UnlockRange(file_position dwPos, file_size dwCount);
 

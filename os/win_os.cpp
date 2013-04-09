@@ -515,7 +515,7 @@ namespace win
 
    }
 
-   bool os::create_service(::planebase::application * papp)
+   bool os::create_service(sp(::planebase::application) papp)
    {
 
       if(papp->m_strAppName.is_empty()
@@ -570,7 +570,7 @@ namespace win
    }
 
 
-   bool os::remove_service(::planebase::application * papp)
+   bool os::remove_service(sp(::planebase::application) papp)
    {
 
       if(papp->m_strAppName.is_empty()
@@ -613,7 +613,7 @@ namespace win
 
    }
 
-   bool os::start_service(::planebase::application * papp)
+   bool os::start_service(sp(::planebase::application) papp)
    {
 
       if(papp->m_strAppName.is_empty()
@@ -655,7 +655,7 @@ namespace win
       return bOk != FALSE;
    }
 
-   bool os::stop_service(::planebase::application * papp)
+   bool os::stop_service(sp(::planebase::application) papp)
    {
 
       if(papp->m_strAppName.is_empty()
