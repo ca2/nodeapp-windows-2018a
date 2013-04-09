@@ -20,7 +20,7 @@ namespace ca2plugin_container
 
       m_pvoidSystem     = g_pvoidPluginSystem; 
 
-      m_phost           = NULL;
+      m_phost           = ::null();
       m_bInitialized    = false;
       m_bOk             = false;
       m_rect.left       = 0;
@@ -37,15 +37,15 @@ namespace ca2plugin_container
 
       ::ca2plugin_container::register_class((HINSTANCE) ::GetModuleHandleA("ca2plugin_container.dll"));
 
-      m_oswindowMessage = ::CreateWindowExA(0, "npca2_message_window", "npca2_message_window", 0, 0, 0, 0, 0, HWND_MESSAGE, NULL, NULL, NULL);
+      m_oswindowMessage = ::CreateWindowExA(0, "npca2_message_window", "npca2_message_window", 0, 0, 0, 0, 0, HWND_MESSAGE, ::null(), ::null(), ::null());
 
-      m_pfile           = NULL;
+      m_pfile           = ::null();
 
-      m_lpbMemory = NULL;
+      m_lpbMemory = ::null();
       m_iMemory = -1;
 
 
-      m_oswindow = NULL;
+      m_oswindow = ::null();
       m_bStream = false;
 
 
@@ -64,7 +64,7 @@ namespace ca2plugin_container
    NPBool host::init(NPWindow* aWindow)
    {
 
-      if(aWindow == NULL)
+      if(aWindow == ::null())
          return FALSE;
 
       m_rect.left = aWindow->x;
@@ -74,7 +74,7 @@ namespace ca2plugin_container
 
       m_oswindow = (oswindow) aWindow->window;
 
-      if(m_oswindow == NULL)
+      if(m_oswindow == ::null())
          return FALSE;
 
 
@@ -126,7 +126,7 @@ namespace ca2plugin_container
 
       finalize();
 
-      m_oswindow = NULL;
+      m_oswindow = ::null();
 
    }
 
@@ -212,12 +212,12 @@ namespace ca2plugin_container
 	   wcex.cbClsExtra	   = 0;
 	   wcex.cbWndExtra	   = 0;
 	   wcex.hInstance		   = hInstance;
-	   wcex.hIcon			   = NULL;
-	   wcex.hCursor		   = LoadCursor(NULL, IDC_ARROW);
+	   wcex.hIcon			   = ::null();
+	   wcex.hCursor		   = LoadCursor(::null(), IDC_ARROW);
 	   wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
-      wcex.lpszMenuName	   = NULL;
+      wcex.lpszMenuName	   = ::null();
 	   wcex.lpszClassName	= "npca2_message_window";
-	   wcex.hIconSm		   = NULL;
+	   wcex.hIconSm		   = ::null();
 
 	   return RegisterClassEx(&wcex);
    }
@@ -257,7 +257,7 @@ namespace ca2plugin_container
 
    NPObject * host::getScriptableObject()
    {
-       if(m_phostjs == NULL)
+       if(m_phostjs == ::null())
        {
            m_phostjs = host_js::NewObject(this);
        }
@@ -279,7 +279,7 @@ namespace ca2plugin_container
  //   assertMainThread();
     NPUTF8* idStr = NPN_UTF8FromIdentifier(identifier);
     vsstring str;
-    if (idStr != NULL)
+    if (idStr != ::null())
         str = idStr;
     NPN_MemFree(idStr);
     return str;
@@ -288,7 +288,7 @@ namespace ca2plugin_container
    void * host::get_system()
    {
 
-      if(m_pvoidSystem == NULL)
+      if(m_pvoidSystem == ::null())
       {
 
          m_pvoidSystem     = g_pvoidPluginSystem; 
@@ -423,10 +423,10 @@ namespace ca2plugin_container
          else if(message == ::hotplugin::message_set_ready)
          {
 
-            if(pdata != NULL)
+            if(pdata != ::null())
             {
 
-               if(m_puchMemory != NULL)
+               if(m_puchMemory != ::null())
                {
                   try
                   {
@@ -443,7 +443,7 @@ namespace ca2plugin_container
 
                memcpy(m_puchMemory, pdata, len);
 
-//  xxx             if(m_puchMemory != NULL)
+//  xxx             if(m_puchMemory != ::null())
   //                m_bStream = true;
 
 

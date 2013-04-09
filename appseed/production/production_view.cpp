@@ -506,7 +506,7 @@ namespace production
          stringa straTitle;
          string strRemote;
 
-         pane_view * pview = GetTypedParent < pane_view > ();
+         sp(pane_view) pview = GetTypedParent < pane_view > ();
 
          pview->set_cur_tab_by_id("tabbed_file_manager");
 
@@ -530,7 +530,7 @@ namespace production
       {
          if(m_iStep == 2)
          {
-            pane_view * pview = GetTypedParent < pane_view > ();
+            sp(pane_view) pview = GetTypedParent < pane_view > ();
             pview->set_cur_tab_by_id(PaneViewProduction);
             m_pproduction->step();
          }

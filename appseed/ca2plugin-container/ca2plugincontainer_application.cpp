@@ -56,7 +56,7 @@ namespace ca2plugin_container
    void application::on_receive(small_ipc_rx_channel * prxchannel, int32_t message, void * pdata, int32_t len)
    {
 
-      if(m_phost != NULL)
+      if(m_phost != ::null())
       {
 
          m_phost->on_receive(prxchannel, message, pdata, len);
@@ -82,7 +82,7 @@ namespace ca2plugin_container
       while(true)
 	   {
 
-         if(!GetMessage(&msg, NULL, 0, 0xffffffffu))
+         if(!GetMessage(&msg, ::null(), 0, 0xffffffffu))
             break;
 
          if(msg.message == WM_QUIT)

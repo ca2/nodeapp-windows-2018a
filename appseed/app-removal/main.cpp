@@ -94,17 +94,17 @@ extern stra_dup * g_pstraTrace;
 removal::removal()
 {
    xxdebug_box("app-install", "app", 0);
-   m_hinstance             = ::GetModuleHandleA(NULL);
-   m_hmutex_app_removal  = NULL;
+   m_hinstance             = ::GetModuleHandleA(::null());
+   m_hmutex_app_removal  = ::null();
    e_message m_emessage    = message_none;
-   m_modpath               = NULL;
-   m_pszDllEnds            = NULL;
-   m_dwaProcess            = NULL;
+   m_modpath               = ::null();
+   m_pszDllEnds            = ::null();
+   m_dwaProcess            = ::null();
    m_iSizeProcess          = 0;
-   m_hmodulea              = NULL;
+   m_hmodulea              = ::null();
    m_iSizeModule           = 0;
    m_bInstallerInstalling  = false;
-   g_pstraTrace            = NULL;
+   g_pstraTrace            = ::null();
 }
 
 removal::~removal()
@@ -127,14 +127,14 @@ removal::~removal()
 //                properties.
 
 
-HRESULT CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc, LPCWSTR lpszIconPath = NULL, int32_t iIcon = 0) 
+HRESULT CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc, LPCWSTR lpszIconPath = ::null(), int32_t iIcon = 0) 
 { 
     HRESULT hres; 
     IShellLinkW* psl; 
  
     // Get a pointer to the IShellLink interface. It is assumed that CoInitialize
     // has already been called.
-    hres = CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLinkW, (LPVOID*)&psl); 
+    hres = CoCreateInstance(CLSID_ShellLink, ::null(), CLSCTX_INPROC_SERVER, IID_IShellLinkW, (LPVOID*)&psl); 
     if (SUCCEEDED(hres)) 
     { 
         IPersistFile* ppf; 
@@ -142,7 +142,7 @@ HRESULT CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc, 
         // set the path to the shortcut target and add the description. 
         psl->SetPath(lpszPathObj); 
         psl->SetDescription(lpszDesc); 
-        if(lpszIconPath!= NULL)
+        if(lpszIconPath!= ::null())
         {
         psl->SetIconLocation(lpszIconPath, iIcon);
         }
@@ -176,9 +176,9 @@ vsstring get_dir(const KNOWNFOLDERID & rfid, const char * lpcsz)
 
    vsstring str;
 
-   wchar_t * buf = NULL;
+   wchar_t * buf = ::null();
    
-   SHGetKnownFolderPath(rfid, 0, NULL, &buf);
+   SHGetKnownFolderPath(rfid, 0, ::null(), &buf);
 
    char * psz = utf16_to_8(buf);
 
@@ -204,7 +204,7 @@ ZeroMemory(&pi, sizeof(pi));
 si.dwFlags |= STARTF_USESHOWWINDOW;
 si.wShowWindow = SW_HIDE;
 
-if (CreateProcess(NULL, (char *) pszCmd, NULL, NULL, FALSE, CREATE_NO_WINDOW | CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
+if (CreateProcess(::null(), (char *) pszCmd, ::null(), ::null(), FALSE, CREATE_NO_WINDOW | CREATE_NEW_CONSOLE, ::null(), ::null(), &si, &pi))
 {
     WaitForSingleObject(pi.hProcess, INFINITE);
     CloseHandle(pi.hProcess);
@@ -246,17 +246,17 @@ bool removal::initialize()
 {
 
 
-   m_hmutex_app_removal = ::CreateMutex(NULL, FALSE, "Global\\::ca::fontopus::ccca2_spa_app_removal::7807e510-5579-11dd-ae16-0800200c7784");
+   m_hmutex_app_removal = ::CreateMutex(::null(), FALSE, "Global\\::ca::fontopus::ccca2_spa_app_removal::7807e510-5579-11dd-ae16-0800200c7784");
    if(::GetLastError() == ERROR_ALREADY_EXISTS)
    {
-      ::MessageBox(NULL, "ca app-removal.exe is already running.\n\nPlease wait for app-removal to finish or close it - using Task Manager - Ctrl+Shift+ESC - to continue.", "app-install.exe is running!", MB_ICONEXCLAMATION);
+      ::MessageBox(::null(), "ca app-removal.exe is already running.\n\nPlease wait for app-removal to finish or close it - using Task Manager - Ctrl+Shift+ESC - to continue.", "app-install.exe is running!", MB_ICONEXCLAMATION);
       m_iError = -202;
       return false;
    }
 
    char szFile[MAX_PATH * 8];
 
-   ::GetModuleFileName(NULL, szFile, sizeof(szFile));
+   ::GetModuleFileName(::null(), szFile, sizeof(szFile));
 
    vsstring strTargetDir = get_dir(FOLDERID_ProgramFilesX86, "ca-app-removal");
 
@@ -266,7 +266,7 @@ bool removal::initialize()
 
    if(::CopyFile(szFile, strTarget, TRUE))
    {
-      int32_t i = MessageBox(NULL, "Do you want to place a shortcut to ca app-removal in Desktop?\n\nProgram has already been copied to Program Files Folder.", "app-removal installation", MB_ICONQUESTION | MB_YESNOCANCEL);
+      int32_t i = MessageBox(::null(), "Do you want to place a shortcut to ca app-removal in Desktop?\n\nProgram has already been copied to Program Files Folder.", "app-removal installation", MB_ICONQUESTION | MB_YESNOCANCEL);
 
       if(i == IDCANCEL)
          return false;
@@ -336,7 +336,7 @@ bool removal::initialize()
    ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "ca2os.ca.fontopus.iexca2.2");
    ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "ca2_spaboot_file");
 
-   //MessageBox(NULL, "Hope Helped!", "Hope Helped!", MB_ICONINFORMATION);
+   //MessageBox(::null(), "Hope Helped!", "Hope Helped!", MB_ICONINFORMATION);
 
    return false;
 
@@ -426,7 +426,7 @@ void removal::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMess
    vsstring strMessage(pszMessage);
    int32_t iRet = 0;
    const char * pszSuffix;
-   if((pszSuffix = str_begins_inc_dup(strMessage, "synch_spaadmin:")) != NULL)
+   if((pszSuffix = str_begins_inc_dup(strMessage, "synch_spaadmin:")) != ::null())
    {
       if(g_bInstalling)
       {
@@ -442,7 +442,7 @@ void removal::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMess
       synch_spaadmin(pszSuffix);
       m_bInstallerInstalling = false;
    }
-   else if((pszSuffix = str_begins_inc_dup(strMessage, "spaadmin:")) != NULL)
+   else if((pszSuffix = str_begins_inc_dup(strMessage, "spaadmin:")) != ::null())
    {
       if(g_bInstalling)
       {

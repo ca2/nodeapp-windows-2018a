@@ -4,7 +4,7 @@
 int32_t spaboot_start();
 
 
-oswindow g_oswindowMessage = NULL;
+oswindow g_oswindowMessage = ::null();
 stra_dup * g_pstraRestartCommandLine;
 MSG g_msgSentinel;
 HANDLE g_hmutexSpabootInstall;
@@ -28,21 +28,21 @@ _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
       return -1;
 
    
-   g_hmutexSpabootInstall = ::CreateMutex(NULL, FALSE, "Local\\::ca::fontopus::ccca2_spaboot_install_sentinel::7807e510-5579-11dd-ae16-0800200c7784");
+   g_hmutexSpabootInstall = ::CreateMutex(::null(), FALSE, "Local\\::ca::fontopus::ccca2_spaboot_install_sentinel::7807e510-5579-11dd-ae16-0800200c7784");
    if(::GetLastError() == ERROR_ALREADY_EXISTS)
    {
       return false;
    }
 
-   g_pstraRestartCommandLine = NULL;;
+   g_pstraRestartCommandLine = ::null();;
 
-   if(!sentinel_RegisterClass(::GetModuleHandleA(NULL)))
+   if(!sentinel_RegisterClass(::GetModuleHandleA(::null())))
       return -1;
 
 
-   g_oswindowMessage = ::CreateWindowExA(0, "::ca2::spaboot:callback_window", "::ca2::spaboot:callback_window", 0, 0, 0, 0, 0, HWND_MESSAGE, NULL, NULL, NULL);
+   g_oswindowMessage = ::CreateWindowExA(0, "::ca2::spaboot:callback_window", "::ca2::spaboot:callback_window", 0, 0, 0, 0, 0, HWND_MESSAGE, ::null(), ::null(), ::null());
 
-   if(g_oswindowMessage == NULL)
+   if(g_oswindowMessage == ::null())
    {
       uint32_t dw = GetLastError();
       return -1;
@@ -52,12 +52,12 @@ _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
    int32_t iRet = spaboot_start();
 
 
-   SetTimer(g_oswindowMessage, 1245, (1977 + 1984) * 8, NULL);
+   SetTimer(g_oswindowMessage, 1245, (1977 + 1984) * 8, ::null());
 
 
 	while(true)
 	{
-      GetMessage(&g_msgSentinel, NULL, 0, 0xffffffffu);
+      GetMessage(&g_msgSentinel, ::null(), 0, 0xffffffffu);
 		TranslateMessage(&g_msgSentinel);
 		DispatchMessage(&g_msgSentinel);
 	}
@@ -88,12 +88,12 @@ ATOM sentinel_RegisterClass(HINSTANCE hInstance)
 	wcex.cbClsExtra	   = 0;
 	wcex.cbWndExtra	   = 0;
 	wcex.hInstance		   = hInstance;
-	wcex.hIcon			   = NULL;
-	wcex.hCursor		   = LoadCursor(NULL, IDC_ARROW);
+	wcex.hIcon			   = ::null();
+	wcex.hCursor		   = LoadCursor(::null(), IDC_ARROW);
 	wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
-   wcex.lpszMenuName	   = NULL;
+   wcex.lpszMenuName	   = ::null();
 	wcex.lpszClassName	= "::ca2::spaboot:callback_window";
-	wcex.hIconSm		   = NULL;
+	wcex.hIconSm		   = ::null();
 
 	return RegisterClassEx(&wcex);
 }
@@ -123,7 +123,7 @@ LRESULT CALLBACK sentinel_WndProc(oswindow oswindow, uint32_t message, WPARAM wP
          {
             KillTimer(g_oswindowMessage, 12);
             spa::installer::spa();
-            SetTimer(g_oswindowMessage, 1245, (1984 + 1977) * 8, NULL);
+            SetTimer(g_oswindowMessage, 1245, (1984 + 1977) * 8, ::null());
          }
       }
       break;
@@ -153,7 +153,7 @@ int32_t spaboot_start()
    
 
    vsstring id = calc_id();
-   if(id == NULL || id.is_empty())
+   if(id == ::null() || id.is_empty())
       id = "spaboot_install";
 
    int32_t iRetry = 0;
@@ -176,7 +176,7 @@ int32_t spaboot_start()
    while(iRetry < iRetryLimit || iRetryLimit < 0)
    {
       update_ca2_installed(true);
-      if(is_ca2_installed() && is_installed(NULL, NULL, "application", id, "_std", "_std"))
+      if(is_ca2_installed() && is_installed(::null(), ::null(), "application", id, "_std", "_std"))
       {  
          break;
       }
@@ -188,7 +188,7 @@ int32_t spaboot_start()
       iRetry++;
    }
 
-   if(!is_ca2_installed() || !is_installed(NULL, NULL, "application", id, "_std", "_std"))
+   if(!is_ca2_installed() || !is_installed(::null(), ::null(), "application", id, "_std", "_std"))
    {  
       return 1;
    }
@@ -208,7 +208,7 @@ vsstring calc_id()
 {
 
    char szModulePath[MAX_PATH * 3];
-   ::GetModuleFileNameA((HINSTANCE) NULL, szModulePath, sizeof(szModulePath));
+   ::GetModuleFileNameA((HINSTANCE) ::null(), szModulePath, sizeof(szModulePath));
    vsstring strId = read_resource_as_string_dup(::GetModuleHandleA(szModulePath), 1984, "CGCL");
    if(strId == "mplite") // use veriwell_mplite
       strId = "bergedge";

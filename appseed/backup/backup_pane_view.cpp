@@ -55,7 +55,7 @@ namespace backup
       {
          set_cur_tab_by_id(pane_view_backup);
       }
-      if(pHint != NULL)
+      if(pHint != ::null())
       {
          if(base < pane_view_update_hint >::bases(pHint))
          {
@@ -69,7 +69,7 @@ namespace backup
             }
          }
       }
-	      if(pHint != NULL)
+	      if(pHint != ::null())
       {
    	   if(base < pane_view_update_hint >::bases(pHint))
          {
@@ -104,7 +104,7 @@ namespace backup
       case pane_view_backup:
          {
             pcreatordata->m_pwnd = create_view < view > ();
-            if(pcreatordata->m_pwnd != NULL)
+            if(pcreatordata->m_pwnd != ::null())
             {
                pcreatordata->m_pdoc = get_document();
             }
@@ -113,19 +113,19 @@ namespace backup
       case pane_view_options:
       {
          sp(form_document) pdoc = App(get_app()).userex().create_form(this, this);
-         if(pdoc == NULL)
+         if(pdoc == ::null())
             return;
          sp(::view) pview = pdoc->get_view();
          form_update_hint uh;
          uh.m_etype = form_update_hint::type_browse;
          uh.m_strForm = "filemanager\\replace_name_in_file_system.xhtml";
-         pdoc->update_all_views(NULL, 0, &uh);
+         pdoc->update_all_views(::null(), 0, &uh);
          
          uh.m_etype = form_update_hint::type_get_form_view;
-         pdoc->update_all_views(NULL, 0, &uh);
+         pdoc->update_all_views(::null(), 0, &uh);
 
          uh.m_etype = form_update_hint::type_after_browse;
-         pdoc->update_all_views(NULL, 0, &uh);
+         pdoc->update_all_views(::null(), 0, &uh);
 
 
          pcreatordata->m_pwnd = dynamic_cast < ::ca::window * >(pview->GetParentFrame());
