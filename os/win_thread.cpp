@@ -698,13 +698,6 @@ namespace win
 
    }
 
-   void thread::on_delete(sp(::ca::ca) p)
-   {
-      UNREFERENCED_PARAMETER(p);
-   }
-
-
-
    sp(::user::interaction) thread::SetMainWnd(sp(::user::interaction) pui)
    {
       sp(::user::interaction) puiPrevious = m_puiMain;

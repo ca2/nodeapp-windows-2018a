@@ -114,9 +114,6 @@ namespace win
 * \brief	Platform independent threads and synchronization objects (linux version)
 */
 
-      virtual void on_delete(sp(::ca::ca) poc);
-
-
       virtual void start();
 
       ::ca::e_thread_priority get_thread_priority();

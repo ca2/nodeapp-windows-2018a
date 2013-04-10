@@ -5898,12 +5898,6 @@ ExitModal:
       return oswindow;    // return the owner as oswindow
    }
 
-   void window::on_delete(sp(::ca::ca) pui)
-   {
-      UNREFERENCED_PARAMETER(pui);
-   }
-
-
    /////////////////////////////////////////////////////////////////////////////
    // Official way to send message to a window
 

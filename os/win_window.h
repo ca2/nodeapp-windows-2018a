@@ -45,9 +45,6 @@ namespace win
       virtual void construct(oswindow oswindow);
 
 
-      virtual void on_delete(sp(::ca::ca) poc);
-
-
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
 
