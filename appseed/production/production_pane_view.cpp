@@ -107,7 +107,7 @@ namespace production
    void pane_view::on_show_view()
    {
       ::userex::pane_tab_view::on_show_view();
-      //sp(frame) pframe = dynamic_cast < sp(frame)> (dynamic_cast < ::ca::window * > (GetParentFrame()));
+      //sp(frame) pframe =  (dynamic_cast < ::ca::window * > (GetParentFrame()));
       if(m_pviewdata->m_id == PaneViewFileManager)
       {
       }
