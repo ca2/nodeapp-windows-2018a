@@ -323,7 +323,7 @@ namespace win
       return pos;
    }
 
-   void file::Flush()
+   void file::flush()
    {
       ASSERT_VALID(this);
 
