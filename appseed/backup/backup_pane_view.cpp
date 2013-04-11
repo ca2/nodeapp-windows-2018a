@@ -128,7 +128,7 @@ namespace backup
          pdoc->update_all_views(::null(), 0, &uh);
 
 
-         pcreatordata->m_pwnd = dynamic_cast < ::ca::window * >(pview->GetParentFrame());
+         pcreatordata->m_pwnd = (pview->GetParentFrame());
 //         sp(form_child_frame) pframe = (pcreatordata->m_pwnd);
          pcreatordata->m_pdoc = pdoc;
 
