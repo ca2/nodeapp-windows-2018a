@@ -27,7 +27,6 @@ void __cdecl _null_se_translator(uint32_t uiCode, EXCEPTION_POINTERS * ppointers
 int32_t CLASS_DECL_win __win_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
 {
 
-
    g_hinstance = hinstance;
 
    UNREFERENCED_PARAMETER(lpCmdLine);
