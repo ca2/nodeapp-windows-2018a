@@ -33,7 +33,7 @@ namespace win
       ::ca::thread(papp),
       ::ca::window_draw(papp),
       message_window_simple_callback(papp),
-      m_mutexRendering(allocer()),
+      m_mutexRendering(papp),
       m_mutexRgnUpdate(papp),
       m_semaphoreBuffer(papp),
       m_mutexRender(papp),
