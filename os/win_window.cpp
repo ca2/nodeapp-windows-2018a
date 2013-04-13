@@ -5565,7 +5565,7 @@ ExitModal:
    { Default(); }
    void window::OnKillFocus(sp(::ca::window))
    { Default(); }
-   LRESULT window::OnMenuChar(UINT, UINT, ::userbase::menu*)
+   LRESULT window::OnMenuChar(UINT, UINT, ::user::menu*)
    { return Default(); }
    void window::OnMenuSelect(UINT, UINT, HMENU)
    { Default(); }
@@ -5732,9 +5732,9 @@ ExitModal:
    { Default(); }
    void window::OnTimer(uint_ptr)
    { Default(); }
-   void window::OnInitMenu(::userbase::menu*)
+   void window::OnInitMenu(::user::menu*)
    { Default(); }
-   void window::OnInitMenuPopup(::userbase::menu*, UINT, bool)
+   void window::OnInitMenuPopup(::user::menu*, UINT, bool)
    { Default(); }
    void window::OnAskCbFormatName(__in UINT nMaxCount, __out_ecount_z(nMaxCount) LPTSTR pszName)
    {

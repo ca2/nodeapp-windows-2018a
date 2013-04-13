@@ -1442,7 +1442,7 @@ gdi_fallback:
    { ASSERT(get_handle2() != ::null()); return ::GetGlyphOutline(get_handle2(), nChar, nFormat,
    lpgm, cbBuffer, lpBuffer, lpmat2); }
 
-   // ::userbase::document handling functions
+   // ::user::document handling functions
    int32_t graphics::StartDoc(LPDOCINFO lpDocInfo)
    { 
 
