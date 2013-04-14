@@ -50,11 +50,11 @@ namespace win
       virtual bool open_in_ie(const char * lpcsz);
 
 
-      virtual bool create_service(sp(::planebase::application) papp);
-      virtual bool remove_service(sp(::planebase::application) papp);
+      virtual bool create_service(sp(::plane::application) papp);
+      virtual bool remove_service(sp(::plane::application) papp);
       
-      virtual bool start_service(sp(::planebase::application) papp);
-      virtual bool stop_service(sp(::planebase::application) papp);
+      virtual bool start_service(sp(::plane::application) papp);
+      virtual bool stop_service(sp(::plane::application) papp);
 
       virtual bool resolve_link(string & strTarget, const char * pszSource, sp(::user::interaction) puiMessageParentOptional = ::null());
 

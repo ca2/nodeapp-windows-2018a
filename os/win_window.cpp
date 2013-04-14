@@ -2330,7 +2330,7 @@ restart_mouse_hover_check:
    /////////////////////////////////////////////////////////////////////////////
    // Scroll bar helpers
    //  hook for window functions
-   //    only works for derived class (eg: ::view) that override 'GetScrollBarCtrl'
+   //    only works for derived class (eg: ::user::view) that override 'GetScrollBarCtrl'
    // if the window doesn't have a _visible_ windows scrollbar - then
    //   look for a sibling with the appropriate ID
 
@@ -4119,7 +4119,7 @@ ExitModal:
    }
 
 
-   /*   view_update_hint::view_update_hint(sp(::ca::application) papp) :
+   /*   ::user::view_update_hint::::user::view_update_hint(sp(::ca::application) papp) :
    ca(papp)
    {
    }
@@ -4764,9 +4764,9 @@ ExitModal:
       ::DragAcceptFiles(get_handle(), bAccept); 
    }
 
-   sp(::frame_window) window::EnsureParentFrame()
+   sp(::user::frame_window) window::EnsureParentFrame()
    {
-      sp(::frame_window) pFrameWnd=GetParentFrame();
+      sp(::user::frame_window) pFrameWnd=GetParentFrame();
       ENSURE_VALID(pFrameWnd);
       return pFrameWnd;
    }
