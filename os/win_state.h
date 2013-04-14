@@ -8,6 +8,12 @@ namespace win
    class thread;
 } // namespace win
 
+
+namespace user
+{
+   class control_bar;
+} // namespace user
+
 //#include "types.h"
 //#include "template.h"
 
@@ -56,8 +62,8 @@ class hmenu_map;
 class himagelist_map;
 class frame_window;
 class CToolTipCtrl;
-class ::user::control_bar;
-class ::user::interaction;
+
+
 namespace ca
 {
    
