@@ -97,6 +97,7 @@ CLASS_DECL_win void reset_message_cache();
 #include "win_thread.h"
 #include "win_window.h"
 #include "win_port_forward.h"
+#include "win_printer.h"
 
 CLASS_DECL_win WNDPROC __get_window_procedure();
 #define __window_procedure (*__get_window_procedure())

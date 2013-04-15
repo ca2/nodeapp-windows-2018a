@@ -205,6 +205,9 @@ namespace win
 
       virtual void ShowWaitCursor(bool bShow = true);
 
+
+      virtual ::user::printer * get_printer(const char * pszDeviceName);
+
    };
 
 

@@ -1370,9 +1370,9 @@ namespace win
          if(m_papp != ::null() && m_papp->m_psession != ::null())
          {
             Session.m_ptCursor = pmouse->m_pt;
-            if(m_papp->m_psession->m_pbergedgeInterface != ::null())
+            if(m_papp->m_psession != ::null())
             {
-               m_papp->m_psession->m_pbergedgeInterface->m_ptCursor = pmouse->m_pt;
+               m_papp->m_psession->m_ptCursor = pmouse->m_pt;
             }
          }
          if(m_pguie != ::null() && m_pguie != this && m_pguie->m_papp->m_psession != ::null() && m_pguie->m_papp->m_psession != m_papp->m_psession)

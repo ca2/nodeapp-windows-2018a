@@ -34,7 +34,8 @@ namespace win
       System.factory().creatable_small < copydesk              >  (System.type_info < ::ca::copydesk          > (), 1);
       System.factory().creatable_small < crypt                 >  (System.type_info < ::ca::crypt             > (), 1);
       System.factory().creatable_small < ip_enum               >  (System.type_info < ::ca::ip_enum           > ());
-      
+     System.factory().creatable < ::win::printer         >  (System.type_info < ::user::printer > (), 1);
+
       ::win::dib::s_initialize();
 
    }

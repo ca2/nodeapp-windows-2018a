@@ -3,7 +3,7 @@
 #include <Gdiplus.h>
 
 
-namespace win2
+namespace win
 {
 
 
@@ -73,7 +73,7 @@ namespace win2
       close();
    }
 
-   bool printer::document_properties::initialize(::win2::printer * pprinter, DEVMODE * pdevmode)
+   bool printer::document_properties::initialize(::win::printer * pprinter, DEVMODE * pdevmode)
    {
       UNREFERENCED_PARAMETER(pdevmode);
       if(m_pdevmode != NULL)

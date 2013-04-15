@@ -1,17 +1,17 @@
 #pragma once
 
 
-namespace win2
+namespace win
 {
 
 
-   class CLASS_DECL_win2 printer :
+   class CLASS_DECL_win printer :
       virtual public ::user::printer
    {
    public:
 
 
-      class CLASS_DECL_win2 document_properties :
+      class CLASS_DECL_win document_properties :
          virtual public ::ca::object
       {
       public:
@@ -25,7 +25,7 @@ namespace win2
          virtual ~document_properties();
 
 
-         virtual bool initialize(::win2::printer * pprinter, DEVMODE * pdevmode = NULL);
+         virtual bool initialize(::win::printer * pprinter, DEVMODE * pdevmode = NULL);
          virtual bool close();
          virtual ::ca::graphics * create_graphics();
 

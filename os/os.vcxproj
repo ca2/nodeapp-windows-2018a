@@ -288,7 +288,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)../../appseedcore/ca2/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(SolutionDir)../../../time/library/x86/$(ConfigurationName);$(SolutionDir)../../../nodeapp/thirdparty/library;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -298,9 +298,8 @@
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention>
-      </DataExecutionPrevention>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
       <ImportLibrary>$(SolutionDir)../../../time/library/x86/$(Configuration)/$(TargetName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalDependencies>Crypt32.lib;Version.lib;Gdiplus.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -938,6 +937,7 @@
     <ClInclude Include="..\operational_system\version_dll.h" />
     <ClInclude Include="..\operational_system\version_windows.h" />
     <ClInclude Include="..\operational_system\_.h" />
+    <ClInclude Include="win_printer.h" />
     <ClInclude Include="win_file_find.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="gen_1.h" />
@@ -1010,6 +1010,7 @@
     </ClCompile>
     <ClCompile Include="win1.cpp" />
     <ClCompile Include="win2.cpp" />
+    <ClCompile Include="win_printer.cpp" />
     <ClCompile Include="win_afxabort.cpp" />
     <ClCompile Include="win_afxmem.cpp" />
     <ClCompile Include="win_afxstate.cpp" />

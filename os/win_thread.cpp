@@ -576,7 +576,7 @@ namespace win
       // most threads are deleted when not needed
       m_bAutoDelete  = TRUE;
 
-      m_frameList.Construct(offsetof(frame_window, m_pNextFrameWnd));
+      m_frameList.Construct(offsetof(::user::frame_window, m_pNextFrameWnd));
       m_ptimera = new ::user::interaction::timer_array(get_app());
       m_puiptra = new user::interaction_ptr_array(get_app());
 
@@ -1564,7 +1564,7 @@ stop_run:
                                  m_papp->m_psystem->pre_translate_message(spbase);
                                  if(spbase->m_bRet)
                                     return TRUE;
-                                 try
+/*                                 try
                                  {
                                     if(m_papp->m_psystem->m_pcube != ::null())
                                     {
@@ -1576,6 +1576,8 @@ stop_run:
                                  catch(...)
                                  {
                                  }
+
+                                 */
                               }
                            }
                            catch(...)
@@ -1592,7 +1594,7 @@ stop_run:
                               catch(...)
                               {
                               }
-                              try
+/*                              try
                               {
                                  if(m_papp->m_psession->m_pbergedge != ::null())
                                  {
@@ -1603,7 +1605,7 @@ stop_run:
                               }
                               catch(...)
                               {
-                              }
+                              }*/
                            }
                         }
                      }
@@ -1612,7 +1614,7 @@ stop_run:
                      }
                      try
                      {
-                        if(!m_papp->is_system() && m_papp->is_bergedge())
+                        if(!m_papp->is_system() && m_papp->is_session())
                         {
                            m_papp->pre_translate_message(spbase);
                            if(spbase->m_bRet)
