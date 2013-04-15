@@ -1263,7 +1263,7 @@ stop_run:
          */
          // send WM_IDLEUPDATECMDUI to all frame windows
          /* linux __MODULE_THREAD_STATE* pState = ___CMDTARGET_GETSTATE()->m_thread;
-         sp(frame_window) pFrameWnd = pState->m_frameList;
+         sp(::user::frame_window) pFrameWnd = pState->m_frameList;
          while (pFrameWnd != ::null())
          {
          if (pFrameWnd->get_handle() != ::null() && pFrameWnd != pMainWnd)
@@ -1423,7 +1423,7 @@ stop_run:
 
       SCAST_PTR(::ca::message::base, pbase, pobj);
 
-      sp(frame_window) pTopFrameWnd;
+      sp(::user::frame_window) pTopFrameWnd;
       sp(::user::interaction) pMainWnd;
       sp(::user::interaction) pMsgWnd;
       switch (code)
@@ -2632,7 +2632,7 @@ pMainWnd->SendMessageToDescendants(WM_IDLEUPDATECMDUI,
 }
 // send WM_IDLEUPDATECMDUI to all frame windows
 /* linux __MODULE_THREAD_STATE* pState = ___CMDTARGET_GETSTATE()->m_thread;
-sp(frame_window) pFrameWnd = pState->m_frameList;
+sp(::user::frame_window) pFrameWnd = pState->m_frameList;
 while (pFrameWnd != ::null())
 {
 if (pFrameWnd->get_handle() != ::null() && pFrameWnd != pMainWnd)
@@ -2805,7 +2805,7 @@ __STATIC inline bool IsButtonUp(LPMSG lpMsg)
 if (lpMsg == ::null())
 return FALSE;   // not handled
 
-sp(frame_window) pTopFrameWnd;
+sp(::user::frame_window) pTopFrameWnd;
 sp(::user::interaction) pMainWnd;
 sp(::user::interaction) pMsgWnd;
 switch (code)

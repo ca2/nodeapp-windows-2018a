@@ -1165,7 +1165,7 @@ namespace win
       if (is_frame_window())
       {
          // frame_window windows should be allowed to exit help mode first
-         sp(frame_window) pFrameWnd = this;
+         sp(::user::frame_window) pFrameWnd = this;
          pFrameWnd->ExitHelpMode();
       }
 
@@ -2077,7 +2077,7 @@ restart_mouse_hover_check:
    /////////////////////////////////////////////////////////////////////////////
    // window extensions
 
-   sp(frame_window) window::GetParentFrame()
+   sp(::user::frame_window) window::GetParentFrame()
    {
       if (get_handle() == ::null()) // no Window attached
       {
@@ -2183,14 +2183,14 @@ restart_mouse_hover_check:
       }
    }
 
-   sp(frame_window) window::GetTopLevelFrame()
+   sp(::user::frame_window) window::GetTopLevelFrame()
    {
       if (get_handle() == ::null()) // no Window attached
          return ::null();
 
       ASSERT_VALID(this);
 
-      sp(frame_window) pFrameWnd = ::null();
+      sp(::user::frame_window) pFrameWnd = ::null();
       if(m_pguie != this)
          pFrameWnd = m_pguie;
       else
@@ -2215,7 +2215,7 @@ restart_mouse_hover_check:
 
       if (pFrameWnd != ::null())
       {
-         sp(frame_window) pTemp;
+         sp(::user::frame_window) pTemp;
          while ((pTemp = pFrameWnd->GetParentFrame()) != ::null())
             pFrameWnd = pTemp;
       }
@@ -5856,7 +5856,7 @@ ExitModal:
       oswindow oswindow = hParent;
       if (oswindow == ::null())
       {
-         /* trans      sp(frame_window) pFrame = command_target::GetRoutingFrame_();
+         /* trans      sp(::user::frame_window) pFrame = command_target::GetRoutingFrame_();
          if (pFrame != ::null())
          oswindow = pFrame->get_handle();
          else

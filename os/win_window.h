@@ -153,13 +153,13 @@ namespace win
          // like get_child_by_id but recursive
       void SendMessageToDescendants(UINT message, WPARAM wParam = 0,
          LPARAM lParam = 0, bool bDeep = TRUE, bool bOnlyPerm = FALSE);
-      sp(frame_window) GetParentFrame();
-      sp(frame_window) EnsureParentFrame();
+      sp(::user::frame_window) GetParentFrame();
+      sp(::user::frame_window) EnsureParentFrame();
       sp(::user::interaction) GetTopLevelParent();
       sp(::user::interaction) EnsureTopLevelParent();
       sp(::user::interaction) GetTopLevelOwner();
       sp(::user::interaction) GetParentOwner();
-      sp(frame_window) GetTopLevelFrame();
+      sp(::user::frame_window) GetTopLevelFrame();
       static sp(::ca::window) get_safe_owner(sp(::ca::window) pParent = ::null(), oswindow* pWndTop = ::null());
 
       virtual bool IsWindow();
