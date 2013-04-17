@@ -25,7 +25,7 @@ namespace production
 
       DECL_GEN_SIGNAL(_001OnUserMessage)
 
-      sp(::user::document) get_document();
+      sp(::production::document) get_document();
 
       bool BaseOnControlEvent(::user::control_event * pevent);
       

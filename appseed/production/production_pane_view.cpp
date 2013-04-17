@@ -168,7 +168,7 @@ namespace production
          break;
       case PaneViewProduction:
          {
-            sp(::user::interaction) puie = ::view::create_view < ::production::view > (get_document(), pcreatordata->m_pholder);
+            sp(::user::interaction) puie = ::user::view::create_view < ::production::view > (get_document(), pcreatordata->m_pholder);
             if(puie != ::null())
             {
                pcreatordata->m_pdoc = get_document();
@@ -236,7 +236,7 @@ namespace production
          break;
       case PaneViewConfiguration:
       {
-         sp(form_document) pdoc = System.userex().create_form(this, pcreatordata->m_pholder);
+         sp(form_document) pdoc = System.user()->create_form(this, pcreatordata->m_pholder);
          if(pdoc == ::null())
             return;
          sp(::user::view) pview = pdoc->get_view();
@@ -342,7 +342,7 @@ namespace production
    }
 
 
-     sp(::user::document) pane_view::get_document()
+     sp(::production::document) pane_view::get_document()
      {
         return  (::user::view::get_document());
      }

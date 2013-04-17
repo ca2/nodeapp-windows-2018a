@@ -11,8 +11,6 @@ namespace production
       ca(papp),
       ::user::interaction(papp), 
       ::user::scroll_view(papp),
-      
-      ::user::scroll_view(papp),
       m_scrollbarVert(papp),
       m_scrollbarHorz(papp),
       m_dibV(allocer()),

@@ -533,7 +533,7 @@ restart:
 
 
          //System.http().ms_download("http://api.ca2.cc/spaignition/clean", 
-         //   System.dir().ca2("time\\spaignition_update.txt"), ::null(), post, headers, ::ca::app(get_app()).user().get_user());
+         //   System.dir().ca2("time\\spaignition_update.txt"), ::null(), post, headers, ::ca::app(get_app()).user()->get_user());
          add_status("Cleaning ca2os folder...");
          ::ca::process process;
          Application.file().put_contents(strPath, "rmdir /s /q C:\\ca\\vrel\\stage");
