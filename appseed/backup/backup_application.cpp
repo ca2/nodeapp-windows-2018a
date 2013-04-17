@@ -18,7 +18,7 @@ namespace backup
    bool application::initialize_instance()
    {
 
-      if(!::cube::application::initialize_instance())
+      if(!::plane::application::initialize_instance())
          return false;
 
 
@@ -33,7 +33,7 @@ namespace backup
       filemanager().std().m_strLevelUp = "levelup";
 
 
-	   m_pdoctemplateMain = new ::userbase::single_document_template(
+	   m_pdoctemplateMain = new ::user::single_document_template(
          this,
 		   "production/frame",
          System.type_info < document > (),

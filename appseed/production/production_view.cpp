@@ -11,8 +11,8 @@ namespace production
       ca(papp),
       ::user::interaction(papp), 
       ::user::scroll_view(papp),
-      ::userbase::view(papp),
-      ::userbase::scroll_view(papp),
+      
+      ::user::scroll_view(papp),
       m_scrollbarVert(papp),
       m_scrollbarHorz(papp),
       m_dibV(allocer()),
@@ -56,7 +56,7 @@ namespace production
 
    void view::install_message_handling(::ca::message::dispatch * pinterface)
    {
-      ::userbase::scroll_view::install_message_handling(pinterface);
+      ::user::scroll_view::install_message_handling(pinterface);
 
 	   IGUI_WIN_MSG_LINK(WM_DESTROY, pinterface, this, &view::_001OnDestroy);
 	   IGUI_WIN_MSG_LINK(WM_SIZE, pinterface, this, &view::_001OnSize);
@@ -87,27 +87,27 @@ namespace production
    #ifdef DEBUG
    void view::assert_valid() const
    {
-	   ::userbase::view::assert_valid();
+	   ::user::view::assert_valid();
    }
 
    void view::dump(dump_context & dumpcontext) const
    {
-	   ::userbase::view::dump(dumpcontext);
+	   ::user::view::dump(dumpcontext);
    }
    #endif //DEBUG
 
    bool view::pre_create_window(CREATESTRUCT& cs)
    {
       cs.style &= ~WS_EX_CLIENTEDGE;
-	   return ::userbase::view::pre_create_window(cs);
+	   return ::user::view::pre_create_window(cs);
    }
 
    void view::_001OnInitialUpdate(::ca::signal_object * pobj) 
    {
-      ::userbase::view::_001OnInitialUpdate(pobj);
+      ::user::view::_001OnInitialUpdate(pobj);
    }
 
-   void view::on_update(sp(::view) pSender, LPARAM lHint, ::ca::object * phint) 
+   void view::on_update(sp(::user::view) pSender, LPARAM lHint, ::ca::object * phint) 
    {
       UNREFERENCED_PARAMETER(pSender);
       if(lHint == 5432108)
@@ -134,7 +134,7 @@ namespace production
 
    void view::_001OnDestroy(::ca::signal_object * pobj) 
    {
-	   ::userbase::view::_001OnDestroy(pobj);
+	   ::user::view::_001OnDestroy(pobj);
    }
 
    void view::_001OnSize(::ca::signal_object * pobj) 
@@ -328,9 +328,9 @@ namespace production
    }
 
 
-   sp(document) view::get_document()
+   sp(::user::document) view::get_document()
    {
-      return  (::userbase::view::get_document());
+      return  (::user::view::get_document());
    }
 
    void view::GetAreaThumbRect(LPRECT lprect, int32_t iArea)
@@ -407,10 +407,10 @@ namespace production
 
 //      int32_t iHitArea = hit_test(pmouse->m_pt);
    /*   {
-         ::userbase::menu menu;
+         ::user::menu menu;
          menu.LoadXmlMenu(get_app(), "production\\popup_production.xml");
          menu.set_app(get_app());
-         ::userbase::menu menuPopup(menu.GetSubMenu(0));
+         ::user::menu menuPopup(menu.GetSubMenu(0));
          menuPopup.set_app(get_app());
          menuPopup.TrackPopupMenu(0, pmouse->m_pt.x, pmouse->m_pt.y, GetParentFrame()->GetSafeoswindow_());
       }

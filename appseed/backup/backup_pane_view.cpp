@@ -7,9 +7,9 @@ namespace backup
    pane_view::pane_view(sp(::ca::application) papp) :
       ca(papp),
       ::user::tab(papp),
-      ::userbase::view(papp),
+      
       ::userex::pane_tab_view(papp),
-      ::userbase::tab_view(papp),
+      ::user::tab_view(papp),
       place_holder_container(papp)
    {
 
@@ -25,12 +25,12 @@ namespace backup
    #ifdef DEBUG
    void pane_view::assert_valid() const
    {
-	   ::userbase::view::assert_valid();
+	   ::user::view::assert_valid();
    }
 
    void pane_view::dump(dump_context & dumpcontext) const
    {
-	   ::userbase::view::dump(dumpcontext);
+	   ::user::view::dump(dumpcontext);
    }
    #endif //DEBUG
 
@@ -48,9 +48,9 @@ namespace backup
       
    }
 
-   void pane_view::on_update(sp(::view) pSender, LPARAM lHint, ::ca::object* pHint) 
+   void pane_view::on_update(sp(::user::view) pSender, LPARAM lHint, ::ca::object* pHint) 
    {
-      ::userbase::tab_view::on_update(pSender, lHint, pHint);
+      ::user::tab_view::on_update(pSender, lHint, pHint);
       if(lHint == 543218)
       {
          set_cur_tab_by_id(pane_view_backup);
@@ -115,7 +115,7 @@ namespace backup
          sp(form_document) pdoc = App(get_app()).userex().create_form(this, this);
          if(pdoc == ::null())
             return;
-         sp(::view) pview = pdoc->get_view();
+         sp(::user::view) pview = pdoc->get_view();
          form_update_hint uh;
          uh.m_etype = form_update_hint::type_browse;
          uh.m_strForm = "filemanager\\replace_name_in_file_system.xhtml";

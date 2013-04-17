@@ -4,12 +4,12 @@ namespace production
 {
 
    class CLASS_DECL_CA2_PRODUCTION application :
-      public cube::application
+      public ::plane::application
    {
    public:
       
       
-      sp(::userbase::single_document_template) m_pdoctemplateMain;
+      sp(::user::single_document_template) m_pdoctemplateMain;
 
 
       application();

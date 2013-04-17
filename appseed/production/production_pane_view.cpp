@@ -8,8 +8,8 @@ namespace production
    pane_view::pane_view(sp(::ca::application) papp) :
       ca(papp),
       ::user::tab(papp),
-      ::userbase::view(papp),
-      ::userbase::tab_view(papp),
+      
+      ::user::tab_view(papp),
       ::userex::pane_tab_view(papp),
       place_holder_container(papp)
    {
@@ -30,12 +30,12 @@ namespace production
    #ifdef DEBUG
    void pane_view::assert_valid() const
    {
-	   ::userbase::view::assert_valid();
+	   ::user::view::assert_valid();
    }
 
    void pane_view::dump(dump_context & dumpcontext) const
    {
-	   ::userbase::view::dump(dumpcontext);
+	   ::user::view::dump(dumpcontext);
    }
    #endif //DEBUG
 
@@ -55,9 +55,9 @@ namespace production
       
    }
 
-   void pane_view::on_update(sp(::view) pSender, LPARAM lHint, ::ca::object* pHint) 
+   void pane_view::on_update(sp(::user::view) pSender, LPARAM lHint, ::ca::object* pHint) 
    {
-      ::userbase::tab_view::on_update(pSender, lHint, pHint);
+      ::user::tab_view::on_update(pSender, lHint, pHint);
       if(lHint == 543218)
       {
          set_cur_tab_by_id(PaneViewProduction);
@@ -127,7 +127,7 @@ namespace production
    {
       cs.dwExStyle &= ~WS_EX_CLIENTEDGE;	
 
-	   return ::userbase::view::pre_create_window(cs);
+	   return ::user::view::pre_create_window(cs);
    }
 
 
@@ -150,11 +150,11 @@ namespace production
                pdoc->Initialize(true);
                pdoc->update_all_views(::null(), 1234);
                pdoc->update_all_views(::null(), 123458);
-               sp(::view) pview = pdoc->get_view();
+               sp(::user::view) pview = pdoc->get_view();
                pdoc->FileManagerBrowse(Application.dir().userappdata("production\\menu"));
                if(pview != ::null())
                {
-                  sp(::userbase::frame_window) pframe =  (pview->GetParentFrame());
+                  sp(::user::frame_window) pframe =  (pview->GetParentFrame());
                   if(pframe != ::null())
                   {
                      pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
@@ -190,10 +190,10 @@ namespace production
                pdoc->Initialize(true);
                pdoc->update_all_views(::null(), 1234);
                pdoc->update_all_views(::null(), 123458);
-               sp(::view) pview = pdoc->get_view();
+               sp(::user::view) pview = pdoc->get_view();
                if(pview != ::null())
                {
-                  sp(::userbase::frame_window) pframe =  (pview->GetParentFrame());
+                  sp(::user::frame_window) pframe =  (pview->GetParentFrame());
                   if(pframe != ::null())
                   {
                      //pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
@@ -218,11 +218,11 @@ namespace production
                pdoc->Initialize(true);
                pdoc->update_all_views(::null(), 1234);
                pdoc->update_all_views(::null(), 123458);
-               sp(::view) pview = pdoc->get_view();
+               sp(::user::view) pview = pdoc->get_view();
                pdoc->FileManagerBrowse(Application.dir().userappdata("production\\3-action-launch"));
                if(pview != ::null())
                {
-                  sp(::userbase::frame_window) pframe =  (pview->GetParentFrame());
+                  sp(::user::frame_window) pframe =  (pview->GetParentFrame());
                   if(pframe != ::null())
                   {
                      pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
@@ -236,10 +236,10 @@ namespace production
          break;
       case PaneViewConfiguration:
       {
-         sp(form_document) pdoc = Cube.userex().create_form(this, pcreatordata->m_pholder);
+         sp(form_document) pdoc = System.userex().create_form(this, pcreatordata->m_pholder);
          if(pdoc == ::null())
             return;
-         sp(::view) pview = pdoc->get_view();
+         sp(::user::view) pview = pdoc->get_view();
          m_pviewOptions =  (pview);
 
          m_pviewOptions->m_pcallback = this;
@@ -280,7 +280,7 @@ namespace production
 
    void pane_view::install_message_handling(::ca::message::dispatch * pinterface)
    {
-      ::userbase::tab_view::install_message_handling(pinterface);
+      ::user::tab_view::install_message_handling(pinterface);
 
       IGUI_WIN_MSG_LINK(WM_USER, pinterface, this, &pane_view::_001OnUserMessage);
 	   IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &pane_view::_001OnCreate);
@@ -342,9 +342,9 @@ namespace production
    }
 
 
-     sp(document) pane_view::get_document()
+     sp(::user::document) pane_view::get_document()
      {
-        return  (::view::get_document());
+        return  (::user::view::get_document());
      }
 
      void pane_view::_001OnUserMessage(::ca::signal_object * pobj)

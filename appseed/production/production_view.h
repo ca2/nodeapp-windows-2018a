@@ -7,7 +7,7 @@ namespace production
 
 
    class CLASS_DECL_CA2_PRODUCTION view :
-      public ::userbase::scroll_view
+      public ::user::scroll_view
    {
    public:
 
@@ -80,9 +80,9 @@ namespace production
       virtual void _001OnTabClick(int32_t iTab);
       virtual void install_message_handling(::ca::message::dispatch * pinterface);
       virtual bool pre_create_window(CREATESTRUCT& cs);
-      virtual void on_update(sp(::view) pSender, LPARAM lHint, ::ca::object * pHint);
+      virtual void on_update(sp(::user::view) pSender, LPARAM lHint, ::ca::object * pHint);
 
-      sp(document) get_document();
+      sp(::user::document) get_document();
 
       DECL_GEN_SIGNAL(_001OnInitialUpdate)
       DECL_GEN_SIGNAL(_001OnLButtonDown)

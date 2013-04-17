@@ -25,7 +25,7 @@ namespace production
 
       DECL_GEN_SIGNAL(_001OnUserMessage)
 
-      sp(document) get_document();
+      sp(::user::document) get_document();
 
       bool BaseOnControlEvent(::user::control_event * pevent);
       
@@ -34,7 +34,7 @@ namespace production
 
       virtual void install_message_handling(::ca::message::dispatch * pinterface);
 
-	   virtual void on_update(sp(::view) pSender, LPARAM lHint, ::ca::object* pHint);
+	   virtual void on_update(sp(::user::view) pSender, LPARAM lHint, ::ca::object* pHint);
 	   virtual bool pre_create_window(CREATESTRUCT& cs);
 
 

@@ -11,7 +11,7 @@ form_callback::~form_callback()
 {
 }
 
-void form_callback::on_update(::user::form * pview, sp(::view) pSender, LPARAM lHint, ::ca::object* phint) 
+void form_callback::on_update(::user::form * pview, sp(::user::view) pSender, LPARAM lHint, ::ca::object* phint) 
 {
    UNREFERENCED_PARAMETER(pview);
    UNREFERENCED_PARAMETER(pSender);

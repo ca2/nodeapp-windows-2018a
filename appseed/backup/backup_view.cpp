@@ -8,7 +8,7 @@ namespace backup
       ca(papp),
       ::user::interaction(papp), 
       ::user::scroll_view(papp),
-      ::userbase::view(papp),
+      
       ::production::view(papp)
    {
    }

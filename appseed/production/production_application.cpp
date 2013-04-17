@@ -37,20 +37,20 @@ namespace production
       System.factory().creatable_small < pane_view >();
 
 
-      if(!::cube::application::initialize_instance())
+      if(!::plane::application::initialize_instance())
          return false;
 
       filemanager().std().m_strLevelUp = "levelup";
 
 
-	   m_pdoctemplateMain = new ::userbase::single_document_template(
+	   m_pdoctemplateMain = new ::user::single_document_template(
          this,
 		   "production/frame",
 		   System.type_info < document > (),
 		   System.type_info < frame > (),
 		   System.type_info < pane_view > ());
 
-      userbase().add_document_template(m_pdoctemplateMain);
+      user().add_document_template(m_pdoctemplateMain);
 
       return true;
 
@@ -65,7 +65,7 @@ namespace production
       try
       {
 
-         iExitCode = ::cube::application::exit_instance();
+         iExitCode = ::plane::application::exit_instance();
 
       }
       catch(...)
