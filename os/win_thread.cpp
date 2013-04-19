@@ -714,7 +714,7 @@ namespace win
       }
    }
 
-   void thread::remove(sp(::user::interaction) pui)
+   void thread::remove(::user::interaction * pui)
    {
       if(pui == ::null())
          return;

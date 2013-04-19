@@ -13,6 +13,8 @@ namespace win
 
       WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_pAppThread = this;
 
+      m_psystem = papp->m_psystem;
+
       m_pfilemanager = ::null();
 
 

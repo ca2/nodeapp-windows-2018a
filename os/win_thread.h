@@ -94,7 +94,7 @@ namespace win
 
 
       virtual void add(sp(::user::interaction) pui);
-      virtual void remove(sp(::user::interaction) pui);
+      virtual void remove(::user::interaction * pui);
       virtual ::count get_ui_count();
       virtual sp(::user::interaction) get_ui(::index iIndex);
       virtual void set_timer(sp(::user::interaction) pui, uint_ptr nIDEvent, UINT nEllapse);
