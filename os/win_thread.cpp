@@ -40,7 +40,7 @@ struct ___THREAD_STARTUP : ::ca::thread_startup
 {
    // following are "in" parameters to thread startup
    ___THREAD_STATE* pThreadState;    // thread state of parent thread
-   ::win::thread* pThread;    // thread for new thread
+   ::win::thread * pThread;    // thread for new thread
    DWORD dwCreateFlags;    // thread creation flags
    _PNH pfnNewHandler;     // new handler for new thread
 
@@ -66,7 +66,7 @@ uint32_t __thread_entry(void * pParam)
       ASSERT(!pStartup->bError);
 
 
-      ::win::thread* pThread = pStartup->pThread;
+      ::win::thread * pThread = pStartup->pThread;
 
 
       ::CoInitialize(::null());
@@ -577,14 +577,15 @@ namespace win
       m_bAutoDelete  = TRUE;
 
       m_frameList.Construct(offsetof(::user::frame_window, m_pNextFrameWnd));
-      m_ptimera = new ::user::interaction::timer_array(get_app());
-      m_puiptra = new user::interaction_ptr_array(get_app());
+      m_ptimera = canew(::user::interaction::timer_array(get_app()));
+      m_puiptra = canew(::user::interaction_ptr_array(get_app()));
 
    }
 
 
    thread::~thread()
    {
+      /*
       if(m_puiptra != ::null())
       {
          single_lock sl(&m_mutexUiPtra, TRUE);
@@ -632,7 +633,7 @@ namespace win
          ::win::thread::s_threadptra.remove(this);
 
       }
-
+      */
       __MODULE_THREAD_STATE* pState = __get_module_thread_state();
       /*      // clean up temp objects
       pState->m_pmapHGDIOBJ->delete_temp();
