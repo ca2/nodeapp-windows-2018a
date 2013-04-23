@@ -327,7 +327,7 @@ namespace win
          TRACE("Could not initialize ::ca::twf - ca Transparent Window Framework!");
          return 0;
       }
-      ::AttachThreadInput(::GetCurrentThreadId(), WIN_THREAD(System.::ca::thread_sp::m_p)->m_nThreadID, TRUE);
+      ::AttachThreadInput(::GetCurrentThreadId(), WIN_THREAD(System.::ca::thread::m_p.m_p)->m_nThreadID, TRUE);
       MSG msg;
       s_bRunning = true;
       while(m_bRun)

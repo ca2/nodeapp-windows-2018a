@@ -182,7 +182,7 @@ CLASS_DECL_win void __set_thread(::ca::thread * pthread)
 {
    // check for current thread in module thread state
    __MODULE_THREAD_STATE* pState = __get_module_thread_state();
-   pState->m_pCurrentWinThread = dynamic_cast < ::win::thread * > (pthread->::ca::thread_sp::m_p);
+   pState->m_pCurrentWinThread = dynamic_cast < ::win::thread * > (pthread->::ca::thread::m_p.m_p);
 }
 
 
@@ -543,6 +543,7 @@ namespace win
       ::ca::thread(::null()),
       m_evFinish(papp),
       m_mutexUiPtra(papp)
+      
    {
       m_evFinish.SetEvent();
       m_pAppThread = dynamic_cast < ::ca::thread * > (papp.m_p);
@@ -970,7 +971,7 @@ namespace win
       {
          if(m_p != ::null())
          {
-            ::ca::thread * pthread = dynamic_cast < ::ca::thread * > (m_p);
+            ::ca::thread * pthread = ::ca::thread::m_p;
             if(pthread != ::null() && pthread->m_pbReady != ::null())
             {
                *pthread->m_pbReady = true;
@@ -1002,7 +1003,7 @@ namespace win
       {
          // delete thread if it is auto-deleting
          //pthread->::ca::smart_pointer < ::ca::thread >::m_p = ::null();
-         ::ca::release(m_p);
+         m_p.release();
          // delete_this();
       }
       else
@@ -1184,8 +1185,8 @@ stop_run:
                if(pui->m_pthread != ::null())
                {
                   if(WIN_THREAD(pui->m_pthread->m_pthread) == this 
-                     || WIN_THREAD(pui->m_pthread->m_pthread->m_p) == WIN_THREAD(m_p)
-                     || WIN_THREAD(pui->m_pthread->m_pthread) == WIN_THREAD(m_p))
+                     || WIN_THREAD(pui->m_pthread->m_pthread->m_p.m_p) == WIN_THREAD(m_p.m_p)
+                     || WIN_THREAD(pui->m_pthread->m_pthread) == WIN_THREAD(m_p.m_p))
                   {
                      pui->m_pthread = ::null();
                   }
@@ -1706,7 +1707,7 @@ stop_run:
    }
 
 
-   bool thread::post_message(sp(::user::interaction) pguie, UINT uiMessage, WPARAM wparam, LPARAM lparam)
+   bool thread::post_message(sp(::user::interaction) pguie, UINT uiMessage, WPARAM wparam, lparam lparam)
    {
       if(m_hThread == ::null())
          return false;
@@ -1903,7 +1904,7 @@ run:
    */
 
 
-   bool thread::post_thread_message(UINT message, WPARAM wParam, LPARAM lParam)
+   bool thread::post_thread_message(UINT message, WPARAM wParam, lparam lParam)
    {
 
       if(m_hThread == ::null())

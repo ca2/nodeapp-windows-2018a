@@ -442,11 +442,11 @@ inline CT* handle_map <HT, CT>::lookup_temporary(HANDLE h)
 
 
 CLASS_DECL_win oswindow_map * get_oswindow_map(bool bCreate = FALSE);
-CLASS_DECL_win mutex * afxMutexoswindow_();
+
+
 CLASS_DECL_win himagelist_map * afxMapHIMAGELIST(bool bCreate = FALSE);
 //CLASS_DECL_win hdc_map * afxMapHDC(bool bCreate = FALSE);
 //CLASS_DECL_win hgdiobj_map * afxMapHGDIOBJ(bool bCreate = FALSE);
 //CLASS_DECL_win hmenu_map * afx_map_HMENU(bool bCreate = FALSE);
-
 
 

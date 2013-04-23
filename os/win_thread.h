@@ -122,8 +122,8 @@ namespace win
    // Operations
       //DWORD SuspendThread();
       uint32_t ResumeThread();
-      bool post_thread_message(UINT message, WPARAM wParam, LPARAM lParam);
-      bool post_message(sp(::user::interaction) pguie, UINT message, WPARAM wParam, LPARAM lParam);
+      bool post_thread_message(UINT message, WPARAM wParam = 0, lparam lParam = ::null());
+      bool post_message(sp(::user::interaction) pguie, UINT message, WPARAM wParam = 0, lparam lParam = ::null());
 
       virtual bool PreInitInstance();
 

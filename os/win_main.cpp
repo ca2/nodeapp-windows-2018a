@@ -1,6 +1,8 @@
 #include "framework.h"
 #include "sal.h"
 
+extern CLASS_DECL_win oswindow_map * g_pwindowmap;
+
 CLASS_DECL_ca2 int32_t ca2_main();
 
 //CLASS_DECL_ca2 extern fixed_alloc_array * g_pfixedallocaWstring;
@@ -43,6 +45,8 @@ int32_t CLASS_DECL_win __win_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, 
 
    sp(::plane::system) psystem = canew(::plane::system());
 
+   g_pwindowmap = new ::oswindow_map(psystem);
+
    ASSERT(hPrevInstance == ::null());
 
    int32_t nReturnCode = 0;
@@ -66,6 +70,9 @@ int32_t CLASS_DECL_win __win_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, 
 
    nReturnCode = psystem->main();
 
+   delete g_pwindowmap;
+
+   g_pwindowmap = ::null();
 
    try
    {

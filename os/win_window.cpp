@@ -197,8 +197,8 @@ namespace win
 
    sp(::ca::window) window::from_handle(oswindow oswindow)
    {
-      single_lock sl(afxMutexoswindow_(), TRUE);
       oswindow_map* pMap = get_oswindow_map(TRUE); //create map if not exist
+      single_lock sl(&pMap->m_mutex, true);
       try
       {
          ASSERT(pMap != ::null());
@@ -215,8 +215,8 @@ namespace win
 
    sp(::ca::window) window::FromHandlePermanent(oswindow oswindow)
    {
-      single_lock sl(afxMutexoswindow_(), TRUE);
       oswindow_map* pMap = get_oswindow_map();
+      single_lock sl(&pMap->m_mutex, true);
       sp(::ca::window) pWnd = ::null();
       if (pMap != ::null())
       {
@@ -236,8 +236,8 @@ namespace win
 
       if (oswindow_New == ::null())
          return FALSE;
-      single_lock sl(afxMutexoswindow_(), TRUE);
       oswindow_map * pMap = get_oswindow_map(TRUE); // create map if not exist
+      single_lock sl(&pMap->m_mutex, true);
       ASSERT(pMap != ::null());
 
       pMap->set_permanent(set_handle(oswindow_New), this);
@@ -254,8 +254,8 @@ namespace win
       oswindow oswindow = get_handle();
       if (oswindow != ::null())
       {
-         single_lock sl(afxMutexoswindow_(), TRUE);
          oswindow_map * pMap = get_oswindow_map(); // don't create if not exist
+         single_lock sl(&pMap->m_mutex, true);
          if (pMap != ::null())
             pMap->remove_handle(get_handle());
          set_handle(::null());
@@ -483,20 +483,26 @@ namespace win
    {
       //m_pbuffer->InstallMessageHandling(pinterface);
       IGUI_WIN_MSG_LINK(WM_NCDESTROY         , pinterface, this, &window::_001OnNcDestroy);
-      IGUI_WIN_MSG_LINK(WM_PAINT             , pinterface, this, &window::_001OnPaint);
-      IGUI_WIN_MSG_LINK(WM_PRINT             , pinterface, this, &window::_001OnPrint);
+      if(!m_bMessageWindow)
+      {
+         IGUI_WIN_MSG_LINK(WM_PAINT             , pinterface, this, &window::_001OnPaint);
+         IGUI_WIN_MSG_LINK(WM_PRINT             , pinterface, this, &window::_001OnPrint);
+      }
       if(m_pguie != ::null() && m_pguie != this)
       {
          m_pguie->install_message_handling(pinterface);
       }
-      IGUI_WIN_MSG_LINK(WM_CAPTURECHANGED    , pinterface, this, &window::_001OnCaptureChanged);
       IGUI_WIN_MSG_LINK(WM_CREATE            , pinterface, this, &window::_001OnCreate);
-      IGUI_WIN_MSG_LINK(WM_SETCURSOR         , pinterface, this, &window::_001OnSetCursor);
-      IGUI_WIN_MSG_LINK(WM_ERASEBKGND        , pinterface, this, &window::_001OnEraseBkgnd);
-      IGUI_WIN_MSG_LINK(WM_MOVE              , pinterface, this, &window::_001OnMove);
-      IGUI_WIN_MSG_LINK(WM_SIZE              , pinterface, this, &window::_001OnSize);
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW        , pinterface, this, &window::_001OnShowWindow);
-      IGUI_WIN_MSG_LINK(ca2m_PRODEVIAN_SYNCH , pinterface, this, &window::_001OnProdevianSynch);
+      if(!m_bMessageWindow)
+      {
+         IGUI_WIN_MSG_LINK(WM_CAPTURECHANGED    , pinterface, this, &window::_001OnCaptureChanged);
+         IGUI_WIN_MSG_LINK(WM_SETCURSOR         , pinterface, this, &window::_001OnSetCursor);
+         IGUI_WIN_MSG_LINK(WM_ERASEBKGND        , pinterface, this, &window::_001OnEraseBkgnd);
+         IGUI_WIN_MSG_LINK(WM_MOVE              , pinterface, this, &window::_001OnMove);
+         IGUI_WIN_MSG_LINK(WM_SIZE              , pinterface, this, &window::_001OnSize);
+         IGUI_WIN_MSG_LINK(WM_SHOWWINDOW        , pinterface, this, &window::_001OnShowWindow);
+         IGUI_WIN_MSG_LINK(ca2m_PRODEVIAN_SYNCH , pinterface, this, &window::_001OnProdevianSynch);
+      }
       IGUI_WIN_MSG_LINK(WM_DESTROY           , pinterface, this, &window::_001OnDestroy);
    }
 
@@ -685,21 +691,26 @@ namespace win
          if (pfnSuper != ::null())
             SetWindowLongPtr(get_handle(), GWLP_WNDPROC, reinterpret_cast<int_ptr>(pfnSuper));
       }
+
       detach();
       ASSERT(get_handle() == ::null());
       m_pfnDispatchWindowProc = &window::_start_user_message_handler;
       // call special post-cleanup routine
-      PostNcDestroy();
       if(m_pguie != ::null() && m_pguie != this)
       {
          m_pguie->PostNcDestroy();
       }
+      PostNcDestroy();
    }
 
    void window::PostNcDestroy()
    {
       set_handle(::null());
-      // default to nothing
+      if(is_heap())
+      {
+         m_pguie.release();
+         m_pimpl.release();
+      }
    }
 
    void window::on_final_release()
@@ -732,8 +743,8 @@ namespace win
          ASSERT(::IsWindow(((::win::window *)this)->get_handle()));
 
          // should also be in the permanent or temporary handle map
-         single_lock sl(afxMutexoswindow_(), TRUE);
          oswindow_map * pMap = get_oswindow_map();
+         single_lock sl(&pMap->m_mutex, true);
          if(pMap == ::null()) // inside thread not having windows
             return; // let go
          ASSERT(pMap != ::null());
@@ -815,7 +826,7 @@ namespace win
 
    bool window::DestroyWindow()
    {
-      single_lock sl(m_pthread == ::null() ? ::null() : &m_pthread->m_pthread->m_mutex, TRUE);
+      //single_lock sl(m_spmutex, TRUE);
       sp(::ca::window) pWnd;
       oswindow_map * pMap;
       oswindow oswindow_Orig;
@@ -830,8 +841,8 @@ namespace win
       oswindow_Orig = ::null();
       if (get_handle() != ::null())
       {
-         single_lock sl(afxMutexoswindow_(), TRUE);
          pMap = get_oswindow_map();
+         single_lock sl(&pMap->m_mutex, true);
          if(pMap != ::null())
          {
             pWnd = (pMap->lookup_permanent(get_handle()));
@@ -840,10 +851,10 @@ namespace win
 #endif
          }
       }
-      sl.unlock();
+      //sl.unlock();
       if (get_handle() != ::null())
          bResult = ::DestroyWindow(get_handle()) != FALSE;
-      sl.lock();
+      //sl.lock();
       if (oswindow_Orig != ::null())
       {
          // Note that 'this' may have been deleted at this point,
@@ -1532,11 +1543,11 @@ restart_mouse_hover_check:
       {
          if(m_pguie != this && m_pguie != ::null())
          {
-            m_pguie->BaseOnControlEvent((::user::control_event *) pbase->m_lparam);
+            m_pguie->BaseOnControlEvent((::user::control_event *) pbase->m_lparam.m_lparam);
          }
          else
          {
-            BaseOnControlEvent((::user::control_event *) pbase->m_lparam);
+            BaseOnControlEvent((::user::control_event *) pbase->m_lparam.m_lparam);
          }
          return;
       }
@@ -2773,8 +2784,8 @@ restart_mouse_hover_check:
    bool window::ReflectLastMsg(oswindow oswindow_Child, LRESULT* pResult)
    {
       // get the map, and if no map, then this message does not need reflection
-      single_lock sl(afxMutexoswindow_(), TRUE);
       oswindow_map * pMap = get_oswindow_map();
+      single_lock sl(&pMap->m_mutex, true);
       if (pMap == ::null())
          return FALSE;
 
@@ -4010,7 +4021,7 @@ ExitModal:
             ::PostThreadMessageA((DWORD) m_iaModalThread[i], WM_NULL, 0, 0);
          }
          PostMessage(WM_NULL);
-         System.GetThread()->post_thread_message(WM_NULL, 0, 0);
+         System.GetThread()->post_thread_message(WM_NULL);
       }
    }
 
@@ -4027,13 +4038,13 @@ ExitModal:
          int32_t iLevel = m_iModalCount - 1;
          m_iModalCount = 0;
          PostMessage(WM_NULL);
-         System.GetThread()->post_thread_message(WM_NULL, 0, 0);
+         System.GetThread()->post_thread_message(WM_NULL);
          for(int32_t i = iLevel; i >= 0; i--)
          {
             ::ca::thread * pthread = oprop(string("RunModalLoop.thread(") + ::ca::str::from(i) + ")").ca < ::ca::thread > ();
             try
             {
-               pthread->post_thread_message(WM_NULL, 0, 0);
+               pthread->post_thread_message(WM_NULL);
             }
             catch(...)
             {
@@ -6205,42 +6216,18 @@ void CTestCmdUI::SetText(const char *)
 {
    // do nothing -- just want to know about calls to Enable
 }
-
+CLASS_DECL_win oswindow_map * g_pwindowmap = ::null();
 
 /////////////////////////////////////////////////////////////////////////////
 // Map from oswindow to sp(::ca::window)
 
 oswindow_map* get_oswindow_map(bool bCreate)
 {
-   UNREFERENCED_PARAMETER(bCreate);
-   try
-   {
-      __MODULE_STATE* pState = __get_module_state();
-      if(pState == ::null())
-         return ::null();
-      return pState->m_pmapHWND;
-   }
-   catch(...)
-   {
-      return ::null();
-   }
+
+   return g_pwindowmap;
+
 }
 
-
-mutex * afxMutexoswindow_()
-{
-   try
-   {
-      __MODULE_STATE* pState = __get_module_state();
-      if(pState == ::null())
-         return ::null();
-      return pState->m_pmutexoswindow_;
-   }
-   catch(...)
-   {
-      return ::null();
-   }
-}
 
 /////////////////////////////////////////////////////////////////////////////
 // The WndProc for all window's and derived classes

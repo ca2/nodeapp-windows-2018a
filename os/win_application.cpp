@@ -9,9 +9,10 @@ namespace win
       ca(papp)
    {
 
-      ::ca::thread_sp::create(allocer());
+      ::ca::thread::m_p.create(allocer());
+      ::ca::thread::m_p->m_p = this;
 
-      WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->m_pAppThread = this;
+      WIN_THREAD(::ca::thread::m_p.m_p)->m_pAppThread = this;
 
       m_psystem = papp->m_psystem;
 
@@ -190,12 +191,12 @@ namespace win
 
    void application::LockTempMaps()
    {
-      WIN_THREAD(::ca::smart_pointer < ::ca::thread >::m_p)->LockTempMaps();
+      WIN_THREAD(::ca::thread::m_p.m_p)->LockTempMaps();
    }
 
    bool application::UnlockTempMaps(bool bDeleteTemp)
    {
-      return WIN_THREAD(::ca::smart_pointer < ::ca::thread >::m_p)->UnlockTempMaps(bDeleteTemp);
+      return WIN_THREAD(::ca::thread::m_p.m_p)->UnlockTempMaps(bDeleteTemp);
    }
 
 
@@ -399,7 +400,7 @@ namespace win
 */
    bool application::process_initialize()
    {
-      if(::ca::smart_pointer < application_base > ::m_p->is_system())
+      if(::ca::application_base::m_p->is_system())
       {
          if(__get_module_state()->m_pmapHWND == ::null())
          {
@@ -427,7 +428,7 @@ namespace win
    bool application::initialize1()
    {
 
-      WIN_THREAD(smart_pointer < ::ca::thread >::m_p)->set_run();
+      WIN_THREAD(::ca::thread::m_p.m_p)->set_run();
 
       return true;
 
@@ -449,9 +450,9 @@ namespace win
 
       // avoid calling CloseHandle() on our own thread handle
       // during the thread destructor
-      ::ca::thread_sp::m_p->set_os_data(::null());
+      ::ca::thread::m_p->set_os_data(::null());
 
-      WIN_THREAD(::ca::thread_sp::m_p)->m_bRun = false;
+      WIN_THREAD(::ca::thread::m_p.m_p)->m_bRun = false;
 
       int32_t iRet = ::ca::application::exit_instance();
 
@@ -541,7 +542,7 @@ namespace win
       if(__get_thread() == ::null())
          return ::null();
       else
-         return dynamic_cast < ::ca::thread * > (__get_thread()->m_p);
+         return __get_thread()->m_p;
    }
 
    void application::set_thread(::ca::thread * pthread)
@@ -600,7 +601,7 @@ namespace win
          __MODULE_THREAD_STATE* pThreadState = pModuleState->m_thread;
          ENSURE(pThreadState);
 //         ASSERT(System.GetThread() == ::null());
-         pThreadState->m_pCurrentWinThread = dynamic_cast < class ::win::thread * > (::ca::thread_sp::m_p);
+         pThreadState->m_pCurrentWinThread = dynamic_cast < class ::win::thread * > (::ca::thread::m_p.m_p);
   //       ASSERT(System.GetThread() == this);
 
          // initialize application state
@@ -610,10 +611,10 @@ namespace win
       }
 
 
-//      dynamic_cast < ::win::thread * > ((smart_pointer < application_base >::m_p->::ca::thread_sp::m_p))->m_hThread = __get_thread()->m_hThread;
-  //    dynamic_cast < ::win::thread * > ((smart_pointer < application_base >::m_p->::ca::thread_sp::m_p))->m_nThreadID = __get_thread()->m_nThreadID;
-      dynamic_cast < class ::win::thread * > (::ca::thread_sp::m_p)->m_hThread      =  ::GetCurrentThread();
-      dynamic_cast < class ::win::thread * > (::ca::thread_sp::m_p)->m_nThreadID    =  ::GetCurrentThreadId();
+//      dynamic_cast < ::win::thread * > ((smart_pointer < application_base >::m_p->::ca::thread::m_p))->m_hThread = __get_thread()->m_hThread;
+  //    dynamic_cast < ::win::thread * > ((smart_pointer < application_base >::m_p->::ca::thread::m_p))->m_nThreadID = __get_thread()->m_nThreadID;
+      dynamic_cast < class ::win::thread * > (::ca::thread::m_p.m_p)->m_hThread      =  ::GetCurrentThread();
+      dynamic_cast < class ::win::thread * > (::ca::thread::m_p.m_p)->m_nThreadID    =  ::GetCurrentThreadId();
       
 
    }
@@ -679,7 +680,7 @@ namespace win
 
       m_pmaininitdata = (::win::main_init_data *) pdata;
 
-      if(m_pmaininitdata != ::null() && ::ca::smart_pointer < application_base >::m_p->is_system())
+      if(m_pmaininitdata != ::null() && ::ca::application_base::m_p->is_system())
       {
          if(!win_init(m_pmaininitdata))
             return false;

@@ -217,8 +217,8 @@ public:
 template < class HT, class CT >
 handle_map < HT, CT > ::handle_map(sp(::ca::application) papp) : 
    ca(papp),
-   m_permanentMap(1024), 
-   m_temporaryMap(1024), 
+   m_permanentMap(papp, 1024), 
+   m_temporaryMap(papp, 1024), 
    m_alloc(sizeof(CT), 1024),
    m_mutex(papp)
 {
@@ -446,7 +446,6 @@ inline CT* handle_map <HT, CT>::lookup_temporary(HANDLE h)
 
 
 CLASS_DECL_win oswindow_map * get_oswindow_map(bool bCreate = FALSE);
-CLASS_DECL_win mutex * afxMutexoswindow_();
 CLASS_DECL_win himagelist_map * afxMapHIMAGELIST(bool bCreate = FALSE);
 //CLASS_DECL_win hdc_map * afxMapHDC(bool bCreate = FALSE);
 //CLASS_DECL_win hgdiobj_map * afxMapHGDIOBJ(bool bCreate = FALSE);
