@@ -611,8 +611,8 @@ namespace win
       }
 
 
-//      dynamic_cast < ::win::thread * > ((smart_pointer < application_base >::m_p->::ca::thread::m_p))->m_hThread = __get_thread()->m_hThread;
-  //    dynamic_cast < ::win::thread * > ((smart_pointer < application_base >::m_p->::ca::thread::m_p))->m_nThreadID = __get_thread()->m_nThreadID;
+//      dynamic_cast < ::win::thread * > ((::c::smart_pointer < application_base >::m_p->::ca::thread::m_p))->m_hThread = __get_thread()->m_hThread;
+  //    dynamic_cast < ::win::thread * > ((::c::smart_pointer < application_base >::m_p->::ca::thread::m_p))->m_nThreadID = __get_thread()->m_nThreadID;
       dynamic_cast < class ::win::thread * > (::ca::thread::m_p.m_p)->m_hThread      =  ::GetCurrentThread();
       dynamic_cast < class ::win::thread * > (::ca::thread::m_p.m_p)->m_nThreadID    =  ::GetCurrentThreadId();
       

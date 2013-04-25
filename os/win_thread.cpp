@@ -432,7 +432,7 @@ void CLASS_DECL_win __end_thread(sp(::ca::application) papp, UINT nExitCode, boo
       }
 
       ASSERT_VALID(pThread);
-      //ASSERT(pThread != System::smart_pointer < sp(::ca::application)>::m_p);
+      //ASSERT(pThread != System::::c::smart_pointer < sp(::ca::application)>::m_p);
 
       if (bDelete)
          pThread->Delete();
