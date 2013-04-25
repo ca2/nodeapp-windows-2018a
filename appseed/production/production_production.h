@@ -3,11 +3,12 @@
 
 namespace production
 {
+
    class view;
 
 
    class CLASS_DECL_CA2_PRODUCTION production : 
-      public simple_thread 
+      virtual public simple_thread 
    {
    public:
 
@@ -154,7 +155,7 @@ namespace production
       virtual void generate_appmatter_spa_style(const char * pszRoot, const char * pszRelative);
       virtual void generate_appmatter_spa(const char * pszRoot, const char * pszRelative);
 
-      virtual void release();
+      virtual void release_production();
       virtual bool release_npca2(const char * pszPlatform);
       virtual bool release_iexca2(const char * pszPlatform);
       virtual bool release_crxca2(const char * pszPlatform);

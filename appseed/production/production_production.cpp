@@ -624,7 +624,8 @@ restart:
 
          }
 
-         release();
+         release_production();
+
          if(!release_npca2("x86"))
          {
             return 1;
@@ -1337,7 +1338,7 @@ retry2:
 
 
 
-   void production::release()
+   void production::release_production()
    {
       m_strStatus = "generating index file and releasing...";
       add_status(m_strStatus);
