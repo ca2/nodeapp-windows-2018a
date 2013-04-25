@@ -56,12 +56,12 @@ namespace win
 
    void application::_001OnFileNew()
    {
-      //::ca::smart_pointer < application_base >::m_p->_001OnFileNew(::null());
+      //::c::smart_pointer < application_base >::m_p->_001OnFileNew(::null());
    }
 
    sp(::user::document_interface) application::_001OpenDocumentFile(var varFile)
    {
-      //return ::ca::smart_pointer < application_base >::m_p->_001OpenDocumentFile(varFile);
+      //return ::c::smart_pointer < application_base >::m_p->_001OpenDocumentFile(varFile);
       return ::null();
    }
 
@@ -212,8 +212,8 @@ namespace win
                __get_module_thread_state()->m_pCurrentWinThread->m_nTempMapLock);
          }
    #endif
-         ::ca::LockTempMaps(::ca::smart_pointer < application_base >::m_p);
-         ::ca::UnlockTempMaps(::ca::smart_pointer < application_base >::m_p, -1);
+         ::ca::LockTempMaps(::c::smart_pointer < application_base >::m_p);
+         ::ca::UnlockTempMaps(::c::smart_pointer < application_base >::m_p, -1);
       }
       catch( base_exception* e )
       {
@@ -456,7 +456,7 @@ namespace win
 
       int32_t iRet = ::ca::application::exit_instance();
 
-      //::ca::smart_pointer < application_base >::destroy();
+      //::c::smart_pointer < application_base >::destroy();
 
 
 

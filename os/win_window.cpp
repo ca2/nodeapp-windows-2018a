@@ -5923,7 +5923,7 @@ ExitModal:
 
       // Catch exceptions thrown outside the scope of a callback
       // in debug builds and warn the ::fontopus::user.
-      ::ca::smart_pointer < ::ca::message::base > spbase;
+      ::c::smart_pointer < ::ca::message::base > spbase;
 
       spbase = pinteraction->get_base(pinteraction, nMsg, wParam, lParam);
 

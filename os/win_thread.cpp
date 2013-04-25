@@ -1002,7 +1002,7 @@ namespace win
       if(m_bAutoDelete)
       {
          // delete thread if it is auto-deleting
-         //pthread->::ca::smart_pointer < ::ca::thread >::m_p = ::null();
+         //pthread->::c::smart_pointer < ::ca::thread >::m_p = ::null();
          m_p.release();
          // delete_this();
       }
@@ -1322,7 +1322,7 @@ stop_run:
       SCAST_PTR(::ca::message::base, pbase, pobj);
       if(!pbase->m_bRet && pbase->m_uiMessage == WM_APP + 1984 && pbase->m_wparam == 77)
       {
-         ::ca::smart_pointer < ::user::message > spmessage(pbase->m_lparam);
+         ::c::smart_pointer < ::user::message > spmessage(pbase->m_lparam);
          spmessage->send();
          pbase->m_uiMessage   = 0;    // ssshhhh.... - self-healing - sh...
          pbase->m_wparam      = 0;    // ssshhhh.... - self-healing - sh...
@@ -1529,7 +1529,7 @@ stop_run:
 
             {
 
-               ::ca::smart_pointer < ::ca::message::base > spbase;
+               ::c::smart_pointer < ::ca::message::base > spbase;
 
                spbase = get_base(&msg);
 
@@ -2688,7 +2688,7 @@ bool thread::DispatchThreadMessageEx(MSG* pmsg)
 {
 if(pmsg->message == WM_APP + 1984 && pmsg->wParam == 77)
 {
-::ca::smart_pointer < win::message > spmessage(pmsg->lParam);
+::c::smart_pointer < win::message > spmessage(pmsg->lParam);
 spmessage->send();
 return TRUE;
 }
@@ -2780,7 +2780,7 @@ LRESULT CALLBACK __message_filter_hook(int32_t code, WPARAM wParam, LPARAM lPara
       return ::CallNextHookEx(gen_ThreadState->m_hHookOldMsgFilter, code, wParam, lParam);
    }
    ASSERT(pthread != ::null());
-   ::ca::smart_pointer < ::ca::message::base > spbase;
+   ::c::smart_pointer < ::ca::message::base > spbase;
    spbase = pthread->get_base((LPMSG)lParam);
    pthread->ProcessMessageFilter(code, spbase);
    LRESULT lresult = spbase->m_bRet ? 1 : 0;
