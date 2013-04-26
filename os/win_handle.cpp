@@ -10,7 +10,7 @@ namespace win
       
       oswindow_map* pMap = __get_module_state()->m_pmapHWND;
 
-      if(::ca::is_null(pMap))
+      if(::c::is_null(pMap))
          return;
 
       single_lock sl(&pMap->m_mutex, TRUE);

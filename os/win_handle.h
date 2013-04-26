@@ -370,7 +370,7 @@ void handle_map < HT, CT >::delete_temp()
    
    single_lock sl(&m_mutex, TRUE);
 
-   if (::ca::is_null(this))
+   if (::c::is_null(this))
       return;
 
    POSITION pos = m_temporaryMap.get_start_position();
