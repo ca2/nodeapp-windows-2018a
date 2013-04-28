@@ -6,8 +6,9 @@ namespace backup
 
 
    backup::backup(sp(::ca::application) papp) :
-   ca(papp),
+      ca(papp),
       thread(papp),
+      ::simple_thread(papp),
       production(papp)
    {
       m_bClean       = false;

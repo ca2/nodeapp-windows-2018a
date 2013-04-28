@@ -6,7 +6,7 @@ namespace backup
 
 
    class CLASS_DECL_CA2_BACKUP view :
-      public production::view
+      virtual public production::view
    {
    public:
 	   

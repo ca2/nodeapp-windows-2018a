@@ -1,13 +1,15 @@
 #pragma once
 
+
 namespace production
 {
+
 
    class document;
 
 
    class CLASS_DECL_CA2_PRODUCTION view :
-      public ::user::scroll_view
+      virtual public ::user::scroll_view
    {
    public:
 
@@ -97,6 +99,11 @@ namespace production
       DECL_GEN_SIGNAL(_001OnShowWindow)
       DECL_GEN_SIGNAL(_001OnUser)
 
+
    };
 
+
 } // namespace production
+
+
+

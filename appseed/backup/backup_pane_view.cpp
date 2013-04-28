@@ -112,7 +112,7 @@ namespace backup
          break;
       case pane_view_options:
       {
-         sp(form_document) pdoc = App(get_app()).userex().create_form(this, this);
+         sp(form_document) pdoc = App(get_app()).user()->create_form(this, this);
          if(pdoc == ::null())
             return;
          sp(::user::view) pview = pdoc->get_view();
