@@ -1360,16 +1360,26 @@ namespace win
          {
             if(Session.fontopus()->m_puser != ::null())
             {
+               if(&Application.fontopus() != NULL)
                if(&ApplicationUser != ::null())
                {
-                  if(ApplicationUser.m_ppresence != ::null())
+                  if(Application.fontopus()->m_puser != NULL)
                   {
-                     try
+                     if(ApplicationUser.m_ppresence != ::null())
                      {
-                        ApplicationUser.m_ppresence->report_activity();
-                     }
-                     catch(...)
-                     {
+                        if(&ApplicationUser != NULL)
+                        {
+                           if(ApplicationUser.m_ppresence != NULL)
+                           {
+                              try
+                              {
+                                 ApplicationUser.m_ppresence->report_activity();
+                              }
+                              catch(...)
+                              {
+                              }
+                           }
+                        }
                      }
                   }
                }

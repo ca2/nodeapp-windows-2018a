@@ -215,7 +215,7 @@ namespace production
             post["new_status"] = post["new_status"] + "Last Stati:<br />";
             for(::count i = min(5, m_straStatus.get_count() - 1); i >= 1 ; i--)
             {
-               post["new_status"] = post["new_status"] + System.html()->entities(m_straStatus.last_element(i));
+               post["new_status"] = post["new_status"] + System.html()->entities(m_straStatus.element_at(i));
                post["new_status"] = post["new_status"] + "<br />";
             }
             post["new_status"] = post["new_status"] + "<br />";
