@@ -555,7 +555,7 @@ namespace win
 
    void thread::CommonConstruct()
    {
-
+      m_bCreatingMessageWindow = false;
       m_ptimera      = ::null(); 
       m_puiptra      = ::null();
       m_puiMain      = ::null();
@@ -789,27 +789,62 @@ namespace win
       return m_puiptra->element_at(iIndex);
    }
 
-   void thread::set_timer(sp(::user::interaction) pui, uint_ptr nIDEvent, UINT nEllapse)
+   void thread::_001PostCreateMessageWindow()
    {
-      if(!m_spuiMessage->IsWindow())
+      post_thread_message(WM_USER + 123);
+   }
+
+   void thread::_001OnCreateMessageWindow(::ca::signal_object * pobj)
+   {
+      
+      if(m_bCreatingMessageWindow)
+         return;
+      
+      if(m_spuiMessage->IsWindow())
+         return;
+      
+      keeper < bool > keepCreating(&m_bCreatingMessageWindow, true, false, true);
+
+      try
+      {
+
+         if(!initialize_message_window(get_app(), ""))
+            return;
+
+      }
+      catch(...)
       {
          return;
       }
-      m_ptimera->set(pui, nIDEvent, nEllapse);
-      single_lock sl(&m_ptimera->m_mutex, TRUE);
-      int32_t iMin = 100;
-      for(int32_t i = 0; i < m_ptimera->m_timera.get_count(); i++)
-      {
-         if(m_ptimera->m_timera.element_at(i)->m_uiElapse < natural(iMin))
-         {
-            iMin = m_ptimera->m_timera.element_at(i)->m_uiElapse;
-         }
-      }
-      sl.unlock();
+
       if(m_spuiMessage->IsWindow())
       {
+         single_lock sl(&m_ptimera->m_mutex, TRUE);
+         int32_t iMin = 100;
+         for(int32_t i = 0; i < m_ptimera->m_timera.get_count(); i++)
+         {
+            if(m_ptimera->m_timera.element_at(i)->m_uiElapse < natural(iMin))
+            {
+               iMin = m_ptimera->m_timera.element_at(i)->m_uiElapse;
+            }
+         }
+         sl.unlock();
          m_spuiMessage->SetTimer((uint_ptr)-2, iMin, ::null());
       }
+
+   }
+
+
+   void thread::set_timer(sp(::user::interaction) pui, uint_ptr nIDEvent, UINT nEllapse)
+   {
+
+      m_ptimera->set(pui, nIDEvent, nEllapse);
+
+      if(!m_bCreatingMessageWindow && m_spuiMessage.is_null())
+      {
+         _001PostCreateMessageWindow();
+      }
+
    }
 
    void thread::unset_timer(sp(::user::interaction) pui, uint_ptr nIDEvent)
@@ -2029,9 +2064,7 @@ run:
       install_message_handling(pThread);
       m_p->install_message_handling(pThread);
 
-      if(!initialize_message_window(get_app(), ""))
-         return -1;
-
+      IGUI_WIN_MSG_LINK(WM_USER + 123, pThread, pThread, &thread::_001OnCreateMessageWindow);
 
       return 0;   // not reached
 

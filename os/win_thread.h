@@ -48,7 +48,7 @@ namespace win
       DWORD m_nTempMapLock;           // if not 0, temp maps locked
 
 
-
+      bool                                   m_bCreatingMessageWindow;
       LPVOID                              m_pThreadParams; // generic parameters passed to starting function
       __THREADPROC                      m_pfnThreadProc;
 
@@ -198,6 +198,8 @@ namespace win
 
       virtual HANDLE item() const;
 
+      void _001PostCreateMessageWindow();
+      DECL_GEN_SIGNAL(_001OnCreateMessageWindow);
 
    };
 
