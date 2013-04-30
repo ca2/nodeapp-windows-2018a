@@ -25,6 +25,7 @@
 
 #define CLASS_DECL_EXPORT _declspec(dllexport)
 #define CLASS_DECL_IMPORT _declspec(dllimport)
+#define CLASS_DECL_THREAD _declspec(thread)
 
 
 
