@@ -800,7 +800,7 @@ namespace win
       if(m_bCreatingMessageWindow)
          return;
       
-      if(m_spuiMessage->IsWindow())
+      if(m_spuiMessage.is_set() && m_spuiMessage->IsWindow())
          return;
       
       keeper < bool > keepCreating(&m_bCreatingMessageWindow, true, false, true);
