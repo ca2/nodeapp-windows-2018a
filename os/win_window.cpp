@@ -5166,7 +5166,7 @@ ExitModal:
       if(pinterface != ::null()) 
          m_pguieCapture = pinterface; 
 
-      return  (sp(::user::interaction)) ::win::window::from_handle(::SetCapture(get_handle())).m_p; 
+      return  (sp(::user::interaction)) ::win::window::from_handle(::SetCapture(get_handle())); 
 
    }
 
