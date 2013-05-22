@@ -205,7 +205,7 @@ namespace win
       }
 
 
-      if(m_pfont != ::null())
+      if(m_pfont != NULL)
       {
          ((font *) this)->m_bUpdated = true;
       }
