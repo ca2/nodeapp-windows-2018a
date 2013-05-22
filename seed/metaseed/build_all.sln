@@ -259,11 +259,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "filemanager_iconoverlay_syl
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_syllomatter", "..\..\..\app-core\appseed\syllomatter\syllomatter.vcxproj", "{8A05B3FD-3C90-4279-8680-F5F1D93585D5}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_mmcube", "..\..\..\app-veriwell\appseed\mmcube\mmcube.vcxproj", "{72D84EA4-F45B-499F-84A9-C4A1BAB46419}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_veriwell_mmcube", "..\..\..\app-veriwell\appseed\mmcube\mmcube.vcxproj", "{72D84EA4-F45B-499F-84A9-C4A1BAB46419}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_verisimplevideo", "..\..\..\app-veriwell\appseed\verisimplevideo\verisimplevideo.vcxproj", "{7F00B13B-B55A-446A-8F6E-3D8A212004D0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_veriwell_verisimplevideo", "..\..\..\app-veriwell\appseed\verisimplevideo\verisimplevideo.vcxproj", "{7F00B13B-B55A-446A-8F6E-3D8A212004D0}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_mail", "..\..\..\app-core\appseed\mail\mail.vcxproj", "{D691C07D-B8F2-494A-BD98-378D24938E01}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_biteditor", "..\..\..\app-core\appseed\biteditor\biteditor.vcxproj", "{BB08FC74-F5E0-4753-BCB9-942B73DB8BC7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1702,6 +1704,22 @@ Global
 		{D691C07D-B8F2-494A-BD98-378D24938E01}.profiler|Win32.Build.0 = profiler|Win32
 		{D691C07D-B8F2-494A-BD98-378D24938E01}.profiler|x64.ActiveCfg = profiler|x64
 		{D691C07D-B8F2-494A-BD98-378D24938E01}.profiler|x64.Build.0 = profiler|x64
+		{BB08FC74-F5E0-4753-BCB9-942B73DB8BC7}.basis|Win32.ActiveCfg = basis|Win32
+		{BB08FC74-F5E0-4753-BCB9-942B73DB8BC7}.basis|Win32.Build.0 = basis|Win32
+		{BB08FC74-F5E0-4753-BCB9-942B73DB8BC7}.basis|x64.ActiveCfg = basis|x64
+		{BB08FC74-F5E0-4753-BCB9-942B73DB8BC7}.basis|x64.Build.0 = basis|x64
+		{BB08FC74-F5E0-4753-BCB9-942B73DB8BC7}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
+		{BB08FC74-F5E0-4753-BCB9-942B73DB8BC7}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
+		{BB08FC74-F5E0-4753-BCB9-942B73DB8BC7}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
+		{BB08FC74-F5E0-4753-BCB9-942B73DB8BC7}.codeanalysis|x64.Build.0 = codeanalysis|x64
+		{BB08FC74-F5E0-4753-BCB9-942B73DB8BC7}.memdleak|Win32.ActiveCfg = memdleak|Win32
+		{BB08FC74-F5E0-4753-BCB9-942B73DB8BC7}.memdleak|Win32.Build.0 = memdleak|Win32
+		{BB08FC74-F5E0-4753-BCB9-942B73DB8BC7}.memdleak|x64.ActiveCfg = memdleak|x64
+		{BB08FC74-F5E0-4753-BCB9-942B73DB8BC7}.memdleak|x64.Build.0 = memdleak|x64
+		{BB08FC74-F5E0-4753-BCB9-942B73DB8BC7}.profiler|Win32.ActiveCfg = profiler|Win32
+		{BB08FC74-F5E0-4753-BCB9-942B73DB8BC7}.profiler|Win32.Build.0 = profiler|Win32
+		{BB08FC74-F5E0-4753-BCB9-942B73DB8BC7}.profiler|x64.ActiveCfg = profiler|x64
+		{BB08FC74-F5E0-4753-BCB9-942B73DB8BC7}.profiler|x64.Build.0 = profiler|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
