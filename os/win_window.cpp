@@ -1522,6 +1522,10 @@ restart_mouse_hover_check:
       {
 
          ::ca::message::key * pkey = (::ca::message::key *) pbase;
+
+
+         Application.user()->keyboard().translate_os_key_message(pkey);
+
          sp(::user::interaction) puiFocus = Application.user()->get_keyboard_focus();
          if(puiFocus != ::null() 
             && puiFocus->IsWindow()
