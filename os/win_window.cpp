@@ -3637,7 +3637,7 @@ restart_mouse_hover_check:
          {
             // let parent determine alternate center window
             sp(::user::interaction) oswindow_Temp =
-               (sp(::user::interaction) )oswindow_Center->send_message(WM_QUERYCENTERWND, 0, 0);
+               (sp(::user::interaction) )oswindow_Center->send_message(WM_QUERYCENTERWND);
             if (oswindow_Temp != ::null())
                oswindow_Center = oswindow_Temp;
          }
