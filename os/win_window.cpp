@@ -5490,7 +5490,7 @@ ExitModal:
 
    }
 
-   bool window::SendNotifyMessage(UINT message, WPARAM wParam, LPARAM lParam)
+   bool window::SendNotifyMessage(UINT message, WPARAM wParam, lparam lParam)
    { 
 
       return ::SendNotifyMessage(get_handle(), message, wParam, lParam) != FALSE;

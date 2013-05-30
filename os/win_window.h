@@ -170,10 +170,10 @@ namespace win
 
    #endif   // WINVER >= 0x0500
 
-      LRESULT send_message(UINT message, WPARAM wParam = 0, LPARAM lParam = 0);
-      bool PostMessage(UINT message, WPARAM wParam = 0, LPARAM lParam = 0);
+      LRESULT send_message(UINT message, WPARAM wParam = 0, lparam lParam = 0);
+      bool PostMessage(UINT message, WPARAM wParam = 0, lparam lParam = 0);
 
-      bool SendNotifyMessage(UINT message, WPARAM wParam, LPARAM lParam);
+      bool SendNotifyMessage(UINT message, WPARAM wParam, lparam lParam);
       bool SendChildNotifyLastMsg(LRESULT* pResult = ::null());
 
       bool DragDetect(POINT pt) const;
