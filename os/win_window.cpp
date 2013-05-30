@@ -1531,7 +1531,7 @@ restart_mouse_hover_check:
             && puiFocus->IsWindow()
             && puiFocus->GetTopLevelParent() != ::null())
          {
-            puiFocus->send_message(pkey);
+            puiFocus->send(pkey);
             if(pbase->m_bRet)
                return;
          }
@@ -4252,14 +4252,14 @@ ExitModal:
          if(rectWindowOld.top_left() != m_rectParentClient.top_left())
          {
 
-            send_message(WM_MOVE, 0, 0);
+            send_message(WM_MOVE);
 
          }
 
          if(rectWindowOld.size() != m_rectParentClient.size())
          {
 
-            send_message(WM_SIZE, 0, 0);
+            send_message(WM_SIZE);
 
          }
 
@@ -4731,13 +4731,13 @@ ExitModal:
       m_pguieOwner = pOwnerWnd; 
    }
 
-   LRESULT window::send_message(UINT message, WPARAM wParam, LPARAM lParam)
+   LRESULT window::send_message(UINT message, WPARAM wParam, lparam lParam)
    {
       //ASSERT(::IsWindow(get_handle())); 
       return ::SendMessage(get_handle(), message, wParam, lParam);
    }
 
-   bool window::PostMessage(UINT message, WPARAM wParam, LPARAM lParam)
+   bool window::PostMessage(UINT message, WPARAM wParam, lparam lParam)
    { 
       return ::PostMessage(get_handle(), message, wParam, lParam) != FALSE; 
    }
@@ -5510,7 +5510,7 @@ ExitModal:
 
       ASSERT(::IsWindow(get_handle()));
 
-      return (HICON)const_cast < ::win::window * > (this)->send_message(WM_GETICON, bBigIcon, 0);
+      return (HICON)const_cast < ::win::window * > (this)->send_message(WM_GETICON, bBigIcon);
 
    }
 
