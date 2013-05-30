@@ -170,8 +170,8 @@ namespace win
 
    #endif   // WINVER >= 0x0500
 
-      LRESULT send_message(UINT message, WPARAM wParam = 0, lparam lParam = 0);
-      bool PostMessage(UINT message, WPARAM wParam = 0, lparam lParam = 0);
+      LRESULT send_message(UINT message, WPARAM wParam = 0, lparam lParam = ::null());
+      bool PostMessage(UINT message, WPARAM wParam = 0, lparam lParam = ::null());
 
       bool SendNotifyMessage(UINT message, WPARAM wParam, lparam lParam);
       bool SendChildNotifyLastMsg(LRESULT* pResult = ::null());
