@@ -1272,6 +1272,8 @@ namespace win
 
          SCAST_PTR(::ca::message::key, pkey, pobj);
 
+         Application.user()->keyboard().translate_os_key_message(pkey);
+
          if(pbase->m_uiMessage == WM_KEYDOWN)
          {
             try
@@ -1522,9 +1524,6 @@ restart_mouse_hover_check:
       {
 
          ::ca::message::key * pkey = (::ca::message::key *) pbase;
-
-
-         Application.user()->keyboard().translate_os_key_message(pkey);
 
          sp(::user::interaction) puiFocus = Application.user()->get_keyboard_focus();
          if(puiFocus != ::null() 
