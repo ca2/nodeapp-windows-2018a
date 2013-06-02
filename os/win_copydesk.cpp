@@ -26,9 +26,9 @@ namespace win
          return 0;
       HDROP hdrop = (HDROP) ::GetClipboardData(CF_HDROP);
       int32_t iCount = 0;
-      if(hdrop != ::null())
+      if(hdrop != NULL)
       {
-         iCount = ::DragQueryFile(hdrop , 0xFFFFFFFF, ::null(), 0);
+         iCount = ::DragQueryFile(hdrop , 0xFFFFFFFF, NULL, 0);
       }
       ::CloseClipboard();
       return iCount;
@@ -46,7 +46,7 @@ namespace win
       string str;
       for(int32_t i = 0; i < iCount; i++)
       {
-         UINT uiLen = ::DragQueryFileW(hdrop, i, ::null(), 0);
+         UINT uiLen = ::DragQueryFileW(hdrop, i, NULL, 0);
          wchar_t * lpwsz = (wchar_t *) malloc(sizeof(wchar_t) * (uiLen + 1));
          ::DragQueryFileW(hdrop, i, lpwsz, uiLen + 1);
          stra.add(::ca::international::unicode_to_utf8(lpwsz));
@@ -110,7 +110,7 @@ namespace win
       if(!::ca::copydesk::initialize())
          return false;
 
-      if(!m_p->CreateEx(0, ::null(), ::null(), 0, rect(0, 0, 0, 0), ::null(), id()))
+      if(!m_p->CreateEx(0, NULL, NULL, 0, rect(0, 0, 0, 0), NULL, id()))
          return false;
 
       return true;
@@ -214,8 +214,8 @@ namespace win
       try
       {
          ::ca::bitmap_sp bitmap(get_app());
-         bitmap->attach(new Gdiplus::Bitmap(hbitmap, ::null()));
-         //HDC hdc = ::CreateCompatibleDC(::null());
+         bitmap->attach(new Gdiplus::Bitmap(hbitmap, NULL));
+         //HDC hdc = ::CreateCompatibleDC(NULL);
          //::ca::graphics_sp g(allocer());
          //g->attach(hdc);
          //::ca::graphics * pgraphics = Application.graphics_from_os_data(hdc);

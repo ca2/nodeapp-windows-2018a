@@ -75,7 +75,7 @@ namespace win
    bool file::open(const char * lpszFileName, UINT nOpenFlags)
    {
 
-      if(lpszFileName == ::null() || *lpszFileName == '\0') 
+      if(lpszFileName == NULL || *lpszFileName == '\0') 
       {
          TRACE("win::file::open file with empty name!!");
          return false;
@@ -152,7 +152,7 @@ namespace win
       // map modeNoInherit flag
       SECURITY_ATTRIBUTES sa;
       sa.nLength = sizeof(sa);
-      sa.lpSecurityDescriptor = ::null();
+      sa.lpSecurityDescriptor = NULL;
       sa.bInheritHandle = (nOpenFlags & modeNoInherit) == 0;
 
       // map creation flags
@@ -168,19 +168,19 @@ namespace win
          dwCreateFlag = OPEN_EXISTING;
 
       // attempt file creation
-      //HANDLE hFile = shell::CreateFile(::ca::international::utf8_to_unicode(m_strFileName), dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, ::null());
-      HANDLE hFile = ::CreateFileW(m_wstrFileName, dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, ::null());
+      //HANDLE hFile = shell::CreateFile(::ca::international::utf8_to_unicode(m_strFileName), dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
+      HANDLE hFile = ::CreateFileW(m_wstrFileName, dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
       if (hFile == INVALID_HANDLE_VALUE)
       {
          DWORD dwLastError = ::GetLastError();
 
          if(dwLastError != ERROR_FILE_NOT_FOUND && dwLastError != ERROR_PATH_NOT_FOUND)
          {
-            /*         if (pException != ::null())
+            /*         if (pException != NULL)
             {
             pException->create(allocer());
             ::ca::file_exception * pfe = dynamic_cast < ::ca::file_exception * > (pException->m_p);
-            if(pfe != ::null())
+            if(pfe != NULL)
             {
             pfe->m_lOsError = dwLastError;
             pfe->m_cause = file_exception::OsErrorToException(pfe->m_lOsError);
@@ -210,15 +210,15 @@ namespace win
 
          m_strFileName = ::ca::international::unicode_to_utf8(m_wstrFileName);
 
-         hFile = ::CreateFileW(m_wstrFileName, dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, ::null());
+         hFile = ::CreateFileW(m_wstrFileName, dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
 
          if (hFile == INVALID_HANDLE_VALUE)
          {
-            /*if (pException != ::null())
+            /*if (pException != NULL)
             {
             pException->create(allocer());
             ::ca::file_exception * pfe = dynamic_cast < ::ca::file_exception * > (pException->m_p);
-            if(pfe != ::null())
+            if(pfe != NULL)
             {
             pfe->m_lOsError = ::GetLastError();
             pfe->m_cause = file_exception::OsErrorToException(pfe->m_lOsError);
@@ -255,11 +255,11 @@ namespace win
       if (nCount == 0)
          return 0;   // avoid Win32 "null-read"
 
-      ASSERT(lpBuf != ::null());
+      ASSERT(lpBuf != NULL);
       ASSERT(__is_valid_address(lpBuf, nCount));
 
       DWORD dwRead;
-      if (!::ReadFile((HANDLE)m_hFile, lpBuf, (DWORD) nCount, &dwRead, ::null()))
+      if (!::ReadFile((HANDLE)m_hFile, lpBuf, (DWORD) nCount, &dwRead, NULL))
          file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
 
       return (UINT)dwRead;
@@ -273,11 +273,11 @@ namespace win
       if (nCount == 0)
          return;     // avoid Win32 "null-write" option
 
-      ASSERT(lpBuf != ::null());
+      ASSERT(lpBuf != NULL);
       ASSERT(__is_valid_address(lpBuf, nCount, FALSE));
 
       DWORD nWritten;
-      if (!::WriteFile((HANDLE)m_hFile, lpBuf, (DWORD) nCount, &nWritten, ::null()))
+      if (!::WriteFile((HANDLE)m_hFile, lpBuf, (DWORD) nCount, &nWritten, NULL))
          file_exception::ThrowOsError(get_app(), (LONG)::GetLastError(), m_strFileName);
 
       // Win32s will not return an error all the time (usually DISK_FULL)
@@ -492,7 +492,7 @@ namespace win
 
 
    /*void CLASS_DECL_win vfxThrowFileException(int32_t cause, LONG lOsError,
-   //   const char * lpszFileName /* == ::null() */
+   //   const char * lpszFileName /* == NULL */
    /*{
    #ifdef DEBUG
    const char * lpsz;
@@ -501,7 +501,7 @@ namespace win
    else
    lpsz = szUnknown;
    TRACE3("file exception: %hs, file %W, App error information = %ld.\n",
-   lpsz, (lpszFileName == ::null()) ? L"Unknown" : lpszFileName, lOsError);
+   lpsz, (lpszFileName == NULL) ? L"Unknown" : lpszFileName, lOsError);
    #endif
    THROW(new FileException(cause, lOsError, lpszFileName));
    }*/
@@ -592,13 +592,13 @@ namespace win
 
 
 
-   void file_exception::ThrowOsError(sp(::ca::application) papp, LONG lOsError, const char * lpszFileName /* = ::null() */)
+   void file_exception::ThrowOsError(sp(::ca::application) papp, LONG lOsError, const char * lpszFileName /* = NULL */)
    {
       if (lOsError != 0)
          vfxThrowFileException(papp, file_exception::OsErrorToException(lOsError), lOsError, lpszFileName);
    }
 
-   void file_exception::ThrowErrno(sp(::ca::application) papp, int32_t nErrno, const char * lpszFileName /* = ::null() */)
+   void file_exception::ThrowErrno(sp(::ca::application) papp, int32_t nErrno, const char * lpszFileName /* = NULL */)
    {
       if (nErrno != 0)
          vfxThrowFileException(papp, file_exception::ErrnoToException(nErrno), _doserrno, lpszFileName);
@@ -801,7 +801,7 @@ namespace win
          if (!::GetFileTime((HANDLE)m_hFile, &ftCreate, &ftAccess, &ftModify))
             return FALSE;
 
-         if ((rStatus.m_size = ::GetFileSize((HANDLE)m_hFile, ::null())) == (DWORD)-1L)
+         if ((rStatus.m_size = ::GetFileSize((HANDLE)m_hFile, NULL)) == (DWORD)-1L)
             return FALSE;
 
          if (m_strFileName.is_empty())
@@ -883,14 +883,14 @@ namespace win
    /*
    UINT CLASS_DECL_win vfxGetFileTitle(const wchar_t * lpszPathName, wchar_t * lpszTitle, UINT nMax)
    {
-   ASSERT(lpszTitle == ::null() ||
+   ASSERT(lpszTitle == NULL ||
    __is_valid_address(lpszTitle, _MAX_FNAME));
    ASSERT(__is_valid_string(lpszPathName));
 
-   // use a temporary to avoid bugs in ::GetFileTitle when lpszTitle is ::null()
+   // use a temporary to avoid bugs in ::GetFileTitle when lpszTitle is NULL
    WCHAR szTemp[_MAX_PATH];
    wchar_t * lpszTemp = lpszTitle;
-   if (lpszTemp == ::null())
+   if (lpszTemp == NULL)
    {
    lpszTemp = szTemp;
    nMax = _countof(szTemp);
@@ -900,7 +900,7 @@ namespace win
    // when ::GetFileTitle fails, use cheap imitation
    return vfxGetFileName(lpszPathName, lpszTitle, nMax);
    }
-   return lpszTitle == ::null() ? lstrlenW(lpszTemp)+1 : 0;
+   return lpszTitle == NULL ? lstrlenW(lpszTemp)+1 : 0;
    }
 
 
@@ -965,9 +965,9 @@ namespace win
    FILETIME creationTime;
    FILETIME lastAccessTime;
    FILETIME lastWriteTime;
-   LPFILETIME lpCreationTime = ::null();
-   LPFILETIME lpLastAccessTime = ::null();
-   LPFILETIME lpLastWriteTime = ::null();
+   LPFILETIME lpCreationTime = NULL;
+   LPFILETIME lpLastAccessTime = NULL;
+   LPFILETIME lpLastWriteTime = NULL;
 
    if ((wAttr = GetFileAttributes((LPTSTR)lpszFileName)) == (DWORD)-1L)
    file_exception::ThrowOsError(get_app(), (LONG)GetLastError());
@@ -1003,8 +1003,8 @@ namespace win
    }
 
    HANDLE hFile = ::CreateFile(lpszFileName, GENERIC_READ|GENERIC_WRITE,
-   FILE_SHARE_READ, ::null(), OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL,
-   ::null());
+   FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL,
+   NULL);
 
    if (hFile == INVALID_HANDLE_VALUE)
    file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
@@ -1068,7 +1068,7 @@ namespace win
 
 
 
-#define _wcsdec(_cpc1, _cpc2) ((_cpc1)>=(_cpc2) ? ::null() : (_cpc2)-1)
+#define _wcsdec(_cpc1, _cpc2) ((_cpc1)>=(_cpc2) ? NULL : (_cpc2)-1)
 
 #define _wcsinc(_pc)    ((_pc)+1)
 
@@ -1125,7 +1125,7 @@ bool CLASS_DECL_win vfxFullPath(wstring & wstrFullPath, const wstring & wstrPath
 
    // get file system information for the volume
    DWORD dwFlags, dwDummy;
-   if (!GetVolumeInformationW(wstrRoot, ::null(), 0, ::null(), &dwDummy, &dwFlags, ::null(), 0))
+   if (!GetVolumeInformationW(wstrRoot, NULL, 0, NULL, &dwDummy, &dwFlags, NULL, 0))
    {
       //      TRACE1("Warning: could not get volume information '%s'.\n", strRoot);
       return FALSE;   // preserving case may not be correct
@@ -1161,7 +1161,7 @@ bool CLASS_DECL_win vfxFullPath(wstring & wstrFullPath, const wstring & wstrPath
 
 /*void CLASS_DECL_win __get_root_path(const char * lpszPath, string & strRoot)
 {
-ASSERT(lpszPath != ::null());
+ASSERT(lpszPath != NULL);
 // determine the root name of the volume
 LPTSTR lpszRoot = strRoot.GetBuffer(_MAX_PATH);
 memset(lpszRoot, 0, _MAX_PATH);
@@ -1257,14 +1257,14 @@ return TRUE; // otherwise file name is truly the same
 
 /*UINT CLASS_DECL_win __get_file_title(const char * lpszPathName, LPTSTR lpszTitle, UINT nMax)
 {
-ASSERT(lpszTitle == ::null() ||
+ASSERT(lpszTitle == NULL ||
 __is_valid_address(lpszTitle, _MAX_FNAME));
 ASSERT(__is_valid_string(lpszPathName));
 
-// use a temporary to avoid bugs in ::GetFileTitle when lpszTitle is ::null()
+// use a temporary to avoid bugs in ::GetFileTitle when lpszTitle is NULL
 char szTemp[_MAX_PATH];
 LPTSTR lpszTemp = lpszTitle;
-if (lpszTemp == ::null())
+if (lpszTemp == NULL)
 {
 lpszTemp = szTemp;
 nMax = _countof(szTemp);
@@ -1274,7 +1274,7 @@ if (::GetFileTitle(lpszPathName, lpszTemp, (WORD)nMax) != 0)
 // when ::GetFileTitle fails, use cheap imitation
 return ::ca::GetFileName(lpszPathName, lpszTitle, nMax);
 }
-return lpszTitle == ::null() ? lstrlen(lpszTemp)+1 : 0;
+return lpszTitle == NULL ? lstrlen(lpszTemp)+1 : 0;
 }*/
 
 void CLASS_DECL_win vfxGetModuleShortFileName(HINSTANCE hInst, string& strShortName)
@@ -1309,14 +1309,14 @@ string CLASS_DECL_win vfxStringFromCLSID(REFCLSID rclsid)
 
 bool CLASS_DECL_win vfxGetInProcServer(const char * lpszCLSID, string & str)
 {
-   HKEY hKey = ::null();
+   HKEY hKey = NULL;
    bool b = FALSE;
    if (RegOpenKey(HKEY_CLASSES_ROOT, "CLSID", &hKey) == ERROR_SUCCESS)
    {
-      HKEY hKeyCLSID = ::null();
+      HKEY hKeyCLSID = NULL;
       if (RegOpenKey(hKey, lpszCLSID, &hKeyCLSID) == ERROR_SUCCESS)
       {
-         HKEY hKeyInProc = ::null();
+         HKEY hKeyInProc = NULL;
          if (RegOpenKey(hKeyCLSID, "InProcServer32", &hKeyInProc) ==
             ERROR_SUCCESS)
          {
@@ -1324,7 +1324,7 @@ bool CLASS_DECL_win vfxGetInProcServer(const char * lpszCLSID, string & str)
             DWORD dwSize = _MAX_PATH * sizeof(char);
             DWORD dwType;
             LONG lRes = ::RegQueryValueEx(hKeyInProc, "",
-               ::null(), &dwType, (BYTE*)lpsz, &dwSize);
+               NULL, &dwType, (BYTE*)lpsz, &dwSize);
             str.ReleaseBuffer();
             b = (lRes == ERROR_SUCCESS);
             RegCloseKey(hKeyInProc);
@@ -1385,7 +1385,7 @@ bool CLASS_DECL_win vfxResolveShortcut(string & strTarget, const char * pszSourc
    }
 
    HRESULT hr ; 
-   if (FAILED(hr = CoCreateInstance(CLSID_ShellLink, ::null(), CLSCTX_INPROC_SERVER, IID_IShellLinkW,
+   if (FAILED(hr = CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLinkW,
       (LPVOID*)&psl)))
    {
       return FALSE;
@@ -1397,12 +1397,12 @@ bool CLASS_DECL_win vfxResolveShortcut(string & strTarget, const char * pszSourc
       if (SUCCEEDED(ppf->Load(wstrFileIn, STGM_READ)))
       {
          /* Resolve the link, this may post UI to find the link */
-         if (SUCCEEDED(psl->Resolve(pui == ::null() ? ::null() : pui->get_handle(),
-            SLR_ANY_MATCH | (pui == ::null() ? (SLR_NO_UI | (8400 << 16)) : 0))))
+         if (SUCCEEDED(psl->Resolve(pui == NULL ? NULL : pui->get_handle(),
+            SLR_ANY_MATCH | (pui == NULL ? (SLR_NO_UI | (8400 << 16)) : 0))))
          {
             wstrFileOut.alloc(MAX_PATH);
             bool bOk;
-            if(SUCCEEDED(psl->GetPath(wstrFileOut, MAX_PATH, ::null(), 0)))
+            if(SUCCEEDED(psl->GetPath(wstrFileOut, MAX_PATH, NULL, 0)))
             {
                bOk = true;
                wstrFileOut.release_buffer();
@@ -1449,7 +1449,7 @@ bool CLASS_DECL_win vfxFullPath(wchar_t * lpszPathOut, const wchar_t * lpszFileI
 
    // get file system information for the volume
    DWORD dwFlags, dwDummy;
-   if (!GetVolumeInformationW(::ca::international::utf8_to_unicode(strRoot), ::null(), 0, ::null(), &dwDummy, &dwFlags, ::null(), 0))
+   if (!GetVolumeInformationW(::ca::international::utf8_to_unicode(strRoot), NULL, 0, NULL, &dwDummy, &dwFlags, NULL, 0))
    {
       //      TRACE1("Warning: could not get volume information '%s'.\n", strRoot);
       return FALSE;   // preserving case may not be correct
@@ -1478,7 +1478,7 @@ bool CLASS_DECL_win vfxFullPath(wchar_t * lpszPathOut, const wchar_t * lpszFileI
 
 void CLASS_DECL_win vfxGetRoot(wstring & wstrRoot, const wstring & wstrPath)
 {
-   //   ASSERT(lpszPath != ::null());
+   //   ASSERT(lpszPath != NULL);
    // determine the root name of the volume
    wstrRoot = wstrPath;
    wchar_t * lpszRoot = wstrRoot;
@@ -1521,7 +1521,7 @@ void CLASS_DECL_win vfxGetRoot(wstring & wstrRoot, const wstring & wstrPath)
 
 void CLASS_DECL_win vfxGetRoot(const wchar_t * lpszPath, string& strRoot)
 {
-   ASSERT(lpszPath != ::null());
+   ASSERT(lpszPath != NULL);
    wstring wstrRoot;
    // determine the root name of the volume
    wchar_t * lpszRoot = wstrRoot.alloc(_MAX_PATH * 4);
@@ -1589,8 +1589,8 @@ vfxGetRoot(lpszPathOut, wstrRoot);
 
 // get file system information for the volume
 DWORD dwFlags, dwDummy;
-if (!shell::GetVolumeInformation(wstrRoot, ::null(), 0, ::null(), &dwDummy, &dwFlags,
-::null(), 0))
+if (!shell::GetVolumeInformation(wstrRoot, NULL, 0, NULL, &dwDummy, &dwFlags,
+NULL, 0))
 {
 TRACE1("Warning: could not get volume information '%S'.\n",
 (const char *)wstrRoot);
@@ -1620,7 +1620,7 @@ return TRUE;
 
 UINT CLASS_DECL_win vfxGetFileName(const wchar_t * lpszPathName, wchar_t * lpszTitle, UINT nMax)
 {
-   ASSERT(lpszTitle == ::null() ||
+   ASSERT(lpszTitle == NULL ||
       __is_valid_address(lpszTitle, _MAX_FNAME));
    ASSERT(__is_valid_string(lpszPathName));
 
@@ -1633,8 +1633,8 @@ UINT CLASS_DECL_win vfxGetFileName(const wchar_t * lpszPathName, wchar_t * lpszT
          lpszTemp = (wchar_t *)_wcsinc(lpsz);
    }
 
-   // lpszTitle can be ::null() which just returns the number of bytes
-   if (lpszTitle == ::null())
+   // lpszTitle can be NULL which just returns the number of bytes
+   if (lpszTitle == NULL)
       return lstrlenW(lpszTemp)+1;
 
    // otherwise copy it into the buffer provided
@@ -1650,7 +1650,7 @@ UINT CLASS_DECL_win vfxGetFileName(const wchar_t * lpszPathName, wchar_t * lpszT
 /////////////////////////////////////////////////////////////////////////////
 // WinFileException helpers
 
-void CLASS_DECL_win vfxThrowFileException(sp(::ca::application) papp, int32_t cause, LONG lOsError, const char * lpszFileName /* == ::null() */)
+void CLASS_DECL_win vfxThrowFileException(sp(::ca::application) papp, int32_t cause, LONG lOsError, const char * lpszFileName /* == NULL */)
 {
 #ifdef DEBUG
    const char * lpsz;
@@ -1658,7 +1658,7 @@ void CLASS_DECL_win vfxThrowFileException(sp(::ca::application) papp, int32_t ca
       lpsz = ::win::rgszFileExceptionCause[cause];
    else
       lpsz = ::win::szUnknown;
-   //   TRACE3("file exception: %hs, file %s, App error information = %ld.\n", lpsz, (lpszFileName == ::null()) ? "Unknown" : lpszFileName, lOsError);
+   //   TRACE3("file exception: %hs, file %s, App error information = %ld.\n", lpsz, (lpszFileName == NULL) ? "Unknown" : lpszFileName, lOsError);
 #endif
    throw ::ca::file_exception(papp, cause, lOsError, lpszFileName);
 }

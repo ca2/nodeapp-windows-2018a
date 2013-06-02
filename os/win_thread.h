@@ -81,9 +81,9 @@ namespace win
 
       virtual void set_p(::ca::thread * p);
 
-      virtual bool begin(::ca::e_thread_priority epriority = get_thread_priority_normal(), uint_ptr nStackSize = 0, uint32_t dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = ::null());
+      virtual bool begin(::ca::e_thread_priority epriority = get_thread_priority_normal(), uint_ptr nStackSize = 0, uint32_t dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
-      bool create_thread(::ca::e_thread_priority epriority = get_thread_priority_normal(), uint32_t dwCreateFlags = 0, uint_ptr nStackSize = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = ::null()) override;
+      bool create_thread(::ca::e_thread_priority epriority = get_thread_priority_normal(), uint32_t dwCreateFlags = 0, uint_ptr nStackSize = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL) override;
 
 
       virtual sp(::user::interaction) SetMainWnd(sp(::user::interaction) pui);
@@ -122,8 +122,8 @@ namespace win
    // Operations
       //DWORD SuspendThread();
       uint32_t ResumeThread();
-      bool post_thread_message(UINT message, WPARAM wParam = 0, lparam lParam = ::null());
-      bool post_message(sp(::user::interaction) pguie, UINT message, WPARAM wParam = 0, lparam lParam = ::null());
+      bool post_thread_message(UINT message, WPARAM wParam = 0, lparam lParam = NULL);
+      bool post_message(sp(::user::interaction) pguie, UINT message, WPARAM wParam = 0, lparam lParam = NULL);
 
       virtual bool PreInitInstance();
 

@@ -100,16 +100,16 @@ preview_dc::preview_dc()
    // Initial scale factor and top-left offset
    m_nScaleNum = m_nScaleDen = 1;
    m_sizeTopLeft.cx = m_sizeTopLeft.cy = 8;
-   m_hFont = m_hPrinterFont = ::null();
+   m_hFont = m_hPrinterFont = NULL;
 }
 
 void preview_dc::SetOutputDC(HDC hDC)
 {
-   ASSERT(hDC != ::null());
+   ASSERT(hDC != NULL);
    m_nSaveDCIndex = ::SaveDC(hDC); // restore in ReleaseOutputDC()
    ::ca::graphics_sp::SetOutputDC(hDC);
 
-   if (get_handle2() != ::null())
+   if (get_handle2() != NULL)
    {
       MirrorMappingMode(FALSE);
 
@@ -123,14 +123,14 @@ void preview_dc::SetOutputDC(HDC hDC)
 
 void preview_dc::ReleaseOutputDC()
 {
-   ASSERT(get_os_data() != ::null());
+   ASSERT(get_os_data() != NULL);
    ::RestoreDC(get_os_data(), m_nSaveDCIndex); // Saved in SetOutputDC()
    ::ca::graphics_sp::ReleaseOutputDC();
 }
 
 void preview_dc::SetAttribDC(HDC hDC)
 {
-   ASSERT(hDC != ::null());
+   ASSERT(hDC != NULL);
    ::ca::graphics_sp::SetAttribDC(hDC);
 
    MirrorMappingMode(TRUE);
@@ -140,7 +140,7 @@ void preview_dc::SetAttribDC(HDC hDC)
 
 preview_dc::~preview_dc()
 {
-   ASSERT(get_os_data() == ::null());      // Should not have a screen DC at this time
+   ASSERT(get_os_data() == NULL);      // Should not have a screen DC at this time
    __delete_object((HGDIOBJ*)&m_hFont);
 }
 
@@ -148,7 +148,7 @@ void preview_dc::SetScaleRatio(int32_t nNumerator, int32_t nDenominator)
 {
    m_nScaleNum = nNumerator;
    m_nScaleDen = nDenominator;
-   if (get_handle2() != ::null())
+   if (get_handle2() != NULL)
    {
       MirrorMappingMode(TRUE);
       MirrorFont();
@@ -174,9 +174,9 @@ void preview_dc::dump(dump_context & dumpcontext) const
 
 int32_t preview_dc::SaveDC()
 {
-   ASSERT(get_handle2() != ::null());
+   ASSERT(get_handle2() != NULL);
    int32_t nAttribIndex = ::SaveDC(get_handle2());
-   if (get_os_data() != ::null())
+   if (get_os_data() != NULL)
    {
       // remove font from object
       ::SelectObject(get_os_data(), GetStockObject(SYSTEM_FONT));
@@ -193,13 +193,13 @@ int32_t preview_dc::SaveDC()
 
 bool preview_dc::RestoreDC(int32_t nSavedDC)
 {
-   ASSERT(get_handle2() != ::null());
+   ASSERT(get_handle2() != NULL);
    bool bSuccess = ::RestoreDC(get_handle2(), nSavedDC);
    if (bSuccess)
    {
       if (m_nSaveDCDelta != 0x7fff)
       {
-         ASSERT(get_os_data() != ::null());      // removed Output DC after save
+         ASSERT(get_os_data() != NULL);      // removed Output DC after save
 
          if (nSavedDC != -1)
             nSavedDC += m_nSaveDCDelta;
@@ -208,7 +208,7 @@ bool preview_dc::RestoreDC(int32_t nSavedDC)
       }
       else
       {
-         ASSERT(get_os_data() == ::null());      // Added the Output DC after save
+         ASSERT(get_os_data() == NULL);      // Added the Output DC after save
       }
    }
    return bSuccess;
@@ -216,9 +216,9 @@ bool preview_dc::RestoreDC(int32_t nSavedDC)
 
 void preview_dc::MirrorAttributes()
 {
-   ASSERT(get_handle2() != ::null());
+   ASSERT(get_handle2() != NULL);
 
-   if (get_os_data() != ::null())
+   if (get_os_data() != NULL)
    {
       // extract and re-set Pen and Brush
       HGDIOBJ hTemp = ::SelectObject(get_handle2(), ::GetStockObject(BLACK_PEN));
@@ -240,7 +240,7 @@ void preview_dc::MirrorAttributes()
 
 ::ca::graphics_object* preview_dc::SelectStockObject(int32_t nIndex)
 {
-   ASSERT(get_handle2() != ::null());
+   ASSERT(get_handle2() != NULL);
 
    HGDIOBJ hObj = ::GetStockObject(nIndex);
 
@@ -264,14 +264,14 @@ void preview_dc::MirrorAttributes()
 
          m_hPrinterFont = (HFONT) hObj;
 
-         ASSERT(m_hPrinterFont != ::null()); // Do not allow infinite recursion
+         ASSERT(m_hPrinterFont != NULL); // Do not allow infinite recursion
 
          MirrorFont();
          return pObject;
       }
 
    default:
-      if (get_os_data() != ::null())
+      if (get_os_data() != NULL)
          ::SelectObject(get_os_data(), hObj);
       return ::win::graphics_object::from_handle(::SelectObject(get_handle2(), hObj));
    }
@@ -279,16 +279,16 @@ void preview_dc::MirrorAttributes()
 
 void preview_dc::MirrorFont()
 {
-   if (get_handle2() == ::null())
+   if (get_handle2() == NULL)
       return;         // Can't do anything without Attrib DC
 
-   if (m_hPrinterFont == ::null())
+   if (m_hPrinterFont == NULL)
    {
       SelectStockObject(DEVICE_DEFAULT_FONT); // will recurse
       return;
    }
 
-   if (get_os_data() == ::null())
+   if (get_os_data() == NULL)
       return;         // can't mirror font without a screen DC
 
    LOGFONT logFont;
@@ -369,10 +369,10 @@ void preview_dc::MirrorFont()
 
 ::ca::font* preview_dc::SelectObject(::ca::font* pFont)
 {
-   if (pFont == ::null())
-      return ::null();
+   if (pFont == NULL)
+      return NULL;
 
-   ASSERT(get_handle2() != ::null());
+   ASSERT(get_handle2() != NULL);
    ASSERT_VALID(pFont);
 
    ::ca::font* pOldFont = (::ca::font*) ::win::graphics_object::from_handle(
@@ -393,23 +393,23 @@ void preview_dc::MirrorFont()
 
 COLORREF preview_dc::SetBkColor(COLORREF crColor)
 {
-   ASSERT(get_handle2() != ::null());
-   if (get_os_data() != ::null())
+   ASSERT(get_handle2() != NULL);
+   if (get_os_data() != NULL)
       ::SetBkColor(get_os_data(), ::GetNearestColor(get_handle2(), crColor));
    return ::SetBkColor(get_handle2(), crColor);
 }
 
 COLORREF preview_dc::SetTextColor(COLORREF crColor)
 {
-   ASSERT(get_handle2() != ::null());
-   if (get_os_data() != ::null())
+   ASSERT(get_handle2() != NULL);
+   if (get_os_data() != NULL)
       ::SetTextColor(get_os_data(), ::GetNearestColor(get_handle2(), crColor));
    return ::SetTextColor(get_handle2(), crColor);
 }
 
 int32_t preview_dc::SetMapMode(int32_t nMapMode)
 {
-   ASSERT(get_handle2() != ::null());
+   ASSERT(get_handle2() != NULL);
    int32_t nModeOld = ::SetMapMode(get_handle2(), nMapMode);
    MirrorMappingMode(TRUE);
    return nModeOld;
@@ -417,7 +417,7 @@ int32_t preview_dc::SetMapMode(int32_t nMapMode)
 
 point preview_dc::SetViewportOrg(int32_t x, int32_t y)
 {
-   ASSERT(get_handle2() != ::null());
+   ASSERT(get_handle2() != NULL);
    point ptOrgOld;
    VERIFY(::SetViewportOrgEx(get_handle2(), x, y, &ptOrgOld));
    MirrorViewportOrg();
@@ -426,7 +426,7 @@ point preview_dc::SetViewportOrg(int32_t x, int32_t y)
 
 point preview_dc::OffsetViewportOrg(int32_t nWidth, int32_t nHeight)
 {
-   ASSERT(get_handle2() != ::null());
+   ASSERT(get_handle2() != NULL);
    point ptOrgOld;
    VERIFY(::OffsetViewportOrgEx(get_handle2(), nWidth, nHeight, &ptOrgOld));
    MirrorViewportOrg();
@@ -435,7 +435,7 @@ point preview_dc::OffsetViewportOrg(int32_t nWidth, int32_t nHeight)
 
 size preview_dc::SetViewportExt(int32_t x, int32_t y)
 {
-   ASSERT(get_handle2() != ::null());
+   ASSERT(get_handle2() != NULL);
    size sizeExtOld;
    VERIFY(::SetViewportExtEx(get_handle2(), x, y, &sizeExtOld));
    MirrorMappingMode(TRUE);
@@ -444,7 +444,7 @@ size preview_dc::SetViewportExt(int32_t x, int32_t y)
 
 size preview_dc::ScaleViewportExt(int32_t xNum, int32_t xDenom, int32_t yNum, int32_t yDenom)
 {
-   ASSERT(get_handle2() != ::null());
+   ASSERT(get_handle2() != NULL);
    size sizeExtOld;
    VERIFY(::ScaleViewportExtEx(get_handle2(), xNum, xDenom,
       yNum, yDenom, &sizeExtOld));
@@ -454,7 +454,7 @@ size preview_dc::ScaleViewportExt(int32_t xNum, int32_t xDenom, int32_t yNum, in
 
 size preview_dc::SetWindowExt(int32_t x, int32_t y)
 {
-   ASSERT(get_handle2() != ::null());
+   ASSERT(get_handle2() != NULL);
    size sizeExtOld;
    VERIFY(::SetWindowExtEx(get_handle2(), x, y, &sizeExtOld));
    MirrorMappingMode(TRUE);
@@ -463,7 +463,7 @@ size preview_dc::SetWindowExt(int32_t x, int32_t y)
 
 size preview_dc::ScaleWindowExt(int32_t xNum, int32_t xDenom, int32_t yNum, int32_t yDenom)
 {
-   ASSERT(get_handle2() != ::null());
+   ASSERT(get_handle2() != NULL);
    size sizeExtOld;
    VERIFY(::ScaleWindowExtEx(get_handle2(), xNum, xDenom, yNum, yDenom,
       &sizeExtOld));
@@ -533,7 +533,7 @@ size preview_dc::ComputeDeltas(int32_t& x, const char * lpszString, UINT &nCount
       {
          // get default size of a tab
          nTabWidth = LOWORD(::GetTabbedTextExtentA(get_handle2(),
-            "\t", 1, 0, ::null()));
+            "\t", 1, 0, NULL));
       }
    }
 
@@ -629,7 +629,7 @@ size preview_dc::ComputeDeltas(int32_t& x, const char * lpszString, UINT &nCount
       nRightFixup = nStartOffset; // Right adjust needed later if TA_UPDATECP
 
    if (bUpdateCP)
-      ::MoveToEx(get_os_data(), x, ptCurrent.y, ::null());
+      ::MoveToEx(get_os_data(), x, ptCurrent.y, NULL);
 
    nCount = (UINT)(pnCurDelta - pnDxWidths);   // number of characters output
    return sizeExtent;
@@ -637,24 +637,24 @@ size preview_dc::ComputeDeltas(int32_t& x, const char * lpszString, UINT &nCount
 
 bool preview_dc::TextOut(int32_t x, int32_t y, const char * lpszString, int32_t nCount)
 {
-   return ExtTextOut(x, y, 0, ::null(), lpszString, nCount, ::null());
+   return ExtTextOut(x, y, 0, NULL, lpszString, nCount, NULL);
 }
 
 bool preview_dc::ExtTextOut(int32_t x, int32_t y, UINT nOptions, LPCRECT lpRect,
    const char * lpszString, UINT nCount, LPINT lpDxWidths)
 {
-   ASSERT(get_os_data() != ::null());
-   ASSERT(get_handle2() != ::null());
-   ASSERT(lpszString != ::null());
-   ASSERT(lpDxWidths == ::null() ||
+   ASSERT(get_os_data() != NULL);
+   ASSERT(get_handle2() != NULL);
+   ASSERT(lpszString != NULL);
+   ASSERT(lpDxWidths == NULL ||
          __is_valid_address(lpDxWidths, sizeof(int32_t) * nCount, FALSE));
    ASSERT(__is_valid_address(lpszString, nCount, FALSE));
 
-   int32_t* pDeltas = ::null();
-   LPTSTR pOutputString = ::null();
+   int32_t* pDeltas = NULL;
+   LPTSTR pOutputString = NULL;
    int32_t nRightFixup = 0;
 
-   if (lpDxWidths == ::null())
+   if (lpDxWidths == NULL)
    {
       if (nCount == 0)    // Do nothing
          return TRUE;
@@ -672,7 +672,7 @@ bool preview_dc::ExtTextOut(int32_t x, int32_t y, UINT nOptions, LPCRECT lpRect,
       }
       
 
-      ComputeDeltas(x, (LPTSTR)lpszString, nCount, FALSE, 0, ::null(), 0,
+      ComputeDeltas(x, (LPTSTR)lpszString, nCount, FALSE, 0, NULL, 0,
                               pOutputString, pDeltas, nRightFixup);
 
       lpDxWidths = pDeltas;
@@ -696,19 +696,19 @@ bool preview_dc::ExtTextOut(int32_t x, int32_t y, UINT nOptions, LPCRECT lpRect,
 size preview_dc::TabbedTextOut(int32_t x, int32_t y, const char * lpszString, int32_t nCount,
    int32_t nTabPositions, LPINT lpnTabStopPositions, int32_t nTabOrigin)
 {
-   ASSERT(get_handle2() != ::null());
-   ASSERT(get_os_data() != ::null());
-   ASSERT(lpszString != ::null());
+   ASSERT(get_handle2() != NULL);
+   ASSERT(get_os_data() != NULL);
+   ASSERT(lpszString != NULL);
    ASSERT(__is_valid_address(lpszString, nCount, FALSE));
-   ASSERT(lpnTabStopPositions == ::null() ||
+   ASSERT(lpnTabStopPositions == NULL ||
          __is_valid_address(lpnTabStopPositions, sizeof(int32_t) * nTabPositions,
             FALSE));
 
    if (nCount <= 0)
       return (DWORD) 0;         // nCount is zero, there is nothing to print
 
-   int32_t* pDeltas = ::null();
-   LPTSTR pOutputString = ::null();
+   int32_t* pDeltas = NULL;
+   LPTSTR pOutputString = NULL;
    int32_t nRightFixup;
 
    try
@@ -729,7 +729,7 @@ size preview_dc::TabbedTextOut(int32_t x, int32_t y, const char * lpszString, in
                      nTabPositions, lpnTabStopPositions, nTabOrigin,
                      pOutputString, pDeltas, nRightFixup);
 
-   bool bSuccess = ExtTextOut(x, y, 0, ::null(), pOutputString, uCount, pDeltas);
+   bool bSuccess = ExtTextOut(x, y, 0, NULL, pOutputString, uCount, pDeltas);
 
    delete[] pDeltas;
    delete[] pOutputString;
@@ -749,10 +749,10 @@ size preview_dc::TabbedTextOut(int32_t x, int32_t y, const char * lpszString, in
 int32_t preview_dc::DrawText(const char * lpszString, int32_t nCount, LPRECT lpRect,
    UINT nFormat)
 {
-   ASSERT(get_handle2() != ::null());
-   ASSERT(get_os_data() != ::null());
-   ASSERT(lpszString != ::null());
-   ASSERT(lpRect != ::null());
+   ASSERT(get_handle2() != NULL);
+   ASSERT(get_os_data() != NULL);
+   ASSERT(lpszString != NULL);
+   ASSERT(lpRect != NULL);
    ASSERT(__is_valid_address(lpRect, sizeof(RECT)));
    ASSERT(nCount == -1 ?
       __is_valid_string(lpszString) :
@@ -762,17 +762,17 @@ int32_t preview_dc::DrawText(const char * lpszString, int32_t nCount, LPRECT lpR
 
    point pos;
    ::GetCurrentPositionEx(get_os_data(), &pos);
-   ::MoveToEx(get_handle2(), pos.x, pos.y, ::null());
+   ::MoveToEx(get_handle2(), pos.x, pos.y, NULL);
    return retVal;
 }
 
 int32_t preview_dc::DrawTextEx(__in_ecount(nCount) LPTSTR lpszString, int32_t nCount, LPRECT lpRect,
    UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
 {
-   ASSERT(get_handle2() != ::null());
-   ASSERT(get_os_data() != ::null());
-   ASSERT(lpszString != ::null());
-   ASSERT(lpRect != ::null());
+   ASSERT(get_handle2() != NULL);
+   ASSERT(get_os_data() != NULL);
+   ASSERT(lpszString != NULL);
+   ASSERT(lpRect != NULL);
    ASSERT(__is_valid_address(lpRect, sizeof(RECT)));
    ASSERT(nCount == -1 ?
       __is_valid_string(lpszString) :
@@ -782,7 +782,7 @@ int32_t preview_dc::DrawTextEx(__in_ecount(nCount) LPTSTR lpszString, int32_t nC
 
    point pos;
    ::GetCurrentPositionEx(get_os_data(), &pos);
-   ::MoveToEx(get_handle2(), pos.x, pos.y, ::null());
+   ::MoveToEx(get_handle2(), pos.x, pos.y, NULL);
    return retVal;
 }
 
@@ -801,7 +801,7 @@ int32_t preview_dc::Escape(int32_t nEscape, int32_t nCount, const char * lpszInD
    // eliminate anything actually going to the printer.  Also anything
    // that actually draws something will be filtered.
 
-   ASSERT(get_handle2() != ::null());
+   ASSERT(get_handle2() != NULL);
 
    switch (nEscape)
    {
@@ -852,7 +852,7 @@ int32_t preview_dc::Escape(int32_t nEscape, int32_t nCount, const char * lpszInD
 
 void preview_dc::MirrorMappingMode(bool bCompute)
 {
-   ASSERT(get_handle2() != ::null());
+   ASSERT(get_handle2() != NULL);
    if (bCompute)
    {
       //
@@ -902,11 +902,11 @@ void preview_dc::MirrorMappingMode(bool bCompute)
       m_sizeVpExt.cy = (int32_t)lTempExt;
    }
 
-   if (get_os_data() != ::null())
+   if (get_os_data() != NULL)
    {
       ::SetMapMode(get_os_data(), MM_ANISOTROPIC);
-      ::SetWindowExtEx(get_os_data(), m_sizeWinExt.cx, m_sizeWinExt.cy, ::null());
-      ::SetViewportExtEx(get_os_data(), m_sizeVpExt.cx, m_sizeVpExt.cy, ::null());
+      ::SetWindowExtEx(get_os_data(), m_sizeWinExt.cx, m_sizeWinExt.cy, NULL);
+      ::SetViewportExtEx(get_os_data(), m_sizeVpExt.cx, m_sizeVpExt.cy, NULL);
 
       // Now that the Logical Units are synchronized, we can set the Viewport Org
       MirrorViewportOrg();
@@ -915,31 +915,31 @@ void preview_dc::MirrorMappingMode(bool bCompute)
 
 void preview_dc::MirrorViewportOrg()
 {
-   if (get_handle2() == ::null() || get_os_data() == ::null())
+   if (get_handle2() == NULL || get_os_data() == NULL)
       return;
 
    point ptVpOrg;
    VERIFY(::GetViewportOrgEx(get_handle2(), &ptVpOrg));
    PrinterDPtoScreenDP(&ptVpOrg);
    ptVpOrg += m_sizeTopLeft;
-   ::SetViewportOrgEx(get_os_data(), ptVpOrg.x, ptVpOrg.y, ::null());
+   ::SetViewportOrgEx(get_os_data(), ptVpOrg.x, ptVpOrg.y, NULL);
 
    point ptWinOrg;
    VERIFY(::GetWindowOrgEx(get_handle2(), &ptWinOrg));
-   ::SetWindowOrgEx(get_os_data(), ptWinOrg.x, ptWinOrg.y, ::null());
+   ::SetWindowOrgEx(get_os_data(), ptWinOrg.x, ptWinOrg.y, NULL);
 }
 
 void preview_dc::SetTopLeftOffset(size sizeTopLeft)
 {
-   ASSERT(get_handle2() != ::null());
+   ASSERT(get_handle2() != NULL);
    m_sizeTopLeft = sizeTopLeft;
    MirrorViewportOrg();
 }
 
 void preview_dc::ClipToPage()
 {
-   ASSERT(get_handle2() != ::null());
-   ASSERT(get_os_data() != ::null());
+   ASSERT(get_handle2() != NULL);
+   ASSERT(get_os_data() != NULL);
    // create a rect in Screen Device coordinates that is one pixel larger
    // on all sides than the actual page.  This is to hide the fact that
    // the printer to screen mapping mode is approximate and may result
@@ -952,8 +952,8 @@ void preview_dc::ClipToPage()
    // set the screen dumpcontext <<to MM_TEXT and no WindowOrg for the interesection
 
    ::SetMapMode(get_os_data(), MM_TEXT);
-   ::SetWindowOrgEx(get_os_data(), 0, 0, ::null());
-   ::SetViewportOrgEx(get_os_data(), m_sizeTopLeft.cx, m_sizeTopLeft.cy, ::null());
+   ::SetWindowOrgEx(get_os_data(), 0, 0, NULL);
+   ::SetViewportOrgEx(get_os_data(), m_sizeTopLeft.cx, m_sizeTopLeft.cy, NULL);
    ::IntersectClipRect(get_os_data(), -1, -1, pt.x + 2, pt.y + 2);
 
    // Resynchronize the mapping mode
@@ -964,7 +964,7 @@ void preview_dc::ClipToPage()
 
 void preview_dc::PrinterDPtoScreenDP(LPPOINT lpPoint) const
 {
-   ASSERT(get_handle2() != ::null());
+   ASSERT(get_handle2() != NULL);
 
    size sizePrinterVpExt;
    VERIFY(::GetViewportExtEx(get_handle2(), &sizePrinterVpExt));
@@ -989,15 +989,15 @@ void preview_dc::PrinterDPtoScreenDP(LPPOINT lpPoint) const
 
 HDC CLASS_DECL_win ::ca::CreateDC(HGLOBAL hDevNames, HGLOBAL hDevMode)
 {
-   if (hDevNames == ::null())
-      return ::null();
+   if (hDevNames == NULL)
+      return NULL;
 
    LPDEVNAMES lpDevNames = (LPDEVNAMES)::GlobalLock(hDevNames);
-   LPDEVMODE  lpDevMode = (hDevMode != ::null()) ?
-                  (LPDEVMODE)::GlobalLock(hDevMode) : ::null();
+   LPDEVMODE  lpDevMode = (hDevMode != NULL) ?
+                  (LPDEVMODE)::GlobalLock(hDevMode) : NULL;
 
-   if (lpDevNames == ::null())
-      return ::null();
+   if (lpDevNames == NULL)
+      return NULL;
 
    HDC hDC = ::CreateDC((const char *)lpDevNames + lpDevNames->wDriverOffset,
                  (const char *)lpDevNames + lpDevNames->wDeviceOffset,
@@ -1005,7 +1005,7 @@ HDC CLASS_DECL_win ::ca::CreateDC(HGLOBAL hDevNames, HGLOBAL hDevMode)
                  lpDevMode);
 
    ::GlobalUnlock(hDevNames);
-   if (hDevMode != ::null())
+   if (hDevMode != NULL)
       ::GlobalUnlock(hDevMode);
    return hDC;
 }

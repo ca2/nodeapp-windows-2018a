@@ -42,7 +42,7 @@ CLASS_DECL_win void __set_alloc_stop(LONG lRequestNumber);
 CLASS_DECL_win bool __check_memory();
 
 // Return TRUE if valid primitive::memory block of nBytes
-CLASS_DECL_win bool __is_memory_block(const void * p, UINT nBytes, LONG* plRequestNumber = ::null());
+CLASS_DECL_win bool __is_memory_block(const void * p, UINT nBytes, LONG* plRequestNumber = NULL);
 
 #endif
 

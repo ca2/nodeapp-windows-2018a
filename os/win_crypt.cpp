@@ -22,7 +22,7 @@ namespace win
       DATA_BLOB DataIn;
       DATA_BLOB DataOut;
 
-      if(pszSalt == ::null())
+      if(pszSalt == NULL)
          pszSalt = "";
 
       DATA_BLOB DataSalt;
@@ -37,7 +37,7 @@ namespace win
       DataIn.pbData = storageEncrypt.get_data();
       DataIn.cbData = (DWORD) storageEncrypt.get_size();
 
-      wchar_t * lpwsz = ::null();
+      wchar_t * lpwsz = NULL;
 
       //--------------------------------------------------------------------
       //  begin protect phase. Note that the encryption key is created
@@ -45,12 +45,12 @@ namespace win
 
       if(CryptUnprotectData(
          &DataIn,
-         ::null(), // A description string
+         NULL, // A description string
                                             // to be included with the
                                             // encrypted data.
          &DataSalt,                               // Optional entropy not used.
-         ::null(),                               // Reserved.
-         ::null(),                               // Pass ::null() for the
+         NULL,                               // Reserved.
+         NULL,                               // Pass NULL for the
                                             // prompt structure.
          0,
          &DataOut))
@@ -75,7 +75,7 @@ namespace win
       DATA_BLOB DataIn;
       DATA_BLOB DataOut;
 
-      if(pszSalt == ::null())
+      if(pszSalt == NULL)
          pszSalt = "";
 
       DATA_BLOB DataSalt;
@@ -91,7 +91,7 @@ namespace win
       DataIn.pbData = (BYTE *) storageDecrypt.get_data();
       DataIn.cbData = (DWORD) storageDecrypt.get_size();
 
-//      wchar_t * lpwsz = ::null();
+//      wchar_t * lpwsz = NULL;
 
       //--------------------------------------------------------------------
       //  begin protect phase. Note that the encryption key is created
@@ -99,12 +99,12 @@ namespace win
 
       if(CryptProtectData(
            &DataIn,
-           ::null(), // A description string
+           NULL, // A description string
                                                // to be included with the
                                                // encrypted data.
            &DataSalt,                               // Optional entropy not used.
-           ::null(),                               // Reserved.
-           ::null(),                               // Pass ::null() for the
+           NULL,                               // Reserved.
+           NULL,                               // Pass NULL for the
                                                // prompt structure.
            0,
            &DataOut))

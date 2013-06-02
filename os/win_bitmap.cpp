@@ -12,24 +12,24 @@ namespace win
       ca(papp)
    { 
 
-      m_pbitmap   = ::null();
-      m_pdata     = ::null();
+      m_pbitmap   = NULL;
+      m_pdata     = NULL;
 
    }
 
    bitmap::~bitmap()
    { 
 
-      if(m_pbitmap != ::null())
+      if(m_pbitmap != NULL)
       {
          delete m_pbitmap;
-         m_pbitmap = ::null();
+         m_pbitmap = NULL;
       }
 
-      if(m_pdata != ::null())
+      if(m_pdata != NULL)
       {
          ca2_free(m_pdata);
-         m_pdata = ::null();
+         m_pdata = NULL;
       }
 
    }
@@ -39,10 +39,10 @@ namespace win
 
       UNREFERENCED_PARAMETER(pgraphics);
 
-      if(m_pdata != ::null())
+      if(m_pdata != NULL)
       {
          ca2_free(m_pdata);
-         m_pdata = ::null();
+         m_pdata = NULL;
       }
       
       m_pbitmap = new ::Gdiplus::Bitmap(nWidth, nHeight, Gdiplus::PixelOffsetModeHighQuality);
@@ -65,38 +65,38 @@ namespace win
 
       UNREFERENCED_PARAMETER(pgraphics);
 
-      if(m_pbitmap != ::null())
+      if(m_pbitmap != NULL)
       {
          delete m_pbitmap;
-         m_pbitmap = ::null();
+         m_pbitmap = NULL;
       }
 
-      if(m_pdata != ::null())
+      if(m_pdata != NULL)
       {
          ca2_free(m_pdata);
-         m_pdata = ::null();
+         m_pdata = NULL;
       }
 
       m_pdata = ca2_alloc(abs(4 * lpbmi->bmiHeader.biWidth * lpbmi->bmiHeader.biHeight));
 
-      if(m_pdata == ::null())
+      if(m_pdata == NULL)
          return FALSE;
 
       m_pbitmap = new Gdiplus::Bitmap(abs(lpbmi->bmiHeader.biWidth), abs(lpbmi->bmiHeader.biHeight), abs(lpbmi->bmiHeader.biWidth) * 4, PixelFormat32bppARGB, (BYTE *) m_pdata);
 
-      if(m_pbitmap == ::null())
+      if(m_pbitmap == NULL)
       {
          ca2_free(m_pdata);
-         m_pdata = ::null();
+         m_pdata = NULL;
          return FALSE;
       }
 
-      if(ppvBits != ::null())
+      if(ppvBits != NULL)
       {
          *ppvBits = m_pdata; 
       }
 
-      if(stride != ::null())
+      if(stride != NULL)
       {
          *stride = lpbmi->bmiHeader.biWidth * sizeof(COLORREF);
       }
@@ -148,7 +148,7 @@ namespace win
    size bitmap::GetBitmapDimension() const
    {
       
-      if(m_pbitmap == ::null())
+      if(m_pbitmap == NULL)
          return class size(0, 0);
 
       return class size(m_pbitmap->GetWidth(), m_pbitmap->GetHeight());
@@ -162,22 +162,22 @@ namespace win
    }
    bool bitmap::LoadOEMBitmap(UINT nIDBitmap)
    { 
-      //return attach(::LoadBitmap(::null(), MAKEINTRESOURCE(nIDBitmap))); 
+      //return attach(::LoadBitmap(NULL, MAKEINTRESOURCE(nIDBitmap))); 
       return FALSE;
    }
    bool bitmap::CreateCompatibleBitmap(::ca::graphics * pgraphics, int32_t nWidth, int32_t nHeight)
    {
 
-      if(m_pdata != ::null())
+      if(m_pdata != NULL)
       {
          ca2_free(m_pdata);
-         m_pdata = ::null();
+         m_pdata = NULL;
       }
 
-      if(m_pbitmap != ::null())
+      if(m_pbitmap != NULL)
       {
          delete m_pbitmap;
-         m_pbitmap = ::null();
+         m_pbitmap = NULL;
       }
 
       m_pbitmap = new ::Gdiplus::Bitmap(nWidth, nHeight, Gdiplus::PixelOffsetModeHighQuality);
@@ -188,16 +188,16 @@ namespace win
    bool bitmap::CreateDiscardableBitmap(::ca::graphics * pgraphics, int32_t nWidth, int32_t nHeight)
    { 
 
-      if(m_pdata != ::null())
+      if(m_pdata != NULL)
       {
          ca2_free(m_pdata);
-         m_pdata = ::null();
+         m_pdata = NULL;
       }
 
-      if(m_pbitmap != ::null())
+      if(m_pbitmap != NULL)
       {
          delete m_pbitmap;
-         m_pbitmap = ::null();
+         m_pbitmap = NULL;
       }
 
       m_pbitmap = new ::Gdiplus::Bitmap(nWidth, nHeight, Gdiplus::PixelOffsetModeHighQuality);
@@ -208,7 +208,7 @@ namespace win
 
    int32_t bitmap::GetBitmap(BITMAP* pBitMap)
    { 
-   //   ASSERT(get_handle() != ::null());
+   //   ASSERT(get_handle() != NULL);
      // return ::GetObject(get_handle(), sizeof(BITMAP), pBitMap); 
       return 0;
    }
@@ -221,7 +221,7 @@ namespace win
       {
          ::ca::graphics_object::dump(dumpcontext);
 
-/*         if (get_handle() == ::null())
+/*         if (get_handle() == NULL)
             return;
 
          if (!afxData.bWin95 && ::GetObjectType(get_handle()) != OBJ_BITMAP)
@@ -255,10 +255,10 @@ namespace win
 
    bool bitmap::attach(void * posdata)
    {
-      if(m_pbitmap != ::null())
+      if(m_pbitmap != NULL)
       {
          delete m_pbitmap;
-         m_pbitmap = ::null();
+         m_pbitmap = NULL;
       }
       
       m_pbitmap = (Gdiplus::Bitmap *) posdata;
@@ -273,7 +273,7 @@ namespace win
 
       Gdiplus::Bitmap * pbitmap = m_pbitmap;
 
-      m_pbitmap = ::null();
+      m_pbitmap = NULL;
 
       return m_pbitmap;
 

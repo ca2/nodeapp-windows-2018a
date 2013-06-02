@@ -22,12 +22,12 @@ namespace win
    {
       DWORD cbValue;
       DWORD dwType;
-      if(ERROR_SUCCESS != ::RegQueryValueEx(hKey, lpSubKey, ::null(), &dwType , ::null(), &cbValue))
+      if(ERROR_SUCCESS != ::RegQueryValueEx(hKey, lpSubKey, NULL, &dwType , NULL, &cbValue))
          return false;
       if(dwType != REG_SZ)
          return false;
       LPTSTR lpsz = str.GetBuffer(cbValue);
-      if(ERROR_SUCCESS != ::RegQueryValueEx(hKey, lpSubKey, ::null(), &dwType, (LPBYTE) lpsz, &cbValue))
+      if(ERROR_SUCCESS != ::RegQueryValueEx(hKey, lpSubKey, NULL, &dwType, (LPBYTE) lpsz, &cbValue))
       {
          str.ReleaseBuffer();
          return false;
@@ -40,18 +40,18 @@ namespace win
 
    registry::Key::Key()
    {
-      m_hkey = ::null();
+      m_hkey = NULL;
    }
 
    registry::Key::Key(HKEY hkey, const char * lpcszSubKey, bool bCreate)
    {
-      m_hkey = ::null();
+      m_hkey = NULL;
       OpenKey(hkey, lpcszSubKey, bCreate);
    }
 
    registry::Key::~Key()
    {
-      if(m_hkey != ::null())
+      if(m_hkey != NULL)
       {
          CloseKey();
       }
@@ -78,12 +78,12 @@ namespace win
 
    void registry::Key::CloseKey()
    {
-      if(m_hkey != ::null())
+      if(m_hkey != NULL)
       {
          if(ERROR_SUCCESS == ::RegCloseKey(
             m_hkey))
          {
-            m_hkey = ::null();
+            m_hkey = NULL;
          }
       }
    }
@@ -94,12 +94,12 @@ namespace win
    {
       DWORD cbValue;
       DWORD dwType;
-      if(ERROR_SUCCESS != ::RegQueryValueEx(m_hkey, lpcszValueName, ::null(), &dwType , ::null(), &cbValue))
+      if(ERROR_SUCCESS != ::RegQueryValueEx(m_hkey, lpcszValueName, NULL, &dwType , NULL, &cbValue))
          return false;
       if(dwType != REG_SZ)
          return false;
       LPTSTR lpsz = str.GetBuffer(cbValue);
-      if(ERROR_SUCCESS != ::RegQueryValueEx(m_hkey, lpcszValueName, ::null(), &dwType, (LPBYTE) lpsz, &cbValue))
+      if(ERROR_SUCCESS != ::RegQueryValueEx(m_hkey, lpcszValueName, NULL, &dwType, (LPBYTE) lpsz, &cbValue))
       {
          str.ReleaseBuffer();
          return false;
@@ -113,12 +113,12 @@ namespace win
    {
       DWORD cbValue;
       DWORD dwType;
-      if(ERROR_SUCCESS != ::RegQueryValueEx(m_hkey, lpcszValueName, ::null(), &dwType , ::null(), &cbValue))
+      if(ERROR_SUCCESS != ::RegQueryValueEx(m_hkey, lpcszValueName, NULL, &dwType , NULL, &cbValue))
          return false;
       if(dwType != REG_BINARY)
          return false;
       mem.allocate(cbValue);
-      if(ERROR_SUCCESS != ::RegQueryValueEx(m_hkey, lpcszValueName, ::null(), &dwType, (LPBYTE) mem.get_data(), &cbValue))
+      if(ERROR_SUCCESS != ::RegQueryValueEx(m_hkey, lpcszValueName, NULL, &dwType, (LPBYTE) mem.get_data(), &cbValue))
       {
          mem.allocate(0);
          return false;
@@ -148,10 +148,10 @@ namespace win
    {
       ASSERT(FALSE);
       // please verify if
-      // using ::null() for the value parameter
+      // using NULL for the value parameter
       // deletes the key.
       return ERROR_SUCCESS ==
-         ::RegDeleteKey(m_hkey, ::null());
+         ::RegDeleteKey(m_hkey, NULL);
    }
 
    ::count registry::Key::EnumKey(stringa & stra)
@@ -159,17 +159,17 @@ namespace win
       DWORD dwMaxSubKeyLen;
       RegQueryInfoKey(
          m_hkey,
-         ::null(),
-         ::null(),
-        ::null(),
-        ::null(),
+         NULL,
+         NULL,
+        NULL,
+        NULL,
         &dwMaxSubKeyLen,
-        ::null(),
-        ::null(),
-        ::null(),
-        ::null(),
-        ::null(),
-        ::null());
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL);
       int32_t iSize = max(dwMaxSubKeyLen, 1024);
       char *buf = (char *) malloc(iSize);
       int32_t iKey = 0;
@@ -200,10 +200,10 @@ namespace win
          dwIndex,
          pszBuf,
          &dwLen,
-         ::null(),
-         ::null(),
-         ::null(),
-         ::null())))
+         NULL,
+         NULL,
+         NULL,
+         NULL)))
       {
          stra.add(pszBuf);
          dwIndex++;

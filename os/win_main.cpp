@@ -33,7 +33,7 @@ int32_t CLASS_DECL_win __win_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, 
 
    UNREFERENCED_PARAMETER(lpCmdLine);
 
-   ::CoInitialize(::null());
+   ::CoInitialize(NULL);
 
    if(!main_initialize())
       return -1;
@@ -47,7 +47,7 @@ int32_t CLASS_DECL_win __win_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, 
 
    g_pwindowmap = new ::oswindow_map(psystem);
 
-   ASSERT(hPrevInstance == ::null());
+   ASSERT(hPrevInstance == NULL);
 
    int32_t nReturnCode = 0;
 
@@ -72,7 +72,7 @@ int32_t CLASS_DECL_win __win_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, 
 
    delete g_pwindowmap;
 
-   g_pwindowmap = ::null();
+   g_pwindowmap = NULL;
 
    try
    {
@@ -82,7 +82,7 @@ int32_t CLASS_DECL_win __win_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, 
    {
    }
 
-   if(__get_thread_state()  != ::null())
+   if(__get_thread_state()  != NULL)
    {
       __get_thread_state()->finalize();
       gen_ThreadState = NULL;
@@ -105,7 +105,7 @@ int32_t CLASS_DECL_win __win_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, 
    {
    }
 
-   psystem = ::null();
+   psystem = NULL;
 
 
    try
@@ -133,28 +133,28 @@ int32_t CLASS_DECL_win __win_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, 
 
    try
    {
-      __get_module_state()->m_pmapHWND     = ::null();
+      __get_module_state()->m_pmapHWND     = NULL;
    }
    catch(...)
    {
    }
 /*   try
    {
-      __get_module_state()->m_pmapHDC      = ::null();
+      __get_module_state()->m_pmapHDC      = NULL;
    }
    catch(...)
    {
    }*/
 /*   try
    {
-      __get_module_state()->m_pmapHGDIOBJ  = ::null();
+      __get_module_state()->m_pmapHGDIOBJ  = NULL;
    }
    catch(...)
    {
    }*/
 
 
-   set_heap_mutex(::null());
+   set_heap_mutex(NULL);
 
    return nReturnCode;
 
@@ -175,7 +175,7 @@ int32_t CLASS_DECL_win ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, co
       //Sleep(30 * 1000);
 
 
-      ASSERT(hPrevInstance == ::null());
+      ASSERT(hPrevInstance == NULL);
 
       int32_t nReturnCode = 0;
 
@@ -204,7 +204,7 @@ int32_t CLASS_DECL_win ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, co
       {
       }
 
-      psystem = ::null();
+      psystem = NULL;
 
       try
       {
@@ -230,27 +230,27 @@ int32_t CLASS_DECL_win ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, co
 //      delete __get_module_state()->m_pmapHMENU;
       try
       {
-         __get_module_state()->m_pmapHWND     = ::null();
+         __get_module_state()->m_pmapHWND     = NULL;
       }
       catch(...)
       {
       }
 /*      try
       {
-         __get_module_state()->m_pmapHDC      = ::null();
+         __get_module_state()->m_pmapHDC      = NULL;
       }
       catch(...)
       {
       }
       try
       {
-         __get_module_state()->m_pmapHGDIOBJ  = ::null();
+         __get_module_state()->m_pmapHGDIOBJ  = NULL;
       }
       catch(...)
       {
       }*/
 
-      set_heap_mutex(::null());
+      set_heap_mutex(NULL);
 
 
       return nReturnCode;
@@ -271,4 +271,4 @@ void __cdecl _null_se_translator(uint32_t uiCode, EXCEPTION_POINTERS * ppointers
 
 
 
-HINSTANCE g_hinstance = ::null();
+HINSTANCE g_hinstance = NULL;

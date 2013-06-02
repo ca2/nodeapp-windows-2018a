@@ -5,19 +5,19 @@
 { return (afxCurrentWinApp); }
 
  CLASS_DECL_win HINSTANCE __get_instance_handle()
-   { ASSERT(afxCurrentInstanceHandle != ::null());
+   { ASSERT(afxCurrentInstanceHandle != NULL);
       return afxCurrentInstanceHandle; }
  CLASS_DECL_win HINSTANCE __get_resource_handle()
-   { ASSERT(afxCurrentResourceHandle != ::null());
+   { ASSERT(afxCurrentResourceHandle != NULL);
       return afxCurrentResourceHandle; }
  CLASS_DECL_win void __set_resource_handle(HINSTANCE hInstResource)
-   { ASSERT(hInstResource != ::null()); afxCurrentResourceHandle = hInstResource; }
+   { ASSERT(hInstResource != NULL); afxCurrentResourceHandle = hInstResource; }
  CLASS_DECL_win const char * __get_app_name()
-   { ASSERT(afxCurrentAppName != ::null()); return afxCurrentAppName; }
+   { ASSERT(afxCurrentAppName != NULL); return afxCurrentAppName; }
  CLASS_DECL_win sp(::user::interaction) __get_main_window()
 {
       ::ca::thread* pThread = dynamic_cast < ::ca::thread * > (::win::get_thread());
-      return pThread != ::null() ? pThread->GetMainWnd() : ::null(); 
+      return pThread != NULL ? pThread->GetMainWnd() : NULL; 
  }
 
  CLASS_DECL_win bool __gen_get_ambient_act_ctx()

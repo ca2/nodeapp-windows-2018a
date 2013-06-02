@@ -129,10 +129,10 @@ namespace win
       /*virtual void construct(__THREADPROC pfnThreadProc, LPVOID pParam);
 
       virtual bool begin(int32_t nPriority = THREAD_PRIORITY_NORMAL, UINT nStackSize = 0,
-         DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = ::null());
+         DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
       bool create_thread(DWORD dwCreateFlags = 0, UINT nStackSize = 0,
-         LPSECURITY_ATTRIBUTES lpSecurityAttrs = ::null());
+         LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
       virtual int_ptr get_os_data();
       virtual int_ptr get_os_int();

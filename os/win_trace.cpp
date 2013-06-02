@@ -194,7 +194,7 @@ static const __MAP_MESSAGE allMessages[] =
    DEFINE_MESSAGE(WM_MOVING),
    DEFINE_MESSAGE(WM_CAPTURECHANGED),
    DEFINE_MESSAGE(WM_DEVICECHANGE),
-   { 0, ::null(), }    // end of message list
+   { 0, NULL, }    // end of message list
 };
 
 #undef DEFINE_MESSAGE
@@ -204,7 +204,7 @@ static const __MAP_MESSAGE allMessages[] =
 
 static void TraceDDE(const char * lpszPrefix, const MSG* pMsg)
 {
-   ENSURE_ARG(pMsg != ::null());
+   ENSURE_ARG(pMsg != NULL);
    if (pMsg->message == WM_DDE_EXECUTE)
    {
       uint_ptr nDummy;
@@ -216,10 +216,10 @@ static void TraceDDE(const char * lpszPrefix, const MSG* pMsg)
   //          pMsg->lParam);
          return;
       }
-      ASSERT(hCommands != ::null());
+      ASSERT(hCommands != NULL);
 
       const char * lpszCommands = (const char *)::GlobalLock(hCommands);
-      ENSURE_THROW(lpszCommands != ::null(), throw ::memory_exception(::ca::get_thread_app()) );
+      ENSURE_THROW(lpszCommands != NULL, throw ::memory_exception(::ca::get_thread_app()) );
 //      ::OutputDebugString(::ca::trace::category_AppMsg, 0, "%s: Execute '%s'.\n", lpszPrefix, lpszCommands);
       ::GlobalUnlock(hCommands);
    }
@@ -236,11 +236,11 @@ static void TraceDDE(const char * lpszPrefix, const MSG* pMsg)
        return;
       }
       aItem = (ATOM)nItem;
-      ASSERT(aItem != ::null());
-      ASSERT(hAdvise != ::null());
+      ASSERT(aItem != NULL);
+      ASSERT(hAdvise != NULL);
 
       DDEADVISE* lpAdvise = (DDEADVISE*)::GlobalLock(hAdvise);
-      ENSURE_THROW(lpAdvise != ::null(), throw ::memory_exception(::ca::get_thread_app()) );
+      ENSURE_THROW(lpAdvise != NULL, throw ::memory_exception(::ca::get_thread_app()) );
       char szItem[80];
       szItem[0] = '\0';
 
@@ -273,7 +273,7 @@ static void TraceDDE(const char * lpszPrefix, const MSG* pMsg)
 void __trace_message(const char * lpszPrefix, ::ca::signal_object * pobj)
 {
    ENSURE_ARG(__is_valid_string(lpszPrefix));
-   ENSURE_ARG(pobj != ::null());
+   ENSURE_ARG(pobj != NULL);
    SCAST_PTR(::ca::message::base, pbase, pobj);
 
    if (pbase->m_uiMessage == WM_MOUSEMOVE || pbase->m_uiMessage == WM_NCMOUSEMOVE ||
@@ -292,7 +292,7 @@ void __trace_message(const char * lpszPrefix, ::ca::signal_object * pobj)
       return;
    }
 
-   const char * lpszMsgName = ::null();
+   const char * lpszMsgName = NULL;
    char szBuf[80];
 
    // find message name
@@ -313,7 +313,7 @@ void __trace_message(const char * lpszPrefix, ::ca::signal_object * pobj)
    {
       // a system windows message
       const __MAP_MESSAGE* pMapMsg = allMessages;
-      for (/*null*/; pMapMsg->lpszMsg != ::null(); pMapMsg++)
+      for (/*null*/; pMapMsg->lpszMsg != NULL; pMapMsg++)
       {
          if (pMapMsg->nMsg == pbase->m_uiMessage)
          {
@@ -323,7 +323,7 @@ void __trace_message(const char * lpszPrefix, ::ca::signal_object * pobj)
       }
    }
 
-   if (lpszMsgName != ::null())
+   if (lpszMsgName != NULL)
    {
 #ifdef _WIN64
       //TRACE(::ca::trace::category_WinMsg, 4, "%s: oswindow=%p, msg = %s (%p, %p)\n",
@@ -356,7 +356,7 @@ void __trace_message(const char * lpszPrefix, ::ca::signal_object * pobj)
 void __trace_message(const char * lpszPrefix, LPMSG lpmsg)
 {
    ENSURE_ARG(__is_valid_string(lpszPrefix));
-   ENSURE_ARG(lpmsg != ::null());
+   ENSURE_ARG(lpmsg != NULL);
 
    if (lpmsg->message == WM_MOUSEMOVE || lpmsg->message == WM_NCMOUSEMOVE ||
       lpmsg->message == WM_NCHITTEST || lpmsg->message == WM_SETCURSOR ||
@@ -374,7 +374,7 @@ void __trace_message(const char * lpszPrefix, LPMSG lpmsg)
       return;
    }
 
-   const char * lpszMsgName = ::null();
+   const char * lpszMsgName = NULL;
    char szBuf[80];
 
    // find message name
@@ -395,7 +395,7 @@ void __trace_message(const char * lpszPrefix, LPMSG lpmsg)
    {
       // a system windows message
       const __MAP_MESSAGE* pMapMsg = allMessages;
-      for (/*null*/; pMapMsg->lpszMsg != ::null(); pMapMsg++)
+      for (/*null*/; pMapMsg->lpszMsg != NULL; pMapMsg++)
       {
          if (pMapMsg->nMsg == lpmsg->message)
          {
@@ -405,7 +405,7 @@ void __trace_message(const char * lpszPrefix, LPMSG lpmsg)
       }
    }
 
-   if (lpszMsgName != ::null())
+   if (lpszMsgName != NULL)
    {
 #ifdef WIN64
 //      TRACE(::ca::trace::category_WinMsg, 4, "%s: oswindow=%p, msg = %hs (%p, %p)\n",

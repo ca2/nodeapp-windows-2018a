@@ -15,7 +15,7 @@ namespace win
       ::win::file(papp)
    {
 
-      m_pStream = ::null();
+      m_pStream = NULL;
 
    }
 
@@ -24,9 +24,9 @@ namespace win
    {
       //   ASSERT_VALID(this);
 
-      //   if (m_pStream != ::null() && m_bCloseOnDelete)
+      //   if (m_pStream != NULL && m_bCloseOnDelete)
       //close();
-      if (m_pStream != ::null())
+      if (m_pStream != NULL)
          close();
    }
 
@@ -34,7 +34,7 @@ namespace win
    bool stdio_file::open(const char * lpszFileName, UINT nOpenFlags)
    {
 
-      ASSERT(lpszFileName != ::null());
+      ASSERT(lpszFileName != NULL);
 
       ASSERT(__is_valid_string(lpszFileName));
 
@@ -43,7 +43,7 @@ namespace win
          Application.dir().mk(System.dir().name(lpszFileName));
       }
 
-      m_pStream = ::null();
+      m_pStream = NULL;
       if (!::win::file::open(lpszFileName, (nOpenFlags & ~::ca::file::type_text)))
          return FALSE;
 
@@ -92,10 +92,10 @@ namespace win
       if (nHandle != -1)
          m_pStream = _fdopen(nHandle, szMode);
 
-      if (m_pStream == ::null())
+      if (m_pStream == NULL)
       {
          // an error somewhere along the way...
-         //      if (pException != ::null())
+         //      if (pException != NULL)
          //    {
          //         pException->m_lOsError = _doserrno;
          //         pException->m_cause = ::ca::file_exception::OsErrorToException(_doserrno);
@@ -111,7 +111,7 @@ namespace win
    ::primitive::memory_size stdio_file::read(void * lpBuf, ::primitive::memory_size nCount)
    {
       ASSERT_VALID(this);
-      ASSERT(m_pStream != ::null());
+      ASSERT(m_pStream != NULL);
 
       if (nCount == 0)
          return 0;   // avoid Win32 "null-read"
@@ -133,7 +133,7 @@ namespace win
    void stdio_file::write(const void * lpBuf, ::primitive::memory_size nCount)
    {
       ASSERT_VALID(this);
-      ASSERT(m_pStream != ::null());
+      ASSERT(m_pStream != NULL);
       ASSERT(__is_valid_address(lpBuf, nCount, FALSE));
 
       if (fwrite(lpBuf, sizeof(BYTE), nCount, m_pStream) != nCount)
@@ -142,8 +142,8 @@ namespace win
 
    void stdio_file::write_string(const char * lpsz)
    {
-      ASSERT(lpsz != ::null());
-      ASSERT(m_pStream != ::null());
+      ASSERT(lpsz != NULL);
+      ASSERT(m_pStream != NULL);
 
       if (_fputts(lpsz, m_pStream) == _TEOF)
          vfxThrowFileException(get_app(), ::ca::file_exception::diskFull, _doserrno, m_strFileName);
@@ -151,12 +151,12 @@ namespace win
 
    LPTSTR stdio_file::read_string(LPTSTR lpsz, UINT nMax)
    {
-      ASSERT(lpsz != ::null());
+      ASSERT(lpsz != NULL);
       ASSERT(__is_valid_address(lpsz, nMax));
-      ASSERT(m_pStream != ::null());
+      ASSERT(m_pStream != NULL);
 
       LPTSTR lpszResult = _fgetts(lpsz, nMax, m_pStream);
-      if (lpszResult == ::null() && !feof(m_pStream))
+      if (lpszResult == NULL && !feof(m_pStream))
       {
          clearerr(m_pStream);
          vfxThrowFileException(get_app(), ::ca::file_exception::type_generic, _doserrno, m_strFileName);
@@ -180,7 +180,7 @@ namespace win
          rString.ReleaseBuffer();
 
          // handle error/eof case
-         if (lpszResult == ::null() && !feof(m_pStream))
+         if (lpszResult == NULL && !feof(m_pStream))
          {
             clearerr(m_pStream);
             vfxThrowFileException(get_app(), ::ca::file_exception::type_generic, _doserrno,
@@ -188,7 +188,7 @@ namespace win
          }
 
          // if string is read completely or EOF
-         if (lpszResult == ::null() ||
+         if (lpszResult == NULL ||
             (nLen = lstrlen(lpsz)) < nMaxSize ||
             lpsz[nLen-1] == '\n')
             break;
@@ -203,13 +203,13 @@ namespace win
       if (nLen != 0 && lpsz[nLen-1] == '\n')
          rString.GetBufferSetLength(nLen-1);
 
-      return lpszResult != ::null();
+      return lpszResult != NULL;
    }
 
    /*void stdio_file::write_string(const char * lpsz)
    {
-   ASSERT(lpsz != ::null());
-   ASSERT(m_pStream != ::null());
+   ASSERT(lpsz != NULL);
+   ASSERT(m_pStream != NULL);
 
    if (fputws(lpsz, m_pStream) == _TEOF)
    vfxThrowFileException(get_app(), ::ca::file_exception::diskFull, _doserrno, m_strFileName);
@@ -217,12 +217,12 @@ namespace win
 
    /*wchar_t * stdio_file::read_string(wchar_t * lpsz, UINT nMax)
    {
-   ASSERT(lpsz != ::null());
+   ASSERT(lpsz != NULL);
    ASSERT(__is_valid_address(lpsz, nMax));
-   ASSERT(m_pStream != ::null());
+   ASSERT(m_pStream != NULL);
 
    wchar_t * lpszResult = fgetws(lpsz, nMax, m_pStream);
-   if (lpszResult == ::null() && !feof(m_pStream))
+   if (lpszResult == NULL && !feof(m_pStream))
    {
    clearerr(m_pStream);
    vfxThrowFileException(get_app(), ::ca::file_exception::generic, _doserrno, m_strFileName);
@@ -234,7 +234,7 @@ namespace win
    {
       ASSERT_VALID(this);
       ASSERT(nFrom == ::ca::seek_begin || nFrom == ::ca::seek_end || nFrom == ::ca::seek_current);
-      ASSERT(m_pStream != ::null());
+      ASSERT(m_pStream != NULL);
 
       if (fseek(m_pStream, (long) lOff, nFrom) != 0)
          vfxThrowFileException(get_app(), ::ca::file_exception::badSeek, _doserrno,
@@ -247,7 +247,7 @@ namespace win
    file_position stdio_file::get_position() const
    {
       ASSERT_VALID(this);
-      ASSERT(m_pStream != ::null());
+      ASSERT(m_pStream != NULL);
 
       long pos = ftell(m_pStream);
       if (pos == -1)
@@ -260,7 +260,7 @@ namespace win
    {
       ASSERT_VALID(this);
 
-      if (m_pStream != ::null() && fflush(m_pStream) != 0)
+      if (m_pStream != NULL && fflush(m_pStream) != 0)
          vfxThrowFileException(get_app(), ::ca::file_exception::diskFull, _doserrno,
          m_strFileName);
    }
@@ -268,16 +268,16 @@ namespace win
    void stdio_file::close()
    {
       ASSERT_VALID(this);
-      ASSERT(m_pStream != ::null());
+      ASSERT(m_pStream != NULL);
 
       int32_t nErr = 0;
 
-      if (m_pStream != ::null())
+      if (m_pStream != NULL)
          nErr = fclose(m_pStream);
 
       m_hFile = (UINT) hFileNull;
       m_bCloseOnDelete = FALSE;
-      m_pStream = ::null();
+      m_pStream = NULL;
 
       if (nErr != 0)
          vfxThrowFileException(get_app(), ::ca::file_exception::diskFull, _doserrno,
@@ -288,26 +288,26 @@ namespace win
    {
       ASSERT_VALID(this);
 
-      if (m_pStream != ::null() && m_bCloseOnDelete)
+      if (m_pStream != NULL && m_bCloseOnDelete)
          fclose(m_pStream);  // close but ignore errors
       m_hFile = (UINT) hFileNull;
-      m_pStream = ::null();
+      m_pStream = NULL;
       m_bCloseOnDelete = FALSE;
    }
 
    sp(::ca::file) stdio_file::Duplicate() const
    {
       ASSERT_VALID(this);
-      ASSERT(m_pStream != ::null());
+      ASSERT(m_pStream != NULL);
 
       throw not_supported_exception(get_app());
-      return ::null();
+      return NULL;
    }
 
    void stdio_file::LockRange(file_position /* dwPos */, file_size /* dwCount */)
    {
       ASSERT_VALID(this);
-      ASSERT(m_pStream != ::null());
+      ASSERT(m_pStream != NULL);
 
       throw not_supported_exception(get_app());
    }
@@ -315,7 +315,7 @@ namespace win
    void stdio_file::UnlockRange(file_position /* dwPos */, file_size /* dwCount */)
    {
       ASSERT_VALID(this);
-      ASSERT(m_pStream != ::null());
+      ASSERT(m_pStream != NULL);
 
       throw not_supported_exception(get_app());
    }

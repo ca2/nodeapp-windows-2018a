@@ -17,27 +17,27 @@ namespace win
 
       System.file().path().eat_end_level(m_strCa2, 2, "\\");
       SHGetSpecialFolderPath(
-         ::null(),
+         NULL,
          m_strCommonAppData,
          CSIDL_COMMON_APPDATA,
          FALSE);
       SHGetSpecialFolderPath(
-         ::null(),
+         NULL,
          m_strProfile,
          CSIDL_PROFILE,
          FALSE);
       SHGetSpecialFolderPath(
-         ::null(),
+         NULL,
          m_strAppData,
          CSIDL_APPDATA,
          FALSE);
       SHGetSpecialFolderPath(
-         ::null(),
+         NULL,
          m_strPrograms,
          CSIDL_PROGRAMS,
          FALSE);
       SHGetSpecialFolderPath(
-         ::null(),
+         NULL,
          m_strCommonPrograms,
          CSIDL_COMMON_PROGRAMS,
          FALSE);
@@ -61,8 +61,8 @@ namespace win
    string dir::path(const char * pszFolder, strsize iLenFolder, const char * pszRelative, strsize iLenRelative, const char * psz2, strsize iLen2, bool bUrl)
    {
 
-      bool bEmptyRelative = iLenRelative == 0 || pszRelative == ::null() || *pszRelative == '\0';
-      bool bEmpty2 = iLen2 == 0 || psz2 == ::null() || *psz2 == '\0';
+      bool bEmptyRelative = iLenRelative == 0 || pszRelative == NULL || *pszRelative == '\0';
+      bool bEmpty2 = iLen2 == 0 || psz2 == NULL || *psz2 == '\0';
 
       if(bEmptyRelative && bEmpty2)
          return pszFolder;
@@ -264,7 +264,7 @@ namespace win
 
    void dir::root_ones(stringa & stra, sp(::ca::application) papp)
    {
-      DWORD dwSize = ::GetLogicalDriveStrings(0, ::null());
+      DWORD dwSize = ::GetLogicalDriveStrings(0, NULL);
       LPTSTR lpszAlloc = (LPTSTR) malloc(dwSize + 1);
       LPTSTR lpsz = lpszAlloc;
       dwSize = ::GetLogicalDriveStrings(dwSize + 1, lpsz);
@@ -299,19 +299,19 @@ namespace win
          bWorking = file_find.FindNextFileA();
          if(!file_find.IsDots())
          {
-            if(pstraPath != ::null())
+            if(pstraPath != NULL)
             {
                pstraPath->add(file_find.GetFilePath());
             }
-            if(pstraTitle != ::null())
+            if(pstraTitle != NULL)
             {
                pstraTitle->add(file_find.GetFileName());
             }
-            if(pbaIsDir != ::null())
+            if(pbaIsDir != NULL)
             {
                pbaIsDir->add(file_find.IsDirectory() != FALSE);
             }
-            if(piaSize != ::null())
+            if(piaSize != NULL)
             {
                piaSize->add(file_find.get_length());
             }
@@ -321,7 +321,7 @@ namespace win
 
    void dir::rls(sp(::ca::application) papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle, stringa * pstraRelative, e_extract eextract)
    {
-      rls_pattern(papp, lpcsz, "*.*", pstraPath, pstraTitle, pstraRelative, ::null(), ::null(), eextract);
+      rls_pattern(papp, lpcsz, "*.*", pstraPath, pstraTitle, pstraRelative, NULL, NULL, eextract);
    }
 
    void dir::rls_pattern(sp(::ca::application) papp, const char * lpcsz, const char * lpszPattern, stringa * pstraPath, stringa * pstraTitle, stringa * pstraRelative, array < bool, bool > * pbaIsDir, array < int64_t, int64_t > * piaSize, e_extract eextract)
@@ -334,12 +334,12 @@ namespace win
          if(strDir == lpcsz)
             continue;
          index iStart = 0;
-         if(pstraRelative != ::null())
+         if(pstraRelative != NULL)
          {
             iStart = pstraRelative->get_size();
          }
          rls_pattern(papp, strDir, lpszPattern, pstraPath, pstraTitle, pstraRelative, pbaIsDir, piaSize, eextract == extract_all ? extract_all : extract_none);
-         if(pstraRelative != ::null())
+         if(pstraRelative != NULL)
          {
             for(index i = iStart; i < pstraRelative->get_size(); i++)
             {
@@ -357,35 +357,35 @@ namespace win
             bWorking = file_find.FindNextFileA() != FALSE;
             if(!file_find.IsDots() && file_find.GetFilePath() != lpcsz)
             {
-               if(pstraPath != ::null())
+               if(pstraPath != NULL)
                {
                   pstraPath->add(file_find.GetFilePath());
                }
-               if(pstraTitle != ::null())
+               if(pstraTitle != NULL)
                {
                   pstraTitle->add(file_find.GetFileName());
                }
-               if(pstraRelative != ::null())
+               if(pstraRelative != NULL)
                {
                   pstraRelative->add(file_find.GetFileName());
                }
-               if(pbaIsDir != ::null())
+               if(pbaIsDir != NULL)
                {
                   pbaIsDir->add(file_find.IsDirectory() != FALSE);
                }
-               if(piaSize != ::null())
+               if(piaSize != NULL)
                {
                   piaSize->add(file_find.get_length());
                }
                /*if(file_find.IsDirectory())
                {
                   int32_t iStart = 0;
-                  if(pstraRelative != ::null())
+                  if(pstraRelative != NULL)
                   {
                      iStart = pstraRelative->get_size();
                   }
                   rls_pattern(file_find.GetFilePath(), lpszPattern, pstraPath, pstraTitle, pstraRelative, pbaIsDir, piaSize);
-                  if(pstraRelative != ::null())
+                  if(pstraRelative != NULL)
                   {
                      for(int32_t i = iStart; i < pstraRelative->get_size(); i++)
                      {
@@ -412,27 +412,27 @@ namespace win
          bWorking = file_find.FindNextFileA();
          if(!file_find.IsDots() && file_find.IsDirectory())
          {
-            if(pstraPath != ::null())
+            if(pstraPath != NULL)
             {
                pstraPath->add(file_find.GetFilePath());
             }
-            if(pstraTitle != ::null())
+            if(pstraTitle != NULL)
             {
                pstraTitle->add(file_find.GetFileName());
             }
-            if(pstraRelative != ::null())
+            if(pstraRelative != NULL)
             {
                pstraRelative->add(file_find.GetFileName());
             }
             if(file_find.IsDirectory())
             {
                index iStart = 0;
-               if(pstraRelative != ::null())
+               if(pstraRelative != NULL)
                {
                   iStart = pstraRelative->get_size();
                }
                rls_dir(papp, file_find.GetFilePath(), pstraPath, pstraTitle, pstraRelative);
-               if(pstraRelative != ::null())
+               if(pstraRelative != NULL)
                {
                   for(index i = iStart; i < pstraRelative->get_size(); i++)
                   {
@@ -460,11 +460,11 @@ namespace win
          bWorking = file_find.FindNextFileA();
          if(file_find.IsDirectory() && !file_find.IsDots())
          {
-            if(pstraPath != ::null())
+            if(pstraPath != NULL)
             {
                pstraPath->add(file_find.GetFilePath());
             }
-            if(pstraTitle != ::null())
+            if(pstraTitle != NULL)
             {
                pstraTitle->add(file_find.GetFileName());
             }
@@ -482,11 +482,11 @@ namespace win
          bWorking = file_find.FindNextFileA();
          if(!file_find.IsDirectory() && !file_find.IsDots())
          {
-            if(pstraPath != ::null())
+            if(pstraPath != NULL)
             {
                pstraPath->add(file_find.GetFilePath());
             }
-            if(pstraTitle != ::null())
+            if(pstraTitle != NULL)
             {
                pstraTitle->add(file_find.GetFileName());
             }
@@ -818,7 +818,7 @@ namespace win
          if(!is(stra[i], papp))
          {
             
-            if(!::CreateDirectoryW(::ca::international::utf8_to_unicode("\\\\?\\" + stra[i]), ::null()))
+            if(!::CreateDirectoryW(::ca::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
             {
                DWORD dwError = ::GetLastError();
                if(dwError == ERROR_ALREADY_EXISTS)
@@ -842,7 +842,7 @@ namespace win
                   catch(...)
                   {
                   }
-                  if(::CreateDirectoryW(::ca::international::utf8_to_unicode("\\\\?\\" + stra[i]), ::null()))
+                  if(::CreateDirectoryW(::ca::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
                   {
                      m_isdirmap.set(stra[i], true, 0);
                      goto try1;
@@ -853,7 +853,7 @@ namespace win
                   }
                }
                char * pszError;
-               FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, ::null(), dwError, 0, (LPTSTR) &pszError, 8, ::null());
+               FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwError, 0, (LPTSTR) &pszError, 8, NULL);
 
                //TRACE("dir::mk CreateDirectoryW last error(%d)=%s", dwError, pszError);
                ::LocalFree(pszError);
@@ -1004,7 +1004,7 @@ namespace win
 
    string dir::trash_that_is_not_trash(const char * psz)
    {
-      if(psz == ::null())
+      if(psz == NULL)
          return "";
 
       if(psz[1] == ':')
@@ -1098,11 +1098,11 @@ namespace win
       return path(path(str, "ca2", strUserFolderShift), lpcsz, lpcsz2);
 
 //      return path(path(str, "ca2"), lpcsz);
-/*      if(&AppUser(papp) == ::null())
+/*      if(&AppUser(papp) == NULL)
       {
          string str;
          SHGetSpecialFolderPath(
-            ::null(),
+            NULL,
             str,
             CSIDL_PROFILE,
             FALSE);
@@ -1147,7 +1147,7 @@ namespace win
 /*      UNREFERENCED_PARAMETER(papp);
       string str;
       SHGetSpecialFolderPath(
-         ::null(),
+         NULL,
          str,
          CSIDL_APPDATA,
          FALSE);

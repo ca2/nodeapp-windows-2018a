@@ -15,7 +15,7 @@ void * no_track_object::operator new(size_t nSize, const char *, int32_t)
 #define new DEBUG_NEW
 void no_track_object::operator delete(void * pObject, const char *, int32_t)
 {
-   if (pObject != ::null())
+   if (pObject != NULL)
       ::LocalFree(pObject);
 }
 #endif
@@ -24,7 +24,7 @@ void no_track_object::operator delete(void * pObject, const char *, int32_t)
 void * no_track_object::operator new(size_t nSize)
 {
    void * p = ::LocalAlloc(LPTR, nSize);
-   if (p == ::null())
+   if (p == NULL)
       throw memory_exception(::ca::get_thread_app());
    return p;
 }
@@ -32,7 +32,7 @@ void * no_track_object::operator new(size_t nSize)
 
 void no_track_object::operator delete(void * p)
 {
-   if (p != ::null())
+   if (p != NULL)
       ::LocalFree(p);
 }
 
@@ -65,19 +65,19 @@ thread_local_storage::thread_local_storage()
 thread_local_storage::~thread_local_storage()
 {
 
-   __thread_data = ::null();
+   __thread_data = NULL;
    
 }
 
 void thread_local_storage::delete_data()
 {
 
-   if(m_pthreadslotdata != ::null())
+   if(m_pthreadslotdata != NULL)
    {
       
       delete m_pthreadslotdata;
 
-      m_pthreadslotdata = ::null();
+      m_pthreadslotdata = NULL;
 
    }
 
@@ -106,7 +106,7 @@ thread_slot_data::~thread_slot_data()
 {
    for(int32_t i = 0; i < 1024; i++)
    {
-      if(m_pa[i] != ::null())
+      if(m_pa[i] != NULL)
       {
          delete m_pa[i];
       }
@@ -124,12 +124,12 @@ thread_slot_data::~thread_slot_data()
 no_track_object* process_local_object::get_data(
    no_track_object* ( * pfnCreateObject)())
 {
-   if (m_pObject == ::null())
+   if (m_pObject == NULL)
    {
       single_lock sl(&m_mutex, TRUE);
       try
       {
-         if (m_pObject == ::null())
+         if (m_pObject == NULL)
             m_pObject = (*pfnCreateObject)();
       }
       catch(base_exception * pe)
@@ -143,7 +143,7 @@ no_track_object* process_local_object::get_data(
 
 process_local_object::~process_local_object()
 {
-   if (m_pObject != ::null())
+   if (m_pObject != NULL)
       delete m_pObject;
 }
 
@@ -152,13 +152,13 @@ process_local_object::~process_local_object()
 
 /*void CLASS_DECL_win ::ca::InitLocalData(HINSTANCE hInst)
 {
-   if (__thread_data != ::null())
+   if (__thread_data != NULL)
       __thread_data->AssignInstance(hInst);
 }
 
 void CLASS_DECL_win __term_local_data(HINSTANCE hInst, bool bAll)
 {
-   if (__thread_data != ::null())
+   if (__thread_data != NULL)
       __thread_data->DeleteValues(hInst, bAll);
 }*/
 
@@ -178,10 +178,10 @@ void CLASS_DECL_win __tls_release()
 {
    if (gen_TlsRef == 0 || --gen_TlsRef == 0)
    {
-      if (__thread_data != ::null())
+      if (__thread_data != NULL)
       {
          __thread_data->~thread_local_storage();
-         __thread_data = ::null();
+         __thread_data = NULL;
       }
    }
 }

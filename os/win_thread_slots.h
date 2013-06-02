@@ -96,17 +96,17 @@ template < int32_t iSlot >
 no_track_object* thread_local_object < iSlot> ::get_data(no_track_object* ( * pfnCreateObject)())
 {
 
-   if (__thread_data == ::null())
+   if (__thread_data == NULL)
    {
 #undef new
       __thread_data = new(_gen_ThreadData) thread_local_storage;
 #define new DEBUG_NEW
-      ENSURE(__thread_data != ::null());
+      ENSURE(__thread_data != NULL);
    }
 
    no_track_object * pValue = (no_track_object *) __thread_data->get_slot_data()->m_pa[iSlot];
 
-   if(pValue == ::null())
+   if(pValue == NULL)
    {
 
       // allocate zero-init object
@@ -152,7 +152,7 @@ public:
 
 // Implementation
    no_track_object* volatile m_pObject;
-   process_local_object() : m_mutex(::null()) {}
+   process_local_object() : m_mutex(NULL) {}
 
    ~process_local_object();
 };
@@ -166,7 +166,7 @@ public:
    inline TYPE* get_data()
    {
       return (TYPE *) thread_local_object::get_data(&CreateObject);
-      //ENSURE(pData != ::null());
+      //ENSURE(pData != NULL);
       //return pData;
    }
    inline TYPE* GetDataNA()
@@ -198,7 +198,7 @@ public:
    inline TYPE* get_data()
    {
       TYPE* pData = (TYPE*)process_local_object::get_data(&CreateObject);
-      ENSURE(pData != ::null());
+      ENSURE(pData != NULL);
       return pData;
    }
    inline TYPE* GetDataNA()

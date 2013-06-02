@@ -28,7 +28,7 @@ namespace win
       m_spgraphics(allocer())
    {
 
-      m_pcolorref          = ::null();
+      m_pcolorref          = NULL;
       cx                   = 0;
       cy                   = 0;
 
@@ -78,7 +78,7 @@ namespace win
 
    void    dib::construct (int32_t cx,  int32_t cy)
    {
-      m_pcolorref    = ::null();
+      m_pcolorref    = NULL;
       cx             = 0;
       cy             = 0;
       create(cx, cy);
@@ -97,7 +97,7 @@ namespace win
    bool dib::create(int32_t width, int32_t height)
    {
       if(m_spbitmap.is_set()
-      && m_spbitmap->get_os_data() != ::null() 
+      && m_spbitmap->get_os_data() != NULL 
       && width == cx
       && height == cy)
          return TRUE;
@@ -120,7 +120,7 @@ namespace win
       m_spbitmap.create(allocer());
       m_spgraphics.create(allocer());
 
-      if(m_spbitmap.m_p == ::null())
+      if(m_spbitmap.m_p == NULL)
       {
          cx       = 0;
          cy       = 0;
@@ -128,7 +128,7 @@ namespace win
          return false;
       }
       
-      if(!m_spbitmap->CreateDIBSection(::null(), &m_info, DIB_RGB_COLORS, (void **) &m_pcolorref, &scan, ::null(), 0))
+      if(!m_spbitmap->CreateDIBSection(NULL, &m_info, DIB_RGB_COLORS, (void **) &m_pcolorref, &scan, NULL, 0))
       {
          cx       = 0;
          cy       = 0;
@@ -136,12 +136,12 @@ namespace win
          return false;
       }
 
-      if(m_spbitmap->get_os_data() != ::null())
+      if(m_spbitmap->get_os_data() != NULL)
       {
-         //m_spgraphics->CreateCompatibleDC(::null());
+         //m_spgraphics->CreateCompatibleDC(NULL);
          ::ca::bitmap * pbitmap = m_spgraphics->SelectObject(m_spbitmap);
          //m_hbitmapOriginal
-         /*if(pbitmap == ::null() || pbitmap->get_os_data() == ::null())
+         /*if(pbitmap == NULL || pbitmap->get_os_data() == NULL)
          {
             Destroy();
             return FALSE;
@@ -162,11 +162,11 @@ namespace win
    {
 /*      if(bSelect)
       {
-         return m_spgraphics->SelectObject(m_spbitmap) != ::null();
+         return m_spgraphics->SelectObject(m_spbitmap) != NULL;
       }
       else
       {
-         return m_spgraphics->SelectObject(m_hbitmapOriginal) != ::null();
+         return m_spgraphics->SelectObject(m_hbitmapOriginal) != NULL;
       }*/
       return true;
    }
@@ -174,7 +174,7 @@ namespace win
    bool dib::create(::ca::graphics * pdc)
    {
       ::ca::bitmap * pbitmap = &(dynamic_cast<::win::graphics * >(pdc))->GetCurrentBitmap();
-      if(pbitmap == ::null())
+      if(pbitmap == NULL)
          return FALSE;
       class size size = pbitmap->get_size();
       if(!create(size.cx, size.cy))
@@ -197,7 +197,7 @@ namespace win
       cx             = 0;
       cy             = 0;
       scan           = 0;
-      m_pcolorref    = ::null();
+      m_pcolorref    = NULL;
       
       return TRUE;
    }
@@ -222,7 +222,7 @@ namespace win
       ::ca::bitmap_sp bitmap(get_app());
       bitmap->CreateCompatibleBitmap(pdc, 1, 1);
       ::ca::bitmap * pbitmap = WIN_DC(pdc)->SelectObject(bitmap);
-      if(pbitmap == ::null())
+      if(pbitmap == NULL)
          return false;
       class size size = pbitmap->get_size();
       if(!create(size))
@@ -344,10 +344,10 @@ namespace win
       if(area() <= 0)
          return;
 
-      //return ::ca::dib::mult_alpha(::null(), true);
+      //return ::ca::dib::mult_alpha(NULL, true);
       ::ca::dib_sp dibWork;
 
-      if(pdibWork == ::null())
+      if(pdibWork == NULL)
       {
          dibWork.create(allocer());
          pdibWork = dibWork;
@@ -1710,7 +1710,7 @@ namespace win
          picon,
          cx, cy,
          0,
-         ::null(),
+         NULL,
          DI_IMAGE | DI_MASK);
     
       // Black blend dib
@@ -1723,7 +1723,7 @@ namespace win
          picon,
          cx, cy,
          0,
-         ::null(),
+         NULL,
          DI_IMAGE | DI_MASK);
 
       // Mask dib
@@ -1735,7 +1735,7 @@ namespace win
          picon,
          cx, cy,
          0,
-         ::null(),
+         NULL,
          DI_MASK);
     
       BYTE * r1=(BYTE*)dib1.m_pcolorref;
@@ -2185,7 +2185,7 @@ namespace win
 
    void dib::set_frame2(void * lpdata, int32_t iFrame, int32_t iFrameCount)
    {
-      if(lpdata == ::null())
+      if(lpdata == NULL)
          return;
       int32_t iSliceCount = (int32_t) sqrt((double) iFrameCount);
       if(iSliceCount == 0)
@@ -2211,7 +2211,7 @@ namespace win
 
    void dib::xor_dib_frame2(void * lpdata, int32_t iFrame, int32_t iFrameCount)
    {
-      if(lpdata == ::null())
+      if(lpdata == NULL)
          return;
       int32_t iSliceCount = (int32_t) sqrt((double) iFrameCount);
       if(iSliceCount == 0)
@@ -2484,7 +2484,7 @@ namespace win
    bool dib::from(::ca::graphics * pgraphics, FIBITMAP *pfibitmap, bool bUnloadFI)
    {
 
-      if(pfibitmap == ::null())
+      if(pfibitmap == NULL)
            return false;
 
       BITMAPINFO * pbi = FreeImage_GetInfo(pfibitmap);
@@ -2494,17 +2494,17 @@ namespace win
          return false;
 
 
-      COLORREF * pcolorref = ::null();
+      COLORREF * pcolorref = NULL;
 
-      HBITMAP hbitmap = ::CreateDIBSection(::null(), &m_info, DIB_RGB_COLORS, (void **) &pcolorref, ::null(), 0);
+      HBITMAP hbitmap = ::CreateDIBSection(NULL, &m_info, DIB_RGB_COLORS, (void **) &pcolorref, NULL, 0);
 
-      if(hbitmap == ::null())
+      if(hbitmap == NULL)
       {
          Destroy();
          return false;
       }
 
-      HDC hdc = ::CreateCompatibleDC(::null());
+      HDC hdc = ::CreateCompatibleDC(NULL);
 
       if(pbi->bmiHeader.biHeight != SetDIBits(
          hdc,

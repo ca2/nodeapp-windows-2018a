@@ -10,7 +10,7 @@ namespace win
    ca(papp)
    {
 
-      m_pfont     = ::null();
+      m_pfont     = NULL;
       m_bUpdated  = false;
 
    }
@@ -19,17 +19,17 @@ namespace win
    font::~font()
    { 
 
-      if(m_pfont != ::null())
+      if(m_pfont != NULL)
       {
          delete m_pfont;
-         m_pfont = ::null();
+         m_pfont = NULL;
       }
    
    }
 
 //   font::operator HFONT() const
   // {
-    //  return (HFONT)(this == ::null() ? ::null() : get_handle()); 
+    //  return (HFONT)(this == NULL ? NULL : get_handle()); 
    //}
    //font* font::from_handle(sp(::ca::application) papp, HFONT hFont)
    //{
@@ -78,21 +78,21 @@ namespace win
    void font::construct(const ::ca::font & fontParam)
       {
          class font & font = const_cast < ::win::font & > (dynamic_cast < const ::win::font & > (fontParam));
-         if(font.m_pfont == ::null())
+         if(font.m_pfont == NULL)
          {
-            if(m_pfont != ::null())
+            if(m_pfont != NULL)
             {
                delete m_pfont;
-               m_pfont = ::null();
+               m_pfont = NULL;
             }
          }
          else
          {
             m_pfont = font.m_pfont->Clone();
          }
-//         if(get_handle() != ::null())
+//         if(get_handle() != NULL)
   //          delete_object();
-    //     if(font.get_handle() != ::null())
+    //     if(font.get_handle() != NULL)
       /*   {
             LOGFONT lf;
             memset(&lf, 0, sizeof(lf));
@@ -106,7 +106,7 @@ namespace win
       {
          ::ca::graphics_object::dump(dumpcontext);
 
-/*         if (get_handle() == ::null())
+/*         if (get_handle() == NULL)
             return;
 
          if (!afxData.bWin95 && ::GetObjectType(get_handle()) != OBJ_FONT)
@@ -142,9 +142,9 @@ namespace win
    void * font::get_os_data() const
    {
       
-      if(m_pfont == ::null() || !m_bUpdated)
+      if(m_pfont == NULL || !m_bUpdated)
       {
-         if(m_pfont != ::null())
+         if(m_pfont != NULL)
          {
             try
             {
@@ -153,7 +153,7 @@ namespace win
             catch(...)
             {
             }
-            ((font *) this)->m_pfont = ::null();
+            ((font *) this)->m_pfont = NULL;
          }
 
 

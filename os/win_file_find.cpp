@@ -5,9 +5,9 @@ namespace win
 
    file_find::file_find()
    {
-      m_pFoundInfo = ::null();
-      m_pNextInfo = ::null();
-      m_hContext = ::null();
+      m_pFoundInfo = NULL;
+      m_pNextInfo = NULL;
+      m_hContext = NULL;
       m_chDirSeparator = '\\';
    }
 
@@ -18,22 +18,22 @@ namespace win
 
    void file_find::close()
    {
-      if (m_pFoundInfo != ::null())
+      if (m_pFoundInfo != NULL)
       {
          delete m_pFoundInfo;
-         m_pFoundInfo = ::null();
+         m_pFoundInfo = NULL;
       }
 
-      if (m_pNextInfo != ::null())
+      if (m_pNextInfo != NULL)
       {
          delete m_pNextInfo;
-         m_pNextInfo = ::null();
+         m_pNextInfo = NULL;
       }
 
-      if (m_hContext != ::null() && m_hContext != INVALID_HANDLE_VALUE)
+      if (m_hContext != NULL && m_hContext != INVALID_HANDLE_VALUE)
       {
          CloseContext();
-         m_hContext = ::null();
+         m_hContext = NULL;
       }
    }
 
@@ -43,14 +43,14 @@ namespace win
       return;
    }
 
-   bool file_find::FindFile(const char * pstrName /* = ::null() */, DWORD dwUnused /* = 0 */)
+   bool file_find::FindFile(const char * pstrName /* = NULL */, DWORD dwUnused /* = 0 */)
    {
       UNUSED_ALWAYS(dwUnused);
       close();
       m_pNextInfo = new WIN32_FIND_DATAW;
       m_bGotLast = FALSE;
 
-      if (pstrName == ::null())
+      if (pstrName == NULL)
          pstrName = "*.*";
       ::ca::international::MultiByteToUnicode(CP_UTF8, ((WIN32_FIND_DATAW*) m_pNextInfo)->cFileName, MAX_PATH, pstrName);
 
@@ -71,8 +71,8 @@ namespace win
       const wchar_t * pstr = ::win::shell::_fullpath(pstrRoot, wstrName, _MAX_PATH);
 
       // passed name isn't a valid path but was found by the API
-      ASSERT(pstr != ::null());
-      if (pstr == ::null())
+      ASSERT(pstr != NULL);
+      if (pstr == NULL)
       {
          m_strRoot.Empty();
          close();
@@ -85,11 +85,11 @@ namespace win
          wchar_t * pstrBack  = wcsrchr(pstrRoot, '\\');
          wchar_t * pstrFront = wcsrchr(pstrRoot, '/');
 
-         if (pstrFront != ::null() || pstrBack != ::null())
+         if (pstrFront != NULL || pstrBack != NULL)
          {
-            if (pstrFront == ::null())
+            if (pstrFront == NULL)
                pstrFront = pstrRoot;
-            if (pstrBack == ::null())
+            if (pstrBack == NULL)
                pstrBack = pstrRoot;
 
             // from the start to the last whack is the root
@@ -107,10 +107,10 @@ namespace win
 
    bool file_find::MatchesMask(DWORD dwMask) const
    {
-      ASSERT(m_hContext != ::null());
+      ASSERT(m_hContext != NULL);
       ASSERT_VALID(this);
 
-      if (m_pFoundInfo != ::null())
+      if (m_pFoundInfo != NULL)
          return (!!(((LPWIN32_FIND_DATAW) m_pFoundInfo)->dwFileAttributes & dwMask));
       else
          return FALSE;
@@ -118,11 +118,11 @@ namespace win
 
    bool file_find::GetLastAccessTime(FILETIME* pTimeStamp) const
    {
-      ASSERT(m_hContext != ::null());
-      ASSERT(pTimeStamp != ::null());
+      ASSERT(m_hContext != NULL);
+      ASSERT(pTimeStamp != NULL);
       ASSERT_VALID(this);
 
-      if (m_pFoundInfo != ::null() && pTimeStamp != ::null())
+      if (m_pFoundInfo != NULL && pTimeStamp != NULL)
       {
          *pTimeStamp = ((LPWIN32_FIND_DATAW) m_pFoundInfo)->ftLastAccessTime;
          return TRUE;
@@ -133,11 +133,11 @@ namespace win
 
    bool file_find::GetLastWriteTime(FILETIME* pTimeStamp) const
    {
-      ASSERT(m_hContext != ::null());
-      ASSERT(pTimeStamp != ::null());
+      ASSERT(m_hContext != NULL);
+      ASSERT(pTimeStamp != NULL);
       ASSERT_VALID(this);
 
-      if (m_pFoundInfo != ::null() && pTimeStamp != ::null())
+      if (m_pFoundInfo != NULL && pTimeStamp != NULL)
       {
          *pTimeStamp = ((LPWIN32_FIND_DATAW) m_pFoundInfo)->ftLastWriteTime;
          return TRUE;
@@ -148,10 +148,10 @@ namespace win
 
    bool file_find::GetCreationTime(FILETIME* pTimeStamp) const
    {
-      ASSERT(m_hContext != ::null());
+      ASSERT(m_hContext != NULL);
       ASSERT_VALID(this);
 
-      if (m_pFoundInfo != ::null() && pTimeStamp != ::null())
+      if (m_pFoundInfo != NULL && pTimeStamp != NULL)
       {
          *pTimeStamp = ((LPWIN32_FIND_DATAW) m_pFoundInfo)->ftCreationTime;
          return TRUE;
@@ -162,10 +162,10 @@ namespace win
 
    bool file_find::GetLastAccessTime(::datetime::time& refTime) const
    {
-      ASSERT(m_hContext != ::null());
+      ASSERT(m_hContext != NULL);
       ASSERT_VALID(this);
 
-      if (m_pFoundInfo != ::null())
+      if (m_pFoundInfo != NULL)
       {
          refTime = ::datetime::time(((LPWIN32_FIND_DATAW) m_pFoundInfo)->ftLastAccessTime);
          return TRUE;
@@ -176,10 +176,10 @@ namespace win
 
    bool file_find::GetLastWriteTime(::datetime::time& refTime) const
    {
-      ASSERT(m_hContext != ::null());
+      ASSERT(m_hContext != NULL);
       ASSERT_VALID(this);
 
-      if (m_pFoundInfo != ::null())
+      if (m_pFoundInfo != NULL)
       {
          refTime = ::datetime::time(((LPWIN32_FIND_DATAW) m_pFoundInfo)->ftLastWriteTime);
          return TRUE;
@@ -190,10 +190,10 @@ namespace win
 
    bool file_find::GetCreationTime(::datetime::time& refTime) const
    {
-      ASSERT(m_hContext != ::null());
+      ASSERT(m_hContext != NULL);
       ASSERT_VALID(this);
 
-      if (m_pFoundInfo != ::null())
+      if (m_pFoundInfo != NULL)
       {
          refTime = ::datetime::time(((LPWIN32_FIND_DATAW) m_pFoundInfo)->ftCreationTime);
          return TRUE;
@@ -204,14 +204,14 @@ namespace win
 
    bool file_find::IsDots() const
    {
-      ASSERT(m_hContext != ::null());
+      ASSERT(m_hContext != NULL);
       ASSERT_VALID(this);
 
       // return TRUE if the file name is "." or ".." and
       // the file is a directory
 
       bool bResult = FALSE;
-      if (m_pFoundInfo != ::null() && IsDirectory())
+      if (m_pFoundInfo != NULL && IsDirectory())
       {
          LPWIN32_FIND_DATAW pFindData = (LPWIN32_FIND_DATAW) m_pFoundInfo;
          if (pFindData->cFileName[0] == '.')
@@ -230,11 +230,11 @@ namespace win
 
    bool file_find::FindNextFile()
    {
-      ASSERT(m_hContext != ::null());
+      ASSERT(m_hContext != NULL);
 
-      if (m_hContext == ::null())
+      if (m_hContext == NULL)
          return FALSE;
-      if (m_pFoundInfo == ::null())
+      if (m_pFoundInfo == NULL)
          m_pFoundInfo = new WIN32_FIND_DATAW;
 
       ASSERT_VALID(this);
@@ -248,7 +248,7 @@ namespace win
 
    string file_find::GetFileURL() const
    {
-      ASSERT(m_hContext != ::null());
+      ASSERT(m_hContext != NULL);
       ASSERT_VALID(this);
 
       string strResult(L"file://");
@@ -258,14 +258,14 @@ namespace win
 
    string file_find::GetRoot() const
    {
-      ASSERT(m_hContext != ::null());
+      ASSERT(m_hContext != NULL);
       ASSERT_VALID(this);
       return m_strRoot;
    }
 
    string file_find::GetFilePath() const
    {
-      ASSERT(m_hContext != ::null());
+      ASSERT(m_hContext != NULL);
       ASSERT_VALID(this);
 
       string strResult = GetRoot();
@@ -278,25 +278,25 @@ namespace win
 
    string file_find::GetFileTitle() const
    {
-      ASSERT(m_hContext != ::null());
+      ASSERT(m_hContext != NULL);
       ASSERT_VALID(this);
 
       string strFullName = GetFileName();
       string strResult;
 
-      _splitpath(strFullName, ::null(), ::null(), strResult.GetBuffer(_MAX_PATH), ::null());
+      _splitpath(strFullName, NULL, NULL, strResult.GetBuffer(_MAX_PATH), NULL);
       strResult.ReleaseBuffer();
       return strResult;
    }
 
    string file_find::GetFileName() const
    {
-      ASSERT(m_hContext != ::null());
+      ASSERT(m_hContext != NULL);
       ASSERT_VALID(this);
 
       string ret;
 
-      if (m_pFoundInfo != ::null())
+      if (m_pFoundInfo != NULL)
       {
          ::ca::international::unicode_to_utf8(ret, ((LPWIN32_FIND_DATAW) m_pFoundInfo)->cFileName);
       }
@@ -305,10 +305,10 @@ namespace win
 
    int64_t file_find::get_length() const
    {
-      ASSERT(m_hContext != ::null());
+      ASSERT(m_hContext != NULL);
       ASSERT_VALID(this);
 
-      if (m_pFoundInfo != ::null())
+      if (m_pFoundInfo != NULL)
          return ((LPWIN32_FIND_DATAW) m_pFoundInfo)->nFileSizeLow +
          ((int64_t)(((LPWIN32_FIND_DATAW) m_pFoundInfo)->nFileSizeHigh) << 32);
       else
@@ -328,10 +328,10 @@ namespace win
       // a get() function without having done at least one
       // FindNext() call
 
-      if (m_hContext == ::null())
-         ASSERT(m_pFoundInfo == ::null() && m_pNextInfo == ::null());
+      if (m_hContext == NULL)
+         ASSERT(m_pFoundInfo == NULL && m_pNextInfo == NULL);
       else
-         ASSERT(m_pFoundInfo != ::null() && m_pNextInfo != ::null());
+         ASSERT(m_pFoundInfo != NULL && m_pNextInfo != NULL);
 
    }
 

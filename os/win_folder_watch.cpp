@@ -25,7 +25,7 @@ namespace win
       HANDLE hDirectory = ::CreateFileW(::ca::international::utf8_to_unicode(m_strPath), 
                       FILE_LIST_DIRECTORY,
                       FILE_SHARE_READ|FILE_SHARE_WRITE|FILE_SHARE_DELETE,
-                      ::null(), OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, ::null());
+                      NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
    
       if(INVALID_HANDLE_VALUE == hDirectory)
       {
@@ -44,10 +44,10 @@ namespace win
                                     FILE_NOTIFY_CHANGE_FILE_NAME |
                                     FILE_NOTIFY_CHANGE_LAST_WRITE |
                                     FILE_NOTIFY_CHANGE_CREATION, &dwBytesReturned, 
-                                    ::null(), ::null()))
+                                    NULL, NULL))
       {
          DWORD dwNextEntryOffset = 0;
-         PFILE_NOTIFY_INFORMATION pfni = ::null();
+         PFILE_NOTIFY_INFORMATION pfni = NULL;
          do
          {
             pfni = (PFILE_NOTIFY_INFORMATION)(buffer + dwNextEntryOffset);

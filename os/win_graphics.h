@@ -34,7 +34,7 @@ namespace win
 
       Gdiplus::Graphics & g()
       {
-         if(m_pgraphics == ::null())
+         if(m_pgraphics == NULL)
          {
             m_pgraphics = ::Gdiplus::Graphics::FromHDC(get_handle1());
          }
@@ -253,21 +253,21 @@ namespace win
       bool DrawIcon(POINT point, ::visual::icon * picon);
       bool DrawIcon(int32_t x, int32_t y, ::visual::icon * picon, int32_t cx, int32_t cy, UINT istepIfAniCur, HBRUSH hbrFlickerFreeDraw, UINT diFlags);
       bool DrawState(point pt, size size, HBITMAP hBitmap, UINT nFlags,
-         HBRUSH hBrush = ::null());
+         HBRUSH hBrush = NULL);
       bool DrawState(point pt, size size, ::ca::bitmap* pBitmap, UINT nFlags,
-         ::ca::brush* pBrush = ::null());
+         ::ca::brush* pBrush = NULL);
       bool DrawState(point pt, size size, HICON hIcon, UINT nFlags,
-         HBRUSH hBrush = ::null());
+         HBRUSH hBrush = NULL);
       bool DrawState(point pt, size size, HICON hIcon, UINT nFlags,
-         ::ca::brush* pBrush = ::null());
+         ::ca::brush* pBrush = NULL);
       bool DrawState(point pt, size size, const char * lpszText, UINT nFlags,
-         bool bPrefixText = TRUE, int32_t nTextLen = 0, HBRUSH hBrush = ::null());
+         bool bPrefixText = TRUE, int32_t nTextLen = 0, HBRUSH hBrush = NULL);
       bool DrawState(point pt, size size, const char * lpszText, UINT nFlags,
-         bool bPrefixText = TRUE, int32_t nTextLen = 0, ::ca::brush* pBrush = ::null());
+         bool bPrefixText = TRUE, int32_t nTextLen = 0, ::ca::brush* pBrush = NULL);
       bool DrawState(point pt, size size, DRAWSTATEPROC lpDrawProc,
-         LPARAM lData, UINT nFlags, HBRUSH hBrush = ::null());
+         LPARAM lData, UINT nFlags, HBRUSH hBrush = NULL);
       bool DrawState(point pt, size size, DRAWSTATEPROC lpDrawProc,
-         LPARAM lData, UINT nFlags, ::ca::brush* pBrush = ::null());
+         LPARAM lData, UINT nFlags, ::ca::brush* pBrush = NULL);
 
    // Ellipse and Polygon Functions
       bool Chord(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3,
@@ -462,7 +462,7 @@ namespace win
       static ::ca::brush* GetHalftoneBrush(sp(::ca::application) papp);
       void DrawDragRect(LPCRECT lpRect, SIZE size,
          LPCRECT lpRectLast, SIZE sizeLast,
-         ::ca::brush* pBrush = ::null(), ::ca::brush* pBrushLast = ::null());
+         ::ca::brush* pBrush = NULL, ::ca::brush* pBrushLast = NULL);
       void FillSolidRect(const __rect64 * lpRect, COLORREF clr);
       void FillSolidRect(LPCRECT lpRect, COLORREF clr);
       void FillSolidRect(int32_t x, int32_t y, int32_t cx, int32_t cy, COLORREF clr);

@@ -32,10 +32,10 @@ namespace win
       if (!OpenProcessToken(GetCurrentProcess(),
          TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken))
          return false;
-      LookupPrivilegeValue(::null(), SE_SHUTDOWN_NAME, &tkp.Privileges[0].Luid);
+      LookupPrivilegeValue(NULL, SE_SHUTDOWN_NAME, &tkp.Privileges[0].Luid);
       tkp.PrivilegeCount = 1;
       tkp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
-      AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) ::null(), 0);
+      AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0);
       if (bIfPowerOff)
          retval = ExitWindowsEx(EWX_POWEROFF, 0) != FALSE;
       else
@@ -43,7 +43,7 @@ namespace win
 
       //reset the previlages
       tkp.Privileges[0].Attributes = 0;
-      AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) ::null(), 0);
+      AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0);
       return retval;
    }
 
@@ -54,14 +54,14 @@ namespace win
       if (!OpenProcessToken(GetCurrentProcess(),
          TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken))
          return false;
-      if(!LookupPrivilegeValue(::null(), SE_SHUTDOWN_NAME, &tkp.Privileges[0].Luid))
+      if(!LookupPrivilegeValue(NULL, SE_SHUTDOWN_NAME, &tkp.Privileges[0].Luid))
       {
          TRACELASTERROR();
          return false;
       }
       tkp.PrivilegeCount = 1;
       tkp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
-      if(!AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) ::null(), 0))
+      if(!AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0))
       {
          TRACELASTERROR();
          return false;
@@ -70,14 +70,14 @@ namespace win
       {
          return false;
       }
-      if(!LookupPrivilegeValue(::null(), SE_REMOTE_SHUTDOWN_NAME, &tkp.Privileges[0].Luid))
+      if(!LookupPrivilegeValue(NULL, SE_REMOTE_SHUTDOWN_NAME, &tkp.Privileges[0].Luid))
       {
          TRACELASTERROR();
          return false;
       }
       tkp.PrivilegeCount = 1;
       tkp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
-      if(!AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) ::null(), 0))
+      if(!AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0))
       {
          TRACELASTERROR();
          return false;
@@ -101,7 +101,7 @@ namespace win
       }*/
       //reset the previlages
       tkp.Privileges[0].Attributes = 0;
-      AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) ::null(), 0);
+      AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0);
       return true;
    }
 
@@ -174,7 +174,7 @@ namespace win
 
       // get the process name.
 
-      if (::null() != hProcess )
+      if (NULL != hProcess )
       {
          HMODULE hMod;
          DWORD cbNeeded;
@@ -412,19 +412,19 @@ namespace win
       string strExtensionNamingClass(pszExtensionNamingClass);
 
       registry::Key key(HKEY_CLASSES_ROOT, strExt, true);
-      key.SetValue(::null(), strExtensionNamingClass);
+      key.SetValue(NULL, strExtensionNamingClass);
 
       registry::Key keyLink3(HKEY_CLASSES_ROOT, strExtensionNamingClass + "\\shell", true);
-      keyLink3.SetValue(::null(), "open");
+      keyLink3.SetValue(NULL, "open");
 
       registry::Key keyLink2(keyLink3, "open", true);
-      keyLink2.SetValue(::null(), "&Abrir");
+      keyLink2.SetValue(NULL, "&Abrir");
 
       registry::Key keyLink1(keyLink2, "command", true);
 
       string strFormat;
       strFormat.Format("\"%s\" \"%%L\" %s", pszCommand, pszParam);
-      keyLink1.SetValue(::null(), strFormat);
+      keyLink1.SetValue(NULL, strFormat);
 
       return true;
 
@@ -439,13 +439,13 @@ namespace win
       strExt += pszExtension;
 
       registry::Key key(HKEY_CLASSES_ROOT, strExt, false);
-      if(!key.QueryValue(::null(), strExtensionNamingClass))
+      if(!key.QueryValue(NULL, strExtensionNamingClass))
          return false;
 
       registry::Key keyLink(HKEY_CLASSES_ROOT, strExtensionNamingClass + "\\shell\\open\\command", false);
 
       string strFormat;
-      if(keyLink.QueryValue(::null(), strFormat))
+      if(keyLink.QueryValue(NULL, strFormat))
       {
 
          const char * psz = strFormat;
@@ -647,7 +647,7 @@ namespace win
          return FALSE;
       }
 
-      bool bOk = StartService(hdlServ, 0, ::null()) != FALSE;
+      bool bOk = StartService(hdlServ, 0, NULL) != FALSE;
 
       CloseServiceHandle(hdlServ);
       CloseServiceHandle(hdlSCM);
@@ -712,7 +712,7 @@ namespace win
 
    DECLSPEC_NO_RETURN void os::raise_exception( DWORD dwExceptionCode, DWORD dwExceptionFlags)
    {
-      RaiseException( dwExceptionCode, dwExceptionFlags, 0, ::null() );
+      RaiseException( dwExceptionCode, dwExceptionFlags, 0, NULL );
    }
 
    bool os::is_remote_session()
@@ -844,9 +844,9 @@ repeat:
       FILETIME creationTime;
       FILETIME lastAccessTime;
       FILETIME lastWriteTime;
-      LPFILETIME lpCreationTime = ::null();
-      LPFILETIME lpLastAccessTime = ::null();
-      LPFILETIME lpLastWriteTime = ::null();
+      LPFILETIME lpCreationTime = NULL;
+      LPFILETIME lpLastAccessTime = NULL;
+      LPFILETIME lpLastWriteTime = NULL;
 
       wstring wstr(lpszFileName);
 
@@ -903,7 +903,7 @@ repeat:
 
       }
 
-      HANDLE hFile = ::CreateFileW(wstr, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, ::null(), OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, ::null());
+      HANDLE hFile = ::CreateFileW(wstr, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
       if(hFile == INVALID_HANDLE_VALUE)
       {

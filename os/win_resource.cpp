@@ -19,7 +19,7 @@ WinResource::~WinResource()
 {
 
    HINSTANCE hinst = ::ca::FindResourceHandle(MAKEINTRESOURCE(nID), lpcszType);
-   if(hinst == ::null())
+   if(hinst == NULL)
       return false;
    return ReadResource(hinst, file, nID, lpcszType);
 }*/
@@ -35,14 +35,14 @@ WinResource::~WinResource()
       hinst,
       MAKEINTRESOURCE(nID), 
       lpcszType);
-   if(hrsrc == ::null())
+   if(hrsrc == NULL)
       return false;
     HGLOBAL hres = ::LoadResource(hinst, hrsrc);
-   if(hres == ::null())
+   if(hres == NULL)
       return false;
     DWORD dwResSize = ::SizeofResource(hinst, hrsrc);
 
-   if(hres != ::null())
+   if(hres != NULL)
     {
       UINT FAR* lpnRes = (UINT FAR*)::LockResource(hres);
         try
@@ -93,14 +93,14 @@ bool WinResource::ReadResource(::ca::file & spfile, HINSTANCE hinst, UINT nID,  
       hinst,
       MAKEINTRESOURCE(nID), 
       lpcszType);
-   if(hrsrc == ::null())
+   if(hrsrc == NULL)
       return false;
     HGLOBAL hres = ::LoadResource(hinst, hrsrc);
-   if(hres == ::null())
+   if(hres == NULL)
       return false;
     DWORD dwResSize = ::SizeofResource(hinst, hrsrc);
 
-   if(hres != ::null())
+   if(hres != NULL)
     {
       UINT FAR* lpnRes = (UINT FAR*)::LockResource(hres);
         try

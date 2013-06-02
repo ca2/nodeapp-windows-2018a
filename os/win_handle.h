@@ -94,7 +94,7 @@ namespace win
    class handle1 : public handle_base < 1 >
    {
    public:
-      handle1() { m_handlea[0] = ::null(); }
+      handle1() { m_handlea[0] = NULL; }
       typedef handle_base < 1 > HANDLE_BASE_TYPE;
       inline H get_handle() const { return static_cast < H > (m_handlea[0]); }
       inline operator H () const { return get_handle(); }
@@ -105,7 +105,7 @@ namespace win
    class handle2 : public handle_base < 2 >
    {
    public:
-      handle2() { m_handlea[0] = ::null(); m_handlea[1] = ::null(); }
+      handle2() { m_handlea[0] = NULL; m_handlea[1] = NULL; }
       typedef handle_base < 2 > HANDLE_BASE_TYPE;
       inline H1 get_os_data() const { return static_cast < H1 > (m_handlea[0]); }
       inline H2 get_handle2() const { return static_cast < H2 > (m_handlea[0]); }
@@ -174,7 +174,7 @@ public:
 
 // Operations
 public:
-   CT * from_handle(HANDLE h, CT * (* pfnAllocator) (sp(::ca::application), HANDLE) = ::null(), sp(::ca::application) papp = ::null());
+   CT * from_handle(HANDLE h, CT * (* pfnAllocator) (sp(::ca::application), HANDLE) = NULL, sp(::ca::application) papp = NULL);
    void delete_temp();
 
    void set_permanent(HANDLE h, CT * permOb);
@@ -241,20 +241,20 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (sp(::ca::
 
    ASSERT(HT::s_iHandleCount == 1 || HT::s_iHandleCount == 2);
 
-   if (h == ::null())
-      return ::null();
+   if (h == NULL)
+      return NULL;
 
    CT* pObject = lookup_permanent(h);
-   if (pObject != ::null() && pObject->get_os_data() == (void *) h)
+   if (pObject != NULL && pObject->get_os_data() == (void *) h)
       return pObject;   // return permanent one
-   else if ((pObject = lookup_temporary(h)) != ::null() && pObject->get_os_data() == (void *) h)
+   else if ((pObject = lookup_temporary(h)) != NULL && pObject->get_os_data() == (void *) h)
    {
       HANDLE* ph = pObject->m_handlea;
-      ASSERT(ph[0] == h || ph[0] == ::null());
+      ASSERT(ph[0] == h || ph[0] == NULL);
       ph[0] = h;
       if (HT::s_iHandleCount == 2)
       {
-         ASSERT(ph[1] == h || ph[1] == ::null());
+         ASSERT(ph[1] == h || ph[1] == NULL);
          ph[1] = h;
       }
       return pObject;   // return current temporary one
@@ -269,13 +269,13 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (sp(::ca::
    _PNH pnhOldHandler = __set_new_handler(&__critical_new_handler);
 #endif
 
-   CT* pTemp = ::null();
+   CT* pTemp = NULL;
    try
    {
-      if(pfnAllocator != ::null())
+      if(pfnAllocator != NULL)
       {
          pTemp = pfnAllocator(papp, h);
-         if (pTemp == ::null())
+         if (pTemp == NULL)
             throw memory_exception(get_app());
       }
       else
@@ -283,11 +283,11 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (sp(::ca::
          // get primitive::memory for the object from the fixed allocator
    //      ASSERT((UINT)m_pClass->m_nObjectSize == m_alloc.GetAllocSize());
          pTemp = (CT*)m_alloc.Alloc();
-         if (pTemp == ::null())
+         if (pTemp == NULL)
             throw memory_exception(get_app());
 
          // now construct the object in place
-         ASSERT(m_pfnConstructObject != ::null());
+         ASSERT(m_pfnConstructObject != NULL);
          (*m_pfnConstructObject)(pTemp);
       }
 
@@ -341,18 +341,18 @@ void handle_map < HT, CT > ::remove_handle(HANDLE h)
 
    // make sure the handle entry is consistent before deleting
    CT* pTemp = lookup_temporary(h);
-   if (pTemp != ::null())
+   if (pTemp != NULL)
    {
       // temporary objects must have correct handle values
       HANDLE* ph = pTemp->m_handlea;
-      ASSERT(ph[0] == h || ph[0] == ::null());
+      ASSERT(ph[0] == h || ph[0] == NULL);
       if (HT::s_iHandleCount == 2)
       {
-         ASSERT(ph[1] == h || ph[1] == ::null());
+         ASSERT(ph[1] == h || ph[1] == NULL);
       }
    }
    pTemp = lookup_permanent(h);
-   if (pTemp != ::null())
+   if (pTemp != NULL)
    {
       HANDLE* ph = pTemp->m_handlea;
       ASSERT(ph[0] == h);
@@ -374,7 +374,7 @@ void handle_map < HT, CT >::delete_temp()
       return;
 
    POSITION pos = m_temporaryMap.get_start_position();
-   while (pos != ::null())
+   while (pos != NULL)
    {
       HANDLE h; // just used for asserts
       CT * pTemp;
@@ -383,16 +383,16 @@ void handle_map < HT, CT >::delete_temp()
       // zero out the handles
       ASSERT(HT::s_iHandleCount == 1 || HT::s_iHandleCount == 2);
       HANDLE* ph = pTemp->m_handlea;  // after ::ca::object
-      ASSERT(ph[0] == h || ph[0] == ::null());
-      ph[0] = ::null();
+      ASSERT(ph[0] == h || ph[0] == NULL);
+      ph[0] = NULL;
       if (HT::s_iHandleCount == 2)
       {
-         ASSERT(ph[1] == h || ph[1] == ::null());
-         ph[1] = ::null();
+         ASSERT(ph[1] == h || ph[1] == NULL);
+         ph[1] = NULL;
       }
 
-      ASSERT(m_pfnDestructObject != ::null());
-      pTemp->m_papp = ::null();
+      ASSERT(m_pfnDestructObject != NULL);
+      pTemp->m_papp = NULL;
       (*m_pfnDestructObject)(pTemp);   // destruct the object
    }
 
@@ -422,11 +422,11 @@ inline CT* handle_map <HT, CT>::lookup_permanent(HANDLE h)
 
    single_lock sl(&m_mutex, TRUE);
 
-   CT * pt = m_permanentMap.get(h, (CT*) ::null());
-   if(pt != ::null() && pt->get_os_data() == (void *) h)
+   CT * pt = m_permanentMap.get(h, (CT*) NULL);
+   if(pt != NULL && pt->get_os_data() == (void *) h)
       return pt;
    else
-      return ::null();
+      return NULL;
 
 }
 
@@ -436,11 +436,11 @@ inline CT* handle_map <HT, CT>::lookup_temporary(HANDLE h)
 
    single_lock sl(&m_mutex, TRUE);
 
-   CT * pt = m_temporaryMap.get(h, (CT*) ::null()); 
-   if(pt != ::null() && pt->get_os_data() == (void *) h)
+   CT * pt = m_temporaryMap.get(h, (CT*) NULL); 
+   if(pt != NULL && pt->get_os_data() == (void *) h)
       return pt;
    else
-      return ::null();
+      return NULL;
 
 }
 

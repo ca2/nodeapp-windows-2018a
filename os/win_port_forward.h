@@ -30,7 +30,7 @@ namespace win
 		
 		   HRESULT STDMETHODCALLTYPE NewExternalIPAddress( BSTR bstrNewExternalIPAddress )
 		   {
-			   ASSERT( m_pointer != ::null() );			
+			   ASSERT( m_pointer != NULL );			
             string strNewExternalIPAddress(bstrNewExternalIPAddress);
 			   return m_pointer->OnNewExternalIPAddress(strNewExternalIPAddress );
 		   }
@@ -57,7 +57,7 @@ namespace win
 		
 		   HRESULT STDMETHODCALLTYPE NewNumberOfEntries( long lNewNumberOfEntries )
 		   {
-			   ASSERT( m_pointer != ::null() );			
+			   ASSERT( m_pointer != NULL );			
 			   return m_pointer->OnNewNumberOfEntries( lNewNumberOfEntries );
 		   }
 		
@@ -82,7 +82,7 @@ namespace win
 	   port_forward(sp(::ca::application) papp);
 	   virtual ~port_forward();
 	
-	   virtual HRESULT ListenForUpnpChanges(::ca::port_forward_change_callbacks *pCallbacks = ::null());  // ::null()==default object; if you provide your own pointer to a port_forward_change_callbacks-derived object it is deleted for you automatically
+	   virtual HRESULT ListenForUpnpChanges(::ca::port_forward_change_callbacks *pCallbacks = NULL);  // NULL==default object; if you provide your own pointer to a port_forward_change_callbacks-derived object it is deleted for you automatically
 	   virtual HRESULT StopListeningForUpnpChanges( );  // Stops listenting for UPnP change events on the router and deletes any port_forward_change_callbacks-derived objects
 	
 	   virtual bool GetDeviceInformationUsingThread( oswindow oswindow );  // starts a thread that will get IGD (router) device information; the thread posts a UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION message to oswindow when it's done
@@ -103,7 +103,7 @@ namespace win
 	
 	   void InitializeMembersToNull();
 	   void DeinitializeCom();
-	   HRESULT PopulateDeviceInfoContainer( IUPnPDevice* piDevice, device & deviceInfo, oswindow oswindow=::null() );
+	   HRESULT PopulateDeviceInfoContainer( IUPnPDevice* piDevice, device & deviceInfo, oswindow oswindow=NULL );
 	   HRESULT GetNextMapping( IEnumVARIANT* piEnumerator, port_map & mappingContainer );
 	   HRESULT SetChangeEventCallbackPointer(::ca::port_forward_change_callbacks *pCallbacks);
 	

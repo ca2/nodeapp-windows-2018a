@@ -56,7 +56,7 @@ namespace win
 
       // Operations
       void close();
-      virtual bool FindFile(const char * pstrName = ::null(), DWORD dwUnused = 0);
+      virtual bool FindFile(const char * pstrName = NULL, DWORD dwUnused = 0);
       virtual bool FindNextFile();
 
    protected:

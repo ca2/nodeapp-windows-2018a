@@ -54,7 +54,7 @@ namespace win
 
       //get host information from the host name
       HOSTENT* pHostEnt = gethostbyname(szHostname);
-      if (pHostEnt == ::null())
+      if (pHostEnt == NULL)
       {
          TRACE("Failed in call to gethostbyname, WSAGetLastError returns %d\n", WSAGetLastError());
          return FALSE;
@@ -100,7 +100,7 @@ namespace win
 
       //get host information from the host name
       HOSTENT* pent = gethostbyname(szHostname);
-      if (pent == ::null())
+      if (pent == NULL)
       {
          TRACE("Failed in call to gethostbyname, WSAGetLastError returns %d\n", WSAGetLastError());
          return FALSE;

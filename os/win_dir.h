@@ -35,15 +35,15 @@ namespace win
       virtual class ::ca::path & path();
       virtual string path(const char * pszFolder, strsize iLenFolder, const char * pszRelative, strsize iLenRelative, const char * psz2, strsize iLen2, bool bUrl);
 
-      virtual string relpath(const char * lpcszSource, const char * lpcszRelative, const char * lpcsz2 = ::null());
-      virtual void  ls_pattern(sp(::ca::application) papp, const char * lpcsz, const char * lpcszPattern, stringa * pstraPath = ::null(), stringa * pstraTitle = ::null(), array < bool, bool > * pbaIsDir = ::null(), array < int64_t, int64_t > * piaSize = ::null());
-      virtual void  ls(sp(::ca::application) papp, const char * lpcsz, stringa * pstraPath = ::null(), stringa * pstraTitle = ::null(), array < bool, bool > * pbaIsDir = ::null(), array < int64_t, int64_t > * piaSize = ::null());
-      virtual void  rls_pattern(sp(::ca::application) papp, const char * lpcsz, const char * lpcszPattern, stringa * pstraPath = ::null(), stringa * pstraTitle = ::null(), stringa * pstraRelative = ::null(), array < bool, bool > * pbaIsDir = ::null(), array < int64_t, int64_t > * piaSize = ::null(), e_extract eextract = extract_first);
-      virtual void  rls(sp(::ca::application) papp, const char * lpcsz, stringa * pstraPath = ::null(), stringa * pstraTitle = ::null(), stringa * pstraRelative = ::null(), e_extract eextract = extract_first);
-      virtual void  rls_dir(sp(::ca::application) papp, const char * lpcsz, stringa * pstraPath = ::null(), stringa * pstraTitle = ::null(), stringa * pstraRelative = ::null());
-      virtual void  ls_dir(sp(::ca::application) papp, const char * lpcsz, stringa * pstraPath = ::null(), stringa * pstraTitle = ::null());
+      virtual string relpath(const char * lpcszSource, const char * lpcszRelative, const char * lpcsz2 = NULL);
+      virtual void  ls_pattern(sp(::ca::application) papp, const char * lpcsz, const char * lpcszPattern, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, array < bool, bool > * pbaIsDir = NULL, array < int64_t, int64_t > * piaSize = NULL);
+      virtual void  ls(sp(::ca::application) papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, array < bool, bool > * pbaIsDir = NULL, array < int64_t, int64_t > * piaSize = NULL);
+      virtual void  rls_pattern(sp(::ca::application) papp, const char * lpcsz, const char * lpcszPattern, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, stringa * pstraRelative = NULL, array < bool, bool > * pbaIsDir = NULL, array < int64_t, int64_t > * piaSize = NULL, e_extract eextract = extract_first);
+      virtual void  rls(sp(::ca::application) papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, stringa * pstraRelative = NULL, e_extract eextract = extract_first);
+      virtual void  rls_dir(sp(::ca::application) papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, stringa * pstraRelative = NULL);
+      virtual void  ls_dir(sp(::ca::application) papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL);
       virtual bool  has_subdir(sp(::ca::application) papp, const char * lpcsz);
-      virtual void  ls_file(sp(::ca::application) papp, const char * lpcsz, stringa * pstraPath = ::null(), stringa * pstraTitle = ::null());
+      virtual void  ls_file(sp(::ca::application) papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL);
       virtual bool  is(const char * lpcsz, sp(::ca::application) papp);
       virtual bool  is(const string & str, sp(::ca::application) papp);
       virtual bool  name_is(const string & str, sp(::ca::application) papp);
@@ -57,41 +57,41 @@ namespace win
       virtual string name(const char * lpcsz);
       virtual string name(const string & str);
 
-      virtual string time(const char * lpcsz = ::null(), const char * lpcsz2 = ::null());
-      virtual string stage(const char * lpcsz = ::null(), const char * lpcsz2 = ::null());
-      virtual string stageapp(const char * lpcsz = ::null(), const char * lpcsz2 = ::null());
-      virtual string netseed(const char * lpcsz = ::null(), const char * lpcsz2 = ::null());
+      virtual string time(const char * lpcsz = NULL, const char * lpcsz2 = NULL);
+      virtual string stage(const char * lpcsz = NULL, const char * lpcsz2 = NULL);
+      virtual string stageapp(const char * lpcsz = NULL, const char * lpcsz2 = NULL);
+      virtual string netseed(const char * lpcsz = NULL, const char * lpcsz2 = NULL);
       
       // stage in ca2os spalib
-      virtual string ca2(const char * lpcsz, const char * lpcsz2 = ::null());
+      virtual string ca2(const char * lpcsz, const char * lpcsz2 = NULL);
       virtual string ca2();
       virtual string ca2(const string & str);
       virtual string ca2(const string & str, const string & str2);
       virtual string ca2(const char * lpcsz, const string & str2);
       virtual string ca2(const string & str, const char * lpcsz2);
 
-      virtual string module(const char * lpcsz = ::null(), const char * lpcsz2 = ::null());
-      virtual string ca2module(const char * lpcsz = ::null(), const char * lpcsz2 = ::null());
+      virtual string module(const char * lpcsz = NULL, const char * lpcsz2 = NULL);
+      virtual string ca2module(const char * lpcsz = NULL, const char * lpcsz2 = NULL);
       virtual void time_square(string &str);
       virtual string time_log(const char * pszId);
 
 
       virtual string trash_that_is_not_trash(const char * psz);
 
-      virtual string appdata(const char * lpcsz = ::null(), const char * lpcsz2 = ::null());
+      virtual string appdata(const char * lpcsz = NULL, const char * lpcsz2 = NULL);
 
-      virtual string usersystemappdata(sp(::ca::application) papp, const char * lpcszPrefix, const char * lpcsz = ::null(), const char * lpcsz2 = ::null());
-      virtual string userappdata(sp(::ca::application) papp, const char * lpcsz = ::null(), const char * lpcsz2 = ::null());
-      virtual string userdata(sp(::ca::application) papp, const char * lpcsz = ::null(), const char * lpcsz2 = ::null());
-      virtual string userfolder(sp(::ca::application) papp, const char * lpcsz = ::null(), const char * lpcsz2 = ::null());
+      virtual string usersystemappdata(sp(::ca::application) papp, const char * lpcszPrefix, const char * lpcsz = NULL, const char * lpcsz2 = NULL);
+      virtual string userappdata(sp(::ca::application) papp, const char * lpcsz = NULL, const char * lpcsz2 = NULL);
+      virtual string userdata(sp(::ca::application) papp, const char * lpcsz = NULL, const char * lpcsz2 = NULL);
+      virtual string userfolder(sp(::ca::application) papp, const char * lpcsz = NULL, const char * lpcsz2 = NULL);
       virtual string default_os_user_path_prefix(sp(::ca::application) papp);
-      virtual string default_userappdata(sp(::ca::application) papp, const char * lpcszPrefix, const char * lpcszLogin , const char * pszRelativePath = ::null());
-      virtual string default_userdata(sp(::ca::application) papp, const char * lpcszPrefix, const char * lpcszLogin, const char * pszRelativePath = ::null());
-      virtual string default_userfolder(sp(::ca::application) papp, const char * lpcszPrefix, const char * lpcszLogin, const char * pszRelativePath = ::null());
-      virtual string userquicklaunch(sp(::ca::application) papp, const char * pszRelativePath = ::null(), const char * lpcsz2 = ::null());
-      virtual string userprograms(sp(::ca::application) papp, const char * pszRelativePath = ::null(), const char * lpcsz2 = ::null());
+      virtual string default_userappdata(sp(::ca::application) papp, const char * lpcszPrefix, const char * lpcszLogin , const char * pszRelativePath = NULL);
+      virtual string default_userdata(sp(::ca::application) papp, const char * lpcszPrefix, const char * lpcszLogin, const char * pszRelativePath = NULL);
+      virtual string default_userfolder(sp(::ca::application) papp, const char * lpcszPrefix, const char * lpcszLogin, const char * pszRelativePath = NULL);
+      virtual string userquicklaunch(sp(::ca::application) papp, const char * pszRelativePath = NULL, const char * lpcsz2 = NULL);
+      virtual string userprograms(sp(::ca::application) papp, const char * pszRelativePath = NULL, const char * lpcsz2 = NULL);
 
-      virtual string commonprograms(const char * pszRelativePath = ::null(), const char * lpcsz2 = ::null());
+      virtual string commonprograms(const char * pszRelativePath = NULL, const char * lpcsz2 = NULL);
 
       virtual bool initialize();
    protected:

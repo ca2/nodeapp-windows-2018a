@@ -33,7 +33,7 @@ namespace win
 struct CLASS_DECL_win __exception_link
 {
    __exception_link* m_pLinkPrev;    // previous top, next in handler chain
-   base_exception* m_pException;   // current exception (::null() in try block)
+   base_exception* m_pException;   // current exception (NULL in try block)
 
    __exception_link();       // for initialization and linking
    ~__exception_link()       // for cleanup and unlinking
@@ -93,7 +93,7 @@ CLASS_DECL_win MSG* __get_current_message();
 CLASS_DECL_win void __end_thread(sp(::ca::application) papp, UINT nExitCode, bool bDelete = TRUE);
 
 CLASS_DECL_win void __init_thread();
-CLASS_DECL_win void __term_thread(sp(::ca::application) papp, HINSTANCE hInstTerm = ::null());
+CLASS_DECL_win void __term_thread(sp(::ca::application) papp, HINSTANCE hInstTerm = NULL);
 
 /////////////////////////////////////////////////////////////////////////////
 // Global functions for access to the one and only application
