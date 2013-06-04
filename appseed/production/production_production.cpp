@@ -322,7 +322,7 @@ restart:
 
          m_straRoot.remove_all();
 
-         Application.dir().ls_dir(m_strBase, ::null(), &m_straRoot);
+         Application.dir().ls_dir(m_strBase, NULL, &m_straRoot);
 
          m_straRoot.filter_begins_ci("app-");
 
@@ -337,7 +337,7 @@ restart:
             for(int32_t i = 0; i < m_straRoot.get_size(); i++)
             {
 
-               if(!sync_source(m_straRoot[i], ::null()))
+               if(!sync_source(m_straRoot[i], NULL))
                   return 1;
 
             }
@@ -533,7 +533,7 @@ restart:
 
 
          //System.http().ms_download("http://api.ca2.cc/spaignition/clean", 
-         //   System.dir().ca2("time\\spaignition_update.txt"), ::null(), post, headers, ::ca::app(get_app()).user()->get_user());
+         //   System.dir().ca2("time\\spaignition_update.txt"), NULL, post, headers, ::ca::app(get_app()).user()->get_user());
          add_status("Cleaning ca2os folder...");
          ::ca::process process;
          Application.file().put_contents(strPath, "rmdir /s /q C:\\ca\\vrel\\stage");
@@ -770,7 +770,7 @@ restart:
          add_status("bz - bzip - compressing stage");
          System.compress().bz(get_app(), m_strCCVrelNew + "\\ca2_spa_stage.fileset.bz", m_strCCVrelNew + "\\ca2_spa_stage.fileset");
 
-         class release * prelease = ::null();
+         class release * prelease = NULL;
 
          /*      add_status("_001cgcl - releasing at United States, GoDaddy, cgcl...");
          class release * prelease = new class release(this);
@@ -1170,7 +1170,7 @@ retry2:
 
    ::ca::property_set headers;
    System.http().ms_download(strUrl, 
-   System.dir().ca2("time\\spaignition_update.txt"), ::null(), post, headers, System.user()->get_user());
+   System.dir().ca2("time\\spaignition_update.txt"), NULL, post, headers, System.user()->get_user());
    i += 8;
    }
    }*/
@@ -1191,7 +1191,7 @@ retry2:
       si.cb = sizeof(si);
       si.dwFlags = STARTF_USESHOWWINDOW;
       si.wShowWindow = SW_HIDE; 
-      if(pszRevision != ::null() && pszRevision[0] != '\0')
+      if(pszRevision != NULL && pszRevision[0] != '\0')
       {
          str.Format("svn update --revision %s %s", pszRevision, System.dir().path(strBase, psz));
       }
@@ -1199,7 +1199,7 @@ retry2:
       {
          str.Format("svn update %s", System.dir().path(strBase, psz));
       }
-      if(!::CreateProcess(::null(), (LPTSTR) (const char *) str, ::null(), ::null(), FALSE, CREATE_NEW_CONSOLE, ::null(), ::null(), &si, &pi))
+      if(!::CreateProcess(NULL, (LPTSTR) (const char *) str, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
       {
          strStatus.Format("     Error: Check svn installation!!");
          add_status(strStatus);
@@ -1258,7 +1258,7 @@ retry2:
       str.Format("svn commit --force-log --encoding utf-8 --file %s %s", 
          System.dir().path(m_strBase, "app\\this_version_info.txt"),
          System.dir().path(strBase, psz));
-      if(!::CreateProcess(::null(), (LPTSTR) (const char *) str, ::null(), ::null(), FALSE, CREATE_NEW_CONSOLE, ::null(), ::null(), &si, &pi))
+      if(!::CreateProcess(NULL, (LPTSTR) (const char *) str, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
       {
          strStatus.Format("     Error: Check svn installation!!");
          add_status(strStatus);
@@ -1310,7 +1310,7 @@ retry2:
 
          stringa stra1;
          stringa stra2;
-         Application.dir().rls(strRelease, &stra1, ::null(), &stra2);
+         Application.dir().rls(strRelease, &stra1, NULL, &stra2);
          for(int32_t i = 0; i < stra1.get_size();)
          {
             if(stra1[i].find("\\.svn\\") >= 0 || (stra1[i].get_length() < 5 || stra1[i].Right(5) == "\\.svn"))
@@ -1459,7 +1459,7 @@ retry2:
 
       string strBase = System.dir().path(m_strBase, pszRoot, "appmatter");
 
-      Application.dir().ls_dir(strBase, ::null(), &straRelative);
+      Application.dir().ls_dir(strBase, NULL, &straRelative);
 
       for(int32_t i = 0; i < straRelative.get_count(); i++)
       {
@@ -1484,7 +1484,7 @@ retry2:
 
       strBase = System.dir().path(strBase, pszRelative);
 
-      Application.dir().ls_dir(strBase, ::null(), &straRelative);
+      Application.dir().ls_dir(strBase, NULL, &straRelative);
 
       for(int32_t i = 0; i < straRelative.get_count(); i++)
       {
@@ -1508,7 +1508,7 @@ retry2:
 
       strBase = System.dir().path(strBase, pszRelative);
 
-      Application.dir().ls_dir(strBase, ::null(), &straRelative);
+      Application.dir().ls_dir(strBase, NULL, &straRelative);
 
       for(int32_t i = 0; i < straRelative.get_count(); i++)
       {
@@ -1528,7 +1528,7 @@ retry2:
 
       strBase = System.dir().path(strBase, pszRelative);
 
-      Application.dir().ls_dir(strBase, ::null(), &straRelative);
+      Application.dir().ls_dir(strBase, NULL, &straRelative);
 
       for(int32_t i = 0; i < straRelative.get_count(); i++)
       {
@@ -1557,7 +1557,7 @@ retry2:
 
       stringa stra2;
 
-      Application.dir().rls(System.dir().path(m_strBase, System.dir().path(pszRoot, "appmatter", pszRelative)), &straFiles, ::null(), &straRelative);
+      Application.dir().rls(System.dir().path(m_strBase, System.dir().path(pszRoot, "appmatter", pszRelative)), &straFiles, NULL, &straRelative);
 
       strsize iBaseLen = m_strBase.get_length();
 
@@ -1807,12 +1807,12 @@ retry2:
       Application.file().put_contents(System.dir().path(pszDir, "META-INF/zigbert.sf"), strSignature);
 
 
-      X509 * signer = ::null();
+      X509 * signer = NULL;
       {
          string strSigner = Application.file().as_string(strSignerPath);
          BIO * pbio = BIO_new_mem_buf((void *) (LPCTSTR) strSigner, (int32_t) strSigner.get_length());
-         //signer = PEM_read_bio_X509_AUX(pbio, ::null(), 0, ::null());
-         signer = PEM_read_bio_X509(pbio, ::null(), 0, ::null());
+         //signer = PEM_read_bio_X509_AUX(pbio, NULL, 0, NULL);
+         signer = PEM_read_bio_X509(pbio, NULL, 0, NULL);
          BIO_free(pbio);
       }
 
@@ -1820,12 +1820,12 @@ retry2:
       {
          string strKey = Application.file().as_string(strKeyPath);
          BIO * pbio = BIO_new_mem_buf((void *) (LPCTSTR) strKey, (int32_t) strKey.get_length());
-         pkey = PEM_read_bio_PrivateKey(pbio, ::null(), ::null(), ::null());
+         pkey = PEM_read_bio_PrivateKey(pbio, NULL, NULL, NULL);
          BIO_free(pbio);
       }
 
 
-      stack_st_X509 * pstack509 = ::null();
+      stack_st_X509 * pstack509 = NULL;
       {
          string strOthers = Application.file().as_string(strOthersPath);
          array < X509 * > xptra;
@@ -1844,10 +1844,10 @@ retry2:
             X509 * x;
             BIO * pbio = BIO_new(BIO_s_mem());
             BIO_puts(pbio, strCertificate);
-            //x = PEM_read_bio_X509_AUX(pbio, ::null(), 0, ::null());
-            x = PEM_read_bio_X509(pbio, ::null(), 0, ::null());
+            //x = PEM_read_bio_X509_AUX(pbio, NULL, 0, NULL);
+            x = PEM_read_bio_X509(pbio, NULL, 0, NULL);
             BIO_free(pbio);
-            if(x == ::null())
+            if(x == NULL)
             {
                return;
             }
@@ -1876,7 +1876,7 @@ retry2:
 
       i2d_PKCS7_bio(output, pkcs7);
 
-      char * pchData = ::null();
+      char * pchData = NULL;
       long count = BIO_get_mem_data(output, &pchData);
 
       Application.file().put_contents(System.dir().path(pszDir, "META-INF/zigbert.rsa"), pchData, count);
@@ -2181,7 +2181,7 @@ retry2:
 
       WCHAR * pwsz;
 
-      if(FAILED(SHGetKnownFolderPath(FOLDERID_ProgramFilesX86, 0, ::null(), &pwsz)))
+      if(FAILED(SHGetKnownFolderPath(FOLDERID_ProgramFilesX86, 0, NULL, &pwsz)))
       {
    
          add_status("Chrome not found...");
@@ -2461,9 +2461,9 @@ Retry2:
          /*xml::document document(get_app());
          if(document.load(replyMsg))
          {
-            if(document.get_root() != ::null())
+            if(document.get_root() != NULL)
             {
-               if(document.get_root()->child_at(0) != ::null() && document.get_root()->child_at(0)->get_name() == "error")
+               if(document.get_root()->child_at(0) != NULL && document.get_root()->child_at(0)->get_name() == "error")
                {
                   if(document.get_root()->child_at(0)->attr("code") != 34
                   && document.get_root()->child_at(0)->get_value().CompareNoCase("Status is a duplicate.") != 0)

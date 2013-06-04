@@ -90,14 +90,14 @@ extern bool g_bInstalling;
 installer::installer()
 {
    xxdebug_box("app-install", "app", 0);
-   m_hinstance             = ::GetModuleHandleA(::null());
-   m_hmutexSpabootInstall  = ::null();
+   m_hinstance             = ::GetModuleHandleA(NULL);
+   m_hmutexSpabootInstall  = NULL;
    e_message m_emessage    = message_none;
-   m_modpath               = ::null();
-   m_pszDllEnds            = ::null();
-   m_dwaProcess            = ::null();
+   m_modpath               = NULL;
+   m_pszDllEnds            = NULL;
+   m_dwaProcess            = NULL;
    m_iSizeProcess          = 0;
-   m_hmodulea              = ::null();
+   m_hmodulea              = NULL;
    m_iSizeModule           = 0;
    m_bInstallerInstalling  = false;
 }
@@ -147,7 +147,7 @@ bool installer::initialize()
    }
 
 
-   m_hmutexSpabootInstall = ::CreateMutex(::null(), FALSE, "Global\\::ca::fontopus::ca2_spaboot_install::7807e510-5579-11dd-ae16-0800200c7784");
+   m_hmutexSpabootInstall = ::CreateMutex(NULL, FALSE, "Global\\::ca::fontopus::ca2_spaboot_install::7807e510-5579-11dd-ae16-0800200c7784");
    if(::GetLastError() == ERROR_ALREADY_EXISTS)
    {
       m_iError = -202;
@@ -281,7 +281,7 @@ void installer::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMe
    vsstring strMessage(pszMessage);
    int32_t iRet = 0;
    const char * pszSuffix;
-   if((pszSuffix = str_begins_inc_dup(strMessage, "synch_spaadmin:")) != ::null())
+   if((pszSuffix = str_begins_inc_dup(strMessage, "synch_spaadmin:")) != NULL)
    {
       if(g_bInstalling)
       {
@@ -297,7 +297,7 @@ void installer::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMe
       synch_spaadmin(pszSuffix);
       m_bInstallerInstalling = false;
    }
-   else if((pszSuffix = str_begins_inc_dup(strMessage, "spaadmin:")) != ::null())
+   else if((pszSuffix = str_begins_inc_dup(strMessage, "spaadmin:")) != NULL)
    {
       if(g_bInstalling)
       {

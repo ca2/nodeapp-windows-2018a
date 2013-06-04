@@ -62,7 +62,7 @@ namespace production
       {
          set_cur_tab_by_id(PaneViewProduction);
       }
-      if(pHint != ::null())
+      if(pHint != NULL)
       {
          if(base < pane_view_update_hint >::bases(pHint))
          {
@@ -76,7 +76,7 @@ namespace production
             }
          }
       }
-	      if(pHint != ::null())
+	      if(pHint != NULL)
       {
    	   if(base < pane_view_update_hint >::bases(pHint))
          {
@@ -139,7 +139,7 @@ namespace production
       case PaneViewContextMenu:
          {
             sp(::filemanager::document) pdoc = papp->filemanager().std().open_child_list(false, true);
-            if(pdoc != ::null())
+            if(pdoc != NULL)
             {
                pdoc->get_filemanager_data()->m_iIconSize = 16;
                pdoc->get_filemanager_data()->m_bListText = true;
@@ -148,14 +148,14 @@ namespace production
                pdoc->get_filemanager_data()->m_strDISection = "production_menu";
                pdoc->get_filemanager_data()->m_pcallback = this;
                pdoc->Initialize(true);
-               pdoc->update_all_views(::null(), 1234);
-               pdoc->update_all_views(::null(), 123458);
+               pdoc->update_all_views(NULL, 1234);
+               pdoc->update_all_views(NULL, 123458);
                sp(::user::view) pview = pdoc->get_view();
                pdoc->FileManagerBrowse(Application.dir().userappdata("production\\menu"));
-               if(pview != ::null())
+               if(pview != NULL)
                {
                   sp(::user::frame_window) pframe =  (pview->GetParentFrame());
-                  if(pframe != ::null())
+                  if(pframe != NULL)
                   {
                      pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
                      pframe->set_parent(this);
@@ -169,7 +169,7 @@ namespace production
       case PaneViewProduction:
          {
             sp(::user::interaction) puie = ::user::view::create_view < ::production::view > (get_document(), pcreatordata->m_pholder);
-            if(puie != ::null())
+            if(puie != NULL)
             {
                pcreatordata->m_pdoc = get_document();
             }
@@ -184,17 +184,17 @@ namespace production
 
             get_document()->m_pfilemanagerdoc = papp->filemanager().std().open(papp, cc);
             sp(::filemanager::document) pdoc = get_document()->m_pfilemanagerdoc;
-            if(pdoc != ::null())
+            if(pdoc != NULL)
             {
                pdoc->get_filemanager_data()->m_strDISection = "production_filemanager";
                pdoc->Initialize(true);
-               pdoc->update_all_views(::null(), 1234);
-               pdoc->update_all_views(::null(), 123458);
+               pdoc->update_all_views(NULL, 1234);
+               pdoc->update_all_views(NULL, 123458);
                sp(::user::view) pview = pdoc->get_view();
-               if(pview != ::null())
+               if(pview != NULL)
                {
                   sp(::user::frame_window) pframe =  (pview->GetParentFrame());
-                  if(pframe != ::null())
+                  if(pframe != NULL)
                   {
                      //pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
                      //pframe->set_parent(this);
@@ -208,7 +208,7 @@ namespace production
       case PaneViewThreeActionLaunch:
          {
             sp(::filemanager::document) pdoc = papp->filemanager().std().open_child_list(false, true);
-            if(pdoc != ::null())
+            if(pdoc != NULL)
             {
                pdoc->get_filemanager_data()->m_iIconSize = 48;
                pdoc->get_filemanager_data()->m_bListText = false;
@@ -216,14 +216,14 @@ namespace production
                pdoc->get_filemanager_data()->m_pcallback = this;
                pdoc->get_filemanager_data()->m_strDISection = "production_3-action-launch";
                pdoc->Initialize(true);
-               pdoc->update_all_views(::null(), 1234);
-               pdoc->update_all_views(::null(), 123458);
+               pdoc->update_all_views(NULL, 1234);
+               pdoc->update_all_views(NULL, 123458);
                sp(::user::view) pview = pdoc->get_view();
                pdoc->FileManagerBrowse(Application.dir().userappdata("production\\3-action-launch"));
-               if(pview != ::null())
+               if(pview != NULL)
                {
                   sp(::user::frame_window) pframe =  (pview->GetParentFrame());
-                  if(pframe != ::null())
+                  if(pframe != NULL)
                   {
                      pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
                      pframe->set_parent(this);
@@ -237,7 +237,7 @@ namespace production
       case PaneViewConfiguration:
       {
          sp(form_document) pdoc = System.user()->create_form(this, pcreatordata->m_pholder);
-         if(pdoc == ::null())
+         if(pdoc == NULL)
             return;
          sp(::user::view) pview = pdoc->get_view();
          m_pviewOptions =  (pview);
@@ -247,13 +247,13 @@ namespace production
          form_update_hint uh;
          uh.m_etype = form_update_hint::type_browse;
          uh.m_strForm = "production\\options.xhtml";
-         pdoc->update_all_views(::null(), 0, &uh);
+         pdoc->update_all_views(NULL, 0, &uh);
          
          uh.m_etype = form_update_hint::type_get_form_view;
-         pdoc->update_all_views(::null(), 0, &uh);
+         pdoc->update_all_views(NULL, 0, &uh);
 
          uh.m_etype = form_update_hint::type_after_browse;
-         pdoc->update_all_views(::null(), 0, &uh);
+         pdoc->update_all_views(NULL, 0, &uh);
 
 
          pcreatordata->m_pwnd = (pview->GetParentFrame());
@@ -299,10 +299,10 @@ namespace production
       if(itema.get_size() > 0)
       {
          int32_t i = (int32_t) ::ShellExecuteW(
-            ::null(), 
-            ::null(), 
+            NULL, 
+            NULL, 
             ::ca::international::utf8_to_unicode("\"" + itema[0].m_strPath + "\""),
-            ::null(),
+            NULL,
             ::ca::international::utf8_to_unicode("\"" + System.dir().name(itema[0].m_strPath) + "\""),
             SW_SHOWNORMAL);
          string str;
@@ -326,7 +326,7 @@ namespace production
             view_update_hint uh;
             uh.m_eoption = view_update_hint::OptionClean;
             uh.m_bOption = pcheckbox->_001GetCheck() == check::checked;
-            get_document()->update_all_views(::null(), 0, &uh);
+            get_document()->update_all_views(NULL, 0, &uh);
          }
          else if(pevent->m_puie->m_id == "build")
          {
@@ -335,7 +335,7 @@ namespace production
             view_update_hint uh;
             uh.m_eoption = view_update_hint::OptionBuild;
             uh.m_bOption = pcheckbox->_001GetCheck() == check::checked;
-            get_document()->update_all_views(::null(), 0, &uh);
+            get_document()->update_all_views(NULL, 0, &uh);
          }
       }
       return false;

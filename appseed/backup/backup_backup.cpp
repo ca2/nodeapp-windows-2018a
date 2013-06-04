@@ -165,7 +165,7 @@ namespace backup
       Application.dir().mk(System.dir().name(strNewRepos));
       str.Format("svnadmin hotcopy C:\\repos\\%s %s", psz, strNewRepos);
 
-      if(!::CreateProcess(::null(), (LPTSTR) (const char *) str, ::null(), ::null(), FALSE, CREATE_NEW_CONSOLE, ::null(), ::null(), &si, &pi))
+      if(!::CreateProcess(NULL, (LPTSTR) (const char *) str, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
       {
          strStatus.Format("     Error: Check svn installation!!");
          add_status(strStatus);
@@ -210,8 +210,8 @@ namespace backup
          System.dir().ca2("basis/ca/app/dbbk.bat"),
          strdump);
 
-      if(!::CreateProcess(::null(), (LPTSTR) (const char *) str,
-         ::null(), ::null(), FALSE, 0, ::null(),
+      if(!::CreateProcess(NULL, (LPTSTR) (const char *) str,
+         NULL, NULL, FALSE, 0, NULL,
          "C:\\", &si, &pi))
       {
          strStatus.Format("     Error: Check svn installation!!");
@@ -256,7 +256,7 @@ namespace backup
       Application.dir().mk(System.dir().name(strTar));
       str.Format("7za.exe a -r -ttar \"%s\" \"%s\"", strTar, strNewRepos);
 
-      if(!::CreateProcess(::null(), (LPTSTR) (const char *) str, ::null(), ::null(), FALSE, CREATE_NEW_CONSOLE, ::null(), ::null(), &si, &pi))
+      if(!::CreateProcess(NULL, (LPTSTR) (const char *) str, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
       {
          strStatus.Format("     Error: Check 7-zip installation! Cannot 7za.exe command line utility!");
          add_status(strStatus);

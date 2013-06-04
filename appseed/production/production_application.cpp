@@ -123,10 +123,10 @@ namespace production
       if(itema.get_size() > 0)
       {
          ::ShellExecuteW(
-            ::null(), 
+            NULL, 
             L"open", 
             ::ca::international::utf8_to_unicode(itema[0].m_strPath),
-            ::null(),
+            NULL,
             ::ca::international::utf8_to_unicode(System.dir().name(itema[0].m_strPath)),
             SW_SHOW);
       }

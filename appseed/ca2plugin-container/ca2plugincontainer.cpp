@@ -2,9 +2,9 @@
 
 
 
-HANDLE g_hinstancePluginbase = ::null(); 
-void * g_pvoidPluginSystem = ::null();
-HANDLE g_hmutex = ::null();
+HANDLE g_hinstancePluginbase = NULL; 
+void * g_pvoidPluginSystem = NULL;
+HANDLE g_hmutex = NULL;
 
 
 uint32_t thread_proc_app(void * lpParam)
@@ -34,7 +34,7 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 	
    UNREFERENCED_PARAMETER(lpCmdLine);
 
-   ::CoInitialize(::null());
+   ::CoInitialize(NULL);
 
    if(!main_initialize())
       return -1;
@@ -43,13 +43,13 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 
    //::plane::system * psystem = new ::plane::system();
 
-   ASSERT(hPrevInstance == ::null());
+   ASSERT(hPrevInstance == NULL);
 
    int32_t nReturnCode = 0;
 
    vsstring * pstrChannel = new vsstring(get_command_line_param(::GetCommandLine(), "channel"));
 
-   g_hmutex = ::CreateMutex(::null(), FALSE, "Global\\::ca::fontopus::ca2plugin-container::" + *pstrChannel);
+   g_hmutex = ::CreateMutex(NULL, FALSE, "Global\\::ca::fontopus::ca2plugin-container::" + *pstrChannel);
 
    if(::GetLastError() == ERROR_ALREADY_EXISTS)
    {
@@ -65,7 +65,7 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
    while(true)
 	{
 
-      if(!GetMessage(&msg, ::null(), 0, 0xffffffffu))
+      if(!GetMessage(&msg, NULL, 0, 0xffffffffu))
          break;
 
       if(msg.message == WM_QUIT)
@@ -112,7 +112,7 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
    }
 
    
-   //psystem = ::null();
+   //psystem = NULL;
 
    try
    {
@@ -156,7 +156,7 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
    try
    {
 
-      //__get_module_state()->m_pmapHWND     = ::null();
+      //__get_module_state()->m_pmapHWND     = NULL;
 
    }
    catch(...)
@@ -168,7 +168,7 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
    try
    {
 
-      __get_module_state()->m_pmapHDC      = ::null();
+      __get_module_state()->m_pmapHDC      = NULL;
 
    }
    catch(...)
@@ -181,7 +181,7 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
    try
    {
 
-      __get_module_state()->m_pmapHGDIOBJ  = ::null();
+      __get_module_state()->m_pmapHGDIOBJ  = NULL;
 
    }
    catch(...)
@@ -190,7 +190,7 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
    }
 */
 
-   set_heap_mutex(::null());
+   set_heap_mutex(NULL);
 
    return nReturnCode;
 

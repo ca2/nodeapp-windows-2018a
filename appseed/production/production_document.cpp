@@ -19,7 +19,7 @@ namespace production
 		   return FALSE;
 
 
-      update_all_views(::null(), 0);
+      update_all_views(NULL, 0);
 
 
 	   return TRUE;
@@ -59,7 +59,7 @@ namespace production
 
    //  m_document.load(str);
 
-      update_all_views(::null(), 123);
+      update_all_views(NULL, 123);
 
       return TRUE;
 

@@ -18,7 +18,7 @@ namespace production
       m_brushBkActive(allocer()),
       m_brushBkInactive(allocer())
    {
-      m_pproduction = ::null();
+      m_pproduction = NULL;
       
       //System.file().ftd("C:\\home2\\ca2os\\ca2_spa\\stage", "C:\\teste.fileset");
 
@@ -110,12 +110,12 @@ namespace production
       UNREFERENCED_PARAMETER(pSender);
       if(lHint == 5432108)
       {
-         SetTimer(5432108, 100, ::null());
+         SetTimer(5432108, 100, NULL);
       }
-      else if(phint != ::null())
+      else if(phint != NULL)
       {
          view_update_hint * puh = dynamic_cast < view_update_hint * > (phint);
-         if(puh != ::null())
+         if(puh != NULL)
          {
             if(puh->m_eoption == view_update_hint::OptionClean)
             {
@@ -209,7 +209,7 @@ namespace production
          pdc->draw_text(m_pproduction->m_straStatus[i], rcItem, DT_BOTTOM | DT_LEFT);
          y = rcItem.bottom;
       }
-      pdc->SelectClipRgn(::null());
+      pdc->SelectClipRgn(NULL);
 
 
 
@@ -264,9 +264,9 @@ namespace production
 		   return;
       }
 
-      SetTimer(31, 230, ::null());
-      SetTimer(3003, 300, ::null());
-      SetTimer(543218, 200, ::null());
+      SetTimer(31, 230, NULL);
+      SetTimer(3003, 300, NULL);
+      SetTimer(543218, 200, NULL);
       m_dibV.load_from_matter("wild_mountains_and_valleys-123.png");
       //System.visual().imaging().free(pfi);
 
