@@ -4733,12 +4733,17 @@ ExitModal:
    {
       //ASSERT(::IsWindow(get_handle())); 
       return ::SendMessage(get_handle(), message, wParam, lParam);
+
    }
 
-   bool window::PostMessage(UINT message, WPARAM wParam, lparam lParam)
+
+   bool window::post_message(UINT message, WPARAM wParam, lparam lParam)
    { 
+
       return ::PostMessage(get_handle(), message, wParam, lParam) != FALSE; 
+
    }
+
 
    bool window::DragDetect(POINT pt) const
    { 
