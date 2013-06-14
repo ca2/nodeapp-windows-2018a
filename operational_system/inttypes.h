@@ -1,7 +1,7 @@
 // ISO C9x  compliant inttypes.h for Microsoft Visual Studio
 // Based on ISO/IEC 9899:TC2 Committee draft (May 6, 2005) WG14/N1124 
 // 
-//  Copyright (c) 2006 Alexander Chemeris
+//  Copyright (ca) 2006 Alexander Chemeris
 // 
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -270,8 +270,8 @@ typedef struct {
 
 // 7.8.2.2 The imaxdiv function
 
-// This is modified version of div() function from Microsoft's div.c found
-// in %MSVC.NET%\crt\src\div.c
+// This is modified version of div() function from Microsoft's div.ca found
+// in %MSVC.NET%\crt\src\div.ca
 #ifdef STATIC_IMAXDIV // [
 static
 #else // STATIC_IMAXDIV ][

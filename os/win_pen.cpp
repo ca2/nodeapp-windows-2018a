@@ -8,8 +8,8 @@ namespace win
 {
 
 
-   pen::pen(sp(::ca::application) papp) :
-      ca(papp)
+   pen::pen(sp(::ca2::application) papp) :
+      ca2(papp)
    { 
 
       m_ppen = NULL;
@@ -71,7 +71,7 @@ namespace win
 
    void pen::dump(dump_context & dumpcontext) const
    {
-      ::ca::graphics_object::dump(dumpcontext);
+      ::ca2::graphics_object::dump(dumpcontext);
 
 /*      if (get_handle() == NULL)
          return;
@@ -102,46 +102,46 @@ namespace win
       // IMPLEMENT_DYNAMIC(user_exception, base_exception)
       //user_exception _simpleUserException(FALSE, __IDS_USER_EXCEPTION);
 
-      // IMPLEMENT_DYNCREATE(::ca::graphics_sp, ::ca::object)
-      // IMPLEMENT_DYNAMIC(CClientDC, ::ca::graphics_sp)
-      // IMPLEMENT_DYNAMIC(CWindowDC, ::ca::graphics_sp)
-      // IMPLEMENT_DYNAMIC(CPaintDC, ::ca::graphics_sp)
-      // IMPLEMENT_DYNCREATE(::ca::graphics_object, ::ca::object)
+      // IMPLEMENT_DYNCREATE(::ca2::graphics_sp, ::ca2::object)
+      // IMPLEMENT_DYNAMIC(CClientDC, ::ca2::graphics_sp)
+      // IMPLEMENT_DYNAMIC(CWindowDC, ::ca2::graphics_sp)
+      // IMPLEMENT_DYNAMIC(CPaintDC, ::ca2::graphics_sp)
+      // IMPLEMENT_DYNCREATE(::ca2::graphics_object, ::ca2::object)
 
-      // IMPLEMENT_DYNAMIC(pen, ::ca::graphics_object)
-      // IMPLEMENT_DYNAMIC(::ca::brush, ::ca::graphics_object)
-      // IMPLEMENT_DYNAMIC(::ca::font, ::ca::graphics_object)
-      // IMPLEMENT_DYNAMIC(::ca::bitmap, ::ca::graphics_object)
-      // IMPLEMENT_DYNAMIC(::ca::palette, ::ca::graphics_object)
-      // IMPLEMENT_DYNAMIC(::ca::region, ::ca::graphics_object)
+      // IMPLEMENT_DYNAMIC(pen, ::ca2::graphics_object)
+      // IMPLEMENT_DYNAMIC(::ca2::brush, ::ca2::graphics_object)
+      // IMPLEMENT_DYNAMIC(::ca2::font, ::ca2::graphics_object)
+      // IMPLEMENT_DYNAMIC(::ca2::bitmap, ::ca2::graphics_object)
+      // IMPLEMENT_DYNAMIC(::ca2::palette, ::ca2::graphics_object)
+      // IMPLEMENT_DYNAMIC(::ca2::region, ::ca2::graphics_object)
 
       /////////////////////////////////////////////////////////////////////////////
       // Standard exception processing
 
 
-   /*void __get_gray_bitmap(sp(::ca::application) papp, const ::ca::bitmap &rSrc, ::ca::bitmap *pDest, COLORREF crBackground)
+   /*void __get_gray_bitmap(sp(::ca2::application) papp, const ::ca2::bitmap &rSrc, ::ca2::bitmap *pDest, COLORREF crBackground)
    {
       ASSERT(pDest);
-      ASSERT_KINDOF(::ca::bitmap, pDest);
+      ASSERT_KINDOF(::ca2::bitmap, pDest);
 
       BITMAP bm;
-      ::ca::graphics_sp graphicsMem, graphicsMask;
+      ::ca2::graphics_sp graphicsMem, graphicsMask;
       COLORREF cr;
-      ::ca::bitmap_sp bmpMask(papp);
-      ::ca::bitmap *pOldMask, *pOldMem;
+      ::ca2::bitmap_sp bmpMask(papp);
+      ::ca2::bitmap *pOldMask, *pOldMem;
       const DWORD   CP_ROP = 0xE20746;
-      ::ca::brush_sp brHighLight(papp, Session.get_default_color(COLOR_3DHIGHLIGHT)),
+      ::ca2::brush_sp brHighLight(papp, Session.get_default_color(COLOR_3DHIGHLIGHT)),
          brShadow(papp, Session.get_default_color(COLOR_3DSHADOW)), spbr;
 
       if(graphicsMem->CreateCompatibleDC(NULL) &&
          graphicsMask->CreateCompatibleDC(NULL))
       {
-         const_cast<::ca::bitmap &>(rSrc).GetBitmap(&bm);
+         const_cast<::ca2::bitmap &>(rSrc).GetBitmap(&bm);
 //         pDest->delete_object();
          if(pDest->CreateBitmap(bm.bmWidth, bm.bmHeight, bm.bmPlanes, bm.bmBitsPixel, NULL) &&
             bmpMask->CreateBitmap(bm.bmWidth, bm.bmHeight, 1, 1, NULL))
          {
-            pOldMem = graphicsMem->SelectObject(const_cast<::ca::bitmap *>(&rSrc));
+            pOldMem = graphicsMem->SelectObject(const_cast<::ca2::bitmap *>(&rSrc));
             pOldMask = graphicsMask->SelectObject(bmpMask);
 
             ASSERT(pOldMem && pOldMask);
@@ -177,26 +177,26 @@ namespace win
       }
    }
 
-   void __draw_gray_bitmap(sp(::ca::application) papp, ::ca::graphics * pgraphics, int32_t x, int32_t y, const ::ca::bitmap &rSrc, COLORREF crBackground)
+   void __draw_gray_bitmap(sp(::ca2::application) papp, ::ca2::graphics * pgraphics, int32_t x, int32_t y, const ::ca2::bitmap &rSrc, COLORREF crBackground)
    {
       ASSERT(pgraphics);
-      ASSERT_KINDOF(::ca::graphics_sp, pgraphics);
+      ASSERT_KINDOF(::ca2::graphics_sp, pgraphics);
 
       BITMAP bm;
-      ::ca::graphics_sp graphicsMem, graphicsMask;
+      ::ca2::graphics_sp graphicsMem, graphicsMask;
       COLORREF cr;
-      ::ca::bitmap_sp bmpMask(papp);
-      ::ca::bitmap *pOldMask, *pOldMem;
+      ::ca2::bitmap_sp bmpMask(papp);
+      ::ca2::bitmap *pOldMask, *pOldMem;
       const DWORD   CP_ROP = 0xE20746;
-      ::ca::brush_sp brHighLight(papp, Session.get_default_color(COLOR_3DHIGHLIGHT)),
+      ::ca2::brush_sp brHighLight(papp, Session.get_default_color(COLOR_3DHIGHLIGHT)),
          brShadow(papp, Session.get_default_color(COLOR_3DSHADOW)), spbr;
 
       if(graphicsMem->CreateCompatibleDC(pgraphics) &&
          graphicsMask->CreateCompatibleDC(pgraphics) &&
-         const_cast<::ca::bitmap &>(rSrc).GetBitmap(&bm) &&
+         const_cast<::ca2::bitmap &>(rSrc).GetBitmap(&bm) &&
          bmpMask->CreateBitmap(bm.bmWidth, bm.bmHeight, 1, 1, NULL))
       {
-         pOldMem = graphicsMem->SelectObject(const_cast<::ca::bitmap *>(&rSrc));
+         pOldMem = graphicsMem->SelectObject(const_cast<::ca2::bitmap *>(&rSrc));
          pOldMask = graphicsMask->SelectObject(bmpMask);
 
          ASSERT(pOldMem && pOldMask);
@@ -225,24 +225,24 @@ namespace win
       }
    }
 
-   void __get_dithered_bitmap(sp(::ca::application) papp, const ::ca::bitmap &rSrc, ::ca::bitmap *pDest, COLORREF cr1, COLORREF cr2)
+   void __get_dithered_bitmap(sp(::ca2::application) papp, const ::ca2::bitmap &rSrc, ::ca2::bitmap *pDest, COLORREF cr1, COLORREF cr2)
    {
       ASSERT(pDest);
-      ASSERT_KINDOF(::ca::bitmap, pDest);
+      ASSERT_KINDOF(::ca2::bitmap, pDest);
 
       BITMAP bm;
-      ::ca::graphics_sp graphicsSrc, graphicsMask, graphicsDest;
+      ::ca2::graphics_sp graphicsSrc, graphicsMask, graphicsDest;
       COLORREF cr;
-      ::ca::bitmap_sp bmpMask(papp);
-      ::ca::bitmap *pOldMask, *pOldSrc;
-      ::ca::brush brChecker;
+      ::ca2::bitmap_sp bmpMask(papp);
+      ::ca2::bitmap *pOldMask, *pOldSrc;
+      ::ca2::brush brChecker;
       static const WORD wPat[8] = {0x55, 0xaa, 0x55, 0xaa, 0x55, 0xaa, 0x55, 0xaa};
 
       if(graphicsSrc->CreateCompatibleDC(NULL) &&
          graphicsMask->CreateCompatibleDC(NULL) &&
          graphicsDest->CreateCompatibleDC(NULL))
       {
-         if(const_cast<::ca::bitmap &>(rSrc).GetBitmap(&bm))
+         if(const_cast<::ca2::bitmap &>(rSrc).GetBitmap(&bm))
          {
             //pDest->delete_object();
             if(pDest->CreateBitmap(bm.bmWidth, bm.bmHeight, bm.bmPlanes, bm.bmBitsPixel, NULL))
@@ -255,7 +255,7 @@ namespace win
                // Mask
                bmpMask->CreateBitmap(bm.bmWidth, bm.bmHeight, 1, 1, NULL);
 
-               pOldSrc = graphicsSrc->SelectObject(const_cast<::ca::bitmap *>(&rSrc));
+               pOldSrc = graphicsSrc->SelectObject(const_cast<::ca2::bitmap *>(&rSrc));
                pOldMask = graphicsMask->SelectObject(bmpMask);
 
                ASSERT(pOldSrc && pOldMask);
@@ -294,22 +294,22 @@ namespace win
       }
    }
 
-   void __draw_dithered_bitmap(sp(::ca::application) papp, ::ca::graphics * pgraphics, int32_t x, int32_t y, const ::ca::bitmap &rSrc, COLORREF cr1, COLORREF cr2)
+   void __draw_dithered_bitmap(sp(::ca2::application) papp, ::ca2::graphics * pgraphics, int32_t x, int32_t y, const ::ca2::bitmap &rSrc, COLORREF cr1, COLORREF cr2)
    {
       ASSERT(pgraphics);
-      ASSERT_KINDOF(::ca::graphics_sp, pgraphics);
+      ASSERT_KINDOF(::ca2::graphics_sp, pgraphics);
 
       BITMAP bm;
-      ::ca::graphics_sp graphicsSrc, graphicsMask;
+      ::ca2::graphics_sp graphicsSrc, graphicsMask;
       COLORREF cr;
-      ::ca::bitmap_sp bmpMask(papp);
-      ::ca::bitmap *pOldMask, *pOldSrc;
-      ::ca::brush brChecker;
+      ::ca2::bitmap_sp bmpMask(papp);
+      ::ca2::bitmap *pOldMask, *pOldSrc;
+      ::ca2::brush brChecker;
       static const WORD wPat[8] = {0x55, 0xaa, 0x55, 0xaa, 0x55, 0xaa, 0x55, 0xaa};
 
       if(graphicsSrc->CreateCompatibleDC(pgraphics) &&
          graphicsMask->CreateCompatibleDC(pgraphics) &&
-         const_cast<::ca::bitmap &>(rSrc).GetBitmap(&bm))
+         const_cast<::ca2::bitmap &>(rSrc).GetBitmap(&bm))
       {
          // create checker brush
          bmpMask->CreateBitmap(8, 8, 1, 1, wPat);
@@ -319,7 +319,7 @@ namespace win
          // Mask
          bmpMask->CreateBitmap(bm.bmWidth, bm.bmHeight, 1, 1, NULL);
 
-         pOldSrc = graphicsSrc->SelectObject(const_cast<::ca::bitmap *>(&rSrc));
+         pOldSrc = graphicsSrc->SelectObject(const_cast<::ca2::bitmap *>(&rSrc));
          pOldMask = graphicsMask->SelectObject(bmpMask);
 
          ASSERT(pOldSrc && pOldMask);

@@ -11,7 +11,7 @@ namespace backup
    public:
 	   
       
-      view(sp(::ca::application) papp);
+      view(sp(::ca2::application) papp);
       virtual ~view();
 
 

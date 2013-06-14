@@ -8,8 +8,8 @@ namespace win
 {
 
 
-   bitmap::bitmap(sp(::ca::application) papp) :
-      ca(papp)
+   bitmap::bitmap(sp(::ca2::application) papp) :
+      ca2(papp)
    { 
 
       m_pbitmap   = NULL;
@@ -34,7 +34,7 @@ namespace win
 
    }
 
-   bool bitmap::CreateBitmap(::ca::graphics * pgraphics, int32_t nWidth, int32_t nHeight, UINT nPlanes, UINT nBitcount, const void * lpBits, int32_t stride)
+   bool bitmap::CreateBitmap(::ca2::graphics * pgraphics, int32_t nWidth, int32_t nHeight, UINT nPlanes, UINT nBitcount, const void * lpBits, int32_t stride)
    { 
 
       UNREFERENCED_PARAMETER(pgraphics);
@@ -51,7 +51,7 @@ namespace win
    
    }
 
-   bool bitmap::CreateBitmapIndirect(::ca::graphics * pgraphics, LPBITMAP lpBitmap)
+   bool bitmap::CreateBitmapIndirect(::ca2::graphics * pgraphics, LPBITMAP lpBitmap)
    { 
 
       UNREFERENCED_PARAMETER(pgraphics);
@@ -60,7 +60,7 @@ namespace win
    }
 
 
-   bool bitmap::CreateDIBSection(::ca::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void **ppvBits, int * stride, HANDLE hSection, uint32_t offset)
+   bool bitmap::CreateDIBSection(::ca2::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void **ppvBits, int * stride, HANDLE hSection, uint32_t offset)
    { 
 
       UNREFERENCED_PARAMETER(pgraphics);
@@ -106,7 +106,7 @@ namespace win
    }
 
 
-   bool bitmap::CreateDIBitmap(::ca::graphics * pdc, const BITMAPINFOHEADER *pbmih, uint32_t flInit, const void *pjBits, const BITMAPINFO *pbmi, UINT iUsage)
+   bool bitmap::CreateDIBitmap(::ca2::graphics * pdc, const BITMAPINFOHEADER *pbmih, uint32_t flInit, const void *pjBits, const BITMAPINFO *pbmi, UINT iUsage)
    { 
       return FALSE;
    }
@@ -126,7 +126,7 @@ namespace win
    }
    bool bitmap::LoadBitmap(const char * lpszResourceName)
    { 
-   //   return attach(::LoadBitmap(::ca::FindResourceHandle(
+   //   return attach(::LoadBitmap(::ca2::FindResourceHandle(
    //lpszResourceName, RT_BITMAP), lpszResourceName));
       return FALSE;
    
@@ -157,7 +157,7 @@ namespace win
 
    bool bitmap::LoadBitmap(UINT nIDResource)
    { 
-      //return attach(::LoadBitmap(::ca::FindResourceHandle(MAKEINTRESOURCE(nIDResource), RT_BITMAP), MAKEINTRESOURCE(nIDResource))); 
+      //return attach(::LoadBitmap(::ca2::FindResourceHandle(MAKEINTRESOURCE(nIDResource), RT_BITMAP), MAKEINTRESOURCE(nIDResource))); 
       return FALSE;
    }
    bool bitmap::LoadOEMBitmap(UINT nIDBitmap)
@@ -165,7 +165,7 @@ namespace win
       //return attach(::LoadBitmap(NULL, MAKEINTRESOURCE(nIDBitmap))); 
       return FALSE;
    }
-   bool bitmap::CreateCompatibleBitmap(::ca::graphics * pgraphics, int32_t nWidth, int32_t nHeight)
+   bool bitmap::CreateCompatibleBitmap(::ca2::graphics * pgraphics, int32_t nWidth, int32_t nHeight)
    {
 
       if(m_pdata != NULL)
@@ -185,7 +185,7 @@ namespace win
       return TRUE;
    
    }
-   bool bitmap::CreateDiscardableBitmap(::ca::graphics * pgraphics, int32_t nWidth, int32_t nHeight)
+   bool bitmap::CreateDiscardableBitmap(::ca2::graphics * pgraphics, int32_t nWidth, int32_t nHeight)
    { 
 
       if(m_pdata != NULL)
@@ -219,7 +219,7 @@ namespace win
 
       void bitmap::dump(dump_context & dumpcontext) const
       {
-         ::ca::graphics_object::dump(dumpcontext);
+         ::ca2::graphics_object::dump(dumpcontext);
 
 /*         if (get_handle() == NULL)
             return;

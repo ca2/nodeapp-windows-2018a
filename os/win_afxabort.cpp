@@ -5,7 +5,7 @@
 
 void CLASS_DECL_win __abort()
 {
-//   TRACE(::ca::trace::category_AppMsg, 0, "__abort called.\n");
+//   TRACE(::ca2::trace::category_AppMsg, 0, "__abort called.\n");
 
    __win_term();
    abort();

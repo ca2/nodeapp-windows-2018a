@@ -4,12 +4,12 @@ namespace win
 {
 
    class CLASS_DECL_win folder_watch :
-      virtual public ::ca::folder_watch,
-      virtual public ::ca::thread
+      virtual public ::ca2::folder_watch,
+      virtual public ::ca2::thread
    {
    public:
       
-      folder_watch(sp(::ca::application) papp);
+      folder_watch(sp(::ca2::application) papp);
 
       virtual bool watch(const char * pszPath);
 

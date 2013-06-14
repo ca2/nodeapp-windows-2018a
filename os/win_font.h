@@ -6,7 +6,7 @@ namespace win
 
 
    class CLASS_DECL_win font : 
-      virtual public ::ca::font
+      virtual public ::ca2::font
    {
    public:
 
@@ -14,14 +14,14 @@ namespace win
       Gdiplus::Font *   m_pfont;
 
 
-      font(sp(::ca::application) papp);
+      font(sp(::ca2::application) papp);
       virtual ~font();
 
 
       virtual void * get_os_data() const;
 
 
-      virtual void font::construct(const ::ca::font & fontParam);
+      virtual void font::construct(const ::ca2::font & fontParam);
 
       /*
       virtual bool CreateFontIndirect(const LOGFONT* lpLogFont);
@@ -30,8 +30,8 @@ namespace win
             BYTE cStrikeOut, BYTE nCharSet, BYTE nOutPrecision,
             BYTE nClipPrecision, BYTE nQuality, BYTE nPitchAndFamily,
             const char * lpszFacename);
-      virtual bool CreatePointFont(int32_t nPointSize, const char * lpszFaceName, ::ca::graphics * pgraphics = NULL);
-      virtual bool CreatePointFontIndirect(const LOGFONT* lpLogFont, ::ca::graphics * pgraphics = NULL);
+      virtual bool CreatePointFont(int32_t nPointSize, const char * lpszFaceName, ::ca2::graphics * pgraphics = NULL);
+      virtual bool CreatePointFontIndirect(const LOGFONT* lpLogFont, ::ca2::graphics * pgraphics = NULL);
       */
 
       //virtual int32_t GetLogFont(LOGFONT* pLogFont);

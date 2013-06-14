@@ -15,8 +15,8 @@ namespace win
    // Construction/Destruction
    //////////////////////////////////////////////////////////////////////
 
-   port_forward::port_forward(sp(::ca::application) papp) :
-      ca(papp)
+   port_forward::port_forward(sp(::ca2::application) papp) :
+      ca2(papp)
    {
 	   InitializeMembersToNull();
 	   ::InitializeCriticalSection( &m_cs );
@@ -85,7 +85,7 @@ namespace win
 	   CoUninitialize();  // balancing call for CoInitialize
    }
 
-   HRESULT port_forward::ListenForUpnpChanges(::ca::port_forward_change_callbacks *pCallbacks /* =NULL */ )
+   HRESULT port_forward::ListenForUpnpChanges(::ca2::port_forward_change_callbacks *pCallbacks /* =NULL */ )
    {
 	   // check if we are already listening
 	
@@ -97,7 +97,7 @@ namespace win
 	
 	   if ( pCallbacks==NULL )
 	   {
-		   SetChangeEventCallbackPointer(	new ::ca::port_forward_change_callbacks );
+		   SetChangeEventCallbackPointer(	new ::ca2::port_forward_change_callbacks );
 	   }
 	   else
 	   {
@@ -190,7 +190,7 @@ namespace win
 
 
 
-   HRESULT port_forward::SetChangeEventCallbackPointer(::ca::port_forward_change_callbacks *pCallbacks)
+   HRESULT port_forward::SetChangeEventCallbackPointer(::ca2::port_forward_change_callbacks *pCallbacks)
    {
 	   ASSERT( pCallbacks!=NULL );
 	
@@ -350,7 +350,7 @@ namespace win
 	
 	   m_oswindow_ForPortMappingThread = oswindow;
 	
-	   m_pPortMappingThread = ::__begin_thread(get_app(), ThreadForPortRetrieval, this, ::ca::thread_priority_below_normal, 0);
+	   m_pPortMappingThread = ::__begin_thread(get_app(), ThreadForPortRetrieval, this, ::ca2::thread_priority_below_normal, 0);
 	
 	   if(m_pPortMappingThread != NULL )
 	   {
@@ -391,7 +391,7 @@ namespace win
 	
 	   m_oswindow_ForEditMappingThread = oswindow;
 	
-	   m_pEditMappingThread = ::__begin_thread(get_app(), ThreadToEditMapping, this, ::ca::thread_priority_below_normal, 0, 0);
+	   m_pEditMappingThread = ::__begin_thread(get_app(), ThreadToEditMapping, this, ::ca2::thread_priority_below_normal, 0, 0);
 	
 	   if(m_pEditMappingThread != NULL)
 	   {
@@ -431,7 +431,7 @@ namespace win
 	
 	   m_oswindow_ForAddMappingThread = oswindow;
 	
-	   m_pAddMappingThread = ::__begin_thread(get_app(), ThreadToAddMapping, this, ::ca::thread_priority_below_normal, 0, 0);
+	   m_pAddMappingThread = ::__begin_thread(get_app(), ThreadToAddMapping, this, ::ca2::thread_priority_below_normal, 0, 0);
 	
 	   if(m_pAddMappingThread != NULL)
 	   {
@@ -471,7 +471,7 @@ namespace win
 	
 	   m_oswindow_ForDeleteMappingThread = oswindow;
 	
-	   m_pDeleteMappingThread = ::__begin_thread(get_app(), ThreadToDeleteMapping, this, ::ca::thread_priority_below_normal, 0, 0);
+	   m_pDeleteMappingThread = ::__begin_thread(get_app(), ThreadToDeleteMapping, this, ::ca2::thread_priority_below_normal, 0, 0);
 	
 	   if(m_pDeleteMappingThread != NULL)
 	   {
@@ -510,7 +510,7 @@ namespace win
 	
 	   m_oswindow_ForDeviceInfoThread = oswindow;
 	
-	   m_pDeviceInfoThread = ::__begin_thread(get_app(), ThreadForDeviceInformationRetrieval, this,  ::ca::thread_priority_below_normal, 0, 0);
+	   m_pDeviceInfoThread = ::__begin_thread(get_app(), ThreadForDeviceInformationRetrieval, this,  ::ca2::thread_priority_below_normal, 0, 0);
 	
 	   if(m_pDeviceInfoThread != NULL)
 	   {
@@ -1156,7 +1156,7 @@ namespace win
 	   }
 	
 	   if( bStr != NULL )
-		   mappingContainer.ExternalIPAddress = string( ::ca::international::unicode_to_utf8(bStr) );
+		   mappingContainer.ExternalIPAddress = string( ::ca2::international::unicode_to_utf8(bStr) );
 	
 	   SysFreeString(bStr);
 	   bStr = NULL;
@@ -1201,7 +1201,7 @@ namespace win
 	   }
 	
 	   if( bStr != NULL )
-		   mappingContainer.Protocol = ::ca::international::unicode_to_utf8(bStr);
+		   mappingContainer.Protocol = ::ca2::international::unicode_to_utf8(bStr);
 	
 	   SysFreeString(bStr);
 	   bStr = NULL;
@@ -1218,7 +1218,7 @@ namespace win
 	   }
 	
 	   if( bStr != NULL )
-		   mappingContainer.InternalClient = ::ca::international::unicode_to_utf8(bStr);
+		   mappingContainer.InternalClient = ::ca2::international::unicode_to_utf8(bStr);
 	
 	   SysFreeString(bStr);
 	   bStr = NULL;
@@ -1250,7 +1250,7 @@ namespace win
 	   }
 	
 	   if( bStr != NULL )
-		   mappingContainer.Description = ::ca::international::unicode_to_utf8( bStr );
+		   mappingContainer.Description = ::ca2::international::unicode_to_utf8( bStr );
 	
 	   SysFreeString(bStr);
 	   bStr = NULL;
@@ -1322,7 +1322,7 @@ namespace win
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-		   deviceInfo.Description = ::ca::international::unicode_to_utf8( bStr );
+		   deviceInfo.Description = ::ca2::international::unicode_to_utf8( bStr );
 		   SysFreeString(bStr);
 		   bStr = NULL;
 	   }
@@ -1333,7 +1333,7 @@ namespace win
          if(!b)
          {
             DWORD dw = ::GetLastError();
-            ::MessageBoxA(NULL, ::ca::str::from((uint32_t) dw), ::ca::str::from((uint32_t) dw), 0);
+            ::MessageBoxA(NULL, ::ca2::str::from((uint32_t) dw), ::ca2::str::from((uint32_t) dw), 0);
          }
       }
 	
@@ -1344,7 +1344,7 @@ namespace win
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-		   deviceInfo.FriendlyName = ::ca::international::unicode_to_utf8(bStr );	
+		   deviceInfo.FriendlyName = ::ca2::international::unicode_to_utf8(bStr );	
 		   SysFreeString(bStr);
 		   bStr = NULL;
 	   }
@@ -1376,7 +1376,7 @@ namespace win
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-		   deviceInfo.IconURL = ::ca::international::unicode_to_utf8( bStr );	
+		   deviceInfo.IconURL = ::ca2::international::unicode_to_utf8( bStr );	
 		   SysFreeString(bStr);
 		   bStr = NULL;
 	   }
@@ -1408,7 +1408,7 @@ namespace win
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-		   deviceInfo.ManufacturerName = ::ca::international::unicode_to_utf8(bStr);	
+		   deviceInfo.ManufacturerName = ::ca2::international::unicode_to_utf8(bStr);	
 		   SysFreeString(bStr);
 		   bStr = NULL;
 	   }
@@ -1423,7 +1423,7 @@ namespace win
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-		   deviceInfo.ManufacturerURL = ::ca::international::unicode_to_utf8(bStr);	
+		   deviceInfo.ManufacturerURL = ::ca2::international::unicode_to_utf8(bStr);	
 		   SysFreeString(bStr);
 		   bStr = NULL;
 	   }
@@ -1438,7 +1438,7 @@ namespace win
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-		   deviceInfo.ModelName = ::ca::international::unicode_to_utf8(bStr);	
+		   deviceInfo.ModelName = ::ca2::international::unicode_to_utf8(bStr);	
 		   SysFreeString(bStr);
 		   bStr = NULL;
 	   }
@@ -1453,7 +1453,7 @@ namespace win
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-		   deviceInfo.ModelNumber = ::ca::international::unicode_to_utf8(bStr);	
+		   deviceInfo.ModelNumber = ::ca2::international::unicode_to_utf8(bStr);	
 		   SysFreeString(bStr);
 		   bStr = NULL;
 	   }
@@ -1468,7 +1468,7 @@ namespace win
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-		   deviceInfo.ModelURL = ::ca::international::unicode_to_utf8(bStr);	
+		   deviceInfo.ModelURL = ::ca2::international::unicode_to_utf8(bStr);	
 		   SysFreeString(bStr);
 		   bStr = NULL;
 	   }
@@ -1494,7 +1494,7 @@ namespace win
 		   {
 			   if ( SUCCEEDED( piDev->get_FriendlyName( &bStr ) ) )
 			   {
-				   deviceInfo.ParentDevice = ::ca::international::unicode_to_utf8(bStr);
+				   deviceInfo.ParentDevice = ::ca2::international::unicode_to_utf8(bStr);
 				   SysFreeString(bStr);
 				   bStr = NULL;
 			   }
@@ -1513,7 +1513,7 @@ namespace win
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-		   deviceInfo.PresentationURL = ::ca::international::unicode_to_utf8(bStr);	
+		   deviceInfo.PresentationURL = ::ca2::international::unicode_to_utf8(bStr);	
 		   SysFreeString(bStr);
 		   bStr = NULL;
 	   }
@@ -1537,7 +1537,7 @@ namespace win
 		   {
 			   if ( SUCCEEDED( piDev->get_FriendlyName( &bStr ) ) )
 			   {
-				   deviceInfo.RootDevice = ::ca::international::unicode_to_utf8(bStr );
+				   deviceInfo.RootDevice = ::ca2::international::unicode_to_utf8(bStr );
 				   SysFreeString(bStr);
 				   bStr = NULL;
 			   }
@@ -1557,7 +1557,7 @@ namespace win
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-		   deviceInfo.SerialNumber = ::ca::international::unicode_to_utf8(bStr);	
+		   deviceInfo.SerialNumber = ::ca2::international::unicode_to_utf8(bStr);	
 		   SysFreeString(bStr);
 		   bStr = NULL;
 	   }
@@ -1603,7 +1603,7 @@ namespace win
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-		   deviceInfo.Type = ::ca::international::unicode_to_utf8(bStr);	
+		   deviceInfo.Type = ::ca2::international::unicode_to_utf8(bStr);	
 		   SysFreeString(bStr);
 		   bStr = NULL;
 	   }
@@ -1618,7 +1618,7 @@ namespace win
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-         deviceInfo.UniqueDeviceName = ::ca::international::unicode_to_utf8(bStr);	
+         deviceInfo.UniqueDeviceName = ::ca2::international::unicode_to_utf8(bStr);	
 		   SysFreeString(bStr);
 		   bStr = NULL;
 	   }
@@ -1633,7 +1633,7 @@ namespace win
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-		   deviceInfo.UPC = ::ca::international::unicode_to_utf8(bStr);	
+		   deviceInfo.UPC = ::ca2::international::unicode_to_utf8(bStr);	
 		   SysFreeString(bStr);
 		   bStr = NULL;
 	   }

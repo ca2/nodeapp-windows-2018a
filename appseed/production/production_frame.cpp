@@ -5,11 +5,11 @@ namespace production
 {
 
 
-   frame::frame(sp(::ca::application) papp) :
-      ca(papp),
+   frame::frame(sp(::ca2::application) papp) :
+      ca2(papp),
       simple_frame_window(papp)
    {
-      m_dataid = "::ca::production::frame";
+      m_dataid = "::ca2::production::frame";
    }
 
    frame::~frame()
@@ -34,13 +34,13 @@ namespace production
 
 
 
-   void frame::install_message_handling(::ca::message::dispatch * pinterface)
+   void frame::install_message_handling(::ca2::message::dispatch * pinterface)
    {
       simple_frame_window::install_message_handling(pinterface);
       IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &frame::_001OnCreate);
    }
 
-   void frame::_001OnCreate(::ca::signal_object * pobj)
+   void frame::_001OnCreate(::ca2::signal_object * pobj)
    {
 
       pobj->previous();

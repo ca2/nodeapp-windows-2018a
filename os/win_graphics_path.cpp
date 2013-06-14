@@ -9,7 +9,7 @@ namespace win
 
 
 
-   graphics_path::graphics_path(sp(::ca::application) papp)
+   graphics_path::graphics_path(sp(::ca2::application) papp)
    {
 
       m_ppath = new Gdiplus::GraphicsPath();
@@ -72,7 +72,7 @@ namespace win
    }
 
 
-   bool graphics_path::internal_begin_figure(bool bFill, ::ca::e_fill_mode efillmode)
+   bool graphics_path::internal_begin_figure(bool bFill, ::ca2::e_fill_mode efillmode)
    {
 
       return m_ppath->StartFigure() == Gdiplus::Status::Ok;
@@ -180,21 +180,21 @@ namespace win
    }
 
 
-   bool graphics_path::set(const ::ca::graphics_path::element & e)
+   bool graphics_path::set(const ::ca2::graphics_path::element & e)
    {
 
       switch(e.m_etype)
       {
-      case ::ca::graphics_path::element::type_arc:
+      case ::ca2::graphics_path::element::type_arc:
          set(e.m_arc);
          break;
-      case ::ca::graphics_path::element::type_move:
+      case ::ca2::graphics_path::element::type_move:
          set(e.m_move);
          break;
-      case ::ca::graphics_path::element::type_line:
+      case ::ca2::graphics_path::element::type_line:
          set(e.m_line);
          break;
-      case ::ca::graphics_path::element::type_end:
+      case ::ca2::graphics_path::element::type_end:
          internal_end_figure(e.m_end.m_bClose);
          break;
       default:
@@ -205,7 +205,7 @@ namespace win
 
    }
 
-   bool graphics_path::set(const ::ca::graphics_path::arc & a)
+   bool graphics_path::set(const ::ca2::graphics_path::arc & a)
    {
 
       //internal_add_arc();
@@ -214,7 +214,7 @@ namespace win
 
    }
 
-   bool graphics_path::set(const ::ca::graphics_path::line & l)
+   bool graphics_path::set(const ::ca2::graphics_path::line & l)
    {
 
       internal_add_line((int32_t) l.m_x, (int32_t) l.m_y);
@@ -224,7 +224,7 @@ namespace win
    }
 
 
-   bool graphics_path::set(const ::ca::graphics_path::move & p)
+   bool graphics_path::set(const ::ca2::graphics_path::move & p)
    {
 
       internal_add_move((int32_t) p.m_x, (int32_t) p.m_y);

@@ -7,7 +7,7 @@ namespace production
       public simple_frame_window
    {
    public:
-	   frame(sp(::ca::application) papp);
+	   frame(sp(::ca2::application) papp);
    public:
 	   virtual ~frame();
    #ifdef DEBUG
@@ -15,7 +15,7 @@ namespace production
 	   virtual void dump(dump_context & dumpcontext) const;
    #endif
 
-      void install_message_handling(::ca::message::dispatch * pinterface);
+      void install_message_handling(::ca2::message::dispatch * pinterface);
 
       DECL_GEN_SIGNAL(_001OnCreate)
    };

@@ -9,12 +9,12 @@ namespace win
 
 
    class CLASS_DECL_win os :
-      public ::ca::os
+      public ::ca2::os
    {
    public:
    
       
-      os(sp(::ca::application) papp);
+      os(sp(::ca2::application) papp);
       virtual ~os();
 
 
@@ -64,7 +64,7 @@ namespace win
 
       virtual void post_to_all_threads(UINT message, WPARAM wParam, LPARAM lParam);
 
-      virtual void set_file_status(const char * lpszFileName, const ::ca::file_status& status);
+      virtual void set_file_status(const char * lpszFileName, const ::ca2::file_status& status);
 
    };
 

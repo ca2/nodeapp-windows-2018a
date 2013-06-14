@@ -22,7 +22,7 @@ namespace win
    CLASS_DECL_win HICON       ExtractIcon(HINSTANCE hInst, const char * lpszExeFileName, UINT nIconIndex);
    CLASS_DECL_win bool        DeleteFile(const char * lpFileName);
    CLASS_DECL_win int32_t         GetMenuStringW(HMENU hMenu, UINT uIDItem, string & str, UINT flags);
-   CLASS_DECL_win void        TimeToFileTime(sp(::ca::application) papp, const ::datetime::time& time, LPFILETIME pFileTime);
+   CLASS_DECL_win void        TimeToFileTime(sp(::ca2::application) papp, const ::datetime::time& time, LPFILETIME pFileTime);
 
 
 } // namespace win
@@ -70,10 +70,10 @@ CLASS_DECL_win LRESULT CALLBACK __window_procedure(oswindow oswindow, UINT nMsg,
 CLASS_DECL_win WNDPROC __get_window_procedure();
 #define __window_procedure (*__get_window_procedure())
 
-typedef void (__MSG_CALL ::ca::window::*__PMSGW)();
-   // like '__PMSG' but for ::ca::window derived classes only
+typedef void (__MSG_CALL ::ca2::window::*__PMSGW)();
+   // like '__PMSG' but for ::ca2::window derived classes only
 
-typedef void (__MSG_CALL ::ca::thread::*__PMSGT)();
+typedef void (__MSG_CALL ::ca2::thread::*__PMSGT)();
    // like '__PMSG' but for thread-derived classes only
 
 
@@ -87,13 +87,13 @@ CLASS_DECL_win LONG delete_registry_tree_helper(HKEY hParentKey, const string & 
 
 
 CLASS_DECL_win ::win::thread * __get_thread();
-CLASS_DECL_win void __set_thread(::ca::thread * pthread);
+CLASS_DECL_win void __set_thread(::ca2::thread * pthread);
 CLASS_DECL_win MSG* __get_current_message();
 
-CLASS_DECL_win void __end_thread(sp(::ca::application) papp, UINT nExitCode, bool bDelete = TRUE);
+CLASS_DECL_win void __end_thread(sp(::ca2::application) papp, UINT nExitCode, bool bDelete = TRUE);
 
 CLASS_DECL_win void __init_thread();
-CLASS_DECL_win void __term_thread(sp(::ca::application) papp, HINSTANCE hInstTerm = NULL);
+CLASS_DECL_win void __term_thread(sp(::ca2::application) papp, HINSTANCE hInstTerm = NULL);
 
 /////////////////////////////////////////////////////////////////////////////
 // Global functions for access to the one and only application
@@ -108,11 +108,11 @@ CLASS_DECL_win void __term_thread(sp(::ca::application) papp, HINSTANCE hInstTer
 
 
 // Advanced initialization: for overriding default WinMain
-//CLASS_DECL_win bool ::ca::WinInit(__in HINSTANCE hInstance, __in HINSTANCE hPrevInstance,
+//CLASS_DECL_win bool ::ca2::WinInit(__in HINSTANCE hInstance, __in HINSTANCE hPrevInstance,
   // __in_z LPTSTR lpCmdLine, __in int32_t nCmdShow);
 CLASS_DECL_win void __win_term();
 
-CLASS_DECL_win sp(::ca::application) __get_app();
+CLASS_DECL_win sp(::ca2::application) __get_app();
 CLASS_DECL_win sp(::user::interaction) __get_main_window();
 //CLASS_DECL_win HINSTANCE CLASS_DECL_win System.m_hInstance;
 CLASS_DECL_win HINSTANCE __get_resource_handle();

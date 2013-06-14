@@ -5,14 +5,14 @@ namespace win
 
    class CLASS_DECL_win palette : 
       virtual public ::win::graphics_object,
-      virtual public ::ca::palette
+      virtual public ::ca2::palette
    {
    public:
-      static palette* from_handle(sp(::ca::application) papp, HPALETTE hPalette);
+      static palette* from_handle(sp(::ca2::application) papp, HPALETTE hPalette);
 
-      palette(sp(::ca::application) papp);
+      palette(sp(::ca2::application) papp);
       bool CreatePalette(LPLOGPALETTE lpLogPalette);
-      bool CreateHalftonePalette(::ca::graphics * pgraphics);
+      bool CreateHalftonePalette(::ca2::graphics * pgraphics);
 
    // Attributes
       operator HPALETTE() const;

@@ -14,7 +14,7 @@ DllMain(HINSTANCE hInstance, uint32_t dwReason, LPVOID lpReserved)
    {
 
 
-      ::OutputDebugString("::ca:: backup.dll :: initializing!\n");
+      ::OutputDebugString("::ca2:: backup.dll :: initializing!\n");
       
 
    }
@@ -22,7 +22,7 @@ DllMain(HINSTANCE hInstance, uint32_t dwReason, LPVOID lpReserved)
    {
 
 
-      ::OutputDebugString("::ca:: backup.dll :: terminating!\n");
+      ::OutputDebugString("::ca2:: backup.dll :: terminating!\n");
 
 
    }

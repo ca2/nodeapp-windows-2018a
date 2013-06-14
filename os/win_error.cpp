@@ -12,7 +12,7 @@ string get_error_message(DWORD dwError)
       (LPWSTR) &lpBuffer,
       1,
       NULL);
-   string str = ::ca::international::unicode_to_utf8(lpBuffer);
+   string str = ::ca2::international::unicode_to_utf8(lpBuffer);
    LocalFree(lpBuffer);
    return str;
 }

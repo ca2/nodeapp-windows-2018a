@@ -5,14 +5,14 @@ extern thread_local_storage * __thread_data;
 namespace win
 {
 
-   application::application(sp(::ca::application) papp) :
-      ca(papp)
+   application::application(sp(::ca2::application) papp) :
+      ca2(papp)
    {
 
-      ::ca::thread::m_p.create(allocer());
-      ::ca::thread::m_p->m_p = this;
+      ::ca2::thread::m_p.create(allocer());
+      ::ca2::thread::m_p->m_p = this;
 
-      WIN_THREAD(::ca::thread::m_p.m_p)->m_pAppThread = this;
+      WIN_THREAD(::ca2::thread::m_p.m_p)->m_pAppThread = this;
 
       m_psystem = papp->m_psystem;
 
@@ -56,12 +56,12 @@ namespace win
 
    void application::_001OnFileNew()
    {
-      //::c::smart_pointer < application_base >::m_p->_001OnFileNew(NULL);
+      //::ca::smart_pointer < application_base >::m_p->_001OnFileNew(NULL);
    }
 
    sp(::user::document_interface) application::_001OpenDocumentFile(var varFile)
    {
-      //return ::c::smart_pointer < application_base >::m_p->_001OpenDocumentFile(varFile);
+      //return ::ca::smart_pointer < application_base >::m_p->_001OpenDocumentFile(varFile);
       return NULL;
    }
 
@@ -69,7 +69,7 @@ namespace win
    {
       ASSERT(m_atomApp == NULL && m_atomSystemTopic == NULL); // do once
 
-      m_atomApp            = ::GlobalAddAtomW(::ca::international::utf8_to_unicode(m_strAppName));
+      m_atomApp            = ::GlobalAddAtomW(::ca2::international::utf8_to_unicode(m_strAppName));
       m_atomSystemTopic    = ::GlobalAddAtomW(L"system");
    }
 
@@ -191,12 +191,12 @@ namespace win
 
    void application::LockTempMaps()
    {
-      WIN_THREAD(::ca::thread::m_p.m_p)->LockTempMaps();
+      WIN_THREAD(::ca2::thread::m_p.m_p)->LockTempMaps();
    }
 
    bool application::UnlockTempMaps(bool bDeleteTemp)
    {
-      return WIN_THREAD(::ca::thread::m_p.m_p)->UnlockTempMaps(bDeleteTemp);
+      return WIN_THREAD(::ca2::thread::m_p.m_p)->UnlockTempMaps(bDeleteTemp);
    }
 
 
@@ -205,15 +205,15 @@ namespace win
 /*      try
       {
    #ifdef DEBUG
-         // check for missing ::ca::LockTempMap calls
+         // check for missing ::ca2::LockTempMap calls
          if (__get_module_thread_state()->m_pCurrentWinThread->m_nTempMapLock != 0)
          {
-            TRACE(::ca::trace::category_AppMsg, 0, "Warning: Temp map lock ::count non-zero (%ld).\n",
+            TRACE(::ca2::trace::category_AppMsg, 0, "Warning: Temp map lock ::count non-zero (%ld).\n",
                __get_module_thread_state()->m_pCurrentWinThread->m_nTempMapLock);
          }
    #endif
-         ::ca::LockTempMaps(::c::smart_pointer < application_base >::m_p);
-         ::ca::UnlockTempMaps(::c::smart_pointer < application_base >::m_p, -1);
+         ::ca2::LockTempMaps(::ca::smart_pointer < application_base >::m_p);
+         ::ca2::UnlockTempMaps(::ca::smart_pointer < application_base >::m_p, -1);
       }
       catch( base_exception* e )
       {
@@ -222,7 +222,7 @@ namespace win
 
       try
       {
-         // cleanup thread local tooltip ::ca::window
+         // cleanup thread local tooltip ::ca2::window
          if (hInstTerm == NULL)
          {
 //            __MODULE_THREAD_STATE* pModuleThreadState = __get_module_thread_state();
@@ -359,7 +359,7 @@ namespace win
 
    // called when occurs an standard_exception exception in run
    // return true to call run again
-   bool application::on_run_exception(::ca::exception & e)
+   bool application::on_run_exception(::ca2::exception & e)
    {
       return ::win::thread::on_run_exception(e);
    }
@@ -371,7 +371,7 @@ namespace win
       return ::win::thread::initialize_instance();
    }
 
-   ::ca::message::e_prototype application::GetMessagePrototype(UINT uiMessage, UINT uiCode)
+   ::ca2::message::e_prototype application::GetMessagePrototype(UINT uiMessage, UINT uiCode)
    {
       return ::win::thread::GetMessagePrototype(uiMessage, uiCode);
    }
@@ -381,7 +381,7 @@ namespace win
    {
       return ::win::thread::run();
    }
-   bool application::pre_translate_message(::ca::signal_object * pobj)
+   bool application::pre_translate_message(::ca2::signal_object * pobj)
    {
       return ::win::thread::pre_translate_message(pMsg);
    }
@@ -400,7 +400,7 @@ namespace win
 */
    bool application::process_initialize()
    {
-      if(::ca::application_base::m_p->is_system())
+      if(::ca2::application_base::m_p->is_system())
       {
          if(__get_module_state()->m_pmapHWND == NULL)
          {
@@ -428,7 +428,7 @@ namespace win
    bool application::initialize1()
    {
 
-      WIN_THREAD(::ca::thread::m_p.m_p)->set_run();
+      WIN_THREAD(::ca2::thread::m_p.m_p)->set_run();
 
       return true;
 
@@ -450,13 +450,13 @@ namespace win
 
       // avoid calling CloseHandle() on our own thread handle
       // during the thread destructor
-      ::ca::thread::m_p->set_os_data(NULL);
+      ::ca2::thread::m_p->set_os_data(NULL);
 
-      WIN_THREAD(::ca::thread::m_p.m_p)->m_bRun = false;
+      WIN_THREAD(::ca2::thread::m_p.m_p)->m_bRun = false;
 
-      int32_t iRet = ::ca::application::exit_instance();
+      int32_t iRet = ::ca2::application::exit_instance();
 
-      //::c::smart_pointer < application_base >::destroy();
+      //::ca::smart_pointer < application_base >::destroy();
 
 
 
@@ -511,19 +511,19 @@ namespace win
       return ::win::thread::DispatchThreadMessageEx(msg);
    }*/
 
-/*   ::ca::graphics * application::graphics_from_os_data(void * pdata)
+/*   ::ca2::graphics * application::graphics_from_os_data(void * pdata)
    {
       return ::win::graphics::from_handle((HDC) pdata);
    }*/
 
-   sp(::ca::window) application::window_from_os_data(void * pdata)
+   sp(::ca2::window) application::window_from_os_data(void * pdata)
    {
       return ::win::window::from_handle((oswindow) pdata);
    }
 
-   sp(::ca::window) application::window_from_os_data_permanent(void * pdata)
+   sp(::ca2::window) application::window_from_os_data_permanent(void * pdata)
    {
-      sp(::ca::window) pwnd = ::win::window::FromHandlePermanent((oswindow) pdata);
+      sp(::ca2::window) pwnd = ::win::window::FromHandlePermanent((oswindow) pdata);
       if(pwnd != NULL)
          return pwnd;
       user::interaction_ptr_array wndptra = System.frames();
@@ -537,7 +537,7 @@ namespace win
       return NULL;
    }
 
-   ::ca::thread * application::GetThread()
+   ::ca2::thread * application::GetThread()
    {
       if(__get_thread() == NULL)
          return NULL;
@@ -545,7 +545,7 @@ namespace win
          return __get_thread()->m_p;
    }
 
-   void application::set_thread(::ca::thread * pthread)
+   void application::set_thread(::ca2::thread * pthread)
    {
       __set_thread(pthread);
    }
@@ -563,7 +563,7 @@ namespace win
 
       // Note: there are a number of _tcsdup (aka _strdup) calls that are
       // made here for the exe path, help file path, etc.  In previous
-      // versions of ca API, this primitive::memory was never freed.  In this and future
+      // versions of ca2 API, this primitive::memory was never freed.  In this and future
       // versions this primitive::memory is automatically freed during application's
       // destructor.  If you are freeing the primitive::memory yourself, you should
       // either remove the code or set the pointers to NULL after freeing
@@ -601,7 +601,7 @@ namespace win
          __MODULE_THREAD_STATE* pThreadState = pModuleState->m_thread;
          ENSURE(pThreadState);
 //         ASSERT(System.GetThread() == NULL);
-         pThreadState->m_pCurrentWinThread = dynamic_cast < class ::win::thread * > (::ca::thread::m_p.m_p);
+         pThreadState->m_pCurrentWinThread = dynamic_cast < class ::win::thread * > (::ca2::thread::m_p.m_p);
   //       ASSERT(System.GetThread() == this);
 
          // initialize application state
@@ -611,20 +611,20 @@ namespace win
       }
 
 
-//      dynamic_cast < ::win::thread * > ((::c::smart_pointer < application_base >::m_p->::ca::thread::m_p))->m_hThread = __get_thread()->m_hThread;
-  //    dynamic_cast < ::win::thread * > ((::c::smart_pointer < application_base >::m_p->::ca::thread::m_p))->m_nThreadID = __get_thread()->m_nThreadID;
-      dynamic_cast < class ::win::thread * > (::ca::thread::m_p.m_p)->m_hThread      =  ::GetCurrentThread();
-      dynamic_cast < class ::win::thread * > (::ca::thread::m_p.m_p)->m_nThreadID    =  ::GetCurrentThreadId();
+//      dynamic_cast < ::win::thread * > ((::ca::smart_pointer < application_base >::m_p->::ca2::thread::m_p))->m_hThread = __get_thread()->m_hThread;
+  //    dynamic_cast < ::win::thread * > ((::ca::smart_pointer < application_base >::m_p->::ca2::thread::m_p))->m_nThreadID = __get_thread()->m_nThreadID;
+      dynamic_cast < class ::win::thread * > (::ca2::thread::m_p.m_p)->m_hThread      =  ::GetCurrentThread();
+      dynamic_cast < class ::win::thread * > (::ca2::thread::m_p.m_p)->m_nThreadID    =  ::GetCurrentThreadId();
       
 
    }
 
-   sp(::ca::window) application::FindWindow(const char * lpszClassName, const char * lpszWindowName)
+   sp(::ca2::window) application::FindWindow(const char * lpszClassName, const char * lpszWindowName)
    {
       return window::FindWindow(lpszClassName, lpszWindowName);
    }
 
-   sp(::ca::window) application::FindWindowEx(oswindow oswindowParent, oswindow oswindowChildAfter, const char * lpszClass, const char * lpszWindow)
+   sp(::ca2::window) application::FindWindowEx(oswindow oswindowParent, oswindow oswindowChildAfter, const char * lpszClass, const char * lpszWindow)
    {
       return window::FindWindowEx(oswindowParent, oswindowChildAfter, lpszClass, lpszWindow);
    }
@@ -675,12 +675,12 @@ namespace win
 
 
 
-   bool application::set_main_init_data(::ca::main_init_data * pdata)
+   bool application::set_main_init_data(::ca2::main_init_data * pdata)
    {
 
       m_pmaininitdata = (::win::main_init_data *) pdata;
 
-      if(m_pmaininitdata != NULL && ::ca::application_base::m_p->is_system())
+      if(m_pmaininitdata != NULL && ::ca2::application_base::m_p->is_system())
       {
          if(!win_init(m_pmaininitdata))
             return false;
@@ -722,11 +722,11 @@ namespace win
          if (!afxContextIsDLL)
             __init_thread();
 
-         // Initialize ::ca::window::m_pfnNotifyWinEvent
+         // Initialize ::ca2::window::m_pfnNotifyWinEvent
       /*   HMODULE hModule = ::GetModuleHandle("user32.dll");
          if (hModule != NULL)
          {
-            ::ca::window::m_pfnNotifyWinEvent = (::ca::window::PFNNOTIFYWINEVENT)::GetProcAddress(hModule, "NotifyWinEvent");
+            ::ca2::window::m_pfnNotifyWinEvent = (::ca2::window::PFNNOTIFYWINEVENT)::GetProcAddress(hModule, "NotifyWinEvent");
          }*/
 
       return true;

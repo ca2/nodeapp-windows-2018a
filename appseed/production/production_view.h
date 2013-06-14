@@ -31,19 +31,19 @@ namespace production
       int32_t                     m_iV; 
       int32_t                     m_iVH;
       int32_t                     m_iVW;
-      // veriwell ca2os ca out world stage
+      // veriwell ca2os ca2 out world stage
       int32_t                     m_iVs;
       int32_t                     m_iVsH;
       int32_t                     m_iVsW;
       visual::dib_sp             m_dibV;
       visual::dib_sp             m_dibVs;
-      ::ca::brush_sp          m_brushBkActive;
-      ::ca::brush_sp          m_brushBkInactive;
+      ::ca2::brush_sp          m_brushBkActive;
+      ::ca2::brush_sp          m_brushBkInactive;
       simple_scroll_bar         m_scrollbarVert;
       simple_scroll_bar         m_scrollbarHorz;
 
 
-	   view(sp(::ca::application) papp);
+	   view(sp(::ca2::application) papp);
 	   virtual ~view();
    #ifdef DEBUG
 	   virtual void assert_valid() const;
@@ -77,12 +77,12 @@ namespace production
 
 
 
-      virtual void _001OnDraw(::ca::graphics * pdc);
+      virtual void _001OnDraw(::ca2::graphics * pdc);
 
       virtual void _001OnTabClick(int32_t iTab);
-      virtual void install_message_handling(::ca::message::dispatch * pinterface);
+      virtual void install_message_handling(::ca2::message::dispatch * pinterface);
       virtual bool pre_create_window(CREATESTRUCT& cs);
-      virtual void on_update(sp(::user::view) pSender, LPARAM lHint, ::ca::object * pHint);
+      virtual void on_update(sp(::user::view) pSender, LPARAM lHint, ::ca2::object * pHint);
 
       sp(::user::document) get_document();
 

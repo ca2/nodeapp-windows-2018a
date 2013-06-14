@@ -1,10 +1,10 @@
 /*
 Module : IPENUM.H
-Purpose: Interface for an ca API class wrapper for IP address enumeration
+Purpose: Interface for an ca2 API class wrapper for IP address enumeration
 Created: PJN / 21-04-1998
 History: None
 
-Copyright (c) 1998 by PJ Naughter.  
+Copyright (ca) 1998 by PJ Naughter.  
 
 
 */
@@ -15,7 +15,7 @@ namespace win
 
 
    class CLASS_DECL_win ip_enum :
-      virtual public ::ca::ip_enum
+      virtual public ::ca2::ip_enum
    {
    public:
 
@@ -23,7 +23,7 @@ namespace win
       bool     m_bWinsockInitialized;
 
       
-      ip_enum(sp(::ca::application) papp);
+      ip_enum(sp(::ca2::application) papp);
       virtual ~ip_enum();
 
       

@@ -9,8 +9,8 @@ namespace win
 {
 
    class CLASS_DECL_win window_draw : 
-      virtual public ::ca::window_draw,
-      virtual public ::ca::message_window_simple_callback
+      virtual public ::ca2::window_draw,
+      virtual public ::ca2::message_window_simple_callback
    {
    public:
 
@@ -39,7 +39,7 @@ namespace win
       DWORD                                  m_dwLastDelay;
 
 
-      window_draw(sp(::ca::application) papp);
+      window_draw(sp(::ca2::application) papp);
       virtual ~window_draw();
 
 
@@ -51,7 +51,7 @@ namespace win
       // Bit blitting spread functions
       virtual bool ScreenOutput(
          user::buffer *,
-         ::ca::region & rgnUpdate);
+         ::ca2::region & rgnUpdate);
 
       virtual bool ScreenOutput();
 
@@ -62,14 +62,14 @@ namespace win
       virtual bool UpdateBuffer();
 
       virtual bool to(
-         ::ca::graphics *       pdc,
+         ::ca2::graphics *       pdc,
          LPCRECT     lprectUpdate,
          user::oswindow_tree & oswindowtree,
          bool        bGdiLocked,
          bool        bExcludeParamWnd);
 
       virtual bool to(
-         ::ca::graphics *       pdc,
+         ::ca2::graphics *       pdc,
          LPCRECT     lprectUpdate,
          user::oswindow_tree::Array & oswindowtreea,
          bool        bGdiLocked,
@@ -136,7 +136,7 @@ namespace win
       virtual void synch_redraw();
       virtual void _synch_redraw();
 
-      virtual void message_window_message_handler(::ca::signal_object * pobj);
+      virtual void message_window_message_handler(::ca2::signal_object * pobj);
 
    };
 

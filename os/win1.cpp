@@ -10,7 +10,7 @@ namespace win
 
    HINSTANCE LoadLibrary(const char * lpsz)
    {
-      return ::LoadLibraryW(::ca::international::utf8_to_unicode(lpsz));
+      return ::LoadLibraryW(::ca2::international::utf8_to_unicode(lpsz));
    }
 
    bool CLASS_DECL_win SHGetSpecialFolderPath(oswindow oswindow, string &str, int32_t csidl, bool fCreate)
@@ -20,12 +20,12 @@ namespace win
 
    DWORD GetFileAttributes(const char * lpFileName)
    {
-      return ::GetFileAttributesW(::ca::international::utf8_to_unicode(lpFileName));
+      return ::GetFileAttributesW(::ca2::international::utf8_to_unicode(lpFileName));
    }
 
    bool CreateDirectory(const char * lpPathName, LPSECURITY_ATTRIBUTES lpSecurityAttributes)
    {
-      return ::CreateDirectoryW(::ca::international::utf8_to_unicode(lpPathName), lpSecurityAttributes) != FALSE;
+      return ::CreateDirectoryW(::ca2::international::utf8_to_unicode(lpPathName), lpSecurityAttributes) != FALSE;
    }
 
    DWORD GetCurrentDirectory(string & str)
@@ -60,23 +60,23 @@ namespace win
 
    HICON ExtractIcon(HINSTANCE hInst, const char * lpszExeFileName, UINT nIconIndex)
    {
-      return ::ExtractIconW(hInst, ::ca::international::utf8_to_unicode(lpszExeFileName), nIconIndex);
+      return ::ExtractIconW(hInst, ::ca2::international::utf8_to_unicode(lpszExeFileName), nIconIndex);
    }
 
    bool  DeleteFile(const char * lpFileName)
    {
-      return ::DeleteFileW(::ca::international::utf8_to_unicode(lpFileName)) != FALSE;
+      return ::DeleteFileW(::ca2::international::utf8_to_unicode(lpFileName)) != FALSE;
    }
 
 /*   int32_t GetMenuString(HMENU hmenu, UINT uIDItem, string & str, UINT flags)
    {
       wstring str;
       int32_t iLen = _GetMenuString(hmenu, uIDItem, wstr, flags);
-      ::ca::international::unicode_to_utf8(str, str);
+      ::ca2::international::unicode_to_utf8(str, str);
       return iLen;
    }*/
 
-   CLASS_DECL_win void TimeToFileTime(sp(::ca::application) papp, const ::datetime::time& time, LPFILETIME pFileTime)
+   CLASS_DECL_win void TimeToFileTime(sp(::ca2::application) papp, const ::datetime::time& time, LPFILETIME pFileTime)
    {
          SYSTEMTIME sysTime;
          sysTime.wYear           = (WORD)time.GetYear();

@@ -3,8 +3,8 @@
 namespace win
 {
 
-   palette::palette(sp(::ca::application) papp) :
-      ca(papp)
+   palette::palette(sp(::ca2::application) papp) :
+      ca2(papp)
    { }
    palette::~palette()
    { }
@@ -13,7 +13,7 @@ namespace win
    { 
       return (HPALETTE)(this == NULL ? NULL : get_os_data()); 
    }
-   palette* palette::from_handle(sp(::ca::application) papp, HPALETTE hPalette)
+   palette* palette::from_handle(sp(::ca2::application) papp, HPALETTE hPalette)
    { 
       //return dynamic_cast < palette * > (::win::graphics_object::from_handle(papp, hPalette)); 
       return NULL;
@@ -23,7 +23,7 @@ namespace win
       //return attach(::CreatePalette(lpLogPalette)); 
       return FALSE;
    }
-   bool palette::CreateHalftonePalette(::ca::graphics * pgraphics)
+   bool palette::CreateHalftonePalette(::ca2::graphics * pgraphics)
    {
       //ASSERT(pgraphics != NULL && (dynamic_cast<::win::graphics * >(pgraphics))->get_handle1() != NULL); 
       //return attach(::CreateHalftonePalette((dynamic_cast<::win::graphics * >(pgraphics))->get_handle1())); 

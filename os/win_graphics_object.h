@@ -6,7 +6,7 @@ namespace win
 
 
    class CLASS_DECL_win graphics_object :
-      virtual public ::ca::graphics_object
+      virtual public ::ca2::graphics_object
    {
    public:
 
@@ -25,8 +25,8 @@ namespace win
       UINT GetObjectType() const;
       bool CreateStockObject(int32_t nIndex);
       bool UnrealizeObject();
-      bool operator==(const ::ca::graphics_object& obj) const;
-      bool operator!=(const ::ca::graphics_object& obj) const;
+      bool operator==(const ::ca2::graphics_object& obj) const;
+      bool operator!=(const ::ca2::graphics_object& obj) const;
 
       virtual void dump(dump_context & dumpcontext) const;
       virtual void assert_valid() const;
@@ -34,7 +34,7 @@ namespace win
    };
 
 
-} // namespace ca
+} // namespace ca2
 
 
 

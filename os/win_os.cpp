@@ -12,9 +12,9 @@ namespace win
 {
 
 
-   os::os(sp(::ca::application) papp) :
-      ca(papp),
-      ::ca::os(papp)
+   os::os(sp(::ca2::application) papp) :
+      ca2(papp),
+      ::ca2::os(papp)
    {
    }
 
@@ -328,18 +328,18 @@ namespace win
          if(keyPlugin.OpenKey(keyPlugins, "@ca2.cc/npca2", true))
          {
 
-            keyPlugin.SetValue("Description", "ca plugin for NPAPI");
+            keyPlugin.SetValue("Description", "ca2 plugin for NPAPI");
             keyPlugin.SetValue("Path", System.dir().ca2module("npca2.dll"));
-            keyPlugin.SetValue("ProductName", "ca plugin for NPAPI");
-            keyPlugin.SetValue("Vendor", "ca Desenvolvimento de Software Ltda.");
+            keyPlugin.SetValue("ProductName", "ca2 plugin for NPAPI");
+            keyPlugin.SetValue("Vendor", "ca2 Desenvolvimento de Software Ltda.");
             keyPlugin.SetValue("Version", Application.file().as_string(System.dir().ca2("appdata/x86/ca2_build.txt")));
 
             registry::Key keyApplicationCa2;
 
-            if(keyApplicationCa2.OpenKey(keyPlugin, "application/ca", true))
+            if(keyApplicationCa2.OpenKey(keyPlugin, "application/ca2", true))
             {
 
-               keyApplicationCa2.SetValue("Description", "ca Document");
+               keyApplicationCa2.SetValue("Description", "ca2 Document");
 
             }
 
@@ -453,9 +453,9 @@ namespace win
          try
          {
 
-            strCommand = ::ca::str::consume_quoted_value(psz);
-            ::ca::str::consume_spaces(psz);
-            ::ca::str::consume(psz, "\"%L\"");
+            strCommand = ::ca2::str::consume_quoted_value(psz);
+            ::ca2::str::consume_spaces(psz);
+            ::ca2::str::consume(psz, "\"%L\"");
             strParam = psz;
 
          }
@@ -533,7 +533,7 @@ namespace win
          return false;
       }
 
-      string strServiceName = "ca-" + papp->m_strAppId;
+      string strServiceName = "ca2-" + papp->m_strAppId;
 
       strServiceName.replace("/", "-");
       strServiceName.replace("\\", "-");
@@ -542,7 +542,7 @@ namespace win
       SC_HANDLE hdlServ = ::CreateService(
          hdlSCM,                    // SCManager database 
          strServiceName,
-         "ca : " + papp->m_strAppId,        // service name to display 
+         "ca2 : " + papp->m_strAppId,        // service name to display 
          STANDARD_RIGHTS_REQUIRED,  // desired access 
          SERVICE_WIN32_OWN_PROCESS | SERVICE_INTERACTIVE_PROCESS, // service type 
          SERVICE_AUTO_START,      // start type 
@@ -585,7 +585,7 @@ namespace win
          //::GetLastError();
          return false;
       }
-      string strServiceName = "ca-" + papp->m_strAppId;
+      string strServiceName = "ca2-" + papp->m_strAppId;
 
       strServiceName.replace("/", "-");
       strServiceName.replace("\\", "-");
@@ -629,7 +629,7 @@ namespace win
          return false;
       }
 
-      string strServiceName = "ca-" + papp->m_strAppId;
+      string strServiceName = "ca2-" + papp->m_strAppId;
 
       strServiceName.replace("/", "-");
       strServiceName.replace("\\", "-");
@@ -671,7 +671,7 @@ namespace win
          return false;
       }
 
-      string strServiceName = "ca-" + papp->m_strAppId;
+      string strServiceName = "ca2-" + papp->m_strAppId;
 
       strServiceName.replace("/", "-");
       strServiceName.replace("\\", "-");
@@ -726,11 +726,11 @@ namespace win
    void os::post_to_all_threads(UINT message, WPARAM wparam, LPARAM lparam)
    {
 
-      ::count c;
+      ::count ca;
 
-      ::ca::thread * pthread;
+      ::ca2::thread * pthread;
 
-      c = ::win::thread::s_threadptra.get_size();
+      ca = ::win::thread::s_threadptra.get_size();
 
       bool bOk;
 
@@ -738,14 +738,14 @@ namespace win
       {
          
          single_lock sl(&::win::thread::s_mutex, true);
-         comparable_array < ::ca::thread * > threadptra = ::win::thread::s_threadptra;
+         comparable_array < ::ca2::thread * > threadptra = ::win::thread::s_threadptra;
 
          for(index i = 0; i < threadptra.get_size(); i++)
          {
 
             try
             {
-               pthread = dynamic_cast < ::ca::thread * >(threadptra[i]);
+               pthread = dynamic_cast < ::ca2::thread * >(threadptra[i]);
                pthread->m_bRun = false;
                pthread->m_p->m_bRun = false;
             }
@@ -813,16 +813,16 @@ repeat:
             if(bOk)
             {
 
-               if(c == ::win::thread::s_haThread.get_size())
+               if(ca == ::win::thread::s_haThread.get_size())
                   i++;
                else
-                  c = ::win::thread::s_haThread.get_size();
+                  ca = ::win::thread::s_haThread.get_size();
 
             }
             else
             {
 
-               c = ::win::thread::s_haThread.get_size();
+               ca = ::win::thread::s_haThread.get_size();
 
             }
 
@@ -837,7 +837,7 @@ repeat:
    }
 
 
-   void os::set_file_status(const char * lpszFileName, const ::ca::file_status& status)
+   void os::set_file_status(const char * lpszFileName, const ::ca2::file_status& status)
    {
 
       DWORD wAttr;

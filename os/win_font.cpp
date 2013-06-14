@@ -6,8 +6,8 @@ namespace win
 {
 
 
-   font::font(sp(::ca::application) papp) :
-   ca(papp)
+   font::font(sp(::ca2::application) papp) :
+   ca2(papp)
    {
 
       m_pfont     = NULL;
@@ -31,7 +31,7 @@ namespace win
   // {
     //  return (HFONT)(this == NULL ? NULL : get_handle()); 
    //}
-   //font* font::from_handle(sp(::ca::application) papp, HFONT hFont)
+   //font* font::from_handle(sp(::ca2::application) papp, HFONT hFont)
    //{
      // return dynamic_cast < font * > (::win::graphics_object::from_handle(papp, hFont)); 
    //}
@@ -43,7 +43,7 @@ namespace win
          m_dFontSize = (int32_t) abs(lpLogFont->lfHeight);
       else
          m_dFontSize = lpLogFont->lfHeight / 10.0;
-      m_eunitFontSize = ::ca::unit_point;
+      m_eunitFontSize = ::ca2::unit_point;
       m_bBold = lpLogFont->lfWeight >= 500;
       m_bItalic = lpLogFont->lfItalic != FALSE;
       m_bStrikeout = lpLogFont->lfStrikeOut != FALSE;
@@ -75,7 +75,7 @@ namespace win
 
       /////////////////////////////////////////////////////////////////////////////
 
-   void font::construct(const ::ca::font & fontParam)
+   void font::construct(const ::ca2::font & fontParam)
       {
          class font & font = const_cast < ::win::font & > (dynamic_cast < const ::win::font & > (fontParam));
          if(font.m_pfont == NULL)
@@ -104,7 +104,7 @@ namespace win
 
       void font::dump(dump_context & dumpcontext) const
       {
-         ::ca::graphics_object::dump(dumpcontext);
+         ::ca2::graphics_object::dump(dumpcontext);
 
 /*         if (get_handle() == NULL)
             return;
@@ -183,10 +183,10 @@ namespace win
 
          switch(m_eunitFontSize)
          {
-         case ::ca::unit_pixel:
+         case ::ca2::unit_pixel:
             unit = Gdiplus::UnitPixel;
             break;
-         case ::ca::unit_point:
+         case ::ca2::unit_point:
             unit = Gdiplus::UnitPoint;
             break;
          default:
@@ -197,7 +197,7 @@ namespace win
          //retry_single_lock slGdiplus(&System.s_mutexGdiplus, millis(1), millis(1));
 
          ((font *) this)->m_pfont = new Gdiplus::Font(
-               ::ca::international::utf8_to_unicode(m_strFontFamilyName),
+               ::ca2::international::utf8_to_unicode(m_strFontFamilyName),
                (Gdiplus::REAL) m_dFontSize,
                iStyle,
                unit);

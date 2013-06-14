@@ -5,8 +5,8 @@ namespace backup
 {
 
 
-   backup::backup(sp(::ca::application) papp) :
-      ca(papp),
+   backup::backup(sp(::ca2::application) papp) :
+      ca2(papp),
       thread(papp),
       ::simple_thread(papp),
       production(papp)
@@ -24,14 +24,14 @@ namespace backup
    string backup::get_new_repos_local_path(const char * psz)
    {
       string strNewRepos;
-      strNewRepos.Format("V:\\ca\\bk\\%s\\repos\\%s", m_strTag, psz);
+      strNewRepos.Format("V:\\ca2\\bk\\%s\\repos\\%s", m_strTag, psz);
       return strNewRepos;
    }
 
    string backup::get_new_db_local_path(const char * psz)
    {
       string strNewRepos;
-      strNewRepos.Format("V:\\ca\\bk\\%s\\db\\%s", m_strTag, psz);
+      strNewRepos.Format("V:\\ca2\\bk\\%s\\db\\%s", m_strTag, psz);
       return strNewRepos;
    }
 
@@ -49,7 +49,7 @@ namespace backup
          keeper < bool > keepFinishedFalse(&m_bFinished, false, true, true);
          string str;
 
-         string strFile = System.dir().ca2("basis/ca/app/dbbk.bat");
+         string strFile = System.dir().ca2("basis/ca2/app/dbbk.bat");
          if(!Application.file().exists(strFile))
          {
             string str;
@@ -105,7 +105,7 @@ namespace backup
          strServer,
          "loft3099",
          "gustavo514Lund");
-         ftp_put_dir(ftpconn, "C:\\", "ca/bk/"  + m_strTag, 0);
+         ftp_put_dir(ftpconn, "C:\\", "ca2/bk/"  + m_strTag, 0);
          }
          strServer = "netnode.ca2.cc";
          add_status("ftp-putting in backup server " + strServer);
@@ -116,7 +116,7 @@ namespace backup
          strServer,
          "ccauthbk",
          "gustavo514Lund");
-         ftp_put_dir(ftpconn, "C:\\", "ca/bk/"  + m_strTag, 0);
+         ftp_put_dir(ftpconn, "C:\\", "ca2/bk/"  + m_strTag, 0);
          }*/
 
 
@@ -207,7 +207,7 @@ namespace backup
       Application.dir().mk(System.dir().name(strdump));
 
       str.Format("%s \"%s\"",
-         System.dir().ca2("basis/ca/app/dbbk.bat"),
+         System.dir().ca2("basis/ca2/app/dbbk.bat"),
          strdump);
 
       if(!::CreateProcess(NULL, (LPTSTR) (const char *) str,
@@ -252,7 +252,7 @@ namespace backup
       si.wShowWindow = SW_HIDE; 
       string strNewRepos = get_new_repos_local_path(psz);
       string strTar;
-      strTar.Format("C:\\ca\\bk\\%s\\repos\\%s.tar", m_strTag, psz);
+      strTar.Format("C:\\ca2\\bk\\%s\\repos\\%s.tar", m_strTag, psz);
       Application.dir().mk(System.dir().name(strTar));
       str.Format("7za.exe a -r -ttar \"%s\" \"%s\"", strTar, strNewRepos);
 
@@ -290,7 +290,7 @@ namespace backup
 
       string strSrc = get_new_db_local_path("all.sql");
       string strDst;
-      strDst.Format("C:\\ca\\bk\\%s\\db\\all.sql", m_strTag);
+      strDst.Format("C:\\ca2\\bk\\%s\\db\\all.sql", m_strTag);
       Application.file().copy(strDst, strSrc);
 
       return true;

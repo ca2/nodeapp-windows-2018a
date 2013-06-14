@@ -84,7 +84,7 @@ namespace production
       return true;
    }
 
-   void application::on_request(sp(::ca::create_context) pcreatecontext)
+   void application::on_request(sp(::ca2::create_context) pcreatecontext)
    {
 
       if(pcreatecontext->m_spCommandLine->m_varQuery["version"] == "stage")
@@ -108,7 +108,7 @@ namespace production
    bool application::_001OnCmdMsg(BaseCmdMsg * pcmdmsg)
    		
    {
-      return ::ca::application::_001OnCmdMsg(pcmdmsg);
+      return ::ca2::application::_001OnCmdMsg(pcmdmsg);
    }
 
 
@@ -125,9 +125,9 @@ namespace production
          ::ShellExecuteW(
             NULL, 
             L"open", 
-            ::ca::international::utf8_to_unicode(itema[0].m_strPath),
+            ::ca2::international::utf8_to_unicode(itema[0].m_strPath),
             NULL,
-            ::ca::international::utf8_to_unicode(System.dir().name(itema[0].m_strPath)),
+            ::ca2::international::utf8_to_unicode(System.dir().name(itema[0].m_strPath)),
             SW_SHOW);
       }
       
@@ -138,10 +138,10 @@ namespace production
 
 
 extern "C"
-::ca::library * get_new_library()
+::ca2::library * get_new_library()
 {
 
-   return new ::ca::single_application_library < production::application > ("nodeapp");
+   return new ::ca2::single_application_library < production::application > ("nodeapp");
 
 }
 

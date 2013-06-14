@@ -4,8 +4,8 @@
 namespace backup
 {
 
-   view::view(sp(::ca::application) papp) :
-      ca(papp),
+   view::view(sp(::ca2::application) papp) :
+      ca2(papp),
       ::user::interaction(papp), 
       ::user::scroll_view(papp),
       

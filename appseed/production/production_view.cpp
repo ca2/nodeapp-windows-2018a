@@ -7,8 +7,8 @@ namespace production
 {
 
 
-   view::view(sp(::ca::application) papp) :
-      ca(papp),
+   view::view(sp(::ca2::application) papp) :
+      ca2(papp),
       ::user::interaction(papp), 
       ::user::scroll_view(papp),
       m_scrollbarVert(papp),
@@ -52,7 +52,7 @@ namespace production
    {
    }
 
-   void view::install_message_handling(::ca::message::dispatch * pinterface)
+   void view::install_message_handling(::ca2::message::dispatch * pinterface)
    {
       ::user::scroll_view::install_message_handling(pinterface);
 
@@ -100,12 +100,12 @@ namespace production
 	   return ::user::view::pre_create_window(cs);
    }
 
-   void view::_001OnInitialUpdate(::ca::signal_object * pobj) 
+   void view::_001OnInitialUpdate(::ca2::signal_object * pobj) 
    {
       ::user::view::_001OnInitialUpdate(pobj);
    }
 
-   void view::on_update(sp(::user::view) pSender, LPARAM lHint, ::ca::object * phint) 
+   void view::on_update(sp(::user::view) pSender, LPARAM lHint, ::ca2::object * phint) 
    {
       UNREFERENCED_PARAMETER(pSender);
       if(lHint == 5432108)
@@ -130,15 +130,15 @@ namespace production
    	
    }
 
-   void view::_001OnDestroy(::ca::signal_object * pobj) 
+   void view::_001OnDestroy(::ca2::signal_object * pobj) 
    {
 	   ::user::view::_001OnDestroy(pobj);
    }
 
-   void view::_001OnSize(::ca::signal_object * pobj) 
+   void view::_001OnSize(::ca2::signal_object * pobj) 
    {
       UNREFERENCED_PARAMETER(pobj);
-//      SCAST_PTR(::ca::message::size, psize, pobj)
+//      SCAST_PTR(::ca2::message::size, psize, pobj)
 
       rect rectDesktop;
       Application.get_screen_rect(rectDesktop);
@@ -166,7 +166,7 @@ namespace production
    }
 
 
-   void view:: _001OnDraw(::ca::graphics * pdc)
+   void view:: _001OnDraw(::ca2::graphics * pdc)
    {
       
 
@@ -195,7 +195,7 @@ namespace production
       }
       rect rectClip(rectText);
       //ClientToScreen(rectClip);
-      ::ca::region_sp rgnClip(allocer());
+      ::ca2::region_sp rgnClip(allocer());
       rgnClip->create_rect(rectClip);
       //pdc->Draw3dRect(rectText, RGB(200, 200, 200), RGB(200, 200, 200));
       pdc->SelectClipRgn(rgnClip);
@@ -232,7 +232,7 @@ namespace production
 
    }
 
-   void view::_001OnCreate(::ca::signal_object * pobj) 
+   void view::_001OnCreate(::ca2::signal_object * pobj) 
    {
       if(pobj->previous())
          return;
@@ -283,7 +283,7 @@ namespace production
       m_pproduction->m_pview  = this;
 
       //m_pproduction->twitter_auth();
-//      m_pproduction->twitter_twit("starting ca production application");
+//      m_pproduction->twitter_twit("starting ca2 production application");
 
 
 
@@ -299,9 +299,9 @@ namespace production
    }
 
 
-   void view::_001OnContextMenu(::ca::signal_object * pobj) 
+   void view::_001OnContextMenu(::ca2::signal_object * pobj) 
    {
-      SCAST_PTR(::ca::message::context_menu, pcontextmenu, pobj)
+      SCAST_PTR(::ca2::message::context_menu, pcontextmenu, pobj)
       point point = pcontextmenu->GetPoint();
    }
 
@@ -314,10 +314,10 @@ namespace production
    }
 
 
-   void view::_001OnSetCursor(::ca::signal_object * pobj) 
+   void view::_001OnSetCursor(::ca2::signal_object * pobj) 
    {
 
-      SCAST_PTR(::ca::message::mouse, pmouse, pobj);
+      SCAST_PTR(::ca2::message::mouse, pmouse, pobj);
 
       pmouse->m_ecursor = ::visual::cursor_arrow;
    	
@@ -370,18 +370,18 @@ namespace production
       return -1;
    }
 
-   void view::_001OnLButtonDown(::ca::signal_object * pobj)
+   void view::_001OnLButtonDown(::ca2::signal_object * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
-  //    SCAST_PTR(::ca::message::mouse, pmouse, pobj)
+  //    SCAST_PTR(::ca2::message::mouse, pmouse, pobj)
 
 //      int32_t iHitArea = hit_test(pmouse->m_pt);
 
    }
 
-   void view::_001OnLButtonUp(::ca::signal_object * pobj)
+   void view::_001OnLButtonUp(::ca2::signal_object * pobj)
    {
-      SCAST_PTR(::ca::message::mouse, pmouse, pobj)
+      SCAST_PTR(::ca2::message::mouse, pmouse, pobj)
 
       class point point = pmouse->m_pt;
       ScreenToClient(&point);
@@ -398,10 +398,10 @@ namespace production
 
    }
 
-   void view::_001OnRButtonUp(::ca::signal_object * pobj)
+   void view::_001OnRButtonUp(::ca2::signal_object * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
-  //    SCAST_PTR(::ca::message::mouse, pmouse, pobj)
+  //    SCAST_PTR(::ca2::message::mouse, pmouse, pobj)
 
 //      int32_t iHitArea = hit_test(pmouse->m_pt);
    /*   {
@@ -418,9 +418,9 @@ namespace production
 
 
 
-   void view::_001OnTimer(::ca::signal_object * pobj)
+   void view::_001OnTimer(::ca2::signal_object * pobj)
    {
-      SCAST_PTR(::ca::message::timer, ptimer, pobj)
+      SCAST_PTR(::ca2::message::timer, ptimer, pobj)
       if(ptimer->m_nIDEvent == 543218)
       {
          if(IsWindowVisible())
@@ -454,10 +454,10 @@ namespace production
 
 
 
-   void view::_001OnShowWindow(::ca::signal_object * pobj) 
+   void view::_001OnShowWindow(::ca2::signal_object * pobj) 
    {
       UNREFERENCED_PARAMETER(pobj);
-//      SCAST_PTR(::ca::message::show_window, pshowwindow, pobj)
+//      SCAST_PTR(::ca2::message::show_window, pshowwindow, pobj)
    }
 
    void view::make_production()
@@ -475,9 +475,9 @@ namespace production
       m_pproduction->start_loop(papp->m_eversion, iLoopCount);
    }
 
-   void view::_001OnUser(::ca::signal_object * pobj)
+   void view::_001OnUser(::ca2::signal_object * pobj)
    {
-      SCAST_PTR(::ca::message::base, pbase, pobj);
+      SCAST_PTR(::ca2::message::base, pbase, pobj);
       if(pbase->m_wparam == 1)
       {
          int32_t iLineHeight = m_iLineHeight;
@@ -516,7 +516,7 @@ namespace production
 
          pdoc->get_operation_doc(true)->m_thread.queue_copy(
             m_pproduction->m_straFiles, 
-            "C:\\ca\\vrel\\stage\\" + m_pproduction->m_strFormatBuild, 
+            "C:\\ca2\\vrel\\stage\\" + m_pproduction->m_strFormatBuild, 
             strBase,
             false, 
             this);

@@ -30,7 +30,7 @@ public:
 
 
    oswindow();
-   oswindow(const ::ca::null & null);
+   oswindow(const ::ca2::null & null);
    oswindow(Windows::UI::Core::CoreWindow ^ window);
    oswindow(const oswindow & oswindow);
    oswindow(const void * p);

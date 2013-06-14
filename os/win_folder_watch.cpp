@@ -3,15 +3,15 @@
 namespace win
 {
 
-   folder_watch::folder_watch(sp(::ca::application) papp) :
-      ca(papp),
-      ::ca::thread(papp)
+   folder_watch::folder_watch(sp(::ca2::application) papp) :
+      ca2(papp),
+      ::ca2::thread(papp)
    {
    }
 
    bool folder_watch::watch(const char * pszPath)
    {
-      if(!::ca::folder_watch::watch(pszPath))
+      if(!::ca2::folder_watch::watch(pszPath))
          return false;
 
       if(!begin())
@@ -22,7 +22,7 @@ namespace win
 
    int32_t folder_watch::run() // thread procedure
    {
-      HANDLE hDirectory = ::CreateFileW(::ca::international::utf8_to_unicode(m_strPath), 
+      HANDLE hDirectory = ::CreateFileW(::ca2::international::utf8_to_unicode(m_strPath), 
                       FILE_LIST_DIRECTORY,
                       FILE_SHARE_READ|FILE_SHARE_WRITE|FILE_SHARE_DELETE,
                       NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
@@ -56,7 +56,7 @@ namespace win
             e_action eaction = translate_os_action(pfni->Action);
             //if(eaction != action_unexpected)
             {
-               on_file_action(eaction, ::ca::international::unicode_to_utf8(wchFileName));
+               on_file_action(eaction, ::ca2::international::unicode_to_utf8(wchFileName));
             }
             dwNextEntryOffset += pfni->NextEntryOffset; // next please!
          }

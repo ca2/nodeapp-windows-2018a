@@ -6,13 +6,13 @@ namespace win
 
 
    class CLASS_DECL_win copydesk : 
-      virtual public ::ca::copydesk,
-      virtual public ::ca::window_sp
+      virtual public ::ca2::copydesk,
+      virtual public ::ca2::window_sp
    {
    public:
 
       
-      copydesk(sp(::ca::application) papp);
+      copydesk(sp(::ca2::application) papp);
       virtual ~copydesk();
 
       
@@ -28,9 +28,9 @@ namespace win
       virtual string get_plain_text();
 
 
-      virtual bool desk_to_dib(::ca::dib * pdib);
+      virtual bool desk_to_dib(::ca2::dib * pdib);
       // todo
-      //bool dib_to_desk(::ca::dib * pdib);
+      //bool dib_to_desk(::ca2::dib * pdib);
 
    };
 

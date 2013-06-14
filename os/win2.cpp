@@ -1,7 +1,7 @@
 #include "framework.h"
 
 // Global helper functions
- CLASS_DECL_win sp(::ca::application) __get_app()
+ CLASS_DECL_win sp(::ca2::application) __get_app()
 { return (afxCurrentWinApp); }
 
  CLASS_DECL_win HINSTANCE __get_instance_handle()
@@ -16,7 +16,7 @@
    { ASSERT(afxCurrentAppName != NULL); return afxCurrentAppName; }
  CLASS_DECL_win sp(::user::interaction) __get_main_window()
 {
-      ::ca::thread* pThread = dynamic_cast < ::ca::thread * > (::win::get_thread());
+      ::ca2::thread* pThread = dynamic_cast < ::ca2::thread * > (::win::get_thread());
       return pThread != NULL ? pThread->GetMainWnd() : NULL; 
  }
 

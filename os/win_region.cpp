@@ -8,8 +8,8 @@ namespace win
 {
 
    
-   region::region(sp(::ca::application) papp) :
-      ca(papp)
+   region::region(sp(::ca2::application) papp) :
+      ca2(papp)
    { 
       
       m_pregion = NULL;
@@ -39,13 +39,13 @@ namespace win
       ::SetRectRgn((HRGN)get_os_data(), lpRect->left, lpRect->top, lpRect->right, lpRect->bottom); 
    }
 
-   int32_t region::CombineRgn(const ::ca::region* pRgn1, const ::ca::region* pRgn2, int32_t nCombineMode)
+   int32_t region::CombineRgn(const ::ca2::region* pRgn1, const ::ca2::region* pRgn2, int32_t nCombineMode)
    { ASSERT(get_os_data() != NULL); return ::CombineRgn((HRGN)get_os_data(), (HRGN)pRgn1->get_os_data(),
    (HRGN)pRgn2->get_os_data(), nCombineMode); }
-   int32_t region::CopyRgn(const ::ca::region* pRgnSrc)
+   int32_t region::CopyRgn(const ::ca2::region* pRgnSrc)
    { ASSERT(get_os_data() != NULL); return ::CombineRgn((HRGN)get_os_data(), (HRGN)pRgnSrc->get_os_data(), NULL, RGN_COPY); }
 
-   bool region::EqualRgn(const ::ca::region* pRgn) const
+   bool region::EqualRgn(const ::ca2::region* pRgn) const
    {
       
       ASSERT(get_os_data() != NULL); 
@@ -156,7 +156,7 @@ namespace win
 
       }
 
-      return ::ca::region::destroy();
+      return ::ca2::region::destroy();
 
    }
 
@@ -226,7 +226,7 @@ namespace win
          pa.add(Gdiplus::PointF((Gdiplus::REAL) m_lppoints[i].x, (Gdiplus::REAL) m_lppoints[i].y));
       }
 
-      if(m_efillmode == ::ca::fill_mode_alternate)
+      if(m_efillmode == ::ca2::fill_mode_alternate)
       {
          path.SetFillMode(Gdiplus::FillModeAlternate);
       }
@@ -247,7 +247,7 @@ namespace win
 
       array < Gdiplus::PointF > pa;
 
-      if(m_efillmode == ::ca::fill_mode_alternate)
+      if(m_efillmode == ::ca2::fill_mode_alternate)
       {
          path.SetFillMode(Gdiplus::FillModeAlternate);
       }

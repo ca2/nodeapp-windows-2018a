@@ -13,12 +13,12 @@ namespace win
 
 
    class file_system :
-      virtual public ::ca::file_system
+      virtual public ::ca2::file_system
    {
    public:
 
 
-      file_system(sp(::ca::application) papp);
+      file_system(sp(::ca2::application) papp);
       virtual ~file_system();
 
 

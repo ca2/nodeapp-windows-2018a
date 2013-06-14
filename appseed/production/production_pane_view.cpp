@@ -5,8 +5,8 @@ namespace production
 {
 
 
-   pane_view::pane_view(sp(::ca::application) papp) :
-      ca(papp),
+   pane_view::pane_view(sp(::ca2::application) papp) :
+      ca2(papp),
       ::user::tab(papp),
       
       ::user::tab_view(papp),
@@ -42,9 +42,9 @@ namespace production
    /////////////////////////////////////////////////////////////////////////////
    // pane_view message handlers
 
-   void pane_view::_001OnCreate(::ca::signal_object * pobj) 
+   void pane_view::_001OnCreate(::ca2::signal_object * pobj) 
    {
-//      SCAST_PTR(::ca::message::create, pcreate, pobj)
+//      SCAST_PTR(::ca2::message::create, pcreate, pobj)
       if(pobj->previous())
          return;
 
@@ -55,7 +55,7 @@ namespace production
       
    }
 
-   void pane_view::on_update(sp(::user::view) pSender, LPARAM lHint, ::ca::object* pHint) 
+   void pane_view::on_update(sp(::user::view) pSender, LPARAM lHint, ::ca2::object* pHint) 
    {
       ::user::tab_view::on_update(pSender, lHint, pHint);
       if(lHint == 543218)
@@ -107,7 +107,7 @@ namespace production
    void pane_view::on_show_view()
    {
       ::userex::pane_tab_view::on_show_view();
-      //sp(frame) pframe =  (dynamic_cast < ::ca::window * > (GetParentFrame()));
+      //sp(frame) pframe =  (dynamic_cast < ::ca2::window * > (GetParentFrame()));
       if(m_pviewdata->m_id == PaneViewFileManager)
       {
       }
@@ -177,7 +177,7 @@ namespace production
          break;
 /*      case PaneViewFileManager:
          {
-            sp(::ca::create_context) cc(get_app());
+            sp(::ca2::create_context) cc(get_app());
             cc->m_bMakeVisible = false;
             cc->m_bTransparentBackground = true;
             cc->m_puiParent = this;
@@ -272,13 +272,13 @@ namespace production
 
 
 
-   void pane_view::_001OnMenuMessage(::ca::signal_object * pobj)
+   void pane_view::_001OnMenuMessage(::ca2::signal_object * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       set_cur_tab_by_id(m_pviewdataOld->m_id);
    }
 
-   void pane_view::install_message_handling(::ca::message::dispatch * pinterface)
+   void pane_view::install_message_handling(::ca2::message::dispatch * pinterface)
    {
       ::user::tab_view::install_message_handling(pinterface);
 
@@ -301,9 +301,9 @@ namespace production
          int32_t i = (int32_t) ::ShellExecuteW(
             NULL, 
             NULL, 
-            ::ca::international::utf8_to_unicode("\"" + itema[0].m_strPath + "\""),
+            ::ca2::international::utf8_to_unicode("\"" + itema[0].m_strPath + "\""),
             NULL,
-            ::ca::international::utf8_to_unicode("\"" + System.dir().name(itema[0].m_strPath) + "\""),
+            ::ca2::international::utf8_to_unicode("\"" + System.dir().name(itema[0].m_strPath) + "\""),
             SW_SHOWNORMAL);
          string str;
          str.Format("%d", i);
@@ -347,9 +347,9 @@ namespace production
         return  (::user::view::get_document());
      }
 
-     void pane_view::_001OnUserMessage(::ca::signal_object * pobj)
+     void pane_view::_001OnUserMessage(::ca2::signal_object * pobj)
      {
-        SCAST_PTR(::ca::message::base, pbase, pobj)
+        SCAST_PTR(::ca2::message::base, pbase, pobj)
            if(pbase->m_wparam == 1)
            {
                set_cur_tab_by_id("tabbed_file_manager");

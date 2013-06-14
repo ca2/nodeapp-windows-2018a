@@ -19,7 +19,7 @@ namespace production
       sp(form_view) m_pviewOptions;
 
 
-	   pane_view(sp(::ca::application) papp);
+	   pane_view(sp(::ca2::application) papp);
 	   virtual ~pane_view();
 
 
@@ -32,9 +32,9 @@ namespace production
       virtual void on_create_view(::user::view_creator_data * pcreatordata);
       virtual void on_show_view();
 
-      virtual void install_message_handling(::ca::message::dispatch * pinterface);
+      virtual void install_message_handling(::ca2::message::dispatch * pinterface);
 
-	   virtual void on_update(sp(::user::view) pSender, LPARAM lHint, ::ca::object* pHint);
+	   virtual void on_update(sp(::user::view) pSender, LPARAM lHint, ::ca2::object* pHint);
 	   virtual bool pre_create_window(CREATESTRUCT& cs);
 
 

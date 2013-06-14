@@ -21,7 +21,7 @@
 
 string get_error_message(DWORD dwError);
 
-//sp(::ca::application)     win_instantiate_application(sp(::ca::application) pappSystem, const char * pszId);
+//sp(::ca2::application)     win_instantiate_application(sp(::ca2::application) pappSystem, const char * pszId);
 
 /////////////////////////////////////////////////////////////////////////////
 // explicit initialization for general purpose classes
@@ -102,13 +102,13 @@ CLASS_DECL_win void reset_message_cache();
 CLASS_DECL_win WNDPROC __get_window_procedure();
 #define __window_procedure (*__get_window_procedure())
 
-#define WIN_THREAD(pthread) (dynamic_cast < ::win::thread * > (dynamic_cast < ::ca::thread * >(pthread)))
+#define WIN_THREAD(pthread) (dynamic_cast < ::win::thread * > (dynamic_cast < ::ca2::thread * >(pthread)))
 #define WIN_WINDOW(pwnd) ((sp(::win::window))(pwnd))
-#define WIN_DC(pgraphics) (dynamic_cast < ::win::graphics * > (dynamic_cast < ::ca::graphics * > (pgraphics)))
-#define SP_DC(pgraphics) (dynamic_cast < ::win::graphics * > (( ::ca::graphics * )(pgraphics)))
-#define WIN_HDC(pgraphics) ((dynamic_cast < ::win::graphics * > (dynamic_cast < ::ca::graphics * > (pgraphics)))->get_handle())
-#define SP_HDC(pgraphics) ((dynamic_cast < ::win::graphics * > ((::ca::graphics *)(pgraphics)))->get_handle())
-#define WIN_DIB(pdib) (dynamic_cast < ::win::dib * > (dynamic_cast < ::ca::dib * >(pdib)))
+#define WIN_DC(pgraphics) (dynamic_cast < ::win::graphics * > (dynamic_cast < ::ca2::graphics * > (pgraphics)))
+#define SP_DC(pgraphics) (dynamic_cast < ::win::graphics * > (( ::ca2::graphics * )(pgraphics)))
+#define WIN_HDC(pgraphics) ((dynamic_cast < ::win::graphics * > (dynamic_cast < ::ca2::graphics * > (pgraphics)))->get_handle())
+#define SP_HDC(pgraphics) ((dynamic_cast < ::win::graphics * > ((::ca2::graphics *)(pgraphics)))->get_handle())
+#define WIN_DIB(pdib) (dynamic_cast < ::win::dib * > (dynamic_cast < ::ca2::dib * >(pdib)))
 
 
 #pragma comment(lib, "kernel32.lib")
@@ -126,15 +126,15 @@ CLASS_DECL_win WNDPROC __get_window_procedure();
 #pragma comment(lib, "Msimg32.lib") 
 #pragma comment(lib, "Psapi.lib") 
 
-CLASS_DECL_win void __trace_message(const char * lpszPrefix, ::ca::signal_object * pobj);
+CLASS_DECL_win void __trace_message(const char * lpszPrefix, ::ca2::signal_object * pobj);
 CLASS_DECL_win void __trace_message(const char * lpszPrefix, LPMSG lpmsg);
 
-CLASS_DECL_win bool __cdecl __is_idle_message(::ca::signal_object * pobj);
+CLASS_DECL_win bool __cdecl __is_idle_message(::ca2::signal_object * pobj);
 CLASS_DECL_win bool __cdecl __is_idle_message(MSG* pMsg);
 
 
-CLASS_DECL_win void __process_window_procedure_exception(base_exception*, ::ca::signal_object * pobj);
-CLASS_DECL_win void __cdecl __pre_translate_message(::ca::signal_object * pobj);
+CLASS_DECL_win void __process_window_procedure_exception(base_exception*, ::ca2::signal_object * pobj);
+CLASS_DECL_win void __cdecl __pre_translate_message(::ca2::signal_object * pobj);
 
 //#include "win_printer.h"
 

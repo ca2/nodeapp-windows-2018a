@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace ca
+namespace ca2
 {
 
 
@@ -9,7 +9,7 @@ namespace ca
 
 
    // Throw a atl_exception corresponding to the result of ::GetLastError
-   NOINLINE DECLSPEC_NO_RETURN inline void WINAPI gen_ThrowLastWin32(sp(::ca::application) papp)
+   NOINLINE DECLSPEC_NO_RETURN inline void WINAPI gen_ThrowLastWin32(sp(::ca2::application) papp)
    {
       DWORD dwError = ::GetLastError();
       throw hresult_exception(papp, HRESULT_FROM_WIN32( dwError ) );
@@ -18,7 +18,7 @@ namespace ca
    #else  // no exception handling
 
    // Throw a atl_exception corresponding to the result of ::GetLastError
-   NOINLINE inline void WINAPI gen_ThrowLastWin32(sp(::ca::application) papp)
+   NOINLINE inline void WINAPI gen_ThrowLastWin32(sp(::ca2::application) papp)
    {
       DWORD dwError = ::GetLastError();
       throw hresult_exception(papp, HRESULT_FROM_WIN32( dwError ) );
@@ -26,4 +26,4 @@ namespace ca
 
    #endif  // no exception handling
 
-}  // namespace ca
+}  // namespace ca2

@@ -11,20 +11,20 @@ CLASS_DECL_ca2 int32_t ca2_main();
 
 void CLASS_DECL_win __cdecl _ca2_purecall()
 {
-   throw simple_exception(::ca::get_thread_app());
+   throw simple_exception(::ca2::get_thread_app());
 }
 
 
 void __cdecl _null_se_translator(uint32_t uiCode, EXCEPTION_POINTERS * ppointers);
 
 
-//sp(::ca::application)     win_application_create(sp(::ca::application) pappSystem, const char * pszId);
-//sp(::ca::application)     win_instantiate_application(sp(::ca::application) pappSystem, const char * pszId);
-//int32_t                     win_application_procedure(sp(::ca::application) pappSystem)
+//sp(::ca2::application)     win_application_create(sp(::ca2::application) pappSystem, const char * pszId);
+//sp(::ca2::application)     win_instantiate_application(sp(::ca2::application) pappSystem, const char * pszId);
+//int32_t                     win_application_procedure(sp(::ca2::application) pappSystem)
 //UINT c_cdecl          win_application_thread_proc(LPVOID);
 /////////////////////////////////////////////////////////////////////////////
 // Standard WinMain implementation
-//  Can be replaced as long as '::ca::WinInit' is called first
+//  Can be replaced as long as '::ca2::WinInit' is called first
 
 int32_t CLASS_DECL_win __win_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
 {
@@ -57,7 +57,7 @@ int32_t CLASS_DECL_win __win_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, 
 
    pinitmaindata->m_hInstance             = hinstance;
    pinitmaindata->m_hPrevInstance         = hPrevInstance;
-   pinitmaindata->m_vssCommandLine        = ::ca::international::unicode_to_utf8(::GetCommandLineW());
+   pinitmaindata->m_vssCommandLine        = ::ca2::international::unicode_to_utf8(::GetCommandLineW());
    pinitmaindata->m_nCmdShow              = nCmdShow;
 
    

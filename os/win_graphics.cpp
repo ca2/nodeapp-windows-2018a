@@ -9,8 +9,8 @@ namespace win
 {
 
 
-   graphics::graphics(sp(::ca::application) papp) :
-      ca(papp)
+   graphics::graphics(sp(::ca2::application) papp) :
+      ca2(papp)
    {
 
       m_bPrinting       = FALSE;
@@ -20,7 +20,7 @@ namespace win
       m_hdcGraphics     = NULL;
       m_ppath           = NULL;
       m_ppathPaint      = NULL;
-      m_etextrendering  = ::ca::text_rendering_anti_alias_grid_fit;
+      m_etextrendering  = ::ca2::text_rendering_anti_alias_grid_fit;
       m_dFontFactor     = 1.0;
 
    }
@@ -34,7 +34,7 @@ namespace win
       m_hdc             = NULL;
       m_ppath           = NULL;
       m_ppathPaint      = NULL;
-      m_etextrendering  = ::ca::text_rendering_anti_alias_grid_fit;
+      m_etextrendering  = ::ca2::text_rendering_anti_alias_grid_fit;
 ;
 
    }
@@ -42,12 +42,12 @@ namespace win
 
    void graphics::assert_valid() const
    {
-      ::ca::object::assert_valid();
+      ::ca2::object::assert_valid();
    }
 
    void graphics::dump(dump_context & dumpcontext) const
    {
-      ::ca::object::dump(dumpcontext);
+      ::ca2::object::dump(dumpcontext);
 
       dumpcontext << "get_handle1() = " << get_handle1();
       dumpcontext << "\nm_hAttribDC = " << get_handle2();
@@ -65,7 +65,7 @@ namespace win
    }
 
 
-   sp(::ca::window) graphics::GetWindow() const
+   sp(::ca2::window) graphics::GetWindow() const
    { 
       ASSERT(get_handle1() != NULL); return ::win::window::from_handle(::WindowFromDC(get_handle1())); 
    }
@@ -87,7 +87,7 @@ namespace win
    }
 
 
-   bool graphics::CreateCompatibleDC(::ca::graphics * pgraphics)
+   bool graphics::CreateCompatibleDC(::ca2::graphics * pgraphics)
    { 
 
       HDC hdc = Detach();
@@ -127,7 +127,7 @@ namespace win
          catch(...)
          {
             
-            TRACE("graphics::CreateCompatibleDC(::ca::graphics * ) : Failed to delete Gdiplus::Graphics");
+            TRACE("graphics::CreateCompatibleDC(::ca2::graphics * ) : Failed to delete Gdiplus::Graphics");
 
          }
 
@@ -176,7 +176,7 @@ namespace win
    }
 
 
-   int32_t graphics::ExcludeUpdateRgn(sp(::ca::window) pWnd)
+   int32_t graphics::ExcludeUpdateRgn(sp(::ca2::window) pWnd)
    { 
       ASSERT(get_handle1() != NULL); 
       return ::ExcludeUpdateRgn(get_handle1(), WIN_WINDOW(pWnd)->get_handle()); 
@@ -217,7 +217,7 @@ namespace win
       return ::EnumObjects(get_handle2(), nObjectType, (GOBJENUMPROC)lpfn, lpData); 
    }
 
-   ::ca::bitmap* graphics::SelectObject(::ca::bitmap * pBitmap)
+   ::ca2::bitmap* graphics::SelectObject(::ca2::bitmap * pBitmap)
    { 
 
       
@@ -228,7 +228,7 @@ namespace win
          return NULL;
       if(pBitmap == NULL)
          return NULL;
-      return dynamic_cast < ::ca::bitmap* > (SelectGdiObject(get_app(), get_handle1(), pBitmap->get_os_data()));*/
+      return dynamic_cast < ::ca2::bitmap* > (SelectGdiObject(get_app(), get_handle1(), pBitmap->get_os_data()));*/
       if(m_pgraphics != NULL)
       {
          try
@@ -240,7 +240,7 @@ namespace win
          catch(...)
          {
 
-            TRACE("graphics::SelectObject(::ca::bitmap *) : Failed to delete Gdiplus::Graphics");
+            TRACE("graphics::SelectObject(::ca2::bitmap *) : Failed to delete Gdiplus::Graphics");
 
          }
 
@@ -250,7 +250,7 @@ namespace win
 
       m_pgraphics = new Gdiplus::Graphics((Gdiplus::Bitmap *) pBitmap->get_os_data());
 
-      set_text_rendering(::ca::text_rendering_anti_alias_grid_fit);
+      set_text_rendering(::ca2::text_rendering_anti_alias_grid_fit);
 
       m_bitmap = pBitmap;
 
@@ -258,7 +258,7 @@ namespace win
    }
 
 
-   ::ca::graphics_object* graphics::SelectObject(::ca::graphics_object* pObject)
+   ::ca2::graphics_object* graphics::SelectObject(::ca2::graphics_object* pObject)
    {
    /*      ASSERT(get_handle1() != NULL); 
       if(pObject == NULL)
@@ -307,7 +307,7 @@ namespace win
 
          m_pgraphics = new Gdiplus::Graphics((Gdiplus::Bitmap *) m_bitmap->get_os_data());
 
-         set_text_rendering(::ca::text_rendering_anti_alias_grid_fit);
+         set_text_rendering(::ca2::text_rendering_anti_alias_grid_fit);
 
          return hbitmap;
 
@@ -442,21 +442,21 @@ namespace win
       ::LPtoDP(get_handle2(), (LPPOINT)lpRect, 2);
    }
 
-   bool graphics::FillRgn(::ca::region* pRgn, ::ca::brush* pBrush)
+   bool graphics::FillRgn(::ca2::region* pRgn, ::ca2::brush* pBrush)
    { 
 
       return ::FillRgn(get_handle1(), (HRGN)pRgn->get_os_data(), (HBRUSH)pBrush->get_os_data()) != FALSE;
 
    }
 
-   bool graphics::FrameRgn(::ca::region* pRgn, ::ca::brush* pBrush, int32_t nWidth, int32_t nHeight)
+   bool graphics::FrameRgn(::ca2::region* pRgn, ::ca2::brush* pBrush, int32_t nWidth, int32_t nHeight)
    { 
 
       return ::FrameRgn(get_handle1(), (HRGN)pRgn->get_os_data(), (HBRUSH)pBrush->get_os_data(), nWidth, nHeight) != FALSE; 
 
    }
 
-   bool graphics::InvertRgn(::ca::region* pRgn)
+   bool graphics::InvertRgn(::ca2::region* pRgn)
    {
       
       ASSERT(get_handle1() != NULL);
@@ -465,7 +465,7 @@ namespace win
    
    }
 
-   bool graphics::PaintRgn(::ca::region* pRgn)
+   bool graphics::PaintRgn(::ca2::region* pRgn)
    {
       
       ASSERT(get_handle1() != NULL);
@@ -537,9 +537,9 @@ namespace win
    
    }
 
-   void graphics::FillRect(LPCRECT lpRect, ::ca::brush* pBrush)
+   void graphics::FillRect(LPCRECT lpRect, ::ca2::brush* pBrush)
    { ASSERT(get_handle1() != NULL); ::FillRect(get_handle1(), lpRect, (HBRUSH)pBrush->get_os_data()); }
-   void graphics::FrameRect(LPCRECT lpRect, ::ca::brush* pBrush)
+   void graphics::FrameRect(LPCRECT lpRect, ::ca2::brush* pBrush)
    { ASSERT(get_handle1() != NULL); ::FrameRect(get_handle1(), lpRect, (HBRUSH)pBrush->get_os_data()); }
    void graphics::InvertRect(LPCRECT lpRect)
    { ASSERT(get_handle1() != NULL); ::InvertRect(get_handle1(), lpRect); }
@@ -644,7 +644,7 @@ namespace win
    
    }
    
-   bool graphics::DrawState(point pt, size size, ::ca::bitmap* pBitmap, UINT nFlags, ::ca::brush* pBrush)
+   bool graphics::DrawState(point pt, size size, ::ca2::bitmap* pBitmap, UINT nFlags, ::ca2::brush* pBrush)
    {
       
       ASSERT(get_handle1() != NULL);
@@ -661,7 +661,7 @@ namespace win
    }
    
 
-   bool graphics::DrawState(point pt, size size, HICON hIcon, UINT nFlags, ::ca::brush* pBrush)
+   bool graphics::DrawState(point pt, size size, HICON hIcon, UINT nFlags, ::ca2::brush* pBrush)
    {
 
       ASSERT(get_handle1() != NULL);
@@ -677,7 +677,7 @@ namespace win
 
    }
    
-   bool graphics::DrawState(point pt, size size, const char * lpszText, UINT nFlags, bool bPrefixText, int32_t nTextLen, ::ca::brush* pBrush)
+   bool graphics::DrawState(point pt, size size, const char * lpszText, UINT nFlags, bool bPrefixText, int32_t nTextLen, ::ca2::brush* pBrush)
    {
 
       ASSERT(get_handle1() != NULL); 
@@ -688,7 +688,7 @@ namespace win
    bool graphics::DrawState(point pt, size size, DRAWSTATEPROC lpDrawProc, LPARAM lData, UINT nFlags, HBRUSH hBrush)
    { ASSERT(get_handle1() != NULL); return ::DrawState(get_handle1(), hBrush,
    lpDrawProc, lData, 0, pt.x, pt.y, size.cx, size.cy, nFlags|DST_COMPLEX) != FALSE; }
-   bool graphics::DrawState(point pt, size size, DRAWSTATEPROC lpDrawProc, LPARAM lData, UINT nFlags, ::ca::brush* pBrush)
+   bool graphics::DrawState(point pt, size size, DRAWSTATEPROC lpDrawProc, LPARAM lData, UINT nFlags, ::ca2::brush* pBrush)
    { ASSERT(get_handle1() != NULL); return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(),
    lpDrawProc, lData, 0, pt.x, pt.y, size.cx, size.cy, nFlags|DST_COMPLEX) != FALSE; }
    bool graphics::DrawEdge(LPRECT lpRect, UINT nEdge, UINT nFlags)
@@ -934,7 +934,7 @@ namespace win
    { ASSERT(get_handle1() != NULL); return ::PatBlt(get_handle1(), x, y, nWidth, nHeight, dwRop) != FALSE; }
    
    
-   bool graphics::BitBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::ca::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, uint32_t dwRop)
+   bool graphics::BitBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::ca2::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, uint32_t dwRop)
    { 
       
 
@@ -945,10 +945,10 @@ namespace win
          rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
 
 
-         ::ca::dib * pdibWork = NULL;
-         ::ca::dib * pdibWork2 = NULL;
-//         ::ca::dib * pdibWork3 = NULL;
-         ::ca::dib * pdibWork4 = NULL;
+         ::ca2::dib * pdibWork = NULL;
+         ::ca2::dib * pdibWork2 = NULL;
+//         ::ca2::dib * pdibWork3 = NULL;
+         ::ca2::dib * pdibWork4 = NULL;
 
             
          class point ptSrc(xSrc, ySrc);
@@ -957,7 +957,7 @@ namespace win
 
 
 
-         ::ca::dib_sp spdib;
+         ::ca2::dib_sp spdib;
          if(pdibWork == NULL)
          {
             spdib.create(allocer());
@@ -970,7 +970,7 @@ namespace win
 
          pdibWork->Fill(0, 0, 0, 0);
 
-         pdibWork->get_graphics()->set_alpha_mode(::ca::alpha_mode_set);
+         pdibWork->get_graphics()->set_alpha_mode(::ca2::alpha_mode_set);
 
          if(!pdibWork->from(null_point(), pgraphicsSrc, ptSrc, size))
             return false;
@@ -978,7 +978,7 @@ namespace win
 
 
 
-         ::ca::dib_sp spdib2;
+         ::ca2::dib_sp spdib2;
          if(pdibWork2 == NULL)
          {
             spdib2.create(allocer());
@@ -986,7 +986,7 @@ namespace win
          }
 
 
-         ::ca::dib_sp spdib4;
+         ::ca2::dib_sp spdib4;
          if(pdibWork4 == NULL)
          {
             spdib4.create(allocer());
@@ -1000,7 +1000,7 @@ namespace win
 
          pdibWork4->Fill(255, 0, 0, 0);
 
-         pdibWork4->get_graphics()->set_alpha_mode(::ca::alpha_mode_set);
+         pdibWork4->get_graphics()->set_alpha_mode(::ca2::alpha_mode_set);
             
          pdibWork4->from(point(max(0, m_ptAlphaBlend.x - x), max(0, m_ptAlphaBlend.y - y)),
             m_pdibAlphaBlend->get_graphics(), point(max(0, x - m_ptAlphaBlend.x), max(0, y - m_ptAlphaBlend.y)), 
@@ -1008,13 +1008,13 @@ namespace win
    
          pdibWork->channel_multiply(visual::rgba::channel_alpha, pdibWork4);
 
-         /*pdibWork->get_graphics()->set_alpha_mode(::ca::alpha_mode_blend);
+         /*pdibWork->get_graphics()->set_alpha_mode(::ca2::alpha_mode_blend);
 
          pdibWork->from(point(max(0, m_ptAlphaBlend.x - x), max(0, m_ptAlphaBlend.y - y)),
             m_pdibAlphaBlend->get_graphics(), point(max(0, x - m_ptAlphaBlend.x), max(0, y - m_ptAlphaBlend.y)), 
                                class size(max(0, size.cx - max(0, x - m_ptAlphaBlend.x)), max(0, size.cy - max(0, y - m_ptAlphaBlend.y))));*/
    
-         //keeper < ::ca::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
+         //keeper < ::ca2::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
 
          Gdiplus::CompositingMode mode = m_pgraphics->GetCompositingMode();
 
@@ -1089,7 +1089,7 @@ gdi_fallback:
    }
 
 
-   bool graphics::StretchBlt(int32_t xDst, int32_t yDst, int32_t nDstWidth, int32_t nDstHeight, ::ca::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, uint32_t dwRop)
+   bool graphics::StretchBlt(int32_t xDst, int32_t yDst, int32_t nDstWidth, int32_t nDstHeight, ::ca2::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, uint32_t dwRop)
    { 
 
       if(pgraphicsSrc == NULL)
@@ -1146,7 +1146,7 @@ gdi_fallback:
             rect rectText(point(x, y), GetTextExtent(str));
             if(rectIntersect.intersect(rectIntersect, rectText))
             {
-               /*::ca::dib_sp dib0(get_app());
+               /*::ca2::dib_sp dib0(get_app());
                dib0->create(rectText.size());
                dib0->Fill(0, 0, 0, 0);
                dib0->get_graphics()->SetTextColor(ARGB(255, 255, 255, 255));
@@ -1154,7 +1154,7 @@ gdi_fallback:
                dib0->get_graphics()->SetBkMode(TRANSPARENT);
                dib0->get_graphics()->TextOut(0, 0, str);
                dib0->ToAlpha(0);*/
-               ::ca::dib_sp dib1(allocer());
+               ::ca2::dib_sp dib1(allocer());
                dib1->create(rectText.size());
                dib1->Fill(0, 0, 0, 0);
                dib1->get_graphics()->set_color(m_crColor);
@@ -1162,19 +1162,19 @@ gdi_fallback:
                dib1->get_graphics()->SetBkMode(TRANSPARENT);
                dib1->get_graphics()->TextOut(0, 0, str);
                //dib1->channel_from(visual::rgba::channel_alpha, dib0);
-               ::ca::dib_sp dib2(allocer());
+               ::ca2::dib_sp dib2(allocer());
                dib2->create(rectText.size());
                dib2->Fill(255, 0, 0, 0);
-               dib2->get_graphics()->set_alpha_mode(::ca::alpha_mode_set);
+               dib2->get_graphics()->set_alpha_mode(::ca2::alpha_mode_set);
                dib2->from(point(max(0, m_ptAlphaBlend.x - x), max(0, m_ptAlphaBlend.y - y)),
                   m_pdibAlphaBlend->get_graphics(), point(max(0, x - m_ptAlphaBlend.x), max(0, y - m_ptAlphaBlend.y)), 
                   size(max(0, m_pdibAlphaBlend->cx-max(0, x - m_ptAlphaBlend.x)),
                         max(0, m_pdibAlphaBlend->cy-max(0, y - m_ptAlphaBlend.y))));
                dib1->channel_multiply(visual::rgba::channel_alpha, dib2);
-               /*::ca::dib_sp dib3(get_app());
+               /*::ca2::dib_sp dib3(get_app());
                dib1->mult_alpha(dib3);*/
 
-               keeper < ::ca::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
+               keeper < ::ca2::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
 
                return System.visual().imaging().true_blend(this, point(x, y), rectText.size(), dib1->get_graphics(), null_point());
 
@@ -1191,7 +1191,7 @@ gdi_fallback:
       }
       
       //ASSERT(get_handle1() != NULL); 
-      //wstring wstr = ::ca::international::utf8_to_unicode(str);
+      //wstring wstr = ::ca2::international::utf8_to_unicode(str);
       return TextOut(x, y, str, (int32_t) str.get_length()); 
    
    } // call virtual
@@ -1207,30 +1207,30 @@ gdi_fallback:
             rect rectText(point((int64_t) x, (int64_t) y), GetTextExtent(str));
             if(rectIntersect.intersect(rectIntersect, rectText))
             {
-               ::ca::dib_sp dib0(allocer());
+               ::ca2::dib_sp dib0(allocer());
                dib0->create(rectText.size());
                dib0->get_graphics()->SetTextColor(RGB(255, 255, 255));
                dib0->get_graphics()->SelectObject(&GetCurrentFont());
                dib0->get_graphics()->SetBkMode(TRANSPARENT);
                dib0->get_graphics()->TextOut(0, 0, str);
                dib0->ToAlpha(0);
-               ::ca::dib_sp dib1(allocer());
+               ::ca2::dib_sp dib1(allocer());
                dib1->create(rectText.size());
                dib1->get_graphics()->SetTextColor(GetTextColor());
                dib1->get_graphics()->SelectObject(&GetCurrentFont());
                dib1->get_graphics()->SetBkMode(TRANSPARENT);
                dib1->get_graphics()->TextOut(0, 0, str);
                dib1->channel_from(visual::rgba::channel_alpha, dib0);
-               ::ca::dib_sp dib2(allocer());
+               ::ca2::dib_sp dib2(allocer());
                dib2->create(rectText.size());
                dib2->Fill(255, 0, 0, 0);
                dib2->from(point((int64_t) max(0, m_ptAlphaBlend.x - x), (int64_t) max(0, m_ptAlphaBlend.y - y)),
                m_pdibAlphaBlend->get_graphics(), point((int64_t) max(0, x - m_ptAlphaBlend.x), (int64_t) max(0, y - m_ptAlphaBlend.y)), rectText.size());
                dib1->channel_multiply(visual::rgba::channel_alpha, dib2);
-               /*::ca::dib_sp dib3(get_app());
+               /*::ca2::dib_sp dib3(get_app());
                dib1->mult_alpha(dib3);*/
 
-               keeper < ::ca::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
+               keeper < ::ca2::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
 
                return System.visual().imaging().true_blend(this, point((int64_t) x, (int64_t) y), rectText.size(), dib1->get_graphics(), null_point());
 
@@ -1247,7 +1247,7 @@ gdi_fallback:
       }
       
       //ASSERT(get_handle1() != NULL); 
-      //wstring wstr = ::ca::international::utf8_to_unicode(str);
+      //wstring wstr = ::ca2::international::utf8_to_unicode(str);
       return TextOut(x, y, str, (int32_t) str.get_length()); 
    
    } // call virtual
@@ -1296,7 +1296,7 @@ gdi_fallback:
       return ::GetTabbedTextExtent(get_handle1(), str, (int32_t) str.get_length(), nTabPositions, lpnTabStopPositions);
    }
 
-   bool graphics::GrayString(::ca::brush* pBrush, bool (CALLBACK* lpfnOutput)(HDC, LPARAM, int32_t), LPARAM lpData, int32_t nCount,int32_t x, int32_t y, int32_t nWidth, int32_t nHeight)
+   bool graphics::GrayString(::ca2::brush* pBrush, bool (CALLBACK* lpfnOutput)(HDC, LPARAM, int32_t), LPARAM lpData, int32_t nCount,int32_t x, int32_t y, int32_t nWidth, int32_t nHeight)
    {
       ASSERT(get_handle1() != NULL); 
       return ::GrayString(get_handle1(), (HBRUSH)pBrush->get_os_data(),(GRAYSTRINGPROC)lpfnOutput, lpData, nCount, x, y, nWidth, nHeight) != FALSE;
@@ -1413,7 +1413,7 @@ gdi_fallback:
    }
    bool graphics::ScrollDC(int32_t dx, int32_t dy,
       LPCRECT lpRectScroll, LPCRECT lpRectClip,
-      ::ca::region* pRgnUpdate, LPRECT lpRectUpdate)
+      ::ca2::region* pRgnUpdate, LPRECT lpRectUpdate)
    { ASSERT(get_handle1() != NULL); return ::ScrollDC(get_handle1(), dx, dy, lpRectScroll,
    lpRectClip, (HRGN)pRgnUpdate->get_os_data(), lpRectUpdate) != FALSE; }
 
@@ -1463,12 +1463,12 @@ gdi_fallback:
    int32_t graphics::EndDoc()
    { ASSERT(get_handle1() != NULL); return ::EndDoc(get_handle1()); }
 
-   bool graphics::MaskBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::ca::graphics * pgraphicsSrc,
-      int32_t xSrc, int32_t ySrc, ::ca::bitmap& maskBitmap, int32_t xMask, int32_t yMask, uint32_t dwRop)
+   bool graphics::MaskBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::ca2::graphics * pgraphicsSrc,
+      int32_t xSrc, int32_t ySrc, ::ca2::bitmap& maskBitmap, int32_t xMask, int32_t yMask, uint32_t dwRop)
    { ASSERT(get_handle1() != NULL); return ::MaskBlt(get_handle1(), x, y, nWidth, nHeight, WIN_HDC(pgraphicsSrc),
    xSrc, ySrc,  (HBITMAP)maskBitmap.get_os_data(), xMask, yMask, dwRop) != FALSE; }
-   bool graphics::PlgBlt(LPPOINT lpPoint, ::ca::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc,
-      int32_t nWidth, int32_t nHeight, ::ca::bitmap& maskBitmap, int32_t xMask, int32_t yMask)
+   bool graphics::PlgBlt(LPPOINT lpPoint, ::ca2::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc,
+      int32_t nWidth, int32_t nHeight, ::ca2::bitmap& maskBitmap, int32_t xMask, int32_t yMask)
    { ASSERT(get_handle1() != NULL); 
    return ::PlgBlt(get_handle1(), lpPoint, WIN_HDC(pgraphicsSrc), xSrc, ySrc, nWidth,
    nHeight, (HBITMAP)maskBitmap.get_os_data(), xMask, yMask) != FALSE; }
@@ -1497,35 +1497,35 @@ gdi_fallback:
    { ASSERT(get_handle2() != NULL); 
    return ::GetColorAdjustment(get_handle2(), lpColorAdjust) != FALSE; }
 
-   ::ca::pen & graphics::GetCurrentPen() const
+   ::ca2::pen & graphics::GetCurrentPen() const
    {
 
       return *m_sppen.m_p;
 
    }
 
-   ::ca::brush & graphics::GetCurrentBrush() const
+   ::ca2::brush & graphics::GetCurrentBrush() const
    {
       
       return *m_spbrush.m_p;
 
    }
    
-   ::ca::palette & graphics::GetCurrentPalette() const
+   ::ca2::palette & graphics::GetCurrentPalette() const
    {
 
-      return *(::ca::palette *)NULL;
+      return *(::ca2::palette *)NULL;
 
    }
 
-   ::ca::font & graphics::GetCurrentFont() const
+   ::ca2::font & graphics::GetCurrentFont() const
    {
 
       return *m_spfont.m_p;
 
    }
 
-   ::ca::bitmap & graphics::GetCurrentBitmap() const
+   ::ca2::bitmap & graphics::GetCurrentBitmap() const
    {
 
       return *m_bitmap.m_p;
@@ -1660,14 +1660,14 @@ gdi_fallback:
    }
 
 
-   bool graphics::draw_path(::ca::graphics_path * ppath)
+   bool graphics::draw_path(::ca2::graphics_path * ppath)
    {
 
       return m_pgraphics->DrawPath(gdiplus_pen(), (Gdiplus::GraphicsPath *) ppath->get_os_data()) == Gdiplus::Status::Ok;
 
    }
 
-   bool graphics::fill_path(::ca::graphics_path * ppath)
+   bool graphics::fill_path(::ca2::graphics_path * ppath)
    {
 
       return m_pgraphics->FillPath(gdiplus_brush(), (Gdiplus::GraphicsPath *) ppath->get_os_data()) == Gdiplus::Status::Ok;
@@ -1750,7 +1750,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 // India India
 // Member
 
-   bool graphics::alpha_blend(int32_t xDest, int32_t yDest, int32_t nDestWidth, int32_t nDestHeight, ::ca::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, double dRate)
+   bool graphics::alpha_blend(int32_t xDest, int32_t yDest, int32_t nDestWidth, int32_t nDestHeight, ::ca2::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, double dRate)
    {
       
       if(m_pdibAlphaBlend != NULL)
@@ -1760,10 +1760,10 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
 
 
-         ::ca::dib * pdibWork = NULL;
-         ::ca::dib * pdibWork2 = NULL;
-//         ::ca::dib * pdibWork3 = NULL;
-         ::ca::dib * pdibWork4 = NULL;
+         ::ca2::dib * pdibWork = NULL;
+         ::ca2::dib * pdibWork2 = NULL;
+//         ::ca2::dib * pdibWork3 = NULL;
+         ::ca2::dib * pdibWork4 = NULL;
 
             
          class point ptSrc(xSrc, ySrc);
@@ -1772,7 +1772,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 
 
-         ::ca::dib_sp spdib;
+         ::ca2::dib_sp spdib;
          if(pdibWork == NULL)
          {
             spdib.create(allocer());
@@ -1788,7 +1788,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 
 
-         ::ca::dib_sp spdib2;
+         ::ca2::dib_sp spdib2;
          if(pdibWork2 == NULL)
          {
             spdib2.create(allocer());
@@ -1796,7 +1796,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          }
 
 
-         ::ca::dib_sp spdib4;
+         ::ca2::dib_sp spdib4;
          if(pdibWork4 == NULL)
          {
             spdib4.create(allocer());
@@ -1816,7 +1816,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          pdibWork->channel_multiply(visual::rgba::channel_alpha, pdibWork4);
 
 
-         keeper < ::ca::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
+         keeper < ::ca2::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
 
 
          return System.visual().imaging().true_blend(this, ptDest, size, pdibWork->get_graphics(), ptSrc); 
@@ -1850,7 +1850,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 
    /*bool graphics::alpha_blend(int32_t xDest, int32_t yDest, int32_t nDestWidth, int32_t nDestHeight,
-      ::ca::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, BLENDFUNCTION blend)
+      ::ca2::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, BLENDFUNCTION blend)
    { 
       
       throw not_implemented(get_app());
@@ -1865,10 +1865,10 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
 
 
-         ::ca::dib * pdibWork = NULL;
-         ::ca::dib * pdibWork2 = NULL;
-//         ::ca::dib * pdibWork3 = NULL;
-         ::ca::dib * pdibWork4 = NULL;
+         ::ca2::dib * pdibWork = NULL;
+         ::ca2::dib * pdibWork2 = NULL;
+//         ::ca2::dib * pdibWork3 = NULL;
+         ::ca2::dib * pdibWork4 = NULL;
 
             
          class point ptSrc(xSrc, ySrc);
@@ -1877,7 +1877,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 
 
-         ::ca::dib_sp spdib;
+         ::ca2::dib_sp spdib;
          if(pdibWork == NULL)
          {
             spdib.create(allocer());
@@ -1893,7 +1893,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 
 
-         ::ca::dib_sp spdib2;
+         ::ca2::dib_sp spdib2;
          if(pdibWork2 == NULL)
          {
             spdib2.create(allocer());
@@ -1901,7 +1901,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          }
 
 
-         ::ca::dib_sp spdib4;
+         ::ca2::dib_sp spdib4;
          if(pdibWork4 == NULL)
          {
             spdib4.create(allocer());
@@ -1921,7 +1921,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          pdibWork->channel_multiply(visual::rgba::channel_alpha, pdibWork4);
 
 
-         keeper < ::ca::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
+         keeper < ::ca2::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
 
 
          return System.visual().imaging().true_blend(this, ptDest, size, pdibWork->get_graphics(), ptSrc); 
@@ -1936,7 +1936,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 
    bool graphics::TransparentBlt(int32_t xDest, int32_t yDest, int32_t nDestWidth, 
-      int32_t nDestHeight, ::ca::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, 
+      int32_t nDestHeight, ::ca2::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, 
       int32_t nSrcHeight, UINT crTransparent)
    { ASSERT(get_handle1() != NULL); return ::TransparentBlt(get_handle1(), xDest, yDest, 
    nDestWidth, nDestHeight, WIN_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth, 
@@ -1949,7 +1949,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   // This is ca API library.
+   // This is ca2 API library.
    // 
    // 
    //
@@ -2016,9 +2016,9 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          nMapMode != MM_TEXT)
       {
          // when using a constrained map mode, map against physical inch
-         ((::ca::graphics *)this)->SetMapMode(MM_HIMETRIC);
+         ((::ca2::graphics *)this)->SetMapMode(MM_HIMETRIC);
          DPtoLP(lpSize);
-         ((::ca::graphics *)this)->SetMapMode(nMapMode);
+         ((::ca2::graphics *)this)->SetMapMode(nMapMode);
       }
       else
       {
@@ -2051,9 +2051,9 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          nMapMode != MM_TEXT)
       {
          // when using a constrained map mode, map against physical inch
-         ((::ca::graphics *)this)->SetMapMode(MM_HIMETRIC);
+         ((::ca2::graphics *)this)->SetMapMode(MM_HIMETRIC);
          LPtoDP(lpSize);
-         ((::ca::graphics *)this)->SetMapMode(nMapMode);
+         ((::ca2::graphics *)this)->SetMapMode(nMapMode);
       }
       else
       {
@@ -2096,9 +2096,9 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    /////////////////////////////////////////////////////////////////////////////
    // special graphics drawing primitives/helpers
 
-   ::ca::brush* graphics::GetHalftoneBrush(sp(::ca::application) papp)
+   ::ca2::brush* graphics::GetHalftoneBrush(sp(::ca2::application) papp)
    {
-/*      ::ca::LockGlobals(CRIT_HALFTONEBRUSH);
+/*      ::ca2::LockGlobals(CRIT_HALFTONEBRUSH);
       if (gen_HalftoneBrush == NULL)
       {
          WORD grayPattern[8];
@@ -2113,13 +2113,13 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       }
       if (!gen_WingdixTerm)
          gen_WingdixTerm = (char)!atexit(&__win_gdi_x_term);
-      ::ca::UnlockGlobals(CRIT_HALFTONEBRUSH);
+      ::ca2::UnlockGlobals(CRIT_HALFTONEBRUSH);
 
 //      return ::win::brush::from_handle(papp, gen_HalftoneBrush);*/
       return NULL;
    }
 
-   void graphics::DrawDragRect(LPCRECT lpRect, SIZE size, LPCRECT lpRectLast, SIZE sizeLast, ::ca::brush* pBrush, ::ca::brush* pBrushLast)
+   void graphics::DrawDragRect(LPCRECT lpRect, SIZE size, LPCRECT lpRectLast, SIZE sizeLast, ::ca2::brush* pBrush, ::ca2::brush* pBrushLast)
    {
 
       throw not_implemented(get_app());
@@ -2131,8 +2131,8 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          __is_valid_address(lpRectLast, sizeof(RECT), FALSE));
 
       // first, determine the update region and select it
-      ::ca::region rgnNew;
-      ::ca::region rgnOutside, rgnInside;
+      ::ca2::region rgnNew;
+      ::ca2::region rgnOutside, rgnInside;
       rgnOutside.create_rect(lpRect);
       rect rect = *lpRect;
       rect.inflate(-size.cx, -size.cy);
@@ -2141,7 +2141,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       rgnNew.create_rect(0, 0, 0, 0);
       rgnNew.combine(&rgnOutside, &rgnInside, RGN_XOR);
 
-      ::ca::brush* pBrushOld = NULL;
+      ::ca2::brush* pBrushOld = NULL;
       if (pBrush == NULL)
       {
          pBrush = graphics::GetHalftoneBrush(get_app());
@@ -2154,7 +2154,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          pBrushLast = pBrush;
       }
 
-      ::ca::region rgnLast, rgnUpdate;
+      ::ca2::region rgnLast, rgnUpdate;
       if (lpRectLast != NULL)
       {
          // find difference between new region and old region
@@ -2243,11 +2243,11 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 
 
-   //::ca::graphics * ::win::graphics::from_handle(HDC hDC)
+   //::ca2::graphics * ::win::graphics::from_handle(HDC hDC)
    //{
       //hdc_map* pMap = afxMapHDC(TRUE); //create map if not exist
       //ASSERT(pMap != NULL);
-//      ::ca::graphics * pgraphics = (::ca::graphics *)pMap->from_handle(hDC);
+//      ::ca2::graphics * pgraphics = (::ca2::graphics *)pMap->from_handle(hDC);
   //    ASSERT(pgraphics == NULL || (dynamic_cast<::win::graphics * >(pgraphics))->get_handle1() == hDC);
     //  return pgraphics;
      // return NULL;
@@ -2272,7 +2272,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          
          m_pgraphics = new ::Gdiplus::Graphics((HDC) hdc);
 
-         set_text_rendering(::ca::text_rendering_anti_alias_grid_fit);
+         set_text_rendering(::ca2::text_rendering_anti_alias_grid_fit);
 
          m_hdc = (HDC) hdc;
 
@@ -2420,7 +2420,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 /*      hdc_map* pMap = afxMapHDC();
       if (pMap != NULL && pMap->lookup_permanent(get_handle1()) == this)
       {
-         TRACE(::ca::trace::category_AppMsg, 0, "Cannot set Output hDC on Attached graphics.\n");
+         TRACE(::ca2::trace::category_AppMsg, 0, "Cannot set Output hDC on Attached graphics.\n");
          ASSERT(FALSE);
       }*/
 #endif
@@ -2438,7 +2438,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 /*      hdc_map* pMap = afxMapHDC();
       if (pMap != NULL && pMap->lookup_permanent(get_handle1()) == this)
       {
-         TRACE(::ca::trace::category_AppMsg, 0, "Cannot Release Output hDC on Attached graphics.\n");
+         TRACE(::ca2::trace::category_AppMsg, 0, "Cannot Release Output hDC on Attached graphics.\n");
          ASSERT(FALSE);
       }*/
 #endif
@@ -2477,12 +2477,12 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return bRetVal;
    }
 
-//   ::ca::graphics_object* graphics::SelectGdiObject(sp(::ca::application) papp, HDC hDC, HGDIOBJ h)
+//   ::ca2::graphics_object* graphics::SelectGdiObject(sp(::ca2::application) papp, HDC hDC, HGDIOBJ h)
   // {
 //      return ::win::graphics_object::from_handle(papp, ::SelectObject(hDC, h));
    //}
 
-   ::ca::graphics_object* graphics::SelectStockObject(int32_t nIndex)
+   ::ca2::graphics_object* graphics::SelectStockObject(int32_t nIndex)
    {
 /*      HGDIOBJ hObject = ::GetStockObject(nIndex);
       HGDIOBJ hOldObj = NULL;
@@ -2496,7 +2496,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return NULL;
    }
 
-   ::ca::pen* graphics::SelectObject(::ca::pen* pPen)
+   ::ca2::pen* graphics::SelectObject(::ca2::pen* pPen)
    {
       /*HGDIOBJ hOldObj = NULL;
       if(pPen == NULL)
@@ -2510,7 +2510,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return &m_penxyz;
    }
 
-   ::ca::brush* graphics::SelectObject(::ca::brush* pBrush)
+   ::ca2::brush* graphics::SelectObject(::ca2::brush* pBrush)
    {
 /*      HGDIOBJ hOldObj = NULL;
       if(pBrush == NULL)
@@ -2519,13 +2519,13 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          hOldObj = ::SelectObject(get_handle1(), pBrush->get_os_data());
       if(get_handle2() != NULL)
          hOldObj = ::SelectObject(get_handle2(), pBrush->get_os_data());
-      return dynamic_cast < ::ca::brush * > (::win::graphics_object::from_handle(get_app(), hOldObj));*/
+      return dynamic_cast < ::ca2::brush * > (::win::graphics_object::from_handle(get_app(), hOldObj));*/
       m_brushxyz = *pBrush;
       return &m_brushxyz;
 
    }
 
-   ::ca::font* graphics::SelectObject(::ca::font* pfont)
+   ::ca2::font* graphics::SelectObject(::ca2::font* pfont)
    {
 /*      HGDIOBJ hOldObj = NULL;
       if(pFont == NULL)
@@ -2534,7 +2534,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          hOldObj = ::SelectObject(get_handle1(), pFont->get_os_data());
       if(get_handle2() != NULL)
          hOldObj = ::SelectObject(get_handle2(), pFont->get_os_data());
-      return dynamic_cast < ::ca::font * > (::win::graphics_object::from_handle(get_app(), hOldObj));*/
+      return dynamic_cast < ::ca2::font * > (::win::graphics_object::from_handle(get_app(), hOldObj));*/
 
       /*ASSERT(pFont != NULL);
 
@@ -2551,7 +2551,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   int32_t graphics::SelectObject(::ca::region* pRgn)
+   int32_t graphics::SelectObject(::ca2::region* pRgn)
    {
       int32_t nRetVal = GDI_ERROR;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
@@ -2561,10 +2561,10 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return nRetVal;
    }
 
-   ::ca::palette* graphics::SelectPalette(::ca::palette* pPalette, bool bForceBackground)
+   ::ca2::palette* graphics::SelectPalette(::ca2::palette* pPalette, bool bForceBackground)
    {
       return NULL;
-//      return dynamic_cast < ::ca::palette * > (::win::graphics_object::from_handle(get_app(), ::SelectPalette(get_handle1(), (HPALETTE)pPalette->get_os_data(), bForceBackground)));
+//      return dynamic_cast < ::ca2::palette * > (::win::graphics_object::from_handle(get_app(), ::SelectPalette(get_handle1(), (HPALETTE)pPalette->get_os_data(), bForceBackground)));
    }
 
    COLORREF graphics::SetBkColor(COLORREF crColor)
@@ -2806,7 +2806,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return ::GetClipBox(get_handle1(), lpRect);
    }
 
-   int32_t graphics::SelectClipRgn(::ca::region * pregion)
+   int32_t graphics::SelectClipRgn(::ca2::region * pregion)
    {
 
       if(pregion == NULL)
@@ -3094,7 +3094,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          HRGN hRgn = ::CreateRectRgn(0, 0, 0, 0);
          if (::GetClipRgn(get_handle1(), hRgn) < 0 || !::SelectClipRgn(get_handle2(), hRgn))
          {
-            TRACE(::ca::trace::category_AppMsg, 0, "Error: unable to transfer clip region in graphics::SelectClipPath!\n");
+            TRACE(::ca2::trace::category_AppMsg, 0, "Error: unable to transfer clip region in graphics::SelectClipPath!\n");
             bResult = FALSE;
          }
          ::DeleteObject(hRgn);
@@ -3102,7 +3102,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return bResult;
    }
 
-   int32_t graphics::SelectClipRgn(::ca::region* pRgn, int32_t nMode)
+   int32_t graphics::SelectClipRgn(::ca2::region* pRgn, int32_t nMode)
    {
       ASSERT(get_handle1() != NULL);
       int32_t nRetVal = ERROR;
@@ -3119,7 +3119,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    int32_t CALLBACK __enum_meta_file_procedure(HDC hDC,
       HANDLETABLE* pHandleTable, METARECORD* pMetaRec, int32_t nHandles, LPARAM lParam)
    {
-      ::ca::graphics * pgraphics = (::ca::graphics *)lParam;
+      ::ca2::graphics * pgraphics = (::ca2::graphics *)lParam;
       ASSERT_VALID(pgraphics);
 
       switch (pMetaRec->rdFunction)
@@ -3185,7 +3185,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
                if (hObjOld == hStockFont)
                {
                   // got the stock object back, so must be selecting a font
-                  throw not_implemented(::ca::get_thread_app());
+                  throw not_implemented(::ca2::get_thread_app());
 //                  (dynamic_cast<::win::graphics * >(pgraphics))->SelectObject(::win::font::from_handle(pgraphics->get_app(), (HFONT)hObject));
                   break;  // don't play the default record
                }
@@ -3199,9 +3199,9 @@ VOID Example_EnumerateMetafile9(HDC hdc)
             }
             else if (nObjType == OBJ_FONT)
             {
-               // play back as graphics::SelectObject(::ca::font*)
+               // play back as graphics::SelectObject(::ca2::font*)
 //               (dynamic_cast<::win::graphics * >(pgraphics))->SelectObject(::win::font::from_handle(pgraphics->get_app(), (HFONT)hObject));
-               throw not_implemented(::ca::get_thread_app());
+               throw not_implemented(::ca2::get_thread_app());
                break;  // don't play the default record
             }
          }
@@ -3259,7 +3259,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       // these flags would modify the string
       ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
       ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
-      wstring wstr = ::ca::international::utf8_to_unicode(string(lpszString, nCount));
+      wstring wstr = ::ca2::international::utf8_to_unicode(string(lpszString, nCount));
       return ::DrawTextW(get_handle1(), wstr, (int32_t) wcslen(wstr), lpRect, nFormat); */
 
       return draw_text(string(lpszString, nCount), lpRect, nFormat);
@@ -3274,7 +3274,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       // these flags would modify the string
       ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
       ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
-      wstring wstr = ::ca::international::utf8_to_unicode(str);
+      wstring wstr = ::ca2::international::utf8_to_unicode(str);
       return ::DrawTextW(get_handle1(), (const wchar_t *)wstr, (int32_t)wcslen(wstr), lpRect, nFormat); */
 
       try
@@ -3285,19 +3285,19 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
          switch(m_etextrendering)
          {
-         case ::ca::text_rendering_anti_alias:
+         case ::ca2::text_rendering_anti_alias:
             m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
             m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
             break;
-         case ::ca::text_rendering_anti_alias_grid_fit:
+         case ::ca2::text_rendering_anti_alias_grid_fit:
             m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
             m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
             break;
-         case ::ca::text_rendering_single_bit_per_pixel:
+         case ::ca2::text_rendering_single_bit_per_pixel:
             m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
             m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintSingleBitPerPixel);
             break;
-         case ::ca::text_rendering_clear_type_grid_fit:
+         case ::ca2::text_rendering_clear_type_grid_fit:
             m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
             m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintClearTypeGridFit);
             break;
@@ -3365,7 +3365,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       m_pgraphics->SetTransform(pmNew);
 
-      m_pgraphics->DrawString(::ca::international::utf8_to_unicode(str), -1, gdiplus_font(), rectf, &format, gdiplus_brush());
+      m_pgraphics->DrawString(::ca2::international::utf8_to_unicode(str), -1, gdiplus_font(), rectf, &format, gdiplus_brush());
 
       m_pgraphics->SetTransform(&m);
 
@@ -3382,7 +3382,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       // these flags would modify the string
       ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
       ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
-      wstring wstr = ::ca::international::utf8_to_unicode(string(lpszString, nCount));
+      wstring wstr = ::ca2::international::utf8_to_unicode(string(lpszString, nCount));
       return ::DrawTextExW(get_handle1(), const_cast<wchar_t *>((const wchar_t *)wstr), (int32_t)wcslen(wstr), lpRect, nFormat, lpDTParams); 
    }
 
@@ -3392,7 +3392,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       // these flags would modify the string
       ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
       ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
-      wstring wstr = ::ca::international::utf8_to_unicode(str);
+      wstring wstr = ::ca2::international::utf8_to_unicode(str);
       return ::DrawTextExW(get_handle1(), const_cast<wchar_t *>((const wchar_t *)wstr), (int32_t)wcslen(wstr), lpRect, nFormat, lpDTParams); 
    }
 
@@ -3411,7 +3411,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if(iIndex < 0)
          return size(0, 0);
 
-      wstring wstr = ::ca::international::utf8_to_unicode(lpszString, nCount);
+      wstring wstr = ::ca2::international::utf8_to_unicode(lpszString, nCount);
 
       strsize iRange = 0;
       strsize i = 0;
@@ -3419,10 +3419,10 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       const char * psz = lpszString;
       while(i < iIndex)
       {
-         iLen = ::ca::str::get_utf8_char(psz).length();
+         iLen = ::ca2::str::get_utf8_char(psz).length();
          iRange++;
          i += iLen;
-         psz = ::ca::str::utf8_inc(psz);
+         psz = ::ca2::str::utf8_inc(psz);
          if(psz == NULL)
             break;
          if(*psz == '\0')
@@ -3497,7 +3497,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       //retry_single_lock slGdiplus(&System.s_mutexGdiplus, millis(1), millis(1));
 
-      wstring wstr = ::ca::international::utf8_to_unicode(lpszString, nCount);
+      wstring wstr = ::ca2::international::utf8_to_unicode(lpszString, nCount);
 
       Gdiplus::RectF box;
 
@@ -3517,7 +3517,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          return size(0, 0);
       SIZE size;
       string str(lpszString, nCount);
-      wstring wstr = ::ca::international::utf8_to_unicode(str);
+      wstring wstr = ::ca2::international::utf8_to_unicode(str);
       if(!::GetTextExtentPoint32W(get_handle2(), wstr, (int32_t)wstr.get_length(), &size))
       {
          return class size(0, 0);
@@ -3530,7 +3530,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 /*      if(get_handle2() == NULL)
          return size(0, 0);
       SIZE size;
-      wstring wstr = ::ca::international::utf8_to_unicode(str);
+      wstring wstr = ::ca2::international::utf8_to_unicode(str);
       if(!::GetTextExtentPoint32W(get_handle2(), wstr, (int32_t)wstr.get_length(), &size))
       {
          return class size(0, 0);
@@ -3547,7 +3547,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       /*if(m_pgraphics == NULL)
          return size(0, 0);
 
-      wstring wstr = ::ca::international::utf8_to_unicode(str);
+      wstring wstr = ::ca2::international::utf8_to_unicode(str);
 
       Gdiplus::RectF box;
 
@@ -3575,7 +3575,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       ASSERT(get_handle1() != NULL);
       SIZE size;
       string str(lpszString, nCount);
-      wstring wstr = ::ca::international::utf8_to_unicode(str);
+      wstring wstr = ::ca2::international::utf8_to_unicode(str);
       VERIFY(::GetTextExtentPoint32W(get_handle1(), wstr, (int32_t)wstr.get_length(), &size));
       return size;
    }
@@ -3584,7 +3584,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    {
       ASSERT(get_handle1() != NULL);
       SIZE size;
-      wstring wstr = ::ca::international::utf8_to_unicode(str);
+      wstring wstr = ::ca2::international::utf8_to_unicode(str);
       VERIFY(::GetTextExtentPoint32W(get_handle1(), wstr, (int32_t)wstr.get_length(), &size));
       return size;
    }
@@ -3606,7 +3606,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if(iIndex < 0)
          return false;
 
-      wstring wstr = ::ca::international::utf8_to_unicode(lpszString, nCount);
+      wstring wstr = ::ca2::international::utf8_to_unicode(lpszString, nCount);
 
       strsize iRange = 0;
       strsize i = 0;
@@ -3616,7 +3616,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       {
          try
          {
-            iLen = ::ca::str::get_utf8_char(psz).length();
+            iLen = ::ca2::str::get_utf8_char(psz).length();
          }
          catch(...)
          {
@@ -3628,7 +3628,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
             break;
          try
          {
-            psz = ::ca::str::utf8_inc(psz);
+            psz = ::ca2::str::utf8_inc(psz);
          }
          catch(...)
          {
@@ -3719,7 +3719,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       //retry_single_lock slGdiplus(&System.s_mutexGdiplus, millis(1), millis(1));
 
-      wstring wstr = ::ca::international::utf8_to_unicode(lpszString, nCount);
+      wstring wstr = ::ca2::international::utf8_to_unicode(lpszString, nCount);
 
       Gdiplus::RectF box;
 
@@ -3759,7 +3759,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if(m_pgraphics == NULL)
          return false;
 
-      wstring wstr = ::ca::international::utf8_to_unicode(str);
+      wstring wstr = ::ca2::international::utf8_to_unicode(str);
 
       Gdiplus::RectF box;
 
@@ -3870,7 +3870,7 @@ namespace win
 
       string str(lpszString, nCount);
       
-      wstring wstr = ::ca::international::utf8_to_unicode(str);
+      wstring wstr = ::ca2::international::utf8_to_unicode(str);
 
 
       try
@@ -3881,19 +3881,19 @@ namespace win
 
          switch(m_etextrendering)
          {
-         case ::ca::text_rendering_anti_alias:
+         case ::ca2::text_rendering_anti_alias:
             m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
             m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
             break;
-         case ::ca::text_rendering_anti_alias_grid_fit:
+         case ::ca2::text_rendering_anti_alias_grid_fit:
             m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
             m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
             break;
-         case ::ca::text_rendering_single_bit_per_pixel:
+         case ::ca2::text_rendering_single_bit_per_pixel:
             m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
             m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintSingleBitPerPixel);
             break;
-         case ::ca::text_rendering_clear_type_grid_fit:
+         case ::ca2::text_rendering_clear_type_grid_fit:
             m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
             m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintClearTypeGridFit);
             break;
@@ -3953,7 +3953,7 @@ namespace win
          double d2 = fontfamily.GetEmHeight(gdiplus_font()->GetStyle());
          double d3 = d1 * d2;
 
-         status = path.AddString(::ca::international::utf8_to_unicode(str), -1, &fontfamily, gdiplus_font()->GetStyle(), (Gdiplus::REAL) d1, origin, &format);
+         status = path.AddString(::ca2::international::utf8_to_unicode(str), -1, &fontfamily, gdiplus_font()->GetStyle(), (Gdiplus::REAL) d1, origin, &format);
 
          path.Transform(pmNew);
 
@@ -3966,7 +3966,7 @@ namespace win
 
          m_pgraphics->SetTransform(pmNew);
 
-         status = m_pgraphics->DrawString(::ca::international::utf8_to_unicode(str), -1, gdiplus_font(), origin, &format, gdiplus_brush());
+         status = m_pgraphics->DrawString(::ca2::international::utf8_to_unicode(str), -1, gdiplus_font(), origin, &format, gdiplus_brush());
 
          m_pgraphics->SetTransform(&m);
 
@@ -3985,7 +3985,7 @@ namespace win
 
       string str(lpszString, nCount);
       
-      wstring wstr = ::ca::international::utf8_to_unicode(str);
+      wstring wstr = ::ca2::international::utf8_to_unicode(str);
 
 
       try
@@ -3996,16 +3996,16 @@ namespace win
 
          switch(m_etextrendering)
          {
-         case ::ca::text_rendering_anti_alias:
+         case ::ca2::text_rendering_anti_alias:
             m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
             break;
-         case ::ca::text_rendering_anti_alias_grid_fit:
+         case ::ca2::text_rendering_anti_alias_grid_fit:
             m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
             break;
-         case ::ca::text_rendering_single_bit_per_pixel:
+         case ::ca2::text_rendering_single_bit_per_pixel:
             m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintSingleBitPerPixel);
             break;
-         case ::ca::text_rendering_clear_type_grid_fit:
+         case ::ca2::text_rendering_clear_type_grid_fit:
             m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
             m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintClearTypeGridFit);
             break;
@@ -4065,7 +4065,7 @@ namespace win
          double d2 = fontfamily.GetEmHeight(gdiplus_font()->GetStyle());
          double d3 = d1 * d2;
 
-         status = path.AddString(::ca::international::utf8_to_unicode(str), -1, &fontfamily, gdiplus_font()->GetStyle(), (Gdiplus::REAL) d1, origin, &format);
+         status = path.AddString(::ca2::international::utf8_to_unicode(str), -1, &fontfamily, gdiplus_font()->GetStyle(), (Gdiplus::REAL) d1, origin, &format);
 
          path.Transform(pmNew);
 
@@ -4078,7 +4078,7 @@ namespace win
 
          m_pgraphics->SetTransform(pmNew);
 
-         status = m_pgraphics->DrawString(::ca::international::utf8_to_unicode(str), -1, gdiplus_font(), origin, &format, gdiplus_brush());
+         status = m_pgraphics->DrawString(::ca2::international::utf8_to_unicode(str), -1, gdiplus_font(), origin, &format, gdiplus_brush());
 
          m_pgraphics->SetTransform(&m);
 
@@ -4109,7 +4109,7 @@ namespace win
    }
 
 
-   void graphics::set_alpha_mode(::ca::e_alpha_mode ealphamode)
+   void graphics::set_alpha_mode(::ca2::e_alpha_mode ealphamode)
    {
 
       try
@@ -4118,12 +4118,12 @@ namespace win
          if(m_pgraphics == NULL)
             return;
 
-         ::ca::graphics::set_alpha_mode(ealphamode);
-         if(m_ealphamode == ::ca::alpha_mode_blend)
+         ::ca2::graphics::set_alpha_mode(ealphamode);
+         if(m_ealphamode == ::ca2::alpha_mode_blend)
          {
             m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
          }
-         else if(m_ealphamode == ::ca::alpha_mode_set)
+         else if(m_ealphamode == ::ca2::alpha_mode_set)
          {
             m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceCopy);
          }
@@ -4137,7 +4137,7 @@ namespace win
    }
 
 
-   void graphics::set_text_rendering(::ca::e_text_rendering etextrendering)
+   void graphics::set_text_rendering(::ca2::e_text_rendering etextrendering)
    {
       m_etextrendering = etextrendering;
 
