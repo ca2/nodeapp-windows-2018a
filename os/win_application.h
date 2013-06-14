@@ -99,7 +99,7 @@ namespace win
 
 
 
-
+      virtual bool update_module_paths();
 
 
 

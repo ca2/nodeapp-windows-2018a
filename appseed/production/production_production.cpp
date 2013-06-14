@@ -583,7 +583,7 @@ restart:
             const char * lpcsz = m_straFiles[i];
             TRACE("file(%05d)=%s\n", i, lpcsz);
          }
-         m_pview->PostMessage(WM_USER, 2);
+         m_pview->post_message(WM_USER, 2);
          {
             string str;
             ::ca::property_set post;

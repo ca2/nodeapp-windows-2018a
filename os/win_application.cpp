@@ -733,6 +733,41 @@ namespace win
 
    }
 
+   bool application::update_module_paths()
+   {
+
+      {
+
+         char lpszModuleFilePath[MAX_PATH + 1];
+         GetModuleFileName(NULL, lpszModuleFilePath, MAX_PATH + 1);
+         m_strModulePath = lpszModuleFilePath;
+         char lpszModuleFolder[MAX_PATH + 1];
+         LPTSTR lpszModuleFileName;
+         GetFullPathName(lpszModuleFilePath, MAX_PATH + 1, lpszModuleFolder, &lpszModuleFileName);
+         string strModuleFolder(lpszModuleFolder, lpszModuleFileName - lpszModuleFolder);
+         m_strModuleFolder = strModuleFolder;
+
+      }
+
+      {
+
+         char lpszModuleFilePath[MAX_PATH + 1];
+         GetModuleFileName(::GetModuleHandleA("ca2.dll"), lpszModuleFilePath, MAX_PATH + 1);
+         m_strCa2ModulePath = lpszModuleFilePath;
+
+         char lpszModuleFolder[MAX_PATH + 1];
+         LPTSTR lpszModuleFileName;
+         GetFullPathName(lpszModuleFilePath, MAX_PATH + 1, lpszModuleFolder, &lpszModuleFileName);
+         string strModuleFolder(lpszModuleFolder, lpszModuleFileName - lpszModuleFolder);
+         m_strCa2ModuleFolder = strModuleFolder;
+
+      }
+
+
+      return true;
+
+   }
+
    void application::ShowWaitCursor(bool bShow)
    {
 
