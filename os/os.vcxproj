@@ -920,8 +920,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\operational_system\bare_operational_system.h" />
-    <ClInclude Include="..\operational_system\c.h" />
-    <ClInclude Include="..\operational_system\ca.h" />
+    <ClInclude Include="..\operational_system\_c.h" />
+    <ClInclude Include="..\operational_system\_ca.h" />
     <ClInclude Include="..\operational_system\cross\cross.h" />
     <ClInclude Include="..\operational_system\cross\general\general.h" />
     <ClInclude Include="..\operational_system\cross\general\general_windows.h" />

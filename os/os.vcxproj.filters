@@ -230,10 +230,10 @@
     <ClInclude Include="win_printer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\operational_system\c.h">
+    <ClInclude Include="..\operational_system\_c.h">
       <Filter>Header Files\operational_system</Filter>
     </ClInclude>
-    <ClInclude Include="..\operational_system\ca.h">
+    <ClInclude Include="..\operational_system\_ca.h">
       <Filter>Header Files\operational_system</Filter>
     </ClInclude>
   </ItemGroup>
