@@ -2306,13 +2306,11 @@ restart_mouse_hover_check:
       return NULL;    // not found
    }
 
-   void window::SendMessageToDescendants(oswindow oswindow, UINT message,
-      WPARAM wParam, LPARAM lParam, bool bDeep, bool bOnlyPerm)
+   void window::SendMessageToDescendants(oswindow oswindow, UINT message, WPARAM wParam, lparam lParam, bool bDeep, bool bOnlyPerm)
    {
       // walk through HWNDs to avoid creating temporary window objects
       // unless we need to call this function recursively
-      for (::oswindow oswindow_Child = ::GetTopWindow(oswindow); oswindow_Child != NULL;
-         oswindow_Child = ::GetNextWindow(oswindow_Child, GW_HWNDNEXT))
+      for (::oswindow oswindow_Child = ::GetTopWindow(oswindow); oswindow_Child != NULL; oswindow_Child = ::GetNextWindow(oswindow_Child, GW_HWNDNEXT))
       {
          // if bOnlyPerm is TRUE, don't send to non-permanent windows
          if (bOnlyPerm)
@@ -4988,8 +4986,9 @@ ExitModal:
 
    }
 
-   void window::SendMessageToDescendants(UINT message, WPARAM wParam, LPARAM lParam, bool bDeep, bool bOnlyPerm)
+   void window::SendMessageToDescendants(UINT message, WPARAM wParam, lparam lParam, bool bDeep, bool bOnlyPerm)
    { 
+
       ASSERT(::IsWindow(get_handle())); 
       //window::SendMessageToDescendants(get_handle(), message, wParam, lParam, bDeep, bOnlyPerm); 
 

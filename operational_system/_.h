@@ -36,3 +36,8 @@
 
 #endif
 
+
+
+#define MOVE_SEMANTICS
+
+
