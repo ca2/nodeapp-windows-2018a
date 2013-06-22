@@ -38,7 +38,8 @@ namespace win
       virtual bool internal_add_move(int32_t x, int32_t y);
 
 
-      virtual bool update();
+      virtual bool create();
+      virtual bool destroy();
 
       virtual bool set(const ::ca2::graphics_path::element & e);
    

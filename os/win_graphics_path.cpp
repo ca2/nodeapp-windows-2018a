@@ -12,15 +12,8 @@ namespace win
    graphics_path::graphics_path(sp(::ca2::application) papp)
    {
 
-      m_ppath = new Gdiplus::GraphicsPath();
+      m_ppath = NULL;
 
-      m_bHasPoint = false;
-
-      m_ptInternal.X = 69;
-
-      m_ptInternal.Y = 69;
-
-      m_bHasPointInternal = false;
 
    }
 
@@ -28,14 +21,7 @@ namespace win
    graphics_path::~graphics_path()
    {
 
-      if(m_ppath != NULL)
-      {
-
-         delete m_ppath;
-
-         m_ppath = NULL;
-
-      }
+      destroy();
 
    }
 
@@ -43,10 +29,7 @@ namespace win
    void * graphics_path::get_os_data() const
    {
 
-      if(!m_bUpdated)
-      {
-         ((graphics_path *)this)->defer_update();
-      }
+      defer_update();
 
       return (void *) m_ppath;
 
@@ -163,8 +146,19 @@ namespace win
 
 
 
-   bool graphics_path::update()
+   bool graphics_path::create()
    {
+
+      m_ppath = new Gdiplus::GraphicsPath();
+
+      m_bHasPoint = false;
+
+      m_ptInternal.X = 69;
+
+      m_ptInternal.Y = 69;
+
+      m_bHasPointInternal = false;
+
 
       internal_begin_figure(m_bFill, m_efillmode);
 
@@ -172,6 +166,23 @@ namespace win
       {
 
          set(m_elementa[i]);
+
+      }
+
+      return true;
+
+   }
+
+
+   bool graphics_path::destroy()
+   {
+
+      if(m_ppath != NULL)
+      {
+
+         delete m_ppath;
+
+         m_ppath = NULL;
 
       }
 
