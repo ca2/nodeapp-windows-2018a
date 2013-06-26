@@ -81,9 +81,9 @@ namespace win
 
       virtual void set_p(::ca2::thread * p);
 
-      virtual bool begin(::ca2::e_thread_priority epriority = get_thread_priority_normal(), uint_ptr nStackSize = 0, uint32_t dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
+      virtual bool begin(int32_t epriority = get_scheduling_priority_normal(), uint_ptr nStackSize = 0, uint32_t dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
-      bool create_thread(::ca2::e_thread_priority epriority = get_thread_priority_normal(), uint32_t dwCreateFlags = 0, uint_ptr nStackSize = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL) override;
+      bool create_thread(int32_t epriority = get_scheduling_priority_normal(), uint32_t dwCreateFlags = 0, uint_ptr nStackSize = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL) override;
 
 
       virtual sp(::user::interaction) SetMainWnd(sp(::user::interaction) pui);
@@ -116,8 +116,8 @@ namespace win
 
       virtual void start();
 
-      ::ca2::e_thread_priority get_thread_priority();
-      bool set_thread_priority(::ca2::e_thread_priority epriority);
+      int32_t get_thread_priority();
+      bool set_thread_priority(int32_t epriority);
 
    // Operations
       //DWORD SuspendThread();

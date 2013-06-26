@@ -1135,7 +1135,7 @@ retry2:
 
       SetThreadAffinityMask(::GetCurrentThread(), m_dwThreadAffinityMask);
 
-      set_thread_priority(::ca2::thread_priority_highest);
+      set_thread_priority(::ca2::scheduling_priority_highest);
 
       while(m_pproduction->compress_next())
       {

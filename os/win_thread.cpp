@@ -687,7 +687,7 @@ namespace win
       return m_hThread;
    }
 
-   bool thread::begin(::ca2::e_thread_priority epriority, uint_ptr nStackSize, uint32_t dwCreateFlags, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
+   bool thread::begin(int32_t epriority, uint_ptr nStackSize, uint32_t dwCreateFlags, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
    {
 
       if(!create_thread(epriority, dwCreateFlags, nStackSize, lpSecurityAttrs))
@@ -896,12 +896,12 @@ namespace win
       m_ptimera->check();
    }
 
-   bool thread::create_thread(::ca2::e_thread_priority epriority, uint32_t dwCreateFlagsParam, uint_ptr nStackSize, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
+   bool thread::create_thread(int32_t epriority, uint32_t dwCreateFlagsParam, uint_ptr nStackSize, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
    {
 
       DWORD dwCreateFlags = dwCreateFlagsParam;
 
-      if(epriority != ::ca2::thread_priority_normal)
+      if(epriority != ::ca2::scheduling_priority_normal)
       {
          dwCreateFlags |= CREATE_SUSPENDED;
       }
@@ -956,7 +956,7 @@ namespace win
       // allow thread to continue, once resumed (it may already be resumed)
       ::SetEvent(startup.hEvent2);
 
-      if(epriority != ::ca2::thread_priority_normal)
+      if(epriority != ::ca2::scheduling_priority_normal)
       {
 
          VERIFY(set_thread_priority(epriority));
@@ -1845,41 +1845,15 @@ run:
 
    }
 
-   bool thread::set_thread_priority(::ca2::e_thread_priority epriority)
+   bool thread::set_thread_priority(int32_t iCa2Priority)
    { 
 
       ASSERT(m_hThread != NULL); 
 
-      int32_t nPriority = THREAD_PRIORITY_NORMAL;
+      int32_t nPriority = (int) get_os_thread_priority(iCa2Priority);
 
-      switch(epriority)
-      {
-      case ::ca2::thread_priority_idle:
-         nPriority = THREAD_PRIORITY_IDLE;
-         break;
-      case ::ca2::thread_priority_lowest:
-         nPriority = THREAD_PRIORITY_LOWEST;
-         break;
-      case ::ca2::thread_priority_below_normal:
-         nPriority = THREAD_PRIORITY_BELOW_NORMAL;
-         break;
-      case ::ca2::thread_priority_normal:
-         nPriority = THREAD_PRIORITY_NORMAL;
-         break;
-      case ::ca2::thread_priority_above_normal:
-         nPriority = THREAD_PRIORITY_ABOVE_NORMAL;
-         break;
-      case ::ca2::thread_priority_highest:
-         nPriority = THREAD_PRIORITY_HIGHEST;
-         break;
-      case ::ca2::thread_priority_time_critical:
-         nPriority = THREAD_PRIORITY_TIME_CRITICAL;
-         break;
-      default:
-         break;
-      }
 
-      bool bOk = ::SetThreadPriority(m_hThread, nPriority)  != FALSE; 
+      bool bOk = ::SetThreadPriority(m_hThread, get_os_thread_priority(iCa2Priority))  != FALSE; 
 
       if(!bOk)
       {
@@ -1891,51 +1865,42 @@ run:
 
    }
 
-   ::ca2::e_thread_priority thread::get_thread_priority()
+
+   int32_t thread::get_thread_priority()
    { 
 
       ASSERT(m_hThread != NULL); 
 
       int32_t nPriority = ::GetThreadPriority(m_hThread);
 
-      ::ca2::e_thread_priority epriority;
+      int32_t iCa2Priority = ::get_os_thread_scheduling_priority(nPriority);
 
-      if(nPriority <= THREAD_PRIORITY_IDLE)
-      {
-         epriority = ::ca2::thread_priority_idle;
-      }
-      else if(nPriority <= THREAD_PRIORITY_LOWEST)
-      {
-         epriority = ::ca2::thread_priority_lowest;
-      }
-      else if(nPriority <= THREAD_PRIORITY_BELOW_NORMAL)
-      {
-         epriority = ::ca2::thread_priority_below_normal;
-      }
-      else if(nPriority <= THREAD_PRIORITY_NORMAL)
-      {
-         epriority = ::ca2::thread_priority_normal;
-      }
-      else if(nPriority <= THREAD_PRIORITY_ABOVE_NORMAL)
-      {
-         epriority = ::ca2::thread_priority_above_normal;
-      }
-      else if(nPriority <= THREAD_PRIORITY_HIGHEST)
-      {
-         epriority = ::ca2::thread_priority_highest;
-      }
-      else
-      {
-         epriority = ::ca2::thread_priority_time_critical;
-      }
-
-      return epriority;
+      return iCa2Priority;
 
    }
+
+
    uint32_t thread::ResumeThread()
-   { ASSERT(m_hThread != NULL); return ::ResumeThread(m_hThread); }
-   /*   DWORD thread::SuspendThread()
-   { ASSERT(m_hThread != NULL); return ::SuspendThread(m_hThread); }
+   {
+   
+      ASSERT(m_hThread != NULL); 
+      
+      return ::ResumeThread(m_hThread); 
+   
+   }
+
+
+   /*
+
+   DWORD thread::SuspendThread()
+   {
+   
+      ASSERT(m_hThread != NULL); 
+      
+      return ::SuspendThread(m_hThread); 
+      
+   }
+
    */
 
 

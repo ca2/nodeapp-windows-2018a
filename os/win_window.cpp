@@ -6,12 +6,9 @@
 #include "sal.h"
 
 
-__STATIC void CLASS_DECL_win __pre_init_dialog(
-   sp(::user::interaction) pWnd, LPRECT lpRectOld, uint32_t* pdwStyleOld);
-__STATIC void CLASS_DECL_win __post_init_dialog(
-   sp(::user::interaction) pWnd, const RECT& rectOld, uint32_t dwStyleOld);
-LRESULT CALLBACK
-   __activation_window_procedure(oswindow oswindow, UINT nMsg, WPARAM wParam, LPARAM lParam);
+__STATIC void CLASS_DECL_win __pre_init_dialog(sp(::user::interaction) pWnd, LPRECT lpRectOld, uint32_t* pdwStyleOld);
+__STATIC void CLASS_DECL_win __post_init_dialog(sp(::user::interaction) pWnd, const RECT& rectOld, uint32_t dwStyleOld);
+LRESULT CALLBACK __activation_window_procedure(oswindow oswindow, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
 __STATIC_DATA const char gen_OldWndProc[] = "::ca2::OldWndProc423";
 
@@ -3081,7 +3078,7 @@ restart_mouse_hover_check:
          m_event.ResetEvent();
          m_oswindow = oswindow;
          m_hdc = hdc;
-         __begin_thread(papp, &print_window::s_print_window, (LPVOID) this, ::ca2::thread_priority_above_normal);
+         __begin_thread(papp, &print_window::s_print_window, (LPVOID) this, ::ca2::scheduling_priority_above_normal);
          if(m_event.wait(millis(dwTimeout)).timeout())
          {
             TRACE("print_window::time_out");
