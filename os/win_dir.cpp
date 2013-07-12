@@ -16,11 +16,11 @@ namespace win
       m_strCa2 = strCa2Module;
 
       System.file().path().eat_end_level(m_strCa2, 2, "\\");
-      SHGetSpecialFolderPath(
+/*      SHGetSpecialFolderPath(
          NULL,
          m_strCommonAppData,
          CSIDL_COMMON_APPDATA,
-         FALSE);
+         FALSE);*/
       SHGetSpecialFolderPath(
          NULL,
          m_strProfile,
@@ -1035,7 +1035,7 @@ namespace win
    string dir::appdata(const char * lpcsz, const char * lpcsz2)
    {
       string str;
-      str = m_strCommonAppData;
+      str = m_strAppData;
 
       string strRelative;
       strRelative = ca2();
