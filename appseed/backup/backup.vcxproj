@@ -36,7 +36,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9FC565B2-1C85-4A57-8A25-2C90680A7F4E}</ProjectGuid>
-    <RootNamespace>app_backup</RootNamespace>
+    <RootNamespace>nodeapp_backup</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <ProjectName>nodeapp_backup</ProjectName>
     <VCTargetsPath Condition="'$(VCTargetsPath11)' != '' and '$(VSVersion)' == '' and $(VisualStudioVersion) == ''">$(VCTargetsPath11)</VCTargetsPath>
