@@ -16,8 +16,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_frontpage_logviewer", "
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_sysutils_igd", "..\..\..\app-sysutils\appseed\igd\igd.vcxproj", "{D5870062-4D25-416A-9D63-E36ED6D55D0F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{425C510B-8C9C-4260-AAF9-FB1F6DB15C4D}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ca2", "..\..\..\app\appseed\ca2\ca2.vcxproj", "{AFC48570-75E4-46BD-B8AB-4590B257E1C8}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_c", "..\..\..\app\appseed\c\c.vcxproj", "{4D7D3626-ADA6-4CA2-9566-ED7B131E3D51}"
@@ -262,15 +260,15 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_netnode_dynamic_we
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_netnode_dynamic_web_server_cfg", "..\..\..\app-core\appseed\netnode_dynamic_web_server_cfg\netnode_dynamic_web_server_cfg.vcxproj", "{0BC8F7BB-EA96-4676-A24B-E71C09B6B896}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "netnode_file_server", "..\..\..\app-core\appseed\netnode_file_server\netnodelite_fileserver.vcxproj", "{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "netnode_netshare_server", "..\..\..\app-core\appseed\netnode_netshare_server\netnode_netshare_server.vcxproj", "{7784C5D3-AA89-4978-8A1C-96179FB2192E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "netnode", "..\..\..\app-core\appseed\netnode\netnode.vcxproj", "{15111984-C807-4AE2-957A-50089268664D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "netnode_precompiled_web_server", "..\..\..\app-core\appseed\netnode_precompiled_web_server\netnode_precompiled_web_server.vcxproj", "{FCA0E676-9A62-4913-A15D-D23F2B1E1EBA}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_netnode_precompiled_web_server", "..\..\..\app-core\appseed\netnode_precompiled_web_server\netnode_precompiled_web_server.vcxproj", "{FCA0E676-9A62-4913-A15D-D23F2B1E1EBA}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_netnode_dynamic_web_server_cfg", "..\..\..\app-core\appseed\netnode_precompiled_web_server_cfg\netnode_precompiled_web_server_cfg.vcxproj", "{D67B67D9-72E6-46D6-A829-507853BB29DE}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_netnode_precompiled_web_server_cfg", "..\..\..\app-core\appseed\netnode_precompiled_web_server_cfg\netnode_precompiled_web_server_cfg.vcxproj", "{D67B67D9-72E6-46D6-A829-507853BB29DE}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "netnode_file_server", "..\..\..\app-core\appseed\netnode_file_server\netnode_file_server.vcxproj", "{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -2145,26 +2143,6 @@ Global
 		{0BC8F7BB-EA96-4676-A24B-E71C09B6B896}.profiler|Win32.Build.0 = profiler|Win32
 		{0BC8F7BB-EA96-4676-A24B-E71C09B6B896}.profiler|x64.ActiveCfg = profiler|x64
 		{0BC8F7BB-EA96-4676-A24B-E71C09B6B896}.profiler|x64.Build.0 = profiler|x64
-		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.basis|Android.ActiveCfg = basis|Win32
-		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.basis|Win32.ActiveCfg = basis|Win32
-		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.basis|Win32.Build.0 = basis|Win32
-		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.basis|x64.ActiveCfg = basis|x64
-		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.basis|x64.Build.0 = basis|x64
-		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.codeanalysis|Android.ActiveCfg = codeanalysis|Win32
-		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
-		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
-		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
-		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.codeanalysis|x64.Build.0 = codeanalysis|x64
-		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.memdleak|Android.ActiveCfg = memdleak|Win32
-		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.memdleak|Win32.ActiveCfg = memdleak|Win32
-		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.memdleak|Win32.Build.0 = memdleak|Win32
-		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.memdleak|x64.ActiveCfg = memdleak|x64
-		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.memdleak|x64.Build.0 = memdleak|x64
-		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.profiler|Android.ActiveCfg = profiler|Win32
-		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.profiler|Win32.ActiveCfg = profiler|Win32
-		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.profiler|Win32.Build.0 = profiler|Win32
-		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.profiler|x64.ActiveCfg = profiler|x64
-		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.profiler|x64.Build.0 = profiler|x64
 		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.basis|Android.ActiveCfg = basis|Win32
 		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.basis|Win32.ActiveCfg = basis|Win32
 		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.basis|Win32.Build.0 = basis|Win32
@@ -2245,6 +2223,26 @@ Global
 		{D67B67D9-72E6-46D6-A829-507853BB29DE}.profiler|Win32.Build.0 = profiler|Win32
 		{D67B67D9-72E6-46D6-A829-507853BB29DE}.profiler|x64.ActiveCfg = profiler|x64
 		{D67B67D9-72E6-46D6-A829-507853BB29DE}.profiler|x64.Build.0 = profiler|x64
+		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.basis|Android.ActiveCfg = basis|Win32
+		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.basis|Win32.ActiveCfg = basis|Win32
+		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.basis|Win32.Build.0 = basis|Win32
+		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.basis|x64.ActiveCfg = basis|x64
+		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.basis|x64.Build.0 = basis|x64
+		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.codeanalysis|Android.ActiveCfg = codeanalysis|Win32
+		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
+		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
+		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
+		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.codeanalysis|x64.Build.0 = codeanalysis|x64
+		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.memdleak|Android.ActiveCfg = memdleak|Win32
+		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.memdleak|Win32.ActiveCfg = memdleak|Win32
+		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.memdleak|Win32.Build.0 = memdleak|Win32
+		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.memdleak|x64.ActiveCfg = memdleak|x64
+		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.memdleak|x64.Build.0 = memdleak|x64
+		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.profiler|Android.ActiveCfg = profiler|Win32
+		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.profiler|Win32.ActiveCfg = profiler|Win32
+		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.profiler|Win32.Build.0 = profiler|Win32
+		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.profiler|x64.ActiveCfg = profiler|x64
+		{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}.profiler|x64.Build.0 = profiler|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
