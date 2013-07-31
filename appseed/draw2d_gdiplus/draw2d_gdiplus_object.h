@@ -1,11 +1,11 @@
 #pragma once
 
 
-namespace win
+namespace draw2d_gdiplus
 {
 
 
-   class CLASS_DECL_win object :
+   class CLASS_DECL_DRAW2D_GDIPLUS object :
       virtual public ::draw2d::object
    {
    public:

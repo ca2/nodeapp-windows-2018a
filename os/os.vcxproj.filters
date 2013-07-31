@@ -110,19 +110,10 @@
     <ClInclude Include="win_application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="win_bitmap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_brush.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="win_copydesk.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="win_crypt.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_dib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="win_dir.h">
@@ -137,18 +128,6 @@
     <ClInclude Include="win_folder_watch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="win_font.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_graphics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_graphics_object.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_graphics_path.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="win_implementation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -161,16 +140,7 @@
     <ClInclude Include="win_os.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="win_palette.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_pen.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="win_port_forward.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_region.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="win_registry.h">
@@ -268,19 +238,10 @@
     <ClCompile Include="win_appterm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win_bitmap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_brush.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="win_copydesk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="win_crypt.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_dib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="win_dir.cpp">
@@ -307,18 +268,6 @@
     <ClCompile Include="win_folder_watch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win_font.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_graphics.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_graphics_object.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_graphics_path.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="win_handle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -331,19 +280,7 @@
     <ClCompile Include="win_os.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win_palette.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_pen.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="win_port_forward.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_preview_dc.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_region.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="win_registry.cpp">

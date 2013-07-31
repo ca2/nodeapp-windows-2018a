@@ -1,9 +1,9 @@
 #pragma once
 
-namespace win
+namespace draw2d_gdiplus
 {
 
-   class CLASS_DECL_win factory_exchange :
+   class CLASS_DECL_DRAW2D_GDIPLUS factory_exchange :
       virtual public ::ca2::object
    {
    public:
@@ -11,4 +11,4 @@ namespace win
       virtual ~factory_exchange();
    };
 
-} // namespace win
+} // namespace draw2d_gdiplus

@@ -1,10 +1,10 @@
 #pragma once
 
-namespace win
+namespace draw2d_gdiplus
 {
 
-   class CLASS_DECL_win palette : 
-      virtual public ::win::object,
+   class CLASS_DECL_DRAW2D_GDIPLUS palette : 
+      virtual public ::draw2d_gdiplus::object,
       virtual public ::draw2d::palette
    {
    public:
@@ -32,4 +32,4 @@ namespace win
       virtual ~palette();
    };
 
-} // namespace win
+} // namespace draw2d_gdiplus

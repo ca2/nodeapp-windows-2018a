@@ -92,143 +92,8 @@
     <ClInclude Include="framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gen_1.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="inttypes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="os.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="stdint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_application.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_bitmap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_brush.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_copydesk.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_crypt.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_dib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_dir.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_exception.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_factory_exchange.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_folder_watch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_font.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_graphics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_graphics_object.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_graphics_path.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_implementation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_internal.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_ip_enum.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_os.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_palette.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_pen.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_port_forward.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_region.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_registry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_state.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_stdio_file.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_thread.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_thread_slots.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_window_draw.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win1.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win32_system.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_file.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_shell.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_file_set.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_file_system.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_uac_tools.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_handle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_file_find.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\operational_system\oswindow.h">
       <Filter>Header Files\operational_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_printer.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\operational_system\_c.h">
       <Filter>Header Files\operational_system</Filter>
@@ -236,167 +101,86 @@
     <ClInclude Include="..\operational_system\_ca.h">
       <Filter>Header Files\operational_system</Filter>
     </ClInclude>
+    <ClInclude Include="draw2d_gdiplus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="draw2d_gdiplus_bitmap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="draw2d_gdiplus_brush.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="draw2d_gdiplus_dib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="draw2d_gdiplus_factory_exchange.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="draw2d_gdiplus_font.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="draw2d_gdiplus_graphics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="draw2d_gdiplus_object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="draw2d_gdiplus_palette.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="draw2d_gdiplus_path.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="draw2d_gdiplus_pen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="draw2d_gdiplus_region.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="framework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="os.cpp">
+    <ClCompile Include="draw2d_gdiplus_bitmap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win_afxabort.cpp">
+    <ClCompile Include="draw2d_gdiplus_brush.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win_afxmem.cpp">
+    <ClCompile Include="draw2d_gdiplus_dib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win_afxstate.cpp">
+    <ClCompile Include="draw2d_gdiplus_factory_exchange.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win_appcore.cpp">
+    <ClCompile Include="draw2d_gdiplus_font.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win_appinit.cpp">
+    <ClCompile Include="draw2d_gdiplus_graphics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win_application.cpp">
+    <ClCompile Include="draw2d_gdiplus_object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win_appmodul.cpp">
+    <ClCompile Include="draw2d_gdiplus_palette.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win_appterm.cpp">
+    <ClCompile Include="draw2d_gdiplus_path.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win_bitmap.cpp">
+    <ClCompile Include="draw2d_gdiplus_pen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win_brush.cpp">
+    <ClCompile Include="draw2d_gdiplus_preview_dc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win_copydesk.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_crypt.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_dib.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_dir.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_dumpinit.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_error.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_factory_exchange.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_file.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_file_set.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_file_system.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_folder_watch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_font.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_graphics.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_graphics_object.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_graphics_path.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_handle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_ip_enum.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_os.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_palette.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_pen.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_port_forward.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_preview_dc.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_region.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_registry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_resource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_shell.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_stdio_file.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_thread.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_thread_local_storage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_trace.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_uac_tools.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_util.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_window_draw.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win1.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_file_find.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_exception.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_printer.cpp">
+    <ClCompile Include="draw2d_gdiplus_region.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="os.def">
+    <None Include="draw2d_gdiplus.def">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>

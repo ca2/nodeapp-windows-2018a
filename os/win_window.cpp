@@ -51,13 +51,10 @@ namespace win
       m_bMouseHover = false;
       m_pfont = NULL;
       m_pguieCapture = NULL;
-      m_hbitmap = NULL;
       ZERO(m_size);
       ZERO(m_pt);
-      m_pcolorref = NULL;
-      m_pbitmap = NULL;
-      ZERO(m_bitmapinfo);
       m_pmutexGraphics = NULL;
+      m_bUpdateGraphics = false;
    }
 
    void window::construct(oswindow oswindow)
@@ -71,13 +68,10 @@ namespace win
       m_bMouseHover = false;
       m_pfont = NULL;
       m_pguieCapture = NULL;
-      m_hbitmap = NULL;
       ZERO(m_size);
       ZERO(m_pt);
-      m_pcolorref = NULL;
-      m_pbitmap = NULL;
-      ZERO(m_bitmapinfo);
       m_pmutexGraphics = NULL;
+      m_bUpdateGraphics = false;
    }
 
    window::window(sp(::ca2::application) papp) :
@@ -94,13 +88,10 @@ namespace win
       m_bMouseHover = false;
       m_pfont = NULL;
       m_pguieCapture = NULL;
-      m_hbitmap = NULL;
       ZERO(m_size);
       ZERO(m_pt);
-      m_pcolorref = NULL;
-      m_pbitmap = NULL;
-      ZERO(m_bitmapinfo);
       m_pmutexGraphics = NULL;
+      m_bUpdateGraphics = false;
    }
 
 
@@ -518,7 +509,15 @@ namespace win
    void window::win_update_graphics()
    {
 
-      single_lock sl(mutex_graphics(), true);
+      single_lock sl(mutex_graphics(), false);
+
+      if(!sl.lock(millis(0)))
+      {
+         m_bUpdateGraphics = true;
+         return;
+      }
+
+      m_bUpdateGraphics = false;
 
       rect rectWindow;
 
@@ -532,9 +531,20 @@ namespace win
       if(m_size != rectWindow.size())
       {
 
-         m_spg.release();
+         if(m_spdib.is_null())
+            m_spdib.create(allocer());
 
-         m_spb.release();
+         m_spdib->create(rectWindow.size());
+
+         m_size = rectWindow.size();
+
+      }
+
+       /*  m_dib->
+
+         //m_spg.release();
+
+         //m_spb.release();
 
          //if(m_pbitmap != NULL)
          //{
@@ -578,7 +588,10 @@ namespace win
 
          m_spg->SelectObject(m_spb);
 
-      }
+      }*/
+
+
+      
 
    }
 
@@ -1071,8 +1084,10 @@ namespace win
       ::draw2d::graphics * pDCSrc, POINT *pptSrc, COLORREF crKey, BLENDFUNCTION *pblend, uint32_t dwFlags)
    {
       ASSERT(::IsWindow(get_handle())); 
-      return ::UpdateLayeredWindow(get_handle(), WIN_HDC(pDCDst), pptDst, psize,
-         WIN_HDC(pDCSrc), pptSrc, crKey, pblend, dwFlags) != FALSE;
+      throw not_implemented(get_app());
+      return false;
+/*      return ::UpdateLayeredWindow(get_handle(), WIN_HDC(pDCDst), pptDst, psize,
+         WIN_HDC(pDCSrc), pptSrc, crKey, pblend, dwFlags) != FALSE;*/
    }
 
 
@@ -1085,7 +1100,9 @@ namespace win
    bool window::PrintWindow(::draw2d::graphics * pgraphics, UINT nFlags) const
    {
       ASSERT(::IsWindow(get_handle())); 
-      return ::PrintWindow(get_handle(), (HDC)(dynamic_cast<::win::graphics * >(pgraphics))->get_handle(), nFlags) != FALSE;
+      throw not_implemented(get_app());
+//      return ::PrintWindow(get_handle(), (HDC)(dynamic_cast<::win::graphics * >(pgraphics))->get_handle(), nFlags) != FALSE;
+      return false;
    }
 
 
@@ -1243,7 +1260,8 @@ namespace win
    void window::_002OnDraw(::draw2d::graphics * pdc)
    {
 
-      ::CallWindowProc(*GetSuperWndProcAddr(), get_handle(), WM_PRINT, (WPARAM)((dynamic_cast<::win::graphics * >(pdc))->get_handle()), (LPARAM)(PRF_CHILDREN | PRF_CLIENT));
+      throw not_implemented(get_app());
+      //::CallWindowProc(*GetSuperWndProcAddr(), get_handle(), WM_PRINT, (WPARAM)((dynamic_cast<::win::graphics * >(pdc))->get_handle()), (LPARAM)(PRF_CHILDREN | PRF_CLIENT));
 
    }
 
@@ -3382,8 +3400,7 @@ restart_mouse_hover_check:
 
          ::draw2d::graphics * pdc = dib->get_graphics();
 
-         if((dynamic_cast<::win::graphics * >(pdc))->get_handle() == NULL 
-            || (dynamic_cast<::win::graphics * >(pdc))->get_handle2() == NULL)
+         if(pdc->get_os_data() == NULL)
             return;
 
          rect rectPaint;
@@ -3400,7 +3417,7 @@ restart_mouse_hover_check:
             rectUpdate = rectPaint;
             ClientToScreen(rectUpdate);
          }
-         (dynamic_cast<::win::graphics * >(pdc))->SelectClipRgn(NULL);
+         pdc->SelectClipRgn(NULL);
          if(m_pguie != NULL && m_pguie != this)
          {
             m_pguie->_001OnDeferPaintLayeredWindowBackground(pdc);
@@ -3409,13 +3426,13 @@ restart_mouse_hover_check:
          {
             _001OnDeferPaintLayeredWindowBackground(pdc);
          }
-         (dynamic_cast<::win::graphics * >(pdc))->SelectClipRgn(NULL);
-         (dynamic_cast<::win::graphics * >(pdc))->SetViewportOrg(point(0, 0));
+         pdc->SelectClipRgn(NULL);
+         pdc->SetViewportOrg(point(0, 0));
          _000OnDraw(pdc);
-         (dynamic_cast<::win::graphics * >(pdc))->SetViewportOrg(point(0, 0));
+         pdc->SetViewportOrg(point(0, 0));
          //(dynamic_cast<::win::graphics * >(pdc))->FillSolidRect(rectUpdate.left, rectUpdate.top, 100, 100, 255);
-         (dynamic_cast<::win::graphics * >(pdc))->SelectClipRgn(NULL);
-         (dynamic_cast<::win::graphics * >(pdc))->SetViewportOrg(point(0, 0));
+         pdc->SelectClipRgn(NULL);
+         pdc->SetViewportOrg(point(0, 0));
          BitBlt(hdc, rectPaint.left, rectPaint.top, 
             rectPaint.width(), rectPaint.height(),
             (HDC) pdc->get_os_data(), rectUpdate.left, rectUpdate.top,
@@ -3434,73 +3451,12 @@ restart_mouse_hover_check:
 
    void window::_001OnPrint(::ca2::signal_object * pobj)
    {
-      SCAST_PTR(::ca2::message::base, pbase, pobj);
 
-      if(pbase->m_wparam == NULL)
-         return;
+      if(m_spdib.is_null())
+         m_spdib.create(allocer());
+      
+      m_spdib->print_window(this, pobj);
 
-      ::draw2d::graphics_sp graphics(allocer());
-      WIN_DC(graphics.m_p)->attach((HDC) pbase->m_wparam);
-      rect rectx;
-      ::draw2d::bitmap * pbitmap = &graphics->GetCurrentBitmap();
-      ::GetCurrentObject((HDC) pbase->m_wparam, OBJ_BITMAP);
-      //      uint32_t dw = ::GetLastError();
-      class size size = pbitmap->get_size();
-      rectx.left = 0;
-      rectx.top = 0;
-      rectx.right = size.cx;
-      rectx.bottom = size.cy;
-      try
-      {
-         rect rectWindow;
-         GetWindowRect(rectWindow);
-
-         ::draw2d::dib_sp dib(allocer());
-         if(!dib->create(rectWindow.bottom_right()))
-            return;
-
-         ::draw2d::graphics * pdc = dib->get_graphics();
-
-         if(pdc->get_os_data() == NULL)
-            return;
-
-         rect rectPaint;
-         rect rectUpdate;
-         rectUpdate = rectWindow;
-         rectPaint = rectWindow;
-         rectPaint.offset(-rectPaint.top_left());
-         (dynamic_cast<::win::graphics * >(pdc))->SelectClipRgn(NULL);
-         if(m_pguie != NULL && m_pguie != this)
-         {
-            m_pguie->_001OnDeferPaintLayeredWindowBackground(pdc);
-         }
-         else
-         {
-            _001OnDeferPaintLayeredWindowBackground(pdc);
-         }
-         (dynamic_cast<::win::graphics * >(pdc))->SelectClipRgn(NULL);
-         (dynamic_cast<::win::graphics * >(pdc))->SetViewportOrg(point(0, 0));
-         _000OnDraw(pdc);
-         (dynamic_cast<::win::graphics * >(pdc))->SetViewportOrg(point(0, 0));
-         //(dynamic_cast<::win::graphics * >(pdc))->FillSolidRect(rectUpdate.left, rectUpdate.top, 100, 100, 255);
-         (dynamic_cast<::win::graphics * >(pdc))->SelectClipRgn(NULL);
-         (dynamic_cast<::win::graphics * >(pdc))->SetViewportOrg(point(0, 0));
-
-         graphics->SelectClipRgn( NULL);
-         graphics->BitBlt(rectPaint.left, rectPaint.top, 
-            rectPaint.width(), rectPaint.height(),
-            pdc, rectUpdate.left, rectUpdate.top,
-            SRCCOPY);
-
-         graphics->TextOut(0, 0, "Te Amo CGCL", 11);
-      }
-      catch(...)
-      {
-      }
-      graphics->FillSolidRect(rectx, RGB(255, 255, 255));
-      WIN_DC(graphics.m_p)->detach();
-      pobj->m_bRet = true;
-      pbase->set_lresult(0);
    }
 
 
@@ -4840,68 +4796,7 @@ ExitModal:
       ::MapWindowPoints(get_handle(), pwndTo->get_handle(), (LPPOINT)lpRect, 2); 
    }
 
-   ::draw2d::graphics * window::GetDC()
-   { 
-      ::draw2d::graphics_sp g(allocer());
-      if(get_handle() == NULL)
-      {
-         (dynamic_cast < ::win::graphics * >(g.m_p))->Attach(::GetDC(NULL));
-      }
-      else
-      {
-         (dynamic_cast < ::win::graphics * >(g.m_p))->Attach(::GetDC(get_handle()));
-      }
-      return g.detach();
-   }
 
-   ::draw2d::graphics * window::GetWindowDC()
-   {
-      ASSERT(::IsWindow(get_handle())); 
-      ::draw2d::graphics_sp g(allocer());
-      (dynamic_cast < ::win::graphics * >(g.m_p))->Attach(::GetWindowDC(get_handle()));
-      return g.detach();
-   }
-
-   bool window::ReleaseDC(::draw2d::graphics * pgraphics)
-   { 
-
-      if(pgraphics == NULL)
-         return false;
-
-      if(((Gdiplus::Graphics *)(dynamic_cast<::win::graphics * >(pgraphics))->get_handle()) == NULL)
-         return false;
-
-      try
-      {
-
-         delete (dynamic_cast<::win::graphics * >(pgraphics))->m_pgraphics;
-
-      }
-      catch(...)
-      {
-
-         TRACE("::win::window::ReleaseDC : Failed to delete Gdiplus::Graphics");
-
-      }
-
-      (dynamic_cast<::win::graphics * >(pgraphics))->m_pgraphics = NULL;
-
-      BOOL bOk = ::ReleaseDC(get_handle(), (dynamic_cast<::win::graphics * >(pgraphics))->m_hdc); 
-
-      if(!bOk)
-      {
-
-         TRACE("::win::window::ReleaseDC : Failed to Release window dc");
-
-      }
-
-      (dynamic_cast<::win::graphics * >(pgraphics))->m_hdc = NULL;
-
-
-
-      return true;
-
-   }
 
    void window::UpdateWindow()
    {
@@ -5096,7 +4991,9 @@ ExitModal:
 
       ASSERT(::IsWindow(get_handle())); 
 
-      return ::DrawCaption(get_handle(), (HDC)(dynamic_cast<::win::graphics * >(pgraphics))->get_handle(), lprc, uFlags) != FALSE;
+      throw not_implemented(get_app());
+      return false;
+//      return ::DrawCaption(get_handle(), (HDC)(dynamic_cast<::win::graphics * >(pgraphics))->get_handle(), lprc, uFlags) != FALSE;
 
    }
 
@@ -5518,7 +5415,8 @@ ExitModal:
 
       ASSERT(::IsWindow(get_handle()));
 
-      const_cast < ::win::window * > (this)->send_message(WM_PRINT, (WPARAM)(dynamic_cast<::win::graphics * >(pgraphics))->get_handle(), (LPARAM) dwFlags);
+      throw not_implemented(get_app());
+//      const_cast < ::win::window * > (this)->send_message(WM_PRINT, (WPARAM)(dynamic_cast<::win::graphics * >(pgraphics))->get_handle(), (LPARAM) dwFlags);
 
    }
 
@@ -5527,7 +5425,8 @@ ExitModal:
 
       ASSERT(::IsWindow(get_handle()));
 
-      const_cast < ::win::window * > (this)->send_message(WM_PRINTCLIENT, (WPARAM)(dynamic_cast<::win::graphics * >(pgraphics))->get_handle(), (LPARAM) dwFlags);
+      throw not_implemented(get_app());
+      //const_cast < ::win::window * > (this)->send_message(WM_PRINTCLIENT, (WPARAM)(dynamic_cast<::win::graphics * >(pgraphics))->get_handle(), (LPARAM) dwFlags);
 
    }
 
@@ -6738,134 +6637,28 @@ namespace win
    void window::_001UpdateWindow()
    {
 
-      if(m_pcolorref == NULL)
-         return;
 
       single_lock sl(mutex_graphics(), false);
 
       if(!sl.lock(millis(84)))
          return;
 
-
-
+      if(m_bUpdateGraphics)
       {
-
-         memset(m_pcolorref, 0, (size_t) (m_size.area() * 4));
-
-         _001Print(m_spg);
-
-
+         win_update_graphics();
       }
 
-      if(GetExStyle() & WS_EX_LAYERED)
-      {
-         BYTE *dst=(BYTE*)m_pcolorref;
-         int64_t size = m_size.area();
+      if(m_spdib.is_null() || m_spdib->get_graphics() == NULL || m_spdib->get_data() == NULL)
+         return;
 
+      m_spdib->Fill(0, 0, 0, 0);
 
-         // >> 8 instead of / 255 subsequent alpha_blend operations say thanks on true_blend because (255) * (1/254) + (255) * (254/255) > 255
+      _001Print(m_spdib->get_graphics());
 
-
-         while (size >= 8)
-         {
-            dst[0] = LOBYTE(((int32_t)dst[0] * (int32_t)dst[3])>> 8);
-            dst[1] = LOBYTE(((int32_t)dst[1] * (int32_t)dst[3])>> 8);
-            dst[2] = LOBYTE(((int32_t)dst[2] * (int32_t)dst[3])>> 8);
-
-            dst[4+0] = LOBYTE(((int32_t)dst[4+0] * (int32_t)dst[4+3])>> 8);
-            dst[4+1] = LOBYTE(((int32_t)dst[4+1] * (int32_t)dst[4+3])>> 8);
-            dst[4+2] = LOBYTE(((int32_t)dst[4+2] * (int32_t)dst[4+3])>> 8);
-
-            dst[8+0] = LOBYTE(((int32_t)dst[8+0] * (int32_t)dst[8+3])>> 8);
-            dst[8+1] = LOBYTE(((int32_t)dst[8+1] * (int32_t)dst[8+3])>> 8);
-            dst[8+2] = LOBYTE(((int32_t)dst[8+2] * (int32_t)dst[8+3])>> 8);
-
-            dst[12+0] = LOBYTE(((int32_t)dst[12+0] * (int32_t)dst[12+3])>> 8);
-            dst[12+1] = LOBYTE(((int32_t)dst[12+1] * (int32_t)dst[12+3])>> 8);
-            dst[12+2] = LOBYTE(((int32_t)dst[12+2] * (int32_t)dst[12+3])>> 8);
-
-            dst[16+0] = LOBYTE(((int32_t)dst[16+0] * (int32_t)dst[16+3])>> 8);
-            dst[16+1] = LOBYTE(((int32_t)dst[16+1] * (int32_t)dst[16+3])>> 8);
-            dst[16+2] = LOBYTE(((int32_t)dst[16+2] * (int32_t)dst[16+3])>> 8);
-
-            dst[20+0] = LOBYTE(((int32_t)dst[20+0] * (int32_t)dst[20+3])>> 8);
-            dst[20+1] = LOBYTE(((int32_t)dst[20+1] * (int32_t)dst[20+3])>> 8);
-            dst[20+2] = LOBYTE(((int32_t)dst[20+2] * (int32_t)dst[20+3])>> 8);
-
-            dst[24+0] = LOBYTE(((int32_t)dst[24+0] * (int32_t)dst[24+3])>> 8);
-            dst[24+1] = LOBYTE(((int32_t)dst[24+1] * (int32_t)dst[24+3])>> 8);
-            dst[24+2] = LOBYTE(((int32_t)dst[24+2] * (int32_t)dst[24+3])>> 8);
-
-            dst[28+0] = LOBYTE(((int32_t)dst[28+0] * (int32_t)dst[28+3])>> 8);
-            dst[28+1] = LOBYTE(((int32_t)dst[28+1] * (int32_t)dst[28+3])>> 8);
-            dst[28+2] = LOBYTE(((int32_t)dst[28+2] * (int32_t)dst[28+3])>> 8);
-
-            dst += 4 * 8;
-            size -= 8;
-         }
-         while(size--)
-         {
-            dst[0] = LOBYTE(((int32_t)dst[0] * (int32_t)dst[3])>> 8);
-            dst[1] = LOBYTE(((int32_t)dst[1] * (int32_t)dst[3])>> 8);
-            dst[2] = LOBYTE(((int32_t)dst[2] * (int32_t)dst[3])>> 8);
-            dst += 4;
-         }
-
-
-         {
-
-            HDC hdcScreen = ::GetDC(get_handle());
-
-            HDC hdcMem = ::CreateCompatibleDC(NULL);
-
-            HBITMAP hbitmapOld = (HBITMAP) ::SelectObject(hdcMem, m_hbitmap);
-
-            BLENDFUNCTION blendPixelFunction = { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
-
-            POINT ptZero = { 0 };
-
-            point ptSrc(0, 0);
-
-            bool bOk = ::UpdateLayeredWindow(get_handle(), hdcScreen, &m_pt, &m_size, hdcMem, &ptSrc, RGB(0, 0, 0), &blendPixelFunction, ULW_ALPHA) != FALSE;
-
-            ::SelectObject(hdcMem, hbitmapOld);
-
-            ::DeleteDC(hdcMem);
-
-            ::ReleaseDC(get_handle(), hdcScreen);
-
-         }
-
-
-      }
-      else
-      {
-
-         {
-            HDC hdcScreen = ::GetDC(get_handle());
-
-            HDC hdcMem = ::CreateCompatibleDC(NULL);
-
-            HBITMAP hbitmapOld = (HBITMAP) ::SelectObject(hdcMem, m_hbitmap);
-
-            BLENDFUNCTION blendPixelFunction = { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
-
-            POINT ptZero = { 0 };
-
-            point ptSrc(0, 0);
-
-            ::BitBlt(hdcScreen, 0, 0, m_size.cx, m_size.cy, hdcMem, 0, 0, SRCCOPY);
-
-            ::SelectObject(hdcMem, hbitmapOld);
-
-            ::DeleteDC(hdcMem);
-
-            ::ReleaseDC(get_handle(), hdcScreen);
-         }
-
-      }
+      m_spdib->update_window(this, NULL);
 
    }
+
 
 }
 

@@ -84,16 +84,6 @@ CLASS_DECL_win void reset_message_cache();
 #include "win_factory_exchange.h"
 #include "win_uac_tools.h"
 #include "win_window_draw.h"
-#include "win_graphics.h"
-#include "win_graphics_object.h"
-#include "win_bitmap.h"
-#include "win_dib.h"
-#include "win_palette.h"
-#include "win_pen.h"
-#include "win_font.h"
-#include "win_brush.h"
-#include "win_region.h"
-#include "win_graphics_path.h"
 #include "win_thread.h"
 #include "win_window.h"
 #include "win_port_forward.h"
@@ -104,11 +94,6 @@ CLASS_DECL_win WNDPROC __get_window_procedure();
 
 #define WIN_THREAD(pthread) (dynamic_cast < ::win::thread * > (dynamic_cast < ::ca2::thread * >(pthread)))
 #define WIN_WINDOW(pwnd) ((sp(::win::window))(pwnd))
-#define WIN_DC(pgraphics) (dynamic_cast < ::win::graphics * > (dynamic_cast < ::draw2d::graphics * > (pgraphics)))
-#define SP_DC(pgraphics) (dynamic_cast < ::win::graphics * > (( ::draw2d::graphics * )(pgraphics)))
-#define WIN_HDC(pgraphics) ((dynamic_cast < ::win::graphics * > (dynamic_cast < ::draw2d::graphics * > (pgraphics)))->get_handle())
-#define SP_HDC(pgraphics) ((dynamic_cast < ::win::graphics * > ((::draw2d::graphics *)(pgraphics)))->get_handle())
-#define WIN_DIB(pdib) (dynamic_cast < ::win::dib * > (dynamic_cast < ::draw2d::dib * >(pdib)))
 
 
 #pragma comment(lib, "kernel32.lib")

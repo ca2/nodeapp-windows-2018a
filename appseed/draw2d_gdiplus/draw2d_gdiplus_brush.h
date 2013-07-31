@@ -1,11 +1,11 @@
 #pragma once
 
 
-namespace win
+namespace draw2d_gdiplus
 {
 
 
-   class CLASS_DECL_win brush : 
+   class CLASS_DECL_DRAW2D_GDIPLUS brush : 
       virtual public ::draw2d::brush
    {
    public:
@@ -38,6 +38,6 @@ namespace win
    };
 
 
-} // namespace win
+} // namespace draw2d_gdiplus
 
 

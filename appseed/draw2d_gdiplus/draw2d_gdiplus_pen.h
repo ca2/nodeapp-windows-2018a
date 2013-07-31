@@ -7,12 +7,12 @@
 #include <GdiPlus.h>
 
 
-namespace win
+namespace draw2d_gdiplus
 {
 
 
-   class CLASS_DECL_win pen : 
-      virtual public ::win::object,
+   class CLASS_DECL_DRAW2D_GDIPLUS pen : 
+      virtual public ::draw2d_gdiplus::object,
       virtual public ::draw2d::pen
    {
    public:
@@ -36,6 +36,6 @@ namespace win
    };
 
 
-} // namespace win
+} // namespace draw2d_gdiplus
 
 

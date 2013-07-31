@@ -18,19 +18,21 @@ namespace win
    public:
 
 
-      spa(::user::interaction)      m_guieptraMouseHover;
-      ::ca2::window_callback *       m_pcallback;
-      string                        m_strWindowText;
-      //visual::dib_sp                m_spdib;
-      //visual::dib_sp                m_spdibMultAlphaWork;
+      spa(::user::interaction)         m_guieptraMouseHover;
+      ::ca2::window_callback *         m_pcallback;
+      string                           m_strWindowText;
+      bool                             m_bUpdateGraphics;
+      //visual::dib_sp                 m_spdib;
+      //visual::dib_sp                 m_spdibMultAlphaWork;
 
-      mutex *                       m_pmutexGraphics;
-      HBITMAP                       m_hbitmap;
-      Gdiplus::Bitmap *             m_pbitmap;
-      ::draw2d::graphics_sp             m_spg;
-      ::draw2d::bitmap_sp               m_spb;
-      BITMAPINFO m_bitmapinfo;
-      COLORREF * m_pcolorref;
+      mutex *                          m_pmutexGraphics;
+      ::draw2d::dib_sp                 m_spdib;
+      //HBITMAP                       m_hbitmap;
+      //Gdiplus::Bitmap *             m_pbitmap;
+      //::draw2d::graphics_sp             m_spg;
+      //::draw2d::bitmap_sp               m_spb;
+      //BITMAPINFO m_bitmapinfo;
+      //COLORREF * m_pcolorref;
       size m_size;
       point m_pt;
       
@@ -228,9 +230,9 @@ namespace win
       virtual void MapWindowPoints(sp(::ca2::window) pwndTo, LPRECT lpRect);
 
    // Update/Painting Functions
-      virtual ::draw2d::graphics * GetDC();
-      virtual ::draw2d::graphics * GetWindowDC();
-      virtual bool ReleaseDC(::draw2d::graphics * pgraphics);
+      //virtual ::draw2d::graphics * GetDC();
+      //virtual ::draw2d::graphics * GetWindowDC();
+      //virtual bool ReleaseDC(::draw2d::graphics * pgraphics);
       virtual void Print(::draw2d::graphics * pgraphics, uint32_t dwFlags) const;
       virtual void PrintClient(::draw2d::graphics * pgraphics, uint32_t dwFlags) const;
 

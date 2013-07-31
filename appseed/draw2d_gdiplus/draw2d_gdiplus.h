@@ -1,18 +1,20 @@
-// This is ca2 API library.
-// 
-// 
-//
-// 
-// 
-// 
-// 
-// 
+#pragma once
+
+
+#include "ca2.h"
+
+
+#ifdef _CA2_DRAW2D_GDIPLUS_LIBRARY
+    #define CLASS_DECL_DRAW2D_GDIPLUS  _declspec(dllexport)
+#else
+    #define CLASS_DECL_DRAW2D_GDIPLUS  _declspec(dllimport)
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 // CHandleMap
 //
 //  Note: Do not access the members of this class directly.
-//      Use ::win::window::from_handle, ::win::graphics::from_handle, etc.
+//      Use ::draw2d_gdiplus::window::from_handle, ::draw2d_gdiplus::graphics::from_handle, etc.
 //      The actual definition is only included because it is
 //      necessary for the definition of WindowsThread.
 //
@@ -39,6 +41,7 @@
 
 #pragma once
 
+/*
 template <>
 inline UINT HashKey < oswindow >(oswindow key)
 {
@@ -75,7 +78,7 @@ inline UINT HashKey < HIMAGELIST >(HIMAGELIST key)
 }
 
 
-namespace win
+namespace draw2d_gdiplus
 {
 
    class window;
@@ -119,11 +122,12 @@ namespace win
    typedef handle1 < HGDIOBJ > hgdiobj_handle;
    typedef handle1 < HIMAGELIST > himagelist_handle;
 
-} // namespace win
+} // namespace draw2d_gdiplus
+*/
 
+//#include "ca2/ca2/ca_fixed_alloc.h"
 
-#include "ca2/ca2/ca_fixed_alloc.h"
-
+/*
 template<class TYPE>
 struct ConstructDestruct
 {
@@ -185,32 +189,34 @@ public:
    friend class ::ca2::thread;
 };
 
-class CLASS_DECL_win oswindow_map :
-   public handle_map < ::win::oswindow_handle, ::win::window >
-{
-public:
-};
-
-/*class CLASS_DECL_win hdc_map :
-   public handle_map < ::win::hdc_handle, ::win::graphics >
-{
-public:
-};*/
-
-/*class hgdiobj_map : 
-   public handle_map < ::win::hgdiobj_handle, ::win::object >
-{
-public:
-};*/
-
-/*
-class CLASS_DECL_win hdc_map :
-   public handle_map < ::win::hmenu_handle, ::win::menu >
+class CLASS_DECL_DRAW2D_GDIPLUS oswindow_map :
+   public handle_map < ::draw2d_gdiplus::oswindow_handle, ::draw2d_gdiplus::window >
 {
 public:
 };
 */
 
+/*class CLASS_DECL_DRAW2D_GDIPLUS hdc_map :
+   public handle_map < ::draw2d_gdiplus::hdc_handle, ::draw2d_gdiplus::graphics >
+{
+public:
+};*/
+
+/*class hgdiobj_map : 
+   public handle_map < ::draw2d_gdiplus::hgdiobj_handle, ::draw2d_gdiplus::object >
+{
+public:
+};*/
+
+/*
+class CLASS_DECL_DRAW2D_GDIPLUS hdc_map :
+   public handle_map < ::draw2d_gdiplus::hmenu_handle, ::draw2d_gdiplus::menu >
+{
+public:
+};
+*/
+
+/*
 
 template < class HT, class CT >
 handle_map < HT, CT > ::handle_map() : 
@@ -441,12 +447,40 @@ inline CT* handle_map <HT, CT>::lookup_temporary(HANDLE h)
 }
 
 
-CLASS_DECL_win oswindow_map * get_oswindow_map(bool bCreate = FALSE);
+CLASS_DECL_DRAW2D_GDIPLUS oswindow_map * get_oswindow_map(bool bCreate = FALSE);
 
 
-CLASS_DECL_win himagelist_map * afxMapHIMAGELIST(bool bCreate = FALSE);
-//CLASS_DECL_win hdc_map * afxMapHDC(bool bCreate = FALSE);
-//CLASS_DECL_win hgdiobj_map * afxMapHGDIOBJ(bool bCreate = FALSE);
-//CLASS_DECL_win hmenu_map * afx_map_HMENU(bool bCreate = FALSE);
+CLASS_DECL_DRAW2D_GDIPLUS himagelist_map * afxMapHIMAGELIST(bool bCreate = FALSE);
+//CLASS_DECL_DRAW2D_GDIPLUS hdc_map * afxMapHDC(bool bCreate = FALSE);
+//CLASS_DECL_DRAW2D_GDIPLUS hgdiobj_map * afxMapHGDIOBJ(bool bCreate = FALSE);
+//CLASS_DECL_DRAW2D_GDIPLUS hmenu_map * afx_map_HMENU(bool bCreate = FALSE);
 
 
+*/
+
+
+#include "draw2d_gdiplus_factory_exchange.h"
+
+
+#include "draw2d_gdiplus_object.h"
+#include "draw2d_gdiplus_pen.h"
+#include "draw2d_gdiplus_bitmap.h"
+#include "draw2d_gdiplus_brush.h"
+#include "draw2d_gdiplus_font.h"
+#include "draw2d_gdiplus_palette.h"
+#include "draw2d_gdiplus_region.h"
+#include "draw2d_gdiplus_dib.h"
+#include "draw2d_gdiplus_path.h"
+
+
+#include "draw2d_gdiplus_graphics.h"
+
+
+#pragma comment(lib, "Msimg32.lib") 
+
+
+#define GDIPLUS_GRAPHICS(pgraphics) (dynamic_cast < ::draw2d_gdiplus::graphics * > (dynamic_cast < ::draw2d::graphics * > (pgraphics)))
+#define SP_DC(pgraphics) (dynamic_cast < ::draw2d_gdiplus::graphics * > (( ::draw2d::graphics * )(pgraphics)))
+#define GDIPLUS_HDC(pgraphics) ((dynamic_cast < ::draw2d_gdiplus::graphics * > (dynamic_cast < ::draw2d::graphics * > (pgraphics)))->get_handle())
+#define SP_HDC(pgraphics) ((dynamic_cast < ::draw2d_gdiplus::graphics * > ((::draw2d::graphics *)(pgraphics)))->get_handle())
+#define GDIPLUS_DIB(pdib) (dynamic_cast < ::draw2d_gdiplus::dib * > (dynamic_cast < ::draw2d::dib * >(pdib)))

@@ -1,6 +1,6 @@
 #include "framework.h"
 
-namespace win
+namespace draw2d_gdiplus
 {
 
    palette::palette(sp(::ca2::application) papp) :
@@ -15,7 +15,7 @@ namespace win
    }
    palette* palette::from_handle(sp(::ca2::application) papp, HPALETTE hPalette)
    { 
-      //return dynamic_cast < palette * > (::win::object::from_handle(papp, hPalette)); 
+      //return dynamic_cast < palette * > (::draw2d_gdiplus::object::from_handle(papp, hPalette)); 
       return NULL;
    }
    bool palette::CreatePalette(LPLOGPALETTE lpLogPalette)
@@ -25,8 +25,8 @@ namespace win
    }
    bool palette::CreateHalftonePalette(::draw2d::graphics * pgraphics)
    {
-      //ASSERT(pgraphics != NULL && (dynamic_cast<::win::graphics * >(pgraphics))->get_handle1() != NULL); 
-      //return attach(::CreateHalftonePalette((dynamic_cast<::win::graphics * >(pgraphics))->get_handle1())); 
+      //ASSERT(pgraphics != NULL && (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->get_handle1() != NULL); 
+      //return attach(::CreateHalftonePalette((dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->get_handle1())); 
       return FALSE;
 
    }
@@ -55,4 +55,4 @@ namespace win
    { ASSERT(get_os_data() != NULL); WORD nEntries;
    ::GetObject((HANDLE) get_os_data(), sizeof(WORD), &nEntries); return (int32_t)nEntries; }
 
-} // namespace win
+} // namespace draw2d_gdiplus

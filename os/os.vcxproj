@@ -958,27 +958,17 @@
     <ClInclude Include="win_file_set.h" />
     <ClInclude Include="win_file_system.h" />
     <ClInclude Include="win_application.h" />
-    <ClInclude Include="win_bitmap.h" />
-    <ClInclude Include="win_brush.h" />
     <ClInclude Include="win_copydesk.h" />
     <ClInclude Include="win_crypt.h" />
-    <ClInclude Include="win_dib.h" />
     <ClInclude Include="win_dir.h" />
     <ClInclude Include="win_exception.h" />
     <ClInclude Include="win_factory_exchange.h" />
     <ClInclude Include="win_folder_watch.h" />
-    <ClInclude Include="win_font.h" />
-    <ClInclude Include="win_graphics.h" />
-    <ClInclude Include="win_graphics_object.h" />
-    <ClInclude Include="win_graphics_path.h" />
     <ClInclude Include="win_implementation.h" />
     <ClInclude Include="win_internal.h" />
     <ClInclude Include="win_ip_enum.h" />
     <ClInclude Include="win_os.h" />
-    <ClInclude Include="win_palette.h" />
-    <ClInclude Include="win_pen.h" />
     <ClInclude Include="win_port_forward.h" />
-    <ClInclude Include="win_region.h" />
     <ClInclude Include="win_registry.h" />
     <ClInclude Include="win_resource.h" />
     <ClInclude Include="win_state.h" />
@@ -998,9 +988,6 @@
     </ProjectReference>
     <ProjectReference Include="..\..\app\appseed\c\c.vcxproj">
       <Project>{4d7d3626-ada6-4ca2-9566-ed7b131e3d51}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\app\thirdparty\appseed\FreeImage\FreeImage.vcxproj">
-      <Project>{b39ed2b3-d53a-4077-b957-930979a3577d}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -1024,11 +1011,8 @@
     <ClCompile Include="win_application.cpp" />
     <ClCompile Include="win_appmodul.cpp" />
     <ClCompile Include="win_appterm.cpp" />
-    <ClCompile Include="win_bitmap.cpp" />
-    <ClCompile Include="win_brush.cpp" />
     <ClCompile Include="win_copydesk.cpp" />
     <ClCompile Include="win_crypt.cpp" />
-    <ClCompile Include="win_dib.cpp" />
     <ClCompile Include="win_dir.cpp" />
     <ClCompile Include="win_dumpinit.cpp" />
     <ClCompile Include="win_error.cpp" />
@@ -1039,19 +1023,11 @@
     <ClCompile Include="win_file_set.cpp" />
     <ClCompile Include="win_file_system.cpp" />
     <ClCompile Include="win_folder_watch.cpp" />
-    <ClCompile Include="win_font.cpp" />
-    <ClCompile Include="win_graphics.cpp" />
-    <ClCompile Include="win_graphics_object.cpp" />
-    <ClCompile Include="win_graphics_path.cpp" />
     <ClCompile Include="win_handle.cpp" />
     <ClCompile Include="win_ip_enum.cpp" />
     <ClCompile Include="win_main.cpp" />
     <ClCompile Include="win_os.cpp" />
-    <ClCompile Include="win_palette.cpp" />
-    <ClCompile Include="win_pen.cpp" />
     <ClCompile Include="win_port_forward.cpp" />
-    <ClCompile Include="win_preview_dc.cpp" />
-    <ClCompile Include="win_region.cpp" />
     <ClCompile Include="win_registry.cpp" />
     <ClCompile Include="win_resource.cpp" />
     <ClCompile Include="win_shell.cpp" />

@@ -1,11 +1,11 @@
 #pragma once
 
 
-namespace win
+namespace draw2d_gdiplus
 {
 
 
-   class CLASS_DECL_win font : 
+   class CLASS_DECL_DRAW2D_GDIPLUS font : 
       virtual public ::draw2d::font
    {
    public:
@@ -42,7 +42,7 @@ namespace win
    };
 
 
-} // namespace win
+} // namespace draw2d_gdiplus
 
 
 

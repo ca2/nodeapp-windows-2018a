@@ -4,7 +4,7 @@
 #undef new
 
 
-namespace win
+namespace draw2d_gdiplus
 {
 
 
@@ -280,4 +280,4 @@ namespace win
    }
 
 
-} // namespace win
+} // namespace draw2d_gdiplus

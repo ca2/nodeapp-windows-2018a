@@ -272,7 +272,7 @@ namespace win
          //::ClientToScreen(oswindowParam, &rectWindow.top_left());
          //::ClientToScreen(oswindowParam, &rectWindow.bottom_right());
          
-         (dynamic_cast<::win::graphics * >(pdc))->SetViewportOrg(rectWindow.left, rectWindow.top);
+         pdc->SetViewportOrg(rectWindow.left, rectWindow.top);
 
       
          if(ptwi != NULL)
@@ -291,11 +291,11 @@ namespace win
          {
             bool bWin4 = FALSE;
          //_gen::FillPSOnStack();
-            ::DefWindowProc(
+            /*::DefWindowProc(
                oswindowParam,
                (bWin4 ? WM_PRINT : WM_PAINT),
                (WPARAM)((dynamic_cast<::win::graphics * >(pdc))->get_os_data()),
-               (LPARAM)(bWin4 ? PRF_CHILDREN | PRF_CLIENT : 0));
+               (LPARAM)(bWin4 ? PRF_CHILDREN | PRF_CLIENT : 0));*/
             //::RedrawWindow(oswindowParam, NULL, rgnClient, RDW_INVALIDATE | RDW_UPDATENOW | RDW_NOCHILDREN);
          }
       }
@@ -412,7 +412,7 @@ namespace win
       if(m_pbuffer->GetBuffer()->get_os_data() == NULL)
          return true;
 
-      ::draw2d::graphics * pdc = (dynamic_cast<::win::graphics * >(m_pbuffer->GetBuffer()));
+      ::draw2d::graphics * pdc = m_pbuffer->GetBuffer();
 
       if(pdc == NULL)
       {
@@ -1122,199 +1122,16 @@ namespace win
          }
       }
 
-      oswindow oswindowParam = pwnd->get_handle();
+      sp(::win::window) pwindow = pwnd;
 
-      HDC hdcScreen = ::GetDCEx(oswindowParam, NULL,  DCX_CLIPSIBLINGS | DCX_WINDOW);
+      if(pwindow->m_spdib.is_null())
+         pwindow->m_spdib.create(allocer());
 
-      if(hdcScreen == NULL)
-      {
-         // If it has failed to get ::ca2::window
-         // owned device context, try to get
-         // a device context from the cache.
-         hdcScreen = ::GetDCEx(oswindowParam, NULL, DCX_CACHE | DCX_CLIPSIBLINGS | DCX_WINDOW);
-
-         // If no device context could be retrieved,
-         // nothing can be drawn at the screen.
-         // The function failed.
-         if(hdcScreen == NULL)
-            return false;
-      }
-
-      ::SelectClipRgn(hdcScreen, NULL);
-
-
-
-      ////////////////////////////////////////
-      //
-      // Routine:
-      // Preparation for the
-      // bit blitting screen output.
-      //
-      ////////////////////////////////////////
-
-      // get the update region bound box.
-      // rect rectUpdate;
-      // rgnUpdate.get_bounding_box(rectUpdate);
-
-      // get the ::ca2::window client area box
-      // in screen coordinates.
-      rect64 rectWindow;
-      rectWindow = pwnd->m_rectParentClient;
-
-      // Output rectangle receive the intersection
-      // of ::ca2::window box and update box.
-      //rect rectOutput;
-      //rectOutput.intersect(rectWnd, rectUpdate);
-
-      // OutputClient rectangle receive the Output
-      // rectangle in client coordinates.
-      //rect rectOutputClient(rectOutput);
-      //rectOutputClient -= rectWnd.top_left();
-   //   ::ScreenToClient(oswindowParam, &rectOutputClient.top_left());
-   //   ::ScreenToClient(oswindowParam, &rectOutputClient.bottom_right());
-
-      rect64 rectOutputClient(rectWindow);
-      rectOutputClient -= rectWindow.top_left();
-
-      // The ::ca2::window owned device context is clipped
-      // with the update region in screen coordinates
-      // translated to ::ca2::window client coordinates.
-      //::draw2d::region_sp rgnClip(allocer());
-      //rgnClip->create_rect(0, 0, 0, 0);
-      //rgnClip->CopyRgn(&rgnUpdate);
-      //rgnClip->translate( - rectWnd.top_left());
-
-   //   ::SelectClipRgn(hdcScreen, rgnClip);
-      
-      // Debug
-   #ifdef DEBUG
-      //rect rectClip;
-      //rgnClip->GetRgnBox(rectClip);
-   #endif
-
-      pbuffer->GetBuffer()->SetViewportOrg(0, 0);
-
-      point pt(0, 0);
-
-      ::SetViewportOrgEx(hdcScreen, 0, 0, &pt);
-
-      /////////////////////////////
-      //
-      // Routine:
-      // Bit blitting screen output.
-      //
-      /////////////////////////////
-
-   /*   if(!::DrawDibDraw ( pbuffer->m_drawdib.m_hdrawdib, 
-         hdcScreen, 
-         rectOutputClient.left,
-         rectOutputClient.top,
-         rectOutputClient.width(),
-         rectOutputClient.height(), 
-         &(pbuffer->m_spdib.m_Info.bmiHeader), pbuffer->m_spdib.m_pcolorref, 
-         rectOutput.left,
-         rectOutput.top,
-         rectOutput.width(),
-         rectOutput.height(), 
-         0))
-      {
-         TRACE0("Bitmap not painted.\n");
-      }*/
-
-      if(::GetWindowLong(oswindowParam, GWL_EXSTYLE) & WS_EX_LAYERED)
-      {
-         BLENDFUNCTION blendPixelFunction = { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
-
-         rect64 rectWindow;
-         rectWindow = pwnd->m_rectParentClient;
-
-         point pt(rectWindow.top_left());
-         ::size sz(rectWindow.size());
-
-         if(pt.x < 0)
-         {
-            pt.x = 0;
-            sz.cx += pt.x;
-         }
-
-         if(pt.y < 0)
-         {
-            pt.y = 0;
-            sz.cy += pt.y;
-         }
-
-         class rect rcMonitor;
-
-         System.get_monitor_rect(0, &rcMonitor);
-         
-         sz.cx = (LONG) min(rectWindow.right - pt.x, rcMonitor.right - pt.x);
-         sz.cy = (LONG) min(rectWindow.bottom - pt.y, rcMonitor.bottom - pt.y);
-
-//         m_pbuffer->m_spdib->fill_channel(0xc0, visual::rgba::channel_alpha);
-
-         ::UpdateLayeredWindow(oswindowParam, hdcScreen, &pt, &sz,
-            (HDC)(dynamic_cast<::win::graphics * >(m_pbuffer->GetBuffer()))->get_os_data(),
-            &pt, 0, &blendPixelFunction, ULW_ALPHA);
-
-         class rect rectWin;
-         ::GetWindowRect(oswindowParam, rectWin);
-         if(rect(rectWindow) != rectWin || (pwnd->m_pguie != NULL && (bool) pwnd->m_pguie->oprop("pending_layout")))
-         {
-
-            
-            if(pwnd->m_pguie != NULL && (bool) pwnd->m_pguie->oprop("pending_layout"))
-            {
-               ::oswindow oswindowZOrder = (oswindow) pwnd->m_pguie->oprop("pending_zorder").int32();
-               ::SetWindowPos(oswindowParam, HWND_TOPMOST, 
-                  (int32_t) rectWindow.left, (int32_t) rectWindow.top, (int32_t) rectWindow.width(), (int32_t) rectWindow.height(), SWP_SHOWWINDOW);
-               ::SetWindowPos(oswindowParam, HWND_NOTOPMOST, 
-                  (int32_t) rectWindow.left, (int32_t) rectWindow.top, (int32_t) rectWindow.width(), (int32_t) rectWindow.height(), SWP_SHOWWINDOW);
-               ::SetWindowPos(oswindowParam, oswindowZOrder, 
-                  (int32_t) rectWindow.left, (int32_t) rectWindow.top, (int32_t) rectWindow.width(), (int32_t) rectWindow.height(), SWP_SHOWWINDOW | SWP_FRAMECHANGED);
-               /*sp(simple_frame_window) pframe =  (pwnd->m_pguie);
-               if(pframe != NULL)
-               {
-                  pframe->ActivateFrame();
-               }*/
-               pwnd->m_pguie->oprop("pending_layout") = false;
-            }
-            else
-            {
-               ::SetWindowPos(oswindowParam, NULL, (int32_t) rectWindow.left, (int32_t) rectWindow.top, (int32_t) rectWindow.width(), (int32_t) rectWindow.height(), SWP_SHOWWINDOW);
-            }
-         }
-
-      }
-      else
-      {
-         ::BitBlt(
-         hdcScreen,
-         (int32_t) rectOutputClient.left,
-         (int32_t) rectOutputClient.top,
-         (int32_t) rectOutputClient.width(),
-         (int32_t) rectOutputClient.height(), 
-         (HDC)(dynamic_cast<::win::graphics * >(m_pbuffer->GetBuffer()))->get_os_data(),
-         (int32_t) rectWindow.left,
-         (int32_t) rectWindow.top,
-         SRCCOPY);
-      }
-
-
-      /*::Rectangle(hdcScreen,
-         rectOutputClient.left,
-         rectOutputClient.top,
-         rectOutputClient.width(),
-         rectOutputClient.height());*/
-
-      ::ReleaseDC(oswindowParam, hdcScreen);
-
-//      DWORD dwTimeOut = get_tick_count();
-   //   TRACE("//\n");
-   //   TRACE("// window_draw::TwfOuputScreen\n");
-   //   TRACE("// TickCount = %d \n", dwTimeOut - dwTimeIn);
-   //   TRACE("//\n");
+      pwindow->m_spdib->update_window(pwindow, NULL);
 
       return true;
+
+
    }
 
 

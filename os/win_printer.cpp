@@ -115,7 +115,8 @@ namespace win
          return NULL;
       m_hdc = ::CreateDC("WINSPOOL", (LPCSTR) m_pdevmode->dmDeviceName, NULL, m_pdevmode);
       ::draw2d::graphics_sp g(allocer());
-      WIN_DC(g.m_p)->Attach(m_hdc);
+      throw not_implemented(get_app());
+//      WIN_DC(g.m_p)->Attach(m_hdc);
       return g.detach();
    }
 

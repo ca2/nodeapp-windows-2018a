@@ -1,6 +1,6 @@
 #pragma once
 
-namespace win
+namespace draw2d_gdiplus
 {
 
    //////////////////////////////////////////////////////////////////////
@@ -9,7 +9,7 @@ namespace win
    //   Date : 09-04-98
    //////////////////////////////////////////////////////////////////////
 
-   class CLASS_DECL_win dib :
+   class CLASS_DECL_DRAW2D_GDIPLUS dib :
       virtual public ::draw2d::dib
    {
    public:
@@ -26,6 +26,9 @@ namespace win
       BITMAPINFO           m_info;
       ::draw2d::bitmap_sp      m_spbitmap;
       ::draw2d::graphics_sp    m_spgraphics;
+      HBITMAP                    m_hbitmap;
+      class size64                       m_sizeWnd;
+      BITMAPINFO           m_bitmapinfo;
 
       virtual ::draw2d::graphics * get_graphics();
       virtual ::draw2d::bitmap_sp get_bitmap();
@@ -145,6 +148,10 @@ namespace win
 
       virtual bool from(::draw2d::graphics * pgraphics, FIBITMAP *pfibitmap, bool bUnloadFI);
 
+      virtual bool update_window(::ca2::window * pwnd, ::ca2::signal_object * pobj);
+      virtual bool print_window(::ca2::window * pwnd, ::ca2::signal_object * pobj);
+
+
    };
 
-} // namespace win
+} // namespace draw2d_gdiplus

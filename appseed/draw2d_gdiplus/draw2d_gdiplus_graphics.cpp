@@ -5,7 +5,7 @@
 #undef new
 
 
-namespace win
+namespace draw2d_gdiplus
 {
 
 
@@ -67,7 +67,8 @@ namespace win
 
    sp(::ca2::window) graphics::GetWindow() const
    { 
-      ASSERT(get_handle1() != NULL); return ::win::window::from_handle(::WindowFromDC(get_handle1())); 
+      //ASSERT(get_handle1() != NULL); return ::draw2d_gdiplus::window::from_handle(::WindowFromDC(get_handle1())); 
+      return NULL;
    }
    
    bool graphics::IsPrinting() const
@@ -141,16 +142,16 @@ namespace win
          hdc = ::CreateCompatibleDC(NULL);
 
       }
-      else if(WIN_DC(pgraphics)->m_hdc != NULL)
+      else if(GDIPLUS_GRAPHICS(pgraphics)->m_hdc != NULL)
       {
          
-         hdc = ::CreateCompatibleDC(WIN_DC(pgraphics)->m_hdc);
+         hdc = ::CreateCompatibleDC(GDIPLUS_GRAPHICS(pgraphics)->m_hdc);
 
       }
-      else if(WIN_DC(pgraphics)->m_hdcGraphics != NULL)
+      else if(GDIPLUS_GRAPHICS(pgraphics)->m_hdcGraphics != NULL)
       {
          
-         hdc = ::CreateCompatibleDC(WIN_DC(pgraphics)->m_hdcGraphics);
+         hdc = ::CreateCompatibleDC(GDIPLUS_GRAPHICS(pgraphics)->m_hdcGraphics);
 
       }
       else
@@ -179,7 +180,9 @@ namespace win
    int32_t graphics::ExcludeUpdateRgn(sp(::ca2::window) pWnd)
    { 
       ASSERT(get_handle1() != NULL); 
-      return ::ExcludeUpdateRgn(get_handle1(), WIN_WINDOW(pWnd)->get_handle()); 
+      throw not_implemented(get_app());
+      //return ::ExcludeUpdateRgn(get_handle1(), WIN_WINDOW(pWnd)->get_handle()); 
+      return 0;
    }
 
    int32_t graphics::GetDeviceCaps(int32_t nIndex) const
@@ -252,9 +255,9 @@ namespace win
 
       set_text_rendering(::draw2d::text_rendering_anti_alias_grid_fit);
 
-      m_bitmap = pBitmap;
+      m_spbitmap = pBitmap;
 
-      return m_bitmap;
+      return m_spbitmap;
    }
 
 
@@ -277,13 +280,13 @@ namespace win
          
          HBITMAP hbitmap = (HBITMAP) hObject;
 
-         if(m_bitmap.is_null())
-            m_bitmap.create(allocer());
+         if(m_spbitmap.is_null())
+            m_spbitmap.create(allocer());
 
-         if(m_bitmap.is_null())
+         if(m_spbitmap.is_null())
             return NULL;
 
-         (dynamic_cast < ::win::bitmap * > (m_bitmap.m_p))->m_pbitmap = new Gdiplus::Bitmap(hbitmap, NULL);
+         (dynamic_cast < ::draw2d_gdiplus::bitmap * > (m_spbitmap.m_p))->m_pbitmap = new Gdiplus::Bitmap(hbitmap, NULL);
 
          if(m_pgraphics != NULL)
          {
@@ -305,7 +308,7 @@ namespace win
 
          }
 
-         m_pgraphics = new Gdiplus::Graphics((Gdiplus::Bitmap *) m_bitmap->get_os_data());
+         m_pgraphics = new Gdiplus::Graphics((Gdiplus::Bitmap *) m_spbitmap->get_os_data());
 
          set_text_rendering(::draw2d::text_rendering_anti_alias_grid_fit);
 
@@ -1058,7 +1061,7 @@ namespace win
          return FALSE;
       }
 
-      //return ::BitBlt(get_handle1(), x, y, nWidth, nHeight, WIN_HDC(pgraphicsSrc), xSrc, ySrc, dwRop); 
+      //return ::BitBlt(get_handle1(), x, y, nWidth, nHeight, GDIPLUS_HDC(pgraphicsSrc), xSrc, ySrc, dwRop); 
 
 gdi_fallback:
       
@@ -1067,7 +1070,7 @@ gdi_fallback:
       if(hdcDst == NULL)
          return false;
 
-      HDC hdcSrc = WIN_DC(pgraphicsSrc)->get_hdc();
+      HDC hdcSrc = GDIPLUS_GRAPHICS(pgraphicsSrc)->get_hdc();
 
       if(hdcSrc == NULL)
       {
@@ -1080,7 +1083,7 @@ gdi_fallback:
 
       bool bOk = ::BitBlt(hdcDst, x, y, nWidth, nHeight, hdcSrc, x, y, dwRop) != FALSE;
 
-      WIN_DC(pgraphicsSrc)->release_hdc(hdcSrc);
+      GDIPLUS_GRAPHICS(pgraphicsSrc)->release_hdc(hdcSrc);
 
       release_hdc(hdcDst);
 
@@ -1110,7 +1113,7 @@ gdi_fallback:
 
       return FALSE;
 
-      //return ::StretchBlt(get_handle1(), x, y, nWidth, nHeight, WIN_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth, nSrcHeight, dwRop); 
+      //return ::StretchBlt(get_handle1(), x, y, nWidth, nHeight, GDIPLUS_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth, nSrcHeight, dwRop); 
    
    }
 
@@ -1184,7 +1187,7 @@ gdi_fallback:
                bf.SourceConstantAlpha = 0xFF;
                bf.AlphaFormat = AC_SRC_ALPHA;
                return ::AlphaBlend(get_handle1(), x, y, 
-                  rectText.width(), rectText.height(), WIN_HDC(dib1->get_graphics()), 0, 0, rectText.width(), 
+                  rectText.width(), rectText.height(), GDIPLUS_HDC(dib1->get_graphics()), 0, 0, rectText.width(), 
                   rectText.height(), bf) != FALSE; */
             }
          }
@@ -1240,7 +1243,7 @@ gdi_fallback:
                bf.SourceConstantAlpha = 0xFF;
                bf.AlphaFormat = AC_SRC_ALPHA;
                return ::AlphaBlend(get_handle1(), x, y, 
-                  rectText.width(), rectText.height(), WIN_HDC(dib1->get_graphics()), 0, 0, rectText.width(), 
+                  rectText.width(), rectText.height(), GDIPLUS_HDC(dib1->get_graphics()), 0, 0, rectText.width(), 
                   rectText.height(), bf) != FALSE; */
             }
          }
@@ -1465,12 +1468,12 @@ gdi_fallback:
 
    bool graphics::MaskBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc,
       int32_t xSrc, int32_t ySrc, ::draw2d::bitmap& maskBitmap, int32_t xMask, int32_t yMask, uint32_t dwRop)
-   { ASSERT(get_handle1() != NULL); return ::MaskBlt(get_handle1(), x, y, nWidth, nHeight, WIN_HDC(pgraphicsSrc),
+   { ASSERT(get_handle1() != NULL); return ::MaskBlt(get_handle1(), x, y, nWidth, nHeight, GDIPLUS_HDC(pgraphicsSrc),
    xSrc, ySrc,  (HBITMAP)maskBitmap.get_os_data(), xMask, yMask, dwRop) != FALSE; }
    bool graphics::PlgBlt(LPPOINT lpPoint, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc,
       int32_t nWidth, int32_t nHeight, ::draw2d::bitmap& maskBitmap, int32_t xMask, int32_t yMask)
    { ASSERT(get_handle1() != NULL); 
-   return ::PlgBlt(get_handle1(), lpPoint, WIN_HDC(pgraphicsSrc), xSrc, ySrc, nWidth,
+   return ::PlgBlt(get_handle1(), lpPoint, GDIPLUS_HDC(pgraphicsSrc), xSrc, ySrc, nWidth,
    nHeight, (HBITMAP)maskBitmap.get_os_data(), xMask, yMask) != FALSE; }
    bool graphics::SetPixelV(int32_t x, int32_t y, COLORREF crColor)
    { ASSERT(get_handle1() != NULL); 
@@ -1528,7 +1531,7 @@ gdi_fallback:
    ::draw2d::bitmap & graphics::GetCurrentBitmap() const
    {
 
-      return *m_bitmap.m_p;
+      return *m_spbitmap.m_p;
 
    }
 
@@ -1930,7 +1933,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       }
 
       return ::AlphaBlend(get_handle1(), xDest, yDest, 
-         nDestWidth, nDestHeight, WIN_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth, 
+         nDestWidth, nDestHeight, GDIPLUS_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth, 
          nSrcHeight, blend) != FALSE; 
    }*/
 
@@ -1939,7 +1942,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       int32_t nDestHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, 
       int32_t nSrcHeight, UINT crTransparent)
    { ASSERT(get_handle1() != NULL); return ::TransparentBlt(get_handle1(), xDest, yDest, 
-   nDestWidth, nDestHeight, WIN_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth, 
+   nDestWidth, nDestHeight, GDIPLUS_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth, 
    nSrcHeight, crTransparent) != FALSE; }
    
    bool graphics::GradientFill(TRIVERTEX* pVertices, ULONG nVertices, void * pMesh, ULONG nMeshElements, uint32_t dwMode)
@@ -1994,14 +1997,14 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 
 
-   __STATIC_DATA HBRUSH gen_HalftoneBrush = 0;
+  // __STATIC_DATA HBRUSH gen_HalftoneBrush = 0;
 
-   void c_cdecl __win_gdi_x_term()
-   {
-      __delete_object((HGDIOBJ*)&gen_HalftoneBrush);
-   }
-   char gen_WingdixTerm = 0;
-
+//   void c_cdecl __win_gdi_x_term()
+  // {
+   //  __delete_object((HGDIOBJ*)&gen_HalftoneBrush);
+   //}
+   //char gen_WingdixTerm = 0;
+//
    /////////////////////////////////////////////////////////////////////////////
    // More coordinate transforms (in separate file to avoid transitive refs)
 
@@ -2115,7 +2118,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          gen_WingdixTerm = (char)!atexit(&__win_gdi_x_term);
       ::ca2::UnlockGlobals(CRIT_HALFTONEBRUSH);
 
-//      return ::win::brush::from_handle(papp, gen_HalftoneBrush);*/
+//      return ::draw2d_gdiplus::brush::from_handle(papp, gen_HalftoneBrush);*/
       return NULL;
    }
 
@@ -2243,12 +2246,12 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 
 
-   //::draw2d::graphics * ::win::graphics::from_handle(HDC hDC)
+   //::draw2d::graphics * ::draw2d_gdiplus::graphics::from_handle(HDC hDC)
    //{
       //hdc_map* pMap = afxMapHDC(TRUE); //create map if not exist
       //ASSERT(pMap != NULL);
 //      ::draw2d::graphics * pgraphics = (::draw2d::graphics *)pMap->from_handle(hDC);
-  //    ASSERT(pgraphics == NULL || (dynamic_cast<::win::graphics * >(pgraphics))->get_handle1() == hDC);
+  //    ASSERT(pgraphics == NULL || (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->get_handle1() == hDC);
     //  return pgraphics;
      // return NULL;
    //}
@@ -2479,7 +2482,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 //   ::draw2d::object* graphics::SelectGdiObject(sp(::ca2::application) papp, HDC hDC, HGDIOBJ h)
   // {
-//      return ::win::object::from_handle(papp, ::SelectObject(hDC, h));
+//      return ::draw2d_gdiplus::object::from_handle(papp, ::SelectObject(hDC, h));
    //}
 
    ::draw2d::object* graphics::SelectStockObject(int32_t nIndex)
@@ -2491,7 +2494,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          hOldObj = ::SelectObject(get_handle1(), hObject);
       if(get_handle2() != NULL)
          hOldObj = ::SelectObject(get_handle2(), hObject);
-      return ::win::object::from_handle(get_app(), hOldObj);*/
+      return ::draw2d_gdiplus::object::from_handle(get_app(), hOldObj);*/
 
       return NULL;
    }
@@ -2505,7 +2508,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          hOldObj = ::SelectObject(get_handle1(), pPen->get_os_data());
       if(get_handle2() != NULL)
          hOldObj = ::SelectObject(get_handle2(), pPen->get_os_data());
-      return dynamic_cast < pen * > (::win::object::from_handle(get_app(), hOldObj));*/
+      return dynamic_cast < pen * > (::draw2d_gdiplus::object::from_handle(get_app(), hOldObj));*/
       m_penxyz = *pPen;
       return &m_penxyz;
    }
@@ -2519,7 +2522,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          hOldObj = ::SelectObject(get_handle1(), pBrush->get_os_data());
       if(get_handle2() != NULL)
          hOldObj = ::SelectObject(get_handle2(), pBrush->get_os_data());
-      return dynamic_cast < ::draw2d::brush * > (::win::object::from_handle(get_app(), hOldObj));*/
+      return dynamic_cast < ::draw2d::brush * > (::draw2d_gdiplus::object::from_handle(get_app(), hOldObj));*/
       m_brushxyz = *pBrush;
       return &m_brushxyz;
 
@@ -2534,7 +2537,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          hOldObj = ::SelectObject(get_handle1(), pFont->get_os_data());
       if(get_handle2() != NULL)
          hOldObj = ::SelectObject(get_handle2(), pFont->get_os_data());
-      return dynamic_cast < ::draw2d::font * > (::win::object::from_handle(get_app(), hOldObj));*/
+      return dynamic_cast < ::draw2d::font * > (::draw2d_gdiplus::object::from_handle(get_app(), hOldObj));*/
 
       /*ASSERT(pFont != NULL);
 
@@ -2564,7 +2567,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    ::draw2d::palette* graphics::SelectPalette(::draw2d::palette* pPalette, bool bForceBackground)
    {
       return NULL;
-//      return dynamic_cast < ::draw2d::palette * > (::win::object::from_handle(get_app(), ::SelectPalette(get_handle1(), (HPALETTE)pPalette->get_os_data(), bForceBackground)));
+//      return dynamic_cast < ::draw2d::palette * > (::draw2d_gdiplus::object::from_handle(get_app(), ::SelectPalette(get_handle1(), (HPALETTE)pPalette->get_os_data(), bForceBackground)));
    }
 
    COLORREF graphics::SetBkColor(COLORREF crColor)
@@ -3126,49 +3129,49 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       {
          // these records have effects different for each graphics derived class
       case META_SETMAPMODE:
-         (dynamic_cast<::win::graphics * >(pgraphics))->SetMapMode((int32_t)(int16_t)pMetaRec->rdParm[0]);
+         (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SetMapMode((int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SETWINDOWEXT:
-         (dynamic_cast<::win::graphics * >(pgraphics))->SetWindowExt(
+         (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SetWindowExt(
             (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SETWINDOWORG:
-         (dynamic_cast<::win::graphics * >(pgraphics))->SetWindowOrg(
+         (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SetWindowOrg(
             (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SETVIEWPORTEXT:
-         (dynamic_cast<::win::graphics * >(pgraphics))->SetViewportExt(
+         (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SetViewportExt(
             (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SETVIEWPORTORG:
-         (dynamic_cast<::win::graphics * >(pgraphics))->SetViewportOrg(
+         (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SetViewportOrg(
             (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SCALEWINDOWEXT:
-         (dynamic_cast<::win::graphics * >(pgraphics))->ScaleWindowExt(
+         (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->ScaleWindowExt(
             (int32_t)(int16_t)pMetaRec->rdParm[3], (int32_t)(int16_t)pMetaRec->rdParm[2],
             (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SCALEVIEWPORTEXT:
-         (dynamic_cast<::win::graphics * >(pgraphics))->ScaleViewportExt(
+         (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->ScaleViewportExt(
             (int32_t)(int16_t)pMetaRec->rdParm[3], (int32_t)(int16_t)pMetaRec->rdParm[2],
             (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_OFFSETVIEWPORTORG:
-         (dynamic_cast<::win::graphics * >(pgraphics))->OffsetViewportOrg(
+         (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->OffsetViewportOrg(
             (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SAVEDC:
-         (dynamic_cast<::win::graphics * >(pgraphics))->SaveDC();
+         (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SaveDC();
          break;
       case META_RESTOREDC:
-         (dynamic_cast<::win::graphics * >(pgraphics))->RestoreDC((int32_t)(int16_t)pMetaRec->rdParm[0]);
+         (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->RestoreDC((int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SETBKCOLOR:
-         (dynamic_cast<::win::graphics * >(pgraphics))->SetBkColor(*(UNALIGNED COLORREF*)&pMetaRec->rdParm[0]);
+         (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SetBkColor(*(UNALIGNED COLORREF*)&pMetaRec->rdParm[0]);
          break;
       case META_SETTEXTCOLOR:
-         (dynamic_cast<::win::graphics * >(pgraphics))->SetTextColor(*(UNALIGNED COLORREF*)&pMetaRec->rdParm[0]);
+         (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SetTextColor(*(UNALIGNED COLORREF*)&pMetaRec->rdParm[0]);
          break;
 
          // need to watch out for SelectObject(HFONT), for custom font mapping
@@ -3180,27 +3183,27 @@ VOID Example_EnumerateMetafile9(HDC hdc)
             {
                // object type is unknown, determine if it is a font
                HFONT hStockFont = (HFONT)::GetStockObject(SYSTEM_FONT);
-               HFONT hFontOld = (HFONT)::SelectObject((dynamic_cast<::win::graphics * >(pgraphics))->get_handle1(), hStockFont);
-               HGDIOBJ hObjOld = ::SelectObject((dynamic_cast<::win::graphics * >(pgraphics))->get_handle1(), hObject);
+               HFONT hFontOld = (HFONT)::SelectObject((dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->get_handle1(), hStockFont);
+               HGDIOBJ hObjOld = ::SelectObject((dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->get_handle1(), hObject);
                if (hObjOld == hStockFont)
                {
                   // got the stock object back, so must be selecting a font
                   throw not_implemented(::ca2::get_thread_app());
-//                  (dynamic_cast<::win::graphics * >(pgraphics))->SelectObject(::win::font::from_handle(pgraphics->get_app(), (HFONT)hObject));
+//                  (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SelectObject(::draw2d_gdiplus::font::from_handle(pgraphics->get_app(), (HFONT)hObject));
                   break;  // don't play the default record
                }
                else
                {
                   // didn't get the stock object back, so restore everything
-                  ::SelectObject((dynamic_cast<::win::graphics * >(pgraphics))->get_handle1(), hFontOld);
-                  ::SelectObject((dynamic_cast<::win::graphics * >(pgraphics))->get_handle1(), hObjOld);
+                  ::SelectObject((dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->get_handle1(), hFontOld);
+                  ::SelectObject((dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->get_handle1(), hObjOld);
                }
                // and fall through to PlayMetaFileRecord...
             }
             else if (nObjType == OBJ_FONT)
             {
                // play back as graphics::SelectObject(::draw2d::font*)
-//               (dynamic_cast<::win::graphics * >(pgraphics))->SelectObject(::win::font::from_handle(pgraphics->get_app(), (HFONT)hObject));
+//               (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SelectObject(::draw2d_gdiplus::font::from_handle(pgraphics->get_app(), (HFONT)hObject));
                throw not_implemented(::ca2::get_thread_app());
                break;  // don't play the default record
             }
@@ -3796,7 +3799,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 
 
-} // namespace win
+} // namespace draw2d_gdiplus
 
 
 
@@ -3819,7 +3822,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 
 
-namespace win
+namespace draw2d_gdiplus
 {
 
    void graphics::FillSolidRect(LPCRECT lpRect, COLORREF clr)
@@ -4137,7 +4140,7 @@ namespace win
    }
 
 
-   void graphics::set_text_rendering(::ca2::e_text_rendering etextrendering)
+   void graphics::set_text_rendering(::draw2d::e_text_rendering etextrendering)
    {
       m_etextrendering = etextrendering;
 
@@ -4292,7 +4295,7 @@ namespace win
    bool graphics::blur(bool bExpand, double dRadius, LPCRECT lpcrect)
    {
 
-      if(m_bitmap.is_null() || m_bitmap->get_os_data() == NULL)
+      if(m_spbitmap.is_null() || m_spbitmap->get_os_data() == NULL)
          return false;
 
       Gdiplus::BlurParams myBlurParams;
@@ -4326,7 +4329,7 @@ namespace win
       rect.right     = (LONG) points[1].X;
       rect.bottom    = (LONG) points[1].Y;
 
-      Gdiplus::Bitmap * pbitmap = ((Gdiplus::Bitmap *) m_bitmap->get_os_data());
+      Gdiplus::Bitmap * pbitmap = ((Gdiplus::Bitmap *) m_spbitmap->get_os_data());
 
       pbitmap->ApplyEffect(&myBlur, &rect);
 
@@ -4375,4 +4378,80 @@ namespace win
 
    }
 
-} // namespace win
+
+   bool graphics::create_client_dc(::ca2::window * pwnd)
+   { 
+      
+      if(pwnd == NULL)
+      {
+         Attach(::GetDC(NULL));
+      }
+      else
+      {
+         Attach(::GetDC(pwnd->get_handle()));
+      }
+
+      return true;
+
+   }
+
+
+   bool graphics::create_window_dc(::ca2::window * pwnd)
+   {
+
+      ASSERT(::IsWindow(pwnd->get_handle())); 
+
+      Attach(::GetWindowDC(pwnd->get_handle()));
+
+      return true;
+
+   }
+
+
+   bool graphics::release_dc(::ca2::window * pwnd)
+   { 
+
+      if(pwnd == NULL)
+         return false;
+
+      if(get_handle() == NULL)
+         return false;
+
+      try
+      {
+
+         delete m_pgraphics;
+
+      }
+      catch(...)
+      {
+
+         TRACE("::win::window::ReleaseDC : Failed to delete Gdiplus::Graphics");
+
+      }
+
+      m_pgraphics = NULL;
+
+      BOOL bOk = ::ReleaseDC(pwnd->get_handle(), m_hdc); 
+
+      if(!bOk)
+      {
+
+         TRACE("::win::window::ReleaseDC : Failed to Release window dc");
+
+      }
+
+      m_hdc = NULL;
+
+
+
+      return true;
+
+   }
+
+
+} // namespace draw2d_gdiplus
+
+
+
+

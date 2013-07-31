@@ -2,7 +2,7 @@
 
 #undef new
 
-namespace win
+namespace draw2d_gdiplus
 {
 
 
@@ -33,7 +33,7 @@ namespace win
    //}
    //font* font::from_handle(sp(::ca2::application) papp, HFONT hFont)
    //{
-     // return dynamic_cast < font * > (::win::object::from_handle(papp, hFont)); 
+     // return dynamic_cast < font * > (::draw2d_gdiplus::object::from_handle(papp, hFont)); 
    //}
 /*   bool font::CreateFontIndirect(const LOGFONT* lpLogFont)
    { 
@@ -77,7 +77,7 @@ namespace win
 
    void font::construct(const ::draw2d::font & fontParam)
       {
-         class font & font = const_cast < ::win::font & > (dynamic_cast < const ::win::font & > (fontParam));
+         class font & font = const_cast < ::draw2d_gdiplus::font & > (dynamic_cast < const ::draw2d_gdiplus::font & > (fontParam));
          if(font.m_pfont == NULL)
          {
             if(m_pfont != NULL)
@@ -214,4 +214,4 @@ namespace win
 
    }
 
-} // namespace win
+} // namespace draw2d_gdiplus

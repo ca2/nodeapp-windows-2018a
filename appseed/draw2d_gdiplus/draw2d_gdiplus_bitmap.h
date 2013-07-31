@@ -1,11 +1,11 @@
 #pragma once
 
 
-namespace win
+namespace draw2d_gdiplus
 {
 
 
-   class CLASS_DECL_win bitmap : 
+   class CLASS_DECL_DRAW2D_GDIPLUS bitmap : 
       virtual public ::draw2d::bitmap
    {
    public:
@@ -54,7 +54,7 @@ namespace win
    };
 
 
-} // namespace win
+} // namespace draw2d_gdiplus
 
 
 

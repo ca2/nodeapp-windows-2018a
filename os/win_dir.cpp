@@ -964,7 +964,7 @@ namespace win
    }
 
 
-   class ::draw2d::path & dir::path()
+   class ::ca2::path & dir::path()
    {
       return m_path;
    }

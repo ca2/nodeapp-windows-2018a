@@ -6,7 +6,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // Helper functions
 
-__STATIC long CLASS_DECL_win _gen::MultMultDivDiv(
+__STATIC long CLASS_DECL_DRAW2D_GDIPLUS _gen::MultMultDivDiv(
    int32_t factor, int32_t num1, int32_t num2,
    int32_t den1, int32_t den2)
 {
@@ -255,7 +255,7 @@ void preview_dc::MirrorAttributes()
    case DEFAULT_GUI_FONT:
       // Handle the stock fonts correctly
       {
-         ::draw2d::object* pObject = ::win::object::from_handle(
+         ::draw2d::object* pObject = ::draw2d_gdiplus::object::from_handle(
                      ::SelectObject(get_handle2(), hObj));
 
          // Don't re-mirror screen font if this is the same font.
@@ -273,7 +273,7 @@ void preview_dc::MirrorAttributes()
    default:
       if (get_os_data() != NULL)
          ::SelectObject(get_os_data(), hObj);
-      return ::win::object::from_handle(::SelectObject(get_handle2(), hObj));
+      return ::draw2d_gdiplus::object::from_handle(::SelectObject(get_handle2(), hObj));
    }
 }
 
@@ -375,7 +375,7 @@ void preview_dc::MirrorFont()
    ASSERT(get_handle2() != NULL);
    ASSERT_VALID(pFont);
 
-   ::draw2d::font* pOldFont = (::draw2d::font*) ::win::object::from_handle(
+   ::draw2d::font* pOldFont = (::draw2d::font*) ::draw2d_gdiplus::object::from_handle(
             ::SelectObject(get_handle2(), pFont->get_handle()));
 
    // If same as already selected, don't re-mirror screen font
@@ -476,7 +476,7 @@ size preview_dc::ScaleWindowExt(int32_t xNum, int32_t xDenom, int32_t yNum, int3
 
 // private helpers for TextOut functions
 
-__STATIC int32_t CLASS_DECL_win _gen::ComputeNextTab(int32_t x, UINT nTabStops, LPINT lpnTabStops, int32_t nTabOrigin, int32_t nTabWidth)
+__STATIC int32_t CLASS_DECL_DRAW2D_GDIPLUS _gen::ComputeNextTab(int32_t x, UINT nTabStops, LPINT lpnTabStops, int32_t nTabOrigin, int32_t nTabWidth)
 {
    ENSURE(nTabWidth!=0);
    x -= nTabOrigin;        // normalize position to tab origin
@@ -987,7 +987,7 @@ void preview_dc::PrinterDPtoScreenDP(LPPOINT lpPoint) const
 ////////////////////////////////////////////////////////////////////////////
 // ::ca2::CreateDC
 
-HDC CLASS_DECL_win ::ca2::CreateDC(HGLOBAL hDevNames, HGLOBAL hDevMode)
+HDC CLASS_DECL_DRAW2D_GDIPLUS ::ca2::CreateDC(HGLOBAL hDevNames, HGLOBAL hDevMode)
 {
    if (hDevNames == NULL)
       return NULL;

@@ -44,6 +44,10 @@ namespace win
 
       application(sp(::ca2::application) papp);
       virtual ~application();
+
+
+      virtual string draw2d_get_default_library_name();
+
       
       virtual HINSTANCE GetHinstance();
       bool _001OnDDECommand(const char * lpcsz);

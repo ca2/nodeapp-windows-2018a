@@ -35,7 +35,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{9163E31A-2D5A-4F18-AD6F-B561C76E5054}</ProjectGuid>
+    <ProjectGuid>{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}</ProjectGuid>
     <RootNamespace>os</RootNamespace>
     <Keyword>MFCProj</Keyword>
     <VCTargetsPath Condition="'$(VCTargetsPath11)' != '' and '$(VSVersion)' == '' and $(VisualStudioVersion) == ''">$(VCTargetsPath11)</VCTargetsPath>
@@ -253,7 +253,7 @@
       <AdditionalOptions>-Zm384 /bigobj </AdditionalOptions>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>.;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/thirdparty/include;$(SolutionDir)../../../app/thirdparty/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../app/appseed/ca2;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_VMSWIN_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CA2_DRAW2D_GDIPLUS_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>Async</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -597,7 +597,7 @@
       <AdditionalOptions>-Zm384 /bigobj</AdditionalOptions>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>.;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/thirdparty/include;$(SolutionDir)../../../app/thirdparty/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../app/appseed/ca2;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_VMSWIN_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CA2_DRAW2D_GDIPLUS_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>Async</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -939,133 +939,60 @@
     <ClInclude Include="..\operational_system\version_dll.h" />
     <ClInclude Include="..\operational_system\version_windows.h" />
     <ClInclude Include="..\operational_system\_.h" />
-    <ClInclude Include="win_printer.h" />
-    <ClInclude Include="win_file_find.h" />
+    <ClInclude Include="draw2d_gdiplus.h" />
+    <ClInclude Include="draw2d_gdiplus_bitmap.h" />
+    <ClInclude Include="draw2d_gdiplus_brush.h" />
+    <ClInclude Include="draw2d_gdiplus_dib.h" />
+    <ClInclude Include="draw2d_gdiplus_factory_exchange.h" />
+    <ClInclude Include="draw2d_gdiplus_font.h" />
+    <ClInclude Include="draw2d_gdiplus_graphics.h" />
+    <ClInclude Include="draw2d_gdiplus_object.h" />
+    <ClInclude Include="draw2d_gdiplus_palette.h" />
+    <ClInclude Include="draw2d_gdiplus_path.h" />
+    <ClInclude Include="draw2d_gdiplus_pen.h" />
+    <ClInclude Include="draw2d_gdiplus_region.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="gen_1.h" />
-    <ClInclude Include="inttypes.h" />
-    <ClInclude Include="os.h" />
-    <ClInclude Include="stdint.h" />
     <ClInclude Include="template\core.h" />
     <ClInclude Include="..\include\win.h" />
     <ClInclude Include="..\include\win32_system.h" />
-    <ClInclude Include="win.h" />
-    <ClInclude Include="win1.h" />
-    <ClInclude Include="win32_system.h" />
-    <ClInclude Include="win_handle.h" />
-    <ClInclude Include="win_shell.h" />
-    <ClInclude Include="win_file.h" />
-    <ClInclude Include="win_file_set.h" />
-    <ClInclude Include="win_file_system.h" />
-    <ClInclude Include="win_application.h" />
-    <ClInclude Include="win_bitmap.h" />
-    <ClInclude Include="win_brush.h" />
-    <ClInclude Include="win_copydesk.h" />
-    <ClInclude Include="win_crypt.h" />
-    <ClInclude Include="win_dib.h" />
-    <ClInclude Include="win_dir.h" />
-    <ClInclude Include="win_exception.h" />
-    <ClInclude Include="win_factory_exchange.h" />
-    <ClInclude Include="win_folder_watch.h" />
-    <ClInclude Include="win_font.h" />
-    <ClInclude Include="win_graphics.h" />
-    <ClInclude Include="win_graphics_object.h" />
-    <ClInclude Include="win_graphics_path.h" />
-    <ClInclude Include="win_implementation.h" />
-    <ClInclude Include="win_internal.h" />
-    <ClInclude Include="win_ip_enum.h" />
-    <ClInclude Include="win_os.h" />
-    <ClInclude Include="win_palette.h" />
-    <ClInclude Include="win_pen.h" />
-    <ClInclude Include="win_port_forward.h" />
-    <ClInclude Include="win_region.h" />
-    <ClInclude Include="win_registry.h" />
-    <ClInclude Include="win_resource.h" />
-    <ClInclude Include="win_state.h" />
-    <ClInclude Include="win_stdio_file.h" />
-    <ClInclude Include="win_thread.h" />
-    <ClInclude Include="win_thread_slots.h" />
-    <ClInclude Include="win_uac_tools.h" />
-    <ClInclude Include="win_window.h" />
-    <ClInclude Include="win_window_draw.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\app\appseed\ca2\ca2.vcxproj">
-      <Project>{afc48570-75e4-46bd-b8ab-4590b257e1c8}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\app\appseed\ca\ca.vcxproj">
-      <Project>{ab77745a-af30-4253-9e4b-961bf2d98641}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\app\appseed\c\c.vcxproj">
-      <Project>{4d7d3626-ada6-4ca2-9566-ed7b131e3d51}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\app\thirdparty\appseed\FreeImage\FreeImage.vcxproj">
-      <Project>{b39ed2b3-d53a-4077-b957-930979a3577d}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+    <ClCompile Include="draw2d_gdiplus_bitmap.cpp" />
+    <ClCompile Include="draw2d_gdiplus_brush.cpp" />
+    <ClCompile Include="draw2d_gdiplus_dib.cpp" />
+    <ClCompile Include="draw2d_gdiplus_factory_exchange.cpp" />
+    <ClCompile Include="draw2d_gdiplus_font.cpp" />
+    <ClCompile Include="draw2d_gdiplus_graphics.cpp" />
+    <ClCompile Include="draw2d_gdiplus_object.cpp" />
+    <ClCompile Include="draw2d_gdiplus_palette.cpp" />
+    <ClCompile Include="draw2d_gdiplus_path.cpp" />
+    <ClCompile Include="draw2d_gdiplus_pen.cpp" />
+    <ClCompile Include="draw2d_gdiplus_preview_dc.cpp" />
+    <ClCompile Include="draw2d_gdiplus_region.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='profiler|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='profiler|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='memdleak|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="os.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="win1.cpp" />
-    <ClCompile Include="win2.cpp" />
-    <ClCompile Include="win_printer.cpp" />
-    <ClCompile Include="win_afxabort.cpp" />
-    <ClCompile Include="win_afxmem.cpp" />
-    <ClCompile Include="win_afxstate.cpp" />
-    <ClCompile Include="win_appcore.cpp" />
-    <ClCompile Include="win_appinit.cpp" />
-    <ClCompile Include="win_application.cpp" />
-    <ClCompile Include="win_appmodul.cpp" />
-    <ClCompile Include="win_appterm.cpp" />
-    <ClCompile Include="win_bitmap.cpp" />
-    <ClCompile Include="win_brush.cpp" />
-    <ClCompile Include="win_copydesk.cpp" />
-    <ClCompile Include="win_crypt.cpp" />
-    <ClCompile Include="win_dib.cpp" />
-    <ClCompile Include="win_dir.cpp" />
-    <ClCompile Include="win_dumpinit.cpp" />
-    <ClCompile Include="win_error.cpp" />
-    <ClCompile Include="win_exception.cpp" />
-    <ClCompile Include="win_factory_exchange.cpp" />
-    <ClCompile Include="win_file.cpp" />
-    <ClCompile Include="win_file_find.cpp" />
-    <ClCompile Include="win_file_set.cpp" />
-    <ClCompile Include="win_file_system.cpp" />
-    <ClCompile Include="win_folder_watch.cpp" />
-    <ClCompile Include="win_font.cpp" />
-    <ClCompile Include="win_graphics.cpp" />
-    <ClCompile Include="win_graphics_object.cpp" />
-    <ClCompile Include="win_graphics_path.cpp" />
-    <ClCompile Include="win_handle.cpp" />
-    <ClCompile Include="win_ip_enum.cpp" />
-    <ClCompile Include="win_main.cpp" />
-    <ClCompile Include="win_os.cpp" />
-    <ClCompile Include="win_palette.cpp" />
-    <ClCompile Include="win_pen.cpp" />
-    <ClCompile Include="win_port_forward.cpp" />
-    <ClCompile Include="win_preview_dc.cpp" />
-    <ClCompile Include="win_region.cpp" />
-    <ClCompile Include="win_registry.cpp" />
-    <ClCompile Include="win_resource.cpp" />
-    <ClCompile Include="win_shell.cpp" />
-    <ClCompile Include="win_stdio_file.cpp" />
-    <ClCompile Include="win_thread.cpp" />
-    <ClCompile Include="win_thread_local_storage.cpp" />
-    <ClCompile Include="win_trace.cpp" />
-    <ClCompile Include="win_uac_tools.cpp" />
-    <ClCompile Include="win_util.cpp" />
-    <ClCompile Include="win_window.cpp" />
-    <ClCompile Include="win_window_draw.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="os.def" />
+    <None Include="draw2d_gdiplus.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\app\appseed\ca2\ca2.vcxproj">
+      <Project>{afc48570-75e4-46bd-b8ab-4590b257e1c8}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\app\appseed\ca\ca.vcxproj">
+      <Project>{ab77745a-af30-4253-9e4b-961bf2d98641}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\app\appseed\c\c.vcxproj">
+      <Project>{4d7d3626-ada6-4ca2-9566-ed7b131e3d51}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\app\thirdparty\appseed\FreeImage\FreeImage.vcxproj">
+      <Project>{b39ed2b3-d53a-4077-b957-930979a3577d}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

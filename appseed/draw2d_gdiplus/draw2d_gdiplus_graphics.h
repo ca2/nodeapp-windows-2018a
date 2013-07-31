@@ -3,13 +3,15 @@
 
 #undef new
 
+
 #include <GdiPlus.h>
 
 
-namespace win
+namespace draw2d_gdiplus
 {
 
-   class CLASS_DECL_win graphics : 
+
+   class CLASS_DECL_DRAW2D_GDIPLUS graphics : 
       virtual public ::draw2d::graphics
    {
       // // DECLARE_DYNCREATE(::draw2d::graphics_sp)
@@ -503,10 +505,16 @@ namespace win
       // used for implementation of non-virtual SelectObject calls
       //static ::draw2d::object* SelectGdiObject(sp(::ca2::application) papp, HDC hDC, HGDIOBJ h);
 
+      virtual bool create_client_dc(::ca2::window * pwnd);
+      virtual bool create_window_dc(::ca2::window * pwnd);
+      virtual bool release_dc(::ca2::window * pwnd);
+
+
+
    };
 
 
-} // namespace win
+} // namespace draw2d_gdiplus
 
 
 #define new DEBUG_NEW

@@ -1,6 +1,6 @@
 #include "framework.h"
 
-namespace win
+namespace draw2d_gdiplus
 {
 
    object::object()
@@ -71,7 +71,7 @@ namespace win
    {
       hgdiobj_map* pMap = afxMapHGDIOBJ(TRUE); //create map if not exist
       ASSERT(pMap != NULL);
-      object* pObject = (::win::object*)pMap->from_handle(h, &graphics_object_allocator, papp);
+      object* pObject = (::draw2d_gdiplus::object*)pMap->from_handle(h, &graphics_object_allocator, papp);
       ASSERT(pObject == NULL || pObject->get_os_data() == h);
       return pObject;
    }
@@ -155,7 +155,7 @@ namespace win
    }
 
 
-} // namespace win
+} // namespace draw2d_gdiplus
 
 
 /*hgdiobj_map * afxMapHGDIOBJ(bool bCreate)
