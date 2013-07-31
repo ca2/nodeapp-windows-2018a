@@ -1,6 +1,0 @@
-LIBRARY "os"
-
-EXPORTS
-ca2_factory_exchange
-ca2_main
-
