@@ -34,6 +34,11 @@ namespace draw2d_gdiplus
       cx                   = 0;
       cy                   = 0;
 
+      m_sizeWnd.cx = 0;
+      m_sizeWnd.cy = 0;
+      m_hbitmap = NULL;
+      ZERO(m_bitmapinfo);
+
    }
 
    COLORREF * dib::get_data()
