@@ -1,4 +1,4 @@
-LIBRARY "drawd_gdiplus"
+LIBRARY "draw2d_gdiplus"
 
 EXPORTS
 ca2_factory_exchange

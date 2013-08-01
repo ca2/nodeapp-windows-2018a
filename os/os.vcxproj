@@ -920,6 +920,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\operational_system\bare_operational_system.h" />
+    <ClInclude Include="..\operational_system\cairo_config.h" />
+    <ClInclude Include="..\operational_system\cairo_features.h" />
     <ClInclude Include="..\operational_system\_c.h" />
     <ClInclude Include="..\operational_system\_ca.h" />
     <ClInclude Include="..\operational_system\cross\cross.h" />
