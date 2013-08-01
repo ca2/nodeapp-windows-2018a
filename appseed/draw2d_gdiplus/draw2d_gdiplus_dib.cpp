@@ -449,7 +449,7 @@ namespace draw2d_gdiplus
       if(op == 123) // zero dest RGB, invert alpha, and OR src RGB
       {
          int32_t isize=cx*cy;
-         LPDWORD lpbitsSrc= (LPDWORD) GDIPLUS_DIB(pdib)->m_pcolorref;
+         LPDWORD lpbitsSrc= (LPDWORD) pdib->m_pcolorref;
          LPDWORD lpbitsDest= (LPDWORD) m_pcolorref;
 
          COLORREF _colorref = RGB ( 0, 0, 0 ) | (255 << 24);
@@ -645,20 +645,20 @@ namespace draw2d_gdiplus
    void dib::copy(::draw2d::dib * pdib)
    {
       // If DibSize Wrong Re-create dib
-      if ( (GDIPLUS_DIB(pdib)->cx!=cx) || (GDIPLUS_DIB(pdib)->cy!=cy) )
-         GDIPLUS_DIB(pdib)->create ( cx, cy );
+      if ( (pdib->cx!=cx) || (pdib->cy!=cy) )
+         pdib->create ( cx, cy );
       // do copy
-      memcpy ( GDIPLUS_DIB(pdib)->m_pcolorref, m_pcolorref, cx*cy*4 );
+      memcpy ( pdib->m_pcolorref, m_pcolorref, cx*cy*4 );
    }
 
 
    void dib::Paste ( ::draw2d::dib * pdib )
    {
       // If DibSize Wrong Re-create dib
-      if ( (cx!=GDIPLUS_DIB(pdib)->cx) || (cy!=GDIPLUS_DIB(pdib)->cy) )
-         create ( GDIPLUS_DIB(pdib)->cx, GDIPLUS_DIB(pdib)->cy );
+      if ( (cx!=pdib->cx) || (cy!=pdib->cy) )
+         create ( pdib->cx, pdib->cy );
       // do Paste
-      memcpy ( m_pcolorref, GDIPLUS_DIB(pdib)->m_pcolorref, cx*cy*4 );
+      memcpy ( m_pcolorref, pdib->m_pcolorref, cx*cy*4 );
    }
 
    bool dib::color_blend(COLORREF cr, BYTE bAlpha)
@@ -691,7 +691,7 @@ namespace draw2d_gdiplus
       if(size() != pdib->size())
          return;
 
-      BYTE *src=(BYTE*)GDIPLUS_DIB(pdib)->m_pcolorref;
+      BYTE *src=(BYTE*)pdib->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
       int32_t size=cx*cy;
          
@@ -711,9 +711,9 @@ namespace draw2d_gdiplus
          size() != pdibA->size())
          return false;
 
-      BYTE *src=(BYTE*)GDIPLUS_DIB(pdib)->m_pcolorref;
+      BYTE *src=(BYTE*)pdib->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
-      BYTE *alf=(BYTE*)GDIPLUS_DIB(pdibA)->m_pcolorref;
+      BYTE *alf=(BYTE*)pdibA->m_pcolorref;
       int32_t size=cx*cy;
 
       A = 2 - A;
@@ -736,7 +736,7 @@ namespace draw2d_gdiplus
       if(size() != pdib->size())
          return;
 
-      BYTE *src=(BYTE*)GDIPLUS_DIB(pdib)->m_pcolorref;
+      BYTE *src=(BYTE*)pdib->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
       int32_t size=cx*cy;
          
@@ -755,7 +755,7 @@ namespace draw2d_gdiplus
       if(size() != pdib->size())
          return;
 
-      BYTE *src=(BYTE*)GDIPLUS_DIB(pdib)->m_pcolorref;
+      BYTE *src=(BYTE*)pdib->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
       int32_t size=cx*cy;
          
@@ -778,7 +778,7 @@ namespace draw2d_gdiplus
       if(size() != pdib->size())
          return;
 
-      BYTE *src=(BYTE*)GDIPLUS_DIB(pdib)->m_pcolorref;
+      BYTE *src=(BYTE*)pdib->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
       int32_t size=cx*cy;
          
@@ -798,7 +798,7 @@ namespace draw2d_gdiplus
       if(size() != pdib->size())
          return;
 
-      BYTE *src=(BYTE*)GDIPLUS_DIB(pdib)->m_pcolorref;
+      BYTE *src=(BYTE*)pdib->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
       int32_t size=cx*cy;
          
@@ -817,7 +817,7 @@ namespace draw2d_gdiplus
       if(size() != pdib->size())
          return;
 
-      BYTE *src=(BYTE*)GDIPLUS_DIB(pdib)->m_pcolorref;
+      BYTE *src=(BYTE*)pdib->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
       int32_t size=cx*cy;
          
@@ -840,8 +840,8 @@ namespace draw2d_gdiplus
       // Clip Rect
       int32_t px=(x>=0) ? x : 0;
       int32_t py=(y>=0) ? y : 0;
-      int32_t dx=((x+GDIPLUS_DIB(pdib)->cx)<cx) ? GDIPLUS_DIB(pdib)->cx : cx-x;
-      int32_t dy=((y+GDIPLUS_DIB(pdib)->cy)<cy) ? GDIPLUS_DIB(pdib)->cy : cy-y;
+      int32_t dx=((x+pdib->cx)<cx) ? pdib->cx : cx-x;
+      int32_t dy=((y+pdib->cy)<cy) ? pdib->cy : cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -849,12 +849,12 @@ namespace draw2d_gdiplus
       if ( (dx<=0) || (dy<=0) )
          return;
       // If DibSize Wrong Re-create dib
-      if ( (dx!=GDIPLUS_DIB(pdib)->cx) || (dy!=GDIPLUS_DIB(pdib)->cy) )
-         GDIPLUS_DIB(pdib)->create ( dx, dy );
+      if ( (dx!=pdib->cx) || (dy!=pdib->cy) )
+         pdib->create ( dx, dy );
 
       // Prepare buffer Addresses
       COLORREF *src=m_pcolorref+(py*cx)+px;
-      COLORREF *dst=GDIPLUS_DIB(pdib)->m_pcolorref;
+      COLORREF *dst=pdib->m_pcolorref;
 
       // Do copy
       while ( dy-- )
@@ -862,7 +862,7 @@ namespace draw2d_gdiplus
          for ( int32_t i=0; i<dx; i++ )
             dst[i]=src[i];
          src+=cx;
-         dst+=GDIPLUS_DIB(pdib)->cx;
+         dst+=pdib->cx;
       }
    }
 
@@ -871,8 +871,8 @@ namespace draw2d_gdiplus
       // Clip Rect
       int32_t px=(x>=0) ? x : 0;
       int32_t py=(y>=0) ? y : 0;
-      int32_t dx=((x+GDIPLUS_DIB(pdib)->cx)<cx) ? GDIPLUS_DIB(pdib)->cx : cx-x;
-      int32_t dy=((y+GDIPLUS_DIB(pdib)->cy)<cy) ? GDIPLUS_DIB(pdib)->cy : cy-y;
+      int32_t dx=((x+pdib->cx)<cx) ? pdib->cx : cx-x;
+      int32_t dy=((y+pdib->cy)<cy) ? pdib->cy : cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -881,7 +881,7 @@ namespace draw2d_gdiplus
          return;
 
       // Prepare buffer Addresses
-      COLORREF *src=GDIPLUS_DIB(pdib)->m_pcolorref+((py-y)*GDIPLUS_DIB(pdib)->cx)+px-x;
+      COLORREF *src=pdib->m_pcolorref+((py-y)*pdib->cx)+px-x;
       COLORREF *dst=m_pcolorref+(py*cx)+px;
 
       // Do Paste
@@ -889,7 +889,7 @@ namespace draw2d_gdiplus
       {
          for ( int32_t i=0; i<dx; i++ )
             dst[i]=src[i];
-         src+=GDIPLUS_DIB(pdib)->cx;
+         src+=pdib->cx;
          dst+=cx;
       }
    }
@@ -988,8 +988,8 @@ namespace draw2d_gdiplus
       // Clip Rect
       int32_t px=(x>=0) ? x : 0;
       int32_t py=(y>=0) ? y : 0;
-      int32_t dx=((x+GDIPLUS_DIB(pdib)->cx)<cx) ? GDIPLUS_DIB(pdib)->cx : cx-x;
-      int32_t dy=((y+GDIPLUS_DIB(pdib)->cy)<cy) ? GDIPLUS_DIB(pdib)->cy : cy-y;
+      int32_t dx=((x+pdib->cx)<cx) ? pdib->cx : cx-x;
+      int32_t dy=((y+pdib->cy)<cy) ? pdib->cy : cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -998,7 +998,7 @@ namespace draw2d_gdiplus
          return;
 
       // Prepare buffer Addresses
-      BYTE *src=(BYTE *)GDIPLUS_DIB(pdib)->m_pcolorref+(((py-y)*GDIPLUS_DIB(pdib)->cx)+px-x)*4;
+      BYTE *src=(BYTE *)pdib->m_pcolorref+(((py-y)*pdib->cx)+px-x)*4;
       BYTE *dst=(BYTE *)m_pcolorref+((py*cx)+px)*4;
 
       // Do Blend
@@ -1013,7 +1013,7 @@ namespace draw2d_gdiplus
             src+=4;
          }
          dst+=(cx-dx)<<2;
-         src+=(GDIPLUS_DIB(pdib)->cx-dx)<<2;
+         src+=(pdib->cx-dx)<<2;
       }
    }
 
@@ -1022,8 +1022,8 @@ namespace draw2d_gdiplus
       // Clip Rect
       int32_t px=(x>=0) ? x : 0;
       int32_t py=(y>=0) ? y : 0;
-      int32_t dx=((x+GDIPLUS_DIB(pdib)->cx)<cx) ? GDIPLUS_DIB(pdib)->cx : cx-x;
-      int32_t dy=((y+GDIPLUS_DIB(pdib)->cy)<cy) ? GDIPLUS_DIB(pdib)->cy : cy-y;
+      int32_t dx=((x+pdib->cx)<cx) ? pdib->cx : cx-x;
+      int32_t dy=((y+pdib->cy)<cy) ? pdib->cy : cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -1032,7 +1032,7 @@ namespace draw2d_gdiplus
          return;
 
       // Prepare buffer Addresses
-      BYTE *src=(BYTE *)GDIPLUS_DIB(pdib)->m_pcolorref+(((py-y)*GDIPLUS_DIB(pdib)->cx)+px-x)*4;
+      BYTE *src=(BYTE *)pdib->m_pcolorref+(((py-y)*pdib->cx)+px-x)*4;
       BYTE *dst=(BYTE *)m_pcolorref+((py*cx)+px)*4;
 
       // Do Darken
@@ -1047,7 +1047,7 @@ namespace draw2d_gdiplus
             src+=4;
          }
          dst+=(cx-dx)<<2;
-         src+=(GDIPLUS_DIB(pdib)->cx-dx)<<2;
+         src+=(pdib->cx-dx)<<2;
       }
    }
 
@@ -1056,8 +1056,8 @@ namespace draw2d_gdiplus
       // Clip Rect
       int32_t px=(x>=0) ? x : 0;
       int32_t py=(y>=0) ? y : 0;
-      int32_t dx=((x+GDIPLUS_DIB(pdib)->cx)<cx) ? GDIPLUS_DIB(pdib)->cx : cx-x;
-      int32_t dy=((y+GDIPLUS_DIB(pdib)->cy)<cy) ? GDIPLUS_DIB(pdib)->cy : cy-y;
+      int32_t dx=((x+pdib->cx)<cx) ? pdib->cx : cx-x;
+      int32_t dy=((y+pdib->cy)<cy) ? pdib->cy : cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -1066,7 +1066,7 @@ namespace draw2d_gdiplus
          return;
 
       // Prepare buffer Addresses
-      BYTE *src=(BYTE *)GDIPLUS_DIB(pdib)->m_pcolorref+(((py-y)*GDIPLUS_DIB(pdib)->cx)+px-x)*4;
+      BYTE *src=(BYTE *)pdib->m_pcolorref+(((py-y)*pdib->cx)+px-x)*4;
       BYTE *dst=(BYTE *)m_pcolorref+((py*cx)+px)*4;
 
       // Do Difference
@@ -1085,7 +1085,7 @@ namespace draw2d_gdiplus
             src+=4;
          }
          dst+=(cx-dx)<<2;
-         src+=(GDIPLUS_DIB(pdib)->cx-dx)<<2;
+         src+=(pdib->cx-dx)<<2;
       }
    }
 
@@ -1094,8 +1094,8 @@ namespace draw2d_gdiplus
       // Clip Rect
       int32_t px=(x>=0) ? x : 0;
       int32_t py=(y>=0) ? y : 0;
-      int32_t dx=((x+GDIPLUS_DIB(pdib)->cx)<cx) ? GDIPLUS_DIB(pdib)->cx : cx-x;
-      int32_t dy=((y+GDIPLUS_DIB(pdib)->cy)<cy) ? GDIPLUS_DIB(pdib)->cy : cy-y;
+      int32_t dx=((x+pdib->cx)<cx) ? pdib->cx : cx-x;
+      int32_t dy=((y+pdib->cy)<cy) ? pdib->cy : cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -1104,7 +1104,7 @@ namespace draw2d_gdiplus
          return;
 
       // Prepare buffer Addresses
-      BYTE *src=(BYTE *)GDIPLUS_DIB(pdib)->m_pcolorref+(((py-y)*GDIPLUS_DIB(pdib)->cx)+px-x)*4;
+      BYTE *src=(BYTE *)pdib->m_pcolorref+(((py-y)*pdib->cx)+px-x)*4;
       BYTE *dst=(BYTE *)m_pcolorref+((py*cx)+px)*4;
 
       // Do Lighten
@@ -1119,7 +1119,7 @@ namespace draw2d_gdiplus
             src+=4;
          }
          dst+=(cx-dx)<<2;
-         src+=(GDIPLUS_DIB(pdib)->cx-dx)<<2;
+         src+=(pdib->cx-dx)<<2;
       }
    }
 
@@ -1128,8 +1128,8 @@ namespace draw2d_gdiplus
       // Clip Rect
       int32_t px=(x>=0) ? x : 0;
       int32_t py=(y>=0) ? y : 0;
-      int32_t dx=((x+GDIPLUS_DIB(pdib)->cx)<cx) ? GDIPLUS_DIB(pdib)->cx : cx-x;
-      int32_t dy=((y+GDIPLUS_DIB(pdib)->cy)<cy) ? GDIPLUS_DIB(pdib)->cy : cy-y;
+      int32_t dx=((x+pdib->cx)<cx) ? pdib->cx : cx-x;
+      int32_t dy=((y+pdib->cy)<cy) ? pdib->cy : cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -1138,7 +1138,7 @@ namespace draw2d_gdiplus
          return;
 
       // Prepare buffer Addresses
-      BYTE *src=(BYTE *)GDIPLUS_DIB(pdib)->m_pcolorref+(((py-y)*GDIPLUS_DIB(pdib)->cx)+px-x)*4;
+      BYTE *src=(BYTE *)pdib->m_pcolorref+(((py-y)*pdib->cx)+px-x)*4;
       BYTE *dst=(BYTE *)m_pcolorref+((py*cx)+px)*4;
 
       // Do Multiply
@@ -1153,7 +1153,7 @@ namespace draw2d_gdiplus
             src+=4;
          }
          dst+=(cx-dx)<<2;
-         src+=(GDIPLUS_DIB(pdib)->cx-dx)<<2;
+         src+=(pdib->cx-dx)<<2;
       }
    }
 
@@ -1162,8 +1162,8 @@ namespace draw2d_gdiplus
       // Clip Rect
       int32_t px=(x>=0) ? x : 0;
       int32_t py=(y>=0) ? y : 0;
-      int32_t dx=((x+GDIPLUS_DIB(pdib)->cx)<cx) ? GDIPLUS_DIB(pdib)->cx : cx-x;
-      int32_t dy=((y+GDIPLUS_DIB(pdib)->cy)<cy) ? GDIPLUS_DIB(pdib)->cy : cy-y;
+      int32_t dx=((x+pdib->cx)<cx) ? pdib->cx : cx-x;
+      int32_t dy=((y+pdib->cy)<cy) ? pdib->cy : cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -1172,7 +1172,7 @@ namespace draw2d_gdiplus
          return;
 
       // Prepare buffer Addresses
-      BYTE *src=(BYTE *)GDIPLUS_DIB(pdib)->m_pcolorref+(((py-y)*GDIPLUS_DIB(pdib)->cx)+px-x)*4;
+      BYTE *src=(BYTE *)pdib->m_pcolorref+(((py-y)*pdib->cx)+px-x)*4;
       BYTE *dst=(BYTE *)m_pcolorref+((py*cx)+px)*4;
 
       // Do Screen
@@ -1187,7 +1187,7 @@ namespace draw2d_gdiplus
             src+=4;
          }
          dst+=(cx-dx)<<2;
-         src+=(GDIPLUS_DIB(pdib)->cx-dx)<<2;
+         src+=(pdib->cx-dx)<<2;
       }
    }
 
@@ -1863,7 +1863,7 @@ namespace draw2d_gdiplus
 
             
             m_pcolorref[(j+joff)*cx+(i+ioff)]=
-               GDIPLUS_DIB(pdib)->m_pcolorref[y * cx + x];
+               pdib->m_pcolorref[y * cx + x];
             k++;
          }
       }
@@ -1934,7 +1934,7 @@ namespace draw2d_gdiplus
 
             
             m_pcolorref[(j+joff)*cx+(i+ioff)]=
-               GDIPLUS_DIB(pdib)->m_pcolorref[y * cx + x];
+               pdib->m_pcolorref[y * cx + x];
             k++;
          }
       }
@@ -2027,7 +2027,7 @@ namespace draw2d_gdiplus
 
             
             m_pcolorref[(j+joff)*cx+(i+ioff)]=
-               GDIPLUS_DIB(pdib)->m_pcolorref[y * cx + x];
+               pdib->m_pcolorref[y * cx + x];
             k++;
          }
       }
@@ -2142,14 +2142,14 @@ namespace draw2d_gdiplus
 
    void dib::xor(::draw2d::dib * pdib)
    {
-      if(cx != GDIPLUS_DIB(pdib)->cx
-      || cy != GDIPLUS_DIB(pdib)->cy)
+      if(cx != pdib->cx
+      || cy != pdib->cy)
       {
          return;
       }
       int32_t iCount = cx * cy;
       LPDWORD lpd1 = (LPDWORD) m_pcolorref;
-      LPDWORD lpd2 = (LPDWORD) GDIPLUS_DIB(pdib)->m_pcolorref;
+      LPDWORD lpd2 = (LPDWORD) pdib->m_pcolorref;
       for(int32_t i = 0; i < iCount; i++)
       {
          *lpd1 = *lpd1 ^ *lpd2;
@@ -2381,8 +2381,8 @@ namespace draw2d_gdiplus
          0, 0,
          cx, cy,
          0, 0, 
-         GDIPLUS_DIB(pdib)->cx, GDIPLUS_DIB(pdib)->cy,
-         GDIPLUS_DIB(pdib)->m_pcolorref,
+         pdib->cx, pdib->cy,
+         pdib->m_pcolorref,
          &GDIPLUS_DIB(pdib)->m_info,
          DIB_RGB_COLORS,
          SRCCOPY);*/

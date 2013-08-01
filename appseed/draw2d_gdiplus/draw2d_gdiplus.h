@@ -480,7 +480,4 @@ CLASS_DECL_DRAW2D_GDIPLUS himagelist_map * afxMapHIMAGELIST(bool bCreate = FALSE
 
 
 #define GDIPLUS_GRAPHICS(pgraphics) (dynamic_cast < ::draw2d_gdiplus::graphics * > (dynamic_cast < ::draw2d::graphics * > (pgraphics)))
-#define SP_DC(pgraphics) (dynamic_cast < ::draw2d_gdiplus::graphics * > (( ::draw2d::graphics * )(pgraphics)))
 #define GDIPLUS_HDC(pgraphics) ((dynamic_cast < ::draw2d_gdiplus::graphics * > (dynamic_cast < ::draw2d::graphics * > (pgraphics)))->get_handle())
-#define SP_HDC(pgraphics) ((dynamic_cast < ::draw2d_gdiplus::graphics * > ((::draw2d::graphics *)(pgraphics)))->get_handle())
-#define GDIPLUS_DIB(pdib) (dynamic_cast < ::draw2d_gdiplus::dib * > (dynamic_cast < ::draw2d::dib * >(pdib)))

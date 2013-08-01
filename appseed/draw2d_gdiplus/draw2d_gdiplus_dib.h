@@ -22,7 +22,6 @@ namespace draw2d_gdiplus
       static int64_t Sin10N[10]; // more precision * 1 << 34
       static double dPi;
 
-      COLORREF *           m_pcolorref;
       BITMAPINFO           m_info;
       ::draw2d::bitmap_sp      m_spbitmap;
       ::draw2d::graphics_sp    m_spgraphics;
