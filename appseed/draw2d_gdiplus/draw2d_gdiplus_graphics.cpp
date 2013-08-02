@@ -2509,8 +2509,8 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if(get_handle2() != NULL)
          hOldObj = ::SelectObject(get_handle2(), pPen->get_os_data());
       return dynamic_cast < pen * > (::draw2d_gdiplus::object::from_handle(get_app(), hOldObj));*/
-      m_penxyz = *pPen;
-      return &m_penxyz;
+      m_sppen = pPen;
+      return m_sppen;
    }
 
    ::draw2d::brush* graphics::SelectObject(::draw2d::brush* pBrush)
@@ -2523,8 +2523,8 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if(get_handle2() != NULL)
          hOldObj = ::SelectObject(get_handle2(), pBrush->get_os_data());
       return dynamic_cast < ::draw2d::brush * > (::draw2d_gdiplus::object::from_handle(get_app(), hOldObj));*/
-      m_brushxyz = *pBrush;
-      return &m_brushxyz;
+      m_spbrush = pBrush;
+      return m_spbrush;
 
    }
 
@@ -2550,7 +2550,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if(!select_font(pfont))
          return NULL;
 
-      return &m_fontxyz;
+      return m_spfont;
 
    }
 
@@ -3362,9 +3362,9 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       Gdiplus::Matrix * pmNew = m.Clone();
 
       pmNew->Translate((Gdiplus::REAL) lpRect->left, (Gdiplus::REAL) lpRect->top);
-      pmNew->Scale((Gdiplus::REAL) m_fontxyz.m_dFontWidth, (Gdiplus::REAL) 1.0, Gdiplus::MatrixOrderAppend);
+      pmNew->Scale((Gdiplus::REAL) m_spfont->m_dFontWidth, (Gdiplus::REAL) 1.0, Gdiplus::MatrixOrderAppend);
 
-      Gdiplus::RectF rectf(0, 0, (Gdiplus::REAL) ((lpRect->right - lpRect->left) * m_fontxyz.m_dFontWidth), (Gdiplus::REAL) (lpRect->bottom - lpRect->top));
+      Gdiplus::RectF rectf(0, 0, (Gdiplus::REAL) ((lpRect->right - lpRect->left) * m_spfont->m_dFontWidth), (Gdiplus::REAL) (lpRect->bottom - lpRect->top));
 
       m_pgraphics->SetTransform(pmNew);
 
@@ -3491,7 +3491,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       rectBound.GetSize(&size);
 
-      return class ::size((int64_t) (size.Width * m_fontxyz.m_dFontWidth), (int64_t) (size.Height));
+      return class ::size((int64_t) (size.Width * m_spfont->m_dFontWidth), (int64_t) (size.Height));
 
    }
 
@@ -3514,7 +3514,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       m_pgraphics->MeasureString(wstr, (int32_t) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, &strFormat,  &box);
 
-      return size((int64_t) (box.Width * m_fontxyz.m_dFontWidth), (int64_t) (box.Height));
+      return size((int64_t) (box.Width * m_spfont->m_dFontWidth), (int64_t) (box.Height));
 
       /*if(get_handle2() == NULL)
          return size(0, 0);
@@ -3710,7 +3710,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       rectBound.GetSize(&sizef);
 
-      size.cx = sizef.Width * m_fontxyz.m_dFontWidth;
+      size.cx = sizef.Width * m_spfont->m_dFontWidth;
 
       size.cy = sizef.Height;
 
@@ -3748,7 +3748,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if(!bOk)
          return false;
 
-      size.cx = box.Width * m_fontxyz.m_dFontWidth;
+      size.cx = box.Width * m_spfontxyz->m_dFontWidth;
 
       size.cy = box.Height;
 
@@ -4277,12 +4277,14 @@ namespace draw2d_gdiplus
       if(m_sppen.is_null())
       {
          m_sppen.create(allocer());
-         m_sppen->operator=(m_penxyz);
+         if(m_sppen.is_set())
+         {
+            m_sppen->m_powner = this;
+         }
       }
-      else if(!m_penxyz.m_bUpdated)
+      if(m_sppen.is_null())
       {
-         m_penxyz.m_bUpdated = true;
-         m_sppen->operator=(m_penxyz);
+         return NULL;
       }
       return (Gdiplus::Pen *) m_sppen->get_os_data();      
    }
