@@ -3748,7 +3748,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if(!bOk)
          return false;
 
-      size.cx = box.Width * m_spfontxyz->m_dFontWidth;
+      size.cx = box.Width * m_spfont->m_dFontWidth;
 
       size.cy = box.Height;
 
@@ -3787,7 +3787,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if(!bOk)
          return false;
 
-      size.cx = box.Width * m_fontxyz.m_dFontWidth;
+      size.cx = box.Width * m_spfont->m_dFontWidth;
 
       size.cy = box.Height;
 
@@ -3928,8 +3928,8 @@ namespace draw2d_gdiplus
          pmNew = m.Clone();
       }
 
-      pmNew->Translate((Gdiplus::REAL)  (x / m_fontxyz.m_dFontWidth), (Gdiplus::REAL) y);
-      pmNew->Scale((Gdiplus::REAL) m_fontxyz.m_dFontWidth, (Gdiplus::REAL) 1.0, Gdiplus::MatrixOrderAppend);
+      pmNew->Translate((Gdiplus::REAL)  (x / m_spfont->m_dFontWidth), (Gdiplus::REAL) y);
+      pmNew->Scale((Gdiplus::REAL) m_spfont->m_dFontWidth, (Gdiplus::REAL) 1.0, Gdiplus::MatrixOrderAppend);
 
       Gdiplus::Status status;
 
@@ -4040,8 +4040,8 @@ namespace draw2d_gdiplus
          pmNew = m.Clone();
       }
 
-      pmNew->Translate((Gdiplus::REAL)  (x / m_fontxyz.m_dFontWidth), (Gdiplus::REAL) y);
-      pmNew->Scale((Gdiplus::REAL) m_fontxyz.m_dFontWidth, (Gdiplus::REAL) 1.0, Gdiplus::MatrixOrderAppend);
+      pmNew->Translate((Gdiplus::REAL)  (x / m_spfont->m_dFontWidth), (Gdiplus::REAL) y);
+      pmNew->Scale((Gdiplus::REAL) m_spfont->m_dFontWidth, (Gdiplus::REAL) 1.0, Gdiplus::MatrixOrderAppend);
 
       Gdiplus::Status status;
 
@@ -4247,12 +4247,14 @@ namespace draw2d_gdiplus
       if(m_spfont.is_null())
       {
          m_spfont.create(allocer());
-         m_spfont->operator=(m_fontxyz);
+         if(m_spfont.is_set())
+         {
+            m_spfont->m_powner = this;
+         }
       }
-      else if(!m_fontxyz.m_bUpdated)
+      if(m_spfont.is_null())
       {
-         m_fontxyz.m_bUpdated = true;
-         m_spfont->operator=(m_fontxyz);
+         return NULL;
       }
       return (Gdiplus::Font *) m_spfont->get_os_data();      
    }
@@ -4262,12 +4264,14 @@ namespace draw2d_gdiplus
       if(m_spbrush.is_null())
       {
          m_spbrush.create(allocer());
-         m_spbrush->operator=(m_brushxyz);
+         if(m_spbrush.is_set())
+         {
+            m_spbrush->m_powner = this;
+         }
       }
-      else if(!m_brushxyz.m_bUpdated)
+      if(m_spbrush.is_null())
       {
-         m_brushxyz.m_bUpdated = true;
-         m_spbrush->operator=(m_brushxyz);
+         return NULL;
       }
       return (Gdiplus::Brush *) m_spbrush->get_os_data();      
    }
