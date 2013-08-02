@@ -2603,12 +2603,12 @@ namespace draw2d_gdiplus
          ZeroMemory(&m_bitmapinfo, sizeof (BITMAPINFO));
 
          m_bitmapinfo.bmiHeader.biSize          = sizeof (BITMAPINFOHEADER);
-         m_bitmapinfo.bmiHeader.biWidth         = m_sizeWnd.cx;
-         m_bitmapinfo.bmiHeader.biHeight        = -m_sizeWnd.cy;
+         m_bitmapinfo.bmiHeader.biWidth         = (LONG) m_sizeWnd.cx;
+         m_bitmapinfo.bmiHeader.biHeight        = (LONG) -m_sizeWnd.cy;
          m_bitmapinfo.bmiHeader.biPlanes        = 1;
          m_bitmapinfo.bmiHeader.biBitCount      = 32; 
          m_bitmapinfo.bmiHeader.biCompression   = BI_RGB;
-         m_bitmapinfo.bmiHeader.biSizeImage     = m_sizeWnd.cx * m_sizeWnd.cy * 4;
+         m_bitmapinfo.bmiHeader.biSizeImage     = (DWORD) (m_sizeWnd.cx * m_sizeWnd.cy * 4);
 
 
          m_hbitmap = CreateDIBSection(NULL, &m_bitmapinfo, DIB_RGB_COLORS, (void **) &m_pcolorref, NULL, 0);
@@ -2616,12 +2616,12 @@ namespace draw2d_gdiplus
 
 
 #undef new
-         m_spbitmap->attach(new  Gdiplus::Bitmap(m_sizeWnd.cx, m_sizeWnd.cy, m_sizeWnd.cx *4 , PixelFormat32bppARGB, (BYTE *) m_pcolorref));
+         m_spbitmap->attach(new  Gdiplus::Bitmap((INT) m_sizeWnd.cx, (INT) m_sizeWnd.cy, (INT) (m_sizeWnd.cx * 4), PixelFormat32bppARGB, (BYTE *) m_pcolorref));
 #define new DEBUG_NEW
 
-         cx = m_sizeWnd.cx;
-         cy = m_sizeWnd.cy;
-         scan = m_sizeWnd.cx * 4;
+         cx = (int32_t) m_sizeWnd.cx;
+         cy = (int32_t) m_sizeWnd.cy;
+         scan = (int32_t) (m_sizeWnd.cx * 4);
 
 
          m_spgraphics.create(allocer());
