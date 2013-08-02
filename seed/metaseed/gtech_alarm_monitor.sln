@@ -30,7 +30,15 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_ca2freetype", "..\..\..\ap
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ca", "..\..\..\app\appseed\ca\ca.vcxproj", "{AB77745A-AF30-4253-9E4B-961BF2D98641}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_gtech_alarm", "..\..\..\app-gtech\appseed\alarm_monitor\gtech_alarm_monitor.vcxproj", "{16E345D6-C5AB-40A8-B932-47BD31CF1664}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_gtech_alarm_monitor", "..\..\..\app-gtech\appseed\alarm_monitor\gtech_alarm_monitor.vcxproj", "{16E345D6-C5AB-40A8-B932-47BD31CF1664}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
+		{9163E31A-2D5A-4F18-AD6F-B561C76E5054} = {9163E31A-2D5A-4F18-AD6F-B561C76E5054}
+		{771F4B49-CAD1-438F-B272-20F3EB8E88F1} = {771F4B49-CAD1-438F-B272-20F3EB8E88F1}
+		{AC98B756-E84C-4A70-9CDB-E9812FEF9B98} = {AC98B756-E84C-4A70-9CDB-E9812FEF9B98}
+		{B39ED2B3-D53A-4077-B957-930979A3577D} = {B39ED2B3-D53A-4077-B957-930979A3577D}
+		{9FFC2CF6-737C-43DB-A1EE-383F7BFDB05B} = {9FFC2CF6-737C-43DB-A1EE-383F7BFDB05B}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
