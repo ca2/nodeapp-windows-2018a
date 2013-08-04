@@ -124,20 +124,13 @@ namespace draw2d_gdiplus
       UINT RealizePalette();
       void UpdateColors();
 
-   // Drawing-Attribute Functions
-      COLORREF GetBkColor() const;
-      int32_t GetBkMode() const;
       int32_t GetPolyFillMode() const;
       int32_t GetROP2() const;
       int32_t GetStretchBltMode() const;
-      COLORREF GetTextColor() const;
 
-      virtual COLORREF SetBkColor(COLORREF crColor);
-      int32_t SetBkMode(int32_t nBkMode);
       int32_t SetPolyFillMode(int32_t nPolyFillMode);
       int32_t SetROP2(int32_t nDrawMode);
       int32_t SetStretchBltMode(int32_t nStretchMode);
-      virtual COLORREF SetTextColor(COLORREF crColor);
 
       bool GetColorAdjustment(LPCOLORADJUSTMENT lpColorAdjust) const;
       bool SetColorAdjustment(const COLORADJUSTMENT* lpColorAdjust);

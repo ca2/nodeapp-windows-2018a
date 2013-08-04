@@ -1,5 +1,4 @@
 #include "framework.h"
-#include <math.h>
 
 
 #undef new
@@ -336,16 +335,6 @@ namespace draw2d_gdiplus
       ::UpdateColors(get_handle1()); 
    }
    
-   COLORREF graphics::GetBkColor() const
-   { 
-      return ::GetBkColor(get_handle2()); 
-   }
-   
-   int32_t graphics::GetBkMode() const
-   { 
-      return ::GetBkMode(get_handle2()); 
-   }
-   
    int32_t graphics::GetPolyFillMode() const
    { 
       return ::GetPolyFillMode(get_handle2()); 
@@ -359,11 +348,6 @@ namespace draw2d_gdiplus
    int32_t graphics::GetStretchBltMode() const
    { 
       return ::GetStretchBltMode(get_handle2()); 
-   }
-   
-   COLORREF graphics::GetTextColor() const
-   { 
-      return ::GetTextColor(get_handle2()); 
    }
    
    int32_t graphics::GetMapMode() const
@@ -1157,12 +1141,14 @@ gdi_fallback:
                dib0->get_graphics()->SetBkMode(TRANSPARENT);
                dib0->get_graphics()->TextOut(0, 0, str);
                dib0->ToAlpha(0);*/
+               ::draw2d::brush_sp brush(allocer());
                ::draw2d::dib_sp dib1(allocer());
                dib1->create(rectText.size());
                dib1->Fill(0, 0, 0, 0);
-               dib1->get_graphics()->set_color(m_crColor);
+               brush->create_solid(m_crColor);
+               dib1->get_graphics()->SelectObject(brush);
                dib1->get_graphics()->SelectObject(&GetCurrentFont());
-               dib1->get_graphics()->SetBkMode(TRANSPARENT);
+//               dib1->get_graphics()->SetBkMode(TRANSPARENT);
                dib1->get_graphics()->TextOut(0, 0, str);
                //dib1->channel_from(visual::rgba::channel_alpha, dib0);
                ::draw2d::dib_sp dib2(allocer());
@@ -1203,7 +1189,7 @@ gdi_fallback:
    { 
       if(m_pdibAlphaBlend != NULL)
       {
-         if(GetBkMode() == TRANSPARENT)
+//         if(GetBkMode() == TRANSPARENT)
          {
          //   return TRUE;
             rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
@@ -1212,16 +1198,17 @@ gdi_fallback:
             {
                ::draw2d::dib_sp dib0(allocer());
                dib0->create(rectText.size());
-               dib0->get_graphics()->SetTextColor(RGB(255, 255, 255));
+               ::draw2d::brush_sp brush(allocer(),ARGB(255, 255, 255, 255));
+               dib0->get_graphics()->SelectObject(brush);
                dib0->get_graphics()->SelectObject(&GetCurrentFont());
-               dib0->get_graphics()->SetBkMode(TRANSPARENT);
                dib0->get_graphics()->TextOut(0, 0, str);
                dib0->ToAlpha(0);
                ::draw2d::dib_sp dib1(allocer());
                dib1->create(rectText.size());
-               dib1->get_graphics()->SetTextColor(GetTextColor());
+               brush->create_solid(m_spbrush->m_cr);
                dib1->get_graphics()->SelectObject(&GetCurrentFont());
-               dib1->get_graphics()->SetBkMode(TRANSPARENT);
+               dib1->get_graphics()->SelectObject(brush);
+//               dib1->get_graphics()->SetBkMode(TRANSPARENT);
                dib1->get_graphics()->TextOut(0, 0, str);
                dib1->channel_from(visual::rgba::channel_alpha, dib0);
                ::draw2d::dib_sp dib2(allocer());
@@ -2570,29 +2557,6 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 //      return dynamic_cast < ::draw2d::palette * > (::draw2d_gdiplus::object::from_handle(get_app(), ::SelectPalette(get_handle1(), (HPALETTE)pPalette->get_os_data(), bForceBackground)));
    }
 
-   COLORREF graphics::SetBkColor(COLORREF crColor)
-   {
-      COLORREF crRetVal = CLR_INVALID;
-      if(get_handle1() != NULL && get_handle1() != get_handle2())
-         crRetVal = ::SetBkColor(get_handle1(), crColor);
-      if(get_handle2() != NULL)
-         crRetVal = ::SetBkColor(get_handle2(), crColor);
-      return crRetVal;
-   }
-
-   int32_t graphics::SetBkMode(int32_t nBkMode)
-   {
-
-      return 0;
-
-/*      int32_t nRetVal = 0;
-      if(get_handle1() != NULL && get_handle1() != get_handle2())
-         nRetVal = ::SetBkMode(get_handle1(), nBkMode);
-      if(get_handle2() != NULL)
-         nRetVal = ::SetBkMode(get_handle2(), nBkMode);
-      return nRetVal;*/
-   }
-
    int32_t graphics::SetPolyFillMode(int32_t nPolyFillMode)
    {
       int32_t nRetVal = 0;
@@ -2636,19 +2600,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return nRetVal;*/
    }
 
-   COLORREF graphics::SetTextColor(COLORREF crColor)
-   {
-      return set_color(crColor);
-      //COLORREF crRetVal = m_crColor;
-      //m_crColor = crColor;
-/*      COLORREF crRetVal = CLR_INVALID;
-      if(get_handle1() != NULL && get_handle1() != get_handle2())
-         crRetVal = ::SetTextColor(get_handle1(), crColor);
-      if(get_handle2() != NULL)
-         crRetVal = ::SetTextColor(get_handle2(), crColor);*/
-      //return crRetVal;
-   }
-
+   
    int32_t graphics::SetGraphicsMode(int32_t iMode)
    {
       int32_t nRetVal = 0;
@@ -3168,10 +3120,16 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->RestoreDC((int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SETBKCOLOR:
-         (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SetBkColor(*(UNALIGNED COLORREF*)&pMetaRec->rdParm[0]);
+         {
+            ::draw2d::brush_sp brush((dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->allocer(), *(UNALIGNED COLORREF*)&pMetaRec->rdParm[0]);
+            (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SelectObject(brush);
+         }
          break;
       case META_SETTEXTCOLOR:
-         (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SetTextColor(*(UNALIGNED COLORREF*)&pMetaRec->rdParm[0]);
+         {
+            ::draw2d::brush_sp brush((dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->allocer(), *(UNALIGNED COLORREF*)&pMetaRec->rdParm[0]);
+            (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SelectObject(brush);
+         }
          break;
 
          // need to watch out for SelectObject(HFONT), for custom font mapping
@@ -3825,27 +3783,15 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 namespace draw2d_gdiplus
 {
 
-   void graphics::FillSolidRect(LPCRECT lpRect, COLORREF clr)
+   void graphics::FillSolidRect(LPCRECT lprect, COLORREF clr)
    {
 
-      //g.SetCompositingMode(Gdiplus::CompositingModeSourceCopy);
-      //g().SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-      //g().SetCompositingQuality(Gdiplus::CompositingQualityGammaCorrected);
+      FillSolidRect(lprect->left, lprect->top, width(lprect), height(lprect), clr);
       
-      set_color(clr);
-
-      m_pgraphics->FillRectangle(gdiplus_brush(), lpRect->left, lpRect->top, lpRect->right - lpRect->left, lpRect->bottom - lpRect->top);
-
-      //::SetBkColor(get_handle1(), clr);
-      //::ExtTextOut(get_handle1(), 0, 0, ETO_OPAQUE, lpRect, NULL, 0, NULL);
    }
 
    void graphics::FillSolidRect(int32_t x, int32_t y, int32_t cx, int32_t cy, COLORREF clr)
    {
-      //g.SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-      //g().SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-      //g().SetCompositingQuality(Gdiplus::CompositingQualityGammaCorrected);
-
 
       try
       {
@@ -3853,9 +3799,15 @@ namespace draw2d_gdiplus
          if(m_pgraphics == NULL)
             return;
 
-         set_color(clr);
+         ::draw2d::brush_sp brushCurrent(m_spbrush);
+
+         ::draw2d::brush_sp brush(allocer(), clr);
+
+         SelectObject(brush);
 
          m_pgraphics->FillRectangle(gdiplus_brush(), x, y, cx, cy);
+
+         m_spbrush = brushCurrent;
 
       }
       catch(...)

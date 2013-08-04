@@ -233,8 +233,8 @@ void preview_dc::MirrorAttributes()
       SetTextAlign(GetTextAlign());
       SetPolyFillMode(GetPolyFillMode());
       SetStretchBltMode(GetStretchBltMode());
-      SetTextColor(GetNearestColor(GetTextColor()));
-      SetBkColor(GetNearestColor(GetBkColor()));
+  //    SetTextColor(GetNearestColor(GetTextColor()));
+//      SetBkColor(GetNearestColor(GetBkColor()));
    }
 }
 

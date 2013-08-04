@@ -6648,14 +6648,63 @@ namespace win
          win_update_graphics();
       }
 
-      if(m_spdib.is_null() || m_spdib->get_graphics() == NULL || m_spdib->get_data() == NULL)
+      if(m_spdib.is_null() || m_spdib->get_graphics() == NULL)
          return;
+
+      m_spdib->map();
+
+      if(m_spdib->get_data() == NULL)
+         return;
+
+      rect64 rectWindow;
+
+      rectWindow = m_rectParentClient;
 
       m_spdib->Fill(0, 0, 0, 0);
 
+      //m_spdib->get_graphics()->FillSolidRect(00, 00, 100, 100, ARGB(127, 0, 127, 0));
       _001Print(m_spdib->get_graphics());
+      //m_spdib->get_graphics()->SetViewportOrg(0, 0);
+      //m_spdib->get_graphics()->FillSolidRect(100, 100, 100, 100, ARGB(127, 127, 0, 0));
 
       m_spdib->update_window(this, NULL);
+
+      if(GetExStyle() & WS_EX_LAYERED)
+      {
+
+         class rect rectWin;
+
+         ::GetWindowRect(get_handle(), rectWin);
+
+         if(rect(rectWindow) != rectWin || (m_pguie != NULL && (bool) m_pguie->oprop("pending_layout")))
+         {
+
+            if(m_pguie != NULL && (bool) m_pguie->oprop("pending_layout"))
+            {
+
+               ::oswindow oswindowZOrder = (oswindow) m_pguie->oprop("pending_zorder").int32();
+
+               ::SetWindowPos(get_handle(), HWND_TOPMOST, 
+                  (int32_t) rectWindow.left, (int32_t) rectWindow.top, (int32_t) rectWindow.width(), (int32_t) rectWindow.height(), SWP_SHOWWINDOW);
+               ::SetWindowPos(get_handle(), HWND_NOTOPMOST, 
+                  (int32_t) rectWindow.left, (int32_t) rectWindow.top, (int32_t) rectWindow.width(), (int32_t) rectWindow.height(), SWP_SHOWWINDOW);
+               ::SetWindowPos(get_handle(), oswindowZOrder, 
+                  (int32_t) rectWindow.left, (int32_t) rectWindow.top, (int32_t) rectWindow.width(), (int32_t) rectWindow.height(), SWP_SHOWWINDOW | SWP_FRAMECHANGED);
+               /*sp(simple_frame_window) pframe =  (pwnd->m_pguie);
+               if(pframe != NULL)
+               {
+                  pframe->ActivateFrame();
+               }*/
+               m_pguie->oprop("pending_layout") = false;
+            }
+            else
+            {
+               ::SetWindowPos(get_handle(), NULL, (int32_t) rectWindow.left, (int32_t) rectWindow.top, (int32_t) rectWindow.width(), (int32_t) rectWindow.height(), SWP_SHOWWINDOW);
+            }
+         }
+
+      }
+
 
    }
 
