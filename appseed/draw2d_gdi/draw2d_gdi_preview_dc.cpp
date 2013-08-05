@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 #include "sal.h"
 
 
@@ -6,7 +6,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // Helper functions
 
-AFX_STATIC long CLASS_DECL_VMSWIN _AfxMultMultDivDiv(
+AFX_STATIC long CLASS_DECL_DRAW2D_GDI _AfxMultMultDivDiv(
    int factor, int num1, int num2,
    int den1, int den2)
 {
@@ -107,7 +107,7 @@ void preview_dc::SetOutputDC(HDC hDC)
 {
    ASSERT(hDC != NULL);
    m_nSaveDCIndex = ::SaveDC(hDC); // restore in ReleaseOutputDC()
-   ::ca::graphics_sp::SetOutputDC(hDC);
+   ::draw2d::graphics_sp::SetOutputDC(hDC);
 
    if (get_handle2() != NULL)
    {
@@ -125,13 +125,13 @@ void preview_dc::ReleaseOutputDC()
 {
    ASSERT(get_os_data() != NULL);
    ::RestoreDC(get_os_data(), m_nSaveDCIndex); // Saved in SetOutputDC()
-   ::ca::graphics_sp::ReleaseOutputDC();
+   ::draw2d::graphics_sp::ReleaseOutputDC();
 }
 
 void preview_dc::SetAttribDC(HDC hDC)
 {
    ASSERT(hDC != NULL);
-   ::ca::graphics_sp::SetAttribDC(hDC);
+   ::draw2d::graphics_sp::SetAttribDC(hDC);
 
    MirrorMappingMode(TRUE);
    MirrorFont();
@@ -159,13 +159,13 @@ void preview_dc::SetScaleRatio(int nNumerator, int nDenominator)
 #ifdef _DEBUG
 void preview_dc::assert_valid() const
 {
-   ::ca::graphics_sp::assert_valid();
+   ::draw2d::graphics_sp::assert_valid();
 }
 
 
 void preview_dc::dump(dump_context & dumpcontext) const
 {
-   ::ca::graphics_sp::dump(dumpcontext);
+   ::draw2d::graphics_sp::dump(dumpcontext);
 
    dumpcontext << "Scale Factor: " << m_nScaleNum << "/" << m_nScaleDen;
    dumpcontext << "\n";
@@ -191,10 +191,10 @@ int preview_dc::SaveDC()
    return nAttribIndex;
 }
 
-BOOL preview_dc::RestoreDC(int nSavedDC)
+bool preview_dc::RestoreDC(int nSavedDC)
 {
    ASSERT(get_handle2() != NULL);
-   BOOL bSuccess = ::RestoreDC(get_handle2(), nSavedDC);
+   bool bSuccess = ::RestoreDC(get_handle2(), nSavedDC);
    if (bSuccess)
    {
       if (m_nSaveDCDelta != 0x7fff)
@@ -238,7 +238,7 @@ void preview_dc::MirrorAttributes()
    }
 }
 
-::ca::graphics_object* preview_dc::SelectStockObject(int nIndex)
+::draw2d::object* preview_dc::SelectStockObject(int nIndex)
 {
    ASSERT(get_handle2() != NULL);
 
@@ -255,7 +255,7 @@ void preview_dc::MirrorAttributes()
    case DEFAULT_GUI_FONT:
       // Handle the stock fonts correctly
       {
-         ::ca::graphics_object* pObject = ::win::graphics_object::from_handle(
+         ::draw2d::object* pObject = ::draw2d_gdi::object::from_handle(
                      ::SelectObject(get_handle2(), hObj));
 
          // Don't re-mirror screen font if this is the same font.
@@ -273,7 +273,7 @@ void preview_dc::MirrorAttributes()
    default:
       if (get_os_data() != NULL)
          ::SelectObject(get_os_data(), hObj);
-      return ::win::graphics_object::from_handle(::SelectObject(get_handle2(), hObj));
+      return ::draw2d_gdi::object::from_handle(::SelectObject(get_handle2(), hObj));
    }
 }
 
@@ -291,11 +291,11 @@ void preview_dc::MirrorFont()
    if (get_os_data() == NULL)
       return;         // can't mirror font without a screen DC
 
-   LOGFONT logFont;
+   LOGFONTW logFont;
    // Fill the logFont structure with the original info
-   ::GetObject(m_hPrinterFont, sizeof(LOGFONT), (LPVOID)&logFont);
+   ::get_object(m_hPrinterFont, sizeof(LOGFONTW), (LPVOID)&logFont);
 
-   TEXTMETRIC tm;
+   TEXTMETRICW tm;
 
    GetTextFace(LF_FACESIZE, (LPTSTR)&logFont.lfFaceName[0]);
    GetTextMetrics(&tm);
@@ -367,7 +367,7 @@ void preview_dc::MirrorFont()
    m_hFont = hNewFont;         // save the new one
 }
 
-::ca::font* preview_dc::SelectObject(::ca::font* pFont)
+::draw2d::font* preview_dc::SelectObject(::draw2d::font* pFont)
 {
    if (pFont == NULL)
       return NULL;
@@ -375,7 +375,7 @@ void preview_dc::MirrorFont()
    ASSERT(get_handle2() != NULL);
    ASSERT_VALID(pFont);
 
-   ::ca::font* pOldFont = (::ca::font*) ::win::graphics_object::from_handle(
+   ::draw2d::font* pOldFont = (::draw2d::font*) ::draw2d_gdi::object::from_handle(
             ::SelectObject(get_handle2(), pFont->get_handle()));
 
    // If same as already selected, don't re-mirror screen font
@@ -476,7 +476,7 @@ size preview_dc::ScaleWindowExt(int xNum, int xDenom, int yNum, int yDenom)
 
 // private helpers for TextOut functions
 
-AFX_STATIC int CLASS_DECL_VMSWIN _AfxComputeNextTab(int x, UINT nTabStops, LPINT lpnTabStops, int nTabOrigin, int nTabWidth)
+AFX_STATIC int CLASS_DECL_DRAW2D_GDI _AfxComputeNextTab(int x, UINT nTabStops, LPINT lpnTabStops, int nTabOrigin, int nTabWidth)
 {
    ENSURE(nTabWidth!=0);
    x -= nTabOrigin;        // normalize position to tab origin
@@ -493,13 +493,13 @@ AFX_STATIC int CLASS_DECL_VMSWIN _AfxComputeNextTab(int x, UINT nTabStops, LPINT
 // Compute a character delta table for correctly positioning the screen
 // font characters where the printer characters will appear on the page
 size preview_dc::ComputeDeltas(int& x, const char * lpszString, UINT &nCount,
-   BOOL bTabbed, UINT nTabStops, LPINT lpnTabStops, int nTabOrigin,
+   bool bTabbed, UINT nTabStops, LPINT lpnTabStops, int nTabOrigin,
    __out_z LPTSTR lpszOutputString, int* pnDxWidths, int& nRightFixup)
 {
    ASSERT_VALID(this);
 
-   TEXTMETRIC tmAttrib;
-   TEXTMETRIC tmScreen;
+   TEXTMETRICW tmAttrib;
+   TEXTMETRICW tmScreen;
    ::GetTextMetrics(get_handle2(), &tmAttrib);
    ::GetTextMetrics(get_os_data(), &tmScreen);
 
@@ -508,7 +508,7 @@ size preview_dc::ComputeDeltas(int& x, const char * lpszString, UINT &nCount,
 
    point ptCurrent;
    UINT nAlignment = ::GetTextAlign(get_handle2());
-   BOOL bUpdateCP = (nAlignment & TA_UPDATECP) != 0;
+   bool bUpdateCP = (nAlignment & TA_UPDATECP) != 0;
    if (bUpdateCP)
    {
       ::GetCurrentPositionEx(get_os_data(), &ptCurrent);
@@ -539,7 +539,7 @@ size preview_dc::ComputeDeltas(int& x, const char * lpszString, UINT &nCount,
 
    for (UINT i = 0; i < nCount; i++)
    {
-      BOOL bSpace = ((_TUCHAR)*lpszCurChar == (_TUCHAR)tmAttrib.tmBreakChar);
+      bool bSpace = ((_TUCHAR)*lpszCurChar == (_TUCHAR)tmAttrib.tmBreakChar);
       if (bSpace || (bTabbed && *lpszCurChar == '\t'))
       {
          // bSpace will be either TRUE (==1) or FALSE (==0).  For spaces
@@ -635,12 +635,12 @@ size preview_dc::ComputeDeltas(int& x, const char * lpszString, UINT &nCount,
    return sizeExtent;
 }
 
-BOOL preview_dc::TextOut(int x, int y, const char * lpszString, int nCount)
+bool preview_dc::TextOut(int x, int y, const char * lpszString, int nCount)
 {
    return ExtTextOut(x, y, 0, NULL, lpszString, nCount, NULL);
 }
 
-BOOL preview_dc::ExtTextOut(int x, int y, UINT nOptions, LPCRECT lpRect,
+bool preview_dc::ExtTextOut(int x, int y, UINT nOptions, LPCRECT lpRect,
    const char * lpszString, UINT nCount, LPINT lpDxWidths)
 {
    ASSERT(get_os_data() != NULL);
@@ -679,7 +679,7 @@ BOOL preview_dc::ExtTextOut(int x, int y, UINT nOptions, LPCRECT lpRect,
       lpszString = pOutputString;
    }
 
-   BOOL bSuccess = ::ExtTextOut(get_os_data(), x, y, nOptions, lpRect, lpszString,
+   bool bSuccess = ::ExtTextOut(get_os_data(), x, y, nOptions, lpRect, lpszString,
                                           nCount, lpDxWidths);
    if (nRightFixup != 0 && bSuccess && (GetTextAlign() & TA_UPDATECP))
    {
@@ -705,7 +705,7 @@ size preview_dc::TabbedTextOut(int x, int y, const char * lpszString, int nCount
             FALSE));
 
    if (nCount <= 0)
-      return (DWORD) 0;         // nCount is zero, there is nothing to print
+      return (uint32_t) 0;         // nCount is zero, there is nothing to print
 
    int* pDeltas = NULL;
    LPTSTR pOutputString = NULL;
@@ -720,7 +720,7 @@ size preview_dc::TabbedTextOut(int x, int y, const char * lpszString, int nCount
    {
       delete[] pDeltas;
       // Note: DELETE_EXCEPTION(e) not required
-      return (DWORD) 0;           // signify error
+      return (uint32_t) 0;           // signify error
    }
    
 
@@ -729,7 +729,7 @@ size preview_dc::TabbedTextOut(int x, int y, const char * lpszString, int nCount
                      nTabPositions, lpnTabStopPositions, nTabOrigin,
                      pOutputString, pDeltas, nRightFixup);
 
-   BOOL bSuccess = ExtTextOut(x, y, 0, NULL, pOutputString, uCount, pDeltas);
+   bool bSuccess = ExtTextOut(x, y, 0, NULL, pOutputString, uCount, pDeltas);
 
    delete[] pDeltas;
    delete[] pOutputString;
@@ -746,7 +746,7 @@ size preview_dc::TabbedTextOut(int x, int y, const char * lpszString, int nCount
 
 // This one is too complicated to do character-by-character output positioning
 // All we really need to do here is mirror the current position
-int preview_dc::DrawText(const char * lpszString, int nCount, LPRECT lpRect,
+int preview_dc::draw_text(const char * lpszString, int nCount, LPRECT lpRect,
    UINT nFormat)
 {
    ASSERT(get_handle2() != NULL);
@@ -758,7 +758,7 @@ int preview_dc::DrawText(const char * lpszString, int nCount, LPRECT lpRect,
       AfxIsValidString(lpszString) :
       fx_is_valid_address(lpszString, nCount, FALSE));
 
-   int retVal = ::DrawText(get_os_data(), lpszString, nCount, lpRect, nFormat);
+   int retVal = ::draw_text(get_os_data(), lpszString, nCount, lpRect, nFormat);
 
    point pos;
    ::GetCurrentPositionEx(get_os_data(), &pos);
@@ -766,7 +766,7 @@ int preview_dc::DrawText(const char * lpszString, int nCount, LPRECT lpRect,
    return retVal;
 }
 
-int preview_dc::DrawTextEx(__in_ecount(nCount) LPTSTR lpszString, int nCount, LPRECT lpRect,
+int preview_dc::draw_text_ex(__in_ecount(nCount) LPTSTR lpszString, int nCount, LPRECT lpRect,
    UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
 {
    ASSERT(get_handle2() != NULL);
@@ -778,7 +778,7 @@ int preview_dc::DrawTextEx(__in_ecount(nCount) LPTSTR lpszString, int nCount, LP
       AfxIsValidString(lpszString) :
       fx_is_valid_address(lpszString, nCount, FALSE));
 
-   int retVal = ::DrawTextEx(get_os_data(), lpszString, nCount, lpRect, nFormat, lpDTParams);
+   int retVal = ::draw_text_ex(get_os_data(), lpszString, nCount, lpRect, nFormat, lpDTParams);
 
    point pos;
    ::GetCurrentPositionEx(get_os_data(), &pos);
@@ -786,8 +786,8 @@ int preview_dc::DrawTextEx(__in_ecount(nCount) LPTSTR lpszString, int nCount, LP
    return retVal;
 }
 
-BOOL preview_dc::GrayString(::ca::brush*,
-            BOOL (CALLBACK *)(HDC, LPARAM, int),
+bool preview_dc::GrayString(::draw2d::brush*,
+            bool (CALLBACK *)(HDC, LPARAM, int),
                LPARAM lpData, int nCount, int x, int y, int, int)
 {
    TRACE(::radix::trace::category_AppMsg, 0, "TextOut() substituted for GrayString() in Print Preview.\n");
@@ -831,7 +831,7 @@ int preview_dc::Escape(int nEscape, int nCount, const char * lpszInData, void * 
    case SETDIBSCALING:
    case ENUMPAPERMETRICS:
    case GETSETPAPERMETRICS:
-   case GETEXTENDEDTEXTMETRICS:
+   case GETEXTENDEDTEXTMETRICWS:
    case GETEXTENTTABLE:
    case GETPAIRKERNTABLE:
    case GETTRACKKERNTABLE:
@@ -850,7 +850,7 @@ int preview_dc::Escape(int nEscape, int nCount, const char * lpszInData, void * 
    }
 }
 
-void preview_dc::MirrorMappingMode(BOOL bCompute)
+void preview_dc::MirrorMappingMode(bool bCompute)
 {
    ASSERT(get_handle2() != NULL);
    if (bCompute)
@@ -987,7 +987,7 @@ void preview_dc::PrinterDPtoScreenDP(LPPOINT lpPoint) const
 ////////////////////////////////////////////////////////////////////////////
 // AfxCreateDC
 
-HDC CLASS_DECL_VMSWIN AfxCreateDC(HGLOBAL hDevNames, HGLOBAL hDevMode)
+HDC CLASS_DECL_DRAW2D_GDI AfxCreateDC(HGLOBAL hDevNames, HGLOBAL hDevMode)
 {
    if (hDevNames == NULL)
       return NULL;
@@ -1011,7 +1011,7 @@ HDC CLASS_DECL_VMSWIN AfxCreateDC(HGLOBAL hDevNames, HGLOBAL hDevMode)
 }
 
 
-// IMPLEMENT_DYNAMIC(preview_dc, ::ca::graphics_sp)
+// IMPLEMENT_DYNAMIC(preview_dc, ::draw2d::graphics_sp)
 
 /////////////////////////////////////////////////////////////////////////////
 */

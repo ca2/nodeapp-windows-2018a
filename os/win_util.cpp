@@ -3,7 +3,7 @@
 
 
 // interesting function
-/*bool CLASS_DECL_win __custom_log_font(UINT nIDS, LOGFONT* pLogFont)
+/*bool CLASS_DECL_win __custom_log_font(UINT nIDS, LOGFONTW* pLogFont)
 {
    ENSURE_ARG(pLogFont != NULL);
    ASSERT(nIDS != 0);

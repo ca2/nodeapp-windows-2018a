@@ -1,13 +1,25 @@
-#include "StdAfx.h"
-#include <math.h>
+#include "framework.h"
 
-namespace win
+
+inline byte byte_clip(int32_t i)
 {
+   if(i >= 255)
+      return 255;
+   else if(i < 0)
+      return 0;
+   else
+      return (byte) i;
+}
+
+namespace draw2d_gdi
+{
+
 
    //   Creator : El Barto (ef00@luc.ac.be)
    //   Location : http://www.luc.ac.be/~ef00/ebgfx
    //   Date : 09-04-98
    //////////////////////////////////////////////////////////////////////
+
 
 
    float dib::Cosines[360];
@@ -21,32 +33,35 @@ namespace win
 
    double dib::dPi;
 
-   dib::dib(::ca::application * papp) :
-      ca(papp),
-      m_spbitmap(papp),
-      m_spgraphics(papp)
+   dib::dib(::ca2::application * papp) :
+      ca2(papp),
+      m_spbitmap(allocer()),
+      m_spgraphics(allocer())
    {
-      m_pcolorref          = NULL;
-      m_size               = class size(0, 0);
+
       m_hbitmapOriginal    = NULL;
+      m_bMapped            = false;
+
    }
 
-   COLORREF * dib::get_data()
+
+   ::draw2d::bitmap_sp dib::get_bitmap()
    {
-      return m_pcolorref;
-   }
-   ::ca::bitmap_sp dib::get_bitmap()
-   {
+
       return m_spbitmap;
+
    }
 
-   ::ca::bitmap_sp dib::detach_bitmap()
+
+   ::draw2d::bitmap_sp dib::detach_bitmap()
    {
+
       return m_spbitmap.detach();
+
    }
 
 
-   CLASS_DECL_VMSWIN void dib::s_initialize()
+   CLASS_DECL_DRAW2D_GDI void dib::s_initialize()
    {
       double dCos;
       double dSin;
@@ -75,8 +90,8 @@ namespace win
 
    void    dib::construct (int cx,  int cy)
    {
-      m_pcolorref    = NULL;
-      m_size         = class size(0, 0);
+      //m_pcolorref    = NULL;
+//      size()         = class size(0, 0);
       create(cx, cy);
    }
 
@@ -85,17 +100,19 @@ namespace win
       Destroy ();
    }
 
-   BOOL dib::create(class size size)
+   bool dib::create(class size size)
    {
       return create(size.cx, size.cy);
    }
 
-   BOOL dib::create(int width, int height)
+   bool dib::create(int width, int height)
    {
+
+
       if(m_spbitmap.is_set()
       && m_spbitmap->get_os_data() != NULL 
-      && width == m_size.cx
-      && height == m_size.cy)
+      && width == this->cx
+      && height == this->cy)
          return TRUE;
 
       Destroy();
@@ -103,7 +120,7 @@ namespace win
       if(width <= 0 || height <= 0)
          return FALSE;
 
-      ZeroMemory(&m_info, sizeof (BITMAPINFO));
+      ZERO(m_info);
 
       m_info.bmiHeader.biSize          = sizeof (BITMAPINFOHEADER);
       m_info.bmiHeader.biWidth         = width;
@@ -115,38 +132,54 @@ namespace win
 
       if(m_spbitmap.m_p == NULL)
       {
-         m_size = class size(0, 0);
+         this->cx = 0;
+         this->cy = 0;
          return FALSE;
       }
       
-      if(!m_spbitmap->CreateDIBSection(NULL, &m_info, DIB_RGB_COLORS, (void **) &m_pcolorref, NULL, NULL))
+      if(!m_spbitmap->CreateDIBSection(NULL, &m_info, DIB_RGB_COLORS, (void **) &m_pcolorref, &scan, NULL, 0))
       {
-         m_size = class size(0, 0);
+         this->cx = 0;
+         this->cy = 0;
          return FALSE;
       }
 
-      if(m_spbitmap->get_os_data() != NULL)
+      if(m_spbitmap->get_os_data() == NULL)
       {
-         m_spgraphics->CreateCompatibleDC(NULL);
-         ::ca::bitmap * pbitmap = m_spgraphics->SelectObject(m_spbitmap);
-         if(pbitmap == NULL || 
-            pbitmap->get_os_data() == NULL)
-         {
-            Destroy();
-            return FALSE;
-         }
-         m_hbitmapOriginal = (HBITMAP) pbitmap->get_os_data();
-         m_size = class size(width, height);
-         return TRUE;
-      }
-      else
-      {
+
          Destroy();
-         return FALSE;
+
+         return false;
+
       }
+
+      m_spgraphics->CreateCompatibleDC(NULL);
+
+      m_spgraphics->m_spdib = dynamic_cast < ::draw2d::dib * > (this);
+
+      m_hbitmapOriginal = (HBITMAP) m_spgraphics->get_os_data_ex(::draw2d_gdi::graphics::data_bitmap);
+
+      ::draw2d::bitmap * pbitmap = m_spgraphics->SelectObject(m_spbitmap);
+
+      if(pbitmap == NULL || pbitmap->get_os_data() == NULL)
+      {
+            
+         Destroy();
+
+         return false;
+
+      }
+         
+      this->cx = width;
+
+      this->cy = height;
+         
+      return true;
+
    }
 
-   bool dib::dc_select(bool bSelect)
+
+   /*bool dib::dc_select(bool bSelect)
    {
       if(bSelect)
       {
@@ -156,15 +189,15 @@ namespace win
       {
          return m_spgraphics->SelectObject(m_hbitmapOriginal) != NULL;
       }
-   }
+   }*/
 
-   BOOL dib::create(::ca::graphics * pdc)
+   bool dib::create(::draw2d::graphics * pdc)
    {
-      ::ca::bitmap * pbitmap = (dynamic_cast<::win::graphics * >(pdc))->GetCurrentBitmap();
+      ::draw2d_gdi::bitmap * pbitmap = dynamic_cast<::draw2d_gdi::bitmap * >(&(dynamic_cast<::draw2d_gdi::graphics * >(pdc))->GetCurrentBitmap());
       if(pbitmap == NULL)
          return FALSE;
       BITMAP bm;
-      pbitmap->GetObject(sizeof(bm), &bm);
+      pbitmap->get_object(sizeof(bm), &bm);
       if(!create(bm.bmWidth, bm.bmHeight))
       {
          return FALSE;
@@ -173,60 +206,73 @@ namespace win
       return TRUE;
    }
 
-   BOOL dib::Destroy ()
+   bool dib::Destroy ()
    {
-      if(m_spbitmap.m_p != NULL && m_spbitmap->get_os_data() != NULL)
-         m_spbitmap->delete_object();
+
+      m_spbitmap->destroy();
 
       
       if(m_spgraphics.is_set() && m_spgraphics->is_set())
       {
-         m_spgraphics->SelectObject(m_hbitmapOriginal);
+         GDI_GRAPHICS(m_spgraphics.m_p)->SelectObject(m_hbitmapOriginal);
          m_spgraphics->DeleteDC();
       }
 
-      m_size         = class size(0, 0);
+      cx = 0;
+      cy = 0;
+      scan = 0;
       m_pcolorref    = NULL;
       
       return TRUE;
    }
 
-   bool dib::to(::ca::graphics * pgraphics, point pt, class size size, point ptSrc)
+   bool dib::to(::draw2d::graphics * pgraphics, point pt, class size size, point ptSrc)
    {
       return SetDIBitsToDevice(
-         (dynamic_cast<::win::graphics * >(pgraphics))->get_handle1(), 
+         (dynamic_cast<::draw2d_gdi::graphics * >(pgraphics))->get_handle1(), 
          pt.x, pt.y, 
          size.cx, size.cy, 
-         ptSrc.x, ptSrc.y, ptSrc.y, m_size.cy - ptSrc.y, 
+         ptSrc.x, ptSrc.y, ptSrc.y, this->cy - ptSrc.y, 
          m_pcolorref, &m_info, 0)
             != FALSE; 
    }
 
-   bool dib::from(::ca::graphics * pdc)
+   bool dib::from(::draw2d::graphics * pdc)
    {
-      ::ca::bitmap_sp bitmap(get_app());
+
+      ::draw2d::bitmap_sp bitmap(get_app());
+
       bitmap->CreateCompatibleBitmap(pdc, 1, 1);
-      ::ca::bitmap * pbitmap = WIN_DC(pdc)->SelectObject(bitmap);
+
+      ::draw2d_gdi::bitmap * pbitmap = dynamic_cast < ::draw2d_gdi::bitmap * > (pdc->SelectObject(bitmap));
+
       if(pbitmap == NULL)
          return false;
+
       BITMAP bm;
+
       memset(&bm, 0, sizeof(bm));
+
       if(!pbitmap->GetBitmap(&bm))
       {
-         WIN_DC(pdc)->SelectObject(pbitmap);
+         pdc->SelectObject(pbitmap);
          return false;
       }
+
       if(!create(bm.bmWidth, bm.bmHeight))
       {
-         WIN_DC(pdc)->SelectObject(pbitmap);
+         pdc->SelectObject(pbitmap);
          return false;
       }
-      bool bOk = GetDIBits(WIN_HDC(pdc), (HBITMAP) pbitmap->get_os_data(), 0, m_size.cy, m_pcolorref, &(m_info), DIB_RGB_COLORS) != FALSE; 
-      WIN_DC(pdc)->SelectObject(pbitmap);
+
+      bool bOk = GetDIBits(GDI_HDC(pdc), (HBITMAP) pbitmap->get_os_data(), 0, this->cy, m_pcolorref, &(m_info), DIB_RGB_COLORS) != FALSE; 
+
+      pdc->SelectObject(pbitmap);
+
       return bOk;
    }
 
-   bool dib::from(point ptDest, ::ca::graphics * pdc, point pt, class size sz)
+   bool dib::from(point ptDest, ::draw2d::graphics * pdc, point pt, class size sz)
    {
       return m_spgraphics->BitBlt(ptDest.x, ptDest.y, sz.cx, sz.cy, pdc, pt.x, pt.y, SRCCOPY) != FALSE;
    }
@@ -234,7 +280,7 @@ namespace win
    void dib::Fill ( int R, int G, int B )
    {
       COLORREF color=RGB ( B, G, R );
-      int size=m_size.cx*m_size.cy;
+      int size=this->cx*this->cy;
 
       COLORREF * pcr;
 
@@ -285,7 +331,7 @@ namespace win
 
    void dib::set_rgb(int R, int G, int B)
    {
-      int size=m_size.cx*m_size.cy;
+      int size=this->cx*this->cy;
 
       BYTE * pbyte = (BYTE *) m_pcolorref;
 
@@ -302,7 +348,7 @@ namespace win
    void dib::ToAlpha(int i)
    {
       BYTE *dst=(BYTE*)m_pcolorref;
-      int size=m_size.cx*m_size.cy;
+      int size=this->cx*this->cy;
 
       while ( size-- )
       {
@@ -314,7 +360,7 @@ namespace win
    void dib::from_alpha()
    {
       BYTE *dst=(BYTE*)m_pcolorref;
-      __int64 size = m_size.area();
+      __int64 size = area();
 
       while ( size-- )
       {
@@ -327,14 +373,14 @@ namespace win
 
    //DIB = DIB * SRC_ALPHA
 
-   void dib::mult_alpha(::ca::dib * pdibWork, bool bPreserveAlpha)
+   void dib::mult_alpha(::draw2d::dib * pdibWork, bool bPreserveAlpha)
    {
-      //return ::ca::dib::mult_alpha(NULL, true);
-      ::ca::dib_sp dibWork;
+      return ::draw2d::dib::mult_alpha(NULL, true);
+      /*::draw2d::dib_sp dibWork;
 
       if(pdibWork == NULL)
       {
-         dibWork.create(get_app());
+         dibWork.create(allocer());
          pdibWork = dibWork;
       }
 
@@ -364,13 +410,13 @@ namespace win
          channel_from(visual::rgba::channel_alpha, pdibWork);
 
       }
-
+      */
    }
 
    void dib::Map(int ToRgb, int FromRgb)
    {
       BYTE *dst=(BYTE*)m_pcolorref;
-      int size=m_size.cx*m_size.cy;
+      int size=this->cx*this->cy;
 
       while ( size-- )
       {
@@ -383,7 +429,7 @@ namespace win
    void dib::ToAlphaAndFill(int i, COLORREF cr)
    {
       BYTE *dst=(BYTE*)m_pcolorref;
-      int size=m_size.cx*m_size.cy;
+      int size=this->cx*this->cy;
 
       BYTE uchB = rgba_get_b(cr);
       BYTE uchG = rgba_get_g(cr);
@@ -402,11 +448,11 @@ namespace win
    void dib::GrayToARGB(COLORREF cr)
    {
       BYTE *dst=(BYTE*)m_pcolorref;
-      int size=m_size.cx*m_size.cy;
+      int size=this->cx*this->cy;
 
-      DWORD dwB = rgba_get_b(cr);
-      DWORD dwG = rgba_get_g(cr);
-      DWORD dwR = rgba_get_r(cr);
+      uint32_t dwB = rgba_get_b(cr);
+      uint32_t dwG = rgba_get_g(cr);
+      uint32_t dwR = rgba_get_r(cr);
 
       while (size-- > 0)
       {
@@ -419,12 +465,12 @@ namespace win
    }
 
 
-   void dib::BitBlt(::ca::dib *pdib, int op)
+   void dib::BitBlt(::draw2d::dib *pdib, int op)
    {
       if(op == 123) // zero dest RGB, invert alpha, and OR src RGB
       {
-         int isize=m_size.cx*m_size.cy;
-         LPDWORD lpbitsSrc= (LPDWORD) WIN_DIB(pdib)->m_pcolorref;
+         int isize=this->cx*this->cy;
+         LPDWORD lpbitsSrc= (LPDWORD) pdib->m_pcolorref;
          LPDWORD lpbitsDest= (LPDWORD) m_pcolorref;
 
          COLORREF _colorref = RGB ( 0, 0, 0 ) | (255 << 24);
@@ -475,7 +521,7 @@ namespace win
 
    void dib::Invert()
    {
-      int size=m_size.cx*m_size.cy;
+      int size=this->cx*this->cy;
       LPBYTE lpb = (LPBYTE) m_pcolorref;
       for ( int i=0; i<size; i++ )
       {
@@ -488,7 +534,7 @@ namespace win
 
    void dib::channel_invert(visual::rgba::echannel echannel)
    {
-      __int64 size=m_size.area();
+      __int64 size=area();
       LPBYTE lpb = (LPBYTE) m_pcolorref;
       lpb += ((int)echannel) % 4;
       for ( int i=0; i<size; i++ )
@@ -518,7 +564,7 @@ namespace win
    void dib::FillGlass ( int R, int G, int B, int A )
    {
       BYTE *dst=(BYTE*)m_pcolorref;
-      int size=m_size.cx*m_size.cy;
+      int size=this->cx*this->cy;
          
       while ( size-- )
       {
@@ -532,8 +578,8 @@ namespace win
    void dib::FillStippledGlass ( int R, int G, int B )
    {   
       COLORREF color=RGB ( B, G, R );
-      int w=m_size.cx;
-      int h=m_size.cy;
+      int w=this->cx;
+      int h=this->cy;
 
       for ( int j=0; j<w; j++ )
       {
@@ -544,38 +590,38 @@ namespace win
       }
    }
 
-   void dib::copy(::ca::dib * pdib)
+   void dib::copy(::draw2d::dib * pdib)
    {
       // If DibSize Wrong Re-create dib
-      if ( (WIN_DIB(pdib)->m_size.cx!=m_size.cx) || (WIN_DIB(pdib)->m_size.cy!=m_size.cy) )
-         WIN_DIB(pdib)->create ( m_size.cx, m_size.cy );
+      if ( (pdib->cx!=this->cx) || (pdib->cy!=this->cy) )
+         pdib->create ( this->cx, this->cy );
       // do copy
-      memcpy ( WIN_DIB(pdib)->m_pcolorref, m_pcolorref, m_size.cx*m_size.cy*4 );
+      memcpy ( pdib->m_pcolorref, m_pcolorref, this->cx*this->cy*4 );
    }
 
 
-   void dib::Paste ( ::ca::dib * pdib )
+   void dib::Paste ( ::draw2d::dib * pdib )
    {
       // If DibSize Wrong Re-create dib
-      if ( (m_size.cx!=WIN_DIB(pdib)->m_size.cx) || (m_size.cy!=WIN_DIB(pdib)->m_size.cy) )
-         create ( WIN_DIB(pdib)->m_size.cx, WIN_DIB(pdib)->m_size.cy );
+      if ( (this->cx!=pdib->cx) || (this->cy!=pdib->cy) )
+         create ( pdib->cx, pdib->cy );
       // do Paste
-      memcpy ( m_pcolorref, WIN_DIB(pdib)->m_pcolorref, m_size.cx*m_size.cy*4 );
+      memcpy ( m_pcolorref, pdib->m_pcolorref, this->cx*this->cy*4 );
    }
 
    bool dib::color_blend(COLORREF cr, BYTE bAlpha)
    {
 
       BYTE *dst=(BYTE*)m_pcolorref;
-      int size=m_size.cx*m_size.cy;
+      int size=this->cx*this->cy;
 
-      DWORD dwB = rgba_get_b(cr);
-      DWORD dwG = rgba_get_g(cr);
-      DWORD dwR = rgba_get_r(cr);
+      uint32_t dwB = rgba_get_b(cr);
+      uint32_t dwG = rgba_get_g(cr);
+      uint32_t dwR = rgba_get_r(cr);
     
-      DWORD dwB_ = dwB << 8;
-      DWORD dwG_ = dwG << 8;
-      DWORD dwR_ = dwR << 8;
+      uint32_t dwB_ = dwB << 8;
+      uint32_t dwG_ = dwG << 8;
+      uint32_t dwR_ = dwR << 8;
          
       while ( size-- )
       {
@@ -588,14 +634,14 @@ namespace win
    }
 
 
-   void dib::Blend (::ca::dib * pdib, int A )
+   void dib::Blend (::draw2d::dib * pdib, int A )
    {
-      if ( m_size!=WIN_DIB(pdib)->m_size )
+      if ( size()!=pdib->size() )
          return;
 
-      BYTE *src=(BYTE*)WIN_DIB(pdib)->m_pcolorref;
+      BYTE *src=(BYTE*)pdib->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
-      int size=m_size.cx*m_size.cy;
+      int size=this->cx*this->cy;
          
       while ( size-- )
       {
@@ -607,16 +653,16 @@ namespace win
       }
    }
 
-   bool dib::Blend(::ca::dib *pdib, ::ca::dib *pdibA, int A)
+   bool dib::Blend(::draw2d::dib *pdib, ::draw2d::dib *pdibA, int A)
    {
-      if(m_size != WIN_DIB(pdib)->m_size ||
-         m_size != WIN_DIB(pdibA)->m_size)
+      if(size() != pdib->size() ||
+         size() != pdibA->size())
          return false;
 
-      BYTE *src=(BYTE*)WIN_DIB(pdib)->m_pcolorref;
+      BYTE *src=(BYTE*)pdib->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
-      BYTE *alf=(BYTE*)WIN_DIB(pdibA)->m_pcolorref;
-      int size=m_size.cx*m_size.cy;
+      BYTE *alf=(BYTE*)pdibA->m_pcolorref;
+      int size=this->cx*this->cy;
 
       A = 2 - A;
          
@@ -633,14 +679,14 @@ namespace win
       return true;
    }
 
-   void dib::Darken (::ca::dib * pdib )
+   void dib::Darken (::draw2d::dib * pdib )
    {
-      if ( m_size!=WIN_DIB(pdib)->m_size )
+      if ( size()!=pdib->size() )
          return;
 
-      BYTE *src=(BYTE*)WIN_DIB(pdib)->m_pcolorref;
+      BYTE *src=(BYTE*)pdib->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
-      int size=m_size.cx*m_size.cy;
+      int size=this->cx*this->cy;
          
       while ( size-- )
       {
@@ -652,14 +698,14 @@ namespace win
       }
    }
 
-   void dib::Difference (::ca::dib * pdib )
+   void dib::Difference (::draw2d::dib * pdib )
    {
-      if ( m_size!=WIN_DIB(pdib)->m_size )
+      if ( size()!=pdib->size() )
          return;
 
-      BYTE *src=(BYTE*)WIN_DIB(pdib)->m_pcolorref;
+      BYTE *src=(BYTE*)pdib->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
-      int size=m_size.cx*m_size.cy;
+      int size=this->cx*this->cy;
          
       while ( size-- )
       {
@@ -675,14 +721,14 @@ namespace win
       }
    }
 
-   void dib::Lighten (::ca::dib * pdib )
+   void dib::Lighten (::draw2d::dib * pdib )
    {
-      if ( m_size!=WIN_DIB(pdib)->m_size )
+      if ( size()!=pdib->size() )
          return;
 
-      BYTE *src=(BYTE*)WIN_DIB(pdib)->m_pcolorref;
+      BYTE *src=(BYTE*)pdib->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
-      int size=m_size.cx*m_size.cy;
+      int size=this->cx*this->cy;
          
       while ( size-- )
       {
@@ -695,14 +741,14 @@ namespace win
    }
 
 
-   void dib::Multiply (::ca::dib * pdib )
+   void dib::Multiply (::draw2d::dib * pdib )
    {
-      if ( m_size!=WIN_DIB(pdib)->m_size )
+      if ( size()!=pdib->size() )
          return;
 
-      BYTE *src=(BYTE*)WIN_DIB(pdib)->m_pcolorref;
+      BYTE *src=(BYTE*)pdib->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
-      int size=m_size.cx*m_size.cy;
+      int size=this->cx*this->cy;
          
       while ( size-- )
       {
@@ -714,14 +760,14 @@ namespace win
       }
    }
 
-   void dib::Screen (::ca::dib * pdib )
+   void dib::Screen (::draw2d::dib * pdib )
    {
-      if ( m_size!=WIN_DIB(pdib)->m_size )
+      if ( size()!=pdib->size() )
          return;
 
-      BYTE *src=(BYTE*)WIN_DIB(pdib)->m_pcolorref;
+      BYTE *src=(BYTE*)pdib->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
-      int size=m_size.cx*m_size.cy;
+      int size=this->cx*this->cy;
          
       while ( size-- )
       {
@@ -737,13 +783,13 @@ namespace win
    // Rectangle Functions
    //////////////////////////////////////////////////////////////////////
 
-   void dib::copy (::ca::dib * pdib, int x, int y )
+   void dib::copy (::draw2d::dib * pdib, int x, int y )
    {
       // Clip Rect
       int px=(x>=0) ? x : 0;
       int py=(y>=0) ? y : 0;
-      int dx=((x+WIN_DIB(pdib)->m_size.cx)<m_size.cx) ? WIN_DIB(pdib)->m_size.cx : m_size.cx-x;
-      int dy=((y+WIN_DIB(pdib)->m_size.cy)<m_size.cy) ? WIN_DIB(pdib)->m_size.cy : m_size.cy-y;
+      int dx=((x+pdib->cx)<this->cx) ? pdib->cx : this->cx-x;
+      int dy=((y+pdib->cy)<this->cy) ? pdib->cy : this->cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -751,30 +797,30 @@ namespace win
       if ( (dx<=0) || (dy<=0) )
          return;
       // If DibSize Wrong Re-create dib
-      if ( (dx!=WIN_DIB(pdib)->m_size.cx) || (dy!=WIN_DIB(pdib)->m_size.cy) )
-         WIN_DIB(pdib)->create ( dx, dy );
+      if ( (dx!=pdib->cx) || (dy!=pdib->cy) )
+         pdib->create ( dx, dy );
 
       // Prepare buffer Addresses
-      COLORREF *src=m_pcolorref+(py*m_size.cx)+px;
-      COLORREF *dst=WIN_DIB(pdib)->m_pcolorref;
+      COLORREF *src=m_pcolorref+(py*this->cx)+px;
+      COLORREF *dst=pdib->m_pcolorref;
 
       // Do copy
       while ( dy-- )
       {
          for ( int i=0; i<dx; i++ )
             dst[i]=src[i];
-         src+=m_size.cx;
-         dst+=WIN_DIB(pdib)->m_size.cx;
+         src+=this->cx;
+         dst+=pdib->cx;
       }
    }
 
-   void dib::PasteRect (::ca::dib * pdib, int x, int y )
+   void dib::PasteRect (::draw2d::dib * pdib, int x, int y )
    {
       // Clip Rect
       int px=(x>=0) ? x : 0;
       int py=(y>=0) ? y : 0;
-      int dx=((x+WIN_DIB(pdib)->m_size.cx)<m_size.cx) ? WIN_DIB(pdib)->m_size.cx : m_size.cx-x;
-      int dy=((y+WIN_DIB(pdib)->m_size.cy)<m_size.cy) ? WIN_DIB(pdib)->m_size.cy : m_size.cy-y;
+      int dx=((x+pdib->cx)<this->cx) ? pdib->cx : this->cx-x;
+      int dy=((y+pdib->cy)<this->cy) ? pdib->cy : this->cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -783,16 +829,16 @@ namespace win
          return;
 
       // Prepare buffer Addresses
-      COLORREF *src=WIN_DIB(pdib)->m_pcolorref+((py-y)*WIN_DIB(pdib)->m_size.cx)+px-x;
-      COLORREF *dst=m_pcolorref+(py*m_size.cx)+px;
+      COLORREF *src=pdib->m_pcolorref+((py-y)*pdib->cx)+px-x;
+      COLORREF *dst=m_pcolorref+(py*this->cx)+px;
 
       // Do Paste
       while ( dy-- )
       {
          for ( int i=0; i<dx; i++ )
             dst[i]=src[i];
-         src+=WIN_DIB(pdib)->m_size.cx;
-         dst+=m_size.cx;
+         src+=pdib->cx;
+         dst+=this->cx;
       }
    }
 
@@ -801,8 +847,8 @@ namespace win
       // Clip Rect
       int px=(x>=0) ? x : 0;
       int py=(y>=0) ? y : 0;
-      int dx=((x+w)<m_size.cx) ? w : m_size.cx-x;
-      int dy=((y+h)<m_size.cy) ? h : m_size.cy-y;
+      int dx=((x+w)<this->cx) ? w : this->cx-x;
+      int dy=((y+h)<this->cy) ? h : this->cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -811,7 +857,7 @@ namespace win
          return;
 
       // Prepare buffer Address
-      COLORREF *dst=m_pcolorref+(py*m_size.cx)+px;
+      COLORREF *dst=m_pcolorref+(py*this->cx)+px;
       COLORREF color=RGB ( B, G, R );
 
       // Do Fill
@@ -821,7 +867,7 @@ namespace win
          {
             dst[i]=color;   
          }
-         dst+=m_size.cx;
+         dst+=this->cx;
       }
    }
 
@@ -830,8 +876,8 @@ namespace win
       // Clip Rect
       int px=(x>=0) ? x : 0;
       int py=(y>=0) ? y : 0;
-      int dx=((x+w)<m_size.cx) ? w : m_size.cx-x;
-      int dy=((y+h)<m_size.cy) ? h : m_size.cy-y;
+      int dx=((x+w)<this->cx) ? w : this->cx-x;
+      int dy=((y+h)<this->cy) ? h : this->cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -840,7 +886,7 @@ namespace win
          return;
 
       // Prepare buffer Address
-      BYTE *dst=(BYTE *)m_pcolorref+((py*m_size.cx)+px)*4;
+      BYTE *dst=(BYTE *)m_pcolorref+((py*this->cx)+px)*4;
 
       // Do FillGlass
       while ( dy-- )
@@ -852,7 +898,7 @@ namespace win
             dst[2]=(BYTE)(((R-dst[2])*A+(dst[2]<<8))>>8);   
             dst+=4;
          }
-         dst+=(m_size.cx-dx)<<2;
+         dst+=(this->cx-dx)<<2;
       }
    }
 
@@ -861,8 +907,8 @@ namespace win
       // Clip Rect
       int px=(x>=0) ? x : 0;
       int py=(y>=0) ? y : 0;
-      int dx=((x+w)<m_size.cx) ? w : m_size.cx-x;
-      int dy=((y+h)<m_size.cy) ? h : m_size.cy-y;
+      int dx=((x+w)<this->cx) ? w : this->cx-x;
+      int dy=((y+h)<this->cy) ? h : this->cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -871,7 +917,7 @@ namespace win
          return;
 
       // Prepare buffer Address
-      COLORREF *dst=m_pcolorref+(py*m_size.cx)+px;
+      COLORREF *dst=m_pcolorref+(py*this->cx)+px;
       COLORREF color=RGB ( B, G, R );
 
       // Do FillStippledGlass
@@ -881,17 +927,17 @@ namespace win
          {
             dst[i]=((i+j)&0x1) ? dst[i] : color;   
          }
-         dst+=m_size.cx;
+         dst+=this->cx;
       }
    }
 
-   void dib::BlendRect (::ca::dib * pdib, int x, int y, int A )
+   void dib::BlendRect (::draw2d::dib * pdib, int x, int y, int A )
    {
       // Clip Rect
       int px=(x>=0) ? x : 0;
       int py=(y>=0) ? y : 0;
-      int dx=((x+WIN_DIB(pdib)->m_size.cx)<m_size.cx) ? WIN_DIB(pdib)->m_size.cx : m_size.cx-x;
-      int dy=((y+WIN_DIB(pdib)->m_size.cy)<m_size.cy) ? WIN_DIB(pdib)->m_size.cy : m_size.cy-y;
+      int dx=((x+pdib->cx)<this->cx) ? pdib->cx : this->cx-x;
+      int dy=((y+pdib->cy)<this->cy) ? pdib->cy : this->cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -900,8 +946,8 @@ namespace win
          return;
 
       // Prepare buffer Addresses
-      BYTE *src=(BYTE *)WIN_DIB(pdib)->m_pcolorref+(((py-y)*WIN_DIB(pdib)->m_size.cx)+px-x)*4;
-      BYTE *dst=(BYTE *)m_pcolorref+((py*m_size.cx)+px)*4;
+      BYTE *src=(BYTE *)pdib->m_pcolorref+(((py-y)*pdib->cx)+px-x)*4;
+      BYTE *dst=(BYTE *)m_pcolorref+((py*this->cx)+px)*4;
 
       // Do Blend
       while ( dy-- )
@@ -914,18 +960,18 @@ namespace win
             dst+=4;
             src+=4;
          }
-         dst+=(m_size.cx-dx)<<2;
-         src+=(WIN_DIB(pdib)->m_size.cx-dx)<<2;
+         dst+=(this->cx-dx)<<2;
+         src+=(pdib->cx-dx)<<2;
       }
    }
 
-   void dib::DarkenRect (::ca::dib * pdib, int x, int y )
+   void dib::DarkenRect (::draw2d::dib * pdib, int x, int y )
    {
       // Clip Rect
       int px=(x>=0) ? x : 0;
       int py=(y>=0) ? y : 0;
-      int dx=((x+WIN_DIB(pdib)->m_size.cx)<m_size.cx) ? WIN_DIB(pdib)->m_size.cx : m_size.cx-x;
-      int dy=((y+WIN_DIB(pdib)->m_size.cy)<m_size.cy) ? WIN_DIB(pdib)->m_size.cy : m_size.cy-y;
+      int dx=((x+pdib->cx)<this->cx) ? pdib->cx : this->cx-x;
+      int dy=((y+pdib->cy)<this->cy) ? pdib->cy : this->cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -934,8 +980,8 @@ namespace win
          return;
 
       // Prepare buffer Addresses
-      BYTE *src=(BYTE *)WIN_DIB(pdib)->m_pcolorref+(((py-y)*WIN_DIB(pdib)->m_size.cx)+px-x)*4;
-      BYTE *dst=(BYTE *)m_pcolorref+((py*m_size.cx)+px)*4;
+      BYTE *src=(BYTE *)pdib->m_pcolorref+(((py-y)*pdib->cx)+px-x)*4;
+      BYTE *dst=(BYTE *)m_pcolorref+((py*this->cx)+px)*4;
 
       // Do Darken
       while ( dy-- )
@@ -948,18 +994,18 @@ namespace win
             dst+=4;
             src+=4;
          }
-         dst+=(m_size.cx-dx)<<2;
-         src+=(WIN_DIB(pdib)->m_size.cx-dx)<<2;
+         dst+=(this->cx-dx)<<2;
+         src+=(pdib->cx-dx)<<2;
       }
    }
 
-   void dib::DifferenceRect (::ca::dib * pdib, int x, int y )
+   void dib::DifferenceRect (::draw2d::dib * pdib, int x, int y )
    {
       // Clip Rect
       int px=(x>=0) ? x : 0;
       int py=(y>=0) ? y : 0;
-      int dx=((x+WIN_DIB(pdib)->m_size.cx)<m_size.cx) ? WIN_DIB(pdib)->m_size.cx : m_size.cx-x;
-      int dy=((y+WIN_DIB(pdib)->m_size.cy)<m_size.cy) ? WIN_DIB(pdib)->m_size.cy : m_size.cy-y;
+      int dx=((x+pdib->cx)<this->cx) ? pdib->cx : this->cx-x;
+      int dy=((y+pdib->cy)<this->cy) ? pdib->cy : this->cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -968,8 +1014,8 @@ namespace win
          return;
 
       // Prepare buffer Addresses
-      BYTE *src=(BYTE *)WIN_DIB(pdib)->m_pcolorref+(((py-y)*WIN_DIB(pdib)->m_size.cx)+px-x)*4;
-      BYTE *dst=(BYTE *)m_pcolorref+((py*m_size.cx)+px)*4;
+      BYTE *src=(BYTE *)pdib->m_pcolorref+(((py-y)*pdib->cx)+px-x)*4;
+      BYTE *dst=(BYTE *)m_pcolorref+((py*this->cx)+px)*4;
 
       // Do Difference
       while ( dy-- )
@@ -986,18 +1032,18 @@ namespace win
             dst+=4;
             src+=4;
          }
-         dst+=(m_size.cx-dx)<<2;
-         src+=(WIN_DIB(pdib)->m_size.cx-dx)<<2;
+         dst+=(this->cx-dx)<<2;
+         src+=(pdib->cx-dx)<<2;
       }
    }
 
-   void dib::LightenRect (::ca::dib * pdib, int x, int y )
+   void dib::LightenRect (::draw2d::dib * pdib, int x, int y )
    {
       // Clip Rect
       int px=(x>=0) ? x : 0;
       int py=(y>=0) ? y : 0;
-      int dx=((x+WIN_DIB(pdib)->m_size.cx)<m_size.cx) ? WIN_DIB(pdib)->m_size.cx : m_size.cx-x;
-      int dy=((y+WIN_DIB(pdib)->m_size.cy)<m_size.cy) ? WIN_DIB(pdib)->m_size.cy : m_size.cy-y;
+      int dx=((x+pdib->cx)<this->cx) ? pdib->cx : this->cx-x;
+      int dy=((y+pdib->cy)<this->cy) ? pdib->cy : this->cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -1006,8 +1052,8 @@ namespace win
          return;
 
       // Prepare buffer Addresses
-      BYTE *src=(BYTE *)WIN_DIB(pdib)->m_pcolorref+(((py-y)*WIN_DIB(pdib)->m_size.cx)+px-x)*4;
-      BYTE *dst=(BYTE *)m_pcolorref+((py*m_size.cx)+px)*4;
+      BYTE *src=(BYTE *)pdib->m_pcolorref+(((py-y)*pdib->cx)+px-x)*4;
+      BYTE *dst=(BYTE *)m_pcolorref+((py*this->cx)+px)*4;
 
       // Do Lighten
       while ( dy-- )
@@ -1020,18 +1066,18 @@ namespace win
             dst+=4;
             src+=4;
          }
-         dst+=(m_size.cx-dx)<<2;
-         src+=(WIN_DIB(pdib)->m_size.cx-dx)<<2;
+         dst+=(this->cx-dx)<<2;
+         src+=(pdib->cx-dx)<<2;
       }
    }
 
-   void dib::MultiplyRect (::ca::dib * pdib, int x, int y )
+   void dib::MultiplyRect (::draw2d::dib * pdib, int x, int y )
    {
       // Clip Rect
       int px=(x>=0) ? x : 0;
       int py=(y>=0) ? y : 0;
-      int dx=((x+WIN_DIB(pdib)->m_size.cx)<m_size.cx) ? WIN_DIB(pdib)->m_size.cx : m_size.cx-x;
-      int dy=((y+WIN_DIB(pdib)->m_size.cy)<m_size.cy) ? WIN_DIB(pdib)->m_size.cy : m_size.cy-y;
+      int dx=((x+pdib->cx)<this->cx) ? pdib->cx : this->cx-x;
+      int dy=((y+pdib->cy)<this->cy) ? pdib->cy : this->cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -1040,8 +1086,8 @@ namespace win
          return;
 
       // Prepare buffer Addresses
-      BYTE *src=(BYTE *)WIN_DIB(pdib)->m_pcolorref+(((py-y)*WIN_DIB(pdib)->m_size.cx)+px-x)*4;
-      BYTE *dst=(BYTE *)m_pcolorref+((py*m_size.cx)+px)*4;
+      BYTE *src=(BYTE *)pdib->m_pcolorref+(((py-y)*pdib->cx)+px-x)*4;
+      BYTE *dst=(BYTE *)m_pcolorref+((py*this->cx)+px)*4;
 
       // Do Multiply
       while ( dy-- )
@@ -1054,18 +1100,18 @@ namespace win
             dst+=4;
             src+=4;
          }
-         dst+=(m_size.cx-dx)<<2;
-         src+=(WIN_DIB(pdib)->m_size.cx-dx)<<2;
+         dst+=(this->cx-dx)<<2;
+         src+=(pdib->cx-dx)<<2;
       }
    }
 
-   void dib::ScreenRect (::ca::dib * pdib, int x, int y )
+   void dib::ScreenRect (::draw2d::dib * pdib, int x, int y )
    {
       // Clip Rect
       int px=(x>=0) ? x : 0;
       int py=(y>=0) ? y : 0;
-      int dx=((x+WIN_DIB(pdib)->m_size.cx)<m_size.cx) ? WIN_DIB(pdib)->m_size.cx : m_size.cx-x;
-      int dy=((y+WIN_DIB(pdib)->m_size.cy)<m_size.cy) ? WIN_DIB(pdib)->m_size.cy : m_size.cy-y;
+      int dx=((x+pdib->cx)<this->cx) ? pdib->cx : this->cx-x;
+      int dy=((y+pdib->cy)<this->cy) ? pdib->cy : this->cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -1074,8 +1120,8 @@ namespace win
          return;
 
       // Prepare buffer Addresses
-      BYTE *src=(BYTE *)WIN_DIB(pdib)->m_pcolorref+(((py-y)*WIN_DIB(pdib)->m_size.cx)+px-x)*4;
-      BYTE *dst=(BYTE *)m_pcolorref+((py*m_size.cx)+px)*4;
+      BYTE *src=(BYTE *)pdib->m_pcolorref+(((py-y)*pdib->cx)+px-x)*4;
+      BYTE *dst=(BYTE *)m_pcolorref+((py*this->cx)+px)*4;
 
       // Do Screen
       while ( dy-- )
@@ -1088,8 +1134,8 @@ namespace win
             dst+=4;
             src+=4;
          }
-         dst+=(m_size.cx-dx)<<2;
-         src+=(WIN_DIB(pdib)->m_size.cx-dx)<<2;
+         dst+=(this->cx-dx)<<2;
+         src+=(pdib->cx-dx)<<2;
       }
    }
 
@@ -1110,7 +1156,7 @@ namespace win
       x=x1;
       y=y1;
 
-      m_pcolorref[y*m_size.cx+x]=color;
+      m_pcolorref[y*this->cx+x]=color;
       while (x<dx) 
       {
          if (d<=0) 
@@ -1124,7 +1170,7 @@ namespace win
             x++;
             y++;
          }
-         m_pcolorref[y*m_size.cx+x]=color;
+         m_pcolorref[y*this->cx+x]=color;
       }
    }*/
 
@@ -1147,7 +1193,7 @@ namespace win
          d=ay-(ax>>1);
          while ( x!=x2 )
          {
-            m_pcolorref[y*m_size.cx+x]=color;
+            m_pcolorref[y*this->cx+x]=color;
             if ( d>=0 )
             {
                y+=sy;
@@ -1162,7 +1208,7 @@ namespace win
          d=ax-(ay>>1);
          while ( y!=y2 )
          {
-            m_pcolorref[y*m_size.cx+x]=color;
+            m_pcolorref[y*this->cx+x]=color;
             if ( d>=0 )
             {
                x+=sx;
@@ -1194,9 +1240,9 @@ namespace win
          d=ay-(ax>>1);
          while ( x!=x2 )
          {
-            dst[(y*m_size.cx+x)<<2]=(BYTE)(((B-dst[(y*m_size.cx+x)<<2])*A+(dst[(y*m_size.cx+x)<<2]<<8))>>8);
-            dst[((y*m_size.cx+x)<<2)+1]=(BYTE)(((G-dst[((y*m_size.cx+x)<<2)+1])*A+(dst[((y*m_size.cx+x)<<2)+1]<<8))>>8);
-            dst[((y*m_size.cx+x)<<2)+2]=(BYTE)(((R-dst[((y*m_size.cx+x)<<2)+2])*A+(dst[((y*m_size.cx+x)<<2)+2]<<8))>>8);
+            dst[(y*this->cx+x)<<2]=(BYTE)(((B-dst[(y*this->cx+x)<<2])*A+(dst[(y*this->cx+x)<<2]<<8))>>8);
+            dst[((y*this->cx+x)<<2)+1]=(BYTE)(((G-dst[((y*this->cx+x)<<2)+1])*A+(dst[((y*this->cx+x)<<2)+1]<<8))>>8);
+            dst[((y*this->cx+x)<<2)+2]=(BYTE)(((R-dst[((y*this->cx+x)<<2)+2])*A+(dst[((y*this->cx+x)<<2)+2]<<8))>>8);
             if ( d>=0 )
             {
                y+=sy;
@@ -1211,9 +1257,9 @@ namespace win
          d=ax-(ay>>1);
          while ( y!=y2 )
          {
-            dst[(y*m_size.cx+x)<<2]=(BYTE)(((B-dst[(y*m_size.cx+x)<<2])*A+(dst[(y*m_size.cx+x)<<2]<<8))>>8);
-            dst[((y*m_size.cx+x)<<2)+1]=(BYTE)(((G-dst[((y*m_size.cx+x)<<2)+1])*A+(dst[((y*m_size.cx+x)<<2)+1]<<8))>>8);
-            dst[((y*m_size.cx+x)<<2)+2]=(BYTE)(((R-dst[((y*m_size.cx+x)<<2)+2])*A+(dst[((y*m_size.cx+x)<<2)+2]<<8))>>8);
+            dst[(y*this->cx+x)<<2]=(BYTE)(((B-dst[(y*this->cx+x)<<2])*A+(dst[(y*this->cx+x)<<2]<<8))>>8);
+            dst[((y*this->cx+x)<<2)+1]=(BYTE)(((G-dst[((y*this->cx+x)<<2)+1])*A+(dst[((y*this->cx+x)<<2)+1]<<8))>>8);
+            dst[((y*this->cx+x)<<2)+2]=(BYTE)(((R-dst[((y*this->cx+x)<<2)+2])*A+(dst[((y*this->cx+x)<<2)+2]<<8))>>8);
             if ( d>=0 )
             {
                x+=sx;
@@ -1231,7 +1277,7 @@ namespace win
       COLORREF crSet = RGB(rgba_get_b(crInMask), rgba_get_g(crInMask), rgba_get_r(crInMask));
       COLORREF crUnset  = RGB(rgba_get_b(crOutMask), rgba_get_g(crOutMask), rgba_get_r(crOutMask));
 
-      int size=m_size.cx*m_size.cy;
+      int size=this->cx*this->cy;
 
       for ( int i=0; i<size; i++ )
          if(m_pcolorref[i]== crFind)
@@ -1255,7 +1301,7 @@ namespace win
 
    void dib::channel_mask(unsigned char uchFind, unsigned char uchSet, unsigned char uchUnset, visual::rgba::echannel echannel)
    {
-      int size = m_size.cx * m_size.cy;
+      int size = this->cx * this->cy;
       unsigned char * puch = (unsigned char * ) m_pcolorref;
       puch += ((int) echannel) % 4;
 
@@ -1269,9 +1315,9 @@ namespace win
       }
    }
 
-   DWORD dib::GetPixel(int x, int y)
+   uint32_t dib::GetPixel(int x, int y)
    {
-      DWORD dw = *(m_pcolorref + x + (m_size.cy - y - 1) * m_size.cx);
+      uint32_t dw = *(m_pcolorref + x + (this->cy - y - 1) * this->cx);
       return RGB(rgba_get_b(dw), rgba_get_g(dw), rgba_get_r(dw));
    }
 
@@ -1302,7 +1348,7 @@ namespace win
 
 
          BYTE *dst = ((BYTE*)(m_pcolorref + xL + yL * m_Size.cx));
-         DWORD dwAdd = ((m_Size.cx - 1 - xU) + xL) * 4;
+         uint32_t dwAdd = ((m_Size.cx - 1 - xU) + xL) * 4;
          int size=m_Size.cx*m_Size.cy;
          double iLevel;
 
@@ -1403,14 +1449,14 @@ namespace win
 
 
          if(xL < 0) xL = 0;
-         if(xU >= m_size.cx) xU = m_size.cx - 1;
+         if(xU >= this->cx) xU = this->cx - 1;
          if(yL < 0) yL = 0;
-         if(yU >= m_size.cy) yU = m_size.cy - 1;
+         if(yU >= this->cy) yU = this->cy - 1;
       
 
-         BYTE *dst = ((BYTE*)(m_pcolorref + xL + yL * m_size.cx));
-         DWORD dwAdd = ((m_size.cx - 1 - xU) + xL) * 4;
-//         int size=m_size.cx*m_size.cy;
+         BYTE *dst = ((BYTE*)(m_pcolorref + xL + yL * this->cx));
+         uint32_t dwAdd = ((this->cx - 1 - xU) + xL) * 4;
+//         int size=this->cx*this->cy;
       
          int dx, dy;
 
@@ -1462,7 +1508,7 @@ namespace win
 
 
          BYTE *dst = ((BYTE*)(m_pcolorref + xL + yL * m_Size.cx));
-         DWORD dwAdd = ((m_Size.cx - 1 - xU) + xL) * 4;
+         uint32_t dwAdd = ((m_Size.cx - 1 - xU) + xL) * 4;
          int size=m_Size.cx*m_Size.cy;
          double iLevel;
 
@@ -1563,14 +1609,14 @@ namespace win
 
 
          if(xL < 0) xL = 0;
-         if(xU >= m_size.cx) xU = m_size.cx - 1;
+         if(xU >= this->cx) xU = this->cx - 1;
          if(yL < 0) yL = 0;
-         if(yU >= m_size.cy) yU = m_size.cy - 1;
+         if(yU >= this->cy) yU = this->cy - 1;
       
 
-         BYTE *dst = ((BYTE*)(m_pcolorref + xL + yL * m_size.cx));
-         DWORD dwAdd = ((m_size.cx - 1 - xU) + xL) * 4;
-//         int size=m_size.cx*m_size.cy;
+         BYTE *dst = ((BYTE*)(m_pcolorref + xL + yL * this->cx));
+         uint32_t dwAdd = ((this->cx - 1 - xU) + xL) * 4;
+//         int size=this->cx*this->cy;
       
          int dx, dy;
 
@@ -1623,9 +1669,9 @@ namespace win
          DI_IMAGE | DI_MASK);
     
       // Black blend dib
-      ::ca::dib_sp spdib2(get_app());
+      ::draw2d::dib_sp spdib2(get_app());
       spdib2->create(cx, cy);
-      spdib2->Fill(0, 0, 0);
+      spdib2->Fill(0, 0, 0, 0);
 
       spdib2->get_graphics()->DrawIcon(
          0, 0,
@@ -1651,7 +1697,7 @@ namespace win
       BYTE * r2=(BYTE*)spdib2->get_data();
       BYTE * srcM=(BYTE*)dibM.m_pcolorref;
       BYTE * dest=(BYTE*)m_pcolorref;
-      int iSize = m_size.cx*m_size.cy;
+      int iSize = this->cx*this->cy;
     
       BYTE b;
       BYTE bMax;
@@ -1685,13 +1731,13 @@ namespace win
     
    }
 
-   void dib::rotate(::ca::dib * pdib, double dAngle, double dScale)
+   void dib::rotate(::draw2d::dib * pdib, double dAngle, double dScale)
    {
-     // ::ca::dib_sp spdib(get_app());
+     // ::draw2d::dib_sp spdib(get_app());
    //   spdib->Paste(this);
 
-      int cx = m_size.cx;
-      int cy = m_size.cy;
+      int cx = this->cx;
+      int cy = this->cy;
 
       int l = max(cx, cy);
 
@@ -1720,7 +1766,7 @@ namespace win
             x=int(cos10(i, iAngle) - sin10(j, iAngle)) + ioff;
             y=int(sin10(i, iAngle) + cos10(j, iAngle)) + joff;
             m_pcolorref[(j+joff)*cx+(i+ioff)]=
-               spdib->m_pcolorref[abs(y%m_size.cy)*m_size.cx+abs(x%m_size.cx)];
+               spdib->m_pcolorref[abs(y%this->cy)*this->cx+abs(x%this->cx)];
             //k++;
          }
          (j+joff)*cx+(i+ioff)
@@ -1729,8 +1775,8 @@ namespace win
       int k = 0;
       double dCos = ::cos(dAngle * dPi / 180.0) * dScale;
       double dSin = ::sin(dAngle * dPi / 180.0) * dScale;
-      int cx1 = m_size.cx - 1;
-      int cy1 = m_size.cy - 1;
+      int cx1 = this->cx - 1;
+      int cy1 = this->cy - 1;
         for ( int j=jmin; j<jmax; j++ )
       {
          for ( int i=imin; i<imax; i++ )
@@ -1738,45 +1784,45 @@ namespace win
             int x, y;
 
             // A Combination of a 2d Translation/rotation/Scale Matrix
-            //x=abs((int(dCos * i - dSin * j) + ioff) % m_size.cx);
-            //y=abs((int(dSin * i + dCos * j) + joff) % m_size.cy);
+            //x=abs((int(dCos * i - dSin * j) + ioff) % this->cx);
+            //y=abs((int(dSin * i + dCos * j) + joff) % this->cy);
 
             x = (int) abs((dCos * i - dSin * j) + ioff);
             y = (int) abs((dSin * i + dCos * j) + joff);
 
-            if((x / m_size.cx) % 2 == 0)
+            if((x / this->cx) % 2 == 0)
             {
-               x %= m_size.cx;
+               x %= this->cx;
             }
             else
             {
-               x = cx1 - (x % m_size.cx);
+               x = cx1 - (x % this->cx);
             }
 
-            if((y / m_size.cy) % 2 == 0)
+            if((y / this->cy) % 2 == 0)
             {
-               y %= m_size.cy;
+               y %= this->cy;
             }
             else
             {
-               y = cy1 - (y % m_size.cy);
+               y = cy1 - (y % this->cy);
             }
 
 
             
             m_pcolorref[(j+joff)*cx+(i+ioff)]=
-               WIN_DIB(pdib)->m_pcolorref[y * cx + x];
+               pdib->m_pcolorref[y * cx + x];
             k++;
          }
       }
    }
 
 
-   void dib::Rotate034(::ca::dib * pdib, double dAngle, double dScale)
+   void dib::Rotate034(::draw2d::dib * pdib, double dAngle, double dScale)
    {
      
-      int cx = m_size.cx;
-      int cy = m_size.cy;
+      int cx = this->cx;
+      int cy = this->cy;
 
       int l = max(cx, cy);
 
@@ -1800,8 +1846,8 @@ namespace win
       int k = 0;
       double dCos = ::cos(dAngle * dPi / 180.0) * dScale;
       double dSin = ::sin(dAngle * dPi / 180.0) * dScale;
-      int cx1 = m_size.cx - 1;
-      int cy1 = m_size.cy - 1;
+      int cx1 = this->cx - 1;
+      int cy1 = this->cy - 1;
         for ( int j=jmin; j<jmax; j++ )
       {
          for ( int i=imin; i<imax; i++ )
@@ -1809,46 +1855,46 @@ namespace win
             int x, y;
 
             // A Combination of a 2d Translation/rotation/Scale Matrix
-            //x=abs((int(dCos * i - dSin * j) + ioff) % m_size.cx);
-            //y=abs((int(dSin * i + dCos * j) + joff) % m_size.cy);
+            //x=abs((int(dCos * i - dSin * j) + ioff) % this->cx);
+            //y=abs((int(dSin * i + dCos * j) + joff) % this->cy);
 
             x = (int) abs((dCos * i - dSin * j) + ioff);
             y = (int) abs((dSin * i + dCos * j) + joff);
 
-            if((x / m_size.cx) % 2 == 0)
+            if((x / this->cx) % 2 == 0)
             {
-               x %= m_size.cx;
+               x %= this->cx;
             }
             else
             {
-               x = cx1 - (x % m_size.cx);
+               x = cx1 - (x % this->cx);
             }
 
-            if((y / m_size.cy) % 2 == 0)
+            if((y / this->cy) % 2 == 0)
             {
-               y %= m_size.cy;
+               y %= this->cy;
             }
             else
             {
-               y = cy1 - (y % m_size.cy);
+               y = cy1 - (y % this->cy);
             }
 
 
             
             m_pcolorref[(j+joff)*cx+(i+ioff)]=
-               WIN_DIB(pdib)->m_pcolorref[y * cx + x];
+               pdib->m_pcolorref[y * cx + x];
             k++;
          }
       }
    }
 
    void dib::rotate(
-      ::ca::dib * pdib,
+      ::draw2d::dib * pdib,
       LPCRECT lpcrect,
       double dAngle, 
       double dScale)
    {
-     // ::ca::dib_sp spdib(get_app());
+     // ::draw2d::dib_sp spdib(get_app());
    //   spdib->Paste(this);
 
 
@@ -1884,7 +1930,7 @@ namespace win
             x=int(cos10(i, iAngle) - sin10(j, iAngle)) + ioff;
             y=int(sin10(i, iAngle) + cos10(j, iAngle)) + joff;
             m_pcolorref[(j+joff)*cx+(i+ioff)]=
-               spdib->m_pcolorref[abs(y%m_size.cy)*m_size.cx+abs(x%m_size.cx)];
+               spdib->m_pcolorref[abs(y%this->cy)*this->cx+abs(x%this->cx)];
             //k++;
          }
          (j+joff)*cx+(i+ioff)
@@ -1902,8 +1948,8 @@ namespace win
             int x, y;
 
             // A Combination of a 2d Translation/rotation/Scale Matrix
-            //x=abs((int(dCos * i - dSin * j) + ioff) % m_size.cx);
-            //y=abs((int(dSin * i + dCos * j) + joff) % m_size.cy);
+            //x=abs((int(dCos * i - dSin * j) + ioff) % this->cx);
+            //y=abs((int(dSin * i + dCos * j) + joff) % this->cy);
 
             x = (int) abs((dCos * i - dSin * j) + ioff);
             y = (int) abs((dSin * i + dCos * j) + joff);
@@ -1928,8 +1974,8 @@ namespace win
 
 
             
-            m_pcolorref[(j+joff)*m_size.cx+(i+ioff)]=
-               WIN_DIB(pdib)->m_pcolorref[y * m_size.cx + x];
+            m_pcolorref[(j+joff)*this->cx+(i+ioff)]=
+               pdib->m_pcolorref[y * this->cx + x];
             k++;
          }
       }
@@ -1951,7 +1997,7 @@ namespace win
    void dib::Fill (int A, int R, int G, int B )
    {
       COLORREF color = RGB ( B, G, R ) | (A << 24);
-      int size=m_size.cx*m_size.cy;
+      int size=this->cx*this->cy;
 
       COLORREF * pcr;
 
@@ -2009,16 +2055,16 @@ namespace win
       int iRLine;
       int iGLine;
       int iBLine;
-      double dDiv = m_size.cx * m_size.cy;
+      double dDiv = this->cx * this->cy;
       if(dDiv > 0)
       {
          LPBYTE lpb = (LPBYTE) m_pcolorref;
-         for (int y = 0; y < m_size.cy; y++)
+         for (int y = 0; y < this->cy; y++)
          {
             iRLine = 0;
             iGLine = 0;
             iBLine = 0;
-            for (int x = 0; x < m_size.cx; x++)
+            for (int x = 0; x < this->cx; x++)
             {
                iRLine += lpb[2];
                iGLine += lpb[1];
@@ -2042,16 +2088,16 @@ namespace win
    }
 
 
-   void dib::xor(::ca::dib * pdib)
+   void dib::xor(::draw2d::dib * pdib)
    {
-      if(m_size.cx != WIN_DIB(pdib)->m_size.cx
-      || m_size.cy != WIN_DIB(pdib)->m_size.cy)
+      if(this->cx != pdib->cx
+      || this->cy != pdib->cy)
       {
          return;
       }
-      int iCount = m_size.cx * m_size.cy;
+      int iCount = this->cx * this->cy;
       LPDWORD lpd1 = (LPDWORD) m_pcolorref;
-      LPDWORD lpd2 = (LPDWORD) WIN_DIB(pdib)->m_pcolorref;
+      LPDWORD lpd2 = (LPDWORD) pdib->m_pcolorref;
       for(int i = 0; i < iCount; i++)
       {
          *lpd1 = *lpd1 ^ *lpd2;
@@ -2073,16 +2119,16 @@ namespace win
       int iSliceCount = (int) sqrt((double) iFrameCount);
       if(iSliceCount == 0)
          iSliceCount = 1;
-      int iFrameWidth = m_size.cx / iSliceCount;
-      int iFrameHeight = m_size.cy / iSliceCount;
+      int iFrameWidth = this->cx / iSliceCount;
+      int iFrameHeight = this->cy / iSliceCount;
       int iX = iFrame % iSliceCount;
       int iY = iFrame / iSliceCount;
-      COLORREF * lpDest = &m_pcolorref[iFrameWidth * iX + iY * iFrameHeight * m_size.cx];
+      COLORREF * lpDest = &m_pcolorref[iFrameWidth * iX + iY * iFrameHeight * this->cx];
       COLORREF * lpSrc = (COLORREF *) lpdata;
       COLORREF * lpDestLine;
       for(int y = 0; y < iFrameHeight; y++)
       {
-         lpDestLine = &lpDest[y * m_size.cx];
+         lpDestLine = &lpDest[y * this->cx];
          for(int x = 0; x < iFrameWidth; x++)
          {
              *lpDestLine = *lpSrc;
@@ -2099,16 +2145,16 @@ namespace win
       int iSliceCount = (int) sqrt((double) iFrameCount);
       if(iSliceCount == 0)
          iSliceCount = 1;
-      int iFrameWidth = m_size.cx / iSliceCount;
-      int iFrameHeight = m_size.cy / iSliceCount;
+      int iFrameWidth = this->cx / iSliceCount;
+      int iFrameHeight = this->cy / iSliceCount;
       int iX = iFrame % iSliceCount;
       int iY = iFrame / iSliceCount;
-      COLORREF * lpDest = &m_pcolorref[iFrameWidth * iX + iY * iFrameHeight * m_size.cx];
+      COLORREF * lpDest = &m_pcolorref[iFrameWidth * iX + iY * iFrameHeight * this->cx];
       COLORREF * lpSrc = (COLORREF *) lpdata;
       COLORREF * lpDestLine;
       for(int y = iFrameHeight - 1; y >= 0; y--)
       {
-         lpDestLine = &lpDest[y * m_size.cx];
+         lpDestLine = &lpDest[y * this->cx];
          for(int x = 0; x < iFrameWidth; x++)
          {
              *lpDestLine = *lpSrc;
@@ -2125,16 +2171,16 @@ namespace win
       int iSliceCount = (int) sqrt((double) iFrameCount);
       if(iSliceCount == 0)
          iSliceCount = 1;
-      int iFrameWidth = m_size.cx / iSliceCount;
-      int iFrameHeight = m_size.cy / iSliceCount;
+      int iFrameWidth = this->cx / iSliceCount;
+      int iFrameHeight = this->cy / iSliceCount;
       int iX = iFrame % iSliceCount;
       int iY = iFrame / iSliceCount;
-      COLORREF * lpDest = &m_pcolorref[iFrameWidth * iX + iY * iFrameHeight * m_size.cx];
+      COLORREF * lpDest = &m_pcolorref[iFrameWidth * iX + iY * iFrameHeight * this->cx];
       COLORREF * lpSrc = (COLORREF *) lpdata;
       COLORREF * lpDestLine;
       for(int y = iFrameHeight - 1; y >= 0; y--)
       {
-         lpDestLine = &lpDest[y * m_size.cx];
+         lpDestLine = &lpDest[y * this->cx];
          for(int x = 0; x < iFrameWidth; x++)
          {
              *lpDestLine ^= *lpSrc;
@@ -2147,16 +2193,16 @@ namespace win
    void dib::get_frame(void * lpdata, int iFrame, int iFrameCount)
    {
       int iSliceCount = (int) sqrt((double) iFrameCount);
-      int iFrameWidth = m_size.cx / iSliceCount;
-      int iFrameHeight = m_size.cy / iSliceCount;
+      int iFrameWidth = this->cx / iSliceCount;
+      int iFrameHeight = this->cy / iSliceCount;
       int iX = iFrame % iSliceCount;
       int iY = iFrame / iSliceCount;
-      COLORREF * lpSrc = &m_pcolorref[iFrameWidth * iX + iY * iFrameHeight *  m_size.cx];
+      COLORREF * lpSrc = &m_pcolorref[iFrameWidth * iX + iY * iFrameHeight *  this->cx];
       COLORREF * lpDest = (COLORREF *) lpdata;
       COLORREF * lpSrcLine;
       for(int y = 0; y < iFrameHeight; y++)
       {
-         lpSrcLine = &lpSrc[y * m_size.cx];
+         lpSrcLine = &lpSrc[y * this->cx];
          for(int x = 0; x < iFrameWidth; x++)
          {
              *lpDest = *lpSrcLine;
@@ -2168,7 +2214,7 @@ namespace win
 
    bool dib::is_rgb_black()
    {
-      int iSize = m_size.cx * m_size.cy;
+      int iSize = this->cx * this->cy;
       COLORREF * lp = m_pcolorref;
       for(int i = 0; i < iSize; i++)
       {
@@ -2185,7 +2231,7 @@ namespace win
       {
          return;
       }
-      int iCount = m_size.cx * m_size.cy;
+      int iCount = this->cx * this->cy;
       LPBYTE lp = ((LPBYTE) m_pcolorref);
       int i = 0;
       int iCount1 = iCount - iCount % 8;
@@ -2240,7 +2286,7 @@ namespace win
       {
          return;
       }
-      int iCount = m_size.cx * m_size.cy;
+      int iCount = this->cx * this->cy;
       LPBYTE lp = ((LPBYTE) m_pcolorref);
       for(int i = 0; i < iCount; i++)
       {
@@ -2258,7 +2304,7 @@ namespace win
       {
          return;
       }
-      int iCount = m_size.cx * m_size.cy;
+      int iCount = this->cx * this->cy;
       LPBYTE lp = ((LPBYTE) m_pcolorref);
       for(int i = 0; i < iCount; i++)
       {
@@ -2268,22 +2314,23 @@ namespace win
    }
 
 
-   void dib::stretch_dib(::ca::dib * pdib)
+   void dib::stretch_dib(::draw2d::dib * pdib)
    {
       ::StretchDIBits(
-         SP_HDC(m_spgraphics),
+         GDI_HDC(m_spgraphics.m_p),
          0, 0,
-         m_size.cx, m_size.cy,
+         this->cx, this->cy,
          0, 0, 
-         WIN_DIB(pdib)->m_size.cx, WIN_DIB(pdib)->m_size.cy,
-         WIN_DIB(pdib)->m_pcolorref,
-         &WIN_DIB(pdib)->m_info,
+         pdib->cx, pdib->cy,
+         pdib->m_pcolorref,
+         &dynamic_cast < dib * > (pdib)->m_info,
          DIB_RGB_COLORS,
          SRCCOPY);
    }
 
-   ::ca::graphics * dib::get_graphics()
+   ::draw2d::graphics * dib::get_graphics()
    {
+      unmap();
       return m_spgraphics;
    }
 
@@ -2295,7 +2342,7 @@ namespace win
    void dib::fill_channel(int intensity, visual::rgba::echannel echannel)
    {
        int offset = ((int)echannel) % 4;
-      int size=m_size.cx*m_size.cy;
+      int size=this->cx*this->cy;
 
       BYTE * pb;
 
@@ -2367,14 +2414,516 @@ namespace win
 
    int dib::width()
    {
-      return m_size.cx;
+      return this->cx;
    }
 
    int dib::height()
    {
-      return m_size.cy;
+      return this->cy;
    }
 
 
+   bool dib::update_window(::ca2::window * pwnd, ::ca2::signal_object * pobj)
+   {
 
-}
+      rect64 rectWindow;
+
+      rectWindow = pwnd->m_rectParentClient;
+
+      m_spgraphics->SetViewportOrg(0, 0);
+
+      map();
+
+
+      BYTE *dst=(BYTE*)get_data();
+      int64_t size = area();
+
+
+      // >> 8 instead of / 255 subsequent alpha_blend operations say thanks on true_blend because (255) * (1/254) + (255) * (254/255) > 255
+
+
+ while (size >= 8)
+         {
+            dst[0] = LOBYTE(((int32_t)dst[0] * (int32_t)dst[3])>> 8);
+            dst[1] = LOBYTE(((int32_t)dst[1] * (int32_t)dst[3])>> 8);
+            dst[2] = LOBYTE(((int32_t)dst[2] * (int32_t)dst[3])>> 8);
+
+            dst[4+0] = LOBYTE(((int32_t)dst[4+0] * (int32_t)dst[4+3])>> 8);
+            dst[4+1] = LOBYTE(((int32_t)dst[4+1] * (int32_t)dst[4+3])>> 8);
+            dst[4+2] = LOBYTE(((int32_t)dst[4+2] * (int32_t)dst[4+3])>> 8);
+
+            dst[8+0] = LOBYTE(((int32_t)dst[8+0] * (int32_t)dst[8+3])>> 8);
+            dst[8+1] = LOBYTE(((int32_t)dst[8+1] * (int32_t)dst[8+3])>> 8);
+            dst[8+2] = LOBYTE(((int32_t)dst[8+2] * (int32_t)dst[8+3])>> 8);
+
+            dst[12+0] = LOBYTE(((int32_t)dst[12+0] * (int32_t)dst[12+3])>> 8);
+            dst[12+1] = LOBYTE(((int32_t)dst[12+1] * (int32_t)dst[12+3])>> 8);
+            dst[12+2] = LOBYTE(((int32_t)dst[12+2] * (int32_t)dst[12+3])>> 8);
+
+            dst[16+0] = LOBYTE(((int32_t)dst[16+0] * (int32_t)dst[16+3])>> 8);
+            dst[16+1] = LOBYTE(((int32_t)dst[16+1] * (int32_t)dst[16+3])>> 8);
+            dst[16+2] = LOBYTE(((int32_t)dst[16+2] * (int32_t)dst[16+3])>> 8);
+
+            dst[20+0] = LOBYTE(((int32_t)dst[20+0] * (int32_t)dst[20+3])>> 8);
+            dst[20+1] = LOBYTE(((int32_t)dst[20+1] * (int32_t)dst[20+3])>> 8);
+            dst[20+2] = LOBYTE(((int32_t)dst[20+2] * (int32_t)dst[20+3])>> 8);
+
+            dst[24+0] = LOBYTE(((int32_t)dst[24+0] * (int32_t)dst[24+3])>> 8);
+            dst[24+1] = LOBYTE(((int32_t)dst[24+1] * (int32_t)dst[24+3])>> 8);
+            dst[24+2] = LOBYTE(((int32_t)dst[24+2] * (int32_t)dst[24+3])>> 8);
+
+            dst[28+0] = LOBYTE(((int32_t)dst[28+0] * (int32_t)dst[28+3])>> 8);
+            dst[28+1] = LOBYTE(((int32_t)dst[28+1] * (int32_t)dst[28+3])>> 8);
+            dst[28+2] = LOBYTE(((int32_t)dst[28+2] * (int32_t)dst[28+3])>> 8);
+
+            dst += 4 * 8;
+            size -= 8;
+         }
+         while(size--)
+         {
+            dst[0] = LOBYTE(((int32_t)dst[0] * (int32_t)dst[3])>> 8);
+            dst[1] = LOBYTE(((int32_t)dst[1] * (int32_t)dst[3])>> 8);
+            dst[2] = LOBYTE(((int32_t)dst[2] * (int32_t)dst[3])>> 8);
+            dst += 4;
+         }
+ 
+
+      rect rect(rectWindow);
+
+      window_graphics::update_window(pwnd->m_pgraphics, pwnd->get_handle(), m_pcolorref, rect);
+
+
+
+      return true;
+
+   }
+
+
+   void dib::map(bool bApplyAlphaTransform)
+   {
+
+      if(m_bMapped)
+         return;
+
+      if(m_pcolorref == NULL)
+         return;
+
+
+         GdiFlush();
+
+
+      /*if(bApplyAlphaTransform)
+      {
+
+         GdiFlush();
+
+         for(int y = 0; y < cy; y++)
+         {
+            byte * p = &((byte *) m_pcolorref)[scan * y];
+            for(int x = 0; x < cx; x++)
+            {
+               if(p[3] == 0)
+               {
+                  p[0] = 255;
+                  p[1] = 255;
+                  p[2] = 255;
+               }
+               else
+               {
+                  p[0] = (p[0] * 255 / p[3]);
+                  p[1] = (p[1] * 255 / p[3]);
+                  p[2] = (p[2] * 255 / p[3]);
+               }
+               p += 4;
+            }
+         }
+
+      }*/
+
+      m_bMapped = true;
+
+   }
+
+   void dib::unmap()
+   {
+
+      if(!m_bMapped)
+         return;
+
+      if(m_pcolorref == NULL)
+         return;
+
+      int64_t iArea = area();
+
+      byte * p = (byte *) m_pcolorref;
+
+       GdiFlush();
+
+       /*
+      for(int y = 0; y < cy; y++)
+      {
+         byte * p = &((byte *) m_pcolorref)[scan * y];
+         for(int x = 0; x < cx; x++)
+         {
+            p[0] = (p[0] * p[3] / 255);
+            p[1] = (p[1] * p[3] / 255);
+            p[2] = (p[2] * p[3] / 255);
+            p += 4;
+         }
+      }
+
+      */
+
+      m_bMapped = false;
+
+   }
+
+
+   bool dib::print_window(::ca2::window * pwnd, ::ca2::signal_object * pobj)
+   {
+
+      SCAST_PTR(::ca2::message::base, pbase, pobj);
+
+      if(pbase->m_wparam == NULL)
+         return false;
+
+      m_spgraphics->attach((HDC) pbase->m_wparam);
+
+      rect rectx;
+
+      ::draw2d::bitmap * pbitmap = &m_spgraphics->GetCurrentBitmap();
+
+      ::GetCurrentObject((HDC) pbase->m_wparam, OBJ_BITMAP);
+
+      //      uint32_t dw = ::GetLastError();
+      class size size = pbitmap->get_size();
+
+      rectx.left = 0;
+      rectx.top = 0;
+      rectx.right = size.cx;
+      rectx.bottom = size.cy;
+
+      try
+      {
+         
+         rect rectWindow;
+         
+         pwnd->GetWindowRect(rectWindow);
+
+         ::draw2d::dib_sp dib(allocer());
+
+         if(!dib->create(rectWindow.bottom_right()))
+            return false;
+
+         ::draw2d::graphics * pdc = dib->get_graphics();
+
+         if(pdc->get_os_data() == NULL)
+            return false;
+
+         rect rectPaint;
+         rect rectUpdate;
+         rectUpdate = rectWindow;
+         rectPaint = rectWindow;
+         rectPaint.offset(-rectPaint.top_left());
+         m_spgraphics->SelectClipRgn(NULL);
+         if(pwnd->m_pguie != NULL && pwnd->m_pguie != this)
+         {
+            pwnd->m_pguie->_001OnDeferPaintLayeredWindowBackground(pdc);
+         }
+         else
+         {
+            pwnd->_001OnDeferPaintLayeredWindowBackground(pdc);
+         }
+         m_spgraphics->SelectClipRgn(NULL);
+        m_spgraphics-> SetViewportOrg(point(0, 0));
+         pwnd->_000OnDraw(pdc);
+         m_spgraphics->SetViewportOrg(point(0, 0));
+         //(dynamic_cast<::win::graphics * >(pdc))->FillSolidRect(rectUpdate.left, rectUpdate.top, 100, 100, 255);
+         m_spgraphics->SelectClipRgn(NULL);
+         m_spgraphics->SetViewportOrg(point(0, 0));
+
+         m_spgraphics->SelectClipRgn( NULL);
+         m_spgraphics->BitBlt(rectPaint.left, rectPaint.top, 
+            rectPaint.width(), rectPaint.height(),
+            pdc, rectUpdate.left, rectUpdate.top,
+            SRCCOPY);
+
+         m_spgraphics->TextOut(0, 0, "Te Amo CGCL", 11);
+      }
+      catch(...)
+      {
+      }
+      m_spgraphics->FillSolidRect(rectx, RGB(255, 255, 255));
+      pobj->m_bRet = true;
+      pbase->set_lresult(0);
+
+      return true;
+
+   }
+
+//
+//procedure TAlphaBitmapWrapper.ProcessTransparency(const Alpha: Byte; TranspRect: TRect);
+//var
+//  LoopX : Integer;
+//  PreMult : Single;
+//  PQuad : PQuadColor;
+//  LoopY: Integer;
+//begin
+//  GdiFlush; // Need to flush before any manipulation of bits
+//  IntersectRect(TranspRect, TranspRect, Rect(0, 0, FWidth, FHeight)); // Clip to valid bounds
+//
+//  PreMult := Alpha / 255.0;
+//  for LoopY := TranspRect.Top to TranspRect.Bottom - 1 do begin
+//    PQuad := FQuads;
+//    Inc(PQuad, LoopY);
+//    for LoopX := TranspRect.Left to TranspRect.Right - 1 do begin
+//      if PQuad.WrittenByGDI then begin
+//        PQuad.SetAlpha(Alpha, PreMult);
+//      end else begin
+//        PQuad.Quad := 0;
+//      end;
+//      Inc(PQuad);
+//    end;
+//  end;
+//end;
+
+   bool dib::process_blend(COLORREF clr, ::draw2d::e_alpha_mode ealphamode)
+   {
+
+      ::GdiFlush();
+
+      int32_t a = GetAValue(clr);
+
+      ::visual::rgba::echannel echannel;
+
+      byte bTune;
+
+      if(GetGValue(clr) > GetBValue(clr))
+      {
+         if(GetBValue(clr) > GetRValue(clr))
+         {
+            echannel = ::visual::rgba::channel_green;
+            bTune = GetGValue(clr);
+         }
+         else if(GetGValue(clr) >  GetRValue(clr))
+         {
+            echannel = ::visual::rgba::channel_green;
+            bTune = GetGValue(clr);
+         }
+         else
+         {
+            echannel = ::visual::rgba::channel_red;
+            bTune = GetRValue(clr);
+         }
+      }
+      else if(GetGValue(clr) > GetRValue(clr))
+      {
+         echannel = ::visual::rgba::channel_blue;
+         bTune = GetBValue(clr);
+      }
+      else if(GetRValue(clr) > GetBValue(clr))
+      {
+         echannel = ::visual::rgba::channel_red;
+         bTune = GetRValue(clr);
+      }
+      else
+      {
+         echannel = ::visual::rgba::channel_blue;
+         bTune = GetBValue(clr);
+      }
+
+      int size=this->cx*this->cy;
+
+      byte * pb = (byte *) m_pcolorref;
+      byte * pbTune = ((byte *) m_pcolorref) + ((int32_t) echannel);
+
+      bTune *= 255;
+
+      //bTune = 255 * (GetGValue(clr) + GetBValue(clr) + GetRValue(clr));
+
+      int32_t aTune = a * 255;
+
+      int32_t r = GetRValue(clr);
+      int32_t g = GetGValue(clr);
+      int32_t b = GetBValue(clr);
+
+      if(bTune == 0)
+      {
+
+         while(size > 0)
+         {
+            if(pb[3] == 0)
+            {
+               pb[0] = pb[0] * a / 255;
+               pb[1] = pb[1] * a / 255;
+               pb[2] = pb[2] * a / 255;
+               pb[3] = a;
+            }
+            else
+            {
+               pb[3] = 0;
+            }
+            size--;
+            pb+=4;
+         }
+
+      }
+      else
+      {
+         while(size > 0)
+         {
+            //if(pb[3] == 0)
+            {
+               pb[3] = byte_clip(aTune * (pb[0] + pb[1] + pb[2]) / bTune);
+               pb[0] = r * pb[3] / 255;
+               pb[1] = g * pb[3] / 255;
+               pb[2] = b * pb[3] / 255;
+            }
+            //else
+            {
+              // pb[3] = 0;
+            }
+            size--;
+            pb+=4;
+            pbTune+=4;
+         }
+      }
+
+      return true;
+
+   }
+
+   bool dib::process_blend(::draw2d::dib * pdib, ::draw2d::e_alpha_mode ealphamode)
+   {
+
+      if(pdib == NULL)
+         return false;
+
+      if(pdib->size() != size())
+         return false;
+
+      ::GdiFlush();
+
+      int32_t size = (int32_t) area();
+
+      byte * pdataDst = (byte *) m_pcolorref;
+
+      byte * pdataSrc = (byte *) pdib->m_pcolorref;
+
+      while(size > 0)
+      {
+
+//         if(pdataDst[1] == 0)
+         {
+
+            pdataDst[3] = pdataSrc[3] * pdataDst[1] / 255;
+
+            pdataDst[0] = pdataSrc[0] * pdataDst[3] / 255;
+            pdataDst[1] = pdataSrc[1] * pdataDst[3] / 255;
+            pdataDst[2] = pdataSrc[2] * pdataDst[3] / 255;
+
+         }
+    //     else
+         {
+
+  //          pdataDst[3] = 0;
+
+         }
+
+         size--;
+
+         pdataDst+=4;
+
+         pdataSrc+=4;
+
+      }
+
+      return true;
+
+   }
+
+   bool dib::process_blend(::draw2d::brush * pbrush, int32_t x, int32_t y, ::draw2d::e_alpha_mode ealphamode)
+   {
+
+      if(pbrush->m_etype == ::draw2d::brush::type_null)
+      {
+         return false;
+      }
+      if(pbrush->m_etype == ::draw2d::brush::type_solid)
+      {
+         process_blend(pbrush->m_cr, ealphamode);
+         GDI_BRUSH(pbrush)->m_bProcess = false;
+         return true;
+      }
+      if(pbrush->m_etype == ::draw2d::brush::type_linear_gradient_point_color)
+      {
+         ::draw2d::dib_sp dib(allocer());
+         dib->create(cx, cy);
+         point p1 = pbrush->m_pt1;
+         point p2 = pbrush->m_pt2;
+         p1.offset(-x, -y);
+         p2.offset(-x, -y);
+         dib->gradient_fill(pbrush->m_cr1, pbrush->m_cr2, p1, p2);
+         process_blend(dib, ealphamode);
+         GDI_BRUSH(pbrush)->m_bProcess = false;
+         return true;
+      }
+      return false;
+   }
+
+   bool dib::process_initialize(::draw2d::brush * pbrush)
+   {
+      if(pbrush->m_etype == ::draw2d::brush::type_null)
+      {
+         return false;
+      }
+      if(pbrush->m_etype == ::draw2d::brush::type_solid)
+      {
+         GDI_BRUSH(pbrush)->m_bProcess = true;
+         pbrush->m_bUpdated = false;
+         Fill(255, 0, 0, 0);
+         return true;
+      }
+      if(pbrush->m_etype == ::draw2d::brush::type_linear_gradient_point_color)
+      {
+         GDI_BRUSH(pbrush)->m_bProcess = true;
+         pbrush->m_bUpdated = false;
+         Fill(0, 0, 0, 0);
+         return true;
+      }
+      return false;
+   }
+
+
+   bool dib::process_blend(::draw2d::pen * ppen, int32_t x, int32_t y, ::draw2d::e_alpha_mode ealphamode)
+   {
+      if(ppen->m_etype == ::draw2d::pen::type_null)
+      {
+         return false;
+      }
+      if(ppen->m_etype == ::draw2d::pen::type_solid)
+      {
+         process_blend(ppen->m_cr, ealphamode);
+         GDI_PEN(ppen)->m_bProcess = false;
+         return true;
+      }
+      return false;
+   }
+
+   bool dib::process_initialize(::draw2d::pen * ppen)
+   {
+      if(ppen->m_etype == ::draw2d::pen::type_null)
+      {
+         return false;
+      }
+      if(ppen->m_etype == ::draw2d::pen::type_solid)
+      {
+         GDI_PEN(ppen)->m_bProcess = true;
+         ppen->m_bUpdated = false;
+         Fill(255, 0, 0, 0);
+         return true;
+      }
+      return false;
+   }
+
+} // namespace draw2d_gdi

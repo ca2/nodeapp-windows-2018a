@@ -1,126 +1,158 @@
-#include "StdAfx.h"
+#include "framework.h"
 
-namespace win
+
+namespace draw2d_gdi
 {
-   font::font(::ca::application * papp) :
-   ca(papp)
-   { }
+
+
+   font::font(::ca2::application * papp) :
+      ca2(papp)
+   { 
+
+   }
+
+
    font::~font()
-   { }
+   {
+
+   }
+
 
    font::operator HFONT() const
    {
+
       return (HFONT)(this == NULL ? NULL : get_handle()); 
+
    }
-   font* PASCAL font::from_handle(::ca::application * papp, HFONT hFont)
+
+
+   ::draw2d::font * font::from_handle(::ca2::application * papp, HFONT hFont)
    {
-      return dynamic_cast < font * > (::win::graphics_object::from_handle(papp, hFont)); 
+
+      return dynamic_cast < font * > (::draw2d_gdi::object::from_handle(papp, hFont)); 
+
    }
-   BOOL font::CreateFontIndirect(const LOGFONT* lpLogFont)
-   { return Attach(::CreateFontIndirect(lpLogFont)); }
-   BOOL font::CreateFont(int nHeight, int nWidth, int nEscapement,
-      int nOrientation, int nWeight, BYTE bItalic, BYTE bUnderline,
-      BYTE cStrikeOut, BYTE nCharSet, BYTE nOutPrecision,
-      BYTE nClipPrecision, BYTE nQuality, BYTE nPitchAndFamily,
-      const char * lpszFacename)
-   { return Attach(::CreateFont(nHeight, nWidth, nEscapement,
-   nOrientation, nWeight, bItalic, bUnderline, cStrikeOut,
-   nCharSet, nOutPrecision, nClipPrecision, nQuality,
-   nPitchAndFamily, lpszFacename)); }
-   
-   int font::GetLogFont(LOGFONT* pLogFont)
+
+
+   bool font::CreateFontIndirect(const LOGFONTW * lpLogFont)
    { 
 
-      return ::GetObject(get_handle(), sizeof(LOGFONT), pLogFont);
+      return Attach(::CreateFontIndirectW(lpLogFont)); 
 
    }
 
 
-      /////////////////////////////////////////////////////////////////////////////
+   bool font::CreateFont(int nHeight, int nWidth, int nEscapement, int nOrientation, int nWeight, BYTE bItalic, BYTE bUnderline, BYTE cStrikeOut, BYTE nCharSet, BYTE nOutPrecision, BYTE nClipPrecision, BYTE nQuality, BYTE nPitchAndFamily, const char * lpszFacename)
+   { 
 
-   void font::construct(const ::ca::font & fontParam)
+      return Attach(::CreateFont(nHeight, nWidth, nEscapement, nOrientation, nWeight, bItalic, bUnderline, cStrikeOut, nCharSet, nOutPrecision, nClipPrecision, nQuality,  nPitchAndFamily, lpszFacename)); 
+
+   }
+
+
+   int font::GetLogFont(LOGFONTW * pLogFont)
+   { 
+
+      return ::GetObjectW(get_handle(), sizeof(LOGFONTW), pLogFont);
+
+   }
+
+
+   void font::construct(const ::draw2d::font & fontParam)
+   {
+
+      class font & font = const_cast < ::draw2d_gdi::font & > (dynamic_cast < const ::draw2d_gdi::font & > (fontParam));
+
+      if(get_handle() != NULL)
+         destroy();
+
+      if(font.get_handle() != NULL)
       {
-         class font & font = const_cast < ::win::font & > (dynamic_cast < const ::win::font & > (fontParam));
-         if(get_handle() != NULL)
-            delete_object();
-         if(font.get_handle() != NULL)
-         {
-            LOGFONT lf;
-            memset(&lf, 0, sizeof(lf));
-            font.GetLogFont(&lf);
-            CreateFontIndirect(&lf);
-         }
+         LOGFONTW lf;
+         memset(&lf, 0, sizeof(lf));
+         font.GetLogFont(&lf);
+         CreateFontIndirect(&lf);
       }
+
+   }
 
 #ifdef _DEBUG
-      void font::dump(dump_context & dumpcontext) const
+
+   void font::dump(dump_context & dumpcontext) const
+   {
+      ::draw2d::object::dump(dumpcontext);
+
+      if (get_handle() == NULL)
+         return;
+
+      /*         if (!afxData.bWin95 && ::GetObjectType(get_handle()) != OBJ_FONT)
       {
-         ::ca::graphics_object::dump(dumpcontext);
+      // not a valid GDI object
+      dumpcontext << "has ILLEGAL HFONT!";
+      return;
+      }*/
 
-         if (get_handle() == NULL)
-            return;
+      LOGFONTW lf;
+      VERIFY(get_object(sizeof(lf), &lf));
+      dumpcontext << "lf.lfHeight = " << lf.lfHeight;
+      dumpcontext << "\nlf.lfWidth = " << lf.lfWidth;
+      dumpcontext << "\nlf.lfEscapement = " << lf.lfEscapement;
+      dumpcontext << "\nlf.lfOrientation = " << lf.lfOrientation;
+      dumpcontext << "\nlf.lfWeight = " << lf.lfWeight;
+      dumpcontext << "\nlf.lfItalic = " << (int)lf.lfItalic;
+      dumpcontext << "\nlf.lfUnderline = " << (int)lf.lfUnderline;
+      dumpcontext << "\nlf.lfStrikeOut = " << (int)lf.lfStrikeOut;
+      dumpcontext << "\nlf.lfCharSet = " << (int)lf.lfCharSet;
+      dumpcontext << "\nlf.lfOutPrecision = " << (int)lf.lfOutPrecision;
+      dumpcontext << "\nlf.lfClipPrecision = " << (int)lf.lfClipPrecision;
+      dumpcontext << "\nlf.lfQuality = " << (int)lf.lfQuality;
+      dumpcontext << "\nlf.lfPitchAndFamily = " << (int)lf.lfPitchAndFamily;
+      dumpcontext << "\nlf.lfFaceName = " << (const char *)lf.lfFaceName;
 
-         if (!afxData.bWin95 && ::GetObjectType(get_handle()) != OBJ_FONT)
-         {
-            // not a valid GDI object
-            dumpcontext << "has ILLEGAL HFONT!";
-            return;
-         }
-
-         LOGFONT lf;
-         VERIFY(GetObject(sizeof(lf), &lf));
-         dumpcontext << "lf.lfHeight = " << lf.lfHeight;
-         dumpcontext << "\nlf.lfWidth = " << lf.lfWidth;
-         dumpcontext << "\nlf.lfEscapement = " << lf.lfEscapement;
-         dumpcontext << "\nlf.lfOrientation = " << lf.lfOrientation;
-         dumpcontext << "\nlf.lfWeight = " << lf.lfWeight;
-         dumpcontext << "\nlf.lfItalic = " << (int)lf.lfItalic;
-         dumpcontext << "\nlf.lfUnderline = " << (int)lf.lfUnderline;
-         dumpcontext << "\nlf.lfStrikeOut = " << (int)lf.lfStrikeOut;
-         dumpcontext << "\nlf.lfCharSet = " << (int)lf.lfCharSet;
-         dumpcontext << "\nlf.lfOutPrecision = " << (int)lf.lfOutPrecision;
-         dumpcontext << "\nlf.lfClipPrecision = " << (int)lf.lfClipPrecision;
-         dumpcontext << "\nlf.lfQuality = " << (int)lf.lfQuality;
-         dumpcontext << "\nlf.lfPitchAndFamily = " << (int)lf.lfPitchAndFamily;
-         dumpcontext << "\nlf.lfFaceName = " << (const char *)lf.lfFaceName;
-
-         dumpcontext << "\n";
-      }
+      dumpcontext << "\n";
+   }
 #endif
 
    /////////////////////////////////////////////////////////////////////////////
-   // out-of-line ::ca::brush, font, etc. helpers
+   // out-of-line ::draw2d::brush, font, etc. helpers
 
    // nPointSize is actually scaled 10x
-   BOOL font::CreatePointFont(int nPointSize, const char * lpszFaceName, ::ca::graphics * pgraphics)
+   bool font::CreatePointFont(int nPointSize, const char * lpszFaceName, ::draw2d::graphics * pgraphics)
    {
-      ASSERT(AfxIsValidString(lpszFaceName));
+      
+      LOGFONTW logFont;
+      
+      ZERO(logFont);
 
-      LOGFONT logFont;
-      memset(&logFont, 0, sizeof(LOGFONT));
       logFont.lfCharSet = DEFAULT_CHARSET;
+
       logFont.lfHeight = nPointSize;
-      _template::checked::strncpy_s(logFont.lfFaceName, _countof(logFont.lfFaceName), lpszFaceName, _TRUNCATE);
+
+      wstring wstr(lpszFaceName);
+
+      wstr = wstr.substr(0, sizeof(logFont.lfFaceName));
+
+      wcsncpy(logFont.lfFaceName, wstr, sizeof(logFont.lfFaceName) / sizeof(wchar_t));
 
       return CreatePointFontIndirect(&logFont, pgraphics);
+
    }
 
    // pLogFont->nHeight is interpreted as PointSize * 10
-   BOOL font::CreatePointFontIndirect(const LOGFONT* lpLogFont, ::ca::graphics * pgraphics)
+   bool font::CreatePointFontIndirect(const LOGFONTW* lpLogFont, ::draw2d::graphics * pgraphics)
    {
-      ASSERT(fx_is_valid_address(lpLogFont, sizeof(LOGFONT), FALSE));
       HDC hDC;
       if (pgraphics != NULL)
       {
          ASSERT_VALID(pgraphics);
-         ASSERT((dynamic_cast<::win::graphics * >(pgraphics))->get_handle2() != NULL);
-         hDC = (dynamic_cast<::win::graphics * >(pgraphics))->get_handle2();
+         ASSERT((dynamic_cast<::draw2d_gdi::graphics * >(pgraphics))->get_handle2() != NULL);
+         hDC = (dynamic_cast<::draw2d_gdi::graphics * >(pgraphics))->get_handle2();
       }
       else
          hDC = ::GetDC(NULL);
 
       // convert nPointSize to logical units based on pgraphics
-      LOGFONT logFont = *lpLogFont;
+      LOGFONTW logFont = *lpLogFont;
       POINT pt;
       // 72 points/inch, 10 decipoints/point
       pt.y = ::MulDiv(::GetDeviceCaps(hDC, LOGPIXELSY), logFont.lfHeight, 720);
@@ -133,7 +165,39 @@ namespace win
       if (pgraphics == NULL)
          ReleaseDC(NULL, hDC);
 
+
+      logFont.lfQuality = ANTIALIASED_QUALITY;
+
       return CreateFontIndirect(&logFont);
+
    }
 
-} // namespace win
+
+   bool font::create()
+   {
+
+      ::draw2d_gdi::object::create();
+
+      if(m_eunitFontSize == ::draw2d::unit_pixel)
+      {
+      
+         CreatePointFont((int32_t) (m_dFontSize * 72.0 / 96.0), m_strFontFamilyName, NULL);
+
+      }
+      else
+      {
+         CreatePointFont((int32_t) (m_dFontSize * 10.0), m_strFontFamilyName, NULL);
+      }
+
+      return true;
+      
+   }
+
+} // namespace draw2d_gdi
+
+
+
+
+
+
+

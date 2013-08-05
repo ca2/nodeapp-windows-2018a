@@ -1,46 +1,43 @@
-#include "StdAfx.h"
+#include "framework.h"
 
-namespace win
+
+namespace draw2d_gdi
 {
 
-   factory_exchange::factory_exchange(::ca::application * papp) :
-      ca(papp)
+
+   factory_exchange::factory_exchange(::ca2::application * papp) :
+      ca2(papp)
    {
-      System.factory().cloneable_large < WinStdioFile         >  (::ca::get_type_info < ::ex1::text_file         > ());
-      System.factory().cloneable_large < WinFile              >  (::ca::get_type_info < ::ex1::file              > ());
-      System.factory().cloneable_large < WinFileSet           >  (::ca::get_type_info < ::ex2::file_set          > ());
-      System.factory().cloneable < WinFileSystem        >  (::ca::get_type_info < ::ex1::file_system       > (), 1);
-      System.factory().cloneable_small < WinFileException     >  (::ca::get_type_info < ::ex1::file_exception    > ());
-      System.factory().cloneable < WinResource          >  (::ca::get_type_info < ::ex1::resource          > (), 1);
-      System.factory().cloneable < application          >  (::ca::get_type_info < ::ex2::application       > (), 1);
-      System.factory().cloneable < dir                  >  (::ca::get_type_info < ::ca::dir::system             > (), 1);
-      System.factory().cloneable_small < folder_watch         >  (::ca::get_type_info < ::ex2::folder_watch      > ());
-      System.factory().cloneable_large < dib                  >  (::ca::get_type_info < ::ca::dib                > ());
-      System.factory().cloneable_large < graphics             >  (::ca::get_type_info < ::ca::graphics           > ());
-      System.factory().cloneable_large < bitmap               >  (::ca::get_type_info < ::ca::bitmap             > ());
-      System.factory().cloneable_large < pen                  >  (::ca::get_type_info < ::ca::pen                > ());
-      System.factory().cloneable_large < brush                >  (::ca::get_type_info < ::ca::brush              > ());
-      System.factory().cloneable_large < palette              >  (::ca::get_type_info < ::ca::palette            > ());
-      System.factory().cloneable_large < rgn                  >  (::ca::get_type_info < ::ca::rgn                > ());
-      System.factory().cloneable_large < font                 >  (::ca::get_type_info < ::ca::font               > ());
-      System.factory().creatable < window_draw          >  (::ca::get_type_info < ::ca::window_draw        > (), 1);
-      System.factory().creatable_large < thread               >  (::ca::get_type_info < ::ca::thread             > ());
-      System.factory().creatable_large < window               >  (::ca::get_type_info < ::ca::window             > ());
-      System.factory().cloneable_small < draw_dib             >  (::ca::get_type_info < ::ca::draw_dib           > ());
-      System.factory().creatable < osi                  >  (::ca::get_type_info < ::ca::osi                > (), 1);
-      System.factory().creatable < port_forward         >  (::ca::get_type_info < ::ca4::port_forward             > (), 1);
-      ::win::dib::s_initialize();
+
+      System.factory().cloneable_large < dib                  >  (System.type_info < ::draw2d::dib                > ());
+      System.factory().cloneable_large < graphics             >  (System.type_info < ::draw2d::graphics           > ());
+      System.factory().cloneable_large < bitmap               >  (System.type_info < ::draw2d::bitmap             > ());
+      System.factory().cloneable_large < pen                  >  (System.type_info < ::draw2d::pen                > ());
+      System.factory().cloneable_large < brush                >  (System.type_info < ::draw2d::brush              > ());
+      System.factory().cloneable_large < palette              >  (System.type_info < ::draw2d::palette            > ());
+      System.factory().cloneable_large < region               >  (System.type_info < ::draw2d::region             > ());
+      System.factory().cloneable_large < font                 >  (System.type_info < ::draw2d::font               > ());
+      System.factory().cloneable_large < ::draw2d::path       >  (System.type_info < ::draw2d::path               > ());
+
+      ::draw2d_gdi::dib::s_initialize();
+
    }
+
 
    factory_exchange::~factory_exchange()
    {
+
    }
 
-} // namespace win
+
+} // namespace draw2d_gdi
 
 
-
-void ca2_factory_exchange(::ca::application * papp)
+void ca2_factory_exchange(sp(::ca2::application) papp)
 {
-   win::factory_exchange factoryexchange(papp);
+   draw2d_gdi::factory_exchange factoryexchange(papp);
 }
+
+
+
+

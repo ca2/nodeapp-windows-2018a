@@ -1,65 +1,88 @@
 #pragma once
 
-namespace win
+
+namespace draw2d_gdi
 {
 
-   class CLASS_DECL_VMSWIN graphics : 
-      virtual public ::ca::graphics,
-      virtual public hdc_handle
+
+   class CLASS_DECL_DRAW2D_GDI graphics : 
+      virtual public ::draw2d::graphics
    {
-      // // DECLARE_DYNCREATE(::ca::graphics_sp)
    public:
 
-      graphics();
-      graphics(::ca::application * papp);
+
+      enum e_data
+      {
+         data_graphics,
+         data_bitmap,
+         data_pen,
+         data_brush,
+         data_font,
+         data_palette,
+         data_region,
+      };
+
+
+      HDC                        m_hdc;
+      ::draw2d::dibmap_ex1       m_dibmap;
+
+      ::draw2d::path_sp          m_sppath;
+
+      //graphics();
+      graphics(::ca2::application * papp);
       virtual ~graphics();
 
-   // Attributes
-   //   HDC get_os_data();          // The output DC (must be first data member <= no more true (What are the consequences?))
-   //   HDC get_handle2();    // The Attribute DC
+     
       operator HDC() const;
       HDC get_handle1() const; // Always returns the Output DC
-      virtual void * get_os_data();
-      ::ca::window * GetWindow() const;
+      HDC get_handle2() const; // Always returns the Output DC
+      virtual void * get_os_data() const;
+      virtual void * get_os_data_ex(int i) const;
+      virtual HDC get_handle() const;
 
-      static ::ca::graphics * PASCAL from_handle(HDC hDC);
-      static void PASCAL DeleteTempMap();
-      BOOL Attach(HDC hDC);   // Attach/Detach affects only the Output DC
+
+      ::draw2d::dib * dib_work(class size size);
+      ::draw2d::dib * fill_dib_work(COLORREF clr, class size size);
+     
+
+      static ::draw2d::graphics * from_handle(::ca2::application * papp, HDC hDC);
+      static void DeleteTempMap();
+      bool Attach(HDC hDC);   // Attach/Detach affects only the Output DC
       HDC Detach();
 
+/*
       virtual void SetAttribDC(HDC hDC);  // Set the Attribute DC
       virtual void SetOutputDC(HDC hDC);  // Set the Output DC
       virtual void ReleaseAttribDC();     // Release the Attribute DC
       virtual void ReleaseOutputDC();     // Release the Output DC
+*/
 
-      BOOL IsPrinting() const;            // TRUE if being used for printing
+      bool IsPrinting() const;            // TRUE if being used for printing
 
-      ::ca::pen* GetCurrentPen() const;
-      ::ca::brush* GetCurrentBrush() const;
-      ::ca::palette* GetCurrentPalette() const;
-      ::ca::font* GetCurrentFont() const;
-      ::ca::bitmap* GetCurrentBitmap() const;
+      ::draw2d::pen & GetCurrentPen() const;
+      ::draw2d::brush & GetCurrentBrush() const;
+      ::draw2d::palette & GetCurrentPalette() const;
+      ::draw2d::font & GetCurrentFont() const;
+      ::draw2d::bitmap & GetCurrentBitmap() const;
 
       // for bidi and mirrored localization
-      DWORD GetLayout() const;
-      DWORD SetLayout(DWORD dwLayout);
+      uint32_t GetLayout() const;
+      uint32_t SetLayout(uint32_t dwLayout);
 
    // Constructors
-      BOOL CreateDC(const char * lpszDriverName, const char * lpszDeviceName,
-         const char * lpszOutput, const void * lpInitData);
-      BOOL CreateIC(const char * lpszDriverName, const char * lpszDeviceName,
-         const char * lpszOutput, const void * lpInitData);
-      BOOL CreateCompatibleDC(::ca::graphics * pgraphics);
+      bool CreateDC(const char * lpszDriverName, const char * lpszDeviceName, const char * lpszOutput, const void * lpInitData);
+      bool CreateIC(const char * lpszDriverName, const char * lpszDeviceName, const char * lpszOutput, const void * lpInitData);
+      bool CreateCompatibleDC(::draw2d::graphics * pgraphics);
 
-      BOOL DeleteDC();
+      bool DeleteDC();
 
    // Device-Context Functions
       virtual int SaveDC();
-      virtual BOOL RestoreDC(int nSavedDC);
+      virtual bool RestoreDC(int nSavedDC);
       int GetDeviceCaps(int nIndex) const;
       UINT SetBoundsRect(LPCRECT lpRectBounds, UINT flags);
       UINT GetBoundsRect(LPRECT lpRectBounds, UINT flags);
-      BOOL ResetDC(const DEVMODE* lpDevMode);
+      bool ResetDC(const DEVMODE* lpDevMode);
 
    // Drawing-Tool Functions
       point GetBrushOrg() const;
@@ -70,18 +93,24 @@ namespace win
 
    // Type-safe selection helpers
    public:
-      virtual ::ca::graphics_object* SelectStockObject(int nIndex);
-      ::ca::pen* SelectObject(::ca::pen* pPen);
-      ::ca::brush* SelectObject(::ca::brush* pBrush);
-      virtual ::ca::font* SelectObject(::ca::font* pFont);
-      ::ca::bitmap* SelectObject(::ca::bitmap* pBitmap);
-      int SelectObject(::ca::rgn* pRgn);       // special return for regions
-      ::ca::graphics_object* SelectObject(::ca::graphics_object* pObject);
-         // ::ca::graphics_object* provided so compiler doesn't use SelectObject(HGDIOBJ)
+      virtual ::draw2d::object* SelectStockObject(int nIndex);
+      virtual ::draw2d::pen* SelectObject(::draw2d::pen* pPen);
+      virtual ::draw2d::brush* SelectObject(::draw2d::brush* pBrush);
+      virtual ::draw2d::font* SelectObject(::draw2d::font* pFont);
+      virtual ::draw2d::bitmap* SelectObject(::draw2d::bitmap* pBitmap);
+      virtual int SelectObject(::draw2d::region* pRgn);       // special return for regions
+
+
+      virtual void select_pen();
+      virtual void select_brush();
+      virtual void select_font();
+      virtual void select_null_pen();
+      virtual void select_null_brush();
+
 
    // color and color Palette Functions
       COLORREF GetNearestColor(COLORREF crColor) const;
-      ::ca::palette* SelectPalette(::ca::palette* pPalette, BOOL bForceBackground);
+      ::draw2d::palette* SelectPalette(::draw2d::palette* pPalette, bool bForceBackground);
       UINT RealizePalette();
       void UpdateColors();
 
@@ -100,8 +129,8 @@ namespace win
       int SetStretchBltMode(int nStretchMode);
       virtual COLORREF SetTextColor(COLORREF crColor);
 
-      BOOL GetColorAdjustment(LPCOLORADJUSTMENT lpColorAdjust) const;
-      BOOL SetColorAdjustment(const COLORADJUSTMENT* lpColorAdjust);
+      bool GetColorAdjustment(LPCOLORADJUSTMENT lpColorAdjust) const;
+      bool SetColorAdjustment(const COLORADJUSTMENT* lpColorAdjust);
 
    #if (_WIN32_WINNT >= 0x0500)
 
@@ -118,9 +147,9 @@ namespace win
       int GetGraphicsMode() const;
 
       // World transform
-      BOOL SetWorldTransform(const XFORM* pXform);
-      BOOL ModifyWorldTransform(const XFORM* pXform,DWORD iMode);
-      BOOL GetWorldTransform(XFORM* pXform) const;
+      bool SetWorldTransform(const XFORM* pXform);
+      bool ModifyWorldTransform(const XFORM* pXform,uint32_t iMode);
+      bool GetWorldTransform(XFORM* pXform) const;
 
       // Mapping Functions
       virtual int GetMapMode() const;
@@ -164,151 +193,142 @@ namespace win
       void HIMETRICtoLP(LPSIZE lpSize) const;
 
    // Region Functions
-      BOOL FillRgn(::ca::rgn* pRgn, ::ca::brush* pBrush);
-      BOOL FrameRgn(::ca::rgn* pRgn, ::ca::brush* pBrush, int nWidth, int nHeight);
-      BOOL InvertRgn(::ca::rgn* pRgn);
-      BOOL PaintRgn(::ca::rgn* pRgn);
+      bool FillRgn(::draw2d::region* pRgn, ::draw2d::brush* pBrush);
+      bool FrameRgn(::draw2d::region* pRgn, ::draw2d::brush* pBrush, int nWidth, int nHeight);
+      bool InvertRgn(::draw2d::region* pRgn);
+      bool PaintRgn(::draw2d::region* pRgn);
 
    // Clipping Functions
       virtual int GetClipBox(LPRECT lpRect) const;
-      virtual BOOL PtVisible(int x, int y) const;
-            BOOL PtVisible(POINT point) const;
-      virtual BOOL RectVisible(LPCRECT lpRect) const;
-            int SelectClipRgn(::ca::rgn* pRgn);
+      virtual bool PtVisible(int x, int y) const;
+            bool PtVisible(POINT point) const;
+      virtual bool RectVisible(LPCRECT lpRect) const;
+            int SelectClipRgn(::draw2d::region* pRgn);
             int ExcludeClipRect(int x1, int y1, int x2, int y2);
             int ExcludeClipRect(LPCRECT lpRect);
-            int ExcludeUpdateRgn(::ca::window * pWnd);
+            int ExcludeUpdateRgn(::ca2::window * pWnd);
             int IntersectClipRect(int x1, int y1, int x2, int y2);
             int IntersectClipRect(LPCRECT lpRect);
             int OffsetClipRgn(int x, int y);
             int OffsetClipRgn(SIZE size);
-      int SelectClipRgn(::ca::rgn* pRgn, int nMode);
+      int SelectClipRgn(::draw2d::region* pRgn, int nMode);
 
    // Line-Output Functions
       point GetCurrentPosition() const;
       point MoveTo(int x, int y);
       point MoveTo(POINT point);
-      BOOL LineTo(int x, int y);
-      BOOL LineTo(POINT point);
-      BOOL Arc(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4);
-      BOOL Arc(LPCRECT lpRect, POINT ptStart, POINT ptEnd);
-      BOOL Polyline(const POINT* lpPoints, int nCount);
+      bool LineTo(int x, int y);
+      bool LineTo(POINT point);
+      bool Arc(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4);
+      bool Arc(LPCRECT lpRect, POINT ptStart, POINT ptEnd);
+      bool Polyline(const POINT* lpPoints, int nCount);
 
-      BOOL AngleArc(int x, int y, int nRadius, float fStartAngle, float fSweepAngle);
-      BOOL ArcTo(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4);
-      BOOL ArcTo(LPCRECT lpRect, POINT ptStart, POINT ptEnd);
+      bool AngleArc(int x, int y, int nRadius, float fStartAngle, float fSweepAngle);
+      bool ArcTo(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4);
+      bool ArcTo(LPCRECT lpRect, POINT ptStart, POINT ptEnd);
       int GetArcDirection() const;
       int SetArcDirection(int nArcDirection);
 
-      BOOL PolyDraw(const POINT* lpPoints, const BYTE* lpTypes, int nCount);
-      BOOL PolylineTo(const POINT* lpPoints, int nCount);
-      BOOL PolyPolyline(const POINT* lpPoints,
-         const DWORD* lpPolyPoints, int nCount);
+      bool PolyDraw(const POINT* lpPoints, const BYTE* lpTypes, int nCount);
+      bool PolylineTo(const POINT* lpPoints, int nCount);
+      bool PolyPolyline(const POINT* lpPoints,
+         const uint32_t* lpPolyPoints, int nCount);
 
-      BOOL PolyBezier(const POINT* lpPoints, int nCount);
-      BOOL PolyBezierTo(const POINT* lpPoints, int nCount);
+      bool PolyBezier(const POINT* lpPoints, int nCount);
+      bool PolyBezierTo(const POINT* lpPoints, int nCount);
 
    // Simple Drawing Functions
-      void FillRect(LPCRECT lpRect, ::ca::brush* pBrush);
-      void FrameRect(LPCRECT lpRect, ::ca::brush* pBrush);
+      void FillRect(LPCRECT lpRect, ::draw2d::brush* pBrush);
+      void FrameRect(LPCRECT lpRect, ::draw2d::brush* pBrush);
       void InvertRect(LPCRECT lpRect);
-      BOOL DrawIcon(int x, int y, ::visual::icon * picon);
-      BOOL DrawIcon(POINT point, ::visual::icon * picon);
-      BOOL DrawIcon(int x, int y, ::visual::icon * picon, int cx, int cy, UINT istepIfAniCur, HBRUSH hbrFlickerFreeDraw, UINT diFlags);
-      BOOL DrawState(point pt, size size, HBITMAP hBitmap, UINT nFlags,
+      bool DrawIcon(int x, int y, ::visual::icon * picon);
+      bool DrawIcon(POINT point, ::visual::icon * picon);
+      bool DrawIcon(int x, int y, ::visual::icon * picon, int cx, int cy, UINT istepIfAniCur, HBRUSH hbrFlickerFreeDraw, UINT diFlags);
+      bool DrawState(point pt, size size, HBITMAP hBitmap, UINT nFlags,
          HBRUSH hBrush = NULL);
-      BOOL DrawState(point pt, size size, ::ca::bitmap* pBitmap, UINT nFlags,
-         ::ca::brush* pBrush = NULL);
-      BOOL DrawState(point pt, size size, HICON hIcon, UINT nFlags,
+      bool DrawState(point pt, size size, ::draw2d::bitmap* pBitmap, UINT nFlags,
+         ::draw2d::brush* pBrush = NULL);
+      bool DrawState(point pt, size size, HICON hIcon, UINT nFlags,
          HBRUSH hBrush = NULL);
-      BOOL DrawState(point pt, size size, HICON hIcon, UINT nFlags,
-         ::ca::brush* pBrush = NULL);
-      BOOL DrawState(point pt, size size, const char * lpszText, UINT nFlags,
-         BOOL bPrefixText = TRUE, int nTextLen = 0, HBRUSH hBrush = NULL);
-      BOOL DrawState(point pt, size size, const char * lpszText, UINT nFlags,
-         BOOL bPrefixText = TRUE, int nTextLen = 0, ::ca::brush* pBrush = NULL);
-      BOOL DrawState(point pt, size size, DRAWSTATEPROC lpDrawProc,
+      bool DrawState(point pt, size size, HICON hIcon, UINT nFlags,
+         ::draw2d::brush* pBrush = NULL);
+      bool DrawState(point pt, size size, const char * lpszText, UINT nFlags,
+         bool bPrefixText = TRUE, int nTextLen = 0, HBRUSH hBrush = NULL);
+      bool DrawState(point pt, size size, const char * lpszText, UINT nFlags,
+         bool bPrefixText = TRUE, int nTextLen = 0, ::draw2d::brush* pBrush = NULL);
+      bool DrawState(point pt, size size, DRAWSTATEPROC lpDrawProc,
          LPARAM lData, UINT nFlags, HBRUSH hBrush = NULL);
-      BOOL DrawState(point pt, size size, DRAWSTATEPROC lpDrawProc,
-         LPARAM lData, UINT nFlags, ::ca::brush* pBrush = NULL);
+      bool DrawState(point pt, size size, DRAWSTATEPROC lpDrawProc,
+         LPARAM lData, UINT nFlags, ::draw2d::brush* pBrush = NULL);
 
    // Ellipse and Polygon Functions
-      BOOL Chord(int x1, int y1, int x2, int y2, int x3, int y3,
+      bool Chord(int x1, int y1, int x2, int y2, int x3, int y3,
          int x4, int y4);
-      BOOL Chord(LPCRECT lpRect, POINT ptStart, POINT ptEnd);
+      bool Chord(LPCRECT lpRect, POINT ptStart, POINT ptEnd);
       void DrawFocusRect(LPCRECT lpRect);
-      BOOL Ellipse(int x1, int y1, int x2, int y2);
-      BOOL Ellipse(LPCRECT lpRect);
-      BOOL Pie(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4);
-      BOOL Pie(LPCRECT lpRect, POINT ptStart, POINT ptEnd);
-      BOOL Polygon(const POINT* lpPoints, int nCount);   
-      BOOL PolyPolygon(const POINT* lpPoints, const INT* lpPolyCounts, int nCount);
-      BOOL Rectangle(int x1, int y1, int x2, int y2);
-      BOOL Rectangle(LPCRECT lpRect);
-      BOOL RoundRect(int x1, int y1, int x2, int y2, int x3, int y3);
-      BOOL RoundRect(LPCRECT lpRect, POINT point);
+      bool Ellipse(int x1, int y1, int x2, int y2);
+      bool Ellipse(LPCRECT lpRect);
+      bool DrawEllipse(int32_t x1, int32_t y1, int32_t x2, int32_t y2);
+      bool DrawEllipse(LPCRECT lpRect);
+      bool FillEllipse(int32_t x1, int32_t y1, int32_t x2, int32_t y2);
+      bool FillEllipse(LPCRECT lpRect) ;
+
+      bool Pie(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4);
+      bool Pie(LPCRECT lpRect, POINT ptStart, POINT ptEnd);
+      bool Polygon(const POINT* lpPoints, int nCount);   
+      bool PolyPolygon(const POINT* lpPoints, const INT* lpPolyCounts, int nCount);
+      bool Rectangle(int x1, int y1, int x2, int y2);
+      bool Rectangle(LPCRECT lpRect);
+      bool RoundRect(int x1, int y1, int x2, int y2, int x3, int y3);
+      bool RoundRect(LPCRECT lpRect, POINT point);
 
    // Bitmap Functions
-      BOOL PatBlt(int x, int y, int nWidth, int nHeight, DWORD dwRop);
-      BOOL BitBlt(int x, int y, int nWidth, int nHeight, ::ca::graphics * pgraphicsSrc,
-         int xSrc, int ySrc, DWORD dwRop);
-      BOOL StretchBlt(int x, int y, int nWidth, int nHeight, ::ca::graphics * pgraphicsSrc,
-         int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, DWORD dwRop);
+      bool PatBlt(int x, int y, int nWidth, int nHeight, uint32_t dwRop);
+      bool BitBlt(int x, int y, int nWidth, int nHeight, ::draw2d::graphics * pgraphicsSrc,
+         int xSrc, int ySrc, uint32_t dwRop);
+      bool StretchBlt(int x, int y, int nWidth, int nHeight, ::draw2d::graphics * pgraphicsSrc,
+         int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, uint32_t dwRop);
       COLORREF GetPixel(int x, int y) const;
       COLORREF GetPixel(POINT point) const;
       COLORREF SetPixel(int x, int y, COLORREF crColor);
       COLORREF SetPixel(POINT point, COLORREF crColor);
-      BOOL FloodFill(int x, int y, COLORREF crColor);
-      BOOL ExtFloodFill(int x, int y, COLORREF crColor, UINT nFillType);
-      BOOL MaskBlt(int x, int y, int nWidth, int nHeight, ::ca::graphics * pgraphicsSrc,
-         int xSrc, int ySrc, ::ca::bitmap& maskBitmap, int xMask, int yMask,
-         DWORD dwRop);
-      BOOL PlgBlt(LPPOINT lpPoint, ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc,
-         int nWidth, int nHeight, ::ca::bitmap& maskBitmap, int xMask, int yMask);
-      BOOL SetPixelV(int x, int y, COLORREF crColor);
-      BOOL SetPixelV(POINT point, COLORREF crColor);
-      BOOL GradientFill(TRIVERTEX* pVertices, ULONG nVertices, 
-        void * pMesh, ULONG nMeshElements, DWORD dwMode);
-      BOOL TransparentBlt(int xDest, int yDest, int nDestWidth, int nDestHeight,
-        ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, 
+      bool FloodFill(int x, int y, COLORREF crColor);
+      bool ExtFloodFill(int x, int y, COLORREF crColor, UINT nFillType);
+      bool MaskBlt(int x, int y, int nWidth, int nHeight, ::draw2d::graphics * pgraphicsSrc,
+         int xSrc, int ySrc, ::draw2d::bitmap& maskBitmap, int xMask, int yMask,
+         uint32_t dwRop);
+      bool PlgBlt(LPPOINT lpPoint, ::draw2d::graphics * pgraphicsSrc, int xSrc, int ySrc,
+         int nWidth, int nHeight, ::draw2d::bitmap& maskBitmap, int xMask, int yMask);
+      bool SetPixelV(int x, int y, COLORREF crColor);
+      bool SetPixelV(POINT point, COLORREF crColor);
+      bool GradientFill(TRIVERTEX* pVertices, ULONG nVertices, 
+        void * pMesh, ULONG nMeshElements, uint32_t dwMode);
+      bool TransparentBlt(int xDest, int yDest, int nDestWidth, int nDestHeight,
+        ::draw2d::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, 
         UINT clrTransparent);
       bool alpha_blend(int xDest, int yDest, int nDestWidth, int nDestHeight,
-        ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, 
+        ::draw2d::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, 
         BLENDFUNCTION blend);
 
    // Text Functions
-      virtual BOOL TextOut(int x, int y, const char * lpszString, int nCount);
-            BOOL TextOut(int x, int y, const string & str);
-      virtual BOOL ExtTextOut(int x, int y, UINT nOptions, LPCRECT lpRect,
+      virtual bool TextOut(int x, int y, const char * lpszString, int nCount);
+            bool TextOut(int x, int y, const string & str);
+      virtual bool ExtTextOut(int x, int y, UINT nOptions, LPCRECT lpRect,
                const char * lpszString, UINT nCount, LPINT lpDxWidths);
-            BOOL ExtTextOut(int x, int y, UINT nOptions, LPCRECT lpRect,
+            bool ExtTextOut(int x, int y, UINT nOptions, LPCRECT lpRect,
                const string & str, LPINT lpDxWidths);
       virtual size TabbedTextOut(int x, int y, const char * lpszString, int nCount,
                int nTabPositions, LPINT lpnTabStopPositions, int nTabOrigin);
             size TabbedTextOut(int x, int y, const string & str,
                int nTabPositions, LPINT lpnTabStopPositions, int nTabOrigin);
 
-   #pragma push_macro("DrawText")
-   #pragma push_macro("DrawTextEx")
-   #undef DrawText
-   #undef DrawTextEx
-      virtual int _AFX_FUNCNAME(DrawText)(const char * lpszString, int nCount, LPRECT lpRect,
-               UINT nFormat);
-            int _AFX_FUNCNAME(DrawText)(const string & str, LPRECT lpRect, UINT nFormat);
+      int draw_text(const char * lpszString, int nCount, LPRECT lpRect,
+         UINT nFormat);
+      int draw_text(const string & str, LPRECT lpRect, UINT nFormat);
 
-      virtual int _AFX_FUNCNAME(DrawTextEx)(LPTSTR lpszString, int nCount, LPRECT lpRect,
-               UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
-            int _AFX_FUNCNAME(DrawTextEx)(const string & str, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
-
-            int DrawText(const char * lpszString, int nCount, LPRECT lpRect,
-               UINT nFormat);
-            int DrawText(const string & str, LPRECT lpRect, UINT nFormat);
-
-            int DrawTextEx(LPTSTR lpszString, int nCount, LPRECT lpRect,
-               UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
-            int DrawTextEx(const string & str, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
-   #pragma pop_macro("DrawText")
-   #pragma pop_macro("DrawTextEx")
+      int draw_text_ex(LPTSTR lpszString, int nCount, LPRECT lpRect,
+         UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
+      int draw_text_ex(const string & str, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
 
       size GetTextExtent(const char * lpszString, int nCount) const;
       size GetTextExtent(const string & str) const;
@@ -322,75 +342,72 @@ namespace win
          int nTabPositions, LPINT lpnTabStopPositions) const;
       size GetOutputTabbedTextExtent(const string & str,
          int nTabPositions, LPINT lpnTabStopPositions) const;
-      virtual BOOL GrayString(::ca::brush* pBrush,
-         BOOL (CALLBACK* lpfnOutput)(HDC, LPARAM, int), LPARAM lpData,
+      virtual bool GrayString(::draw2d::brush* pBrush,
+         bool (CALLBACK* lpfnOutput)(HDC, LPARAM, int), LPARAM lpData,
             int nCount, int x, int y, int nWidth, int nHeight);
       UINT GetTextAlign() const;
       UINT SetTextAlign(UINT nFlags);
-      int GetTextFace(__in int nCount, __out_ecount_part_z(nCount, return + 1) LPTSTR lpszFacename) const;
+      int GetTextFace(int nCount, __out_ecount_part_z(nCount, return + 1) LPTSTR lpszFacename) const;
       int GetTextFace(string & rString) const;
-   #pragma push_macro("GetTextMetrics")
-   #undef GetTextMetrics
-      BOOL _AFX_FUNCNAME(GetTextMetrics)(LPTEXTMETRIC lpMetrics) const;
-      BOOL GetTextMetrics(LPTEXTMETRIC lpMetrics) const;
-   #pragma pop_macro("GetTextMetrics")
-      BOOL GetOutputTextMetrics(LPTEXTMETRIC lpMetrics) const;
+
+      bool get_text_metrics(LPTEXTMETRICW lpMetrics) const;
+      bool get_output_text_metrics(LPTEXTMETRICW lpMetrics) const;
+
       int SetTextJustification(int nBreakExtra, int nBreakCount);
       int GetTextCharacterExtra() const;
       int SetTextCharacterExtra(int nCharExtra);
 
-      DWORD GetCharacterPlacement(const char * lpString, int nCount, int nMaxExtent, LPGCP_RESULTS lpResults, DWORD dwFlags) const;
-      DWORD GetCharacterPlacement(string & str, int nMaxExtent, LPGCP_RESULTS lpResults, DWORD dwFlags) const;
+      uint32_t GetCharacterPlacement(const char * lpString, int nCount, int nMaxExtent, LPGCP_RESULTS lpResults, uint32_t dwFlags) const;
+      uint32_t GetCharacterPlacement(string & str, int nMaxExtent, LPGCP_RESULTS lpResults, uint32_t dwFlags) const;
 
    #if (_WIN32_WINNT >= 0x0500)
 
-      BOOL GetTextExtentExPointI(LPWORD pgiIn, int cgi, int nMaxExtent, LPINT lpnFit, LPINT alpDx, __out_opt LPSIZE lpSize) const;
-      BOOL GetTextExtentPointI(LPWORD pgiIn, int cgi, __out_opt LPSIZE lpSize) const;
+      bool GetTextExtentExPointI(LPWORD pgiIn, int cgi, int nMaxExtent, LPINT lpnFit, LPINT alpDx, __out_opt LPSIZE lpSize) const;
+      bool GetTextExtentPointI(LPWORD pgiIn, int cgi, __out_opt LPSIZE lpSize) const;
 
    #endif
 
 
 
    // Advanced Drawing
-      BOOL DrawEdge(LPRECT lpRect, UINT nEdge, UINT nFlags);
-      BOOL DrawFrameControl(LPRECT lpRect, UINT nType, UINT nState);
+      bool DrawEdge(LPRECT lpRect, UINT nEdge, UINT nFlags);
+      bool DrawFrameControl(LPRECT lpRect, UINT nType, UINT nState);
 
    // Scrolling Functions
-      BOOL ScrollDC(int dx, int dy, LPCRECT lpRectScroll, LPCRECT lpRectClip,
-         ::ca::rgn* pRgnUpdate, LPRECT lpRectUpdate);
+      bool ScrollDC(int dx, int dy, LPCRECT lpRectScroll, LPCRECT lpRectClip,
+         ::draw2d::region* pRgnUpdate, LPRECT lpRectUpdate);
 
    // font Functions
-      BOOL GetCharWidth(UINT nFirstChar, UINT nLastChar, LPINT lpBuffer) const;
-      BOOL GetOutputCharWidth(UINT nFirstChar, UINT nLastChar, LPINT lpBuffer) const;
-      DWORD SetMapperFlags(DWORD dwFlag);
+      bool GetCharWidth(UINT nFirstChar, UINT nLastChar, LPINT lpBuffer) const;
+      bool GetOutputCharWidth(UINT nFirstChar, UINT nLastChar, LPINT lpBuffer) const;
+      uint32_t SetMapperFlags(uint32_t dwFlag);
       size GetAspectRatioFilter() const;
 
-      BOOL GetCharABCWidths(UINT nFirstChar, UINT nLastChar, LPABC lpabc) const;
-      DWORD GetFontData(DWORD dwTable, DWORD dwOffset, LPVOID lpData, DWORD cbData) const;
+      bool GetCharABCWidths(UINT nFirstChar, UINT nLastChar, LPABC lpabc) const;
+      uint32_t GetFontData(uint32_t dwTable, uint32_t dwOffset, LPVOID lpData, uint32_t cbData) const;
       int GetKerningPairs(int nPairs, LPKERNINGPAIR lpkrnpair) const;
-      UINT GetOutlineTextMetrics(UINT cbData, LPOUTLINETEXTMETRIC lpotm) const;
-      DWORD GetGlyphOutline(UINT nChar, UINT nFormat, LPGLYPHMETRICS lpgm,
-         DWORD cbBuffer, LPVOID lpBuffer, const MAT2* lpmat2) const;
+      UINT GetOutlineTextMetrics(UINT cbData, LPOUTLINETEXTMETRICW lpotm) const;
+      uint32_t GetGlyphOutline(UINT nChar, UINT nFormat, LPGLYPHMETRICS lpgm, uint32_t cbBuffer, LPVOID lpBuffer, const MAT2* lpmat2) const;
 
-      BOOL GetCharABCWidths(UINT nFirstChar, UINT nLastChar,
+      bool GetCharABCWidths(UINT nFirstChar, UINT nLastChar,
          LPABCFLOAT lpABCF) const;
-      BOOL GetCharWidth(UINT nFirstChar, UINT nLastChar,
+      bool GetCharWidth(UINT nFirstChar, UINT nLastChar,
          float* lpFloatBuffer) const;
 
-      DWORD GetFontLanguageInfo() const;
+      uint32_t GetFontLanguageInfo() const;
 
    #if (_WIN32_WINNT >= 0x0500)
 
-      BOOL GetCharABCWidthsI(UINT giFirst, UINT cgi, LPWORD pgi, LPABC lpabc) const;
-      BOOL GetCharWidthI(UINT giFirst, UINT cgi, LPWORD pgi, LPINT lpBuffer) const;
+      bool GetCharABCWidthsI(UINT giFirst, UINT cgi, LPWORD pgi, LPABC lpabc) const;
+      bool GetCharWidthI(UINT giFirst, UINT cgi, LPWORD pgi, LPINT lpBuffer) const;
 
    #endif
 
    // Printer/Device Escape Functions
-      virtual int Escape(__in int nEscape, __in int nCount,
-         __in_bcount(nCount) const char * lpszInData, __in LPVOID lpOutData);
-      int Escape(__in int nEscape, __in int nInputSize, __in_bcount(nInputSize) const char * lpszInputData,
-         __in int nOutputSize, __out_bcount(nOutputSize) char * lpszOutputData);
+      virtual int Escape(int nEscape, int nCount,
+         __in_bcount(nCount) const char * lpszInData, LPVOID lpOutData);
+      int Escape(int nEscape, int nInputSize, __in_bcount(nInputSize) const char * lpszInputData,
+         int nOutputSize, __out_bcount(nOutputSize) char * lpszOutputData);
       int DrawEscape(int nEscape, int nInputSize, const char * lpszInputData);
 
       // Escape helpers
@@ -398,57 +415,62 @@ namespace win
       int StartDoc(LPDOCINFO lpDocInfo);
       int StartPage();
       int EndPage();
-      int SetAbortProc(BOOL (CALLBACK* lpfn)(HDC, int));
+      int SetAbortProc(bool (CALLBACK* lpfn)(HDC, int));
       int AbortDoc();
       int EndDoc();
 
    // MetaFile Functions
-      BOOL PlayMetaFile(HMETAFILE hMF);
-      BOOL PlayMetaFile(HENHMETAFILE hEnhMetaFile, LPCRECT lpBounds);
-      BOOL AddMetaFileComment(UINT nDataSize, const BYTE* pCommentData);
+      bool PlayMetaFile(HMETAFILE hMF);
+      bool PlayMetaFile(HENHMETAFILE hEnhMetaFile, LPCRECT lpBounds);
+      bool AddMetaFileComment(UINT nDataSize, const BYTE* pCommentData);
          // can be used for enhanced metafiles only
 
    // Path Functions
-      BOOL AbortPath();
-      BOOL BeginPath();
-      BOOL CloseFigure();
-      BOOL EndPath();
-      BOOL FillPath();
-      BOOL FlattenPath();
-      BOOL StrokeAndFillPath();
-      BOOL StrokePath();
-      BOOL WidenPath();
+      bool AbortPath();
+      bool BeginPath();
+      bool CloseFigure();
+      bool EndPath();
+      bool FillPath();
+      bool FlattenPath();
+      bool StrokeAndFillPath();
+      bool StrokePath();
+      bool WidenPath();
       float GetMiterLimit() const;
-      BOOL SetMiterLimit(float fMiterLimit);
+      bool SetMiterLimit(float fMiterLimit);
       int GetPath(LPPOINT lpPoints, LPBYTE lpTypes, int nCount) const;
-      BOOL SelectClipPath(int nMode);
+      bool SelectClipPath(int nMode);
 
    // Misc Helper Functions
-      static ::ca::brush* PASCAL GetHalftoneBrush(::ca::application * papp);
+      static ::draw2d::brush* GetHalftoneBrush(::ca2::application * papp);
       void DrawDragRect(LPCRECT lpRect, SIZE size,
-         LPCRECT lpRectLast, SIZE sizeLast,
-         ::ca::brush* pBrush = NULL, ::ca::brush* pBrushLast = NULL);
+         LPCRECT lpRectLast, SIZE sizeLast, ::draw2d::brush* pBrush = NULL, ::draw2d::brush* pBrushLast = NULL);
       void FillSolidRect(const __rect64 * lpRect, COLORREF clr);
       void FillSolidRect(LPCRECT lpRect, COLORREF clr);
       void FillSolidRect(int x, int y, int cx, int cy, COLORREF clr);
       void Draw3dRect(LPCRECT lpRect, COLORREF clrTopLeft, COLORREF clrBottomRight);
-      void Draw3dRect(int x, int y, int cx, int cy,
-         COLORREF clrTopLeft, COLORREF clrBottomRight);
+      void Draw3dRect(int x, int y, int cx, int cy, COLORREF clrTopLeft, COLORREF clrBottomRight);
 
-   // Implementation
-   public:
    #ifdef _DEBUG
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
    #endif
 
-      // advanced use and implementation
-      BOOL m_bPrinting;
       HGDIOBJ SelectObject(HGDIOBJ);      // do not use for regions
 
-   protected:
-      // used for implementation of non-virtual SelectObject calls
-      static ::ca::graphics_object* PASCAL SelectGdiObject(::ca::application * papp, HDC hDC, HGDIOBJ h);
+      bool set(::draw2d::path * ppath);
+      bool set(::draw2d::path::element & pelement);
+      bool set(::draw2d::path::line & pline);
+      bool set(::draw2d::path::arc & parc);
+      bool set(::draw2d::path::move & pmove);
+      bool draw_path(::draw2d::path * ppath);
+      bool fill_path(::draw2d::path * ppath);
+
+      bool select_path(::draw2d::path * ppath);
+
    };
 
-} // namespace win
+
+} // namespace draw2d_gdi
+
+
+

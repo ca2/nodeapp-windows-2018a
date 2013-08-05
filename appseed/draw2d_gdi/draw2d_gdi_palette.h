@@ -1,35 +1,42 @@
 #pragma once
 
-namespace win
+
+namespace draw2d_gdi
 {
 
-   class CLASS_DECL_VMSWIN palette : 
-      virtual public ::win::graphics_object,
-      virtual public ::ca::palette
+
+   class CLASS_DECL_DRAW2D_GDI palette : 
+      virtual public ::draw2d_gdi::object,
+      virtual public ::draw2d::palette
    {
    public:
-      static palette* PASCAL from_handle(::ca::application * papp, HPALETTE hPalette);
 
-      palette(::ca::application * papp);
-      BOOL CreatePalette(LPLOGPALETTE lpLogPalette);
-      BOOL CreateHalftonePalette(::ca::graphics * pgraphics);
 
-   // Attributes
+      palette(::ca2::application * papp);
+      virtual ~palette();
+
+
       operator HPALETTE() const;
       int GetEntryCount();
-      UINT GetPaletteEntries(UINT nStartIndex, UINT nNumEntries,
-            LPPALETTEENTRY lpPaletteColors) const;
-      UINT SetPaletteEntries(UINT nStartIndex, UINT nNumEntries,
-            LPPALETTEENTRY lpPaletteColors);
 
-   // Operations
-      void AnimatePalette(UINT nStartIndex, UINT nNumEntries,
-            LPPALETTEENTRY lpPaletteColors);
+      static ::draw2d::palette * from_handle(::ca2::application * papp, HPALETTE hPalette);
+
+      bool CreatePalette(LPLOGPALETTE lpLogPalette);
+      bool CreateHalftonePalette(::draw2d::graphics * pgraphics);
+
+
+      UINT GetPaletteEntries(UINT nStartIndex, UINT nNumEntries, LPPALETTEENTRY lpPaletteColors) const;
+      UINT SetPaletteEntries(UINT nStartIndex, UINT nNumEntries, LPPALETTEENTRY lpPaletteColors);
+
+      void AnimatePalette(UINT nStartIndex, UINT nNumEntries, LPPALETTEENTRY lpPaletteColors);
       UINT GetNearestPaletteIndex(COLORREF crColor) const;
-      BOOL ResizePalette(UINT nNumEntries);
+      bool ResizePalette(UINT nNumEntries);
 
-   // Implementation
-      virtual ~palette();
+      
    };
 
-} // namespace win
+
+} // namespace draw2d_gdi
+
+
+

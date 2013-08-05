@@ -291,11 +291,11 @@ void preview_dc::MirrorFont()
    if (get_os_data() == NULL)
       return;         // can't mirror font without a screen DC
 
-   LOGFONT logFont;
+   LOGFONTW logFont;
    // Fill the logFont structure with the original info
-   ::GetObject(m_hPrinterFont, sizeof(LOGFONT), (LPVOID)&logFont);
+   ::GetObject(m_hPrinterFont, sizeof(LOGFONTW), (LPVOID)&logFont);
 
-   TEXTMETRIC tm;
+   TEXTMETRICW tm;
 
    GetTextFace(LF_FACESIZE, (LPTSTR)&logFont.lfFaceName[0]);
    GetTextMetrics(&tm);
@@ -498,8 +498,8 @@ size preview_dc::ComputeDeltas(int32_t& x, const char * lpszString, UINT &nCount
 {
    ASSERT_VALID(this);
 
-   TEXTMETRIC tmAttrib;
-   TEXTMETRIC tmScreen;
+   TEXTMETRICW tmAttrib;
+   TEXTMETRICW tmScreen;
    ::GetTextMetrics(get_handle2(), &tmAttrib);
    ::GetTextMetrics(get_os_data(), &tmScreen);
 
@@ -831,7 +831,7 @@ int32_t preview_dc::Escape(int32_t nEscape, int32_t nCount, const char * lpszInD
    case SETDIBSCALING:
    case ENUMPAPERMETRICS:
    case GETSETPAPERMETRICS:
-   case GETEXTENDEDTEXTMETRICS:
+   case GETEXTENDEDTEXTMETRICWS:
    case GETEXTENTTABLE:
    case GETPAIRKERNTABLE:
    case GETTRACKKERNTABLE:

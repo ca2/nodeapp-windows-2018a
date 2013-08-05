@@ -1,53 +1,56 @@
 #pragma once
 
-namespace win
+
+namespace draw2d_gdi
 {
 
-   /////////////////////////////////////////////////////////////////////////////
-   // graphics_object abstract class for ::ca::graphics_sp SelectObject
 
-   class CLASS_DECL_VMSWIN graphics_object :
-      virtual public ::ca::graphics_object,
-      virtual public hgdiobj_handle
+   class CLASS_DECL_DRAW2D_GDI object :
+      virtual public ::draw2d::object
    {
-      // // DECLARE_DYNCREATE(::ca::graphics_object)
    public:
 
-   // Attributes
-   //   HGDIOBJ m_hObject;                  // must be first data member
-      operator HGDIOBJ() const;
-      HGDIOBJ get_os_data() const;
 
-      static graphics_object* PASCAL from_handle(::ca::application * papp, HGDIOBJ hObject);
-      static void PASCAL DeleteTempMap();
-      BOOL Attach(HGDIOBJ hObject);
+      HGDIOBJ m_hgdiobj;
+
+
+      object();
+      virtual ~object();
+
+
+      operator HGDIOBJ() const;
+      virtual void * get_os_data() const;
+      virtual HGDIOBJ get_handle() const;
+
+      static ::draw2d::object * from_handle(::ca2::application * papp, HGDIOBJ hObject);
+
+      bool Attach(HGDIOBJ hObject);
       HGDIOBJ Detach();
 
-   // Constructors
-      ::ca::graphics_object(); // must create a derived class object
-      BOOL delete_object();
+      virtual bool destroy();
 
-   // Operations
-   #pragma push_macro("GetObject")
-   #undef GetObject
-      int _AFX_FUNCNAME(GetObject)(int nCount, LPVOID lpObject) const;
-      int GetObject(int nCount, LPVOID lpObject) const;
-   #pragma pop_macro("GetObject")
+      int get_object(int nCount, LPVOID lpObject) const;
+
       UINT GetObjectType() const;
-      BOOL CreateStockObject(int nIndex);
-      BOOL UnrealizeObject();
-      BOOL operator==(const ::ca::graphics_object& obj) const;
-      BOOL operator!=(const ::ca::graphics_object& obj) const;
 
-   // Implementation
-   public:
-      virtual ~graphics_object();
-   #ifdef _DEBUG
+      bool CreateStockObject(int nIndex);
+
+      bool UnrealizeObject();
+
       virtual void dump(dump_context & dumpcontext) const;
       virtual void assert_valid() const;
-   #endif
 
       void * detach_os_data();
+
+
+      virtual void update();
+
+
    };
 
-} // namespace ca
+
+} // namespace draw2d_gdi
+
+
+
+

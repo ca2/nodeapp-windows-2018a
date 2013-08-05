@@ -1,41 +1,48 @@
 #pragma once
 
-namespace win
+namespace draw2d_gdi
 {
 
-   class CLASS_DECL_VMSWIN brush : 
-      virtual public ::win::graphics_object,
-      virtual public ::ca::brush
+   class CLASS_DECL_DRAW2D_GDI brush : 
+      virtual public ::draw2d_gdi::object,
+      virtual public ::draw2d::brush
    {
    public:
-      static brush* PASCAL from_handle(::ca::application * papp, HBRUSH hBrush);
+
+      bool m_bProcess;
 
       // Constructors
-      brush(::ca::application * papp);
-      virtual void construct(COLORREF crColor);                // CreateSolidBrush
-      virtual void construct(int nIndex, COLORREF crColor);    // CreateHatchBrush
-      virtual void construct(::ca::bitmap * pbitmap);                // CreatePatternBrush
-
+      brush(::ca2::application * papp);
       virtual ~brush();
 
-      BOOL CreateSolidBrush(COLORREF crColor);
-      BOOL CreateHatchBrush(int nIndex, COLORREF crColor);
-      BOOL CreateBrushIndirect(const LOGBRUSH* lpLogBrush);
-      BOOL CreatePatternBrush(::ca::bitmap* pBitmap);
-      BOOL CreateDIBPatternBrush(HGLOBAL hPackedDIB, UINT nUsage);
-      BOOL CreateDIBPatternBrush(const void * lpPackedDIB, UINT nUsage);
-      BOOL CreateSysColorBrush(int nIndex);
 
-      // Attributes
       operator HBRUSH() const;
       int GetLogBrush(LOGBRUSH* pLogBrush);
 
-      // Implementation
-   public:
+      static ::draw2d::brush * from_handle(::ca2::application * papp, HBRUSH hBrush);
+
+      virtual void construct(COLORREF crColor);                // CreateSolidBrush
+      virtual void construct(int nIndex, COLORREF crColor);    // CreateHatchBrush
+      virtual void construct(::draw2d::bitmap * pbitmap);                // CreatePatternBrush
+
+
+      bool CreateSolid(COLORREF crColor);
+      bool CreateHatchBrush(int nIndex, COLORREF crColor);
+      bool CreateBrushIndirect(const LOGBRUSH* lpLogBrush);
+      bool CreatePatternBrush(::draw2d::bitmap* pBitmap);
+      bool CreateDIBPatternBrush(HGLOBAL hPackedDIB, UINT nUsage);
+      bool CreateDIBPatternBrush(const void * lpPackedDIB, UINT nUsage);
+      bool CreateSysColorBrush(int nIndex);
+
+
 #ifdef _DEBUG
       virtual void dump(dump_context & dumpcontext) const;
 #endif
+
+
+      virtual bool create();
+
    };
 
 
-} // namespace win
+} // namespace draw2d_gdi

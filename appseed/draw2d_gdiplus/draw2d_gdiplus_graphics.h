@@ -358,8 +358,8 @@ namespace draw2d_gdiplus
       UINT SetTextAlign(UINT nFlags);
       int32_t GetTextFace(__in int32_t nCount, __out_ecount_part_z(nCount, return + 1) LPTSTR lpszFacename) const;
       int32_t GetTextFace(string & rString) const;
-      bool get_text_metrics(LPTEXTMETRIC lpMetrics) const;
-      bool get_output_text_metrics(LPTEXTMETRIC lpMetrics) const;
+      bool get_text_metrics(LPTEXTMETRICW lpMetrics) const;
+      bool get_output_text_metrics(LPTEXTMETRICW lpMetrics) const;
       int32_t SetTextJustification(int32_t nBreakExtra, int32_t nBreakCount);
       int32_t GetTextCharacterExtra() const;
       int32_t SetTextCharacterExtra(int32_t nCharExtra);
@@ -393,7 +393,7 @@ namespace draw2d_gdiplus
       bool GetCharABCWidths(UINT nFirstChar, UINT nLastChar, LPABC lpabc) const;
       uint32_t GetFontData(uint32_t dwTable, uint32_t dwOffset, LPVOID lpData, uint32_t cbData) const;
       int32_t GetKerningPairs(int32_t nPairs, LPKERNINGPAIR lpkrnpair) const;
-      UINT GetOutlineTextMetrics(UINT cbData, LPOUTLINETEXTMETRIC lpotm) const;
+      UINT GetOutlineTextMetrics(UINT cbData, LPOUTLINETEXTMETRICW lpotm) const;
       uint32_t GetGlyphOutline(UINT nChar, UINT nFormat, LPGLYPHMETRICS lpgm,
          uint32_t cbBuffer, LPVOID lpBuffer, const MAT2* lpmat2) const;
 

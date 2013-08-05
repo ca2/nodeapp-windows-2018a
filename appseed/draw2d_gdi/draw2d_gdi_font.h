@@ -1,38 +1,49 @@
 #pragma once
 
-namespace win
+namespace draw2d_gdi
 {
 
-   class CLASS_DECL_VMSWIN font : 
-      virtual public ::win::graphics_object,
-      virtual public ::ca::font
+   class CLASS_DECL_DRAW2D_GDI font : 
+      virtual public ::draw2d_gdi::object,
+      virtual public ::draw2d::font
    {
    public:
-      static font * PASCAL from_handle(::ca::application * papp, HFONT hFont);
 
-      font(::ca::application * papp);
+
+      font(::ca2::application * papp);
       virtual ~font();
 
-      virtual void font::construct(const ::ca::font & fontParam);
 
-      virtual BOOL CreateFontIndirect(const LOGFONT* lpLogFont);
-      virtual BOOL CreateFont(int nHeight, int nWidth, int nEscapement,
-            int nOrientation, int nWeight, BYTE bItalic, BYTE bUnderline,
-            BYTE cStrikeOut, BYTE nCharSet, BYTE nOutPrecision,
-            BYTE nClipPrecision, BYTE nQuality, BYTE nPitchAndFamily,
-            const char * lpszFacename);
-      virtual BOOL CreatePointFont(int nPointSize, const char * lpszFaceName, ::ca::graphics * pgraphics = NULL);
-      virtual BOOL CreatePointFontIndirect(const LOGFONT* lpLogFont, ::ca::graphics * pgraphics = NULL);
-
-   // Attributes
       operator HFONT() const;
-      virtual int GetLogFont(LOGFONT* pLogFont);
+      virtual int GetLogFont(LOGFONTW* pLogFont);
 
-      // Implementation
-      public:
-      #ifdef _DEBUG
-         virtual void dump(dump_context & dumpcontext) const;
-      #endif
+
+      static ::draw2d::font * from_handle(::ca2::application * papp, HFONT hFont);
+
+
+      virtual void construct(const ::draw2d::font & fontParam);
+
+
+      virtual bool CreateFontIndirect(const LOGFONTW* lpLogFont);
+      virtual bool CreateFont(int nHeight, int nWidth, int nEscapement, int nOrientation, int nWeight, BYTE bItalic, BYTE bUnderline, BYTE cStrikeOut, BYTE nCharSet, BYTE nOutPrecision, BYTE nClipPrecision, BYTE nQuality, BYTE nPitchAndFamily, const char * lpszFacename);
+      virtual bool CreatePointFont(int nPointSize, const char * lpszFaceName, ::draw2d::graphics * pgraphics = NULL);
+      virtual bool CreatePointFontIndirect(const LOGFONTW* lpLogFont, ::draw2d::graphics * pgraphics = NULL);
+
+
+#ifdef _DEBUG
+      virtual void dump(dump_context & dumpcontext) const;
+#endif
+
+      
+      virtual bool create();
+
+
    };
 
-} // namespace win
+
+} // namespace draw2d_gdi
+
+
+
+
+

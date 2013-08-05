@@ -1,52 +1,45 @@
 #include "framework.h"
 
+
 extern thread_local_storage * __thread_data;
+
 
 namespace win
 {
+
 
    application::application(sp(::ca2::application) papp) :
       ca2(papp)
    {
 
       ::ca2::thread::m_p.create(allocer());
+
       ::ca2::thread::m_p->m_p = this;
 
       WIN_THREAD(::ca2::thread::m_p.m_p)->m_pAppThread = this;
 
-      m_psystem = papp->m_psystem;
+      m_psystem                        = papp->m_psystem;
 
-      m_pfilemanager = NULL;
+      m_pfilemanager                   = NULL;
+      m_hInstance                      = NULL;
+      m_pszHelpFilePath                = NULL;
+      m_pszProfileName                 = NULL;
+      m_pszRegistryKey                 = NULL;
+      m_pdocmanager                    = NULL;
+      m_atomApp = m_atomSystemTopic    = NULL;
+      m_hcurWaitCursorRestore          = NULL;
 
+      m_hDevMode                       = NULL;
+      m_hDevNames                      = NULL;
+      m_nNumPreviewPages               = 0;     // not specified (defaults to 1)
 
-
-      // in non-running state until WinMain
-      m_hInstance = NULL;
-//      m_hLangResourceDLL = NULL;
-      m_pszHelpFilePath = NULL;
-      m_pszProfileName = NULL;
-      m_pszRegistryKey = NULL;
-//      m_pRecentFileList = NULL;
-      m_pdocmanager = NULL;
-      m_atomApp = m_atomSystemTopic = NULL;
-      //m_lpCmdLine = NULL;
-//      m_pCmdInfo = NULL;
-
-      // initialize wait cursor state
-      m_hcurWaitCursorRestore = NULL;
-
-      // initialize current printer state
-      m_hDevMode = NULL;
-      m_hDevNames = NULL;
-      m_nNumPreviewPages = 0;     // not specified (defaults to 1)
-
-      // other initialization
-      m_bHelpMode = FALSE;
-//      m_eHelpType = afxWinHelp;
-      m_nSafetyPoolSize = 512;        // default size
+      m_bHelpMode                      = FALSE;
+      m_nSafetyPoolSize                = 512;        // default size
 
       shell::theWindowsShell.Initialize();
+
    }
+
 
    application::~application()
    {
@@ -56,32 +49,49 @@ namespace win
 
    void application::_001OnFileNew()
    {
+
       //::ca::smart_pointer < application_base >::m_p->_001OnFileNew(NULL);
+
    }
+
 
    sp(::user::document_interface) application::_001OpenDocumentFile(var varFile)
    {
+
       //return ::ca::smart_pointer < application_base >::m_p->_001OpenDocumentFile(varFile);
+
       return NULL;
+
    }
+
 
    void application::_001EnableShellOpen()
    {
+
       ASSERT(m_atomApp == NULL && m_atomSystemTopic == NULL); // do once
 
       m_atomApp            = ::GlobalAddAtomW(::ca2::international::utf8_to_unicode(m_strAppName));
+
       m_atomSystemTopic    = ::GlobalAddAtomW(L"system");
+
    }
+
 
    bool application::_001OnDDECommand(const char * lpcsz)
    {
+
       UNREFERENCED_PARAMETER(lpcsz);
+
       return FALSE;
+
    }
+
 
    HINSTANCE application::GetHinstance()
    {
+
       return NULL;
+
    }
 
    string application::get_version()
@@ -804,7 +814,7 @@ namespace win
 
    string application::draw2d_get_default_library_name()
    {
-      return "draw2d_direct2d";
+      return "draw2d_gdi";
    }
 
 

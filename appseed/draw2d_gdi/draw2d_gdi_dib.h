@@ -1,7 +1,9 @@
 #pragma once
 
-namespace win
+
+namespace draw2d_gdi
 {
+
 
    //////////////////////////////////////////////////////////////////////
    //   Creator : El Barto (ef00@luc.ac.be)
@@ -9,10 +11,11 @@ namespace win
    //   Date : 09-04-98
    //////////////////////////////////////////////////////////////////////
 
-   class CLASS_DECL_VMSWIN dib :
-      virtual public ::ca::dib
+   class CLASS_DECL_DRAW2D_GDI dib :
+      virtual public ::draw2d::dib
    {
    public:
+
 
       static float Cosines[360];
       static float Sines[360];
@@ -22,52 +25,63 @@ namespace win
       static __int64 Sin10N[10]; // more precision * 1 << 34
       static double dPi;
 
-      COLORREF *           m_pcolorref;
-      BITMAPINFO           m_info;
-      ::ca::bitmap_sp      m_spbitmap;
-      ::ca::graphics_sp    m_spgraphics;
-      class size           m_size;
-      HBITMAP              m_hbitmapOriginal;
 
-      virtual ::ca::graphics * get_graphics();
-      virtual ::ca::bitmap_sp get_bitmap();
-      virtual ::ca::bitmap_sp detach_bitmap();
+      BITMAPINFO              m_info;
+      ::draw2d::bitmap_sp     m_spbitmap;
+      ::draw2d::graphics_sp   m_spgraphics;
+      HBITMAP                 m_hbitmapOriginal;
+      bool                    m_bMapped;
 
 
-      virtual COLORREF * get_data();
 
-      dib(::ca::application * papp);
-      virtual void construct(int cx, int cy);
+      dib(::ca2::application * papp);
       virtual ~dib();
 
-      static void s_initialize();
-      void stretch_dib(::ca::dib * pdib);
 
-      bool dc_select(bool bSelect = true);
+      static void s_initialize();
+
+
+      virtual void construct(int cx, int cy);
+
+
+
+
+      virtual ::draw2d::graphics * get_graphics();
+      virtual ::draw2d::bitmap_sp get_bitmap();
+      virtual ::draw2d::bitmap_sp detach_bitmap();
+
+
+      void stretch_dib(::draw2d::dib * pdib);
+
+      //bool dc_select(bool bSelect = true);
+
+      virtual void map(bool bApplyAlphaTransform = true); // some implementations may requrire to map to m_pcolorref before manipulate it
+      virtual void unmap(); // some implementations may require to unmap from m_pcolorref to update *os* bitmap
+
 
       COLORREF GetAverageColor();
-      bool Blend(::ca::dib *pdib, ::ca::dib * pdibA, int A);
+      bool Blend(::draw2d::dib *pdib, ::draw2d::dib * pdibA, int A);
       bool color_blend(COLORREF cr, BYTE bAlpha);
-      void BitBlt(::ca::dib * pdib, int op);
+      void BitBlt(::draw2d::dib * pdib, int op);
       int cos(int i, int iAngle);
       int sin(int i, int iAngle);
       int cos10(int i, int iAngle);
       int sin10(int i, int iAngle);
 
       bool is_rgb_black();
-      void xor(::ca::dib * pdib);
+      void xor(::draw2d::dib * pdib);
 
       void ToAlpha(int i);
       void ToAlphaAndFill(int i, COLORREF cr);
       void GrayToARGB(COLORREF cr);
 
       void from_alpha();
-      void mult_alpha(::ca::dib * pdibWork, bool bPreserveAlpha = true);
+      void mult_alpha(::draw2d::dib * pdibWork, bool bPreserveAlpha = true);
       void set_rgb(int R, int G, int B);
 
-      void rotate(::ca::dib * pdib, LPCRECT lpcrect, double dAngle, double dScale);
-      void rotate(::ca::dib * pdib, double dAngle, double dScale);
-      void Rotate034(::ca::dib * pdib, double dAngle, double dScale);
+      void rotate(::draw2d::dib * pdib, LPCRECT lpcrect, double dAngle, double dScale);
+      void rotate(::draw2d::dib * pdib, double dAngle, double dScale);
+      void Rotate034(::draw2d::dib * pdib, double dAngle, double dScale);
 
 
       void SetIconMask(::visual::icon * picon, int cx, int cy);
@@ -77,26 +91,26 @@ namespace win
          BYTE a2, BYTE r2, BYTE g2, BYTE b2, // border colors
          int x, int y, int iRadius);
 
-      DWORD GetPixel(int x, int y);
+      uint32_t GetPixel(int x, int y);
       void Mask(COLORREF crMask, COLORREF crInMask, COLORREF crOutMask);
       void channel_mask(BYTE uchFind, BYTE uchSet, BYTE uchUnset, visual::rgba::echannel echannel);
       void transparent_color(color color);
       
 
-      BOOL create(class size size);
-      BOOL create(int iWidth, int iHeight);
-      BOOL create(::ca::graphics * pdc);
-      BOOL Destroy();
+      bool create(class size size);
+      bool create(int iWidth, int iHeight);
+      bool create(::draw2d::graphics * pdc);
+      bool Destroy();
 
 
       void DivideRGB(int iDivide);
       void DivideARGB(int iDivide);
       void DivideA(int iDivide);
 
-      bool from(::ca::graphics * pdc);
-      bool from(point ptDest, ::ca::graphics * pdc, point pt, class size sz);
+      bool from(::draw2d::graphics * pdc);
+      bool from(point ptDest, ::draw2d::graphics * pdc, point pt, class size sz);
 
-      bool to(::ca::graphics * pgraphics, point pt, class size size, point ptSrc);
+      bool to(::draw2d::graphics * pgraphics, point pt, class size size, point ptSrc);
       
       virtual void fill_channel(int C, visual::rgba::echannel echannel);
       void Fill (int A, int R, int G, int B );
@@ -109,29 +123,29 @@ namespace win
 
       void Map (int ToRgb, int FromRgb );
 
-      void copy( ::ca::dib *dib );
-      void Paste ( ::ca::dib *dib );
+      void copy( ::draw2d::dib *dib );
+      void Paste ( ::draw2d::dib *dib );
 
-      void Blend ( ::ca::dib *dib, int A );
-      void Darken ( ::ca::dib *dib );
-      void Difference ( ::ca::dib *dib );
-      void Lighten ( ::ca::dib *dib );
-      void Multiply ( ::ca::dib *dib );
-      void Screen ( ::ca::dib *dib );
+      void Blend ( ::draw2d::dib *dib, int A );
+      void Darken ( ::draw2d::dib *dib );
+      void Difference ( ::draw2d::dib *dib );
+      void Lighten ( ::draw2d::dib *dib );
+      void Multiply ( ::draw2d::dib *dib );
+      void Screen ( ::draw2d::dib *dib );
 
-      void copy ( ::ca::dib *dib, int x, int y );
-      void PasteRect ( ::ca::dib *dib, int x, int y );
+      void copy ( ::draw2d::dib *dib, int x, int y );
+      void PasteRect ( ::draw2d::dib *dib, int x, int y );
 
       void FillRect ( int x, int y, int w, int h, int R, int G, int B );
       void FillGlassRect ( int x, int y, int w, int h, int R, int G, int B, int A );
       void FillStippledGlassRect ( int x, int y, int w, int h, int R, int G, int B );
       
-      void BlendRect ( ::ca::dib *dib, int x, int y, int A );
-      void DarkenRect ( ::ca::dib *dib, int x, int y );
-      void DifferenceRect ( ::ca::dib *dib, int x, int y );
-      void LightenRect ( ::ca::dib *dib, int x, int y );
-      void MultiplyRect ( ::ca::dib *dib, int x, int y );
-      void ScreenRect ( ::ca::dib *dib, int x, int y );
+      void BlendRect ( ::draw2d::dib *dib, int x, int y, int A );
+      void DarkenRect ( ::draw2d::dib *dib, int x, int y );
+      void DifferenceRect ( ::draw2d::dib *dib, int x, int y );
+      void LightenRect ( ::draw2d::dib *dib, int x, int y );
+      void MultiplyRect ( ::draw2d::dib *dib, int x, int y );
+      void ScreenRect ( ::draw2d::dib *dib, int x, int y );
 
       void Line ( int x1, int y1, int x2, int y2, int R, int G, int B );
       void LineGlass ( int x1, int y1, int x2, int y2, int R, int G, int B, int A );
@@ -146,6 +160,26 @@ namespace win
       int width();
       int height();
       double pi();
+
+      virtual bool update_window(::ca2::window * pwnd, ::ca2::signal_object * pobj);
+      virtual bool print_window(::ca2::window * pwnd, ::ca2::signal_object * pobj);
+
+
+      virtual bool process_initialize(::draw2d::brush * pbrush);
+      virtual bool process_initialize(::draw2d::pen * ppen);
+      virtual bool process_blend(::draw2d::brush * pbrush, int32_t x, int32_t y, ::draw2d::e_alpha_mode ealphamode);
+      virtual bool process_blend(COLORREF clr, ::draw2d::e_alpha_mode ealphamode);
+      virtual bool process_blend(::draw2d::dib * pdib, ::draw2d::e_alpha_mode ealphamode);
+      virtual bool process_blend(::draw2d::pen * ppen, int32_t x, int32_t y, ::draw2d::e_alpha_mode ealphamode);
+
+
    };
 
-} // namespace win
+
+} // namespace draw2d_gdi
+
+
+
+
+
+

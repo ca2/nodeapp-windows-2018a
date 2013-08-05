@@ -1301,7 +1301,7 @@ gdi_fallback:
    256, rString.GetBuffer(256)); rString.ReleaseBuffer();
    return nResult; }
 
-   bool graphics::get_text_metrics(LPTEXTMETRIC lpMetrics) const
+   bool graphics::get_text_metrics(LPTEXTMETRICW lpMetrics) const
    { 
       //ASSERT(get_handle2() != NULL); return ::GetTextMetrics(get_handle2(), lpMetrics); 
       /*wstring wstr(L"123AWZwmc");
@@ -1362,12 +1362,12 @@ gdi_fallback:
    }
 
 
-   bool graphics::get_output_text_metrics(LPTEXTMETRIC lpMetrics) const
+   bool graphics::get_output_text_metrics(LPTEXTMETRICW lpMetrics) const
    {
    
       ASSERT(get_handle1() != NULL);
       
-      return ::GetTextMetrics(get_handle1(), lpMetrics) != FALSE;
+      return ::GetTextMetricsW(get_handle1(), lpMetrics) != FALSE;
    
    }
 
@@ -1418,8 +1418,8 @@ gdi_fallback:
    { ASSERT(get_handle2() != NULL); return ::GetBoundsRect(get_handle2(), lpRectBounds, flags); }
    bool graphics::ResetDC(const DEVMODE* lpDevMode)
    { ASSERT(get_handle2() != NULL); return ::ResetDC(get_handle2(), lpDevMode) != NULL; }
-   UINT graphics::GetOutlineTextMetrics(UINT cbData, LPOUTLINETEXTMETRIC lpotm) const
-   { ASSERT(get_handle2() != NULL); return ::GetOutlineTextMetrics(get_handle2(), cbData, lpotm); }
+   UINT graphics::GetOutlineTextMetrics(UINT cbData, LPOUTLINETEXTMETRICW lpotm) const
+   { ASSERT(get_handle2() != NULL); return ::GetOutlineTextMetricsW(get_handle2(), cbData, lpotm); }
    bool graphics::GetCharABCWidths(UINT nFirstChar, UINT nLastChar, LPABC lpabc) const
    { ASSERT(get_handle2() != NULL); return ::GetCharABCWidths(get_handle2(), nFirstChar, nLastChar, lpabc) != FALSE; }
    uint32_t graphics::GetFontData(uint32_t dwTable, uint32_t dwOffset, LPVOID lpData,

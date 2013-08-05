@@ -1,7 +1,5 @@
-LIBRARY "os"
+LIBRARY "draw2d_gdi"
 
 EXPORTS
-_WinMain@16
 ca2_factory_exchange
-ca2_main
 

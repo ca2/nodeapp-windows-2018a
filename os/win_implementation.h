@@ -22,7 +22,7 @@ extern CLASS_DECL_win const char gen_WndOleControl[];
 
 CLASS_DECL_win void __cancel_modes(oswindow oswindow_Rcvr);
 CLASS_DECL_win bool __help_enabled();  // determine if ID_HELP handler exists
-CLASS_DECL_win bool __custom_log_font(UINT nIDS, LOGFONT* pLogFont);
+CLASS_DECL_win bool __custom_log_font(UINT nIDS, LOGFONTW* pLogFont);
 CLASS_DECL_win bool __get_prop_sheet_font(string & strFace, WORD& wSize, bool bWizard);
 
 CLASS_DECL_win bool __is_combo_box_control(oswindow oswindow, UINT nStyle);

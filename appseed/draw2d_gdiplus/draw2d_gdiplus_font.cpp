@@ -35,7 +35,7 @@ namespace draw2d_gdiplus
    //{
      // return dynamic_cast < font * > (::draw2d_gdiplus::object::from_handle(papp, hFont)); 
    //}
-/*   bool font::CreateFontIndirect(const LOGFONT* lpLogFont)
+/*   bool font::CreateFontIndirect(const LOGFONTW* lpLogFont)
    { 
 
       m_strFontFamilyName = lpLogFont->lfFaceName;
@@ -64,11 +64,11 @@ namespace draw2d_gdiplus
    //nPitchAndFamily, lpszFacename)); 
    }
    
-   int32_t font::GetLogFont(LOGFONT* pLogFont)
+   int32_t font::GetLogFont(LOGFONTW* pLogFont)
    { 
 
       return 0;
-   //   return ::GetObject(get_handle(), sizeof(LOGFONT), pLogFont);
+   //   return ::GetObject(get_handle(), sizeof(LOGFONTW), pLogFont);
 
    }*/
 
@@ -94,7 +94,7 @@ namespace draw2d_gdiplus
   //          delete_object();
     //     if(font.get_handle() != NULL)
       /*   {
-            LOGFONT lf;
+            LOGFONTW lf;
             memset(&lf, 0, sizeof(lf));
             font.GetLogFont(&lf);
             CreateFontIndirect(&lf);
@@ -116,7 +116,7 @@ namespace draw2d_gdiplus
             return;
          }
 
-         LOGFONT lf;
+         LOGFONTW lf;
          VERIFY(GetObject(sizeof(lf), &lf));
          dumpcontext << "lf.lfHeight = " << lf.lfHeight;
          dumpcontext << "\nlf.lfWidth = " << lf.lfWidth;

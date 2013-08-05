@@ -1,163 +1,202 @@
-#include "StdAfx.h"
+#include "framework.h"
 
-namespace win
+
+namespace draw2d_gdi
 {
 
-   graphics_object::operator HGDIOBJ() const
-   { 
-      return this == NULL ? NULL : get_handle(); 
-   }
-   
-   HGDIOBJ graphics_object::get_os_data() const
+
+   object::object()
    {
-      return this == NULL ? NULL : get_handle(); 
+
+      m_hgdiobj = NULL;
+
    }
    
-   graphics_object::graphics_object()
+   object::~object()
+   { 
+
+      destroy(); 
+
+   }
+   
+
+   int object::get_object(int nCount, LPVOID lpObject) const
    {
-      set_handle(NULL); 
-   }
+
+      return ::GetObjectW(m_hgdiobj, nCount, lpObject); 
    
-   graphics_object::~graphics_object()
-   { 
-      delete_object(); 
-   }
-   
-   int graphics_object::_AFX_FUNCNAME(GetObject)(int nCount, LPVOID lpObject) const
-   { 
-      return ::GetObject(get_handle(), nCount, lpObject); 
    }
 
-#pragma push_macro("GetObject")
-#undef GetObject
-   int graphics_object::GetObject(int nCount, LPVOID lpObject) const
-   { return _AFX_FUNCNAME(GetObject)(nCount, lpObject); }
-#pragma pop_macro("GetObject")
-   BOOL graphics_object::CreateStockObject(int nIndex)
-   { return (set_handle(::GetStockObject(nIndex))) != NULL; }
-   BOOL graphics_object::UnrealizeObject()
-   { ASSERT(get_handle() != NULL); return ::UnrealizeObject(get_handle()); }
-   UINT graphics_object::GetObjectType() const
-   { return (UINT)::GetObjectType(get_handle()); }
-   BOOL graphics_object::operator==(const ::ca::graphics_object& obj) const
-   { return ((HGDIOBJ) obj.get_os_data()) == get_handle(); }
-   BOOL graphics_object::operator!=(const ::ca::graphics_object& obj) const
-   { return ((HGDIOBJ) obj.get_os_data()) != get_handle(); }
-
-
-   graphics_object * graphics_object_allocator(::ca::application * papp, HANDLE h)
+   bool object::CreateStockObject(int nIndex)
    {
+   
+      return (m_hgdiobj = ::GetStockObject(nIndex)) != NULL; 
+   
+   }
+
+   bool object::UnrealizeObject()
+   { 
+   
+      ASSERT(get_handle() != NULL); 
+      
+      return ::UnrealizeObject(get_handle()) != FALSE; 
+   
+   }
+
+   UINT object::GetObjectType() const
+   { 
+   
+      return (UINT)::GetObjectType(get_handle()); 
+   
+   }
+
+
+   ::draw2d_gdi::object * graphics_object_allocator(::ca2::application * papp, HANDLE h)
+   {
+
       switch(::GetObjectType(h))
       {
       case OBJ_BITMAP:
-         return dynamic_cast < graphics_object * > (new bitmap(papp));
+         return dynamic_cast < ::draw2d_gdi::object * > (canew(bitmap(papp)));
       case OBJ_REGION:
-         return dynamic_cast < graphics_object * > (new rgn(papp));
+         return dynamic_cast < ::draw2d_gdi::object * > (canew(region(papp)));
       case OBJ_PEN:
-         return dynamic_cast < graphics_object * > (new pen(papp));
+         return dynamic_cast < ::draw2d_gdi::object * > (canew(pen(papp)));
       case OBJ_BRUSH:
-         return dynamic_cast < graphics_object * > (new brush(papp));
+         return dynamic_cast < ::draw2d_gdi::object * > (canew(brush(papp)));
       case OBJ_PAL:
-         return dynamic_cast < graphics_object * > (new palette(papp));
+         return dynamic_cast < ::draw2d_gdi::object * > (canew(palette(papp)));
       case OBJ_FONT:
-         return dynamic_cast < graphics_object * > (new font(papp));
+         return dynamic_cast < ::draw2d_gdi::object * > (canew(font(papp)));
       }
-      return new graphics_object();
+      
+      return NULL;
+
    }
 
-   graphics_object* PASCAL graphics_object::from_handle(::ca::application * papp, HGDIOBJ h)
+   ::draw2d::object * object::from_handle(::ca2::application * papp, HGDIOBJ h)
    {
-      hgdiobj_map* pMap = afxMapHGDIOBJ(TRUE); //create ::collection::map if not exist
-      ASSERT(pMap != NULL);
-      graphics_object* pObject = (::win::graphics_object*)pMap->from_handle(h, &graphics_object_allocator, papp);
-      ASSERT(pObject == NULL || pObject->get_os_data() == h);
-      return pObject;
+      
+      ::draw2d_gdi::object * pobject = graphics_object_allocator(papp, h);
+
+      if(pobject == NULL)
+         return NULL;
+
+      pobject->Attach(h);
+
+      return pobject;
+
    }
 
-   BOOL graphics_object::Attach(HGDIOBJ hObject)
+   bool object::Attach(HGDIOBJ hObject)
    {
+      
       if (hObject == NULL)
       {
+
          return FALSE;
+
       }
-      if(get_os_data() != NULL)
+
+      if(m_hgdiobj != NULL)
       {
-         delete_object();
+
+         destroy();
+
       }
-      // remember early to avoid leak
-      set_handle(hObject);
-      hgdiobj_map* pMap = afxMapHGDIOBJ(TRUE); // create ::collection::map if not exist
-      ASSERT(pMap != NULL);
-      pMap->set_permanent(get_os_data(), this);
+
+      m_hgdiobj = hObject;
+
       return TRUE;
+
    }
 
-   HGDIOBJ graphics_object::Detach()
+
+   HGDIOBJ object::Detach()
    {
-      HGDIOBJ hObject = get_os_data();
-      if (hObject != NULL)
-      {
-         hgdiobj_map* pMap = afxMapHGDIOBJ(); // don't create if not exist
-         if (pMap != NULL)
-            pMap->remove_handle(get_os_data());
-      }
+      
+      HGDIOBJ hgdiobj = m_hgdiobj;
 
-      set_handle(NULL);
-      return hObject;
+      m_hgdiobj = NULL;
+
+      return hgdiobj;
+
    }
 
-   BOOL graphics_object::delete_object()
+
+   bool object::destroy()
    {
-      if (get_os_data() == NULL)
-         return FALSE;
-      return ::DeleteObject(Detach());
-   }
+      
+      if(m_hgdiobj == NULL)
+         return true;
 
-   /////////////////////////////////////////////////////////////////////////////
-   // ::ca::graphics_object
+      return ::DeleteObject(Detach()) != FALSE;
+
+   }
 
 #ifdef _DEBUG
-   void graphics_object::dump(dump_context & dumpcontext) const
+   void object::dump(dump_context & dumpcontext) const
    {
-      ::radix::object::dump(dumpcontext);
+      ::ca2::object::dump(dumpcontext);
 
       dumpcontext << "get_handle() = " << get_handle();
       dumpcontext << "\n";
    }
 
-   void graphics_object::assert_valid() const
+   void object::assert_valid() const
    {
-      ::radix::object::assert_valid();
-      ASSERT(get_handle() == NULL ||
-         (afxData.bWin95 || ::GetObjectType(get_handle()) != 0));
+      ::ca2::object::assert_valid();
+/*      ASSERT(get_handle() == NULL ||
+         (afxData.bWin95 || ::GetObjectType(get_handle()) != 0));*/
    }
 #endif
 
-   void * graphics_object::detach_os_data()
+   void * object::detach_os_data()
    {
       return Detach();
    }
 
-   /*void * graphics_object::get_os_data() const
+   void * object::get_handle() const
    {
-   return get_os_data();
-   }*/
 
-} // namespace win
+      return get_os_data();
 
-hgdiobj_map * PASCAL afxMapHGDIOBJ(BOOL bCreate)
-{
-   UNREFERENCED_PARAMETER(bCreate);
-   try
+   }
+
+   object::operator HGDIOBJ() const
+   { 
+
+      return this == NULL ? NULL : (HGDIOBJ) get_os_data(); 
+
+   }
+   
+
+   HGDIOBJ object::get_os_data() const
    {
-      AFX_MODULE_STATE* pState = AfxGetModuleState();
-      if(pState == NULL)
+
+      if(this == NULL)
          return NULL;
-      return pState->m_pmapHGDIOBJ;
-   }
-   catch(...)
-   {
-      return NULL;
+      
+      defer_update();
+
+      return m_hgdiobj; 
+
    }
 
-}
+   void object::update()
+   {
+
+      if(m_hgdiobj != NULL)
+      {
+         
+         destroy();
+
+         m_hgdiobj = NULL;
+
+      }
+      
+   }
+
+
+}  // namespace draw2d_gdi
+
