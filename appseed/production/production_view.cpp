@@ -166,7 +166,7 @@ namespace production
    }
 
 
-   void view:: _001OnDraw(::ca2::graphics * pdc)
+   void view:: _001OnDraw(::draw2d::graphics * pdc)
    {
       
 
@@ -195,12 +195,15 @@ namespace production
       }
       rect rectClip(rectText);
       //ClientToScreen(rectClip);
-      ::ca2::region_sp rgnClip(allocer());
+      ::draw2d::region_sp rgnClip(allocer());
       rgnClip->create_rect(rectClip);
       //pdc->Draw3dRect(rectText, RGB(200, 200, 200), RGB(200, 200, 200));
       pdc->SelectClipRgn(rgnClip);
       //single_lock sl(&m_pproduction->m_mutexStatus, TRUE);
-      pdc->set_color(ARGB(0xcc, 84, 84, 84));
+      //pdc->set_color(ARGB(0xcc, 84, 84, 84));
+      ::draw2d::brush_sp brush(allocer());
+      brush->create_solid(ARGB(0xcc, 84, 84, 84));
+      pdc->SelectObject(brush);
       for(int32_t i = iStart; i < m_pproduction->m_straStatus.get_size() && y < rectText.bottom; i++)
       {
          rcItem = rectText;

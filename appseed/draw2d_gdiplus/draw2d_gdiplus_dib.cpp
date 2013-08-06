@@ -180,16 +180,23 @@ namespace draw2d_gdiplus
 
    bool dib::create(::draw2d::graphics * pdc)
    {
-      ::draw2d::bitmap * pbitmap = &(dynamic_cast<::draw2d_gdiplus::graphics * >(pdc))->GetCurrentBitmap();
+
+      ::draw2d::bitmap * pbitmap = (dynamic_cast<::draw2d_gdiplus::graphics * >(pdc))->get_current_bitmap();
+
       if(pbitmap == NULL)
          return FALSE;
+
       class size size = pbitmap->get_size();
+
       if(!create(size.cx, size.cy))
       {
          return FALSE;
       }
+
       from(pdc);
+
       return TRUE;
+
    }
 
    bool dib::Destroy ()
@@ -2645,7 +2652,7 @@ namespace draw2d_gdiplus
 
       rect rectx;
 
-      ::draw2d::bitmap * pbitmap = &m_spgraphics->GetCurrentBitmap();
+      ::draw2d::bitmap * pbitmap = m_spgraphics->get_current_bitmap();
 
       ::GetCurrentObject((HDC) pbase->m_wparam, OBJ_BITMAP);
 

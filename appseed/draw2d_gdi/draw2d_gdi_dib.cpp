@@ -1,4 +1,5 @@
 #include "framework.h"
+#include "include/FreeImage.h"
 
 
 inline byte byte_clip(int32_t i)
@@ -193,7 +194,7 @@ namespace draw2d_gdi
 
    bool dib::create(::draw2d::graphics * pdc)
    {
-      ::draw2d_gdi::bitmap * pbitmap = dynamic_cast<::draw2d_gdi::bitmap * >(&(dynamic_cast<::draw2d_gdi::graphics * >(pdc))->GetCurrentBitmap());
+      ::draw2d_gdi::bitmap * pbitmap = dynamic_cast<::draw2d_gdi::bitmap * >(dynamic_cast<::draw2d_gdi::graphics * >(pdc)->get_current_bitmap().m_p);
       if(pbitmap == NULL)
          return FALSE;
       BITMAP bm;
@@ -2591,7 +2592,7 @@ namespace draw2d_gdi
 
       rect rectx;
 
-      ::draw2d::bitmap * pbitmap = &m_spgraphics->GetCurrentBitmap();
+      ::draw2d::bitmap * pbitmap = m_spgraphics->get_current_bitmap();
 
       ::GetCurrentObject((HDC) pbase->m_wparam, OBJ_BITMAP);
 
@@ -2924,6 +2925,74 @@ namespace draw2d_gdi
          return true;
       }
       return false;
+   }
+
+   bool dib::from(::draw2d::graphics * pgraphics, FIBITMAP *pfibitmap, bool bUnloadFI)
+   {
+
+      if(pfibitmap == NULL)
+           return false;
+
+      BITMAPINFO * pbi = FreeImage_GetInfo(pfibitmap);
+      void * pdata = FreeImage_GetBits(pfibitmap);
+
+      if(!create(pbi->bmiHeader.biWidth, pbi->bmiHeader.biHeight))
+         return false;
+
+
+      COLORREF * pcolorref = NULL;
+
+      HBITMAP hbitmap = ::CreateDIBSection(NULL, &m_info, DIB_RGB_COLORS, (void **) &pcolorref, NULL, 0);
+
+      if(hbitmap == NULL)
+      {
+         Destroy();
+         return false;
+      }
+
+      HDC hdc = ::CreateCompatibleDC(NULL);
+
+      if(pbi->bmiHeader.biHeight != SetDIBits(
+         hdc,
+         hbitmap,
+         0,
+         pbi->bmiHeader.biHeight,
+         pdata,
+         pbi,
+         DIB_RGB_COLORS))
+      {
+         Destroy();
+         if(bUnloadFI)
+         {
+            FreeImage_Unload(pfibitmap);
+         }
+         return false;
+      }
+
+      memcpy(m_pcolorref, pcolorref, (size_t) (area() * sizeof(COLORREF)));
+
+
+      RGBQUAD bkcolor;
+
+      if(pbi->bmiHeader.biBitCount == 32)
+      {
+      }
+      else if(pbi->bmiHeader.biBitCount <= 24 && FreeImage_GetTransparencyCount(pfibitmap) <= 0)
+      {
+         fill_channel(0xff, ::visual::rgba::channel_alpha);
+      }
+      else if(FreeImage_GetBackgroundColor(pfibitmap, &bkcolor))
+      {
+         transparent_color(bkcolor);
+      }
+
+      if(bUnloadFI)
+      {
+         FreeImage_Unload(pfibitmap);
+      }
+
+
+      return true;
    }
 
 } // namespace draw2d_gdi

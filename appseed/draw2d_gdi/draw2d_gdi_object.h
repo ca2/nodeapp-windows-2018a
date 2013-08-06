@@ -5,13 +5,16 @@ namespace draw2d_gdi
 {
 
 
+   class graphics;
+
    class CLASS_DECL_DRAW2D_GDI object :
       virtual public ::draw2d::object
    {
    public:
 
 
-      HGDIOBJ m_hgdiobj;
+      HGDIOBJ                                            m_hgdiobj;
+      comparable_array < ::draw2d_gdi::graphics * >      m_ptraGraphics;
 
 
       object();

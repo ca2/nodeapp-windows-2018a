@@ -1008,7 +1008,7 @@ namespace draw2d_gdiplus
          //m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
 
          bool bOk = m_pgraphics->DrawImage(
-            (Gdiplus::Bitmap *) pdibWork->get_graphics()->GetCurrentBitmap().get_os_data(),
+            (Gdiplus::Bitmap *) pdibWork->get_graphics()->get_current_bitmap()->get_os_data(),
             x, y , 0, 0, nWidth, nHeight, Gdiplus::UnitPixel) == Gdiplus::Status::Ok;
 
 
@@ -1028,15 +1028,15 @@ namespace draw2d_gdiplus
          if(pgraphicsSrc == NULL)
             return FALSE;
 
-         if(&pgraphicsSrc->GetCurrentBitmap() == NULL)
+         if(&pgraphicsSrc->get_current_bitmap() == NULL)
             goto gdi_fallback;
 
-         if(pgraphicsSrc->GetCurrentBitmap().get_os_data() == NULL)
+         if(pgraphicsSrc->get_current_bitmap()->get_os_data() == NULL)
             goto gdi_fallback;
 
 
          return m_pgraphics->DrawImage(
-            (Gdiplus::Bitmap *) pgraphicsSrc->GetCurrentBitmap().get_os_data(),
+            (Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data(),
             x, y , xSrc, ySrc, nWidth, nHeight, Gdiplus::UnitPixel) == Gdiplus::Status::Ok;
 
       }
@@ -1088,7 +1088,7 @@ gdi_fallback:
 
       try
       {
-         return m_pgraphics->DrawImage((Gdiplus::Bitmap *) pgraphicsSrc->GetCurrentBitmap().get_os_data(),  dstRect, srcRect, Gdiplus::UnitPixel) == Gdiplus::Status::Ok;
+         return m_pgraphics->DrawImage((Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data(),  dstRect, srcRect, Gdiplus::UnitPixel) == Gdiplus::Status::Ok;
       }
       catch(...)
       {
@@ -1137,7 +1137,7 @@ gdi_fallback:
                dib0->create(rectText.size());
                dib0->Fill(0, 0, 0, 0);
                dib0->get_graphics()->SetTextColor(ARGB(255, 255, 255, 255));
-               dib0->get_graphics()->SelectObject(&GetCurrentFont());
+               dib0->get_graphics()->SelectObject(&get_current_font());
                dib0->get_graphics()->SetBkMode(TRANSPARENT);
                dib0->get_graphics()->TextOut(0, 0, str);
                dib0->ToAlpha(0);*/
@@ -1147,7 +1147,7 @@ gdi_fallback:
                dib1->Fill(0, 0, 0, 0);
                brush->create_solid(m_crColor);
                dib1->get_graphics()->SelectObject(brush);
-               dib1->get_graphics()->SelectObject(&GetCurrentFont());
+               dib1->get_graphics()->SelectObject(get_current_font());
 //               dib1->get_graphics()->SetBkMode(TRANSPARENT);
                dib1->get_graphics()->TextOut(0, 0, str);
                //dib1->channel_from(visual::rgba::channel_alpha, dib0);
@@ -1200,13 +1200,13 @@ gdi_fallback:
                dib0->create(rectText.size());
                ::draw2d::brush_sp brush(allocer(),ARGB(255, 255, 255, 255));
                dib0->get_graphics()->SelectObject(brush);
-               dib0->get_graphics()->SelectObject(&GetCurrentFont());
+               dib0->get_graphics()->SelectObject(get_current_font());
                dib0->get_graphics()->TextOut(0, 0, str);
                dib0->ToAlpha(0);
                ::draw2d::dib_sp dib1(allocer());
                dib1->create(rectText.size());
                brush->create_solid(m_spbrush->m_cr);
-               dib1->get_graphics()->SelectObject(&GetCurrentFont());
+               dib1->get_graphics()->SelectObject(get_current_font());
                dib1->get_graphics()->SelectObject(brush);
 //               dib1->get_graphics()->SetBkMode(TRANSPARENT);
                dib1->get_graphics()->TextOut(0, 0, str);
@@ -1355,7 +1355,7 @@ gdi_fallback:
       /*wstr = L"";
       m_pgraphics->MeasureString(wstr.m_pwsz, -1, (Gdiplus::Font *) m_font->get_os_data(), origin, &rect2);*/
 
-      lpMetrics->tmAveCharWidth        = (LONG) (rect.Width * GetCurrentFont().m_dFontWidth / (double) wstr.get_length());
+      lpMetrics->tmAveCharWidth = (LONG) (rect.Width * get_current_font()->m_dFontWidth / (double) wstr.get_length());
 
 
       return TRUE;
@@ -1487,38 +1487,38 @@ gdi_fallback:
    { ASSERT(get_handle2() != NULL); 
    return ::GetColorAdjustment(get_handle2(), lpColorAdjust) != FALSE; }
 
-   ::draw2d::pen & graphics::GetCurrentPen() const
+   ::draw2d::pen_sp graphics::get_current_pen() const
    {
 
-      return *m_sppen.m_p;
+      return m_sppen;
 
    }
 
-   ::draw2d::brush & graphics::GetCurrentBrush() const
+   ::draw2d::brush_sp graphics::get_current_brush() const
    {
       
-      return *m_spbrush.m_p;
+      return m_spbrush;
 
    }
    
-   ::draw2d::palette & graphics::GetCurrentPalette() const
+   ::draw2d::palette_sp graphics::get_current_palette() const
    {
 
-      return *(::draw2d::palette *)NULL;
+      return (::draw2d::palette *)NULL;
 
    }
 
-   ::draw2d::font & graphics::GetCurrentFont() const
+   ::draw2d::font_sp graphics::get_current_font() const
    {
 
-      return *m_spfont.m_p;
+      return m_spfont;
 
    }
 
-   ::draw2d::bitmap & graphics::GetCurrentBitmap() const
+   ::draw2d::bitmap_sp graphics::get_current_bitmap() const
    {
 
-      return *m_spbitmap.m_p;
+      return m_spbitmap;
 
    }
 
@@ -1831,7 +1831,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       Gdiplus::RectF dstRect((Gdiplus::REAL) xDest, (Gdiplus::REAL) yDest, (Gdiplus::REAL) nDestWidth, (Gdiplus::REAL) nDestHeight);
 
-      m_pgraphics->DrawImage((Gdiplus::Bitmap *) pgraphicsSrc->GetCurrentBitmap().get_os_data(), dstRect, 
+      m_pgraphics->DrawImage((Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data(), dstRect, 
          (Gdiplus::REAL) xSrc, (Gdiplus::REAL) ySrc, (Gdiplus::REAL) nSrcWidth, (Gdiplus::REAL) nSrcHeight, Gdiplus::UnitPixel, &attributes);
 
       return true;

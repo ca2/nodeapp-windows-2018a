@@ -238,8 +238,9 @@ namespace draw2d_gdi
 
       pbitmap->m_bUpdated = true;
 
-      if(!::SelectObject(get_handle1(), pbitmap->get_os_data()))
-         return NULL;
+      ::SelectObject(get_handle1(), pbitmap->get_os_data());
+
+      GDI_BITMAP(pbitmap)->m_ptraGraphics.add_unique(this);
 
       m_spbitmap = pbitmap;
 
@@ -838,13 +839,13 @@ namespace draw2d_gdi
    bool graphics::Ellipse(int x1, int y1, int x2, int y2)
    {
 
-      if(m_sppen.is_set() && m_sppen->get_os_data() != NULL && m_sppen->get_os_data() != GetCurrentObject(m_hdc, OBJ_PEN))
-         ::SelectObject(m_hdc, m_sppen->get_os_data());
+      select_pen();
 
-      if(m_spbrush.is_set() && m_spbrush->get_os_data() != NULL && m_spbrush->get_os_data() != GetCurrentObject(m_hdc, OBJ_BRUSH))
-         ::SelectObject(m_hdc, m_spbrush->get_os_data());
+      select_brush();
 
-		return ::Ellipse(get_handle1(), x1, y1, x2, y2) != FALSE;
+		bool bOk = ::Ellipse(get_handle1(), x1, y1, x2, y2) != FALSE;
+
+      return bOk;
 
 	}
 
@@ -859,13 +860,14 @@ namespace draw2d_gdi
 
    bool graphics::DrawEllipse(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    {
-      
-      ::SelectObject(m_hdc, ::GetStockObject(NULL_BRUSH));
 
-      if(m_sppen.is_set() && m_sppen->get_os_data() != NULL && m_sppen->get_os_data() != GetCurrentObject(m_hdc, OBJ_PEN))
-         ::SelectObject(m_hdc, m_sppen->get_os_data());
+      select_null_brush();
+
+      select_pen();
       
-      return ::Ellipse(get_handle1(), x1, y1, x2, y2) != FALSE;
+      bool bOk = ::Ellipse(get_handle1(), x1, y1, x2, y2) != FALSE;
+
+      return bOk;
 
    }
 
@@ -878,13 +880,14 @@ namespace draw2d_gdi
 
    bool graphics::FillEllipse(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    {
-      
-      ::SelectObject(m_hdc, ::GetStockObject(NULL_PEN));
 
-      if(m_spbrush.is_set() && m_spbrush->get_os_data() != NULL && m_spbrush->get_os_data() != GetCurrentObject(m_hdc, OBJ_BRUSH))
-         ::SelectObject(m_hdc, m_spbrush->get_os_data());
+      select_null_pen();
+
+      select_brush();
       
-      return ::Ellipse(get_handle1(), x1, y1, x2, y2) != FALSE;
+      bool bOk = ::Ellipse(get_handle1(), x1, y1, x2, y2) != FALSE;
+
+      return bOk;
 
    }
 
@@ -1135,16 +1138,16 @@ namespace draw2d_gdi
                ::draw2d::brush_sp brush(allocer());
                brush->create_solid(ARGB(255, 255, 255, 255));
                dib0->get_graphics()->SelectObject(brush);
-               dib0->get_graphics()->SelectObject(&GetCurrentFont());
+               dib0->get_graphics()->SelectObject(get_current_font());
                //dib0->get_graphics()->SetBkMode(TRANSPARENT);
                dib0->get_graphics()->TextOut(0, 0, lpszString, nCount);
                dib0->ToAlpha(0);
                ::draw2d::dib_sp dib1(get_app());
                dib1->create(rectText.size());
-               brush->create_solid(GetCurrentBrush().m_cr);
+               brush->create_solid(get_current_brush()->m_cr);
                dib0->get_graphics()->SelectObject(brush);
                //dib1->get_graphics()->SetTextColor(GetTextColor());
-               dib1->get_graphics()->SelectObject(&GetCurrentFont());
+               dib1->get_graphics()->SelectObject(get_current_font());
                //dib1->get_graphics()->SetBkMode(TRANSPARENT);
                dib1->get_graphics()->TextOut(0, 0, lpszString, nCount);
                dib1->channel_from(visual::rgba::channel_alpha, dib0);
@@ -1179,8 +1182,8 @@ namespace draw2d_gdi
       
       wstring wstr = ::ca2::international::utf8_to_unicode(str);
 
-      ::draw2d::brush & brush = GetCurrentBrush();
-      ::draw2d::font & font = GetCurrentFont();
+      ::draw2d::brush & brush = get_current_brush();
+      ::draw2d::font & font = get_current_font();
 
       //if(m_spbrush.is_null() || GetAValue(m_spbrush->m_cr) == 255 || m_spdib.is_null())
 
@@ -1200,8 +1203,6 @@ namespace draw2d_gdi
       {
 
          SIZE size;
-
-         SelectObject((HGDIOBJ) font.get_os_data());
 
          if(!::GetTextExtentPoint32W(get_handle2(), wstr, (int)wstr.get_length(), &size))
          {
@@ -1223,7 +1224,7 @@ namespace draw2d_gdi
 
          GDI_GRAPHICS(pdib->get_graphics())->SetTextColor(RGB(GetRValue(brush.m_cr), GetGValue(brush.m_cr), GetBValue(brush.m_cr)));
 
-         GDI_GRAPHICS(pdib->get_graphics())->SelectObject((HGDIOBJ) font.get_os_data());
+         pdib->get_graphics()->SelectObject(&font);
 
          ::SetBkMode((HDC) pdib->get_graphics()->get_os_data(), TRANSPARENT);
 
@@ -1738,9 +1739,34 @@ namespace draw2d_gdi
 	}
 
 
-   
+   void graphics::set_original_object(int iType)
+   {
 
-   ::draw2d::pen & graphics::GetCurrentPen() const
+      switch(iType)
+      {
+      case OBJ_BITMAP:
+         ::SelectObject(m_hdc, m_hbitmapOriginal);
+         return;
+      case OBJ_PEN:
+         ::SelectObject(m_hdc, m_hpenOriginal);
+         return;
+      case OBJ_BRUSH:
+         ::SelectObject(m_hdc, m_hbrushOriginal);
+         return;
+      case OBJ_FONT:
+         ::SelectObject(m_hdc, m_hfontOriginal);
+         return;
+      case OBJ_REGION:
+         ::SelectObject(m_hdc, m_hrgnOriginal);
+         return;
+      default:
+         break;
+      }
+
+   }
+
+
+   ::draw2d::pen_sp graphics::get_current_pen() const
    { 
 
       if(m_sppen.is_set() && m_sppen->get_os_data() == (void *) ::GetCurrentObject(get_handle2(), OBJ_PEN))
@@ -1755,7 +1781,7 @@ namespace draw2d_gdi
    }
    
    
-   ::draw2d::brush & graphics::GetCurrentBrush() const
+   ::draw2d::brush_sp graphics::get_current_brush() const
    { 
       
       if(m_spbrush.is_set())
@@ -1777,11 +1803,11 @@ namespace draw2d_gdi
    
    }
 
-   ::draw2d::palette & graphics::GetCurrentPalette() const
+   ::draw2d::palette_sp graphics::get_current_palette() const
    { 
 
 
-      return *((::draw2d::palette *) NULL);
+      return ((::draw2d::palette *) NULL);
       
 /*      if(m_sppalette.is_set() && m_sppalette->get_os_data() == (void *) ::GetCurrentObject(get_handle2(), OBJ_PAL))
          return m_sppalette;
@@ -1795,7 +1821,7 @@ namespace draw2d_gdi
    }
 
 
-   ::draw2d::font & graphics::GetCurrentFont() const
+   ::draw2d::font_sp graphics::get_current_font() const
    { 
       
       if(m_spfont.is_set())
@@ -1809,7 +1835,7 @@ namespace draw2d_gdi
    
    }
    
-   ::draw2d::bitmap & graphics::GetCurrentBitmap() const
+   ::draw2d::bitmap_sp graphics::get_current_bitmap() const
    {
       
       if(m_spbitmap.is_set() && m_spbitmap->get_os_data() == (void *) ::GetCurrentObject(get_handle2(), OBJ_BITMAP))
@@ -1925,7 +1951,7 @@ namespace draw2d_gdi
 
       ASSERT(get_handle1() != NULL); 
 
-      ::draw2d::brush & brush = GetCurrentBrush();
+      ::draw2d::brush & brush = get_current_brush();
 
       if(m_spdib.is_null())
       {
@@ -1953,7 +1979,7 @@ namespace draw2d_gdi
          if(!GDI_DIB(pdib)->process_initialize(&brush))
             return false;
 
-         ::SelectObject((HDC) pdib->get_graphics()->get_os_data(), brush.get_os_data());
+         pdib->get_graphics()->SelectObject(&brush);
 
          GDI_GRAPHICS(pdib->get_graphics())->SetViewportOrg(-rect.top_left());
 
@@ -2038,7 +2064,7 @@ namespace draw2d_gdi
 
       ASSERT(get_handle1() != NULL); 
 
-      ::draw2d::pen & pen = GetCurrentPen();
+      ::draw2d::pen & pen = get_current_pen();
 
       if(m_spdib.is_null())
       {
@@ -2073,9 +2099,9 @@ namespace draw2d_gdi
          if(!GDI_DIB(pdib)->process_initialize(&pen))
             return false;
 
-         ::SelectObject(m_hdc, pen.get_os_data());
+         pdib->get_graphics()->SelectObject(&pen);
 
-         GDI_GRAPHICS(pdib->get_graphics())->SetViewportOrg(-rectBound.top_left());
+         pdib->get_graphics()->SetViewportOrg(-rectBound.top_left());
 
          GDI_GRAPHICS(pdib->get_graphics())->set(m_sppath);
 
@@ -2133,7 +2159,7 @@ namespace draw2d_gdi
    // double blend
    // COLOR_DEST = SRC_ALPHA * BLEND_ALPHA * COLOR_SRC  + (1 - SRC_ALPHA * BLEND_ALPHA) * COLOR_DST
 
-   bool graphics::alpha_blend(int xDest, int yDest, int nDestWidth, int nDestHeight, ::draw2d::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, BLENDFUNCTION blend)
+   /*bool graphics::alpha_blend(int xDest, int yDest, int nDestWidth, int nDestHeight, ::draw2d::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, BLENDFUNCTION blend)
    { 
       
 
@@ -2223,6 +2249,107 @@ namespace draw2d_gdi
       return ::AlphaBlend(get_handle1(), xDest, yDest, 
          nDestWidth, nDestHeight, GDI_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth, 
          nSrcHeight, blend) != FALSE; 
+   }*/
+
+bool graphics::alpha_blend(int xDest, int yDest, int nDestWidth, int nDestHeight, ::draw2d::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, double dOpacity)
+   { 
+      
+
+      if(get_handle1() == NULL)
+         return false;
+
+      
+      if(m_pdibAlphaBlend != NULL)
+      {
+
+
+         rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
+
+
+         ::draw2d::dib * pdibWork = NULL;
+         ::draw2d::dib * pdibWork2 = NULL;
+//         ::draw2d::dib * pdibWork3 = NULL;
+         ::draw2d::dib * pdibWork4 = NULL;
+
+            
+         class point ptSrc(xSrc, ySrc);
+         class point ptDest(xDest, yDest);
+         class size size(nDestWidth, nDestHeight);
+
+
+
+         ::draw2d::dib_sp spdib;
+
+         if(pdibWork == NULL)
+         {
+
+            spdib.create(allocer());
+            
+            pdibWork = spdib;
+
+         }
+
+         if(pdibWork == NULL)
+            return false;
+
+         if(!pdibWork->create(size))
+            return false;
+
+         if(!pdibWork->from(null_point(), pgraphicsSrc, ptSrc, size))
+            return false;
+
+
+
+
+         ::draw2d::dib_sp spdib2;
+         if(pdibWork2 == NULL)
+         {
+            spdib2.create(allocer());
+            pdibWork2 = spdib2;
+         }
+
+
+         ::draw2d::dib_sp spdib4;
+         if(pdibWork4 == NULL)
+         {
+            spdib4.create(allocer());
+            pdibWork4 = spdib4;
+         }
+         if(pdibWork4 == NULL)
+            return false;
+         if(!pdibWork4->create(size))
+            return false;
+
+
+         pdibWork4->Fill(255, 0, 0, 0);
+            
+         pdibWork4->from(point(max(0, m_ptAlphaBlend.x - xDest), max(0, m_ptAlphaBlend.y - yDest)),
+            m_pdibAlphaBlend->get_graphics(), point(max(0, xDest - m_ptAlphaBlend.x), max(0, yDest - m_ptAlphaBlend.y)), size);
+   
+         pdibWork->channel_multiply(visual::rgba::channel_alpha, pdibWork4);
+
+
+         keeper < ::draw2d::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
+
+
+         return System.visual().imaging().true_blend(this, ptDest, size, pdibWork->get_graphics(), ptSrc) != FALSE;
+
+	}
+      if(dOpacity < 0.0)
+         dOpacity = 0.0;
+      else if(dOpacity > 1.0)
+      dOpacity = 1.0;
+
+      BLENDFUNCTION bf;
+      bf.BlendOp     = AC_SRC_OVER;
+      bf.BlendFlags  = 0;
+      bf.SourceConstantAlpha = (BYTE) (dOpacity * 0xFF);
+      bf.AlphaFormat = AC_SRC_ALPHA;
+
+
+      return ::AlphaBlend(get_handle1(), xDest, yDest, 
+         nDestWidth, nDestHeight, GDI_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth, 
+         nSrcHeight, bf) != FALSE; 
    }
 
 
@@ -2317,7 +2444,7 @@ namespace draw2d_gdi
 	}
 
 
-   inline bool graphics::GetCharWidthI(UINT giFirst, UINT cgi, LPWORD pgi, LPINT lpBuffer) const
+   bool graphics::GetCharWidthI(UINT giFirst, UINT cgi, LPWORD pgi, LPINT lpBuffer) const
    {
 
 		ASSERT(get_handle1() != NULL);
@@ -2325,6 +2452,19 @@ namespace draw2d_gdi
 		return ::GetCharWidthI(get_handle1(), giFirst, cgi, pgi, lpBuffer) != FALSE;
 
 	}
+
+
+   bool graphics::GetTextExtent(sized & size, const char * lpszString, strsize nCount, int32_t iIndex) const
+   {
+
+      ::size sz = GetTextExtent(string(lpszString), iIndex);
+
+      size.cx = sz.cx;
+      size.cy = sz.cy;
+
+      return true;
+
+   }
 
 
 
@@ -2745,6 +2885,14 @@ namespace draw2d_gdi
 
       m_hdc = hdc;
 
+
+      m_hbitmapOriginal    = (HBITMAP) ::GetCurrentObject(m_hdc , OBJ_BITMAP);
+      m_hpenOriginal       = (HPEN)    ::GetCurrentObject(m_hdc , OBJ_PEN);
+      m_hbrushOriginal     = (HBRUSH)  ::GetCurrentObject(m_hdc , OBJ_BRUSH );
+      m_hfontOriginal      = (HFONT)   ::GetCurrentObject(m_hdc , OBJ_FONT);
+      m_hrgnOriginal       = (HRGN)    ::GetCurrentObject(m_hdc , OBJ_REGION);
+
+
       return TRUE;
 
    }
@@ -2856,8 +3004,9 @@ namespace draw2d_gdi
       if(ppen == NULL)
          return NULL;
 
-      if(!SelectObject(ppen->get_os_data()))
-         return NULL;
+      SelectObject(ppen->get_os_data());
+
+      GDI_PEN(ppen)->m_ptraGraphics.add_unique(this);
 
       m_sppen = ppen;
 
@@ -2879,6 +3028,8 @@ namespace draw2d_gdi
 
       SelectObject(pbrush->get_os_data());
 
+      GDI_BRUSH(pbrush)->m_ptraGraphics.add_unique(this);
+
       m_spbrush = pbrush;
 
       return m_spbrush;
@@ -2896,8 +3047,9 @@ namespace draw2d_gdi
       if(pfont == NULL)
          return NULL;
 
-      if(!SelectObject(pfont->get_os_data()))
-         return NULL;
+      SelectObject(pfont->get_os_data());
+      
+      GDI_FONT(pfont)->m_ptraGraphics.add_unique(this);
 
       m_spfont = pfont;
 
@@ -2918,18 +3070,21 @@ namespace draw2d_gdi
       if(pregion == NULL)
          return nRetVal;
 
-      if(!SelectObject(pregion->get_os_data()))
-         return nRetVal;
+      SelectObject(pregion->get_os_data());
+         
+      GDI_REGION(pregion)->m_ptraGraphics.add_unique(this);
 
       return nRetVal;
    }
 
    ::draw2d::palette* graphics::SelectPalette(::draw2d::palette* pPalette, bool bForceBackground)
    {
-     // return dynamic_cast < ::draw2d::palette * > (::draw2d_gdi::object::from_handle(get_app(), ::SelectPalette(get_handle1(), (HPALETTE)pPalette->get_os_data(), bForceBackground))) != FALSE;
+      
+      // return dynamic_cast < ::draw2d::palette * > (::draw2d_gdi::object::from_handle(get_app(), ::SelectPalette(get_handle1(), (HPALETTE)pPalette->get_os_data(), bForceBackground))) != FALSE;
+      
       throw not_implemented(get_app());
 
-         return NULL;
+      return NULL;
 
 	}
 
@@ -3805,41 +3960,25 @@ namespace draw2d_gdi
 
       rect r;
 
-      r.left         = arc.m_xCenter - arc.m_dRadiusX;
-      r.right        = arc.m_xCenter + arc.m_dRadiusX;
-      r.top          = arc.m_yCenter - arc.m_dRadiusY;
-      r.bottom       = arc.m_yCenter + arc.m_dRadiusY;
+      r.left         = (LONG) (arc.m_xCenter - arc.m_dRadiusX);
+      r.right        = (LONG) (arc.m_xCenter + arc.m_dRadiusX);
+      r.top          = (LONG) (arc.m_yCenter - arc.m_dRadiusY);
+      r.bottom       = (LONG) (arc.m_yCenter + arc.m_dRadiusY);
 
       POINT pt1;
       
       POINT pt2;
 
-      if((pt1.y - arc.m_yCenter) == 0) 
-         return false;
-      
-      if((pt2.y - arc.m_yCenter) == 0) 
-         return false;
-
-      if((pt1.x - arc.m_xCenter) == 0) 
-         return false;
-      
-      if((pt2.x - arc.m_xCenter) == 0) 
-         return false;
-
       double e = arc.m_dRadiusY / arc.m_dRadiusX;
 
-      double f1 = atan2(((double) pt1.y - arc.m_yCenter) * arc.m_dRadiusX, ((double) pt1.x - arc.m_xCenter) * arc.m_dRadiusY);
+      double f1 = arc.m_dAngle1;
       
-      double f2 = atan2(((double) pt2.y - arc.m_yCenter) * arc.m_dRadiusX, ((double) pt2.x - arc.m_xCenter) * arc.m_dRadiusY);
+      double f2 = arc.m_dAngle2;
       
-      f1 += System.math().GetPi();
-
-      f2 += System.math().GetPi();
-
-      pt1.x          = arc.m_xCenter + arc.m_dRadiusX * cos(f1);
-      pt1.y          = arc.m_yCenter - arc.m_dRadiusY * sin(f1);
-      pt2.x          = arc.m_xCenter + arc.m_dRadiusX * cos(f2);
-      pt2.y          = arc.m_yCenter - arc.m_dRadiusY * sin(f2);
+      pt1.x          = (LONG) (arc.m_xCenter + arc.m_dRadiusX * cos(f1));
+      pt1.y          = (LONG) (arc.m_yCenter - arc.m_dRadiusY * sin(f1));
+      pt2.x          = (LONG) (arc.m_xCenter + arc.m_dRadiusX * cos(f2));
+      pt2.y          = (LONG) (arc.m_yCenter - arc.m_dRadiusY * sin(f2));
 
       return ArcTo(&r, pt1, pt2);
 
@@ -3885,7 +4024,8 @@ namespace draw2d_gdi
          if(m_sppen->get_os_data() != GetCurrentObject(m_hdc, OBJ_PEN))
          {
 
-            ::SelectObject(m_hdc, m_sppen->get_os_data());
+            SelectObject(m_sppen);
+
          }
 
       }
@@ -3907,7 +4047,7 @@ namespace draw2d_gdi
          if(m_spbrush->get_os_data() != GetCurrentObject(m_hdc, OBJ_BRUSH))
          {
             
-            ::SelectObject(m_hdc, m_spbrush->get_os_data());
+            SelectObject(m_spbrush);
 
          }
 
@@ -3931,7 +4071,7 @@ namespace draw2d_gdi
          if(m_spfont->get_os_data() != GetCurrentObject(m_hdc, OBJ_FONT))
          {
             
-            ::SelectObject(m_hdc, m_spfont->get_os_data());
+            SelectObject(m_spfont);
 
          }
 

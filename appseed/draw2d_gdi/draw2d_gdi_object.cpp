@@ -130,6 +130,22 @@ namespace draw2d_gdi
       if(m_hgdiobj == NULL)
          return true;
 
+      for(int i = 0; i < m_ptraGraphics.get_size(); i++)
+      {
+         try
+         {
+            if(::GetCurrentObject((HDC) m_ptraGraphics[i]->get_os_data(), ::GetObjectType(m_hgdiobj)) == m_hgdiobj)
+            {
+               GDI_GRAPHICS(m_ptraGraphics[i])->set_original_object(::GetObjectType(m_hgdiobj));
+            }
+         }
+         catch(...)
+         {
+         }
+      }
+
+      m_ptraGraphics.remove_all();
+
       return ::DeleteObject(Detach()) != FALSE;
 
    }

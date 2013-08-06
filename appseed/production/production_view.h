@@ -37,8 +37,8 @@ namespace production
       int32_t                     m_iVsW;
       visual::dib_sp             m_dibV;
       visual::dib_sp             m_dibVs;
-      ::ca2::brush_sp          m_brushBkActive;
-      ::ca2::brush_sp          m_brushBkInactive;
+      ::draw2d::brush_sp          m_brushBkActive;
+      ::draw2d::brush_sp          m_brushBkInactive;
       simple_scroll_bar         m_scrollbarVert;
       simple_scroll_bar         m_scrollbarHorz;
 
@@ -77,7 +77,7 @@ namespace production
 
 
 
-      virtual void _001OnDraw(::ca2::graphics * pdc);
+      virtual void _001OnDraw(::draw2d::graphics * pdc);
 
       virtual void _001OnTabClick(int32_t iTab);
       virtual void install_message_handling(::ca2::message::dispatch * pinterface);

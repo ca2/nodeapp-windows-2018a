@@ -28,6 +28,12 @@ namespace draw2d_gdi
 
       ::draw2d::path_sp          m_sppath;
 
+      HBITMAP                    m_hbitmapOriginal;
+      HPEN                       m_hpenOriginal;
+      HBRUSH                     m_hbrushOriginal;
+      HFONT                      m_hfontOriginal;
+      HRGN                       m_hrgnOriginal;
+
       //graphics();
       graphics(::ca2::application * papp);
       virtual ~graphics();
@@ -59,15 +65,17 @@ namespace draw2d_gdi
 
       bool IsPrinting() const;            // TRUE if being used for printing
 
-      ::draw2d::pen & GetCurrentPen() const;
-      ::draw2d::brush & GetCurrentBrush() const;
-      ::draw2d::palette & GetCurrentPalette() const;
-      ::draw2d::font & GetCurrentFont() const;
-      ::draw2d::bitmap & GetCurrentBitmap() const;
+      ::draw2d::pen_sp     get_current_pen() const;
+      ::draw2d::brush_sp   get_current_brush() const;
+      ::draw2d::palette_sp get_current_palette() const;
+      ::draw2d::font_sp    get_current_font() const;
+      ::draw2d::bitmap_sp  get_current_bitmap() const;
 
       // for bidi and mirrored localization
       uint32_t GetLayout() const;
       uint32_t SetLayout(uint32_t dwLayout);
+
+      void set_original_object(int iType);
 
    // Constructors
       bool CreateDC(const char * lpszDriverName, const char * lpszDeviceName, const char * lpszOutput, const void * lpInitData);
@@ -306,9 +314,14 @@ namespace draw2d_gdi
       bool TransparentBlt(int xDest, int yDest, int nDestWidth, int nDestHeight,
         ::draw2d::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, 
         UINT clrTransparent);
+      /*bool alpha_blend(int xDest, int yDest, int nDestWidth, int nDestHeight,
+        ::draw2d::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, 
+        BLENDFUNCTION blend);*/
       bool alpha_blend(int xDest, int yDest, int nDestWidth, int nDestHeight,
         ::draw2d::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, 
-        BLENDFUNCTION blend);
+        double dOpacity);
+
+      virtual bool GetTextExtent(sized & size, const char * lpszString, strsize nCount, int32_t iIndex) const;
 
    // Text Functions
       virtual bool TextOut(int x, int y, const char * lpszString, int nCount);
