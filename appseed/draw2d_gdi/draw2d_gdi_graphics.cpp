@@ -40,6 +40,21 @@ namespace draw2d_gdi
    graphics::~graphics()
    {
 
+      for(int i = 0; i < m_ptraObject.get_count(); i++)
+      {
+
+         try
+         {
+
+            dynamic_cast < ::draw2d_gdi::object * > (m_ptraObject[i])->m_ptraGraphics.remove(this);
+
+         }
+         catch(...)
+         {
+         }
+
+      }
+
       if (get_handle1() != NULL)
       {
 
@@ -243,6 +258,7 @@ namespace draw2d_gdi
       ::SelectObject(get_handle1(), pbitmap->get_os_data());
 
       GDI_BITMAP(pbitmap)->m_ptraGraphics.add_unique(this);
+      m_ptraObject.add_unique(pbitmap);
 
       m_spbitmap = pbitmap;
 
@@ -1166,16 +1182,55 @@ namespace draw2d_gdi
 
          GdiFlush();
 
+
          if(m_ealphamode == ::draw2d::alpha_mode_blend)
          {
+         class point ptDst(x, y);
+         class size size(nWidth, nHeight);
+         class point ptSrc(xSrc, ySrc);
 
-            ::draw2d::dib * pdib  = dib_work(size(nWidth, nHeight));
+            ::draw2d::dib * pdib = pgraphicsSrc->m_pdib;
 
+      if(ptDst.x < 0)
+      {
+         size.cx += ptDst.x;
+         ptDst.x = 0;
+      }
+
+      if(size.cx < 0)
+         return true;
+      
+      if(ptDst.y < 0)
+      {
+         size.cy += ptDst.y;
+         ptDst.y = 0;
+      }
+
+      if(size.cy < 0)
+         return true;
+
+      int xEnd = min(size.cx, min(pdib->cx - ptSrc.x, m_pdib->cx - ptDst.x));
+      
+      int yEnd = min(size.cy, min(pdib->cy - ptSrc.y, m_pdib->cy - ptDst.y));
+
+      if(xEnd < 0)
+         return false;
+
+      if(yEnd < 0)
+         return false;
+
+
+      size.cx = xEnd;
+      size.cy = yEnd;
+
+
+
+            pdib  = dib_work(size, false);
 
             if(pdib == NULL)
                return false;
 
-            pdib->from(point(0, 0), pgraphicsSrc->m_pdib, point(xSrc, ySrc), size(nWidth, nHeight));
+            pdib->from(point(0, 0), pgraphicsSrc->m_pdib, point(xSrc, ySrc), size);
 
 
             BLENDFUNCTION bf;
@@ -1253,7 +1308,7 @@ namespace draw2d_gdi
 
             GdiFlush();
             
-            ::AlphaBlend(m_hdc, x, y, nWidth, nHeight, (HDC) pdib->get_graphics()->get_os_data(), 0, 0, nWidth, nHeight, bf);
+            ::AlphaBlend(m_hdc, ptDst.x, ptDst.y, size.cx, size.cy, (HDC) pdib->get_graphics()->get_os_data(), 0, 0, size.cx, size.cy, bf);
 
             /*for(int y = 0; y < nHeight; y++)
             {
@@ -1332,12 +1387,12 @@ namespace draw2d_gdi
       else
       {
 
-         ::draw2d::dib * pdib1 = dib_work(size(nWidth, nHeight));
+         ::draw2d::dib * pdib1 = dib_work(size(nWidth, nHeight), false);
 
          if(pdib1 == NULL)
             return false;
 
-         ::draw2d::dib * pdib2 = dib_work(size(nSrcWidth, nSrcHeight));
+         ::draw2d::dib * pdib2 = dib_work(size(nSrcWidth, nSrcHeight), false);
 
          if(pdib2 == NULL)
             return false;
@@ -1517,7 +1572,7 @@ namespace draw2d_gdi
 
 	      }
          
-         ::draw2d::dib * pdib = dib_work(size);
+         ::draw2d::dib * pdib = dib_work(size, true);
 
          BLENDFUNCTION bf;
          bf.BlendOp     = AC_SRC_OVER;
@@ -1527,7 +1582,6 @@ namespace draw2d_gdi
 
          if(!GDI_DIB(pdib)->process_initialize(&brush))
             return false;
-
 
          if(GDI_BRUSH(&brush)->m_bProcess)
          {
@@ -1549,9 +1603,14 @@ namespace draw2d_gdi
 
          ::TextOutW((HDC) pdib->get_graphics()->get_os_data(), 0, 0, wstr, wstr.length());
 
-         GDI_DIB(pdib)->process_blend(&brush, x, y, m_ealphamode);
+         GDI_DIB(pdib)->process_blend(&brush, x, y, m_ealphamode, m_pdib);
 
-         ::AlphaBlend(m_hdc, x, y, size.cx, size.cy, (HDC) pdib->get_graphics()->get_os_data(), 0, 0, size.cx, size.cy, bf);
+         if(m_ealphamode == ::draw2d::alpha_mode_blend)
+         {
+
+            ::AlphaBlend(m_hdc, x, y, size.cx, size.cy, (HDC) pdib->get_graphics()->get_os_data(), 0, 0, size.cx, size.cy, bf);
+
+         }
 
          return true;
 
@@ -2429,7 +2488,7 @@ namespace draw2d_gdi
 
          //m_sppath->get_bounding_rect(rect);
 
-         ::draw2d::dib * pdib = dib_work(rect.size());
+         ::draw2d::dib * pdib = dib_work(rect.size(), false);
 
          BLENDFUNCTION bf;
          bf.BlendOp     = AC_SRC_OVER;
@@ -2448,11 +2507,16 @@ namespace draw2d_gdi
 
          ::FillPath((HDC) pdib->get_graphics()->get_os_data());
 
-         GDI_DIB(pdib)->process_blend(&brush, rect.left, rect.top, m_ealphamode);
+         GDI_DIB(pdib)->process_blend(&brush, rect.left, rect.top, m_ealphamode, m_pdib);
 
-         GDI_GRAPHICS(pdib->get_graphics())->SetViewportOrg(0, 0);
+         if(m_ealphamode == ::draw2d::alpha_mode_blend)
+         {
 
-         ::AlphaBlend(m_hdc, rect.left, rect.top, rect.width(), rect.height(), (HDC) pdib->get_graphics()->get_os_data(), 0, 0, rect.width(), rect.height(), bf);
+            GDI_GRAPHICS(pdib->get_graphics())->SetViewportOrg(0, 0);
+
+            ::AlphaBlend(m_hdc, rect.left, rect.top, rect.width(), rect.height(), (HDC) pdib->get_graphics()->get_os_data(), 0, 0, rect.width(), rect.height(), bf);
+
+         }
 
          return true;
 
@@ -2567,7 +2631,7 @@ namespace draw2d_gdi
          bf.SourceConstantAlpha = 0xFF;
          bf.AlphaFormat = AC_SRC_ALPHA;
 
-         ::draw2d::dib * pdib = dib_work(rect.size());
+         ::draw2d::dib * pdib = dib_work(rect.size(), false);
 
          if(!GDI_DIB(pdib)->process_initialize(&pen))
             return false;
@@ -2580,11 +2644,16 @@ namespace draw2d_gdi
 
          ::StrokePath(GDI_HDC(pdib->get_graphics()));
 
-         GDI_DIB(pdib)->process_blend(&pen, rect.left, rect.top, m_ealphamode);
+         GDI_DIB(pdib)->process_blend(&pen, rect.left, rect.top, m_ealphamode, m_pdib);
 
-         GDI_GRAPHICS(pdib->get_graphics())->SetViewportOrg(0, 0);
+         if(m_ealphamode == ::draw2d::alpha_mode_blend)
+         {
 
-         ::AlphaBlend(m_hdc, rect.left, rect.top, rect.width(), rect.height(), (HDC) pdib->get_graphics()->get_os_data(), 0, 0, rect.width(), rect.height(), bf);
+            GDI_GRAPHICS(pdib->get_graphics())->SetViewportOrg(0, 0);
+
+            ::AlphaBlend(m_hdc, rect.left, rect.top, rect.width(), rect.height(), (HDC) pdib->get_graphics()->get_os_data(), 0, 0, rect.width(), rect.height(), bf);
+
+         }
 
          return true;
 
@@ -2623,45 +2692,61 @@ namespace draw2d_gdi
 
          ::rect rect(rectBound);
 
+         rect.left   -= (int32_t) floor(pen.m_dWidth / 2.0);
+         rect.right  += (int32_t) ceil(pen.m_dWidth / 2.0);
+         rect.top    -= (int32_t) floor(pen.m_dWidth / 2.0);
+         rect.bottom += (int32_t) ceil(pen.m_dWidth / 2.0);
+
          BLENDFUNCTION bf;
          bf.BlendOp     = AC_SRC_OVER;
          bf.BlendFlags  = 0;
          bf.SourceConstantAlpha = 0xFF;
          bf.AlphaFormat = AC_SRC_ALPHA;
 
-         ::draw2d::dib * pdib = dib_work(rect.size());
+         ::draw2d::dib * pdib = dib_work(rect.size(), false);
 
          if(GDI_DIB(pdib)->process_initialize(&brush))
          {
 
             pdib->get_graphics()->SelectObject(&brush);
 
-            GDI_GRAPHICS(pdib->get_graphics())->SetViewportOrg(-rect.top_left());
+            GDI_GRAPHICS(pdib->get_graphics())->SetViewportOrg(-rect.top_left() + point((int32_t) floor(pen.m_dWidth / 2.0), (int32_t) floor(pen.m_dWidth / 2.0)));
 
             (GDI_GRAPHICS(pdib->get_graphics())->*pfnInternalSetPath)(pparam);
 
             ::FillPath((HDC) pdib->get_graphics()->get_os_data());
 
-            if(GDI_DIB(pdib)->process_blend(&brush, rect.left, rect.top, m_ealphamode))
+            if(GDI_DIB(pdib)->process_blend(&brush, rect.left, rect.top, m_ealphamode, m_pdib))
             {
 
-               GDI_GRAPHICS(pdib->get_graphics())->SetViewportOrg(0, 0);
+               if(m_ealphamode == ::draw2d::alpha_mode_blend)
+               {
 
-               ::AlphaBlend(m_hdc, rect.left, rect.top, rect.width(), rect.height(), (HDC) pdib->get_graphics()->get_os_data(), 0, 0, rect.width(), rect.height(), bf);
+                  GDI_GRAPHICS(pdib->get_graphics())->SetViewportOrg(0, 0);
+
+                  ::AlphaBlend(m_hdc, rect.left, rect.top, rect.width(), rect.height(), (HDC) pdib->get_graphics()->get_os_data(), 0, 0, rect.width(), rect.height(), bf);
+
+               }
+/*
+               else
+               {
+
+                  m_pdib->from_ignore_alpha(rect.top_left() + GetViewportOrg(), pdib, point(0, 0), rect.size());
+
+               }
+*/
 
             }
 
          }
 
-         rect.left   -= (int32_t) floor(pen.m_dWidth / 2.0);
-         rect.right  += (int32_t) ceil(pen.m_dWidth / 2.0);
-         rect.top    -= (int32_t) floor(pen.m_dWidth / 2.0);
-         rect.bottom += (int32_t) ceil(pen.m_dWidth / 2.0);
 
-         pdib = dib_work(rect.size());
+         //::draw2d::dib * pdib2 = dib_work(rect.size());
 
          if(GDI_DIB(pdib)->process_initialize(&pen))
          {
+
+           // pdib2->from(point((int32_t) floor(pen.m_dWidth / 2.0), (int32_t) floor(pen.m_dWidth / 2.0)), pdib, point(0, 0), rect.size());
 
             pdib->get_graphics()->SelectObject(&pen);
 
@@ -2671,12 +2756,25 @@ namespace draw2d_gdi
 
             ::StrokePath(GDI_HDC(pdib->get_graphics()));
 
-            if(GDI_DIB(pdib)->process_blend(&pen, rect.left, rect.top, m_ealphamode))
+            if(GDI_DIB(pdib)->process_blend(&pen, rect.left, rect.top, m_ealphamode, m_pdib))
             {
 
-               GDI_GRAPHICS(pdib->get_graphics())->SetViewportOrg(0, 0);
+               if(m_ealphamode == ::draw2d::alpha_mode_blend)
+               {
 
-               ::AlphaBlend(m_hdc, rect.left, rect.top, rect.width(), rect.height(), (HDC) pdib->get_graphics()->get_os_data(), 0, 0, rect.width(), rect.height(), bf);
+                  GDI_GRAPHICS(pdib->get_graphics())->SetViewportOrg(0, 0);
+
+                  ::AlphaBlend(m_hdc, rect.left, rect.top, rect.width(), rect.height(), (HDC) pdib->get_graphics()->get_os_data(), 0, 0, rect.width(), rect.height(), bf);
+
+               }
+/*             
+               else
+               {
+
+                  m_pdib->from_ignore_alpha(rect.top_left() + GetViewportOrg(), pdib, point(0, 0), rect.size());
+
+               }
+*/
 
             }
 
@@ -3294,46 +3392,54 @@ bool graphics::alpha_blend(int xDest, int yDest, int nDestWidth, int nDestHeight
 
 	}
 
-   ::draw2d::dib * graphics::dib_work(class size size)
+   ::draw2d::dib * graphics::dib_work(class size size, bool bReset)
    {
 
       ::draw2d::dib::descriptor d;
 
       d.m_etype = ::draw2d::dib::type_complex;
       d.m_cr = 0;
+      d.m_size = size;
 
       if(t_pdibmap == NULL)
          t_pdibmap = new ::draw2d::dibmap_ex1(get_app());
 
-      ::draw2d::dib * pdib = t_pdibmap->operator[](d)[size];
+
+      ::draw2d::dib * pdib = t_pdibmap->operator[](d);
 
       pdib->m_descriptor = d;
 
-      pdib->Fill(0, 0, 0, 0);
+      if(bReset)
+      {
+
+         pdib->Fill(0, 0, 0, 0);
+
+      }
 
       return pdib;
 
    }
 
-   ::draw2d::dib * graphics::fill_dib_work(COLORREF clr, class size size)
+   ::draw2d::dib * graphics::fill_dib_work(COLORREF clr, class size size, bool bReset)
    {
 
       ::draw2d::dib::descriptor d;
 
       d.m_etype = ::draw2d::dib::type_plain_color;
       d.m_cr = clr;
+      d.m_size = size;
 
 
       if(t_pdibmap == NULL)
          t_pdibmap = new ::draw2d::dibmap_ex1(get_app());
 
-      ::draw2d::dib * pdib = t_pdibmap->operator[](d)[size];
+      ::draw2d::dib * pdib = t_pdibmap->operator[](d);
 
-
-      if(!(pdib->m_descriptor == d))
+      if(pdib->m_descriptor != d || bReset)
       {
 
          pdib->m_descriptor = d;
+
 
          pdib->Fill(GetAValue(clr), GetRValue(clr) * GetAValue(clr) / 255, GetGValue(clr) * GetAValue(clr) / 255, GetBValue(clr) * GetAValue(clr) / 255);
          //pdib->Fill(GetAValue(clr), GetRValue(clr), GetGValue(clr), GetBValue(clr));
@@ -3373,7 +3479,7 @@ bool graphics::alpha_blend(int xDest, int yDest, int nDestWidth, int nDestHeight
       else
       {
 
-         ::draw2d::dib * pdib = fill_dib_work(clr, ::size(cx, cy));
+         ::draw2d::dib * pdib = fill_dib_work(clr, ::size(cx, cy), false);
          
          BLENDFUNCTION bf;
          bf.BlendOp     = AC_SRC_OVER;
@@ -3588,6 +3694,7 @@ bool graphics::alpha_blend(int xDest, int yDest, int nDestWidth, int nDestHeight
       SelectObject(ppen->get_os_data());
 
       GDI_PEN(ppen)->m_ptraGraphics.add_unique(this);
+      m_ptraObject.add_unique(ppen);
 
       m_sppen = ppen;
 
@@ -3610,6 +3717,7 @@ bool graphics::alpha_blend(int xDest, int yDest, int nDestWidth, int nDestHeight
       SelectObject(pbrush->get_os_data());
 
       GDI_BRUSH(pbrush)->m_ptraGraphics.add_unique(this);
+      m_ptraObject.add_unique(pbrush);
 
       m_spbrush = pbrush;
 
@@ -3631,6 +3739,7 @@ bool graphics::alpha_blend(int xDest, int yDest, int nDestWidth, int nDestHeight
       SelectObject(pfont->get_os_data());
       
       GDI_FONT(pfont)->m_ptraGraphics.add_unique(this);
+      m_ptraObject.add_unique(pfont);
 
       m_spfont = pfont;
 
@@ -3654,6 +3763,7 @@ bool graphics::alpha_blend(int xDest, int yDest, int nDestWidth, int nDestHeight
       SelectObject(pregion->get_os_data());
          
       GDI_REGION(pregion)->m_ptraGraphics.add_unique(this);
+      m_ptraObject.add_unique(pregion);
 
       return nRetVal;
    }

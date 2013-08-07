@@ -45,6 +45,8 @@ namespace draw2d_gdi
       HFONT                      m_hfontOriginal;
       HRGN                       m_hrgnOriginal;
 
+      comparable_array < ::draw2d::object * >      m_ptraObject;
+
       //graphics();
       graphics(::ca2::application * papp);
       virtual ~graphics();
@@ -58,8 +60,8 @@ namespace draw2d_gdi
       virtual HDC get_handle() const;
 
 
-      ::draw2d::dib * dib_work(class size size);
-      ::draw2d::dib * fill_dib_work(COLORREF clr, class size size);
+      ::draw2d::dib * dib_work(class size size, bool bReset);
+      ::draw2d::dib * fill_dib_work(COLORREF clr, class size size, bool bReset);
      
       bool internal_fill_path(void (::draw2d_gdi::graphics::* pfnInternalSetPath)(void *), void * pparam, LPCRECT lpcrect);
       bool internal_stroke_path(void (::draw2d_gdi::graphics::* pfnInternalSetPath)(void *), void * pparam, LPCRECT lpcrect);

@@ -6669,6 +6669,8 @@ namespace win
 
       m_spdib->update_window(this, NULL);
 
+      sl.unlock();
+
       if(GetExStyle() & WS_EX_LAYERED)
       {
 

@@ -2688,7 +2688,7 @@ namespace draw2d_gdi
 //  end;
 //end;
 
-   bool dib::process_blend(COLORREF clr, ::draw2d::e_alpha_mode ealphamode)
+   bool dib::process_blend(COLORREF clr, int32_t x, int32_t y, ::draw2d::e_alpha_mode ealphamode, ::draw2d::dib * pdibSrc)
    {
 
       ::GdiFlush();
@@ -2740,7 +2740,7 @@ namespace draw2d_gdi
 
       //bTune *= 255;
 
-      bTune = 255 * 255 * 3;
+      bTune = 255  * 3;
 
       int32_t aTune = a * 255;
 
@@ -2775,30 +2775,77 @@ namespace draw2d_gdi
       }
       else
       {
-         while(size > 0)
+         if(ealphamode == ::draw2d::alpha_mode_blend)
          {
-            //if(pb[3] == 0)
+            while(size > 0)
             {
-               pb[3] = byte_clip(aTune * (pb[0] + pb[1] + pb[2]) / bTune);
-               pb[0] = r * pb[3] / 255;
-               pb[1] = g * pb[3] / 255;
-               pb[2] = b * pb[3] / 255;
+               //if(pb[3] == 0)
+               {
+                  pb[3] = byte_clip(a * (pb[0] + pb[1] + pb[2]) / bTune);
+                  pb[0] = r * pb[3] / 255;
+                  pb[1] = g * pb[3] / 255;
+                  pb[2] = b * pb[3] / 255;
+               }
+               //else
+               {
+                 // pb[3] = 0;
+               }
+               size--;
+               pb+=4;
+               pbTune+=4;
             }
-            //else
+         }
+         else
+         {
+            byte * ps = (byte *) pdibSrc->m_pcolorref;
+            ps += pdibSrc->scan * y + x * sizeof(COLORREF);
+            int s = pdibSrc->scan - cx * sizeof(COLORREF);
+            int c = cx;
+
+            rect r1(x , y,  x  + cx , y + cy);
+            rect r2(0, 0, pdibSrc->cx, pdibSrc->cy);
+            rect r3;
+
+            r3.intersect(r1, r2);
+
+            size = min(size, r3.area());
+            while(size > 0)
             {
-              // pb[3] = 0;
+               if(pb[3] == 0)
+               {
+                  ps[3] = byte_clip(a * (pb[0] + pb[1] + pb[2]) / bTune);
+                  ps[0] = (byte) b;
+                  ps[1] = (byte) g;
+                  ps[2] = (byte) r;
+               }
+               else
+               {
+/*                  pb[3] = ps[3];
+                  pb[2] = ps[2];
+                  pb[1] = ps[1];
+                  pb[0] = ps[0];
+                  */
+               }
+               c--;
+               size--;
+               pb+=4;
+               pbTune+=4;
+                  ps+=4;
+               if(c <= 0)
+               {
+                  c = cx;
+                  ps += s;
+               }
             }
-            size--;
-            pb+=4;
-            pbTune+=4;
          }
       }
+
 
       return true;
 
    }
 
-   bool dib::process_blend(::draw2d::dib * pdib, ::draw2d::e_alpha_mode ealphamode)
+   bool dib::process_blend(::draw2d::dib * pdib, int32_t x, int32_t y, ::draw2d::e_alpha_mode ealphamode, ::draw2d::dib * pdibSrc)
    {
 
       if(pdib == NULL)
@@ -2815,31 +2862,62 @@ namespace draw2d_gdi
 
       byte * pdataSrc = (byte *) pdib->m_pcolorref;
 
-      while(size > 0)
+      if(ealphamode == ::draw2d::alpha_mode_set)
       {
+                     byte * ps = (byte *) pdibSrc->m_pcolorref;
+            ps += pdibSrc->scan * y + x * sizeof(COLORREF);
+            int s = pdibSrc->scan - cx * sizeof(COLORREF);
+            int c = cx;
 
-//         if(pdataDst[1] == 0)
+         while(size > 0)
          {
 
-            pdataDst[3] = pdataSrc[3] * pdataDst[1] / 255;
+            if(pdataDst[3] == 0)
+            {
+               ps[3] = pdataSrc[3] * pdataDst[1] / 255;
+               ps[0] = pdataSrc[0] * ps[3] / 255;
+               ps[1] = pdataSrc[1] * ps[3] / 255;
+               ps[2] = pdataSrc[2] * ps[3] / 255;
+            }
+            else
+            {
+               //pdataDst[3] = ps[3];
+               //pdataDst[2] = ps[2];
+               //pdataDst[1] = ps[1];
+               //pdataDst[0] = ps[0];
 
+            }
+            c--;
+            size--;
+
+            pdataDst+=4;
+            pdataSrc+=4;
+            ps+=4;
+            if(c <= 0)
+            {
+               c= cx;
+               ps+= s;
+            }
+
+         }
+
+      }
+      else
+      {
+         while(size > 0)
+         {
+
+
+            pdataDst[3] = pdataSrc[3] * pdataDst[1] / 255;
             pdataDst[0] = pdataSrc[0] * pdataDst[3] / 255;
             pdataDst[1] = pdataSrc[1] * pdataDst[3] / 255;
             pdataDst[2] = pdataSrc[2] * pdataDst[3] / 255;
 
-         }
-    //     else
-         {
-
-  //          pdataDst[3] = 0;
+            size--;
+            pdataDst+=4;
+            pdataSrc+=4;
 
          }
-
-         size--;
-
-         pdataDst+=4;
-
-         pdataSrc+=4;
 
       }
 
@@ -2847,7 +2925,7 @@ namespace draw2d_gdi
 
    }
 
-   bool dib::process_blend(::draw2d::brush * pbrush, int32_t x, int32_t y, ::draw2d::e_alpha_mode ealphamode)
+   bool dib::process_blend(::draw2d::brush * pbrush, int32_t x, int32_t y, ::draw2d::e_alpha_mode ealphamode, ::draw2d::dib * pdibSrc)
    {
 
       if(pbrush->m_etype == ::draw2d::brush::type_null)
@@ -2856,7 +2934,7 @@ namespace draw2d_gdi
       }
       if(pbrush->m_etype == ::draw2d::brush::type_solid)
       {
-         process_blend(pbrush->m_cr, ealphamode);
+         process_blend(pbrush->m_cr, x, y, ealphamode, pdibSrc);
          GDI_BRUSH(pbrush)->m_bProcess = false;
          return true;
       }
@@ -2869,14 +2947,14 @@ namespace draw2d_gdi
          p1.offset(-x, -y);
          p2.offset(-x, -y);
          dib->gradient_fill(pbrush->m_cr1, pbrush->m_cr2, p1, p2);
-         process_blend(dib, ealphamode);
+         process_blend(dib, x, y, ealphamode, pdibSrc);
          GDI_BRUSH(pbrush)->m_bProcess = false;
          return true;
       }
       return false;
    }
 
-   bool dib::process_initialize(::draw2d::brush * pbrush)
+   bool dib::process_initialize(::draw2d::brush * pbrush, bool bReset)
    {
       if(pbrush->m_etype == ::draw2d::brush::type_null)
       {
@@ -2886,21 +2964,27 @@ namespace draw2d_gdi
       {
          GDI_BRUSH(pbrush)->m_bProcess = true;
          pbrush->m_bUpdated = false;
-         Fill(255, 0, 0, 0);
+         if(bReset)
+         {
+            Fill(255, 0, 0, 0);
+         }
          return true;
       }
       if(pbrush->m_etype == ::draw2d::brush::type_linear_gradient_point_color)
       {
          GDI_BRUSH(pbrush)->m_bProcess = true;
          pbrush->m_bUpdated = false;
-         Fill(0, 0, 0, 0);
+         if(bReset)
+         {
+            Fill(255, 0, 0, 0);
+         }
          return true;
       }
       return false;
    }
 
 
-   bool dib::process_blend(::draw2d::pen * ppen, int32_t x, int32_t y, ::draw2d::e_alpha_mode ealphamode)
+   bool dib::process_blend(::draw2d::pen * ppen, int32_t x, int32_t y, ::draw2d::e_alpha_mode ealphamode, ::draw2d::dib * pdib)
    {
       if(ppen->m_etype == ::draw2d::pen::type_null)
       {
@@ -2908,28 +2992,46 @@ namespace draw2d_gdi
       }
       if(ppen->m_etype == ::draw2d::pen::type_solid)
       {
-         process_blend(ppen->m_cr, ealphamode);
+         process_blend(ppen->m_cr, x, y, ealphamode, pdib);
          GDI_PEN(ppen)->m_bProcess = false;
          return true;
       }
       return false;
    }
 
-   bool dib::process_initialize(::draw2d::pen * ppen)
+
+   bool dib::process_initialize(::draw2d::pen * ppen, bool bReset)
    {
+
       if(ppen->m_etype == ::draw2d::pen::type_null)
       {
+
          return false;
+
       }
+
       if(ppen->m_etype == ::draw2d::pen::type_solid)
       {
+
          GDI_PEN(ppen)->m_bProcess = true;
+
          ppen->m_bUpdated = false;
-         Fill(255, 0, 0, 0);
+
+         if(bReset)
+         {
+          
+            Fill(255, 0, 0, 0);
+
+         }
+         
          return true;
+
       }
+
       return false;
+
    }
+
 
    bool dib::from(::draw2d::graphics * pgraphics, FIBITMAP *pfibitmap, bool bUnloadFI)
    {

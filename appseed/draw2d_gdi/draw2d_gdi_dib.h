@@ -167,12 +167,12 @@ namespace draw2d_gdi
       virtual bool print_window(::ca2::window * pwnd, ::ca2::signal_object * pobj);
 
 
-      virtual bool process_initialize(::draw2d::brush * pbrush);
-      virtual bool process_initialize(::draw2d::pen * ppen);
-      virtual bool process_blend(::draw2d::brush * pbrush, int32_t x, int32_t y, ::draw2d::e_alpha_mode ealphamode);
-      virtual bool process_blend(COLORREF clr, ::draw2d::e_alpha_mode ealphamode);
-      virtual bool process_blend(::draw2d::dib * pdib, ::draw2d::e_alpha_mode ealphamode);
-      virtual bool process_blend(::draw2d::pen * ppen, int32_t x, int32_t y, ::draw2d::e_alpha_mode ealphamode);
+      virtual bool process_initialize(::draw2d::brush * pbrush, bool bReset = true);
+      virtual bool process_initialize(::draw2d::pen * ppen, bool bReset = true);
+      virtual bool process_blend(::draw2d::brush * pbrush, int32_t x, int32_t y, ::draw2d::e_alpha_mode ealphamode, ::draw2d::dib * pdibSrc);
+      virtual bool process_blend(COLORREF clr, int32_t x, int32_t y, ::draw2d::e_alpha_mode ealphamode, ::draw2d::dib * pdibSrc);
+      virtual bool process_blend(::draw2d::dib * pdib, int32_t x, int32_t y, ::draw2d::e_alpha_mode ealphamode, ::draw2d::dib * pdibSrc);
+      virtual bool process_blend(::draw2d::pen * ppen, int32_t x, int32_t y, ::draw2d::e_alpha_mode ealphamode, ::draw2d::dib * pdibSrc);
 
 
    };
