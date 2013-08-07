@@ -63,6 +63,7 @@ namespace draw2d_gdi
      
       bool internal_fill_path(void (::draw2d_gdi::graphics::* pfnInternalSetPath)(void *), void * pparam, LPCRECT lpcrect);
       bool internal_stroke_path(void (::draw2d_gdi::graphics::* pfnInternalSetPath)(void *), void * pparam, LPCRECT lpcrect);
+      bool internal_fill_and_stroke_path(void (::draw2d_gdi::graphics::* pfnInternalSetPath)(void *), void * pparam, LPCRECT lpcrect);
 
       void internal_set_path(void * pparam);
       void internal_set_path_ellipse(void * pparam);

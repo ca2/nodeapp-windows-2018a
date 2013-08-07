@@ -705,8 +705,6 @@ namespace draw2d_gdi
       else
       {
 
-         //::DrawIconEx((HDC)dib->get_graphics()->get_os_data(), 0, 0, (HICON) picon->m_picon, cx, cy, istepIfAniCur, NULL, DI_IMAGE | DI_MASK);
-
          ::draw2d::dib_sp dib(allocer());
 
          dib->create(cx,cy);
@@ -715,97 +713,14 @@ namespace draw2d_gdi
 
          ::DrawIconEx((HDC)dib->get_graphics()->get_os_data(), 0, 0, (HICON) picon->m_picon, cx, cy, istepIfAniCur, NULL, DI_IMAGE | DI_MASK);
 
-         /*::draw2d::dib_sp dib2(allocer());
-
-         dib2->create(cx,cy);
-
-         dib2->Fill(255, 255, 255, 255);
-
-         ::DrawIconEx((HDC)dib2->get_graphics()->get_os_data(), 0, 0, (HICON) picon->m_picon, cx, cy, istepIfAniCur, NULL, DI_IMAGE | DI_MASK);*/
-
-         BYTE * r1 = (BYTE *) dib->get_data();
-         
-         //BYTE * r2 = (BYTE *) dib2->get_data();
-
-         int iSize = cx * cy;
-         
-         BYTE b;
-
-         BYTE bMax;
-
-         int r_1;
-         int g_1;
-         int b_1;
-         int a_1;
-
-         int r_2;
-         int g_2;
-         int b_2;
-         int a_2;
-
-         /*int c_1;
-         int c_2;*/
-
-         GdiFlush();
-
-         while(iSize-- > 0)
-         {
-
-            r_1 = r1[0];
-            g_1 = r1[1];
-            b_1 = r1[2];
-            a_1 = r1[3];
-
-            //c_1 = (r_1 + g_1 + b_1) / 3; 
-
-            /*r_2 = r2[0];
-            g_2 = r2[1];
-            b_2 = r2[2];
-            a_2 = r2[3];
-
-            c_2 = (r_2 + g_2 + b_2) / 3;*/
-
-            //r1[3]    = c_1 - c_2 + 255;
-            //r1[3]    = a_1;
-            if(r1[3] == 0)
-            {
-               r1[0] = 0;
-               r1[1] = 0;
-               r1[2] = 0;
-            }
-            else
-            {
-               r1[0]    = r1[0] * 255 / r1[3];
-               r1[1]    = r1[1] * 255 / r1[3];
-               r1[2]    = r1[2] * 255 / r1[3];
-            }
-
-            r_2 = r1[0];
-            g_2 = r1[1];
-            b_2 = r1[2];
-            a_2 = r1[3];
-
-            r1       += 4;
-            //r2       += 4;
-
-         }
-
-
+         dib->div_alpha();
+   
          m_pdib->from(point(x, y), dib, point(0, 0), size(cx, cy));
 
-         /*BLENDFUNCTION bf;
-         bf.BlendOp     = AC_SRC_OVER;
-         bf.BlendFlags  = 0;
-         bf.SourceConstantAlpha = 0xFF;
-         bf.AlphaFormat = AC_SRC_ALPHA;*/
-
-         //::AlphaBlend(m_hdc, x, y, cx, cy, (HDC) dib->get_graphics()->get_os_data(), 0, 0, cx, cy, bf);
-
       }
- 
-
 
    }
+
 
    bool graphics::DrawState(point pt, class size size, HBITMAP hBitmap, UINT nFlags, HBRUSH hBrush)
    {
@@ -950,11 +865,12 @@ namespace draw2d_gdi
    bool graphics::Ellipse(LPCRECT lpRect)
    {
 
-      bool bOk1 = FillEllipse(lpRect);
+      if(width(lpRect) <= 0 || height(lpRect) <= 0)
+         return false;
 
-      bool bOk2 = DrawEllipse(lpRect);   
+      bool bOk = internal_fill_and_stroke_path(&::draw2d_gdi::graphics::internal_set_path_ellipse, (void *) lpRect, lpRect);
 
-      return bOk1 && bOk2;
+      return bOk;
 
 	}
 
@@ -988,11 +904,12 @@ namespace draw2d_gdi
    bool graphics::Rectangle(LPCRECT lpRect)
    {
 
-      bool bOk1 = FillRectangle(lpRect);
+      if(width(lpRect) <= 0 || height(lpRect) <= 0)
+         return false;
 
-      bool bOk2 = DrawRectangle(lpRect);   
+      bool bOk = internal_fill_and_stroke_path(&::draw2d_gdi::graphics::internal_set_path_rectangle, (void *) lpRect, lpRect);
 
-      return bOk1 && bOk2;
+      return bOk;
 
 	}
 
@@ -1025,11 +942,24 @@ namespace draw2d_gdi
    bool graphics::Polygon(const POINT * lpPoints, int nCount)
    {
 
-      bool bOk1 = FillPolygon(lpPoints, nCount);
+      rect rect;
 
-      bool bOk2 = DrawPolygon(lpPoints, nCount);   
+      rect.get_bounding_rect(lpPoints, nCount);
 
-      return bOk1 && bOk2;
+      if(rect.width() <= 0 || rect.height() <= 0)
+         return false;
+
+      draw_item item;
+
+      ZERO(item);
+
+      item.lpPoints = lpPoints;
+
+      item.nCount = nCount;
+
+      bool bOk = internal_fill_and_stroke_path(&::draw2d_gdi::graphics::internal_set_path_polygon, (void *) &item, &rect);
+
+      return bOk;
 
 	}
 
@@ -1087,11 +1017,26 @@ namespace draw2d_gdi
    bool graphics::PolyPolygon(const POINT * lpPoints, const INT * lpPolyCounts, int nCount)
    {
 
-      bool bOk1 = FillPolyPolygon(lpPoints, lpPolyCounts, nCount);
+      rect rect;
 
-      bool bOk2 = DrawPolyPolygon(lpPoints, lpPolyCounts, nCount);   
+      rect.get_bounding_rect(lpPoints, nCount);
 
-      return bOk1 && bOk2;
+      if(rect.width() <= 0 || rect.height() <= 0)
+         return false;
+
+      draw_item item;
+
+      ZERO(item);
+
+      item.lpPoints = lpPoints;
+
+      item.lpPolyCounts = lpPolyCounts;
+
+      item.nCount = nCount;
+
+      bool bOk = internal_fill_and_stroke_path(&::draw2d_gdi::graphics::internal_set_path_poly_polygon, (void *) &item, &rect);
+
+      return bOk;
 
 	}
 
@@ -1285,7 +1230,10 @@ namespace draw2d_gdi
                }
             }
             */
-      int64_t iArea = pdib->area();
+
+            pdib->mult_alpha();
+
+/*      int64_t iArea = pdib->area();
 
       byte * pcolorref = (byte *) pdib->m_pcolorref;
 
@@ -1301,7 +1249,7 @@ namespace draw2d_gdi
             p[2] = (p[2] * p[3] / 255);
             p += 4;
          }
-      }
+      }*/
 
             GdiFlush();
             
@@ -1369,15 +1317,48 @@ namespace draw2d_gdi
 
 
 
-   bool graphics::StretchBlt(int x, int y, int nWidth, int nHeight, ::draw2d::graphics * pgraphicsSrc,
-      int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, uint32_t dwRop)
+   bool graphics::StretchBlt(int x, int y, int nWidth, int nHeight, ::draw2d::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, uint32_t dwRop)
    {
 
 		ASSERT(get_handle1() != NULL);
 
-		return ::StretchBlt(get_handle1(), x, y, nWidth, nHeight,
-   GDI_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth, nSrcHeight,
-   dwRop) != FALSE;
+
+      if(m_pdib == NULL)
+      {
+       
+         return ::StretchBlt(get_handle1(), x, y, nWidth, nHeight, GDI_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth, nSrcHeight,  dwRop) != FALSE;
+
+      }
+      else
+      {
+
+         ::draw2d::dib * pdib1 = dib_work(size(nWidth, nHeight));
+
+         if(pdib1 == NULL)
+            return false;
+
+         ::draw2d::dib * pdib2 = dib_work(size(nSrcWidth, nSrcHeight));
+
+         if(pdib2 == NULL)
+            return false;
+
+         pdib2->from(point(0, 0), pgraphicsSrc->m_pdib, point(xSrc, ySrc), pdib2->size());
+
+         pdib1->stretch_dib(pdib2);
+
+         pdib1->mult_alpha();
+
+         BLENDFUNCTION bf;
+         bf.BlendOp     = AC_SRC_OVER;
+         bf.BlendFlags  = 0;
+         bf.SourceConstantAlpha = 0xFF;
+         bf.AlphaFormat = AC_SRC_ALPHA;
+
+         return ::AlphaBlend(m_hdc, x, y, nWidth, nHeight, (HDC) pdib1->get_graphics()->get_os_data(), 0, 0, nSrcWidth, nSrcHeight, bf) != FALSE;
+
+
+
+      }
 
 	}
 
@@ -2529,9 +2510,11 @@ namespace draw2d_gdi
    bool graphics::StrokeAndFillPath()
    { 
       
-      ASSERT(get_handle1() != NULL); 
-      
-      return ::StrokeAndFillPath(get_handle1()) != FALSE;
+      rect rect;
+
+      m_sppath->get_bounding_rect(rect);
+
+      return internal_fill_and_stroke_path(&::draw2d_gdi::graphics::internal_set_path, m_sppath.m_p, rect);
    
    }
 
@@ -2609,6 +2592,101 @@ namespace draw2d_gdi
    
    }
 
+
+   bool graphics::internal_fill_and_stroke_path(void (::draw2d_gdi::graphics::* pfnInternalSetPath)(void *), void * pparam, LPCRECT lpcrect)
+   {
+
+      ASSERT(get_handle1() != NULL); 
+
+      ::draw2d::pen & pen = get_current_pen();
+
+      if(pen.m_etype == ::draw2d::pen::type_null)
+         return internal_fill_path(pfnInternalSetPath, pparam, lpcrect);
+
+      ::draw2d::brush & brush = get_current_brush();
+
+      if(brush.m_etype == ::draw2d::brush::type_null)
+         return internal_stroke_path(pfnInternalSetPath, pparam, lpcrect);
+
+      if(m_pdib == NULL)
+      {
+
+         (this->*pfnInternalSetPath)(pparam);
+
+         return ::StrokeAndFillPath(get_handle1()) != FALSE;
+
+      }
+      else
+      {
+
+         ::rect rectBound(lpcrect);
+
+         ::rect rect(rectBound);
+
+         BLENDFUNCTION bf;
+         bf.BlendOp     = AC_SRC_OVER;
+         bf.BlendFlags  = 0;
+         bf.SourceConstantAlpha = 0xFF;
+         bf.AlphaFormat = AC_SRC_ALPHA;
+
+         ::draw2d::dib * pdib = dib_work(rect.size());
+
+         if(GDI_DIB(pdib)->process_initialize(&brush))
+         {
+
+            pdib->get_graphics()->SelectObject(&brush);
+
+            GDI_GRAPHICS(pdib->get_graphics())->SetViewportOrg(-rect.top_left());
+
+            (GDI_GRAPHICS(pdib->get_graphics())->*pfnInternalSetPath)(pparam);
+
+            ::FillPath((HDC) pdib->get_graphics()->get_os_data());
+
+            if(GDI_DIB(pdib)->process_blend(&brush, rect.left, rect.top, m_ealphamode))
+            {
+
+               GDI_GRAPHICS(pdib->get_graphics())->SetViewportOrg(0, 0);
+
+               ::AlphaBlend(m_hdc, rect.left, rect.top, rect.width(), rect.height(), (HDC) pdib->get_graphics()->get_os_data(), 0, 0, rect.width(), rect.height(), bf);
+
+            }
+
+         }
+
+         rect.left   -= (int32_t) floor(pen.m_dWidth / 2.0);
+         rect.right  += (int32_t) ceil(pen.m_dWidth / 2.0);
+         rect.top    -= (int32_t) floor(pen.m_dWidth / 2.0);
+         rect.bottom += (int32_t) ceil(pen.m_dWidth / 2.0);
+
+         pdib = dib_work(rect.size());
+
+         if(GDI_DIB(pdib)->process_initialize(&pen))
+         {
+
+            pdib->get_graphics()->SelectObject(&pen);
+
+            pdib->get_graphics()->SetViewportOrg(-rectBound.top_left());
+
+            (GDI_GRAPHICS(pdib->get_graphics())->*pfnInternalSetPath)(pparam);
+
+            ::StrokePath(GDI_HDC(pdib->get_graphics()));
+
+            if(GDI_DIB(pdib)->process_blend(&pen, rect.left, rect.top, m_ealphamode))
+            {
+
+               GDI_GRAPHICS(pdib->get_graphics())->SetViewportOrg(0, 0);
+
+               ::AlphaBlend(m_hdc, rect.left, rect.top, rect.width(), rect.height(), (HDC) pdib->get_graphics()->get_os_data(), 0, 0, rect.width(), rect.height(), bf);
+
+            }
+
+         }
+
+         return true;
+
+      }
+   
+   }
 
    
    bool graphics::WidenPath()
