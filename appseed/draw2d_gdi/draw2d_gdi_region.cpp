@@ -4,11 +4,32 @@
 namespace draw2d_gdi
 {
 
+   int get_os_fill_mode(::draw2d::e_fill_mode efillmode)
+   {
+    
+      int nMode; 
+      switch(efillmode)
+      {
+      case ::draw2d::fill_mode_winding:
+         nMode = WINDING;
+         break;
+      case ::draw2d::fill_mode_alternate:
+         nMode = ALTERNATE;
+         break;
+      default:
+         nMode = WINDING;
+         break;
+      }
+
+      return nMode;
+
+   }
+
 
    region::region(::ca2::application * papp) :
       ca2(papp)
    {
-   
+      m_bUpdated = true;   
    }
 
 
@@ -38,22 +59,39 @@ namespace draw2d_gdi
    { 
       
       return Attach(::CreateRectRgnIndirect(lpRect)); }
+   
+   
    bool region::CreateEllipticRgn(int x1, int y1, int x2, int y2)
    { 
       
-      return Attach(::CreateEllipticRgn(x1, y1, x2, y2)); }
-   bool region::CreateEllipticRgnIndirect(LPCRECT lpRect)
+      return Attach(::CreateEllipticRgn(x1, y1, x2, y2)); 
+   
+   }
+
+
+   bool region::create_oval(LPCRECT lpRect)
    { 
       
-      return Attach(::CreateEllipticRgnIndirect(lpRect)); }
-   bool region::CreatePolygonRgn(LPPOINT lpPoints, int nCount, int nMode)
+      return Attach(::CreateEllipticRgnIndirect(lpRect)); 
+   
+   }
+
+
+   bool region::create_polygon(LPPOINT lpPoints, int32_t nCount, ::draw2d::e_fill_mode efillmode)
+   { 
+
+      return Attach(::CreatePolygonRgn(lpPoints, nCount, get_os_fill_mode(efillmode)));
+   
+   }
+
+   bool region::create_poly_polygon(LPPOINT lpPoints, LPINT lpPolyCounts, int32_t nCount, ::draw2d::e_fill_mode efillmode)
    { 
       
-      return Attach(::CreatePolygonRgn(lpPoints, nCount, nMode)); }
-   bool region::CreatePolyPolygonRgn(LPPOINT lpPoints, LPINT lpPolyCounts, int nCount, int nPolyFillMode)
-   { 
-      
-      return Attach(::CreatePolyPolygonRgn(lpPoints, lpPolyCounts, nCount, nPolyFillMode)); }
+      return Attach(::CreatePolyPolygonRgn(lpPoints, lpPolyCounts, nCount, get_os_fill_mode(efillmode))); 
+
+   }
+
+
    bool region::CreateRoundRectRgn(int x1, int y1, int x2, int y2, int x3, int y3)
    { 
       
@@ -144,7 +182,7 @@ namespace draw2d_gdi
    }
    
    
-   bool region::PtInRegion(int x, int y) const
+   bool region::contains(int x, int y) const
    {
       
       ASSERT(get_os_data() != NULL); 
@@ -154,7 +192,7 @@ namespace draw2d_gdi
    }
    
 
-   bool region::PtInRegion(POINT point) const
+   bool region::contains(POINT point) const
    {
       ASSERT(get_os_data() != NULL); 
       
@@ -177,6 +215,8 @@ namespace draw2d_gdi
    {
 
       ::draw2d_gdi::object::create();
+
+      //for(int i = 0; i <
 
       return true;
       

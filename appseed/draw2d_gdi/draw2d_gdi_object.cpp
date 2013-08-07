@@ -146,7 +146,9 @@ namespace draw2d_gdi
 
       m_ptraGraphics.remove_all();
 
-      return ::DeleteObject(Detach()) != FALSE;
+      bool bOk = ::DeleteObject(Detach()) != FALSE;
+
+      return bOk;
 
    }
 

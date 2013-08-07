@@ -23,10 +23,9 @@ namespace draw2d_gdi
       bool CreateRectRgn(int x1, int y1, int x2, int y2);
       bool CreateRectRgnIndirect(LPCRECT lpRect);
       bool CreateEllipticRgn(int x1, int y1, int x2, int y2);
-      bool CreateEllipticRgnIndirect(LPCRECT lpRect);
-      bool CreatePolygonRgn(LPPOINT lpPoints, int nCount, int nMode);
-      bool CreatePolyPolygonRgn(LPPOINT lpPoints, LPINT lpPolyCounts,
-            int nCount, int nPolyFillMode);
+      bool create_oval(LPCRECT lpRect);
+      bool create_polygon(LPPOINT lpPoints, int32_t nCount, ::draw2d::e_fill_mode efillmode);
+      bool create_poly_polygon(LPPOINT lpPoints, LPINT lpPolyCounts, int32_t nCount, ::draw2d::e_fill_mode efillmode);
       bool CreateRoundRectRgn(int x1, int y1, int x2, int y2, int x3, int y3);
       bool CreateFromPath(::draw2d::graphics * pgraphics);
       bool CreateFromData(const XFORM* lpXForm, int nCount,
@@ -41,8 +40,8 @@ namespace draw2d_gdi
       int OffsetRgn(int x, int y);
       int OffsetRgn(POINT point);
       int GetRgnBox(LPRECT lpRect) const;
-      bool PtInRegion(int x, int y) const;
-      bool PtInRegion(POINT point) const;
+      bool contains(int x, int y) const;
+      bool contains(POINT point) const;
       bool RectInRegion(LPCRECT lpRect) const;
       int GetRegionData(LPRGNDATA lpRgnData, int nCount) const;
 

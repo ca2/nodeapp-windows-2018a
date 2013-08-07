@@ -156,7 +156,7 @@ namespace draw2d_gdi
 
       m_spgraphics->CreateCompatibleDC(NULL);
 
-      m_spgraphics->m_spdib = dynamic_cast < ::draw2d::dib * > (this);
+      m_spgraphics->m_pdib = dynamic_cast < ::draw2d::dib * > (this);
 
       m_hbitmapOriginal = (HBITMAP) m_spgraphics->get_os_data_ex(::draw2d_gdi::graphics::data_bitmap);
 
@@ -2442,7 +2442,7 @@ namespace draw2d_gdi
 
       // >> 8 instead of / 255 subsequent alpha_blend operations say thanks on true_blend because (255) * (1/254) + (255) * (254/255) > 255
 
-
+      /*
  while (size >= 8)
          {
             dst[0] = LOBYTE(((int32_t)dst[0] * (int32_t)dst[3])>> 8);
@@ -2487,7 +2487,7 @@ namespace draw2d_gdi
             dst[2] = LOBYTE(((int32_t)dst[2] * (int32_t)dst[3])>> 8);
             dst += 4;
          }
- 
+ */
 
       rect rect(rectWindow);
 
@@ -2697,7 +2697,7 @@ namespace draw2d_gdi
 
       ::visual::rgba::echannel echannel;
 
-      byte bTune;
+      int32_t bTune;
 
       if(GetGValue(clr) > GetBValue(clr))
       {
@@ -2738,9 +2738,9 @@ namespace draw2d_gdi
       byte * pb = (byte *) m_pcolorref;
       byte * pbTune = ((byte *) m_pcolorref) + ((int32_t) echannel);
 
-      bTune *= 255;
+      //bTune *= 255;
 
-      //bTune = 255 * (GetGValue(clr) + GetBValue(clr) + GetRValue(clr));
+      bTune = 255 * 255 * 3;
 
       int32_t aTune = a * 255;
 
@@ -2751,13 +2751,17 @@ namespace draw2d_gdi
       if(bTune == 0)
       {
 
+         r *= a;
+         g *= a;
+         b *= a;
+
          while(size > 0)
          {
             if(pb[3] == 0)
             {
-               pb[0] = pb[0] * a / 255;
-               pb[1] = pb[1] * a / 255;
-               pb[2] = pb[2] * a / 255;
+               pb[0] = r * pb[0] / (255 * 255);
+               pb[1] = g * pb[1] / (255 * 255);
+               pb[2] = b * pb[2] / (255 * 255);
                pb[3] = a;
             }
             else

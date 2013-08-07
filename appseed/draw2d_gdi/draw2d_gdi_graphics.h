@@ -4,6 +4,7 @@
 namespace draw2d_gdi
 {
 
+   
 
    class CLASS_DECL_DRAW2D_GDI graphics : 
       virtual public ::draw2d::graphics
@@ -23,8 +24,18 @@ namespace draw2d_gdi
       };
 
 
+      class draw_item
+      {
+      public:
+         
+         const POINT * lpPoints;
+         int nCount;   
+         const INT * lpPolyCounts;
+
+      };
+
+
       HDC                        m_hdc;
-      ::draw2d::dibmap_ex1       m_dibmap;
 
       ::draw2d::path_sp          m_sppath;
 
@@ -50,6 +61,15 @@ namespace draw2d_gdi
       ::draw2d::dib * dib_work(class size size);
       ::draw2d::dib * fill_dib_work(COLORREF clr, class size size);
      
+      bool internal_fill_path(void (::draw2d_gdi::graphics::* pfnInternalSetPath)(void *), void * pparam, LPCRECT lpcrect);
+      bool internal_stroke_path(void (::draw2d_gdi::graphics::* pfnInternalSetPath)(void *), void * pparam, LPCRECT lpcrect);
+
+      void internal_set_path(void * pparam);
+      void internal_set_path_ellipse(void * pparam);
+      void internal_set_path_rectangle(void * pparam);
+      void internal_set_path_line(void * pparam);
+      void internal_set_path_polygon(void * pparam);
+      void internal_set_path_poly_polygon(void * pparam);
 
       static ::draw2d::graphics * from_handle(::ca2::application * papp, HDC hDC);
       static void DeleteTempMap();
@@ -107,6 +127,9 @@ namespace draw2d_gdi
       virtual ::draw2d::font* SelectObject(::draw2d::font* pFont);
       virtual ::draw2d::bitmap* SelectObject(::draw2d::bitmap* pBitmap);
       virtual int SelectObject(::draw2d::region* pRgn);       // special return for regions
+
+      bool SelectFont(::draw2d::font * pfont);
+
 
 
       virtual void select_pen();
@@ -245,6 +268,8 @@ namespace draw2d_gdi
       bool PolyBezier(const POINT* lpPoints, int nCount);
       bool PolyBezierTo(const POINT* lpPoints, int nCount);
 
+      
+
    // Simple Drawing Functions
       void FillRect(LPCRECT lpRect, ::draw2d::brush* pBrush);
       void FrameRect(LPCRECT lpRect, ::draw2d::brush* pBrush);
@@ -270,23 +295,28 @@ namespace draw2d_gdi
          LPARAM lData, UINT nFlags, ::draw2d::brush* pBrush = NULL);
 
    // Ellipse and Polygon Functions
-      bool Chord(int x1, int y1, int x2, int y2, int x3, int y3,
-         int x4, int y4);
+      bool Chord(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4);
       bool Chord(LPCRECT lpRect, POINT ptStart, POINT ptEnd);
       void DrawFocusRect(LPCRECT lpRect);
-      bool Ellipse(int x1, int y1, int x2, int y2);
+
       bool Ellipse(LPCRECT lpRect);
-      bool DrawEllipse(int32_t x1, int32_t y1, int32_t x2, int32_t y2);
       bool DrawEllipse(LPCRECT lpRect);
-      bool FillEllipse(int32_t x1, int32_t y1, int32_t x2, int32_t y2);
-      bool FillEllipse(LPCRECT lpRect) ;
+      bool FillEllipse(LPCRECT lpRect);
+
+      bool Rectangle(LPCRECT lpRect);
+      bool DrawRectangle(LPCRECT lpRect);
+      bool FillRectangle(LPCRECT lpRect);
+
+      bool Polygon(const POINT * lpPoints, int nCount);
+      bool DrawPolygon(const POINT * lpPoints, int nCount);
+      bool FillPolygon(const POINT * lpPoints, int nCount);
+
+      bool PolyPolygon(const POINT * lpPoints, const INT * lpPolyCounts, int nCount);
+      bool DrawPolyPolygon(const POINT * lpPoints, const INT * lpPolyCounts, int nCount);
+      bool FillPolyPolygon(const POINT * lpPoints, const INT * lpPolyCounts, int nCount);
 
       bool Pie(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4);
       bool Pie(LPCRECT lpRect, POINT ptStart, POINT ptEnd);
-      bool Polygon(const POINT* lpPoints, int nCount);   
-      bool PolyPolygon(const POINT* lpPoints, const INT* lpPolyCounts, int nCount);
-      bool Rectangle(int x1, int y1, int x2, int y2);
-      bool Rectangle(LPCRECT lpRect);
       bool RoundRect(int x1, int y1, int x2, int y2, int x3, int y3);
       bool RoundRect(LPCRECT lpRect, POINT point);
 
