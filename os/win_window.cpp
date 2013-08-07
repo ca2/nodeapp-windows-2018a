@@ -5841,6 +5841,14 @@ ExitModal:
 
       __trace_message("WndProc", spbase);
 
+      ::ca2::message::mouse * pmouse = dynamic_cast < ::ca2::message::mouse * >(spbase.m_p);
+
+      if(pmouse != NULL)
+      {
+         ::GetCursorPos(&pmouse->m_pt);
+         pmouse->m_bTranslated = true;
+      }
+
       try
       {
 

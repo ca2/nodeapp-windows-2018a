@@ -15,7 +15,7 @@ namespace draw2d_gdi
    object::~object()
    { 
 
-      destroy(); 
+      destroy();
 
    }
    
@@ -127,11 +127,15 @@ namespace draw2d_gdi
    bool object::destroy()
    {
       
-      if(m_hgdiobj == NULL)
-         return true;
-
       for(int i = 0; i < m_ptraGraphics.get_size(); i++)
       {
+         try
+         {
+            m_ptraGraphics[i]->m_ptraObject.remove(this);
+         }
+         catch(...)
+         {
+         }
          try
          {
             if(::GetCurrentObject((HDC) m_ptraGraphics[i]->get_os_data(), ::GetObjectType(m_hgdiobj)) == m_hgdiobj)
@@ -145,6 +149,9 @@ namespace draw2d_gdi
       }
 
       m_ptraGraphics.remove_all();
+
+      if(m_hgdiobj == NULL)
+         return true;
 
       bool bOk = ::DeleteObject(Detach()) != FALSE;
 
