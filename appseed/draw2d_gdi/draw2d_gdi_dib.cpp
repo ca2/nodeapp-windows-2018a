@@ -112,9 +112,11 @@ namespace draw2d_gdi
 
       if(m_spbitmap.is_set()
       && m_spbitmap->get_os_data() != NULL 
+      && m_spgraphics.is_set()
+      && m_spgraphics->get_os_data() != NULL
       && width == this->cx
       && height == this->cy)
-         return TRUE;
+         return true;
 
       Destroy();
 

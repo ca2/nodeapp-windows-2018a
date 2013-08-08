@@ -3469,8 +3469,7 @@ bool graphics::alpha_blend(int xDest, int yDest, int nDestWidth, int nDestHeight
    void graphics::FillSolidRect(int x, int y, int cx, int cy, COLORREF clr)
    {
 
-
-      if(GetAValue(clr) == 255 || m_pdib == NULL)
+      if(m_pdib == NULL)
       {
 
          ::SetBkColor(get_handle1(), clr);
