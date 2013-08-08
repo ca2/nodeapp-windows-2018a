@@ -2297,8 +2297,9 @@ namespace draw2d_gdi
 
    bool graphics::BeginPath()
    { 
-      
-      ASSERT(get_handle1() != NULL); 
+
+      if(get_handle1() == NULL)
+         return false;
       
       return ::BeginPath(get_handle1()) != FALSE;
    
@@ -2318,7 +2319,8 @@ namespace draw2d_gdi
    bool graphics::EndPath()
    { 
       
-      ASSERT(get_handle1() != NULL); 
+      if(get_handle1() == NULL)
+         return false;
       
       return ::EndPath(get_handle1()) != FALSE;
    
