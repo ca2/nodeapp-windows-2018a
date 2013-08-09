@@ -3508,6 +3508,12 @@ namespace draw2d_gdi
          ::ExtTextOut(get_handle1(), 0, 0, ETO_OPAQUE, &rect, NULL, 0, NULL);
 
       }
+      else if(GetAValue(clr) == 255)
+      {
+         
+         m_pdib->FillRect(x, y, cx, cy, 255, GetRValue(clr), GetGValue(clr), GetBValue(clr));
+
+      }
       else
       {
 
