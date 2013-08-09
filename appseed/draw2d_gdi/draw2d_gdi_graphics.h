@@ -5,6 +5,8 @@ namespace draw2d_gdi
 {
 
    
+   class object;
+
 
    class CLASS_DECL_DRAW2D_GDI graphics : 
       virtual public ::draw2d::graphics
@@ -39,13 +41,13 @@ namespace draw2d_gdi
 
       ::draw2d::path_sp          m_sppath;
 
-      HBITMAP                    m_hbitmapOriginal;
-      HPEN                       m_hpenOriginal;
-      HBRUSH                     m_hbrushOriginal;
-      HFONT                      m_hfontOriginal;
-      HRGN                       m_hrgnOriginal;
+      HBITMAP                                            m_hbitmapOriginal;
+      HPEN                                               m_hpenOriginal;
+      HBRUSH                                             m_hbrushOriginal;
+      HFONT                                              m_hfontOriginal;
+      HRGN                                               m_hrgnOriginal;
 
-      comparable_array < ::draw2d::object * >      m_ptraObject;
+      comparable_array < ::draw2d_gdi::object * >        m_ptraObject;
 
       //graphics();
       graphics(::ca2::application * papp);

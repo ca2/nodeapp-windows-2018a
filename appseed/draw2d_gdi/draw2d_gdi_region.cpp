@@ -46,22 +46,32 @@ namespace draw2d_gdi
 
    }
 
+
    ::draw2d::region* region::from_handle(::ca2::application * papp, HRGN hRgn)
    { 
+
       return dynamic_cast < region * > (::draw2d_gdi::object::from_handle(papp, hRgn));
+
    }
 
-   bool region::CreateRectRgn(int x1, int y1, int x2, int y2)
+
+   bool region::create_rect(int x1, int y1, int x2, int y2)
    { 
       
-      return Attach(::CreateRectRgn(x1, y1, x2, y2)); }
-   bool region::CreateRectRgnIndirect(LPCRECT lpRect)
+      return Attach(::CreateRectRgn(x1, y1, x2, y2)); 
+   
+   }
+
+
+   bool region::create_rect(LPCRECT lpRect)
    { 
       
-      return Attach(::CreateRectRgnIndirect(lpRect)); }
+      return Attach(::CreateRectRgnIndirect(lpRect)); 
+   
+   }
    
    
-   bool region::CreateEllipticRgn(int x1, int y1, int x2, int y2)
+   bool region::create_oval(int x1, int y1, int x2, int y2)
    { 
       
       return Attach(::CreateEllipticRgn(x1, y1, x2, y2)); 

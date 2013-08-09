@@ -15,7 +15,51 @@ namespace draw2d_gdi
    object::~object()
    { 
 
-      destroy();
+      mutex_lock ml(user_mutex());
+
+      for(int i = 0; i < m_ptraGraphics.get_size(); i++)
+      {
+
+         try
+         {
+
+            m_ptraGraphics[i]->m_ptraObject.remove(this);
+
+         }
+         catch(...)
+         {
+
+         }
+
+      }
+
+      if(m_hgdiobj != NULL)
+      {
+
+         for(int i = 0; i < m_ptraGraphics.get_size(); i++)
+         {
+
+            try
+            {
+
+               if(::GetCurrentObject(m_ptraGraphics[i]->get_handle1(), ::GetObjectType(m_hgdiobj)) == m_hgdiobj)
+               {
+
+                  GDI_GRAPHICS(m_ptraGraphics[i])->set_original_object(::GetObjectType(m_hgdiobj));
+
+               }
+
+            }
+            catch(...)
+            {
+
+            }
+
+         }
+
+         bool bOk = ::DeleteObject(m_hgdiobj) != FALSE;
+
+      }
 
    }
    
@@ -126,34 +170,62 @@ namespace draw2d_gdi
 
    bool object::destroy()
    {
+
+      mutex_lock ml(user_mutex());
       
       for(int i = 0; i < m_ptraGraphics.get_size(); i++)
       {
+
          try
          {
-            m_ptraGraphics[i]->m_ptraObject.remove(this);
+
+            ::draw2d_gdi::graphics * pgraphics = m_ptraGraphics[i];
+
+            pgraphics->m_ptraObject.remove(this);
+
          }
          catch(...)
          {
+
          }
+
+      }
+
+      if(m_hgdiobj == NULL)
+      {
+         
+         m_ptraGraphics.remove_all();
+
+         return true;
+
+      }
+
+      for(int i = 0; i < m_ptraGraphics.get_size(); i++)
+      {
+
          try
          {
-            if(::GetCurrentObject((HDC) m_ptraGraphics[i]->get_os_data(), ::GetObjectType(m_hgdiobj)) == m_hgdiobj)
+
+            if(::GetCurrentObject(m_ptraGraphics[i]->get_handle1(), ::GetObjectType(m_hgdiobj)) == m_hgdiobj)
             {
-               GDI_GRAPHICS(m_ptraGraphics[i])->set_original_object(::GetObjectType(m_hgdiobj));
+
+               m_ptraGraphics[i]->set_original_object(::GetObjectType(m_hgdiobj));
+
             }
+
          }
          catch(...)
          {
+
          }
+
       }
 
       m_ptraGraphics.remove_all();
 
-      if(m_hgdiobj == NULL)
-         return true;
+      bool bOk = ::DeleteObject(m_hgdiobj) != FALSE;
 
-      bool bOk = ::DeleteObject(Detach()) != FALSE;
+      m_hgdiobj = NULL;
 
       return bOk;
 

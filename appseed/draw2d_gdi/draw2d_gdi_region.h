@@ -20,9 +20,9 @@ namespace draw2d_gdi
       static ::draw2d::region * from_handle(::ca2::application * papp, HRGN hRgn);
 
 
-      bool CreateRectRgn(int x1, int y1, int x2, int y2);
-      bool CreateRectRgnIndirect(LPCRECT lpRect);
-      bool CreateEllipticRgn(int x1, int y1, int x2, int y2);
+      bool create_rect(int x1, int y1, int x2, int y2);
+      bool create_rect(LPCRECT lpRect);
+      bool create_oval(int x1, int y1, int x2, int y2);
       bool create_oval(LPCRECT lpRect);
       bool create_polygon(LPPOINT lpPoints, int32_t nCount, ::draw2d::e_fill_mode efillmode);
       bool create_poly_polygon(LPPOINT lpPoints, LPINT lpPolyCounts, int32_t nCount, ::draw2d::e_fill_mode efillmode);

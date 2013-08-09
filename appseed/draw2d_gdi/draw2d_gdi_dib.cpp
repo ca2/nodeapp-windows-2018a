@@ -109,6 +109,8 @@ namespace draw2d_gdi
    bool dib::create(int width, int height)
    {
 
+      mutex_lock ml(user_mutex());
+
 
       if(m_spbitmap.is_set()
       && m_spbitmap->get_os_data() != NULL 
@@ -211,6 +213,8 @@ namespace draw2d_gdi
 
    bool dib::Destroy ()
    {
+
+      mutex_lock ml(user_mutex());
 
       m_spbitmap->destroy();
 
@@ -2810,7 +2814,7 @@ namespace draw2d_gdi
 
             r3.intersect(r1, r2);
 
-            size = min(size, r3.area());
+            size = min(size, (int32_t) r3.area());
             while(size > 0)
             {
                if(pb[3] == 0)
