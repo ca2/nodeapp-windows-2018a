@@ -1040,6 +1040,7 @@
     <ClCompile Include="win_uac_tools.cpp" />
     <ClCompile Include="win_util.cpp" />
     <ClCompile Include="win_window.cpp" />
+    <ClCompile Include="win_window_api.cpp" />
     <ClCompile Include="win_window_draw.cpp" />
   </ItemGroup>
   <ItemGroup>

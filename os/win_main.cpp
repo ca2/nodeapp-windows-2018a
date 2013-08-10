@@ -1,7 +1,9 @@
 #include "framework.h"
 #include "sal.h"
 
+
 extern CLASS_DECL_win oswindow_map * g_pwindowmap;
+
 
 CLASS_DECL_ca2 int32_t ca2_main();
 
