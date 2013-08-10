@@ -3377,7 +3377,7 @@ restart_mouse_hover_check:
 
    void window::_001OnPaint(::ca2::signal_object * pobj)
    {
-
+      mutex_lock ml(user_mutex());
       //lock lock(m_pguie, 1984);
 
       SCAST_PTR(::ca2::message::base, pbase, pobj);
@@ -6670,10 +6670,10 @@ namespace win
 
       m_spdib->Fill(0, 0, 0, 0);
 
-    //  m_spdib->get_graphics()->FillSolidRect(00, 00, 100, 100, ARGB(127, 0, 127, 0));
+      m_spdib->get_graphics()->FillSolidRect(00, 00, 100, 100, ARGB(127, 0, 127, 0));
       _001Print(m_spdib->get_graphics());
-//      m_spdib->get_graphics()->SetViewportOrg(0, 0);
-  //    m_spdib->get_graphics()->FillSolidRect(100, 100, 100, 100, ARGB(127, 127, 0, 0));
+      m_spdib->get_graphics()->SetViewportOrg(0, 0);
+      m_spdib->get_graphics()->FillSolidRect(100, 100, 100, 100, ARGB(127, 127, 0, 0));
 
       m_spdib->update_window(this, NULL);
 
