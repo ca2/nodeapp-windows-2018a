@@ -814,7 +814,7 @@ namespace win
 
    string application::draw2d_get_default_library_name()
    {
-      return "draw2d_gdi";
+      return "draw2d_gdiplus";
    }
 
 
