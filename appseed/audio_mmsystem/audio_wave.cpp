@@ -7,7 +7,9 @@ namespace audio
    wave::wave(sp(::ca2::application) papp) :
       ca2(papp)
    {
-      m_uiWaveInDevice = WAVE_MAPPER; 
+#ifdef WINDOWS
+      m_uiWaveInDevice = WAVE_MAPPER;
+#endif
       m_pwavein = NULL;
    }
 

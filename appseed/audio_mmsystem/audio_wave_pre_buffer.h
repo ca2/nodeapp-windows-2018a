@@ -15,7 +15,7 @@ namespace iaudio
 {
 
 
-   class ::iaudio::wave_stream_effect;
+   class wave_stream_effect;
 
 
 } // namespace iaudio

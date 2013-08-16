@@ -5,7 +5,7 @@ namespace audio
 {
 
    class wave_out;
-   class ::audio::wave_pre_buffer;
+   class wave_pre_buffer;
 
    class CLASS_DECL_CA2_MULTIMEDIA wave_recorder_command
    {

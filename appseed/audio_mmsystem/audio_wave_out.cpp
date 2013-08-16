@@ -29,9 +29,11 @@ namespace audio
 
    void wave_out::install_message_handling(::ca2::message::dispatch * pinterface)
    {
+#ifdef WINDOWS
       IGUI_WIN_MSG_LINK(MM_WOM_OPEN, pinterface, this, &wave_out::OnMultimediaOpen);
       IGUI_WIN_MSG_LINK(MM_WOM_DONE, pinterface, this, &wave_out::OnMultimediaDone);
       IGUI_WIN_MSG_LINK(MM_WOM_CLOSE, pinterface, this, &wave_out::OnMultimediaClose);
+#endif
       IGUI_WIN_MSG_LINK(MessageBufferReady, pinterface, this, &wave_out::OnBufferReady);
       IGUI_WIN_MSG_LINK(MessageClose, pinterface, this, &wave_out::OnClose);
    }
@@ -79,6 +81,7 @@ namespace audio
          m_estate != state_initial)
          return MMSYSERR_NOERROR;
       m_pthreadCallback = pthreadCallback;
+      #ifdef WINDOWS
       MMRESULT mmr;
       ASSERT(m_hwaveout == NULL);
       ASSERT(m_estate == state_initial);
@@ -346,6 +349,7 @@ Opened:
          }
       }
       m_pprebuffer->SetMinL1BufferCount(GetBuffer().GetBufferCount() + 4);
+      #endif
       m_estate = StateOpened;
       return MMSYSERR_NOERROR;
    }
@@ -374,10 +378,10 @@ Opened:
       {
          Stop();
       }
-      MMRESULT mmr;
       if(m_estate != StateOpened)
          return MMSYSERR_NOERROR;
-
+#ifdef WINDOWS
+      MMRESULT mmr;
       int32_t i, iSize;
       iSize =  GetBuffer().GetBufferCount();
       for(i = 0; i < iSize; i++)
@@ -393,6 +397,7 @@ Opened:
 
       mmr = waveOutClose(m_hwaveout);
       m_hwaveout = NULL;
+      #endif
       m_pprebuffer->Reset();
       m_estate = state_initial;
       return MMSYSERR_NOERROR;
@@ -410,8 +415,10 @@ Opened:
    {
       SCAST_PTR(::ca2::message::base, pbase, pobj);
       m_iBufferInMMSys--;
+      #ifdef WINDOWS
       LPWAVEHDR lpwavehdr = (LPWAVEHDR) pbase->m_lparam.m_lparam;
       OutBufferDone(lpwavehdr);
+      #endif
    }
 
    void wave_out::OnMultimediaClose(::ca2::signal_object * pobj)
@@ -433,8 +440,8 @@ Opened:
          return;
       }
 
+#ifdef WINDOWS
       MMRESULT mmr;
-
       if(m_peffect != NULL)
       {
          m_peffect->Process16bits(
@@ -452,7 +459,7 @@ Opened:
       {
          m_iBufferInMMSys++;
       }
-
+#endif
    }
 
    bool wave_out::Stop()
@@ -468,14 +475,14 @@ Opened:
       m_pprebuffer->Stop();
 
       m_estate = StateStopping;
-
+#ifdef WINDOWS
       // waveOutReset
       // The waveOutReset function stops playback on the given
       // waveform-audio output device and resets the current position
       // to zero. All pending playback buffers are marked as done and
       // returned to the application.
       m_mmr = waveOutReset(m_hwaveout);
-
+#endif
 
 
       if(m_mmr == MMSYSERR_NOERROR)
@@ -496,13 +503,14 @@ Opened:
          return false;
 
 
-
+#ifdef WINDOWS
       // waveOutReset
       // The waveOutReset function stops playback on the given
       // waveform-audio output device and resets the current position
       // to zero. All pending playback buffers are marked as done and
       // returned to the application.
       m_mmr = waveOutPause(m_hwaveout);
+#endif
 
       ASSERT(m_mmr == MMSYSERR_NOERROR);
 
@@ -524,13 +532,14 @@ Opened:
 
 
 
-
+#ifdef WINDOWS
       // waveOutReset
       // The waveOutReset function stops playback on the given
       // waveform-audio output device and resets the current position
       // to zero. All pending playback buffers are marked as done and
       // returned to the application.
       m_mmr = waveOutRestart(m_hwaveout);
+#endif
 
       ASSERT(m_mmr == MMSYSERR_NOERROR);
 
@@ -564,9 +573,11 @@ Opened:
    imedia::time wave_out::GetPositionMillis()
    {
       single_lock sLock(&m_csHandle, TRUE);
+
+
+#ifdef WINDOWS
       MMRESULT                mmr;
       MMTIME                  mmt;
-
       mmt.wType = TIME_MS;
 
       if(m_hwaveout != NULL)
@@ -602,6 +613,7 @@ Opened:
       }
       else
          return 0;
+#endif
 
    }
 
@@ -617,9 +629,9 @@ Opened:
    imedia::position wave_out::get_position()
    {
       single_lock sLock(&m_csHandle, TRUE);
+#ifdef WINDOWS
       MMRESULT                mmr;
       MMTIME                  mmt;
-
       mmt.wType = TIME_BYTES;
 
       if(m_hwaveout != NULL)
@@ -651,7 +663,7 @@ Opened:
       }
       else
          return 0;
-
+#endif
    }
 
    int32_t wave_out::GetBufferInMMSystemCount()
@@ -737,6 +749,7 @@ Opened:
    void wave_out::_Free(LPWAVEHDR lpwavehdr)
    {
       m_lphdraFree.add(lpwavehdr);
+      #ifdef WINDOWS
       if(!m_pprebuffer->IdFree((int32_t) lpwavehdr->dwUser))
          return;
 
@@ -747,6 +760,7 @@ Opened:
 
 
       BufferReady(lpwavehdr);
+      #endif
    }
 
    void wave_out::OnPlaybackEnd()

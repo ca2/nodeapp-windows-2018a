@@ -13,7 +13,9 @@ namespace audio
       m_evInitialized(papp)
    {
       m_pencoder = NULL;
+      #ifdef WINDOWS
       m_hWaveIn = NULL;
+      #endif
       m_estate = state_initial;
       m_bResetting = false;
       //m_pthreadCallback = NULL;
@@ -48,10 +50,11 @@ namespace audio
       return thread::exit_instance();
    }
 
-   void wave_in::pre_translate_message(::ca2::signal_object * pobj) 
+   void wave_in::pre_translate_message(::ca2::signal_object * pobj)
    {
       SCAST_PTR(::ca2::message::base, pbase, pobj);
       //ASSERT(GetMainWnd() == NULL);
+      #ifdef WINDOWS
       if(pbase->m_uiMessage == MM_WIM_OPEN ||
          pbase->m_uiMessage == MM_WIM_CLOSE ||
          pbase->m_uiMessage == MM_WIM_DATA)
@@ -60,6 +63,7 @@ namespace audio
          if(pbase->m_bRet)
             return;
       }
+      #endif
       return thread::pre_translate_message(pbase);
    }
 
@@ -67,6 +71,7 @@ namespace audio
       int32_t iBufferCount,
       int32_t iBufferSampleCount)
    {
+   #ifdef WINDOWS
       if(m_hWaveIn != NULL && m_estate != state_initial)
       {
          InitializeEncoder();
@@ -89,9 +94,9 @@ namespace audio
       m_iBuffer = 0;
 
       if(MMSYSERR_NOERROR == (mmr = waveInOpen(
-         &m_hWaveIn,            
-         audiowave->m_uiWaveInDevice,            
-         &m_waveFormatEx,  
+         &m_hWaveIn,
+         audiowave->m_uiWaveInDevice,
+         &m_waveFormatEx,
          get_os_int(),
          (uint32_t) 0,
          CALLBACK_THREAD)))
@@ -99,9 +104,9 @@ namespace audio
       m_waveFormatEx.nSamplesPerSec = 22050;
       m_waveFormatEx.nAvgBytesPerSec = m_waveFormatEx.nSamplesPerSec * m_waveFormatEx.nBlockAlign;
       if(MMSYSERR_NOERROR == (mmr = waveInOpen(
-         &m_hWaveIn,            
-         WAVE_MAPPER,            
-         &m_waveFormatEx,  
+         &m_hWaveIn,
+         WAVE_MAPPER,
+         &m_waveFormatEx,
          (uint32_t) get_os_int(),
          (uint32_t) 0,
          CALLBACK_THREAD)))
@@ -109,9 +114,9 @@ namespace audio
       m_waveFormatEx.nSamplesPerSec = 11025;
       m_waveFormatEx.nAvgBytesPerSec = m_waveFormatEx.nSamplesPerSec * m_waveFormatEx.nBlockAlign;
       if(MMSYSERR_NOERROR == (mmr = waveInOpen(
-         &m_hWaveIn,            
-         WAVE_MAPPER,            
-         &m_waveFormatEx,  
+         &m_hWaveIn,
+         WAVE_MAPPER,
+         &m_waveFormatEx,
          (uint32_t) get_os_int(),
          (uint32_t) 0,
          CALLBACK_THREAD)))
@@ -188,7 +193,7 @@ Opened:
       for(i = 0; i < iSize; i++)
       {
          if(MMSYSERR_NOERROR != (mmr =  waveInPrepareHeader(
-            m_hWaveIn,  
+            m_hWaveIn,
             &GetBuffer().get_item(i)->m_wavehdr,
             sizeof(WAVEHDR))))
          {
@@ -203,6 +208,7 @@ Opened:
          close();
          return (MMRESULT) -1;
       }
+      #endif
       m_estate = StateOpened;
       return MMSYSERR_NOERROR;
    }
@@ -215,6 +221,7 @@ Opened:
    MMRESULT wave_in::close()
    {
       single_lock sLock(&m_csHandle, TRUE);
+      #ifdef WINDOWS
 
       MMRESULT mmr;
 
@@ -228,7 +235,7 @@ Opened:
       for(i = 0; i < iSize; i++)
       {
          if(MMSYSERR_NOERROR != (mmr = waveInUnprepareHeader(
-            m_hWaveIn,  
+            m_hWaveIn,
             GetBuffer().GetHdr(i),
             sizeof(WAVEHDR))))
          {
@@ -239,6 +246,7 @@ Opened:
 
       mmr = waveInClose(m_hWaveIn);
       m_hWaveIn = NULL;
+      #endif
       m_estate = state_initial;
       return MMSYSERR_NOERROR;
 
@@ -247,6 +255,7 @@ Opened:
    MMRESULT wave_in::Start()
    {
       single_lock sLock(&m_csHandle, TRUE);
+      #ifdef WINDOWS
       if(m_estate == StateRecording)
          return MMSYSERR_NOERROR;
       //ASSERT(m_estate == StateOpened || m_estate == StateStopped);
@@ -260,6 +269,7 @@ Opened:
          TRACE("ERROR starting INPUT DEVICE ");
          return mmr;
       }
+      #endif
       m_estate = StateRecording;
       return MMSYSERR_NOERROR;
 
@@ -267,11 +277,11 @@ Opened:
 
    MMRESULT wave_in::Stop()
    {
-      
+
       single_lock sLock(&m_csHandle, TRUE);
-      
       if(m_estate != StateRecording)
          return MMSYSERR_ERROR;
+      #ifdef WINDOWS
 
       MMRESULT mmr;
 
@@ -288,7 +298,7 @@ Opened:
       {
          TRACE("wave_in::Stop : Exception OPENING stopping INPUT DEVICE ");
       }
-
+#endif
       m_estate = StateStopped;
 
       m_eventStopped.SetEvent();
@@ -296,6 +306,9 @@ Opened:
       return MMSYSERR_NOERROR;
 
    }
+
+
+   #ifdef WINDOWS
 
    void CALLBACK wave_in::WaveInProc(HWAVEIN hwi, uint32_t uMsg, uint32_t dwInstance, uint32_t dwParam1, uint32_t dwParam2)
    {
@@ -325,7 +338,7 @@ Opened:
          //         i = 0;*/
       }
    }
-
+#endif
 
    LPWAVEFORMATEX wave_in::GetFormatEx()
    {
@@ -341,7 +354,7 @@ Opened:
    {
       single_lock sLock(&m_csHandle, TRUE);
       m_bResetting = true;
-
+#ifdef WINDOWS
       if(m_hWaveIn == NULL)
       {
          return MMSYSERR_ERROR;
@@ -368,6 +381,7 @@ Opened:
       catch(...)
       {
       }
+      #endif
       m_estate = StateOpened;
       m_bResetting = false;
       return MMSYSERR_NOERROR;
@@ -383,15 +397,17 @@ Opened:
    {
       return (uint32_t) ((double) GetBuffer().m_uiAnalysisSize * GetBuffer().m_uiSkippedSamplesCount * 1000.0 / m_waveFormatEx.nSamplesPerSec);
    }
-
+#ifdef WINDOWS
    HWAVEIN wave_in::GetSafeHwavein()
    {
       return m_hWaveIn;
    }
+   #endif
 
    void wave_in::TranslateWaveInMessage(::ca2::signal_object * pobj)
    {
       SCAST_PTR(::ca2::message::base, pbase, pobj);
+      #ifdef WINDOWS
       ASSERT(
          pbase->m_uiMessage == MM_WIM_OPEN ||
          pbase->m_uiMessage == MM_WIM_CLOSE ||
@@ -419,6 +435,7 @@ Opened:
          }
 
       }
+      #endif
       pbase->m_bRet = true;
    }
 
@@ -479,13 +496,15 @@ Opened:
    MMRESULT wave_in::AddBuffer(LPWAVEHDR lpwavehdr)
    {
       MMRESULT mmr;
+      #ifdef WINDOWS
       if(MMSYSERR_NOERROR != (mmr = waveInAddBuffer(
-         GetSafeHwavein(),  
+         GetSafeHwavein(),
          lpwavehdr,
          sizeof(WAVEHDR))))
       {
          TRACE("ERROR OPENING Adding INPUT DEVICE buffer");
       }
+      #endif
       m_iBuffer++;
       return mmr;
    }

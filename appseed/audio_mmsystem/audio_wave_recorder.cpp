@@ -238,9 +238,9 @@ namespace audio
 
       UNREFERENCED_PARAMETER(pwavein);
       UNREFERENCED_PARAMETER(dwSampleTime);
-
+#ifdef WINDOWS
       m_spfile->write(lpwavehdr->lpData, lpwavehdr->dwBufferLength);
-
+#endif
    }
 
    bool wave_recorder::IsRecording()

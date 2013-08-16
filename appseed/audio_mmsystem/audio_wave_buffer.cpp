@@ -329,11 +329,13 @@ namespace audio
          buffer.m_pData = &m_bdaData[i * m_uiBufferSize / sizeof(WAVEBUFFERDATA)];
          buffer.m_iIndex = (int32_t) i;
          pWaveHdr = &buffer.m_wavehdr;
+#ifdef WINDOWS
          pWaveHdr->lpData = (char *) get_data(i);
          pWaveHdr->dwBufferLength = m_uiBufferSize;
          pWaveHdr->dwBytesRecorded = 0;
          pWaveHdr->dwUser = i;
          pWaveHdr->dwFlags = 0;
+#endif
       }
 
       ZeroDoubleSetAImaginary();
@@ -428,18 +430,22 @@ namespace audio
       {
          //      buffer & buffer = GetBuffer(i);
          pWaveHdr = GetHdr(i);
+#ifdef WINDOWS
          pWaveHdr->lpData = (char *) PCMOutGetBuffer(i);
          pWaveHdr->dwBufferLength = m_uiBufferSize;
          pWaveHdr->dwBytesRecorded = 0;
          pWaveHdr->dwUser = i;
          pWaveHdr->dwFlags = 0;
+#endif
       }
 
    }
 
    void wave_buffer::PCMOutProcessWAVEHDR(LPWAVEHDR lpwavehdr)
    {
+#ifdef WINDOWS
       PCMOutProcess((int32_t) lpwavehdr->dwUser);
+#endif
    }
 
    void wave_buffer::PCMOutProcess(int32_t dwBuffer)
@@ -451,7 +457,9 @@ namespace audio
 
    void wave_buffer::FFTProcess(LPWAVEHDR lpwavehdr)
    {
+#ifdef WINDOWS
       FFTProcess((int32_t) lpwavehdr->dwUser);
+#endif
    }
 
    void wave_buffer::FFTProcess(int32_t dwBuffer)

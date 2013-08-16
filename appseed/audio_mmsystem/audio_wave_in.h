@@ -49,6 +49,9 @@ namespace audio
 
 #ifdef WINDOWS
       HWAVEIN                          m_hWaveIn;
+#elif defined(MACOS)
+      AudioStreamBasicDescription      m_desc;
+      AudioQueueInputCallback          m_callback;
 #else
       snd_pcm_t *                      m_ppcm;
       snd_pcm_hw_params_t *            m_phwparams;

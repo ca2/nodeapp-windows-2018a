@@ -171,8 +171,9 @@ namespace audio
 
    bool wave_player::initialize_instance()
    {
+   #ifdef WINDOWS
       CoInitialize(NULL);
-
+#endif
       m_pwaveout = __begin_thread < wave_out >(get_app(), ::ca2::scheduling_priority_above_normal);
       if(m_pwaveout == NULL)
          return false;
@@ -184,7 +185,9 @@ namespace audio
 
    int32_t wave_player::exit_instance()
    {
+   #ifdef WINDOWS
       CoUninitialize();
+#endif
       if(m_pwaveout != NULL)
       {
          event ev(get_app());
