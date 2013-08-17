@@ -1,22 +1,35 @@
 #include "framework.h"
 
 
-namespace audio_mixer
+namespace multimedia
 {
 
-   int32_t control_data::GetObjectType()
+
+   namespace audio_mixer_mmsystem
    {
-      return DataTypeBase;
-   }
 
 
-   int32_t control_data::get_type()
-   {
-      return m_iType;
-   }
+      int32_t control_data::GetObjectType()
+      {
+
+         return DataTypeBase;
+
+      }
 
 
-} // namespace audio_mixer
+      int32_t control_data::get_type()
+      {
+
+         return m_iType;
+
+      }
+
+
+   } // namespace audio_mixer_mmsystem
+
+
+} // namespace multimedia
+
 
 
 

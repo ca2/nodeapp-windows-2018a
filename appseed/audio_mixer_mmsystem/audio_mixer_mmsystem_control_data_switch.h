@@ -1,25 +1,33 @@
 #pragma once
 
 
-namespace audio_mixer
+namespace multimedia
 {
 
 
-   class control_data_switch :
-      public ::audio_mixer::control_data
+   namespace audio_mixer_mmsystem
    {
-   public:
 
-      inline virtual int32_t GetObjectType()
+
+      class control_data_switch :
+         public ::multimedia::audio_mixer::control_data
       {
-         return DataTypeMute;
-      }
+      public:
+
+         inline virtual int32_t GetObjectType()
+         {
+            return DataTypeMute;
+         }
 
 
-   };
+      };
 
 
-} // namespace audio_mixer
+   } // namespace audio_mixer_mmsystem
+
+
+} // namespace multimedia
+
 
 
 

@@ -1,26 +1,30 @@
 #include "framework.h"
 
 
-namespace audio_mixer
+namespace multimedia
 {
 
 
-   line_info::line_info()
+   namespace audio_mixer_mmsystem
    {
 
-   }
+
+      line_info::line_info()
+      {
+
+      }
 
 
-   line_info::~line_info()
-   {
+      line_info::~line_info()
+      {
 
-   }
-
-
-} // namespace audio_mixer
+      }
 
 
+   } // namespace audio_mixer_mmsystem
 
+
+} // namespace multimedia
 
 
 

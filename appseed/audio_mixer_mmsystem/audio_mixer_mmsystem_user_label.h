@@ -1,35 +1,42 @@
 #pragma once
 
 
-namespace audio_mixer
+namespace multimedia
 {
 
 
-   namespace user
+   namespace audio_mixer_mmsystem
    {
 
 
-      class CLASS_DECL_CA2_MULTIMEDIA label :
-         public control
+      namespace user
       {
-      public:
 
 
-         label();
-         virtual ~label();
+         class CLASS_DECL_AUDIO_MIXER_MMSYSTEM label :
+            public control
+         {
+         public:
 
 
-         virtual void SetText(const char * lpcszText) = 0;
-         ::audio_mixer::control_data & get_data();
+            label();
+            virtual ~label();
 
 
-      };
+            virtual void SetText(const char * lpcszText) = 0;
+            ::multimedia::audio_mixer::control_data & get_data();
 
 
-   } // namespace user
+         };
 
 
-} // namespace audio_mixer
+      } // namespace user
+
+
+   } // namespace audio_mixer_mmsystem
+
+
+} // namespace multimedia
 
 
 

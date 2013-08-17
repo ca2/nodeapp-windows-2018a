@@ -1,30 +1,35 @@
 #pragma once
 
 
-namespace audio_mixer
+namespace multimedia
 {
 
 
-   class CLASS_DECL_CA2_MULTIMEDIA callback
+   namespace audio_mixer_mmsystem
    {
-   public:
 
 
-      callback();
-      virtual ~callback();
+      class CLASS_DECL_AUDIO_MIXER_MMSYSTEM callback
+      {
+      public:
 
 
-      virtual ::audio_mixer::user::level_control * allocate_level_control();
-      virtual ::audio_mixer::user::toggle_control * allocate_toggle_control();
-      virtual ::audio_mixer::user::label * allocate_label();
-
-   };
+         callback();
+         virtual ~callback();
 
 
-} // namespace audio_mixer
+         virtual ::multimedia::audio_mixer::user::level_control * allocate_level_control();
+         virtual ::multimedia::audio_mixer::user::toggle_control * allocate_toggle_control();
+         virtual ::multimedia::audio_mixer::user::label * allocate_label();
 
 
+      };
 
+
+   } // namespace audio_mixer_mmsystem
+
+
+} // namespace multimedia
 
 
 

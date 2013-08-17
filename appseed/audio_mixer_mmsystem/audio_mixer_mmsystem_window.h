@@ -1,39 +1,44 @@
 #pragma once
 
 
-namespace audio_mixer
+namespace multimedia
 {
 
-   
-   class audio_mixer;
 
-
-   class window : 
-      public ::user::interaction
+   namespace audio_mixer_mmsystem
    {
-   public:
 
 
-      ::audio_mixer::audio_mixer                    * m_pmixer;
+      class audio_mixer;
 
 
-      window(sp(::ca2::application) papp);
-      virtual ~window();
+      class window : 
+         public ::user::interaction
+      {
+      public:
 
 
-      void install_message_handling(::ca2::message::dispatch * pinterface);
+         ::multimedia::audio_mixer::audio_mixer                    * m_pmixer;
 
 
-      DECL_GEN_SIGNAL(_001OnMixerControlChange)
-      DECL_GEN_SIGNAL(_001OnMixerLineChange)
+         window(sp(::ca2::application) papp);
+         virtual ~window();
 
 
-   };
+         void install_message_handling(::ca2::message::dispatch * pinterface);
 
 
-} // namespace audio_mixer
+         DECL_GEN_SIGNAL(_001OnMixerControlChange)
+            DECL_GEN_SIGNAL(_001OnMixerLineChange)
 
 
+      };
+
+
+   } // namespace audio_mixer_mmsystem
+
+
+} // namespace multimedia
 
 
 

@@ -1,26 +1,34 @@
 #pragma once
 
 
-namespace audio_mixer
+namespace multimedia
 {
 
 
-   class CLASS_DECL_CA2_MULTIMEDIA line_info
+   namespace audio_mixer_mmsystem
    {
-   public:
 
 
-      MIXERLINE       m_mixerLine;
+      class CLASS_DECL_AUDIO_MIXER_MMSYSTEM line_info
+      {
+      public:
 
 
-      line_info();
-      virtual ~line_info();
-   
-      
-   };
+         MIXERLINE       m_mixerLine;
 
 
-} // namespace audio_mixer
+         line_info();
+         virtual ~line_info();
+
+
+      };
+
+
+   } // namespace audio_mixer_mmsystem
+
+
+} // namespace multimedia
+
 
 
 

@@ -1,39 +1,48 @@
 #include "framework.h"
 
 
-namespace audio_mixer
+namespace multimedia
 {
 
 
-   namespace user
+   namespace audio_mixer_mmsystem
    {
 
 
-      label::label() :
-         control(new ::audio_mixer::control_data)
+      namespace user
       {
 
-      }
+
+         label::label() :
+            control(new ::multimedia::audio_mixer::control_data)
+         {
+
+         }
 
 
-      label::~label()
-      {
+         label::~label()
+         {
 
-      }
-
-
-      ::audio_mixer::control_data & label::get_data()
-      {
-
-         return *(::audio_mixer::control_data* ) m_pdata;
-
-      }
+         }
 
 
-   } // namespace user
+         ::multimedia::audio_mixer::control_data & label::get_data()
+         {
+
+            return *(::multimedia::audio_mixer::control_data* ) m_pdata;
+
+         }
 
 
-} // namespace audio_mixer
+      } // namespace user
+
+
+   } // namespace audio_mixer_mmsystem
+
+
+} // namespace multimedia
+
+
 
 
 

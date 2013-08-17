@@ -10,49 +10,13 @@
     <ClInclude Include="audio_mmsystem_factory_exchange.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="audio_mmsystem_global.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio_mmsystem_wave.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio_mmsystem_wave_buffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio_mmsystem_wave_effect_crescendo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio_mmsystem_wave_effect_devocalizer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio_mmsystem_wave_file.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="audio_mmsystem_wave_in.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="audio_mmsystem_wave_out.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="audio_mmsystem_wave_player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio_mmsystem_wave_player_command.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio_mmsystem_wave_player_container.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio_mmsystem_wave_pre_buffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio_mmsystem_wave_recorder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio_mmsystem_wave_recorder_command.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio_mmsystem_wave_recorder_container.h">
+    <ClInclude Include="audio_mmsystem_translation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -65,25 +29,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="framework.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="audio_mmsystem_factory_exchange.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="audio_mmsystem_wave.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="audio_mmsystem_wave_buffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="audio_mmsystem_wave_effect_crescendo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="audio_mmsystem_wave_effect_devocalizer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="audio_mmsystem_wave_file.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="audio_mmsystem_wave_in.cpp">
@@ -92,22 +38,10 @@
     <ClCompile Include="audio_mmsystem_wave_out.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="audio_mmsystem_wave_player.cpp">
+    <ClCompile Include="framework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="audio_mmsystem_wave_player_container.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="audio_mmsystem_wave_pre_buffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="audio_mmsystem_wave_pre_buffer_callback.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="audio_mmsystem_wave_recorder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="audio_mmsystem_wave_recorder_container.cpp">
+    <ClCompile Include="audio_mmsystem_translation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

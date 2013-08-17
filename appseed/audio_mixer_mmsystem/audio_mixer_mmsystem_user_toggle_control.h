@@ -1,42 +1,48 @@
 #pragma once
 
 
-namespace audio_mixer
+namespace multimedia
 {
 
 
-   class control_data_switch;
-
-
-   namespace user
+   namespace audio_mixer_mmsystem
    {
 
 
-      class CLASS_DECL_CA2_MULTIMEDIA toggle_control :
-         public control
+      class control_data_switch;
+
+
+      namespace user
       {
-      public:
 
 
-         toggle_control();
-         virtual ~toggle_control();
+         class CLASS_DECL_AUDIO_MIXER_MMSYSTEM toggle_control :
+            public control
+         {
+         public:
 
 
-         virtual check::e_check _001GetCheck() = 0;
-         virtual void _001SetCheck(check::e_check echeck) = 0;
-         virtual void set_label(const char * lpcszLabel) = 0;
-
-         ::audio_mixer::control_data_switch & get_data();
+            toggle_control();
+            virtual ~toggle_control();
 
 
-      };
+            virtual check::e_check _001GetCheck() = 0;
+            virtual void _001SetCheck(check::e_check echeck) = 0;
+            virtual void set_label(const char * lpcszLabel) = 0;
+
+            ::multimedia::audio_mixer::control_data_switch & get_data();
 
 
-   } // namespace user
+         };
 
 
-} // namespace audio_mixer
+      } // namespace user
 
+
+   } // namespace audio_mixer_mmsystem
+
+
+} // namespace multimedia
 
 
 

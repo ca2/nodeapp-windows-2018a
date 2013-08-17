@@ -1,48 +1,57 @@
 #pragma once
 
 
-namespace audio_mixer
+namespace multimedia
 {
 
 
-   class CLASS_DECL_CA2_MULTIMEDIA section :
-      virtual public ::ca2::section,
-      virtual public ::user::interaction
-   {
-   public:
-
-
-
-   enum EIds
+   namespace audio_mixer_mmsystem
    {
 
-      IdsMuteAll,
-      IdsMute
 
-   };
-
-      
-      section(sp(::ca2::application) papp);
-      virtual ~section();
-
-
-      virtual bool initialize1();
+      class CLASS_DECL_AUDIO_MIXER_MMSYSTEM section :
+         virtual public ::ca2::section,
+         virtual public ::user::interaction
+      {
+      public:
 
 
 
-      bool initialize();
-      
+         enum EIds
+         {
 
-      bool finalize();
+            IdsMuteAll,
+            IdsMute
 
-
-
-
-
-   };
+         };
 
 
-} // namespace mixguserbase
+         section(sp(::ca2::application) papp);
+         virtual ~section();
+
+
+         virtual bool initialize1();
+
+
+
+         bool initialize();
+
+
+         bool finalize();
+
+
+
+
+
+      };
+
+
+   } // namespace mixguserbase
+
+
+} // namespace multimedia
+
+
 
 
 

@@ -1,30 +1,37 @@
 #pragma once
 
 
-namespace audio_mixer
+namespace multimedia
 {
 
 
-   class control_data_volume :
-      public ::audio_mixer::control_data
+   namespace audio_mixer_mmsystem
    {
-   public:
-      
-      
-      int32_t                             nRange;
-      int32_t                             nPageInc;
-      
-      
-      inline virtual int32_t GetObjectType()
+
+
+      class control_data_volume :
+         public ::multimedia::audio_mixer::control_data
       {
-         return DataTypeVolume;
-      }
+      public:
 
 
-   };
+         int32_t                             nRange;
+         int32_t                             nPageInc;
 
 
-} // namespace audio_mixer
+         inline virtual int32_t GetObjectType()
+         {
+            return DataTypeVolume;
+         }
+
+
+      };
+
+
+   } // namespace audio_mixer_mmsystem
+
+
+} // namespace multimedia
 
 
 

@@ -12,31 +12,11 @@
 #endif
 
 
-#include "audio_mmsystem_global.h"
+#include "audio_mmsystem_translation.h"
 
 
-#include "audio_mmsystem_wave_player_command.h"
-#include "audio_mmsystem_wave_recorder_command.h"
-
-
-#include "audio_mmsystem_wave_buffer.h"
-#include "audio_mmsystem_wave_file.h"
-
-
-
-#include "audio_mmsystem_wave_in_listener.h"
-#include "audio_mmsystem_wave_in_listener_set.h"
-
-#include "audio_mmsystem_wave_player.h"
-#include "audio_mmsystem_wave_player_container.h"
-#include "audio_mmsystem_wave_pre_buffer.h"
 #include "audio_mmsystem_wave_out.h"
-#include "audio_mmsystem_wave_recorder.h"
-#include "audio_mmsystem_wave_recorder_container.h"
 #include "audio_mmsystem_wave_in.h"
 
-#include "audio_mmsystem_wave_effect_crescendo.h"
-#include "audio_mmsystem_wave_effect_devocalizer.h"
 
-
-#include "audio_mmsystem_wave.h"
+#include "audio_mmsystem_factory_exchange.h"

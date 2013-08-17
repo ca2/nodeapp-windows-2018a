@@ -1,50 +1,51 @@
 #pragma once
 
 
-namespace audio_mixer
+namespace multimedia
 {
 
 
-   class CLASS_DECL_CA2_MULTIMEDIA destination :
-      public ::audio_mixer::source
+   namespace audio_mixer_mmsystem
    {
-   public:
-
-      
-      ::audio_mixer::device *  m_pdevice;
-      ::audio_mixer::source_array  m_mixersourcea; 
-
-      
-      destination(sp(::ca2::application) papp);
-      destination(const destination & destination);
-      virtual ~destination();
 
 
-      uint32_t get_component_type();
-      void update_all_controls();
-      ::multimedia::result initialize_all_controls();
-      ::multimedia::result initialize_source_info();
-
-      ::audio_mixer::source_array & get_source_info();
-      void operator delete(void *);
-
-      destination & operator = (const destination & device);
-
-      ::audio_mixer::device * get_device();
-      void set_device(::audio_mixer::device * pdevice);
-
-   };
+      class CLASS_DECL_AUDIO_MIXER_MMSYSTEM destination :
+         virtual public ::multimedia::audio_mixer_mmsystem::source,
+         virtual public ::multimedia::audio_mixer::destination
+      {
+      public:
 
 
-   class destination_array :
-      public spa(destination)
-   {
-   public:
-
-   };
+         destination(sp(::ca2::application) papp);
+         destination(const destination & destination);
+         virtual ~destination();
 
 
-} // namespace audio_mixer
+         uint32_t get_component_type();
+         void update_all_controls();
+         ::multimedia::result initialize_all_controls();
+         ::multimedia::result initialize_source_info();
+
+         ::multimedia::audio_mixer::source_array & get_source_info();
+         void operator delete(void *);
+
+         destination & operator = (const destination & device);
+
+         ::multimedia::audio_mixer::device * get_device();
+         void set_device(::multimedia::audio_mixer::device * pdevice);
+
+
+         virtual uint32_t get_mixer_line_id();
+
+      };
+
+
+   } // namespace audio_mixer_mmsystem
+
+
+
+} // namespace multimedia
+
 
 
 

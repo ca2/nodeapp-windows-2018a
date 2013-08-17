@@ -805,47 +805,18 @@
   <ItemGroup>
     <ClInclude Include="audio_mmsystem.h" />
     <ClInclude Include="audio_mmsystem_factory_exchange.h" />
-    <ClInclude Include="audio_mmsystem_global.h" />
-    <ClInclude Include="audio_mmsystem_wave.h" />
-    <ClInclude Include="audio_mmsystem_wave_buffer.h" />
-    <ClInclude Include="audio_mmsystem_wave_effect_crescendo.h" />
-    <ClInclude Include="audio_mmsystem_wave_effect_devocalizer.h" />
-    <ClInclude Include="audio_mmsystem_wave_file.h" />
+    <ClInclude Include="audio_mmsystem_translation.h" />
     <ClInclude Include="audio_mmsystem_wave_in.h" />
     <ClInclude Include="audio_mmsystem_wave_out.h" />
-    <ClInclude Include="audio_mmsystem_wave_player.h" />
-    <ClInclude Include="audio_mmsystem_wave_player_command.h" />
-    <ClInclude Include="audio_mmsystem_wave_player_container.h" />
-    <ClInclude Include="audio_mmsystem_wave_pre_buffer.h" />
-    <ClInclude Include="audio_mmsystem_wave_recorder.h" />
-    <ClInclude Include="audio_mmsystem_wave_recorder_command.h" />
-    <ClInclude Include="audio_mmsystem_wave_recorder_container.h" />
     <ClInclude Include="framework.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="audio_mmsystem_factory_exchange.cpp" />
-    <ClCompile Include="audio_mmsystem_wave.cpp" />
-    <ClCompile Include="audio_mmsystem_wave_buffer.cpp" />
-    <ClCompile Include="audio_mmsystem_wave_effect_crescendo.cpp" />
-    <ClCompile Include="audio_mmsystem_wave_effect_devocalizer.cpp" />
-    <ClCompile Include="audio_mmsystem_wave_file.cpp" />
+    <ClCompile Include="audio_mmsystem_translation.cpp" />
     <ClCompile Include="audio_mmsystem_wave_in.cpp" />
     <ClCompile Include="audio_mmsystem_wave_out.cpp" />
-    <ClCompile Include="audio_mmsystem_wave_player.cpp" />
-    <ClCompile Include="audio_mmsystem_wave_player_container.cpp" />
-    <ClCompile Include="audio_mmsystem_wave_pre_buffer.cpp" />
-    <ClCompile Include="audio_mmsystem_wave_pre_buffer_callback.cpp" />
-    <ClCompile Include="audio_mmsystem_wave_recorder.cpp" />
-    <ClCompile Include="audio_mmsystem_wave_recorder_container.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='codeanalysis|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='memdleak|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='profiler|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='codeanalysis|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='memdleak|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='profiler|x64'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

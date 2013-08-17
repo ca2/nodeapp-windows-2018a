@@ -1,41 +1,49 @@
 #include "framework.h"
 
 
-namespace audio_mixer
+namespace multimedia
 {
 
 
-   namespace user
+   namespace audio_mixer_mmsystem
    {
 
 
-      control::control(::audio_mixer::control_data * pdata)
+      namespace user
       {
 
-         m_pdata = pdata;
 
-      }
-
-
-      control::~control()
-      {
-
-         if(m_pdata != NULL)
+         control::control(::multimedia::audio_mixer::control_data * pdata)
          {
 
-            delete m_pdata;
-
-            m_pdata = NULL;
+            m_pdata = pdata;
 
          }
 
-      }
+
+         control::~control()
+         {
+
+            if(m_pdata != NULL)
+            {
+
+               delete m_pdata;
+
+               m_pdata = NULL;
+
+            }
+
+         }
 
 
-   } // namespace user
+      } // namespace user
 
 
-} // namespace audio_mixer
+   } // namespace audio_mixer_mmsystem
+
+
+} // namespace multimedia
+
 
 
 
