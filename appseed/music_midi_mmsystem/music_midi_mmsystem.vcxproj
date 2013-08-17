@@ -811,6 +811,7 @@
     <ClInclude Include="music_midi_mmsystem_sequence_thread.h" />
     <ClInclude Include="music_midi_mmsystem_translation.h" />
     <ClInclude Include="player\music_midi_mmsystem_player.h" />
+    <ClInclude Include="player\music_midi_mmsystem_player_callback.h" />
     <ClInclude Include="player\music_midi_mmsystem_player_window.h" />
   </ItemGroup>
   <ItemGroup>

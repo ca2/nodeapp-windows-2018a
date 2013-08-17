@@ -28,6 +28,9 @@
     <ClInclude Include="music_midi_mmsystem_translation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="player\music_midi_mmsystem_player_callback.h">
+      <Filter>Header Files\player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
