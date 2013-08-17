@@ -1,0 +1,929 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="multimedia\multimedia.h">
+      <Filter>Header Files\multimedia</Filter>
+    </ClInclude>
+    <ClInclude Include="video\video.h">
+      <Filter>Header Files\video</Filter>
+    </ClInclude>
+    <ClInclude Include="video\video_player_command.h">
+      <Filter>Header Files\video</Filter>
+    </ClInclude>
+    <ClInclude Include="video\video_global.h">
+      <Filter>Header Files\video</Filter>
+    </ClInclude>
+    <ClInclude Include="video\video_player.h">
+      <Filter>Header Files\video</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplay\mediaplay.h">
+      <Filter>Header Files\mediaplay</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplay\mediaplay_data.h">
+      <Filter>Header Files\mediaplay</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplay\mediaplay_document.h">
+      <Filter>Header Files\mediaplay</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplay\mediaplay_karaoke.h">
+      <Filter>Header Files\mediaplay</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplay\mediaplay_record_notify_view.h">
+      <Filter>Header Files\mediaplay</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplay\mediaplay_view.h">
+      <Filter>Header Files\mediaplay</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplay\mediaplay_view_interface.h">
+      <Filter>Header Files\mediaplay</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaplay\mediaplay_view_update_hint.h">
+      <Filter>Header Files\mediaplay</Filter>
+    </ClInclude>
+    <ClInclude Include="video_decode\decoder_.h">
+      <Filter>Header Files\video_decode</Filter>
+    </ClInclude>
+    <ClInclude Include="video_decode\decoder_plugin.h">
+      <Filter>Header Files\video_decode</Filter>
+    </ClInclude>
+    <ClInclude Include="video_decode\decoder_plugin_set.h">
+      <Filter>Header Files\video_decode</Filter>
+    </ClInclude>
+    <ClInclude Include="video_decode\decoder_plugin_set_ex1.h">
+      <Filter>Header Files\video_decode</Filter>
+    </ClInclude>
+    <ClInclude Include="video_decode\video_decode.h">
+      <Filter>Header Files\video_decode</Filter>
+    </ClInclude>
+    <ClInclude Include="imedia\imedia.h">
+      <Filter>Header Files\imedia</Filter>
+    </ClInclude>
+    <ClInclude Include="video\video_command.h">
+      <Filter>Header Files\video</Filter>
+    </ClInclude>
+    <ClInclude Include="multimedia\multimedia_application.h">
+      <Filter>Header Files\multimedia</Filter>
+    </ClInclude>
+    <ClInclude Include="medialibrary\medialibrary_document.h">
+      <Filter>Header Files\medialibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="medialibrary\medialibrary_explorer_tree_view.h">
+      <Filter>Header Files\medialibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="medialibrary\medialibrary_explorer_view.h">
+      <Filter>Header Files\medialibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="medialibrary\medialibrary_list_view.h">
+      <Filter>Header Files\medialibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="medialibrary\medialibrary.h">
+      <Filter>Header Files\medialibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="medialibrary\medialibrary_child_frame.h">
+      <Filter>Header Files\medialibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="medialibrary\medialibrary_const.h">
+      <Filter>Header Files\medialibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="mediafun\mediafun_list_view.h">
+      <Filter>Header Files\mediafun</Filter>
+    </ClInclude>
+    <ClInclude Include="mediafun\mediafun_tree_view.h">
+      <Filter>Header Files\mediafun</Filter>
+    </ClInclude>
+    <ClInclude Include="mediafun\mediafun_view.h">
+      <Filter>Header Files\mediafun</Filter>
+    </ClInclude>
+    <ClInclude Include="mediafun\mediafun.h">
+      <Filter>Header Files\mediafun</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaalbum\mediaalbum.h">
+      <Filter>Header Files\mediaalbum</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaalbum\mediaalbum_document.h">
+      <Filter>Header Files\mediaalbum</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaalbum\mediaalbum_frame.h">
+      <Filter>Header Files\mediaalbum</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaalbum\mediaalbum_html_view.h">
+      <Filter>Header Files\mediaalbum</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaalbum\mediaalbum_main_view.h">
+      <Filter>Header Files\mediaalbum</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaalbum\mediaalbum_options_view.h">
+      <Filter>Header Files\mediaalbum</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaalbum\mediaalbum_search_form_view.h">
+      <Filter>Header Files\mediaalbum</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaalbum\mediaalbum_song_check_list.h">
+      <Filter>Header Files\mediaalbum</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaalbum\mediaalbum_song_list.h">
+      <Filter>Header Files\mediaalbum</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaalbum\mediaalbum_tree.h">
+      <Filter>Header Files\mediaalbum</Filter>
+    </ClInclude>
+    <ClInclude Include="mediaalbum\mediaalbum_view_update_hint.h">
+      <Filter>Header Files\mediaalbum</Filter>
+    </ClInclude>
+    <ClInclude Include="medialibrary\medialibrary_pane_view.h">
+      <Filter>Header Files\medialibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="medialibrary\medialibrary_pane_view_update_hint.h">
+      <Filter>Header Files\medialibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="music_user\music_user.h">
+      <Filter>Header Files\music_user</Filter>
+    </ClInclude>
+    <ClInclude Include="music_user\music_user_player_document_container.h">
+      <Filter>Header Files\music_user</Filter>
+    </ClInclude>
+    <ClInclude Include="music_user\music_user_single_document_template.h">
+      <Filter>Header Files\music_user</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music.h">
+      <Filter>Header Files\music</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_attributes.h">
+      <Filter>Header Files\music</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_karaoke_util.h">
+      <Filter>Header Files\music</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_star350.h">
+      <Filter>Header Files\music\star350</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_star350_event_base.h">
+      <Filter>Header Files\music\star350</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_star350_event_track.h">
+      <Filter>Header Files\music\star350</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_star350_event_v1.h">
+      <Filter>Header Files\music\star350</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_star350_event_v5.h">
+      <Filter>Header Files\music\star350</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_star350_event_v8.h">
+      <Filter>Header Files\music\star350</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_star350_file.h">
+      <Filter>Header Files\music\star350</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_star350_info_header.h">
+      <Filter>Header Files\music\star350</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_star350_lyric_track.h">
+      <Filter>Header Files\music\star350</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_star350_lyric_tracks.h">
+      <Filter>Header Files\music\star350</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_star350_track_base.h">
+      <Filter>Header Files\music\star350</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_star350_tracks.h">
+      <Filter>Header Files\music\star350</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_star350_track_v8.h">
+      <Filter>Header Files\music\star350</Filter>
+    </ClInclude>
+    <ClInclude Include="ikaraoke\ikaraoke_data.h">
+      <Filter>Header Files\ikaraoke</Filter>
+    </ClInclude>
+    <ClInclude Include="ikaraoke\ikaraoke_data_container.h">
+      <Filter>Header Files\ikaraoke</Filter>
+    </ClInclude>
+    <ClInclude Include="ikaraoke\ikaraoke_dynamic_data.h">
+      <Filter>Header Files\ikaraoke</Filter>
+    </ClInclude>
+    <ClInclude Include="ikaraoke\ikaraoke.h">
+      <Filter>Header Files\ikaraoke</Filter>
+    </ClInclude>
+    <ClInclude Include="ikaraoke\ikaraoke_karaoke.h">
+      <Filter>Header Files\ikaraoke</Filter>
+    </ClInclude>
+    <ClInclude Include="ikaraoke\ikaraoke_lyric_events_v1.h">
+      <Filter>Header Files\ikaraoke</Filter>
+    </ClInclude>
+    <ClInclude Include="ikaraoke\ikaraoke_lyric_events_v2.h">
+      <Filter>Header Files\ikaraoke</Filter>
+    </ClInclude>
+    <ClInclude Include="ikaraoke\ikaraoke_lyric_event_v1.h">
+      <Filter>Header Files\ikaraoke</Filter>
+    </ClInclude>
+    <ClInclude Include="ikaraoke\ikaraoke_lyric_event_v2.h">
+      <Filter>Header Files\ikaraoke</Filter>
+    </ClInclude>
+    <ClInclude Include="ikaraoke\ikaraoke_static_data.h">
+      <Filter>Header Files\ikaraoke</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_tune1000_info.h">
+      <Filter>Header Files\music\tune1000</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_softkaraoke_info.h">
+      <Filter>Header Files\music\softkaraoke</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_xf.h">
+      <Filter>Header Files\music\xf</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_xf_info_header.h">
+      <Filter>Header Files\music\xf</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_xf_info_header_ls.h">
+      <Filter>Header Files\music\xf</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_xf_info_headers.h">
+      <Filter>Header Files\music\xf</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_xf_xf.h">
+      <Filter>Header Files\music\xf</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_definition.h">
+      <Filter>Header Files\music</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_microke1_section.h">
+      <Filter>Header Files\music\microke1</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_microke1.h">
+      <Filter>Header Files\music\microke1</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_softkaraoke.h">
+      <Filter>Header Files\music\softkaraoke</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_star350_definition.h">
+      <Filter>Header Files\music\star350</Filter>
+    </ClInclude>
+    <ClInclude Include="ikaraoke\ikaraoke_Global.h">
+      <Filter>Header Files\ikaraoke</Filter>
+    </ClInclude>
+    <ClInclude Include="music\music_tune1000.h">
+      <Filter>Header Files\music\tune1000</Filter>
+    </ClInclude>
+    <ClInclude Include="music_user\music_user_midi_section.h">
+      <Filter>Header Files\music_user\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music_user\music_user_midi.h">
+      <Filter>Header Files\music_user\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music_user\music_user_midi_track_selection.h">
+      <Filter>Header Files\music_user\midi\track_selection</Filter>
+    </ClInclude>
+    <ClInclude Include="music_user\music_user_midi_track_selection_control_interface.h">
+      <Filter>Header Files\music_user\midi\track_selection</Filter>
+    </ClInclude>
+    <ClInclude Include="music_user\music_user_midi_track_selection_ddx.h">
+      <Filter>Header Files\music_user\midi\track_selection</Filter>
+    </ClInclude>
+    <ClInclude Include="music_user\music_user_midi_track_selection_document.h">
+      <Filter>Header Files\music_user\midi\track_selection</Filter>
+    </ClInclude>
+    <ClInclude Include="music_user\music_user_midi_track_selection_frame.h">
+      <Filter>Header Files\music_user\midi\track_selection</Filter>
+    </ClInclude>
+    <ClInclude Include="music_user\music_user_midi_track_selection_view.h">
+      <Filter>Header Files\music_user\midi\track_selection</Filter>
+    </ClInclude>
+    <ClInclude Include="music_user\music_user_midi_track_selection_view_update_hint.h">
+      <Filter>Header Files\music_user\midi\track_selection</Filter>
+    </ClInclude>
+    <ClInclude Include="music_user\music_user_midi_track_selection_selection.h">
+      <Filter>Header Files\music_user\midi\track_selection</Filter>
+    </ClInclude>
+    <ClInclude Include="karaoke\karaoke_karaoke.h">
+      <Filter>Header Files\karaoke</Filter>
+    </ClInclude>
+    <ClInclude Include="karaoke\karaoke.h">
+      <Filter>Header Files\karaoke</Filter>
+    </ClInclude>
+    <ClInclude Include="karaoke\karaoke_bouncing_ball.h">
+      <Filter>Header Files\karaoke</Filter>
+    </ClInclude>
+    <ClInclude Include="karaoke\karaoke_sdi_frame.h">
+      <Filter>Header Files\karaoke</Filter>
+    </ClInclude>
+    <ClInclude Include="karaoke\karaoke_view.h">
+      <Filter>Header Files\karaoke</Filter>
+    </ClInclude>
+    <ClInclude Include="karaoke\karaoke_lyric_view_line.h">
+      <Filter>Header Files\karaoke</Filter>
+    </ClInclude>
+    <ClInclude Include="karaoke\karaoke_lyric_view_lines.h">
+      <Filter>Header Files\karaoke</Filter>
+    </ClInclude>
+    <ClInclude Include="karaoke\karaoke_lyric_view_line_selection.h">
+      <Filter>Header Files\karaoke</Filter>
+    </ClInclude>
+    <ClInclude Include="karaoke\karaoke_lyric_view_line_template.h">
+      <Filter>Header Files\karaoke</Filter>
+    </ClInclude>
+    <ClInclude Include="karaoke\karaoke_lyric_view_line_templates.h">
+      <Filter>Header Files\karaoke</Filter>
+    </ClInclude>
+    <ClInclude Include="karaoke\karaoke_scoring.h">
+      <Filter>Header Files\karaoke</Filter>
+    </ClInclude>
+    <ClInclude Include="karaoke\karaoke_scoring_central.h">
+      <Filter>Header Files\karaoke</Filter>
+    </ClInclude>
+    <ClInclude Include="karaoke\karaoke_scoring_central_container.h">
+      <Filter>Header Files\karaoke</Filter>
+    </ClInclude>
+    <ClInclude Include="music_user\aaa_want_to_remove_music_user_musical_player_central_container.h">
+      <Filter>Header Files\music_user</Filter>
+    </ClInclude>
+    <ClInclude Include="music_user\music_user_musical_player.h">
+      <Filter>Header Files\music_user</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\player\music_midi_player.h">
+      <Filter>Header Files\music\midi\player</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\player\music_midi_player_callback.h">
+      <Filter>Header Files\music\midi\player</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\player\music_midi_player_callback_interface.h">
+      <Filter>Header Files\music\midi\player</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\player\music_midi_player_command.h">
+      <Filter>Header Files\music\midi\player</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\player\music_midi_player_interface.h">
+      <Filter>Header Files\music\midi\player</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\player\music_midi_player_notify_event.h">
+      <Filter>Header Files\music\midi\player</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\player\music_midi_player_window.h">
+      <Filter>Header Files\music\midi\player</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi_attribute_message.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi_definition.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi_document_helper.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi_enum.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi_event_base.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi_event_v1.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi_event_v2.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi_event_v5.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi_event_v7.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi_event_v8.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi_events_v1.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi_exception.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi_file.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi_lyric_track.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi_lyric_tracks.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi_midi.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi_midi_listener.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi_midi_listener_set.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi_sequence.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi_sequence_thread.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi_tempo_map.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi_track.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi_track_base.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi_track_v8.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi_tracks.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi_util.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="music\midi\music_midi_view_helper.h">
+      <Filter>Header Files\music\midi</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{e2571db8-1669-4ee5-82a1-a6d704bfe32d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\multimedia">
+      <UniqueIdentifier>{e3778410-5731-4e58-b69f-37554b816d4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{87a445b3-95eb-40bd-9ff2-d032ed40678f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\multimedia">
+      <UniqueIdentifier>{5d2884b3-f372-4101-a817-373521f554ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\video">
+      <UniqueIdentifier>{a322adff-685f-4115-b145-9e72fa452077}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\mediaplay">
+      <UniqueIdentifier>{f2780aaa-a68b-43f2-9330-f7c4e3734f7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\mediaplay">
+      <UniqueIdentifier>{a96e1d82-9a86-4267-b713-59b5c8f94653}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\video">
+      <UniqueIdentifier>{d7a80f2e-e5d0-47c8-9204-f66dd76a5029}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\video_decode">
+      <UniqueIdentifier>{ddb439fa-0ddb-49cd-8c45-0c240f4d7a97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\video_decode">
+      <UniqueIdentifier>{b9b02fe8-df58-4921-b660-87bc24c97ac3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\imedia">
+      <UniqueIdentifier>{fa72293e-2e84-4938-ab49-10ad9ab36599}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\medialibrary">
+      <UniqueIdentifier>{e9956ab2-3c3f-42cf-ae4b-14ccfd20946b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\medialibrary">
+      <UniqueIdentifier>{27eae7ac-b38e-4d81-8f6d-4ce12fa8fcfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\mediafun">
+      <UniqueIdentifier>{0b52a772-bb2c-4630-a9bf-301d06d29155}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\mediafun">
+      <UniqueIdentifier>{3a798e00-27bb-43b5-af60-d6b014c4c9ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\mediaalbum">
+      <UniqueIdentifier>{2f9d33bd-a8b5-4feb-8f9a-d6aa401b3b75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\mediaalbum">
+      <UniqueIdentifier>{3567c14a-956b-4c86-afda-6928c197756f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\karaoke">
+      <UniqueIdentifier>{b9112bdf-66a0-4e30-a94c-e608e7616e86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\music">
+      <UniqueIdentifier>{1ffcf01d-0d02-4bcd-afea-ea59f2e458b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\music\midi">
+      <UniqueIdentifier>{3bee3d74-10ed-4586-bdce-bf8051d3ed23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\music\star350">
+      <UniqueIdentifier>{1a2e7e85-c7a0-4763-92fa-84f8cb1e7b3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\music_user">
+      <UniqueIdentifier>{d356f093-fc12-4467-864d-60c9ba11155b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\music_user">
+      <UniqueIdentifier>{b1060026-1db2-4fbe-8c0f-75327797da3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\music">
+      <UniqueIdentifier>{af9c1b0d-40e1-4e93-a003-4241869cdc9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\music\midi">
+      <UniqueIdentifier>{34b881b1-d30e-42ab-a424-afd4dd04cfed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\music\star350">
+      <UniqueIdentifier>{7c8327c0-b003-446e-b4f4-112696cce651}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\karaoke">
+      <UniqueIdentifier>{c6ec0c0b-0a0f-4cc0-8646-7fa077ad4b2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ikaraoke">
+      <UniqueIdentifier>{3a9cc245-8799-40e9-b505-11e44f07bcce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ikaraoke">
+      <UniqueIdentifier>{5827bba5-912a-4014-8f16-14b68c65e1f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\music\midi\player">
+      <UniqueIdentifier>{27cf5c13-d922-427e-8f23-d6f112e015aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\music\xf">
+      <UniqueIdentifier>{158541b6-9ed1-46fb-9b19-731dac029ddc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\music\softkaraoke">
+      <UniqueIdentifier>{460147b8-b01c-4561-9f8f-5c40e0748aea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\music\tune1000">
+      <UniqueIdentifier>{7e4129c7-19bc-4127-b433-6f645a436a34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\music\microke1">
+      <UniqueIdentifier>{dee14b70-c95a-4ed9-8cdf-6faf7475f67b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\music\xf">
+      <UniqueIdentifier>{ed768ba9-a120-405a-b7bd-3ee1e7627a28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\music\softkaraoke">
+      <UniqueIdentifier>{61376768-9d05-46f7-b8f1-0410273df7d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\music\microke1">
+      <UniqueIdentifier>{a07884d9-7796-4ac0-bc79-6628176b819e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\music\tune1000">
+      <UniqueIdentifier>{f16a8793-0810-4321-be88-9dd0ddd49a55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\music_user\midi">
+      <UniqueIdentifier>{350823e8-79bb-4f66-82c8-751abf9bd701}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\music_user\midi\track_selection">
+      <UniqueIdentifier>{ad53fc78-54dd-4ee0-9db2-1cc29b0b438a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\music\midi\player">
+      <UniqueIdentifier>{af1cd039-8184-40ed-8827-9ccf5af01da3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\music_user\midi">
+      <UniqueIdentifier>{58546047-3ca8-4a5d-8ce6-28f836c4f699}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\music_user\midi\track_selection">
+      <UniqueIdentifier>{453ea36b-874d-45f5-add8-cb3290365da1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="mediaplay\mediaplay_data.cpp">
+      <Filter>Source Files\mediaplay</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaplay\mediaplay_document.cpp">
+      <Filter>Source Files\mediaplay</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaplay\mediaplay_karaoke.cpp">
+      <Filter>Source Files\mediaplay</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaplay\mediaplay_record_notify_view.cpp">
+      <Filter>Source Files\mediaplay</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaplay\mediaplay_view.cpp">
+      <Filter>Source Files\mediaplay</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaplay\mediaplay_view_interface.cpp">
+      <Filter>Source Files\mediaplay</Filter>
+    </ClCompile>
+    <ClCompile Include="video\video_player_command.cpp">
+      <Filter>Source Files\video</Filter>
+    </ClCompile>
+    <ClCompile Include="video\video_player.cpp">
+      <Filter>Source Files\video</Filter>
+    </ClCompile>
+    <ClCompile Include="video_decode\video_decode_decoder_.cpp">
+      <Filter>Source Files\video_decode</Filter>
+    </ClCompile>
+    <ClCompile Include="video_decode\video_decode_decoder_plugin.cpp">
+      <Filter>Source Files\video_decode</Filter>
+    </ClCompile>
+    <ClCompile Include="video_decode\video_decode_decoder_plugin_set.cpp">
+      <Filter>Source Files\video_decode</Filter>
+    </ClCompile>
+    <ClCompile Include="multimedia\multimedia_application.cpp">
+      <Filter>Source Files\multimedia</Filter>
+    </ClCompile>
+    <ClCompile Include="medialibrary\medialibrary_child_frame.cpp">
+      <Filter>Source Files\medialibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="medialibrary\medialibrary_document.cpp">
+      <Filter>Source Files\medialibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="medialibrary\medialibrary_explorer_tree_view.cpp">
+      <Filter>Source Files\medialibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="medialibrary\medialibrary_explorer_view.cpp">
+      <Filter>Source Files\medialibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="medialibrary\medialibrary_list_view.cpp">
+      <Filter>Source Files\medialibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="mediafun\mediafun_list_view.cpp">
+      <Filter>Source Files\mediafun</Filter>
+    </ClCompile>
+    <ClCompile Include="mediafun\mediafun_tree_view.cpp">
+      <Filter>Source Files\mediafun</Filter>
+    </ClCompile>
+    <ClCompile Include="mediafun\mediafun_view.cpp">
+      <Filter>Source Files\mediafun</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaalbum\mediaalbum_document.cpp">
+      <Filter>Source Files\mediaalbum</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaalbum\mediaalbum_frame.cpp">
+      <Filter>Source Files\mediaalbum</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaalbum\mediaalbum_html_view.cpp">
+      <Filter>Source Files\mediaalbum</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaalbum\mediaalbum_main_view.cpp">
+      <Filter>Source Files\mediaalbum</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaalbum\mediaalbum_options_view.cpp">
+      <Filter>Source Files\mediaalbum</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaalbum\mediaalbum_search_form_view.cpp">
+      <Filter>Source Files\mediaalbum</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaalbum\mediaalbum_song_check_list.cpp">
+      <Filter>Source Files\mediaalbum</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaalbum\mediaalbum_song_list.cpp">
+      <Filter>Source Files\mediaalbum</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaalbum\mediaalbum_tree.cpp">
+      <Filter>Source Files\mediaalbum</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaalbum\mediaalbum_view_update_hint.cpp">
+      <Filter>Source Files\mediaalbum</Filter>
+    </ClCompile>
+    <ClCompile Include="medialibrary\medialibrary_pane_view.cpp">
+      <Filter>Source Files\medialibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="medialibrary\medialibrary_pane_view_update_hint.cpp">
+      <Filter>Source Files\medialibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="framework.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="karaoke\karaoke_karaoke.cpp">
+      <Filter>Source Files\karaoke</Filter>
+    </ClCompile>
+    <ClCompile Include="karaoke\karaoke_bouncing_ball.cpp">
+      <Filter>Source Files\karaoke</Filter>
+    </ClCompile>
+    <ClCompile Include="karaoke\karaoke_view.cpp">
+      <Filter>Source Files\karaoke</Filter>
+    </ClCompile>
+    <ClCompile Include="karaoke\karaoke_lyric_view_line.cpp">
+      <Filter>Source Files\karaoke</Filter>
+    </ClCompile>
+    <ClCompile Include="karaoke\karaoke_lyric_view_lines.cpp">
+      <Filter>Source Files\karaoke</Filter>
+    </ClCompile>
+    <ClCompile Include="karaoke\karaoke_lyric_view_line_selection.cpp">
+      <Filter>Source Files\karaoke</Filter>
+    </ClCompile>
+    <ClCompile Include="karaoke\karaoke_lyric_view_line_template.cpp">
+      <Filter>Source Files\karaoke</Filter>
+    </ClCompile>
+    <ClCompile Include="karaoke\karaoke_lyric_view_line_templates.cpp">
+      <Filter>Source Files\karaoke</Filter>
+    </ClCompile>
+    <ClCompile Include="karaoke\karaoke_scoring.cpp">
+      <Filter>Source Files\karaoke</Filter>
+    </ClCompile>
+    <ClCompile Include="karaoke\karaoke_scoring_central.cpp">
+      <Filter>Source Files\karaoke</Filter>
+    </ClCompile>
+    <ClCompile Include="karaoke\karaoke_scoring_central_container.cpp">
+      <Filter>Source Files\karaoke</Filter>
+    </ClCompile>
+    <ClCompile Include="music\music_attributes.cpp">
+      <Filter>Source Files\music</Filter>
+    </ClCompile>
+    <ClCompile Include="music\music_karaoke_util.cpp">
+      <Filter>Source Files\music</Filter>
+    </ClCompile>
+    <ClCompile Include="music\music_star350_event_base.cpp">
+      <Filter>Source Files\music\star350</Filter>
+    </ClCompile>
+    <ClCompile Include="music\music_star350_event_track.cpp">
+      <Filter>Source Files\music\star350</Filter>
+    </ClCompile>
+    <ClCompile Include="music\music_star350_event_v1.cpp">
+      <Filter>Source Files\music\star350</Filter>
+    </ClCompile>
+    <ClCompile Include="music\music_star350_event_v5.cpp">
+      <Filter>Source Files\music\star350</Filter>
+    </ClCompile>
+    <ClCompile Include="music\music_star350_event_v8.cpp">
+      <Filter>Source Files\music\star350</Filter>
+    </ClCompile>
+    <ClCompile Include="music\music_star350_file.cpp">
+      <Filter>Source Files\music\star350</Filter>
+    </ClCompile>
+    <ClCompile Include="music\music_star350_info_header.cpp">
+      <Filter>Source Files\music\star350</Filter>
+    </ClCompile>
+    <ClCompile Include="music\music_star350_lyric_track.cpp">
+      <Filter>Source Files\music\star350</Filter>
+    </ClCompile>
+    <ClCompile Include="music\music_star350_lyric_tracks.cpp">
+      <Filter>Source Files\music\star350</Filter>
+    </ClCompile>
+    <ClCompile Include="music\music_star350_track_base.cpp">
+      <Filter>Source Files\music\star350</Filter>
+    </ClCompile>
+    <ClCompile Include="music\music_star350_tracks.cpp">
+      <Filter>Source Files\music\star350</Filter>
+    </ClCompile>
+    <ClCompile Include="music\music_star350_track_v8.cpp">
+      <Filter>Source Files\music\star350</Filter>
+    </ClCompile>
+    <ClCompile Include="music_user\music_user_player_document_container.cpp">
+      <Filter>Source Files\music_user</Filter>
+    </ClCompile>
+    <ClCompile Include="music_user\music_user_single_document_template.cpp">
+      <Filter>Source Files\music_user</Filter>
+    </ClCompile>
+    <ClCompile Include="ikaraoke\ikaraoke_data.cpp">
+      <Filter>Source Files\ikaraoke</Filter>
+    </ClCompile>
+    <ClCompile Include="ikaraoke\ikaraoke_data_container.cpp">
+      <Filter>Source Files\ikaraoke</Filter>
+    </ClCompile>
+    <ClCompile Include="ikaraoke\ikaraoke_dynamic_data.cpp">
+      <Filter>Source Files\ikaraoke</Filter>
+    </ClCompile>
+    <ClCompile Include="ikaraoke\ikaraoke_karaoke.cpp">
+      <Filter>Source Files\ikaraoke</Filter>
+    </ClCompile>
+    <ClCompile Include="ikaraoke\ikaraoke_static_data.cpp">
+      <Filter>Source Files\ikaraoke</Filter>
+    </ClCompile>
+    <ClCompile Include="ikaraoke\ikaraoke_lyric_events_v1.cpp">
+      <Filter>Source Files\ikaraoke</Filter>
+    </ClCompile>
+    <ClCompile Include="ikaraoke\ikaraoke_lyric_events_v2.cpp">
+      <Filter>Source Files\ikaraoke</Filter>
+    </ClCompile>
+    <ClCompile Include="ikaraoke\ikaraoke_lyric_event_v1.cpp">
+      <Filter>Source Files\ikaraoke</Filter>
+    </ClCompile>
+    <ClCompile Include="music\music_tune1000_info.cpp">
+      <Filter>Source Files\music\tune1000</Filter>
+    </ClCompile>
+    <ClCompile Include="music\music_softkaraoke_info.cpp">
+      <Filter>Source Files\music\softkaraoke</Filter>
+    </ClCompile>
+    <ClCompile Include="music\music_xf.cpp">
+      <Filter>Source Files\music\xf</Filter>
+    </ClCompile>
+    <ClCompile Include="music\music_xf_info_header.cpp">
+      <Filter>Source Files\music\xf</Filter>
+    </ClCompile>
+    <ClCompile Include="music\music_xf_info_header_ls.cpp">
+      <Filter>Source Files\music\xf</Filter>
+    </ClCompile>
+    <ClCompile Include="music\music_xf_info_headers.cpp">
+      <Filter>Source Files\music\xf</Filter>
+    </ClCompile>
+    <ClCompile Include="music\music_microke1.cpp">
+      <Filter>Source Files\music\microke1</Filter>
+    </ClCompile>
+    <ClCompile Include="music_user\music_user_midi_track_selection_control_interface.cpp">
+      <Filter>Source Files\music_user\midi\track_selection</Filter>
+    </ClCompile>
+    <ClCompile Include="music_user\music_user_midi_track_selection_ddx.cpp">
+      <Filter>Source Files\music_user\midi\track_selection</Filter>
+    </ClCompile>
+    <ClCompile Include="music_user\music_user_midi_track_selection_document.cpp">
+      <Filter>Source Files\music_user\midi\track_selection</Filter>
+    </ClCompile>
+    <ClCompile Include="music_user\music_user_midi_track_selection_frame.cpp">
+      <Filter>Source Files\music_user\midi\track_selection</Filter>
+    </ClCompile>
+    <ClCompile Include="music_user\music_user_midi_track_selection_view.cpp">
+      <Filter>Source Files\music_user\midi\track_selection</Filter>
+    </ClCompile>
+    <ClCompile Include="music_user\music_user_midi_track_selection_view_update_hint.cpp">
+      <Filter>Source Files\music_user\midi\track_selection</Filter>
+    </ClCompile>
+    <ClCompile Include="music_user\music_user_midi_section.cpp">
+      <Filter>Source Files\music_user\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="music_user\music_user_midi_track_selection_selection.cpp">
+      <Filter>Source Files\music_user\midi\track_selection</Filter>
+    </ClCompile>
+    <ClCompile Include="mediaplay\mediaplay_view_update_hint.cpp">
+      <Filter>Source Files\mediaplay</Filter>
+    </ClCompile>
+    <ClCompile Include="music_user\music_user_musical_player.cpp">
+      <Filter>Source Files\music_user</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\player\music_midi_player.cpp">
+      <Filter>Source Files\music\midi\player</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\player\music_midi_player_callback.cpp">
+      <Filter>Source Files\music\midi\player</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\player\music_midi_player_callback_interface.cpp">
+      <Filter>Source Files\music\midi\player</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\player\music_midi_player_command.cpp">
+      <Filter>Source Files\music\midi\player</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\player\music_midi_player_interface.cpp">
+      <Filter>Source Files\music\midi\player</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\player\music_midi_player_window.cpp">
+      <Filter>Source Files\music\midi\player</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\music_midi.cpp">
+      <Filter>Source Files\music\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\music_midi_document_helper.cpp">
+      <Filter>Source Files\music\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\music_midi_event_base.cpp">
+      <Filter>Source Files\music\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\music_midi_event_v1.cpp">
+      <Filter>Source Files\music\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\music_midi_event_v2.cpp">
+      <Filter>Source Files\music\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\music_midi_event_v5.cpp">
+      <Filter>Source Files\music\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\music_midi_event_v7.cpp">
+      <Filter>Source Files\music\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\music_midi_event_v8.cpp">
+      <Filter>Source Files\music\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\music_midi_events_v1.cpp">
+      <Filter>Source Files\music\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\music_midi_exception.cpp">
+      <Filter>Source Files\music\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\music_midi_file.cpp">
+      <Filter>Source Files\music\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\music_midi_lyric_track.cpp">
+      <Filter>Source Files\music\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\music_midi_midi.cpp">
+      <Filter>Source Files\music\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\music_midi_midi_listener.cpp">
+      <Filter>Source Files\music\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\music_midi_sequence.cpp">
+      <Filter>Source Files\music\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\music_midi_sequence_thread.cpp">
+      <Filter>Source Files\music\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\music_midi_track.cpp">
+      <Filter>Source Files\music\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\music_midi_track_base.cpp">
+      <Filter>Source Files\music\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\music_midi_track_v8.cpp">
+      <Filter>Source Files\music\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\music_midi_tracks.cpp">
+      <Filter>Source Files\music\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\music_midi_util.cpp">
+      <Filter>Source Files\music\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="music\midi\music_midi_view_helper.cpp">
+      <Filter>Source Files\music\midi</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="veriwell_multimedia.def">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>
