@@ -35,7 +35,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{20FD0446-AA14-4013-84E0-B5CB63FA354F}</ProjectGuid>
+    <ProjectGuid>{B46A198F-4171-4DEE-8CFD-164D99B42057}</ProjectGuid>
     <RootNamespace>multimedia</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <ProjectName>multimedia</ProjectName>
