@@ -72,7 +72,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ca", "..\..\..\app\appseed\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_mmsystem", "..\..\appseed\audio_mmsystem\audio_mmsystem.vcxproj", "{54850FD8-653A-43B6-AA90-E59AC030559C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multimedia", "..\..\appseed\audio_mixer_mmsystem\audio_mixer_mmsystem.vcxproj", "{B46A198F-4171-4DEE-8CFD-164D99B42057}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_mixer_mmsystem", "..\..\appseed\audio_mixer_mmsystem\audio_mixer_mmsystem.vcxproj", "{B46A198F-4171-4DEE-8CFD-164D99B42057}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "music_midi_mmsystem", "..\..\appseed\music_midi_mmsystem\music_midi_mmsystem.vcxproj", "{B2E38F2D-2D8C-4C63-8865-02DC220DC360}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -888,6 +890,38 @@ Global
 		{B46A198F-4171-4DEE-8CFD-164D99B42057}.profiler|Win32.Build.0 = profiler|Win32
 		{B46A198F-4171-4DEE-8CFD-164D99B42057}.profiler|x64.ActiveCfg = profiler|x64
 		{B46A198F-4171-4DEE-8CFD-164D99B42057}.profiler|x64.Build.0 = profiler|x64
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.basis|Android.ActiveCfg = basis|Win32
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.basis|ARM.ActiveCfg = basis|Win32
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.basis|Mixed Platforms.ActiveCfg = basis|Win32
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.basis|Mixed Platforms.Build.0 = basis|Win32
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.basis|Win32.ActiveCfg = basis|Win32
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.basis|Win32.Build.0 = basis|Win32
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.basis|x64.ActiveCfg = basis|x64
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.basis|x64.Build.0 = basis|x64
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.codeanalysis|Android.ActiveCfg = codeanalysis|Win32
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.codeanalysis|ARM.ActiveCfg = codeanalysis|Win32
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.codeanalysis|Mixed Platforms.ActiveCfg = codeanalysis|Win32
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.codeanalysis|Mixed Platforms.Build.0 = codeanalysis|Win32
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.codeanalysis|x64.Build.0 = codeanalysis|x64
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.memdleak|Android.ActiveCfg = memdleak|Win32
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.memdleak|ARM.ActiveCfg = memdleak|Win32
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.memdleak|Mixed Platforms.ActiveCfg = memdleak|Win32
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.memdleak|Mixed Platforms.Build.0 = memdleak|Win32
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.memdleak|Win32.ActiveCfg = memdleak|Win32
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.memdleak|Win32.Build.0 = memdleak|Win32
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.memdleak|x64.ActiveCfg = memdleak|x64
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.memdleak|x64.Build.0 = memdleak|x64
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.profiler|Android.ActiveCfg = profiler|Win32
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.profiler|ARM.ActiveCfg = profiler|Win32
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.profiler|Mixed Platforms.ActiveCfg = profiler|Win32
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.profiler|Mixed Platforms.Build.0 = profiler|Win32
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.profiler|Win32.ActiveCfg = profiler|Win32
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.profiler|Win32.Build.0 = profiler|Win32
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.profiler|x64.ActiveCfg = profiler|x64
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.profiler|x64.Build.0 = profiler|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
