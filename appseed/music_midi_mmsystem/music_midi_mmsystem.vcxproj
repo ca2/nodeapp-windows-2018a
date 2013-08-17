@@ -805,39 +805,12 @@
   <ItemGroup>
     <ClInclude Include="framework.h" />
     <ClInclude Include="music_midi_mmsystem.h" />
-    <ClInclude Include="music_midi_mmsystem_attribute_message.h" />
-    <ClInclude Include="music_midi_mmsystem_document_helper.h" />
-    <ClInclude Include="music_midi_mmsystem_enum.h" />
-    <ClInclude Include="music_midi_mmsystem_events_v1.h" />
-    <ClInclude Include="music_midi_mmsystem_event_base.h" />
-    <ClInclude Include="music_midi_mmsystem_event_v1.h" />
-    <ClInclude Include="music_midi_mmsystem_event_v2.h" />
-    <ClInclude Include="music_midi_mmsystem_event_v5.h" />
-    <ClInclude Include="music_midi_mmsystem_event_v7.h" />
-    <ClInclude Include="music_midi_mmsystem_event_v8.h" />
     <ClInclude Include="music_midi_mmsystem_exception.h" />
     <ClInclude Include="music_midi_mmsystem_file.h" />
-    <ClInclude Include="music_midi_mmsystem_lyric_track.h" />
-    <ClInclude Include="music_midi_mmsystem_lyric_tracks.h" />
-    <ClInclude Include="music_midi_mmsystem_midi.h" />
-    <ClInclude Include="music_midi_mmsystem_midi_listener.h" />
-    <ClInclude Include="music_midi_mmsystem_midi_listener_set.h" />
     <ClInclude Include="music_midi_mmsystem_sequence.h" />
     <ClInclude Include="music_midi_mmsystem_sequence_thread.h" />
-    <ClInclude Include="music_midi_mmsystem_tempo_map.h" />
-    <ClInclude Include="music_midi_mmsystem_track.h" />
-    <ClInclude Include="music_midi_mmsystem_tracks.h" />
-    <ClInclude Include="music_midi_mmsystem_track_base.h" />
-    <ClInclude Include="music_midi_mmsystem_track_v8.h" />
     <ClInclude Include="music_midi_mmsystem_translation.h" />
-    <ClInclude Include="music_midi_mmsystem_util.h" />
-    <ClInclude Include="music_midi_mmsystem_view_helper.h" />
     <ClInclude Include="player\music_midi_mmsystem_player.h" />
-    <ClInclude Include="player\music_midi_mmsystem_player_callback.h" />
-    <ClInclude Include="player\music_midi_mmsystem_player_callback_interface.h" />
-    <ClInclude Include="player\music_midi_mmsystem_player_command.h" />
-    <ClInclude Include="player\music_midi_mmsystem_player_interface.h" />
-    <ClInclude Include="player\music_midi_mmsystem_player_notify_event.h" />
     <ClInclude Include="player\music_midi_mmsystem_player_window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -875,10 +848,6 @@
     <ClCompile Include="music_midi_mmsystem_util.cpp" />
     <ClCompile Include="music_midi_mmsystem_view_helper.cpp" />
     <ClCompile Include="player\music_midi_mmsystem_player.cpp" />
-    <ClCompile Include="player\music_midi_mmsystem_player_callback.cpp" />
-    <ClCompile Include="player\music_midi_mmsystem_player_callback_interface.cpp" />
-    <ClCompile Include="player\music_midi_mmsystem_player_command.cpp" />
-    <ClCompile Include="player\music_midi_mmsystem_player_interface.cpp" />
     <ClCompile Include="player\music_midi_mmsystem_player_window.cpp" />
   </ItemGroup>
   <ItemGroup>
