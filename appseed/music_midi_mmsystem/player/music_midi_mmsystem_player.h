@@ -1,6 +1,10 @@
 #pragma once
 
 
+#include "music_midi_mmsystem_player_window.h"
+#include "music_midi_mmsystem_player_callback.h"
+
+
 typedef struct tag_midicallbackdata MIDICALLBACKDATA;
 
 typedef struct  tagDouble
