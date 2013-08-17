@@ -23,7 +23,7 @@ namespace music
 
    }
 
-   namespace midi
+   namespace midi_mmsystem
    {
 
 
@@ -36,7 +36,7 @@ namespace music
 
 
 
-      class CLASS_DECL_VERIWELL_MULTIMEDIA file :
+      class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM file :
          virtual public primitive::memory_container
       {
       public:
@@ -273,7 +273,7 @@ namespace music
       };
 
 
-   } // namespace midi
+   } // namespace midi_mmsystem
 
 
 } // namespace music

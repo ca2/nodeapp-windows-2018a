@@ -5,7 +5,7 @@ namespace music
 {
 
 
-   namespace midi
+   namespace midi_mmsystem
    {
 
 
@@ -3459,7 +3459,7 @@ smf_Open_File_Cleanup:
       }
 
 
-   } // namespace midi
+   } // namespace midi_mmsystem
 
 
 } // namespace music

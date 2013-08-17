@@ -5,11 +5,11 @@ namespace music
 {
 
 
-   namespace midi
+   namespace midi_mmsystem
    {
 
 
-      class CLASS_DECL_VERIWELL_MULTIMEDIA tracks :
+      class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM tracks :
          virtual public ::ca2::object
       {
 
@@ -213,7 +213,7 @@ namespace music
       };
 
 
-   } // namespace midi
+   } // namespace midi_mmsystem
 
 
 } // namespace music

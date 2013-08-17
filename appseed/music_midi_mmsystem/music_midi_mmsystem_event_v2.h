@@ -5,11 +5,11 @@ namespace music
 {
 
 
-   namespace midi
+   namespace midi_mmsystem
    {
 
 
-      class CLASS_DECL_VERIWELL_MULTIMEDIA event_v2 :
+      class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM event_v2 :
          public ::music::midi::event_base  
       {
       public:
@@ -92,7 +92,7 @@ namespace music
       };
 
 
-   } // namespace midi
+   } // namespace midi_mmsystem
 
 
 } // namespace music

@@ -5,7 +5,7 @@ namespace music
 {
 
 
-   namespace midi
+   namespace midi_mmsystem
    {
 
 
@@ -2640,7 +2640,7 @@ seq_Preroll_Cleanup:
       }
 
 
-   } // namespace midi
+   } // namespace midi_mmsystem
 
 
 } // namespace music

@@ -6,7 +6,7 @@ namespace music
 {
 
 
-   namespace midi
+   namespace midi_mmsystem
    {
 
 
@@ -38,7 +38,7 @@ namespace music
       } // namespace player
 
 
-   } // namespace midi
+   } // namespace midi_mmsystem
 
 
 } // namespace music
@@ -179,7 +179,7 @@ namespace music
 namespace music
 {
 
-   namespace midi
+   namespace midi_mmsystem
    {
 
 
@@ -290,7 +290,7 @@ namespace music
       };
 
 
-      class CLASS_DECL_VERIWELL_MULTIMEDIA file_flags :
+      class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM file_flags :
          public ::flags < e_file_flag >
       {
       public:
@@ -300,7 +300,7 @@ namespace music
 
 
 
-   } // namespace midi
+   } // namespace midi_mmsystem
 
 
 } // namespace music

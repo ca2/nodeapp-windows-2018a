@@ -109,6 +109,9 @@
     <ClInclude Include="music_midi_mmsystem_view_helper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="music_midi_mmsystem_translation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -211,6 +214,9 @@
     </ClCompile>
     <ClCompile Include="player\music_midi_mmsystem_player_window.cpp">
       <Filter>Source Files\player</Filter>
+    </ClCompile>
+    <ClCompile Include="music_midi_mmsystem_translation.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

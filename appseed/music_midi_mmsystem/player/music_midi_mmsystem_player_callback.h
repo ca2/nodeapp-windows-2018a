@@ -5,7 +5,7 @@ namespace music
 {
 
 
-   namespace midi
+   namespace midi_mmsystem
    {
 
 
@@ -13,7 +13,7 @@ namespace music
       {
 
 
-         class CLASS_DECL_VERIWELL_MULTIMEDIA callback :
+         class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM callback :
             virtual public callback_interface
          {
          public:
@@ -40,7 +40,7 @@ namespace music
       } // namespace player
 
 
-   } // namespace midi
+   } // namespace midi_mmsystem
 
 
 } // namespace music

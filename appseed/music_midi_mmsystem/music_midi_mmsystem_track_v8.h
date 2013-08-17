@@ -5,14 +5,14 @@ namespace music
 {
 
 
-   namespace midi
+   namespace midi_mmsystem
    {
 
 
       class event_v1;
 
 
-      class CLASS_DECL_VERIWELL_MULTIMEDIA track_v8
+      class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM track_v8
       {
       public:
 
@@ -46,7 +46,7 @@ namespace music
       };
 
 
-   } // namespace midi
+   } // namespace midi_mmsystem
 
 
 } // namespace music

@@ -811,6 +811,11 @@ namespace win
       return pprinter;
    }
 
+   string application::veriwell_multimedia_music_midi_get_default_library_name()
+   {
+      return "music_midi_mmsystem";
+   }
+
    string application::multimedia_audio_mixer_get_default_library_name()
    {
       return "audio_mixer_mmsystem";

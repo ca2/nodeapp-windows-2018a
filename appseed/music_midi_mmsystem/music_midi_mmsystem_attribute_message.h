@@ -5,11 +5,11 @@ namespace music
 {
 
 
-   namespace midi
+   namespace midi_mmsystem
    {
 
 
-      class CLASS_DECL_VERIWELL_MULTIMEDIA attribute_message :
+      class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM attribute_message :
          public ::ca2::signal_object
       {
       public:
@@ -25,7 +25,7 @@ namespace music
 
 
 
-   } // namespace midi
+   } // namespace midi_mmsystem
 
 
 } // namespace music

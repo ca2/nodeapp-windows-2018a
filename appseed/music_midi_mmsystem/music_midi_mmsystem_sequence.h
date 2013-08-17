@@ -28,11 +28,11 @@ namespace music
 {
 
    
-   namespace midi
+   namespace midi_mmsystem
    {
       
       
-      class CLASS_DECL_VERIWELL_MULTIMEDIA midi_out
+      class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM midi_out
       {
       public:
          
@@ -59,7 +59,7 @@ namespace music
 #ifdef WINDOWS
       
       
-      class CLASS_DECL_VERIWELL_MULTIMEDIA midi_stream
+      class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM midi_stream
       {
       public:
          
@@ -79,7 +79,7 @@ namespace music
 #endif
       
       
-      class CLASS_DECL_VERIWELL_MULTIMEDIA midi_pack
+      class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM midi_pack
       {
       public:
          
@@ -121,7 +121,7 @@ namespace music
 
 
 
-      class CLASS_DECL_VERIWELL_MULTIMEDIA sequence :
+      class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM sequence :
          virtual public ::ikaraoke::karaoke
       {
       public:
@@ -435,7 +435,7 @@ namespace music
       } MIDIDONEDATA, * LPMIDIDONEDATA;
 
 
-   } // namespace midi
+   } // namespace midi_mmsystem
 
 
 } // namespace music

@@ -5,7 +5,7 @@ namespace music
 {
 
 
-   namespace midi
+   namespace midi_mmsystem
    {
 
 
@@ -57,7 +57,7 @@ namespace music
       } // namespace player
 
 
-   } // namespace midi
+   } // namespace midi_mmsystem
 
 
 } // namespace music

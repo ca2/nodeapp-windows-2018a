@@ -5,7 +5,7 @@ namespace music
 {
 
 
-   namespace midi
+   namespace midi_mmsystem
    {
 
 
@@ -13,7 +13,7 @@ namespace music
 
 
 
-      class CLASS_DECL_VERIWELL_MULTIMEDIA midi_listener :
+      class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM midi_listener :
          virtual public ::ca2::signalizable
       {
       public:
@@ -41,7 +41,7 @@ namespace music
 
 
 
-   } // namespace midi
+   } // namespace midi_mmsystem
 
 
 } // namespace music

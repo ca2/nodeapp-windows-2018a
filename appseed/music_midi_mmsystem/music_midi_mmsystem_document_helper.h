@@ -5,14 +5,14 @@ namespace music
 {
 
 
-   namespace midi
+   namespace midi_mmsystem
    {
 
 
       class sequence;
 
 
-      class CLASS_DECL_VERIWELL_MULTIMEDIA document_helper :
+      class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM document_helper :
          public virtual ::ca2::object
       {
       public:
@@ -51,7 +51,7 @@ namespace music
       };
 
 
-   } // namespace midi
+   } // namespace midi_mmsystem
 
 
 } // namespace music

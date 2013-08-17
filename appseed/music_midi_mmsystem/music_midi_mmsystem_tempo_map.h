@@ -5,11 +5,11 @@ namespace music
 {
 
 
-   namespace midi
+   namespace midi_mmsystem
    {
 
 
-      class CLASS_DECL_VERIWELL_MULTIMEDIA tempo_map_entry
+      class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM tempo_map_entry
       {
       public:
 
@@ -27,14 +27,14 @@ namespace music
 
       };
 
-      class CLASS_DECL_VERIWELL_MULTIMEDIA tempo_map :
+      class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM tempo_map :
          public  array < tempo_map_entry, tempo_map_entry &>
       {
       public:
       };
 
 
-   } // namespace midi
+   } // namespace midi_mmsystem
 
 
 } // namespace music

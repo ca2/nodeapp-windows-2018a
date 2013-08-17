@@ -5,7 +5,7 @@ namespace music
 {
 
 
-   namespace midi
+   namespace midi_mmsystem
    {
 
 
@@ -35,7 +35,7 @@ namespace music
       } // namespace player
 
 
-   } // namespace midi
+   } // namespace midi_mmsystem
 
 
 } // namespace music
@@ -81,7 +81,7 @@ typedef uint32_t SMFRESULT;
 #define FOURCC_XFIH     mmioFOURCC('X','F','I','H')
 #define FOURCC_XFKM     mmioFOURCC('X','F','K','M')
 
-typedef struct CLASS_DECL_VERIWELL_MULTIMEDIA tag_chunkhdr
+typedef struct CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM tag_chunkhdr
 {
    FOURCC  fourccType;
    uint32_t   dwLength;
@@ -89,7 +89,7 @@ typedef struct CLASS_DECL_VERIWELL_MULTIMEDIA tag_chunkhdr
    *PCHUNKHDR;
 
 #pragma pack(1)   // override cl32 default packing, to match disk spfile->
-typedef struct CLASS_DECL_VERIWELL_MULTIMEDIA tag_midifilehdr
+typedef struct CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM tag_midifilehdr
 {
    WORD    wFormat;
    WORD    wTracks;
@@ -105,7 +105,7 @@ typedef struct CLASS_DECL_VERIWELL_MULTIMEDIA tag_midifilehdr
 /* NOTE: This is arbitrary and only used if there is a tempo map but no
 ** entry at tick 0.
 */
-typedef struct CLASS_DECL_VERIWELL_MULTIMEDIA tag_keyframe
+typedef struct CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM tag_keyframe
 {
    /*
    ** Meta events. All FF's indicates never seen.
@@ -185,26 +185,26 @@ typedef struct tag_smffileinfo
 namespace music
 {
 
-   namespace midi
+   namespace midi_mmsystem
    {
 
 
 
-      CLASS_DECL_VERIWELL_MULTIMEDIA extern const uint32_t grbChanMsgLen[];
-      CLASS_DECL_VERIWELL_MULTIMEDIA extern const uint32_t voiceText[];
-      CLASS_DECL_VERIWELL_MULTIMEDIA extern const char pitchText[][5];
-      CLASS_DECL_VERIWELL_MULTIMEDIA extern const uint32_t DefaultTempo;
+      CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM extern const uint32_t grbChanMsgLen[];
+      CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM extern const uint32_t voiceText[];
+      CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM extern const char pitchText[][5];
+      CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM extern const uint32_t DefaultTempo;
       
       
       
-      CLASS_DECL_VERIWELL_MULTIMEDIA ::multimedia::result TranslateSMFResult(::music::midi::e_file_result smfrc);
-      CLASS_DECL_VERIWELL_MULTIMEDIA uint32_t GetVDWord(byte * & hpbMidiStream, uint32_t dwLeft, uint32_t &dwValue);
-      CLASS_DECL_VERIWELL_MULTIMEDIA int32_t GetMessageLen(BYTE bEvent);
-      CLASS_DECL_VERIWELL_MULTIMEDIA uint32_t GetStateMaxSize();
-      CLASS_DECL_VERIWELL_MULTIMEDIA double GetNoteFrequency(double dA3Frequency,BYTE bNote);
+      CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM ::multimedia::result TranslateSMFResult(::music::midi::e_file_result smfrc);
+      CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM uint32_t GetVDWord(byte * & hpbMidiStream, uint32_t dwLeft, uint32_t &dwValue);
+      CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM int32_t GetMessageLen(BYTE bEvent);
+      CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM uint32_t GetStateMaxSize();
+      CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM double GetNoteFrequency(double dA3Frequency,BYTE bNote);
 
 
-   } // namespace midi
+   } // namespace midi_mmsystem
 
 
 } // namespace music

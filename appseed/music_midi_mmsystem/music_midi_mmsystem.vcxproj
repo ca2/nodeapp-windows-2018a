@@ -243,7 +243,7 @@
       <AdditionalOptions>-Zm284 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>.;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/thirdparty/include;$(SolutionDir)../../../app/thirdparty/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../app/appseed/ca2;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_VERIWELL_MULTIMEDIA_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>Async</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -830,6 +830,7 @@
     <ClInclude Include="music_midi_mmsystem_tracks.h" />
     <ClInclude Include="music_midi_mmsystem_track_base.h" />
     <ClInclude Include="music_midi_mmsystem_track_v8.h" />
+    <ClInclude Include="music_midi_mmsystem_translation.h" />
     <ClInclude Include="music_midi_mmsystem_util.h" />
     <ClInclude Include="music_midi_mmsystem_view_helper.h" />
     <ClInclude Include="player\music_midi_mmsystem_player.h" />
@@ -871,6 +872,7 @@
     <ClCompile Include="music_midi_mmsystem_tracks.cpp" />
     <ClCompile Include="music_midi_mmsystem_track_base.cpp" />
     <ClCompile Include="music_midi_mmsystem_track_v8.cpp" />
+    <ClCompile Include="music_midi_mmsystem_translation.cpp" />
     <ClCompile Include="music_midi_mmsystem_util.cpp" />
     <ClCompile Include="music_midi_mmsystem_view_helper.cpp" />
     <ClCompile Include="player\music_midi_mmsystem_player.cpp" />

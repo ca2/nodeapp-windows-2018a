@@ -4,14 +4,14 @@
 namespace music
 {
 
-   namespace midi
+   namespace midi_mmsystem
    {
 
 
       class document_helper;
 
 
-      class CLASS_DECL_VERIWELL_MULTIMEDIA view_helper   :
+      class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM view_helper   :
          virtual public ::ca2::object
       {
       public:
@@ -28,7 +28,7 @@ namespace music
       };
 
 
-   } // namespace midi
+   } // namespace midi_mmsystem
 
 
 } // namespace music

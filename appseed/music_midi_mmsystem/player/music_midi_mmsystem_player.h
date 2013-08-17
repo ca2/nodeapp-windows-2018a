@@ -31,7 +31,7 @@ namespace music
 {
 
 
-   namespace midi
+   namespace midi_mmsystem
    {
 
 
@@ -47,7 +47,7 @@ namespace music
 
 
 
-         class CLASS_DECL_VERIWELL_MULTIMEDIA player :
+         class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM player :
             public ::ca2::thread,
             public ::music::midi::midi_listener
          {
@@ -128,7 +128,7 @@ namespace music
       } // namespace player
 
 
-   } // namespace midi
+   } // namespace midi_mmsystem
 
 
 } // namespace music

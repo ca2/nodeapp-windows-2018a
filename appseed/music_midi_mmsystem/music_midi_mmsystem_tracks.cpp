@@ -5,7 +5,7 @@ namespace music
 {
 
 
-   namespace midi
+   namespace midi_mmsystem
    {
 
 
@@ -3027,7 +3027,7 @@ Skip090:;
       }
 
 
-   } // namespace midi
+   } // namespace midi_mmsystem
 
 
 } // namespace music
