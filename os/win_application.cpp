@@ -811,6 +811,11 @@ namespace win
       return pprinter;
    }
 
+   string application::multimedia_audio_mixer_get_default_library_name()
+   {
+      return "audio_mixer_mmsystem";
+   }
+
    string application::multimedia_audio_get_default_library_name()
    {
       return "audio_mmsystem";

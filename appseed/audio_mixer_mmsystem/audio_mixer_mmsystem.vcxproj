@@ -36,9 +36,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B46A198F-4171-4DEE-8CFD-164D99B42057}</ProjectGuid>
-    <RootNamespace>multimedia</RootNamespace>
+    <RootNamespace>audio_mixer_mmsystem</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <ProjectName>multimedia</ProjectName>
+    <ProjectName>audio_mixer_mmsystem</ProjectName>
     <VCTargetsPath Condition="'$(VCTargetsPath11)' != '' and '$(VSVersion)' == '' and $(VisualStudioVersion) == ''">$(VCTargetsPath11)</VCTargetsPath>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -803,328 +803,42 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="audio\audio.h" />
-    <ClInclude Include="audio\audio_global.h" />
-    <ClInclude Include="audio\audio_command.h" />
-    <ClInclude Include="audio\audio_wave_buffer.h" />
-    <ClInclude Include="audio\audio_wave.h" />
-    <ClInclude Include="audio\audio_wave_effect_crescendo.h" />
-    <ClInclude Include="audio\audio_wave_effect_devocalizer.h" />
-    <ClInclude Include="audio\audio_wave_file.h" />
-    <ClInclude Include="audio\audio_wave_format.h" />
-    <ClInclude Include="audio\audio_wave_in.h" />
-    <ClInclude Include="audio\audio_wave_in_listener.h" />
-    <ClInclude Include="audio\audio_wave_in_listener_set.h" />
-    <ClInclude Include="audio\audio_wave_out.h" />
-    <ClInclude Include="audio\audio_wave_player.h" />
-    <ClInclude Include="audio\audio_wave_player_command.h" />
-    <ClInclude Include="audio\audio_wave_player_container.h" />
-    <ClInclude Include="audio\audio_wave_pre_buffer.h" />
-    <ClInclude Include="audio\audio_wave_recorder.h" />
-    <ClInclude Include="audio\audio_wave_recorder_command.h" />
-    <ClInclude Include="audio\audio_wave_recorder_container.h" />
-    <ClInclude Include="audio_decode\audio_decode.h" />
-    <ClInclude Include="audio_decode\audio_decode_decoder.h" />
-    <ClInclude Include="audio_decode\audio_decode_decoder_plugin.h" />
-    <ClInclude Include="audio_decode\audio_decode_decoder_plugin_set.h" />
-    <ClInclude Include="audio_decode\audio_decode_encoder.h" />
-    <ClInclude Include="audio_decode\audio_decode_encoder_plugin.h" />
-    <ClInclude Include="audio_decode\audio_decode_encoder_plugin_set.h" />
-    <ClInclude Include="audio_mixer\audio_mixer.h" />
-    <ClInclude Include="audio_mixer\audio_mixer_callback.h" />
-    <ClInclude Include="audio_mixer\audio_mixer_control.h" />
-    <ClInclude Include="audio_mixer\audio_mixer_control_data.h" />
-    <ClInclude Include="audio_mixer\audio_mixer_control_data_switch.h" />
-    <ClInclude Include="audio_mixer\audio_mixer_control_data_volume.h" />
-    <ClInclude Include="audio_mixer\audio_mixer_destination.h" />
-    <ClInclude Include="audio_mixer\audio_mixer_device.h" />
-    <ClInclude Include="audio_mixer\audio_mixer_line_info.h" />
-    <ClInclude Include="audio_mixer\audio_mixer_mixer.h" />
-    <ClInclude Include="audio_mixer\audio_mixer_section.h" />
-    <ClInclude Include="audio_mixer\audio_mixer_source.h" />
-    <ClInclude Include="audio_mixer\audio_mixer_thread.h" />
-    <ClInclude Include="audio_mixer\audio_mixer_user_control.h" />
-    <ClInclude Include="audio_mixer\audio_mixer_user_label.h" />
-    <ClInclude Include="audio_mixer\audio_mixer_user_level_control.h" />
-    <ClInclude Include="audio_mixer\audio_mixer_user_toggle_control.h" />
-    <ClInclude Include="audio_mixer\audio_mixer_window.h" />
-    <ClInclude Include="audio_mixer_userbase\audio_mixer_userbase.h" />
-    <ClInclude Include="audio_mixer_userbase\audio_mixer_userbase_control_data.h" />
-    <ClInclude Include="audio_mixer_userbase\audio_mixer_userbase_control_view.h" />
-    <ClInclude Include="audio_mixer_userbase\audio_mixer_userbase_document.h" />
-    <ClInclude Include="audio_mixer_userbase\audio_mixer_userbase_frame_window.h" />
-    <ClInclude Include="audio_mixer_userbase\audio_mixer_userbase_label.h" />
-    <ClInclude Include="audio_mixer_userbase\audio_mixer_userbase_main_view.h" />
-    <ClInclude Include="audio_mixer_userbase\audio_mixer_userbase_mute_control.h" />
-    <ClInclude Include="audio_mixer_userbase\audio_mixer_userbase_section.h" />
-    <ClInclude Include="audio_mixer_userbase\audio_mixer_userbase_slider.h" />
-    <ClInclude Include="audio_mixer_userbase\audio_mixer_userbase_thread.h" />
-    <ClInclude Include="iaudio\iaudio.h" />
-    <ClInclude Include="iaudio\iaudio_wave_stream_effect.h" />
-    <ClInclude Include="iaudio\iaudio_wave_stream_effect_chain.h" />
-    <ClInclude Include="iaudio\iaudio_wave_stream_effect_event_listener.h" />
-    <ClInclude Include="iaudio\iaudio_wave_stream_effect_order.h" />
-    <ClInclude Include="id3lib\id3lib.h" />
-    <ClInclude Include="id3lib\id3lib_acconfig.h" />
-    <ClInclude Include="id3lib\id3lib_config.h" />
-    <ClInclude Include="id3lib\id3lib_field.h" />
-    <ClInclude Include="id3lib\id3lib_field_def.h" />
-    <ClInclude Include="id3lib\id3lib_field_impl.h" />
-    <ClInclude Include="id3lib\id3lib_flags.h" />
-    <ClInclude Include="id3lib\id3lib_frame.h" />
-    <ClInclude Include="id3lib\id3lib_frame_def.h" />
-    <ClInclude Include="id3lib\id3lib_frame_impl.h" />
-    <ClInclude Include="id3lib\id3lib_globals.h" />
-    <ClInclude Include="id3lib\id3lib_header.h" />
-    <ClInclude Include="id3lib\id3lib_header_frame.h" />
-    <ClInclude Include="id3lib\id3lib_header_tag.h" />
-    <ClInclude Include="id3lib\id3lib_helpers.h" />
-    <ClInclude Include="id3lib\id3lib_io_decorators.h" />
-    <ClInclude Include="id3lib\id3lib_io_helpers.h" />
-    <ClInclude Include="id3lib\id3lib_io_strings.h" />
-    <ClInclude Include="id3lib\id3lib_mp3_header.h" />
-    <ClInclude Include="id3lib\id3lib_reader.h" />
-    <ClInclude Include="id3lib\id3lib_readers.h" />
-    <ClInclude Include="id3lib\id3lib_sized_types.h" />
-    <ClInclude Include="id3lib\id3lib_spec.h" />
-    <ClInclude Include="id3lib\id3lib_streams.h" />
-    <ClInclude Include="id3lib\id3lib_strings.h" />
-    <ClInclude Include="id3lib\id3lib_tag.h" />
-    <ClInclude Include="id3lib\id3lib_tag_impl.h" />
-    <ClInclude Include="id3lib\id3lib_utils.h" />
-    <ClInclude Include="id3lib\id3lib_writer.h" />
-    <ClInclude Include="id3lib\id3lib_writers.h" />
-    <ClInclude Include="imediamanager\imediamanager.h" />
-    <ClInclude Include="imediamanager\PlayerInterface.h" />
-    <ClInclude Include="imediamanager\PlaylistInterface.h" />
-    <ClInclude Include="imedia\imedia.h" />
-    <ClInclude Include="imedia\imedia_position.h" />
-    <ClInclude Include="imedia\imedia_position_array.h" />
-    <ClInclude Include="imedia\imedia_time.h" />
-    <ClInclude Include="imedia\imedia_time_array.h" />
-    <ClInclude Include="mediamanager\mediamanager.h" />
-    <ClInclude Include="mediamanager\mediamanager_album_build.h" />
-    <ClInclude Include="mediamanager\mediamanager_album_build_thread.h" />
-    <ClInclude Include="mediamanager\mediamanager_album_build_window.h" />
-    <ClInclude Include="mediamanager\mediamanager_album_record.h" />
-    <ClInclude Include="mediamanager\mediamanager_media_manager.h" />
-    <ClInclude Include="mediaplaylist\mediaplaylist.h" />
-    <ClInclude Include="mediaplaylist\mediaplaylist_player.h" />
-    <ClInclude Include="mediaplaylist\mediaplaylist_media_playlist.h" />
-    <ClInclude Include="mediaplaylist\mediaplaylist_listener.h" />
-    <ClInclude Include="mediaplaylist\mediaplaylist_document.h" />
-    <ClInclude Include="mediaplaylist\mediaplaylist_enum.h" />
-    <ClInclude Include="mediaplaylist\mediaplaylist_frame.h" />
-    <ClInclude Include="mediaplaylist\mediaplaylist_list_view.h" />
-    <ClInclude Include="mediaplaylist\mediaplaylist_tree_base.h" />
-    <ClInclude Include="mediaplaylist\mediaplaylist_tree_data.h" />
-    <ClInclude Include="mediaplaylist\mediaplaylist_tree_item_data.h" />
-    <ClInclude Include="mediaplaylist\mediaplaylist_tree_view.h" />
-    <ClInclude Include="mediaplaylist\mediaplaylist_view.h" />
-    <ClInclude Include="mediaplaylist\mediaplaylist_view_update_hint.h" />
-    <ClInclude Include="mediaplay\mediaplay.h" />
-    <ClInclude Include="mediaplay\mediaplay_data.h" />
-    <ClInclude Include="mediaplay\mediaplay_document.h" />
-    <ClInclude Include="mediaplay\mediaplay_record_notify_view.h" />
-    <ClInclude Include="mediaplay\mediaplay_view.h" />
-    <ClInclude Include="mediaplay\mediaplay_view_interface.h" />
-    <ClInclude Include="mediaplay\mediaplay_view_update_hint.h" />
-    <ClInclude Include="multimedia\multimedia.h" />
-    <ClInclude Include="multimedia\multimedia_application.h" />
-    <ClInclude Include="multimedia\multimedia_decoder.h" />
-    <ClInclude Include="multimedia\multimedia_file_application.h" />
-    <ClInclude Include="multimedia\multimedia_library.h" />
-    <ClInclude Include="ortp\b64.h" />
-    <ClInclude Include="ortp\event.h" />
-    <ClInclude Include="ortp\ortp_file.h" />
-    <ClInclude Include="ortp\jitterctl.h" />
-    <ClInclude Include="ortp\ortp-config-linux.h" />
-    <ClInclude Include="ortp\ortp-config-win32.h" />
-    <ClInclude Include="ortp\ortp.h" />
-    <ClInclude Include="ortp\payloadtype.h" />
-    <ClInclude Include="ortp\port.h" />
-    <ClInclude Include="ortp\rtcp.h" />
-    <ClInclude Include="ortp\rtp.h" />
-    <ClInclude Include="ortp\rtpsession.h" />
-    <ClInclude Include="ortp\rtpsession_priv.h" />
-    <ClInclude Include="ortp\rtpsignaltable.h" />
-    <ClInclude Include="ortp\rtptimer.h" />
-    <ClInclude Include="ortp\scheduler.h" />
-    <ClInclude Include="ortp\sessionset.h" />
-    <ClInclude Include="ortp\srtp.h" />
-    <ClInclude Include="ortp\str_utils.h" />
-    <ClInclude Include="ortp\stun.h" />
-    <ClInclude Include="ortp\stun_udp.h" />
-    <ClInclude Include="ortp\telephonyevents.h" />
-    <ClInclude Include="ortp\utils.h" />
-    <ClInclude Include="srtp\config.h" />
-    <ClInclude Include="srtp\config2.h" />
-    <ClInclude Include="srtp\config_in.h" />
-    <ClInclude Include="srtp\getopt_s.h" />
-    <ClInclude Include="srtp\rtp.h" />
-    <ClInclude Include="srtp\rtp_priv.h" />
-    <ClInclude Include="srtp\srtp.h" />
-    <ClInclude Include="srtp\srtp_priv.h" />
+    <ClInclude Include="audio_mixer_mmsystem.h" />
+    <ClInclude Include="audio_mixer_mmsystem_callback.h" />
+    <ClInclude Include="audio_mixer_mmsystem_control.h" />
+    <ClInclude Include="audio_mixer_mmsystem_control_data.h" />
+    <ClInclude Include="audio_mixer_mmsystem_control_data_switch.h" />
+    <ClInclude Include="audio_mixer_mmsystem_control_data_volume.h" />
+    <ClInclude Include="audio_mixer_mmsystem_destination.h" />
+    <ClInclude Include="audio_mixer_mmsystem_device.h" />
+    <ClInclude Include="audio_mixer_mmsystem_line_info.h" />
+    <ClInclude Include="audio_mixer_mmsystem_mixer.h" />
+    <ClInclude Include="audio_mixer_mmsystem_section.h" />
+    <ClInclude Include="audio_mixer_mmsystem_source.h" />
+    <ClInclude Include="audio_mixer_mmsystem_thread.h" />
+    <ClInclude Include="audio_mixer_mmsystem_user_control.h" />
+    <ClInclude Include="audio_mixer_mmsystem_user_label.h" />
+    <ClInclude Include="audio_mixer_mmsystem_user_level_control.h" />
+    <ClInclude Include="audio_mixer_mmsystem_user_toggle_control.h" />
+    <ClInclude Include="audio_mixer_mmsystem_window.h" />
     <ClInclude Include="framework.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="audio\audio_wave_buffer.cpp" />
-    <ClCompile Include="audio\audio_wave.cpp" />
-    <ClCompile Include="audio\audio_wave_effect_crescendo.cpp" />
-    <ClCompile Include="audio\audio_wave_effect_devocalizer.cpp" />
-    <ClCompile Include="audio\audio_wave_file.cpp" />
-    <ClCompile Include="audio\audio_wave_in.cpp" />
-    <ClCompile Include="audio\audio_wave_in_listener.cpp" />
-    <ClCompile Include="audio\audio_wave_in_listener_set.cpp" />
-    <ClCompile Include="audio\audio_wave_out.cpp" />
-    <ClCompile Include="audio\audio_wave_player.cpp" />
-    <ClCompile Include="audio\audio_wave_player_container.cpp" />
-    <ClCompile Include="audio\audio_wave_pre_buffer.cpp" />
-    <ClCompile Include="audio\audio_wave_pre_buffer_callback.cpp" />
-    <ClCompile Include="audio\audio_wave_recorder.cpp" />
-    <ClCompile Include="audio\audio_wave_recorder_container.cpp" />
-    <ClCompile Include="audio_decode\audio_decode_decoder.cpp" />
-    <ClCompile Include="audio_decode\audio_decode_decoder_plugin.cpp" />
-    <ClCompile Include="audio_decode\audio_decode_decoder_plugin_set.cpp" />
-    <ClCompile Include="audio_decode\audio_decode_encoder.cpp" />
-    <ClCompile Include="audio_decode\audio_decode_encoder_plugin.cpp" />
-    <ClCompile Include="audio_decode\audio_decode_encoder_plugin_set.cpp" />
-    <ClCompile Include="audio_mixer\audio_mixer_section.cpp" />
-    <ClCompile Include="audio_mixer\audio_mixer_callback.cpp" />
-    <ClCompile Include="audio_mixer\audio_mixer_control.cpp" />
-    <ClCompile Include="audio_mixer\audio_mixer_control_data.cpp" />
-    <ClCompile Include="audio_mixer\audio_mixer_destination.cpp" />
-    <ClCompile Include="audio_mixer\audio_mixer_device.cpp" />
-    <ClCompile Include="audio_mixer\audio_mixer_line_info.cpp" />
-    <ClCompile Include="audio_mixer\audio_mixer_mixer.cpp" />
-    <ClCompile Include="audio_mixer\audio_mixer_source.cpp" />
-    <ClCompile Include="audio_mixer\audio_mixer_thread.cpp" />
-    <ClCompile Include="audio_mixer\audio_mixer_user label.cpp" />
-    <ClCompile Include="audio_mixer\audio_mixer_user_control.cpp" />
-    <ClCompile Include="audio_mixer\audio_mixer_user_level_control.cpp" />
-    <ClCompile Include="audio_mixer\audio_mixer_user_toggle_control.cpp" />
-    <ClCompile Include="audio_mixer\audio_mixer_window.cpp" />
-    <ClCompile Include="audio_mixer_userbase\audio_mixer_userbase_section.cpp" />
-    <ClCompile Include="audio_mixer_userbase\audio_mixer_userbase_control_data.cpp" />
-    <ClCompile Include="audio_mixer_userbase\audio_mixer_userbase_control_view.cpp" />
-    <ClCompile Include="audio_mixer_userbase\audio_mixer_userbase_document.cpp" />
-    <ClCompile Include="audio_mixer_userbase\audio_mixer_userbase_frame_window.cpp" />
-    <ClCompile Include="audio_mixer_userbase\audio_mixer_userbase_label.cpp" />
-    <ClCompile Include="audio_mixer_userbase\audio_mixer_userbase_main_view.cpp" />
-    <ClCompile Include="audio_mixer_userbase\audio_mixer_userbase_mute_control.cpp" />
-    <ClCompile Include="audio_mixer_userbase\audio_mixer_userbase_slider.cpp" />
-    <ClCompile Include="audio_mixer_userbase\audio_mixer_userbase_thread.cpp" />
-    <ClCompile Include="iaudio\iaudio_wave_stream_effect.cpp" />
-    <ClCompile Include="iaudio\iaudio_wave_stream_effect_chain.cpp" />
-    <ClCompile Include="iaudio\iaudio_wave_stream_effect_listener.cpp" />
-    <ClCompile Include="iaudio\iaudio_wave_stream_effect_order.cpp" />
-    <ClCompile Include="id3lib\id3lib_field.cpp" />
-    <ClCompile Include="id3lib\id3lib_field_binary.cpp" />
-    <ClCompile Include="id3lib\id3lib_field_integer.cpp" />
-    <ClCompile Include="id3lib\id3lib_field_string.cpp" />
-    <ClCompile Include="id3lib\id3lib_frame.cpp" />
-    <ClCompile Include="id3lib\id3lib_frame_impl.cpp" />
-    <ClCompile Include="id3lib\id3lib_frame_parse.cpp" />
-    <ClCompile Include="id3lib\id3lib_frame_render.cpp" />
-    <ClCompile Include="id3lib\id3lib_globals.cpp" />
-    <ClCompile Include="id3lib\id3lib_header.cpp" />
-    <ClCompile Include="id3lib\id3lib_header_frame.cpp" />
-    <ClCompile Include="id3lib\id3lib_header_tag.cpp" />
-    <ClCompile Include="id3lib\id3lib_helpers.cpp" />
-    <ClCompile Include="id3lib\id3lib_io.cpp" />
-    <ClCompile Include="id3lib\id3lib_io_decorators.cpp" />
-    <ClCompile Include="id3lib\id3lib_io_helpers.cpp" />
-    <ClCompile Include="id3lib\id3lib_mp3_parse.cpp" />
-    <ClCompile Include="id3lib\id3lib_reader.cpp" />
-    <ClCompile Include="id3lib\id3lib_readers.cpp" />
-    <ClCompile Include="id3lib\id3lib_spec.cpp" />
-    <ClCompile Include="id3lib\id3lib_tag.cpp" />
-    <ClCompile Include="id3lib\id3lib_tag_file.cpp" />
-    <ClCompile Include="id3lib\id3lib_tag_find.cpp" />
-    <ClCompile Include="id3lib\id3lib_tag_impl.cpp" />
-    <ClCompile Include="id3lib\id3lib_tag_parse.cpp" />
-    <ClCompile Include="id3lib\id3lib_tag_parse_lyrics3.cpp" />
-    <ClCompile Include="id3lib\id3lib_tag_parse_musicmatch.cpp" />
-    <ClCompile Include="id3lib\id3lib_tag_parse_v1.cpp" />
-    <ClCompile Include="id3lib\id3lib_tag_render.cpp" />
-    <ClCompile Include="id3lib\id3lib_utils.cpp" />
-    <ClCompile Include="id3lib\id3lib_writers.cpp" />
-    <ClCompile Include="imediamanager\PlayerInterface.cpp" />
-    <ClCompile Include="imediamanager\PlaylistInterface.cpp" />
-    <ClCompile Include="imedia\imedia_position.cpp" />
-    <ClCompile Include="imedia\imedia_position_array.cpp" />
-    <ClCompile Include="imedia\imedia_time.cpp" />
-    <ClCompile Include="imedia\imedia_time_array.cpp" />
-    <ClCompile Include="mediamanager\mediamanager_album_build.cpp" />
-    <ClCompile Include="mediamanager\mediamanager_album_build_thread.cpp" />
-    <ClCompile Include="mediamanager\mediamanager_album_build_window.cpp" />
-    <ClCompile Include="mediamanager\mediamanager_mediamanager.cpp" />
-    <ClCompile Include="mediaplaylist\mediaplaylist_player.cpp" />
-    <ClCompile Include="mediaplaylist\mediaplaylist_media_playlist.cpp" />
-    <ClCompile Include="mediaplaylist\mediaplaylist_listener.cpp" />
-    <ClCompile Include="mediaplaylist\mediaplaylist_document.cpp" />
-    <ClCompile Include="mediaplaylist\mediaplaylist_frame.cpp" />
-    <ClCompile Include="mediaplaylist\mediaplaylist_list_view.cpp" />
-    <ClCompile Include="mediaplaylist\mediaplaylist_tree_base.cpp" />
-    <ClCompile Include="mediaplaylist\mediaplaylist_tree_data.cpp" />
-    <ClCompile Include="mediaplaylist\mediaplaylist_tree_item_data.cpp" />
-    <ClCompile Include="mediaplaylist\mediaplaylist_tree_view.cpp" />
-    <ClCompile Include="mediaplaylist\mediaplaylist_view.cpp" />
-    <ClCompile Include="mediaplaylist\mediaplaylist_view_update_hint.cpp" />
-    <ClCompile Include="mediaplay\mediaplay_data.cpp" />
-    <ClCompile Include="mediaplay\mediaplay_document.cpp" />
-    <ClCompile Include="mediaplay\mediaplay_record_notify_view.cpp" />
-    <ClCompile Include="mediaplay\mediaplay_view.cpp" />
-    <ClCompile Include="mediaplay\mediaplay_view_interface.cpp" />
-    <ClCompile Include="mediaplay\mediaplay_view_update_hint.cpp" />
-    <ClCompile Include="multimedia\multimedia_application.cpp" />
-    <ClCompile Include="multimedia\multimedia_decoder.cpp" />
-    <ClCompile Include="multimedia\multimedia_file_application.cpp" />
-    <ClCompile Include="multimedia\multimedia_library.cpp" />
-    <ClCompile Include="ortp\ortp_avprofile.cpp" />
-    <ClCompile Include="ortp\ortp_b64.cpp" />
-    <ClCompile Include="ortp\ortp_event.cpp" />
-    <ClCompile Include="ortp\ortp_jitterctl.cpp" />
-    <ClCompile Include="ortp\ortp.cpp" />
-    <ClCompile Include="ortp\ortp_file.cpp" />
-    <ClCompile Include="ortp\ortp_payloadtype.cpp" />
-    <ClCompile Include="ortp\ortp_port.cpp" />
-    <ClCompile Include="ortp\ortp_posixtimer.cpp" />
-    <ClCompile Include="ortp\ortp_rtcp.cpp" />
-    <ClCompile Include="ortp\ortp_rtcpparse.cpp" />
-    <ClCompile Include="ortp\ortp_rtpparse.cpp" />
-    <ClCompile Include="ortp\ortp_rtpsession.cpp" />
-    <ClCompile Include="ortp\ortp_rtpsession_inet.cpp" />
-    <ClCompile Include="ortp\ortp_rtpsignaltable.cpp" />
-    <ClCompile Include="ortp\ortp_rtptimer.cpp" />
-    <ClCompile Include="ortp\ortp_scheduler.cpp" />
-    <ClCompile Include="ortp\ortp_sessionset.cpp" />
-    <ClCompile Include="ortp\ortp_srtp.cpp" />
-    <ClCompile Include="ortp\ortp_str_utils.cpp" />
-    <ClCompile Include="ortp\ortp_stun.cpp" />
-    <ClCompile Include="ortp\ortp_stun_udp.cpp" />
-    <ClCompile Include="ortp\ortp_telephonyevents.cpp" />
-    <ClCompile Include="ortp\ortp_utils.cpp" />
-    <ClCompile Include="srtp\srtp_aes_tables.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='codeanalysis|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='memdleak|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='profiler|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|x64'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='codeanalysis|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='memdleak|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='profiler|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="srtp\srtp_srtp.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='codeanalysis|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='memdleak|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='profiler|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|x64'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='codeanalysis|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='memdleak|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='profiler|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="audio_mixer_mmsystem_callback.cpp" />
+    <ClCompile Include="audio_mixer_mmsystem_control.cpp" />
+    <ClCompile Include="audio_mixer_mmsystem_control_data.cpp" />
+    <ClCompile Include="audio_mixer_mmsystem_destination.cpp" />
+    <ClCompile Include="audio_mixer_mmsystem_device.cpp" />
+    <ClCompile Include="audio_mixer_mmsystem_line_info.cpp" />
+    <ClCompile Include="audio_mixer_mmsystem_mixer.cpp" />
+    <ClCompile Include="audio_mixer_mmsystem_section.cpp" />
+    <ClCompile Include="audio_mixer_mmsystem_source.cpp" />
+    <ClCompile Include="audio_mixer_mmsystem_thread.cpp" />
+    <ClCompile Include="audio_mixer_mmsystem_user label.cpp" />
+    <ClCompile Include="audio_mixer_mmsystem_user_control.cpp" />
+    <ClCompile Include="audio_mixer_mmsystem_user_level_control.cpp" />
+    <ClCompile Include="audio_mixer_mmsystem_user_toggle_control.cpp" />
+    <ClCompile Include="audio_mixer_mmsystem_window.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='codeanalysis|Win32'">Create</PrecompiledHeader>
@@ -1135,9 +849,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='memdleak|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='profiler|x64'">Create</PrecompiledHeader>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="multimedia.def" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\app\appseed\ca2\ca2.vcxproj">
@@ -1155,6 +866,9 @@
     <ProjectReference Include="..\..\..\app\thirdparty\appseed\zlib\_ca2zlib.vcxproj">
       <Project>{9ffc2cf6-737c-43db-a1ee-383f7bfdb05b}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="audio_mixer_mmsystem.def" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
