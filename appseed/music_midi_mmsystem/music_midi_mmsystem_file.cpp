@@ -716,37 +716,37 @@ smf_Open_File_Cleanup:
          }
 
          event_v5 * pevent;
-         int32_t iSize = sizeof(CMidiStreamEventHeader);
+         int32_t iSize = sizeof(midi_stream_event_header);
          int32_t i;
          for(i = 0; i < eventptra.get_size(); i++)
          {
             pevent = eventptra[i];
             ASSERT(pevent->GetFlags() & 1);
             iSize += (int32_t) pevent->GetParamSize();
-            iSize += sizeof(CMidiStreamEventHeader);
+            iSize += sizeof(midi_stream_event_header);
          }
 
          m_memstorageF1.allocate(iSize);
          LPBYTE lpbParam;
          LPDWORD lpdwType;
-         CMidiStreamEventHeader * pheader;
-         pheader = (CMidiStreamEventHeader *) &m_memstorageF1.get_data()[0];
-         pheader->m_dwLength = iSize - sizeof(CMidiStreamEventHeader);
+         midi_stream_event_header * pheader;
+         pheader = (midi_stream_event_header *) &m_memstorageF1.get_data()[0];
+         pheader->m_dwLength = iSize - sizeof(midi_stream_event_header);
          pheader->m_dwType = 0;
-         iSize = sizeof(CMidiStreamEventHeader);
+         iSize = sizeof(midi_stream_event_header);
          for(i = 0; i < eventptra.get_size(); i++)
          {
             pevent = eventptra[i];
             lpbParam = pevent->GetParam();
             lpdwType = (LPDWORD) lpbParam;
-            pheader = (CMidiStreamEventHeader *) &m_memstorageF1.get_data()[iSize];
+            pheader = (midi_stream_event_header *) &m_memstorageF1.get_data()[iSize];
             pheader->m_dwLength = (uint32_t) pevent->GetParamSize();
             pheader->m_dwType = *lpdwType;
             memcpy(
-               &m_memstorageF1.get_data()[iSize + sizeof(CMidiStreamEventHeader)],
+               &m_memstorageF1.get_data()[iSize + sizeof(midi_stream_event_header)],
                lpbParam,
                pheader->m_dwLength);
-            iSize += pheader->m_dwLength + sizeof(CMidiStreamEventHeader);
+            iSize += pheader->m_dwLength + sizeof(midi_stream_event_header);
          }
 
          m_cbPendingUserEvent = (uint32_t) m_memstorageF1.get_size();

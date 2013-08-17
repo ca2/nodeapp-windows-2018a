@@ -106,7 +106,7 @@ namespace music
 
          }
 
-         ::music::midi::sequence & player_interface::GetMidiSequence()
+         ::music::midi::sequence & player_interface::get_midi_sequence()
          {
             return *((::music::midi::sequence *)NULL);
          }
@@ -114,7 +114,7 @@ namespace music
          void player_interface::MusicTempoMinus()
          {
             player * pplayer = GetMidiPlayer();
-            ::music::midi::sequence & sequence = GetMidiSequence();
+            ::music::midi::sequence & sequence = get_midi_sequence();
             int32_t iTempoShift = sequence.GetTempoShift() - 1;
             if(iTempoShift >= -10 || iTempoShift <= 10)
             {
@@ -133,7 +133,7 @@ namespace music
 
          void player_interface::MusicTransposeMinusTone()
          {
-            ::music::midi::sequence & sequence = GetMidiSequence();
+            ::music::midi::sequence & sequence = get_midi_sequence();
             int32_t iKeyShift = sequence.GetKeyShift() - 2;
             if(iKeyShift >= -12 || iKeyShift <= 12)
             {
@@ -146,7 +146,7 @@ namespace music
          {
             if(GetMidiPlayer())
             {
-               ::music::midi::sequence & sequence = GetMidiSequence();
+               ::music::midi::sequence & sequence = get_midi_sequence();
                pcmdui->Enable(sequence.GetTempoShift() != 0);
                pcmdui->_001SetCheck(sequence.GetTempoShift() == 0 ? check::checked : check::unchecked);
             }
@@ -160,7 +160,7 @@ namespace music
          void player_interface::MusicTempoPlus()
          {
             player * pplayer = GetMidiPlayer();
-            ::music::midi::sequence & sequence = GetMidiSequence();
+            ::music::midi::sequence & sequence = get_midi_sequence();
             int32_t iTempoShift = sequence.GetTempoShift() + 1;
             if(iTempoShift >= -10 || iTempoShift <= 10)
             {
@@ -173,7 +173,7 @@ namespace music
          {
             if(GetMidiPlayer())
             {
-               ::music::midi::sequence & sequence = GetMidiSequence();
+               ::music::midi::sequence & sequence = get_midi_sequence();
                int32_t iTempoShift = sequence.GetTempoShift() + 1;
                pcmdui->Enable(iTempoShift <= 10);
             }
@@ -187,7 +187,7 @@ namespace music
          {
             if(GetMidiPlayer())
             {
-               ::music::midi::sequence & sequence = GetMidiSequence();
+               ::music::midi::sequence & sequence = get_midi_sequence();
                int32_t iTempoShift = sequence.GetTempoShift() - 1;
                pcmdui->Enable(iTempoShift >= -10);
             }
@@ -200,7 +200,7 @@ namespace music
 
          void player_interface::MusicTransposeMinus()
          {
-            ::music::midi::sequence & sequence = GetMidiSequence();
+            ::music::midi::sequence & sequence = get_midi_sequence();
             int32_t iKeyShift = sequence.GetKeyShift() - 1;
             if(iKeyShift >= -12 || iKeyShift <= 12)
             {
@@ -212,7 +212,7 @@ namespace music
 
          void player_interface::MusicTransposePlus()
          {
-            ::music::midi::sequence & sequence = GetMidiSequence();
+            ::music::midi::sequence & sequence = get_midi_sequence();
             int32_t iKeyShift = sequence.GetKeyShift() + 1;
             if(iKeyShift >= -12 || iKeyShift <= 12)
             {
@@ -223,14 +223,14 @@ namespace music
 
          void player_interface::MusicTransposeReset()
          {
-            ::music::midi::sequence & sequence = GetMidiSequence();
+            ::music::midi::sequence & sequence = get_midi_sequence();
             sequence.SetKeyShift(0);
             OnChangeMidiPlayerTranspose();
          }
 
          void player_interface::MusicTransposePlusTone()
          {
-            ::music::midi::sequence & sequence = GetMidiSequence();
+            ::music::midi::sequence & sequence = get_midi_sequence();
             int32_t iKeyShift = sequence.GetKeyShift() + 2;
             if(iKeyShift >= -12 || iKeyShift <= 12)
             {
@@ -243,7 +243,7 @@ namespace music
          {
             if(GetMidiPlayer())
             {
-               ::music::midi::sequence & sequence = GetMidiSequence();
+               ::music::midi::sequence & sequence = get_midi_sequence();
                int32_t iKeyShift = sequence.GetKeyShift() - 1;
                pcmdui->Enable(iKeyShift >= -12);
             }
@@ -257,7 +257,7 @@ namespace music
          {
             if(GetMidiPlayer())
             {
-               ::music::midi::sequence & sequence = GetMidiSequence();
+               ::music::midi::sequence & sequence = get_midi_sequence();
                int32_t iKeyShift = sequence.GetKeyShift() + 1;
                pcmdui->Enable(iKeyShift <= 12);
             }
@@ -271,7 +271,7 @@ namespace music
          {
             if(GetMidiPlayer())
             {
-               ::music::midi::sequence & sequence = GetMidiSequence();
+               ::music::midi::sequence & sequence = get_midi_sequence();
                pcmdui->Enable(sequence.GetKeyShift() != 0);
                pcmdui->_001SetCheck(sequence.GetKeyShift() == 0 ? check::checked : check::unchecked);
             }
@@ -285,7 +285,7 @@ namespace music
          {
             if(GetMidiPlayer())
             {
-               ::music::midi::sequence & sequence = GetMidiSequence();
+               ::music::midi::sequence & sequence = get_midi_sequence();
                int32_t iKeyShift = sequence.GetKeyShift() + 1;
                pcmdui->Enable(iKeyShift <= 12);
             }
@@ -300,7 +300,7 @@ namespace music
          {
             if(GetMidiPlayer())
             {
-               ::music::midi::sequence & sequence = GetMidiSequence();
+               ::music::midi::sequence & sequence = get_midi_sequence();
                int32_t iKeyShift = sequence.GetKeyShift() - 2;
                pcmdui->Enable(iKeyShift >= -12);
             }

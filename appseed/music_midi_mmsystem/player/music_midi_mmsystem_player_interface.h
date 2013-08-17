@@ -29,7 +29,7 @@ namespace music
 
 
             virtual ::ca2::thread * GetMidiPlayerCallbackThread() = 0;
-            virtual ::music::midi::sequence & GetMidiSequence() = 0;
+            virtual ::music::midi::sequence & get_midi_sequence() = 0;
             virtual bool OnOpenMidiPlayer();
             player * GetMidiPlayer();
 

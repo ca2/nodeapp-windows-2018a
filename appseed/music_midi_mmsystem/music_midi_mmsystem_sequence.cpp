@@ -1203,7 +1203,7 @@ seq_Preroll_Cleanup:
          ASSERT(lpmidihdr != NULL);
          LPBYTE lpbData = (LPBYTE) (lpmidihdr->lpData + lpmidihdr->dwOffset);
          MIDIEVENT * lpme = (MIDIEVENT *) lpbData;
-         file::CMidiStreamEventHeader * pheader = (file::CMidiStreamEventHeader *) &lpme->dwParms[0];
+         file::midi_stream_event_header * pheader = (file::midi_stream_event_header *) &lpme->dwParms[0];
          lpbData = (LPBYTE) pheader;
          LPDWORD lpdwParam;
 
@@ -1214,10 +1214,10 @@ seq_Preroll_Cleanup:
             {
                array < ::ikaraoke::lyric_event_v1, ::ikaraoke::lyric_event_v1 &> * plyriceventa = NULL;
                array < ::ikaraoke::lyric_event_v1, ::ikaraoke::lyric_event_v1 &> lyriceventa;
-               for(int32_t i = sizeof(file::CMidiStreamEventHeader); i < iSize;)
+               for(int32_t i = sizeof(file::midi_stream_event_header); i < iSize;)
                {
-                  pheader = (file::CMidiStreamEventHeader *) &lpbData[i];
-                  lpdwParam = (LPDWORD) &lpbData[i + sizeof(file::CMidiStreamEventHeader)];
+                  pheader = (file::midi_stream_event_header *) &lpbData[i];
+                  lpdwParam = (LPDWORD) &lpbData[i + sizeof(file::midi_stream_event_header)];
                   ASSERT(*lpdwParam == pheader->m_dwType);
                   switch(pheader->m_dwType)
                   {
@@ -1249,7 +1249,7 @@ seq_Preroll_Cleanup:
                      }
                      break;
                   }
-                  i += pheader->m_dwLength + sizeof(file::CMidiStreamEventHeader);
+                  i += pheader->m_dwLength + sizeof(file::midi_stream_event_header);
                }
                /*         if(plyriceventa != NULL)
                {

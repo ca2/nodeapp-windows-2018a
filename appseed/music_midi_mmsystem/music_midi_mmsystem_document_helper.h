@@ -31,7 +31,7 @@ namespace music
 
          bool HelperOpenFile(primitive::memory & storage);
 
-         virtual sequence & GetMidiSequence();
+         virtual sequence & get_midi_sequence();
          virtual void SetLyricDelay(int32_t iDelay);
          virtual void SetTempoShift(int32_t iShift);
          ::music::xf::info_headers * HelperGetXFInfoHeaderSet();

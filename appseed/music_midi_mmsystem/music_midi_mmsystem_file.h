@@ -41,7 +41,7 @@ namespace music
       {
       public:
 
-         class CMidiStreamEventHeader
+         class midi_stream_event_header
          {
          public:
             uint32_t m_dwLength;

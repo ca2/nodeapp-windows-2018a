@@ -806,7 +806,6 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="music_midi_mmsystem.h" />
     <ClInclude Include="music_midi_mmsystem_attribute_message.h" />
-    <ClInclude Include="music_midi_mmsystem_definition.h" />
     <ClInclude Include="music_midi_mmsystem_document_helper.h" />
     <ClInclude Include="music_midi_mmsystem_enum.h" />
     <ClInclude Include="music_midi_mmsystem_events_v1.h" />
@@ -885,6 +884,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\app-core\appseed\multimedia\multimedia.vcxproj">
       <Project>{20fd0446-aa14-4013-84e0-b5cb63fa354f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\app-veriwell\appseed\multimedia\veriwell_multimedia.vcxproj">
+      <Project>{6cf16680-cdb9-437d-b24a-b9ba61a91fcd}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\app\appseed\ca2\ca2.vcxproj">
       <Project>{afc48570-75e4-46bd-b8ab-4590b257e1c8}</Project>

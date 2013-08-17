@@ -90,7 +90,7 @@ namespace music
 
 
 
-      sequence & document_helper::GetMidiSequence()
+      sequence & document_helper::get_midi_sequence()
       {
          return m_sequenceHelper;
       }

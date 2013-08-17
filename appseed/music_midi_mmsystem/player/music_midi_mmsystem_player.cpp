@@ -639,7 +639,7 @@ End:
 
          sequence & player::GetSequence()
          {
-            return m_pinterface->GetMidiSequence();
+            return m_pinterface->get_midi_sequence();
          }
 
 

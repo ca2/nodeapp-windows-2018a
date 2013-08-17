@@ -324,7 +324,7 @@ namespace music
          void OnMidiPlaybackEnd(sequence::Event * pevent);
          int32_t SetTempoShift(int32_t iTempoShift);
 
-         sequence & GetMidiSequence();
+         sequence & get_midi_sequence();
          void OnPositionCB(LPMIDIHDR lpmidihdr);
          void OnDone(midi_stream hmidistream, midi_pack * lpmidihdr);
          virtual void GetTimeLength(imedia::time & time);

@@ -31,9 +31,6 @@
     <ClInclude Include="music_midi_mmsystem_attribute_message.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="music_midi_mmsystem_definition.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="music_midi_mmsystem_document_helper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
