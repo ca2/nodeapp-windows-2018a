@@ -849,6 +849,7 @@
     <ClCompile Include="music_midi_mmsystem_util.cpp" />
     <ClCompile Include="music_midi_mmsystem_view_helper.cpp" />
     <ClCompile Include="player\music_midi_mmsystem_player.cpp" />
+    <ClCompile Include="player\music_midi_mmsystem_player_callback.cpp" />
     <ClCompile Include="player\music_midi_mmsystem_player_window.cpp" />
   </ItemGroup>
   <ItemGroup>

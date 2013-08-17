@@ -125,6 +125,9 @@
     <ClCompile Include="music_midi_mmsystem_translation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="player\music_midi_mmsystem_player_callback.cpp">
+      <Filter>Source Files\player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="music_midi_mmsystem.def">
