@@ -1,7 +1,7 @@
 #include "framework.h"
 
 
-namespace audio
+namespace audio_mmsystem
 {
 
 
@@ -92,7 +92,7 @@ namespace audio
          }
          m_iOutBufferSampleCount =  48 * 1024;
 
-         audio_decode::decoder_plugin * pplugin = m_decoderset.LoadPlugin(strDecoder);
+         ::multimedia::audio_decode::decoder_plugin * pplugin = m_decoderset.LoadPlugin(strDecoder);
          if(pplugin == NULL)
             return false;
 
@@ -266,12 +266,12 @@ namespace audio
       m_pfileOpen = pfile;
    }
 
-   void wave_player_command::SetOpenDecoder(::audio_decode::decoder * pdecoder)
+   void wave_player_command::SetOpenDecoder(::::multimedia::audio_decode::decoder * pdecoder)
    {
       m_pdecoderOpen = pdecoder;
    }
 
-   void wave_player_command::OpenDecoder(::audio_decode::decoder * pdecoder)
+   void wave_player_command::OpenDecoder(::::multimedia::audio_decode::decoder * pdecoder)
    {
       SetCommand(command_open_decoder);
       SetOpenDecoder(pdecoder);
@@ -662,7 +662,7 @@ namespace audio
       return __begin_thread < wave_player > (papp, ::ca2::scheduling_priority_highest);
    }
 
-   wave_out * wave_player::GetWaveOut()
+   wave_out * wave_player::get_wave_out()
    {
       return m_pwaveout;
    }
@@ -744,7 +744,7 @@ namespace audio
 
       string str;
       string wstrAttr;
-      if(m_pdecoder->DecoderGetAttribute(audio_decode::AttributeTitle, strAttr))
+      if(m_pdecoder->DecoderGetAttribute(::multimedia::audio_decode::AttributeTitle, strAttr))
       {
          strAttr.ReleaseBuffer();
          wstrAttr = strAttr;
@@ -753,7 +753,7 @@ namespace audio
          wstr2aTitle[wstr2aTitle.get_upper_bound()].add(wstrAttr);
       }
 
-      if(m_pdecoder->DecoderGetAttribute(audio_decode::AttributeArtist, strAttr))
+      if(m_pdecoder->DecoderGetAttribute(::multimedia::audio_decode::AttributeArtist, strAttr))
       {
          strAttr.ReleaseBuffer();
          wstrAttr = strAttr;
@@ -762,7 +762,7 @@ namespace audio
          wstr2aTitle[wstr2aTitle.get_upper_bound()].add(wstrAttr);
       }
 
-      if(m_pdecoder->DecoderGetAttribute(audio_decode::AttributeAlbum, strAttr))
+      if(m_pdecoder->DecoderGetAttribute(::multimedia::audio_decode::AttributeAlbum, strAttr))
       {
          strAttr.ReleaseBuffer();
          wstrAttr = strAttr;
@@ -771,7 +771,7 @@ namespace audio
          wstr2aTitle[wstr2aTitle.get_upper_bound()].add(wstrAttr);
       }
 
-      if(m_pdecoder->DecoderGetAttribute(audio_decode::AttributeComposer, strAttr))
+      if(m_pdecoder->DecoderGetAttribute(::multimedia::audio_decode::AttributeComposer, strAttr))
       {
          strAttr.ReleaseBuffer();
          wstrAttr = strAttr;
@@ -780,7 +780,7 @@ namespace audio
          wstr2aTitle[wstr2aTitle.get_upper_bound()].add(wstrAttr);
       }
 
-      if(m_pdecoder->DecoderGetAttribute(audio_decode::AttributeYear,strAttr))
+      if(m_pdecoder->DecoderGetAttribute(::multimedia::audio_decode::AttributeYear,strAttr))
       {
          strAttr.ReleaseBuffer();
          wstrAttr = strAttr;
@@ -791,7 +791,7 @@ namespace audio
    }
 
 
-} // namespace audio
+} // namespace audio_mmsystem
 
 
 

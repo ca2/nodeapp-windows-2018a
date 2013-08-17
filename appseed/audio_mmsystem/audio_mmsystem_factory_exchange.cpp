@@ -1,7 +1,7 @@
 #include "framework.h"
 
 
-namespace draw2d_gdiplus
+namespace audio_mmsystem
 {
 
 
@@ -9,7 +9,7 @@ namespace draw2d_gdiplus
       ca2(papp)
    {
 
-      System.factory().cloneable_large < dib                   >  (System.type_info < ::draw2d::dib                  > ());
+      System.factory().cloneable_large < wave_in                   >  (System.type_info < ::multimedia::audio::wave_in                  > ());
       System.factory().cloneable_large < graphics              >  (System.type_info < ::draw2d::graphics             > ());
       System.factory().cloneable_large < bitmap                >  (System.type_info < ::draw2d::bitmap               > ());
       System.factory().cloneable_large < pen                   >  (System.type_info < ::draw2d::pen                  > ());
@@ -19,7 +19,7 @@ namespace draw2d_gdiplus
       System.factory().cloneable_large < font                  >  (System.type_info < ::draw2d::font                 > ());
       System.factory().cloneable_large < path                  >  (System.type_info < ::draw2d::path                 > ());
 
-      ::draw2d_gdiplus::dib::s_initialize();
+      ::audio_mmsystem::dib::s_initialize();
 
    }
 
@@ -29,13 +29,13 @@ namespace draw2d_gdiplus
    }
 
 
-} // namespace draw2d_gdiplus
+} // namespace audio_mmsystem
 
 
 
 void ca2_factory_exchange(sp(::ca2::application) papp)
 {
-   draw2d_gdiplus::factory_exchange factoryexchange(papp);
+   audio_mmsystem::factory_exchange factoryexchange(papp);
 }
 
 

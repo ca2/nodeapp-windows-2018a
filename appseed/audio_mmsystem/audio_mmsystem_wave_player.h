@@ -17,7 +17,7 @@ namespace audio_decode
 } // namespace audio_decode
 
 
-namespace audio
+namespace audio_mmsystem
 {
 
 
@@ -25,7 +25,7 @@ namespace audio
    class wave_pre_buffer;
 
 
-   class CLASS_DECL_CA2_MULTIMEDIA wave_player :
+   class  CLASS_DECL_AUDIO_MMSYSTEM wave_player :
       public ::ca2::thread
    {
    public:
@@ -74,9 +74,9 @@ namespace audio
       list < wave_player_command, wave_player_command & > m_commandlistStopOpen;
       list < wave_player_command, wave_player_command & > m_commandlistOpenPlay;
 
-      audio_decode::decoder_plugin_set          m_decoderset;
+      ::multimedia::audio_decode::decoder_plugin_set          m_decoderset;
       sp(::user::interaction)                   m_oswindowCallback;
-      sp(audio_decode::decoder)                 m_pdecoder;
+      sp(::multimedia::audio_decode::decoder)                 m_pdecoder;
       wave_out *                              m_pwaveout;
 
       EDeviceState                              m_edevicestate;
@@ -109,7 +109,7 @@ namespace audio
       void set_callback(sp(::user::interaction)  oswindow);
       bool GetStopEnable();
       bool GetPlayEnable();
-      wave_out * GetWaveOut();
+      wave_out * get_wave_out();
       static wave_player * BeginThread(sp(::ca2::application) papp);
       bool IsPlaying();
       EDeviceState GetDeviceState();
@@ -135,7 +135,7 @@ namespace audio
    };
 
 
-} // namespace audio
+} // namespace audio_mmsystem
 
 
 

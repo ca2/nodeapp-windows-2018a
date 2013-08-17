@@ -1,15 +1,13 @@
 #include "framework.h"
 
 
-namespace audio
+namespace audio_mmsystem
 {
 
    wave::wave(sp(::ca2::application) papp) :
       ca2(papp)
    {
-#ifdef WINDOWS
       m_uiWaveInDevice = WAVE_MAPPER;
-#endif
       m_pwavein = NULL;
    }
 
@@ -29,8 +27,8 @@ namespace audio
       if(m_pwavein != NULL)
          return true;
 
-      System.factory().creatable_small < ::audio::wave_effect_devocalizer::Group >();
-      System.factory().creatable_small < ::audio::wave_effect_devocalizer::Group::Channel >();
+      System.factory().creatable_small < ::audio_mmsystem::wave_effect_devocalizer::Group >();
+      System.factory().creatable_small < ::audio_mmsystem::wave_effect_devocalizer::Group::Channel >();
 
       m_pwavein = __begin_thread < wave_in > (get_app());
       if(m_pwavein != NULL)
@@ -60,6 +58,6 @@ namespace audio
    }
 
 
-} // namespace audio
+} // namespace audio_mmsystem
 
 

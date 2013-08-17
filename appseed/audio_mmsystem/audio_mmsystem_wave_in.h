@@ -1,125 +1,71 @@
 #pragma once
 
 
-/*typedef struct CLASS_DECL_CA2_MULTIMEDIA tagWaveProcDataMessage
-{
-uint32_t               m_msSampleTime;
-uint32_t               m_dwBufferIndex;
-LPWAVEHDR         m_lpwavehdr;
-bool               m_bDelete;
-wave_in *         m_pwavein;
-} WAVEPROCDATAMESSAGE, * LPWAVEPROCDATAMESSAGE;*/
-
-
-#define WAVM_WAVE_PROC_DATA 1000
-
-namespace audio
+namespace multimedia
 {
 
 
-   class wave_in;
-   class wave_buffer;
-   class wave_in_listener;
-
-
-   class CLASS_DECL_CA2_MULTIMEDIA wave_in :
-      public ::ca2::thread
+   namespace audio_mmsystem
    {
-   public:
 
 
-      enum  e_state
+      class  CLASS_DECL_AUDIO_MMSYSTEM wave_in :
+         virtual public ::multimedia::audio::wave_in
       {
-         state_initial,
-         StateOpened,
-         StateRecording,
-         state_stopping,
-         StateStopped,
+      public:
+
+
+
+
+         wave_in(sp(::ca2::application) papp);
+         virtual ~wave_in();
+
+
+         virtual bool wave_in_initialize_encoder();
+
+         virtual ::multimedia::result wave_in_add_buffer(int32_t iBuffer);
+         virtual ::multimedia::result add_buffer(LPWAVEHDR lpwavehdr);
+         virtual void wave_in_remove_listener(wave_in_listener * plistener);
+         virtual void wave_in_add_listener(wave_in_listener * plistener);
+
+         virtual mutex * wave_in_get_mutex();
+         virtual bool wave_in_is_opened();
+         virtual bool wave_in_is_recording();
+         virtual HWAVEIN wave_in_get_safe_HWAVEIN();
+         virtual void * get_os_data();
+         virtual uint32_t wave_in_get_analysis_millis();
+         virtual bool wave_in_is_resetting();
+
+         virtual uint32_t wave_in_get_state();
+         virtual ::multimedia::audio::wave_format & wave_in_get_format();
+
+
+         virtual ::multimedia::audio::wave_buffer & wave_in_get_buffer();
+
+         // Operations
+         ::multimedia::result wave_in_open(int32_t iBufferCount, int32_t iBufferSampleCount);
+         ::multimedia::result wave_in_close();
+         ::multimedia::result wave_in_stop();
+         ::multimedia::result wave_in_start();
+         ::multimedia::result wave_in_reset();
+
+         // Event handlers
+         virtual void translate_wave_in_message(::ca2::signal_object * pobj);
+
+         virtual bool initialize_instance();
+         virtual int32_t exit_instance();
+         virtual void pre_translate_message(::ca2::signal_object * pobj);
+
+         static void CALLBACK wave_in_proc(HWAVEIN hwi, UINT uMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2);
+
       };
 
 
-      audio_decode::encoder *          m_pencoder;
-
-      critical_section                 m_csHandle;
-      bool                             m_bResetting;
-      int32_t                              m_iRefCount;
-      int32_t                              m_iBuffer;
-      e_state                          m_estate;
-      wave_buffer *                  m_pwavebuffer;
-
-#ifdef WINDOWS
-      HWAVEIN                          m_hWaveIn;
-#elif defined(MACOS)
-      AudioStreamBasicDescription      m_desc;
-      AudioQueueInputCallback          m_callback;
-#else
-      snd_pcm_t *                      m_ppcm;
-      snd_pcm_hw_params_t *            m_phwparams;
-#endif
-
-      WAVEFORMATEX                     m_waveFormatEx;
+   } // namespace audio_mmsystem
 
 
-      wave_in_listener_set             m_listenerset;
-
-      event                            m_evInitialized;
-      event                            m_eventExitInstance;
-      event                            m_eventStopped;
+} // namespace multimedia
 
 
-      wave_in(sp(::ca2::application) papp);
-      virtual ~wave_in();
-
-
-      bool InitializeEncoder();
-
-      MMRESULT AddBuffer(int32_t iBuffer);
-      MMRESULT AddBuffer(LPWAVEHDR lpwavehdr);
-      void RemoveListener(wave_in_listener * plistener);
-      void AddListener(wave_in_listener * plistener);
-      // Attributes
-      critical_section & GetHandleCriticalSection();
-      bool IsOpened();
-      bool IsRecording();
-#ifdef WINDOWS
-      HWAVEIN GetSafeHwavein();
-#endif
-      uint32_t GetAnalysisMillis();
-      bool IsResetting();
-
-      uint32_t GetState();
-      LPWAVEFORMATEX GetFormatEx();
-      // Reference count
-      int32_t Release();
-      int32_t AddRef();
-
-
-      wave_buffer & GetBuffer();
-
-      // Operations
-      MMRESULT open(int32_t iBufferCount, int32_t iBufferSampleCount);
-      MMRESULT close();
-      MMRESULT Stop();
-      MMRESULT Start();
-      MMRESULT Reset();
-
-      // Event handlers
-      virtual void TranslateWaveInMessage(::ca2::signal_object * pobj);
-
-      virtual bool initialize_instance();
-      virtual int32_t exit_instance();
-      virtual void pre_translate_message(::ca2::signal_object * pobj);
-
-#ifdef WINDOWS
-      static void CALLBACK WaveInProc(HWAVEIN hwi, uint32_t uMsg,
-         uint32_t dwInstance,
-         uint32_t dwParam1,
-         uint32_t dwParam2);
-#endif
-
-   };
-
-
-} // namespace audio
 
 

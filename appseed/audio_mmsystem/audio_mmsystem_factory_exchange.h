@@ -1,6 +1,6 @@
 #pragma once
 
-namespace draw2d_gdiplus
+namespace audio_mmsystem
 {
 
    class CLASS_DECL_DRAW2D_GDIPLUS factory_exchange :
@@ -11,4 +11,4 @@ namespace draw2d_gdiplus
       virtual ~factory_exchange();
    };
 
-} // namespace draw2d_gdiplus
+} // namespace audio_mmsystem

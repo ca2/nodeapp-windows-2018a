@@ -163,6 +163,9 @@
 #endif
 #endif
 
+#define WIN32_LEAN_AND_MEAN
+
+
 #include <windows.h>
 
 #include "oswindow.h"
@@ -252,13 +255,11 @@ __INLINE oswindow GetNextWindow(oswindow oswindow, UINT nDirection)
 //#include <tpipv6.h>  // For IPv6 Tech Preview.
 
 #include <Psapi.h>
-#include <MMSystem.h>
 
 #include <ole2.h>
 
 
 #pragma comment(lib,"Psapi.lib")
-#define WIN32_LEAN_AND_MEAN
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #if _MSC_VER < 1200

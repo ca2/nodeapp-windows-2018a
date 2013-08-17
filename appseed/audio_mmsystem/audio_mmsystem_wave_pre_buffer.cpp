@@ -1,7 +1,7 @@
 #include "framework.h"
 
 
-namespace audio
+namespace audio_mmsystem
 {
 
 
@@ -25,7 +25,7 @@ namespace audio
    }
 
 
-   bool wave_pre_buffer::open(::audio::wave_pre_buffer_callback * pcallback, int32_t iChannelCount, int32_t iChunkCount, int32_t iChunkSampleCount)
+   bool wave_pre_buffer::open(::audio_mmsystem::wave_pre_buffer_callback * pcallback, int32_t iChannelCount, int32_t iChunkCount, int32_t iChunkSampleCount)
    {
       if(!_UpdateBuffer(iChannelCount, iChunkCount, iChunkSampleCount, m_iMinFreeBuffer))
       {
@@ -39,7 +39,7 @@ namespace audio
 
       // no m_speffect by default, removed devocalizer during memory usage optimization 16:35 2011-04-05
       //m_spdevocalizer.destroy();
-      //m_spdevocalizer(new ::audio::wave_effect_devocalizer(get_app(), false, iChunkSampleCount, 44100, 2, 2));
+      //m_spdevocalizer(new ::audio_mmsystem::wave_effect_devocalizer(get_app(), false, iChunkSampleCount, 44100, 2, 2));
       return true;
    }
 
@@ -54,9 +54,9 @@ namespace audio
       return true;
    }
 
-   void wave_pre_buffer::SetDecoder(audio_decode::decoder * pinterface)
+   void wave_pre_buffer::SetDecoder(::multimedia::audio_decode::decoder * pinterface)
    {
-      spa(audio_decode::decoder)::add(pinterface);
+      spa(::multimedia::audio_decode::decoder)::add(pinterface);
       m_pdecoder = pinterface;
    }
 
@@ -407,7 +407,7 @@ namespace audio
    }
 
 
-} // namespace audio
+} // namespace audio_mmsystem
 
 
 

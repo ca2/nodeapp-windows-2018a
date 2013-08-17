@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace audio
+namespace audio_mmsystem
 {
 
 
@@ -12,23 +12,20 @@ namespace audio
    typedef array < WAVEBUFFERDATA > wave_buffer_data_array;
 
 
-   class CLASS_DECL_CA2_MULTIMEDIA wave_buffer :
+   class  CLASS_DECL_AUDIO_MMSYSTEM wave_buffer :
       virtual public ::ca2::object
    {
    public:
 
 
-      class buffer
+      class CLASS_DECL_AUDIO_MMSYSTEM buffer :
+         virtual public ::multimedia::audio::wave_buffer::buffer
       {
       protected:
-         bool        m_bShortCompress;
-      public:
-         bool        m_bFFT;
-         bool FFTProcessed();
-         bool OnMultimediaDone();
-         int32_t         m_iIndex;
+
          WAVEHDR     m_wavehdr;
-         void *      m_pData;
+
+         virtual void * get_os_data();
 
       };
 
@@ -110,7 +107,7 @@ namespace audio
    };
 
 
-} // namespace audio
+} // namespace audio_mmsystem
 
 
 

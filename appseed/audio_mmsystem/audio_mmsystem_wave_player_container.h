@@ -1,30 +1,30 @@
 #pragma once
 
 
-namespace audio
+namespace audio_mmsystem
 {
 
 
-   class CLASS_DECL_CA2_MULTIMEDIA wave_player_container :
+   class  CLASS_DECL_AUDIO_MMSYSTEM wave_player_container :
       virtual public ::ca2::object
    {
    public:
 
 
-      ::audio::wave_player *   m_pwaveplayer;
+      ::audio_mmsystem::wave_player *   m_pwaveplayer;
 
 
       wave_player_container(sp(::ca2::application) papp);
       virtual ~wave_player_container();
 
 
-      ::audio::wave_player * GetWavePlayer();
+      ::audio_mmsystem::wave_player * get_wave_player();
 
 
    };
 
 
-} // namespace audio
+} // namespace audio_mmsystem
 
 
 

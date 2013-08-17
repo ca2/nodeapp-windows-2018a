@@ -38,6 +38,5 @@
 
 
 
-#define MOVE_SEMANTICS
 
 

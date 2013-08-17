@@ -1,30 +1,30 @@
 #pragma once
 
 
-namespace audio
+namespace audio_mmsystem
 {
 
 
-   class CLASS_DECL_CA2_MULTIMEDIA wave_recorder_container :
+   class  CLASS_DECL_AUDIO_MMSYSTEM wave_recorder_container :
       virtual public ::ca2::object
    {
    public:
 
 
-      ::audio::wave_recorder *   m_pwaverecorder;
+      ::audio_mmsystem::wave_recorder *   m_pwaverecorder;
 
 
       wave_recorder_container(sp(::ca2::application) papp);
       virtual ~wave_recorder_container();
 
 
-      ::audio::wave_recorder * GetWaveRecorder();
+      ::audio_mmsystem::wave_recorder * GetWaveRecorder();
 
 
    };
 
 
-} // audio
+} // audio_mmsystem
 
 
 

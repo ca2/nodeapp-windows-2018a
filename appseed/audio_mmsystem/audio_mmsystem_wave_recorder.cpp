@@ -1,7 +1,7 @@
 #include "framework.h"
 
 
-namespace audio
+namespace audio_mmsystem
 {
 
 
@@ -58,8 +58,8 @@ namespace audio
       m_eventStopped.ResetEvent();
       switch(command.GetCommand())
       {
-      case ::audio::command_execute_stop:
-      case ::audio::command_close_device:
+      case ::audio_mmsystem::command_execute_stop:
+      case ::audio_mmsystem::command_close_device:
          {
             audCommandMessageProcedure(command);
          }
@@ -130,7 +130,7 @@ namespace audio
          }
          break;
 
-      case ::audio::command_execute_record:
+      case ::audio_mmsystem::command_execute_record:
          {
             /*if(m_pencoder == NULL)
             {
@@ -141,8 +141,8 @@ namespace audio
             m_pwavein->Start();
          }
          break;
-      case ::audio::command_close_device:
-      case ::audio::command_execute_stop:
+      case ::audio_mmsystem::command_close_device:
+      case ::audio_mmsystem::command_execute_stop:
          {
 
             m_eventStopped.ResetEvent();
@@ -222,13 +222,13 @@ namespace audio
    }
    void wave_recorder_command::Stop()
    {
-      SetCommand(::audio::command_execute_stop);
+      SetCommand(::audio_mmsystem::command_execute_stop);
 
    }
 
    void wave_recorder_command::Record()
    {
-      SetCommand(::audio::command_execute_record);
+      SetCommand(::audio_mmsystem::command_execute_record);
 
    }
 
@@ -251,7 +251,7 @@ namespace audio
    }
 
 
-} // namespace audio
+} // namespace audio_mmsystem
 
 
 

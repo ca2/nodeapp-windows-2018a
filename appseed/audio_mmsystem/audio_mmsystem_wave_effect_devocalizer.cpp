@@ -1,8 +1,7 @@
 #include "framework.h"
-#include <math.h>
 
 
-namespace audio
+namespace audio_mmsystem
 {
 
 
@@ -939,6 +938,6 @@ namespace audio
 
 
 
-} // namespace audio
+} // namespace audio_mmsystem
 
 

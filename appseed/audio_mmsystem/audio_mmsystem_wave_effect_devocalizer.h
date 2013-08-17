@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace audio
+namespace audio_mmsystem
 {
 
    class wave_effect_devocalizer  :
@@ -128,7 +128,7 @@ namespace audio
    };
 
 
-} // namespace audio
+} // namespace audio_mmsystem
 
 
 

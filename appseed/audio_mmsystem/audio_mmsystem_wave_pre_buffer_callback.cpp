@@ -1,11 +1,11 @@
 #include "framework.h"
 
 
-namespace audio
+namespace audio_mmsystem
 {
 
 
-   void ::audio::wave_pre_buffer_callback::OnPreBufferDone(int32_t iId)
+   void ::audio_mmsystem::wave_pre_buffer_callback::OnPreBufferDone(int32_t iId)
    {
 
       UNREFERENCED_PARAMETER(iId);
@@ -15,4 +15,4 @@ namespace audio
 
 
 
-} // namespace audio
+} // namespace audio_mmsystem

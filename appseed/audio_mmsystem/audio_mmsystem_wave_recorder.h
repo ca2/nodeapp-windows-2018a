@@ -2,14 +2,14 @@
 
 
 
-namespace audio
+namespace audio_mmsystem
 {
 
 
    class wave_in;
 
 
-   class CLASS_DECL_CA2_MULTIMEDIA wave_recorder : 
+   class  CLASS_DECL_AUDIO_MMSYSTEM wave_recorder : 
       public ::ca2::thread,
       public wave_in_listener
    {
@@ -18,8 +18,8 @@ namespace audio
 
       wave_in *                              m_pwavein;
       ::ca2::filesp                            m_spfile;
-      audio_decode::encoder *                m_pencoder;
-      audio_decode::encoder_plugin_set       m_pluginset;
+      ::multimedia::audio_decode::encoder *                m_pencoder;
+      ::multimedia::audio_decode::encoder_plugin_set       m_pluginset;
       event                                  m_eventStopped;
       int32_t                                m_iOutBufferSampleCount;
 
@@ -48,7 +48,7 @@ namespace audio
    };
 
 
-} // namespace audio
+} // namespace audio_mmsystem
 
 
 

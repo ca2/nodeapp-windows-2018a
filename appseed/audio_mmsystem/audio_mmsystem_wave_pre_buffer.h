@@ -21,12 +21,12 @@ namespace iaudio
 } // namespace iaudio
 
 
-namespace audio
+namespace audio_mmsystem
 {
 
 
-   class CLASS_DECL_CA2_MULTIMEDIA wave_pre_buffer :
-      virtual public spa(audio_decode::decoder)
+   class  CLASS_DECL_AUDIO_MMSYSTEM wave_pre_buffer :
+      virtual public spa(::multimedia::audio_decode::decoder)
    {
    public:
 
@@ -79,11 +79,11 @@ namespace audio
 
       array < int16_t >                 m_shaL1;
       array < int16_t >                 m_shaL2;
-      ::audio::wave_pre_buffer_callback *          m_pcallback;
+      ::audio_mmsystem::wave_pre_buffer_callback *          m_pcallback;
       int32_t                                 m_iChannelCount;
       int32_t                                 m_iChunkCount;
       int32_t                                 m_iChunkSampleCount;
-      sp(audio_decode::decoder)           m_pdecoder;
+      sp(::multimedia::audio_decode::decoder)           m_pdecoder;
 
       sp(::iaudio::wave_stream_effect)        m_speffect;
       ChunkArray                          m_chunkaL1;
@@ -121,8 +121,8 @@ namespace audio
       int16_t * GetInBuffer(int32_t iChunk);
       int32_t GetTotalChunkCount();
       int16_t * GetOutBufferId(int32_t iId);
-      void SetDecoder(audio_decode::decoder * pinterface);
-      bool open(::audio::wave_pre_buffer_callback * pcallback, int32_t iChannelCount, int32_t iGroupCount, int32_t iGroupSampleCount);
+      void SetDecoder(::multimedia::audio_decode::decoder * pinterface);
+      bool open(::audio_mmsystem::wave_pre_buffer_callback * pcallback, int32_t iChannelCount, int32_t iGroupCount, int32_t iGroupSampleCount);
       bool SetMinL1BufferCount(int32_t iCount);
 
       int64_t GetMillisLength();
@@ -140,7 +140,7 @@ namespace audio
    }
 
 
-} // namespace audio
+} // namespace audio_mmsystem
 
 
 

@@ -1,14 +1,14 @@
 #pragma once
 
 
-namespace audio
+namespace audio_mmsystem
 {
 
 
    class wave_in;
 
 
-   class CLASS_DECL_CA2_MULTIMEDIA wave :
+   class  CLASS_DECL_AUDIO_MMSYSTEM wave :
       virtual public ::ca2::object
    {
    public:
@@ -32,7 +32,7 @@ namespace audio
    };
 
 
-} // namespace audio
+} // namespace audio_mmsystem
 
 
 

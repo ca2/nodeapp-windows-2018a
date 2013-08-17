@@ -46,7 +46,6 @@ namespace win
       virtual ~application();
 
 
-      virtual string draw2d_get_default_library_name();
 
       
       virtual HINSTANCE GetHinstance();
@@ -211,6 +210,10 @@ namespace win
 
 
       virtual ::user::printer * get_printer(const char * pszDeviceName);
+
+      virtual string draw2d_get_default_library_name();
+      virtual string multimedia_audio_get_default_library_name();
+
 
    };
 

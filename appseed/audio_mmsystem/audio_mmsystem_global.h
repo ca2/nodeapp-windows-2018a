@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace audio
+namespace audio_mmsystem
 {
 
 
@@ -13,7 +13,7 @@ namespace audio
 
    };
 
-   class CLASS_DECL_CA2_MULTIMEDIA wave_pre_buffer_callback
+   class  CLASS_DECL_AUDIO_MMSYSTEM wave_pre_buffer_callback
    {
    public:
 
@@ -25,7 +25,7 @@ namespace audio
 
 
 
-} // namespace audio
+} // namespace audio_mmsystem
 
 
 

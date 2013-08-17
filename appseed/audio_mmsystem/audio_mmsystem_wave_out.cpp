@@ -1,7 +1,7 @@
 #include "framework.h"
 
 
-namespace audio
+namespace audio_mmsystem
 {
 
 
@@ -29,11 +29,9 @@ namespace audio
 
    void wave_out::install_message_handling(::ca2::message::dispatch * pinterface)
    {
-#ifdef WINDOWS
       IGUI_WIN_MSG_LINK(MM_WOM_OPEN, pinterface, this, &wave_out::OnMultimediaOpen);
       IGUI_WIN_MSG_LINK(MM_WOM_DONE, pinterface, this, &wave_out::OnMultimediaDone);
       IGUI_WIN_MSG_LINK(MM_WOM_CLOSE, pinterface, this, &wave_out::OnMultimediaClose);
-#endif
       IGUI_WIN_MSG_LINK(MessageBufferReady, pinterface, this, &wave_out::OnBufferReady);
       IGUI_WIN_MSG_LINK(MessageClose, pinterface, this, &wave_out::OnClose);
    }
@@ -71,7 +69,7 @@ namespace audio
       return thread::exit_instance();
    }
 
-   MMRESULT wave_out::open(
+   ::multimedia::result wave_out::open(
       thread * pthreadCallback,
       int32_t iBufferCount,
       int32_t iBufferSampleCount)
@@ -81,8 +79,7 @@ namespace audio
          m_estate != state_initial)
          return MMSYSERR_NOERROR;
       m_pthreadCallback = pthreadCallback;
-      #ifdef WINDOWS
-      MMRESULT mmr;
+      ::multimedia::result mmr;
       ASSERT(m_hwaveout == NULL);
       ASSERT(m_estate == state_initial);
 
@@ -93,7 +90,7 @@ namespace audio
       m_waveformatex.nBlockAlign = m_waveformatex.wBitsPerSample * m_waveformatex.nChannels / 8;
       m_waveformatex.nAvgBytesPerSec = m_waveformatex.nSamplesPerSec * m_waveformatex.nBlockAlign;
       m_waveformatex.cbSize = 0;
-      sp(::audio::wave) audiowave = Application.audiowave();
+      sp(::audio_mmsystem::wave) audiowave = Application.audiowave();
 
       if(MMSYSERR_NOERROR == (mmr = waveOutOpen(
          &m_hwaveout,
@@ -136,7 +133,7 @@ namespace audio
          }
          else if(mmr == WAVERR_BADFORMAT)
          {
-            TRACE("Attempted to open with an unsupported waveform-audio format.");
+            TRACE("Attempted to open with an unsupported waveform-audio_mmsystem format.");
          }
          TRACE("ERROR OPENING WAVE INPUT DEVICE");
          return mmr;
@@ -214,7 +211,7 @@ Opened:
       return MMSYSERR_NOERROR;
    }
 
-   MMRESULT wave_out::OpenEx(
+   ::multimedia::result wave_out::OpenEx(
       thread * pthreadCallback,
       int32_t iBufferCount,
       int32_t iBufferSampleCount,
@@ -227,7 +224,7 @@ Opened:
          m_estate != state_initial)
          return MMSYSERR_NOERROR;
       m_pthreadCallback = pthreadCallback;
-      MMRESULT mmr;
+      ::multimedia::result mmr;
       ASSERT(m_hwaveout == NULL);
       ASSERT(m_estate == state_initial);
 
@@ -239,7 +236,7 @@ Opened:
       m_waveformatex.nAvgBytesPerSec   = m_waveformatex.nSamplesPerSec * m_waveformatex.nBlockAlign;
       m_waveformatex.cbSize            = sizeof(m_waveformatex);
 
-      sp(::audio::wave) audiowave = Application.audiowave();
+      sp(::audio_mmsystem::wave) audiowave = Application.audiowave();
 
       try
       {
@@ -273,7 +270,7 @@ Opened:
          }
          else if(mmr == WAVERR_BADFORMAT)
          {
-            TRACE("Attempted to open with an unsupported waveform-audio format.");
+            TRACE("Attempted to open with an unsupported waveform-audio_mmsystem format.");
          }
          TRACE("ERROR OPENING WAVE INPUT DEVICE");
          return mmr;
@@ -349,12 +346,12 @@ Opened:
          }
       }
       m_pprebuffer->SetMinL1BufferCount(GetBuffer().GetBufferCount() + 4);
-      #endif
+      
       m_estate = StateOpened;
       return MMSYSERR_NOERROR;
    }
 
-   MMRESULT wave_out::Start(const imedia::position & position)
+   ::multimedia::result wave_out::Start(const imedia::position & position)
    {
       single_lock sLock(&m_csHandle, TRUE);
       if(m_estate == StatePlaying)
@@ -371,7 +368,7 @@ Opened:
    }
 
 
-   MMRESULT wave_out::close()
+   ::multimedia::result wave_out::close()
    {
       single_lock sLock(&m_csHandle, TRUE);
       if(m_estate == StatePlaying)
@@ -380,8 +377,7 @@ Opened:
       }
       if(m_estate != StateOpened)
          return MMSYSERR_NOERROR;
-#ifdef WINDOWS
-      MMRESULT mmr;
+      ::multimedia::result mmr;
       int32_t i, iSize;
       iSize =  GetBuffer().GetBufferCount();
       for(i = 0; i < iSize; i++)
@@ -397,7 +393,6 @@ Opened:
 
       mmr = waveOutClose(m_hwaveout);
       m_hwaveout = NULL;
-      #endif
       m_pprebuffer->Reset();
       m_estate = state_initial;
       return MMSYSERR_NOERROR;
@@ -415,10 +410,8 @@ Opened:
    {
       SCAST_PTR(::ca2::message::base, pbase, pobj);
       m_iBufferInMMSys--;
-      #ifdef WINDOWS
       LPWAVEHDR lpwavehdr = (LPWAVEHDR) pbase->m_lparam.m_lparam;
       OutBufferDone(lpwavehdr);
-      #endif
    }
 
    void wave_out::OnMultimediaClose(::ca2::signal_object * pobj)
@@ -440,8 +433,7 @@ Opened:
          return;
       }
 
-#ifdef WINDOWS
-      MMRESULT mmr;
+      ::multimedia::result mmr;
       if(m_peffect != NULL)
       {
          m_peffect->Process16bits(
@@ -459,7 +451,6 @@ Opened:
       {
          m_iBufferInMMSys++;
       }
-#endif
    }
 
    bool wave_out::Stop()
@@ -475,14 +466,14 @@ Opened:
       m_pprebuffer->Stop();
 
       m_estate = StateStopping;
-#ifdef WINDOWS
+
       // waveOutReset
       // The waveOutReset function stops playback on the given
-      // waveform-audio output device and resets the current position
+      // waveform-audio_mmsystem output device and resets the current position
       // to zero. All pending playback buffers are marked as done and
       // returned to the application.
       m_mmr = waveOutReset(m_hwaveout);
-#endif
+
 
 
       if(m_mmr == MMSYSERR_NOERROR)
@@ -503,14 +494,14 @@ Opened:
          return false;
 
 
-#ifdef WINDOWS
+
       // waveOutReset
       // The waveOutReset function stops playback on the given
-      // waveform-audio output device and resets the current position
+      // waveform-audio_mmsystem output device and resets the current position
       // to zero. All pending playback buffers are marked as done and
       // returned to the application.
       m_mmr = waveOutPause(m_hwaveout);
-#endif
+
 
       ASSERT(m_mmr == MMSYSERR_NOERROR);
 
@@ -532,14 +523,14 @@ Opened:
 
 
 
-#ifdef WINDOWS
+
       // waveOutReset
       // The waveOutReset function stops playback on the given
-      // waveform-audio output device and resets the current position
+      // waveform-audio_mmsystem output device and resets the current position
       // to zero. All pending playback buffers are marked as done and
       // returned to the application.
       m_mmr = waveOutRestart(m_hwaveout);
-#endif
+
 
       ASSERT(m_mmr == MMSYSERR_NOERROR);
 
@@ -575,8 +566,8 @@ Opened:
       single_lock sLock(&m_csHandle, TRUE);
 
 
-#ifdef WINDOWS
-      MMRESULT                mmr;
+
+      ::multimedia::result                mmr;
       MMTIME                  mmt;
       mmt.wType = TIME_MS;
 
@@ -613,7 +604,7 @@ Opened:
       }
       else
          return 0;
-#endif
+
 
    }
 
@@ -629,8 +620,8 @@ Opened:
    imedia::position wave_out::get_position()
    {
       single_lock sLock(&m_csHandle, TRUE);
-#ifdef WINDOWS
-      MMRESULT                mmr;
+
+      ::multimedia::result                mmr;
       MMTIME                  mmt;
       mmt.wType = TIME_BYTES;
 
@@ -663,7 +654,7 @@ Opened:
       }
       else
          return 0;
-#endif
+
    }
 
    int32_t wave_out::GetBufferInMMSystemCount()
@@ -692,7 +683,7 @@ Opened:
       return GetBuffer().PCMOutGetInBufferSize();
    }
 
-   MMRESULT wave_out::GetLastMMResult()
+   ::multimedia::result wave_out::GetLastMMResult()
    {
       return m_mmr;
    }
@@ -714,7 +705,7 @@ Opened:
       return m_iBufferInMMSys;
    }
 
-   audio_decode::decoder * wave_out::SetDecoder(audio_decode::decoder * pdecoder)
+   ::multimedia::audio_decode::decoder * wave_out::SetDecoder(::multimedia::audio_decode::decoder * pdecoder)
    {
       m_pprebuffer->SetDecoder(pdecoder);
       return pdecoder;
@@ -749,7 +740,7 @@ Opened:
    void wave_out::_Free(LPWAVEHDR lpwavehdr)
    {
       m_lphdraFree.add(lpwavehdr);
-      #ifdef WINDOWS
+      
       if(!m_pprebuffer->IdFree((int32_t) lpwavehdr->dwUser))
          return;
 
@@ -760,7 +751,7 @@ Opened:
 
 
       BufferReady(lpwavehdr);
-      #endif
+      
    }
 
    void wave_out::OnPlaybackEnd()
@@ -798,7 +789,7 @@ Opened:
    }
 
 
-} // namespace audio
+} // namespace audio_mmsystem
 
 
 
