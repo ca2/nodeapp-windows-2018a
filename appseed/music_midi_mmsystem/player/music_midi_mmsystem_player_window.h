@@ -22,18 +22,18 @@ namespace music
          public:
 
 
-            callback * m_pcallback;
+            ::music::midi::player::callback_interface * m_pcallback;
 
 
             window(sp(::ca2::application) papp);
             virtual ~window();
 
-            callback * get_callback();
+            ::music::midi::player::callback_interface * get_callback();
 
             using ::user::interaction::create;
             virtual bool create();
 
-            void set_callback(callback * pcallback);
+            void set_callback(::music::midi::player::callback_interface * pcallback);
 
             void install_message_handling(::ca2::message::dispatch * pinterface);
 

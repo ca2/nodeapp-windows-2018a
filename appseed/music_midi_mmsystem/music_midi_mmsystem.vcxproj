@@ -803,6 +803,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="music_midi_mmsystem_factory_exchange.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="music_midi_mmsystem.h" />
     <ClInclude Include="music_midi_mmsystem_exception.h" />
@@ -813,8 +814,10 @@
     <ClInclude Include="player\music_midi_mmsystem_player.h" />
     <ClInclude Include="player\music_midi_mmsystem_player_callback.h" />
     <ClInclude Include="player\music_midi_mmsystem_player_window.h" />
+    <ClInclude Include="player\music_midi_mmsystem_player_interface.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="music_midi_mmsystem_factory_exchange.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='codeanalysis|Win32'">Create</PrecompiledHeader>
@@ -826,31 +829,15 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='profiler|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="music_midi_mmsystem.cpp" />
-    <ClCompile Include="music_midi_mmsystem_document_helper.cpp" />
-    <ClCompile Include="music_midi_mmsystem_events_v1.cpp" />
-    <ClCompile Include="music_midi_mmsystem_event_base.cpp" />
-    <ClCompile Include="music_midi_mmsystem_event_v1.cpp" />
-    <ClCompile Include="music_midi_mmsystem_event_v2.cpp" />
-    <ClCompile Include="music_midi_mmsystem_event_v5.cpp" />
-    <ClCompile Include="music_midi_mmsystem_event_v7.cpp" />
-    <ClCompile Include="music_midi_mmsystem_event_v8.cpp" />
     <ClCompile Include="music_midi_mmsystem_exception.cpp" />
     <ClCompile Include="music_midi_mmsystem_file.cpp" />
-    <ClCompile Include="music_midi_mmsystem_lyric_track.cpp" />
-    <ClCompile Include="music_midi_mmsystem_midi.cpp" />
-    <ClCompile Include="music_midi_mmsystem_midi_listener.cpp" />
     <ClCompile Include="music_midi_mmsystem_sequence.cpp" />
     <ClCompile Include="music_midi_mmsystem_sequence_thread.cpp" />
-    <ClCompile Include="music_midi_mmsystem_track.cpp" />
-    <ClCompile Include="music_midi_mmsystem_tracks.cpp" />
-    <ClCompile Include="music_midi_mmsystem_track_base.cpp" />
-    <ClCompile Include="music_midi_mmsystem_track_v8.cpp" />
     <ClCompile Include="music_midi_mmsystem_translation.cpp" />
-    <ClCompile Include="music_midi_mmsystem_util.cpp" />
-    <ClCompile Include="music_midi_mmsystem_view_helper.cpp" />
     <ClCompile Include="player\music_midi_mmsystem_player.cpp" />
     <ClCompile Include="player\music_midi_mmsystem_player_callback.cpp" />
     <ClCompile Include="player\music_midi_mmsystem_player_window.cpp" />
+    <ClCompile Include="player\music_midi_mmsystem_player_interface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\app-core\appseed\multimedia\multimedia.vcxproj">

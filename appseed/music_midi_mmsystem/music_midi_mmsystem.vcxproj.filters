@@ -31,6 +31,12 @@
     <ClInclude Include="player\music_midi_mmsystem_player_callback.h">
       <Filter>Header Files\player</Filter>
     </ClInclude>
+    <ClInclude Include="player\music_midi_mmsystem_player_interface.h">
+      <Filter>Header Files\player</Filter>
+    </ClInclude>
+    <ClInclude Include="music_midi_mmsystem_factory_exchange.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -53,67 +59,16 @@
     <ClCompile Include="music_midi_mmsystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="music_midi_mmsystem_document_helper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="music_midi_mmsystem_event_base.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="music_midi_mmsystem_event_v1.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="music_midi_mmsystem_event_v2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="music_midi_mmsystem_event_v5.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="music_midi_mmsystem_event_v7.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="music_midi_mmsystem_event_v8.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="music_midi_mmsystem_events_v1.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="music_midi_mmsystem_exception.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="music_midi_mmsystem_file.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="music_midi_mmsystem_lyric_track.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="music_midi_mmsystem_midi.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="music_midi_mmsystem_midi_listener.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="music_midi_mmsystem_sequence.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="music_midi_mmsystem_sequence_thread.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="music_midi_mmsystem_track.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="music_midi_mmsystem_track_base.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="music_midi_mmsystem_track_v8.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="music_midi_mmsystem_tracks.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="music_midi_mmsystem_util.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="music_midi_mmsystem_view_helper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="player\music_midi_mmsystem_player.cpp">
@@ -127,6 +82,12 @@
     </ClCompile>
     <ClCompile Include="player\music_midi_mmsystem_player_callback.cpp">
       <Filter>Source Files\player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\music_midi_mmsystem_player_interface.cpp">
+      <Filter>Source Files\player</Filter>
+    </ClCompile>
+    <ClCompile Include="music_midi_mmsystem_factory_exchange.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

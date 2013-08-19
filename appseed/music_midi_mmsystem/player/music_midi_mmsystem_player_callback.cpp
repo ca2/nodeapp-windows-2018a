@@ -5,7 +5,7 @@ namespace music
 {
 
 
-   namespace midi
+   namespace midi_mmsystem
    {
 
 
@@ -45,7 +45,7 @@ namespace music
             UNREFERENCED_PARAMETER(lpmdd);
          }
 
-         void callback::OnMidiPlayerNotifyEvent(notify_event * pdata)
+         void callback::OnMidiPlayerNotifyEvent(::music::midi::player::notify_event * pdata)
          {
             switch(pdata->m_enotifyevent)
             {
@@ -64,7 +64,7 @@ namespace music
       } // namespace player
 
 
-   } // namespace midi
+   } // namespace midi_mmsystem
 
 
 } // namespace music

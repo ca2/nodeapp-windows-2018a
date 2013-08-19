@@ -1145,8 +1145,8 @@ gdi_fallback:
                ::draw2d::dib_sp dib1(allocer());
                dib1->create(rectText.size());
                dib1->Fill(0, 0, 0, 0);
-               brush->create_solid(m_crColor);
-               dib1->get_graphics()->SelectObject(brush);
+               //brush->create_solid(m_spbrush.is_null() ? ARGB(255, 0, 0, 0) : m_spbrush->m_cr);
+               dib1->get_graphics()->SelectObject(m_spbrush);
                dib1->get_graphics()->SelectObject(get_current_font());
 //               dib1->get_graphics()->SetBkMode(TRANSPARENT);
                dib1->get_graphics()->TextOut(0, 0, str);

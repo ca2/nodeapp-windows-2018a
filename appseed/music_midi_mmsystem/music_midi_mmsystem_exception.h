@@ -25,23 +25,11 @@ namespace music
    {
 
 
-      class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM exception : public base_exception  
+      class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM exception : 
+         virtual public ::music::midi::exception
       {
       public:
 
-         enum e_type 
-         {
-            TypeUndefined,
-            TypeMultimediaSystem,
-            TypeMidiFile,
-         };
-
-
-         ::multimedia::result                        m_mmr;
-         int32_t                           m_iAppError;
-         ::music::midi::e_file_result    m_mfr;
-         string                        m_strUser;
-         e_type                        m_etype;
 
 
          exception(sp(::ca2::application) papp);

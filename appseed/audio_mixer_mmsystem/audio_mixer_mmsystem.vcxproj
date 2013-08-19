@@ -811,6 +811,7 @@
     <ClInclude Include="audio_mixer_mmsystem_control_data_volume.h" />
     <ClInclude Include="audio_mixer_mmsystem_destination.h" />
     <ClInclude Include="audio_mixer_mmsystem_device.h" />
+    <ClInclude Include="audio_mixer_mmsystem_factory_exchange.h" />
     <ClInclude Include="audio_mixer_mmsystem_line_info.h" />
     <ClInclude Include="audio_mixer_mmsystem_mixer.h" />
     <ClInclude Include="audio_mixer_mmsystem_section.h" />
@@ -829,6 +830,7 @@
     <ClCompile Include="audio_mixer_mmsystem_control_data.cpp" />
     <ClCompile Include="audio_mixer_mmsystem_destination.cpp" />
     <ClCompile Include="audio_mixer_mmsystem_device.cpp" />
+    <ClCompile Include="audio_mixer_mmsystem_factory_exchange.cpp" />
     <ClCompile Include="audio_mixer_mmsystem_line_info.cpp" />
     <ClCompile Include="audio_mixer_mmsystem_mixer.cpp" />
     <ClCompile Include="audio_mixer_mmsystem_section.cpp" />

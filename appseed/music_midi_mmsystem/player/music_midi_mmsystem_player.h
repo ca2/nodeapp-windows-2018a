@@ -3,32 +3,10 @@
 
 #include "music_midi_mmsystem_player_window.h"
 #include "music_midi_mmsystem_player_callback.h"
-
-
-typedef struct tag_midicallbackdata MIDICALLBACKDATA;
-
-typedef struct  tagDouble
-{
-   double d;
-} DOUBLESTRUCT, * LPDOUBLESTRUCT;
-
-//#define MIDIPLAYERMESSAGE_PLAYBACKEND WM_USER + 30
-#define MIDISEQUENCEMESSAGE_EVENT WM_USER + 30
-
-#define MIDIPLAYERMESSAGE_COMMAND WM_USER + 50
-//#define MIDIPLAYERMESSAGE_STREAMOUT WM_USER + 31
-//#define   MIDIPLAYERMESSAGE_STOP WM_USER + 32
-
-
-#define MIDIPLAYERMESSAGE_NOTIFYEVENT WM_APP + 40
+#include "music_midi_mmsystem_player_interface.h"
 
 
 
-
-
-
-
-#pragma once
 
 
 namespace music
@@ -52,23 +30,9 @@ namespace music
 
 
          class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM player :
-            public ::ca2::thread,
-            public ::music::midi::midi_listener
+            virtual public ::music::midi::player::player
          {
          public:
-
-            enum e_message 
-            {
-               MessageNotifyEvent = WM_APP + 40,
-            };
-
-            event              m_eventPlaybackEnd;
-            event              m_evInitialized;
-
-            ::music::midi::sequence_thread *    m_psequencethread;
-            sp(::user::interaction)                   m_puie;
-            player_interface *   m_pinterface;
-            double                  m_dNextPositionRate;
 
 
             player(sp(::ca2::application) papp);
@@ -78,10 +42,8 @@ namespace music
             void install_message_handling(::ca2::message::dispatch * pinterface);
 
 
-
             void SendMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd);
             void SetCallbackWindow(sp(::user::interaction) puie);
-            ::music::midi::sequence & GetSequence();
             bool Play(double dRate = 0.0, uint32_t dwEllapse = 584);
             bool Play(imedia::position tkStart, uint32_t dwEllapse = 584);
 
@@ -95,11 +57,11 @@ namespace music
             void Pause();
             void CloseFile();
             void SendReset();
-            bool ExecuteCommand(e_command ecommand, uint32_t dwEllapse);
+            bool ExecuteCommand(::music::midi::player::e_command ecommand, uint32_t dwEllapse);
             virtual void OnMidiOutDeviceChange();
 
             uint32_t GetMidiOutDevice();
-            void PostNotifyEvent(e_notify_event eevent);
+            void PostNotifyEvent(::music::midi::player::e_notify_event eevent);
 
             imedia::position RateToTicks(double dRate);
 
@@ -119,11 +81,11 @@ namespace music
 
 
             DECL_GEN_SIGNAL(OnNotifyEvent)
-               DECL_GEN_SIGNAL(OnMultimediaMidiOutputMessageDone)
-               DECL_GEN_SIGNAL(OnMultimediaMidiOutputMessagePositionCB)
+            DECL_GEN_SIGNAL(OnMultimediaMidiOutputMessageDone)
+            DECL_GEN_SIGNAL(OnMultimediaMidiOutputMessagePositionCB)
 
-               // midi central listener
-               DECL_GEN_VSIGNAL(on_attribute_change);
+            // midi central listener
+            DECL_GEN_VSIGNAL(on_attribute_change);
 
 
          };

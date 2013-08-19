@@ -27,7 +27,7 @@ namespace music
          {
             ::user::interaction::install_message_handling(pinterface);
             IGUI_WIN_MSG_LINK(MMSG_DONE                        , pinterface, this, &window::_001OnMmsgDone);
-            IGUI_WIN_MSG_LINK(player::MessageNotifyEvent   , pinterface, this, &window::_001OnNotifyEvent);
+            IGUI_WIN_MSG_LINK(::music::midi::player::message_notify_event   , pinterface, this, &window::_001OnNotifyEvent);
             IGUI_WIN_MSG_LINK(WM_USER                          , pinterface, this, &window::_001OnUserMessage);
             IGUI_WIN_MSG_LINK(WM_APP + 3388                    , pinterface, this, &window::_001OnApp3388Message);
          }
@@ -53,7 +53,7 @@ namespace music
          void window::_001OnNotifyEvent(::ca2::signal_object * pobj)
          {
             SCAST_PTR(::ca2::message::base, pbase, pobj);
-            notify_event * pdata = (notify_event *) pbase->m_lparam.m_lparam;
+            ::music::midi::player::notify_event * pdata = (::music::midi::player::notify_event *) pbase->m_lparam.m_lparam;
             if(get_callback() != NULL)
             {
                get_callback()->OnMidiPlayerNotifyEvent(pdata);
@@ -68,12 +68,12 @@ namespace music
          }
 
 
-         callback * window::get_callback()
+         ::music::midi::player::callback_interface * window::get_callback()
          {
             return m_pcallback;
          }
 
-         void window::set_callback(callback *pcallback)
+         void window::set_callback(::music::midi::player::callback_interface *pcallback)
          {
             m_pcallback = pcallback;
          }

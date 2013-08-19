@@ -9,14 +9,15 @@ namespace multimedia
    {
 
 
-      device::device(::multimedia::audio_mixer::audio_mixer * pmixer) :
-         ::ca2::ca2(pmixer->get_app()),
-         ::multimedia::audio_mixer::device(pmixer)
+      device::device(sp(::ca2::application) papp) :
+         ::ca2::ca2(papp),
+         ::multimedia::audio_mixer::device(papp)
       {
 
-         m_mixerdestinationa.set_app(pmixer->get_app());
+         m_mixerdestinationa.set_app(get_app());
 
-         m_pmixer = pmixer;
+         m_pmixer = NULL;
+
          m_hMixer = NULL;
 
       }
@@ -29,6 +30,14 @@ namespace multimedia
 
       }
 
+      bool device::initialize(::multimedia::audio_mixer::audio_mixer * pmixer)
+      {
+
+         m_pmixer = pmixer;
+
+         return true;
+
+      }
 
       ::multimedia::result device::open(uint32_t uiMixerId, uint32_t dwCallback, uint32_t dwInstance, uint32_t fdwOpen)
       {

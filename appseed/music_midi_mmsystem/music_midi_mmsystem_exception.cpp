@@ -12,15 +12,17 @@ namespace music
       exception::exception(sp(::ca2::application) papp) :
          ca2(papp),
          ::call_stack(papp),
-         ::base_exception(papp)
+         ::base_exception(papp),
+         ::music::midi::exception(papp)
       {
          m_etype = TypeUndefined;
       }
 
-      exception::exception(sp(::ca2::application) papp, e_file_result mfr) :
+      exception::exception(sp(::ca2::application) papp, ::music::midi::e_file_result mfr) :
          ca2(papp),
          ::call_stack(papp),
-         ::base_exception(papp)
+         ::base_exception(papp),
+         ::music::midi::exception(papp, mfr)
       {
          m_etype = TypeMidiFile;
          m_mfr = mfr;
@@ -29,7 +31,8 @@ namespace music
       exception::exception(sp(::ca2::application) papp, ::multimedia::result mmr, int32_t iAppError) :
          ca2(papp),
          ::call_stack(papp),
-         ::base_exception(papp)
+         ::base_exception(papp),
+         ::music::midi::exception(papp, mmr, iAppError)
       {
          m_etype = TypeMultimediaSystem;
          m_mmr = mmr;

@@ -58,6 +58,9 @@
     <ClInclude Include="audio_mixer_mmsystem_window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="audio_mixer_mmsystem_factory_exchange.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -114,6 +117,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="audio_mixer_mmsystem_window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="audio_mixer_mmsystem_factory_exchange.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

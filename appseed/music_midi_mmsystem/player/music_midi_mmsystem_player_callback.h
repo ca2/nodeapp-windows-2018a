@@ -5,7 +5,7 @@ namespace music
 {
 
 
-   namespace midi
+   namespace midi_mmsystem
    {
 
 
@@ -13,8 +13,8 @@ namespace music
       {
 
 
-         class CLASS_DECL_VERIWELL_MULTIMEDIA callback :
-            virtual public callback_interface
+         class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM callback :
+            virtual public ::music::midi::player::callback_interface
          {
          public:
 
@@ -29,8 +29,8 @@ namespace music
             virtual bool initialize();
             virtual bool finalize();
 
-            virtual void OnMmsgDone(sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd);
-            virtual void OnMidiPlayerNotifyEvent(notify_event * pdata); 
+            virtual void OnMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd);
+            virtual void OnMidiPlayerNotifyEvent(::music::midi::player::notify_event * pdata); 
             virtual void OnMidiLyricEvent(array<::ikaraoke::lyric_event_v1, ::ikaraoke::lyric_event_v1&> * pevents);
 
 
@@ -40,7 +40,7 @@ namespace music
       } // namespace player
 
 
-   } // namespace midi
+   } // namespace midi_mmsystem
 
 
 } // namespace music

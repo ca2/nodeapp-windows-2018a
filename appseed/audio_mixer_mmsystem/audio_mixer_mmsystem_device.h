@@ -19,9 +19,10 @@ namespace multimedia
          MIXERCAPS                     m_mixercaps;
 
 
-         device(::multimedia::audio_mixer::audio_mixer * pmixer);
+         device(sp(::ca2::application) papp);
          virtual ~device();
 
+         virtual bool initialize(::multimedia::audio_mixer::audio_mixer * pmixer);
 
          ::multimedia::audio_mixer::audio_mixer * get_mixer();
          const char * GetSZPName();

@@ -16,11 +16,10 @@ namespace music
          player::player(sp(::ca2::application) papp) :
             ca2(papp),
             thread(papp),
-            m_eventPlaybackEnd(papp),
-            m_evInitialized(papp)
+            ::music::midi::player::player(papp)
          {
 
-            m_psequencethread = __begin_thread < sequence_thread >(papp, ::ca2::scheduling_priority_normal, 0, CREATE_SUSPENDED);
+            m_psequencethread = dynamic_cast < ::music::midi::sequence_thread * > (__begin_thread < sequence_thread >(papp, ::ca2::scheduling_priority_normal, 0, CREATE_SUSPENDED));
 
             m_puie               = NULL;
 
@@ -50,9 +49,9 @@ namespace music
          int32_t player::exit_instance()
          {
             // TODO:  perform any per-thread cleanup here
-            //   if(!GetSequence().IsNull())
+            //   if(!get_sequence()->IsNull())
             //   {
-            //      delete GetSequence();
+            //      delete get_sequence();
             //   }
             //    if(m_pmidicallbackdata != NULL)
             //  {
@@ -64,20 +63,19 @@ namespace music
 
          void player::install_message_handling(::ca2::message::dispatch * pinterface)
          {
-            IGUI_WIN_MSG_LINK(MessageNotifyEvent, pinterface, this, &player::OnNotifyEvent);
+            ::music::midi::player::player::install_message_handling(pinterface);
             IGUI_WIN_MSG_LINK(MM_MOM_DONE, pinterface, this, &player::OnMultimediaMidiOutputMessageDone);
             IGUI_WIN_MSG_LINK(MM_MOM_POSITIONCB, pinterface, this, &player::OnMultimediaMidiOutputMessagePositionCB);
-            IGUI_WIN_MSG_LINK(WM_USER, pinterface, this, &player::OnUserMessage);
          }
 
          bool player::Play(imedia::position tkStart, uint32_t dwEllapse)
          {
 
-            command * pcommand = new command(get_app());
+            ::music::midi::player::command * pcommand = new ::music::midi::player::command(get_app());
 
-            pcommand->m_ecommand = command_play;
+            pcommand->m_ecommand = ::music::midi::player::command_play;
             pcommand->m_dwEllapse = dwEllapse;
-            pcommand->m_flags.signalize(command::flag_ticks);
+            pcommand->m_flags.signalize(::music::midi::player::command::flag_ticks);
             pcommand->m_ticks = tkStart;
 
             m_psequencethread->ExecuteCommand(pcommand);
@@ -92,11 +90,11 @@ namespace music
          bool player::Play(double dRate, uint32_t dwEllapse)
          {
 
-            command * pcommand = new command(get_app());
+            ::music::midi::player::command * pcommand = new ::music::midi::player::command(get_app());
 
-            pcommand->m_ecommand = command_play;
+            pcommand->m_ecommand = ::music::midi::player::command_play;
             pcommand->m_dwEllapse = dwEllapse;
-            pcommand->m_flags.signalize(command::flag_dRate);
+            pcommand->m_flags.signalize(::music::midi::player::command::flag_dRate);
             pcommand->m_dRate = dRate;
 
             m_psequencethread->ExecuteCommand(pcommand);
@@ -113,22 +111,22 @@ namespace music
          {
             ASSERT(dRate >= 0.0);
             ASSERT(dRate <= 1.0);
-            return (imedia::position) (int32_t) (GetSequence().m_tkLength * dRate);
+            return (imedia::position) (int32_t) (get_sequence()->m_tkLength * dRate);
          }
 
 
 
          bool player::IsPlaying()
          {
-            ASSERT(!GetSequence().IsNull());
-            return (bool) GetSequence().IsPlaying();
+            ASSERT(!get_sequence()->IsNull());
+            return (bool) get_sequence()->IsPlaying();
 
          }
 
-         bool player::ExecuteCommand(e_command ecommand, uint32_t dwEllapse)
+         bool player::ExecuteCommand(::music::midi::player::e_command ecommand, uint32_t dwEllapse)
          {
 
-            command * pcommand = new command(get_app());
+            ::music::midi::player::command * pcommand = new ::music::midi::player::command(get_app());
 
             pcommand->m_ecommand = ecommand;
             pcommand->m_dwEllapse = dwEllapse;
@@ -146,7 +144,7 @@ namespace music
          void player::CloseFile()
          {
             ::multimedia::result            mmrc;
-            if(MMSYSERR_NOERROR != (mmrc = GetSequence().CloseFile()) &&
+            if(MMSYSERR_NOERROR != (mmrc = get_sequence()->CloseFile()) &&
                mmrc != MCIERR_UNSUPPORTED_FUNCTION)
             {
                throw new exception(get_app(), mmrc, MIDIPLAYERCLOSEEXCEPTION);
@@ -155,37 +153,37 @@ namespace music
 
          void player::Pause()
          {
-            if (GetSequence().GetState() == sequence::StatusPaused)
+            if (get_sequence()->GetState() == ::music::midi::sequence::status_paused)
             {
-               GetSequence().Restart();
+               get_sequence()->Restart();
             }
             else
             {
-               GetSequence().Pause();
+               get_sequence()->Pause();
             }
 
          }
 
          void player::SetPosition(double dRate)
          {
-            if (sequence::StatusPlaying != GetSequence().GetState() &&
-               sequence::StatusStopping != GetSequence().GetState() &&
-               sequence::StatusOpened != GetSequence().GetState())
+            if (::music::midi::sequence::status_playing != get_sequence()->GetState() &&
+               ::music::midi::sequence::status_stopping != get_sequence()->GetState() &&
+               ::music::midi::sequence::status_opened != get_sequence()->GetState())
                return;
 
-            if(GetSequence().IsPlaying())
+            if(get_sequence()->IsPlaying())
             {
-               sequence::PlayerLink & link = GetSequence().GetPlayerLink();
+               ::music::midi::sequence::PlayerLink & link = get_sequence()->GetPlayerLink();
                link.ModifyFlag(
-                  sequence::FlagSettingPos,
-                  sequence::FlagNull);
+                  ::music::midi::sequence::FlagSettingPos,
+                  ::music::midi::sequence::FlagNull);
                link.m_tkRestart = RateToTicks(dRate);
-               GetSequence().Stop();
+               get_sequence()->Stop();
             }
 
          }
 
-         void player::OnMmsgDone(sequence * pSeq)
+         void player::OnMmsgDone(::music::midi::sequence * pSeq)
          {
             ASSERT(FALSE);
             ASSERT(FALSE);
@@ -195,10 +193,10 @@ namespace music
             ASSERT(FALSE);
             ASSERT(FALSE);
             ASSERT(FALSE);
-            ASSERT(pSeq == &GetSequence());
+            ASSERT(pSeq == get_sequence());
             if(pSeq->IsSettingPosition())
             {
-               GetSequence().SetSettingPositionFlag(FALSE);
+               get_sequence()->SetSettingPositionFlag(FALSE);
                try
                {
                   //         PrerollAndWait(m_dNextPositionRate);
@@ -209,7 +207,7 @@ namespace music
                   pe->Delete();
                   return;
                }
-               GetSequence().Start();
+               get_sequence()->Start();
             }
             else
             {
@@ -244,7 +242,7 @@ namespace music
             }
             if(pbase->m_uiMessage == MMSG_DONE)
             {
-               OnMmsgDone((sequence *) pbase->m_wparam);
+               OnMmsgDone((::music::midi::sequence *) pbase->m_wparam);
                pbase->m_bRet = true;
                return;
             }
@@ -258,144 +256,13 @@ namespace music
          void player::SaveFile(const char * lpszPathName)
          {
             ::multimedia::result            mmrc;
-            if((mmrc = GetSequence().SaveFile(lpszPathName)) != 
+            if((mmrc = get_sequence()->SaveFile(lpszPathName)) != 
                MMSYSERR_NOERROR)
             {
                throw new exception(get_app(), mmrc, MIDIPLAYERSAVEEXCEPTION);
             }
 
          }
-         /*
-         void player::OnMidiPlaybackEnd(
-         WPARAM wParam, LPARAM lParam)
-         {
-         sequence * pSeq = (sequence *) wParam;
-         LPMIDIHDR lpmh = (LPMIDIHDR) lParam;
-
-         ASSERT(pSeq == GetSequence());
-
-         m_eventPlaybackEnd.SetEvent();
-         //    GetSequence().OnMidiPlaybackEnd(lpmh, m_pmidicallbackdata);
-         GetSequence().OnEvent(sequence::EventMidiPlaybackEnd);
-         }*/
-
-         //void player::OnMidiSequenceEvent(::ca2::signal_object * pobj)
-         //{
-         /*   sequence::Event * pevent = (sequence::Event *) lparam;
-         sequence * pseq = (sequence *) pevent->m_psequence;
-
-         if(pevent->m_eevent == sequence::EventMidiPlaybackEnd)
-         {
-         m_eventPlaybackEnd.SetEvent();
-         }
-
-         pseq->OnEvent(pevent->m_eevent);
-
-         switch(pevent->m_eevent)
-         {
-         case sequence::EventStopped:
-         {
-         sequence::PlayerLink & link = GetSequence().GetPlayerLink();
-         if(link.TestFlag(
-         sequence::FlagStop))
-         {
-         link.ModifyFlag(
-         sequence::FlagNull,
-         sequence::FlagStop);
-         PostNotifyEvent(:music::midi:player::notify_event_playback_stop);
-         }
-         else if(link.TestFlag(
-         sequence::FlagTempoChange))
-         {
-         PrerollAndWait(link.m_tkRestart);
-         GetSequence().SetTempoChangeFlag(false);
-         GetSequence().Start();
-         link.ModifyFlag(
-         sequence::FlagNull,
-         sequence::FlagTempoChange);
-         }
-         else if(link.TestFlag(
-         sequence::FlagSettingPos))
-         {
-         link.ModifyFlag(
-         sequence::FlagNull,
-         sequence::FlagSettingPos);
-         try
-         {
-         PrerollAndWait(link.m_tkRestart);
-         }
-         catch(exception *pe)
-         {
-         SendMmsgDone(pseq, NULL);      
-         pe->Delete();
-         return;
-         }
-         GetSequence().Start();
-         PostNotifyEvent(:music::midi:player::notify_event_position_set);
-         }
-         else if(link.TestFlag(
-         sequence::FlagMidiOutDeviceChange))
-         {
-         link.ModifyFlag(
-         sequence::FlagNull,
-         sequence::FlagMidiOutDeviceChange);
-         try
-         {
-         PrerollAndWait(link.m_tkRestart);
-         }
-         catch(exception *pe)
-         {
-         SendMmsgDone(pseq, NULL);      
-         pe->Delete();
-         return;
-         }
-         GetSequence().Start();
-         /*:notify_event data;
-         data.m_pplayer = this;
-         data.m_enotifyevent = :music::midi:player::notify_event_position_set;
-         SendMessage(
-         m_oswindow_,
-         MIDIPLAYERMESSAGE_NOTIFYEVENT,
-         (WPARAM) &data,
-         0);      */
-
-         /*}
-         else if(link.TestFlag(
-         sequence::FlagStopAndRestart))
-         {
-         link.ModifyFlag(
-         sequence::FlagNull,
-         sequence::FlagStopAndRestart);
-         try
-         {
-         PrerollAndWait(link.m_tkRestart);
-         }
-         catch(exception *pe)
-         {
-         SendMmsgDone(pseq, NULL);      
-         pe->Delete();
-         return;
-         }
-         GetSequence().Start();
-         //PostNotifyEvent(:music::midi:player::notify_event_position_set);
-         }
-
-         }
-         break;
-         case sequence::EventSpecialModeV001End:
-         {
-         PostNotifyEvent(:music::midi:player::notify_event_generic_mmsg_done);
-         }
-         break;
-         case sequence::EventMidiPlaybackEnd:
-         {
-         PostNotifyEvent(:music::midi:player::notify_event_playback_end);
-         }
-         break;
-
-         }
-         delete pevent;*/
-         //}
 
 
          void player::OnUserMessage(::ca2::signal_object * pobj)
@@ -439,11 +306,10 @@ namespace music
          VMSRESULT player::SetInterface(player_interface * pinterface)
          {
             m_pinterface = pinterface;
-            GetSequence().m_pthread   = m_psequencethread;
-            GetSequence().m_midicallbackdata.m_psequence = &GetSequence(); 
-            m_psequencethread->m_psequence = &GetSequence(); 
+            get_sequence()->m_pthread   = m_psequencethread;
+            m_psequencethread->m_psequence = &get_sequence(); 
             m_psequencethread->m_pplayer = this; 
-            PostNotifyEvent(notify_event_set_sequence);
+            PostNotifyEvent(::music::midi::player::notify_event_set_sequence);
             return VMSR_SUCCESS;
          }
 
@@ -461,31 +327,31 @@ namespace music
          {
             //   if(IsPlaying())
             {/*
-             GetSequence().SetTempoChangeFlag();
-             sequence::PlayerLink & link = GetSequence().GetPlayerLink();
+             get_sequence()->SetTempoChangeFlag();
+             ::music::midi::sequence::PlayerLink & link = get_sequence()->GetPlayerLink();
              link.ModifyFlag(
-             sequence::FlagTempoChange,
-             sequence::FlagNull);
-             imedia::position tk = GetSequence().GetPositionTicks();
-             GetSequence().m_evMmsgDone.ResetEvent();
-             link.m_tkRestart = tk + GetSequence().m_tkBase;
+             ::music::midi::sequence::FlagTempoChange,
+             ::music::midi::sequence::FlagNull);
+             imedia::position tk = get_sequence()->GetPositionTicks();
+             get_sequence()->m_evMmsgDone.ResetEvent();
+             link.m_tkRestart = tk + get_sequence()->m_tkBase;
              //m_bChangingTempo = true;
-             GetSequence().Stop();
-             //GetSequence().m_evMmsgDone.lock();
+             get_sequence()->Stop();
+             //get_sequence()->m_evMmsgDone.lock();
              */
                bool bPlay = IsPlaying();
                imedia::position ticks = 0;
                if(bPlay)
                {
-                  ticks = GetSequence().GetPositionTicks();
-                  GetSequence().Stop();
+                  ticks = get_sequence()->GetPositionTicks();
+                  get_sequence()->Stop();
                }
-               if(!GetSequence().SetTempoShift(iTempoShift))
+               if(!get_sequence()->SetTempoShift(iTempoShift))
                   return false;
                if(bPlay)
                {
-                  GetSequence().m_pthread->PrerollAndWait(ticks);
-                  GetSequence().Start();
+                  get_sequence()->m_pthread->PrerollAndWait(ticks);
+                  get_sequence()->Start();
                }
 
             }
@@ -493,18 +359,18 @@ namespace music
          }
 
 
-         void player::PostNotifyEvent(e_notify_event eevent)
+         void player::PostNotifyEvent(::music::midi::player::e_notify_event eevent)
          {
             if(m_puie != NULL)
             {
-               notify_event * pdata = new notify_event;
+               ::music::midi::player::notify_event * pdata = new ::music::midi::player::notify_event;
                pdata->m_pplayer = this;
                pdata->m_enotifyevent = eevent;
-               m_puie->post_message(MessageNotifyEvent, 0 , (LPARAM) pdata);      
+               m_puie->post_message(::music::midi::player::message_notify_event, 0 , (LPARAM) pdata);      
             }
          }
 
-         void player::SendMmsgDone(sequence *pSeq, LPMIDIDONEDATA lpmdd)
+         void player::SendMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd)
          {
             if(m_puie != NULL)
             {
@@ -539,17 +405,17 @@ namespace music
 
          void player::OnMidiOutDeviceChange()
          {
-            GetSequence().SetMidiOutDevice(GetMidiOutDevice());
-            if(GetSequence().IsPlaying())
+            get_sequence()->SetMidiOutDevice(GetMidiOutDevice());
+            if(get_sequence()->IsPlaying())
             {
                imedia::position tkPosition = 0;
-               GetSequence().get_position(tkPosition);
-               sequence::PlayerLink & link = GetSequence().GetPlayerLink();
+               get_sequence()->get_position(tkPosition);
+               ::music::midi::sequence::PlayerLink & link = get_sequence()->GetPlayerLink();
                link.ModifyFlag(
-                  sequence::FlagTempoChange,
-                  sequence::FlagNull);
+                  ::music::midi::sequence::FlagTempoChange,
+                  ::music::midi::sequence::FlagNull);
                link.m_tkRestart = tkPosition;
-               GetSequence().Stop();
+               get_sequence()->Stop();
             }
 
          }
@@ -557,18 +423,32 @@ namespace music
 
          void player::OnMultimediaMidiOutputMessageDone(::ca2::signal_object * pobj)
          {
+            
             SCAST_PTR(::ca2::message::base, pbase, pobj);
+            
             HMIDISTRM hmidistream = (HMIDISTRM) pbase->m_wparam;
+            
             LPMIDIHDR lpmidihdr = (LPMIDIHDR) pbase->m_lparam.m_lparam;
-            ASSERT(GetSequence().m_hMidiStream == hmidistream);
-            GetSequence().OnDone(hmidistream, lpmidihdr);
+
+            sp(sequence) sequence = get_sequence();
+
+            ASSERT(sequence->m_hstream == hmidistream);
+
+            sequence->OnDone(hmidistream, lpmidihdr);
+
          }
 
          void player::OnMultimediaMidiOutputMessagePositionCB(::ca2::signal_object * pobj)
          {
             SCAST_PTR(::ca2::message::base, pbase, pobj);
             LPMIDIHDR lpmidihdr = (LPMIDIHDR) pbase->m_wparam;
-            GetSequence().OnPositionCB(lpmidihdr);
+  //          get_sequence()->OnPositionCB(lpmidihdr);
+
+            sp(sequence) sequence = get_sequence();
+
+//            ASSERT(sequence->m_hstream == hmidistream);
+
+            sequence->OnPositionCB(lpmidihdr);
          }
 
 
@@ -577,11 +457,11 @@ namespace music
          void player::OnNotifyEvent(::ca2::signal_object * pobj)
          {
             SCAST_PTR(::ca2::message::base, pbase, pobj);
-            notify_event * pdata = (notify_event *) pbase->m_lparam.m_lparam;
+            ::music::midi::player::notify_event * pdata = (::music::midi::player::notify_event *) pbase->m_lparam.m_lparam;
             pdata->m_pplayer = this;
             if(m_puie != NULL)
             {
-               m_puie->post_message(MessageNotifyEvent, 0 , (LPARAM) pdata);      
+               m_puie->post_message(::music::midi::player::message_notify_event, 0 , (LPARAM) pdata);      
             }
             else
             {
@@ -635,11 +515,6 @@ namespace music
                goto End;
 End:
             midiOutClose( hmidiout);
-         }
-
-         sequence & player::GetSequence()
-         {
-            return m_pinterface->get_midi_sequence();
          }
 
 

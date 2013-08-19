@@ -9,7 +9,8 @@ namespace multimedia
    {
 
 
-      class CLASS_DECL_AUDIO_MIXER_MMSYSTEM line_info
+      class CLASS_DECL_AUDIO_MIXER_MMSYSTEM line_info :
+         virtual public ::multimedia::audio_mixer::line_info
       {
       public:
 
@@ -17,7 +18,7 @@ namespace multimedia
          MIXERLINE       m_mixerLine;
 
 
-         line_info();
+         line_info(sp(::ca2::application) papp);
          virtual ~line_info();
 
 

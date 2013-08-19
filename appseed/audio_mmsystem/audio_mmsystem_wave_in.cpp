@@ -18,6 +18,8 @@ namespace multimedia
          m_hwavein = NULL;
          m_estate = state_initial;
          m_bResetting = false;
+
+
       }
 
       wave_in::~wave_in()

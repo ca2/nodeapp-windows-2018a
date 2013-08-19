@@ -8,7 +8,7 @@ namespace music
    {
 
 
-      ::multimedia::result TranslateSMFResult(e_file_result smfrc);
+      ::multimedia::result TranslateSMFResult(::music::midi::e_file_result smfrc);
 
 
    } // namespace midi_mmsystem

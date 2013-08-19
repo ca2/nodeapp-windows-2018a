@@ -1,15 +1,15 @@
 #pragma once
 
 
-namespace multimedia
+namespace music
 {
 
 
-   namespace audio_mixer_mmsystem
+   namespace midi_mmsystem
    {
 
 
-      class CLASS_DECL_AUDIO_MIXER_MMSYSTEM factory_exchange :
+      class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM factory_exchange :
          virtual public ::ca2::object
       {
       public:
@@ -18,14 +18,15 @@ namespace multimedia
          factory_exchange(sp(::ca2::application) papp);
          virtual ~factory_exchange();
 
-
       };
 
 
-   } // namespace audio_mixer_mmsystem
+   } // namespace midi_mmsystem
 
 
-} // namespace multimedia
+} // namespace music
+
+
 
 
 
