@@ -43,7 +43,7 @@ namespace multimedia
             return MMSYSERR_NOERROR;
          }
 
-         m_mixercontrola.set_size(iControlCount);
+         m_mixercontrola.set_size_create(iControlCount);
 
          if(m_mixerlinecontrols.pamxctrl != NULL)
             delete[] (MIXERCONTROL *) m_mixerlinecontrols.pamxctrl;
@@ -59,7 +59,6 @@ namespace multimedia
          {
             m_mixerlinecontrols.pamxctrl[i].cbStruct = sizeof(MIXERCONTROL);
          }
-#ifdef WINDOWS
 
          sp(::multimedia::audio_mixer_mmsystem::device) device = get_device();
 
@@ -145,9 +144,6 @@ namespace multimedia
          //    SetWindowRedraw(ptlb->hlb, TRUE);
          //  LocalFree((HLOCAL)pamxctrl);
          return mmrc;
-#else
-         return MMSYSERR_ERROR;
-#endif
 
       }
 

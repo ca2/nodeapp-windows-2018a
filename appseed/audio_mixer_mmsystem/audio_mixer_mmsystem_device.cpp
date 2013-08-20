@@ -12,9 +12,10 @@ namespace multimedia
       device::device(sp(::ca2::application) papp) :
          ::ca2::ca2(papp),
          ::multimedia::audio_mixer::device(papp)
+         //m_mixerdestinationa(papp)
       {
 
-         m_mixerdestinationa.set_app(get_app());
+         //m_mixerdestinationa.set_app(get_app());
 
          m_pmixer = NULL;
 
@@ -122,7 +123,7 @@ namespace multimedia
 
          sp(::multimedia::audio_mixer_mmsystem::destination)    lpDestination;
 
-         m_mixerdestinationa.set_size(m_mixercaps.cDestinations);
+         m_mixerdestinationa.set_size_create(m_mixercaps.cDestinations);
 
          for (int32_t i = 0; (uint32_t) i < m_mixercaps.cDestinations; i++)
          {
@@ -164,8 +165,20 @@ namespace multimedia
 
       }
 
-      ::multimedia::result device::get_destination(uint32_t dwComponentType, ::multimedia::audio_mixer::destination **ppDestination)
+      ::multimedia::result device::get_destination(::multimedia::audio_mixer::e_destination edestination, ::multimedia::audio_mixer::destination **ppDestination)
       {
+         
+         uint32_t dwComponentType;
+
+         switch(edestination)
+         {
+         case ::multimedia::audio_mixer::destination_speakers:
+            dwComponentType = MIXERLINE_COMPONENTTYPE_DST_SPEAKERS;
+            break;
+         default:
+            return MMSYSERR_ERROR;
+         };
+
 
          if(m_mixerdestinationa.get_size() <= 0)
             initialize_destinations();
@@ -256,7 +269,7 @@ namespace multimedia
             m_mapIDToControl.set_at(control->GetMixerControl().dwControlID, control);
             for(int32_t l = 0; l < control->get_size(); l++)
             {
-               sp(::multimedia::audio_mixer_mmsystem::user::control) pcontrol = control->operator ()(l);
+               sp(::multimedia::audio_mixer::user::control) pcontrol = control->operator ()(l);
                m_mapDlgItemIDToControl.set_at(pcontrol->_GetDlgCtrlID(), control);
             }
          }
@@ -298,7 +311,7 @@ namespace multimedia
 
       ::multimedia::result device::close()
       {
-         ::multimedia::result mmrc;
+         ::multimedia::result mmrc = MMSYSERR_NOERROR;
 
          if(m_hMixer != NULL)
          {

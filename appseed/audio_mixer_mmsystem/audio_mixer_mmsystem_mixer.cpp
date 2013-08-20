@@ -17,7 +17,7 @@ namespace multimedia
 
          m_window.m_pmixer = this;
 
-         m_pdevice = new ::multimedia::audio_mixer::device(this);
+//         m_pdevice = new ::multimedia::audio_mixer::device(this);
 
       }
 
@@ -32,14 +32,14 @@ namespace multimedia
 
          }
 
-         if(m_pdevice != NULL)
+/*         if(m_pdevice != NULL)
          {
 
             delete m_pdevice;
 
             m_pdevice = NULL;
 
-         }
+         }*/
 
       }
 
@@ -48,14 +48,11 @@ namespace multimedia
       {
 
          ::multimedia::result            mmrc;
-#ifdef WINDOWS
+
          if(MMSYSERR_NOERROR != (mmrc = m_pdevice->open(uiMixerId, (uint32_t) m_window.get_handle(), 0,  CALLBACK_WINDOW)))
          {
             return mmrc;
          }
-#else
-         return MMSYSERR_ERROR;
-#endif
 
          return mmrc;
 
@@ -64,10 +61,7 @@ namespace multimedia
 
       bool audio_mixer::get_component_name(LPMIXERLINE pmxl, string & strComponent)
       {
-#ifdef WINDOWS
-         //
-         //
-         //
+
          if (0 == (MIXERLINE_LINEF_SOURCE & pmxl->fdwLine))
          {
             switch (pmxl->dwComponentType)
@@ -167,16 +161,14 @@ namespace multimedia
             }
          }
 
-         return (TRUE);
-#else
-         return false;
-#endif
-      } // MixAppGetComponentName()
+         return true;
+
+      } 
 
 
       bool audio_mixer::get_control_type_name(LPMIXERCONTROL pmxctrl, string & strTypeName)
       {
-#ifdef WINDOWS
+
          switch (pmxctrl->dwControlType)
          {
          case MIXERCONTROL_CONTROLTYPE_CUSTOM:
@@ -306,13 +298,10 @@ namespace multimedia
             return (FALSE);
          }
 
-         return (TRUE);
-#else
-         return false;
-#endif
-      } // MixAppGetControlTypeName()
+         return true;
 
-#ifdef WINDOWS
+      } 
+
       void audio_mixer::OnMixerLineChange(HMIXER hMixer, uint32_t dwLineID)
       {
 
@@ -353,7 +342,7 @@ namespace multimedia
          }
 
       }
-#endif
+
       bool audio_mixer::OnCommand(WPARAM wparam, LPARAM lparam)
       {
 

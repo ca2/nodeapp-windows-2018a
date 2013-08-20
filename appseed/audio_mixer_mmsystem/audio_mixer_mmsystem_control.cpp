@@ -861,10 +861,24 @@ namespace multimedia
          return *this;
       }
 
-      uint32_t control::GetControlType() const
+
+      bool control::control_type(::multimedia::audio_mixer::e_control econtrol) const
       {
-         return m_mixercontrol.dwControlType;
+
+         switch(econtrol)
+         {
+         case ::multimedia::audio_mixer::control_boolean:
+            return (m_mixercontrol.dwControlType & MIXERCONTROL_CT_UNITS_MASK) == MIXERCONTROL_CT_UNITS_BOOLEAN;
+         case ::multimedia::audio_mixer::control_volume:
+            return m_mixercontrol.dwControlType == MIXERCONTROL_CONTROLTYPE_VOLUME;
+         case ::multimedia::audio_mixer::control_mux:
+            return m_mixercontrol.dwControlType == MIXERCONTROL_CONTROLTYPE_MUX;
+         default:
+            return ::multimedia::audio_mixer::control::control_type(econtrol);
+         };
+
       }
+
 
       int_ptr control::add(::multimedia::audio_mixer::user::control * pcontrol)
       {

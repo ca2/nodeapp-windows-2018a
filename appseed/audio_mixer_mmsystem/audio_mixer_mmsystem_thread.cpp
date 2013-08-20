@@ -55,9 +55,7 @@ namespace multimedia
          //MessageFilterHookManager::AppGetMessageFilterHookManager(&pmfmh);
          //pmfmh->MessageFilterUnhook();
 
-#ifdef WINDOWS
          CoUninitialize();
-#endif
          return ::ca2::thread::exit_instance();
       }
 

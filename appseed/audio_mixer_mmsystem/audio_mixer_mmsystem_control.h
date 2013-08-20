@@ -32,7 +32,7 @@ namespace multimedia
          using ::multimedia::audio_mixer::user::control_ptr_array::add;
          virtual int_ptr add(::multimedia::audio_mixer::user::control * pcontrol);
 
-         uint32_t GetControlType() const;
+         bool control_type(::multimedia::audio_mixer::e_control econtrol) const;
          bool OnCommand(WPARAM wParam, LPARAM lParam);
          ::multimedia::audio_mixer::control_data * GetWindowDataByDlgCtrlID(uint32_t nID);
          ::multimedia::audio_mixer::user::control * GetControlByDlgCtrlID(uint32_t nID);

@@ -13,15 +13,6 @@
     <ClInclude Include="audio_mixer_mmsystem_control.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="audio_mixer_mmsystem_control_data.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio_mixer_mmsystem_control_data_switch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio_mixer_mmsystem_control_data_volume.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="audio_mixer_mmsystem_destination.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -41,18 +32,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="audio_mixer_mmsystem_thread.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio_mixer_mmsystem_user_control.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio_mixer_mmsystem_user_label.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio_mixer_mmsystem_user_level_control.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio_mixer_mmsystem_user_toggle_control.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="audio_mixer_mmsystem_window.h">
@@ -80,9 +59,6 @@
     <ClCompile Include="audio_mixer_mmsystem_control.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="audio_mixer_mmsystem_control_data.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="audio_mixer_mmsystem_destination.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -102,18 +78,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="audio_mixer_mmsystem_thread.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="audio_mixer_mmsystem_user label.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="audio_mixer_mmsystem_user_control.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="audio_mixer_mmsystem_user_level_control.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="audio_mixer_mmsystem_user_toggle_control.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="audio_mixer_mmsystem_window.cpp">

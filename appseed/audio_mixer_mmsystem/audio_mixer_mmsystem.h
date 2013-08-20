@@ -39,17 +39,6 @@ namespace multimedia
 } // namespace multimedia
 
 
-#include "audio_mixer_mmsystem_control_data.h"
-#include "audio_mixer_mmsystem_control_data_volume.h"
-#include "audio_mixer_mmsystem_control_data_switch.h"
-
-
-#include "audio_mixer_mmsystem_user_control.h"
-#include "audio_mixer_mmsystem_user_level_control.h"
-#include "audio_mixer_mmsystem_user_toggle_control.h"
-#include "audio_mixer_mmsystem_user_label.h"
-
-
 #include "audio_mixer_mmsystem_window.h"
 #include "audio_mixer_mmsystem_mixer.h"
 #include "audio_mixer_mmsystem_control.h"

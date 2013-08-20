@@ -26,10 +26,6 @@ namespace multimedia
       bool section::initialize1()
       {
 
-         System.factory().creatable_small < ::multimedia::audio_mixer::destination > ();
-         System.factory().creatable_small < ::multimedia::audio_mixer::source > ();
-         System.factory().creatable_small < ::multimedia::audio_mixer::control > ();
-
          return true;
 
       }

@@ -806,9 +806,6 @@
     <ClInclude Include="audio_mixer_mmsystem.h" />
     <ClInclude Include="audio_mixer_mmsystem_callback.h" />
     <ClInclude Include="audio_mixer_mmsystem_control.h" />
-    <ClInclude Include="audio_mixer_mmsystem_control_data.h" />
-    <ClInclude Include="audio_mixer_mmsystem_control_data_switch.h" />
-    <ClInclude Include="audio_mixer_mmsystem_control_data_volume.h" />
     <ClInclude Include="audio_mixer_mmsystem_destination.h" />
     <ClInclude Include="audio_mixer_mmsystem_device.h" />
     <ClInclude Include="audio_mixer_mmsystem_factory_exchange.h" />
@@ -817,17 +814,12 @@
     <ClInclude Include="audio_mixer_mmsystem_section.h" />
     <ClInclude Include="audio_mixer_mmsystem_source.h" />
     <ClInclude Include="audio_mixer_mmsystem_thread.h" />
-    <ClInclude Include="audio_mixer_mmsystem_user_control.h" />
-    <ClInclude Include="audio_mixer_mmsystem_user_label.h" />
-    <ClInclude Include="audio_mixer_mmsystem_user_level_control.h" />
-    <ClInclude Include="audio_mixer_mmsystem_user_toggle_control.h" />
     <ClInclude Include="audio_mixer_mmsystem_window.h" />
     <ClInclude Include="framework.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="audio_mixer_mmsystem_callback.cpp" />
     <ClCompile Include="audio_mixer_mmsystem_control.cpp" />
-    <ClCompile Include="audio_mixer_mmsystem_control_data.cpp" />
     <ClCompile Include="audio_mixer_mmsystem_destination.cpp" />
     <ClCompile Include="audio_mixer_mmsystem_device.cpp" />
     <ClCompile Include="audio_mixer_mmsystem_factory_exchange.cpp" />
@@ -836,10 +828,6 @@
     <ClCompile Include="audio_mixer_mmsystem_section.cpp" />
     <ClCompile Include="audio_mixer_mmsystem_source.cpp" />
     <ClCompile Include="audio_mixer_mmsystem_thread.cpp" />
-    <ClCompile Include="audio_mixer_mmsystem_user label.cpp" />
-    <ClCompile Include="audio_mixer_mmsystem_user_control.cpp" />
-    <ClCompile Include="audio_mixer_mmsystem_user_level_control.cpp" />
-    <ClCompile Include="audio_mixer_mmsystem_user_toggle_control.cpp" />
     <ClCompile Include="audio_mixer_mmsystem_window.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>
