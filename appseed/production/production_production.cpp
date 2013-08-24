@@ -1078,7 +1078,7 @@ retry2:
       else
       {
          smart_pointer_array < manual_reset_event > eventa(get_app());
-         eventa.set_size(uiProcessorCount);
+         eventa.set_size_create(uiProcessorCount);
          sync_object_ptra syncobjectptra;
          for(uint32_t ui = 0; ui < uiProcessorCount; ui++)
          {
