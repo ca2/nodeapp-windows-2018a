@@ -1385,7 +1385,7 @@ seq_Preroll_Cleanup:
          if(uiDevice == ::music::midi::device_default)
          {
 
-            m_uiDeviceID == MIDI_MAPPER;
+            m_uiDeviceID = MIDI_MAPPER;
 
          }
          else

@@ -284,6 +284,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_ca2pixman", "..\..\..\app\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "music_midi_mmsystem", "..\..\appseed\music_midi_mmsystem\music_midi_mmsystem.vcxproj", "{B2E38F2D-2D8C-4C63-8865-02DC220DC360}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_mixer_mmsystem", "..\..\appseed\audio_mixer_mmsystem\audio_mixer_mmsystem.vcxproj", "{B46A198F-4171-4DEE-8CFD-164D99B42057}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_mmsystem", "..\..\appseed\audio_mmsystem\audio_mmsystem.vcxproj", "{54850FD8-653A-43B6-AA90-E59AC030559C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis_v110|Android = basis_v110|Android
@@ -2964,6 +2968,56 @@ Global
 		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.profiler|Win32.Build.0 = profiler|Win32
 		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.profiler|x64.ActiveCfg = profiler|x64
 		{B2E38F2D-2D8C-4C63-8865-02DC220DC360}.profiler|x64.Build.0 = profiler|x64
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.basis_v110|Android.ActiveCfg = basis|Win32
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.basis_v110|Win32.ActiveCfg = basis|Win32
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.basis_v110|Win32.Build.0 = basis|Win32
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.basis_v110|x64.ActiveCfg = basis|x64
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.basis_v110|x64.Build.0 = basis|x64
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.basis|Android.ActiveCfg = basis|Win32
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.basis|Win32.ActiveCfg = basis|Win32
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.basis|Win32.Build.0 = basis|Win32
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.basis|x64.ActiveCfg = basis|x64
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.basis|x64.Build.0 = basis|x64
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.codeanalysis|Android.ActiveCfg = codeanalysis|Win32
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.codeanalysis|x64.Build.0 = codeanalysis|x64
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.memdleak|Android.ActiveCfg = memdleak|Win32
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.memdleak|Win32.ActiveCfg = memdleak|Win32
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.memdleak|Win32.Build.0 = memdleak|Win32
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.memdleak|x64.ActiveCfg = memdleak|x64
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.memdleak|x64.Build.0 = memdleak|x64
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.profiler|Android.ActiveCfg = profiler|Win32
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.profiler|Win32.ActiveCfg = profiler|Win32
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.profiler|Win32.Build.0 = profiler|Win32
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.profiler|x64.ActiveCfg = profiler|x64
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.profiler|x64.Build.0 = profiler|x64
+		{54850FD8-653A-43B6-AA90-E59AC030559C}.basis_v110|Android.ActiveCfg = basis|Win32
+		{54850FD8-653A-43B6-AA90-E59AC030559C}.basis_v110|Win32.ActiveCfg = basis|Win32
+		{54850FD8-653A-43B6-AA90-E59AC030559C}.basis_v110|Win32.Build.0 = basis|Win32
+		{54850FD8-653A-43B6-AA90-E59AC030559C}.basis_v110|x64.ActiveCfg = basis|x64
+		{54850FD8-653A-43B6-AA90-E59AC030559C}.basis_v110|x64.Build.0 = basis|x64
+		{54850FD8-653A-43B6-AA90-E59AC030559C}.basis|Android.ActiveCfg = basis|Win32
+		{54850FD8-653A-43B6-AA90-E59AC030559C}.basis|Win32.ActiveCfg = basis|Win32
+		{54850FD8-653A-43B6-AA90-E59AC030559C}.basis|Win32.Build.0 = basis|Win32
+		{54850FD8-653A-43B6-AA90-E59AC030559C}.basis|x64.ActiveCfg = basis|x64
+		{54850FD8-653A-43B6-AA90-E59AC030559C}.basis|x64.Build.0 = basis|x64
+		{54850FD8-653A-43B6-AA90-E59AC030559C}.codeanalysis|Android.ActiveCfg = codeanalysis|Win32
+		{54850FD8-653A-43B6-AA90-E59AC030559C}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
+		{54850FD8-653A-43B6-AA90-E59AC030559C}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
+		{54850FD8-653A-43B6-AA90-E59AC030559C}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
+		{54850FD8-653A-43B6-AA90-E59AC030559C}.codeanalysis|x64.Build.0 = codeanalysis|x64
+		{54850FD8-653A-43B6-AA90-E59AC030559C}.memdleak|Android.ActiveCfg = memdleak|Win32
+		{54850FD8-653A-43B6-AA90-E59AC030559C}.memdleak|Win32.ActiveCfg = memdleak|Win32
+		{54850FD8-653A-43B6-AA90-E59AC030559C}.memdleak|Win32.Build.0 = memdleak|Win32
+		{54850FD8-653A-43B6-AA90-E59AC030559C}.memdleak|x64.ActiveCfg = memdleak|x64
+		{54850FD8-653A-43B6-AA90-E59AC030559C}.memdleak|x64.Build.0 = memdleak|x64
+		{54850FD8-653A-43B6-AA90-E59AC030559C}.profiler|Android.ActiveCfg = profiler|Win32
+		{54850FD8-653A-43B6-AA90-E59AC030559C}.profiler|Win32.ActiveCfg = profiler|Win32
+		{54850FD8-653A-43B6-AA90-E59AC030559C}.profiler|Win32.Build.0 = profiler|Win32
+		{54850FD8-653A-43B6-AA90-E59AC030559C}.profiler|x64.ActiveCfg = profiler|x64
+		{54850FD8-653A-43B6-AA90-E59AC030559C}.profiler|x64.Build.0 = profiler|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

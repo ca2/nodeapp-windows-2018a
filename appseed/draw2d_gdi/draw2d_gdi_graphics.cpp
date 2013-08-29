@@ -739,6 +739,8 @@ namespace draw2d_gdi
 
          m_pdib->from(point(x, y), dib, point(0, 0), size(cx, cy));
 
+         return true;
+
       }
 
    }
