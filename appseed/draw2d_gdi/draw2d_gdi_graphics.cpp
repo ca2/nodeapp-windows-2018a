@@ -1582,7 +1582,7 @@ namespace draw2d_gdi
 
          ::SetTextColor(m_hdc, RGB(GetRValue(brush.m_cr), GetGValue(brush.m_cr), GetBValue(brush.m_cr)));
 
-         return ::TextOutW(get_handle1(), x, y, wstr, wstr.length()) != FALSE;
+         return ::TextOutW(get_handle1(), x, y, wstr, (int) wstr.length()) != FALSE;
 
       }
       else
@@ -1590,7 +1590,7 @@ namespace draw2d_gdi
 
          SIZE size;
 
-         if(!::GetTextExtentPoint32W(get_handle2(), wstr, (int)wstr.get_length(), &size))
+         if(!::GetTextExtentPoint32W(get_handle2(), wstr, (int) wstr.get_length(), &size))
          {
 
             return false;
@@ -1626,7 +1626,7 @@ namespace draw2d_gdi
 
          ::SetBkMode((HDC) pdib->get_graphics()->get_os_data(), TRANSPARENT);
 
-         ::TextOutW((HDC) pdib->get_graphics()->get_os_data(), 0, 0, wstr, wstr.length());
+         ::TextOutW((HDC) pdib->get_graphics()->get_os_data(), 0, 0, wstr, (int) wstr.length());
 
          GDI_DIB(pdib)->process_blend(&brush, x, y, m_ealphamode, m_pdib);
 
@@ -1655,7 +1655,7 @@ namespace draw2d_gdi
    bool graphics::TextOut(int x, int y, const string & str)
    { 
 
-      return TextOut(x, y, str, str.get_length());
+      return TextOut(x, y, str, (int) str.get_length());
 
    }
 
@@ -1723,7 +1723,7 @@ namespace draw2d_gdi
    int graphics::draw_text(const string & str, LPRECT lpRect, UINT nFormat)
    { 
 
-      return draw_text(str, str.get_length(), lpRect, nFormat);
+      return draw_text(str, (int) str.get_length(), lpRect, nFormat);
 
    }
 
@@ -1733,7 +1733,7 @@ namespace draw2d_gdi
 
       wstring wstr(string(lpszString, nCount));
 
-      return DrawTextExW(get_handle(), (wchar_t *) (const wchar_t *)  wstr, wstr.get_length(), lpRect, nFormat, lpDTParams);
+      return DrawTextExW(get_handle(), (wchar_t *) (const wchar_t *)  wstr, (int) wstr.get_length(), lpRect, nFormat, lpDTParams);
 
    }
 
@@ -1741,7 +1741,7 @@ namespace draw2d_gdi
    int graphics::draw_text_ex(const string & str, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
    { 
 
-      return draw_text_ex((char *) (const char *) str, str.get_length(), lpRect, nFormat, lpDTParams);
+      return draw_text_ex((char *) (const char *) str, (int) str.get_length(), lpRect, nFormat, lpDTParams);
 
    }
 
@@ -1896,7 +1896,7 @@ namespace draw2d_gdi
 
       ASSERT(get_handle1() != NULL);
 
-      return ::GetCharacterPlacement(get_handle1(), (const char *)str, str.get_length(), nMaxExtent, lpResults, dwFlags);
+      return ::GetCharacterPlacement(get_handle1(), (const char *)str, (int) str.get_length(), nMaxExtent, lpResults, dwFlags);
 
    }
 
