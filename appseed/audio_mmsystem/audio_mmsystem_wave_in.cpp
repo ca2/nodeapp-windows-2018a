@@ -393,7 +393,7 @@ Opened:
 
             wave_in_get_buffer()->get_buffer((int32_t) lpwavehdr->dwUser)->OnMultimediaDone();
 
-            m_listenerset.wave_in_data_proc(this, msSampleTime, lpwavehdr->dwUser);
+            m_listenerset.wave_in_data_proc(this, msSampleTime, (int32_t) lpwavehdr->dwUser);
 
             if(m_pencoder != NULL)
             {

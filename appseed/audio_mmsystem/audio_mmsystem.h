@@ -2,7 +2,7 @@
 
 
 #include "app-core/appseed/multimedia/multimedia/multimedia.h"
-#include <mmsystem.t.h>
+#include <mmsystem.h>
 
 
 #if defined(_AUDIO_MMSYSTEM_LIBRARY)

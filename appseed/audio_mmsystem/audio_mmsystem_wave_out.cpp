@@ -387,7 +387,7 @@ Opened:
 
          LPWAVEHDR lpwavehdr = (LPWAVEHDR) pbase->m_lparam.m_lparam;
 
-         wave_out_out_buffer_done(lpwavehdr->dwUser);
+         wave_out_out_buffer_done((int32_t) lpwavehdr->dwUser);
 
       }
 
