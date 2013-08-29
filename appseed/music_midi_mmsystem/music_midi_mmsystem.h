@@ -2,7 +2,7 @@
 
 
 #include "app-veriwell/appseed/multimedia/multimedia/multimedia.h"
-#include <mmsystem.t.h>
+#include <mmsystem.h>
 
 
 #if defined(_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM_LIBRARY)
@@ -21,6 +21,8 @@
 #include "music_midi_mmsystem_sequence.h"
 
 #include "player/music_midi_mmsystem_player.h"
+
+#include "music_midi_mmsystem_out.h"
 
 #include "music_midi_mmsystem_file.h"
           

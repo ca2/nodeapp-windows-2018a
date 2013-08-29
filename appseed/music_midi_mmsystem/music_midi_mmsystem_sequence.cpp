@@ -1381,7 +1381,20 @@ seq_Preroll_Cleanup:
 
       bool sequence::SetMidiOutDevice(uint32_t uiDevice)
       {
-         m_uiDeviceID = uiDevice;
+
+         if(uiDevice == ::music::midi::device_default)
+         {
+
+            m_uiDeviceID == MIDI_MAPPER;
+
+         }
+         else
+         {
+
+            m_uiDeviceID = uiDevice;
+
+         }
+
          return true;
       }
 

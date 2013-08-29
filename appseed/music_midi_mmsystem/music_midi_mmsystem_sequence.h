@@ -21,7 +21,7 @@ namespace music
       class sequence_thread;
 
 
-      class CLASS_DECL_VERIWELL_MULTIMEDIA midi_callback_data
+      class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM midi_callback_data
       {
       public:
 

@@ -37,6 +37,9 @@
     <ClInclude Include="music_midi_mmsystem_factory_exchange.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="music_midi_mmsystem_out.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -87,6 +90,9 @@
       <Filter>Source Files\player</Filter>
     </ClCompile>
     <ClCompile Include="music_midi_mmsystem_factory_exchange.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="music_midi_mmsystem_out.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

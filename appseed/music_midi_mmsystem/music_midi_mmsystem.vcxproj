@@ -808,6 +808,7 @@
     <ClInclude Include="music_midi_mmsystem.h" />
     <ClInclude Include="music_midi_mmsystem_exception.h" />
     <ClInclude Include="music_midi_mmsystem_file.h" />
+    <ClInclude Include="music_midi_mmsystem_out.h" />
     <ClInclude Include="music_midi_mmsystem_sequence.h" />
     <ClInclude Include="music_midi_mmsystem_sequence_thread.h" />
     <ClInclude Include="music_midi_mmsystem_translation.h" />
@@ -831,6 +832,7 @@
     <ClCompile Include="music_midi_mmsystem.cpp" />
     <ClCompile Include="music_midi_mmsystem_exception.cpp" />
     <ClCompile Include="music_midi_mmsystem_file.cpp" />
+    <ClCompile Include="music_midi_mmsystem_out.cpp" />
     <ClCompile Include="music_midi_mmsystem_sequence.cpp" />
     <ClCompile Include="music_midi_mmsystem_sequence_thread.cpp" />
     <ClCompile Include="music_midi_mmsystem_translation.cpp" />
