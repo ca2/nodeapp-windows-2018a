@@ -17,6 +17,7 @@
 #define CLASS_DECL_IMPORT _declspec(dllimport)
 #define CLASS_DECL_THREAD _declspec(thread)
 
+#define SECURITY_WIN32
 
 #if defined(_M_X64)  // X64
 
