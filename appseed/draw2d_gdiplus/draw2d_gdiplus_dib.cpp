@@ -93,7 +93,7 @@ namespace draw2d_gdiplus
 
    dib::~dib ()
    {
-//      Destroy ();
+      Destroy ();
    }
 
    bool dib::create(class size size)
