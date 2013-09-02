@@ -122,7 +122,7 @@ namespace win
          const char * lpszWindowName, uint32_t dwStyle,
          const RECT& rect,
          sp(::user::interaction) pParentWnd, id id,
-         sp(::ca2::create_context) pContext = NULL);
+         sp(create_context) pContext = NULL);
 
       // advanced creation (allows access to extended styles)
       virtual bool CreateEx(uint32_t dwExStyle, const char * lpszClassName,

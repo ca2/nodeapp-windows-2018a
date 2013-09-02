@@ -369,7 +369,7 @@ namespace win
 
    // called when occurs an standard_exception exception in run
    // return true to call run again
-   bool application::on_run_exception(::ca2::exception & e)
+   bool application::on_run_exception(exception & e)
    {
       return ::win::thread::on_run_exception(e);
    }

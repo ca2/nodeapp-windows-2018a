@@ -384,7 +384,7 @@ namespace win
       const char * lpszWindowName, uint32_t dwStyle,
       const RECT& rect,
       sp(::user::interaction) pParentWnd, id id,
-      sp(::ca2::create_context) pContext)
+      sp(create_context) pContext)
    {
       // can't use for desktop or pop-up windows (use CreateEx instead)
       ASSERT(pParentWnd != NULL);
@@ -5879,10 +5879,10 @@ ExitModal:
          return -1;
 
       }
-      catch(const ::ca2::exception & e)
+      catch(const exception & e)
       {
 
-         if(!App(pinteraction->m_papp).on_run_exception((::ca2::exception &) e))
+         if(!App(pinteraction->m_papp).on_run_exception((exception &) e))
          {
 
             Sys(pinteraction->m_papp).os().post_to_all_threads(WM_QUIT, 0, 0);
