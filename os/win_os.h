@@ -14,7 +14,7 @@ namespace win
    public:
    
       
-      os(sp(::ca2::application) papp);
+      os(sp(::application) papp);
       virtual ~os();
 
 

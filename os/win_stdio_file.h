@@ -17,7 +17,7 @@ namespace win
 
 
 
-      stdio_file(sp(::ca2::application) papp);
+      stdio_file(sp(::application) papp);
       virtual ~stdio_file();
 
       virtual void write_string(const char * lpsz);
@@ -30,14 +30,14 @@ namespace win
       virtual bool open(const char * lpszFileName, UINT nOpenFlags);
       virtual ::primitive::memory_size read(void * lpBuf, ::primitive::memory_size nCount);
       virtual void write(const void * lpBuf, ::primitive::memory_size nCount);
-      virtual file_position seek(file_offset lOff, ::ca2::e_seek nFrom);
+      virtual file_position seek(file_offset lOff, ::file::e_seek nFrom);
       virtual void Abort();
       virtual void Flush();
       virtual void close();
       virtual file_size get_length() const;
 
       // Unsupported APIs
-      virtual sp(::ca2::file) Duplicate() const;
+      virtual sp(::file::file) Duplicate() const;
       virtual void LockRange(file_position dwPos, file_size dwCount);
       virtual void UnlockRange(file_position dwPos, file_size dwCount);
 

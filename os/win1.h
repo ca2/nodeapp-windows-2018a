@@ -22,18 +22,18 @@ namespace win
    CLASS_DECL_win HICON       ExtractIcon(HINSTANCE hInst, const char * lpszExeFileName, UINT nIconIndex);
    CLASS_DECL_win bool        DeleteFile(const char * lpFileName);
    CLASS_DECL_win int32_t         GetMenuStringW(HMENU hMenu, UINT uIDItem, string & str, UINT flags);
-   CLASS_DECL_win void        TimeToFileTime(sp(::ca2::application) papp, const ::datetime::time& time, LPFILETIME pFileTime);
+   CLASS_DECL_win void        TimeToFileTime(sp(::application) papp, const ::datetime::time& time, LPFILETIME pFileTime);
 
 
 } // namespace win
 
 
 
-// Placed on frame for EXCEPTION linkage, or base_exception cleanup
+// Placed on frame for EXCEPTION linkage, or ::exception::base cleanup
 struct CLASS_DECL_win __exception_link
 {
    __exception_link* m_pLinkPrev;    // previous top, next in handler chain
-   base_exception* m_pException;   // current exception (NULL in try block)
+   ::exception::base* m_pException;   // current exception (NULL in try block)
 
    __exception_link();       // for initialization and linking
    ~__exception_link()       // for cleanup and unlinking
@@ -90,10 +90,10 @@ CLASS_DECL_win ::win::thread * __get_thread();
 CLASS_DECL_win void __set_thread(::ca2::thread * pthread);
 CLASS_DECL_win MSG* __get_current_message();
 
-CLASS_DECL_win void __end_thread(sp(::ca2::application) papp, UINT nExitCode, bool bDelete = TRUE);
+CLASS_DECL_win void __end_thread(sp(::application) papp, UINT nExitCode, bool bDelete = TRUE);
 
 CLASS_DECL_win void __init_thread();
-CLASS_DECL_win void __term_thread(sp(::ca2::application) papp, HINSTANCE hInstTerm = NULL);
+CLASS_DECL_win void __term_thread(sp(::application) papp, HINSTANCE hInstTerm = NULL);
 
 /////////////////////////////////////////////////////////////////////////////
 // Global functions for access to the one and only application
@@ -112,7 +112,7 @@ CLASS_DECL_win void __term_thread(sp(::ca2::application) papp, HINSTANCE hInstTe
   // __in_z LPTSTR lpCmdLine, __in int32_t nCmdShow);
 CLASS_DECL_win void __win_term();
 
-CLASS_DECL_win sp(::ca2::application) __get_app();
+CLASS_DECL_win sp(::application) __get_app();
 CLASS_DECL_win sp(::user::interaction) __get_main_window();
 //CLASS_DECL_win HINSTANCE CLASS_DECL_win System.m_hInstance;
 CLASS_DECL_win HINSTANCE __get_resource_handle();

@@ -6,7 +6,7 @@ namespace draw2d_gdi
 
 
    palette::palette(::ca2::application * papp) :
-      ca2(papp)
+      element(papp)
    {
    
    }

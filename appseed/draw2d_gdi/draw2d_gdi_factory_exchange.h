@@ -6,7 +6,7 @@ namespace draw2d_gdi
 
 
    class CLASS_DECL_DRAW2D_GDI factory_exchange :
-      virtual public ::ca2::object
+      virtual public object
    {
    public:
 

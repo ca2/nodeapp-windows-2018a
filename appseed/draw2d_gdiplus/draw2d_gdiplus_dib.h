@@ -36,7 +36,7 @@ namespace draw2d_gdiplus
 
       virtual COLORREF * get_data();
 
-      dib(sp(::ca2::application) papp);
+      dib(sp(::application) papp);
       virtual void construct(int32_t cx, int32_t cy);
       virtual ~dib();
 
@@ -147,8 +147,8 @@ namespace draw2d_gdiplus
 
       virtual bool from(::draw2d::graphics * pgraphics, FIBITMAP *pfibitmap, bool bUnloadFI);
 
-      virtual bool update_window(::ca2::window * pwnd, ::ca2::signal_object * pobj);
-      virtual bool print_window(::ca2::window * pwnd, ::ca2::signal_object * pobj);
+      virtual bool update_window(::ca2::window * pwnd, signal_details * pobj);
+      virtual bool print_window(::ca2::window * pwnd, signal_details * pobj);
 
 
    };

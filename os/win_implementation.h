@@ -4,8 +4,8 @@ CLASS_DECL_win string get_user_interaction_window_class(sp(::user::interaction) 
 
 
 // Temporary map management (locks temp map on current thread)
-//CLASS_DECL_win void ::ca2::LockTempMaps(sp(::ca2::application) papp);
-//CLASS_DECL_win bool ::ca2::UnlockTempMaps(sp(::ca2::application) papp, bool bDeleteTemps = TRUE);
+//CLASS_DECL_win void ::ca2::LockTempMaps(sp(::application) papp);
+//CLASS_DECL_win bool ::ca2::UnlockTempMaps(sp(::application) papp, bool bDeleteTemps = TRUE);
 
 
 

@@ -7,8 +7,8 @@ namespace win
 {
 
 
-   printer::printer(sp(::ca2::application) papp) :
-      ca2(papp),
+   printer::printer(sp(::application) papp) :
+      element(papp),
       ::user::printer(papp),
       m_documentproperties(papp)
    {
@@ -61,8 +61,8 @@ namespace win
    }
 
 
-   printer::document_properties::document_properties(sp(::ca2::application) papp) :
-      ca2(papp)
+   printer::document_properties::document_properties(sp(::application) papp) :
+      element(papp)
    {
       m_hdc = NULL;
       m_pdevmode = NULL;

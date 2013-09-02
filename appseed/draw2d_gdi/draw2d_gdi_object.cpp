@@ -15,7 +15,7 @@ namespace draw2d_gdi
    object::~object()
    { 
 
-      mutex_lock ml(user_mutex());
+      synch_lock ml(&user_mutex());
 
       for(int i = 0; i < m_ptraGraphics.get_size(); i++)
       {
@@ -171,7 +171,7 @@ namespace draw2d_gdi
    bool object::destroy()
    {
 
-      mutex_lock ml(user_mutex());
+      synch_lock ml(&user_mutex());
       
       for(int i = 0; i < m_ptraGraphics.get_size(); i++)
       {
@@ -234,7 +234,7 @@ namespace draw2d_gdi
 #ifdef _DEBUG
    void object::dump(dump_context & dumpcontext) const
    {
-      ::ca2::object::dump(dumpcontext);
+      object::dump(dumpcontext);
 
       dumpcontext << "get_handle() = " << get_handle();
       dumpcontext << "\n";
@@ -242,7 +242,7 @@ namespace draw2d_gdi
 
    void object::assert_valid() const
    {
-      ::ca2::object::assert_valid();
+      object::assert_valid();
 /*      ASSERT(get_handle() == NULL ||
          (afxData.bWin95 || ::GetObjectType(get_handle()) != 0));*/
    }

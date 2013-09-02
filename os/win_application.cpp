@@ -8,8 +8,8 @@ namespace win
 {
 
 
-   application::application(sp(::ca2::application) papp) :
-      ca2(papp)
+   application::application(sp(::application) papp) :
+      element(papp)
    {
 
       ::ca2::thread::m_p.create(allocer());
@@ -50,7 +50,7 @@ namespace win
    void application::_001OnFileNew()
    {
 
-      //::ca::smart_pointer < application_base >::m_p->_001OnFileNew(NULL);
+      //smart_pointer < application_base >::m_p->_001OnFileNew(NULL);
 
    }
 
@@ -58,7 +58,7 @@ namespace win
    sp(::user::document_interface) application::_001OpenDocumentFile(var varFile)
    {
 
-      //return ::ca::smart_pointer < application_base >::m_p->_001OpenDocumentFile(varFile);
+      //return smart_pointer < application_base >::m_p->_001OpenDocumentFile(varFile);
 
       return NULL;
 
@@ -70,7 +70,7 @@ namespace win
 
       ASSERT(m_atomApp == NULL && m_atomSystemTopic == NULL); // do once
 
-      m_atomApp            = ::GlobalAddAtomW(::ca2::international::utf8_to_unicode(m_strAppName));
+      m_atomApp            = ::GlobalAddAtomW(::str::international::utf8_to_unicode(m_strAppName));
 
       m_atomSystemTopic    = ::GlobalAddAtomW(L"system");
 
@@ -222,10 +222,10 @@ namespace win
                __get_module_thread_state()->m_pCurrentWinThread->m_nTempMapLock);
          }
    #endif
-         ::ca2::LockTempMaps(::ca::smart_pointer < application_base >::m_p);
-         ::ca2::UnlockTempMaps(::ca::smart_pointer < application_base >::m_p, -1);
+         ::ca2::LockTempMaps(smart_pointer < application_base >::m_p);
+         ::ca2::UnlockTempMaps(smart_pointer < application_base >::m_p, -1);
       }
-      catch( base_exception* e )
+      catch( ::exception::base* e )
       {
          e->Delete();
       }*/
@@ -238,7 +238,7 @@ namespace win
 //            __MODULE_THREAD_STATE* pModuleThreadState = __get_module_thread_state();
          }
       }
-      catch( base_exception* e )
+      catch( ::exception::base* e )
       {
          e->Delete();
       }
@@ -249,7 +249,7 @@ namespace win
          if (__thread_data != NULL)
             __thread_data->delete_data();
       }
-      catch( base_exception* e )
+      catch( ::exception::base* e )
       {
          e->Delete();
       }
@@ -391,7 +391,7 @@ namespace win
    {
       return ::win::thread::run();
    }
-   bool application::pre_translate_message(::ca2::signal_object * pobj)
+   bool application::pre_translate_message(signal_details * pobj)
    {
       return ::win::thread::pre_translate_message(pMsg);
    }
@@ -466,7 +466,7 @@ namespace win
 
       int32_t iRet = ::ca2::application::exit_instance();
 
-      //::ca::smart_pointer < application_base >::destroy();
+      //smart_pointer < application_base >::destroy();
 
 
 
@@ -474,7 +474,7 @@ namespace win
    }
 /*
    // Advanced: exception handling
-   LRESULT application::ProcessWndProcException(base_exception* e, const MSG* pMsg)
+   LRESULT application::ProcessWndProcException(::exception::base* e, const MSG* pMsg)
    {
       return   ::win::thread::ProcessWndProcException(e, pMsg);
    }
@@ -621,8 +621,8 @@ namespace win
       }
 
 
-//      dynamic_cast < ::win::thread * > ((::ca::smart_pointer < application_base >::m_p->::ca2::thread::m_p))->m_hThread = __get_thread()->m_hThread;
-  //    dynamic_cast < ::win::thread * > ((::ca::smart_pointer < application_base >::m_p->::ca2::thread::m_p))->m_nThreadID = __get_thread()->m_nThreadID;
+//      dynamic_cast < ::win::thread * > ((smart_pointer < application_base >::m_p->::ca2::thread::m_p))->m_hThread = __get_thread()->m_hThread;
+  //    dynamic_cast < ::win::thread * > ((smart_pointer < application_base >::m_p->::ca2::thread::m_p))->m_nThreadID = __get_thread()->m_nThreadID;
       dynamic_cast < class ::win::thread * > (::ca2::thread::m_p.m_p)->m_hThread      =  ::GetCurrentThread();
       dynamic_cast < class ::win::thread * > (::ca2::thread::m_p.m_p)->m_nThreadID    =  ::GetCurrentThreadId();
       

@@ -23,7 +23,7 @@ namespace win
       bool     m_bWinsockInitialized;
 
       
-      ip_enum(sp(::ca2::application) papp);
+      ip_enum(sp(::application) papp);
       virtual ~ip_enum();
 
       

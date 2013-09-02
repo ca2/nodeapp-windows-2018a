@@ -8,8 +8,8 @@ namespace draw2d_gdiplus
 {
 
 
-   bitmap::bitmap(sp(::ca2::application) papp) :
-      ca2(papp)
+   bitmap::bitmap(sp(::application) papp) :
+      element(papp)
    { 
 
       m_pbitmap   = NULL;

@@ -12,7 +12,7 @@ namespace win
    public:
 
       
-      copydesk(sp(::ca2::application) papp);
+      copydesk(sp(::application) papp);
       virtual ~copydesk();
 
       

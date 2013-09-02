@@ -39,7 +39,7 @@ namespace win
       DWORD                                  m_dwLastDelay;
 
 
-      window_draw(sp(::ca2::application) papp);
+      window_draw(sp(::application) papp);
       virtual ~window_draw();
 
 
@@ -136,7 +136,7 @@ namespace win
       virtual void synch_redraw();
       virtual void _synch_redraw();
 
-      virtual void message_window_message_handler(::ca2::signal_object * pobj);
+      virtual void message_window_message_handler(signal_details * pobj);
 
    };
 

@@ -5,8 +5,8 @@ namespace draw2d_gdiplus
 {
 
 
-   factory_exchange::factory_exchange(sp(::ca2::application) papp) :
-      ca2(papp)
+   factory_exchange::factory_exchange(sp(::application) papp) :
+      element(papp)
    {
 
       System.factory().cloneable_large < dib                   >  (System.type_info < ::draw2d::dib                  > ());
@@ -33,7 +33,7 @@ namespace draw2d_gdiplus
 
 
 
-void ca2_factory_exchange(sp(::ca2::application) papp)
+void ca2_factory_exchange(sp(::application) papp)
 {
    draw2d_gdiplus::factory_exchange factoryexchange(papp);
 }

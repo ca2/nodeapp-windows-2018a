@@ -20,9 +20,9 @@ void CLASS_DECL_win __cdecl _ca2_purecall()
 void __cdecl _null_se_translator(uint32_t uiCode, EXCEPTION_POINTERS * ppointers);
 
 
-//sp(::ca2::application)     win_application_create(sp(::ca2::application) pappSystem, const char * pszId);
-//sp(::ca2::application)     win_instantiate_application(sp(::ca2::application) pappSystem, const char * pszId);
-//int32_t                     win_application_procedure(sp(::ca2::application) pappSystem)
+//sp(::application)     win_application_create(sp(::application) pappSystem, const char * pszId);
+//sp(::application)     win_instantiate_application(sp(::application) pappSystem, const char * pszId);
+//int32_t                     win_application_procedure(sp(::application) pappSystem)
 //UINT c_cdecl          win_application_thread_proc(LPVOID);
 /////////////////////////////////////////////////////////////////////////////
 // Standard WinMain implementation
@@ -59,7 +59,7 @@ int32_t CLASS_DECL_win __win_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, 
 
    pinitmaindata->m_hInstance             = hinstance;
    pinitmaindata->m_hPrevInstance         = hPrevInstance;
-   pinitmaindata->m_vssCommandLine        = ::ca2::international::unicode_to_utf8(::GetCommandLineW());
+   pinitmaindata->m_vssCommandLine        = ::str::international::unicode_to_utf8(::GetCommandLineW());
    pinitmaindata->m_nCmdShow              = nCmdShow;
 
    

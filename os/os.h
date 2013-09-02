@@ -21,7 +21,7 @@
 
 string get_error_message(DWORD dwError);
 
-//sp(::ca2::application)     win_instantiate_application(sp(::ca2::application) pappSystem, const char * pszId);
+//sp(::application)     win_instantiate_application(sp(::application) pappSystem, const char * pszId);
 
 /////////////////////////////////////////////////////////////////////////////
 // explicit initialization for general purpose classes
@@ -111,15 +111,15 @@ CLASS_DECL_win WNDPROC __get_window_procedure();
 #pragma comment(lib, "Msimg32.lib") 
 #pragma comment(lib, "Psapi.lib") 
 
-CLASS_DECL_win void __trace_message(const char * lpszPrefix, ::ca2::signal_object * pobj);
+CLASS_DECL_win void __trace_message(const char * lpszPrefix, signal_details * pobj);
 CLASS_DECL_win void __trace_message(const char * lpszPrefix, LPMSG lpmsg);
 
-CLASS_DECL_win bool __cdecl __is_idle_message(::ca2::signal_object * pobj);
+CLASS_DECL_win bool __cdecl __is_idle_message(signal_details * pobj);
 CLASS_DECL_win bool __cdecl __is_idle_message(MSG* pMsg);
 
 
-CLASS_DECL_win void __process_window_procedure_exception(base_exception*, ::ca2::signal_object * pobj);
-CLASS_DECL_win void __cdecl __pre_translate_message(::ca2::signal_object * pobj);
+CLASS_DECL_win void __process_window_procedure_exception(::exception::base*, signal_details * pobj);
+CLASS_DECL_win void __cdecl __pre_translate_message(signal_details * pobj);
 
 //#include "win_printer.h"
 

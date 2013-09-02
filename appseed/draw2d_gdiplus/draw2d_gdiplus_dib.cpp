@@ -24,8 +24,8 @@ namespace draw2d_gdiplus
 
    double dib::dPi;
 
-   dib::dib(sp(::ca2::application) papp) :
-      ca2(papp),
+   dib::dib(sp(::application) papp) :
+      element(papp),
       m_spbitmap(papp),
       m_spgraphics(allocer())
    {
@@ -2564,7 +2564,7 @@ namespace draw2d_gdiplus
    }
 
 
-   bool dib::update_window(::ca2::window * pwnd, ::ca2::signal_object * pobj)
+   bool dib::update_window(::ca2::window * pwnd, signal_details * pobj)
    {
 
       rect64 rectWindow;
@@ -2640,7 +2640,7 @@ namespace draw2d_gdiplus
 
    }
 
-   bool dib::print_window(::ca2::window * pwnd, ::ca2::signal_object * pobj)
+   bool dib::print_window(::ca2::window * pwnd, signal_details * pobj)
    {
 
       SCAST_PTR(::ca2::message::base, pbase, pobj);

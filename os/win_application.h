@@ -42,7 +42,7 @@ namespace win
       main_init_data *     m_pmaininitdata;
 
 
-      application(sp(::ca2::application) papp);
+      application(sp(::application) papp);
       virtual ~application();
 
 
@@ -164,7 +164,7 @@ namespace win
 
       // running and idle processing
       virtual int32_t run();
-      virtual void pre_translate_message(::ca2::signal_object * pobj);
+      virtual void pre_translate_message(signal_details * pobj);
       virtual bool pump_message();     // low level message pump
       virtual bool on_idle(LONG lCount); // return TRUE if more idle processing
       virtual bool is_idle_message(MSG* pMsg);  // checks for special messages
@@ -173,7 +173,7 @@ namespace win
       virtual int32_t exit_instance(); // default will 'delete this'
 
       // Advanced: exception handling
-      virtual LRESULT ProcessWndProcException(base_exception* e, const MSG* pMsg);
+      virtual LRESULT ProcessWndProcException(::exception::base* e, const MSG* pMsg);
 
       // Advanced: handling messages sent to message filter hook
       virtual bool ProcessMessageFilter(int32_t code, LPMSG lpMsg);

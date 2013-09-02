@@ -122,7 +122,7 @@ __MODULE_STATE::__MODULE_STATE(bool bDLL, WNDPROC pfn_window_procedure, DWORD dw
    m_pmapHMENU             = NULL;
    m_pstrUnregisterList    = NULL;
    /* xxx xxx xxx
-   m_classList.Construct(offsetof(sp(::ca2::type_info), m_pNextClass)); */
+   m_classList.Construct(offsetof(sp(type), m_pNextClass)); */
 
    m_fRegisteredClasses = 0;
    m_bDLL = (BYTE)bDLL;
@@ -356,7 +356,7 @@ bool CLASS_DECL_win __is_module_dll()
 
 bool CLASS_DECL_win __init_current_state_app()
 {
-   sp(::ca2::application) pApp = __get_module_state()->m_pCurrentWinApp;
+   sp(::application) pApp = __get_module_state()->m_pCurrentWinApp;
    if (pApp != NULL && !pApp->initialize_instance())
    {
       // Init Failed

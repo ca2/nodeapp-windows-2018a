@@ -17,7 +17,7 @@ namespace draw2d_gdiplus
 
 
 
-      path(sp(::ca2::application) papp);
+      path(sp(::application) papp);
       virtual ~path();
 
 

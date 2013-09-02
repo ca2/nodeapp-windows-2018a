@@ -40,7 +40,7 @@ namespace win
 
 
       window();
-      window(sp(::ca2::application) papp);
+      window(sp(::application) papp);
       virtual ~window();
 
 
@@ -627,11 +627,11 @@ namespace win
       virtual void EndModalState();
 
       // for translating Windows messages in main message pump
-      virtual void pre_translate_message(::ca2::signal_object * pobj);
+      virtual void pre_translate_message(signal_details * pobj);
 
 
       // for processing Windows messages
-      virtual void message_handler(::ca2::signal_object * pobj);
+      virtual void message_handler(signal_details * pobj);
       //virtual bool OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
 
       // for handling default processing
@@ -657,7 +657,7 @@ namespace win
       bool HandleFloatingSysCommand(UINT nID, LPARAM lParam);
       bool IsTopParentActive();
       void ActivateTopParent();
-      virtual void WalkPreTranslateTree(sp(::user::interaction) puiStop, ::ca2::signal_object * pobj);
+      virtual void WalkPreTranslateTree(sp(::user::interaction) puiStop, signal_details * pobj);
       static sp(::user::interaction) GetDescendantWindow(sp(::user::interaction) oswindow, id id);
       static void SendMessageToDescendants(oswindow  oswindow, UINT message, WPARAM wParam, lparam lParam, bool bDeep, bool bOnlyPerm);
       virtual bool is_frame_window(); // is_kind_of(System.type_info < frame_window > ()))

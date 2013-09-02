@@ -3,8 +3,8 @@
 namespace draw2d_gdiplus
 {
 
-   palette::palette(sp(::ca2::application) papp) :
-      ca2(papp)
+   palette::palette(sp(::application) papp) :
+      element(papp)
    { }
    palette::~palette()
    { }
@@ -13,7 +13,7 @@ namespace draw2d_gdiplus
    { 
       return (HPALETTE)(this == NULL ? NULL : get_os_data()); 
    }
-   palette* palette::from_handle(sp(::ca2::application) papp, HPALETTE hPalette)
+   palette* palette::from_handle(sp(::application) papp, HPALETTE hPalette)
    { 
       //return dynamic_cast < palette * > (::draw2d_gdiplus::object::from_handle(papp, hPalette)); 
       return NULL;

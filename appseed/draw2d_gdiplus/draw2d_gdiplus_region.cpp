@@ -8,8 +8,8 @@ namespace draw2d_gdiplus
 {
 
    
-   region::region(sp(::ca2::application) papp) :
-      ca2(papp)
+   region::region(sp(::application) papp) :
+      element(papp)
    { 
       
       m_pregion = NULL;

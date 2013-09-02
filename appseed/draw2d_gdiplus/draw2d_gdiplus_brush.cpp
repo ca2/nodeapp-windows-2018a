@@ -6,8 +6,8 @@ namespace draw2d_gdiplus
 {
 
 
-   brush::brush(sp(::ca2::application) papp) :
-      ca2(papp)
+   brush::brush(sp(::application) papp) :
+      element(papp)
    { 
 
       m_pbrush = NULL;

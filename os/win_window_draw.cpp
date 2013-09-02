@@ -28,8 +28,8 @@ public:
 namespace win
 {
 
-   window_draw::window_draw(sp(::ca2::application) papp) : 
-      ca2(papp),
+   window_draw::window_draw(sp(::application) papp) : 
+      element(papp),
       ::ca2::thread(papp),
       ::ca2::window_draw(papp),
       message_window_simple_callback(papp),
@@ -62,7 +62,7 @@ namespace win
    }
    */
 
-   void window_draw::message_window_message_handler(::ca2::signal_object * pobj)
+   void window_draw::message_window_message_handler(signal_details * pobj)
    {
       SCAST_PTR(::ca2::message::base, pbase, pobj);
       if(pbase->m_uiMessage == (WM_USER + 1984 + 1977))

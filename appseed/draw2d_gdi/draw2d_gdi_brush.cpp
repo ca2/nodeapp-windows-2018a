@@ -6,7 +6,7 @@ namespace draw2d_gdi
 
 
    brush::brush(::ca2::application * papp) :
-      ca2(papp)
+      element(papp)
    { 
       m_bProcess = false;
    }

@@ -8,8 +8,8 @@ namespace draw2d_gdiplus
 {
 
 
-   pen::pen(sp(::ca2::application) papp) :
-      ca2(papp)
+   pen::pen(sp(::application) papp) :
+      element(papp)
    { 
 
       m_ppen = NULL;
@@ -96,17 +96,17 @@ namespace draw2d_gdiplus
 
 
 
-      // IMPLEMENT_DYNAMIC(resource_exception, base_exception)
+      // IMPLEMENT_DYNAMIC(resource_exception, ::exception::base)
       //resource_exception _simpleResourceException(FALSE, __IDS_RESOURCE_EXCEPTION);
 
-      // IMPLEMENT_DYNAMIC(user_exception, base_exception)
+      // IMPLEMENT_DYNAMIC(user_exception, ::exception::base)
       //user_exception _simpleUserException(FALSE, __IDS_USER_EXCEPTION);
 
-      // IMPLEMENT_DYNCREATE(::draw2d::graphics_sp, ::ca2::object)
+      // IMPLEMENT_DYNCREATE(::draw2d::graphics_sp, object)
       // IMPLEMENT_DYNAMIC(CClientDC, ::draw2d::graphics_sp)
       // IMPLEMENT_DYNAMIC(CWindowDC, ::draw2d::graphics_sp)
       // IMPLEMENT_DYNAMIC(CPaintDC, ::draw2d::graphics_sp)
-      // IMPLEMENT_DYNCREATE(::draw2d::object, ::ca2::object)
+      // IMPLEMENT_DYNCREATE(::draw2d::object, object)
 
       // IMPLEMENT_DYNAMIC(pen, ::draw2d::object)
       // IMPLEMENT_DYNAMIC(::draw2d::brush, ::draw2d::object)
@@ -119,7 +119,7 @@ namespace draw2d_gdiplus
       // Standard exception processing
 
 
-   /*void __get_gray_bitmap(sp(::ca2::application) papp, const ::draw2d::bitmap &rSrc, ::draw2d::bitmap *pDest, COLORREF crBackground)
+   /*void __get_gray_bitmap(sp(::application) papp, const ::draw2d::bitmap &rSrc, ::draw2d::bitmap *pDest, COLORREF crBackground)
    {
       ASSERT(pDest);
       ASSERT_KINDOF(::draw2d::bitmap, pDest);
@@ -177,7 +177,7 @@ namespace draw2d_gdiplus
       }
    }
 
-   void __draw_gray_bitmap(sp(::ca2::application) papp, ::draw2d::graphics * pgraphics, int32_t x, int32_t y, const ::draw2d::bitmap &rSrc, COLORREF crBackground)
+   void __draw_gray_bitmap(sp(::application) papp, ::draw2d::graphics * pgraphics, int32_t x, int32_t y, const ::draw2d::bitmap &rSrc, COLORREF crBackground)
    {
       ASSERT(pgraphics);
       ASSERT_KINDOF(::draw2d::graphics_sp, pgraphics);
@@ -225,7 +225,7 @@ namespace draw2d_gdiplus
       }
    }
 
-   void __get_dithered_bitmap(sp(::ca2::application) papp, const ::draw2d::bitmap &rSrc, ::draw2d::bitmap *pDest, COLORREF cr1, COLORREF cr2)
+   void __get_dithered_bitmap(sp(::application) papp, const ::draw2d::bitmap &rSrc, ::draw2d::bitmap *pDest, COLORREF cr1, COLORREF cr2)
    {
       ASSERT(pDest);
       ASSERT_KINDOF(::draw2d::bitmap, pDest);
@@ -294,7 +294,7 @@ namespace draw2d_gdiplus
       }
    }
 
-   void __draw_dithered_bitmap(sp(::ca2::application) papp, ::draw2d::graphics * pgraphics, int32_t x, int32_t y, const ::draw2d::bitmap &rSrc, COLORREF cr1, COLORREF cr2)
+   void __draw_dithered_bitmap(sp(::application) papp, ::draw2d::graphics * pgraphics, int32_t x, int32_t y, const ::draw2d::bitmap &rSrc, COLORREF cr1, COLORREF cr2)
    {
       ASSERT(pgraphics);
       ASSERT_KINDOF(::draw2d::graphics_sp, pgraphics);

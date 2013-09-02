@@ -12,7 +12,7 @@ namespace win
 
 
       class CLASS_DECL_win document_properties :
-         virtual public ::ca2::object
+         virtual public object
       {
       public:
 
@@ -21,7 +21,7 @@ namespace win
          HDC            m_hdc;
 
 
-         document_properties(sp(::ca2::application) papp);
+         document_properties(sp(::application) papp);
          virtual ~document_properties();
 
 
@@ -36,7 +36,7 @@ namespace win
       document_properties     m_documentproperties;
 
 
-      printer(sp(::ca2::application) papp);
+      printer(sp(::application) papp);
       virtual ~printer();
 
 

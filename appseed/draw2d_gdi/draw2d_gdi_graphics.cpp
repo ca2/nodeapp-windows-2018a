@@ -17,7 +17,7 @@ namespace draw2d_gdi
 
 
    graphics::graphics(::ca2::application * papp) :
-      ca2(papp)
+      element(papp)
    {
 
 
@@ -41,7 +41,7 @@ namespace draw2d_gdi
    graphics::~graphics()
    {
 
-      mutex_lock ml(user_mutex());
+      synch_lock ml(&user_mutex());
 
       for(int i = 0; i < m_ptraObject.get_count(); i++)
       {
@@ -256,7 +256,7 @@ namespace draw2d_gdi
       if(pbitmap == NULL)
          return NULL;
 
-      mutex_lock ml(user_mutex());
+      synch_lock ml(&user_mutex());
 
       pbitmap->m_bUpdated = true;
 
@@ -1176,7 +1176,7 @@ namespace draw2d_gdi
    bool graphics::BitBlt(int x, int y, int nWidth, int nHeight, ::draw2d::graphics * pgraphicsSrc, int xSrc, int ySrc, uint32_t dwRop)
    { 
 
-      mutex_lock ml(user_mutex());
+      synch_lock ml(&user_mutex());
 
       if(get_handle1() == NULL)
          return false;
@@ -1397,7 +1397,7 @@ namespace draw2d_gdi
    bool graphics::StretchBlt(int x, int y, int nWidth, int nHeight, ::draw2d::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, uint32_t dwRop)
    {
 
-      mutex_lock ml(user_mutex());
+      synch_lock ml(&user_mutex());
 
       ASSERT(get_handle1() != NULL);
 
@@ -1505,7 +1505,7 @@ namespace draw2d_gdi
    bool graphics::TextOut(int x, int y, const char * lpszString, int nCount)
    {
 
-      mutex_lock ml(user_mutex());
+      synch_lock ml(&user_mutex());
 
       if(get_handle1() == NULL)
          return FALSE;
@@ -1566,7 +1566,7 @@ namespace draw2d_gdi
 
       string str(lpszString, nCount);
 
-      wstring wstr = ::ca2::international::utf8_to_unicode(str);
+      wstring wstr = ::str::international::utf8_to_unicode(str);
 
       ::draw2d::brush & brush = get_current_brush();
       ::draw2d::font & font = get_current_font();
@@ -2493,7 +2493,7 @@ namespace draw2d_gdi
    bool graphics::internal_fill_path(void (::draw2d_gdi::graphics::* pfnInternalSetPath)(void *), void * pparam, LPCRECT lpcrect)
    { 
 
-      mutex_lock ml(user_mutex());
+      synch_lock ml(&user_mutex());
 
       ASSERT(get_handle1() != NULL); 
 
@@ -2625,7 +2625,7 @@ namespace draw2d_gdi
    bool graphics::internal_stroke_path(void (::draw2d_gdi::graphics::* pfnInternalSetPath)(void *), void * pparam, LPCRECT lpcrect)
    {
 
-      mutex_lock ml(user_mutex());
+      synch_lock ml(&user_mutex());
 
       ASSERT(get_handle1() != NULL); 
 
@@ -2696,7 +2696,7 @@ namespace draw2d_gdi
    bool graphics::internal_fill_and_stroke_path(void (::draw2d_gdi::graphics::* pfnInternalSetPath)(void *), void * pparam, LPCRECT lpcrect)
    {
 
-      mutex_lock ml(user_mutex());
+      synch_lock ml(&user_mutex());
 
       ASSERT(get_handle1() != NULL); 
 
@@ -3500,7 +3500,7 @@ namespace draw2d_gdi
    void graphics::FillSolidRect(int x, int y, int cx, int cy, COLORREF clr)
    {
 
-      mutex_lock ml(user_mutex());
+      synch_lock ml(&user_mutex());
 
       if(m_pdib == NULL)
       {
@@ -3561,7 +3561,7 @@ namespace draw2d_gdi
 #ifdef _DEBUG
    void graphics::assert_valid() const
    {
-      ::ca2::object::assert_valid();
+      object::assert_valid();
 
    }
 
@@ -3569,7 +3569,7 @@ namespace draw2d_gdi
 
    void graphics::dump(dump_context & dumpcontext) const
    {
-      ::ca2::object::dump(dumpcontext);
+      object::dump(dumpcontext);
 
       dumpcontext << "get_handle1() = " << get_handle1();
       dumpcontext << "\nm_hAttribDC = " << get_handle2();
@@ -3731,7 +3731,7 @@ namespace draw2d_gdi
       if(ppen == NULL)
          return NULL;
 
-      mutex_lock ml(user_mutex());
+      synch_lock ml(&user_mutex());
 
       SelectObject(ppen->get_os_data());
 
@@ -3757,7 +3757,7 @@ namespace draw2d_gdi
       if(pbrush == NULL)
          return NULL;
 
-      mutex_lock ml(user_mutex());
+      synch_lock ml(&user_mutex());
 
       SelectObject(pbrush->get_os_data());
 
@@ -3782,7 +3782,7 @@ namespace draw2d_gdi
       if(pfont == NULL)
          return NULL;
 
-      mutex_lock ml(user_mutex());
+      synch_lock ml(&user_mutex());
 
       SelectObject(pfont->get_os_data());
 
@@ -3809,7 +3809,7 @@ namespace draw2d_gdi
       if(pregion == NULL)
          return nRetVal;
 
-      mutex_lock ml(user_mutex());
+      synch_lock ml(&user_mutex());
 
       SelectObject(pregion->get_os_data());
 
@@ -4588,7 +4588,7 @@ namespace draw2d_gdi
 
       string str(lpszString, nCount);
 
-      wstring wstr = ::ca2::international::utf8_to_unicode(str);
+      wstring wstr = ::str::international::utf8_to_unicode(str);
 
       if(!::GetTextExtentPoint32W(get_handle2(), wstr, (int)wstr.get_length(), &size))
       {
@@ -4612,7 +4612,7 @@ namespace draw2d_gdi
 
       SIZE size;
 
-      wstring wstr = ::ca2::international::utf8_to_unicode(str);
+      wstring wstr = ::str::international::utf8_to_unicode(str);
 
       if(!::GetTextExtentPoint32W(get_handle2(), wstr, (int)wstr.get_length(), &size))
       {
@@ -4630,7 +4630,7 @@ namespace draw2d_gdi
       ASSERT(get_handle1() != NULL);
       SIZE size;
       string str(lpszString, nCount);
-      wstring wstr = ::ca2::international::utf8_to_unicode(str);
+      wstring wstr = ::str::international::utf8_to_unicode(str);
       VERIFY(::GetTextExtentPoint32W(get_handle1(), wstr, (int)wstr.get_length(), &size));
       return size;
    }
@@ -4638,7 +4638,7 @@ namespace draw2d_gdi
    {
       ASSERT(get_handle1() != NULL);
       SIZE size;
-      wstring wstr = ::ca2::international::utf8_to_unicode(str);
+      wstring wstr = ::str::international::utf8_to_unicode(str);
       VERIFY(::GetTextExtentPoint32W(get_handle1(), wstr, (int)wstr.get_length(), &size));
       return size;
    }

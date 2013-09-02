@@ -127,11 +127,11 @@ namespace win
 template<class TYPE>
 struct ConstructDestruct
 {
-   static void Construct(::ca2::object* pObject)
+   static void Construct(object* pObject)
    { 
       new (pObject) TYPE; 
    }
-   static void Destruct(::ca2::object* pObject)
+   static void Destruct(object* pObject)
    {
       TYPE* p = dynamic_cast < TYPE * > (pObject);
       p->~TYPE();
@@ -154,7 +154,7 @@ class WindowsThread;       // forward reference for friend declaration
 
 template < class HT, class CT >
 class handle_map :
-   virtual public ::ca2::object
+   virtual public object
 {
 public:
 
@@ -166,7 +166,7 @@ public:
    map < HANDLE, HANDLE, CT *, CT *> m_permanentMap;
    map < HANDLE, HANDLE, CT *, CT *> m_temporaryMap;
 
-   handle_map(sp(::ca2::application) papp);
+   handle_map(sp(::application) papp);
    virtual ~handle_map()
    { 
       delete_temp();
@@ -174,7 +174,7 @@ public:
 
 // Operations
 public:
-   CT * from_handle(HANDLE h, CT * (* pfnAllocator) (sp(::ca2::application), HANDLE) = NULL, sp(::ca2::application) papp = NULL);
+   CT * from_handle(HANDLE h, CT * (* pfnAllocator) (sp(::application), HANDLE) = NULL, sp(::application) papp = NULL);
    void delete_temp();
 
    void set_permanent(HANDLE h, CT * permOb);
@@ -190,7 +190,7 @@ class CLASS_DECL_win oswindow_map :
    public handle_map < ::win::oswindow_handle, ::win::window >
 {
 public:
-   oswindow_map(sp(::ca2::application) papp) : handle_map < ::win::oswindow_handle, ::win::window >(papp) {}
+   oswindow_map(sp(::application) papp) : handle_map < ::win::oswindow_handle, ::win::window >(papp) {}
 };
 
 /*class CLASS_DECL_win hdc_map :
@@ -215,8 +215,8 @@ public:
 
 
 template < class HT, class CT >
-handle_map < HT, CT > ::handle_map(sp(::ca2::application) papp) : 
-   ca2(papp),
+handle_map < HT, CT > ::handle_map(sp(::application) papp) : 
+   element(papp),
    m_permanentMap(papp, 1024), 
    m_temporaryMap(papp, 1024), 
    m_alloc(sizeof(CT), 1024),
@@ -234,7 +234,7 @@ handle_map < HT, CT > ::handle_map(sp(::ca2::application) papp) :
 }
 
 template < class HT, class CT >
-CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (sp(::ca2::application), HANDLE), sp(::ca2::application) papp)
+CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (sp(::application), HANDLE), sp(::application) papp)
 {
    
    single_lock sl(&m_mutex, TRUE);
@@ -294,7 +294,7 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (sp(::ca2:
       // set it in the map
       m_temporaryMap.set_at(h, pTemp);
    }
-   catch(base_exception * pe)
+   catch(::exception::base * pe)
    {
 #ifndef ___PORTABLE
       __set_new_handler(pnhOldHandler);
@@ -310,7 +310,7 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (sp(::ca2:
    //__enable_memory_tracking(bEnable);
 
    // now set the handle in the object
-   HANDLE* ph = pTemp->m_handlea;  // after ::ca2::object
+   HANDLE* ph = pTemp->m_handlea;  // after object
    ph[0] = h;
    if (HT::s_iHandleCount == 2)
       ph[1] = h;
@@ -382,7 +382,7 @@ void handle_map < HT, CT >::delete_temp()
 
       // zero out the handles
       ASSERT(HT::s_iHandleCount == 1 || HT::s_iHandleCount == 2);
-      HANDLE* ph = pTemp->m_handlea;  // after ::ca2::object
+      HANDLE* ph = pTemp->m_handlea;  // after object
       ASSERT(ph[0] == h || ph[0] == NULL);
       ph[0] = NULL;
       if (HT::s_iHandleCount == 2)

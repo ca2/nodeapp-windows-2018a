@@ -12,8 +12,8 @@ namespace win
 {
 
 
-   os::os(sp(::ca2::application) papp) :
-      ca2(papp),
+   os::os(sp(::application) papp) :
+      element(papp),
       ::ca2::os(papp)
    {
    }
@@ -332,7 +332,7 @@ namespace win
             keyPlugin.SetValue("Path", System.dir().ca2module("npca2.dll"));
             keyPlugin.SetValue("ProductName", "ca2 plugin for NPAPI");
             keyPlugin.SetValue("Vendor", "ca2 Desenvolvimento de Software Ltda.");
-            keyPlugin.SetValue("Version", Application.file().as_string(System.dir().ca2("appdata/x86/ca2_build.txt")));
+            keyPlugin.SetValue("Version", Application.file().as_string(System.dir().element("appdata/x86/ca2_build.txt")));
 
             registry::Key keyApplicationCa2;
 
@@ -453,9 +453,9 @@ namespace win
          try
          {
 
-            strCommand = ::ca2::str::consume_quoted_value(psz);
-            ::ca2::str::consume_spaces(psz);
-            ::ca2::str::consume(psz, "\"%L\"");
+            strCommand = ::str::consume_quoted_value(psz);
+            ::str::consume_spaces(psz);
+            ::str::consume(psz, "\"%L\"");
             strParam = psz;
 
          }

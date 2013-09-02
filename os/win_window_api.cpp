@@ -427,7 +427,7 @@ LRESULT CALLBACK
       if (bCallDefault)
          lResult = CallWindowProc(oldWndProc, oswindow, nMsg, wParam, lParam);
    }
-   catch(base_exception * pe)
+   catch(::exception::base * pe)
    {
       // handle exception
       MSG msg;
@@ -485,7 +485,7 @@ bool CLASS_DECL_win __register_class(WNDCLASS* lpWndClass)
          *pModuleState->m_pstrUnregisterList += lpWndClass->lpszClassName;
          *pModuleState->m_pstrUnregisterList +='\n';
       }
-      catch(base_exception * pe)
+      catch(::exception::base * pe)
       {
          ::ca2::rethrow(pe);
          // Note: DELETE_EXCEPTION not required.

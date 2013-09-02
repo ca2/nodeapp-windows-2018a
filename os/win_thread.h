@@ -61,7 +61,7 @@ namespace win
       UINT                                m_dwFinishTimeout;
 
 
-      thread(sp(::ca2::application) papp);
+      thread(sp(::application) papp);
       virtual ~thread();
 
 
@@ -139,21 +139,21 @@ namespace win
 
       // running and idle processing
       virtual int32_t run();
-      virtual void pre_translate_message(::ca2::signal_object * pobj);
+      virtual void pre_translate_message(signal_details * pobj);
       virtual bool pump_message();     // low level message pump
       virtual bool on_idle(LONG lCount); // return TRUE if more idle processing
-      virtual bool is_idle_message(::ca2::signal_object * pobj);  // checks for special messages
+      virtual bool is_idle_message(signal_details * pobj);  // checks for special messages
       virtual bool is_idle_message(LPMSG lpmsg);  // checks for special messages
-      virtual void message_handler(::ca2::signal_object * pobj);
+      virtual void message_handler(signal_details * pobj);
 
       // thread termination
       virtual int32_t exit_instance(); // default will 'delete this'
 
       // Advanced: exception handling
-      virtual void ProcessWndProcException(base_exception * e, ::ca2::signal_object * pMsg);
+      virtual void ProcessWndProcException(::exception::base * e, signal_details * pMsg);
 
       // Advanced: handling messages sent to message filter hook
-      virtual void ProcessMessageFilter(int32_t code, ::ca2::signal_object * pobj);
+      virtual void ProcessMessageFilter(int32_t code, signal_details * pobj);
 
       // Advanced: virtual access to GetMainWnd()
       virtual sp(::user::interaction) GetMainWnd();
@@ -166,8 +166,8 @@ namespace win
 
 
 
-      virtual void DispatchThreadMessageEx(::ca2::signal_object * pobj);  // helper
-      virtual void message_window_message_handler(::ca2::signal_object * pobj);
+      virtual void DispatchThreadMessageEx(signal_details * pobj);  // helper
+      virtual void message_window_message_handler(signal_details * pobj);
 
       virtual void delete_temp();
 

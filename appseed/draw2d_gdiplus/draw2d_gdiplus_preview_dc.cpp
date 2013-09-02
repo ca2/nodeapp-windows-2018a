@@ -664,7 +664,7 @@ bool preview_dc::ExtTextOut(int32_t x, int32_t y, UINT nOptions, LPCRECT lpRect,
          pDeltas = new int32_t[nCount];
          pOutputString = new char[nCount];
       }
-      catch(base_exception * pe)
+      catch(::exception::base * pe)
       {
          delete[] pDeltas;  // in case it was allocated
          // Note: DELETE_EXCEPTION(e) not required
@@ -716,7 +716,7 @@ size preview_dc::TabbedTextOut(int32_t x, int32_t y, const char * lpszString, in
       pDeltas = new int32_t[nCount];
       pOutputString = new char[nCount];
    }
-   catch(base_exception * pe)
+   catch(::exception::base * pe)
    {
       delete[] pDeltas;
       // Note: DELETE_EXCEPTION(e) not required

@@ -27,7 +27,7 @@ namespace draw2d_gdi
 
 
    region::region(::ca2::application * papp) :
-      ca2(papp)
+      element(papp)
    {
       m_bUpdated = true;   
    }

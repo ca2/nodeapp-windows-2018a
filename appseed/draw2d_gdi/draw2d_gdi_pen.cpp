@@ -6,7 +6,7 @@ namespace draw2d_gdi
 
 
    pen::pen(::ca2::application * papp) :
-      ca2(papp)
+      element(papp)
    { 
 
    }

@@ -18,7 +18,7 @@ namespace win
    public:
 
 
-      file_system(sp(::ca2::application) papp);
+      file_system(sp(::application) papp);
       virtual ~file_system();
 
 

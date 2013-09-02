@@ -127,11 +127,11 @@ namespace win
 template<class TYPE>
 struct ConstructDestruct
 {
-   static void Construct(::ca2::object* pObject)
+   static void Construct(object* pObject)
    { 
       new (pObject) TYPE; 
    }
-   static void Destruct(::ca2::object* pObject)
+   static void Destruct(object* pObject)
    {
       TYPE* p = dynamic_cast < TYPE * > (pObject);
       p->~TYPE();
@@ -173,7 +173,7 @@ public:
 
 // Operations
 public:
-   CT * from_handle(HANDLE h, CT * (* pfnAllocator) (sp(::ca2::application), HANDLE) = NULL, sp(::ca2::application) papp = NULL);
+   CT * from_handle(HANDLE h, CT * (* pfnAllocator) (sp(::application), HANDLE) = NULL, sp(::application) papp = NULL);
    void delete_temp();
 
    void set_permanent(HANDLE h, CT * permOb);
@@ -230,7 +230,7 @@ handle_map < HT, CT > ::handle_map() :
 }
 
 template < class HT, class CT >
-CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (sp(::ca2::application), HANDLE), sp(::ca2::application) papp)
+CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (sp(::application), HANDLE), sp(::application) papp)
 {
    
    single_lock sl(&m_mutex, TRUE);
@@ -290,7 +290,7 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (sp(::ca2:
       // set it in the map
       m_temporaryMap.set_at(h, pTemp);
    }
-   catch(base_exception * pe)
+   catch(::exception::base * pe)
    {
 #ifndef ___PORTABLE
       __set_new_handler(pnhOldHandler);
@@ -306,7 +306,7 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (sp(::ca2:
    //__enable_memory_tracking(bEnable);
 
    // now set the handle in the object
-   HANDLE* ph = pTemp->m_handlea;  // after ::ca2::object
+   HANDLE* ph = pTemp->m_handlea;  // after object
    ph[0] = h;
    if (HT::s_iHandleCount == 2)
       ph[1] = h;
@@ -378,7 +378,7 @@ void handle_map < HT, CT >::delete_temp()
 
       // zero out the handles
       ASSERT(HT::s_iHandleCount == 1 || HT::s_iHandleCount == 2);
-      HANDLE* ph = pTemp->m_handlea;  // after ::ca2::object
+      HANDLE* ph = pTemp->m_handlea;  // after object
       ASSERT(ph[0] == h || ph[0] == NULL);
       ph[0] = NULL;
       if (HT::s_iHandleCount == 2)

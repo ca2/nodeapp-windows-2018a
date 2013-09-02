@@ -5,12 +5,12 @@ namespace win
 {
 
 
-   factory_exchange::factory_exchange(sp(::ca2::application) papp) :
-      ca2(papp)
+   factory_exchange::factory_exchange(sp(::application) papp) :
+      element(papp)
    {
 
       System.factory().cloneable_large    < stdio_file         >  (System.type_info < ::ca2::text_file         > ()        );
-      System.factory().cloneable_large    < file               >  (System.type_info < ::ca2::file              > ()        );
+      System.factory().cloneable_large    < file               >  (System.type_info < ::file::file              > ()        );
       System.factory().cloneable_large    < file_set           >  (System.type_info < ::ca2::file_set          > ()        );
       System.factory().cloneable          < file_system        >  (System.type_info < ::ca2::file_system       > ()  , 1   );
       System.factory().cloneable          < WinResource        >  (System.type_info < ::ca2::resource          > ()  , 1   );
@@ -39,7 +39,7 @@ namespace win
 
 
 
-void ca2_factory_exchange(sp(::ca2::application) papp)
+void ca2_factory_exchange(sp(::application) papp)
 {
    win::factory_exchange factoryexchange(papp);
 }

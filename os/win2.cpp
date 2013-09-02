@@ -1,7 +1,7 @@
 #include "framework.h"
 
 // Global helper functions
- CLASS_DECL_win sp(::ca2::application) __get_app()
+ CLASS_DECL_win sp(::application) __get_app()
 { return (afxCurrentWinApp); }
 
  CLASS_DECL_win HINSTANCE __get_instance_handle()

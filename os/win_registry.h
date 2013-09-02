@@ -6,7 +6,7 @@ namespace win
 
 
    class CLASS_DECL_win registry :
-      virtual public ::ca2::object
+      virtual public object
    {
    public:
 

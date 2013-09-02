@@ -74,8 +74,8 @@ namespace win
       m_bUpdateGraphics = false;
    }
 
-   window::window(sp(::ca2::application) papp) :
-      ca2(papp),
+   window::window(sp(::application) papp) :
+      element(papp),
       ::user::interaction(papp)
    {
       m_pcallback = NULL;
@@ -494,7 +494,7 @@ namespace win
       IGUI_WIN_MSG_LINK(WM_DESTROY           , pinterface, this, &window::_001OnDestroy);
    }
 
-   void window::_001OnMove(::ca2::signal_object * pobj)
+   void window::_001OnMove(signal_details * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       if(!m_bRectOk && !(GetExStyle() & WS_EX_LAYERED))
@@ -595,7 +595,7 @@ namespace win
 
    }
 
-   void window::_001OnSize(::ca2::signal_object * pobj)
+   void window::_001OnSize(signal_details * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
 
@@ -631,7 +631,7 @@ namespace win
 
    }
 
-   void window::_001OnShowWindow(::ca2::signal_object * pobj)
+   void window::_001OnShowWindow(signal_details * pobj)
    {
       SCAST_PTR(::ca2::message::show_window, pshowwindow, pobj);
       m_bVisible = pshowwindow->m_bShow != FALSE;
@@ -639,7 +639,7 @@ namespace win
          m_pguie->m_bVisible = m_bVisible;
    }
 
-   void window::_001OnDestroy(::ca2::signal_object * pobj)
+   void window::_001OnDestroy(signal_details * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       Default();
@@ -655,14 +655,14 @@ namespace win
       }
    }
 
-   void window::_001OnCaptureChanged(::ca2::signal_object * pobj)
+   void window::_001OnCaptureChanged(signal_details * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       m_pguieCapture = NULL;
    }
 
    // WM_NCDESTROY is the absolute LAST message sent.
-   void window::_001OnNcDestroy(::ca2::signal_object * pobj)
+   void window::_001OnNcDestroy(signal_details * pobj)
    {
       single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_pthread->m_mutex, TRUE);
       pobj->m_bRet = true;
@@ -759,7 +759,7 @@ namespace win
             return; // let go
          ASSERT(pMap != NULL);
 
-         //         ::ca2::object* p=NULL;
+         //         object* p=NULL;
          /*if(pMap)
          {
          ASSERT( (p = pMap->lookup_permanent(get_handle())) != NULL ||
@@ -787,7 +787,7 @@ namespace win
 
    void window::dump(dump_context & dumpcontext) const
    {
-      ::ca2::object::dump(dumpcontext);
+      object::dump(dumpcontext);
 
       dumpcontext << "\nm_oswindow_ = " << ((::win::window *)this)->get_handle();
 
@@ -919,7 +919,7 @@ namespace win
       return &m_pfnSuper;
    }
 
-   void window::pre_translate_message(::ca2::signal_object * pobj)
+   void window::pre_translate_message(signal_details * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       // no default processing
@@ -1268,7 +1268,7 @@ namespace win
    /////////////////////////////////////////////////////////////////////////////
    // main message_handler implementation
 
-   void window::message_handler(::ca2::signal_object * pobj)
+   void window::message_handler(signal_details * pobj)
    {
 
       SCAST_PTR(::ca2::message::base, pbase, pobj);
@@ -1338,7 +1338,7 @@ namespace win
       {
       if(pbase->m_wparam == BERGEDGE_GETAPP)
       {
-      sp(::ca2::application)* ppapp= (sp(::ca2::application)*) pbase->m_lparam;
+      sp(::application)* ppapp= (sp(::application)*) pbase->m_lparam;
       *ppapp = get_app();
       pbase->m_bRet = true;
       return;
@@ -1491,7 +1491,7 @@ restart_mouse_hover_check:
                //m_pguieCapture->m_pimpl->SendMessage(pbase);
                try
                {
-                  (m_pguieCapture->m_pimpl->*m_pguieCapture->m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast < ::ca2::signal_object * > (pmouse));
+                  (m_pguieCapture->m_pimpl->*m_pguieCapture->m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast < signal_details * > (pmouse));
                   if(pmouse->get_lresult() != 0)
                      return;
                }
@@ -1505,7 +1505,7 @@ restart_mouse_hover_check:
                //m_pguieCapture->SendMessage(pbase);
                try
                {
-                  (m_pguieCapture->*m_pguieCapture->m_pfnDispatchWindowProc)(dynamic_cast < ::ca2::signal_object * > (pmouse));
+                  (m_pguieCapture->*m_pguieCapture->m_pfnDispatchWindowProc)(dynamic_cast < signal_details * > (pmouse));
                   if(pmouse->get_lresult() != 0)
                      return;
                }
@@ -2514,7 +2514,7 @@ restart_mouse_hover_check:
    sp(::user::interaction) pWnd = oswindow_Child;
    if (strIdc == pszIdLeftOver)
    oswindow_LeftOver = oswindow_Child;
-   else if (::ca2::str::begins(strIdc, pszPrefix) && pWnd != NULL)
+   else if (::str::begins(strIdc, pszPrefix) && pWnd != NULL)
    oswindow_Child->SendMessage(WM_SIZEPARENT, 0, (LPARAM)&layout);
    }
    for (int32_t i = 0; i < m_pguie->m_uiptra.get_count();   i++)
@@ -2524,7 +2524,7 @@ restart_mouse_hover_check:
    sp(::user::interaction) pWnd = oswindow_Child;
    if (strIdc == pszIdLeftOver)
    oswindow_LeftOver = oswindow_Child;
-   else if (::ca2::str::begins(strIdc, pszPrefix) && pWnd != NULL)
+   else if (::str::begins(strIdc, pszPrefix) && pWnd != NULL)
    oswindow_Child->SendMessage(WM_SIZEPARENT, 0, (LPARAM)&layout);
    }
    }
@@ -2537,7 +2537,7 @@ restart_mouse_hover_check:
    sp(::user::interaction) pWnd = oswindow_Child;
    if (strIdc == pszIdLeftOver)
    oswindow_LeftOver = oswindow_Child;
-   else if (::ca2::str::begins(strIdc, pszPrefix) && pWnd != NULL)
+   else if (::str::begins(strIdc, pszPrefix) && pWnd != NULL)
    oswindow_Child->SendMessage(WM_SIZEPARENT, 0, (LPARAM)&layout);
    }
    for (int32_t i = 0; i < m_uiptra.get_count();   i++)
@@ -2547,7 +2547,7 @@ restart_mouse_hover_check:
    sp(::user::interaction) pWnd = oswindow_Child;
    if (strIdc == pszIdLeftOver)
    oswindow_LeftOver = oswindow_Child;
-   else if (::ca2::str::begins(strIdc, pszPrefix) && pWnd != NULL)
+   else if (::str::begins(strIdc, pszPrefix) && pWnd != NULL)
    oswindow_Child->SendMessage(WM_SIZEPARENT, 0, (LPARAM)&layout);
    }
    }
@@ -2775,7 +2775,7 @@ restart_mouse_hover_check:
       return false;
    }
 
-   void window::WalkPreTranslateTree(sp(::user::interaction) puiStop, ::ca2::signal_object * pobj)
+   void window::WalkPreTranslateTree(sp(::user::interaction) puiStop, signal_details * pobj)
    {
       ASSERT(puiStop == NULL || puiStop->IsWindow());
       ASSERT(pobj != NULL);
@@ -3038,7 +3038,7 @@ restart_mouse_hover_check:
       return (int32_t)Default();
    }
 
-   void window::_001OnCreate(::ca2::signal_object * pobj)
+   void window::_001OnCreate(signal_details * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       Default();
@@ -3079,7 +3079,7 @@ restart_mouse_hover_check:
 
 
    class print_window :
-      virtual ::ca2::object
+      virtual object
    {
    public:
 
@@ -3089,8 +3089,8 @@ restart_mouse_hover_check:
       oswindow m_oswindow;
       HDC m_hdc;
 
-      print_window(sp(::ca2::application) papp, oswindow oswindow, HDC hdc, uint32_t dwTimeout) :
-         ca2(papp),
+      print_window(sp(::application) papp, oswindow oswindow, HDC hdc, uint32_t dwTimeout) :
+         element(papp),
          m_event(papp)
       {
          m_event.ResetEvent();
@@ -3368,16 +3368,16 @@ restart_mouse_hover_check:
       ::DeleteObject(rgnUpdate);
    }
 
-   void window::_001OnProdevianSynch(::ca2::signal_object * pobj)
+   void window::_001OnProdevianSynch(signal_details * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       //      System.get_event(m_pthread)->SetEvent();
       //    System.get_event(System.get_twf())->wait(millis(8400));
    }
 
-   void window::_001OnPaint(::ca2::signal_object * pobj)
+   void window::_001OnPaint(signal_details * pobj)
    {
-      mutex_lock ml(user_mutex());
+      synch_lock ml(&user_mutex());
       //lock lock(m_pguie, 1984);
 
       SCAST_PTR(::ca2::message::base, pbase, pobj);
@@ -3449,7 +3449,7 @@ restart_mouse_hover_check:
    }
 
 
-   void window::_001OnPrint(::ca2::signal_object * pobj)
+   void window::_001OnPrint(signal_details * pobj)
    {
 
       if(m_spdib.is_null())
@@ -3552,7 +3552,7 @@ restart_mouse_hover_check:
    ASSERT(!bOK);                                 
    // Note: DELETE_EXCEPTION_(e) not required
    }
-   catch(base_exception * pe)
+   catch(::exception::base * pe)
    {
    // validation failed due to OOM or other resource failure
    //e->ReportError(MB_ICONEXCLAMATION, __IDP_INTERNAL_FAILURE);
@@ -3838,12 +3838,12 @@ restart_mouse_hover_check:
       oswindow oswindow_Parent = ::GetParent(get_handle());
       m_iModal = m_iModalCount;
       int32_t iLevel = m_iModal;
-      oprop(string("RunModalLoop.thread(") + ::ca2::str::from(iLevel) + ")") = System.GetThread();
+      oprop(string("RunModalLoop.thread(") + ::str::from(iLevel) + ")") = System.GetThread();
       m_iModalCount++;
 
       m_iaModalThread.add(::GetCurrentThreadId());
-      sp(::ca2::application) pappThis1 = (m_pthread->m_pthread->m_p);
-      sp(::ca2::application) pappThis2 = (m_pthread->m_pthread);
+      sp(::application) pappThis1 = (m_pthread->m_pthread->m_p);
+      sp(::application) pappThis2 = (m_pthread->m_pthread);
       // acquire and dispatch messages until the modal state is done
       MSG msg;
       for (;;)
@@ -4004,7 +4004,7 @@ ExitModal:
          System.GetThread()->post_thread_message(WM_NULL);
          for(int32_t i = iLevel; i >= 0; i--)
          {
-            ::ca2::thread * pthread = oprop(string("RunModalLoop.thread(") + ::ca2::str::from(i) + ")").ca2 < ::ca2::thread > ();
+            ::ca2::thread * pthread = oprop(string("RunModalLoop.thread(") + ::str::from(i) + ")").element < ::ca2::thread > ();
             try
             {
                pthread->post_thread_message(WM_NULL);
@@ -4093,8 +4093,8 @@ ExitModal:
    }
 
 
-   /*   ::user::view_update_hint::::user::view_update_hint(sp(::ca2::application) papp) :
-   ca2(papp)
+   /*   ::user::view_update_hint::::user::view_update_hint(sp(::application) papp) :
+   element(papp)
    {
    }
    */
@@ -4426,13 +4426,13 @@ ExitModal:
       return m_id;
    }
 
-   /*   guie_message_wnd::guie_message_wnd(sp(::ca2::application) papp) :
-   ca2(papp)
+   /*   guie_message_wnd::guie_message_wnd(sp(::application) papp) :
+   element(papp)
    {
    m_pguieForward = NULL;
    }
 
-   LRESULT guie_message_wnd::message_handler(::ca2::signal_object * pobj)
+   LRESULT guie_message_wnd::message_handler(signal_details * pobj)
    {
    if(m_pguieForward != NULL)
    {
@@ -5518,7 +5518,7 @@ ExitModal:
 
    }
 
-   void window::_001OnSetCursor(::ca2::signal_object * pobj)
+   void window::_001OnSetCursor(signal_details * pobj)
    {
       SCAST_PTR(::ca2::message::base, pbase, pobj);
       if(Session.get_cursor() != NULL && Session.get_cursor()->m_ecursor != ::visual::cursor_system)
@@ -5835,7 +5835,7 @@ ExitModal:
 
       // Catch exceptions thrown outside the scope of a callback
       // in debug builds and warn the ::fontopus::user.
-      ::ca::smart_pointer < ::ca2::message::base > spbase;
+      smart_pointer < ::ca2::message::base > spbase;
 
       spbase = pinteraction->get_base(pinteraction, nMsg, wParam, lParam);
 
@@ -5894,7 +5894,7 @@ ExitModal:
          return -1;
 
       }
-      catch(base_exception * pe)
+      catch(::exception::base * pe)
       {
          __process_window_procedure_exception(pe, spbase);
          //         TRACE(::ca2::trace::category_AppMsg, 0, "Warning: Uncaught exception in message_handler (returning %ld).\n", spbase->get_lresult());
@@ -6069,7 +6069,7 @@ lCallNextHook:
 
 
 
-   void window::_001OnEraseBkgnd(::ca2::signal_object * pobj)
+   void window::_001OnEraseBkgnd(signal_details * pobj)
    {
       SCAST_PTR(::ca2::message::erase_bkgnd, perasebkgnd, pobj);
       perasebkgnd->m_bRet = true;
@@ -6197,8 +6197,8 @@ lCallNextHook:
 } // namespace win
 
 
-CTestCmdUI::CTestCmdUI(sp(::ca2::application) papp) :
-   ca2(papp),
+CTestCmdUI::CTestCmdUI(sp(::application) papp) :
+   element(papp),
    cmd_ui(papp)
 {
    m_bEnabled = TRUE;  // assume it is enabled

@@ -1,8 +1,8 @@
 #include "framework.h"
 
 
-WinResource::WinResource(sp(::ca2::application) papp) :
-   ca2(papp)
+WinResource::WinResource(sp(::application) papp) :
+   element(papp)
 {
 }
 
@@ -48,7 +48,7 @@ WinResource::~WinResource()
         try
         {
            // create the .mdb file
-//           ::ca2::filesp f(lpcszFilePath, ::ca2::file::mode_create | ::ca2::file::mode_write );
+//           ::ca2::filesp f(lpcszFilePath, ::file::file::mode_create | ::file::file::mode_write );
 
            // write the ::fontopus::user-defined resource to the .mdb file
            spfile->write(lpnRes, dwResSize);
@@ -86,7 +86,7 @@ bool WinResource::ReadResource(string & str, HINSTANCE hinst,  UINT nID, const c
 
 
 
-bool WinResource::ReadResource(::ca2::file & spfile, HINSTANCE hinst, UINT nID,  const char * lpcszType)
+bool WinResource::ReadResource(::file::file & spfile, HINSTANCE hinst, UINT nID,  const char * lpcszType)
 {
 
    HRSRC hrsrc = ::FindResource(
@@ -112,7 +112,7 @@ bool WinResource::ReadResource(::ca2::file & spfile, HINSTANCE hinst, UINT nID, 
            spfile.write(lpnRes, dwResSize);
            spfile.flush();
         }
-        catch(base_exception &)
+        catch(::exception::base &)
         {
       #ifdef DEBUG
 //         g_dumpcontext << "File could not be opened " << pe->m_cause << "\n";

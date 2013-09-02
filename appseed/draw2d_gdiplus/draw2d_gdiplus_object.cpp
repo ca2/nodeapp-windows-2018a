@@ -46,7 +46,7 @@ namespace draw2d_gdiplus
    }
 
 
-   object * graphics_object_allocator(sp(::ca2::application) papp, HANDLE h)
+   object * graphics_object_allocator(sp(::application) papp, HANDLE h)
    {
       /*switch(::GetObjectType(h))
       {
@@ -67,7 +67,7 @@ namespace draw2d_gdiplus
       return NULL;
    }
 
-   /*object* object::from_handle(sp(::ca2::application) papp, HGDIOBJ h)
+   /*object* object::from_handle(sp(::application) papp, HGDIOBJ h)
    {
       hgdiobj_map* pMap = afxMapHGDIOBJ(TRUE); //create map if not exist
       ASSERT(pMap != NULL);
@@ -122,7 +122,7 @@ namespace draw2d_gdiplus
 
    void object::dump(dump_context & dumpcontext) const
    {
-      ::ca2::object::dump(dumpcontext);
+      object::dump(dumpcontext);
 
 //      dumpcontext << "get_handle() = " << get_handle();
   //    dumpcontext << "\n";
@@ -130,7 +130,7 @@ namespace draw2d_gdiplus
 
    void object::assert_valid() const
    {
-      ::ca2::object::assert_valid();
+      object::assert_valid();
       //ASSERT(get_handle() == NULL ||
         // (afxData.bWin95 || ::GetObjectType(get_handle()) != 0));
    }

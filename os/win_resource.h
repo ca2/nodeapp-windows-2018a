@@ -7,11 +7,11 @@ class CLASS_DECL_win WinResource :
 public:
 
 
-   WinResource(sp(::ca2::application) papp);
+   WinResource(sp(::application) papp);
    virtual ~WinResource();
    
    bool ReadResource(string & str, HINSTANCE hinst, UINT nID, const char * lpcszType);
-   bool ReadResource(::ca2::file & file, HINSTANCE hinst, UINT nID, const char * lpcszType);
+   bool ReadResource(::file::file & file, HINSTANCE hinst, UINT nID, const char * lpcszType);
 
 
 };

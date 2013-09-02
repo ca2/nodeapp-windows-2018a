@@ -8,8 +8,8 @@ namespace draw2d_gdiplus
 {
 
 
-   graphics::graphics(sp(::ca2::application) papp) :
-      ca2(papp)
+   graphics::graphics(sp(::application) papp) :
+      element(papp)
    {
 
       m_bPrinting       = FALSE;
@@ -41,12 +41,12 @@ namespace draw2d_gdiplus
 
    void graphics::assert_valid() const
    {
-      ::ca2::object::assert_valid();
+      object::assert_valid();
    }
 
    void graphics::dump(dump_context & dumpcontext) const
    {
-      ::ca2::object::dump(dumpcontext);
+      object::dump(dumpcontext);
 
       dumpcontext << "get_handle1() = " << get_handle1();
       dumpcontext << "\nm_hAttribDC = " << get_handle2();
@@ -1180,7 +1180,7 @@ gdi_fallback:
       }
       
       //ASSERT(get_handle1() != NULL); 
-      //wstring wstr = ::ca2::international::utf8_to_unicode(str);
+      //wstring wstr = ::str::international::utf8_to_unicode(str);
       return TextOut(x, y, str, (int32_t) str.get_length()); 
    
    } // call virtual
@@ -1237,7 +1237,7 @@ gdi_fallback:
       }
       
       //ASSERT(get_handle1() != NULL); 
-      //wstring wstr = ::ca2::international::utf8_to_unicode(str);
+      //wstring wstr = ::str::international::utf8_to_unicode(str);
       return TextOut(x, y, str, (int32_t) str.get_length()); 
    
    } // call virtual
@@ -2086,7 +2086,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    /////////////////////////////////////////////////////////////////////////////
    // special graphics drawing primitives/helpers
 
-   ::draw2d::brush* graphics::GetHalftoneBrush(sp(::ca2::application) papp)
+   ::draw2d::brush* graphics::GetHalftoneBrush(sp(::application) papp)
    {
 /*      ::ca2::LockGlobals(CRIT_HALFTONEBRUSH);
       if (gen_HalftoneBrush == NULL)
@@ -2467,7 +2467,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return bRetVal;
    }
 
-//   ::draw2d::object* graphics::SelectGdiObject(sp(::ca2::application) papp, HDC hDC, HGDIOBJ h)
+//   ::draw2d::object* graphics::SelectGdiObject(sp(::application) papp, HDC hDC, HGDIOBJ h)
   // {
 //      return ::draw2d_gdiplus::object::from_handle(papp, ::SelectObject(hDC, h));
    //}
@@ -3220,7 +3220,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       // these flags would modify the string
       ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
       ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
-      wstring wstr = ::ca2::international::utf8_to_unicode(string(lpszString, nCount));
+      wstring wstr = ::str::international::utf8_to_unicode(string(lpszString, nCount));
       return ::DrawTextW(get_handle1(), wstr, (int32_t) wcslen(wstr), lpRect, nFormat); */
 
       return draw_text(string(lpszString, nCount), lpRect, nFormat);
@@ -3235,7 +3235,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       // these flags would modify the string
       ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
       ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
-      wstring wstr = ::ca2::international::utf8_to_unicode(str);
+      wstring wstr = ::str::international::utf8_to_unicode(str);
       return ::DrawTextW(get_handle1(), (const wchar_t *)wstr, (int32_t)wcslen(wstr), lpRect, nFormat); */
 
       try
@@ -3326,7 +3326,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       m_pgraphics->SetTransform(pmNew);
 
-      m_pgraphics->DrawString(::ca2::international::utf8_to_unicode(str), -1, gdiplus_font(), rectf, &format, gdiplus_brush());
+      m_pgraphics->DrawString(::str::international::utf8_to_unicode(str), -1, gdiplus_font(), rectf, &format, gdiplus_brush());
 
       m_pgraphics->SetTransform(&m);
 
@@ -3343,7 +3343,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       // these flags would modify the string
       ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
       ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
-      wstring wstr = ::ca2::international::utf8_to_unicode(string(lpszString, nCount));
+      wstring wstr = ::str::international::utf8_to_unicode(string(lpszString, nCount));
       return ::DrawTextExW(get_handle1(), const_cast<wchar_t *>((const wchar_t *)wstr), (int32_t)wcslen(wstr), lpRect, nFormat, lpDTParams); 
    }
 
@@ -3353,7 +3353,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       // these flags would modify the string
       ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
       ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
-      wstring wstr = ::ca2::international::utf8_to_unicode(str);
+      wstring wstr = ::str::international::utf8_to_unicode(str);
       return ::DrawTextExW(get_handle1(), const_cast<wchar_t *>((const wchar_t *)wstr), (int32_t)wcslen(wstr), lpRect, nFormat, lpDTParams); 
    }
 
@@ -3372,7 +3372,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if(iIndex < 0)
          return size(0, 0);
 
-      wstring wstr = ::ca2::international::utf8_to_unicode(lpszString, nCount);
+      wstring wstr = ::str::international::utf8_to_unicode(lpszString, nCount);
 
       strsize iRange = 0;
       strsize i = 0;
@@ -3380,10 +3380,10 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       const char * psz = lpszString;
       while(i < iIndex)
       {
-         iLen = ::ca2::str::get_utf8_char(psz).length();
+         iLen = ::str::get_utf8_char(psz).length();
          iRange++;
          i += iLen;
-         psz = ::ca2::str::utf8_inc(psz);
+         psz = ::str::utf8_inc(psz);
          if(psz == NULL)
             break;
          if(*psz == '\0')
@@ -3458,7 +3458,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       //retry_single_lock slGdiplus(&System.s_mutexGdiplus, millis(1), millis(1));
 
-      wstring wstr = ::ca2::international::utf8_to_unicode(lpszString, nCount);
+      wstring wstr = ::str::international::utf8_to_unicode(lpszString, nCount);
 
       Gdiplus::RectF box;
 
@@ -3478,7 +3478,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          return size(0, 0);
       SIZE size;
       string str(lpszString, nCount);
-      wstring wstr = ::ca2::international::utf8_to_unicode(str);
+      wstring wstr = ::str::international::utf8_to_unicode(str);
       if(!::GetTextExtentPoint32W(get_handle2(), wstr, (int32_t)wstr.get_length(), &size))
       {
          return class size(0, 0);
@@ -3491,7 +3491,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 /*      if(get_handle2() == NULL)
          return size(0, 0);
       SIZE size;
-      wstring wstr = ::ca2::international::utf8_to_unicode(str);
+      wstring wstr = ::str::international::utf8_to_unicode(str);
       if(!::GetTextExtentPoint32W(get_handle2(), wstr, (int32_t)wstr.get_length(), &size))
       {
          return class size(0, 0);
@@ -3508,7 +3508,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       /*if(m_pgraphics == NULL)
          return size(0, 0);
 
-      wstring wstr = ::ca2::international::utf8_to_unicode(str);
+      wstring wstr = ::str::international::utf8_to_unicode(str);
 
       Gdiplus::RectF box;
 
@@ -3536,7 +3536,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       ASSERT(get_handle1() != NULL);
       SIZE size;
       string str(lpszString, nCount);
-      wstring wstr = ::ca2::international::utf8_to_unicode(str);
+      wstring wstr = ::str::international::utf8_to_unicode(str);
       VERIFY(::GetTextExtentPoint32W(get_handle1(), wstr, (int32_t)wstr.get_length(), &size));
       return size;
    }
@@ -3545,7 +3545,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    {
       ASSERT(get_handle1() != NULL);
       SIZE size;
-      wstring wstr = ::ca2::international::utf8_to_unicode(str);
+      wstring wstr = ::str::international::utf8_to_unicode(str);
       VERIFY(::GetTextExtentPoint32W(get_handle1(), wstr, (int32_t)wstr.get_length(), &size));
       return size;
    }
@@ -3567,7 +3567,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if(iIndex < 0)
          return false;
 
-      wstring wstr = ::ca2::international::utf8_to_unicode(lpszString, nCount);
+      wstring wstr = ::str::international::utf8_to_unicode(lpszString, nCount);
 
       strsize iRange = 0;
       strsize i = 0;
@@ -3577,7 +3577,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       {
          try
          {
-            iLen = ::ca2::str::get_utf8_char(psz).length();
+            iLen = ::str::get_utf8_char(psz).length();
          }
          catch(...)
          {
@@ -3589,7 +3589,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
             break;
          try
          {
-            psz = ::ca2::str::utf8_inc(psz);
+            psz = ::str::utf8_inc(psz);
          }
          catch(...)
          {
@@ -3680,7 +3680,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       //retry_single_lock slGdiplus(&System.s_mutexGdiplus, millis(1), millis(1));
 
-      wstring wstr = ::ca2::international::utf8_to_unicode(lpszString, nCount);
+      wstring wstr = ::str::international::utf8_to_unicode(lpszString, nCount);
 
       Gdiplus::RectF box;
 
@@ -3720,7 +3720,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if(m_pgraphics == NULL)
          return false;
 
-      wstring wstr = ::ca2::international::utf8_to_unicode(str);
+      wstring wstr = ::str::international::utf8_to_unicode(str);
 
       Gdiplus::RectF box;
 
@@ -3825,7 +3825,7 @@ namespace draw2d_gdiplus
 
       string str(lpszString, nCount);
       
-      wstring wstr = ::ca2::international::utf8_to_unicode(str);
+      wstring wstr = ::str::international::utf8_to_unicode(str);
 
 
       try
@@ -3908,7 +3908,7 @@ namespace draw2d_gdiplus
          double d2 = fontfamily.GetEmHeight(gdiplus_font()->GetStyle());
          double d3 = d1 * d2;
 
-         status = path.AddString(::ca2::international::utf8_to_unicode(str), -1, &fontfamily, gdiplus_font()->GetStyle(), (Gdiplus::REAL) d1, origin, &format);
+         status = path.AddString(::str::international::utf8_to_unicode(str), -1, &fontfamily, gdiplus_font()->GetStyle(), (Gdiplus::REAL) d1, origin, &format);
 
          path.Transform(pmNew);
 
@@ -3921,7 +3921,7 @@ namespace draw2d_gdiplus
 
          m_pgraphics->SetTransform(pmNew);
 
-         status = m_pgraphics->DrawString(::ca2::international::utf8_to_unicode(str), -1, gdiplus_font(), origin, &format, gdiplus_brush());
+         status = m_pgraphics->DrawString(::str::international::utf8_to_unicode(str), -1, gdiplus_font(), origin, &format, gdiplus_brush());
 
          m_pgraphics->SetTransform(&m);
 
@@ -3940,7 +3940,7 @@ namespace draw2d_gdiplus
 
       string str(lpszString, nCount);
       
-      wstring wstr = ::ca2::international::utf8_to_unicode(str);
+      wstring wstr = ::str::international::utf8_to_unicode(str);
 
 
       try
@@ -4020,7 +4020,7 @@ namespace draw2d_gdiplus
          double d2 = fontfamily.GetEmHeight(gdiplus_font()->GetStyle());
          double d3 = d1 * d2;
 
-         status = path.AddString(::ca2::international::utf8_to_unicode(str), -1, &fontfamily, gdiplus_font()->GetStyle(), (Gdiplus::REAL) d1, origin, &format);
+         status = path.AddString(::str::international::utf8_to_unicode(str), -1, &fontfamily, gdiplus_font()->GetStyle(), (Gdiplus::REAL) d1, origin, &format);
 
          path.Transform(pmNew);
 
@@ -4033,7 +4033,7 @@ namespace draw2d_gdiplus
 
          m_pgraphics->SetTransform(pmNew);
 
-         status = m_pgraphics->DrawString(::ca2::international::utf8_to_unicode(str), -1, gdiplus_font(), origin, &format, gdiplus_brush());
+         status = m_pgraphics->DrawString(::str::international::utf8_to_unicode(str), -1, gdiplus_font(), origin, &format, gdiplus_brush());
 
          m_pgraphics->SetTransform(&m);
 

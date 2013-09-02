@@ -35,7 +35,7 @@ namespace draw2d_gdi
    double dib::dPi;
 
    dib::dib(::ca2::application * papp) :
-      ca2(papp),
+      element(papp),
       m_spbitmap(allocer()),
       m_spgraphics(allocer())
    {
@@ -109,7 +109,7 @@ namespace draw2d_gdi
    bool dib::create(int width, int height)
    {
 
-      mutex_lock ml(user_mutex());
+      synch_lock ml(&user_mutex());
 
 
       if(m_spbitmap.is_set()
@@ -214,7 +214,7 @@ namespace draw2d_gdi
    bool dib::Destroy ()
    {
 
-      mutex_lock ml(user_mutex());
+      synch_lock ml(&user_mutex());
 
       m_spbitmap->destroy();
 
@@ -2430,7 +2430,7 @@ namespace draw2d_gdi
    }
 
 
-   bool dib::update_window(::ca2::window * pwnd, ::ca2::signal_object * pobj)
+   bool dib::update_window(::ca2::window * pwnd, signal_details * pobj)
    {
 
       rect64 rectWindow;
@@ -2586,7 +2586,7 @@ namespace draw2d_gdi
    }
 
 
-   bool dib::print_window(::ca2::window * pwnd, ::ca2::signal_object * pobj)
+   bool dib::print_window(::ca2::window * pwnd, signal_details * pobj)
    {
 
       SCAST_PTR(::ca2::message::base, pbase, pobj);

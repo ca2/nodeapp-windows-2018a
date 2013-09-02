@@ -6,8 +6,8 @@ namespace draw2d_gdiplus
 {
 
 
-   font::font(sp(::ca2::application) papp) :
-   ca2(papp)
+   font::font(sp(::application) papp) :
+   element(papp)
    {
 
       m_pfont     = NULL;
@@ -31,7 +31,7 @@ namespace draw2d_gdiplus
   // {
     //  return (HFONT)(this == NULL ? NULL : get_handle()); 
    //}
-   //font* font::from_handle(sp(::ca2::application) papp, HFONT hFont)
+   //font* font::from_handle(sp(::application) papp, HFONT hFont)
    //{
      // return dynamic_cast < font * > (::draw2d_gdiplus::object::from_handle(papp, hFont)); 
    //}
@@ -197,7 +197,7 @@ namespace draw2d_gdiplus
          //retry_single_lock slGdiplus(&System.s_mutexGdiplus, millis(1), millis(1));
 
          ((font *) this)->m_pfont = new Gdiplus::Font(
-               ::ca2::international::utf8_to_unicode(m_strFontFamilyName),
+               ::str::international::utf8_to_unicode(m_strFontFamilyName),
                (Gdiplus::REAL) m_dFontSize,
                iStyle,
                unit);
