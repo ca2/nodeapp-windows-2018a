@@ -5,7 +5,7 @@ namespace draw2d_gdi
 {
 
 
-   bitmap::bitmap(::ca2::application * papp) :
+   bitmap::bitmap(application * papp) :
       element(papp)
    { 
 
@@ -26,7 +26,7 @@ namespace draw2d_gdi
    }
 
 
-   ::draw2d::bitmap * bitmap::from_handle(::ca2::application * papp, HBITMAP hBitmap)
+   ::draw2d::bitmap * bitmap::from_handle(application * papp, HBITMAP hBitmap)
    { 
 
       return dynamic_cast < bitmap * > (::draw2d_gdi::object::from_handle(papp, hBitmap)); 

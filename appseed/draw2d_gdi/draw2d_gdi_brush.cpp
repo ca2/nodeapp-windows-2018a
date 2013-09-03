@@ -5,7 +5,7 @@ namespace draw2d_gdi
 {
 
 
-   brush::brush(::ca2::application * papp) :
+   brush::brush(application * papp) :
       element(papp)
    { 
       m_bProcess = false;
@@ -27,7 +27,7 @@ namespace draw2d_gdi
    }
 
 
-   ::draw2d::brush* brush::from_handle(::ca2::application * papp, HBRUSH hBrush)
+   ::draw2d::brush* brush::from_handle(application * papp, HBRUSH hBrush)
    {
 
       return dynamic_cast < brush * > (::draw2d_gdi::object::from_handle(papp, hBrush));

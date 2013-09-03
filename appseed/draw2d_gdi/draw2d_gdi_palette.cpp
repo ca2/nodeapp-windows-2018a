@@ -5,7 +5,7 @@ namespace draw2d_gdi
 {
 
 
-   palette::palette(::ca2::application * papp) :
+   palette::palette(application * papp) :
       element(papp)
    {
    
@@ -27,7 +27,7 @@ namespace draw2d_gdi
    }
 
 
-   ::draw2d::palette * palette::from_handle(::ca2::application * papp, HPALETTE hPalette)
+   ::draw2d::palette * palette::from_handle(application * papp, HPALETTE hPalette)
    { 
 
       return dynamic_cast < palette * > (::draw2d_gdi::object::from_handle(papp, hPalette)); 

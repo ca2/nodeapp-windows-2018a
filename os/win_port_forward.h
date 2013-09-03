@@ -79,7 +79,7 @@ namespace win
 	
 	   // public functions -- there are only a few
 	
-	   port_forward(sp(::application) papp);
+	   port_forward(sp(base_application) papp);
 	   virtual ~port_forward();
 	
 	   virtual HRESULT ListenForUpnpChanges(::ca2::port_forward_change_callbacks *pCallbacks = NULL);  // NULL==default object; if you provide your own pointer to a port_forward_change_callbacks-derived object it is deleted for you automatically

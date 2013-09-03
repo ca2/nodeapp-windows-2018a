@@ -5,7 +5,7 @@ namespace win
 {
 
 
-   crypt::crypt(sp(::application) papp) :
+   crypt::crypt(sp(base_application) papp) :
       element(papp),
       ::ca2::crypt(papp)
    {

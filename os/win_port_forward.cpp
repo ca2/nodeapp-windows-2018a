@@ -15,7 +15,7 @@ namespace win
    // Construction/Destruction
    //////////////////////////////////////////////////////////////////////
 
-   port_forward::port_forward(sp(::application) papp) :
+   port_forward::port_forward(sp(base_application) papp) :
       element(papp)
    {
 	   InitializeMembersToNull();

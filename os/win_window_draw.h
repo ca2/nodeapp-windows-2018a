@@ -39,7 +39,7 @@ namespace win
       DWORD                                  m_dwLastDelay;
 
 
-      window_draw(sp(::application) papp);
+      window_draw(sp(base_application) papp);
       virtual ~window_draw();
 
 

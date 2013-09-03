@@ -40,7 +40,7 @@ namespace win
 
 
       window();
-      window(sp(::application) papp);
+      window(sp(base_application) papp);
       virtual ~window();
 
 

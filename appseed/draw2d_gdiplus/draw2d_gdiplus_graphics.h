@@ -30,7 +30,7 @@ namespace draw2d_gdiplus
 
 
       graphics();
-      graphics(sp(::application) papp);
+      graphics(sp(base_application) papp);
       virtual ~graphics();
 
 
@@ -454,7 +454,7 @@ namespace draw2d_gdiplus
       bool SelectClipPath(int32_t nMode);
 
    // Misc Helper Functions
-      static ::draw2d::brush* GetHalftoneBrush(sp(::application) papp);
+      static ::draw2d::brush* GetHalftoneBrush(sp(base_application) papp);
       void DrawDragRect(LPCRECT lpRect, SIZE size,
          LPCRECT lpRectLast, SIZE sizeLast,
          ::draw2d::brush* pBrush = NULL, ::draw2d::brush* pBrushLast = NULL);
@@ -496,7 +496,7 @@ namespace draw2d_gdiplus
 
    //protected:
       // used for implementation of non-virtual SelectObject calls
-      //static ::draw2d::object* SelectGdiObject(sp(::application) papp, HDC hDC, HGDIOBJ h);
+      //static ::draw2d::object* SelectGdiObject(sp(base_application) papp, HDC hDC, HGDIOBJ h);
 
       virtual bool create_client_dc(::ca2::window * pwnd);
       virtual bool create_window_dc(::ca2::window * pwnd);

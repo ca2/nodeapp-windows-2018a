@@ -16,7 +16,7 @@ namespace draw2d_gdi
 {
 
 
-   graphics::graphics(::ca2::application * papp) :
+   graphics::graphics(application * papp) :
       element(papp)
    {
 
@@ -3310,7 +3310,7 @@ namespace draw2d_gdi
    /////////////////////////////////////////////////////////////////////////////
    // special graphics drawing primitives/helpers
 
-   ::draw2d::brush* graphics::GetHalftoneBrush(::ca2::application * papp)
+   ::draw2d::brush* graphics::GetHalftoneBrush(application * papp)
    {
       /*      AfxLockGlobals(CRIT_HALFTONEBRUSH);
       if (_afxHalftoneBrush == NULL)
@@ -3580,7 +3580,7 @@ namespace draw2d_gdi
 #endif //_DEBUG
 
 
-   ::draw2d::graphics * graphics::from_handle(::ca2::application * papp, HDC hdc)
+   ::draw2d::graphics * graphics::from_handle(application * papp, HDC hdc)
    {
 
       ::draw2d_gdi::graphics * pgraphics = new ::draw2d_gdi::graphics (papp);

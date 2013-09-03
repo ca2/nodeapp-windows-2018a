@@ -8,7 +8,7 @@ namespace draw2d_gdiplus
 {
 
 
-   graphics::graphics(sp(::application) papp) :
+   graphics::graphics(sp(base_application) papp) :
       element(papp)
    {
 
@@ -2086,7 +2086,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    /////////////////////////////////////////////////////////////////////////////
    // special graphics drawing primitives/helpers
 
-   ::draw2d::brush* graphics::GetHalftoneBrush(sp(::application) papp)
+   ::draw2d::brush* graphics::GetHalftoneBrush(sp(base_application) papp)
    {
 /*      ::ca2::LockGlobals(CRIT_HALFTONEBRUSH);
       if (gen_HalftoneBrush == NULL)
@@ -2467,7 +2467,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return bRetVal;
    }
 
-//   ::draw2d::object* graphics::SelectGdiObject(sp(::application) papp, HDC hDC, HGDIOBJ h)
+//   ::draw2d::object* graphics::SelectGdiObject(sp(base_application) papp, HDC hDC, HGDIOBJ h)
   // {
 //      return ::draw2d_gdiplus::object::from_handle(papp, ::SelectObject(hDC, h));
    //}

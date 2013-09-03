@@ -12,14 +12,14 @@ namespace draw2d_gdi
       bool m_bProcess;
 
       // Constructors
-      brush(::ca2::application * papp);
+      brush(application * papp);
       virtual ~brush();
 
 
       operator HBRUSH() const;
       int GetLogBrush(LOGBRUSH* pLogBrush);
 
-      static ::draw2d::brush * from_handle(::ca2::application * papp, HBRUSH hBrush);
+      static ::draw2d::brush * from_handle(application * papp, HBRUSH hBrush);
 
       virtual void construct(COLORREF crColor);                // CreateSolidBrush
       virtual void construct(int nIndex, COLORREF crColor);    // CreateHatchBrush

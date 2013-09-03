@@ -5,7 +5,7 @@ namespace win
 {
 
 
-   file_set::file_set(sp(::application) papp) :
+   file_set::file_set(sp(base_application) papp) :
       element(papp)
    {
 

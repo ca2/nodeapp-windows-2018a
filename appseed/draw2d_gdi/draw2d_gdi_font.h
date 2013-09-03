@@ -10,7 +10,7 @@ namespace draw2d_gdi
    public:
 
 
-      font(::ca2::application * papp);
+      font(application * papp);
       virtual ~font();
 
 
@@ -18,7 +18,7 @@ namespace draw2d_gdi
       virtual int GetLogFont(LOGFONTW* pLogFont);
 
 
-      static ::draw2d::font * from_handle(::ca2::application * papp, HFONT hFont);
+      static ::draw2d::font * from_handle(application * papp, HFONT hFont);
 
 
       virtual void construct(const ::draw2d::font & fontParam);

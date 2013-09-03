@@ -12,7 +12,7 @@ namespace win
 {
 
 
-   os::os(sp(::application) papp) :
+   os::os(sp(base_application) papp) :
       element(papp),
       ::ca2::os(papp)
    {

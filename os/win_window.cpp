@@ -74,7 +74,7 @@ namespace win
       m_bUpdateGraphics = false;
    }
 
-   window::window(sp(::application) papp) :
+   window::window(sp(base_application) papp) :
       element(papp),
       ::user::interaction(papp)
    {
@@ -3089,7 +3089,7 @@ restart_mouse_hover_check:
       oswindow m_oswindow;
       HDC m_hdc;
 
-      print_window(sp(::application) papp, oswindow oswindow, HDC hdc, uint32_t dwTimeout) :
+      print_window(sp(base_application) papp, oswindow oswindow, HDC hdc, uint32_t dwTimeout) :
          element(papp),
          m_event(papp)
       {
@@ -4093,7 +4093,7 @@ ExitModal:
    }
 
 
-   /*   ::user::view_update_hint::::user::view_update_hint(sp(::application) papp) :
+   /*   ::user::view_update_hint::::user::view_update_hint(sp(base_application) papp) :
    element(papp)
    {
    }
@@ -4426,7 +4426,7 @@ ExitModal:
       return m_id;
    }
 
-   /*   guie_message_wnd::guie_message_wnd(sp(::application) papp) :
+   /*   guie_message_wnd::guie_message_wnd(sp(base_application) papp) :
    element(papp)
    {
    m_pguieForward = NULL;
@@ -6197,7 +6197,7 @@ lCallNextHook:
 } // namespace win
 
 
-CTestCmdUI::CTestCmdUI(sp(::application) papp) :
+CTestCmdUI::CTestCmdUI(sp(base_application) papp) :
    element(papp),
    cmd_ui(papp)
 {

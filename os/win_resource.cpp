@@ -1,7 +1,7 @@
 #include "framework.h"
 
 
-WinResource::WinResource(sp(::application) papp) :
+WinResource::WinResource(sp(base_application) papp) :
    element(papp)
 {
 }

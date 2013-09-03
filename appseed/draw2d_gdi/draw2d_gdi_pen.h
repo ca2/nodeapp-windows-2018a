@@ -15,7 +15,7 @@ namespace draw2d_gdi
       bool        m_bProcess;
 
 
-      pen(::ca2::application * papp);
+      pen(application * papp);
       virtual ~pen();
 
       operator HPEN() const;
@@ -23,7 +23,7 @@ namespace draw2d_gdi
       int GetExtLogPen(EXTLOGPEN* pLogPen);
 
 
-      static ::draw2d::pen* from_handle(::ca2::application * papp, HPEN hPen);
+      static ::draw2d::pen* from_handle(application * papp, HPEN hPen);
 
 
       virtual void construct(int nPenStyle, int nWidth, COLORREF crColor);

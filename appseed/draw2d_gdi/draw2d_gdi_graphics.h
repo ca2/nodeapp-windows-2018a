@@ -50,7 +50,7 @@ namespace draw2d_gdi
       comparable_array < ::draw2d_gdi::object * >        m_ptraObject;
 
       //graphics();
-      graphics(::ca2::application * papp);
+      graphics(application * papp);
       virtual ~graphics();
 
      
@@ -76,7 +76,7 @@ namespace draw2d_gdi
       void internal_set_path_polygon(void * pparam);
       void internal_set_path_poly_polygon(void * pparam);
 
-      static ::draw2d::graphics * from_handle(::ca2::application * papp, HDC hDC);
+      static ::draw2d::graphics * from_handle(application * papp, HDC hDC);
       static void DeleteTempMap();
       bool Attach(HDC hDC);   // Attach/Detach affects only the Output DC
       HDC Detach();
@@ -489,7 +489,7 @@ namespace draw2d_gdi
       bool SelectClipPath(int nMode);
 
    // Misc Helper Functions
-      static ::draw2d::brush* GetHalftoneBrush(::ca2::application * papp);
+      static ::draw2d::brush* GetHalftoneBrush(application * papp);
       void DrawDragRect(LPCRECT lpRect, SIZE size,
          LPCRECT lpRectLast, SIZE sizeLast, ::draw2d::brush* pBrush = NULL, ::draw2d::brush* pBrushLast = NULL);
       void FillSolidRect(const __rect64 * lpRect, COLORREF clr);

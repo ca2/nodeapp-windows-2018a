@@ -61,7 +61,7 @@ namespace win
       UINT                                m_dwFinishTimeout;
 
 
-      thread(sp(::application) papp);
+      thread(sp(base_application) papp);
       virtual ~thread();
 
 

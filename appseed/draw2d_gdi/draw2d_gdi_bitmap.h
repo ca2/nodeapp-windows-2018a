@@ -12,7 +12,7 @@ namespace draw2d_gdi
    public:
 
 
-      bitmap(::ca2::application * papp);
+      bitmap(application * papp);
       virtual ~bitmap();
 
 
@@ -20,7 +20,7 @@ namespace draw2d_gdi
       int GetBitmap(BITMAP* pBitMap);
 
 
-      static ::draw2d::bitmap * from_handle(::ca2::application * papp, HBITMAP hBitmap);
+      static ::draw2d::bitmap * from_handle(application * papp, HBITMAP hBitmap);
 
 
       bool LoadBitmap(const char * lpszResourceName);

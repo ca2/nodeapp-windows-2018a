@@ -21,7 +21,7 @@ namespace win
          HDC            m_hdc;
 
 
-         document_properties(sp(::application) papp);
+         document_properties(sp(base_application) papp);
          virtual ~document_properties();
 
 
@@ -36,7 +36,7 @@ namespace win
       document_properties     m_documentproperties;
 
 
-      printer(sp(::application) papp);
+      printer(sp(base_application) papp);
       virtual ~printer();
 
 

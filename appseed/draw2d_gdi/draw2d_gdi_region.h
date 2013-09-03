@@ -10,14 +10,14 @@ namespace draw2d_gdi
    public:
 
       
-      region(::ca2::application * papp);
+      region(application * papp);
       virtual ~region();
 
       
       operator HRGN() const;
 
 
-      static ::draw2d::region * from_handle(::ca2::application * papp, HRGN hRgn);
+      static ::draw2d::region * from_handle(application * papp, HRGN hRgn);
 
 
       bool create_rect(int x1, int y1, int x2, int y2);

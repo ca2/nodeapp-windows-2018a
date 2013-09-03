@@ -7,7 +7,7 @@ namespace win
 {
 
 
-   printer::printer(sp(::application) papp) :
+   printer::printer(sp(base_application) papp) :
       element(papp),
       ::user::printer(papp),
       m_documentproperties(papp)
@@ -61,7 +61,7 @@ namespace win
    }
 
 
-   printer::document_properties::document_properties(sp(::application) papp) :
+   printer::document_properties::document_properties(sp(base_application) papp) :
       element(papp)
    {
       m_hdc = NULL;

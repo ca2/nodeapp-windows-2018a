@@ -5,7 +5,7 @@ namespace draw2d_gdi
 {
 
 
-   font::font(::ca2::application * papp) :
+   font::font(application * papp) :
       element(papp)
    { 
 
@@ -26,7 +26,7 @@ namespace draw2d_gdi
    }
 
 
-   ::draw2d::font * font::from_handle(::ca2::application * papp, HFONT hFont)
+   ::draw2d::font * font::from_handle(application * papp, HFONT hFont)
    {
 
       return dynamic_cast < font * > (::draw2d_gdi::object::from_handle(papp, hFont)); 

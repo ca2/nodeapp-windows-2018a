@@ -28,7 +28,7 @@ public:
 namespace win
 {
 
-   window_draw::window_draw(sp(::application) papp) : 
+   window_draw::window_draw(sp(base_application) papp) : 
       element(papp),
       ::ca2::thread(papp),
       ::ca2::window_draw(papp),

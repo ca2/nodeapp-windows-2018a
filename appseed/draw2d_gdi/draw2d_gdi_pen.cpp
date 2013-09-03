@@ -5,7 +5,7 @@ namespace draw2d_gdi
 {
 
 
-   pen::pen(::ca2::application * papp) :
+   pen::pen(application * papp) :
       element(papp)
    { 
 
@@ -25,7 +25,7 @@ namespace draw2d_gdi
 
    }
 
-   ::draw2d::pen * pen::from_handle(::ca2::application * papp, HPEN hPen)
+   ::draw2d::pen * pen::from_handle(application * papp, HPEN hPen)
    { 
 
       return dynamic_cast < pen* > (::draw2d_gdi::object::from_handle(papp, hPen));

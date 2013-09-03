@@ -30,7 +30,7 @@ namespace win
 
 
    class CLASS_DECL_win application :
-      virtual public ::ca2::application
+      virtual public application
    {
    public:
 
@@ -42,7 +42,7 @@ namespace win
       main_init_data *     m_pmaininitdata;
 
 
-      application(sp(::application) papp);
+      application(sp(base_application) papp);
       virtual ~application();
 
 

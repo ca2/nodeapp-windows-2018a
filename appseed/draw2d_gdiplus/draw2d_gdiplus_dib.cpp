@@ -24,7 +24,7 @@ namespace draw2d_gdiplus
 
    double dib::dPi;
 
-   dib::dib(sp(::application) papp) :
+   dib::dib(sp(base_application) papp) :
       element(papp),
       m_spbitmap(papp),
       m_spgraphics(allocer())

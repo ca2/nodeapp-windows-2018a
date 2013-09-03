@@ -7,7 +7,7 @@ namespace draw2d_gdiplus
       virtual public object
    {
    public:
-      factory_exchange(sp(::application) papp);
+      factory_exchange(sp(base_application) papp);
       virtual ~factory_exchange();
    };
 

@@ -9,7 +9,7 @@ namespace draw2d_gdiplus
 
 
 
-   path::path(sp(::application) papp)
+   path::path(sp(base_application) papp)
    {
 
       m_ppath = NULL;

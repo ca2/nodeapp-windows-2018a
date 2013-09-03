@@ -3,7 +3,7 @@
 namespace win
 {
 
-   folder_watch::folder_watch(sp(::application) papp) :
+   folder_watch::folder_watch(sp(base_application) papp) :
       element(papp),
       ::ca2::thread(papp)
    {

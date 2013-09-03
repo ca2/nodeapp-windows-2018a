@@ -12,14 +12,14 @@ namespace draw2d_gdi
    public:
 
 
-      palette(::ca2::application * papp);
+      palette(application * papp);
       virtual ~palette();
 
 
       operator HPALETTE() const;
       int GetEntryCount();
 
-      static ::draw2d::palette * from_handle(::ca2::application * papp, HPALETTE hPalette);
+      static ::draw2d::palette * from_handle(application * papp, HPALETTE hPalette);
 
       bool CreatePalette(LPLOGPALETTE lpLogPalette);
       bool CreateHalftonePalette(::draw2d::graphics * pgraphics);

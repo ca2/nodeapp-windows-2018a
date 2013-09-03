@@ -5,7 +5,7 @@ namespace win
 {
 
 
-   ip_enum::ip_enum(sp(::application) papp) :
+   ip_enum::ip_enum(sp(base_application) papp) :
       element(papp),
       ::ca2::ip_enum(papp)
    {

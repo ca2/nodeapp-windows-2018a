@@ -396,7 +396,7 @@ bool __cdecl __is_idle_message(MSG* pMsg)
 }
 
 
-/*thread* CLASS_DECL_win __begin_thread(sp(::application) papp, __THREADPROC pfnThreadProc, LPVOID pParam,
+/*thread* CLASS_DECL_win __begin_thread(sp(base_application) papp, __THREADPROC pfnThreadProc, LPVOID pParam,
 int32_t nPriority, UINT nStackSize, DWORD dwCreateFlags,
 LPSECURITY_ATTRIBUTES lpSecurityAttrs)
 {
@@ -417,7 +417,7 @@ VERIFY(pThread->ResumeThread() != (DWORD)-1);
 
 return pThread;
 }*/
-void CLASS_DECL_win __end_thread(sp(::application) papp, UINT nExitCode, bool bDelete)
+void CLASS_DECL_win __end_thread(sp(base_application) papp, UINT nExitCode, bool bDelete)
 {
    // remove current thread object from primitive::memory
    __MODULE_THREAD_STATE* pState = __get_module_thread_state();
@@ -454,7 +454,7 @@ void CLASS_DECL_win __end_thread(sp(::application) papp, UINT nExitCode, bool bD
 
 extern thread_local_storage * __thread_data;
 
-void CLASS_DECL_win __term_thread(sp(::application) papp, HINSTANCE hInstTerm)
+void CLASS_DECL_win __term_thread(sp(base_application) papp, HINSTANCE hInstTerm)
 {
    UNREFERENCED_PARAMETER(papp);
    try
@@ -536,7 +536,7 @@ namespace win
       CommonConstruct();
    }
 
-   thread::thread(sp(::application) papp) :
+   thread::thread(sp(base_application) papp) :
       element(papp),
       message_window_simple_callback(papp),//,
       //m_evFinish(FALSE, TRUE)
@@ -1963,7 +1963,7 @@ run:
 
 
 #ifndef ___PORTABLE
-         sp(::application) papp = (get_app());
+         sp(base_application) papp = (get_app());
          ___THREAD_STATE* pThreadState = __get_thread_state();
          if( pThreadState != NULL )
          {
@@ -2024,7 +2024,7 @@ run:
 
       ::win::thread* pThread = pStartup->pThread;
 
-      //      sp(::application) papp = (get_app());
+      //      sp(base_application) papp = (get_app());
       m_evFinish.ResetEvent();
       install_message_handling(pThread);
       m_p->install_message_handling(pThread);

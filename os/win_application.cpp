@@ -8,7 +8,7 @@ namespace win
 {
 
 
-   application::application(sp(::application) papp) :
+   application::application(sp(base_application) papp) :
       element(papp)
    {
 
@@ -464,7 +464,7 @@ namespace win
 
       WIN_THREAD(::ca2::thread::m_p.m_p)->m_bRun = false;
 
-      int32_t iRet = ::ca2::application::exit_instance();
+      int32_t iRet = application::exit_instance();
 
       //smart_pointer < application_base >::destroy();
 

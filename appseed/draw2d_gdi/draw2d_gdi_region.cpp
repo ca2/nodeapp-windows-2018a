@@ -26,7 +26,7 @@ namespace draw2d_gdi
    }
 
 
-   region::region(::ca2::application * papp) :
+   region::region(application * papp) :
       element(papp)
    {
       m_bUpdated = true;   
@@ -47,7 +47,7 @@ namespace draw2d_gdi
    }
 
 
-   ::draw2d::region* region::from_handle(::ca2::application * papp, HRGN hRgn)
+   ::draw2d::region* region::from_handle(application * papp, HRGN hRgn)
    { 
 
       return dynamic_cast < region * > (::draw2d_gdi::object::from_handle(papp, hRgn));
