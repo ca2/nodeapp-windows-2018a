@@ -13,7 +13,7 @@ WinResource::~WinResource()
 
 
 /*bool WinResource::ReadResource(
-   ::file::filesp & file, 
+   ::file::binary_buffer_sp & file, 
    UINT nID, 
    const char * lpcszType)
 {
@@ -26,7 +26,7 @@ WinResource::~WinResource()
 
 /*bool WinResource::ReadResource(
    HINSTANCE hinst,
-   ::file::filesp & file, 
+   ::file::binary_buffer_sp & file, 
    UINT nID, 
    const char * lpcszType)
 {
@@ -48,7 +48,7 @@ WinResource::~WinResource()
         try
         {
            // create the .mdb file
-//           ::file::filesp f(lpcszFilePath, ::file::file::mode_create | ::file::file::mode_write );
+//           ::file::binary_buffer_sp f(lpcszFilePath, ::file::binary_buffer::mode_create | ::file::binary_buffer::mode_write );
 
            // write the ::fontopus::user-defined resource to the .mdb file
            spfile->write(lpnRes, dwResSize);
@@ -86,7 +86,7 @@ bool WinResource::ReadResource(string & str, HINSTANCE hinst,  UINT nID, const c
 
 
 
-bool WinResource::ReadResource(::file::file & spfile, HINSTANCE hinst, UINT nID,  const char * lpcszType)
+bool WinResource::ReadResource(::file::binary_buffer & spfile, HINSTANCE hinst, UINT nID,  const char * lpcszType)
 {
 
    HRSRC hrsrc = ::FindResource(

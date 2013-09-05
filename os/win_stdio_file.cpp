@@ -38,13 +38,13 @@ namespace win
 
       ASSERT(__is_valid_string(lpszFileName));
 
-      if(nOpenFlags  & ::file::file::defer_create_directory)
+      if(nOpenFlags  & ::file::binary_buffer::defer_create_directory)
       {
          Application.dir().mk(System.dir().name(lpszFileName));
       }
 
       m_pStream = NULL;
-      if (!::win::file::open(lpszFileName, (nOpenFlags & ~::file::file::type_text)))
+      if (!::win::file::open(lpszFileName, (nOpenFlags & ~::file::binary_buffer::type_text)))
          return FALSE;
 
       ASSERT(m_hFile != hFileNull);
@@ -53,7 +53,7 @@ namespace win
       char szMode[4]; // C-runtime open string
       int32_t nMode = 0;
 
-      // determine read/write mode depending on ::file::filesp mode
+      // determine read/write mode depending on ::file::binary_buffer_sp mode
       if (nOpenFlags & mode_create)
       {
          if (nOpenFlags & modeNoTruncate)
@@ -295,7 +295,7 @@ namespace win
       m_bCloseOnDelete = FALSE;
    }
 
-   sp(::file::file) stdio_file::Duplicate() const
+   sp(::file::binary_buffer) stdio_file::Duplicate() const
    {
       ASSERT_VALID(this);
       ASSERT(m_pStream != NULL);

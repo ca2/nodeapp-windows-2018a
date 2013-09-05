@@ -18,7 +18,7 @@ namespace win
 
 
    class CLASS_DECL_win file :
-      virtual public ::file::file
+      virtual public ::file::binary_buffer
    {
    public:
 
@@ -80,7 +80,7 @@ namespace win
       uint64_t ReadHuge(void * lpBuffer, uint64_t dwCount);
       void WriteHuge(const void * lpBuffer, uint64_t dwCount);
 
-      virtual sp(::file::file) Duplicate() const;
+      virtual sp(::file::binary_buffer) Duplicate() const;
 
       virtual file_position seek(file_offset lOff, ::file::e_seek nFrom);
       virtual void set_length(file_size dwNewLen);

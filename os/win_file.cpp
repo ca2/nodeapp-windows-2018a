@@ -52,7 +52,7 @@ namespace win
 
    }
 
-   sp(::file::file) file::Duplicate() const
+   sp(::file::binary_buffer) file::Duplicate() const
    {
       ASSERT_VALID(this);
       ASSERT(m_hFile != (UINT)hFileNull);
@@ -92,7 +92,7 @@ namespace win
       nOpenFlags &= ~(UINT)type_binary;
 
 
-      if(nOpenFlags & ::file::file::defer_create_directory)
+      if(nOpenFlags & ::file::binary_buffer::defer_create_directory)
       {
          System.dir_mk(System.dir_name(lpszFileName));
       }
@@ -1039,7 +1039,7 @@ namespace win
 
 
 
-   // ::file::filesp
+   // ::file::binary_buffer_sp
    file::operator HFILE() const
    {
 
@@ -1647,21 +1647,6 @@ UINT CLASS_DECL_win vfxGetFileName(const wchar_t * lpszPathName, wchar_t * lpszT
 
 
 
-/////////////////////////////////////////////////////////////////////////////
-// WinFileException helpers
-
-void CLASS_DECL_win vfxThrowFileException(sp(base_application) papp, int32_t cause, LONG lOsError, const char * lpszFileName /* == NULL */)
-{
-#ifdef DEBUG
-   const char * lpsz;
-   if (cause >= 0 && cause < _countof(::win::rgszFileExceptionCause))
-      lpsz = ::win::rgszFileExceptionCause[cause];
-   else
-      lpsz = ::win::szUnknown;
-   //   TRACE3("file exception: %hs, file %s, App error information = %ld.\n", lpsz, (lpszFileName == NULL) ? "Unknown" : lpszFileName, lOsError);
-#endif
-   throw ::file::exception(papp, cause, lOsError, lpszFileName);
-}
 
 namespace win
 {

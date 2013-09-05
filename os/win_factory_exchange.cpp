@@ -10,7 +10,7 @@ namespace win
    {
 
       System.factory().cloneable_large    < stdio_file         >  (System.type_info < ::ca2::text_file         > ()        );
-      System.factory().cloneable_large    < file               >  (System.type_info < ::file::file              > ()        );
+      System.factory().cloneable_large    < file               >  (System.type_info < ::file::binary_buffer              > ()        );
       System.factory().cloneable_large    < file_set           >  (System.type_info < ::ca2::file_set          > ()        );
       System.factory().cloneable          < file_system        >  (System.type_info < ::ca2::file_system       > ()  , 1   );
       System.factory().cloneable          < WinResource        >  (System.type_info < ::ca2::resource          > ()  , 1   );
