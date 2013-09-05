@@ -1338,7 +1338,7 @@ namespace win
       {
       if(pbase->m_wparam == BERGEDGE_GETAPP)
       {
-      sp(::application)* ppapp= (sp(::application)*) pbase->m_lparam;
+      sp(base_application)* ppapp= (sp(base_application)*) pbase->m_lparam;
       *ppapp = get_app();
       pbase->m_bRet = true;
       return;
@@ -3842,8 +3842,8 @@ restart_mouse_hover_check:
       m_iModalCount++;
 
       m_iaModalThread.add(::GetCurrentThreadId());
-      sp(::application) pappThis1 = (m_pthread->m_pthread->m_p);
-      sp(::application) pappThis2 = (m_pthread->m_pthread);
+      sp(base_application) pappThis1 = (m_pthread->m_pthread->m_p);
+      sp(base_application) pappThis2 = (m_pthread->m_pthread);
       // acquire and dispatch messages until the modal state is done
       MSG msg;
       for (;;)

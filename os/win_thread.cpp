@@ -432,7 +432,7 @@ void CLASS_DECL_win __end_thread(sp(base_application) papp, UINT nExitCode, bool
       }
 
       ASSERT_VALID(pThread);
-      //ASSERT(pThread != System::smart_pointer < sp(::application)>::m_p);
+      //ASSERT(pThread != System::smart_pointer < sp(base_application)>::m_p);
 
       if (bDelete)
          pThread->Delete();
@@ -1071,8 +1071,8 @@ namespace win
       // for tracking the idle time state
       bool bIdle = TRUE;
       LONG lIdleCount = 0;
-      sp(::application) pappThis1 = (this);
-      sp(::application) pappThis2 = (m_p);
+      sp(base_application) pappThis1 = (this);
+      sp(base_application) pappThis2 = (m_p);
 
       // acquire and dispatch messages until a WM_QUIT message is received.
       MSG msg;

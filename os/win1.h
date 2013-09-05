@@ -112,7 +112,7 @@ CLASS_DECL_win void __term_thread(sp(base_application) papp, HINSTANCE hInstTerm
   // __in_z LPTSTR lpCmdLine, __in int32_t nCmdShow);
 CLASS_DECL_win void __win_term();
 
-CLASS_DECL_win sp(::application) __get_app();
+CLASS_DECL_win sp(base_application) __get_app();
 CLASS_DECL_win sp(::user::interaction) __get_main_window();
 //CLASS_DECL_win HINSTANCE CLASS_DECL_win System.m_hInstance;
 CLASS_DECL_win HINSTANCE __get_resource_handle();

@@ -13,7 +13,7 @@ WinResource::~WinResource()
 
 
 /*bool WinResource::ReadResource(
-   ::ca2::filesp & file, 
+   ::file::filesp & file, 
    UINT nID, 
    const char * lpcszType)
 {
@@ -26,7 +26,7 @@ WinResource::~WinResource()
 
 /*bool WinResource::ReadResource(
    HINSTANCE hinst,
-   ::ca2::filesp & file, 
+   ::file::filesp & file, 
    UINT nID, 
    const char * lpcszType)
 {
@@ -48,7 +48,7 @@ WinResource::~WinResource()
         try
         {
            // create the .mdb file
-//           ::ca2::filesp f(lpcszFilePath, ::file::file::mode_create | ::file::file::mode_write );
+//           ::file::filesp f(lpcszFilePath, ::file::file::mode_create | ::file::file::mode_write );
 
            // write the ::fontopus::user-defined resource to the .mdb file
            spfile->write(lpnRes, dwResSize);

@@ -53,7 +53,7 @@ namespace win
       char szMode[4]; // C-runtime open string
       int32_t nMode = 0;
 
-      // determine read/write mode depending on ::ca2::filesp mode
+      // determine read/write mode depending on ::file::filesp mode
       if (nOpenFlags & mode_create)
       {
          if (nOpenFlags & modeNoTruncate)

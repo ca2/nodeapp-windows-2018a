@@ -21,7 +21,7 @@
 
 string get_error_message(DWORD dwError);
 
-//sp(::application)     win_instantiate_application(sp(::application) pappSystem, const char * pszId);
+//sp(base_application)     win_instantiate_application(sp(base_application) pappSystem, const char * pszId);
 
 /////////////////////////////////////////////////////////////////////////////
 // explicit initialization for general purpose classes

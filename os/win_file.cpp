@@ -1039,7 +1039,7 @@ namespace win
 
 
 
-   // ::ca2::filesp
+   // ::file::filesp
    file::operator HFILE() const
    {
 
