@@ -172,7 +172,7 @@ CLASS_DECL_win const char * __register_window_class(UINT nClassStyle,
    wndcls.lpszMenuName = NULL;
    wndcls.lpszClassName = lpszName;
    if (!__register_class(&wndcls))
-      throw resource_exception(::ca2::get_thread_app());
+      throw resource_exception(get_thread_app());
 
    // return thread-local pointer
    return lpszName;

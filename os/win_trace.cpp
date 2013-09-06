@@ -219,7 +219,7 @@ static void TraceDDE(const char * lpszPrefix, const MSG* pMsg)
       ASSERT(hCommands != NULL);
 
       const char * lpszCommands = (const char *)::GlobalLock(hCommands);
-      ENSURE_THROW(lpszCommands != NULL, throw ::memory_exception(::ca2::get_thread_app()) );
+      ENSURE_THROW(lpszCommands != NULL, throw ::memory_exception(get_thread_app()) );
 //      ::OutputDebugString(::ca2::trace::category_AppMsg, 0, "%s: Execute '%s'.\n", lpszPrefix, lpszCommands);
       ::GlobalUnlock(hCommands);
    }
@@ -240,7 +240,7 @@ static void TraceDDE(const char * lpszPrefix, const MSG* pMsg)
       ASSERT(hAdvise != NULL);
 
       DDEADVISE* lpAdvise = (DDEADVISE*)::GlobalLock(hAdvise);
-      ENSURE_THROW(lpAdvise != NULL, throw ::memory_exception(::ca2::get_thread_app()) );
+      ENSURE_THROW(lpAdvise != NULL, throw ::memory_exception(get_thread_app()) );
       char szItem[80];
       szItem[0] = '\0';
 

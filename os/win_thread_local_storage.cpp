@@ -25,7 +25,7 @@ void * no_track_object::operator new(size_t nSize)
 {
    void * p = ::LocalAlloc(LPTR, nSize);
    if (p == NULL)
-      throw memory_exception(::ca2::get_thread_app());
+      throw memory_exception(get_thread_app());
    return p;
 }
 #define new DEBUG_NEW

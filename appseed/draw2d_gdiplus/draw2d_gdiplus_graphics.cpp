@@ -3146,7 +3146,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
                if (hObjOld == hStockFont)
                {
                   // got the stock object back, so must be selecting a font
-                  throw not_implemented(::ca2::get_thread_app());
+                  throw not_implemented(get_thread_app());
 //                  (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SelectObject(::draw2d_gdiplus::font::from_handle(pgraphics->get_app(), (HFONT)hObject));
                   break;  // don't play the default record
                }
@@ -3162,7 +3162,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
             {
                // play back as graphics::SelectObject(::draw2d::font*)
 //               (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SelectObject(::draw2d_gdiplus::font::from_handle(pgraphics->get_app(), (HFONT)hObject));
-               throw not_implemented(::ca2::get_thread_app());
+               throw not_implemented(get_thread_app());
                break;  // don't play the default record
             }
          }

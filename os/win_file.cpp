@@ -52,7 +52,7 @@ namespace win
 
    }
 
-   sp(::file::binary_buffer) file::Duplicate() const
+   ::file::buffer_sp file::Duplicate() const
    {
       ASSERT_VALID(this);
       ASSERT(m_hFile != (UINT)hFileNull);
