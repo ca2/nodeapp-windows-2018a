@@ -983,17 +983,6 @@
     <ClInclude Include="win_window_draw.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\app\appseed\ca2\ca2.vcxproj">
-      <Project>{afc48570-75e4-46bd-b8ab-4590b257e1c8}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\app\appseed\ca\ca.vcxproj">
-      <Project>{ab77745a-af30-4253-9e4b-961bf2d98641}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\app\appseed\c\c.vcxproj">
-      <Project>{4d7d3626-ada6-4ca2-9566-ed7b131e3d51}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='profiler|x64'">Create</PrecompiledHeader>
@@ -1046,6 +1035,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="os.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\app\appseed\base\base.vcxproj">
+      <Project>{4d7d3626-ada6-4ca2-9566-ed7b131e3d51}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\app\appseed\boot\boot.vcxproj">
+      <Project>{ab77745a-af30-4253-9e4b-961bf2d98641}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\app\appseed\core\core.vcxproj">
+      <Project>{afc48570-75e4-46bd-b8ab-4590b257e1c8}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
