@@ -15,7 +15,7 @@ namespace win
 
    bool CLASS_DECL_win SHGetSpecialFolderPath(oswindow oswindow, string &str, int32_t csidl, bool fCreate)
    {
-      return ::SHGetSpecialFolderPathW(oswindow, wstringtou(str, MAX_PATH * 8), csidl, fCreate) != FALSE;
+      return ::SHGetSpecialFolderPathW(oswindow, wtostring(str, MAX_PATH * 8), csidl, fCreate) != FALSE;
    }
 
    DWORD GetFileAttributes(const char * lpFileName)
@@ -30,12 +30,12 @@ namespace win
 
    DWORD GetCurrentDirectory(string & str)
    {
-      return ::GetCurrentDirectoryW(MAX_PATH * 8, wstringtou(str, MAX_PATH * 8));
+      return ::GetCurrentDirectoryW(MAX_PATH * 8, wtostring(str, MAX_PATH * 8));
    }
 
    DWORD GetTempPath(string & str)
    {
-      return ::GetTempPathW(MAX_PATH * 8, wstringtou(str, MAX_PATH * 8));
+      return ::GetTempPathW(MAX_PATH * 8, wtostring(str, MAX_PATH * 8));
    }
 
    LONG RegQueryValue(HKEY hkey, const char * lpszSubKey, string & str)
