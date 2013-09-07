@@ -21,7 +21,7 @@ namespace win
    bool file_system::FullPath(string &str, const char * lpszFileIn)
    {
 
-      //if(::ca2::file_system::FullPath(str, lpszFileIn))
+      //if(::core::file_system::FullPath(str, lpszFileIn))
       // return true;
 
       if(::str::begins_ci(lpszFileIn, "http://"))
@@ -54,7 +54,7 @@ namespace win
    bool file_system::FullPath(wstring & wstrFullPath, const wstring & wstrPath)
    {
 
-      /*      if(::ca2::file_system::FullPath(wstrFullPath, wstrPath))
+      /*      if(::core::file_system::FullPath(wstrFullPath, wstrPath))
       return true;*/
 
       if(::str::begins_ci(wstrPath, L"http://"))

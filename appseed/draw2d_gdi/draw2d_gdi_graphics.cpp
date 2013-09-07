@@ -177,7 +177,7 @@ namespace draw2d_gdi
    }
 
 
-   int graphics::ExcludeUpdateRgn(::ca2::window * pWnd)
+   int graphics::ExcludeUpdateRgn(::core::window * pWnd)
    { 
 
       ASSERT(get_handle1() != NULL); 
@@ -3079,7 +3079,7 @@ namespace draw2d_gdi
 
 
 
-   // This is ca2 API library.
+   // This is core API library.
    // 
    // 
    //

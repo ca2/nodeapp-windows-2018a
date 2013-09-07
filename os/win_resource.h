@@ -2,7 +2,7 @@
 
 
 class CLASS_DECL_win WinResource :
-   virtual public ::ca2::resource
+   virtual public ::core::resource
 {
 public:
 

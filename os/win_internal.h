@@ -15,7 +15,7 @@
 #include "win_file_system.h"
 #include "win_file.h"
 #include "win_shell.h"
-//#include "ca2/gen_resource.h"
+//#include "core/gen_resource.h"
 #include "win_resource.h"
 #include "win_stdio_file.h"
 #include "win_file_set.h"

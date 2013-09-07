@@ -18,7 +18,7 @@ WinResource::~WinResource()
    const char * lpcszType)
 {
 
-   HINSTANCE hinst = ::ca2::FindResourceHandle(MAKEINTRESOURCE(nID), lpcszType);
+   HINSTANCE hinst = ::core::FindResourceHandle(MAKEINTRESOURCE(nID), lpcszType);
    if(hinst == NULL)
       return false;
    return ReadResource(hinst, file, nID, lpcszType);
@@ -54,7 +54,7 @@ WinResource::~WinResource()
            spfile->write(lpnRes, dwResSize);
            spfile->Flush();
         }
-        catch(::ca2::file_exception_sp * pe)
+        catch(::core::file_exception_sp * pe)
         {
       #ifdef DEBUG
          g_dumpcontext << "File could not be opened " << e->m_cause << "\n";
@@ -129,6 +129,6 @@ bool WinResource::ReadResource(::file::binary_buffer & spfile, HINSTANCE hinst, 
 
 }
 
-//} //namespace ca2
+//} //namespace core
 
 

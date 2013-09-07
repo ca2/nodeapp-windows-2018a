@@ -88,7 +88,7 @@ void ___THREAD_STATE::finalize()
    if (m_pSafetyPoolBuffer != NULL)
       free(m_pSafetyPoolBuffer);
 
-   // parking ::ca2::window must have already been cleaned up by now!
+   // parking ::core::window must have already been cleaned up by now!
    ASSERT(m_pWndPark == NULL);
 
 
@@ -165,7 +165,7 @@ __MODULE_STATE::__MODULE_STATE(bool bDLL, WNDPROC pfn_window_procedure, DWORD dw
    
 
 /////////////////////////////////////////////////////////////////////////////
-// Global function pointers for Context (WinSxS/Manifest) API, to be init during ca2 API global init.
+// Global function pointers for Context (WinSxS/Manifest) API, to be init during core API global init.
 #define __ACTCTX_API_PTR_DEFINE(name, type, params) \
    typedef type (WINAPI* PFN_##name)params; \
    PFN_##name pfn##name = NULL;

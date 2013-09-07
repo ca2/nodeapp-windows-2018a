@@ -1,4 +1,4 @@
-// This is ca2 API library.
+// This is core API library.
 // 
 // 
 //
@@ -122,7 +122,7 @@ namespace win
 } // namespace win
 
 
-#include "base/ca2/ca2_fixed_alloc.h"
+#include "base/core/ca2_fixed_alloc.h"
 
 template<class TYPE>
 struct ConstructDestruct
@@ -183,7 +183,7 @@ public:
    CT * lookup_permanent(HANDLE h);
    CT * lookup_temporary(HANDLE h);
 
-   friend class ::ca2::thread;
+   friend class ::core::thread;
 };
 
 class CLASS_DECL_win oswindow_map :
@@ -300,7 +300,7 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (sp(base_a
       __set_new_handler(pnhOldHandler);
 #endif
       //__enable_memory_tracking(bEnable);
-      ::ca2::rethrow(pe);
+      ::core::rethrow(pe);
    }
    
 

@@ -8,11 +8,11 @@ BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 
    if (dwReason == DLL_PROCESS_ATTACH)
    {
-      ::OutputDebugString("::ca2:: win.dll :: initializing!\n");
+      ::OutputDebugString("::core:: win.dll :: initializing!\n");
       
 
-      ::ca2::g_pfn_get_thread = &::win::get_thread;
-      ::ca2::g_pfn_get_thread_state = &::win::get_thread_state;
+      ::core::g_pfn_get_thread = &::win::get_thread;
+      ::core::g_pfn_get_thread_state = &::win::get_thread_state;
 
    }
    else if (dwReason == DLL_PROCESS_DETACH)
@@ -44,7 +44,7 @@ BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
       {
       }
 
-      ::OutputDebugString("::ca2:: win.dll :: terminating!\n");
+      ::OutputDebugString("::core:: win.dll :: terminating!\n");
 
    }
 

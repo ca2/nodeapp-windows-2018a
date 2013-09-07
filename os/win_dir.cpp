@@ -7,7 +7,7 @@ namespace win
 
    dir::dir(sp(base_application) papp) :
       element(papp),
-      ::ca2::dir::system(papp),
+      ::core::dir::system(papp),
       m_path(papp)
    {
       
@@ -181,7 +181,7 @@ namespace win
    string dir::relpath(const char * lpcszSource, const char * lpcszRelative, const char * psz2)
    {
       const char * pszRequest;
-      if(::ca2::is_url(lpcszSource, &pszRequest))
+      if(::core::is_url(lpcszSource, &pszRequest))
       {
          if(::str::begins(lpcszRelative, "/"))
          {
@@ -287,9 +287,9 @@ namespace win
 
    void dir::ls_pattern(sp(base_application) papp, const char * lpcsz, const char * pszPattern, stringa * pstraPath, stringa * pstraTitle, array < bool, bool > * pbaIsDir, array < int64_t, int64_t > * piaSize)
    {
-      if(::ca2::dir::system::is(lpcsz, papp)) // if base class "already" "says" it is a dir, let it handle it: may be not a operational system dir, e.g., zip or compressed directory...
+      if(::core::dir::system::is(lpcsz, papp)) // if base class "already" "says" it is a dir, let it handle it: may be not a operational system dir, e.g., zip or compressed directory...
       {
-         return ::ca2::dir::system::ls_pattern(papp, lpcsz, pszPattern, pstraPath, pstraTitle, pbaIsDir, piaSize);
+         return ::core::dir::system::ls_pattern(papp, lpcsz, pszPattern, pstraPath, pstraTitle, pbaIsDir, piaSize);
       }
       file_find file_find;
       bool bWorking;
@@ -398,7 +398,7 @@ namespace win
       }
       else
       {
-         ::ca2::dir::system::rls(papp, lpcsz, pstraPath, pstraTitle, pstraRelative, eextract == extract_all ? extract_all : extract_none);
+         ::core::dir::system::rls(papp, lpcsz, pstraPath, pstraTitle, pstraRelative, eextract == extract_all ? extract_all : extract_none);
       }
    }
 
@@ -452,7 +452,7 @@ namespace win
       bWorking = file_find.FindFile(System.dir().path(lpcsz, "*.*"));
       if(!bWorking)
       {
-         ::ca2::dir::system::ls_dir(papp, lpcsz, pstraPath, pstraTitle);
+         ::core::dir::system::ls_dir(papp, lpcsz, pstraPath, pstraTitle);
          return;
       }
       while(bWorking)
@@ -515,7 +515,7 @@ namespace win
          return bIsDir;
       }
 
-      if(::ca2::dir::system::is(lpcszPath, papp))
+      if(::core::dir::system::is(lpcszPath, papp))
          return true;
 
 
@@ -548,7 +548,7 @@ namespace win
    bool dir::is(const string & strPath, sp(base_application) papp)
    {
       
-      if(::ca2::dir::system::is(strPath, papp))
+      if(::core::dir::system::is(strPath, papp))
          return true;
 
       bool bIsDir;
@@ -964,7 +964,7 @@ namespace win
    }
 
 
-   class ::ca2::path & dir::path()
+   class ::core::path & dir::path()
    {
       return m_path;
    }
@@ -1047,7 +1047,7 @@ namespace win
          strsize iStart = max(iFind1 + 1, iFind2 + 1);
          strRelative = strRelative.Left(iFind - 1) + "_" + strRelative.Mid(iStart, iFind - iStart) + strRelative.Mid(iFind + 1);
       }
-      return path(path(str, "ca2", strRelative), lpcsz, lpcsz2);
+      return path(path(str, "core", strRelative), lpcsz, lpcsz2);
    }
 
    string dir::usersystemappdata(sp(base_application) papp, const char * lpcszPrefix, const char * lpcsz, const char * lpcsz2)
@@ -1095,9 +1095,9 @@ namespace win
          strUserFolderShift = strRelative;
       }
 
-      return path(path(str, "ca2", strUserFolderShift), lpcsz, lpcsz2);
+      return path(path(str, "core", strUserFolderShift), lpcsz, lpcsz2);
 
-//      return path(path(str, "ca2"), lpcsz);
+//      return path(path(str, "core"), lpcsz);
 /*      if(&AppUser(papp) == NULL)
       {
          string str;
@@ -1106,7 +1106,7 @@ namespace win
             str,
             CSIDL_PROFILE,
             FALSE);
-         return path(path(str, "ca2\\_____default"), lpcsz);
+         return path(path(str, "core\\_____default"), lpcsz);
       }
       else
       {
@@ -1151,7 +1151,7 @@ namespace win
          str,
          CSIDL_APPDATA,
          FALSE);
-      return path(path(str, "ca2\\user", lpcszPrefix), lpcszLogin, pszRelativePath);*/
+      return path(path(str, "core\\user", lpcszPrefix), lpcszLogin, pszRelativePath);*/
    }
 
    string dir::userquicklaunch(sp(base_application) papp, const char * lpcszRelativePath, const char * lpcsz2)

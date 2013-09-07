@@ -4,8 +4,8 @@ namespace win
 {
 
    class CLASS_DECL_win folder_watch :
-      virtual public ::ca2::folder_watch,
-      virtual public ::ca2::thread
+      virtual public ::core::folder_watch,
+      virtual public ::core::thread
    {
    public:
       

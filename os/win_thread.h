@@ -4,12 +4,12 @@
 bool __internal_pre_translate_message(MSG* pMsg);
 
 
-namespace ca2
+namespace core
 {
 
    struct  thread_startup
    {
-      ::ca2::thread *          m_pthread;    // thread for new thread
+      ::core::thread *          m_pthread;    // thread for new thread
       HANDLE hEvent;          // event triggered after success/non-success
       HANDLE hEvent2;         // event triggered after thread is resumed
 
@@ -18,7 +18,7 @@ namespace ca2
    };
 
 
-} // namespace ca2
+} // namespace core
 
 
 namespace win
@@ -26,8 +26,8 @@ namespace win
 
 
    class CLASS_DECL_win thread :
-      virtual public ::ca2::thread,
-      virtual public ::ca2::message_window_simple_callback
+      virtual public ::core::thread,
+      virtual public ::core::message_window_simple_callback
    {
    public:
 
@@ -37,7 +37,7 @@ namespace win
 
 
       static comparable_array < HANDLE > s_haThread;
-      static comparable_array < ::ca2::thread * > s_threadptra;
+      static comparable_array < ::core::thread * > s_threadptra;
       static mutex s_mutex;
 
 
@@ -56,7 +56,7 @@ namespace win
       UINT                                m_nDisablePumpCount;
       mutex                               m_mutexUiPtra;
       
-      ::ca2::thread *                      m_pAppThread;
+      ::core::thread *                      m_pAppThread;
 
       UINT                                m_dwFinishTimeout;
 
@@ -79,7 +79,7 @@ namespace win
       void set_os_data(void * pvoidOsData);
       void set_os_int(int_ptr iData);
 
-      virtual void set_p(::ca2::thread * p);
+      virtual void set_p(::core::thread * p);
 
       virtual bool begin(int32_t epriority = get_scheduling_priority_normal(), uint_ptr nStackSize = 0, uint32_t dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
@@ -88,7 +88,7 @@ namespace win
 
       virtual sp(::user::interaction) SetMainWnd(sp(::user::interaction) pui);
 
-      virtual int32_t thread_entry(::ca2::thread_startup * pstartup);
+      virtual int32_t thread_entry(::core::thread_startup * pstartup);
       virtual int32_t main();
       virtual int32_t thread_term(int32_t nResult);
 
@@ -103,7 +103,7 @@ namespace win
       virtual void set_run(bool bRun = true);
       virtual event & get_finish_event();
       virtual bool get_run();
-      virtual ::ca2::thread * get_app_thread();
+      virtual ::core::thread * get_app_thread();
       virtual sp(::user::interaction) get_active_ui();
       virtual sp(::user::interaction) set_active_ui(sp(::user::interaction) pui);
       virtual void step_timer();
@@ -135,7 +135,7 @@ namespace win
       // thread initialization
       virtual bool initialize_instance();
 
-      virtual ::ca2::message::e_prototype thread::GetMessagePrototype(UINT uiMessage, UINT uiCode); 
+      virtual message::e_prototype thread::GetMessagePrototype(UINT uiMessage, UINT uiCode); 
 
       // running and idle processing
       virtual int32_t run();
@@ -204,8 +204,8 @@ namespace win
    };
 
 
-   CLASS_DECL_win ::ca2::thread * get_thread();
-   CLASS_DECL_win ::ca2::thread_state * get_thread_state();
+   CLASS_DECL_win ::core::thread * get_thread();
+   CLASS_DECL_win ::core::thread_state * get_thread_state();
 
 
 } // namespace win

@@ -6,7 +6,7 @@ namespace win
 
 
    class CLASS_DECL_win path :
-      virtual public ::ca2::path
+      virtual public ::core::path
    {
    public:
 
@@ -19,7 +19,7 @@ namespace win
 
 
    class CLASS_DECL_win dir :
-      virtual public ::ca2::dir::system
+      virtual public ::core::dir::system
    {
    public:
 
@@ -38,8 +38,8 @@ namespace win
       dir(sp(base_application) papp);
 
 
-      using ::ca2::dir::system::path;
-      virtual class ::ca2::path & path();
+      using ::core::dir::system::path;
+      virtual class ::core::path & path();
       virtual string path(const char * pszFolder, strsize iLenFolder, const char * pszRelative, strsize iLenRelative, const char * psz2, strsize iLen2, bool bUrl);
 
       virtual string relpath(const char * lpcszSource, const char * lpcszRelative, const char * lpcsz2 = NULL);

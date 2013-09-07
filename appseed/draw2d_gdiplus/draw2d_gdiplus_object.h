@@ -34,7 +34,7 @@ namespace draw2d_gdiplus
    };
 
 
-} // namespace ca2
+} // namespace core
 
 
 

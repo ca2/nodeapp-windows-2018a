@@ -29,7 +29,7 @@ This file contains several Vista-specific functions helpful when dealing with th
 for information on what each function does and how to use it.
 
 This file contains the Win32 stuff only, it can be used with or without other frameworks, 
-such as ca2 API, ca2, etc.
+such as core API, core, etc.
 
 HOW TO USE THIS FILE:
 
@@ -451,7 +451,7 @@ RunNonElevated(
    // running without its shell?), we will try to inject our code into the shell process.
    //
    // To inject the code, we will install a global hook, and send a message to 
-   // a ::ca2::window created by the shell. This will cause our hook callback procedure to be executed
+   // a ::core::window created by the shell. This will cause our hook callback procedure to be executed
    // in the context of the shell proces. 
    //
    // Because this trick uses a global hook, the hook procedure must be in a DLL.
@@ -464,7 +464,7 @@ RunNonElevated(
       uVEMsg = ::RegisterWindowMessage( "VistaElevatorMsg" );
 
    //////////////////////////////////////
-   // find the shell ::ca2::window (the desktop)
+   // find the shell ::core::window (the desktop)
 
    ::oswindow oswindowShell = ::FindWindow( "Progman", NULL);
 

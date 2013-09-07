@@ -10,13 +10,13 @@ DllMain(HINSTANCE hInstance, uint32_t dwReason, LPVOID lpReserved)
    if (dwReason == DLL_PROCESS_ATTACH)
    {
 
-      ::OutputDebugStringW(L"::ca2:: draw2d_gdi.dll :: initializing!\n");
+      ::OutputDebugStringW(L"::core:: draw2d_gdi.dll :: initializing!\n");
 
    }
    else if (dwReason == DLL_PROCESS_DETACH)
    {
 
-      ::OutputDebugStringW(L"::ca2:: draw2d_gdi.dll :: terminating!\n");
+      ::OutputDebugStringW(L"::core:: draw2d_gdi.dll :: terminating!\n");
 
    }
 

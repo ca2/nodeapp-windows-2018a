@@ -85,7 +85,7 @@ namespace win
 	   CoUninitialize();  // balancing call for CoInitialize
    }
 
-   HRESULT port_forward::ListenForUpnpChanges(::ca2::port_forward_change_callbacks *pCallbacks /* =NULL */ )
+   HRESULT port_forward::ListenForUpnpChanges(::core::port_forward_change_callbacks *pCallbacks /* =NULL */ )
    {
 	   // check if we are already listening
 	
@@ -97,7 +97,7 @@ namespace win
 	
 	   if ( pCallbacks==NULL )
 	   {
-		   SetChangeEventCallbackPointer(	new ::ca2::port_forward_change_callbacks );
+		   SetChangeEventCallbackPointer(	new ::core::port_forward_change_callbacks );
 	   }
 	   else
 	   {
@@ -190,7 +190,7 @@ namespace win
 
 
 
-   HRESULT port_forward::SetChangeEventCallbackPointer(::ca2::port_forward_change_callbacks *pCallbacks)
+   HRESULT port_forward::SetChangeEventCallbackPointer(::core::port_forward_change_callbacks *pCallbacks)
    {
 	   ASSERT( pCallbacks!=NULL );
 	
@@ -350,7 +350,7 @@ namespace win
 	
 	   m_oswindow_ForPortMappingThread = oswindow;
 	
-	   m_pPortMappingThread = ::__begin_thread(get_app(), ThreadForPortRetrieval, this, ::ca2::scheduling_priority_below_normal, 0);
+	   m_pPortMappingThread = ::__begin_thread(get_app(), ThreadForPortRetrieval, this, ::core::scheduling_priority_below_normal, 0);
 	
 	   if(m_pPortMappingThread != NULL )
 	   {
@@ -391,7 +391,7 @@ namespace win
 	
 	   m_oswindow_ForEditMappingThread = oswindow;
 	
-	   m_pEditMappingThread = ::__begin_thread(get_app(), ThreadToEditMapping, this, ::ca2::scheduling_priority_below_normal, 0, 0);
+	   m_pEditMappingThread = ::__begin_thread(get_app(), ThreadToEditMapping, this, ::core::scheduling_priority_below_normal, 0, 0);
 	
 	   if(m_pEditMappingThread != NULL)
 	   {
@@ -431,7 +431,7 @@ namespace win
 	
 	   m_oswindow_ForAddMappingThread = oswindow;
 	
-	   m_pAddMappingThread = ::__begin_thread(get_app(), ThreadToAddMapping, this, ::ca2::scheduling_priority_below_normal, 0, 0);
+	   m_pAddMappingThread = ::__begin_thread(get_app(), ThreadToAddMapping, this, ::core::scheduling_priority_below_normal, 0, 0);
 	
 	   if(m_pAddMappingThread != NULL)
 	   {
@@ -471,7 +471,7 @@ namespace win
 	
 	   m_oswindow_ForDeleteMappingThread = oswindow;
 	
-	   m_pDeleteMappingThread = ::__begin_thread(get_app(), ThreadToDeleteMapping, this, ::ca2::scheduling_priority_below_normal, 0, 0);
+	   m_pDeleteMappingThread = ::__begin_thread(get_app(), ThreadToDeleteMapping, this, ::core::scheduling_priority_below_normal, 0, 0);
 	
 	   if(m_pDeleteMappingThread != NULL)
 	   {
@@ -510,7 +510,7 @@ namespace win
 	
 	   m_oswindow_ForDeviceInfoThread = oswindow;
 	
-	   m_pDeviceInfoThread = ::__begin_thread(get_app(), ThreadForDeviceInformationRetrieval, this,  ::ca2::scheduling_priority_below_normal, 0, 0);
+	   m_pDeviceInfoThread = ::__begin_thread(get_app(), ThreadForDeviceInformationRetrieval, this,  ::core::scheduling_priority_below_normal, 0, 0);
 	
 	   if(m_pDeviceInfoThread != NULL)
 	   {

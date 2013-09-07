@@ -1,4 +1,4 @@
-// This is ca2 API library.
+// This is core API library.
 // 
 // 
 //
@@ -15,7 +15,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-/*bool CLASS_DECL_win ::ca2::WinInit(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+/*bool CLASS_DECL_win ::core::WinInit(HINSTANCE hInstance, HINSTANCE hPrevInstance,
    __in LPTSTR lpCmdLine, int32_t nCmdShow)
 {
 }*/
@@ -24,12 +24,12 @@
 /////////////////////////////////////////////////////////////////////////////
 // ::file::binary_buffer_sp implementation helpers
 
-//#ifdef ::ca2::GetFileName
-//#undef ::ca2::GetFileName
+//#ifdef ::core::GetFileName
+//#undef ::core::GetFileName
 //#endif
 
 
-/*UINT CLASS_DECL_win ::ca2::GetFileName(const char * lpszPathName, __out_ecount_opt(nMax) LPTSTR lpszTitle, UINT nMax)
+/*UINT CLASS_DECL_win ::core::GetFileName(const char * lpszPathName, __out_ecount_opt(nMax) LPTSTR lpszTitle, UINT nMax)
 {
    ASSERT(lpszTitle == NULL ||
       __is_valid_address(lpszTitle, nMax));
@@ -45,7 +45,7 @@
       return lstrlen(lpszTemp)+1;
 
    // otherwise copy it into the buffer provided
-   ::ca2::strncpy_s(lpszTitle, nMax, lpszTemp, _TRUNCATE);
+   ::core::strncpy_s(lpszTitle, nMax, lpszTemp, _TRUNCATE);
    return 0;
 }
 

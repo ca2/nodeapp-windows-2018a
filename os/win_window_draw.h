@@ -9,8 +9,8 @@ namespace win
 {
 
    class CLASS_DECL_win window_draw : 
-      virtual public ::ca2::window_draw,
-      virtual public ::ca2::message_window_simple_callback
+      virtual public ::core::window_draw,
+      virtual public ::core::message_window_simple_callback
    {
    public:
 

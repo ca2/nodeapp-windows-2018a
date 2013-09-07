@@ -11,7 +11,7 @@ namespace win
 
 
    class port_forward :
-      virtual public ::ca2::port_forward
+      virtual public ::core::port_forward
    {
    public:
 	
@@ -26,7 +26,7 @@ namespace win
 
 	   interface IDerivedNATExternalIPAddressCallback : public INATExternalIPAddressCallback
 	   {
-		   IDerivedNATExternalIPAddressCallback( ::ca2::port_forward_change_callbacks* p ) : m_pointer( p ), m_dwRef( 0 ) { };
+		   IDerivedNATExternalIPAddressCallback( ::core::port_forward_change_callbacks* p ) : m_pointer( p ), m_dwRef( 0 ) { };
 		
 		   HRESULT STDMETHODCALLTYPE NewExternalIPAddress( BSTR bstrNewExternalIPAddress )
 		   {
@@ -48,12 +48,12 @@ namespace win
 		   }
 		
 		   DWORD		m_dwRef;
-		   ::ca2::port_forward_change_callbacks*	m_pointer;
+		   ::core::port_forward_change_callbacks*	m_pointer;
 	   };
 	
 	   interface IDerivedNATNumberOfEntriesCallback : public INATNumberOfEntriesCallback
 	   {
-		   IDerivedNATNumberOfEntriesCallback( ::ca2::port_forward_change_callbacks* p ) : m_pointer( p ), m_dwRef( 0 ) { };
+		   IDerivedNATNumberOfEntriesCallback( ::core::port_forward_change_callbacks* p ) : m_pointer( p ), m_dwRef( 0 ) { };
 		
 		   HRESULT STDMETHODCALLTYPE NewNumberOfEntries( long lNewNumberOfEntries )
 		   {
@@ -74,7 +74,7 @@ namespace win
 		   }
 		
 		   DWORD		m_dwRef;
-		   ::ca2::port_forward_change_callbacks*	m_pointer;
+		   ::core::port_forward_change_callbacks*	m_pointer;
 	   };
 	
 	   // public functions -- there are only a few
@@ -82,7 +82,7 @@ namespace win
 	   port_forward(sp(base_application) papp);
 	   virtual ~port_forward();
 	
-	   virtual HRESULT ListenForUpnpChanges(::ca2::port_forward_change_callbacks *pCallbacks = NULL);  // NULL==default object; if you provide your own pointer to a port_forward_change_callbacks-derived object it is deleted for you automatically
+	   virtual HRESULT ListenForUpnpChanges(::core::port_forward_change_callbacks *pCallbacks = NULL);  // NULL==default object; if you provide your own pointer to a port_forward_change_callbacks-derived object it is deleted for you automatically
 	   virtual HRESULT StopListeningForUpnpChanges( );  // Stops listenting for UPnP change events on the router and deletes any port_forward_change_callbacks-derived objects
 	
 	   virtual bool GetDeviceInformationUsingThread( oswindow oswindow );  // starts a thread that will get IGD (router) device information; the thread posts a UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION message to oswindow when it's done
@@ -105,7 +105,7 @@ namespace win
 	   void DeinitializeCom();
 	   HRESULT PopulateDeviceInfoContainer( IUPnPDevice* piDevice, device & deviceInfo, oswindow oswindow=NULL );
 	   HRESULT GetNextMapping( IEnumVARIANT* piEnumerator, port_map & mappingContainer );
-	   HRESULT SetChangeEventCallbackPointer(::ca2::port_forward_change_callbacks *pCallbacks);
+	   HRESULT SetChangeEventCallbackPointer(::core::port_forward_change_callbacks *pCallbacks);
 	
 	   static UINT ThreadForPortRetrieval( LPVOID pVoid );
 	   static UINT ThreadForDeviceInformationRetrieval( LPVOID pVoid );
@@ -124,15 +124,15 @@ namespace win
 	   IDerivedNATNumberOfEntriesCallback*		m_piNumberOfEntriesCallback;
 	
 	   INATEventManager*						m_piEventManager;
-	   ::ca2::port_forward_change_callbacks*			m_pChangeCallbackFunctions;
+	   ::core::port_forward_change_callbacks*			m_pChangeCallbackFunctions;
 	
 	   bool m_bListeningForUpnpChanges;
 	
-	   ::ca2::thread_sp m_pPortMappingThread;
-	   ::ca2::thread_sp m_pDeviceInfoThread;
-	   ::ca2::thread_sp m_pAddMappingThread;
-	   ::ca2::thread_sp m_pEditMappingThread;
-	   ::ca2::thread_sp m_pDeleteMappingThread;
+	   ::core::thread_sp m_pPortMappingThread;
+	   ::core::thread_sp m_pDeviceInfoThread;
+	   ::core::thread_sp m_pAddMappingThread;
+	   ::core::thread_sp m_pEditMappingThread;
+	   ::core::thread_sp m_pDeleteMappingThread;
 	
 	   smart_pointer_array<port_map> m_MappingContainer;
 	
@@ -162,5 +162,5 @@ namespace win
    };
 
 
-} // namespace ca2
+} // namespace core
 

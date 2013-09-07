@@ -126,7 +126,7 @@ namespace draw2d_gdiplus
    }
    bool bitmap::LoadBitmap(const char * lpszResourceName)
    { 
-   //   return attach(::LoadBitmap(::ca2::FindResourceHandle(
+   //   return attach(::LoadBitmap(::core::FindResourceHandle(
    //lpszResourceName, RT_BITMAP), lpszResourceName));
       return FALSE;
    
@@ -157,7 +157,7 @@ namespace draw2d_gdiplus
 
    bool bitmap::LoadBitmap(UINT nIDResource)
    { 
-      //return attach(::LoadBitmap(::ca2::FindResourceHandle(MAKEINTRESOURCE(nIDResource), RT_BITMAP), MAKEINTRESOURCE(nIDResource))); 
+      //return attach(::LoadBitmap(::core::FindResourceHandle(MAKEINTRESOURCE(nIDResource), RT_BITMAP), MAKEINTRESOURCE(nIDResource))); 
       return FALSE;
    }
    bool bitmap::LoadOEMBitmap(UINT nIDBitmap)

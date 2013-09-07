@@ -268,7 +268,7 @@
 
 
 
-// ca2 API inline constructors (including compiler generated) can get deep
+// core API inline constructors (including compiler generated) can get deep
 #pragma inline_depth(16)
 
 #ifdef ___DEVBUILD

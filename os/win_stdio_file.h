@@ -7,7 +7,7 @@ namespace win
 
    class stdio_file : 
       virtual public ::win::file,
-      virtual public ::ca2::text_file
+      virtual public ::core::text_file
    {
    public:
 

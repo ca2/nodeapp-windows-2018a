@@ -790,7 +790,7 @@ bool preview_dc::GrayString(::draw2d::brush*,
             bool (CALLBACK *)(HDC, LPARAM, int32_t),
                LPARAM lpData, int32_t nCount, int32_t x, int32_t y, int32_t, int32_t)
 {
-   TRACE(::ca2::trace::category_AppMsg, 0, "TextOut() substituted for GrayString() in Print Preview.\n");
+   TRACE(::core::trace::category_AppMsg, 0, "TextOut() substituted for GrayString() in Print Preview.\n");
    return TextOut(x, y, (const char *)lpData, nCount);
 }
 
@@ -985,9 +985,9 @@ void preview_dc::PrinterDPtoScreenDP(LPPOINT lpPoint) const
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// ::ca2::CreateDC
+// ::core::CreateDC
 
-HDC CLASS_DECL_DRAW2D_GDIPLUS ::ca2::CreateDC(HGLOBAL hDevNames, HGLOBAL hDevMode)
+HDC CLASS_DECL_DRAW2D_GDIPLUS ::core::CreateDC(HGLOBAL hDevNames, HGLOBAL hDevMode)
 {
    if (hDevNames == NULL)
       return NULL;

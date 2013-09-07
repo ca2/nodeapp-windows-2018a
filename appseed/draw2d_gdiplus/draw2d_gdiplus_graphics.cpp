@@ -64,7 +64,7 @@ namespace draw2d_gdiplus
    }
 
 
-   sp(::ca2::window) graphics::GetWindow() const
+   sp(::core::window) graphics::GetWindow() const
    { 
       //ASSERT(get_handle1() != NULL); return ::draw2d_gdiplus::window::from_handle(::WindowFromDC(get_handle1())); 
       return NULL;
@@ -176,7 +176,7 @@ namespace draw2d_gdiplus
    }
 
 
-   int32_t graphics::ExcludeUpdateRgn(sp(::ca2::window) pWnd)
+   int32_t graphics::ExcludeUpdateRgn(sp(::core::window) pWnd)
    { 
       ASSERT(get_handle1() != NULL); 
       throw not_implemented(get_app());
@@ -1939,7 +1939,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   // This is ca2 API library.
+   // This is core API library.
    // 
    // 
    //
@@ -2088,7 +2088,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    ::draw2d::brush* graphics::GetHalftoneBrush(sp(base_application) papp)
    {
-/*      ::ca2::LockGlobals(CRIT_HALFTONEBRUSH);
+/*      ::core::LockGlobals(CRIT_HALFTONEBRUSH);
       if (gen_HalftoneBrush == NULL)
       {
          WORD grayPattern[8];
@@ -2103,7 +2103,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       }
       if (!gen_WingdixTerm)
          gen_WingdixTerm = (char)!atexit(&__win_gdi_x_term);
-      ::ca2::UnlockGlobals(CRIT_HALFTONEBRUSH);
+      ::core::UnlockGlobals(CRIT_HALFTONEBRUSH);
 
 //      return ::draw2d_gdiplus::brush::from_handle(papp, gen_HalftoneBrush);*/
       return NULL;
@@ -2410,7 +2410,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 /*      hdc_map* pMap = afxMapHDC();
       if (pMap != NULL && pMap->lookup_permanent(get_handle1()) == this)
       {
-         TRACE(::ca2::trace::category_AppMsg, 0, "Cannot set Output hDC on Attached graphics.\n");
+         TRACE(::core::trace::category_AppMsg, 0, "Cannot set Output hDC on Attached graphics.\n");
          ASSERT(FALSE);
       }*/
 #endif
@@ -2428,7 +2428,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 /*      hdc_map* pMap = afxMapHDC();
       if (pMap != NULL && pMap->lookup_permanent(get_handle1()) == this)
       {
-         TRACE(::ca2::trace::category_AppMsg, 0, "Cannot Release Output hDC on Attached graphics.\n");
+         TRACE(::core::trace::category_AppMsg, 0, "Cannot Release Output hDC on Attached graphics.\n");
          ASSERT(FALSE);
       }*/
 #endif
@@ -3049,7 +3049,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          HRGN hRgn = ::CreateRectRgn(0, 0, 0, 0);
          if (::GetClipRgn(get_handle1(), hRgn) < 0 || !::SelectClipRgn(get_handle2(), hRgn))
          {
-            TRACE(::ca2::trace::category_AppMsg, 0, "Error: unable to transfer clip region in graphics::SelectClipPath!\n");
+            TRACE(::core::trace::category_AppMsg, 0, "Error: unable to transfer clip region in graphics::SelectClipPath!\n");
             bResult = FALSE;
          }
          ::DeleteObject(hRgn);
@@ -4337,7 +4337,7 @@ namespace draw2d_gdiplus
    }
 
 
-   bool graphics::create_client_dc(::ca2::window * pwnd)
+   bool graphics::create_client_dc(::core::window * pwnd)
    { 
       
       if(pwnd == NULL)
@@ -4354,7 +4354,7 @@ namespace draw2d_gdiplus
    }
 
 
-   bool graphics::create_window_dc(::ca2::window * pwnd)
+   bool graphics::create_window_dc(::core::window * pwnd)
    {
 
       ASSERT(::IsWindow(pwnd->get_handle())); 
@@ -4366,7 +4366,7 @@ namespace draw2d_gdiplus
    }
 
 
-   bool graphics::release_dc(::ca2::window * pwnd)
+   bool graphics::release_dc(::core::window * pwnd)
    { 
 
       if(pwnd == NULL)

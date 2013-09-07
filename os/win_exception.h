@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace ca2
+namespace core
 {
 
 
@@ -26,4 +26,4 @@ namespace ca2
 
    #endif  // no exception handling
 
-}  // namespace ca2
+}  // namespace core

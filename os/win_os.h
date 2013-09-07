@@ -9,7 +9,7 @@ namespace win
 
 
    class CLASS_DECL_win os :
-      public ::ca2::os
+      public ::core::os
    {
    public:
    
@@ -64,7 +64,7 @@ namespace win
 
       virtual void post_to_all_threads(UINT message, WPARAM wParam, LPARAM lParam);
 
-      virtual void set_file_status(const char * lpszFileName, const ::ca2::file_status& status);
+      virtual void set_file_status(const char * lpszFileName, const ::core::file_status& status);
 
    };
 

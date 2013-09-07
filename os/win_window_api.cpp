@@ -7,7 +7,7 @@ extern const char * gen_OldWndProc;
 
 
 /////////////////////////////////////////////////////////////////////////////
-// Map from oswindow to sp(::ca2::window)
+// Map from oswindow to sp(::core::window)
 
 oswindow_map* get_oswindow_map(bool bCreate)
 {
@@ -29,7 +29,7 @@ LRESULT CALLBACK __window_procedure(oswindow oswindow, UINT nMsg, WPARAM wParam,
   //    return 1;
 
    // all other messages route through message map
-   sp(::ca2::window) pWnd = ::win::window::FromHandlePermanent(oswindow);
+   sp(::core::window) pWnd = ::win::window::FromHandlePermanent(oswindow);
    //ASSERT(pWnd != NULL);               
    //ASSERT(pWnd==NULL || WIN_WINDOW(pWnd)->get_handle() == oswindow);
    if (pWnd == NULL || WIN_WINDOW(pWnd)->get_handle() != oswindow)
@@ -138,11 +138,11 @@ CLASS_DECL_win const char * __register_window_class(UINT nClassStyle,
 
    if (hCursor == NULL && hbrBackground == NULL && hIcon == NULL)
    {
-      C_RUNTIME_ERRORCHECK_SPRINTF(_sntprintf_s(lpszName, ___TEMP_CLASS_NAME_SIZE, ___TEMP_CLASS_NAME_SIZE - 1, "::ca2:::%p:%x", hInst, nClassStyle));
+      C_RUNTIME_ERRORCHECK_SPRINTF(_sntprintf_s(lpszName, ___TEMP_CLASS_NAME_SIZE, ___TEMP_CLASS_NAME_SIZE - 1, "::core:::%p:%x", hInst, nClassStyle));
    }
    else
    {
-      C_RUNTIME_ERRORCHECK_SPRINTF(_sntprintf_s(lpszName, ___TEMP_CLASS_NAME_SIZE, ___TEMP_CLASS_NAME_SIZE - 1, "::ca2:::%p:%x:%p:%p:%p", hInst, nClassStyle,
+      C_RUNTIME_ERRORCHECK_SPRINTF(_sntprintf_s(lpszName, ___TEMP_CLASS_NAME_SIZE, ___TEMP_CLASS_NAME_SIZE - 1, "::core:::%p:%x:%p:%p:%p", hInst, nClassStyle,
          hCursor, hbrBackground, hIcon));
    }
 
@@ -180,7 +180,7 @@ CLASS_DECL_win const char * __register_window_class(UINT nClassStyle,
 
 
 __STATIC void CLASS_DECL_win
-   __handle_activate(sp(::ca2::window) pWnd, WPARAM nState, sp(::ca2::window) pWndOther)
+   __handle_activate(sp(::core::window) pWnd, WPARAM nState, sp(::core::window) pWndOther)
 {
    ASSERT(pWnd != NULL);      
 
@@ -209,7 +209,7 @@ __STATIC void CLASS_DECL_win
 }
 
 __STATIC bool CLASS_DECL_win
-   __handle_set_cursor(sp(::ca2::window) pWnd, UINT nHitTest, UINT nMsg)
+   __handle_set_cursor(sp(::core::window) pWnd, UINT nHitTest, UINT nMsg)
 {
    if (nHitTest == HTERROR &&
       (nMsg == WM_LBUTTONDOWN || nMsg == WM_MBUTTONDOWN ||
@@ -398,7 +398,7 @@ LRESULT CALLBACK
          {
             uint32_t dwStyle;
             rect rectOld;
-            sp(::ca2::window) pWnd = ::win::window::from_handle(oswindow);
+            sp(::core::window) pWnd = ::win::window::from_handle(oswindow);
             __pre_init_dialog(pWnd, &rectOld, &dwStyle);
             bCallDefault = FALSE;
             lResult = CallWindowProc(oldWndProc, oswindow, nMsg, wParam, lParam);
@@ -437,7 +437,7 @@ LRESULT CALLBACK
       msg.lParam = lParam;
 
       //lResult = __process_window_procedure_exception(pe, &msg);
-      //      TRACE(::ca2::trace::category_AppMsg, 0, "Warning: Uncaught exception in __activation_window_procedure (returning %ld).\n",
+      //      TRACE(::core::trace::category_AppMsg, 0, "Warning: Uncaught exception in __activation_window_procedure (returning %ld).\n",
       //       lResult);
       pe->Delete();
    }
@@ -465,7 +465,7 @@ bool CLASS_DECL_win __register_class(WNDCLASS* lpWndClass)
 
    if (!::RegisterClass(lpWndClass))
    {
-      //      TRACE(::ca2::trace::category_AppMsg, 0, "Can't register window class named %s\n",
+      //      TRACE(::core::trace::category_AppMsg, 0, "Can't register window class named %s\n",
       //       lpWndClass->lpszClassName);
       return FALSE;
    }
@@ -487,7 +487,7 @@ bool CLASS_DECL_win __register_class(WNDCLASS* lpWndClass)
       }
       catch(::exception::base * pe)
       {
-         ::ca2::rethrow(pe);
+         ::core::rethrow(pe);
          // Note: DELETE_EXCEPTION not required.
       }
 

@@ -5,13 +5,13 @@ namespace win
 
    folder_watch::folder_watch(sp(base_application) papp) :
       element(papp),
-      ::ca2::thread(papp)
+      ::core::thread(papp)
    {
    }
 
    bool folder_watch::watch(const char * pszPath)
    {
-      if(!::ca2::folder_watch::watch(pszPath))
+      if(!::core::folder_watch::watch(pszPath))
          return false;
 
       if(!begin())

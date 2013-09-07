@@ -30,8 +30,8 @@ namespace win
 
    window_draw::window_draw(sp(base_application) papp) : 
       element(papp),
-      ::ca2::thread(papp),
-      ::ca2::window_draw(papp),
+      ::core::thread(papp),
+      ::core::window_draw(papp),
       message_window_simple_callback(papp),
       m_mutexRendering(papp),
       m_mutexRgnUpdate(papp),
@@ -64,7 +64,7 @@ namespace win
 
    void window_draw::message_window_message_handler(signal_details * pobj)
    {
-      SCAST_PTR(::ca2::message::base, pbase, pobj);
+      SCAST_PTR(message::base, pbase, pobj);
       if(pbase->m_uiMessage == (WM_USER + 1984 + 1977))
       {
          _synch_redraw();
@@ -161,29 +161,29 @@ namespace win
                TRACE("window_draw::_synch_redraw :: during prodevian Performance Analysis Time Frame - %d milliseconds -,", iTimeFrame);
                TRACE("window_draw::_synch_redraw :: failure ::count has exceeded the maximum count - %d", iMaxFailureCount);
                TRACE("window_draw::_synch_redraw :: Going to try to save some resource that may favor drawing perfomance");
-               if(!System.savings().is_trying_to_save(::ca2::resource_blur_background))
+               if(!System.savings().is_trying_to_save(::core::resource_blur_background))
                {
                   TRACE("window_draw::_synch_redraw :: System is not trying to save \"blur background\" resource");
                   TRACE("window_draw::_synch_redraw :: Going to try to save \"blur background\" resource");
-                  System.savings().try_to_save(::ca2::resource_blur_background);
+                  System.savings().try_to_save(::core::resource_blur_background);
                }
-               else if(!System.savings().is_trying_to_save(::ca2::resource_blurred_text_embossing))
+               else if(!System.savings().is_trying_to_save(::core::resource_blurred_text_embossing))
                {
                   TRACE("window_draw::_synch_redraw :: System is not trying to save \"blurred text embossing\" resource");
                   TRACE("window_draw::_synch_redraw :: Going to try to save \"blurred text embossing\" resource");
-                  System.savings().try_to_save(::ca2::resource_blurred_text_embossing);
+                  System.savings().try_to_save(::core::resource_blurred_text_embossing);
                }
-               else if(!System.savings().is_warning(::ca2::resource_processing))
+               else if(!System.savings().is_warning(::core::resource_processing))
                {
                   TRACE("window_draw::_synch_redraw :: System is not warning to save \"processing\" resource");
                   TRACE("window_draw::_synch_redraw :: Going to warn to save \"processing\" resource");
-                  System.savings().warn(::ca2::resource_processing);
+                  System.savings().warn(::core::resource_processing);
                }
-               else if(!System.savings().is_trying_to_save(::ca2::resource_processing))
+               else if(!System.savings().is_trying_to_save(::core::resource_processing))
                {
                   TRACE("window_draw::_synch_redraw :: System is not trying to save \"processing\" resource");
                   TRACE("window_draw::_synch_redraw :: Going to try to save \"processing\" resource");
-                  System.savings().try_to_save(::ca2::resource_blur_background);
+                  System.savings().try_to_save(::core::resource_blur_background);
                }
             }
             s_iFrameFailureCount = 0;
@@ -322,12 +322,12 @@ namespace win
 
    UINT window_draw::RedrawProc()
    {
-      if(!initialize_message_window("::ca2::twf - ca2 Transparent Window Framework"))
+      if(!initialize_message_window("::core::twf - core Transparent Window Framework"))
       {
-         TRACE("Could not initialize ::ca2::twf - ca2 Transparent Window Framework!");
+         TRACE("Could not initialize ::core::twf - core Transparent Window Framework!");
          return 0;
       }
-      ::AttachThreadInput(::GetCurrentThreadId(), WIN_THREAD(System.::ca2::thread::m_p.m_p)->m_nThreadID, TRUE);
+      ::AttachThreadInput(::GetCurrentThreadId(), WIN_THREAD(System.::core::thread::m_p.m_p)->m_nThreadID, TRUE);
       MSG msg;
       s_bRunning = true;
       while(m_bRun)
@@ -547,8 +547,8 @@ namespace win
       {
          oswindow oswindowTopic = wndaApp[j];
 
-         sp(::ca2::window) pwnd = NULL;
-         //sp(::ca2::window) pwnd = (System.user()->window_map().get((int_ptr) oswindowTopic));
+         sp(::core::window) pwnd = NULL;
+         //sp(::core::window) pwnd = (System.user()->window_map().get((int_ptr) oswindowTopic));
          //if(pwnd == NULL)
          //{
          for(int32_t l = 0; l < wndpa.get_count(); l++)
@@ -676,8 +676,8 @@ namespace win
       return &m_semaphoreBuffer;
    }
 
-   // The first ::ca2::window handle in the array must belong
-   // to the higher z order ::ca2::window.
+   // The first ::core::window handle in the array must belong
+   // to the higher z order ::core::window.
    // The rectangle must contain all update region.
    // It must be in screen coordinates.
 
@@ -685,7 +685,7 @@ namespace win
 
    // Remark: this optimization eliminates top level windows
    // that are lower z order siblings of a higher z order
-   // top level ::ca2::window that contains all
+   // top level ::core::window that contains all
    // the update region in a opaque area.
    // It doesn´t eliminates from the update parent windows
    // obscured by opaque children.
@@ -811,7 +811,7 @@ namespace win
          return OptimizeNone;
       }
 
-   //    sp(::ca2::window) pwnd = window::FromHandlePermanent(oswindow);
+   //    sp(::core::window) pwnd = window::FromHandlePermanent(oswindow);
        
       
       if(ptwi == NULL)
@@ -903,7 +903,7 @@ namespace win
       ::GetWindowRect(oswindow, rectWindow);
 
 
-   //   sp(::ca2::window) pwnd = ::win::window::from_handle;
+   //   sp(::core::window) pwnd = ::win::window::from_handle;
 
       if(!TwfGetTopWindow(
             oswindowParam,
@@ -1006,7 +1006,7 @@ namespace win
    {
       rect rectWindow;
 
-   //   sp(::ca2::window) pwndOpaque = window::FromHandlePermanent(oswindowOpaque);
+   //   sp(::core::window) pwndOpaque = window::FromHandlePermanent(oswindowOpaque);
 
       ::GetWindowRect(oswindowOpaque, rectWindow);
 
@@ -1094,7 +1094,7 @@ namespace win
       // pdc is the source primitive::memory device context
       // from which bitmap the screen is updated.
       user::buffer * pbuffer,
-      // oswindowParam ::ca2::window device context
+      // oswindowParam ::core::window device context
       // is used from screen output
       sp(::user::interaction) pwnd)
    {
@@ -1137,8 +1137,8 @@ namespace win
 
 
 
-   // The first ::ca2::window handle in the array must belong
-   // to the higher z order ::ca2::window.
+   // The first ::core::window handle in the array must belong
+   // to the higher z order ::core::window.
    // The rectangle must contain all update region.
    // It must be in screen coordinates.
 
@@ -1146,7 +1146,7 @@ namespace win
 
    // Remark: this optimization eliminates top level windows
    // that are lower z order siblings of a higher z order
-   // top level ::ca2::window that contains all
+   // top level ::core::window that contains all
    // the update region in a opaque area.
    // It doesn´t eliminates from the update parent windows
    // obscured by opaque children.

@@ -2430,7 +2430,7 @@ namespace draw2d_gdi
    }
 
 
-   bool dib::update_window(::ca2::window * pwnd, signal_details * pobj)
+   bool dib::update_window(::core::window * pwnd, signal_details * pobj)
    {
 
       rect64 rectWindow;
@@ -2586,10 +2586,10 @@ namespace draw2d_gdi
    }
 
 
-   bool dib::print_window(::ca2::window * pwnd, signal_details * pobj)
+   bool dib::print_window(::core::window * pwnd, signal_details * pobj)
    {
 
-      SCAST_PTR(::ca2::message::base, pbase, pobj);
+      SCAST_PTR(message::base, pbase, pobj);
 
       if(pbase->m_wparam == NULL)
          return false;

@@ -560,7 +560,7 @@ namespace win
    {
       ASSERT_VALID(this);
 
-      ::ca2::file_status status;
+      ::core::file_status status;
       GetStatus(status);
       return System.file().name_(status.m_strFullName);
    }
@@ -569,7 +569,7 @@ namespace win
    {
       ASSERT_VALID(this);
 
-      ::ca2::file_status status;
+      ::core::file_status status;
       GetStatus(status);
       return System.file().title_(status.m_strFullName);
    }
@@ -578,7 +578,7 @@ namespace win
    {
       ASSERT_VALID(this);
 
-      ::ca2::file_status status;
+      ::core::file_status status;
       GetStatus(status);
       return status.m_strFullName;
    }
@@ -785,11 +785,11 @@ namespace win
    /////////////////////////////////////////////////////////////////////////////
    // file Status implementation
 
-   bool file::GetStatus(::ca2::file_status& rStatus) const
+   bool file::GetStatus(::core::file_status& rStatus) const
    {
       ASSERT_VALID(this);
 
-      //memset(&rStatus, 0, sizeof(::ca2::file_status));
+      //memset(&rStatus, 0, sizeof(::core::file_status));
 
       // copy file name from cached m_strFileName
       rStatus.m_strFullName = ::str::international::unicode_to_utf8(m_wstrFileName);
@@ -810,14 +810,14 @@ namespace win
          {
             DWORD dwAttribute = ::GetFileAttributesW(::str::international::utf8_to_unicode(m_strFileName));
 
-            // don't return an error for this because previous versions of ca2 API didn't
+            // don't return an error for this because previous versions of core API didn't
             if (dwAttribute == 0xFFFFFFFF)
                rStatus.m_attribute = 0;
             else
             {
                rStatus.m_attribute = (BYTE) dwAttribute & 0xff;
                //#ifdef DEBUG
-               // ca2 API BUG: m_attribute is only a BYTE wide
+               // core API BUG: m_attribute is only a BYTE wide
                //             if (dwAttribute & ~0xFF)
                //                  TRACE0("Warning: file::GetStatus() returns m_attribute without high-order flags.\n");
                //#endif
@@ -839,7 +839,7 @@ namespace win
    }
 
 
-   bool file::GetStatus(const char * lpszFileName, ::ca2::file_status& rStatus)
+   bool file::GetStatus(const char * lpszFileName, ::core::file_status& rStatus)
    {
       // attempt to fully qualify path first
       wstring wstrFullName;
@@ -959,7 +959,7 @@ namespace win
    */
 
    /*
-   void file::SetStatus(const char * lpszFileName, const ::ca2::file_status& status)
+   void file::SetStatus(const char * lpszFileName, const ::core::file_status& status)
    {
    DWORD wAttr;
    FILETIME creationTime;
@@ -985,20 +985,20 @@ namespace win
    // last modification time
    if (status.m_mtime.get_time() != 0)
    {
-   ::ca2::TimeToFileTime(status.m_mtime, &lastWriteTime);
+   ::core::TimeToFileTime(status.m_mtime, &lastWriteTime);
    lpLastWriteTime = &lastWriteTime;
 
    // last access time
    if (status.m_atime.get_time() != 0)
    {
-   ::ca2::TimeToFileTime(status.m_atime, &lastAccessTime);
+   ::core::TimeToFileTime(status.m_atime, &lastAccessTime);
    lpLastAccessTime = &lastAccessTime;
    }
 
    // create time
    if (status.m_ctime.get_time() != 0)
    {
-   ::ca2::TimeToFileTime(status.m_ctime, &creationTime);
+   ::core::TimeToFileTime(status.m_ctime, &creationTime);
    lpCreationTime = &creationTime;
    }
 
@@ -1202,7 +1202,7 @@ lpsz[1] = '\0';
 strRoot.ReleaseBuffer();
 }*/
 
-/*bool CLASS_DECL_win ::ca2::ComparePath(const char * lpszPath1, const char * lpszPath2)
+/*bool CLASS_DECL_win ::core::ComparePath(const char * lpszPath1, const char * lpszPath2)
 {
 // use case insensitive compare as a starter
 if (lstrcmpi(lpszPath1, lpszPath2) != 0)
@@ -1272,7 +1272,7 @@ nMax = _countof(szTemp);
 if (::GetFileTitle(lpszPathName, lpszTemp, (WORD)nMax) != 0)
 {
 // when ::GetFileTitle fails, use cheap imitation
-return ::ca2::GetFileName(lpszPathName, lpszTitle, nMax);
+return ::core::GetFileName(lpszPathName, lpszTitle, nMax);
 }
 return lpszTitle == NULL ? lstrlen(lpszTemp)+1 : 0;
 }*/

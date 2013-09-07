@@ -1,14 +1,14 @@
 #pragma once
 
 
-namespace ca2
+namespace core
 {
 
 
    class command_line;
 
 
-} // namespace ca2
+} // namespace core
 
 
 namespace win
@@ -16,7 +16,7 @@ namespace win
 
 
    class CLASS_DECL_win main_init_data :
-      public ::ca2::main_init_data
+      public ::core::main_init_data
    {
    public:
 
@@ -86,7 +86,7 @@ namespace win
 
       virtual void SetCurrentHandles();
 
-      virtual bool set_main_init_data(::ca2::main_init_data * pdata);
+      virtual bool set_main_init_data(::core::main_init_data * pdata);
 
       virtual bool process_initialize();
       virtual bool initialize1();
@@ -160,7 +160,7 @@ namespace win
       // thread initialization
       virtual bool initialize_instance();
 
-      virtual ::ca2::message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode); 
+      virtual message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode); 
 
       // running and idle processing
       virtual int32_t run();
@@ -193,14 +193,14 @@ namespace win
 
       //::draw2d::graphics * graphics_from_os_data(void * pdata);
 
-      sp(::ca2::window) window_from_os_data(void * pdata);
-      sp(::ca2::window) window_from_os_data_permanent(void * pdata);
+      sp(::core::window) window_from_os_data(void * pdata);
+      sp(::core::window) window_from_os_data_permanent(void * pdata);
 
-      virtual ::ca2::thread * GetThread();
-      virtual void set_thread(::ca2::thread * pthread);
+      virtual ::core::thread * GetThread();
+      virtual void set_thread(::core::thread * pthread);
 
-      virtual sp(::ca2::window) FindWindow(const char * lpszClassName, const char * lpszWindowName);
-      virtual sp(::ca2::window) FindWindowEx(oswindow oswindowParent, oswindow oswindowChildAfter, const char * lpszClass, const char * lpszWindow);
+      virtual sp(::core::window) FindWindow(const char * lpszClassName, const char * lpszWindowName);
+      virtual sp(::core::window) FindWindowEx(oswindow oswindowParent, oswindow oswindowChildAfter, const char * lpszClass, const char * lpszWindow);
 
       virtual void get_time(struct timeval *p);
       virtual void set_env_var(const string & var,const string & value);

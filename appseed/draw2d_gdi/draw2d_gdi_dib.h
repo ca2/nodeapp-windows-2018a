@@ -163,8 +163,8 @@ namespace draw2d_gdi
 
       virtual bool from(::draw2d::graphics * pgraphics, FIBITMAP *pfibitmap, bool bUnloadFI);
 
-      virtual bool update_window(::ca2::window * pwnd, signal_details * pobj);
-      virtual bool print_window(::ca2::window * pwnd, signal_details * pobj);
+      virtual bool update_window(::core::window * pwnd, signal_details * pobj);
+      virtual bool print_window(::core::window * pwnd, signal_details * pobj);
 
 
       virtual bool process_initialize(::draw2d::brush * pbrush, bool bReset = true);

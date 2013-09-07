@@ -1,6 +1,6 @@
 /*
 Module : IPENUM.H
-Purpose: Interface for an ca2 API class wrapper for IP address enumeration
+Purpose: Interface for an core API class wrapper for IP address enumeration
 Created: PJN / 21-04-1998
 History: None
 
@@ -15,7 +15,7 @@ namespace win
 
 
    class CLASS_DECL_win ip_enum :
-      virtual public ::ca2::ip_enum
+      virtual public ::core::ip_enum
    {
    public:
 
