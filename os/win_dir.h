@@ -6,7 +6,7 @@ namespace win
 
 
    class CLASS_DECL_win path :
-      virtual public ::core::path
+      virtual public ::file::path
    {
    public:
 
@@ -39,7 +39,7 @@ namespace win
 
 
       using ::core::dir::system::path;
-      virtual class ::core::path & path();
+      virtual class ::file::path & path();
       virtual string path(const char * pszFolder, strsize iLenFolder, const char * pszRelative, strsize iLenRelative, const char * psz2, strsize iLen2, bool bUrl);
 
       virtual string relpath(const char * lpcszSource, const char * lpcszRelative, const char * lpcsz2 = NULL);

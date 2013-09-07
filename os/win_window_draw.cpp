@@ -30,7 +30,7 @@ namespace win
 
    window_draw::window_draw(sp(base_application) papp) : 
       element(papp),
-      ::core::thread(papp),
+      thread(papp),
       ::core::window_draw(papp),
       message_window_simple_callback(papp),
       m_mutexRendering(papp),
@@ -327,7 +327,7 @@ namespace win
          TRACE("Could not initialize ::core::twf - core Transparent Window Framework!");
          return 0;
       }
-      ::AttachThreadInput(::GetCurrentThreadId(), WIN_THREAD(System.::core::thread::m_p.m_p)->m_nThreadID, TRUE);
+      ::AttachThreadInput(::GetCurrentThreadId(), WIN_THREAD(System.thread::m_p.m_p)->m_nThreadID, TRUE);
       MSG msg;
       s_bRunning = true;
       while(m_bRun)
@@ -547,8 +547,8 @@ namespace win
       {
          oswindow oswindowTopic = wndaApp[j];
 
-         sp(::core::window) pwnd = NULL;
-         //sp(::core::window) pwnd = (System.user()->window_map().get((int_ptr) oswindowTopic));
+         sp(::user::window) pwnd = NULL;
+         //sp(::user::window) pwnd = (System.user()->window_map().get((int_ptr) oswindowTopic));
          //if(pwnd == NULL)
          //{
          for(int32_t l = 0; l < wndpa.get_count(); l++)
@@ -676,8 +676,8 @@ namespace win
       return &m_semaphoreBuffer;
    }
 
-   // The first ::core::window handle in the array must belong
-   // to the higher z order ::core::window.
+   // The first ::user::window handle in the array must belong
+   // to the higher z order ::user::window.
    // The rectangle must contain all update region.
    // It must be in screen coordinates.
 
@@ -685,7 +685,7 @@ namespace win
 
    // Remark: this optimization eliminates top level windows
    // that are lower z order siblings of a higher z order
-   // top level ::core::window that contains all
+   // top level ::user::window that contains all
    // the update region in a opaque area.
    // It doesn´t eliminates from the update parent windows
    // obscured by opaque children.
@@ -811,7 +811,7 @@ namespace win
          return OptimizeNone;
       }
 
-   //    sp(::core::window) pwnd = window::FromHandlePermanent(oswindow);
+   //    sp(::user::window) pwnd = window::FromHandlePermanent(oswindow);
        
       
       if(ptwi == NULL)
@@ -903,7 +903,7 @@ namespace win
       ::GetWindowRect(oswindow, rectWindow);
 
 
-   //   sp(::core::window) pwnd = ::win::window::from_handle;
+   //   sp(::user::window) pwnd = ::win::window::from_handle;
 
       if(!TwfGetTopWindow(
             oswindowParam,
@@ -1006,7 +1006,7 @@ namespace win
    {
       rect rectWindow;
 
-   //   sp(::core::window) pwndOpaque = window::FromHandlePermanent(oswindowOpaque);
+   //   sp(::user::window) pwndOpaque = window::FromHandlePermanent(oswindowOpaque);
 
       ::GetWindowRect(oswindowOpaque, rectWindow);
 
@@ -1094,7 +1094,7 @@ namespace win
       // pdc is the source primitive::memory device context
       // from which bitmap the screen is updated.
       user::buffer * pbuffer,
-      // oswindowParam ::core::window device context
+      // oswindowParam ::user::window device context
       // is used from screen output
       sp(::user::interaction) pwnd)
    {
@@ -1137,8 +1137,8 @@ namespace win
 
 
 
-   // The first ::core::window handle in the array must belong
-   // to the higher z order ::core::window.
+   // The first ::user::window handle in the array must belong
+   // to the higher z order ::user::window.
    // The rectangle must contain all update region.
    // It must be in screen coordinates.
 
@@ -1146,7 +1146,7 @@ namespace win
 
    // Remark: this optimization eliminates top level windows
    // that are lower z order siblings of a higher z order
-   // top level ::core::window that contains all
+   // top level ::user::window that contains all
    // the update region in a opaque area.
    // It doesn´t eliminates from the update parent windows
    // obscured by opaque children.

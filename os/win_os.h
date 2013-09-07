@@ -64,7 +64,7 @@ namespace win
 
       virtual void post_to_all_threads(UINT message, WPARAM wParam, LPARAM lParam);
 
-      virtual void set_file_status(const char * lpszFileName, const ::core::file_status& status);
+      virtual void set_file_status(const char * lpszFileName, const ::file::file_status& status);
 
    };
 

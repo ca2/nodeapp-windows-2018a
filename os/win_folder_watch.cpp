@@ -5,7 +5,7 @@ namespace win
 
    folder_watch::folder_watch(sp(base_application) papp) :
       element(papp),
-      ::core::thread(papp)
+      thread(papp)
    {
    }
 

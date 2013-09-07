@@ -147,8 +147,8 @@ namespace draw2d_gdiplus
 
       virtual bool from(::draw2d::graphics * pgraphics, FIBITMAP *pfibitmap, bool bUnloadFI);
 
-      virtual bool update_window(::core::window * pwnd, signal_details * pobj);
-      virtual bool print_window(::core::window * pwnd, signal_details * pobj);
+      virtual bool update_window(::user::window * pwnd, signal_details * pobj);
+      virtual bool print_window(::user::window * pwnd, signal_details * pobj);
 
 
    };

@@ -70,10 +70,10 @@ CLASS_DECL_win LRESULT CALLBACK __window_procedure(oswindow oswindow, UINT nMsg,
 CLASS_DECL_win WNDPROC __get_window_procedure();
 #define __window_procedure (*__get_window_procedure())
 
-typedef void (__MSG_CALL ::core::window::*__PMSGW)();
-   // like '__PMSG' but for ::core::window derived classes only
+typedef void (__MSG_CALL ::user::window::*__PMSGW)();
+   // like '__PMSG' but for ::user::window derived classes only
 
-typedef void (__MSG_CALL ::core::thread::*__PMSGT)();
+typedef void (__MSG_CALL thread::*__PMSGT)();
    // like '__PMSG' but for thread-derived classes only
 
 
@@ -87,7 +87,7 @@ CLASS_DECL_win LONG delete_registry_tree_helper(HKEY hParentKey, const string & 
 
 
 CLASS_DECL_win ::win::thread * __get_thread();
-CLASS_DECL_win void __set_thread(::core::thread * pthread);
+CLASS_DECL_win void __set_thread(thread * pthread);
 CLASS_DECL_win MSG* __get_current_message();
 
 CLASS_DECL_win void __end_thread(sp(base_application) papp, UINT nExitCode, bool bDelete = TRUE);

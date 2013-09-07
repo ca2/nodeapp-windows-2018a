@@ -64,7 +64,7 @@ namespace draw2d_gdiplus
    }
 
 
-   sp(::core::window) graphics::GetWindow() const
+   sp(::user::window) graphics::GetWindow() const
    { 
       //ASSERT(get_handle1() != NULL); return ::draw2d_gdiplus::window::from_handle(::WindowFromDC(get_handle1())); 
       return NULL;
@@ -176,7 +176,7 @@ namespace draw2d_gdiplus
    }
 
 
-   int32_t graphics::ExcludeUpdateRgn(sp(::core::window) pWnd)
+   int32_t graphics::ExcludeUpdateRgn(sp(::user::window) pWnd)
    { 
       ASSERT(get_handle1() != NULL); 
       throw not_implemented(get_app());
@@ -4337,7 +4337,7 @@ namespace draw2d_gdiplus
    }
 
 
-   bool graphics::create_client_dc(::core::window * pwnd)
+   bool graphics::create_client_dc(::user::window * pwnd)
    { 
       
       if(pwnd == NULL)
@@ -4354,7 +4354,7 @@ namespace draw2d_gdiplus
    }
 
 
-   bool graphics::create_window_dc(::core::window * pwnd)
+   bool graphics::create_window_dc(::user::window * pwnd)
    {
 
       ASSERT(::IsWindow(pwnd->get_handle())); 
@@ -4366,7 +4366,7 @@ namespace draw2d_gdiplus
    }
 
 
-   bool graphics::release_dc(::core::window * pwnd)
+   bool graphics::release_dc(::user::window * pwnd)
    { 
 
       if(pwnd == NULL)

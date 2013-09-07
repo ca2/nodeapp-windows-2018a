@@ -7,7 +7,7 @@ extern const char * gen_OldWndProc;
 
 
 /////////////////////////////////////////////////////////////////////////////
-// Map from oswindow to sp(::core::window)
+// Map from oswindow to sp(::user::window)
 
 oswindow_map* get_oswindow_map(bool bCreate)
 {
@@ -29,7 +29,7 @@ LRESULT CALLBACK __window_procedure(oswindow oswindow, UINT nMsg, WPARAM wParam,
   //    return 1;
 
    // all other messages route through message map
-   sp(::core::window) pWnd = ::win::window::FromHandlePermanent(oswindow);
+   sp(::user::window) pWnd = ::win::window::FromHandlePermanent(oswindow);
    //ASSERT(pWnd != NULL);               
    //ASSERT(pWnd==NULL || WIN_WINDOW(pWnd)->get_handle() == oswindow);
    if (pWnd == NULL || WIN_WINDOW(pWnd)->get_handle() != oswindow)
@@ -180,7 +180,7 @@ CLASS_DECL_win const char * __register_window_class(UINT nClassStyle,
 
 
 __STATIC void CLASS_DECL_win
-   __handle_activate(sp(::core::window) pWnd, WPARAM nState, sp(::core::window) pWndOther)
+   __handle_activate(sp(::user::window) pWnd, WPARAM nState, sp(::user::window) pWndOther)
 {
    ASSERT(pWnd != NULL);      
 
@@ -209,7 +209,7 @@ __STATIC void CLASS_DECL_win
 }
 
 __STATIC bool CLASS_DECL_win
-   __handle_set_cursor(sp(::core::window) pWnd, UINT nHitTest, UINT nMsg)
+   __handle_set_cursor(sp(::user::window) pWnd, UINT nHitTest, UINT nMsg)
 {
    if (nHitTest == HTERROR &&
       (nMsg == WM_LBUTTONDOWN || nMsg == WM_MBUTTONDOWN ||
@@ -398,7 +398,7 @@ LRESULT CALLBACK
          {
             uint32_t dwStyle;
             rect rectOld;
-            sp(::core::window) pWnd = ::win::window::from_handle(oswindow);
+            sp(::user::window) pWnd = ::win::window::from_handle(oswindow);
             __pre_init_dialog(pWnd, &rectOld, &dwStyle);
             bCallDefault = FALSE;
             lResult = CallWindowProc(oldWndProc, oswindow, nMsg, wParam, lParam);

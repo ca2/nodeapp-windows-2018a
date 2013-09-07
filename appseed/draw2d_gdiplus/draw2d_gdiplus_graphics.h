@@ -43,7 +43,7 @@ namespace draw2d_gdiplus
          return *m_pgraphics;
       }
 
-      sp(::core::window) GetWindow() const;
+      sp(::user::window) GetWindow() const;
 
       //static ::draw2d::graphics * from_handle(HDC hDC);
       //static void DeleteTempMap();
@@ -209,7 +209,7 @@ namespace draw2d_gdiplus
             int32_t SelectClipRgn(::draw2d::region* pRgn);
             int32_t ExcludeClipRect(int32_t x1, int32_t y1, int32_t x2, int32_t y2);
             int32_t ExcludeClipRect(LPCRECT lpRect);
-            int32_t ExcludeUpdateRgn(sp(::core::window) pWnd);
+            int32_t ExcludeUpdateRgn(sp(::user::window) pWnd);
             int32_t IntersectClipRect(int32_t x1, int32_t y1, int32_t x2, int32_t y2);
             int32_t IntersectClipRect(LPCRECT lpRect);
             int32_t OffsetClipRgn(int32_t x, int32_t y);
@@ -498,9 +498,9 @@ namespace draw2d_gdiplus
       // used for implementation of non-virtual SelectObject calls
       //static ::draw2d::object* SelectGdiObject(sp(base_application) papp, HDC hDC, HGDIOBJ h);
 
-      virtual bool create_client_dc(::core::window * pwnd);
-      virtual bool create_window_dc(::core::window * pwnd);
-      virtual bool release_dc(::core::window * pwnd);
+      virtual bool create_client_dc(::user::window * pwnd);
+      virtual bool create_window_dc(::user::window * pwnd);
+      virtual bool release_dc(::user::window * pwnd);
 
 
 

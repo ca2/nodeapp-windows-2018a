@@ -128,11 +128,11 @@ namespace win
 	
 	   bool m_bListeningForUpnpChanges;
 	
-	   ::core::thread_sp m_pPortMappingThread;
-	   ::core::thread_sp m_pDeviceInfoThread;
-	   ::core::thread_sp m_pAddMappingThread;
-	   ::core::thread_sp m_pEditMappingThread;
-	   ::core::thread_sp m_pDeleteMappingThread;
+	   thread_sp m_pPortMappingThread;
+	   thread_sp m_pDeviceInfoThread;
+	   thread_sp m_pAddMappingThread;
+	   thread_sp m_pEditMappingThread;
+	   thread_sp m_pDeleteMappingThread;
 	
 	   smart_pointer_array<port_map> m_MappingContainer;
 	

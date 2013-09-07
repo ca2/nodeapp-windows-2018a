@@ -88,7 +88,7 @@ void ___THREAD_STATE::finalize()
    if (m_pSafetyPoolBuffer != NULL)
       free(m_pSafetyPoolBuffer);
 
-   // parking ::core::window must have already been cleaned up by now!
+   // parking ::user::window must have already been cleaned up by now!
    ASSERT(m_pWndPark == NULL);
 
 

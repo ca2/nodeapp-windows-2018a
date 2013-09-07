@@ -964,7 +964,7 @@ namespace win
    }
 
 
-   class ::core::path & dir::path()
+   class ::file::path & dir::path()
    {
       return m_path;
    }

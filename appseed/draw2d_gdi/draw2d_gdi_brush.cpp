@@ -116,7 +116,7 @@ namespace draw2d_gdi
 
 /*      if (!afxData.bWin95 && ::GetObjectType(get_os_data()) != OBJ_BRUSH)
       {
-         // not a valid ::core::window
+         // not a valid ::user::window
          dumpcontext << "has ILLEGAL HBRUSH!";
          return;
       }*/

@@ -75,7 +75,7 @@ WinResource::~WinResource()
 
 bool WinResource::ReadResource(string & str, HINSTANCE hinst,  UINT nID, const char * lpcszType)
 {
-   ::::file::memory_buffer file(get_app());
+   ::file::memory_buffer file(get_app());
    if(!ReadResource(file, hinst, nID, lpcszType))
       return false;
    file.allocate_add_up(1);

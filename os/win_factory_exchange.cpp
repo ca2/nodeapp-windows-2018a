@@ -18,8 +18,8 @@ namespace win
       System.factory().cloneable          < dir                >  (System.type_info < ::core::dir::system       > ()  , 1   );
       System.factory().cloneable_small    < folder_watch       >  (System.type_info < ::core::folder_watch      > ()        );
       System.factory().creatable          < window_draw        >  (System.type_info < ::core::window_draw       > ()  , 1   );
-      System.factory().creatable_large    < thread             >  (System.type_info < ::core::thread            > ()        );
-      System.factory().creatable_large    < window             >  (System.type_info < ::core::window            > ()        );
+      System.factory().creatable_large    < thread             >  (System.type_info < thread            > ()        );
+      System.factory().creatable_large    < window             >  (System.type_info < ::user::window            > ()        );
       System.factory().creatable          < os                 >  (System.type_info < ::core::os                > ()  , 1   );
       System.factory().creatable          < port_forward       >  (System.type_info < ::core::port_forward      > ()  , 1   );
       System.factory().creatable_small    < copydesk           >  (System.type_info < ::core::copydesk          > ()  , 1   );

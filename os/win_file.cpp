@@ -52,7 +52,7 @@ namespace win
 
    }
 
-   ::file::buffer_sp file::Duplicate() const
+   ::file::buffer_sp  file::Duplicate() const
    {
       ASSERT_VALID(this);
       ASSERT(m_hFile != (UINT)hFileNull);
@@ -560,7 +560,7 @@ namespace win
    {
       ASSERT_VALID(this);
 
-      ::core::file_status status;
+      ::file::file_status status;
       GetStatus(status);
       return System.file().name_(status.m_strFullName);
    }
@@ -569,7 +569,7 @@ namespace win
    {
       ASSERT_VALID(this);
 
-      ::core::file_status status;
+      ::file::file_status status;
       GetStatus(status);
       return System.file().title_(status.m_strFullName);
    }
@@ -578,7 +578,7 @@ namespace win
    {
       ASSERT_VALID(this);
 
-      ::core::file_status status;
+      ::file::file_status status;
       GetStatus(status);
       return status.m_strFullName;
    }
@@ -785,11 +785,11 @@ namespace win
    /////////////////////////////////////////////////////////////////////////////
    // file Status implementation
 
-   bool file::GetStatus(::core::file_status& rStatus) const
+   bool file::GetStatus(::file::file_status& rStatus) const
    {
       ASSERT_VALID(this);
 
-      //memset(&rStatus, 0, sizeof(::core::file_status));
+      //memset(&rStatus, 0, sizeof(::file::file_status));
 
       // copy file name from cached m_strFileName
       rStatus.m_strFullName = ::str::international::unicode_to_utf8(m_wstrFileName);
@@ -839,7 +839,7 @@ namespace win
    }
 
 
-   bool file::GetStatus(const char * lpszFileName, ::core::file_status& rStatus)
+   bool file::GetStatus(const char * lpszFileName, ::file::file_status& rStatus)
    {
       // attempt to fully qualify path first
       wstring wstrFullName;
@@ -959,7 +959,7 @@ namespace win
    */
 
    /*
-   void file::SetStatus(const char * lpszFileName, const ::core::file_status& status)
+   void file::SetStatus(const char * lpszFileName, const ::file::file_status& status)
    {
    DWORD wAttr;
    FILETIME creationTime;

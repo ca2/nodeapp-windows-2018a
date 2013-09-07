@@ -47,7 +47,7 @@ void CLASS_DECL_win __win_term()
    // cleanup OLE if required
 //   thread* pThread = &System;
 
-   // cleanup thread local tooltip ::core::window
+   // cleanup thread local tooltip ::user::window
 //   __MODULE_THREAD_STATE* pModuleThreadState = __get_module_thread_state();
 /*   if (pModuleThreadState->m_pToolTip != NULL)
    {

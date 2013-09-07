@@ -67,7 +67,7 @@ namespace win
       operator HFILE() const;
 
       virtual file_position get_position() const;
-      bool GetStatus(::core::file_status & rStatus) const;
+      bool GetStatus(::file::file_status & rStatus) const;
       virtual string GetFileName() const;
       virtual string GetFileTitle() const;
       virtual string GetFilePath() const;
@@ -75,12 +75,12 @@ namespace win
 
       virtual bool open(const char * lpszFileName, UINT nOpenFlags);
 
-      virtual bool GetStatus(const char * lpszFileName, ::core::file_status& rStatus);
+      virtual bool GetStatus(const char * lpszFileName, ::file::file_status& rStatus);
 
       uint64_t ReadHuge(void * lpBuffer, uint64_t dwCount);
       void WriteHuge(const void * lpBuffer, uint64_t dwCount);
 
-      virtual ::file::buffer_sp Duplicate() const;
+      virtual ::file::buffer_sp  Duplicate() const;
 
       virtual file_position seek(file_offset lOff, ::file::e_seek nFrom);
       virtual void set_length(file_size dwNewLen);

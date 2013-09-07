@@ -9,7 +9,7 @@ namespace core
 
    struct  thread_startup
    {
-      ::core::thread *          m_pthread;    // thread for new thread
+      thread *          m_pthread;    // thread for new thread
       HANDLE hEvent;          // event triggered after success/non-success
       HANDLE hEvent2;         // event triggered after thread is resumed
 
@@ -26,8 +26,8 @@ namespace win
 
 
    class CLASS_DECL_win thread :
-      virtual public ::core::thread,
-      virtual public ::core::message_window_simple_callback
+      virtual public thread,
+      virtual public message_window_simple_callback
    {
    public:
 
@@ -37,7 +37,7 @@ namespace win
 
 
       static comparable_array < HANDLE > s_haThread;
-      static comparable_array < ::core::thread * > s_threadptra;
+      static comparable_array < thread * > s_threadptra;
       static mutex s_mutex;
 
 
@@ -56,7 +56,7 @@ namespace win
       UINT                                m_nDisablePumpCount;
       mutex                               m_mutexUiPtra;
       
-      ::core::thread *                      m_pAppThread;
+      thread *                      m_pAppThread;
 
       UINT                                m_dwFinishTimeout;
 
@@ -79,7 +79,7 @@ namespace win
       void set_os_data(void * pvoidOsData);
       void set_os_int(int_ptr iData);
 
-      virtual void set_p(::core::thread * p);
+      virtual void set_p(thread * p);
 
       virtual bool begin(int32_t epriority = get_scheduling_priority_normal(), uint_ptr nStackSize = 0, uint32_t dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
@@ -103,7 +103,7 @@ namespace win
       virtual void set_run(bool bRun = true);
       virtual event & get_finish_event();
       virtual bool get_run();
-      virtual ::core::thread * get_app_thread();
+      virtual thread * get_app_thread();
       virtual sp(::user::interaction) get_active_ui();
       virtual sp(::user::interaction) set_active_ui(sp(::user::interaction) pui);
       virtual void step_timer();
@@ -204,7 +204,7 @@ namespace win
    };
 
 
-   CLASS_DECL_win ::core::thread * get_thread();
+   CLASS_DECL_win thread * get_thread();
    CLASS_DECL_win ::core::thread_state * get_thread_state();
 
 

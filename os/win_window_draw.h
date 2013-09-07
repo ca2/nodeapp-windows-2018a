@@ -10,7 +10,7 @@ namespace win
 
    class CLASS_DECL_win window_draw : 
       virtual public ::core::window_draw,
-      virtual public ::core::message_window_simple_callback
+      virtual public message_window_simple_callback
    {
    public:
 

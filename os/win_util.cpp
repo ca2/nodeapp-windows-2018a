@@ -59,7 +59,7 @@ oswindow CLASS_DECL_win __child_window_from_point(oswindow oswindow, POINT pt)
       if (__get_dialog_control_id(oswindow_Child) != (WORD)0 &&
          (::GetWindowLong(oswindow_Child, GWL_STYLE) & WS_VISIBLE))
       {
-         // see if point hits the child ::core::window
+         // see if point hits the child ::user::window
          rect rect;
          ::GetWindowRect(oswindow_Child, rect);
          if (rect.contains(pt))
@@ -100,14 +100,14 @@ void CLASS_DECL_win __delete_object(HGDIOBJ* pObject)
 /*
 void CLASS_DECL_win __cancel_modes(oswindow oswindow_Rcvr)
 {
-   // if we receive a message destined for a ::core::window, cancel any combobox
+   // if we receive a message destined for a ::user::window, cancel any combobox
    //  popups that could be in toolbars or dialog bars
    oswindow oswindow_Cancel = ::GetFocus();
    if (oswindow_Cancel == NULL)
       return;     // nothing to cancel
 
    if (oswindow_Cancel == oswindow_Rcvr)
-      return;     // let input go to ::core::window with focus
+      return;     // let input go to ::user::window with focus
 
    // focus is in part of a combo-box
    if (!__is_combo_box_control(oswindow_Cancel, (UINT)CBS_DROPDOWNLIST))

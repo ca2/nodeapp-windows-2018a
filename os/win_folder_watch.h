@@ -5,7 +5,7 @@ namespace win
 
    class CLASS_DECL_win folder_watch :
       virtual public ::core::folder_watch,
-      virtual public ::core::thread
+      virtual public thread
    {
    public:
       

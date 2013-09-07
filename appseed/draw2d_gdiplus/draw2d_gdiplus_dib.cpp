@@ -202,11 +202,11 @@ namespace draw2d_gdiplus
    bool dib::Destroy ()
    {
       if(m_spbitmap.is_set())
-         ::ca::release(m_spbitmap.m_p);
+         ::release(m_spbitmap.m_p);
 
       
       if(m_spgraphics.is_set())
-         ::ca::release(m_spgraphics.m_p);
+         ::release(m_spgraphics.m_p);
  
       cx             = 0;
       cy             = 0;
@@ -2564,7 +2564,7 @@ namespace draw2d_gdiplus
    }
 
 
-   bool dib::update_window(::core::window * pwnd, signal_details * pobj)
+   bool dib::update_window(::user::window * pwnd, signal_details * pobj)
    {
 
       rect64 rectWindow;
@@ -2640,7 +2640,7 @@ namespace draw2d_gdiplus
 
    }
 
-   bool dib::print_window(::core::window * pwnd, signal_details * pobj)
+   bool dib::print_window(::user::window * pwnd, signal_details * pobj)
    {
 
       SCAST_PTR(message::base, pbase, pobj);

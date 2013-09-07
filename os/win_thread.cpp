@@ -88,7 +88,7 @@ uint32_t __thread_entry(void * pParam)
          // forced initialization of the thread
          __init_thread();
 
-         // thread inherits cast's main ::core::window if not already set
+         // thread inherits cast's main ::user::window if not already set
          //if (papp != NULL && GetMainWnd() == NULL)
          {
             // just attach the oswindow
@@ -178,11 +178,11 @@ CLASS_DECL_win ::win::thread * __get_thread()
 }
 
 
-CLASS_DECL_win void __set_thread(::core::thread * pthread)
+CLASS_DECL_win void __set_thread(thread * pthread)
 {
    // check for current thread in module thread state
    __MODULE_THREAD_STATE* pState = __get_module_thread_state();
-   pState->m_pCurrentWinThread = dynamic_cast < ::win::thread * > (pthread->::core::thread::m_p.m_p);
+   pState->m_pCurrentWinThread = dynamic_cast < ::win::thread * > (pthread->thread::m_p.m_p);
 }
 
 
@@ -206,7 +206,7 @@ CLASS_DECL_win void __internal_process_wnd_proc_exception(::exception::base*, si
    }
    else if (pbase->m_uiMessage == WM_PAINT)
    {
-      // force validation of ::core::window to prevent getting WM_PAINT again
+      // force validation of ::user::window to prevent getting WM_PAINT again
       ValidateRect(pbase->m_pwnd->get_safe_handle(), NULL);
       pbase->set_lresult(0);
       return;
@@ -216,7 +216,7 @@ CLASS_DECL_win void __internal_process_wnd_proc_exception(::exception::base*, si
 
 CLASS_DECL_win void __process_window_procedure_exception(::exception::base* e, signal_details * pobj)
 {
-   ::core::thread *pThread = App(pobj->get_app()).GetThread();
+   thread *pThread = App(pobj->get_app()).GetThread();
    if( pThread )
       return pThread->ProcessWndProcException( e, pobj );
    else
@@ -231,7 +231,7 @@ void __internal_pre_translate_message(signal_details * pobj)
 
       //   ASSERT_VALID(this);
 
-      ::core::thread * pthread = ::win::get_thread();
+      thread * pthread = ::win::get_thread();
       if(pthread)
       {
          // if this is a thread-message, int16_t-circuit this function
@@ -311,7 +311,7 @@ void __internal_pre_translate_message(signal_details * pobj)
 
 void __cdecl __pre_translate_message(signal_details * pobj)
 {
-   ::core::thread *pThread = App(pobj->get_app()).GetThread();
+   thread *pThread = App(pobj->get_app()).GetThread();
    if( pThread )
       return pThread->pre_translate_message( pobj );
    else
@@ -379,7 +379,7 @@ bool __internal_is_idle_message(LPMSG lpmsg)
 
 bool __cdecl __is_idle_message(signal_details * pobj)
 {
-   ::core::thread *pThread = App(pobj->get_app()).GetThread();
+   thread *pThread = App(pobj->get_app()).GetThread();
    if( pThread )
       return pThread->is_idle_message(pobj);
    else
@@ -505,12 +505,12 @@ namespace win
 
 
    comparable_array < HANDLE > thread::s_haThread;
-   comparable_array < ::core::thread * > thread::s_threadptra;
+   comparable_array < thread * > thread::s_threadptra;
    mutex thread::s_mutex(NULL);
 
 
 
-   void thread::set_p(::core::thread * p)
+   void thread::set_p(thread * p)
    {
       m_p = p;
    }
@@ -540,13 +540,13 @@ namespace win
       element(papp),
       message_window_simple_callback(papp),//,
       //m_evFinish(FALSE, TRUE)
-      ::core::thread(NULL),
+      thread(NULL),
       m_evFinish(papp),
       m_mutexUiPtra(papp)
       
    {
       m_evFinish.SetEvent();
-      m_pAppThread = dynamic_cast < ::core::thread * > (papp.m_p);
+      m_pAppThread = dynamic_cast < thread * > (papp.m_p);
       m_pThreadParams = NULL;
       m_pfnThreadProc = NULL;
 
@@ -872,7 +872,7 @@ namespace win
       return m_bRun;
    }
 
-   ::core::thread * thread::get_app_thread()
+   thread * thread::get_app_thread()
    {
       return m_pAppThread;
    }
@@ -1006,7 +1006,7 @@ namespace win
       {
          if(m_p != NULL)
          {
-            ::core::thread * pthread = ::core::thread::m_p;
+            thread * pthread = thread::m_p;
             if(pthread != NULL && pthread->m_pbReady != NULL)
             {
                *pthread->m_pbReady = true;
@@ -1037,7 +1037,7 @@ namespace win
       if(m_bAutoDelete)
       {
          // delete thread if it is auto-deleting
-         //pthread->smart_pointer < ::core::thread >::m_p = NULL;
+         //pthread->smart_pointer < thread >::m_p = NULL;
          m_p.release();
          // delete_this();
       }
@@ -1412,7 +1412,7 @@ stop_run:
       for(int32_t i = 0; i < signalptra.get_size(); i++)
       {
          Signal & signal = *signalptra[i];
-         ::core::signal * psignal = signal.m_psignal;
+         ::signal * psignal = signal.m_psignal;
          message::e_prototype eprototype = signal.m_eprototype;
          if(eprototype == message::PrototypeNone)
          {
@@ -1773,7 +1773,7 @@ stop_run:
      // }
 
       // all other messages route through message map
-      sp(::core::window) pwindow = pbase->m_pwnd->get_wnd();
+      sp(::user::window) pwindow = pbase->m_pwnd->get_wnd();
 
       ASSERT(pwindow == NULL || pwindow == pbase->m_pwnd->m_pimpl);
 
@@ -1931,7 +1931,7 @@ run:
    }
 
 
-   CLASS_DECL_win ::core::thread * get_thread()
+   CLASS_DECL_win thread * get_thread()
    {
       ::win::thread * pwinthread = __get_thread();
       if(pwinthread == NULL)
@@ -2269,7 +2269,7 @@ return -1;  // just fail
 }
 else if (pMsg->message == WM_PAINT)
 {
-// force validation of ::core::window to prevent getting WM_PAINT again
+// force validation of ::user::window to prevent getting WM_PAINT again
 ValidateRect(pMsg->oswindow, NULL);
 return 0;
 }
@@ -2296,16 +2296,16 @@ if (pMsg->oswindow == NULL && pThread->DispatchThreadMessageEx(pMsg))
 return TRUE;
 }
 
-// walk from target to main ::core::window
+// walk from target to main ::user::window
 sp(::user::interaction) pMainWnd = System.GetMainWnd();
-/* trans   if (::core::window::WalkPreTranslateTree(pMainWnd->GetSafeoswindow_(), pMsg))
+/* trans   if (::user::window::WalkPreTranslateTree(pMainWnd->GetSafeoswindow_(), pMsg))
 return TRUE; */
 
 // in case of modeless dialogs, last chance route through main
-//   ::core::window's accelerator table
+//   ::user::window's accelerator table
 /*   if (pMainWnd != NULL)
 {
-sp(::core::window) pWnd = ::win::window::from_handle(pMsg->oswindow);
+sp(::user::window) pWnd = ::win::window::from_handle(pMsg->oswindow);
 if (pWnd != NULL && WIN_WINDOW(pWnd)->GetTopLevelParent() != pMainWnd)
 return pMainWnd->pre_translate_message(pMsg);
 }
@@ -2622,7 +2622,7 @@ ASSERT(__check_memory());
 
 if (lCount <= 0)
 {
-// send WM_IDLEUPDATECMDUI to the main ::core::window
+// send WM_IDLEUPDATECMDUI to the main ::user::window
 sp(::user::interaction) pMainWnd = GetMainWnd();
 if (pMainWnd != NULL && pMainWnd->IsWindowVisible())
 {
@@ -2702,7 +2702,7 @@ pMessageMap = (*pMessageMap->pfnGetBaseMap)())
 ASSERT(pMessageMap != (*pMessageMap->pfnGetBaseMap)());
 if (pMsg->message < 0xC000)
 {
-// constant ::core::window message
+// constant ::user::window message
 if ((lpEntry = ::core::FindMessageEntry(pMessageMap->lpEntries,
 pMsg->message, 0, 0)) != NULL)
 goto LDispatch;
@@ -2738,7 +2738,7 @@ m_signala.GetSignalsByMessage(signalptra, pmsg->message, 0, 0);
 for(int32_t i = 0; i < signalptra.get_size(); i++)
 {
 Signal & signal = *signalptra[i];
-::core::signal * psignal = signal.m_psignal;
+::signal * psignal = signal.m_psignal;
 message::e_prototype eprototype = signal.m_eprototype;
 if(eprototype == message::PrototypeNone)
 {
@@ -2772,8 +2772,8 @@ return __internal_process_wnd_proc_exception( e, pMsg );
 
 LRESULT CALLBACK __message_filter_hook(int32_t code, WPARAM wParam, LPARAM lParam)
 {
-   ::core::thread* pthread;
-   if (afxContextIsDLL || (code < 0 && code != MSGF_DDEMGR) || (pthread = dynamic_cast < ::core::thread * > (::win::get_thread())) == NULL)
+   thread* pthread;
+   if (afxContextIsDLL || (code < 0 && code != MSGF_DDEMGR) || (pthread = dynamic_cast < thread * > (::win::get_thread())) == NULL)
    {
       return ::CallNextHookEx(gen_ThreadState->m_hHookOldMsgFilter, code, wParam, lParam);
    }
@@ -2872,7 +2872,7 @@ sp(::user::interaction) thread::GetMainWnd()
 if (m_pActiveWnd != NULL)
 return m_pActiveWnd;    // probably in-place active
 
-// when not inplace active, just return main ::core::window
+// when not inplace active, just return main ::user::window
 if (GetMainWnd() != NULL)
 return GetMainWnd();
 

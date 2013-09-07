@@ -183,7 +183,7 @@ public:
    CT * lookup_permanent(HANDLE h);
    CT * lookup_temporary(HANDLE h);
 
-   friend class ::core::thread;
+   friend class thread;
 };
 
 class CLASS_DECL_win oswindow_map :

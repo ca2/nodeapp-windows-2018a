@@ -92,7 +92,7 @@ CLASS_DECL_win void reset_message_cache();
 CLASS_DECL_win WNDPROC __get_window_procedure();
 #define __window_procedure (*__get_window_procedure())
 
-#define WIN_THREAD(pthread) (dynamic_cast < ::win::thread * > (dynamic_cast < ::core::thread * >(pthread)))
+#define WIN_THREAD(pthread) (dynamic_cast < ::win::thread * > (dynamic_cast < thread * >(pthread)))
 #define WIN_WINDOW(pwnd) ((sp(::win::window))(pwnd))
 
 

@@ -728,7 +728,7 @@ namespace win
 
       ::count ca;
 
-      ::core::thread * pthread;
+      thread * pthread;
 
       ca = ::win::thread::s_threadptra.get_size();
 
@@ -738,14 +738,14 @@ namespace win
       {
          
          single_lock sl(&::win::thread::s_mutex, true);
-         comparable_array < ::core::thread * > threadptra = ::win::thread::s_threadptra;
+         comparable_array < thread * > threadptra = ::win::thread::s_threadptra;
 
          for(index i = 0; i < threadptra.get_size(); i++)
          {
 
             try
             {
-               pthread = dynamic_cast < ::core::thread * >(threadptra[i]);
+               pthread = dynamic_cast < thread * >(threadptra[i]);
                pthread->m_bRun = false;
                pthread->m_p->m_bRun = false;
             }
@@ -837,7 +837,7 @@ repeat:
    }
 
 
-   void os::set_file_status(const char * lpszFileName, const ::core::file_status& status)
+   void os::set_file_status(const char * lpszFileName, const ::file::file_status& status)
    {
 
       DWORD wAttr;

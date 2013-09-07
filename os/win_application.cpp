@@ -12,11 +12,11 @@ namespace win
       element(papp)
    {
 
-      ::core::thread::m_p.create(allocer());
+      thread::m_p.create(allocer());
 
-      ::core::thread::m_p->m_p = this;
+      thread::m_p->m_p = this;
 
-      WIN_THREAD(::core::thread::m_p.m_p)->m_pAppThread = this;
+      WIN_THREAD(thread::m_p.m_p)->m_pAppThread = this;
 
       m_psystem                        = papp->m_psystem;
 
@@ -201,12 +201,12 @@ namespace win
 
    void application::LockTempMaps()
    {
-      WIN_THREAD(::core::thread::m_p.m_p)->LockTempMaps();
+      WIN_THREAD(thread::m_p.m_p)->LockTempMaps();
    }
 
    bool application::UnlockTempMaps(bool bDeleteTemp)
    {
-      return WIN_THREAD(::core::thread::m_p.m_p)->UnlockTempMaps(bDeleteTemp);
+      return WIN_THREAD(thread::m_p.m_p)->UnlockTempMaps(bDeleteTemp);
    }
 
 
@@ -232,7 +232,7 @@ namespace win
 
       try
       {
-         // cleanup thread local tooltip ::core::window
+         // cleanup thread local tooltip ::user::window
          if (hInstTerm == NULL)
          {
 //            __MODULE_THREAD_STATE* pModuleThreadState = __get_module_thread_state();
@@ -438,7 +438,7 @@ namespace win
    bool application::initialize1()
    {
 
-      WIN_THREAD(::core::thread::m_p.m_p)->set_run();
+      WIN_THREAD(thread::m_p.m_p)->set_run();
 
       return true;
 
@@ -460,9 +460,9 @@ namespace win
 
       // avoid calling CloseHandle() on our own thread handle
       // during the thread destructor
-      ::core::thread::m_p->set_os_data(NULL);
+      thread::m_p->set_os_data(NULL);
 
-      WIN_THREAD(::core::thread::m_p.m_p)->m_bRun = false;
+      WIN_THREAD(thread::m_p.m_p)->m_bRun = false;
 
       int32_t iRet = application::exit_instance();
 
@@ -526,14 +526,14 @@ namespace win
       return ::win::graphics::from_handle((HDC) pdata);
    }*/
 
-   sp(::core::window) application::window_from_os_data(void * pdata)
+   sp(::user::window) application::window_from_os_data(void * pdata)
    {
       return ::win::window::from_handle((oswindow) pdata);
    }
 
-   sp(::core::window) application::window_from_os_data_permanent(void * pdata)
+   sp(::user::window) application::window_from_os_data_permanent(void * pdata)
    {
-      sp(::core::window) pwnd = ::win::window::FromHandlePermanent((oswindow) pdata);
+      sp(::user::window) pwnd = ::win::window::FromHandlePermanent((oswindow) pdata);
       if(pwnd != NULL)
          return pwnd;
       user::interaction_ptr_array wndptra = System.frames();
@@ -547,7 +547,7 @@ namespace win
       return NULL;
    }
 
-   ::core::thread * application::GetThread()
+   thread * application::GetThread()
    {
       if(__get_thread() == NULL)
          return NULL;
@@ -555,7 +555,7 @@ namespace win
          return __get_thread()->m_p;
    }
 
-   void application::set_thread(::core::thread * pthread)
+   void application::set_thread(thread * pthread)
    {
       __set_thread(pthread);
    }
@@ -611,7 +611,7 @@ namespace win
          __MODULE_THREAD_STATE* pThreadState = pModuleState->m_thread;
          ENSURE(pThreadState);
 //         ASSERT(System.GetThread() == NULL);
-         pThreadState->m_pCurrentWinThread = dynamic_cast < class ::win::thread * > (::core::thread::m_p.m_p);
+         pThreadState->m_pCurrentWinThread = dynamic_cast < class ::win::thread * > (thread::m_p.m_p);
   //       ASSERT(System.GetThread() == this);
 
          // initialize application state
@@ -621,20 +621,20 @@ namespace win
       }
 
 
-//      dynamic_cast < ::win::thread * > ((smart_pointer < application_base >::m_p->::core::thread::m_p))->m_hThread = __get_thread()->m_hThread;
-  //    dynamic_cast < ::win::thread * > ((smart_pointer < application_base >::m_p->::core::thread::m_p))->m_nThreadID = __get_thread()->m_nThreadID;
-      dynamic_cast < class ::win::thread * > (::core::thread::m_p.m_p)->m_hThread      =  ::GetCurrentThread();
-      dynamic_cast < class ::win::thread * > (::core::thread::m_p.m_p)->m_nThreadID    =  ::GetCurrentThreadId();
+//      dynamic_cast < ::win::thread * > ((smart_pointer < application_base >::m_p->thread::m_p))->m_hThread = __get_thread()->m_hThread;
+  //    dynamic_cast < ::win::thread * > ((smart_pointer < application_base >::m_p->thread::m_p))->m_nThreadID = __get_thread()->m_nThreadID;
+      dynamic_cast < class ::win::thread * > (thread::m_p.m_p)->m_hThread      =  ::GetCurrentThread();
+      dynamic_cast < class ::win::thread * > (thread::m_p.m_p)->m_nThreadID    =  ::GetCurrentThreadId();
       
 
    }
 
-   sp(::core::window) application::FindWindow(const char * lpszClassName, const char * lpszWindowName)
+   sp(::user::window) application::FindWindow(const char * lpszClassName, const char * lpszWindowName)
    {
       return window::FindWindow(lpszClassName, lpszWindowName);
    }
 
-   sp(::core::window) application::FindWindowEx(oswindow oswindowParent, oswindow oswindowChildAfter, const char * lpszClass, const char * lpszWindow)
+   sp(::user::window) application::FindWindowEx(oswindow oswindowParent, oswindow oswindowChildAfter, const char * lpszClass, const char * lpszWindow)
    {
       return window::FindWindowEx(oswindowParent, oswindowChildAfter, lpszClass, lpszWindow);
    }
@@ -732,11 +732,11 @@ namespace win
          if (!afxContextIsDLL)
             __init_thread();
 
-         // Initialize ::core::window::m_pfnNotifyWinEvent
+         // Initialize ::user::window::m_pfnNotifyWinEvent
       /*   HMODULE hModule = ::GetModuleHandle("user32.dll");
          if (hModule != NULL)
          {
-            ::core::window::m_pfnNotifyWinEvent = (::core::window::PFNNOTIFYWINEVENT)::GetProcAddress(hModule, "NotifyWinEvent");
+            ::user::window::m_pfnNotifyWinEvent = (::user::window::PFNNOTIFYWINEVENT)::GetProcAddress(hModule, "NotifyWinEvent");
          }*/
 
       return true;
