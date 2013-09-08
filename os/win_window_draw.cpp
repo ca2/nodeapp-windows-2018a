@@ -31,7 +31,7 @@ namespace win
    window_draw::window_draw(sp(base_application) papp) : 
       element(papp),
       thread(papp),
-      ::core::window_draw(papp),
+      ::user::window_draw(papp),
       message_window_simple_callback(papp),
       m_mutexRendering(papp),
       m_mutexRgnUpdate(papp),
@@ -64,7 +64,7 @@ namespace win
 
    void window_draw::message_window_message_handler(signal_details * pobj)
    {
-      SCAST_PTR(message::base, pbase, pobj);
+      SCAST_PTR(::message::base, pbase, pobj);
       if(pbase->m_uiMessage == (WM_USER + 1984 + 1977))
       {
          _synch_redraw();

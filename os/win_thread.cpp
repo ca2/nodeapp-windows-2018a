@@ -198,7 +198,7 @@ CLASS_DECL_win MSG * __get_current_message()
 
 CLASS_DECL_win void __internal_process_wnd_proc_exception(::exception::base*, signal_details * pobj)
 {
-   SCAST_PTR(message::base, pbase, pobj);
+   SCAST_PTR(::message::base, pbase, pobj);
    if (pbase->m_uiMessage == WM_CREATE)
    {
       pbase->set_lresult(-1);
@@ -227,7 +227,7 @@ void __internal_pre_translate_message(signal_details * pobj)
 {
    try
    {
-      SCAST_PTR(message::base, pbase, pobj);
+      SCAST_PTR(::message::base, pbase, pobj);
 
       //   ASSERT_VALID(this);
 
@@ -320,7 +320,7 @@ void __cdecl __pre_translate_message(signal_details * pobj)
 
 bool __internal_is_idle_message(signal_details * pobj)
 {
-   SCAST_PTR(message::base, pbase, pobj);
+   SCAST_PTR(::message::base, pbase, pobj);
    // Return FALSE if the message just dispatched should _not_
    // cause on_idle to be run.  Messages which do not usually
    // affect the state of the ::fontopus::user interface and happen very
@@ -1354,7 +1354,7 @@ stop_run:
 
    void thread::DispatchThreadMessageEx(signal_details * pobj)
    {
-      SCAST_PTR(message::base, pbase, pobj);
+      SCAST_PTR(::message::base, pbase, pobj);
       if(!pbase->m_bRet && pbase->m_uiMessage == WM_APP + 1984 && pbase->m_wparam == 77)
       {
          smart_pointer < ::user::message > spmessage(pbase->m_lparam);
@@ -1442,13 +1442,13 @@ stop_run:
 
    __STATIC inline bool IsEnterKey(signal_details * pobj)
    { 
-      SCAST_PTR(message::base, pbase, pobj);
+      SCAST_PTR(::message::base, pbase, pobj);
       return pbase->m_uiMessage == WM_KEYDOWN && pbase->m_wparam == VK_RETURN; 
    }
 
    __STATIC inline bool IsButtonUp(signal_details * pobj)
    { 
-      SCAST_PTR(message::base, pbase, pobj);
+      SCAST_PTR(::message::base, pbase, pobj);
       return pbase->m_uiMessage == WM_LBUTTONUP; 
    }
 
@@ -1458,7 +1458,7 @@ stop_run:
       if(pobj == NULL)
          return;   // not handled
 
-      SCAST_PTR(message::base, pbase, pobj);
+      SCAST_PTR(::message::base, pbase, pobj);
 
       sp(::user::frame_window) pTopFrameWnd;
       sp(::user::interaction) pMainWnd;
@@ -1764,7 +1764,7 @@ stop_run:
 
    void thread::message_handler(signal_details * pobj)
    {
-      SCAST_PTR(message::base, pbase, pobj);
+      SCAST_PTR(::message::base, pbase, pobj);
       // special message which identifies the window as using __window_procedure
 //      if(pbase->m_uiMessage == WM_QUERYAFXWNDPROC)
   //    {

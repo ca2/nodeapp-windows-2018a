@@ -633,7 +633,7 @@ namespace win
 
    void window::_001OnShowWindow(signal_details * pobj)
    {
-      SCAST_PTR(message::show_window, pshowwindow, pobj);
+      SCAST_PTR(::message::show_window, pshowwindow, pobj);
       m_bVisible = pshowwindow->m_bShow != FALSE;
       if(m_pguie != NULL && m_pguie != this)
          m_pguie->m_bVisible = m_bVisible;
@@ -1271,7 +1271,7 @@ namespace win
    void window::message_handler(signal_details * pobj)
    {
 
-      SCAST_PTR(message::base, pbase, pobj);
+      SCAST_PTR(::message::base, pbase, pobj);
 
       if(pbase->m_uiMessage == WM_SIZE || pbase->m_uiMessage == WM_MOVE)
       {
@@ -1285,7 +1285,7 @@ namespace win
          pbase->m_uiMessage == WM_CHAR)
       {
 
-         SCAST_PTR(message::key, pkey, pobj);
+         SCAST_PTR(::message::key, pkey, pobj);
 
          Application.user()->keyboard().translate_os_key_message(pkey);
 
@@ -2780,7 +2780,7 @@ restart_mouse_hover_check:
       ASSERT(puiStop == NULL || puiStop->IsWindow());
       ASSERT(pobj != NULL);
 
-      SCAST_PTR(message::base, pbase, pobj);
+      SCAST_PTR(::message::base, pbase, pobj);
       // walk from the target window up to the oswindow_Stop window checking
       //  if any window wants to translate this message
 
@@ -3380,7 +3380,7 @@ restart_mouse_hover_check:
       synch_lock ml(&user_mutex());
       //lock lock(m_pguie, 1984);
 
-      SCAST_PTR(message::base, pbase, pobj);
+      SCAST_PTR(::message::base, pbase, pobj);
 
       PAINTSTRUCT paint;
       memset(&paint, 0, sizeof(paint));
@@ -5520,7 +5520,7 @@ ExitModal:
 
    void window::_001OnSetCursor(signal_details * pobj)
    {
-      SCAST_PTR(message::base, pbase, pobj);
+      SCAST_PTR(::message::base, pbase, pobj);
       if(Session.get_cursor() != NULL && Session.get_cursor()->m_ecursor != ::visual::cursor_system)
       {
          ::SetCursor(NULL);
@@ -6071,7 +6071,7 @@ lCallNextHook:
 
    void window::_001OnEraseBkgnd(signal_details * pobj)
    {
-      SCAST_PTR(message::erase_bkgnd, perasebkgnd, pobj);
+      SCAST_PTR(::message::erase_bkgnd, perasebkgnd, pobj);
       perasebkgnd->m_bRet = true;
       perasebkgnd->set_result(TRUE);
    }
