@@ -122,8 +122,6 @@ namespace win
 } // namespace win
 
 
-#include "base/core/ca2_fixed_alloc.h"
-
 template<class TYPE>
 struct ConstructDestruct
 {
@@ -300,7 +298,7 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (sp(base_a
       __set_new_handler(pnhOldHandler);
 #endif
       //__enable_memory_tracking(bEnable);
-      ::core::rethrow(pe);
+      ::exception::rethrow(pe);
    }
    
 

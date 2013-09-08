@@ -92,7 +92,7 @@ namespace win
       nOpenFlags &= ~(UINT)type_binary;
 
 
-      if(nOpenFlags & ::file::binary_buffer::defer_create_directory)
+      if(nOpenFlags & ::file::defer_create_directory)
       {
          System.dir_mk(System.dir_name(lpszFileName));
       }
@@ -142,7 +142,7 @@ namespace win
       case shareDenyRead:
          dwShareMode = FILE_SHARE_WRITE;
          break;
-      case shareDenyNone:
+      case share_deny_none:
          dwShareMode = FILE_SHARE_WRITE|FILE_SHARE_READ;
          break;
       }
@@ -159,7 +159,7 @@ namespace win
       DWORD dwCreateFlag;
       if (nOpenFlags & mode_create)
       {
-         if (nOpenFlags & modeNoTruncate)
+         if (nOpenFlags & mode_no_truncate)
             dwCreateFlag = OPEN_ALWAYS;
          else
             dwCreateFlag = CREATE_ALWAYS;

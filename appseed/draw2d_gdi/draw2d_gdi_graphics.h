@@ -76,7 +76,7 @@ namespace draw2d_gdi
       void internal_set_path_polygon(void * pparam);
       void internal_set_path_poly_polygon(void * pparam);
 
-      static ::draw2d::graphics * from_handle(application * papp, HDC hDC);
+      static ::draw2d::graphics * from_handle(base_application * papp, HDC hDC);
       static void DeleteTempMap();
       bool Attach(HDC hDC);   // Attach/Detach affects only the Output DC
       HDC Detach();

@@ -242,7 +242,7 @@ namespace win
 #define ___TEMP_CLASS_NAME_SIZE 96
 class CLASS_DECL_win ___THREAD_STATE : 
    public no_track_object,
-   public ::core::thread_state
+   public ::thread_state
 {
 public:
    //___THREAD_STATE();

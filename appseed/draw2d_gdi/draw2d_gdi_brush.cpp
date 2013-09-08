@@ -27,7 +27,7 @@ namespace draw2d_gdi
    }
 
 
-   ::draw2d::brush* brush::from_handle(application * papp, HBRUSH hBrush)
+   ::draw2d::brush* brush::from_handle(base_application * papp, HBRUSH hBrush)
    {
 
       return dynamic_cast < brush * > (::draw2d_gdi::object::from_handle(papp, hBrush));

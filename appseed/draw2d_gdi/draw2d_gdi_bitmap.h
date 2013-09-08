@@ -20,7 +20,7 @@ namespace draw2d_gdi
       int GetBitmap(BITMAP* pBitMap);
 
 
-      static ::draw2d::bitmap * from_handle(application * papp, HBITMAP hBitmap);
+      static ::draw2d::bitmap * from_handle(base_application * papp, HBITMAP hBitmap);
 
 
       bool LoadBitmap(const char * lpszResourceName);

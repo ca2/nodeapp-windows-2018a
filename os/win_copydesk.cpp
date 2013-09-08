@@ -12,7 +12,7 @@ namespace win
    copydesk::copydesk(sp(base_application) papp) :
       element(papp),
       ::core::copydesk(papp),
-      ::core::window_sp(allocer())
+      ::user::window_sp(allocer())
    {
    }
 
@@ -125,9 +125,9 @@ namespace win
       
       bOk = ::core::copydesk::finalize();
 
-      if(::core::window_sp::is_set() && ::core::window_sp::m_p->IsWindow())
+      if(::user::window_sp::is_set() && ::user::window_sp::m_p->IsWindow())
       {
-         bOk = ::core::window_sp::m_p->DestroyWindow() != FALSE;
+         bOk = ::user::window_sp::m_p->DestroyWindow() != FALSE;
       }
       else
       {

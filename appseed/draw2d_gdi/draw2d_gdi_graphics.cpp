@@ -3580,7 +3580,7 @@ namespace draw2d_gdi
 #endif //_DEBUG
 
 
-   ::draw2d::graphics * graphics::from_handle(application * papp, HDC hdc)
+   ::draw2d::graphics * graphics::from_handle(base_application * papp, HDC hdc)
    {
 
       ::draw2d_gdi::graphics * pgraphics = new ::draw2d_gdi::graphics (papp);

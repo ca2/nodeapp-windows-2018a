@@ -247,15 +247,15 @@ void __internal_pre_translate_message(signal_details * pobj)
 
       try
       {
-         if(pthread->m_papp->m_psession != NULL)
+         if(pthread->m_pbaseapp->m_pplaneapp->m_psession != NULL)
          {
             try
             {
-               for(int32_t i = 0; i < pthread->m_papp->m_psession->frames().get_count(); i++)
+               for(int32_t i = 0; i < pthread->m_pbaseapp->m_pplaneapp->m_psession->frames().get_count(); i++)
                {
                   try
                   {
-                     sp(::user::interaction) pui = pthread->m_papp->m_psession->frames()(i);
+                     sp(::user::interaction) pui = pthread->m_pbaseapp->m_pplaneapp->m_psession->frames()(i);
                      if(pui != NULL)
                      {
                         if(pui->m_pguie != NULL)
@@ -1106,7 +1106,7 @@ namespace win
                throw e;
 
             }
-            catch(exception & e)
+            catch(exception::exception & e)
             {
 
                if(!Application.on_run_exception(e))
@@ -1596,16 +1596,16 @@ stop_run:
                         {
                            try
                            {
-                              if(m_papp->m_psystem != NULL)
+                              if(m_pbaseapp->m_pplaneapp->m_psystem != NULL)
                               {
-                                 m_papp->m_psystem->pre_translate_message(spbase);
+                                 m_pbaseapp->m_pplaneapp->m_psystem->pre_translate_message(spbase);
                                  if(spbase->m_bRet)
                                     return TRUE;
 /*                                 try
                                  {
-                                    if(m_papp->m_psystem->m_pcube != NULL)
+                                    if(m_pbaseapp->m_pplaneapp->m_psystem->m_pcube != NULL)
                                     {
-                                       m_papp->m_psystem->m_pcubeInterface->pre_translate_message(spbase);
+                                       m_pbaseapp->m_pplaneapp->m_psystem->m_pcubeInterface->pre_translate_message(spbase);
                                        if(spbase->m_bRet)
                                           return TRUE;
                                     }
@@ -1620,11 +1620,11 @@ stop_run:
                            catch(...)
                            {
                            }
-                           if(m_papp->m_psession != NULL)
+                           if(m_pbaseapp->m_pplaneapp->m_psession != NULL)
                            {
                               try
                               {
-                                 m_papp->m_psession->pre_translate_message(spbase);
+                                 m_pbaseapp->m_pplaneapp->m_psession->pre_translate_message(spbase);
                                  if(spbase->m_bRet)
                                     return TRUE;
                               }
@@ -1633,9 +1633,9 @@ stop_run:
                               }
 /*                              try
                               {
-                                 if(m_papp->m_psession->m_pbergedge != NULL)
+                                 if(m_pbaseapp->m_pplaneapp->m_psession->m_pbergedge != NULL)
                                  {
-                                    m_papp->m_psession->m_pbergedgeInterface->pre_translate_message(spbase);
+                                    m_pbaseapp->m_pplaneapp->m_psession->m_pbergedgeInterface->pre_translate_message(spbase);
                                     if(spbase->m_bRet)
                                        return TRUE;
                                  }
@@ -1755,7 +1755,7 @@ stop_run:
    }
 
 
-   bool thread::on_run_exception(exception & e)
+   bool thread::on_run_exception(exception::exception & e)
    {
       UNREFERENCED_PARAMETER(e);
       return false;
@@ -1939,7 +1939,7 @@ run:
       return pwinthread->m_p;
    }
 
-   CLASS_DECL_win ::core::thread_state * get_thread_state()
+   CLASS_DECL_win ::thread_state * get_thread_state()
    {
       return __get_thread_state();
    }
@@ -1970,8 +1970,8 @@ run:
             // restore safety pool after temp objects destroyed
             if(papp != NULL &&
                (pThreadState->m_pSafetyPoolBuffer == NULL ||
-               _msize(pThreadState->m_pSafetyPoolBuffer) < papp->m_nSafetyPoolSize) &&
-               papp->m_nSafetyPoolSize != 0)
+               _msize(pThreadState->m_pSafetyPoolBuffer) < papp->m_pplaneapp->m_nSafetyPoolSize) &&
+               papp->m_pplaneapp->m_nSafetyPoolSize != 0)
             {
                // attempt to restore the safety pool to its max size
                size_t nOldSize = 0;
@@ -1985,7 +1985,7 @@ run:
                //bool bEnable = __enable_memory_tracking(FALSE);
                try
                {
-                  pThreadState->m_pSafetyPoolBuffer = malloc(papp->m_nSafetyPoolSize);
+                  pThreadState->m_pSafetyPoolBuffer = malloc(papp->m_pplaneapp->m_nSafetyPoolSize);
                   if (pThreadState->m_pSafetyPoolBuffer == NULL)
                   {
                      //                  TRACE(::core::trace::category_AppMsg, 0, "Warning: failed to reclaim %d bytes for primitive::memory safety pool.\n",
@@ -2951,7 +2951,7 @@ return post_thread_message(WM_APP + 1984, 77, (LPARAM) pmessage);
 }
 
 
-bool thread::on_run_exception(exception & e)
+bool thread::on_run_exception(exception::exception & e)
 {
 return false;
 }

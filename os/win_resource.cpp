@@ -48,7 +48,7 @@ WinResource::~WinResource()
         try
         {
            // create the .mdb file
-//           ::file::binary_buffer_sp f(lpcszFilePath, ::file::binary_buffer::mode_create | ::file::binary_buffer::mode_write );
+//           ::file::binary_buffer_sp f(lpcszFilePath, ::file::mode_create | ::file::mode_write );
 
            // write the ::fontopus::user-defined resource to the .mdb file
            spfile->write(lpnRes, dwResSize);

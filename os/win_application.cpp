@@ -18,7 +18,7 @@ namespace win
 
       WIN_THREAD(thread::m_p.m_p)->m_pAppThread = this;
 
-      m_psystem                        = papp->m_psystem;
+      m_psystem                        = papp->m_pplaneapp->m_psystem;
 
       m_pfilemanager                   = NULL;
       m_hInstance                      = NULL;
@@ -369,7 +369,7 @@ namespace win
 
    // called when occurs an standard_exception exception in run
    // return true to call run again
-   bool application::on_run_exception(exception & e)
+   bool application::on_run_exception(exception::exception & e)
    {
       return ::win::thread::on_run_exception(e);
    }
@@ -410,7 +410,7 @@ namespace win
 */
    bool application::process_initialize()
    {
-      if(::core::application_base::m_p->is_system())
+      if(::application_base::m_p->is_system())
       {
          if(__get_module_state()->m_pmapHWND == NULL)
          {
@@ -690,7 +690,7 @@ namespace win
 
       m_pmaininitdata = (::win::main_init_data *) pdata;
 
-      if(m_pmaininitdata != NULL && ::core::application_base::m_p->is_system())
+      if(m_pmaininitdata != NULL && ::application_base::m_p->is_system())
       {
          if(!win_init(m_pmaininitdata))
             return false;

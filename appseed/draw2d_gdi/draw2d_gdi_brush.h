@@ -19,7 +19,7 @@ namespace draw2d_gdi
       operator HBRUSH() const;
       int GetLogBrush(LOGBRUSH* pLogBrush);
 
-      static ::draw2d::brush * from_handle(application * papp, HBRUSH hBrush);
+      static ::draw2d::brush * from_handle(base_application * papp, HBRUSH hBrush);
 
       virtual void construct(COLORREF crColor);                // CreateSolidBrush
       virtual void construct(int nIndex, COLORREF crColor);    // CreateHatchBrush

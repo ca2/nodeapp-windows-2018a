@@ -118,7 +118,7 @@ namespace draw2d_gdi
 
    }
 
-   ::draw2d::object * object::from_handle(application * papp, HGDIOBJ h)
+   ::draw2d::object * object::from_handle(base_application * papp, HGDIOBJ h)
    {
       
       ::draw2d_gdi::object * pobject = graphics_object_allocator(papp, h);
@@ -234,7 +234,7 @@ namespace draw2d_gdi
 #ifdef _DEBUG
    void object::dump(dump_context & dumpcontext) const
    {
-      object::dump(dumpcontext);
+      ::object::dump(dumpcontext);
 
       dumpcontext << "get_handle() = " << get_handle();
       dumpcontext << "\n";
@@ -242,7 +242,7 @@ namespace draw2d_gdi
 
    void object::assert_valid() const
    {
-      object::assert_valid();
+      ::object::assert_valid();
 /*      ASSERT(get_handle() == NULL ||
          (afxData.bWin95 || ::GetObjectType(get_handle()) != 0));*/
    }

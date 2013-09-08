@@ -487,7 +487,7 @@ bool CLASS_DECL_win __register_class(WNDCLASS* lpWndClass)
       }
       catch(::exception::base * pe)
       {
-         ::core::rethrow(pe);
+         ::exception::rethrow(pe);
          // Note: DELETE_EXCEPTION not required.
       }
 

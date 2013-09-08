@@ -98,7 +98,7 @@ namespace win
    window::~window()
    {
 
-      if(m_papp != NULL && m_papp->m_psystem != NULL && Sys(m_papp).user().is_set() && Sys(m_papp).user()->m_pwindowmap != NULL)
+      if(m_papp != NULL && m_pbaseapp->m_pplaneapp->m_psystem != NULL && Sys(m_papp).user().is_set() && Sys(m_papp).user()->m_pwindowmap != NULL)
       {
          Sys(m_papp).user()->m_pwindowmap->m_map.remove_key((int_ptr) get_handle());
       }
@@ -667,7 +667,7 @@ namespace win
       single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_pthread->m_mutex, TRUE);
       pobj->m_bRet = true;
       // cleanup main and active windows
-      thread* pThread = ::core::get_thread();
+      thread* pThread = ::get_thread();
       if (pThread != NULL)
       {
          if (pThread->GetMainWnd() == this)
@@ -1405,17 +1405,17 @@ namespace win
          message::mouse * pmouse = (message::mouse *) pbase;
 
          Application.m_ptCursor = pmouse->m_pt;
-         if(m_papp != NULL && m_papp->m_psession != NULL)
+         if(m_papp != NULL && m_pbaseapp->m_pplaneapp->m_psession != NULL)
          {
             Session.m_ptCursor = pmouse->m_pt;
-            if(m_papp->m_psession != NULL)
+            if(m_pbaseapp->m_pplaneapp->m_psession != NULL)
             {
-               m_papp->m_psession->m_ptCursor = pmouse->m_pt;
+               m_pbaseapp->m_pplaneapp->m_psession->m_ptCursor = pmouse->m_pt;
             }
          }
-         if(m_pguie != NULL && m_pguie != this && m_pguie->m_papp->m_psession != NULL && m_pguie->m_papp->m_psession != m_papp->m_psession)
+         if(m_pguie != NULL && m_pguie != this && m_pguie->m_pbaseapp->m_pplaneapp->m_psession != NULL && m_pguie->m_pbaseapp->m_pplaneapp->m_psession != m_pbaseapp->m_pplaneapp->m_psession)
          {
-            Sess(m_pguie->m_papp->m_psession).m_ptCursor = pmouse->m_pt;
+            Sess(m_pguie->m_pbaseapp->m_pplaneapp->m_psession).m_ptCursor = pmouse->m_pt;
          }
 
          sp(::plane::session) psession = NULL;

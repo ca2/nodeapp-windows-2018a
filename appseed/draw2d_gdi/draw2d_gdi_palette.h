@@ -19,7 +19,7 @@ namespace draw2d_gdi
       operator HPALETTE() const;
       int GetEntryCount();
 
-      static ::draw2d::palette * from_handle(application * papp, HPALETTE hPalette);
+      static ::draw2d::palette * from_handle(base_application * papp, HPALETTE hPalette);
 
       bool CreatePalette(LPLOGPALETTE lpLogPalette);
       bool CreateHalftonePalette(::draw2d::graphics * pgraphics);

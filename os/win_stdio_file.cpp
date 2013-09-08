@@ -38,13 +38,13 @@ namespace win
 
       ASSERT(__is_valid_string(lpszFileName));
 
-      if(nOpenFlags  & ::file::binary_buffer::defer_create_directory)
+      if(nOpenFlags  & ::file::defer_create_directory)
       {
          Application.dir().mk(System.dir().name(lpszFileName));
       }
 
       m_pStream = NULL;
-      if (!::win::file::open(lpszFileName, (nOpenFlags & ~::file::binary_buffer::type_text)))
+      if (!::win::file::open(lpszFileName, (nOpenFlags & ~::file::type_text)))
          return FALSE;
 
       ASSERT(m_hFile != hFileNull);
@@ -56,7 +56,7 @@ namespace win
       // determine read/write mode depending on ::file::binary_buffer_sp mode
       if (nOpenFlags & mode_create)
       {
-         if (nOpenFlags & modeNoTruncate)
+         if (nOpenFlags & mode_no_truncate)
             szMode[nMode++] = 'a';
          else
             szMode[nMode++] = 'w';

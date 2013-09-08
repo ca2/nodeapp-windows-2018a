@@ -26,7 +26,7 @@ namespace draw2d_gdi
    }
 
 
-   ::draw2d::font * font::from_handle(application * papp, HFONT hFont)
+   ::draw2d::font * font::from_handle(base_application * papp, HFONT hFont)
    {
 
       return dynamic_cast < font * > (::draw2d_gdi::object::from_handle(papp, hFont)); 

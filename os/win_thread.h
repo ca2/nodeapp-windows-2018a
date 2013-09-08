@@ -129,7 +129,7 @@ namespace win
 
       // called when occurs an standard_exception exception in run
       // return true to call run again
-      virtual bool on_run_exception(exception & e);
+      virtual bool on_run_exception(exception::exception & e);
 
    // Overridables
       // thread initialization
@@ -205,7 +205,7 @@ namespace win
 
 
    CLASS_DECL_win thread * get_thread();
-   CLASS_DECL_win ::core::thread_state * get_thread_state();
+   CLASS_DECL_win ::thread_state * get_thread_state();
 
 
 } // namespace win

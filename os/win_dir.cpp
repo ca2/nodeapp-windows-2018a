@@ -285,7 +285,7 @@ namespace win
       free(lpszAlloc);
    }
 
-   void dir::ls_pattern(sp(base_application) papp, const char * lpcsz, const char * pszPattern, stringa * pstraPath, stringa * pstraTitle, array < bool, bool > * pbaIsDir, array < int64_t, int64_t > * piaSize)
+   void dir::ls_pattern(sp(base_application) papp, const char * lpcsz, const char * pszPattern, stringa * pstraPath, stringa * pstraTitle, bool_array * pbaIsDir, array < int64_t, int64_t > * piaSize)
    {
       if(::core::dir::system::is(lpcsz, papp)) // if base class "already" "says" it is a dir, let it handle it: may be not a operational system dir, e.g., zip or compressed directory...
       {
@@ -324,7 +324,7 @@ namespace win
       rls_pattern(papp, lpcsz, "*.*", pstraPath, pstraTitle, pstraRelative, NULL, NULL, eextract);
    }
 
-   void dir::rls_pattern(sp(base_application) papp, const char * lpcsz, const char * lpszPattern, stringa * pstraPath, stringa * pstraTitle, stringa * pstraRelative, array < bool, bool > * pbaIsDir, array < int64_t, int64_t > * piaSize, e_extract eextract)
+   void dir::rls_pattern(sp(base_application) papp, const char * lpcsz, const char * lpszPattern, stringa * pstraPath, stringa * pstraTitle, stringa * pstraRelative, bool_array * pbaIsDir, array < int64_t, int64_t > * piaSize, e_extract eextract)
    {
       stringa straDir;
       ls_dir(papp, lpcsz, &straDir);
@@ -494,7 +494,7 @@ namespace win
       }
    }
 
-   void dir::ls(sp(base_application) papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle, array < bool, bool > * pbaIsDir, array < int64_t, int64_t > * piaSize)
+   void dir::ls(sp(base_application) papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle, bool_array * pbaIsDir, array < int64_t, int64_t > * piaSize)
    {
       return ls_pattern(papp, lpcsz, "*.*", pstraPath, pstraTitle, pbaIsDir, piaSize);
    }
@@ -643,7 +643,7 @@ namespace win
       }
 
 
-      if(papp->m_bZipIsDir && iLast >= 3  && !strnicmp_dup(&((const char *) str)[iLast - 3], ".zip", 4))
+      if(papp->m_pplaneapp->m_bZipIsDir && iLast >= 3  && !strnicmp_dup(&((const char *) str)[iLast - 3], ".zip", 4))
       {
          m_isdirmap.set(str.Left(iLast + 1), true, 0);
          return true;
@@ -651,7 +651,7 @@ namespace win
       
       strsize iFind = ::str::find_ci(".zip:", str);
 
-      if(papp->m_bZipIsDir && iFind >= 0 && iFind < iLast)
+      if(papp->m_pplaneapp->m_bZipIsDir && iFind >= 0 && iFind < iLast)
       {
          bool bHasSubFolder;
          if(m_isdirmap.lookup(str, bHasSubFolder, uiLastError))

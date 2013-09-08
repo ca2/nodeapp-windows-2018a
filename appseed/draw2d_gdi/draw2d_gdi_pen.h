@@ -23,7 +23,7 @@ namespace draw2d_gdi
       int GetExtLogPen(EXTLOGPEN* pLogPen);
 
 
-      static ::draw2d::pen* from_handle(application * papp, HPEN hPen);
+      static ::draw2d::pen* from_handle(base_application * papp, HPEN hPen);
 
 
       virtual void construct(int nPenStyle, int nWidth, COLORREF crColor);

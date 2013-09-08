@@ -25,7 +25,7 @@ namespace draw2d_gdi
       virtual void * get_os_data() const;
       virtual HGDIOBJ get_handle() const;
 
-      static ::draw2d::object * from_handle(application * papp, HGDIOBJ hObject);
+      static ::draw2d::object * from_handle(base_application * papp, HGDIOBJ hObject);
 
       bool Attach(HGDIOBJ hObject);
       HGDIOBJ Detach();
