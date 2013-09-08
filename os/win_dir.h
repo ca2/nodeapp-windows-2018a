@@ -19,7 +19,7 @@ namespace win
 
 
    class CLASS_DECL_win dir :
-      virtual public ::core::dir::system
+      virtual public ::file::dir::system
    {
    public:
 

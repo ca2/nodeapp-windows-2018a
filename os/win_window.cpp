@@ -5879,10 +5879,10 @@ ExitModal:
          return -1;
 
       }
-      catch(const exception & e)
+      catch(const ::exception::exception &)
       {
 
-         if(!App(pinteraction->m_papp).on_run_exception((exception &) e))
+         if(!App(pinteraction->m_papp).on_run_exception((::exception::exception &) e))
          {
 
             Sys(pinteraction->m_papp).os().post_to_all_threads(WM_QUIT, 0, 0);

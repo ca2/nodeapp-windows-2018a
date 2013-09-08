@@ -1106,7 +1106,7 @@ namespace win
                throw e;
 
             }
-            catch(exception::exception & e)
+            catch(::exception::exception &)
             {
 
                if(!Application.on_run_exception(e))
@@ -1684,12 +1684,12 @@ stop_run:
       {
          throw e;
       }
-      catch(const exception & e)
+      catch(const ::exception::exception &)
       {
-         if(on_run_exception((exception &) e))
+         if(on_run_exception((::exception::exception &) e))
             return TRUE;
          // get_app() may be it self, it is ok...
-         if(App(get_app()).final_handle_exception((exception & ) e))
+         if(App(get_app()).final_handle_exception((::exception::exception & ) e))
             return TRUE;
          return FALSE;
       }
@@ -1755,7 +1755,7 @@ stop_run:
    }
 
 
-   bool thread::on_run_exception(exception::exception & e)
+   bool thread::on_run_exception(::exception::exception &)
    {
       UNREFERENCED_PARAMETER(e);
       return false;
@@ -1817,11 +1817,11 @@ stop_run:
          if(pbase->m_uiMessage == WM_INITDIALOG)
             __post_init_dialog(pwindow, rectOld, dwStyle);
       }
-      catch(const exception & e)
+      catch(const ::exception::exception &)
       {
-         if(App(get_app()).on_run_exception((exception &) e))
+         if(App(get_app()).on_run_exception((::exception::exception &) e))
             goto run;
-         if(App(get_app()).final_handle_exception((exception &) e))
+         if(App(get_app()).final_handle_exception((::exception::exception &) e))
             goto run;
          __post_quit_message(-1);
          pbase->set_lresult(-1);
@@ -2088,11 +2088,11 @@ run:
             throw e;
 
          }
-         catch(const exception & e)
+         catch(const ::exception::exception &)
          {
-            if(on_run_exception((exception &) e))
+            if(on_run_exception((::exception::exception &) e))
                goto run;
-            if(App(get_app()).final_handle_exception((exception & ) e))
+            if(App(get_app()).final_handle_exception((::exception::exception & ) e))
                goto run;
             try
             {
@@ -2888,12 +2888,12 @@ try
 {
 return __internal_pump_message();
 }
-catch(const exception & e)
+catch(const ::exception::exception &)
 {
-if(on_run_exception((exception &) e))
+if(on_run_exception((::exception::exception &) e))
 return TRUE;
 // get_app() may be it self, it is ok...
-if(App(get_app()).final_handle_exception((exception & ) e))
+if(App(get_app()).final_handle_exception((::exception::exception & ) e))
 return TRUE;
 return FALSE;
 }
@@ -2951,7 +2951,7 @@ return post_thread_message(WM_APP + 1984, 77, (LPARAM) pmessage);
 }
 
 
-bool thread::on_run_exception(exception::exception & e)
+bool thread::on_run_exception(::exception::exception &)
 {
 return false;
 }
