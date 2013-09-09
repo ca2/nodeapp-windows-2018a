@@ -10,7 +10,7 @@ namespace draw2d_gdi
    public:
 
       
-      region(application * papp);
+      region(base_application * papp);
       virtual ~region();
 
       

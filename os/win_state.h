@@ -185,7 +185,7 @@ public:
 CLASS_DECL_win __MODULE_STATE* __set_module_state(__MODULE_STATE* pNewState);
 CLASS_DECL_win __MODULE_STATE* __get_module_state();
 CLASS_DECL_win bool __is_module_dll();
-CLASS_DECL_win bool __init_current_state_app();
+//CLASS_DECL_win bool __init_current_state_app();
 CLASS_DECL_win __MODULE_STATE* __get_static_module_state();
 CLASS_DECL_win HINSTANCE __get_instance_handle_helper();
 

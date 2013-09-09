@@ -98,9 +98,9 @@ namespace win
    window::~window()
    {
 
-      if(m_papp != NULL && m_pbaseapp->m_pplaneapp->m_psystem != NULL && Sys(m_papp).user().is_set() && Sys(m_papp).user()->m_pwindowmap != NULL)
+      if(m_pbaseapp != NULL && m_pbaseapp->m_pplaneapp->m_psystem != NULL && Sys(m_pbaseapp).user().is_set() && Sys(m_pbaseapp).user()->m_pwindowmap != NULL)
       {
-         Sys(m_papp).user()->m_pwindowmap->m_map.remove_key((int_ptr) get_handle());
+         Sys(m_pbaseapp).user()->m_pwindowmap->m_map.remove_key((int_ptr) get_handle());
       }
 
       single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_pthread->m_mutex, TRUE);
@@ -363,8 +363,8 @@ namespace win
          GetClassInfo(System.m_hInstance, lpszClassName, &wndcls) &&
          wndcls.hIcon != NULL)
       {
-         m_pguie->set_icon(new ::visual::icon(wndcls.hIcon), false);
-         m_pguie->set_icon(new ::visual::icon(wndcls.hIcon), true);
+         Application.set_icon(m_pguie, new ::visual::icon(wndcls.hIcon), false);
+         Application.set_icon(m_pguie, new ::visual::icon(wndcls.hIcon), true);
       }
       //      oswindow oswindowHandle = get_handle();
       if(oswindow != get_handle())
@@ -667,10 +667,10 @@ namespace win
       single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_pthread->m_mutex, TRUE);
       pobj->m_bRet = true;
       // cleanup main and active windows
-      thread* pThread = ::get_thread();
-      if (pThread != NULL)
+      base_thread* pThread = ::get_thread();
+      if (pThread != NULL && pThread->m_pthread != NULL)
       {
-         if (pThread->GetMainWnd() == this)
+         if (pThread->m_pthread->GetMainWnd() == this)
          {
             if (!afxContextIsDLL)
             {
@@ -678,10 +678,10 @@ namespace win
                if (pThread != &System)
                   __post_quit_message(0);
             }
-            pThread->SetMainWnd(NULL);
+            pThread->m_pthread->SetMainWnd(NULL);
          }
-         if (pThread->get_active_ui() == this)
-            pThread->set_active_ui(NULL);
+         if (pThread->m_pthread->get_active_ui() == this)
+            pThread->m_pthread->set_active_ui(NULL);
       }
 
       // cleanup tooltip support
@@ -1402,10 +1402,10 @@ namespace win
                }
             }
          }
-         message::mouse * pmouse = (message::mouse *) pbase;
+         message::mouse * pmouse = (::message::mouse *) pbase;
 
          Application.m_ptCursor = pmouse->m_pt;
-         if(m_papp != NULL && m_pbaseapp->m_pplaneapp->m_psession != NULL)
+         if(m_pbaseapp != NULL && m_pbaseapp->m_pplaneapp->m_psession != NULL)
          {
             Session.m_ptCursor = pmouse->m_pt;
             if(m_pbaseapp->m_pplaneapp->m_psession != NULL)
@@ -1419,7 +1419,7 @@ namespace win
          }
 
          sp(::plane::session) psession = NULL;
-         if(m_papp->is_system())
+         if(m_pbaseapp->is_system())
          {
             psession = System.query_session(0);
             if(psession != NULL && psession->m_bSessionSynchronizedCursor)
@@ -1538,7 +1538,7 @@ restart_mouse_hover_check:
          pbase->m_uiMessage == WM_CHAR)
       {
 
-         message::key * pkey = (message::key *) pbase;
+         message::key * pkey = (::message::key *) pbase;
 
          sp(::user::interaction) puiFocus = Application.user()->get_keyboard_focus();
          if(puiFocus != NULL 
@@ -1567,7 +1567,7 @@ restart_mouse_hover_check:
          pbase->set_lresult(DefWindowProc(pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));
          return;
       }
-      if(pbase->m_uiMessage == ::core::message_event)
+      if(pbase->m_uiMessage == ::message::message_event)
       {
          if(m_pguie != this && m_pguie != NULL)
          {
@@ -3079,7 +3079,7 @@ restart_mouse_hover_check:
 
 
    class print_window :
-      virtual object
+      virtual ::object
    {
    public:
 
@@ -3090,7 +3090,7 @@ restart_mouse_hover_check:
       HDC m_hdc;
 
       print_window(sp(base_application) papp, oswindow oswindow, HDC hdc, uint32_t dwTimeout) :
-         element(papp),
+         ::element(papp),
          m_event(papp)
       {
          m_event.ResetEvent();
@@ -3879,11 +3879,11 @@ restart_mouse_hover_check:
             m_pthread->m_pthread->m_p->m_dwAlive = m_pthread->m_pthread->m_dwAlive = ::get_tick_count();
             if(pappThis1 != NULL)
             {
-               pappThis1->m_dwAlive = m_pthread->m_pthread->m_dwAlive;
+               pappThis1->m_pplaneapp->m_dwAlive = m_pthread->m_pthread->m_dwAlive;
             }
             if(pappThis2 != NULL)
             {
-               pappThis2->m_dwAlive = m_pthread->m_pthread->m_dwAlive;
+               pappThis2->m_pplaneapp->m_dwAlive = m_pthread->m_pthread->m_dwAlive;
             }
             if(pliveobject != NULL)
             {
@@ -3927,11 +3927,11 @@ restart_mouse_hover_check:
             m_pthread->m_pthread->m_p->m_dwAlive = m_pthread->m_pthread->m_dwAlive = ::get_tick_count();
             if(pappThis1 != NULL)
             {
-               pappThis1->m_dwAlive = m_pthread->m_pthread->m_dwAlive;
+               pappThis1->m_pplaneapp->m_dwAlive = m_pthread->m_pthread->m_dwAlive;
             }
             if(pappThis2 != NULL)
             {
-               pappThis2->m_dwAlive = m_pthread->m_pthread->m_dwAlive;
+               pappThis2->m_pplaneapp->m_dwAlive = m_pthread->m_pthread->m_dwAlive;
             }
             if(pliveobject != NULL)
             {
@@ -4132,8 +4132,8 @@ ExitModal:
       /*
       bool b;
       bool * pb = &b;
-      if(m_papp->s_ptwf != NULL)
-      pb = &m_papp->s_ptwf->m_bProDevianMode;
+      if(m_pbaseapp->s_ptwf != NULL)
+      pb = &m_pbaseapp->s_ptwf->m_bProDevianMode;
       keeper < bool > keepOnDemandDraw(pb, false, *pb, true);
       */
 
@@ -5874,18 +5874,18 @@ ExitModal:
       catch(::exit_exception &)
       {
 
-         Sys(pinteraction->m_papp).os().post_to_all_threads(WM_QUIT, 0, 0);
+         Sys(pinteraction->m_pbaseapp).os().post_to_all_threads(WM_QUIT, 0, 0);
 
          return -1;
 
       }
-      catch(const ::exception::exception &)
+      catch(const ::exception::exception & e)
       {
 
-         if(!App(pinteraction->m_papp).on_run_exception((::exception::exception &) e))
+         if(!App(pinteraction->m_pbaseapp).on_run_exception((::exception::exception &) e))
          {
 
-            Sys(pinteraction->m_papp).os().post_to_all_threads(WM_QUIT, 0, 0);
+            Sys(pinteraction->m_pbaseapp).os().post_to_all_threads(WM_QUIT, 0, 0);
 
             return -1;
 

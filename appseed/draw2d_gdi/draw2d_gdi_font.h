@@ -1,7 +1,9 @@
 #pragma once
 
+
 namespace draw2d_gdi
 {
+
 
    class CLASS_DECL_DRAW2D_GDI font : 
       virtual public ::draw2d_gdi::object,
@@ -10,7 +12,7 @@ namespace draw2d_gdi
    public:
 
 
-      font(application * papp);
+      font(base_application * papp);
       virtual ~font();
 
 

@@ -17,15 +17,6 @@ namespace draw2d_gdi
    public:
 
 
-      static float Cosines[360];
-      static float Sines[360];
-      static __int64 CosN[360]; // * 1 << 31
-      static __int64 SinN[360]; 
-      static __int64 Cos10N[10]; // until 10 degress
-      static __int64 Sin10N[10]; // more precision * 1 << 34
-      static double dPi;
-
-
       BITMAPINFO              m_info;
       ::draw2d::bitmap_sp     m_spbitmap;
       ::draw2d::graphics_sp   m_spgraphics;
@@ -34,11 +25,8 @@ namespace draw2d_gdi
 
 
 
-      dib(application * papp);
+      dib(base_application * papp);
       virtual ~dib();
-
-
-      static void s_initialize();
 
 
       virtual void construct(int cx, int cy);

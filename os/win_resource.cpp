@@ -86,7 +86,7 @@ bool WinResource::ReadResource(string & str, HINSTANCE hinst,  UINT nID, const c
 
 
 
-bool WinResource::ReadResource(::file::binary_buffer & spfile, HINSTANCE hinst, UINT nID,  const char * lpcszType)
+bool WinResource::ReadResource(::file::stream_buffer & spfile, HINSTANCE hinst, UINT nID,  const char * lpcszType)
 {
 
    HRSRC hrsrc = ::FindResource(

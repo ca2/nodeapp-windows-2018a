@@ -5,7 +5,7 @@ namespace draw2d_gdi
 {
 
 
-   pen::pen(application * papp) :
+   pen::pen(base_application * papp) :
       element(papp)
    { 
 

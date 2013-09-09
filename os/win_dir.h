@@ -38,7 +38,7 @@ namespace win
       dir(sp(base_application) papp);
 
 
-      using ::core::dir::system::path;
+      using ::file::dir::system::path;
       virtual class ::file::path & path();
       virtual string path(const char * pszFolder, strsize iLenFolder, const char * pszRelative, strsize iLenRelative, const char * psz2, strsize iLen2, bool bUrl);
 

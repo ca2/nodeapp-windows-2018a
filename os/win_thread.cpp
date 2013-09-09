@@ -107,7 +107,7 @@ uint32_t __thread_entry(void * pParam)
          //         threadWnd.detach();
          pStartup->bError = TRUE;
          VERIFY(::SetEvent(pStartup->hEvent));
-         __end_thread((pThread->m_papp), (UINT)-1, FALSE);
+         __end_thread((pThread->m_pbaseapp), (UINT)-1, FALSE);
          ASSERT(FALSE);  // unreachable
       }
 
@@ -231,13 +231,13 @@ void __internal_pre_translate_message(signal_details * pobj)
 
       //   ASSERT_VALID(this);
 
-      thread * pthread = ::win::get_thread();
-      if(pthread)
+      base_thread * pthread = ::win::get_thread();
+      if(pthread && pthread->m_pthread != NULL)
       {
          // if this is a thread-message, int16_t-circuit this function
          if (pbase->m_pwnd == NULL)
          {
-            pthread->DispatchThreadMessageEx(pobj);
+            pthread->m_pthread->DispatchThreadMessageEx(pobj);
             if(pobj->m_bRet)
                return;
          }
@@ -540,7 +540,7 @@ namespace win
       element(papp),
       message_window_simple_callback(papp),//,
       //m_evFinish(FALSE, TRUE)
-      thread(NULL),
+      ::thread(NULL),
       m_evFinish(papp),
       m_mutexUiPtra(papp)
       
@@ -577,7 +577,7 @@ namespace win
       // most threads are deleted when not needed
       m_bAutoDelete  = TRUE;
 
-      m_frameList.Construct(offsetof(::user::frame_window, m_pNextFrameWnd));
+//      m_frameList.Construct(offsetof(::user::frame_window, m_pNextFrameWnd));
       m_ptimera = canew(::user::interaction::timer_array(get_app()));
       m_puiptra = canew(::user::interaction_ptr_array(get_app()));
 
@@ -872,7 +872,7 @@ namespace win
       return m_bRun;
    }
 
-   thread * thread::get_app_thread()
+   ::thread * thread::get_app_thread()
    {
       return m_pAppThread;
    }
@@ -1006,7 +1006,7 @@ namespace win
       {
          if(m_p != NULL)
          {
-            thread * pthread = thread::m_p;
+            ::thread * pthread = thread::m_p;
             if(pthread != NULL && pthread->m_pbReady != NULL)
             {
                *pthread->m_pbReady = true;
@@ -1089,11 +1089,11 @@ namespace win
             m_p->m_dwAlive = m_dwAlive = ::get_tick_count();
             if(pappThis1 != NULL)
             {
-               pappThis1->m_dwAlive = m_dwAlive;
+               pappThis1->m_pplaneapp->m_dwAlive = m_dwAlive;
             }
             if(pappThis2 != NULL)
             {
-               pappThis2->m_dwAlive = m_dwAlive;
+               pappThis2->m_pplaneapp->m_dwAlive = m_dwAlive;
             }
             try
             {
@@ -1106,7 +1106,7 @@ namespace win
                throw e;
 
             }
-            catch(::exception::exception &)
+            catch(::exception::exception & e)
             {
 
                if(!Application.on_run_exception(e))
@@ -1150,11 +1150,11 @@ namespace win
             m_p->m_dwAlive = m_dwAlive = ::get_tick_count();
             if(pappThis1 != NULL)
             {
-               pappThis1->m_dwAlive = m_dwAlive;
+               pappThis1->m_pplaneapp->m_dwAlive = m_dwAlive;
             }
             if(pappThis2 != NULL)
             {
-               pappThis2->m_dwAlive = m_dwAlive;
+               pappThis2->m_pplaneapp->m_dwAlive = m_dwAlive;
             }
          }
          while (::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE) != FALSE);
@@ -1328,8 +1328,8 @@ stop_run:
          if (pState->m_nTempMapLock == 0)
          {
          // free temp maps, OLE DLLs, etc.
-         ::core::LockTempMaps((m_p->m_papp));
-         ::core::UnlockTempMaps((m_p->m_papp));
+         ::core::LockTempMaps((m_p->m_pbaseapp));
+         ::core::UnlockTempMaps((m_p->m_pbaseapp));
          }*/
       }
 
@@ -1592,7 +1592,7 @@ stop_run:
                   {
                      try
                      {
-                        if(m_papp != NULL)
+                        if(m_pbaseapp != NULL)
                         {
                            try
                            {
@@ -1651,9 +1651,9 @@ stop_run:
                      }
                      try
                      {
-                        if(!m_papp->is_system() && m_papp->is_session())
+                        if(!m_pbaseapp->is_system() && m_pbaseapp->m_pplaneapp->is_session())
                         {
-                           m_papp->pre_translate_message(spbase);
+                           m_pbaseapp->m_pplaneapp->pre_translate_message(spbase);
                            if(spbase->m_bRet)
                               return TRUE;
                         }
@@ -1684,7 +1684,7 @@ stop_run:
       {
          throw e;
       }
-      catch(const ::exception::exception &)
+      catch(const ::exception::exception & e)
       {
          if(on_run_exception((::exception::exception &) e))
             return TRUE;
@@ -1755,7 +1755,7 @@ stop_run:
    }
 
 
-   bool thread::on_run_exception(::exception::exception &)
+   bool thread::on_run_exception(::exception::exception & e)
    {
       UNREFERENCED_PARAMETER(e);
       return false;
@@ -1817,7 +1817,7 @@ stop_run:
          if(pbase->m_uiMessage == WM_INITDIALOG)
             __post_init_dialog(pwindow, rectOld, dwStyle);
       }
-      catch(const ::exception::exception &)
+      catch(const ::exception::exception & e)
       {
          if(App(get_app()).on_run_exception((::exception::exception &) e))
             goto run;
@@ -1931,7 +1931,7 @@ run:
    }
 
 
-   CLASS_DECL_win thread * get_thread()
+   CLASS_DECL_win base_thread * get_thread()
    {
       ::win::thread * pwinthread = __get_thread();
       if(pwinthread == NULL)
@@ -2088,7 +2088,7 @@ run:
             throw e;
 
          }
-         catch(const ::exception::exception &)
+         catch(const ::exception::exception & e)
          {
             if(on_run_exception((::exception::exception &) e))
                goto run;
@@ -2129,7 +2129,7 @@ run:
       {
          // cleanup and shutdown the thread
          //         threadWnd.detach();
-         __end_thread((m_papp), nResult);
+         __end_thread((m_pbaseapp), nResult);
       }
       catch(...)
       {

@@ -7,4 +7,4 @@
 #include "os.h"
 #include "win_internal.h"
 
-CLASS_DECL_win void vfxThrowFileException(sp(base_application) papp, int32_t cause, LONG lOsError, const char * lpszFileName = NULL);
+//CLASS_DECL_win void throw_file_exception(sp(base_application) papp, int32_t cause, LONG lOsError, const char * lpszFileName = NULL);

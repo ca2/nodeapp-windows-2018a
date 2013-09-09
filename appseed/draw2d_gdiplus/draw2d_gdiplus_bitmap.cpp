@@ -28,7 +28,7 @@ namespace draw2d_gdiplus
 
       if(m_pdata != NULL)
       {
-         ca2_free(m_pdata);
+         memory_free(m_pdata);
          m_pdata = NULL;
       }
 
@@ -41,7 +41,7 @@ namespace draw2d_gdiplus
 
       if(m_pdata != NULL)
       {
-         ca2_free(m_pdata);
+         memory_free(m_pdata);
          m_pdata = NULL;
       }
       
@@ -73,11 +73,11 @@ namespace draw2d_gdiplus
 
       if(m_pdata != NULL)
       {
-         ca2_free(m_pdata);
+         memory_free(m_pdata);
          m_pdata = NULL;
       }
 
-      m_pdata = ca2_alloc(abs(4 * lpbmi->bmiHeader.biWidth * lpbmi->bmiHeader.biHeight));
+      m_pdata = memory_alloc(abs(4 * lpbmi->bmiHeader.biWidth * lpbmi->bmiHeader.biHeight));
 
       if(m_pdata == NULL)
          return FALSE;
@@ -86,7 +86,7 @@ namespace draw2d_gdiplus
 
       if(m_pbitmap == NULL)
       {
-         ca2_free(m_pdata);
+         memory_free(m_pdata);
          m_pdata = NULL;
          return FALSE;
       }
@@ -170,7 +170,7 @@ namespace draw2d_gdiplus
 
       if(m_pdata != NULL)
       {
-         ca2_free(m_pdata);
+         memory_free(m_pdata);
          m_pdata = NULL;
       }
 
@@ -190,7 +190,7 @@ namespace draw2d_gdiplus
 
       if(m_pdata != NULL)
       {
-         ca2_free(m_pdata);
+         memory_free(m_pdata);
          m_pdata = NULL;
       }
 

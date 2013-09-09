@@ -14,13 +14,6 @@ namespace draw2d_gdiplus
    {
    public:
 
-      static float Cosines[360];
-      static float Sines[360];
-      static int64_t CosN[360]; // * 1 << 31
-      static int64_t SinN[360]; 
-      static int64_t Cos10N[10]; // until 10 degress
-      static int64_t Sin10N[10]; // more precision * 1 << 34
-      static double dPi;
 
       BITMAPINFO           m_info;
       ::draw2d::bitmap_sp      m_spbitmap;
@@ -40,7 +33,6 @@ namespace draw2d_gdiplus
       virtual void construct(int32_t cx, int32_t cy);
       virtual ~dib();
 
-      static void s_initialize();
       void stretch_dib(::draw2d::dib * pdib);
 
       bool dc_select(bool bSelect = true);

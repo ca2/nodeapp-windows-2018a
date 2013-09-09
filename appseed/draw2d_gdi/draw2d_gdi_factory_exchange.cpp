@@ -5,7 +5,7 @@ namespace draw2d_gdi
 {
 
 
-   factory_exchange::factory_exchange(application * papp) :
+   factory_exchange::factory_exchange(base_application * papp) :
       element(papp)
    {
 
@@ -18,8 +18,6 @@ namespace draw2d_gdi
       System.factory().cloneable_large < region               >  (System.type_info < ::draw2d::region             > ());
       System.factory().cloneable_large < font                 >  (System.type_info < ::draw2d::font               > ());
       System.factory().cloneable_large < ::draw2d::path       >  (System.type_info < ::draw2d::path               > ());
-
-      ::draw2d_gdi::dib::s_initialize();
 
    }
 

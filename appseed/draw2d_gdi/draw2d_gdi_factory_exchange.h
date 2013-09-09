@@ -11,7 +11,7 @@ namespace draw2d_gdi
    public:
 
 
-      factory_exchange(application * papp);
+      factory_exchange(base_application * papp);
       virtual ~factory_exchange();
 
 

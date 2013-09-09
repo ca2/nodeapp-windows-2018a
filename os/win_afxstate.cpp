@@ -354,9 +354,9 @@ bool CLASS_DECL_win __is_module_dll()
    return __get_module_state()->m_bDLL;
 }
 
-bool CLASS_DECL_win __init_current_state_app()
+/*bool CLASS_DECL_win __init_current_state_app()
 {
-   sp(base_application) pApp = __get_module_state()->m_pCurrentWinApp;
+   sp(::application) pApp = __get_module_state()->m_pCurrentWinApp;
    if (pApp != NULL && !pApp->initialize_instance())
    {
       // Init Failed
@@ -371,7 +371,7 @@ bool CLASS_DECL_win __init_current_state_app()
       return FALSE;
    }
    return TRUE;
-}
+}*/
 
 CLASS_DECL_win __MODULE_THREAD_STATE * __get_module_thread_state()
 {

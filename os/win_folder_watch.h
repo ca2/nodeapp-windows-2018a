@@ -1,15 +1,19 @@
 #pragma once
 
+
 namespace win
 {
 
+
    class CLASS_DECL_win folder_watch :
-      virtual public ::core::folder_watch,
-      virtual public thread
+      virtual public ::file::folder_watch,
+      virtual public ::thread
    {
    public:
       
+
       folder_watch(sp(base_application) papp);
+
 
       virtual bool watch(const char * pszPath);
 
@@ -21,3 +25,7 @@ namespace win
 
 
 } // namespace win
+
+
+
+

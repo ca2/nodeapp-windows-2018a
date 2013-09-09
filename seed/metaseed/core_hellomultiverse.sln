@@ -14,6 +14,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_hellomultiverse", 
 		{AC98B756-E84C-4A70-9CDB-E9812FEF9B98} = {AC98B756-E84C-4A70-9CDB-E9812FEF9B98}
 		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF} = {51F51C57-0947-4D1D-850E-2F4BE6C88DCF}
 		{87965269-EA4E-42AA-A3AF-A2030D49DC5C} = {87965269-EA4E-42AA-A3AF-A2030D49DC5C}
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593} = {2652C96F-6E86-4ED1-B3B6-AC977DFB0593}
 		{E6C58C82-71E5-48E6-98ED-1B505D6F10C2} = {E6C58C82-71E5-48E6-98ED-1B505D6F10C2}
 		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF} = {9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}
 		{B39ED2B3-D53A-4077-B957-930979A3577D} = {B39ED2B3-D53A-4077-B957-930979A3577D}
@@ -40,25 +41,25 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_uinteraction", "..
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_deepfish", "..\..\..\app-core\appseed\deepfish\deepfish.vcxproj", "{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_ca2freeimage", "..\..\..\app\thirdparty\appseed\FreeImage\FreeImage.vcxproj", "{B39ED2B3-D53A-4077-B957-930979A3577D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basefreeimage", "..\..\..\app\thirdparty\appseed\FreeImage\FreeImage.vcxproj", "{B39ED2B3-D53A-4077-B957-930979A3577D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_ca2zlib", "..\..\..\app\thirdparty\appseed\zlib\_ca2zlib.vcxproj", "{9FFC2CF6-737C-43DB-A1EE-383F7BFDB05B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basezlib", "..\..\..\app\thirdparty\appseed\zlib\_ca2zlib.vcxproj", "{9FFC2CF6-737C-43DB-A1EE-383F7BFDB05B}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_alarm", "..\..\..\app-core\appseed\alarm\alarm.vcxproj", "{19841511-0204-1977-A73E-2CD949AA3AF6}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_deepfish_alarm", "..\..\..\app-core\appseed\deepfish_alarm\deepfish_alarm.vcxproj", "{52F96A19-6F3A-45AC-926B-256082D8FF5D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_ca2freetype", "..\..\..\app\thirdparty\appseed\freetype\freetype.vcxproj", "{771F4B49-CAD1-438F-B272-20F3EB8E88F1}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basefreetype", "..\..\..\app\thirdparty\appseed\freetype\freetype.vcxproj", "{771F4B49-CAD1-438F-B272-20F3EB8E88F1}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_ca2openssl", "..\..\..\app\thirdparty\appseed\openssl\openssl.vcxproj", "{AC98B756-E84C-4A70-9CDB-E9812FEF9B98}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "baseopenssl", "..\..\..\app\thirdparty\appseed\openssl\openssl.vcxproj", "{AC98B756-E84C-4A70-9CDB-E9812FEF9B98}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "draw2d_gdiplus", "..\..\appseed\draw2d_gdiplus\draw2d_gdiplus.vcxproj", "{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "draw2d_cairo", "..\..\..\app\appseed\draw2d_cairo\draw2d_cairo.vcxproj", "{B5B26A30-A18D-4DC2-BACE-48C2DE33CD75}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_ca2cairo", "..\..\..\app\thirdparty\appseed\cairo\_ca2cairo.vcxproj", "{E6C58C82-71E5-48E6-98ED-1B505D6F10C2}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basecairo", "..\..\..\app\thirdparty\appseed\cairo\_ca2cairo.vcxproj", "{E6C58C82-71E5-48E6-98ED-1B505D6F10C2}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_ca2pixman", "..\..\..\app\thirdparty\appseed\pixman\_ca2pixman.vcxproj", "{63108F1C-EAA8-4C49-A591-13F813A76B05}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basepixman", "..\..\..\app\thirdparty\appseed\pixman\_ca2pixman.vcxproj", "{63108F1C-EAA8-4C49-A591-13F813A76B05}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{26C8BCA3-EE82-4278-9032-DE43BCAD227B}"
 	ProjectSection(SolutionItems) = preProject
@@ -69,11 +70,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "draw2d_direct2d", "..\..\..
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "draw2d_gdi", "..\..\appseed\draw2d_gdi\draw2d_gdi.vcxproj", "{87965269-EA4E-42AA-A3AF-A2030D49DC5C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_base", "..\..\..\app\appseed\base\base.vcxproj", "{4D7D3626-ADA6-4CA2-9566-ED7B131E3D51}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "base", "..\..\..\app\appseed\base\base.vcxproj", "{4D7D3626-ADA6-4CA2-9566-ED7B131E3D51}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "boot", "..\..\..\app\appseed\boot\boot.vcxproj", "{AB77745A-AF30-4253-9E4B-961BF2D98641}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "core", "..\..\..\app\appseed\core\core.vcxproj", "{AFC48570-75E4-46BD-B8AB-4590B257E1C8}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basemysql", "..\..\..\app\thirdparty\appseed\mysql\mysql.vcxproj", "{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1685,6 +1688,94 @@ Global
 		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.Release|Win32.Build.0 = basis|Win32
 		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.Release|x64.ActiveCfg = basis|x64
 		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.Release|x64.Build.0 = basis|x64
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.basis_v110|Android.ActiveCfg = basis|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.basis_v110|Android.Build.0 = basis|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.basis_v110|Android.Deploy.0 = basis|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.basis_v110|ARM.ActiveCfg = basis|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.basis_v110|Win32.ActiveCfg = basis|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.basis_v110|Win32.Build.0 = basis|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.basis_v110|x64.ActiveCfg = basis|x64
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.basis_v110|x64.Build.0 = basis|x64
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.basis|Android.ActiveCfg = basis|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.basis|Android.Build.0 = basis|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.basis|Android.Deploy.0 = basis|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.basis|ARM.ActiveCfg = basis|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.basis|Win32.ActiveCfg = basis|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.basis|Win32.Build.0 = basis|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.basis|x64.ActiveCfg = basis|x64
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.basis|x64.Build.0 = basis|x64
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.codeanalysis|Android.ActiveCfg = basis|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.codeanalysis|Android.Build.0 = basis|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.codeanalysis|Android.Deploy.0 = basis|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.codeanalysis|ARM.ActiveCfg = basis|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.codeanalysis|Win32.ActiveCfg = basis|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.codeanalysis|Win32.Build.0 = basis|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.codeanalysis|x64.ActiveCfg = basis|x64
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.codeanalysis|x64.Build.0 = basis|x64
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Debug Multithreaded|Android.ActiveCfg = basis|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Debug Multithreaded|Android.Build.0 = basis|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Debug Multithreaded|Android.Deploy.0 = basis|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Debug Multithreaded|ARM.ActiveCfg = basis|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Debug Multithreaded|Win32.ActiveCfg = basis|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Debug Multithreaded|Win32.Build.0 = basis|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Debug Multithreaded|x64.ActiveCfg = basis|x64
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Debug Multithreaded|x64.Build.0 = basis|x64
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Debug Singlethreaded|Android.ActiveCfg = basis|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Debug Singlethreaded|Android.Build.0 = basis|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Debug Singlethreaded|Android.Deploy.0 = basis|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Debug Singlethreaded|ARM.ActiveCfg = basis|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Debug Singlethreaded|Win32.ActiveCfg = basis|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Debug Singlethreaded|Win32.Build.0 = basis|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Debug Singlethreaded|x64.ActiveCfg = basis|x64
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Debug Singlethreaded|x64.Build.0 = basis|x64
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Debug|Android.ActiveCfg = basis|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Debug|Android.Build.0 = basis|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Debug|Android.Deploy.0 = basis|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Debug|ARM.ActiveCfg = basis|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Debug|Win32.ActiveCfg = basis|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Debug|Win32.Build.0 = basis|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Debug|x64.ActiveCfg = basis|x64
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Debug|x64.Build.0 = basis|x64
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.memdleak|Android.ActiveCfg = memdleak|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.memdleak|Android.Build.0 = memdleak|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.memdleak|Android.Deploy.0 = memdleak|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.memdleak|ARM.ActiveCfg = memdleak|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.memdleak|Win32.ActiveCfg = memdleak|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.memdleak|Win32.Build.0 = memdleak|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.memdleak|x64.ActiveCfg = memdleak|x64
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.memdleak|x64.Build.0 = memdleak|x64
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.profiler|Android.ActiveCfg = profiler|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.profiler|Android.Build.0 = profiler|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.profiler|Android.Deploy.0 = profiler|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.profiler|ARM.ActiveCfg = profiler|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.profiler|Win32.ActiveCfg = profiler|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.profiler|Win32.Build.0 = profiler|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.profiler|x64.ActiveCfg = profiler|x64
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.profiler|x64.Build.0 = profiler|x64
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Release Multithreaded|Android.ActiveCfg = basis|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Release Multithreaded|Android.Build.0 = basis|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Release Multithreaded|Android.Deploy.0 = basis|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Release Multithreaded|ARM.ActiveCfg = basis|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Release Multithreaded|Win32.ActiveCfg = basis|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Release Multithreaded|Win32.Build.0 = basis|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Release Multithreaded|x64.ActiveCfg = basis|x64
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Release Multithreaded|x64.Build.0 = basis|x64
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Release Singlethreaded|Android.ActiveCfg = basis|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Release Singlethreaded|Android.Build.0 = basis|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Release Singlethreaded|Android.Deploy.0 = basis|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Release Singlethreaded|ARM.ActiveCfg = basis|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Release Singlethreaded|Win32.ActiveCfg = basis|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Release Singlethreaded|Win32.Build.0 = basis|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Release Singlethreaded|x64.ActiveCfg = basis|x64
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Release Singlethreaded|x64.Build.0 = basis|x64
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Release|Android.ActiveCfg = basis|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Release|Android.Build.0 = basis|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Release|Android.Deploy.0 = basis|Android
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Release|ARM.ActiveCfg = basis|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Release|Win32.ActiveCfg = basis|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Release|Win32.Build.0 = basis|Win32
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Release|x64.ActiveCfg = basis|x64
+		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.Release|x64.Build.0 = basis|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

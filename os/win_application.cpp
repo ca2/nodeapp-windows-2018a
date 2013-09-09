@@ -12,11 +12,11 @@ namespace win
       element(papp)
    {
 
-      thread::m_p.create(allocer());
+      ::thread::m_p.create(allocer());
 
-      thread::m_p->m_p = this;
+      ::thread::m_p->m_p = this;
 
-      WIN_THREAD(thread::m_p.m_p)->m_pAppThread = this;
+      WIN_THREAD(::thread::m_p.m_p)->m_pAppThread = this;
 
       m_psystem                        = papp->m_pplaneapp->m_psystem;
 
@@ -464,7 +464,7 @@ namespace win
 
       WIN_THREAD(thread::m_p.m_p)->m_bRun = false;
 
-      int32_t iRet = application::exit_instance();
+      int32_t iRet = ::application::exit_instance();
 
       //smart_pointer < application_base >::destroy();
 
@@ -547,7 +547,7 @@ namespace win
       return NULL;
    }
 
-   thread * application::GetThread()
+   ::thread * application::GetThread()
    {
       if(__get_thread() == NULL)
          return NULL;
@@ -721,7 +721,7 @@ namespace win
          // fill in the initial state for the application
          // Windows specific initialization (not done if no application)
          m_hInstance = hInstance;
-         m_papp->m_hInstance = hInstance;
+         m_pbaseapp->m_pplaneapp->m_hInstance = hInstance;
          //hPrevInstance; // Obsolete.
          m_strCmdLine = strCmdLine;
          m_nCmdShow = nCmdShow;

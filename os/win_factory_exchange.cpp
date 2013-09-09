@@ -9,14 +9,14 @@ namespace win
       element(papp)
    {
 
-      System.factory().cloneable_large    < stdio_file         >  (System.type_info < ::core::text_file           > ()        );
+      System.factory().cloneable_large    < stdio_file         >  (System.type_info < ::file::text_buffer         > ()        );
       System.factory().cloneable_large    < file               >  (System.type_info < ::file::binary_buffer       > ()        );
-      System.factory().cloneable_large    < file_set           >  (System.type_info < ::core::file_set            > ()        );
-      System.factory().cloneable          < file_system        >  (System.type_info < ::core::file_system         > ()  , 1   );
+      System.factory().cloneable_large    < file_set           >  (System.type_info < ::file::set                 > ()        );
+      System.factory().cloneable          < file_system        >  (System.type_info < ::file::system              > ()  , 1   );
       System.factory().cloneable          < WinResource        >  (System.type_info < ::core::resource            > ()  , 1   );
       System.factory().cloneable          < application        >  (System.type_info < ::application_base          > ()  , 1   );
-      System.factory().cloneable          < dir                >  (System.type_info < ::core::dir::system         > ()  , 1   );
-      System.factory().cloneable_small    < folder_watch       >  (System.type_info < ::core::folder_watch        > ()        );
+      System.factory().cloneable          < dir                >  (System.type_info < ::file::dir::system         > ()  , 1   );
+      System.factory().cloneable_small    < folder_watch       >  (System.type_info < ::file::folder_watch        > ()        );
       System.factory().creatable          < window_draw        >  (System.type_info < ::user::window_draw         > ()  , 1   );
       System.factory().creatable_large    < thread             >  (System.type_info < ::thread                    > ()        );
       System.factory().creatable_large    < window             >  (System.type_info < ::user::window              > ()        );

@@ -192,11 +192,11 @@ namespace win
 
    void os::get_all_processes(uint32_array & dwa )
    {
-      dwa.set_size(0);
+      dwa.allocate(0);
       DWORD cbNeeded = 0;
       while(cbNeeded == natural(dwa.get_count()))
       {
-         dwa.set_size(dwa.get_count() + 1024);
+         dwa.allocate(dwa.get_count() + 1024);
          if(!EnumProcesses(
             (DWORD *) dwa.get_data(), 
             (DWORD) (dwa.get_count() * sizeof(DWORD)),
@@ -204,7 +204,7 @@ namespace win
          {
             return;
          }
-         dwa.set_size(cbNeeded / sizeof(DWORD));
+         dwa.allocate(cbNeeded / sizeof(DWORD));
       }
    }
 

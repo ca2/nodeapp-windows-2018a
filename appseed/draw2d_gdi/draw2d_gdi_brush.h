@@ -1,7 +1,9 @@
 #pragma once
 
+
 namespace draw2d_gdi
 {
+
 
    class CLASS_DECL_DRAW2D_GDI brush : 
       virtual public ::draw2d_gdi::object,
@@ -12,7 +14,7 @@ namespace draw2d_gdi
       bool m_bProcess;
 
       // Constructors
-      brush(application * papp);
+      brush(base_application * papp);
       virtual ~brush();
 
 
@@ -46,3 +48,7 @@ namespace draw2d_gdi
 
 
 } // namespace draw2d_gdi
+
+
+
+

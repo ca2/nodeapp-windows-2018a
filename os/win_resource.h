@@ -11,7 +11,7 @@ public:
    virtual ~WinResource();
    
    bool ReadResource(string & str, HINSTANCE hinst, UINT nID, const char * lpcszType);
-   bool ReadResource(::file::binary_buffer & file, HINSTANCE hinst, UINT nID, const char * lpcszType);
+   bool ReadResource(::file::stream_buffer & file, HINSTANCE hinst, UINT nID, const char * lpcszType);
 
 
 };

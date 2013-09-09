@@ -5,7 +5,8 @@ namespace win
 {
 
 
-   class CLASS_DECL_win file_find : public object
+   class CLASS_DECL_win file_find : 
+      public ::object
    {
    // ementation
    protected:

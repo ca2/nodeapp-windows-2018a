@@ -86,10 +86,10 @@ namespace win
 
       ASSERT_VALID(this);
       ASSERT(__is_valid_string(lpszFileName));
-      ASSERT((nOpenFlags & type_text) == 0);   // text mode not supported
+      ASSERT((nOpenFlags & ::file::type_text) == 0);   // text mode not supported
 
       // file objects are always binary and CreateFile does not need flag
-      nOpenFlags &= ~(UINT)type_binary;
+      nOpenFlags &= ~(UINT)::file::type_binary;
 
 
       if(nOpenFlags & ::file::defer_create_directory)
@@ -105,20 +105,20 @@ namespace win
       m_wstrFileName    = ::str::international::utf8_to_unicode(m_strFileName);
 
       ASSERT(sizeof(HANDLE) == sizeof(uint_ptr));
-      ASSERT(shareCompat == 0);
+      ASSERT(::file::share_compat == 0);
 
       // map read/write mode
-      ASSERT((mode_read|mode_write|mode_read_write) == 3);
+      ASSERT((::file::mode_read|::file::mode_write|::file::mode_read_write) == 3);
       DWORD dwAccess = 0;
       switch (nOpenFlags & 3)
       {
-      case mode_read:
+      case ::file::mode_read:
          dwAccess = GENERIC_READ;
          break;
-      case mode_write:
+      case ::file::mode_write:
          dwAccess = GENERIC_WRITE;
          break;
-      case mode_read_write:
+      case ::file::mode_read_write:
          dwAccess = GENERIC_READ|GENERIC_WRITE;
          break;
       default:
@@ -132,17 +132,17 @@ namespace win
       {
       default:
          ASSERT(FALSE);  // invalid share mode?
-      case shareCompat:
-      case shareExclusive:
+      case ::file::share_compat:
+      case ::file::share_exclusive:
          dwShareMode = 0;
          break;
-      case shareDenyWrite:
+      case ::file::share_deny_write:
          dwShareMode = FILE_SHARE_READ;
          break;
-      case shareDenyRead:
+      case ::file::share_deny_read:
          dwShareMode = FILE_SHARE_WRITE;
          break;
-      case share_deny_none:
+      case ::file::share_deny_none:
          dwShareMode = FILE_SHARE_WRITE|FILE_SHARE_READ;
          break;
       }
@@ -153,13 +153,13 @@ namespace win
       SECURITY_ATTRIBUTES sa;
       sa.nLength = sizeof(sa);
       sa.lpSecurityDescriptor = NULL;
-      sa.bInheritHandle = (nOpenFlags & modeNoInherit) == 0;
+      sa.bInheritHandle = (nOpenFlags & ::file::mode_no_inherit) == 0;
 
       // map creation flags
       DWORD dwCreateFlag;
-      if (nOpenFlags & mode_create)
+      if (nOpenFlags & ::file::mode_create)
       {
-         if (nOpenFlags & mode_no_truncate)
+         if (nOpenFlags & ::file::mode_no_truncate)
             dwCreateFlag = OPEN_ALWAYS;
          else
             dwCreateFlag = CREATE_ALWAYS;
@@ -192,7 +192,7 @@ namespace win
             {*/
 
 
-            vfxThrowFileException(get_app(), file_exception::OsErrorToException(dwLastError), dwLastError, lpszFileName);
+            throw_file_exception(get_app(), file_exception::OsErrorToException(dwLastError), dwLastError, lpszFileName);
 
             //}
 
@@ -231,7 +231,7 @@ namespace win
 
 
             DWORD dwLastError = ::GetLastError();
-            vfxThrowFileException(get_app(), file_exception::OsErrorToException(dwLastError), dwLastError, lpszFileName);
+            throw_file_exception(get_app(), file_exception::OsErrorToException(dwLastError), dwLastError, lpszFileName);
 
 
             //}
@@ -282,7 +282,7 @@ namespace win
 
       // Win32s will not return an error all the time (usually DISK_FULL)
       if (nWritten != nCount)
-         vfxThrowFileException(get_app(), ::file::exception::diskFull, -1, m_strFileName);
+         throw_file_exception(get_app(), ::file::exception::diskFull, -1, m_strFileName);
    }
 
    file_position file::seek(file_offset lOff, ::file::e_seek nFrom)
@@ -465,48 +465,8 @@ namespace win
 
 
 
-   /////////////////////////////////////////////////////////////////////////////
-   // FileException helpers
-
-#ifdef DEBUG
-   static const char * rgszFileExceptionCause[] =
-   {
-      "none",
-      "generic",
-      "fileNotFound",
-      "badPath",
-      "tooManyOpenFiles",
-      "accessDenied",
-      "invalidFile",
-      "removeCurrentDir",
-      "directoryFull",
-      "badSeek",
-      "hardIO",
-      "sharingViolation",
-      "lockViolation",
-      "diskFull",
-      "endOfFile",
-   };
-   static const char szUnknown[] = "unknown";
-#endif
 
 
-   /*void CLASS_DECL_win vfxThrowFileException(int32_t cause, LONG lOsError,
-   //   const char * lpszFileName /* == NULL */
-   /*{
-   #ifdef DEBUG
-   const char * lpsz;
-   if (cause >= 0 && cause < _countof(rgszFileExceptionCause))
-   lpsz = rgszFileExceptionCause[cause];
-   else
-   lpsz = szUnknown;
-   TRACE3("file exception: %hs, file %W, App error information = %ld.\n",
-   lpsz, (lpszFileName == NULL) ? L"Unknown" : lpszFileName, lOsError);
-   #endif
-   THROW(new FileException(cause, lOsError, lpszFileName));
-   }*/
-
-   /* Error Codes */
 
 #define EPERM           1
 #define ENOENT          2
@@ -595,13 +555,13 @@ namespace win
    void file_exception::ThrowOsError(sp(base_application) papp, LONG lOsError, const char * lpszFileName /* = NULL */)
    {
       if (lOsError != 0)
-         vfxThrowFileException(papp, file_exception::OsErrorToException(lOsError), lOsError, lpszFileName);
+         throw_file_exception(papp, file_exception::OsErrorToException(lOsError), lOsError, lpszFileName);
    }
 
    void file_exception::ThrowErrno(sp(base_application) papp, int32_t nErrno, const char * lpszFileName /* = NULL */)
    {
       if (nErrno != 0)
-         vfxThrowFileException(papp, file_exception::ErrnoToException(nErrno), _doserrno, lpszFileName);
+         throw_file_exception(papp, file_exception::ErrnoToException(nErrno), _doserrno, lpszFileName);
    }
 
 

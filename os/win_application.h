@@ -30,7 +30,7 @@ namespace win
 
 
    class CLASS_DECL_win application :
-      virtual public application
+      virtual public ::application
    {
    public:
 

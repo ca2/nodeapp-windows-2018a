@@ -26,7 +26,7 @@ namespace win
 
 
    class CLASS_DECL_win thread :
-      virtual public thread,
+      virtual public ::thread,
       virtual public message_window_simple_callback
    {
    public:
@@ -42,7 +42,7 @@ namespace win
 
 
       // list of frame_window objects for thread
-      simple_list < sp(::user::frame_window) >   m_frameList;
+      list < sp(::user::frame_window) >   m_frameList;
 
       // temporary/permanent map state
       DWORD m_nTempMapLock;           // if not 0, temp maps locked
@@ -56,7 +56,7 @@ namespace win
       UINT                                m_nDisablePumpCount;
       mutex                               m_mutexUiPtra;
       
-      thread *                      m_pAppThread;
+      ::thread *                      m_pAppThread;
 
       UINT                                m_dwFinishTimeout;
 
@@ -103,7 +103,7 @@ namespace win
       virtual void set_run(bool bRun = true);
       virtual event & get_finish_event();
       virtual bool get_run();
-      virtual thread * get_app_thread();
+      virtual ::thread * get_app_thread();
       virtual sp(::user::interaction) get_active_ui();
       virtual sp(::user::interaction) set_active_ui(sp(::user::interaction) pui);
       virtual void step_timer();
@@ -204,7 +204,7 @@ namespace win
    };
 
 
-   CLASS_DECL_win thread * get_thread();
+   CLASS_DECL_win base_thread * get_thread();
    CLASS_DECL_win ::thread_state * get_thread_state();
 
 

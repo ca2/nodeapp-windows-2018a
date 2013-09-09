@@ -6,8 +6,8 @@ namespace win
 
 
    dir::dir(sp(base_application) papp) :
-      element(papp),
-      ::core::dir::system(papp),
+      ::element(papp),
+      ::file::dir::system(papp),
       m_path(papp)
    {
       
@@ -181,7 +181,7 @@ namespace win
    string dir::relpath(const char * lpcszSource, const char * lpcszRelative, const char * psz2)
    {
       const char * pszRequest;
-      if(::core::is_url(lpcszSource, &pszRequest))
+      if(::url::is_url(lpcszSource, &pszRequest))
       {
          if(::str::begins(lpcszRelative, "/"))
          {
@@ -287,9 +287,9 @@ namespace win
 
    void dir::ls_pattern(sp(base_application) papp, const char * lpcsz, const char * pszPattern, stringa * pstraPath, stringa * pstraTitle, bool_array * pbaIsDir, array < int64_t, int64_t > * piaSize)
    {
-      if(::core::dir::system::is(lpcsz, papp)) // if base class "already" "says" it is a dir, let it handle it: may be not a operational system dir, e.g., zip or compressed directory...
+      if(::file::dir::system::is(lpcsz, papp)) // if base class "already" "says" it is a dir, let it handle it: may be not a operational system dir, e.g., zip or compressed directory...
       {
-         return ::core::dir::system::ls_pattern(papp, lpcsz, pszPattern, pstraPath, pstraTitle, pbaIsDir, piaSize);
+         return ::file::dir::system::ls_pattern(papp, lpcsz, pszPattern, pstraPath, pstraTitle, pbaIsDir, piaSize);
       }
       file_find file_find;
       bool bWorking;
@@ -398,7 +398,7 @@ namespace win
       }
       else
       {
-         ::core::dir::system::rls(papp, lpcsz, pstraPath, pstraTitle, pstraRelative, eextract == extract_all ? extract_all : extract_none);
+         ::file::dir::system::rls(papp, lpcsz, pstraPath, pstraTitle, pstraRelative, eextract == extract_all ? extract_all : extract_none);
       }
    }
 
@@ -452,7 +452,7 @@ namespace win
       bWorking = file_find.FindFile(System.dir().path(lpcsz, "*.*"));
       if(!bWorking)
       {
-         ::core::dir::system::ls_dir(papp, lpcsz, pstraPath, pstraTitle);
+         ::file::dir::system::ls_dir(papp, lpcsz, pstraPath, pstraTitle);
          return;
       }
       while(bWorking)
@@ -515,7 +515,7 @@ namespace win
          return bIsDir;
       }
 
-      if(::core::dir::system::is(lpcszPath, papp))
+      if(::file::dir::system::is(lpcszPath, papp))
          return true;
 
 
@@ -548,7 +548,7 @@ namespace win
    bool dir::is(const string & strPath, sp(base_application) papp)
    {
       
-      if(::core::dir::system::is(strPath, papp))
+      if(::file::dir::system::is(strPath, papp))
          return true;
 
       bool bIsDir;

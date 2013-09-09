@@ -5,7 +5,7 @@ namespace draw2d_gdi
 {
 
 
-   bitmap::bitmap(application * papp) :
+   bitmap::bitmap(base_application * papp) :
       element(papp)
    { 
 
