@@ -1568,8 +1568,8 @@ namespace draw2d_gdi
 
       wstring wstr = ::str::international::utf8_to_unicode(str);
 
-      ::draw2d::brush & brush = get_current_brush();
-      ::draw2d::font & font = get_current_font();
+      ::draw2d::brush & brush = *get_current_brush();
+      ::draw2d::font & font = *get_current_font();
 
       //if(m_spbrush.is_null() || GetAValue(m_spbrush->m_cr) == 255 || m_spdib.is_null())
 
@@ -2497,7 +2497,7 @@ namespace draw2d_gdi
 
       ASSERT(get_handle1() != NULL); 
 
-      ::draw2d::brush & brush = get_current_brush();
+      ::draw2d::brush & brush = *get_current_brush();
 
       if(brush.m_etype == ::draw2d::brush::type_null)
          return true;
@@ -2629,7 +2629,7 @@ namespace draw2d_gdi
 
       ASSERT(get_handle1() != NULL); 
 
-      ::draw2d::pen & pen = get_current_pen();
+      ::draw2d::pen & pen = *get_current_pen();
 
       if(pen.m_etype == ::draw2d::pen::type_null)
          return true;
@@ -2700,12 +2700,12 @@ namespace draw2d_gdi
 
       ASSERT(get_handle1() != NULL); 
 
-      ::draw2d::pen & pen = get_current_pen();
+      ::draw2d::pen & pen = *get_current_pen();
 
       if(pen.m_etype == ::draw2d::pen::type_null)
          return internal_fill_path(pfnInternalSetPath, pparam, lpcrect);
 
-      ::draw2d::brush & brush = get_current_brush();
+      ::draw2d::brush & brush = *get_current_brush();
 
       if(brush.m_etype == ::draw2d::brush::type_null)
          return internal_stroke_path(pfnInternalSetPath, pparam, lpcrect);

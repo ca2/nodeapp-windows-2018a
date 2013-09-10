@@ -164,7 +164,7 @@ namespace win
       return lpszResult;
    }
 
-   UINT stdio_file::read_string(string & rString)
+   bool stdio_file::read_string(string & rString)
    {
       ASSERT_VALID(this);
 

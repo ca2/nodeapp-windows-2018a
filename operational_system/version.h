@@ -231,7 +231,7 @@
 #define __DATADEF
 #define __API CLASS_DECL_ca2
 
-// used when building the "core" MFC80.DLL
+// used when building the "core.dll" MFC80.DLL
 #ifndef __CORE_DATA
 	#define __CORE_DATA CLASS_DECL_ca2
 	#define __CORE_DATADEF

@@ -510,7 +510,7 @@ namespace win
 
 
 
-   void thread::set_p(thread * p)
+   void thread::set_p(::thread * p)
    {
       m_p = p;
    }

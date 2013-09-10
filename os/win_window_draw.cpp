@@ -419,7 +419,7 @@ namespace win
          return false;
       }
 
-
+      synch_lock slUser(&user_mutex());
       //user::oswindow_array oswindowa;
 
       //get_wnda(oswindowa);

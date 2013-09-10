@@ -22,7 +22,7 @@ namespace win
 
       virtual void write_string(const char * lpsz);
       virtual char * read_string(char * lpsz, UINT nMax);
-      virtual UINT read_string(string & rString);
+      virtual bool read_string(string & rString);
 
       
       void dump(dump_context & dumpcontext) const;

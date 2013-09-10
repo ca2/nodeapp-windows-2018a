@@ -4004,7 +4004,7 @@ ExitModal:
          System.GetThread()->post_thread_message(WM_NULL);
          for(int32_t i = iLevel; i >= 0; i--)
          {
-            thread * pthread = oprop(string("RunModalLoop.thread(") + ::str::from(i) + ")").element < thread > ();
+            ::thread * pthread = oprop(string("RunModalLoop.thread(") + ::str::from(i) + ")").element < ::thread > ();
             try
             {
                pthread->post_thread_message(WM_NULL);
@@ -5980,7 +5980,7 @@ ExitModal:
             // the window should not be in the permanent map at this time
             ASSERT(::win::window::FromHandlePermanent(oswindow) == NULL);
 
-            pWndInit->m_pthread = dynamic_cast < thread * > (::win::get_thread());
+            pWndInit->m_pthread = dynamic_cast < base_thread * > (::win::get_thread());
             if(pWndInit->m_pthread != NULL)
             {
                pWndInit->m_pthread->m_pthread->add(pWndInit);
