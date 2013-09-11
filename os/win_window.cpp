@@ -4004,7 +4004,7 @@ ExitModal:
          System.GetThread()->post_thread_message(WM_NULL);
          for(int32_t i = iLevel; i >= 0; i--)
          {
-            ::thread * pthread = oprop(string("RunModalLoop.thread(") + ::str::from(i) + ")").element < ::thread > ();
+            ::thread * pthread = oprop(string("RunModalLoop.thread(") + ::str::from(i) + ")").cast < ::thread > ();
             try
             {
                pthread->post_thread_message(WM_NULL);
