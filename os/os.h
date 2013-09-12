@@ -2,7 +2,7 @@
 
 #define SECURITY_WIN32
 
-#include "core.h"
+#include "core/core.h"
 #include <shlobj.h>
 #include <Security.h>
 #include <shlobj.h>
