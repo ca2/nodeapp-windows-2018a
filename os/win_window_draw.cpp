@@ -512,7 +512,7 @@ namespace win
       {
          try
          {
-            if(wndpa[l].m_psession == NULL)
+            if(wndpa[l].m_psession.is_null())
             {
                try
                {

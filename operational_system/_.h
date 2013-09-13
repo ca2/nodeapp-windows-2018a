@@ -3,12 +3,16 @@
 
 #define WINDOWS
 #define WINDOWSEX
+#ifndef WIN32
 #define WIN32
+#endif
 #define DECL_C __cdecl
 
 
 #define _CRT_SECURE_NO_WARNINGS
+#ifndef _CRT_SECURE_NO_DEPRECATE
 #define _CRT_SECURE_NO_DEPRECATE
+#endif
 #define _CRT_NONSTDC_NO_DEPRECATE
 #define _CRT_RAND_S
 
