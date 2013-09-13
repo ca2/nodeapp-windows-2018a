@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "core.h"
+#include "core/core.h"
 
 
 #ifdef _CA2_DRAW2D_GDIPLUS_LIBRARY

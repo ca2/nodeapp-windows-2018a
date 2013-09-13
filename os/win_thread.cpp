@@ -251,11 +251,11 @@ void __internal_pre_translate_message(signal_details * pobj)
          {
             try
             {
-               for(int32_t i = 0; i < pthread->m_pbaseapp->m_pplaneapp->m_psession->frames().get_count(); i++)
+               for(int32_t i = 0; i < pthread->m_pbaseapp->m_pplaneapp->m_psession->m_pplanesession->m_pplanesession->frames().get_count(); i++)
                {
                   try
                   {
-                     sp(::user::interaction) pui = pthread->m_pbaseapp->m_pplaneapp->m_psession->frames()(i);
+                     sp(::user::interaction) pui = pthread->m_pbaseapp->m_pplaneapp->m_psession->m_pplanesession->m_pplanesession->frames()(i);
                      if(pui != NULL)
                      {
                         if(pui->m_pguie != NULL)
@@ -1624,7 +1624,7 @@ stop_run:
                            {
                               try
                               {
-                                 m_pbaseapp->m_pplaneapp->m_psession->pre_translate_message(spbase);
+                                 m_pbaseapp->m_pplaneapp->m_psession->m_pplanesession->m_pplanesession->pre_translate_message(spbase);
                                  if(spbase->m_bRet)
                                     return TRUE;
                               }
@@ -1633,9 +1633,9 @@ stop_run:
                               }
 /*                              try
                               {
-                                 if(m_pbaseapp->m_pplaneapp->m_psession->m_pbergedge != NULL)
+                                 if(m_pbaseapp->m_pplaneapp->m_psession->m_pplanesession->m_pplanesession->m_pbergedge != NULL)
                                  {
-                                    m_pbaseapp->m_pplaneapp->m_psession->m_pbergedgeInterface->pre_translate_message(spbase);
+                                    m_pbaseapp->m_pplaneapp->m_psession->m_pplanesession->m_pplanesession->m_pbergedgeInterface->pre_translate_message(spbase);
                                     if(spbase->m_bRet)
                                        return TRUE;
                                  }

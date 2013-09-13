@@ -1410,7 +1410,7 @@ namespace win
             Session.m_ptCursor = pmouse->m_pt;
             if(m_pbaseapp->m_pplaneapp->m_psession != NULL)
             {
-               m_pbaseapp->m_pplaneapp->m_psession->m_ptCursor = pmouse->m_pt;
+               m_pbaseapp->m_pplaneapp->m_psession->m_pplanesession->m_pplanesession->m_ptCursor = pmouse->m_pt;
             }
          }
          if(m_pguie != NULL && m_pguie != this && m_pguie->m_pbaseapp->m_pplaneapp->m_psession != NULL && m_pguie->m_pbaseapp->m_pplaneapp->m_psession != m_pbaseapp->m_pplaneapp->m_psession)
