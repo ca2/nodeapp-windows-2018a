@@ -44,6 +44,7 @@
 #endif
 
 
+#pragma warning(disable:4250) // disable warning if inherited via dominance
 
 
 
