@@ -12,6 +12,15 @@ LRESULT CALLBACK __activation_window_procedure(oswindow oswindow, UINT nMsg, WPA
 
 const char * gen_OldWndProc = "::core::OldWndProc423";
 
+
+#define __WNDCLASS(s)    "ca2" _T(s)
+#define __WND             __WNDCLASS("Wnd")
+#define __WNDCONTROLBAR   __WNDCLASS("ControlBar")
+#define __WNDMDIFRAME     __WNDCLASS("MDIFrame")
+#define __WNDFRAMEORVIEW  __WNDCLASS("FrameOrView")
+#define __WNDOLECONTROL   __WNDCLASS("OleControl")
+
+
 const char gen_WndControlBar[] = __WNDCONTROLBAR;
 const char gen_WndMDIFrame[] = __WNDMDIFRAME;
 const char gen_WndFrameOrView[] = __WNDFRAMEORVIEW;
@@ -693,13 +702,13 @@ namespace win
       }
 
       // call default, unsubclass, and detach from the map
-      WNDPROC pfnWndProc = WNDPROC(GetWindowLongPtr(get_handle(), GWLP_WNDPROC));
+      WNDPROC pfnWndProc = WNDPROC(::GetWindowLongPtr(get_handle(), GWLP_WNDPROC));
       Default();
-      if (WNDPROC(GetWindowLongPtr(get_handle(), GWLP_WNDPROC)) == pfnWndProc)
+      if (WNDPROC(::GetWindowLongPtr(get_handle(), GWLP_WNDPROC)) == pfnWndProc)
       {
          WNDPROC pfnSuper = *GetSuperWndProcAddr();
          if (pfnSuper != NULL)
-            SetWindowLongPtr(get_handle(), GWLP_WNDPROC, reinterpret_cast<int_ptr>(pfnSuper));
+            SetWindowLongPtr(GWLP_WNDPROC, reinterpret_cast<int_ptr>(pfnSuper));
       }
 
       detach();
@@ -4085,7 +4094,7 @@ ExitModal:
 
       // set WNDPROC back to original value
       WNDPROC* lplpfn = GetSuperWndProcAddr();
-      SetWindowLongPtr(get_handle(), GWLP_WNDPROC, (int_ptr)*lplpfn);
+      SetWindowLongPtr(GWLP_WNDPROC, (int_ptr)*lplpfn);
       *lplpfn = NULL;
 
       // and detach the oswindow from the window object

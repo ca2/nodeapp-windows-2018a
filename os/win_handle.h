@@ -264,7 +264,7 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (sp(base_a
 
    //bool bEnable = __enable_memory_tracking(FALSE);
 #ifndef ___PORTABLE
-   _PNH pnhOldHandler = __set_new_handler(&__critical_new_handler);
+//   _PNH pnhOldHandler = __set_new_handler(&__critical_new_handler);
 #endif
 
    CT* pTemp = NULL;
@@ -295,7 +295,7 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (sp(base_a
    catch(::exception::base * pe)
    {
 #ifndef ___PORTABLE
-      __set_new_handler(pnhOldHandler);
+//      __set_new_handler(pnhOldHandler);
 #endif
       //__enable_memory_tracking(bEnable);
       ::exception::rethrow(pe);
@@ -303,7 +303,7 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (sp(base_a
    
 
 #ifndef ___PORTABLE
-   __set_new_handler(pnhOldHandler);
+   //__set_new_handler(pnhOldHandler);
 #endif
    //__enable_memory_tracking(bEnable);
 

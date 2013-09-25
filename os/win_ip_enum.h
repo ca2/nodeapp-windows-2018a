@@ -15,7 +15,7 @@ namespace win
 
 
    class CLASS_DECL_win ip_enum :
-      virtual public ::core::ip_enum
+      virtual public ::net::ip_enum
    {
    public:
 
