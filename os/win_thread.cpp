@@ -538,7 +538,7 @@ namespace win
 
    thread::thread(sp(base_application) papp) :
       element(papp),
-      message_window_simple_callback(papp),//,
+      message_queue(papp),//,
       //m_evFinish(FALSE, TRUE)
       ::thread(NULL),
       m_evFinish(papp),
@@ -808,7 +808,7 @@ namespace win
       try
       {
 
-         if(!initialize_message_window(get_app(), ""))
+         if(!create_message_queue(get_app(), ""))
             return;
 
       }
@@ -1925,7 +1925,7 @@ run:
       m_nThreadID = (DWORD) iData;
    }
 
-   void thread::message_window_message_handler(signal_details * pobj)
+   void thread::message_queue_message_handler(signal_details * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
    }
@@ -2119,7 +2119,7 @@ run:
    {
       try
       {
-         finalize_message_window();
+         destroy_message_queue();
       }
       catch(...)
       {

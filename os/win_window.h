@@ -19,7 +19,7 @@ namespace win
 
 
       spa(::user::interaction)         m_guieptraMouseHover;
-      ::message_window_callback *         m_pcallback;
+      ::message_queue_listener *         m_pcallback;
       string                           m_strWindowText;
       bool                             m_bUpdateGraphics;
       //visual::dib_sp                 m_spdib;
@@ -54,7 +54,7 @@ namespace win
       virtual void mouse_hover_add(sp(::user::interaction) pinterface);
       virtual void mouse_hover_remove(sp(::user::interaction) pinterface);
 
-      bool create_message_window(const char * pszName, ::message_window_callback * pcallback = NULL);
+      bool create_message_queue(const char * pszName, ::message_queue_listener * pcallback = NULL);
 
       static const MSG* GetCurrentMessage();
 
