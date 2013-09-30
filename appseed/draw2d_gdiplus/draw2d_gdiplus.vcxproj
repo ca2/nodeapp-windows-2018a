@@ -993,6 +993,9 @@
     <ProjectReference Include="..\..\..\app\thirdparty\appseed\FreeImage\FreeImage.vcxproj">
       <Project>{b39ed2b3-d53a-4077-b957-930979a3577d}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\app\thirdparty\appseed\zlib\_ca2zlib.vcxproj">
+      <Project>{9ffc2cf6-737c-43db-a1ee-383f7bfdb05b}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
