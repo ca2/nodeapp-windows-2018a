@@ -708,7 +708,7 @@ namespace win
       {
          WNDPROC pfnSuper = *GetSuperWndProcAddr();
          if (pfnSuper != NULL)
-            SetWindowLongPtr(GWLP_WNDPROC, reinterpret_cast<int_ptr>(pfnSuper));
+            ::SetWindowLongPtr(get_handle(), GWLP_WNDPROC, reinterpret_cast<int_ptr>(pfnSuper));
       }
 
       detach();
@@ -4094,7 +4094,7 @@ ExitModal:
 
       // set WNDPROC back to original value
       WNDPROC* lplpfn = GetSuperWndProcAddr();
-      SetWindowLongPtr(GWLP_WNDPROC, (int_ptr)*lplpfn);
+      ::SetWindowLongPtr(get_handle(), GWLP_WNDPROC, (int_ptr)*lplpfn);
       *lplpfn = NULL;
 
       // and detach the oswindow from the window object
