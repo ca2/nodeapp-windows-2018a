@@ -138,7 +138,7 @@ namespace production
 
 
 extern "C"
-::ca2::library * get_new_library()
+::core::library * get_new_library()
 {
 
    return new ::ca2::single_application_library < production::application > ("nodeapp");
