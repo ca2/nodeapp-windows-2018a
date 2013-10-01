@@ -10,7 +10,7 @@ namespace music
 
 
       class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM factory_exchange :
-         virtual public ::ca2::object
+         virtual public ::object
       {
       public:
 

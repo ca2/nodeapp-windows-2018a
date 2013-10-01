@@ -19,7 +19,7 @@ _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
    __in LPTSTR lpCmdLine, int32_t nCmdShow)
 {
 
-   initialize_primitive_heap();
+//   initialize_primitive_heap();
 
    if(!os_initialize())
       return -1;
@@ -66,7 +66,7 @@ _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
    os_finalize();
 
-   finalize_primitive_heap();
+//   finalize_primitive_heap();
 
 
    return iRet;
@@ -122,7 +122,7 @@ LRESULT CALLBACK sentinel_WndProc(oswindow oswindow, uint32_t message, WPARAM wP
          if(wParam == 1245)
          {
             KillTimer(g_oswindowMessage, 12);
-            spa::installer::spa();
+            spa_install::installer::do_spa();
             SetTimer(g_oswindowMessage, 1245, (1984 + 1977) * 8, NULL);
          }
       }

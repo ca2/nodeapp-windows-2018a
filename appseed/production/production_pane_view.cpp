@@ -55,7 +55,7 @@ namespace production
       
    }
 
-   void pane_view::on_update(sp(::user::view) pSender, LPARAM lHint, ::ca2::object* pHint) 
+   void pane_view::on_update(sp(::user::view) pSender, LPARAM lHint, ::object* pHint) 
    {
       ::user::tab_view::on_update(pSender, lHint, pHint);
       if(lHint == 543218)

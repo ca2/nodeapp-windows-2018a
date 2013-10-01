@@ -10,7 +10,7 @@ namespace multimedia
 
 
       class CLASS_DECL_AUDIO_MMSYSTEM factory_exchange :
-         virtual public ::ca2::object
+         virtual public ::object
       {
       public:
 
