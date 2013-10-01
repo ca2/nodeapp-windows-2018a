@@ -141,7 +141,7 @@ extern "C"
 ::core::library * get_new_library()
 {
 
-   return new ::ca2::single_application_library < production::application > ("nodeapp");
+   return new ::core::single_application_library < production::application > ("nodeapp");
 
 }
 
