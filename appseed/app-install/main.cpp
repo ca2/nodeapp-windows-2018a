@@ -138,7 +138,7 @@ bool installer::initialize()
 
          uint32_t dwStartError;
          
-         spa::ca2_app_install_run(strCommandLine, dwStartError, true);
+         spa_install::ca2_app_install_run(strCommandLine, dwStartError, true);
          
          return false;
 
@@ -158,12 +158,12 @@ bool installer::initialize()
 
    //Sleep(15 * 1000);
 
-   m_modpath      = (char *) ca2_alloc(MAX_PATH * 8);
-   m_pszDllEnds   = (char *) ca2_alloc(MAX_PATH * 8);
+   m_modpath      = (char *) memory_alloc(MAX_PATH * 8);
+   m_pszDllEnds   = (char *) memory_alloc(MAX_PATH * 8);
    m_iSizeProcess = 1024;
-   m_dwaProcess   = (uint32_t *) ca2_alloc(m_iSizeProcess);
+   m_dwaProcess   = (uint32_t *) memory_alloc(m_iSizeProcess);
    m_iSizeModule  = 1024;
-   m_hmodulea     = (HMODULE *) ca2_alloc(m_iSizeModule);
+   m_hmodulea     = (HMODULE *) memory_alloc(m_iSizeModule);
 
    m_rxchannel.m_preceiver = this;
 

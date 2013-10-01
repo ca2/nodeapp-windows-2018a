@@ -439,7 +439,7 @@ namespace ca2plugin_container
 
                m_countMemory = len;
 
-               m_puchMemory = (uint8_t *) ca2_alloc(len);
+               m_puchMemory = (uint8_t *) memory_alloc(len);
 
                memcpy(m_puchMemory, pdata, len);
 

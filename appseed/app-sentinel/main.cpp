@@ -109,7 +109,7 @@ LRESULT CALLBACK sentinel_WndProc(oswindow oswindow, uint32_t message, WPARAM wP
          if(pcds->dwData == 15111984)
          {
             g_pstraRestartCommandLine = new stra_dup;
-            char * str = (char *) ca2_alloc(pcds->cbData + 1);
+            char * str = (char *) memory_alloc(pcds->cbData + 1);
             strncpy_dup(str, (const char *) pcds->lpData, pcds->cbData);
             str[pcds->cbData] = '\0';
             g_pstraRestartCommandLine->decode_v16(str);
