@@ -2237,7 +2237,7 @@ retry2:
 
 
    production::release::release(production * pproduction) : 
-      ::ca2::ca2(pproduction->get_app()),
+      ::element(pproduction->get_app()),
       thread(pproduction->get_app())
    {
       m_pproduction = pproduction;
