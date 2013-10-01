@@ -37,7 +37,7 @@ namespace ca2plugin_container
 
       ::ca2plugin_container::register_class((HINSTANCE) ::GetModuleHandleA("ca2plugin_container.dll"));
 
-      m_oswindowMessage = ::CreateWindowExA(0, "npca2_message_window", "npca2_message_window", 0, 0, 0, 0, 0, HWND_MESSAGE, NULL, NULL, NULL);
+      m_oswindowMessage = ::CreateWindowExA(0, "npca2_message_queue", "npca2_message_queue", 0, 0, 0, 0, 0, HWND_MESSAGE, NULL, NULL, NULL);
 
       m_pfile           = NULL;
 
@@ -216,7 +216,7 @@ namespace ca2plugin_container
 	   wcex.hCursor		   = LoadCursor(NULL, IDC_ARROW);
 	   wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
       wcex.lpszMenuName	   = NULL;
-	   wcex.lpszClassName	= "npca2_message_window";
+	   wcex.lpszClassName	= "npca2_message_queue";
 	   wcex.hIconSm		   = NULL;
 
 	   return RegisterClassEx(&wcex);

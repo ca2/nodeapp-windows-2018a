@@ -12,7 +12,7 @@ namespace multimedia
       window::window(sp(base_application) papp) :
          element(papp)
       {
-         create_message_window("");
+         create_message_queue("");
       }
 
       window::~window()

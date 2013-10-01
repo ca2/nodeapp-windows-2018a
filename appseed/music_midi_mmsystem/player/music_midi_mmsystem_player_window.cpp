@@ -81,7 +81,7 @@ namespace music
 
          bool window::create()
          {
-            if(!create_message_window("::ca2::::music::music::midiwindow"))
+            if(!create_message_queue("::ca2::::music::music::midiwindow"))
             {
                return false;
             }
