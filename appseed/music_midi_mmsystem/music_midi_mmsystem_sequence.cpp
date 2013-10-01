@@ -220,9 +220,9 @@ Seq_Open_File_Cleanup:
          ::ca2::filesp file(
             get_app());
          file->open(lpFileName,
-            ::ca2::file::mode_read |
-            ::ca2::file::shareDenyWrite |
-            ::ca2::file::type_binary);
+            ::file::stream_buffer::mode_read |
+            ::file::stream_buffer::shareDenyWrite |
+            ::file::stream_buffer::type_binary);
          return OpenFile(file, openMode);
       }
 
@@ -276,7 +276,7 @@ Seq_Open_File_Cleanup:
       }
 
       ::multimedia::result sequence::OpenFile(
-         ::ca2::file & ar,
+         ::file::stream_buffer & ar,
          int32_t openMode)
       {
          ::multimedia::result                rc      = MMSYSERR_NOERROR;

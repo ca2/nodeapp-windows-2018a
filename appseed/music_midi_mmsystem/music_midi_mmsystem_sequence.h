@@ -170,7 +170,7 @@ namespace music
 
          //::multimedia::result OpenFile(const char * lpFileName, int32_t openMode);
          ::multimedia::result OpenFile(::music::midi::sequence & sequence, int32_t iOpenMode);
-         ::multimedia::result OpenFile(::ca2::file & ar, int32_t openMode);
+         ::multimedia::result OpenFile(::file::stream_buffer & ar, int32_t openMode);
          ::multimedia::result OpenFile(const char * lpFileName, int32_t openMode);
          ::multimedia::result OpenFile(primitive::memory * pmemorystorage, int32_t openMode, ::music::e_storage estorage);
 
