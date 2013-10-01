@@ -853,6 +853,11 @@
   <ItemGroup>
     <ResourceCompile Include="app.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\app\appseed\base\base.vcxproj">
+      <Project>{4d7d3626-ada6-4ca2-9566-ed7b131e3d51}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
