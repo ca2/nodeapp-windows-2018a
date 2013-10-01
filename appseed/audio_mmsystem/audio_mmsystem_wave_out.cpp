@@ -11,7 +11,7 @@ namespace multimedia
 
       wave_out::wave_out(sp(base_application) papp) :
          element(papp),
-         ::ca2::thread(papp),
+         ::thread(papp),
          ::multimedia::audio::wave_out(papp)
       {
          m_estate             = state_initial;

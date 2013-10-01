@@ -10,7 +10,7 @@ namespace multimedia
 
 
       class CLASS_DECL_AUDIO_MIXER_MMSYSTEM thread :
-         public ::ca2::thread,
+         public ::thread,
          public ::database::client
       {
       public:

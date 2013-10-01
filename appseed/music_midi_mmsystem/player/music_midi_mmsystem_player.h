@@ -71,7 +71,7 @@ namespace music
 
             VMSRESULT SetInterface(player_interface * pinterface);
 
-            VMSRESULT Initialize(::ca2::thread * pthread);
+            VMSRESULT Initialize(::thread * pthread);
 
             bool IsPlaying();
 

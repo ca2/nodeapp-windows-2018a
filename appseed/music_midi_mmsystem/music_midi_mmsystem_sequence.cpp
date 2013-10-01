@@ -433,7 +433,7 @@ Seq_Open_File_Cleanup:
       *
       *
       ****************************************************************************/
-      ::multimedia::result sequence::Preroll(::ca2::thread * pthread, ::music::midi::LPPREROLL lpPreroll, bool bThrow)
+      ::multimedia::result sequence::Preroll(::thread * pthread, ::music::midi::LPPREROLL lpPreroll, bool bThrow)
       {
          UNREFERENCED_PARAMETER(pthread);
          single_lock sl(&m_mutex, TRUE);

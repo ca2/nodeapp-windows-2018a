@@ -11,7 +11,7 @@ namespace multimedia
 
       thread::thread(sp(base_application) papp) :
          element(papp),
-         ::ca2::thread(papp)
+         ::thread(papp)
       {
          SetMainWnd(NULL);
          m_bPendingShowCommand = false;
@@ -56,7 +56,7 @@ namespace multimedia
          //pmfmh->MessageFilterUnhook();
 
          CoUninitialize();
-         return ::ca2::thread::exit_instance();
+         return ::thread::exit_instance();
       }
 
       void thread::install_message_handling(::ca2::message::dispatch * pinterface)
@@ -146,7 +146,7 @@ namespace multimedia
       bool thread::on_idle(LONG lCount)
       {
          // TODO: add your specialized code here and/or call the base class
-         return ::ca2::thread::on_idle(lCount);
+         return ::thread::on_idle(lCount);
       }
 
       void thread::OnVmsmException(::ca2::signal_object * pobj)
@@ -303,7 +303,7 @@ namespace multimedia
       void thread::pre_translate_message(::ca2::signal_object * pobj)
       {
 
-         return ::ca2::thread::pre_translate_message(pobj);
+         return ::thread::pre_translate_message(pobj);
 
       }
 

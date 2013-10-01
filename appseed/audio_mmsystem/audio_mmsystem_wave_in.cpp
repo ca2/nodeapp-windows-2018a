@@ -11,7 +11,7 @@ namespace multimedia
 
       wave_in::wave_in(sp(base_application) papp) :
          element(papp),
-         ::ca2::thread(papp),
+         ::thread(papp),
          ::multimedia::audio::wave_in(papp)
       {
          m_pencoder = NULL;
