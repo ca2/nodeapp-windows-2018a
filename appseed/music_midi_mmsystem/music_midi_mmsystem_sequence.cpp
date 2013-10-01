@@ -220,9 +220,9 @@ Seq_Open_File_Cleanup:
          ::file::buffer_sp file(
             get_app());
          file->open(lpFileName,
-            ::file::stream_buffer::mode_read |
+            ::file::mode_read |
             ::file::stream_buffer::shareDenyWrite |
-            ::file::stream_buffer::type_binary);
+            ::file::type_binary);
          return OpenFile(file, openMode);
       }
 

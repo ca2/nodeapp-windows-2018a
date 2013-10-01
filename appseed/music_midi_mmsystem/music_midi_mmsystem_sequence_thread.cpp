@@ -243,8 +243,8 @@ namespace music
       {
          ::music::midi::PREROLL                 preroll;
 
-         ::ca2::math::math::MaxClip(&dRate, 1.0);
-         ::ca2::math::math::MinClip(&dRate,  0.0);
+         ::math::math::MaxClip(&dRate, 1.0);
+         ::math::math::MinClip(&dRate,  0.0);
 
          preroll.tkBase = (imedia::position) (int32_t) ((double) get_sequence()->m_tkLength * dRate);
          preroll.tkEnd  = get_sequence()->m_tkLength;
