@@ -338,9 +338,9 @@ namespace ca2plugin_container
          
 #ifdef WINDOWS
 #ifdef X86
-         ::SetDllDirectory(dir::ca2("stage\\x86"));
+         ::SetDllDirectory(dir::element("stage\\x86"));
 #else
-         ::SetDllDirectory(dir::ca2("stage\\x64"));
+         ::SetDllDirectory(dir::element("stage\\x64"));
 #endif
 #endif
          //Sleep(15 * 1000);
