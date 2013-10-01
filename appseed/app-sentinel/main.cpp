@@ -5,7 +5,7 @@ int32_t spaboot_start();
 
 
 oswindow g_oswindowMessage = NULL;
-stra_dup * g_pstraRestartCommandLine;
+stringa * g_pstraRestartCommandLine;
 MSG g_msgSentinel;
 HANDLE g_hmutexSpabootInstall;
 
@@ -108,7 +108,7 @@ LRESULT CALLBACK sentinel_WndProc(oswindow oswindow, uint32_t message, WPARAM wP
          COPYDATASTRUCT * pcds = (COPYDATASTRUCT *) lParam;
          if(pcds->dwData == 15111984)
          {
-            g_pstraRestartCommandLine = new stra_dup;
+            g_pstraRestartCommandLine = new stringa;
             char * str = (char *) memory_alloc(pcds->cbData + 1);
             strncpy_dup(str, (const char *) pcds->lpData, pcds->cbData);
             str[pcds->cbData] = '\0';

@@ -89,7 +89,7 @@ _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 }*/
 
 extern bool g_bInstalling;
-extern stra_dup * g_pstraTrace;
+extern stringa * g_pstraTrace;
 
 removal::removal()
 {
