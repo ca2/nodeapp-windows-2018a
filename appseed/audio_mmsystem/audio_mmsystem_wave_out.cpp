@@ -225,7 +225,7 @@ Opened:
                CALLBACK_THREAD)))
                goto Opened;
          }
-         catch(const ::ca2::exception &)
+         catch(const ::exception::exception &)
          {
             return MMSYSERR_ERROR;
          }
