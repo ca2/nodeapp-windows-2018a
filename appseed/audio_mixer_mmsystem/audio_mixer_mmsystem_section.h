@@ -9,8 +9,8 @@ namespace multimedia
    {
 
 
-      class CLASS_DECL_AUDIO_MIXER_MMSYSTEM section :
-         virtual public ::ca2::section,
+      class CLASS_DECL_AUDIO_MIXER_MMSYSTEM departament :
+         virtual public base_departament,
          virtual public ::user::interaction
       {
       public:
@@ -26,8 +26,8 @@ namespace multimedia
          };
 
 
-         section(sp(base_application) papp);
-         virtual ~section();
+         departament(sp(base_application) papp);
+         virtual ~departament();
 
 
          virtual bool initialize1();

@@ -226,7 +226,7 @@ namespace win
    {
 	   // returns a copy of the current mappings (note: thread-awareness is needed)
 	
-	   // cast away const-ness of the critical section (since this is a const function)
+	   // cast away const-ness of the critical departament (since this is a const function)
 	   port_forward* pThis = const_cast< port_forward* >( this );
 	
 	   ::EnterCriticalSection( &(pThis->m_cs) );
@@ -243,7 +243,7 @@ namespace win
    {	
 	   // returns a copy of the current device information (note: thread-awareness is needed)
 	
-	   // cast away const-ness of the critical section (since this is a const function)
+	   // cast away const-ness of the critical departament (since this is a const function)
 	   port_forward* pThis = const_cast< port_forward* >( this );
 	
 	   ::EnterCriticalSection( &(pThis->m_cs) );

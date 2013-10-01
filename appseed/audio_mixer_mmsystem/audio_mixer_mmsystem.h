@@ -30,7 +30,7 @@ namespace multimedia
       class destination;
       class thread;
       class audio_mixer;
-      class section;
+      class departament;
 
 
    } // namespace audio_mixer_mmsystem

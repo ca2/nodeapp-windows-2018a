@@ -9,21 +9,21 @@ namespace multimedia
    {
 
 
-      section::section(sp(base_application) papp) :
+      departament::departament(sp(base_application) papp) :
          element(papp),
-         ::ca2::section(papp)
+         base_departament(papp)
       {
 
       }
 
 
-      section::~section()
+      departament::~departament()
       {
 
       }
 
 
-      bool section::initialize1()
+      bool departament::initialize1()
       {
 
          return true;
@@ -31,7 +31,7 @@ namespace multimedia
       }
 
 
-      bool section::finalize() 
+      bool departament::finalize() 
       {
 
          DestroyWindow();
@@ -43,7 +43,7 @@ namespace multimedia
 
 
 
-      /*::multimedia::result section::CreateNewDevice(uint32_t uiMixerID)
+      /*::multimedia::result departament::CreateNewDevice(uint32_t uiMixerID)
       {
       ::multimedia::result mmrc;
       if(MMSYSERR_NOERROR != (mmrc = m_pmixer->set_new_device(
@@ -60,7 +60,7 @@ namespace multimedia
       return mmrc;
       }
 
-      ::multimedia::result section::CreateNewDestination(uint32_t dwComponentType)
+      ::multimedia::result departament::CreateNewDestination(uint32_t dwComponentType)
       {
       ::multimedia::result mmrc;
       ::multimedia::audio_mixer::destination * pdestination = NULL;
@@ -89,7 +89,7 @@ namespace multimedia
       }*/
 
 
-      bool section::initialize()
+      bool departament::initialize()
       {
          //   m_pmixerthread = (::multimedia::audio_mixer::thread *) __begin_thread(System.type_info < ::multimedia::audio_mixer::thread > ());
          //   if(m_pmixerthread == NULL)
