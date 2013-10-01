@@ -23,7 +23,7 @@ namespace music
             friend class window;
             window m_wnd;
 
-            callback(sp(::ca2::application) papp);
+            callback(sp(base_application) papp);
             virtual ~callback();
 
             virtual bool initialize();

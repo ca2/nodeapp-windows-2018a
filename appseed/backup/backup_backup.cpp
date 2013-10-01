@@ -5,7 +5,7 @@ namespace backup
 {
 
 
-   backup::backup(sp(::ca2::application) papp) :
+   backup::backup(sp(base_application) papp) :
       ca2(papp),
       thread(papp),
       ::simple_thread(papp),

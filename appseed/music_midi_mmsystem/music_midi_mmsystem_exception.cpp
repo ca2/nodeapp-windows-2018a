@@ -9,7 +9,7 @@ namespace music
    {
 
 
-      exception::exception(sp(::ca2::application) papp) :
+      exception::exception(sp(base_application) papp) :
          ca2(papp),
          ::call_stack(papp),
          ::base_exception(papp),
@@ -18,7 +18,7 @@ namespace music
          m_etype = TypeUndefined;
       }
 
-      exception::exception(sp(::ca2::application) papp, ::music::midi::e_file_result mfr) :
+      exception::exception(sp(base_application) papp, ::music::midi::e_file_result mfr) :
          ca2(papp),
          ::call_stack(papp),
          ::base_exception(papp),
@@ -28,7 +28,7 @@ namespace music
          m_mfr = mfr;
       }
 
-      exception::exception(sp(::ca2::application) papp, ::multimedia::result mmr, int32_t iAppError) :
+      exception::exception(sp(base_application) papp, ::multimedia::result mmr, int32_t iAppError) :
          ca2(papp),
          ::call_stack(papp),
          ::base_exception(papp),

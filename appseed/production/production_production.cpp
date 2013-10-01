@@ -9,7 +9,7 @@ namespace production
 {
 
 
-   production::production(sp(::ca2::application) papp) :
+   production::production(sp(base_application) papp) :
       ca2(papp),
       thread(papp),
       simple_thread(papp),

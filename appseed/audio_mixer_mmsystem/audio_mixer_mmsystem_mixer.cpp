@@ -9,7 +9,7 @@ namespace multimedia
    {
 
 
-      audio_mixer::audio_mixer(sp(::ca2::application) papp) :
+      audio_mixer::audio_mixer(sp(base_application) papp) :
          ca2(papp),
          m_window(papp),
          ::multimedia::audio_mixer::audio_mixer(papp)

@@ -9,7 +9,7 @@ namespace multimedia
    {
 
 
-      wave_out::wave_out(sp(::ca2::application) papp) :
+      wave_out::wave_out(sp(base_application) papp) :
          ca2(papp),
          ::ca2::thread(papp),
          ::multimedia::audio::wave_out(papp)

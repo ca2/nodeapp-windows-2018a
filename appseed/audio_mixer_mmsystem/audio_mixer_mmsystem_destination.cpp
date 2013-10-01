@@ -8,7 +8,7 @@ namespace multimedia
    namespace audio_mixer_mmsystem
    {
 
-      destination::destination(sp(::ca2::application) papp) :
+      destination::destination(sp(base_application) papp) :
          ca2(papp),
          ::multimedia::audio_mixer::source(papp),
          ::multimedia::audio_mixer_mmsystem::source(papp),

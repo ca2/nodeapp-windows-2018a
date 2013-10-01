@@ -13,7 +13,7 @@ namespace music
       {
 
 
-         player::player(sp(::ca2::application) papp) :
+         player::player(sp(base_application) papp) :
             ca2(papp),
             thread(papp),
             ::music::midi::player::player(papp)

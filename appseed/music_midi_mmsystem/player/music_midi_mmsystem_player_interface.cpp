@@ -13,7 +13,7 @@ namespace music
       {
 
 
-         player_interface::player_interface(sp(::ca2::application) papp) :
+         player_interface::player_interface(sp(base_application) papp) :
             ca2(papp),
             callback(papp),
             ::music::midi::player::player_interface(papp)

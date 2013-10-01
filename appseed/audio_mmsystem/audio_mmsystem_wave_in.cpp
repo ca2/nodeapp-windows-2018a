@@ -9,7 +9,7 @@ namespace multimedia
    {
 
 
-      wave_in::wave_in(sp(::ca2::application) papp) :
+      wave_in::wave_in(sp(base_application) papp) :
          ca2(papp),
          ::ca2::thread(papp),
          ::multimedia::audio::wave_in(papp)

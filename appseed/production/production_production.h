@@ -120,7 +120,7 @@ namespace production
       manual_reset_event      m_evFinish;
 
 
-      production(sp(::ca2::application) papp);
+      production(sp(base_application) papp);
       virtual ~production();
 
 

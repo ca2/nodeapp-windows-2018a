@@ -21,7 +21,7 @@ namespace multimedia
          ::multimedia::audio_mixer::audio_mixer                    * m_pmixer;
 
 
-         window(sp(::ca2::application) papp);
+         window(sp(base_application) papp);
          virtual ~window();
 
 

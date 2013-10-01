@@ -18,7 +18,7 @@ namespace music
          HMIDIOUT       m_hmidiout;
 
 
-         out(sp(::ca2::application) papp);
+         out(sp(base_application) papp);
          virtual ~out();
 
 

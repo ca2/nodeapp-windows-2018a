@@ -9,7 +9,7 @@ namespace music
    {
 
 
-      file::file(sp(::ca2::application) papp) :
+      file::file(sp(base_application) papp) :
          ca2(papp),
          primitive::memory_container (papp),
          ::music::midi::file(papp)

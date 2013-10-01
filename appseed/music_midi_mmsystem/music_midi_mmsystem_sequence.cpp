@@ -9,7 +9,7 @@ namespace music
    {
 
 
-      sequence::sequence(sp(::ca2::application) papp) :
+      sequence::sequence(sp(base_application) papp) :
          ca2(papp),
          ::ikaraoke::karaoke(papp),
          ::music::midi::sequence(papp)

@@ -103,7 +103,7 @@ namespace music
 
 
 
-         sequence(sp(::ca2::application) papp);
+         sequence(sp(base_application) papp);
          virtual ~sequence();
 
 

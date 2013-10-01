@@ -25,7 +25,7 @@ namespace music
             ::music::midi::player::callback_interface * m_pcallback;
 
 
-            window(sp(::ca2::application) papp);
+            window(sp(base_application) papp);
             virtual ~window();
 
             ::music::midi::player::callback_interface * get_callback();

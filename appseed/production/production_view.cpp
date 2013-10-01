@@ -7,7 +7,7 @@ namespace production
 {
 
 
-   view::view(sp(::ca2::application) papp) :
+   view::view(sp(base_application) papp) :
       ca2(papp),
       ::user::interaction(papp), 
       ::user::scroll_view(papp),
