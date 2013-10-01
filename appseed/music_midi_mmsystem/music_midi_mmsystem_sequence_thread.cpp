@@ -22,7 +22,7 @@ namespace music
 
       bool sequence_thread::initialize_instance()
       {
-         set_thread_priority(::ca2::scheduling_priority_highest);
+         set_thread_priority(::core::scheduling_priority_highest);
          return true;
       }
 

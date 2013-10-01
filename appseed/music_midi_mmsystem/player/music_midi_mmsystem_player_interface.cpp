@@ -56,7 +56,7 @@ namespace music
             {
                m_pmidiplayer = dynamic_cast < ::music::midi::player::player * > (__begin_thread < player >(
                   get_app(),
-                  ::ca2::scheduling_priority_normal,
+                  ::core::scheduling_priority_normal,
                   0,
                   CREATE_SUSPENDED));
             }
