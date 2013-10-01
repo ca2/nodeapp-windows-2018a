@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "ca2.h"
+#include "core.h"
 
 
 #include "ca2plugincontainer_host.h"

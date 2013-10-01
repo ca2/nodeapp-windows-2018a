@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "ca2.h"
+#include "core.h"
 
 
 #ifdef _CA2_FONTOPUS_PRODUCTION_DLL

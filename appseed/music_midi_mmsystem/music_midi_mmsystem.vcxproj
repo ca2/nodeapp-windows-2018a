@@ -242,7 +242,7 @@
     <ClCompile>
       <AdditionalOptions>-Zm284 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>.;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/thirdparty/include;$(SolutionDir)../../../app/thirdparty/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../app/appseed/ca2;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/thirdparty/include;$(SolutionDir)../../../app/thirdparty/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../app/appseed/core;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>Async</ExceptionHandling>
@@ -840,26 +840,6 @@
     <ClCompile Include="player\music_midi_mmsystem_player_callback.cpp" />
     <ClCompile Include="player\music_midi_mmsystem_player_window.cpp" />
     <ClCompile Include="player\music_midi_mmsystem_player_interface.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\app-core\appseed\multimedia\multimedia.vcxproj">
-      <Project>{20fd0446-aa14-4013-84e0-b5cb63fa354f}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\app-veriwell\appseed\multimedia\veriwell_multimedia.vcxproj">
-      <Project>{6cf16680-cdb9-437d-b24a-b9ba61a91fcd}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\app\appseed\ca2\ca2.vcxproj">
-      <Project>{afc48570-75e4-46bd-b8ab-4590b257e1c8}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\app\appseed\ca\ca.vcxproj">
-      <Project>{ab77745a-af30-4253-9e4b-961bf2d98641}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\app\appseed\c\c.vcxproj">
-      <Project>{4d7d3626-ada6-4ca2-9566-ed7b131e3d51}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\app\thirdparty\appseed\zlib\_ca2zlib.vcxproj">
-      <Project>{9ffc2cf6-737c-43db-a1ee-383f7bfdb05b}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="music_midi_mmsystem.def" />
