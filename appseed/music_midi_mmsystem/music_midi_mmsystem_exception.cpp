@@ -10,7 +10,7 @@ namespace music
 
 
       exception::exception(sp(base_application) papp) :
-         ca2(papp),
+         element(papp),
          ::call_stack(papp),
          ::base_exception(papp),
          ::music::midi::exception(papp)
@@ -19,7 +19,7 @@ namespace music
       }
 
       exception::exception(sp(base_application) papp, ::music::midi::e_file_result mfr) :
-         ca2(papp),
+         element(papp),
          ::call_stack(papp),
          ::base_exception(papp),
          ::music::midi::exception(papp, mfr)
@@ -29,7 +29,7 @@ namespace music
       }
 
       exception::exception(sp(base_application) papp, ::multimedia::result mmr, int32_t iAppError) :
-         ca2(papp),
+         element(papp),
          ::call_stack(papp),
          ::base_exception(papp),
          ::music::midi::exception(papp, mmr, iAppError)

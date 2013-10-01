@@ -10,7 +10,7 @@ namespace production
 
 
    production::production(sp(base_application) papp) :
-      ca2(papp),
+      element(papp),
       thread(papp),
       simple_thread(papp),
       m_mutexStatus(papp),

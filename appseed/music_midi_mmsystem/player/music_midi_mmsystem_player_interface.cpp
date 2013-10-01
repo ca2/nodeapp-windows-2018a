@@ -14,7 +14,7 @@ namespace music
 
 
          player_interface::player_interface(sp(base_application) papp) :
-            ca2(papp),
+            element(papp),
             callback(papp),
             ::music::midi::player::player_interface(papp)
             

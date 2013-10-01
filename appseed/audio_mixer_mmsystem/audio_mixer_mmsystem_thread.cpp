@@ -10,7 +10,7 @@ namespace multimedia
 
 
       thread::thread(sp(base_application) papp) :
-         ca2(papp),
+         element(papp),
          ::ca2::thread(papp)
       {
          SetMainWnd(NULL);

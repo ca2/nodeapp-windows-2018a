@@ -10,7 +10,7 @@ namespace multimedia
 
 
       factory_exchange::factory_exchange(sp(base_application) papp) :
-         ca2(papp)
+         element(papp)
       {
 
          //System.factory().cloneable_large < callback                    >  (System.type_info < ::multimedia::audio_mixer::callback                 > ());

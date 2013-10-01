@@ -6,7 +6,7 @@ namespace backup
 
 
    document::document(sp(base_application) papp) :
-      ca2(papp),
+      element(papp),
       ::ca2::data_container_base(papp),
       production::document(papp)
    {

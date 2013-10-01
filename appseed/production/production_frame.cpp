@@ -6,7 +6,7 @@ namespace production
 
 
    frame::frame(sp(base_application) papp) :
-      ca2(papp),
+      element(papp),
       simple_frame_window(papp)
    {
       m_dataid = "::ca2::production::frame";

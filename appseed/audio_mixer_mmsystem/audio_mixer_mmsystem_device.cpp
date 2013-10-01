@@ -10,7 +10,7 @@ namespace multimedia
 
 
       device::device(sp(base_application) papp) :
-         ::ca2::ca2(papp),
+         ::ca2::element(papp),
          ::multimedia::audio_mixer::device(papp)
          //m_mixerdestinationa(papp)
       {

@@ -5,7 +5,7 @@ namespace backup
 {
 
    pane_view::pane_view(sp(base_application) papp) :
-      ca2(papp),
+      element(papp),
       ::user::tab(papp),
       
       ::userex::pane_tab_view(papp),

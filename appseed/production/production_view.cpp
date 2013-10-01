@@ -8,7 +8,7 @@ namespace production
 
 
    view::view(sp(base_application) papp) :
-      ca2(papp),
+      element(papp),
       ::user::interaction(papp), 
       ::user::scroll_view(papp),
       m_scrollbarVert(papp),

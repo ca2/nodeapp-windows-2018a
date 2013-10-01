@@ -10,7 +10,7 @@ namespace music
 
 
       out::out(sp(base_application) papp) :
-         ca2(papp),
+         element(papp),
          ::music::midi::out(papp)
       {
 

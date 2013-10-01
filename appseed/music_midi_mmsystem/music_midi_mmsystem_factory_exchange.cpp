@@ -10,7 +10,7 @@ namespace music
 
 
       factory_exchange::factory_exchange(sp(base_application) papp) :
-         ca2(papp)
+         element(papp)
       {
 
          System.factory().cloneable_large < sequence               >  (System.type_info < ::music::midi::sequence                  > ());
