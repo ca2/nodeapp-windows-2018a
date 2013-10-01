@@ -7,7 +7,7 @@ namespace production
 
    document::document(sp(base_application) papp):
       element(papp),
-      ::ca2::data_container_base(papp),
+      ::data::data_container_base(papp),
       ::user::document(papp)
    {
    }
