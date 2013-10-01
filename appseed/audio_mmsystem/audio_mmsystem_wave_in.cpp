@@ -44,7 +44,7 @@ namespace multimedia
 
       void wave_in::pre_translate_message(::ca2::signal_object * pobj)
       {
-         SCAST_PTR(::ca2::message::base, pbase, pobj);
+         SCAST_PTR(::message::base, pbase, pobj);
          //ASSERT(GetMainWnd() == NULL);
          if(pbase->m_uiMessage == MM_WIM_OPEN ||
             pbase->m_uiMessage == MM_WIM_CLOSE ||
@@ -375,7 +375,7 @@ Opened:
       void wave_in::translate_wave_in_message(::ca2::signal_object * pobj)
       {
 
-         SCAST_PTR(::ca2::message::base, pbase, pobj);
+         SCAST_PTR(::message::base, pbase, pobj);
 
          ASSERT(
             pbase->m_uiMessage == MM_WIM_OPEN ||

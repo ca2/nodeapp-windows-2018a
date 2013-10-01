@@ -25,7 +25,7 @@ namespace multimedia
          virtual ~window();
 
 
-         void install_message_handling(::ca2::message::dispatch * pinterface);
+         void install_message_handling(::message::dispatch * pinterface);
 
 
          DECL_GEN_SIGNAL(_001OnMixerControlChange)

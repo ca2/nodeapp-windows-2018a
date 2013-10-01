@@ -19,7 +19,7 @@ namespace music
          virtual ~sequence_thread();
 
 
-         void install_message_handling(::ca2::message::dispatch * pinterface);
+         void install_message_handling(::message::dispatch * pinterface);
 
          ::music::midi::sequence * get_sequence();
          void Stop(imedia::time msEllapse);

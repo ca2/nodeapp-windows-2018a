@@ -44,7 +44,7 @@ namespace production
 
    void pane_view::_001OnCreate(::ca2::signal_object * pobj) 
    {
-//      SCAST_PTR(::ca2::message::create, pcreate, pobj)
+//      SCAST_PTR(::message::create, pcreate, pobj)
       if(pobj->previous())
          return;
 
@@ -278,7 +278,7 @@ namespace production
       set_cur_tab_by_id(m_pviewdataOld->m_id);
    }
 
-   void pane_view::install_message_handling(::ca2::message::dispatch * pinterface)
+   void pane_view::install_message_handling(::message::dispatch * pinterface)
    {
       ::user::tab_view::install_message_handling(pinterface);
 
@@ -349,7 +349,7 @@ namespace production
 
      void pane_view::_001OnUserMessage(::ca2::signal_object * pobj)
      {
-        SCAST_PTR(::ca2::message::base, pbase, pobj)
+        SCAST_PTR(::message::base, pbase, pobj)
            if(pbase->m_wparam == 1)
            {
                set_cur_tab_by_id("tabbed_file_manager");

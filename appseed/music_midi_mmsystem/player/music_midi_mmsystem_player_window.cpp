@@ -23,7 +23,7 @@ namespace music
          {
          }
 
-         void window::install_message_handling(::ca2::message::dispatch * pinterface)
+         void window::install_message_handling(::message::dispatch * pinterface)
          {
             ::user::interaction::install_message_handling(pinterface);
             IGUI_WIN_MSG_LINK(MMSG_DONE                        , pinterface, this, &window::_001OnMmsgDone);
@@ -34,7 +34,7 @@ namespace music
 
          void window::_001OnMmsgDone(::ca2::signal_object * pobj)
          {
-            SCAST_PTR(::ca2::message::base, pbase, pobj);
+            SCAST_PTR(::message::base, pbase, pobj);
             if(get_callback() != NULL)
             {
                ::music::midi::sequence * pseq = (::music::midi::sequence *) pbase->m_wparam;
@@ -52,7 +52,7 @@ namespace music
 
          void window::_001OnNotifyEvent(::ca2::signal_object * pobj)
          {
-            SCAST_PTR(::ca2::message::base, pbase, pobj);
+            SCAST_PTR(::message::base, pbase, pobj);
             ::music::midi::player::notify_event * pdata = (::music::midi::player::notify_event *) pbase->m_lparam.m_lparam;
             if(get_callback() != NULL)
             {
@@ -90,7 +90,7 @@ namespace music
 
          void window::_001OnUserMessage(::ca2::signal_object * pobj)
          {
-            SCAST_PTR(::ca2::message::base, pbase, pobj);
+            SCAST_PTR(::message::base, pbase, pobj);
             switch(pbase->m_wparam)
             {
             case 3388:
@@ -110,7 +110,7 @@ namespace music
          void window::_001OnApp3388Message(::ca2::signal_object * pobj)
          {
             throw not_implemented(get_app());
-            SCAST_PTR(::ca2::message::base, pbase, pobj);
+            SCAST_PTR(::message::base, pbase, pobj);
 /*            MSG msg;
 
             while(PeekMessage(

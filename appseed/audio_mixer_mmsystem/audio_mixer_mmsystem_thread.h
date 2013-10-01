@@ -37,7 +37,7 @@ namespace multimedia
             );
 
 
-         void install_message_handling(::ca2::message::dispatch * pinterface);
+         void install_message_handling(::message::dispatch * pinterface);
 
          virtual bool initialize_instance();
          virtual int32_t exit_instance();

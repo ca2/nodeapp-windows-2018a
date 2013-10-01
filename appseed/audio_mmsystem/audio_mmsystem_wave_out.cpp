@@ -28,7 +28,7 @@ namespace multimedia
 
       }
 
-      void wave_out::install_message_handling(::ca2::message::dispatch * pinterface)
+      void wave_out::install_message_handling(::message::dispatch * pinterface)
       {
 
          ::multimedia::audio::wave_out::install_message_handling(pinterface);
@@ -381,7 +381,7 @@ Opened:
       void wave_out::OnMultimediaDone(::ca2::signal_object * pobj)
       {
          
-         SCAST_PTR(::ca2::message::base, pbase, pobj);
+         SCAST_PTR(::message::base, pbase, pobj);
          
          m_iBufferedCount--;
 

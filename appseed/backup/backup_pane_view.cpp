@@ -36,7 +36,7 @@ namespace backup
 
    void pane_view::_001OnCreate(::ca2::signal_object * pobj) 
    {
-//      SCAST_PTR(::ca2::message::create, pcreate, pobj)
+//      SCAST_PTR(::message::create, pcreate, pobj)
 
       if(pobj->previous())
          return;
@@ -142,7 +142,7 @@ namespace backup
    }
 
 
-   void pane_view::install_message_handling(::ca2::message::dispatch * pinterface)
+   void pane_view::install_message_handling(::message::dispatch * pinterface)
    {
       ::userex::pane_tab_view::install_message_handling(pinterface);
 	   IGUI_WIN_MSG_LINK(WM_CREATE       , pinterface, this, &pane_view::_001OnCreate);

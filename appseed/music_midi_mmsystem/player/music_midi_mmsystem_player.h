@@ -39,7 +39,7 @@ namespace music
             virtual ~player();
 
 
-            void install_message_handling(::ca2::message::dispatch * pinterface);
+            void install_message_handling(::message::dispatch * pinterface);
 
 
             void SendMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd);

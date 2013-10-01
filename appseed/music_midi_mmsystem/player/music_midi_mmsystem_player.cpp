@@ -61,7 +61,7 @@ namespace music
             return thread::exit_instance();
          }
 
-         void player::install_message_handling(::ca2::message::dispatch * pinterface)
+         void player::install_message_handling(::message::dispatch * pinterface)
          {
             ::music::midi::player::player::install_message_handling(pinterface);
             IGUI_WIN_MSG_LINK(MM_MOM_DONE, pinterface, this, &player::OnMultimediaMidiOutputMessageDone);
@@ -217,7 +217,7 @@ namespace music
 
          void player::pre_translate_message(::ca2::signal_object * pobj) 
          {
-            SCAST_PTR(::ca2::message::base, pbase, pobj);
+            SCAST_PTR(::message::base, pbase, pobj);
             //ASSERT(GetMainWnd() == NULL);
             //   if(pMsg->message == MM_MOM_DONE ||
             //      pMsg->message == MM_MOM_POSITIONCB ||
@@ -267,7 +267,7 @@ namespace music
 
          void player::OnUserMessage(::ca2::signal_object * pobj)
          {
-            SCAST_PTR(::ca2::message::base, pbase, pobj);
+            SCAST_PTR(::message::base, pbase, pobj);
             if(pbase->m_wparam == 3377)
             {
                m_puie->send_message(WM_USER, pbase->m_wparam, pbase->m_lparam);
@@ -424,7 +424,7 @@ namespace music
          void player::OnMultimediaMidiOutputMessageDone(::ca2::signal_object * pobj)
          {
             
-            SCAST_PTR(::ca2::message::base, pbase, pobj);
+            SCAST_PTR(::message::base, pbase, pobj);
             
             HMIDISTRM hmidistream = (HMIDISTRM) pbase->m_wparam;
             
@@ -440,7 +440,7 @@ namespace music
 
          void player::OnMultimediaMidiOutputMessagePositionCB(::ca2::signal_object * pobj)
          {
-            SCAST_PTR(::ca2::message::base, pbase, pobj);
+            SCAST_PTR(::message::base, pbase, pobj);
             LPMIDIHDR lpmidihdr = (LPMIDIHDR) pbase->m_wparam;
   //          get_sequence()->OnPositionCB(lpmidihdr);
 
@@ -456,7 +456,7 @@ namespace music
 
          void player::OnNotifyEvent(::ca2::signal_object * pobj)
          {
-            SCAST_PTR(::ca2::message::base, pbase, pobj);
+            SCAST_PTR(::message::base, pbase, pobj);
             ::music::midi::player::notify_event * pdata = (::music::midi::player::notify_event *) pbase->m_lparam.m_lparam;
             pdata->m_pplayer = this;
             if(m_puie != NULL)

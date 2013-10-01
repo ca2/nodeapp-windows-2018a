@@ -52,7 +52,7 @@ namespace production
    {
    }
 
-   void view::install_message_handling(::ca2::message::dispatch * pinterface)
+   void view::install_message_handling(::message::dispatch * pinterface)
    {
       ::user::scroll_view::install_message_handling(pinterface);
 
@@ -138,7 +138,7 @@ namespace production
    void view::_001OnSize(::ca2::signal_object * pobj) 
    {
       UNREFERENCED_PARAMETER(pobj);
-//      SCAST_PTR(::ca2::message::size, psize, pobj)
+//      SCAST_PTR(::message::size, psize, pobj)
 
       rect rectDesktop;
       Application.get_screen_rect(rectDesktop);
@@ -304,7 +304,7 @@ namespace production
 
    void view::_001OnContextMenu(::ca2::signal_object * pobj) 
    {
-      SCAST_PTR(::ca2::message::context_menu, pcontextmenu, pobj)
+      SCAST_PTR(::message::context_menu, pcontextmenu, pobj)
       point point = pcontextmenu->GetPoint();
    }
 
@@ -320,7 +320,7 @@ namespace production
    void view::_001OnSetCursor(::ca2::signal_object * pobj) 
    {
 
-      SCAST_PTR(::ca2::message::mouse, pmouse, pobj);
+      SCAST_PTR(::message::mouse, pmouse, pobj);
 
       pmouse->m_ecursor = ::visual::cursor_arrow;
    	
@@ -376,7 +376,7 @@ namespace production
    void view::_001OnLButtonDown(::ca2::signal_object * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
-  //    SCAST_PTR(::ca2::message::mouse, pmouse, pobj)
+  //    SCAST_PTR(::message::mouse, pmouse, pobj)
 
 //      int32_t iHitArea = hit_test(pmouse->m_pt);
 
@@ -384,7 +384,7 @@ namespace production
 
    void view::_001OnLButtonUp(::ca2::signal_object * pobj)
    {
-      SCAST_PTR(::ca2::message::mouse, pmouse, pobj)
+      SCAST_PTR(::message::mouse, pmouse, pobj)
 
       class point point = pmouse->m_pt;
       ScreenToClient(&point);
@@ -404,7 +404,7 @@ namespace production
    void view::_001OnRButtonUp(::ca2::signal_object * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
-  //    SCAST_PTR(::ca2::message::mouse, pmouse, pobj)
+  //    SCAST_PTR(::message::mouse, pmouse, pobj)
 
 //      int32_t iHitArea = hit_test(pmouse->m_pt);
    /*   {
@@ -423,7 +423,7 @@ namespace production
 
    void view::_001OnTimer(::ca2::signal_object * pobj)
    {
-      SCAST_PTR(::ca2::message::timer, ptimer, pobj)
+      SCAST_PTR(::message::timer, ptimer, pobj)
       if(ptimer->m_nIDEvent == 543218)
       {
          if(IsWindowVisible())
@@ -460,7 +460,7 @@ namespace production
    void view::_001OnShowWindow(::ca2::signal_object * pobj) 
    {
       UNREFERENCED_PARAMETER(pobj);
-//      SCAST_PTR(::ca2::message::show_window, pshowwindow, pobj)
+//      SCAST_PTR(::message::show_window, pshowwindow, pobj)
    }
 
    void view::make_production()
@@ -480,7 +480,7 @@ namespace production
 
    void view::_001OnUser(::ca2::signal_object * pobj)
    {
-      SCAST_PTR(::ca2::message::base, pbase, pobj);
+      SCAST_PTR(::message::base, pbase, pobj);
       if(pbase->m_wparam == 1)
       {
          int32_t iLineHeight = m_iLineHeight;

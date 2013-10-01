@@ -59,7 +59,7 @@ namespace multimedia
          return ::thread::exit_instance();
       }
 
-      void thread::install_message_handling(::ca2::message::dispatch * pinterface)
+      void thread::install_message_handling(::message::dispatch * pinterface)
       {
          IGUI_WIN_MSG_LINK(thread::MessageMixerThread, pinterface, this, &thread::OnMixerMessage);
          IGUI_WIN_MSG_LINK(WM_USER, pinterface, this, &thread::OnUserMessage);
@@ -81,7 +81,7 @@ namespace multimedia
 
       void thread::OnMixerMessage(::ca2::signal_object * pobj)
       {
-         SCAST_PTR(::ca2::message::base, pbase, pobj);
+         SCAST_PTR(::message::base, pbase, pobj);
 
          if(pbase->m_wparam ==  23)
          {
@@ -159,7 +159,7 @@ namespace multimedia
 
       void thread::OnUserMessage(::ca2::signal_object * pobj)
       {
-         SCAST_PTR(::ca2::message::base, pbase, pobj);
+         SCAST_PTR(::message::base, pbase, pobj);
 
          switch(pbase->m_wparam)
          {

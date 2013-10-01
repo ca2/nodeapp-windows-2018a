@@ -31,7 +31,7 @@ namespace music
          return thread::exit_instance();
       }
 
-      void sequence_thread::install_message_handling(::ca2::message::dispatch * pinterface)
+      void sequence_thread::install_message_handling(::message::dispatch * pinterface)
       {
          IGUI_WIN_MSG_LINK(::music::midi::player::message_command, pinterface, this, &sequence_thread::OnCommand);
          IGUI_WIN_MSG_LINK(::music::midi::sequence::message_event, pinterface, this, &sequence_thread::OnMidiSequenceEvent);
@@ -69,7 +69,7 @@ namespace music
       void sequence_thread::OnMidiSequenceEvent(::ca2::signal_object * pobj)
       {
 
-         SCAST_PTR(::ca2::message::base, pbase, pobj);
+         SCAST_PTR(::message::base, pbase, pobj);
 
          ::music::midi::sequence::event * pevent = (::music::midi::sequence::event *) pbase->m_lparam.m_lparam;
          ::music::midi::sequence * pseq = (::music::midi::sequence *) pevent->m_psequence;
@@ -309,7 +309,7 @@ namespace music
 
       void sequence_thread::OnCommand(::ca2::signal_object * pobj)
       {
-         SCAST_PTR(::ca2::message::base, pbase, pobj);
+         SCAST_PTR(::message::base, pbase, pobj);
          ::ca::smart_pointer < ::music::midi::player::command > spcommand;
          spcommand = (::music::midi::player::command *) pbase->m_lparam.m_lparam;
          try

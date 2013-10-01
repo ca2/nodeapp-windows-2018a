@@ -19,7 +19,7 @@ namespace multimedia
       {
       }
 
-      void window::install_message_handling(::ca2::message::dispatch * pinterface)
+      void window::install_message_handling(::message::dispatch * pinterface)
       {
          ::user::interaction::install_message_handling(pinterface);
          IGUI_WIN_MSG_LINK(MM_MIXM_CONTROL_CHANGE, pinterface, this, &window::_001OnMixerControlChange);
