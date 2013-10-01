@@ -21,7 +21,7 @@ namespace ca2plugin_container
 
       m_phost->m_strBitmapChannel = m_strChannel;
 
-      vsstring strChannel = "\\ca2\\ca2plugin-container-";
+      string strChannel = "\\ca2\\ca2plugin-container-";
 
       strChannel += m_strChannel;
 

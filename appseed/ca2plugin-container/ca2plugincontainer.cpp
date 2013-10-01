@@ -10,7 +10,7 @@ HANDLE g_hmutex = NULL;
 uint32_t thread_proc_app(void * lpParam)
 {
 
-   vsstring * pstrChannel = (vsstring *) lpParam;
+   string * pstrChannel = (string *) lpParam;
 
    ::ca2plugin_container::application * papp = new ::ca2plugin_container::application();
 
@@ -47,7 +47,7 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 
    int32_t nReturnCode = 0;
 
-   vsstring * pstrChannel = new vsstring(get_command_line_param(::GetCommandLine(), "channel"));
+   string * pstrChannel = new string(get_command_line_param(::GetCommandLine(), "channel"));
 
    g_hmutex = ::CreateMutex(NULL, FALSE, "Global\\::ca2::fontopus::ca2plugin-container::" + *pstrChannel);
 

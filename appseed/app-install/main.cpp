@@ -117,7 +117,7 @@ bool installer::initialize()
 
          //Sleep(15 * 1000);
 
-         vsstring strCommandLine;
+         string strCommandLine;
 
          for(int32_t i = 1; i < __argc; i++)
          {
@@ -278,7 +278,7 @@ bool installer::is_user_using(const char * pszDll)
 
 void installer::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMessage)
 {
-   vsstring strMessage(pszMessage);
+   string strMessage(pszMessage);
    int32_t iRet = 0;
    const char * pszSuffix;
    if((pszSuffix = str_begins_inc_dup(strMessage, "synch_spaadmin:")) != NULL)

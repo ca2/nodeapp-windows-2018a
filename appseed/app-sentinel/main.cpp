@@ -138,7 +138,7 @@ LRESULT CALLBACK sentinel_WndProc(oswindow oswindow, uint32_t message, WPARAM wP
 
 
 
-vsstring calc_id();
+string calc_id();
 
 
 int32_t installer(const char * param);
@@ -152,7 +152,7 @@ int32_t spaboot_start()
 
    
 
-   vsstring id = calc_id();
+   string id = calc_id();
    if(id == NULL || id.is_empty())
       id = "spaboot_install";
 
@@ -180,7 +180,7 @@ int32_t spaboot_start()
       {  
          break;
       }
-      vsstring strCommandLine;
+      string strCommandLine;
 
       strCommandLine = ": app=session session_start=" + id + " app_type=application install locale=_std schema=_std";
 
@@ -204,12 +204,12 @@ int32_t spaboot_start()
 
 
 
-vsstring calc_id()
+string calc_id()
 {
 
    char szModulePath[MAX_PATH * 3];
    ::GetModuleFileNameA((HINSTANCE) NULL, szModulePath, sizeof(szModulePath));
-   vsstring strId = read_resource_as_string_dup(::GetModuleHandleA(szModulePath), 1984, "CGCL");
+   string strId = read_resource_as_string_dup(::GetModuleHandleA(szModulePath), 1984, "CGCL");
    if(strId == "mplite") // use veriwell_mplite
       strId = "bergedge";
    return strId;

@@ -18,8 +18,8 @@ namespace ca2plugin_container
       oswindow                      m_oswindow;
       bool                          m_bStream;
 
-      vsstring                      m_vssPluginName;
-      vsstring                      m_vssPluginDescription;
+      string                      m_vssPluginName;
+      string                      m_vssPluginDescription;
 
       application *                 m_papp;      
 
@@ -40,7 +40,7 @@ namespace ca2plugin_container
       virtual bool      reload_plugin();
 
 
-      virtual vsstring  calc_location_url();
+      virtual string  calc_location_url();
 
 
       bool finalize();

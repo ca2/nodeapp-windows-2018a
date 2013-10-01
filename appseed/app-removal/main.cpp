@@ -171,10 +171,10 @@ HRESULT CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc, 
 
 }
 
-vsstring get_dir(const KNOWNFOLDERID & rfid, const char * lpcsz)
+string get_dir(const KNOWNFOLDERID & rfid, const char * lpcsz)
 {
 
-   vsstring str;
+   string str;
 
    wchar_t * buf = NULL;
    
@@ -216,12 +216,12 @@ if (CreateProcess(NULL, (char *) pszCmd, NULL, NULL, FALSE, CREATE_NO_WINDOW | C
 
 void rmdir(const char * pszDir)
 {
-   my_system("cmd.exe /C rmdir /S /Q \"" + vsstring(pszDir) + "\"");
+   my_system("cmd.exe /C rmdir /S /Q \"" + string(pszDir) + "\"");
 }
 
 void rmdir_n_v(const char * pszDir)
 {
-   vsstring str(pszDir);
+   string str(pszDir);
    rmdir(str);
 
    str.replace(":", "");
@@ -233,7 +233,7 @@ void rmdir_n_v(const char * pszDir)
 void g_n_rmdir_n_v(const KNOWNFOLDERID & rfid, const char * pszDir)
 {
 
-   vsstring strDir = get_dir(rfid, pszDir);
+   string strDir = get_dir(rfid, pszDir);
 
    rmdir_n_v(strDir);
 
@@ -258,11 +258,11 @@ bool removal::initialize()
 
    ::GetModuleFileName(NULL, szFile, sizeof(szFile));
 
-   vsstring strTargetDir = get_dir(FOLDERID_ProgramFilesX86, "ca2-app-removal");
+   string strTargetDir = get_dir(FOLDERID_ProgramFilesX86, "ca2-app-removal");
 
    dir::mk(strTargetDir);
 
-   vsstring strTarget = dir::path(strTargetDir, "app-removal.exe");
+   string strTarget = dir::path(strTargetDir, "app-removal.exe");
 
    if(::CopyFile(szFile, strTarget, TRUE))
    {
@@ -273,7 +273,7 @@ bool removal::initialize()
 
       if(i == IDYES)
       {
-         vsstring strLink= get_dir(FOLDERID_Desktop, "ca2 app-removal Tool.lnk");
+         string strLink= get_dir(FOLDERID_Desktop, "ca2 app-removal Tool.lnk");
          wstring wstrTarget(strTarget);
          wstring wstrLink(strLink);
          // create shortcurt;
@@ -291,7 +291,7 @@ bool removal::initialize()
    g_n_rmdir_n_v(FOLDERID_ProgramFilesX86, "ca2");
    g_n_rmdir_n_v(FOLDERID_ProgramData, "ca2");
 
-   vsstring str;
+   string str;
 
    g_n_rmdir_n_v(FOLDERID_Profile, "ca2");
 //rmdir /S /Q "C:\Users\ca2os\ca2"
@@ -423,7 +423,7 @@ bool removal::is_user_using(const char * pszDll)
 
 void removal::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMessage)
 {
-   vsstring strMessage(pszMessage);
+   string strMessage(pszMessage);
    int32_t iRet = 0;
    const char * pszSuffix;
    if((pszSuffix = str_begins_inc_dup(strMessage, "synch_spaadmin:")) != NULL)

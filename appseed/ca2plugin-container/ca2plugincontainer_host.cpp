@@ -159,7 +159,7 @@ namespace ca2plugin_container
 
    }
 
-   vsstring host::calc_location_url()
+   string host::calc_location_url()
    {
 /*      NPVariant varLocation;
       if(!NPN_GetProperty(m_instance, m_pobjectWindow, sLocation_id, &varLocation))
@@ -174,7 +174,7 @@ namespace ca2plugin_container
          NPN_ReleaseVariantValue(&varLocation);
          return "";
       }
-      vsstring strUrl(varValue.value.stringValue.UTF8Characters, varValue.value.stringValue.UTF8Length);
+      string strUrl(varValue.value.stringValue.UTF8Characters, varValue.value.stringValue.UTF8Length);
       NPN_ReleaseVariantValue(&varValue);
       NPN_ReleaseVariantValue(&varLocation);*/
       //return strUrl;
@@ -274,11 +274,11 @@ namespace ca2plugin_container
 //   */
    // This is the preferred method to get strings from NPIdentifiers, since you
 // don't have to worry about cleaning it up =]
-/*vsstring host::StringFromIdentifier(NPIdentifier identifier)
+/*string host::StringFromIdentifier(NPIdentifier identifier)
 {
  //   assertMainThread();
     NPUTF8* idStr = NPN_UTF8FromIdentifier(identifier);
-    vsstring str;
+    string str;
     if (idStr != NULL)
         str = idStr;
     NPN_MemFree(idStr);
@@ -447,7 +447,7 @@ namespace ca2plugin_container
   //                m_bStream = true;
 
 
-               vsstring str((const char *) m_puchMemory, len);
+               string str((const char *) m_puchMemory, len);
 
                xxdebug_box(str, "ca2plugincontainer::host::on_receive", 0);
 
@@ -463,7 +463,7 @@ namespace ca2plugin_container
          {
 
 
-            vsstring str((const char *) pdata, len);
+            string str((const char *) pdata, len);
 
             xxdebug_box(str, "ca2plugincontainer::host::on_receive", 0);
 
