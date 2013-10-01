@@ -22,7 +22,7 @@ namespace production
 
       virtual bool bergedge_start();
 
-      virtual void on_request(sp(::ca2::create_context) pcreatecontext);
+      virtual void on_request(sp(::create_context) pcreatecontext);
 
 	   virtual bool _001OnCmdMsg(BaseCmdMsg * pcmdmsg);
    		

@@ -84,7 +84,7 @@ namespace production
       return true;
    }
 
-   void application::on_request(sp(::ca2::create_context) pcreatecontext)
+   void application::on_request(sp(::create_context) pcreatecontext)
    {
 
       if(pcreatecontext->m_spCommandLine->m_varQuery["version"] == "stage")
