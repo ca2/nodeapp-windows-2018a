@@ -430,7 +430,7 @@ namespace ca2plugin_container
                {
                   try
                   {
-                     ca2_free(m_puchMemory);
+                     memory_free(m_puchMemory);
                   }
                   catch(...)
                   {

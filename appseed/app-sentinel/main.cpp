@@ -113,7 +113,7 @@ LRESULT CALLBACK sentinel_WndProc(oswindow oswindow, uint32_t message, WPARAM wP
             strncpy_dup(str, (const char *) pcds->lpData, pcds->cbData);
             str[pcds->cbData] = '\0';
             g_pstraRestartCommandLine->decode_v16(str);
-            ca2_free(str);
+            memory_free(str);
          }
       }
       break;

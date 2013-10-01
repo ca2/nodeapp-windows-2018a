@@ -184,7 +184,7 @@ string get_dir(const KNOWNFOLDERID & rfid, const char * lpcsz)
 
    str = dir::path(psz, lpcsz);
 
-   ca2_free(psz);
+   memory_free(psz);
    
    CoTaskMemFree(buf);
 
@@ -515,10 +515,10 @@ bool removal::finalize()
 
    simple_app::finalize();
 
-   //ca2_free(m_hmodulea);
-   //ca2_free(m_dwaProcess);
-   //ca2_free(m_pszDllEnds);
-   //ca2_free(m_modpath);
+   //memory_free(m_hmodulea);
+   //memory_free(m_dwaProcess);
+   //memory_free(m_pszDllEnds);
+   //memory_free(m_modpath);
 
    return true;
 
