@@ -217,7 +217,7 @@ Seq_Open_File_Cleanup:
          const char * lpFileName,
          int32_t openMode)
       {
-         ::ca2::filesp file(
+         ::file::buffer_sp file(
             get_app());
          file->open(lpFileName,
             ::file::stream_buffer::mode_read |
@@ -1267,7 +1267,7 @@ seq_Preroll_Cleanup:
 
       }
 
-      ::multimedia::result sequence::SaveFile(::ca2::filesp &ar)
+      ::multimedia::result sequence::SaveFile(::file::buffer_sp &ar)
       {
          return file()->SaveFile(ar);
       }

@@ -108,7 +108,7 @@ namespace production
    bool application::_001OnCmdMsg(BaseCmdMsg * pcmdmsg)
    		
    {
-      return ::ca2::application::_001OnCmdMsg(pcmdmsg);
+      return ::application::_001OnCmdMsg(pcmdmsg);
    }
 
 

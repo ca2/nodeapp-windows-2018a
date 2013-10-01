@@ -177,7 +177,7 @@ namespace music
          ::multimedia::result CloseFile();
          ::multimedia::result SaveFile(const char * lpFileName);
          ::multimedia::result SaveFile();
-         ::multimedia::result SaveFile(::ca2::filesp &ar);
+         ::multimedia::result SaveFile(::file::buffer_sp &ar);
          ::multimedia::result Preroll(::thread * pthread, ::music::midi::LPPREROLL lpPreroll, bool bThrow);
          ::multimedia::result Start();
 
