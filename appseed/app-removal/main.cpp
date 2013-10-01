@@ -174,18 +174,14 @@ HRESULT CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc, 
 string get_dir(const KNOWNFOLDERID & rfid, const char * lpcsz)
 {
 
-   string str;
-
    wchar_t * buf = NULL;
    
    SHGetKnownFolderPath(rfid, 0, NULL, &buf);
 
-   char * psz = utf16_to_8(buf);
+   string str(buf);
 
-   str = dir::path(psz, lpcsz);
+   str = dir::path(str, lpcsz);
 
-   memory_free(psz);
-   
    CoTaskMemFree(buf);
 
    return str;
