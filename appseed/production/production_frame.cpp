@@ -40,7 +40,7 @@ namespace production
       IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &frame::_001OnCreate);
    }
 
-   void frame::_001OnCreate(::ca2::signal_object * pobj)
+   void frame::_001OnCreate(::signal_details * pobj)
    {
 
       pobj->previous();

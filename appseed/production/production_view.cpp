@@ -100,7 +100,7 @@ namespace production
 	   return ::user::view::pre_create_window(cs);
    }
 
-   void view::_001OnInitialUpdate(::ca2::signal_object * pobj) 
+   void view::_001OnInitialUpdate(::signal_details * pobj) 
    {
       ::user::view::_001OnInitialUpdate(pobj);
    }
@@ -130,12 +130,12 @@ namespace production
    	
    }
 
-   void view::_001OnDestroy(::ca2::signal_object * pobj) 
+   void view::_001OnDestroy(::signal_details * pobj) 
    {
 	   ::user::view::_001OnDestroy(pobj);
    }
 
-   void view::_001OnSize(::ca2::signal_object * pobj) 
+   void view::_001OnSize(::signal_details * pobj) 
    {
       UNREFERENCED_PARAMETER(pobj);
 //      SCAST_PTR(::message::size, psize, pobj)
@@ -235,7 +235,7 @@ namespace production
 
    }
 
-   void view::_001OnCreate(::ca2::signal_object * pobj) 
+   void view::_001OnCreate(::signal_details * pobj) 
    {
       if(pobj->previous())
          return;
@@ -302,7 +302,7 @@ namespace production
    }
 
 
-   void view::_001OnContextMenu(::ca2::signal_object * pobj) 
+   void view::_001OnContextMenu(::signal_details * pobj) 
    {
       SCAST_PTR(::message::context_menu, pcontextmenu, pobj)
       point point = pcontextmenu->GetPoint();
@@ -317,7 +317,7 @@ namespace production
    }
 
 
-   void view::_001OnSetCursor(::ca2::signal_object * pobj) 
+   void view::_001OnSetCursor(::signal_details * pobj) 
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -373,7 +373,7 @@ namespace production
       return -1;
    }
 
-   void view::_001OnLButtonDown(::ca2::signal_object * pobj)
+   void view::_001OnLButtonDown(::signal_details * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
   //    SCAST_PTR(::message::mouse, pmouse, pobj)
@@ -382,7 +382,7 @@ namespace production
 
    }
 
-   void view::_001OnLButtonUp(::ca2::signal_object * pobj)
+   void view::_001OnLButtonUp(::signal_details * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj)
 
@@ -401,7 +401,7 @@ namespace production
 
    }
 
-   void view::_001OnRButtonUp(::ca2::signal_object * pobj)
+   void view::_001OnRButtonUp(::signal_details * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
   //    SCAST_PTR(::message::mouse, pmouse, pobj)
@@ -421,7 +421,7 @@ namespace production
 
 
 
-   void view::_001OnTimer(::ca2::signal_object * pobj)
+   void view::_001OnTimer(::signal_details * pobj)
    {
       SCAST_PTR(::message::timer, ptimer, pobj)
       if(ptimer->m_nIDEvent == 543218)
@@ -457,7 +457,7 @@ namespace production
 
 
 
-   void view::_001OnShowWindow(::ca2::signal_object * pobj) 
+   void view::_001OnShowWindow(::signal_details * pobj) 
    {
       UNREFERENCED_PARAMETER(pobj);
 //      SCAST_PTR(::message::show_window, pshowwindow, pobj)
@@ -478,7 +478,7 @@ namespace production
       m_pproduction->start_loop(papp->m_eversion, iLoopCount);
    }
 
-   void view::_001OnUser(::ca2::signal_object * pobj)
+   void view::_001OnUser(::signal_details * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       if(pbase->m_wparam == 1)

@@ -66,7 +66,7 @@ namespace music
 
       }
 
-      void sequence_thread::OnMidiSequenceEvent(::ca2::signal_object * pobj)
+      void sequence_thread::OnMidiSequenceEvent(::signal_details * pobj)
       {
 
          SCAST_PTR(::message::base, pbase, pobj);
@@ -307,7 +307,7 @@ namespace music
       }
 
 
-      void sequence_thread::OnCommand(::ca2::signal_object * pobj)
+      void sequence_thread::OnCommand(::signal_details * pobj)
       {
          SCAST_PTR(::message::base, pbase, pobj);
          ::ca::smart_pointer < ::music::midi::player::command > spcommand;

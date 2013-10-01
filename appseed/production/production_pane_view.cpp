@@ -42,7 +42,7 @@ namespace production
    /////////////////////////////////////////////////////////////////////////////
    // pane_view message handlers
 
-   void pane_view::_001OnCreate(::ca2::signal_object * pobj) 
+   void pane_view::_001OnCreate(::signal_details * pobj) 
    {
 //      SCAST_PTR(::message::create, pcreate, pobj)
       if(pobj->previous())
@@ -272,7 +272,7 @@ namespace production
 
 
 
-   void pane_view::_001OnMenuMessage(::ca2::signal_object * pobj)
+   void pane_view::_001OnMenuMessage(::signal_details * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       set_cur_tab_by_id(m_pviewdataOld->m_id);
@@ -347,7 +347,7 @@ namespace production
         return  (::user::view::get_document());
      }
 
-     void pane_view::_001OnUserMessage(::ca2::signal_object * pobj)
+     void pane_view::_001OnUserMessage(::signal_details * pobj)
      {
         SCAST_PTR(::message::base, pbase, pobj)
            if(pbase->m_wparam == 1)

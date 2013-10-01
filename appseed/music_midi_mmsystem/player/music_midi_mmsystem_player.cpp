@@ -215,7 +215,7 @@ namespace music
 
          }
 
-         void player::pre_translate_message(::ca2::signal_object * pobj) 
+         void player::pre_translate_message(::signal_details * pobj) 
          {
             SCAST_PTR(::message::base, pbase, pobj);
             //ASSERT(GetMainWnd() == NULL);
@@ -265,7 +265,7 @@ namespace music
          }
 
 
-         void player::OnUserMessage(::ca2::signal_object * pobj)
+         void player::OnUserMessage(::signal_details * pobj)
          {
             SCAST_PTR(::message::base, pbase, pobj);
             if(pbase->m_wparam == 3377)
@@ -390,7 +390,7 @@ namespace music
             m_puie = puie;
          }
 
-         void player::on_attribute_change(::ca2::signal_object * pobj)
+         void player::on_attribute_change(::signal_details * pobj)
          {
             SCAST_PTR(::music::midi::attribute_message, pchange, pobj);
 
@@ -421,7 +421,7 @@ namespace music
          }
 
 
-         void player::OnMultimediaMidiOutputMessageDone(::ca2::signal_object * pobj)
+         void player::OnMultimediaMidiOutputMessageDone(::signal_details * pobj)
          {
             
             SCAST_PTR(::message::base, pbase, pobj);
@@ -438,7 +438,7 @@ namespace music
 
          }
 
-         void player::OnMultimediaMidiOutputMessagePositionCB(::ca2::signal_object * pobj)
+         void player::OnMultimediaMidiOutputMessagePositionCB(::signal_details * pobj)
          {
             SCAST_PTR(::message::base, pbase, pobj);
             LPMIDIHDR lpmidihdr = (LPMIDIHDR) pbase->m_wparam;
@@ -454,7 +454,7 @@ namespace music
 
 
 
-         void player::OnNotifyEvent(::ca2::signal_object * pobj)
+         void player::OnNotifyEvent(::signal_details * pobj)
          {
             SCAST_PTR(::message::base, pbase, pobj);
             ::music::midi::player::notify_event * pdata = (::music::midi::player::notify_event *) pbase->m_lparam.m_lparam;

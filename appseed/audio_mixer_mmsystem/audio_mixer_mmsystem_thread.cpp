@@ -79,7 +79,7 @@ namespace multimedia
       // thread message handlers
 
 
-      void thread::OnMixerMessage(::ca2::signal_object * pobj)
+      void thread::OnMixerMessage(::signal_details * pobj)
       {
          SCAST_PTR(::message::base, pbase, pobj);
 
@@ -149,7 +149,7 @@ namespace multimedia
          return ::thread::on_idle(lCount);
       }
 
-      void thread::OnVmsmException(::ca2::signal_object * pobj)
+      void thread::OnVmsmException(::signal_details * pobj)
       {
          UNREFERENCED_PARAMETER(pobj);
          //sp(base_application) pApp = (sp(base_application)) &System;
@@ -157,7 +157,7 @@ namespace multimedia
       }
 
 
-      void thread::OnUserMessage(::ca2::signal_object * pobj)
+      void thread::OnUserMessage(::signal_details * pobj)
       {
          SCAST_PTR(::message::base, pbase, pobj);
 
@@ -300,7 +300,7 @@ namespace multimedia
       }
 
 
-      void thread::pre_translate_message(::ca2::signal_object * pobj)
+      void thread::pre_translate_message(::signal_details * pobj)
       {
 
          return ::thread::pre_translate_message(pobj);

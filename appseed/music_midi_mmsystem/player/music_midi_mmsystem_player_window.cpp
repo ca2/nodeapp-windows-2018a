@@ -32,7 +32,7 @@ namespace music
             IGUI_WIN_MSG_LINK(WM_APP + 3388                    , pinterface, this, &window::_001OnApp3388Message);
          }
 
-         void window::_001OnMmsgDone(::ca2::signal_object * pobj)
+         void window::_001OnMmsgDone(::signal_details * pobj)
          {
             SCAST_PTR(::message::base, pbase, pobj);
             if(get_callback() != NULL)
@@ -50,7 +50,7 @@ namespace music
             }
          }
 
-         void window::_001OnNotifyEvent(::ca2::signal_object * pobj)
+         void window::_001OnNotifyEvent(::signal_details * pobj)
          {
             SCAST_PTR(::message::base, pbase, pobj);
             ::music::midi::player::notify_event * pdata = (::music::midi::player::notify_event *) pbase->m_lparam.m_lparam;
@@ -88,7 +88,7 @@ namespace music
             return true;
          }
 
-         void window::_001OnUserMessage(::ca2::signal_object * pobj)
+         void window::_001OnUserMessage(::signal_details * pobj)
          {
             SCAST_PTR(::message::base, pbase, pobj);
             switch(pbase->m_wparam)
@@ -107,7 +107,7 @@ namespace music
             pbase->set_lresult(0);
          }
 
-         void window::_001OnApp3388Message(::ca2::signal_object * pobj)
+         void window::_001OnApp3388Message(::signal_details * pobj)
          {
             throw not_implemented(get_app());
             SCAST_PTR(::message::base, pbase, pobj);

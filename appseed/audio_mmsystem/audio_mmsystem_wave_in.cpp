@@ -42,7 +42,7 @@ namespace multimedia
          return thread::exit_instance();
       }
 
-      void wave_in::pre_translate_message(::ca2::signal_object * pobj)
+      void wave_in::pre_translate_message(::signal_details * pobj)
       {
          SCAST_PTR(::message::base, pbase, pobj);
          //ASSERT(GetMainWnd() == NULL);
@@ -372,7 +372,7 @@ Opened:
       }
 
 
-      void wave_in::translate_wave_in_message(::ca2::signal_object * pobj)
+      void wave_in::translate_wave_in_message(::signal_details * pobj)
       {
 
          SCAST_PTR(::message::base, pbase, pobj);

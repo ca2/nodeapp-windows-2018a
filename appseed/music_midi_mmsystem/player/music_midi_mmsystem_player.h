@@ -49,7 +49,7 @@ namespace music
 
             virtual bool initialize_instance();
             virtual int32_t exit_instance();
-            virtual void pre_translate_message(::ca2::signal_object * pobj);
+            virtual void pre_translate_message(::signal_details * pobj);
             void OnMmsgDone(::music::midi::sequence *pSeq);
             DECL_GEN_SIGNAL(OnUserMessage)
                void SaveFile(const char * lpszPathName);

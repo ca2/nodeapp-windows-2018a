@@ -372,13 +372,13 @@ Opened:
       }
 
 
-      void wave_out::OnMultimediaOpen(::ca2::signal_object * pobj)
+      void wave_out::OnMultimediaOpen(::signal_details * pobj)
       {
          UNREFERENCED_PARAMETER(pobj);
       }
 
 
-      void wave_out::OnMultimediaDone(::ca2::signal_object * pobj)
+      void wave_out::OnMultimediaDone(::signal_details * pobj)
       {
          
          SCAST_PTR(::message::base, pbase, pobj);
@@ -391,12 +391,12 @@ Opened:
 
       }
 
-      void wave_out::OnMultimediaClose(::ca2::signal_object * pobj)
+      void wave_out::OnMultimediaClose(::signal_details * pobj)
       {
          UNREFERENCED_PARAMETER(pobj);
       }
 
-      /*void wave_out::wave_out_on_buffer_ready(::ca2::signal_object * pobj)
+      /*void wave_out::wave_out_on_buffer_ready(::signal_details * pobj)
       {
          UNREFERENCED_PARAMETER(pobj);
       }*/
