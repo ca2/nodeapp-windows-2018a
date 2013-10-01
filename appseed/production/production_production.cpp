@@ -125,9 +125,9 @@ namespace production
 
       string str;
 
-      ::ca2::property_set post;
-      ::ca2::property_set headers;
-      ::ca2::property_set params;
+      property_set post;
+      property_set headers;
+      property_set params;
 
       int32_t iProduce;
 
@@ -392,9 +392,9 @@ restart:
          {
             // good pratice to initialize authentication of ca2status.com with account.ca2.cc auth information
             string str;
-            ::ca2::property_set post;
-            ::ca2::property_set headers;
-            ::ca2::property_set params;
+            property_set post;
+            property_set headers;
+            property_set params;
 
             Application.http().get("http://api.ca2.cc/status/insert");
 
@@ -435,8 +435,8 @@ restart:
          if(m_strBase.Right(1) != "/" && m_strBase.Right(1) != "\\")
             m_iBaseLen++;
 
-         ::ca2::property_set post;
-         ::ca2::property_set headers;
+         property_set post;
+         property_set headers;
          string strStatus;
          m_strTag = strTime + " " + strSVNKey;
          m_strTagPath = System.dir().path("C:\\ca2\\build\\stage", m_strFormatBuild +".txt");
@@ -470,9 +470,9 @@ restart:
             add_status("Cleaning ca2 fontopus ca2os ...");
             {
                string str;
-               ::ca2::property_set post;
-               ::ca2::property_set headers;
-               ::ca2::property_set params;
+               property_set post;
+               property_set headers;
+               property_set params;
 
                post["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor +" display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt( "%Y-%m-%d %H-%M-%S")) +  " Cleaning...</span></div>";
 
@@ -518,9 +518,9 @@ restart:
 
          {
             string str;
-            ::ca2::property_set post;
-            ::ca2::property_set headers;
-            ::ca2::property_set params;
+            property_set post;
+            property_set headers;
+            property_set params;
 
             post["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor +" display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt( "%Y-%m-%d %H-%M-%S")) +  " Cleaning...</span></div>";
 
@@ -586,9 +586,9 @@ restart:
          m_pview->post_message(WM_USER, 2);
          {
             string str;
-            ::ca2::property_set post;
-            ::ca2::property_set headers;
-            ::ca2::property_set params;
+            property_set post;
+            property_set headers;
+            property_set params;
 
             post["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor +" display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt( "%Y-%m-%d %H-%M-%S")) +  " Copying...</span></div>";
 
@@ -602,9 +602,9 @@ restart:
          m_timeStart.FormatGmt(m_strStartTime, "%Y-%m-%d %H-%M-%S");
          {
             string str;
-            ::ca2::property_set post;
-            ::ca2::property_set headers;
-            ::ca2::property_set params;
+            property_set post;
+            property_set headers;
+            property_set params;
 
             post["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor +" display: block; margin-bottom: 0.95em;\">" +version_to_international_datetime( ::datetime::time::get_current_time().FormatGmt( "%Y-%m-%d %H-%M-%S")) +  " Compressing...</span></div>";
 
@@ -614,9 +614,9 @@ restart:
          compress();
          {
             string str;
-            ::ca2::property_set post;
-            ::ca2::property_set headers;
-            ::ca2::property_set params;
+            property_set post;
+            property_set headers;
+            property_set params;
 
             post["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor +" display: block; margin-bottom: 0.95em;\">" +version_to_international_datetime( ::datetime::time::get_current_time().FormatGmt( "%Y-%m-%d %H-%M-%S")) +  " Resources...</span></div>";
 
@@ -658,9 +658,9 @@ restart:
 
          {
             string str;
-            ::ca2::property_set post;
-            ::ca2::property_set headers;
-            ::ca2::property_set params;
+            property_set post;
+            property_set headers;
+            property_set params;
 
             post["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor +" display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt( "%Y-%m-%d %H-%M-%S")) +  " Storing Symbols...</span></div>";
 
@@ -749,9 +749,9 @@ restart:
 
          {
             string str;
-            ::ca2::property_set post;
-            ::ca2::property_set headers;
-            ::ca2::property_set params;
+            property_set post;
+            property_set headers;
+            property_set params;
 
             post["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor +" display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt( "%Y-%m-%d %H-%M-%S")) +  " Packaging...</span></div>";
 
@@ -788,9 +788,9 @@ restart:
 
          {
             string str;
-            ::ca2::property_set post;
-            ::ca2::property_set headers;
-            ::ca2::property_set params;
+            property_set post;
+            property_set headers;
+            property_set params;
 
             post["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor +" display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt( "%Y-%m-%d %H-%M-%S")) +  " Releasing...</span></div>";
 
@@ -1166,9 +1166,9 @@ retry2:
    strStatus.Format("compress step: %d", i);
    add_status(strStatus);
 
-   ::ca2::property_set post;
+   property_set post;
 
-   ::ca2::property_set headers;
+   property_set headers;
    System.http().ms_download(strUrl, 
    System.dir().ca2("time\\spaignition_update.txt"), NULL, post, headers, System.user()->get_user());
    i += 8;
@@ -2252,9 +2252,9 @@ retry2:
    int32_t production::release::run()
    {
       string str;
-      ::ca2::property_set post(get_app());
-      ::ca2::property_set headers(get_app());
-      ::ca2::property_set set(get_app());
+      property_set post(get_app());
+      property_set headers(get_app());
+      property_set set(get_app());
       set["disable_ca2_sessid"] = true;
       Application.http().get(m_strRelease, str, post, headers, set);
       m_pproduction->m_iRelease--;
@@ -2271,9 +2271,9 @@ retry2:
          m_evFinish.wait();
          m_evFinish.ResetEvent();
          add_status("All releases have been commanded and production has deemed ended!!.!.!!.");
-         ::ca2::property_set post;
-         ::ca2::property_set headers;
-         ::ca2::property_set params;
+         property_set post;
+         property_set headers;
+         property_set params;
          string strEndTime;
          m_timeEnd.FormatGmt(strEndTime, "%Y-%m-%d %H-%M-%S");
          if(m_eversion == version_basis)
@@ -2453,7 +2453,7 @@ Retry2:
       {
          //replyMsg=twitterObj.get_response(  );
 
-         //::ca2::property_set set(get_app());
+         //property_set set(get_app());
 
          //set.parse_json(replyMsg);
 
@@ -2581,9 +2581,9 @@ retry1:
       add_status("Building ca2 fontopus ca2os " + strApp + "...");
       {
          string str;
-         ::ca2::property_set post;
-         ::ca2::property_set headers;
-         ::ca2::property_set params;
+         property_set post;
+         property_set headers;
+         property_set params;
 
          post["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor +" display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt( "%Y-%m-%d %H-%M-%S")) +  " Building " + strApp + "...</span></div>";
 
