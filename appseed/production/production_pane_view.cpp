@@ -301,9 +301,9 @@ namespace production
          int32_t i = (int32_t) ::ShellExecuteW(
             NULL, 
             NULL, 
-            ::ca2::international::utf8_to_unicode("\"" + itema[0].m_strPath + "\""),
+            ::str::international::utf8_to_unicode("\"" + itema[0].m_strPath + "\""),
             NULL,
-            ::ca2::international::utf8_to_unicode("\"" + System.dir().name(itema[0].m_strPath) + "\""),
+            ::str::international::utf8_to_unicode("\"" + System.dir().name(itema[0].m_strPath) + "\""),
             SW_SHOWNORMAL);
          string str;
          str.Format("%d", i);

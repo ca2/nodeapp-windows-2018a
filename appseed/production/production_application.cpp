@@ -125,9 +125,9 @@ namespace production
          ::ShellExecuteW(
             NULL, 
             L"open", 
-            ::ca2::international::utf8_to_unicode(itema[0].m_strPath),
+            ::str::international::utf8_to_unicode(itema[0].m_strPath),
             NULL,
-            ::ca2::international::utf8_to_unicode(System.dir().name(itema[0].m_strPath)),
+            ::str::international::utf8_to_unicode(System.dir().name(itema[0].m_strPath)),
             SW_SHOW);
       }
       

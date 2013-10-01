@@ -158,21 +158,21 @@ namespace production
          if(m_iGlobalRetry > 8)
          {
 
-            add_status("Retried " + ::ca2::str::from(m_iGlobalRetry) + " times - \"giving up\" this command!");
+            add_status("Retried " + ::str::from(m_iGlobalRetry) + " times - \"giving up\" this command!");
 
             if(m_eversion == version_basis)
             {
-               post["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #882266; display: block; margin-bottom: 1.5em;\">Retried " + ::ca2::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!</span>";
+               post["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #882266; display: block; margin-bottom: 1.5em;\">Retried " + ::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!</span>";
             }
             else
             {
-               post["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">Retried " + ::ca2::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!</span>";
+               post["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">Retried " + ::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!</span>";
             }
 
             Application.http().get("http://api.ca2.cc/status/insert", str, post, headers, params);
 
 
-            string strTwit = "Retried " + ::ca2::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!";
+            string strTwit = "Retried " + ::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!";
 
             twitter_twit(strTwit);
 
@@ -197,7 +197,7 @@ namespace production
          }
          else
          {
-            m_strTry = ::ca2::str::from(m_iGlobalRetry) + "th";
+            m_strTry = ::str::from(m_iGlobalRetry) + "th";
          }
 
          if(m_eversion == version_basis)
@@ -509,7 +509,7 @@ restart:
             return 2;
 
 
-         m_strSubversionRevision = "SVN" + ::ca2::str::from(atoi(strRevision) + 1);
+         m_strSubversionRevision = "SVN" + ::str::from(atoi(strRevision) + 1);
 
          if(m_bBuild)
          {
@@ -972,10 +972,10 @@ restart:
       strStatus.Format("compressing %s", System.file().name_(lpcszRelative));
       add_status(strStatus);
       string strSrcFile = System.dir().path(m_strVrel, lpcszRelative);
-      if(::ca2::str::ends_ci(lpcszRelative, ".dll")
-         || ::ca2::str::ends_ci(lpcszRelative, ".exe")
-         || ::ca2::str::ends_ci(lpcszRelative, ".ocx")
-         || ::ca2::str::ends_ci(lpcszRelative, ".cab"))
+      if(::str::ends_ci(lpcszRelative, ".dll")
+         || ::str::ends_ci(lpcszRelative, ".exe")
+         || ::str::ends_ci(lpcszRelative, ".ocx")
+         || ::str::ends_ci(lpcszRelative, ".cab"))
       {
 
          string strStatus;
@@ -988,7 +988,7 @@ restart:
          add_status("Signing code ...");
 
       }
-      else if(::ca2::str::ends_ci(lpcszRelative, ".sys"))
+      else if(::str::ends_ci(lpcszRelative, ".sys"))
       {
 
          string strStatus;
@@ -1299,10 +1299,10 @@ retry2:
          string strFile;
          string strTitle;
          string strRelative;
-         ::ca2::str::ends_eat(strRelease, "\\");
-         ::ca2::str::ends_eat(strRelease, "/");
-         ::ca2::str::ends_eat(strLocal, "\\");
-         ::ca2::str::ends_eat(strLocal, "/");
+         ::str::ends_eat(strRelease, "\\");
+         ::str::ends_eat(strRelease, "/");
+         ::str::ends_eat(strLocal, "\\");
+         ::str::ends_eat(strLocal, "/");
          strFile = strRelease + ".expand_fileset";
          strTitle = System.file().name_(strRelease) + ".expand_fileset";
          strRelative = strLocal + ".expand_fileset";
@@ -1366,7 +1366,7 @@ retry2:
       for(;i < m_straFiles.get_size();i++)
       {
          string & strFile = m_straFiles[i];
-         if(::ca2::str::ends_ci(strFile, ".zip"))
+         if(::str::ends_ci(strFile, ".zip"))
          {
          }
          else if(Application.dir().is(strFile))
@@ -1417,7 +1417,7 @@ retry2:
       m_strIndexMd5 = System.file().md5(strIndex);
 
       strBz = System.dir().path(m_strCCAuth, strRelative) + ".bz"; 
-      ::DeleteFileW(::ca2::international::utf8_to_unicode(strBz));
+      ::DeleteFileW(::str::international::utf8_to_unicode(strBz));
       compress(strRelative);
 
       string strRelativeMd5 = "app\\stage\\metastage\\index-" + m_strFormatBuild + ".md5";
@@ -1425,17 +1425,17 @@ retry2:
       Application.file().put_contents(strMd5 , m_strIndexMd5);
 
       //string strStage = System.dir().path("C:\\home\\ca2os\\ca2_spa\\" + m_strVersionShift, strRelative) + ".bz"; 
-      //::DeleteFileW(::ca2::international::utf8_to_unicode(
+      //::DeleteFileW(::str::international::utf8_to_unicode(
       // strStage));
       //System.file().copy(strStage, strBz);
       strRelease = System.dir().path(m_strCCVrel, strRelative) + ".bz";
-      //::DeleteFileW(::ca2::international::utf8_to_unicode(
+      //::DeleteFileW(::str::international::utf8_to_unicode(
       // strRelease));
       Application.file().copy(strRelease, strBz);
       strRelease = System.dir().path(m_strCCVrel, strRelativeMd5);
       Application.file().copy(strRelease, strMd5);
       strReleaseNew = System.dir().path(m_strCCVrelNew, strRelative) + ".bz";
-      //::DeleteFileW(::ca2::international::utf8_to_unicode(
+      //::DeleteFileW(::str::international::utf8_to_unicode(
       // strRelease));
       Application.file().copy(strReleaseNew, strBz);
       strReleaseNew = System.dir().path(m_strCCVrelNew, strRelativeMd5);
@@ -1463,7 +1463,7 @@ retry2:
 
       for(int32_t i = 0; i < straRelative.get_count(); i++)
       {
-         if(::ca2::str::begins(straRelative[i], "_"))
+         if(::str::begins(straRelative[i], "_"))
          {
             generate_appmatter_spa_folder(pszRoot, straRelative[i]);
          }
@@ -1488,7 +1488,7 @@ retry2:
 
       for(int32_t i = 0; i < straRelative.get_count(); i++)
       {
-         if(::ca2::str::begins(straRelative[i], "_") && straRelative[i] != "_std")
+         if(::str::begins(straRelative[i], "_") && straRelative[i] != "_std")
          {
             generate_appmatter_spa_folder(pszRoot, System.dir().path(pszRelative, straRelative[i]));
          }
@@ -1791,7 +1791,7 @@ retry2:
       for(int32_t i = 0; i < m_straPath.get_count(); i++)
       {
          string strRelative = m_straRelative[i];
-         if(::ca2::str::begins_ci(strRelative, "META-INF\\"))
+         if(::str::begins_ci(strRelative, "META-INF\\"))
             continue;
          strRelative.replace("\\", "/");
          mem.allocate(0);
@@ -2300,7 +2300,7 @@ retry2:
             }
             else
             {
-               strTwit += " with " + ::ca2::str::from(m_iGlobalRetry) + " retries";
+               strTwit += " with " + ::str::from(m_iGlobalRetry) + " retries";
             }
          }
 
@@ -2352,8 +2352,8 @@ retry2:
          twitterObj.get_oauth().setOAuthTokenSecret( "" );
       }
 
-      string strPathKey = Application.dir().userappdata("twitterClient_token_key"+::ca2::str::from(m_eversion)+".txt");
-      string strPathSecret = Application.dir().userappdata("twitterClient_token_secret"+::ca2::str::from(m_eversion)+".txt");
+      string strPathKey = Application.dir().userappdata("twitterClient_token_key"+::str::from(m_eversion)+".txt");
+      string strPathSecret = Application.dir().userappdata("twitterClient_token_secret"+::str::from(m_eversion)+".txt");
       /* Step 1: Check if we alredy have OAuth access token from a previous run */
       //    char szKey[1024];
       string myOAuthAccessTokenKey = Application.file().as_string(strPathKey);
@@ -2422,8 +2422,8 @@ Retry2:
          twitterObj.get_oauth().setConsumerSecret(string( "LmgKZmcM5NExmp8cPisHvtuYGxU0KMKH61wNYc0Pn8Q" ) );
       }
 
-      string strPathKey = Application.dir().userappdata("twitterClient_token_key"+::ca2::str::from(m_eversion)+".txt");
-      string strPathSecret = Application.dir().userappdata("twitterClient_token_secret"+::ca2::str::from(m_eversion)+".txt");
+      string strPathKey = Application.dir().userappdata("twitterClient_token_key"+::str::from(m_eversion)+".txt");
+      string strPathSecret = Application.dir().userappdata("twitterClient_token_secret"+::str::from(m_eversion)+".txt");
       /* Step 1: Check if we alredy have OAuth access token from a previous run */
       //    char szKey[1024];
       string myOAuthAccessTokenKey = Application.file().as_string(strPathKey);
