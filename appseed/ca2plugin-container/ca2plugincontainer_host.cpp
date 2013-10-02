@@ -30,7 +30,7 @@ namespace ca2plugin_container
 
       m_bRunningSpaAdmin = false;
 
-      m_pbaseapp->m_pplaneapp = papp;
+      m_pcontainerapp  = papp;
 
       m_vssPluginName = "ca2 plugin";
       m_vssPluginDescription = "ca2 plugin for Firefox";
@@ -144,7 +144,7 @@ namespace ca2plugin_container
    void host::restart_small_ipc_channel()
    {
 
-      m_pbaseapp->m_pplaneapp->restart_small_ipc_channel();
+      m_pcontainerapp->restart_small_ipc_channel();
 
    }
 
