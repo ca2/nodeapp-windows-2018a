@@ -479,7 +479,7 @@ restart:
                Application.http().get("http://api.ca2.cc/status/insert", str, post, headers, params);
 
             }
-            ::ca2::process process;
+            ::core::process process;
             string strPath;
             strPath = System.dir().element("nodeapp\\stage\\script\\stage_clean.bat");
             if(!process.create_child_process(strPath, false))
@@ -535,7 +535,7 @@ restart:
          //System.http().ms_download("http://api.ca2.cc/spaignition/clean", 
          //   System.dir().element("time\\spaignition_update.txt"), NULL, post, headers, ::ca2::app(get_app()).user()->get_user());
          add_status("Cleaning ca2os folder...");
-         ::ca2::process process;
+         ::core::process process;
          Application.file().put_contents(strPath, "rmdir /s /q C:\\ca2\\vrel\\stage");
          if(!process.create_child_process(strPath, false))
          {
@@ -678,7 +678,7 @@ restart:
 
             string strPath = System.dir().element("time\\stage\\app\\matter\\store_symbols_job_x86.bat");
 
-            ::ca2::process process;
+            ::core::process process;
             string strCommand = "\"C:\\Program Files (x86)\\Windows Kits\\8.0\\Debuggers\\x86\\symstore.exe\"  add /r  -:REL /f \\\\sewindows\\stage\\" + m_strFormatBuild + "\\stage\\x86\\ /s \\\\sewindows\\SymbolServer\\ /t \"ca2\" /v \"" + m_strFormatBuild + "\"";
             Application.file().put_contents(strPath, strCommand);
             if(!process.create_child_process(strPath, false))
@@ -716,7 +716,7 @@ restart:
 
             string strPath = System.dir().element("time\\stage\\app\\matter\\store_symbols_job_x64.bat");
 
-            ::ca2::process process;
+            ::core::process process;
             string strCommand = "\"C:\\Program Files (x86)\\Windows Kits\\8.0\\Debuggers\\x64\\symstore.exe\"  add /r  -:REL /f \\\\sewindows\\stage\\" + m_strFormatBuild + "\\stage\\x64\\ /s \\\\sewindows\\SymbolServer\\ /t \"ca2\" /v \"" + m_strFormatBuild + "\"";
             Application.file().put_contents(strPath, strCommand);
             if(!process.create_child_process(strPath, false))
@@ -2021,7 +2021,7 @@ retry2:
 
       string strPath;
 
-      ::ca2::process process;
+      ::core::process process;
 
       uint32_t dwExitCode;
 
@@ -2058,7 +2058,7 @@ retry2:
       string str;
       uint32_t dwExitCode;
       string strXpi = System.dir().path(strDir, "npca2.xpi") ;
-      ::ca2::process process;
+      ::core::process process;
       string strPath = "zip -r -D \""+strXpi+"\" * ";
       if(!process.create_child_process(strPath, false,  System.dir().path(strDir, "npca2/")))
       {
@@ -2095,7 +2095,7 @@ retry2:
 
       uint32_t dwExitCode;
       string str;
-      ::ca2::process process;
+      ::core::process process;
       string strPath;
       strPath = System.dir().path(m_strBase, "nodeapp\\stage\\script\\makecab" + string(pszPlatform) + ".bat");
       if(!process.create_child_process(strPath, false, System.dir().name(strPath)))
@@ -2590,7 +2590,7 @@ retry1:
          Application.http().get("http://api.ca2.cc/status/insert", str, post, headers, params);
 
       }
-      ::ca2::process process;
+      ::core::process process;
       string strPath;
       if(Application.m_eversion == version_basis)
       {
