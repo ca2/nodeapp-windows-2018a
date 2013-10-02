@@ -1198,7 +1198,7 @@ seq_Preroll_Cleanup:
                      break;
                   case EVENT_ID_NOTE_ON:
                      {
-                        ::ca2::byte_stream_memory_file memFile(get_app(), (LPBYTE) &lpdwParam[1], pheader->m_dwLength - sizeof(uint32_t));
+                        ::file::byte_stream_memory_buffer memFile(get_app(), (LPBYTE) &lpdwParam[1], pheader->m_dwLength - sizeof(uint32_t));
                         for(int32_t i = 0; i < m_iaLevel.get_size(); i++)
                         {
                            BYTE b;
