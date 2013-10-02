@@ -297,7 +297,7 @@ namespace music
       }
 
 
-      void sequence_thread::ExecuteCommand(::ca::smart_pointer < ::music::midi::player::command > spcommand)
+      void sequence_thread::ExecuteCommand(smart_pointer < ::music::midi::player::command > spcommand)
       {
          spcommand->add_ref();
          post_thread_message(
@@ -310,7 +310,7 @@ namespace music
       void sequence_thread::OnCommand(::signal_details * pobj)
       {
          SCAST_PTR(::message::base, pbase, pobj);
-         ::ca::smart_pointer < ::music::midi::player::command > spcommand;
+         smart_pointer < ::music::midi::player::command > spcommand;
          spcommand = (::music::midi::player::command *) pbase->m_lparam.m_lparam;
          try
          {
@@ -326,7 +326,7 @@ namespace music
       }
 
 
-      void sequence_thread::_ExecuteCommand(::ca::smart_pointer < ::music::midi::player::command > spcommand)
+      void sequence_thread::_ExecuteCommand(smart_pointer < ::music::midi::player::command > spcommand)
       {
          switch(spcommand->GetCommand())
          {

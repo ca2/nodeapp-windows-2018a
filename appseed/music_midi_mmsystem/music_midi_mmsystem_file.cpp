@@ -133,7 +133,7 @@ smf_Open_File_Cleanup:
 
          if(estorage == ::music::storage_copy)
          {
-            FullLoad(pmemorystorage);
+            this->get_primitive_memory()->operator=(*pmemorystorage);
          }
          else if(estorage == ::music::storage_attach)
          {
@@ -153,7 +153,7 @@ smf_Open_File_Cleanup:
             {
                detach();
             }
-            FullLoad(pmemorystorage);
+            this->get_primitive_memory()->operator=(*pmemorystorage);
          }
 
          m_estorage = estorage;
@@ -223,7 +223,7 @@ smf_Open_File_Cleanup:
          m_ptracks->GetFlags() = GetFlags();
 
 
-         FullLoad(ar);
+         get_memory()->transfer_from_begin(ar);
 
          /* If the file exists, parse it just enough to pull out the header and
          ** build a track index.
@@ -3213,9 +3213,7 @@ smf_Open_File_Cleanup:
          {
             TRACE("File contains no tempo map! Insert default tempo.");
 
-            m_tempomap.size()++;
-
-            ::music::midi::tempo_map_entry * ptempo = &m_tempomap.last_element();
+            ::music::midi::tempo_map_entry * ptempo = &m_tempomap.add_new();
             ptempo->tkTempo = 0;
             ptempo->msBase  = 0;
             //      ptempo->dwTempo = DefaultTempo;

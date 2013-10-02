@@ -852,6 +852,9 @@
     <ProjectReference Include="..\..\..\app\appseed\core\core.vcxproj">
       <Project>{e000ffaf-392f-4e32-bf51-fd7ed638991f}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\app\thirdparty\appseed\openssl\openssl.vcxproj">
+      <Project>{ac98b756-e84c-4a70-9cdb-e9812fef9b98}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

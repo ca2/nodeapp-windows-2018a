@@ -1122,7 +1122,7 @@ retry2:
 
 
    production::compress_thread::compress_thread(production * pproduction, manual_reset_event * peventFinished) :
-      ca2(pproduction->get_app()),
+      element(pproduction->get_app()),
       thread(pproduction->get_app()),
       m_pevFinished(peventFinished)
    {
@@ -2326,7 +2326,7 @@ retry2:
    {
 
 
-      ::ca2::twit twitterObj(get_app());
+      ::hi5::twit twitterObj(get_app());
 
 
       string tmpStr( "" );
@@ -2373,7 +2373,7 @@ retry2:
          /* Step 3: Ask user to visit web link and get PIN */
          string szOAuthVerifierPin;
 
-         ::hi5::net::twitter::authorization authapp(get_app(), tmpStr, "twitter\\authorization.xhtml", true);
+         ::hi5::twitter::authorization authapp(get_app(), tmpStr, "twitter\\authorization.xhtml", true);
          szOAuthVerifierPin = authapp.get_pin();
 
          tmpStr = szOAuthVerifierPin;
@@ -2405,7 +2405,7 @@ retry2:
 
 Retry2:
 
-      ::ca2::twit twitterObj(get_app());
+      ::hi5::twit twitterObj(get_app());
       string tmpStr( "" );
       string replyMsg( "" );
 
