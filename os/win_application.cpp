@@ -828,7 +828,13 @@ namespace win
 
    string application::draw2d_get_default_library_name()
    {
-      return "draw2d_gdiplus";
+      
+      string str = file_as_string_dup(::dir::userappdata("draw2d.txt"));
+
+      if(str.has_char())
+         return "draw2d_" + str;
+      else
+         return "draw2d_gdiplus";
    }
 
 
