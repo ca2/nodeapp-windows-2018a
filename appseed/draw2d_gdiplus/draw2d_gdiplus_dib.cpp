@@ -2688,7 +2688,7 @@ namespace draw2d_gdiplus
 
 
 
-#define new DEBUG_NEW
+#define new BASE_NEW
 
 
 }

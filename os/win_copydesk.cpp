@@ -241,7 +241,7 @@ namespace win
       return bOk;
    }
 
-#define new DEBUG_NEW
+#define new BASE_NEW
 
 
 } // namespace win

@@ -582,14 +582,14 @@ namespace win
 
 #undef new
          m_pbitmap =  new  Gdiplus::Bitmap(m_size.cx, m_size.cy, m_size.cx *4 , PixelFormat32bppARGB, (BYTE *) m_pcolorref);
-#define new DEBUG_NEW
+#define new BASE_NEW
 
 
          m_spg.create(allocer());
 
 #undef new
          (dynamic_cast < ::win::graphics * > (m_spg.m_p))->attach(new Gdiplus::Graphics(m_pbitmap));
-#define new DEBUG_NEW
+#define new BASE_NEW
 
          m_spb.create(allocer());
 

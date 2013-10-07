@@ -54,7 +54,7 @@ public:
 #undef new
    void * operator new(size_t, void * p)
       { return p; }
-#define new DEBUG_NEW
+#define new BASE_NEW
 };
 
 
@@ -67,13 +67,13 @@ class CLASS_DECL_win __NOVTABLE no_track_object
 public:
 #undef new
    void * operator new(size_t nSize);
-#define new DEBUG_NEW
+#define new BASE_NEW
    void operator delete(void *);
 
 #if defined(DEBUG) && !defined(___NO_DEBUG_CRT)
 #undef new
    void * operator new(size_t nSize, const char *, int32_t);
-#define new DEBUG_NEW
+#define new BASE_NEW
    void operator delete(void * pObject, const char *, int32_t);
 #endif
     virtual ~no_track_object() {};
@@ -100,7 +100,7 @@ no_track_object* thread_local_object < iSlot> ::get_data(no_track_object* ( * pf
    {
 #undef new
       __thread_data = new(_gen_ThreadData) thread_local_storage;
-#define new DEBUG_NEW
+#define new BASE_NEW
       ENSURE(__thread_data != NULL);
    }
 

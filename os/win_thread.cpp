@@ -402,7 +402,7 @@ LPSECURITY_ATTRIBUTES lpSecurityAttrs)
 {
 ASSERT(pfnThreadProc != NULL);
 
-thread* pThread = DEBUG_NEW thread(papp, pfnThreadProc, pParam);
+thread* pThread = BASE_NEW thread(papp, pfnThreadProc, pParam);
 ASSERT_VALID(pThread);
 
 if (!pThread->create_thread(dwCreateFlags|CREATE_SUSPENDED, nStackSize,

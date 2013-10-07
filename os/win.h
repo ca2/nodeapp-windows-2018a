@@ -140,7 +140,7 @@ struct ConstructDestruct
    { 
 #undef new
       new (pObject) TYPE; 
-#define new DEBUG_NEW
+#define new BASE_NEW
    }
    static void Destruct(TYPE * pObject)
    {

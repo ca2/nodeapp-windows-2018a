@@ -5,7 +5,7 @@
 #include <GdiPlus.h>
 #include <Gdipluseffects.h>
 
-#define new DEBUG_NEW
+#define new BASE_NEW
 
 #include <wincrypt.h>
 
