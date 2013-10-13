@@ -1,4 +1,3 @@
-LIBRARY  "audio_mmsystem"
+LIBRARY  "multimedia_mmsystem"
 
 EXPORTS
-ca2_factory_exchange

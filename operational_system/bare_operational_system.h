@@ -296,7 +296,7 @@
 
 typedef INT_PTR         int_ptr     , * pint_ptr;
 typedef UINT_PTR        uint_ptr    , * puint_ptr;
-
+typedef int_ptr         ssize_t;
 
 
 #include "cross/cross.h"
