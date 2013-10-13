@@ -7,7 +7,7 @@ namespace music
    namespace midi_mmsystem
    {
 
-      ::multimedia::result TranslateSMFResult(::music::midi::e_file_result               smfrc)
+      ::multimedia::e_result TranslateSMFResult(::music::midi::e_file_result               smfrc)
       {
          switch(smfrc)
          {

@@ -36,7 +36,7 @@ namespace music
 
          ::music::midi::e_file_result CreateTempoMap();
 
-         ::multimedia::result ImmediatePutTempoChange();
+         ::multimedia::e_result ImmediatePutTempoChange();
 
          VMSRESULT GetTempoEvent(::music::midi::event_base & event);
 

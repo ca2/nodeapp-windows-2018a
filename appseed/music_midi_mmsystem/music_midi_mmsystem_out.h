@@ -22,10 +22,10 @@ namespace music
          virtual ~out();
 
 
-         virtual ::multimedia::result open();
-         virtual ::multimedia::result close();
+         virtual ::multimedia::e_result open();
+         virtual ::multimedia::e_result close();
 
-         ::multimedia::result send_short_message(::music::midi::e_type etype, int iChannel, int iData1, int iData2);
+         ::multimedia::e_result send_short_message(::music::midi::e_type etype, int iChannel, int iData1, int iData2);
 
       };
 

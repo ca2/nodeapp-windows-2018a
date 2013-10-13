@@ -30,10 +30,10 @@ namespace multimedia
          virtual void wave_out_buffer_ready(int iBuffer);
          virtual void wave_out_buffer_ready(LPWAVEHDR lpwavehdr);
 
-         virtual ::multimedia::result wave_out_open(::thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount);
-         virtual ::multimedia::result wave_out_open_ex(::thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample);
+         virtual ::multimedia::e_result wave_out_open(::thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount);
+         virtual ::multimedia::e_result wave_out_open_ex(::thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample);
          virtual bool wave_out_stop();
-         virtual ::multimedia::result wave_out_close();
+         virtual ::multimedia::e_result wave_out_close();
          virtual bool wave_out_pause();
          virtual bool wave_out_restart();
          virtual void * get_os_data();

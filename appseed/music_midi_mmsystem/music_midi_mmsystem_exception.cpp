@@ -28,7 +28,7 @@ namespace music
          m_mfr = mfr;
       }
 
-      exception::exception(sp(base_application) papp, ::multimedia::result mmr, int32_t iAppError) :
+      exception::exception(sp(base_application) papp, ::multimedia::e_result mmr, int32_t iAppError) :
          element(papp),
          ::call_stack(papp),
          ::exception::base(papp),
@@ -45,7 +45,7 @@ namespace music
 
       }
 
-      void exception::SetMMResult(::multimedia::result mmr)
+      void exception::SetMMResult(::multimedia::e_result mmr)
       {
          m_etype = TypeMultimediaSystem;
          m_mmr = mmr;

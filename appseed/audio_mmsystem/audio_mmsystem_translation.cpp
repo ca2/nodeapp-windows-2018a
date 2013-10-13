@@ -61,7 +61,22 @@ namespace multimedia
 
       }
 
+      ::multimedia::e_result translate(MMRESULT mmr)
+      {
 
+         switch(mmr)
+         {
+         case MMSYSERR_NOERROR:
+
+            return ::multimedia::result_success;
+
+         default:
+
+            return ::multimedia::result_error;
+
+         };
+
+      }
    }
 
 }

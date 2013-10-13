@@ -15,6 +15,9 @@ namespace multimedia
       LPWAVEHDR get_os_data(::multimedia::audio::wave_buffer * pwavebuffer, int iIndex);
 
 
+      ::multimedia::e_result translate(MMRESULT mmr);
+
+
    } // namespace audio_mmsystem
 
 

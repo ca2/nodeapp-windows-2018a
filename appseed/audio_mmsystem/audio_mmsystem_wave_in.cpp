@@ -57,7 +57,7 @@ namespace multimedia
          return thread::pre_translate_message(pbase);
       }
 
-      ::multimedia::result wave_in::wave_in_open(int32_t iBufferCount, int32_t iBufferSampleCount)
+      ::multimedia::e_result wave_in::wave_in_open(int32_t iBufferCount, int32_t iBufferSampleCount)
       {
          if(m_hwavein != NULL && m_estate != state_initial)
          {
@@ -66,7 +66,7 @@ namespace multimedia
          }
 
          single_lock sLock(&m_mutex, TRUE);
-         ::multimedia::result mmr;
+         ::multimedia::e_result mmr;
          ASSERT(m_hwavein == NULL);
          ASSERT(m_estate == state_initial);
 
@@ -200,7 +200,7 @@ Opened:
 
             wave_in_close();
 
-            return (::multimedia::result) -1;
+            return (::multimedia::e_result) -1;
 
          }
 
@@ -211,12 +211,12 @@ Opened:
       }
 
 
-      ::multimedia::result wave_in::wave_in_close()
+      ::multimedia::e_result wave_in::wave_in_close()
       {
 
          single_lock sLock(&m_mutex, TRUE);
 
-         ::multimedia::result mmr;
+         ::multimedia::e_result mmr;
 
          if(m_estate != state_opened && m_estate != state_stopped)
             return MMSYSERR_NOERROR;
@@ -250,7 +250,7 @@ Opened:
 
       }
 
-      ::multimedia::result wave_in::wave_in_start()
+      ::multimedia::e_result wave_in::wave_in_start()
       {
          single_lock sLock(&m_mutex, TRUE);
          if(m_estate == state_recording)
@@ -259,7 +259,7 @@ Opened:
          if(m_estate != state_opened &&
             m_estate != state_stopped)
             return MMSYSERR_NOERROR;
-         ::multimedia::result mmr;
+         ::multimedia::e_result mmr;
          if(MMSYSERR_NOERROR != (mmr = waveInStart(
             m_hwavein)))
          {
@@ -271,7 +271,7 @@ Opened:
 
       }
 
-      ::multimedia::result wave_in::wave_in_stop()
+      ::multimedia::e_result wave_in::wave_in_stop()
       {
 
          single_lock sLock(&m_mutex, TRUE);
@@ -279,7 +279,7 @@ Opened:
          if(m_estate != state_recording)
             return MMSYSERR_ERROR;
 
-         ::multimedia::result mmr;
+         ::multimedia::e_result mmr;
 
          m_estate = state_stopping;
 
@@ -332,7 +332,7 @@ Opened:
          }
       }
 
-      ::multimedia::result wave_in::wave_in_reset()
+      ::multimedia::e_result wave_in::wave_in_reset()
       {
          single_lock sLock(&m_mutex, TRUE);
          m_bResetting = true;
@@ -341,7 +341,7 @@ Opened:
             return MMSYSERR_ERROR;
          }
 
-         ::multimedia::result mmr;
+         ::multimedia::e_result mmr;
          if(m_estate == state_recording)
          {
             if(MMSYSERR_NOERROR != (mmr = wave_in_stop()))
@@ -410,7 +410,7 @@ Opened:
       }
 
 
-      ::multimedia::result wave_in::wave_in_add_buffer(int32_t iBuffer)
+      ::multimedia::e_result wave_in::wave_in_add_buffer(int32_t iBuffer)
       {
          
          return wave_in_add_buffer(wave_hdr(iBuffer));
@@ -418,10 +418,10 @@ Opened:
       }
 
 
-      ::multimedia::result wave_in::wave_in_add_buffer(LPWAVEHDR lpwavehdr)
+      ::multimedia::e_result wave_in::wave_in_add_buffer(LPWAVEHDR lpwavehdr)
       {
 
-         ::multimedia::result mmr;
+         ::multimedia::e_result mmr;
 
          if(MMSYSERR_NOERROR != (mmr = waveInAddBuffer(m_hwavein, lpwavehdr, sizeof(WAVEHDR))))
          {

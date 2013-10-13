@@ -2,8 +2,7 @@
 
 
 
-#include "app-core/appseed/multimedia/multimedia/multimedia.h"
-#include <mmsystem.h>
+#include "nodeapp/appseed/audio_mmsystem/audio_mmsystem.h"
 
 
 #if defined(_AUDIO_MIXER_MMSYSTEM_LIBRARY)

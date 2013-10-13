@@ -59,14 +59,14 @@ namespace multimedia
 
       }
 
-      ::multimedia::result wave_out::wave_out_open(thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount)
+      ::multimedia::e_result wave_out::wave_out_open(thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount)
       {
          single_lock sLock(&m_mutex, TRUE);
          if(m_hwaveout != NULL &&
             m_estate != state_initial)
             return MMSYSERR_NOERROR;
          m_pthreadCallback = pthreadCallback;
-         ::multimedia::result mmr;
+         ::multimedia::e_result mmr;
          ASSERT(m_hwaveout == NULL);
          ASSERT(m_estate == state_initial);
 
@@ -193,14 +193,14 @@ Opened:
          return MMSYSERR_NOERROR;
       }
 
-      ::multimedia::result wave_out::wave_out_open_ex(thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample)
+      ::multimedia::e_result wave_out::wave_out_open_ex(thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample)
       {
          single_lock sLock(&m_mutex, TRUE);
          if(m_hwaveout != NULL &&
             m_estate != state_initial)
             return MMSYSERR_NOERROR;
          m_pthreadCallback = pthreadCallback;
-         ::multimedia::result mmr;
+         ::multimedia::e_result mmr;
          ASSERT(m_hwaveout == NULL);
          ASSERT(m_estate == state_initial);
 
@@ -328,7 +328,7 @@ Opened:
 
 
 
-      ::multimedia::result wave_out::wave_out_close()
+      ::multimedia::e_result wave_out::wave_out_close()
       {
 
          single_lock sLock(&m_mutex, TRUE);
@@ -341,7 +341,7 @@ Opened:
          if(m_estate != state_opened)
             return MMSYSERR_NOERROR;
 
-         ::multimedia::result mmr;
+         ::multimedia::e_result mmr;
 
          int32_t i, iSize;
 
@@ -417,7 +417,7 @@ Opened:
             return;
          }
 
-         ::multimedia::result mmr;
+         ::multimedia::e_result mmr;
          if(m_peffect != NULL)
          {
             m_peffect->Process16bits((int16_t *) lpwavehdr->lpData, lpwavehdr->dwBytesRecorded / 2);
@@ -550,7 +550,7 @@ Opened:
 
 
 
-         ::multimedia::result                mmr;
+         ::multimedia::e_result                mmr;
          MMTIME                  mmt;
          mmt.wType = TIME_MS;
 
@@ -604,7 +604,7 @@ Opened:
       {
          single_lock sLock(&m_mutex, TRUE);
 
-         ::multimedia::result                mmr;
+         ::multimedia::e_result                mmr;
          MMTIME                  mmt;
          mmt.wType = TIME_BYTES;
 

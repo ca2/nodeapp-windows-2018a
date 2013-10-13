@@ -143,7 +143,7 @@ namespace music
 
          void player::CloseFile()
          {
-            ::multimedia::result            mmrc;
+            ::multimedia::e_result            mmrc;
             if(MMSYSERR_NOERROR != (mmrc = get_sequence()->CloseFile()) &&
                mmrc != MCIERR_UNSUPPORTED_FUNCTION)
             {
@@ -255,7 +255,7 @@ namespace music
 
          void player::SaveFile(const char * lpszPathName)
          {
-            ::multimedia::result            mmrc;
+            ::multimedia::e_result            mmrc;
             if((mmrc = get_sequence()->SaveFile(lpszPathName)) != 
                MMSYSERR_NOERROR)
             {
@@ -475,7 +475,7 @@ namespace music
          void player::SendReset()
          {
             HMIDIOUT hmidiout = NULL;
-            ::multimedia::result mmrc;
+            ::multimedia::e_result mmrc;
             uint32_t uDeviceID = 0;
             mmrc = midiOutOpen(&hmidiout, uDeviceID,  0, 0, CALLBACK_NULL);
             if(mmrc != MMSYSERR_NOERROR)

@@ -27,7 +27,7 @@ namespace music
       }
 
 
-      ::multimedia::result out::open()
+      ::multimedia::e_result out::open()
       {
 
          MMRESULT mmrc;
@@ -46,7 +46,7 @@ namespace music
 
       }
 
-      ::multimedia::result out::close()
+      ::multimedia::e_result out::close()
       {
 
          if(m_hmidiout != NULL)
@@ -61,7 +61,7 @@ namespace music
 
       }
 
-      ::multimedia::result out::send_short_message(::music::midi::e_type etype, int iChannel, int iData1, int iData2)
+      ::multimedia::e_result out::send_short_message(::music::midi::e_type etype, int iChannel, int iData1, int iData2)
       {
 
          return midiOutShortMsg(m_hmidiout, MIDIMSG(((int) etype) >> 4, iChannel, iData1, iData2));

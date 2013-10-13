@@ -56,7 +56,7 @@ namespace music
       * before the SEQUENCE structure is discarded.
       *
       ***************************************************************************/
-      ::multimedia::result sequence::AllocBuffers()
+      ::multimedia::e_result sequence::AllocBuffers()
       {
          ASSERT(FALSE);
          /*
@@ -168,9 +168,9 @@ namespace music
       *
       ***************************************************************************/
 
-      ::multimedia::result sequence::OpenFile(::music::midi::sequence & sequence, int32_t openMode)
+      ::multimedia::e_result sequence::OpenFile(::music::midi::sequence & sequence, int32_t openMode)
       {
-         ::multimedia::result                rc      = MMSYSERR_NOERROR;
+         ::multimedia::e_result                rc      = MMSYSERR_NOERROR;
          SMFFILEINFO             sfi;
          ::music::midi::e_file_result               smfrc;
          uint32_t                   cbBuffer;
@@ -213,7 +213,7 @@ Seq_Open_File_Cleanup:
          return rc;
       }
 
-      ::multimedia::result sequence::OpenFile(
+      ::multimedia::e_result sequence::OpenFile(
          const char * lpFileName,
          int32_t openMode)
       {
@@ -227,12 +227,12 @@ Seq_Open_File_Cleanup:
       }
 
 
-      ::multimedia::result sequence::OpenFile(
+      ::multimedia::e_result sequence::OpenFile(
          primitive::memory * pmemorystorage,
          int32_t openMode,
          e_storage estorage)
       {
-         ::multimedia::result                rc = MMSYSERR_NOERROR;
+         ::multimedia::e_result                rc = MMSYSERR_NOERROR;
          SMFFILEINFO             sfi;
          ::music::midi::e_file_result    smfrc;
          uint32_t                   cbBuffer;
@@ -275,11 +275,11 @@ Seq_Open_File_Cleanup:
          return rc;
       }
 
-      ::multimedia::result sequence::OpenFile(
+      ::multimedia::e_result sequence::OpenFile(
          ::file::stream_buffer & ar,
          int32_t openMode)
       {
-         ::multimedia::result                rc      = MMSYSERR_NOERROR;
+         ::multimedia::e_result                rc      = MMSYSERR_NOERROR;
          //    SMFOPENFILESTRUCT       sofs;
          SMFFILEINFO             sfi;
          ::music::midi::e_file_result               smfrc;
@@ -358,7 +358,7 @@ Seq_Open_File_Cleanup:
       * stopped before this call will be accepted.
       *
       ***************************************************************************/
-      ::multimedia::result sequence::CloseFile()
+      ::multimedia::e_result sequence::CloseFile()
       {
          single_lock sl(&m_mutex, true);
 
@@ -433,14 +433,14 @@ Seq_Open_File_Cleanup:
       *
       *
       ****************************************************************************/
-      ::multimedia::result sequence::Preroll(::thread * pthread, ::music::midi::LPPREROLL lpPreroll, bool bThrow)
+      ::multimedia::e_result sequence::Preroll(::thread * pthread, ::music::midi::LPPREROLL lpPreroll, bool bThrow)
       {
          UNREFERENCED_PARAMETER(pthread);
          single_lock sl(&m_mutex, TRUE);
          int32_t i;
          //   midi_callback_data *      lpData = &m_midicallbackdata;
          ::music::midi::e_file_result     smfrc;
-         ::multimedia::result                mmrc        = MMSYSERR_NOERROR;
+         ::multimedia::e_result                mmrc        = MMSYSERR_NOERROR;
          MIDIPROPTIMEDIV         mptd;
          LPMIDIHDR               lpmh = NULL;
          //   LPMIDIHDR               lpmhPreroll = NULL;
@@ -668,7 +668,7 @@ seq_Preroll_Cleanup:
       * Just feed everything in the ready queue to the device.
       *
       ***************************************************************************/
-      ::multimedia::result sequence::Start()
+      ::multimedia::e_result sequence::Start()
       {
          single_lock sl(&m_mutex, TRUE);
          if (::music::midi::sequence::status_pre_rolled != GetState())
@@ -681,7 +681,7 @@ seq_Preroll_Cleanup:
 
          m_evMmsgDone.ResetEvent();
 
-         ::multimedia::result mmrc = 0;
+         ::multimedia::e_result mmrc = 0;
          if(m_hstream != NULL)
          {
             mmrc = midiStreamRestart(m_hstream);
@@ -715,7 +715,7 @@ seq_Preroll_Cleanup:
       * due to missing notes.
       *
       ***************************************************************************/
-      ::multimedia::result sequence::Pause()
+      ::multimedia::e_result sequence::Pause()
 
       {
          single_lock sl(&m_mutex, TRUE);
@@ -727,7 +727,7 @@ seq_Preroll_Cleanup:
 
          SetState(status_paused);
 
-         ::multimedia::result mmrc = 0;
+         ::multimedia::e_result mmrc = 0;
          //    single_lock slStream(&m_csStream, false);
          //  slStream.lock();
          if(m_hstream != NULL)
@@ -758,7 +758,7 @@ seq_Preroll_Cleanup:
       * The sequencer must be paused before seqRestart may be called.
       *
       ***************************************************************************/
-      ::multimedia::result sequence::Restart()
+      ::multimedia::e_result sequence::Restart()
       {
          //    assert(NULL != pSeq);
 
@@ -770,7 +770,7 @@ seq_Preroll_Cleanup:
          SetState(status_playing);
          m_evMmsgDone.ResetEvent();
 
-         //    ::multimedia::result mmrc = 0;
+         //    ::multimedia::e_result mmrc = 0;
          //    single_lock slStream(&m_csStream, false);
          //  slStream.lock();
          if(m_hstream != NULL)
@@ -798,7 +798,7 @@ seq_Preroll_Cleanup:
       * The sequencer must be paused or playing before seqStop may be called.
       *
       ***************************************************************************/
-      ::multimedia::result sequence::Stop()
+      ::multimedia::e_result sequence::Stop()
       {
 
          single_lock sl(&m_mutex, TRUE);
@@ -862,13 +862,13 @@ seq_Preroll_Cleanup:
       * may be called.
       *
       ***************************************************************************/
-      ::multimedia::result sequence::get_ticks(imedia::position &  pTicks)
+      ::multimedia::e_result sequence::get_ticks(imedia::position &  pTicks)
       {
          single_lock sl(&m_mutex);
          if(!sl.lock(millis(184)))
             return MCIERR_INTERNAL;
 
-         ::multimedia::result                mmr;
+         ::multimedia::e_result                mmr;
          MMTIME                  mmt;
 
          if (::music::midi::sequence::status_playing != GetState() &&
@@ -926,13 +926,13 @@ seq_Preroll_Cleanup:
          get_millis(time);
       }
 
-      ::multimedia::result sequence::get_millis(imedia::time & time)
+      ::multimedia::e_result sequence::get_millis(imedia::time & time)
       {
          single_lock sl(&m_mutex);
          if(!sl.lock(millis(184)))
             return MCIERR_INTERNAL;
 
-         ::multimedia::result                mmr;
+         ::multimedia::e_result                mmr;
          MMTIME                  mmt;
 
          if (status_playing != GetState() &&
@@ -1256,18 +1256,18 @@ seq_Preroll_Cleanup:
 
 
 
-      ::multimedia::result sequence::SaveFile()
+      ::multimedia::e_result sequence::SaveFile()
       {
          return SaveFile(file()->m_strName);
       }
 
-      ::multimedia::result sequence::SaveFile(const char * lpFileName)
+      ::multimedia::e_result sequence::SaveFile(const char * lpFileName)
       {
          return TranslateSMFResult(file()->SaveFile(lpFileName));
 
       }
 
-      ::multimedia::result sequence::SaveFile(::file::buffer_sp &ar)
+      ::multimedia::e_result sequence::SaveFile(::file::buffer_sp &ar)
       {
          return file()->SaveFile(*ar);
       }
@@ -1398,7 +1398,7 @@ seq_Preroll_Cleanup:
          return true;
       }
 
-      ::multimedia::result sequence::CloseStream()
+      ::multimedia::e_result sequence::CloseStream()
       {
          single_lock sl(&m_mutex, TRUE);
          if(IsPlaying())
@@ -1437,7 +1437,7 @@ seq_Preroll_Cleanup:
          single_lock sl(&m_mutex, TRUE);
          //   LPMIDIHDR lpmh = pevent->m_lpmh;
          //   midi_callback_data * lpData = &m_midicallbackdata;
-         ::multimedia::result mmrc;
+         ::multimedia::e_result mmrc;
 
 
          if(0 == m_uBuffersInMMSYSTEM)
@@ -1505,7 +1505,7 @@ seq_Preroll_Cleanup:
 
                LPMIDIHDR lpmh = pev->m_lpmh;
 
-               ::multimedia::result mmrc;
+               ::multimedia::e_result mmrc;
 
                if(IsInSpecialModeV001())
                {
@@ -2241,9 +2241,9 @@ seq_Preroll_Cleanup:
       }
 
 
-      ::multimedia::result sequence::buffer::midiOutPrepareHeader(HMIDIOUT hmidiout)
+      ::multimedia::e_result sequence::buffer::midiOutPrepareHeader(HMIDIOUT hmidiout)
       {
-         ::multimedia::result mmr = 0;
+         ::multimedia::e_result mmr = 0;
          if(hmidiout == NULL)
             return mmr;
          if(m_bPrepared)
@@ -2256,9 +2256,9 @@ seq_Preroll_Cleanup:
          return mmr;
       }
 
-      ::multimedia::result sequence::buffer::midiOutUnprepareHeader(HMIDIOUT hmidiout)
+      ::multimedia::e_result sequence::buffer::midiOutUnprepareHeader(HMIDIOUT hmidiout)
       {
-         ::multimedia::result mmr = 0;
+         ::multimedia::e_result mmr = 0;
          if(hmidiout == NULL)
             return mmr;
          if(!m_bPrepared)
@@ -2271,13 +2271,13 @@ seq_Preroll_Cleanup:
          return mmr;
       }
 
-      ::multimedia::result sequence::buffer_array::midiOutUnprepareHeader(HMIDIOUT hmidiout)
+      ::multimedia::e_result sequence::buffer_array::midiOutUnprepareHeader(HMIDIOUT hmidiout)
       {
-         ::multimedia::result mmr = MMSYSERR_NOERROR;
+         ::multimedia::e_result mmr = MMSYSERR_NOERROR;
 
          for (int32_t i = 0; i < this->get_size(); i++)
          {
-            ::multimedia::result mmrBuffer = this->element_at(i).midiOutUnprepareHeader(hmidiout);
+            ::multimedia::e_result mmrBuffer = this->element_at(i).midiOutUnprepareHeader(hmidiout);
             if(mmrBuffer != MMSYSERR_NOERROR)
             {
                mmr = mmrBuffer;
@@ -2286,9 +2286,9 @@ seq_Preroll_Cleanup:
          return mmr;
       }
 
-      ::multimedia::result sequence::buffer_array::midiOutPrepareHeader(HMIDIOUT hmidiout)
+      ::multimedia::e_result sequence::buffer_array::midiOutPrepareHeader(HMIDIOUT hmidiout)
       {
-         ::multimedia::result mmrc = MMSYSERR_NOERROR;
+         ::multimedia::e_result mmrc = MMSYSERR_NOERROR;
          for(int32_t i = 0; i < this->get_size(); i++)
          {
             mmrc = this->element_at(i).midiOutPrepareHeader(
@@ -2311,15 +2311,15 @@ seq_Preroll_Cleanup:
       }
 
 
-      ::multimedia::result sequence::buffer::midiStreamOut(HMIDISTRM hmidiout)
+      ::multimedia::e_result sequence::buffer::midiStreamOut(HMIDISTRM hmidiout)
       {
          ASSERT(hmidiout != NULL);
          return ::midiStreamOut(hmidiout, &m_midihdr, sizeof(m_midihdr));
       }
 
-      ::multimedia::result sequence::buffer_array::midiStreamOut(HMIDISTRM hmidiout)
+      ::multimedia::e_result sequence::buffer_array::midiStreamOut(HMIDISTRM hmidiout)
       {
-         ::multimedia::result mmrc = MMSYSERR_NOERROR;
+         ::multimedia::e_result mmrc = MMSYSERR_NOERROR;
          for(int32_t i = 0; i < this->get_size(); i++)
          {
             mmrc = this->element_at(i).midiStreamOut(

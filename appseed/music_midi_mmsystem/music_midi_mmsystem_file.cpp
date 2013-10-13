@@ -2642,7 +2642,7 @@ smf_Open_File_Cleanup:
       }
 
 
-      ::multimedia::result file::ImmediatePutTempoChange()
+      ::multimedia::e_result file::ImmediatePutTempoChange()
       {
          ::music::midi::event_v5 * pevent = new ::music::midi::event_v5;
          GetTempoEvent(*pevent);
