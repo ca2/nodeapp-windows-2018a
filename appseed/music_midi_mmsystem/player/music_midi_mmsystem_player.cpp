@@ -295,7 +295,7 @@ namespace music
          ::music::e_result player::Initialize(thread * pthread)
          {
             UNREFERENCED_PARAMETER(pthread);
-            return VMSR_SUCCESS;
+            return ::multimedia::result_success;
          }
 
          //void player::SetView(CXfplayerView *pview)
@@ -310,7 +310,7 @@ namespace music
             m_psequencethread->m_psequence = &get_sequence(); 
             m_psequencethread->m_pplayer = this; 
             PostNotifyEvent(::music::midi::player::notify_event_set_sequence);
-            return VMSR_SUCCESS;
+            return ::multimedia::result_success;
          }
 
 

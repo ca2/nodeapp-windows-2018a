@@ -710,7 +710,7 @@ smf_Open_File_Cleanup:
 
          if(eventptra.get_size() <= 0)
          {
-            return VMSR_SUCCESS;
+            return ::multimedia::result_success;
          }
 
          ::music::midi::event_v5 * pevent;

@@ -344,7 +344,7 @@ namespace music
          iItem = lpcombo->AddString(str);
          lpcombo->SetItemData(iItem, ProgramChange);*/
 
-         return VMSR_SUCCESS;
+         return ::multimedia::result_success;
       }
 
       ::music::e_result FillPitchCombo(sp(simple_combo_box)lpcombo)
@@ -358,7 +358,7 @@ namespace music
          lpcombo->SetItemData(iItem, i);
          }
          */
-         return VMSR_SUCCESS;
+         return ::multimedia::result_success;
       }
 
 
