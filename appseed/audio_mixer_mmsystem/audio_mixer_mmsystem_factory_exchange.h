@@ -10,7 +10,7 @@ namespace multimedia
 
 
       class CLASS_DECL_AUDIO_MIXER_MMSYSTEM factory_exchange :
-         virtual public ::object
+         virtual public ::multimedia::mmsystem::factory_exchange
       {
       public:
 

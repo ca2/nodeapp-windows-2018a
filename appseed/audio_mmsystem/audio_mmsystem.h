@@ -1,8 +1,7 @@
 #pragma once
 
 
-#include "app-core/appseed/multimedia/multimedia/multimedia.h"
-#include <mmsystem.h>
+#include "nodeapp/appseed/multimedia_mmsystem/multimedia_mmsystem.h"
 
 
 #if defined(_AUDIO_MMSYSTEM_LIBRARY)
@@ -10,9 +9,6 @@
 #else
    #define  CLASS_DECL_AUDIO_MMSYSTEM  CLASS_DECL_IMPORT
 #endif
-
-
-#include "audio_mmsystem_translation.h"
 
 
 #include "audio_mmsystem_wave_out.h"

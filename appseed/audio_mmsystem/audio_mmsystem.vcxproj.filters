@@ -16,9 +16,6 @@
     <ClInclude Include="audio_mmsystem_wave_out.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="audio_mmsystem_translation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -39,9 +36,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="framework.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="audio_mmsystem_translation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

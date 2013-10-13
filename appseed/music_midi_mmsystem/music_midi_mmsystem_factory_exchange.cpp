@@ -10,7 +10,8 @@ namespace music
 
 
       factory_exchange::factory_exchange(sp(base_application) papp) :
-         element(papp)
+         element(papp),
+         ::multimedia::mmsystem::factory_exchange(papp)
       {
 
          System.factory().cloneable_large < sequence               >  (System.type_info < ::music::midi::sequence                  > ());

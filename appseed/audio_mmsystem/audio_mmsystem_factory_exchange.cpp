@@ -10,7 +10,8 @@ namespace multimedia
 
 
       factory_exchange::factory_exchange(sp(base_application) papp) :
-         element(papp)
+         element(papp),
+         ::multimedia::mmsystem::factory_exchange(papp)
       {
 
          System.factory().cloneable_large < wave_in               >  (System.type_info < ::multimedia::audio::wave_in                  > ());

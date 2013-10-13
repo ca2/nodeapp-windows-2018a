@@ -53,7 +53,7 @@ namespace multimedia
 
             ::multimedia::e_result mmrct = close();
 
-            if (MMSYSERR_NOERROR != mmrct)
+            if(::multimedia::result_success != mmrct)
             {
 
                System.simple_message_box(NULL, MB_OK | MB_ICONEXCLAMATION, "mixerClose() failed on hmx=%.04Xh, mmr=%u!", m_hMixer, mmrct);
@@ -62,9 +62,9 @@ namespace multimedia
 
          }
 
-         mmrc = mixerGetDevCaps(uiMixerId, &mxcaps, sizeof(mxcaps));
+         mmrc = mmsystem::translate(mixerGetDevCaps(uiMixerId, &mxcaps, sizeof(mxcaps)));
 
-         if (MMSYSERR_NOERROR != mmrc)
+         if(::multimedia::result_success != mmrc)
          {
 
             System.simple_message_box(NULL, MB_OK | MB_ICONEXCLAMATION, "mixerGetDevCaps() failed on uMxId=%u, mmr=%u!", uiMixerId, mmrc);
@@ -73,9 +73,9 @@ namespace multimedia
 
          }
 
-         mmrc = mixerOpen(&hmx, uiMixerId, dwCallback, dwInstance, fdwOpen);
+         mmrc = mmsystem::translate(mixerOpen(&hmx, uiMixerId, dwCallback, dwInstance, fdwOpen));
 
-         if (MMSYSERR_NOERROR != mmrc)
+         if(::multimedia::result_success != mmrc)
          {
 
             System.simple_message_box(NULL, MB_OK | MB_ICONEXCLAMATION, "mixerOpen() failed on uMxId=%u, mmr=%u!", uiMixerId, mmrc);
@@ -102,9 +102,9 @@ namespace multimedia
 
          ::multimedia::e_result mmrc;
 
-         mmrc = mixerGetDevCaps((uint32_t) m_hMixer, &m_mixercaps, sizeof(MIXERCAPS));
+         mmrc = mmsystem::translate(mixerGetDevCaps((uint32_t) m_hMixer, &m_mixercaps, sizeof(MIXERCAPS)));
 
-         if (MMSYSERR_NOERROR != mmrc)
+         if(::multimedia::result_success != mmrc)
          {
 
             System.simple_message_box(NULL, MB_OK | MB_ICONEXCLAMATION, "mixerGetDevCaps() failed on uMxId=%u, mmr=%u!", m_uiMixerID, mmrc);
@@ -161,7 +161,7 @@ namespace multimedia
          //
          //
          //    SetWindowRedraw(ptlb->hlb, TRUE);
-         return MMSYSERR_NOERROR;
+         return ::multimedia::result_success;
 
       }
 
@@ -175,45 +175,67 @@ namespace multimedia
          case ::multimedia::audio_mixer::destination_speakers:
             dwComponentType = MIXERLINE_COMPONENTTYPE_DST_SPEAKERS;
             break;
+
          default:
-            return MMSYSERR_ERROR;
+            return ::multimedia::result_error;
          };
 
 
          if(m_mixerdestinationa.get_size() <= 0)
             initialize_destinations();
+
          if(m_mixerdestinationa.get_size() <= 0)
-            return MMSYSERR_ERROR;
+            return ::multimedia::result_error;
+
          for(int32_t i = 0; i < m_mixerdestinationa.get_size(); i++)
          {
+
             sp(::multimedia::audio_mixer_mmsystem::destination) destination = m_mixerdestinationa(i);
+
             uint32_t dw = destination->m_mixerline.dwComponentType;
+
             if(dw == dwComponentType)
             {
+
                *ppDestination = m_mixerdestinationa(i);
-               return MMSYSERR_NOERROR;
+
+               return ::multimedia::result_success;
+
             }
+
          }
-         return MMSYSERR_ERROR;
+
+         return ::multimedia::result_error;
 
       }
 
       void device::map_controls()
       {
+
          m_mapIDToControl.remove_all();
 
          for(int32_t i = 0; i < m_mixerdestinationa.get_size(); i++)
          {
+
             sp(::multimedia::audio_mixer_mmsystem::destination) destination = m_mixerdestinationa(i);
+
             MapLineControls(destination);
+
             ::multimedia::audio_mixer::source_array & sourcea = destination->get_source_info();
+
             for(int32_t j = 0; j < sourcea.get_size(); j++)
             {
+
                sp(::multimedia::audio_mixer::source) source = sourcea(j);
+
                MapLineControls(source);
+
             }
+
          }
+
       }
+
 
       void device::map_lines()
       {
@@ -311,12 +333,13 @@ namespace multimedia
 
       ::multimedia::e_result device::close()
       {
-         ::multimedia::e_result mmrc = MMSYSERR_NOERROR;
+
+         ::multimedia::e_result mmrc = ::multimedia::result_success;
 
          if(m_hMixer != NULL)
          {
 
-            mmrc = mixerClose(m_hMixer);
+            mmrc = mmsystem::translate(mixerClose(m_hMixer));
 
             m_mixerdestinationa.remove_all();
 

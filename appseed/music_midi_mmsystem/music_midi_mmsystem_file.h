@@ -38,7 +38,7 @@ namespace music
 
          ::multimedia::e_result ImmediatePutTempoChange();
 
-         VMSRESULT GetTempoEvent(::music::midi::event_base & event);
+         ::music::e_result GetTempoEvent(::music::midi::event_base & event);
 
          void OnStop();
 
@@ -46,15 +46,15 @@ namespace music
 
          LPBYTE GetImage();
 
-         VMSRESULT Format0();
+         ::music::e_result Format0();
 
-         VMSRESULT InsertTempoEvent();
+         ::music::e_result InsertTempoEvent();
 
          ::music::midi::tempo_map_entry * GetTempoMapEntry(const imedia::position & position);
 
          int32_t GetTempoShift();
 
-         VMSRESULT SetTempoShift(int32_t iTempoShift);
+         ::music::e_result SetTempoShift(int32_t iTempoShift);
 
          void ToWorkStorage();
 
@@ -154,9 +154,9 @@ namespace music
 
          ::music::midi::e_file_result StreamRender(LPMIDIHDR lpmh, imedia::position tkMax, uint32_t cbPrerollNomimalMax);
 
-         VMSRESULT StreamEvent(imedia::position tkDelta, ::music::midi::event_base * Event, LPMIDIHDR lpmh, imedia::position tkMax, uint32_t cbPrerollNomimalMax);
+         ::music::e_result StreamEvent(imedia::position tkDelta, ::music::midi::event_base * Event, LPMIDIHDR lpmh, imedia::position tkMax, uint32_t cbPrerollNomimalMax);
 
-         VMSRESULT StreamEventF1(imedia::position tkDelta, array < ::music::midi::event_v5 *, ::music::midi::event_v5 * > & eventptra, LPMIDIHDR lpmh, imedia::position tkMax, uint32_t cbPrerollNomimalMax);
+         ::music::e_result StreamEventF1(imedia::position tkDelta, array < ::music::midi::event_v5 *, ::music::midi::event_v5 * > & eventptra, LPMIDIHDR lpmh, imedia::position tkMax, uint32_t cbPrerollNomimalMax);
 
          ::music::midi::e_file_result seek(imedia::position tkPosition, LPMIDIHDR lpmh);
 
@@ -174,7 +174,7 @@ namespace music
 
          ::music::midi::e_file_result InsertParmData(imedia::position tkDelta, LPMIDIHDR lpmh);
 
-         VMSRESULT InsertLyricEvents(::ikaraoke::lyric_event_v1 * pLyricEvent, LPMIDIHDR lpmh);
+         ::music::e_result InsertLyricEvents(::ikaraoke::lyric_event_v1 * pLyricEvent, LPMIDIHDR lpmh);
 
          ::music::midi::e_file_result InsertPadEvent(imedia::position tkDelta, LPMIDIHDR lpmh);
 

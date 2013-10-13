@@ -292,7 +292,7 @@ namespace music
          }
 
 
-         VMSRESULT player::Initialize(thread * pthread)
+         ::music::e_result player::Initialize(thread * pthread)
          {
             UNREFERENCED_PARAMETER(pthread);
             return VMSR_SUCCESS;
@@ -303,7 +303,7 @@ namespace music
          //    m_pView = pview;
          //}
 
-         VMSRESULT player::SetInterface(player_interface * pinterface)
+         ::music::e_result player::SetInterface(player_interface * pinterface)
          {
             m_pinterface = pinterface;
             get_sequence()->m_pthread   = m_psequencethread;

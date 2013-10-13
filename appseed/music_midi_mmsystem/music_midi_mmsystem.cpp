@@ -318,7 +318,7 @@ namespace music
 
       }
 
-      VMSRESULT FillTypeCombo(sp(simple_combo_box)lpcombo)
+      ::music::e_result FillTypeCombo(sp(simple_combo_box)lpcombo)
       {
          UNREFERENCED_PARAMETER(lpcombo);
          /*   lpcombo->ResetContent();
@@ -347,7 +347,7 @@ namespace music
          return VMSR_SUCCESS;
       }
 
-      VMSRESULT FillPitchCombo(sp(simple_combo_box)lpcombo)
+      ::music::e_result FillPitchCombo(sp(simple_combo_box)lpcombo)
       {
          UNREFERENCED_PARAMETER(lpcombo);
          /*    lpcombo->ResetContent();

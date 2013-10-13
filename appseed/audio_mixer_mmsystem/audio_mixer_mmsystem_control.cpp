@@ -380,11 +380,9 @@ namespace multimedia
 
 
 
-         mmrc = mixerGetControlDetails(
-            (HMIXEROBJ)device->m_hMixer,
-            &m_mixercontroldetails,
-            MIXER_GETCONTROLDETAILSF_VALUE);
-         if (MMSYSERR_NOERROR != mmrc)
+         mmrc = mmsystem::translate(mixerGetControlDetails((HMIXEROBJ) device->m_hMixer, &m_mixercontroldetails, MIXER_GETCONTROLDETAILSF_VALUE));
+
+         if (::multimedia::result_success != mmrc)
          {
             //        System.simple_message_box(NULL, MB_OK | MB_ICONEXCLAMATION,
             //                "mixerGetControlDetails(ctrlid=%.08lXh) failed on hmx=%.04Xh, mmr=%u!",
@@ -392,10 +390,11 @@ namespace multimedia
             return;
          }
 
-
          cMultipleItems = 1;
+
          if (MIXERCONTROL_CONTROLF_MULTIPLE & m_mixercontrol.fdwControl)
             cMultipleItems = (uint32_t)m_mixercontrol.cMultipleItems;
+
          if(m_mixercontrol.dwControlType == MIXERCONTROL_CONTROLTYPE_VOLUME)
          {
             ASSERT(cMultipleItems == 1);
@@ -743,13 +742,14 @@ namespace multimedia
                               nRightValue ,
                               m_mixercontrol.Bounds.dwMaximum - m_mixercontrol.Bounds.dwMinimum,
                               nRange) +  m_mixercontrol.Bounds.dwMinimum;
-                           ::multimedia::e_result mmrc = mixerSetControlDetails(
-                              (HMIXEROBJ)device->m_hMixer,
-                              &m_mixercontroldetails,
-                              MIXER_GETCONTROLDETAILSF_VALUE);
-                           if (MMSYSERR_NOERROR == mmrc)
+                           
+                           ::multimedia::e_result mmrc = mmsystem::translate(mixerSetControlDetails((HMIXEROBJ) device->m_hMixer, &m_mixercontroldetails, MIXER_GETCONTROLDETAILSF_VALUE));
+
+                           if (::multimedia::result_success == mmrc)
                            {
+
                               OnMixerControlChange();
+
                            }
                            else
                            {
@@ -767,11 +767,10 @@ namespace multimedia
                            int32_t nValue = nRange - pslVolume->GetPos();
                            PMIXERCONTROLDETAILS_UNSIGNED pmxcd_u = (PMIXERCONTROLDETAILS_UNSIGNED) m_mixercontroldetails.paDetails;
                            pmxcd_u[0].dwValue = (int32_t)MulDivRN(nValue, m_mixercontrol.Bounds.dwMaximum - m_mixercontrol.Bounds.dwMinimum, nRange) + m_mixercontrol.Bounds.dwMinimum;
-                           ::multimedia::e_result mmrc = mixerSetControlDetails(
-                              (HMIXEROBJ)device->m_hMixer,
-                              &m_mixercontroldetails,
-                              MIXER_GETCONTROLDETAILSF_VALUE);
-                           if (MMSYSERR_NOERROR == mmrc)
+
+                           ::multimedia::e_result mmrc = mmsystem::translate(mixerSetControlDetails((HMIXEROBJ) device->m_hMixer, &m_mixercontroldetails, MIXER_GETCONTROLDETAILSF_VALUE));
+
+                           if(::multimedia::result_success == mmrc)
                            {
                               OnMixerControlChange();
                            }
@@ -833,13 +832,14 @@ namespace multimedia
                         bool fValue = i == iSel ? 1 : 0;
                         pmxcd_f[cMultipleItems - i - 1].fValue = fValue;
                      }
-                     ::multimedia::e_result mmrc = mixerSetControlDetails(
-                        (HMIXEROBJ) device->m_hMixer,
-                        &m_mixercontroldetails,
-                        MIXER_GETCONTROLDETAILSF_VALUE);
-                     if(MMSYSERR_NOERROR == mmrc)
+                     
+                     ::multimedia::e_result mmrc = mmsystem::translate(mixerSetControlDetails((HMIXEROBJ) device->m_hMixer, &m_mixercontroldetails, MIXER_GETCONTROLDETAILSF_VALUE));
+
+                     if(::multimedia::result_success == mmrc)
                      {
+
                         OnMixerControlChange();
+
                      }
                      else
                      {

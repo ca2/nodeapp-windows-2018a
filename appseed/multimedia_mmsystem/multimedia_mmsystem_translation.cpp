@@ -4,8 +4,10 @@
 namespace multimedia
 {
 
-   namespace audio_mmsystem
+
+   namespace mmsystem
    {
+
 
       void translate(WAVEFORMATEX & waveformatex, ::multimedia::audio::wave_format * pwaveformat)
       {
@@ -70,6 +72,12 @@ namespace multimedia
 
             return ::multimedia::result_success;
 
+         case MMSYSERR_ALLOCATED:
+
+            return ::multimedia::result_already_allocated;
+
+
+
          default:
 
             return ::multimedia::result_error;
@@ -77,7 +85,14 @@ namespace multimedia
          };
 
       }
-   }
 
-}
+
+   } // namespace mmsystem
+
+
+} // namespace multimedia
+
+
+
+
 

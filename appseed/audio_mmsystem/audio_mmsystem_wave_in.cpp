@@ -84,7 +84,7 @@ namespace multimedia
          sp(::multimedia::audio::wave) audiowave = Application.audiowave();
          m_iBuffer = 0;
 
-         if(MMSYSERR_NOERROR == (mmr = translate(waveInOpen(
+         if(MMSYSERR_NOERROR == (mmr = mmsystem::translate(waveInOpen(
             &m_hwavein,
             audiowave->m_uiWaveInDevice,
             wave_format(),
@@ -95,23 +95,23 @@ namespace multimedia
 
          m_pwaveformat->nSamplesPerSec = 22050;
          m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
-         if(MMSYSERR_NOERROR == (mmr = waveInOpen(
+         if(MMSYSERR_NOERROR == (mmr = mmsystem::translate(waveInOpen(
             &m_hwavein,
             WAVE_MAPPER,
             wave_format(),
             (uint32_t) get_os_int(),
             (uint32_t) 0,
-            CALLBACK_THREAD)))
+            CALLBACK_THREAD))))
             goto Opened;
          m_pwaveformat->nSamplesPerSec = 11025;
          m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
-         if(MMSYSERR_NOERROR == (mmr = waveInOpen(
+         if(MMSYSERR_NOERROR == (mmr = mmsystem::translate(waveInOpen(
             &m_hwavein,
             WAVE_MAPPER,
             wave_format(),
             (uint32_t) get_os_int(),
             (uint32_t) 0,
-            CALLBACK_THREAD)))
+            CALLBACK_THREAD))))
             goto Opened;
 
          if(mmr !=MMSYSERR_NOERROR)
@@ -188,7 +188,7 @@ Opened:
          for(i = 0; i < iSize; i++)
          {
             
-            if(MMSYSERR_NOERROR != (mmr =  waveInPrepareHeader(m_hwavein, create_new_WAVEHDR(wave_in_get_buffer(), i), sizeof(WAVEHDR))))
+            if(MMSYSERR_NOERROR != (mmr = mmsystem::translate(waveInPrepareHeader(m_hwavein, mmsystem::create_new_WAVEHDR(wave_in_get_buffer(), i), sizeof(WAVEHDR)))))
             {
                TRACE("ERROR OPENING Preparing INPUT DEVICE buffer");
                return mmr;
@@ -211,7 +211,7 @@ Opened:
 
          m_estate = state_opened;
 
-         return MMSYSERR_NOERROR;
+         return ::multimedia::result_success;
 
       }
 
@@ -224,7 +224,7 @@ Opened:
          ::multimedia::e_result mmr;
 
          if(m_estate != state_opened && m_estate != state_stopped)
-            return MMSYSERR_NOERROR;
+            return ::multimedia::result_success;
 
          mmr = wave_in_reset();
 
@@ -235,7 +235,7 @@ Opened:
          for(i = 0; i < iSize; i++)
          {
 
-            if(MMSYSERR_NOERROR != (mmr = waveInUnprepareHeader(m_hwavein, wave_hdr(i), sizeof(WAVEHDR))))
+            if(::multimedia::result_success != (mmr = mmsystem::translate(waveInUnprepareHeader(m_hwavein, wave_hdr(i), sizeof(WAVEHDR)))))
             {
                TRACE("ERROR OPENING Unpreparing INPUT DEVICE buffer");
                //return mmr;
@@ -245,34 +245,40 @@ Opened:
 
          }
 
-         mmr = waveInClose(m_hwavein);
+         mmr = mmsystem::translate(waveInClose(m_hwavein));
 
          m_hwavein = NULL;
 
          m_estate = state_initial;
 
-         return MMSYSERR_NOERROR;
+         return ::multimedia::result_success;
 
       }
 
       ::multimedia::e_result wave_in::wave_in_start()
       {
+         
          single_lock sLock(&m_mutex, TRUE);
+         
          if(m_estate == state_recording)
-            return MMSYSERR_NOERROR;
+            return ::multimedia::result_success;
+         
          //ASSERT(m_estate == state_opened || m_estate == state_stopped);
-         if(m_estate != state_opened &&
-            m_estate != state_stopped)
-            return MMSYSERR_NOERROR;
+
+         if(m_estate != state_opened && m_estate != state_stopped)
+            return ::multimedia::result_success;
+
          ::multimedia::e_result mmr;
-         if(MMSYSERR_NOERROR != (mmr = waveInStart(
-            m_hwavein)))
+
+         if(::multimedia::result_success != (mmr = mmsystem::translate(waveInStart(m_hwavein))))
          {
             TRACE("ERROR starting INPUT DEVICE ");
             return mmr;
          }
+
          m_estate = state_recording;
-         return MMSYSERR_NOERROR;
+
+         return ::multimedia::result_success;
 
       }
 
@@ -282,7 +288,7 @@ Opened:
          single_lock sLock(&m_mutex, TRUE);
 
          if(m_estate != state_recording)
-            return MMSYSERR_ERROR;
+            return ::multimedia::result_error;
 
          ::multimedia::e_result mmr;
 
@@ -290,20 +296,27 @@ Opened:
 
          try
          {
-            if(MMSYSERR_NOERROR != (mmr = waveInStop(m_hwavein)))
+
+            if(::multimedia::result_success != (mmr = mmsystem::translate(waveInStop(m_hwavein))))
             {
+
                TRACE("wave_in::wave_in_stop : ERROR OPENING stopping INPUT DEVICE ");
+
             }
+
          }
          catch(...)
          {
+
             TRACE("wave_in::wave_in_stop : Exception OPENING stopping INPUT DEVICE ");
+
          }
+
          m_estate = state_stopped;
 
          m_eventStopped.SetEvent();
 
-         return MMSYSERR_NOERROR;
+         return ::multimedia::result_success;
 
       }
 
@@ -335,34 +348,53 @@ Opened:
             //      if( i > 2)
             //         i = 0;*/
          }
+
       }
+
 
       ::multimedia::e_result wave_in::wave_in_reset()
       {
+
          single_lock sLock(&m_mutex, TRUE);
+
          m_bResetting = true;
+
          if(m_hwavein == NULL)
          {
-            return MMSYSERR_ERROR;
+
+            return ::multimedia::result_success;
+
          }
 
          ::multimedia::e_result mmr;
+
          if(m_estate == state_recording)
          {
-            if(MMSYSERR_NOERROR != (mmr = wave_in_stop()))
+
+            if(::multimedia::result_success != (mmr = wave_in_stop()))
             {
+
                TRACE("wave_in::Reset error stopping input device");
+
                return mmr;
+
             }
+
          }
+
+
          try
          {
-            if(MMSYSERR_NOERROR != (mmr = waveInReset(
-               m_hwavein)))
+
+            if(::multimedia::result_success != (mmr = mmsystem::translate(waveInReset(m_hwavein))))
             {
+               
                TRACE("wave_in::Reset error resetting input device");
+
                return mmr;
+
             }
+
          }
          catch(...)
          {
@@ -372,7 +404,7 @@ Opened:
 
          m_bResetting = false;
 
-         return MMSYSERR_NOERROR;
+         return ::multimedia::result_success;
 
       }
 
@@ -382,10 +414,7 @@ Opened:
 
          SCAST_PTR(::message::base, pbase, pobj);
 
-         ASSERT(
-            pbase->m_uiMessage == MM_WIM_OPEN ||
-            pbase->m_uiMessage == MM_WIM_CLOSE ||
-            pbase->m_uiMessage == MM_WIM_DATA);
+         ASSERT(pbase->m_uiMessage == MM_WIM_OPEN || pbase->m_uiMessage == MM_WIM_CLOSE || pbase->m_uiMessage == MM_WIM_DATA);
 
          if(pbase->m_uiMessage == MM_WIM_DATA)
          {
@@ -411,7 +440,9 @@ Opened:
             }
 
          }
+
          pbase->m_bRet = true;
+
       }
 
 
@@ -428,7 +459,7 @@ Opened:
 
          ::multimedia::e_result mmr;
 
-         if(MMSYSERR_NOERROR != (mmr = waveInAddBuffer(m_hwavein, lpwavehdr, sizeof(WAVEHDR))))
+         if(::multimedia::result_success != (mmr = mmsystem::translate(waveInAddBuffer(m_hwavein, lpwavehdr, sizeof(WAVEHDR)))))
          {
 
             TRACE("ERROR OPENING Adding INPUT DEVICE buffer");
@@ -458,7 +489,7 @@ Opened:
       WAVEFORMATEX * wave_in::wave_format()
       {
 
-         translate(m_waveformatex, m_pwaveformat);
+         mmsystem::translate(m_waveformatex, m_pwaveformat);
 
          return &m_waveformatex;
 
@@ -476,12 +507,17 @@ Opened:
 
       void * wave_in::get_os_data()
       {
+
          return m_hwavein;
+
       }
+
 
       LPWAVEHDR wave_in::wave_hdr(int iBuffer)
       {
-         return ::multimedia::audio_mmsystem::get_os_data(wave_in_get_buffer(), iBuffer);
+
+         return ::multimedia::mmsystem::get_os_data(wave_in_get_buffer(), iBuffer);
+
       }
 
 

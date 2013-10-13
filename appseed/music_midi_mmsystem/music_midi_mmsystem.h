@@ -2,7 +2,7 @@
 
 
 #include "app-veriwell/appseed/multimedia/multimedia/multimedia.h"
-#include <mmsystem.h>
+#include "nodeapp/appseed/multimedia_mmsystem/multimedia_mmsystem.h"
 
 
 #if defined(_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM_LIBRARY)

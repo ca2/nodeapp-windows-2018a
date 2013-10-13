@@ -697,7 +697,7 @@ smf_Open_File_Cleanup:
 
       }
 
-      VMSRESULT file::StreamEventF1(imedia::position tkDelta,
+      ::music::e_result file::StreamEventF1(imedia::position tkDelta,
          array < ::music::midi::event_v5 *, ::music::midi::event_v5 * > & eventptra,
          LPMIDIHDR lpmh,
          imedia::position tkMax,
@@ -762,7 +762,7 @@ smf_Open_File_Cleanup:
          return smfrc;
       }
 
-      VMSRESULT file::StreamEvent(
+      ::music::e_result file::StreamEvent(
          imedia::position                   tkDelta,
          ::music::midi::event_base *        pEvent,
          LPMIDIHDR               lpmh,
@@ -1230,7 +1230,7 @@ smf_Open_File_Cleanup:
                ** their given tkBase and tkEnd as the entire file, therefore
                ** we want to translate this into EOF.
                */
-               if (::music::midi::SReachedTkMax == smfrc)
+               if (::music::midi::file::SReachedTkMax == smfrc)
                {
                   GetFlags().signalize(::music::midi::EndOfFile);
                }
@@ -1238,7 +1238,7 @@ smf_Open_File_Cleanup:
                TRACE( "smfReadEvents: ReadEvents() -> %u", (uint32_t)smfrc);
                break;
             }
-            VMSRESULT vmsr;
+            ::music::e_result vmsr;
             vmsr = StreamEvent(tkDelta, pevent, lpmh, tkMax, cbPrerollNominalMax);
 
          }
@@ -1267,7 +1267,7 @@ smf_Open_File_Cleanup:
       * @xref <f smfWriteEvents>
       *****************************************************************************/
 
-      VMSRESULT file::InsertLyricEvents(
+      ::music::e_result file::InsertLyricEvents(
          ::ikaraoke::lyric_event_v1 *      pLyricEvent,
          LPMIDIHDR         lpmh)
       {
@@ -1668,7 +1668,7 @@ smf_Open_File_Cleanup:
             }
          }
 
-         if (::music::midi::SReachedTkMax != smfrc)
+         if (::music::midi::file::SReachedTkMax != smfrc)
          {
             return smfrc;
          }
@@ -1806,7 +1806,7 @@ smf_Open_File_Cleanup:
 
          while(::music::midi::Success == (smfrc = GetNextEvent(pevent, tkPosition, FALSE)));
 
-         if (::music::midi::SReachedTkMax != smfrc)
+         if (::music::midi::file::SReachedTkMax != smfrc)
          {
             return smfrc;
          }
@@ -2354,7 +2354,7 @@ smf_Open_File_Cleanup:
             peventPrevious = pevent;
          }
 
-         if (::music::midi::SReachedTkMax != smfrc)
+         if (::music::midi::file::SReachedTkMax != smfrc)
          {
             return smfrc;
          }
@@ -2526,7 +2526,7 @@ smf_Open_File_Cleanup:
          m_ptracks->ToWorkStorage();
       }
 
-      VMSRESULT file::SetTempoShift(int32_t iTempoShift)
+      ::music::e_result file::SetTempoShift(int32_t iTempoShift)
       {
          m_iTempoShift = iTempoShift;
          return ::music::midi::Success;
@@ -2559,7 +2559,7 @@ smf_Open_File_Cleanup:
       }
 
       // event must have space to put event data
-      VMSRESULT file::GetTempoEvent(::music::midi::event_base &event)
+      ::music::e_result file::GetTempoEvent(::music::midi::event_base &event)
       {
          ::music::midi::tempo_map_entry * pmtme = GetTempoMapEntry(m_ptracks->m_tkPosition);
          if(pmtme != NULL)
@@ -2585,7 +2585,7 @@ smf_Open_File_Cleanup:
 
       }
 
-      VMSRESULT file::InsertTempoEvent()
+      ::music::e_result file::InsertTempoEvent()
       {
          ::music::midi::tempo_map_entry * pmtme = GetTempoMapEntry(m_ptracks->m_tkPosition);
          if(pmtme != NULL)
@@ -2597,7 +2597,7 @@ smf_Open_File_Cleanup:
          return ::music::midi::Success;
       }
 
-      VMSRESULT file::Format0()
+      ::music::e_result file::Format0()
       {
          MIDIFILEHDR fileHdr;
 
@@ -3049,7 +3049,7 @@ smf_Open_File_Cleanup:
             }
          }
 
-         if (::music::midi::SReachedTkMax != smfrc)
+         if (::music::midi::file::SReachedTkMax != smfrc)
          {
             return smfrc;
          }

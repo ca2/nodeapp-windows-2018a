@@ -62,11 +62,9 @@ namespace multimedia
 
          sp(::multimedia::audio_mixer_mmsystem::device) device = get_device();
 
-         mmrc = mixerGetLineControls(
-            (HMIXEROBJ) device->m_hMixer,
-            &m_mixerlinecontrols,
-            MIXER_GETLINECONTROLSF_ALL);
-         if (MMSYSERR_NOERROR != mmrc)
+         mmrc = mmsystem::translate(mixerGetLineControls((HMIXEROBJ) device->m_hMixer, &m_mixerlinecontrols, MIXER_GETLINECONTROLSF_ALL));
+
+         if (::multimedia::result_success != mmrc)
          {
             System.simple_message_box(NULL, MB_OK | MB_ICONEXCLAMATION,
                "mixerGetLineControls(ctrlid=%.08lXh) failed on hmx=%.04Xh, mmr=%u!",
@@ -226,9 +224,9 @@ namespace multimedia
 
          sp(::multimedia::audio_mixer_mmsystem::device) device = get_device();
 
-         ::multimedia::e_result mmrc = ::mixerGetLineInfo((HMIXEROBJ)device->m_hMixer, &m_mixerline, fdwInfo);
+         ::multimedia::e_result mmrc = mmsystem::translate(::mixerGetLineInfo((HMIXEROBJ)device->m_hMixer, &m_mixerline, fdwInfo));
 
-         if (MMSYSERR_NOERROR != mmrc)
+         if (::multimedia::result_success != mmrc)
          {
             System.simple_message_box(NULL, MB_OK | MB_ICONEXCLAMATION,
                "mixerGetLineInfo(src=%u) failed on hmx=%.04Xh, mmr=%u!",

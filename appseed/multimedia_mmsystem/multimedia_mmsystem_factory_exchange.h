@@ -5,11 +5,11 @@ namespace multimedia
 {
 
 
-   namespace audio_mmsystem
+   namespace mmsystem
    {
 
 
-      class CLASS_DECL_AUDIO_MMSYSTEM factory_exchange :
+      class CLASS_DECL_MULTIMEDIA_MMSYSTEM factory_exchange :
          virtual public ::object
       {
       public:
@@ -21,7 +21,7 @@ namespace multimedia
       };
 
 
-   } // namespace audio_mmsystem
+   } // namespace mmsystem
 
 
 } // namespace multimedia

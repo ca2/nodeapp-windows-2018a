@@ -68,33 +68,43 @@ namespace multimedia
 
          }
 
-         return MMSYSERR_NOERROR;
+         return ::multimedia::result_success;
 
       }
 
 
       ::multimedia::e_result destination::initialize_all_controls()
       {
+
          GetLineControls();
 
          ::multimedia::audio_mixer::source_array & sourcea = m_mixersourcea;
 
          for(int32_t i = 0; i < sourcea.get_size(); i++)
          {
+
             sourcea[i].GetLineControls();
+
          }
-         return true;
+         
+         return ::multimedia::result_success;
+
       }
 
       void destination::update_all_controls()
       {
+
          ::multimedia::audio_mixer::source::update_all_controls();
+
          ::multimedia::audio_mixer::source_array & sourcea = m_mixersourcea;
 
          for(int32_t i = 0; i < sourcea.get_size(); i++)
          {
+
             sourcea[i].update_all_controls();
+
          }
+
       }
 
 

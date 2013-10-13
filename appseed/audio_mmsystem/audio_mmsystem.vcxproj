@@ -805,14 +805,12 @@
   <ItemGroup>
     <ClInclude Include="audio_mmsystem.h" />
     <ClInclude Include="audio_mmsystem_factory_exchange.h" />
-    <ClInclude Include="audio_mmsystem_translation.h" />
     <ClInclude Include="audio_mmsystem_wave_in.h" />
     <ClInclude Include="audio_mmsystem_wave_out.h" />
     <ClInclude Include="framework.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="audio_mmsystem_factory_exchange.cpp" />
-    <ClCompile Include="audio_mmsystem_translation.cpp" />
     <ClCompile Include="audio_mmsystem_wave_in.cpp" />
     <ClCompile Include="audio_mmsystem_wave_out.cpp" />
     <ClCompile Include="framework.cpp">
@@ -835,6 +833,9 @@
     </ProjectReference>
     <ProjectReference Include="..\..\..\app\appseed\core\core.vcxproj">
       <Project>{e000ffaf-392f-4e32-bf51-fd7ed638991f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\multimedia_mmsystem\multimedia_mmsystem.vcxproj">
+      <Project>{21da4a8c-5a05-40a4-bf5b-ff62b9ddd150}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

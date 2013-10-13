@@ -69,9 +69,9 @@ namespace music
 
             bool SetMidiOutDevice(uint32_t uiDevice);
 
-            VMSRESULT SetInterface(player_interface * pinterface);
+            ::music::e_result SetInterface(player_interface * pinterface);
 
-            VMSRESULT Initialize(::thread * pthread);
+            ::music::e_result Initialize(::thread * pthread);
 
             bool IsPlaying();
 
