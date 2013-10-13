@@ -35,10 +35,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{54850FD8-653A-43B6-AA90-E59AC030559C}</ProjectGuid>
-    <RootNamespace>audio_mmsystem</RootNamespace>
+    <ProjectGuid>{21DA4A8C-5A05-40A4-BF5B-FF62B9DDD150}</ProjectGuid>
+    <RootNamespace>multimedia_mmsystem</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <ProjectName>audio_mmsystem</ProjectName>
+    <ProjectName>multimedia_mmsystem</ProjectName>
     <VCTargetsPath Condition="'$(VCTargetsPath11)' != '' and '$(VSVersion)' == '' and $(VisualStudioVersion) == ''">$(VCTargetsPath11)</VCTargetsPath>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -803,25 +803,18 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="audio_mmsystem.h" />
-    <ClInclude Include="audio_mmsystem_factory_exchange.h" />
-    <ClInclude Include="audio_mmsystem_translation.h" />
-    <ClInclude Include="audio_mmsystem_wave_in.h" />
-    <ClInclude Include="audio_mmsystem_wave_out.h" />
+    <ClInclude Include="multimedia_mmsystem.h" />
+    <ClInclude Include="multimedia_mmsystem_factory_exchange.h" />
+    <ClInclude Include="multimedia_mmsystem_translation.h" />
     <ClInclude Include="framework.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="audio_mmsystem_factory_exchange.cpp" />
-    <ClCompile Include="audio_mmsystem_translation.cpp" />
-    <ClCompile Include="audio_mmsystem_wave_in.cpp" />
-    <ClCompile Include="audio_mmsystem_wave_out.cpp" />
+    <ClCompile Include="multimedia_mmsystem_factory_exchange.cpp" />
+    <ClCompile Include="multimedia_mmsystem_translation.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|x64'">Create</PrecompiledHeader>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="audio_mmsystem.def" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\app-core\appseed\multimedia\multimedia.vcxproj">
@@ -836,6 +829,9 @@
     <ProjectReference Include="..\..\..\app\appseed\core\core.vcxproj">
       <Project>{e000ffaf-392f-4e32-bf51-fd7ed638991f}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="multimedia_mmsystem.def" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
