@@ -12,15 +12,17 @@ namespace multimedia
       wave_out::wave_out(sp(base_application) papp) :
          element(papp),
          ::thread(papp),
+         wave_base(papp),
          ::multimedia::audio::wave_out(papp)
       {
+
          m_estate             = state_initial;
          m_pthreadCallback    = NULL;
          m_hwaveout           = NULL;
          m_iBufferedCount     = 0;
-         m_mmr                = MMSYSERR_NOERROR;
          m_peffect            = NULL;
          m_dwLostSampleCount  = 0;
+
       }
 
       wave_out::~wave_out()
@@ -61,10 +63,12 @@ namespace multimedia
 
       ::multimedia::e_result wave_out::wave_out_open(thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount)
       {
+         
          single_lock sLock(&m_mutex, TRUE);
-         if(m_hwaveout != NULL &&
-            m_estate != state_initial)
-            return MMSYSERR_NOERROR;
+
+         if(m_hwaveout != NULL && m_estate != state_initial)
+            return ::multimedia::result_success;
+
          m_pthreadCallback = pthreadCallback;
          ::multimedia::e_result mmr;
          ASSERT(m_hwaveout == NULL);

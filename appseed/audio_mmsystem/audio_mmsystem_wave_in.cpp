@@ -12,13 +12,14 @@ namespace multimedia
       wave_in::wave_in(sp(base_application) papp) :
          element(papp),
          ::thread(papp),
+         wave_base(papp),
          ::multimedia::audio::wave_in(papp)
       {
+
          m_pencoder = NULL;
          m_hwavein = NULL;
          m_estate = state_initial;
          m_bResetting = false;
-
 
       }
 
@@ -59,10 +60,13 @@ namespace multimedia
 
       ::multimedia::e_result wave_in::wave_in_open(int32_t iBufferCount, int32_t iBufferSampleCount)
       {
+
          if(m_hwavein != NULL && m_estate != state_initial)
          {
             wave_in_initialize_encoder();
-            return MMSYSERR_NOERROR;
+
+            return ::multimedia::result_success;
+
          }
 
          single_lock sLock(&m_mutex, TRUE);
@@ -80,14 +84,15 @@ namespace multimedia
          sp(::multimedia::audio::wave) audiowave = Application.audiowave();
          m_iBuffer = 0;
 
-         if(MMSYSERR_NOERROR == (mmr = waveInOpen(
+         if(MMSYSERR_NOERROR == (mmr = translate(waveInOpen(
             &m_hwavein,
             audiowave->m_uiWaveInDevice,
             wave_format(),
             get_os_int(),
             (uint32_t) 0,
-            CALLBACK_THREAD)))
+            CALLBACK_THREAD))))
             goto Opened;
+
          m_pwaveformat->nSamplesPerSec = 22050;
          m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
          if(MMSYSERR_NOERROR == (mmr = waveInOpen(
