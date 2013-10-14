@@ -326,8 +326,6 @@ Seq_Open_File_Cleanup:
             //smfrc = smfOpenFile(&sofs);
             if (::music::success != smfrc)
             {
-               //      delete pSmf;
-               rc = TranslateSMFResult(smfrc);
             }
             else
             {
@@ -347,13 +345,16 @@ Seq_Open_File_Cleanup:
                cbBuffer = min(m_cbBuffer, ::music::midi::GetStateMaxSize());
             }
 
-            if (MMSYSERR_NOERROR != rc)
+            if(success != smfrc)
                CloseFile();
             else
                SetState(status_opened);
 
-            return rc;
+            return smfrc;
+
          }
+
+
          /***************************************************************************
          *
          * seqCloseFile
@@ -374,8 +375,9 @@ Seq_Open_File_Cleanup:
          * stopped before this call will be accepted.
          *
          ***************************************************************************/
-         ::multimedia::e_result sequence::CloseFile()
+         e_result sequence::CloseFile()
          {
+
             single_lock sl(&m_mutex, true);
 
             //if (status_no_file == GetState())
@@ -416,8 +418,10 @@ Seq_Open_File_Cleanup:
 
             SetState(status_no_file);
 
-            return MMSYSERR_NOERROR;
+            return success;
+
          }
+
 
          /***************************************************************************
          *
@@ -451,29 +455,29 @@ Seq_Open_File_Cleanup:
          ****************************************************************************/
          ::multimedia::e_result sequence::Preroll(::thread * pthread, ::music::midi::LPPREROLL lpPreroll, bool bThrow)
          {
+            
             UNREFERENCED_PARAMETER(pthread);
+            
             single_lock sl(&m_mutex, TRUE);
-            int32_t i;
-            //   midi_callback_data *      lpData = &m_midicallbackdata;
-            file::e_result     smfrc;
-            ::multimedia::e_result                mmrc        = MMSYSERR_NOERROR;
+
+            int32_t                 i;
+            e_result                smfrc;
+            ::multimedia::e_result  mmrc = ::multimedia::result_success;
             MIDIPROPTIMEDIV         mptd;
             LPMIDIHDR               lpmh = NULL;
-            //   LPMIDIHDR               lpmhPreroll = NULL;
-            uint32_t                    uDeviceID;
+            uint32_t                uDeviceID;
 
 
-            ASSERT(m_iOpenMode == file::OpenForPlaying
-               || IsInSpecialModeV001());
+            ASSERT(m_iOpenMode == file::OpenForPlaying || IsInSpecialModeV001());
 
             m_flags.unsignalize(FlagEOF);
 
-            m_mmrcLastErr = MMSYSERR_NOERROR;
+            m_mmrcLastErr = ::multimedia::result_success;
 
             if(GetState() != status_opened &&
                GetState() != status_pre_rolled &&
                !IsInSpecialModeV001())
-               return MCIERR_UNSUPPORTED_FUNCTION;
+               return ::multimedia::result_unsupported_function;
 
             m_tkBase = lpPreroll->tkBase;
             m_tkEnd = lpPreroll->tkEnd;
@@ -503,19 +507,19 @@ Seq_Open_File_Cleanup:
             if (m_hstream == NULL)
             {
                uDeviceID = m_uiDeviceID;
-               mmrc = midiStreamOpen(&m_hstream,
+               mmrc = translate_mmr(midiStreamOpen(&m_hstream,
                   &uDeviceID,
                   1,
                   (uint32_t) MidiOutProc,
                   0,
-                  CALLBACK_FUNCTION);
+                  CALLBACK_FUNCTION));
                if(mmrc != MMSYSERR_NOERROR)
                {
                   m_hstream = NULL;
                   if(bThrow)
                   {
                      SetState(status_opened);
-                     throw new exception(get_app(), mmrc, MIDIPLAYERPRERROLLSTREAMOPENEXCEPTION);
+                     throw new exception(get_app(), EMidiPlayerPrerollStreamOpen);
                   }
                   TRACE("midiStreamOpenError %d\n", mmrc);
                   //goto seq_Preroll_Cleanup;
@@ -530,32 +534,41 @@ Seq_Open_File_Cleanup:
                }
 
                mptd.cbStruct  = sizeof(mptd);
+               
                mptd.dwTimeDiv = m_dwTimeDivision;
-               mmrc = midiStreamProperty(
-                  m_hstream,
-                  (LPBYTE)&mptd,
-                  MIDIPROP_SET
-                  | MIDIPROP_TIMEDIV);
+               
+               mmrc = translate_mmr(midiStreamProperty(m_hstream, (LPBYTE) &mptd, MIDIPROP_SET | MIDIPROP_TIMEDIV));
+
                if (mmrc != MMSYSERR_NOERROR)
                {
+                  
                   TRACE( "midiStreamProperty() -> %04X", (WORD)mmrc);
+                  
                   midiStreamClose(m_hstream);
+                  
                   m_hstream = NULL;
-                  mmrc = MCIERR_DEVICE_NOT_READY;
+                  
+                  mmrc = translate_mmr(MCIERR_DEVICE_NOT_READY);
+
                   if(bThrow)
                   {
+                     
                      SetState(status_opened);
-                     throw new exception(get_app(), mmrc, MIDIPLAYERPRERROLLSTREAMPROPERTYEXCEPTION);
+
+                     throw new exception(get_app(), EMidiPlayerPrerollStreamProperty);
+
                   }
+
                   goto seq_Preroll_Cleanup;
+
                }
+
             }
 
-            mmrc = MMSYSERR_NOERROR;
-
-
+            mmrc = ::multimedia::result_success;
 
             m_buffera.Reset();
+
             lpmh = &m_buffera[0].m_midihdr;
 
             if(IsInSpecialModeV001())
@@ -586,7 +599,7 @@ Seq_Open_File_Cleanup:
 
 
             m_flags.unsignalize(FlagEOF);
-            file()->GetFlags().unsignalize(::music::file::buffer::EndOfFile);
+            file()->GetFlags().unsignalize(file::EndOfFile);
             for(i = 1; i < m_buffera.get_size(); i++)
             {
                lpmh = m_buffera[i].GetMidiHdr();
@@ -595,7 +608,7 @@ Seq_Open_File_Cleanup:
                if(::music::success != smfrc && ::music::midi::::music::SEndOfFile != smfrc)
                {
                   TRACE( "SFP: smfReadEvents() -> %u", (uint32_t)smfrc);
-                  mmrc = TranslateSMFResult(smfrc);
+                  mmrc = translate(smfrc);
                   /*if(bThrow)
                   {
                   SetState(status_opened);
@@ -1042,7 +1055,7 @@ seq_Preroll_Cleanup:
          void sequence::OnDone(HMIDISTRM hmidistream, LPMIDIHDR lpmidihdr)
          {
             UNREFERENCED_PARAMETER(hmidistream);
-            file::e_result               smfrc;
+            e_result               smfrc;
             midi_callback_data *      lpData;
             ASSERT(lpmidihdr != NULL);
             lpData = (midi_callback_data *) lpmidihdr->dwUser;

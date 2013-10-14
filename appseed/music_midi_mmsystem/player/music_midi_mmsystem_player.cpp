@@ -147,23 +147,32 @@ namespace music
 
             void player::CloseFile()
             {
-               ::multimedia::e_result            mmrc;
-               if(MMSYSERR_NOERROR != (mmrc = get_sequence()->CloseFile()) &&
-                  mmrc != MCIERR_UNSUPPORTED_FUNCTION)
+
+               e_result            mmrc;
+
+               if(success != (mmrc = get_sequence()->CloseFile()) && mmrc != EFunctionNotSupported)
                {
-                  throw new exception(get_app(), mmrc, MIDIPLAYERCLOSEEXCEPTION);
+                  
+                  throw new exception(get_app(), EMidiPlayerClose);
+
                }
+
             }
 
             void player::Pause()
             {
+
                if (get_sequence()->GetState() == ::music::midi::sequence::status_paused)
                {
+
                   get_sequence()->Restart();
+
                }
                else
                {
+
                   get_sequence()->Pause();
+
                }
 
             }
