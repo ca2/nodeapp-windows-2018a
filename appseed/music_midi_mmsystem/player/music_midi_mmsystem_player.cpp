@@ -268,11 +268,14 @@ namespace music
 
             void player::SaveFile(const char * lpszPathName)
             {
-               ::multimedia::e_result            mmrc;
-               if((mmrc = get_sequence()->SaveFile(lpszPathName)) != 
-                  MMSYSERR_NOERROR)
+               
+               e_result            mmrc;
+
+               if((mmrc = get_sequence()->SaveFile(lpszPathName)) != success)
                {
-                  throw new exception(get_app(), mmrc, MIDIPLAYERSAVEEXCEPTION);
+
+                  throw new exception(get_app(), EMidiPlayerSave);
+
                }
 
             }

@@ -605,10 +605,10 @@ Seq_Open_File_Cleanup:
                lpmh = m_buffera[i].GetMidiHdr();
 
                smfrc = file()->WorkStreamRender(lpmh, m_tkEnd, m_cbPrerollNominalMax);
-               if(::music::success != smfrc && ::music::midi::::music::SEndOfFile != smfrc)
+               if(success != smfrc && SEndOfFile != smfrc)
                {
                   TRACE( "SFP: smfReadEvents() -> %u", (uint32_t)smfrc);
-                  mmrc = translate(smfrc);
+                  translate(mmrc, smfrc);
                   /*if(bThrow)
                   {
                   SetState(status_opened);
@@ -619,7 +619,7 @@ Seq_Open_File_Cleanup:
 
 
 
-               if (::music::midi::::music::SEndOfFile == smfrc)
+               if (SEndOfFile == smfrc)
                {
                   m_flags.signalize(FlagEOF);
                   break;
@@ -630,11 +630,11 @@ Seq_Open_File_Cleanup:
             if (mmrc != MMSYSERR_NOERROR)
             {
                TRACE( "midiOutPrepare(preroll) -> %lu!", (uint32_t)mmrc);
-               mmrc = MCIERR_DEVICE_NOT_READY;
+               mmrc = translate_mmr(MCIERR_DEVICE_NOT_READY);
                if(bThrow)
                {
                   SetState(status_opened);
-                  throw new exception(get_app(), mmrc, MIDIPLAYERPRERROLLPREPAREHEADEREXCEPTION);
+                  throw new exception(get_app(), EMidiPlayerPrerollPrepareHeader);
                }
                else
                {
@@ -647,11 +647,11 @@ Seq_Open_File_Cleanup:
             if (mmrc != MMSYSERR_NOERROR)
             {
                TRACE( "midiOutPrepare(preroll) -> %lu!", (uint32_t)mmrc);
-               mmrc = MCIERR_DEVICE_NOT_READY;
+               mmrc = translate_mmr(MCIERR_DEVICE_NOT_READY);
                if(bThrow)
                {
                   SetState(status_opened);
-                  throw new exception(get_app(), mmrc, MIDIPLAYERPRERROLLPREPAREHEADEREXCEPTION);
+                  throw new exception(get_app(), EMidiPlayerPrerollPrepareHeader2);
                }
                else
                {
@@ -699,11 +699,16 @@ seq_Preroll_Cleanup:
          ***************************************************************************/
          ::multimedia::e_result sequence::Start()
          {
+            
             single_lock sl(&m_mutex, TRUE);
+            
             if (::music::midi::sequence::status_pre_rolled != GetState())
             {
+               
                TRACE( "seqStart(): State is wrong! [%u]", GetState());
-               return MCIERR_UNSUPPORTED_FUNCTION;
+               
+               return ::multimedia::result_unsupported_function;
+
             }
 
             SetState(::music::midi::sequence::status_playing);
@@ -1551,7 +1556,7 @@ seq_Preroll_Cleanup:
 
                      break;
 
-                  case ::music::midi::::music::SEndOfFile:
+                  case SEndOfFile:
 
                      m_flags.signalize(FlagEOF);
 
