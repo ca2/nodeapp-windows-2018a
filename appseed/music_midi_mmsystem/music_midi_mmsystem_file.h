@@ -125,7 +125,7 @@ namespace music
 
          e_result OpenFile(primitive::memory * pmemstorage, int32_t openMode, ::music::e_storage);
 
-         e_result OpenFile(primitive::memory * pmemstorage, ::music::midi::file::buffer::e_open eopenmode, ::music::e_storage estorage);
+         e_result OpenFile(primitive::memory * pmemstorage, midi::file::e_open eopenmode, ::music::e_storage estorage);
 
          e_result SaveFile(::file::stream_buffer & file);
 
