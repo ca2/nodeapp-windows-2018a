@@ -274,7 +274,7 @@ Seq_Open_File_Cleanup:
 
                m_dwTimeDivision = sfi.dwTimeDivision;
                m_tkLength       = sfi.tkLength;
-               if(m_iOpenMode == midi::file::OpenForPlaying)
+               if(m_iOpenMode == file::OpenForPlaying)
                {
                   m_msLength      = TicksToMillisecs(m_tkLength);
                }
@@ -284,28 +284,27 @@ Seq_Open_File_Cleanup:
                cbBuffer = min(m_cbBuffer, ::music::midi::GetStateMaxSize());
             }
 
-            if(MMSYSERR_NOERROR != rc)
+            if(::music::success != smfrc)
                CloseFile();
             else
                SetState(status_opened);
 
-            return rc;
+            return smfrc;
+
          }
 
-         ::multimedia::e_result sequence::OpenFile(
-            ::file::stream_buffer & ar,
-            int32_t openMode)
+         e_result sequence::OpenFile(::file::stream_buffer & ar, int32_t openMode)
          {
-            ::multimedia::e_result                rc      = MMSYSERR_NOERROR;
-            //    SMFOPENFILESTRUCT       sofs;
-            SMFFILEINFO             sfi;
-            midi::file::e_result               smfrc;
+
+            SMFFILEINFO                sfi;
+            e_result                   smfrc = success;
             uint32_t                   cbBuffer;
-            //    assert(pSeq != NULL);
 
             if (GetState() != status_no_file)
             {
-               return MCIERR_UNSUPPORTED_FUNCTION;
+               
+               return EFunctionNotSupported;
+
             }
 
 
@@ -338,7 +337,7 @@ Seq_Open_File_Cleanup:
 
                m_dwTimeDivision = sfi.dwTimeDivision;
                m_tkLength       = sfi.tkLength;
-               if(m_iOpenMode == midi::file::OpenForPlaying)
+               if(m_iOpenMode == file::OpenForPlaying)
                {
                   m_msLength      = TicksToMillisecs(m_tkLength);
                }
@@ -456,7 +455,7 @@ Seq_Open_File_Cleanup:
             single_lock sl(&m_mutex, TRUE);
             int32_t i;
             //   midi_callback_data *      lpData = &m_midicallbackdata;
-            midi::file::e_result     smfrc;
+            file::e_result     smfrc;
             ::multimedia::e_result                mmrc        = MMSYSERR_NOERROR;
             MIDIPROPTIMEDIV         mptd;
             LPMIDIHDR               lpmh = NULL;
@@ -464,7 +463,7 @@ Seq_Open_File_Cleanup:
             uint32_t                    uDeviceID;
 
 
-            ASSERT(m_iOpenMode == midi::file::OpenForPlaying
+            ASSERT(m_iOpenMode == file::OpenForPlaying
                || IsInSpecialModeV001());
 
             m_flags.unsignalize(FlagEOF);
@@ -587,7 +586,7 @@ Seq_Open_File_Cleanup:
 
 
             m_flags.unsignalize(FlagEOF);
-            file()->GetFlags().unsignalize(::music::midi::file::buffer::EndOfFile);
+            file()->GetFlags().unsignalize(::music::file::buffer::EndOfFile);
             for(i = 1; i < m_buffera.get_size(); i++)
             {
                lpmh = m_buffera[i].GetMidiHdr();
@@ -1043,7 +1042,7 @@ seq_Preroll_Cleanup:
          void sequence::OnDone(HMIDISTRM hmidistream, LPMIDIHDR lpmidihdr)
          {
             UNREFERENCED_PARAMETER(hmidistream);
-            midi::file::e_result               smfrc;
+            file::e_result               smfrc;
             midi_callback_data *      lpData;
             ASSERT(lpmidihdr != NULL);
             lpData = (midi_callback_data *) lpmidihdr->dwUser;

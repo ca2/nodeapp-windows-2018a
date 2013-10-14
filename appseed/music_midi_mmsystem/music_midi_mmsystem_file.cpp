@@ -181,7 +181,7 @@ smf_Open_File_Cleanup:
          }
 
 
-         e_result buffer::OpenFile(primitive::memory * pmemorystorage, file::buffere_open eopenmode, e_storage estorage)
+         e_result buffer::OpenFile(primitive::memory * pmemorystorage, file::e_open eopenmode, e_storage estorage)
          {
 
             return OpenFile(pmemorystorage, (int32_t) eopenmode, estorage);
@@ -213,7 +213,7 @@ smf_Open_File_Cleanup:
          *     SMFOPENFILESTRUCT were invalid.
          *
          *****************************************************************************/
-         e_result buffer::OpenFile(::buffer::stream_buffer &ar, int32_t openMode)
+         e_result buffer::OpenFile(::file::stream_buffer & ar, int32_t openMode)
          {
             e_result               smfrc = ::music::success;
 
@@ -225,7 +225,7 @@ smf_Open_File_Cleanup:
 
             if(openMode == file::OpenForParsingLevel3)
             {
-               GetFlags().signalize(::music::midi::DisablePlayLevel1Operations);
+               GetFlags().signalize(file::DisablePlayLevel1Operations);
             }
 
             m_ptracks->GetFlags() = GetFlags();
