@@ -13,9 +13,6 @@
     <ClInclude Include="music_midi_mmsystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="music_midi_mmsystem_exception.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="music_midi_mmsystem_file.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -60,9 +57,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="music_midi_mmsystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="music_midi_mmsystem_exception.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="music_midi_mmsystem_file.cpp">

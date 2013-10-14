@@ -11,7 +11,7 @@ namespace music
    {
 
 
-      ::multimedia::e_result TranslateSMFResult(e_result smfrc);
+      ::multimedia::e_result translate_mmr(MMRESULT mmr);
 
 
    } // namespace midi_mmsystem

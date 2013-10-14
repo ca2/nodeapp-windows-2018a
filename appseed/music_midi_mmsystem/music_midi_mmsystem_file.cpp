@@ -59,10 +59,10 @@ namespace music
       }
 
 
-      midi::file::e_result file::OpenFile(::music::midi::file::buffer &file, int32_t openMode)
+      e_result file::OpenFile(::music::midi::file::buffer &file, int32_t openMode)
       {
 
-         midi::file::e_result               smfrc = ::music::success;
+         e_result               smfrc = ::music::success;
 
          m_ptracks->m_iMelodyTrackTipA = -1;
 
@@ -72,7 +72,7 @@ namespace music
 
          if(openMode == midi::file::OpenForParsingLevel3)
          {
-            GetFlags().signalize(::music::midi::DisablePlayLevel1Operations);
+            GetFlags().signalize(midi::file::DisablePlayLevel1Operations);
          }
 
          m_ptracks->GetFlags() = GetFlags();
@@ -85,7 +85,7 @@ namespace music
          catch(memory_exception * pe)
          {
             TRACE( "smfOpenFile: No primitive::memory for image! [%08lX]", cbImage);
-            smfrc = ::music::midi::ENoMemory;
+            smfrc = ENoMemory;
             delete pe;
             goto smf_Open_File_Cleanup;
          }
@@ -114,11 +114,11 @@ smf_Open_File_Cleanup:
          return smfrc;
       }
 
-      midi::file::e_result file::OpenFile(primitive::memory * pmemorystorage, int32_t openMode, e_storage estorage)
+      e_result file::OpenFile(primitive::memory * pmemorystorage, int32_t openMode, e_storage estorage)
       {
          ASSERT(pmemorystorage != NULL);
 
-         midi::file::e_result smfrc = ::music::success;
+         e_result smfrc = ::music::success;
 
          m_ptracks->m_iMelodyTrackTipA = -1;
 
@@ -175,7 +175,7 @@ smf_Open_File_Cleanup:
       }
 
 
-      midi::file::e_result file::OpenFile(primitive::memory * pmemorystorage, ::music::midi::file::buffer::e_open eopenmode, e_storage estorage)
+      e_result file::OpenFile(primitive::memory * pmemorystorage, ::music::midi::file::buffer::e_open eopenmode, e_storage estorage)
       {
 
          return OpenFile(pmemorystorage, (int32_t) eopenmode, estorage);
@@ -207,9 +207,9 @@ smf_Open_File_Cleanup:
       *     SMFOPENFILESTRUCT were invalid.
       *
       *****************************************************************************/
-      midi::file::e_result file::OpenFile(::file::stream_buffer &ar, int32_t openMode)
+      e_result file::OpenFile(::file::stream_buffer &ar, int32_t openMode)
       {
-         midi::file::e_result               smfrc = ::music::success;
+         e_result               smfrc = ::music::success;
 
          m_ptracks->m_iMelodyTrackTipA = -1;
 
@@ -259,7 +259,7 @@ smf_Open_File_Cleanup:
       * call.
       *
       *****************************************************************************/
-      midi::file::e_result file::CloseFile()
+      e_result file::CloseFile()
       {
          single_lock(&m_cs, TRUE);
          SetOpened(false);
@@ -331,7 +331,7 @@ smf_Open_File_Cleanup:
       *   SMF_INVALID_PARM The given handle was invalid.
       *
       *****************************************************************************/
-      midi::file::e_result file::GetFileInfo(
+      e_result file::GetFileInfo(
          PSMFFILEINFO            psfi)
       {
          //    PSMF                    pSmf = (PSMF)hSmf;
@@ -708,7 +708,7 @@ smf_Open_File_Cleanup:
       {
          UNREFERENCED_PARAMETER(tkMax);
          UNREFERENCED_PARAMETER(cbPrerollNomimalMax);
-         midi::file::e_result               smfrc;
+         e_result               smfrc;
 
          if(eventptra.get_size() <= 0)
          {
@@ -777,7 +777,7 @@ smf_Open_File_Cleanup:
 
          uint32_t                   dwTempo;
          LPDWORD                 lpdw;
-         midi::file::e_result    smfrc;
+         e_result    smfrc;
          lpdw = (LPDWORD)(lpmh->lpData + lpmh->dwBytesRecorded);
          ASSERT(!(pEvent->GetFlags() & 1));
          if(pEvent->GetFlags() & 1)
@@ -976,14 +976,14 @@ smf_Open_File_Cleanup:
       *
       * @xref <f smfWriteEvents>
       *****************************************************************************/
-      midi::file::e_result file::StreamRender(
+      e_result file::StreamRender(
          LPMIDIHDR               lpmh,
          imedia::position                   tkMax,
          uint32_t                   cbPrerollNominalMax)
       {
 
          //    PSMF                    pSmf = (PSMF)hSmf;
-         midi::file::e_result               smfrc;
+         e_result               smfrc;
          ::music::midi::event_v1 * pevent;
          LPDWORD                 lpdw;
          //    uint32_t                   dwTempo;
@@ -1394,7 +1394,7 @@ smf_Open_File_Cleanup:
          return ::music::success;
       }
 
-      midi::file::e_result file::InsertPadEvent(
+      e_result file::InsertPadEvent(
          imedia::position            tkDelta,
          LPMIDIHDR         lpmh)
 
@@ -1504,7 +1504,7 @@ smf_Open_File_Cleanup:
       * that the next event may be read.
       *
       *****************************************************************************/
-      midi::file::e_result file::InsertParmData(
+      e_result file::InsertParmData(
          imedia::position                   tkDelta,
          LPMIDIHDR               lpmh)
       {
@@ -1618,11 +1618,11 @@ smf_Open_File_Cleanup:
       *****************************************************************************/
 
 
-      midi::file::e_result file::seek(
+      e_result file::seek(
          imedia::position                   tkPosition,
          LPMIDIHDR               lpmh)
       {
-         midi::file::e_result     smfrc;
+         e_result     smfrc;
          ::music::midi::event_v1 *        pevent;
          LPDWORD                 lpdw;
          BYTE                    bEvent;
@@ -1793,10 +1793,10 @@ smf_Open_File_Cleanup:
          return ::music::success;
       }
 
-      midi::file::e_result file::seek(
+      e_result file::seek(
          imedia::position                   tkPosition)
       {
-         midi::file::e_result  smfrc;
+         e_result  smfrc;
          ::music::midi::event_v1 *     pevent;
 
 
@@ -1839,9 +1839,9 @@ smf_Open_File_Cleanup:
       * to build keyframes and validate the track format.
       *
       *****************************************************************************/
-      midi::file::e_result file::Build()
+      e_result file::Build()
       {
-         midi::file::e_result        smfrc = ::music::success;
+         e_result        smfrc = ::music::success;
          UNALIGNED CHUNKHDR *       pCh;
          int32_t                        iLeft;
          int32_t                        iLeftInitial;
@@ -2010,7 +2010,7 @@ smf_Open_File_Cleanup:
       }
 
 
-      midi::file::e_result file::GetNextEvent(
+      e_result file::GetNextEvent(
          ::music::midi::event_v1 *&  pevent,
          imedia::position             tkMax,
          bool               bTkMaxInclusive)
@@ -2042,7 +2042,7 @@ smf_Open_File_Cleanup:
                   tkQuarterNote = m_ptracks->m_tkPosition + WORDSWAP(m_pFileHeader->wDivision) - tkMod;
                }
                imedia::position tkPosition;
-               midi::file::e_result smfrc = GetNextEventTkPosition(&tkPosition, tkMax);
+               e_result smfrc = GetNextEventTkPosition(&tkPosition, tkMax);
                if(smfrc == ::music::midi::::music::SEndOfFile)
                   GetFlags().signalize(::music::midi::file::buffer::EndOfFile);
                if(tkPosition > tkQuarterNote)
@@ -2056,7 +2056,7 @@ smf_Open_File_Cleanup:
             }
          }
 
-         midi::file::e_result smfrc   = m_ptracks->GetNextEvent(
+         e_result smfrc   = m_ptracks->GetNextEvent(
             pevent,
             tkMax,
             bTkMaxInclusive,
@@ -2094,7 +2094,7 @@ smf_Open_File_Cleanup:
 
       }
 
-      midi::file::e_result file::GetNextEventTkPosition(
+      e_result file::GetNextEventTkPosition(
          imedia::position * pTkPosition,
          imedia::position tkMax)
       {
@@ -2146,7 +2146,7 @@ smf_Open_File_Cleanup:
       }
 
 
-      midi::file::e_result file::MergeTracks()
+      e_result file::MergeTracks()
       {
          int32_t i;
          uint32_t dwAllocation;
@@ -2205,7 +2205,7 @@ smf_Open_File_Cleanup:
 
       }
 
-      midi::file::e_result file::WorkMergeTracks()
+      e_result file::WorkMergeTracks()
       {
          ::music::midi::track * ptrack;
          for(int32_t i = 0; i < m_ptracks->GetMidiTrackCount(); i++)
@@ -2236,10 +2236,10 @@ smf_Open_File_Cleanup:
             m_pFileHeader->wFormat);
       }
 
-      midi::file::e_result file::SaveFile(const char * lpcFilePath)
+      e_result file::SaveFile(const char * lpcFilePath)
       {
          HMMIO                   hmmio = (HMMIO)NULL;
-         //    midi::file::e_result               smfrc = ::music::success;
+         //    e_result               smfrc = ::music::success;
          MMIOINFO                mmioinfo;
 
          ASSERT(lpcFilePath != NULL);
@@ -2266,7 +2266,7 @@ smf_Open_File_Cleanup:
          return ::music::success;
       }
 
-      midi::file::e_result file::SaveFile(::file::stream_buffer &ar)
+      e_result file::SaveFile(::file::stream_buffer &ar)
       {
          ar.write(GetImage(), GetImageSize());
          return ::music::success;
@@ -2282,9 +2282,9 @@ smf_Open_File_Cleanup:
          return m_ptracks->IsSoftKaraokeFile(bWork, pstra);
       }
 
-      /*file::midi::file::e_result file::DeleteEvent(::music::midi::event_base *pEvent)
+      /*file::e_result file::DeleteEvent(::music::midi::event_base *pEvent)
       {
-      file::midi::file::e_result   smfrc;
+      file::e_result   smfrc;
       if(pEvent->GetImage() > 0)
       {
       if(pEvent->_GetDelta() != 0)
@@ -2329,13 +2329,13 @@ smf_Open_File_Cleanup:
 
       } */
 
-      midi::file::e_result file::GetPreviousEvent(
+      e_result file::GetPreviousEvent(
          ::music::midi::event_base  * pPreviousEvent,
          ::music::midi::event_base  * pEvent)
       {
          UNREFERENCED_PARAMETER(pPreviousEvent);
 
-         midi::file::e_result               smfrc;
+         e_result               smfrc;
          ::music::midi::event_v1 *           pevent;
          ::music::midi::event_v1 *           peventPrevious;
 
@@ -2365,7 +2365,7 @@ smf_Open_File_Cleanup:
 
       }
 
-      midi::file::e_result file::ReplaceSameDeltaEvent(::music::midi::event_base &eventNew)
+      e_result file::ReplaceSameDeltaEvent(::music::midi::event_base &eventNew)
       {
          int32_t iCurrentTrack = m_ptracks->m_iCurrentTrack;
          if(iCurrentTrack < 0)
@@ -2383,7 +2383,7 @@ smf_Open_File_Cleanup:
          event = eventNew;
          return ::music::success;
       }
-      /*midi::file::e_result ReplaceSameDeltaEvent(::music::midi::event_base *pEventOld, CMidiEventV007 *pEventNew)
+      /*e_result ReplaceSameDeltaEvent(::music::midi::event_base *pEventOld, CMidiEventV007 *pEventNew)
       {
       ASSERT(pEventOld->_GetDeltaTicks() == pEventNew->_GetDeltaTicks());
       ASSERT(pEventNew->IsAutoAllocated());
@@ -2441,9 +2441,9 @@ smf_Open_File_Cleanup:
 
       }*/
 
-      /*midi::file::e_result ChangeEventDelta(::music::midi::event_base *pEvent, imedia::position tkNewDelta)
+      /*e_result ChangeEventDelta(::music::midi::event_base *pEvent, imedia::position tkNewDelta)
       {
-      midi::file::e_result smfrc;
+      e_result smfrc;
       if(pEvent->_GetDelta() != tkNewDelta)
       {
       track * pTrack = m_ptracks->GetEventTrack(pEvent);
@@ -2486,7 +2486,7 @@ smf_Open_File_Cleanup:
 
       }*/
 
-      midi::file::e_result file::WriteHeader(MIDIFILEHDR * lpmfh)
+      e_result file::WriteHeader(MIDIFILEHDR * lpmfh)
       {
          m_pMThd = (CHUNKHDR *) GetImage();
          //   uint32_t dwLength = m_cbImage - sizeof(CHUNKHDR);
@@ -2616,7 +2616,7 @@ smf_Open_File_Cleanup:
          *ptrack = *pTrackUnion;
 
 
-         midi::file::e_result smfrc;
+         e_result smfrc;
          if(MMSYSERR_NOERROR != (smfrc = MergeTracks()))
             return smfrc;
 
@@ -2654,12 +2654,12 @@ smf_Open_File_Cleanup:
 
 
 
-      midi::file::e_result file::WorkStreamRender(
+      e_result file::WorkStreamRender(
          LPMIDIHDR               lpmh,
          imedia::position                   tkMax,
          uint32_t                   cbPrerollNominalMax)
       {
-         midi::file::e_result       smfrc;
+         e_result       smfrc;
          ::music::midi::event_v5 *           pevent;
          array < ::music::midi::event_v5 *, ::music::midi::event_v5 * > eventptraPositionCB;
          LPDWORD                    lpdw;
@@ -2844,7 +2844,7 @@ smf_Open_File_Cleanup:
          return (GetFlags().is_signalized(::music::midi::file::buffer::EndOfFile)) ? ::music::midi::::music::SEndOfFile : ::music::success;
       }
 
-      midi::file::e_result file::WorkGetNextRawEvent(
+      e_result file::WorkGetNextRawEvent(
          ::music::midi::event_v5 *&      pevent,
          imedia::position                tkMax,
          bool                  bTkMaxInclusive)
@@ -2853,7 +2853,7 @@ smf_Open_File_Cleanup:
          {
             return ::music::midi::::music::SEndOfFile;
          }
-         midi::file::e_result smfrc = m_ptracks->WorkGetNextRawEvent(
+         e_result smfrc = m_ptracks->WorkGetNextRawEvent(
             pevent,
             tkMax,
             bTkMaxInclusive,
@@ -2865,7 +2865,7 @@ smf_Open_File_Cleanup:
          return smfrc;
       }
 
-      midi::file::e_result file::WorkGetNextRawMidiEvent(
+      e_result file::WorkGetNextRawMidiEvent(
          ::music::midi::event_v5 *&      pevent,
          imedia::position                tkMax,
          bool                  bTkMaxInclusive)
@@ -2874,7 +2874,7 @@ smf_Open_File_Cleanup:
          {
             return ::music::midi::::music::SEndOfFile;
          }
-         midi::file::e_result smfrc = m_ptracks->WorkGetNextRawMidiEvent(
+         e_result smfrc = m_ptracks->WorkGetNextRawMidiEvent(
             pevent,
             tkMax,
             bTkMaxInclusive,
@@ -2886,7 +2886,7 @@ smf_Open_File_Cleanup:
          return smfrc;
       }
 
-      midi::file::e_result file::WorkGetNextEvent(
+      e_result file::WorkGetNextEvent(
          ::music::midi::event_v5 *&      pevent,
          imedia::position                tkMax,
          bool                  bTkMaxInclusive)
@@ -2919,7 +2919,7 @@ smf_Open_File_Cleanup:
          tkQuarterNote = m_ptracks->m_tkPosition + WORDSWAP(m_pFileHeader->wDivision) - tkMod;
          }
          imedia::position tkPosition;
-         midi::file::e_result smfrc = GetNextEventTkPosition(&tkPosition, tkMax);
+         e_result smfrc = GetNextEventTkPosition(&tkPosition, tkMax);
          if(smfrc == ::music::midi::::music::SEndOfFile)
          GetFlags().signalize(::music::midi::file::buffer::EndOfFile);
          if(tkPosition > tkQuarterNote)
@@ -2933,7 +2933,7 @@ smf_Open_File_Cleanup:
          }
          }*/
 
-         midi::file::e_result smfrc;
+         e_result smfrc;
          while(true)
          {
             smfrc   = m_ptracks->WorkGetNextEvent(
@@ -3002,12 +3002,12 @@ smf_Open_File_Cleanup:
       }
 
 
-      midi::file::e_result file::WorkSeek(
+      e_result file::WorkSeek(
          imedia::position                   tkPosition,
          LPMIDIHDR               lpmh)
       {
 
-         midi::file::e_result        smfrc;
+         e_result        smfrc;
          ::music::midi::event_v5 *           pevent;
          LPDWORD                    lpdw;
          BYTE                       bEvent;
@@ -3151,11 +3151,11 @@ smf_Open_File_Cleanup:
          return ::music::success;
       }
 
-      midi::file::e_result file::CreateTempoMap()
+      e_result file::CreateTempoMap()
       {
          bool bFirst = true;
          ::music::midi::tempo_map_entry tempo;
-         midi::file::e_result smfrc;
+         e_result smfrc;
          ::music::midi::event_v5 * pevent;
          m_ptracks->WorkSeekBegin();
          while (::music::success
@@ -3226,14 +3226,14 @@ smf_Open_File_Cleanup:
 
       }
 
-      midi::file::e_result file::CalcTkLength()
+      e_result file::CalcTkLength()
       {
          m_tkLength = m_ptracks->CalcTkLength();
          return ::music::success;
 
       }
 
-      midi::file::e_result file::WorkSeekBegin()
+      e_result file::WorkSeekBegin()
       {
          m_ptracks->WorkSeekBegin();
          GetFlags().unsignalize(::music::midi::file::buffer::EndOfFile);
@@ -3371,7 +3371,7 @@ smf_Open_File_Cleanup:
       }
 
 
-      midi::file::e_result file::WorkWriteXFTracks(
+      e_result file::WorkWriteXFTracks(
          stringa &  tokena,
          imedia::position_array & positiona,
          ::music::xf::info_header & xfinfoheader)

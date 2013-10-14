@@ -169,15 +169,16 @@ namespace music
          VOID FreeBuffers();
 
          //::multimedia::e_result OpenFile(const char * lpFileName, int32_t openMode);
-         ::multimedia::e_result OpenFile(::music::midi::sequence & sequence, int32_t iOpenMode);
-         ::multimedia::e_result OpenFile(::file::stream_buffer & ar, int32_t openMode);
-         ::multimedia::e_result OpenFile(const char * lpFileName, int32_t openMode);
-         ::multimedia::e_result OpenFile(primitive::memory * pmemorystorage, int32_t openMode, ::music::e_storage estorage);
+         e_result OpenFile(::music::midi::sequence & sequence, int32_t iOpenMode);
+         e_result OpenFile(::file::stream_buffer & ar, int32_t openMode);
+         e_result OpenFile(const char * lpFileName, int32_t openMode);
+         e_result OpenFile(primitive::memory * pmemorystorage, int32_t openMode, ::music::e_storage estorage);
 
-         ::multimedia::e_result CloseFile();
-         ::multimedia::e_result SaveFile(const char * lpFileName);
-         ::multimedia::e_result SaveFile();
-         ::multimedia::e_result SaveFile(::file::buffer_sp &ar);
+         e_result CloseFile();
+         e_result SaveFile(const char * lpFileName);
+         e_result SaveFile();
+         e_result SaveFile(::file::buffer_sp &ar);
+
          ::multimedia::e_result Preroll(::thread * pthread, ::music::midi::LPPREROLL lpPreroll, bool bThrow);
          ::multimedia::e_result Start();
 

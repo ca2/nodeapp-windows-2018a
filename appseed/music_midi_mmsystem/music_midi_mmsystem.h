@@ -15,9 +15,6 @@
 
 #include "music_midi_mmsystem_translation.h"
 
-
-#include "music_midi_mmsystem_exception.h"
-
 #include "music_midi_mmsystem_sequence.h"
 
 #include "player/music_midi_mmsystem_player.h"
@@ -28,5 +25,7 @@
           
 #include "music_midi_mmsystem_sequence_thread.h"
 
-
 #include "music_midi_mmsystem_factory_exchange.h"
+
+
+

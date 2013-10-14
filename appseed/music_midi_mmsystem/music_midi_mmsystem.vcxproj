@@ -806,7 +806,6 @@
     <ClInclude Include="music_midi_mmsystem_factory_exchange.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="music_midi_mmsystem.h" />
-    <ClInclude Include="music_midi_mmsystem_exception.h" />
     <ClInclude Include="music_midi_mmsystem_file.h" />
     <ClInclude Include="music_midi_mmsystem_out.h" />
     <ClInclude Include="music_midi_mmsystem_sequence.h" />
@@ -830,7 +829,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='profiler|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="music_midi_mmsystem.cpp" />
-    <ClCompile Include="music_midi_mmsystem_exception.cpp" />
     <ClCompile Include="music_midi_mmsystem_file.cpp" />
     <ClCompile Include="music_midi_mmsystem_out.cpp" />
     <ClCompile Include="music_midi_mmsystem_sequence.cpp" />

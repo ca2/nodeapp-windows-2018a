@@ -344,10 +344,10 @@ namespace music
          iItem = lpcombo->AddString(str);
          lpcombo->SetItemData(iItem, ProgramChange);*/
 
-         return ::multimedia::result_success;
+         return success;
       }
 
-      ::music::e_result FillPitchCombo(sp(simple_combo_box)lpcombo)
+      e_result FillPitchCombo(sp(simple_combo_box)lpcombo)
       {
          UNREFERENCED_PARAMETER(lpcombo);
          /*    lpcombo->ResetContent();
@@ -358,7 +358,7 @@ namespace music
          lpcombo->SetItemData(iItem, i);
          }
          */
-         return ::multimedia::result_success;
+         return success;
       }
 
 

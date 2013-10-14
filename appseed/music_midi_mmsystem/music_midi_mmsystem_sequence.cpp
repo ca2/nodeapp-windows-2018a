@@ -103,7 +103,9 @@ namespace music
          }
 
          return MMSYSERR_NOERROR;*/
-         return MMSYSERR_NOERROR;
+
+         return ::multimedia::result_error;
+
       }
 
       /***************************************************************************
@@ -168,16 +170,19 @@ namespace music
       *
       ***************************************************************************/
 
-      ::multimedia::e_result sequence::OpenFile(::music::midi::sequence & sequence, int32_t openMode)
+      e_result sequence::OpenFile(::music::midi::sequence & sequence, int32_t openMode)
       {
-         ::multimedia::e_result                rc      = MMSYSERR_NOERROR;
+
+         e_result                rc = success;
          SMFFILEINFO             sfi;
-         midi::file::e_result               smfrc;
-         uint32_t                   cbBuffer;
+         e_result                smfrc;
+         uint32_t                cbBuffer;
 
          if (GetState() != status_no_file)
          {
-            return MCIERR_UNSUPPORTED_FUNCTION;
+
+            return EFunctionNotSupported;
+
          }
 
          m_iOpenMode = openMode;
