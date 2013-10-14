@@ -193,8 +193,6 @@ namespace music
          if(::music::success != smfrc)
          {
 
-            translate(rc, smfrc);
-
             goto Seq_Open_File_Cleanup;
 
          }
