@@ -5,49 +5,57 @@
 namespace music
 {
 
-   namespace midi_mmsystem
+
+   namespace midi
    {
 
 
-      class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM sequence_thread : 
-         virtual public ::music::midi::sequence_thread
+      namespace mmsystem
       {
-      public:
 
 
-         sequence_thread(sp(base_application) papp);
-         virtual ~sequence_thread();
+         class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM sequence_thread : 
+            virtual public ::music::midi::sequence_thread
+         {
+         public:
 
 
-         void install_message_handling(::message::dispatch * pinterface);
+            sequence_thread(sp(base_application) papp);
+            virtual ~sequence_thread();
 
-         ::music::midi::sequence * get_sequence();
-         void Stop(imedia::time msEllapse);
 
-         bool PostMidiSequenceEvent(::music::midi::sequence * pseq, ::music::midi::sequence::e_event event);
+            void install_message_handling(::message::dispatch * pinterface);
 
-         bool PostMidiSequenceEvent(::music::midi::sequence * pseq, ::music::midi::sequence::e_event event, LPMIDIHDR lpmh);
+            ::music::midi::sequence * get_sequence();
+            void Stop(imedia::time msEllapse);
 
-         void PostNotifyEvent(::music::midi::player::e_notify_event eevent);
+            bool PostMidiSequenceEvent(::music::midi::sequence * pseq, ::music::midi::sequence::e_event event);
 
-         void PrerollAndWait(double rate = 0.0);
-         void PrerollAndWait(imedia::position tkStart);
-         void Play(double dRate = 0.0);
-         void Play(imedia::position tkStart);
-         void PostGMReset();
-         void PostTempoChange();
-         void SendTempoChange();
+            bool PostMidiSequenceEvent(::music::midi::sequence * pseq, ::music::midi::sequence::e_event event, LPMIDIHDR lpmh);
 
-         void ExecuteCommand(smart_pointer < ::music::midi::player::command > pcommand);
-         void _ExecuteCommand(smart_pointer < ::music::midi::player::command > pcommand);
+            void PostNotifyEvent(::music::midi::player::e_notify_event eevent);
 
-         virtual bool initialize_instance();
-         virtual int32_t exit_instance();
+            void PrerollAndWait(double rate = 0.0);
+            void PrerollAndWait(imedia::position tkStart);
+            void Play(double dRate = 0.0);
+            void Play(imedia::position tkStart);
+            void PostGMReset();
+            void PostTempoChange();
+            void SendTempoChange();
 
-         DECL_GEN_SIGNAL(OnCommand)
-         DECL_GEN_SIGNAL(OnMidiSequenceEvent)
+            void ExecuteCommand(smart_pointer < ::music::midi::player::command > pcommand);
+            void _ExecuteCommand(smart_pointer < ::music::midi::player::command > pcommand);
 
-      };
+            virtual bool initialize_instance();
+            virtual int32_t exit_instance();
+
+            DECL_GEN_SIGNAL(OnCommand)
+               DECL_GEN_SIGNAL(OnMidiSequenceEvent)
+
+         };
+
+
+      } // namespace mmsystem
 
 
    } // namespace midi_mmsystem

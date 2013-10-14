@@ -70,10 +70,12 @@ namespace music
             m_pmidiplayer->SetMidiCentral(m_psection);
 
             m_pmidiplayer->SetCallbackWindow(&m_wnd);
-            if(VMS_FAILED(m_pmidiplayer->Initialize(
-               GetMidiPlayerCallbackThread())))
+
+            if(failed(m_pmidiplayer->Initialize(GetMidiPlayerCallbackThread())))
             {
+
                return false;
+
             }
 
 

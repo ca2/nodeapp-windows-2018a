@@ -7,14 +7,22 @@
 namespace music
 {
 
-   namespace midi_mmsystem
+
+   namespace midi
    {
 
+      
+      namespace mmsystem
+      {
 
-      ::multimedia::e_result translate_mmr(MMRESULT mmr);
+
+         ::multimedia::e_result translate_mmr(MMRESULT mmr);
 
 
-   } // namespace midi_mmsystem
+      } // namespace mmsystem
+
+
+   } // namespace midi
 
 
 } // namespace music
