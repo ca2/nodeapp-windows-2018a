@@ -215,12 +215,12 @@ namespace music
             imedia::position GetQuarterNote();
 
 
-            inline sp(::music::midi:mmsystem::file) file()
+            inline sp(::music::midi::mmsystem::file) file()
             {
                return get_file();
             }
 
-            inline sp(::music::midi:mmsystem::sequence_thread) thread()
+            inline sp(::music::midi::mmsystem::sequence_thread) thread()
             {
                return m_pthread;
             }
