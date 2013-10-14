@@ -18,7 +18,7 @@ namespace music
          m_etype = TypeUndefined;
       }
 
-      exception::exception(sp(base_application) papp, ::music::midi::e_file_result mfr) :
+      exception::exception(sp(base_application) papp, midi::file::e_result mfr) :
          element(papp),
          ::call_stack(papp),
          ::exception::base(papp),

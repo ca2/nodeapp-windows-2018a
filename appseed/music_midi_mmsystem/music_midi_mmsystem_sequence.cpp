@@ -172,7 +172,7 @@ namespace music
       {
          ::multimedia::e_result                rc      = MMSYSERR_NOERROR;
          SMFFILEINFO             sfi;
-         ::music::midi::e_file_result               smfrc;
+         midi::file::e_result               smfrc;
          uint32_t                   cbBuffer;
 
          if (GetState() != status_no_file)
@@ -198,7 +198,7 @@ namespace music
 
          m_dwTimeDivision = sfi.dwTimeDivision;
          m_tkLength       = sfi.tkLength;
-         if(m_iOpenMode == ::music::midi::OpenForPlaying)
+         if(m_iOpenMode == midi::file::OpenForPlaying)
          {
             m_msLength      = TicksToMillisecs(m_tkLength);
          }
@@ -238,7 +238,7 @@ Seq_Open_File_Cleanup:
       {
          ::multimedia::e_result                rc = MMSYSERR_NOERROR;
          SMFFILEINFO             sfi;
-         ::music::midi::e_file_result    smfrc;
+         midi::file::e_result    smfrc;
          uint32_t                   cbBuffer;
 
          if (GetState() != status_no_file)
@@ -261,7 +261,7 @@ Seq_Open_File_Cleanup:
 
             m_dwTimeDivision = sfi.dwTimeDivision;
             m_tkLength       = sfi.tkLength;
-            if(m_iOpenMode == ::music::midi::OpenForPlaying)
+            if(m_iOpenMode == midi::file::OpenForPlaying)
             {
                m_msLength      = TicksToMillisecs(m_tkLength);
             }
@@ -286,7 +286,7 @@ Seq_Open_File_Cleanup:
          ::multimedia::e_result                rc      = MMSYSERR_NOERROR;
          //    SMFOPENFILESTRUCT       sofs;
          SMFFILEINFO             sfi;
-         ::music::midi::e_file_result               smfrc;
+         midi::file::e_result               smfrc;
          uint32_t                   cbBuffer;
          //    assert(pSeq != NULL);
 
@@ -325,7 +325,7 @@ Seq_Open_File_Cleanup:
 
             m_dwTimeDivision = sfi.dwTimeDivision;
             m_tkLength       = sfi.tkLength;
-            if(m_iOpenMode == ::music::midi::OpenForPlaying)
+            if(m_iOpenMode == midi::file::OpenForPlaying)
             {
                m_msLength      = TicksToMillisecs(m_tkLength);
             }
@@ -443,7 +443,7 @@ Seq_Open_File_Cleanup:
          single_lock sl(&m_mutex, TRUE);
          int32_t i;
          //   midi_callback_data *      lpData = &m_midicallbackdata;
-         ::music::midi::e_file_result     smfrc;
+         midi::file::e_result     smfrc;
          ::multimedia::e_result                mmrc        = MMSYSERR_NOERROR;
          MIDIPROPTIMEDIV         mptd;
          LPMIDIHDR               lpmh = NULL;
@@ -451,7 +451,7 @@ Seq_Open_File_Cleanup:
          uint32_t                    uDeviceID;
 
 
-         ASSERT(m_iOpenMode == ::music::midi::OpenForPlaying
+         ASSERT(m_iOpenMode == midi::file::OpenForPlaying
             || IsInSpecialModeV001());
 
          m_flags.unsignalize(FlagEOF);
@@ -574,13 +574,13 @@ Seq_Open_File_Cleanup:
 
 
          m_flags.unsignalize(FlagEOF);
-         file()->GetFlags().unsignalize(::music::midi::EndOfFile);
+         file()->GetFlags().unsignalize(::music::midi::file::buffer::EndOfFile);
          for(i = 1; i < m_buffera.get_size(); i++)
          {
             lpmh = m_buffera[i].GetMidiHdr();
 
             smfrc = file()->WorkStreamRender(lpmh, m_tkEnd, m_cbPrerollNominalMax);
-            if(::music::success != smfrc && ::music::midi::SEndOfFile != smfrc)
+            if(::music::success != smfrc && ::music::midi::::music::SEndOfFile != smfrc)
             {
                TRACE( "SFP: smfReadEvents() -> %u", (uint32_t)smfrc);
                mmrc = TranslateSMFResult(smfrc);
@@ -594,7 +594,7 @@ Seq_Open_File_Cleanup:
 
 
 
-            if (::music::midi::SEndOfFile == smfrc)
+            if (::music::midi::::music::SEndOfFile == smfrc)
             {
                m_flags.signalize(FlagEOF);
                break;
@@ -1030,7 +1030,7 @@ seq_Preroll_Cleanup:
       void sequence::OnDone(HMIDISTRM hmidistream, LPMIDIHDR lpmidihdr)
       {
          UNREFERENCED_PARAMETER(hmidistream);
-         ::music::midi::e_file_result               smfrc;
+         midi::file::e_result               smfrc;
          midi_callback_data *      lpData;
          ASSERT(lpmidihdr != NULL);
          lpData = (midi_callback_data *) lpmidihdr->dwUser;
@@ -1526,7 +1526,7 @@ seq_Preroll_Cleanup:
 
                   break;
 
-               case ::music::midi::SEndOfFile:
+               case ::music::midi::::music::SEndOfFile:
                   
                   m_flags.signalize(FlagEOF);
                   
