@@ -369,7 +369,7 @@ namespace music
                   link.ModifyFlag(::music::midi::sequence::FlagStop, ::music::midi::sequence::FlagNull);
                   if(MMSYSERR_NOERROR != (mmrc = get_sequence()->Stop()))
                   {
-                     throw new exception(get_app(), mmrc, MIDIPLAYERSTOPEXCEPTION);
+                     throw new exception(get_app(), EMidiPlayerStop);
                   }
                }
                break;
@@ -382,9 +382,9 @@ namespace music
                      ::music::midi::sequence::FlagStopAndRestart,
                      ::music::midi::sequence::FlagNull);
                   link.m_tkRestart = get_sequence()->GetPositionTicks();
-                  if(MMSYSERR_NOERROR != (mmrc = get_sequence()->Stop()))
+                  if(::multimedia::result_success != (mmrc = get_sequence()->Stop()))
                   {
-                     throw new exception(get_app(), mmrc, MIDIPLAYERSTOPEXCEPTION);
+                     throw new exception(get_app(), EMidiPlayerStop);
                   }
                }
                break;

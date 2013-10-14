@@ -308,7 +308,7 @@ namespace music
             }
 
 
-            ::music::e_result player::Initialize(thread * pthread)
+            ::multimedia::e_result player::Initialize(thread * pthread)
             {
                UNREFERENCED_PARAMETER(pthread);
                return ::multimedia::result_success;
@@ -326,7 +326,7 @@ namespace music
                m_psequencethread->m_psequence = &get_sequence(); 
                m_psequencethread->m_pplayer = this; 
                PostNotifyEvent(::music::midi::player::notify_event_set_sequence);
-               return ::multimedia::result_success;
+               return success;
             }
 
 

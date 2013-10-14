@@ -154,7 +154,7 @@ namespace music
          * Returns
          *   MMSYSERR_NOERROR If the operation is successful.
          *
-         *   MCIERR_UNSUPPORTED_FUNCTION If there is already a file open
+         *   ::multimedia::result_unsupported_function If there is already a file open
          *     on this instance.
          *
          *   MCIERR_OUT_OF_MEMORY If there was insufficient primitive::memory to
@@ -366,7 +366,7 @@ Seq_Open_File_Cleanup:
          * Returns
          *   MMSYSERR_NOERROR If the operation is successful.
          *
-         *   MCIERR_UNSUPPORTED_FUNCTION If the sequencer instance is not
+         *   ::multimedia::result_unsupported_function If the sequencer instance is not
          *     stopped.
          *
          * A call to seqCloseFile must be paired with a prior call to
@@ -381,7 +381,7 @@ Seq_Open_File_Cleanup:
             single_lock sl(&m_mutex, true);
 
             //if (status_no_file == GetState())
-            //   return MCIERR_UNSUPPORTED_FUNCTION;
+            //   return ::multimedia::result_unsupported_function;
 
             file()->CloseFile();
 
@@ -437,7 +437,7 @@ Seq_Open_File_Cleanup:
          * Returns
          *   MMSYSERR_NOERROR If the operation is successful.
          *
-         *   MCIERR_UNSUPPORTED_FUNCTION If the sequencer instance is not
+         *   ::multimedia::result_unsupported_function If the sequencer instance is not
          *     opened or prerolled.
          *
          * open the device so we can initialize channels.
@@ -686,7 +686,7 @@ seq_Preroll_Cleanup:
          * Returns
          *   MMSYSERR_NOERROR If the operation is successful.
          *
-         *   MCIERR_UNSUPPORTED_FUNCTION If the sequencer instance is not
+         *   ::multimedia::result_unsupported_function If the sequencer instance is not
          *     stopped.
          *
          *   MCIERR_DEVICE_NOT_READY If the underlying MIDI device could
@@ -715,13 +715,13 @@ seq_Preroll_Cleanup:
 
             m_evMmsgDone.ResetEvent();
 
-            ::multimedia::e_result mmrc = 0;
+            ::multimedia::e_result mmrc = ::multimedia::result_success;
             if(m_hstream != NULL)
             {
-               mmrc = midiStreamRestart(m_hstream);
+               mmrc = translate_mmr(midiStreamRestart(m_hstream));
             }
             sl.unlock();
-            if(mmrc == MMSYSERR_NOERROR)
+            if(mmrc == ::multimedia::result_success)
             {
                thread()->PostMidiSequenceEvent(this, ::music::midi::sequence::EventMidiPlaybackStart);
 
@@ -740,7 +740,7 @@ seq_Preroll_Cleanup:
          * Returns
          *   MMSYSERR_NOERROR If the operation is successful.
          *
-         *   MCIERR_UNSUPPORTED_FUNCTION If the sequencer instance is not
+         *   ::multimedia::result_unsupported_function If the sequencer instance is not
          *     playing.
          *
          * The sequencer must be playing before seqPause may be called.
@@ -757,22 +757,22 @@ seq_Preroll_Cleanup:
             //    assert(NULL != pSeq);
 
             if (status_playing != GetState())
-               return MCIERR_UNSUPPORTED_FUNCTION;
+               return ::multimedia::result_unsupported_function;
 
             SetState(status_paused);
 
-            ::multimedia::e_result mmrc = 0;
+            ::multimedia::e_result mmrc = ::multimedia::result_success;
             //    single_lock slStream(&m_csStream, false);
             //  slStream.lock();
             if(m_hstream != NULL)
             {
-               mmrc = midiStreamPause(m_hstream);;
+               mmrc = translate_mmr(midiStreamPause(m_hstream));
             }
             //slStream.unlock();
 
             SetLevelMeter(0);
 
-            return MMSYSERR_NOERROR;
+            return ::multimedia::result_success;
          }
 
          /***************************************************************************
@@ -786,7 +786,7 @@ seq_Preroll_Cleanup:
          * Returns
          *    MMSYSERR_NOERROR If the operation is successful.
          *
-         *    MCIERR_UNSUPPORTED_FUNCTION If the sequencer instance is not
+         *    ::multimedia::result_unsupported_function If the sequencer instance is not
          *     paused.
          *
          * The sequencer must be paused before seqRestart may be called.
@@ -799,7 +799,7 @@ seq_Preroll_Cleanup:
             single_lock sl(&m_mutex, TRUE);
 
             if (status_paused != GetState())
-               return MCIERR_UNSUPPORTED_FUNCTION;
+               return ::multimedia::result_unsupported_function;
 
             SetState(status_playing);
             m_evMmsgDone.ResetEvent();
@@ -812,7 +812,7 @@ seq_Preroll_Cleanup:
                midiStreamRestart(m_hstream);
             }
             //slStream.unlock();
-            return MMSYSERR_NOERROR;
+            return ::multimedia::result_success;
          }
 
          /***************************************************************************
@@ -826,7 +826,7 @@ seq_Preroll_Cleanup:
          * Returns
          *   MMSYSERR_NOERROR If the operation is successful.
          *
-         *   MCIERR_UNSUPPORTED_FUNCTION If the sequencer instance is not
+         *   ::multimedia::result_unsupported_function If the sequencer instance is not
          *     paused or playing.
          *
          * The sequencer must be paused or playing before seqStop may be called.
@@ -838,7 +838,7 @@ seq_Preroll_Cleanup:
             single_lock sl(&m_mutex, TRUE);
 
             if(GetState() == status_stopping)
-               return MMSYSERR_NOERROR;
+               return ::multimedia::result_success;
 
             // Automatic success if we're already stopped
             if (GetState() != status_playing
@@ -846,7 +846,7 @@ seq_Preroll_Cleanup:
             {
                m_flags.unsignalize(::music::midi::sequence::FlagWaiting);
                GetPlayerLink().OnFinishCommand(::music::midi::player::command_stop);
-               return MMSYSERR_NOERROR;
+               return ::multimedia::result_success;
             }
 
             SetState(status_stopping);
@@ -856,20 +856,28 @@ seq_Preroll_Cleanup:
 
             if(m_hstream != NULL)
             {
-               m_mmrcLastErr = midiStreamStop(m_hstream);
+               
+               m_mmrcLastErr = translate_mmr(midiStreamStop(m_hstream));
+
                if(MMSYSERR_NOERROR != m_mmrcLastErr)
                {
+
                   TRACE( "::music::midi::sequence::Stop() -> midiOutStop() returned %lu in seqStop()!\n", (uint32_t)m_mmrcLastErr);
+
                   m_flags.unsignalize(FlagWaiting);
-                  return MCIERR_DEVICE_NOT_READY;
+
+                  return ::multimedia::result_not_ready;
+
                }
+
             }
 
             //m_eventMidiPlaybackEnd.lock();
 
             SetLevelMeter(0);
 
-            return MMSYSERR_NOERROR;
+            return ::multimedia::result_success;
+
          }
 
          /***************************************************************************
@@ -889,7 +897,7 @@ seq_Preroll_Cleanup:
          *   MCIERR_DEVICE_NOT_READY If the underlying device fails to report
          *     the position.
          *
-         *   MCIERR_UNSUPPORTED_FUNCTION If the sequencer instance is not
+         *   ::multimedia::result_unsupported_function If the sequencer instance is not
          *     paused or playing.
          *
          * The sequencer must be paused, playing or prerolled before seqTime
@@ -900,7 +908,7 @@ seq_Preroll_Cleanup:
          {
             single_lock sl(&m_mutex);
             if(!sl.lock(millis(184)))
-               return MCIERR_INTERNAL;
+               return ::multimedia::result_internal;
 
             ::multimedia::e_result                mmr;
             MMTIME                  mmt;
@@ -913,7 +921,7 @@ seq_Preroll_Cleanup:
                ::music::midi::sequence::status_stopping != GetState())
             {
                TRACE( "seqTime(): State wrong! [is %u]", GetState());
-               return MCIERR_UNSUPPORTED_FUNCTION;
+               return ::multimedia::result_unsupported_function;
             }
 
             pTicks = 0;
@@ -964,7 +972,7 @@ seq_Preroll_Cleanup:
          {
             single_lock sl(&m_mutex);
             if(!sl.lock(millis(184)))
-               return MCIERR_INTERNAL;
+               return ::multimedia::result_internal;
 
             ::multimedia::e_result                mmr;
             MMTIME                  mmt;
@@ -977,7 +985,7 @@ seq_Preroll_Cleanup:
                status_stopping != GetState())
             {
                TRACE( "seqTime(): State wrong! [is %u]", GetState());
-               return MCIERR_UNSUPPORTED_FUNCTION;
+               return ::multimedia::result_unsupported_function;
             }
 
             time = 0;
