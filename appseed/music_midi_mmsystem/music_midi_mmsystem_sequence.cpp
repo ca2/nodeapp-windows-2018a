@@ -220,34 +220,40 @@ Seq_Open_File_Cleanup:
          return rc;
       }
 
-      ::multimedia::e_result sequence::OpenFile(
-         const char * lpFileName,
-         int32_t openMode)
+
+      e_result sequence::OpenFile(const char * lpFileName, int32_t openMode)
       {
-         ::file::buffer_sp file(
-            get_app());
-         file->open(lpFileName,
-            ::file::mode_read |
-            ::file::share_deny_write |
-            ::file::type_binary);
+
+         ::file::buffer_sp file;
+
+         try
+         {
+         
+            file = Application.file().get_file(lpFileName, ::file::mode_read | ::file::share_deny_write | ::file::type_binary);
+
+         }
+         catch(...)
+         {
+         
+         }
+
          return OpenFile(*file, openMode);
+
       }
 
 
-      ::multimedia::e_result sequence::OpenFile(
-         primitive::memory * pmemorystorage,
-         int32_t openMode,
-         e_storage estorage)
+      e_result sequence::OpenFile(primitive::memory * pmemorystorage, int32_t openMode, e_storage estorage)
       {
-         ::multimedia::e_result                rc = MMSYSERR_NOERROR;
-         SMFFILEINFO             sfi;
-         midi::file::e_result    smfrc;
+
+         SMFFILEINFO                sfi;
+         e_result                   smfrc;
          uint32_t                   cbBuffer;
 
          if (GetState() != status_no_file)
          {
+
             CloseFile();
-            //return MCIERR_UNSUPPORTED_FUNCTION;
+
          }
 
          m_iOpenMode = openMode;
@@ -256,7 +262,7 @@ Seq_Open_File_Cleanup:
 
          if (::music::success != smfrc)
          {
-            rc = TranslateSMFResult(smfrc);
+
          }
          else
          {
