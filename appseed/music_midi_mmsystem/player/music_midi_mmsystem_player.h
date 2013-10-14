@@ -71,7 +71,7 @@ namespace music
 
             ::music::e_result SetInterface(player_interface * pinterface);
 
-            ::music::e_result Initialize(::thread * pthread);
+            ::multimedia::e_result Initialize(::thread * pthread);
 
             bool IsPlaying();
 
