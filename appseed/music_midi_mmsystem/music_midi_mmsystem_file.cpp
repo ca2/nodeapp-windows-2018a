@@ -128,7 +128,9 @@ smf_Open_File_Cleanup:
 
          if(openMode ==::music::midi:: file::OpenForParsingLevel3)
          {
-            GetFlags().signalize(::music::midi::DisablePlayLevel1Operations);
+
+            GetFlags().signalize(file::DisablePlayLevel1Operations);
+
          }
 
          m_ptracks->GetFlags() = GetFlags();
