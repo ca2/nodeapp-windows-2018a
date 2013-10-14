@@ -26,7 +26,7 @@ namespace music
 
 
       class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM exception : 
-         virtual public ::music::midi::exception
+         virtual public ::music::exception
       {
       public:
 

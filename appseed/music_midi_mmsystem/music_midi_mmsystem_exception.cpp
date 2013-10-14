@@ -13,7 +13,7 @@ namespace music
          element(papp),
          ::call_stack(papp),
          ::exception::base(papp),
-         ::music::midi::exception(papp)
+         ::music::exception(papp)
       {
          m_etype = TypeUndefined;
       }
@@ -22,7 +22,7 @@ namespace music
          element(papp),
          ::call_stack(papp),
          ::exception::base(papp),
-         ::music::midi::exception(papp, mfr)
+         ::music::exception(papp, mfr)
       {
          m_etype = TypeMidiFile;
          m_mfr = mfr;
@@ -32,7 +32,7 @@ namespace music
          element(papp),
          ::call_stack(papp),
          ::exception::base(papp),
-         ::music::midi::exception(papp, mmr, iAppError)
+         ::music::exception(papp, mmr, iAppError)
       {
          m_etype = TypeMultimediaSystem;
          m_mmr = mmr;
