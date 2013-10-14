@@ -548,7 +548,7 @@ Seq_Open_File_Cleanup:
                   
                   m_hstream = NULL;
                   
-                  mmrc = translate_mmr(MCIERR_DEVICE_NOT_READY);
+                  mmrc = translate_mmr(::multimedia::result_not_ready);
 
                   if(bThrow)
                   {
@@ -630,7 +630,7 @@ Seq_Open_File_Cleanup:
             if (mmrc != MMSYSERR_NOERROR)
             {
                TRACE( "midiOutPrepare(preroll) -> %lu!", (uint32_t)mmrc);
-               mmrc = translate_mmr(MCIERR_DEVICE_NOT_READY);
+               mmrc = translate_mmr(::multimedia::result_not_ready);
                if(bThrow)
                {
                   SetState(status_opened);
@@ -647,7 +647,7 @@ Seq_Open_File_Cleanup:
             if (mmrc != MMSYSERR_NOERROR)
             {
                TRACE( "midiOutPrepare(preroll) -> %lu!", (uint32_t)mmrc);
-               mmrc = translate_mmr(MCIERR_DEVICE_NOT_READY);
+               mmrc = translate_mmr(::multimedia::result_not_ready);
                if(bThrow)
                {
                   SetState(status_opened);
@@ -689,7 +689,7 @@ seq_Preroll_Cleanup:
          *   ::multimedia::result_unsupported_function If the sequencer instance is not
          *     stopped.
          *
-         *   MCIERR_DEVICE_NOT_READY If the underlying MIDI device could
+         *   ::multimedia::result_not_ready If the underlying MIDI device could
          *     not be opened or fails any call.
          *
          * The sequencer must be prerolled before seqStart may be called.
@@ -894,7 +894,7 @@ seq_Preroll_Cleanup:
          * Returns
          *   MMSYSERR_NOERROR If the operation is successful.
          *
-         *   MCIERR_DEVICE_NOT_READY If the underlying device fails to report
+         *   ::multimedia::result_not_ready If the underlying device fails to report
          *     the position.
          *
          *   ::multimedia::result_unsupported_function If the sequencer instance is not
@@ -936,7 +936,7 @@ seq_Preroll_Cleanup:
                   if(m_hstream == NULL)
                   {
                      TRACE("m_hmidi == NULL!!!!");
-                     return MCIERR_DEVICE_NOT_READY;
+                     return ::multimedia::result_not_ready;
                   }
                   else
                   {
@@ -947,12 +947,12 @@ seq_Preroll_Cleanup:
                         if (MMSYSERR_NOERROR != mmr)
                         {
                            TRACE( "midiStreamPosition() returned %lu", (uint32_t)mmr);
-                           return MCIERR_DEVICE_NOT_READY;
+                           return ::multimedia::result_not_ready;
                         }
                      }
                      catch(...)
                      {
-                        return MCIERR_DEVICE_NOT_READY;
+                        return ::multimedia::result_not_ready;
                      }
                      pTicks += mmt.u.ticks;
                   }
@@ -1000,7 +1000,7 @@ seq_Preroll_Cleanup:
                   if(m_hstream == NULL)
                   {
                      TRACE("m_hmidi == NULL!!!!");
-                     return MCIERR_DEVICE_NOT_READY;
+                     return ::multimedia::result_not_ready;
                   }
                   else
                   {
@@ -1011,12 +1011,12 @@ seq_Preroll_Cleanup:
                         if (MMSYSERR_NOERROR != mmr)
                         {
                            TRACE( "midiStreamPosition() returned %lu", (uint32_t)mmr);
-                           return MCIERR_DEVICE_NOT_READY;
+                           return ::multimedia::result_not_ready;
                         }
                      }
                      catch(...)
                      {
-                        return MCIERR_DEVICE_NOT_READY;
+                        return ::multimedia::result_not_ready;
                      }
                      time += mmt.u.ms;
                   }
