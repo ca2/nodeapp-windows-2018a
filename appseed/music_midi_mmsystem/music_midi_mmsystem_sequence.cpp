@@ -1507,7 +1507,7 @@ seq_Preroll_Cleanup:
 
                single_lock sl(&m_mutex, TRUE);
 
-               ::music::midi_mmsystem::sequence::event * pev = (::music::midi_mmsystem::sequence::event *) pevent;
+               ::music::midi:mmsystem::sequence::event * pev = (::music::midi:mmsystem::sequence::event *) pevent;
 
                if(m_flags.is_signalized(FlagEOF))
                {
@@ -1671,7 +1671,7 @@ seq_Preroll_Cleanup:
          ::ikaraoke::data & data)
       {
          UNREFERENCED_PARAMETER(str2a);
-         ::music::midi_mmsystem::file & file = *this->file();
+         ::music::midi:mmsystem::file & file = *this->file();
          ::music::midi::tracks & tracks = file.GetTracks();
 
          ASSERT(!file.IsNull());
@@ -2102,7 +2102,7 @@ seq_Preroll_Cleanup:
 
       void sequence::Prepare(int32_t iTrack, ::ikaraoke::data & data)
       {
-         ::music::midi_mmsystem::file & file = *this->file();
+         ::music::midi:mmsystem::file & file = *this->file();
          ::music::midi::tracks & tracks = file.GetTracks();
          string2a & str2a = data.GetStaticData().m_str2aRawTokens;
          imedia::position_2darray position2a;
@@ -2129,7 +2129,7 @@ seq_Preroll_Cleanup:
 
       void sequence::Prepare(::ikaraoke::data & data)
       {
-         ::music::midi_mmsystem::file & file = *this->file();
+         ::music::midi:mmsystem::file & file = *this->file();
          ::music::midi::tracks & tracks = file.GetTracks();
          string2a & str2a = data.GetStaticData().m_str2aRawTokens;
          imedia::position_2darray position2a;
