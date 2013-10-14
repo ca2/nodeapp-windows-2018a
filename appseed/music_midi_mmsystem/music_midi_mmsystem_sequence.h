@@ -20,7 +20,7 @@ namespace music
       {
 
 
-         class file;
+         class buffer;
          class sequence;
          class sequence_thread;
 
@@ -215,7 +215,7 @@ namespace music
             imedia::position GetQuarterNote();
 
 
-            inline sp(::music::midi::mmsystem::file) file()
+            inline sp(::music::midi::mmsystem::buffer) file()
             {
                return get_file();
             }

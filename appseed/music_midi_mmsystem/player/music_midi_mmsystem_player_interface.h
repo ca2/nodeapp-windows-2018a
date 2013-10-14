@@ -5,46 +5,55 @@ namespace music
 {
 
 
-   namespace midi_mmsystem
+   namespace midi
    {
 
 
-      namespace player
+      namespace mmsystem
       {
 
 
-
-         class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM player_interface :
-            virtual public callback,
-            virtual public ::music::midi::player::player_interface
+         namespace player
          {
-         public:
 
 
-            player_interface(sp(base_application) papp);
-            virtual ~player_interface();
+
+            class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM player_interface :
+               virtual public callback,
+               virtual public ::music::midi::player::player_interface
+            {
+            public:
 
 
-            virtual bool OnOpenMidiPlayer();
+               player_interface(sp(base_application) papp);
+               virtual ~player_interface();
 
 
-            virtual bool Initialize(sp(::music::midi::midi) pcentral);
-            virtual bool Finalize();
+               virtual bool OnOpenMidiPlayer();
 
 
-            virtual bool OpenMidiPlayer();
-
-            virtual void OnMidiPlayerNotifyEvent(::music::midi::player::notify_event * pdata);
-
-         };
+               virtual bool Initialize(sp(::music::midi::midi) pcentral);
+               virtual bool Finalize();
 
 
-      } // namespace player
+               virtual bool OpenMidiPlayer();
+
+               virtual void OnMidiPlayerNotifyEvent(::music::midi::player::notify_event * pdata);
+
+            };
+
+
+         } // namespace player
+
+
+      } // namespace mmsystem
 
 
    } // namespace midi_mmsystem
 
 
 } // namespace music
+
+
 
 
