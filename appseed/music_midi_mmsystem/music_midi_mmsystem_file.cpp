@@ -14,6 +14,8 @@ namespace music
          primitive::memory_container (papp),
          ::music::midi::file(papp)
       {
+
+
          m_estorage              = ::music::storage_none;
 
          m_tkLength              = 0;
@@ -1230,7 +1232,7 @@ smf_Open_File_Cleanup:
                ** their given tkBase and tkEnd as the entire file, therefore
                ** we want to translate this into EOF.
                */
-               if (::music::midi::file::SReachedTkMax == smfrc)
+               if (::music::midi::::music::SReachedTkMax == smfrc)
                {
                   GetFlags().signalize(::music::midi::EndOfFile);
                }
@@ -1668,7 +1670,7 @@ smf_Open_File_Cleanup:
             }
          }
 
-         if (::music::midi::file::SReachedTkMax != smfrc)
+         if (::music::midi::::music::SReachedTkMax != smfrc)
          {
             return smfrc;
          }
@@ -1806,7 +1808,7 @@ smf_Open_File_Cleanup:
 
          while(::music::midi::Success == (smfrc = GetNextEvent(pevent, tkPosition, FALSE)));
 
-         if (::music::midi::file::SReachedTkMax != smfrc)
+         if (::music::midi::::music::SReachedTkMax != smfrc)
          {
             return smfrc;
          }
@@ -2354,7 +2356,7 @@ smf_Open_File_Cleanup:
             peventPrevious = pevent;
          }
 
-         if (::music::midi::file::SReachedTkMax != smfrc)
+         if (::music::midi::::music::SReachedTkMax != smfrc)
          {
             return smfrc;
          }
@@ -3049,7 +3051,7 @@ smf_Open_File_Cleanup:
             }
          }
 
-         if (::music::midi::file::SReachedTkMax != smfrc)
+         if (::music::midi::::music::SReachedTkMax != smfrc)
          {
             return smfrc;
          }
@@ -3443,8 +3445,6 @@ smf_Open_File_Cleanup:
             GetFlags().unsignalize(::music::midi::Opened);
          }
       }
-
-
 
    } // namespace midi_mmsystem
 
