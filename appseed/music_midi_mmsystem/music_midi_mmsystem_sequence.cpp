@@ -184,10 +184,14 @@ namespace music
 
          smfrc = file()->OpenFile(*sequence.get_file(), openMode);
 
-         if (::music::midi::Success != smfrc)
+
+         if(::music::success != smfrc)
          {
-            rc = TranslateSMFResult(smfrc);
+
+            translate(rc, smfrc);
+
             goto Seq_Open_File_Cleanup;
+
          }
 
          file()->GetFileInfo(&sfi);
@@ -247,7 +251,7 @@ Seq_Open_File_Cleanup:
 
          smfrc = file()->OpenFile(pmemorystorage, openMode, estorage);
 
-         if (::music::midi::Success != smfrc)
+         if (::music::success != smfrc)
          {
             rc = TranslateSMFResult(smfrc);
          }
@@ -308,7 +312,7 @@ Seq_Open_File_Cleanup:
          smfrc = file()->OpenFile(ar, openMode);
 
          //smfrc = smfOpenFile(&sofs);
-         if (::music::midi::Success != smfrc)
+         if (::music::success != smfrc)
          {
             //      delete pSmf;
             rc = TranslateSMFResult(smfrc);
@@ -576,7 +580,7 @@ Seq_Open_File_Cleanup:
             lpmh = m_buffera[i].GetMidiHdr();
 
             smfrc = file()->WorkStreamRender(lpmh, m_tkEnd, m_cbPrerollNominalMax);
-            if(::music::midi::Success != smfrc && ::music::midi::SEndOfFile != smfrc)
+            if(::music::success != smfrc && ::music::midi::SEndOfFile != smfrc)
             {
                TRACE( "SFP: smfReadEvents() -> %u", (uint32_t)smfrc);
                mmrc = TranslateSMFResult(smfrc);
@@ -1143,7 +1147,7 @@ seq_Preroll_Cleanup:
                   EventMidiStreamOut,
                   lpmidihdr);
                m_flags.signalize(FlagSpecialModeV001End);
-               smfrc = ::music::midi::Success;
+               smfrc = ::music::success;
                return;
             }
             //
@@ -1518,7 +1522,7 @@ seq_Preroll_Cleanup:
 
                switch(mmrc)
                {
-               case ::music::midi::Success:
+               case ::music::success:
 
                   break;
 
@@ -1526,7 +1530,7 @@ seq_Preroll_Cleanup:
                   
                   m_flags.signalize(FlagEOF);
                   
-                  mmrc = ::music::midi::Success;
+                  mmrc = ::music::success;
                
                   break;
                
