@@ -76,8 +76,6 @@ namespace multimedia
 
             return ::multimedia::result_already_allocated;
 
-
-
          default:
 
             return ::multimedia::result_error;

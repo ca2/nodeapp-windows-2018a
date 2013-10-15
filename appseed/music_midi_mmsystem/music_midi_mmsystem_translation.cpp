@@ -4,26 +4,35 @@
 namespace music
 {
 
-   namespace midi_mmsystem
+
+   namespace midi
    {
 
-      ::multimedia::e_result translate_mmr(MMRESULT mmr)
+
+      namespace mmsystem
       {
 
-         if(mmr == MMSYSERR_NOERROR)
+
+         ::multimedia::e_result translate_mmr(MMRESULT mmr)
          {
 
-            return ::multimedia::result_success;
+            if(mmr == MMSYSERR_NOERROR)
+            {
+
+               return ::multimedia::result_success;
+
+            }
+            else
+            {
+
+               return ::multimedia::result_error;
+
+            }
 
          }
-         else
-         {
 
-            return ::multimedia::result_error;
 
-         }
-
-      }
+      } // namespace mmsystem
 
    } // namespace midi_mmsystem
 

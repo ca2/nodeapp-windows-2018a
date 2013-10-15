@@ -602,6 +602,7 @@
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <FixedBaseAddress>false</FixedBaseAddress>
     </Link>
     <Manifest>
       <AdditionalManifestFiles>

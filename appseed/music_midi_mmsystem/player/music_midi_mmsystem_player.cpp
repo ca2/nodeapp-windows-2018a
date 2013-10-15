@@ -493,7 +493,7 @@ namespace music
                HMIDIOUT hmidiout = NULL;
                ::multimedia::e_result mmrc;
                uint32_t uDeviceID = 0;
-               mmrc = midiOutOpen(&hmidiout, uDeviceID,  0, 0, CALLBACK_NULL);
+               mmrc = translate_mmr(midiOutOpen(&hmidiout, uDeviceID,  0, 0, CALLBACK_NULL));
                if(mmrc != MMSYSERR_NOERROR)
                   return;
                Sleep(284);
@@ -518,15 +518,15 @@ namespace music
                lpmh->dwBufferLength = sizeof(gmModeOn);
                lpmh->dwBytesRecorded = 0;
                lpmh->dwFlags = 0;
-               mmrc = midiOutPrepareHeader( hmidiout, lpmh, sizeof(MIDIHDR));
+               mmrc = translate_mmr(midiOutPrepareHeader( hmidiout, lpmh, sizeof(MIDIHDR)));
                if(mmrc != MMSYSERR_NOERROR)
                   goto End;
                lpmh->dwBytesRecorded = sizeof(gmModeOn);
                if(mmrc != MMSYSERR_NOERROR)
                   goto End;
-               mmrc = midiOutLongMsg( hmidiout, lpmh, sizeof(MIDIHDR));
+               mmrc = translate_mmr(midiOutLongMsg( hmidiout, lpmh, sizeof(MIDIHDR)));
                Sleep(284);
-               mmrc = midiOutUnprepareHeader( hmidiout, lpmh, sizeof(MIDIHDR));
+               mmrc = translate_mmr(midiOutUnprepareHeader( hmidiout, lpmh, sizeof(MIDIHDR)));
                if(mmrc != MMSYSERR_NOERROR)
                   goto End;
 End:
