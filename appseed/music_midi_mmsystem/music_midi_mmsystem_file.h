@@ -167,7 +167,7 @@ namespace music
 
             e_result seek(imedia::position tkPosition);
 
-            e_result Build();
+            //e_result Build();
 
             e_result GetNextEvent(::music::midi::event_v1 *& pevent, imedia::position tkMax, bool   bTkMaxInclusive);
 

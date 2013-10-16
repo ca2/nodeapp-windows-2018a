@@ -4856,24 +4856,35 @@ ExitModal:
    bool window::IsWindowVisible()
    {
 
-      if(!::IsWindow(get_handle()))
-         return false;
-
-      if(m_pguie != NULL)
+      try
       {
 
-         if(!m_pguie->m_bVisible)
+         if(!::IsWindow(get_handle()))
             return false;
 
-         if(m_pguie->get_parent() != NULL && !m_pguie->get_parent()->IsWindowVisible())
+         if(m_pguie != NULL)
+         {
+
+            if(!m_pguie->m_bVisible)
+               return false;
+
+            if(m_pguie->get_parent() != NULL && !m_pguie->get_parent()->IsWindowVisible())
+               return false;
+
+         }
+
+         if(!::IsWindowVisible(get_handle()))
             return false;
+
+         return true;
 
       }
-
-      if(!::IsWindowVisible(get_handle()))
+      catch(...)
+      {
+         
          return false;
 
-      return true;
+      }
 
    }
 

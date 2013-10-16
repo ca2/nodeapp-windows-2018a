@@ -1830,201 +1830,6 @@ smf_Open_File_Cleanup:
             return ::music::success;
          }
 
-         /******************************************************************************
-         *
-         * smfBuildFileIndex
-         *
-         * Preliminary parsing of a MIDI file.
-         *
-         * ppSmf                     - Pointer to a returned SMF structure if the
-         *                             file is successfully parsed.
-         *
-         * Returns
-         *   ::music::success The events were successfully read.
-         *   ENoMemory Out of primitive::memory to build key frames.
-         *   EInvalidFile A disk or parse error occured on the file.
-         *
-         * This function validates the format of and existing MIDI or RMI file
-         * and builds the handle structure which will refer to it for theytrhf b
-         * lifetime of the instance.
-         *
-         * The file header information will be read and verified, and
-         * smfBuildTrackIndices will be called on every existing track
-         * to build keyframes and validate the track format.
-         *
-         *****************************************************************************/
-         e_result buffer::Build()
-         {
-            e_result        smfrc = ::music::success;
-            UNALIGNED CHUNKHDR *       pCh;
-            int32_t                        iLeft;
-            int32_t                        iLeftInitial;
-            byte *                     hpbImage;
-            byte *                     hpbImageInitial;
-            uint32_t                      dwLength;
-            //   track_base *            pTrk = NULL;
-            ::music::midi::track *                pTrkMidi;
-            ::music::midi::event_v1              event;
-            uint32_t                        cbLength;
-            int32_t                        iTrack;
-
-            GetTracks().remove_all();
-
-            /* MIDI data image is already in hpbImage (already extracted from
-            ** RIFF header if necessary).
-            */
-
-            /* Validate MIDI header
-            */
-            iLeft    = GetImageSize();
-            hpbImage = GetImage();
-
-            if (iLeft < sizeof(CHUNKHDR))
-               return EInvalidFile;
-
-            m_pMThd = (CHUNKHDR FAR *)hpbImage;
-
-            iLeft   -= sizeof(CHUNKHDR);
-            hpbImage += sizeof(CHUNKHDR);
-
-            if (m_pMThd->fourccType != FOURCC_MThd)
-               return EInvalidFile;
-
-            dwLength = DWORDSWAP(m_pMThd->dwLength);
-            if (dwLength < sizeof(MIDIFILEHDR) || dwLength > (uint32_t) iLeft)
-               return EInvalidFile;
-
-            m_pFileHeader = (MIDIFILEHDR *)hpbImage;
-
-            iLeft    -= dwLength;
-            hpbImage += dwLength;
-
-            m_dwFormat       = (uint32_t)(WORDSWAP(m_pFileHeader->wFormat));
-            m_dwTracks       = (uint32_t)(WORDSWAP(m_pFileHeader->wTracks));
-            m_dwTimeDivision = (uint32_t)(WORDSWAP(m_pFileHeader->wDivision));
-
-            /*
-            ** We've successfully parsed the header. Now try to build the track
-            ** index.
-            **
-            ** We only check out the track header chunk here; the track will be
-            ** preparsed after we do a quick integretiy check.
-            */
-
-            iLeftInitial      = iLeft;
-            hpbImageInitial   = hpbImage;
-            iTrack            = 0;
-
-            for (int32_t i = 0; iLeft > 0; i++)
-            {
-               if (iLeft < sizeof(CHUNKHDR))
-                  break;
-
-               pCh = (CHUNKHDR FAR *)hpbImage;
-
-               iLeft       -= sizeof(CHUNKHDR);
-               hpbImage    += sizeof(CHUNKHDR);
-               cbLength    =  DWORDSWAP(pCh->dwLength);
-
-               if(cbLength > (uint32_t) iLeft)
-                  break;
-
-
-               if (pCh->fourccType == FOURCC_MTrk
-                  || pCh->fourccType == FOURCC_XFIH
-                  || pCh->fourccType == FOURCC_XFKM)
-               {
-                  pTrkMidi                      = m_ptracks->CreateTrack();
-                  pTrkMidi->m_iIndex            = iTrack++;
-                  pTrkMidi->m_idxTrack          = (uint32_t)(hpbImage - GetImage());
-                  pTrkMidi->m_smti.m_cbLength   = cbLength;
-
-                  pTrkMidi->Initialize(m_ptracks);
-               }
-
-               iLeft       -= cbLength;
-               hpbImage    += cbLength;
-
-            }
-
-            if((uint32_t) m_ptracks->GetTrackCount() < m_dwTracks)
-            {
-
-               return EInvalidFile;
-
-            }
-
-
-            /*   iLeft             = iLeftInitial;
-            hpbImage          = hpbImageInitial;
-
-            for (i = 0; iLeft > 0; i++)
-            {
-            if (iLeft < sizeof(CHUNKHDR))
-            break;
-
-            pCh = (CHUNKHDR FAR *)hpbImage;
-
-            iLeft       -= sizeof(CHUNKHDR);
-            hpbImage    += sizeof(CHUNKHDR);
-            cbLength    =  DWORDSWAP(pCh->dwLength);
-
-            if(pCh->fourccType == FOURCC_XFIH ||
-            pCh->fourccType == FOURCC_XFKM)
-            {
-            pTrkMidi                      = m_ptracks->CreateTrack();
-            pTrkMidi->m_iIndex            = iTrack++;
-            pTrkMidi->m_idxTrack          = (uint32_t)(hpbImage - GetImage());
-            pTrkMidi->m_smti.m_cbLength   = cbLength;
-
-            if (pTrkMidi->m_smti.m_cbLength > (uint32_t) iLeft)
-            {
-            TRACE("Track longer than file!");
-            return EInvalidFile;
-            }
-
-            pTrkMidi->Initialize(m_ptracks);
-            }
-
-            iLeft       -= cbLength;
-            hpbImage    += cbLength;
-
-            }*/
-
-            m_dwTracks = (uint32_t) m_ptracks->GetTrackCount();
-
-
-            /* File looks OK. Now preparse, doing the following:
-            ** (1) Build tempo map so we can convert to/from ticks quickly
-            ** (2) Determine actual tick length of file
-            ** (3) Validate all events in all tracks
-            */
-            m_ptracks->m_tkPosition = 0;
-            GetFlags().unsignalize(file::EndOfFile);
-            GetFlags().signalize(file::DisablePlayLevel1Operations);
-
-            m_ptracks->SetAutoAllocation(false);
-            if(m_iOpenMode != file::OpenForHeaders)
-            {
-               m_ptracks->ToWorkStorage();
-            }
-
-            if(m_iOpenMode == file::OpenForPlaying)
-            {
-               smfrc = CreateTempoMap();
-            }
-
-            if(m_iOpenMode != file::OpenForHeaders
-               && smfrc == ::music::success)
-            {
-               smfrc = CalcTkLength();
-            }
-
-            //GetFlags().unsignalize(DisablePlayLevel1Operations);
-
-            return smfrc;
-         }
-
 
          e_result buffer::GetNextEvent(::music::midi::event_v1 * & pevent, imedia::position tkMax, bool bTkMaxInclusive)
          {
@@ -2168,7 +1973,7 @@ smf_Open_File_Cleanup:
             {
                ptrack = m_ptracks->MidiTrackAt(i);
                dwAllocation += ptrack->GetTrackImageLength();
-               ptrack->SetAutoAllocation();
+//               ptrack->SetAutoAllocation();
             }
 
             try
@@ -2192,11 +1997,11 @@ smf_Open_File_Cleanup:
             for(i = 0; i < m_ptracks->GetMidiTrackCount(); i++)
             {
                ptrack = m_ptracks->MidiTrackAt(i);
-               hpbSrc = ptrack->GetAllocationImage();
+               hpbSrc = ptrack->GetTrackImage();
                memcpy(hpbDest, hpbSrc, ptrack->GetTrackImageLength());
                ptrack->m_idxTrack = (uint32_t) (hpbDest - GetImage() + sizeof(CHUNKHDR));
                ptrack->Initialize(m_ptracks);
-               ptrack->SetAutoAllocation(FALSE);
+               //ptrack->SetAutoAllocation(FALSE);
                ptrack->WriteHeaderLength();
                hpbDest += ptrack->GetTrackImageLength();
             }

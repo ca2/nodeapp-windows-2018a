@@ -19,9 +19,9 @@ namespace music
             ::music::midi::sequence(papp)
          {
 
+            m_hstream = NULL;
 
-
-            m_buffera.Initialize(16, m_cbPreroll, (uint32_t) (void *) &m_midicallbackdata);
+            m_buffera.Initialize(16, m_cbPreroll, (uint_ptr) (void *) &m_midicallbackdata);
             m_midicallbackdata.m_psequence = this;
 
 
@@ -128,19 +128,6 @@ namespace music
          VOID sequence::FreeBuffers()
          {
             ASSERT(FALSE);
-            /*
-            LPMIDIHDR               lpmh;
-
-            //    assert(pSeq != NULL);
-
-            if (NULL != m_lpbAlloc)
-            {
-            lpmh = (LPMIDIHDR)m_lpbAlloc;
-            ASSERT(!(lpmh->dwFlags & MHDR_PREPARED));
-
-            //GlobalFreePtr(m_lpbAlloc);
-            HeapFree(GetProcessHeap(), 0, m_lpbAlloc);
-            }*/
          }
 
          /***************************************************************************
@@ -507,10 +494,11 @@ Seq_Open_File_Cleanup:
             if (m_hstream == NULL)
             {
                uDeviceID = m_uiDeviceID;
+               //uDeviceID = MIDI_MAPPER;
                mmrc = translate_mmr(midiStreamOpen(&m_hstream,
                   &uDeviceID,
                   1,
-                  (uint32_t) MidiOutProc,
+                  (uint_ptr) &MidiOutProc,
                   0,
                   CALLBACK_FUNCTION));
                if(mmrc != ::multimedia::result_success)
@@ -1148,11 +1136,6 @@ seq_Preroll_Cleanup:
                   {
                      TRACE("void CALLBACK ::music::midi::sequence::MidiOutProc m_flags.is_signalized(FlagEOF\n");
                   }
-                  //       if (lpmidihdr != m_lpmhPreroll)
-                  //     {
-                  //      lpmidihdr->lpNext = m_lpmhFree;
-                  //    m_lpmhFree        = lpmidihdr;
-                  //}
                   if(m_uBuffersInMMSYSTEM <= 0)
                   {
                      pthread->PostMidiSequenceEvent(
@@ -1280,7 +1263,7 @@ seq_Preroll_Cleanup:
 
          }
 
-         void CALLBACK sequence::MidiOutProc(HMIDIOUT hmo, uint32_t wMsg, uint32_t dwInstance, uint32_t dwParam1, uint32_t dwParam2)
+         void CALLBACK sequence::MidiOutProc(HMIDIOUT hmo, UINT wMsg, DWORD_PTR dwInstance, DWORD_PTR dwParam1, DWORD_PTR dwParam2)
          {
 
             UNREFERENCED_PARAMETER(hmo);
@@ -2298,7 +2281,7 @@ seq_Preroll_Cleanup:
             position = m_tkLength;
          }
 
-         void sequence::buffer::Initialize(int32_t iSize, uint32_t dwUser)
+         void sequence::buffer::Initialize(int32_t iSize, uint_ptr dwUser)
          {
             m_storage.allocate(iSize);
             m_midihdr.lpData           = (char *) m_storage.get_data();
@@ -2308,7 +2291,7 @@ seq_Preroll_Cleanup:
 
          }
 
-         void sequence::buffer_array::Initialize(int32_t iCount, int32_t iSize, uint32_t dwUser)
+         void sequence::buffer_array::Initialize(int32_t iCount, int32_t iSize, uint_ptr dwUser)
          {
             set_size(iCount);
 

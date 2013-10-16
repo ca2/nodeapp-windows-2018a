@@ -55,7 +55,7 @@ namespace music
 
                bool IsPrepared();
                void Reset();
-               void Initialize(int32_t iSize, uint32_t dwUser);
+               void Initialize(int32_t iSize, uint_ptr dwUser);
 
                ::multimedia::e_result midiStreamOut(HMIDISTRM hmidiout);
                ::multimedia::e_result midiOutPrepareHeader(HMIDIOUT hmidiout);
@@ -77,7 +77,7 @@ namespace music
 
 
                void Reset();
-               void Initialize(int32_t iCount, int32_t iSize, uint32_t dwUser);
+               void Initialize(int32_t iCount, int32_t iSize, uint_ptr dwUser);
 
 
                ::multimedia::e_result midiStreamOut(HMIDISTRM hmidiout);
@@ -206,7 +206,7 @@ namespace music
 
             bool IsPlaying();
 
-            static void CALLBACK MidiOutProc(HMIDIOUT hmo, uint32_t wMsg, uint32_t dwInstance, uint32_t dwParam1, uint32_t dwParam2);
+            static void CALLBACK MidiOutProc(HMIDIOUT hmo, UINT wMsg, DWORD_PTR dwInstance, DWORD_PTR dwParam1, DWORD_PTR dwParam2);
 
 
             bool IsSettingPosition();
