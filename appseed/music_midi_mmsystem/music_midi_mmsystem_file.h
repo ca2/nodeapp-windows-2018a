@@ -39,11 +39,11 @@ namespace music
 
             e_result CalcTkLength();
 
-            e_result CreateTempoMap();
+            //e_result CreateTempoMap();
 
             ::multimedia::e_result ImmediatePutTempoChange();
 
-            ::music::e_result GetTempoEvent(::music::midi::event_base & event);
+            ::music::e_result GetTempoEvent(::music::midi::event & event);
 
             void OnStop();
 
@@ -81,19 +81,19 @@ namespace music
 
             e_result WriteHeader(MIDIFILEHDR * lpmfh);
 
-            e_result ChangeEventDelta(::music::midi::event_base *pEvent, imedia::position tkNewDelta);
+            e_result ChangeEventDelta(::music::midi::event *pEvent, imedia::position tkNewDelta);
 
-            e_result ReplaceSameDeltaEvent(::music::midi::event_base & pEventNew);
+            e_result ReplaceSameDeltaEvent(::music::midi::event & pEventNew);
 
-            e_result GetPreviousEvent(::music::midi::event_base * pPreviousEvent, ::music::midi::event_base * pEvent);
+            e_result GetPreviousEvent(::music::midi::event * pPreviousEvent, ::music::midi::event * pEvent);
 
             e_result SaveFile(const char * lpFilePath);
 
             e_result WorkWriteXFTracks(stringa & tokena, imedia::position_array & positiona, ::music::xf::info_header & xfinfoheader);
 
-            int32_t CalcMelodyTrack(::music::midi::events_v1 ** ppEvents, imedia::position_array * pTicks);
+            //int32_t CalcMelodyTrack(::music::midi::events ** ppEvents, imedia::position_array * pTicks);
 
-            int32_t WorkCalcMelodyTrack(::music::midi::events_v1 ** ppEvents, imedia::position_array & positiona, int_array & iaTokenLine);
+            //int32_t WorkCalcMelodyTrack(::music::midi::events ** ppEvents, imedia::position_array & positiona, int_array & iaTokenLine);
 
             int32_t GetFormat();
 
@@ -103,11 +103,11 @@ namespace music
 
             e_result WorkStreamRender(LPMIDIHDR lpmh, imedia::position tkMax, uint32_t cbPrerollNomimalMax);
 
-            e_result WorkGetNextEvent(::music::midi::event_v5 * & pevent, imedia::position tkMax, bool bTkMaxInclusive);
+            e_result WorkGetNextEvent(::music::midi::event * & pevent, imedia::position tkMax, bool bTkMaxInclusive);
 
-            e_result WorkGetNextRawEvent(::music::midi::event_v5 * & pevent, imedia::position tkMax, bool bTkMaxInclusive);
+            e_result WorkGetNextRawEvent(::music::midi::event * & pevent, imedia::position tkMax, bool bTkMaxInclusive);
 
-            e_result WorkGetNextRawMidiEvent(::music::midi::event_v5 * & pevent, imedia::position tkMax, bool bTkMaxInclusive);
+            e_result WorkGetNextRawMidiEvent(::music::midi::event * & pevent, imedia::position tkMax, bool bTkMaxInclusive);
 
             e_result WorkSeek(::imedia::position tkPosition, LPMIDIHDR lpmh);
 
@@ -115,7 +115,7 @@ namespace music
 
             int32_t GetDivision();
 
-            imedia::position get_position();
+            imedia::position GetPosition();
 
             void AttachSeekSync(::ikaraoke::events_tracks_v1 * ptracksv1);
 
@@ -159,9 +159,9 @@ namespace music
 
             e_result StreamRender(LPMIDIHDR lpmh, imedia::position tkMax, uint32_t cbPrerollNomimalMax);
 
-            ::music::e_result StreamEvent(imedia::position tkDelta, ::music::midi::event_base * Event, LPMIDIHDR lpmh, imedia::position tkMax, uint32_t cbPrerollNomimalMax);
+            ::music::e_result StreamEvent(imedia::position tkDelta, ::music::midi::event * Event, LPMIDIHDR lpmh, imedia::position tkMax, uint32_t cbPrerollNomimalMax);
 
-            ::music::e_result StreamEventF1(imedia::position tkDelta, array < ::music::midi::event_v5 *, ::music::midi::event_v5 * > & eventptra, LPMIDIHDR lpmh, imedia::position tkMax, uint32_t cbPrerollNomimalMax);
+            ::music::e_result StreamEventF1(imedia::position tkDelta, array < ::music::midi::event *, ::music::midi::event * > & eventptra, LPMIDIHDR lpmh, imedia::position tkMax, uint32_t cbPrerollNomimalMax);
 
             e_result seek(imedia::position tkPosition, LPMIDIHDR lpmh);
 
@@ -169,7 +169,7 @@ namespace music
 
             //e_result Build();
 
-            e_result GetNextEvent(::music::midi::event_v1 *& pevent, imedia::position tkMax, bool   bTkMaxInclusive);
+            e_result GetNextEvent(::music::midi::event *& pevent, imedia::position tkMax, bool   bTkMaxInclusive);
 
             e_result GetNextEventTkPosition(imedia::position * pTkPosition, imedia::position tkMax);
 

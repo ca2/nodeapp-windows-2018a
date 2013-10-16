@@ -425,7 +425,7 @@ namespace music
                if(get_sequence()->IsPlaying())
                {
                   imedia::position tkPosition = 0;
-                  get_sequence()->get_position(tkPosition);
+                  get_sequence()->GetPosition(tkPosition);
                   ::music::midi::sequence::PlayerLink & link = get_sequence()->GetPlayerLink();
                   link.ModifyFlag(
                      ::music::midi::sequence::FlagTempoChange,

@@ -581,7 +581,7 @@ Seq_Open_File_Cleanup:
 
             smfrc = file()->WorkSeek(m_tkBase, lpmh);
 
-            m_tkPrerollBase = get_file()->get_position();
+            m_tkPrerollBase = get_file()->GetPosition();
 
 
 
@@ -1165,7 +1165,7 @@ seq_Preroll_Cleanup:
                   }
                   else if(m_uiSpecialModeV001Operation == SPMV001TempoChange)
                   {
-                     ::music::midi::event_v7 event;
+                     ::music::midi::event event;
                      file()->GetTempoEvent(event);
                      file()->StreamEvent(event.GetDelta(), &event, lpmidihdr, 0x7fffffff, 256);
                      // lpmidihdr->dwBytesRecorded = sizeof(gmModeOn);
@@ -1721,7 +1721,7 @@ seq_Preroll_Cleanup:
             return imedia::time(TicksToMillisecs((imedia::position) (int_ptr) tk));
          }
 
-         void sequence::get_position(imedia::position & position)
+         void sequence::GetPosition(imedia::position & position)
          {
             get_ticks(position);
          }
@@ -1779,7 +1779,7 @@ seq_Preroll_Cleanup:
             imedia::time_2darray ms2DNoteOffMillis(get_app());
             imedia::time_2darray ms2DBegMillis(get_app());
             imedia::time_2darray ms2DEndMillis(get_app());
-            ::music::midi::events_v1 midiEvents;
+            ::music::midi::events midiEvents;
 
 
 
@@ -1787,13 +1787,13 @@ seq_Preroll_Cleanup:
             // Note on and off events
             // and maximum and minimum
             // pitch bend peaks.
-            ::music::midi::events_v1 midiEventsLevel2;
+            ::music::midi::events midiEventsLevel2;
 
-            ::music::midi::events_v1 noteOnEvents;
-            ::music::midi::events_v1 noteOffEvents;
+            ::music::midi::events noteOnEvents;
+            ::music::midi::events noteOffEvents;
 
-            ::music::midi::events_v1 eventsLevel2Beg;
-            ::music::midi::events_v1 eventsLevel2End;
+            ::music::midi::events eventsLevel2Beg;
+            ::music::midi::events eventsLevel2End;
             ::ikaraoke::events_tracks_v1 lyricEventsForPositionCB;
             ::ikaraoke::events_tracks_v1 lyricEventsForBouncingBall;
             ::ikaraoke::events_tracks_v1 lyricEventsForScoring;
@@ -1814,7 +1814,7 @@ seq_Preroll_Cleanup:
             ::ikaraoke::lyric_events_v2 *pLyricEventsV2_;
             ::ikaraoke::lyric_events_v2 *pLyricEventsV2B;
             ::ikaraoke::lyric_events_v2 *pLyricEventsV2C;
-            ::music::midi::events_v1 *pMidiEventsV1;
+            ::music::midi::events *pMidiEventsV1;
 
             tk2DNoteOnPositions.set_size_create(tka2DTokensTicks.get_size());
             tk2DNoteOffPositions.set_size_create(tka2DTokensTicks.get_size());
