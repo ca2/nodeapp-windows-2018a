@@ -1598,7 +1598,7 @@ namespace draw2d_gdiplus
       {
 
          LPBYTE lpbAlloc = (LPBYTE) malloc((iRadius * iRadius) + 4);
-         LPBYTE lpb = (LPBYTE) (((int32_t) lpbAlloc + 3) & ~3);
+         LPBYTE lpb = (LPBYTE) (((int_ptr) lpbAlloc + 3) & ~3);
 
 
          int32_t x, y;
