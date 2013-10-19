@@ -11,36 +11,6 @@ namespace win
       m_path(papp)
    {
       
-      string strCa2Module = ca2module();
-      
-      m_strCa2 = strCa2Module;
-
-      System.file().path().eat_end_level(m_strCa2, 2, "\\");
-/*      SHGetSpecialFolderPath(
-         NULL,
-         m_strCommonAppData,
-         CSIDL_COMMON_APPDATA,
-         FALSE);*/
-      SHGetSpecialFolderPath(
-         NULL,
-         m_strProfile,
-         CSIDL_PROFILE,
-         FALSE);
-      SHGetSpecialFolderPath(
-         NULL,
-         m_strAppData,
-         CSIDL_APPDATA,
-         FALSE);
-      SHGetSpecialFolderPath(
-         NULL,
-         m_strPrograms,
-         CSIDL_PROGRAMS,
-         FALSE);
-      SHGetSpecialFolderPath(
-         NULL,
-         m_strCommonPrograms,
-         CSIDL_COMMON_PROGRAMS,
-         FALSE);
 
    }
 
@@ -57,6 +27,8 @@ namespace win
              ch == '\r' ||
              ch == '\n';
    }
+
+
 
    string dir::path(const char * pszFolder, strsize iLenFolder, const char * pszRelative, strsize iLenRelative, const char * psz2, strsize iLen2, bool bUrl)
    {
@@ -706,22 +678,22 @@ namespace win
 
    string dir::time(const char * lpcsz, const char * lpcsz2)
    {
-      return dir::path(m_strTimeFolder, lpcsz, lpcsz2);
+      return path(m_strTimeFolder, lpcsz, lpcsz2);
    }
 
    string dir::stage(const char * lpcsz, const char * lpcsz2)
    {
-      return dir::path(element("stage"), lpcsz, lpcsz2);
+      return path(element("stage"), lpcsz, lpcsz2);
    }
 
    string dir::stageapp(const char * lpcsz, const char * lpcsz2)
    {
-      return dir::path(stage("basis", lpcsz), lpcsz2);
+      return path(stage("basis", lpcsz), lpcsz2);
    }
 
    string dir::netseed(const char * lpcsz, const char * lpcsz2)
    {
-      return dir::path(m_strNetSeedFolder, lpcsz, lpcsz2);
+      return path(m_strNetSeedFolder, lpcsz, lpcsz2);
    }
 
    // stage in ca2os spalib
@@ -730,7 +702,7 @@ namespace win
       
       single_lock sl(&m_mutex, true);
 
-      return dir::path(m_strCa2, lpcsz, lpcsz2);
+      return path(m_strCa2, lpcsz, lpcsz2);
 
    }
 
@@ -739,7 +711,7 @@ namespace win
       
       single_lock sl(&m_mutex, true);
 
-      return dir::path(m_strCa2, str, lpcsz2);
+      return path(m_strCa2, str, lpcsz2);
 
    }
 
@@ -748,7 +720,7 @@ namespace win
       
       single_lock sl(&m_mutex, true);
 
-      return dir::path(m_strCa2, lpcsz, str2);
+      return path(m_strCa2, lpcsz, str2);
 
    }
 
@@ -757,7 +729,7 @@ namespace win
       
       single_lock sl(&m_mutex, true);
 
-      return dir::path(m_strCa2, str, str2);
+      return path(m_strCa2, str, str2);
 
    }
 
@@ -766,7 +738,7 @@ namespace win
       
       single_lock sl(&m_mutex, true);
 
-      return dir::path(m_strCa2, str);
+      return path(m_strCa2, str);
 
    }
 
@@ -783,13 +755,13 @@ namespace win
    string dir::module(const char * lpcsz, const char * lpcsz2)
    {
       string str = System.get_module_folder();
-      return dir::path(str, lpcsz, lpcsz2);
+      return path(str, lpcsz, lpcsz2);
    }
 
    string dir::ca2module(const char * lpcsz, const char * lpcsz2)
    {
       string str = System.get_ca2_module_folder();
-      return dir::path(str, lpcsz, lpcsz2);
+      return path(str, lpcsz, lpcsz2);
    }
 
 
@@ -973,6 +945,38 @@ namespace win
    bool dir::initialize()
    {
       
+
+         string strCa2Module = ca2module();
+
+         m_strCa2 = strCa2Module;
+
+         System.file().path().eat_end_level(m_strCa2, 2, "\\");
+         /*      SHGetSpecialFolderPath(
+         NULL,
+         m_strCommonAppData,
+         CSIDL_COMMON_APPDATA,
+         FALSE);*/
+         SHGetSpecialFolderPath(
+            NULL,
+            m_strProfile,
+            CSIDL_PROFILE,
+            FALSE);
+         SHGetSpecialFolderPath(
+            NULL,
+            m_strAppData,
+            CSIDL_APPDATA,
+            FALSE);
+         SHGetSpecialFolderPath(
+            NULL,
+            m_strPrograms,
+            CSIDL_PROGRAMS,
+            FALSE);
+         SHGetSpecialFolderPath(
+            NULL,
+            m_strCommonPrograms,
+            CSIDL_COMMON_PROGRAMS,
+            FALSE);
+
       xml::document doc(get_app());
       
       doc.load(Application.file().as_string(appdata("configuration\\directory.xml")));
