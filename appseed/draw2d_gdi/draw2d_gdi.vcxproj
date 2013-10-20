@@ -327,7 +327,7 @@
     <Link>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>$(SolutionDir)../../../time/library/x86/;$(SolutionDir)../../../app/thirdparty/library;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)../../../time/library/x86/$(ConfigurationName);$(SolutionDir)../../../nodeapp/thirdparty/library;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <ModuleDefinitionFile>./$(ProjectName).def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -1113,10 +1113,10 @@
       <Project>{4d7d3626-ada6-4ca2-9566-ed7b131e3d51}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\app\appseed\boot\boot.vcxproj">
-      <Project>{20ad9c6f-4eb1-48d7-a696-1d5b277e7e36}</Project>
+      <Project>{ab77745a-af30-4253-9e4b-961bf2d98641}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\app\appseed\core\core.vcxproj">
-      <Project>{e000ffaf-392f-4e32-bf51-fd7ed638991f}</Project>
+      <Project>{afc48570-75e4-46bd-b8ab-4590b257e1c8}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\app\thirdparty\appseed\FreeImage\FreeImage.vcxproj">
       <Project>{b39ed2b3-d53a-4077-b957-930979a3577d}</Project>
