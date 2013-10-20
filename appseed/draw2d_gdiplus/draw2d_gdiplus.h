@@ -4,10 +4,10 @@
 #include "core/core.h"
 
 
-#ifdef _CA2_DRAW2D_GDIPLUS_LIBRARY
-    #define CLASS_DECL_DRAW2D_GDIPLUS  _declspec(dllexport)
+#ifdef _DRAW2D_GDIPLUS_LIBRARY
+    #define CLASS_DECL_DRAW2D_GDIPLUS  CLASS_DECL_EXPORT
 #else
-    #define CLASS_DECL_DRAW2D_GDIPLUS  _declspec(dllimport)
+    #define CLASS_DECL_DRAW2D_GDIPLUS  CLASS_DECL_IMPORT
 #endif
 
 

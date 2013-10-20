@@ -2205,11 +2205,11 @@ Global
 		{87965269-EA4E-42AA-A3AF-A2030D49DC5C}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
 		{87965269-EA4E-42AA-A3AF-A2030D49DC5C}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
 		{87965269-EA4E-42AA-A3AF-A2030D49DC5C}.codeanalysis|x64.Build.0 = codeanalysis|x64
-		{87965269-EA4E-42AA-A3AF-A2030D49DC5C}.memdleak|Android.ActiveCfg = basis_v110|Win32
-		{87965269-EA4E-42AA-A3AF-A2030D49DC5C}.memdleak|Win32.ActiveCfg = basis_v110|Win32
-		{87965269-EA4E-42AA-A3AF-A2030D49DC5C}.memdleak|Win32.Build.0 = basis_v110|Win32
-		{87965269-EA4E-42AA-A3AF-A2030D49DC5C}.memdleak|x64.ActiveCfg = basis_v110|x64
-		{87965269-EA4E-42AA-A3AF-A2030D49DC5C}.memdleak|x64.Build.0 = basis_v110|x64
+		{87965269-EA4E-42AA-A3AF-A2030D49DC5C}.memdleak|Android.ActiveCfg = memdleak|Win32
+		{87965269-EA4E-42AA-A3AF-A2030D49DC5C}.memdleak|Win32.ActiveCfg = memdleak|Win32
+		{87965269-EA4E-42AA-A3AF-A2030D49DC5C}.memdleak|Win32.Build.0 = memdleak|Win32
+		{87965269-EA4E-42AA-A3AF-A2030D49DC5C}.memdleak|x64.ActiveCfg = memdleak|x64
+		{87965269-EA4E-42AA-A3AF-A2030D49DC5C}.memdleak|x64.Build.0 = memdleak|x64
 		{87965269-EA4E-42AA-A3AF-A2030D49DC5C}.profiler|Android.ActiveCfg = profiler|Win32
 		{87965269-EA4E-42AA-A3AF-A2030D49DC5C}.profiler|Win32.ActiveCfg = profiler|Win32
 		{87965269-EA4E-42AA-A3AF-A2030D49DC5C}.profiler|Win32.Build.0 = profiler|Win32

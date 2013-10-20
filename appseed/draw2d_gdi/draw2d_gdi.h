@@ -4,7 +4,7 @@
 #include "core.h"
 
 
-#ifdef _CA2_DRAW2D_GDI_LIBRARY
+#ifdef _DRAW2D_GDI_LIBRARY
     #define CLASS_DECL_DRAW2D_GDI  _declspec(dllexport)
 #else
     #define CLASS_DECL_DRAW2D_GDI  _declspec(dllimport)
