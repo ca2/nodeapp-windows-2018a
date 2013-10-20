@@ -13,10 +13,10 @@
 
 
 
-#ifdef _VMSWIN_DLL
-    #define CLASS_DECL_win  _declspec(dllexport)
+#ifdef _WINDOWS_DESKTOP_LIBRARY
+    #define CLASS_DECL_win  CLASS_DECL_EXPORT
 #else
-    #define CLASS_DECL_win  _declspec(dllimport)
+    #define CLASS_DECL_win  CLASS_DECL_IMPORT
 #endif
 
 string get_error_message(DWORD dwError);

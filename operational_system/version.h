@@ -229,11 +229,11 @@
 // The following macros are used on data declarations/definitions
 //  (they are redefined for extension DLLs and the shared MFC DLL)
 #define __DATADEF
-#define __API CLASS_DECL_ca2
+#define __API CLASS_DECL_CORE
 
 // used when building the "core.dll" MFC80.DLL
 #ifndef __CORE_DATA
-	#define __CORE_DATA CLASS_DECL_ca2
+	#define __CORE_DATA CLASS_DECL_CORE
 	#define __CORE_DATADEF
 #endif
 
@@ -296,7 +296,7 @@
 #ifdef ___DEVBUILD
 	#define __IMPL_DATA __DATA_EXPORT
 #else
-	#define __IMPL_DATA CLASS_DECL_ca2 
+	#define __IMPL_DATA CLASS_DECL_CORE 
 #endif
 
 

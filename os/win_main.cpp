@@ -5,11 +5,11 @@
 extern CLASS_DECL_win oswindow_map * g_pwindowmap;
 
 
-CLASS_DECL_ca2 int32_t ca2_main();
+CLASS_DECL_CORE int32_t ca2_main();
 
-//CLASS_DECL_ca2 extern fixed_alloc_array * g_pfixedallocaWstring;
+//CLASS_DECL_CORE extern fixed_alloc_array * g_pfixedallocaWstring;
 
-//CLASS_DECL_ca2 fixed_alloc_array * new_wstring_manager();
+//CLASS_DECL_CORE fixed_alloc_array * new_wstring_manager();
 
 void CLASS_DECL_win __cdecl _ca2_purecall()
 {

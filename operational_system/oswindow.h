@@ -12,7 +12,7 @@ class oswindow_data;
 
 class oswindow_dataptra;
 
-class CLASS_DECL_c oswindow
+class CLASS_DECL_BASE oswindow
 {
 public:
 
