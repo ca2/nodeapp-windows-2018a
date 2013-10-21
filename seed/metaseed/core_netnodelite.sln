@@ -4,10 +4,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "os", "..\..\os\os.vcxproj", "{9163E31A-2D5A-4F18-AD6F-B561C76E5054}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AB77745A-AF30-4253-9E4B-961BF2D98641} = {AB77745A-AF30-4253-9E4B-961BF2D98641}
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8} = {AFC48570-75E4-46BD-B8AB-4590B257E1C8}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\app.vcxproj", "{19841115-1984-0411-1977-021977151984}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86} = {E2D7833B-9B59-4826-BBDF-C270A2115E86}
+		{AB77745A-AF30-4253-9E4B-961BF2D98641} = {AB77745A-AF30-4253-9E4B-961BF2D98641}
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8} = {AFC48570-75E4-46BD-B8AB-4590B257E1C8}
 		{15111984-C807-4AE2-957A-50089268664D} = {15111984-C807-4AE2-957A-50089268664D}
 		{B39ED2B3-D53A-4077-B957-930979A3577D} = {B39ED2B3-D53A-4077-B957-930979A3577D}
 		{9FFC2CF6-737C-43DB-A1EE-383F7BFDB05B} = {9FFC2CF6-737C-43DB-A1EE-383F7BFDB05B}
@@ -22,10 +28,21 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "baseopenssl", "..\..\..\app\thirdparty\appseed\openssl\openssl.vcxproj", "{AC98B756-E84C-4A70-9CDB-E9812FEF9B98}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basefreetype", "..\..\..\app\thirdparty\appseed\freetype\freetype.vcxproj", "{771F4B49-CAD1-438F-B272-20F3EB8E88F1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4D7D3626-ADA6-4CA2-9566-ED7B131E3D51} = {4D7D3626-ADA6-4CA2-9566-ED7B131E3D51}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "netnode_dynamic_source_library", "..\..\..\app-core\appseed\netnode_dynamic_source_library\netnode_dynamic_source_library.vcxproj", "{5C487247-84EC-479D-A80C-1858F4361C05}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AB77745A-AF30-4253-9E4B-961BF2D98641} = {AB77745A-AF30-4253-9E4B-961BF2D98641}
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8} = {AFC48570-75E4-46BD-B8AB-4590B257E1C8}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "netnode_dynamic_source_script", "..\..\..\app-core\appseed\netnode_dynamic_source_script\netnode_dynamic_source_script.vcxproj", "{7F80EE33-BA33-4F1D-9EF7-73EB4AC73DCD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AB77745A-AF30-4253-9E4B-961BF2D98641} = {AB77745A-AF30-4253-9E4B-961BF2D98641}
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8} = {AFC48570-75E4-46BD-B8AB-4590B257E1C8}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_netnode_dynamic_web_server", "..\..\..\app-core\appseed\netnode_dynamic_web_server\netnode_dynamic_web_server.vcxproj", "{A494183C-99B9-46AE-8F24-FB90D97EF51B}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -47,6 +64,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_netnode_dynamic_we
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "netnode", "..\..\..\app-core\appseed\netnode\netnode.vcxproj", "{15111984-C807-4AE2-957A-50089268664D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AB77745A-AF30-4253-9E4B-961BF2D98641} = {AB77745A-AF30-4253-9E4B-961BF2D98641}
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8} = {AFC48570-75E4-46BD-B8AB-4590B257E1C8}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "draw2d_cairo", "..\..\..\app\appseed\draw2d_cairo\draw2d_cairo.vcxproj", "{B5B26A30-A18D-4DC2-BACE-48C2DE33CD75}"
 EndProject
@@ -57,14 +78,20 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "draw2d_gdiplus", "..\..\appseed\draw2d_gdiplus\draw2d_gdiplus.vcxproj", "{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basecairo", "..\..\..\app\thirdparty\appseed\cairo\_ca2cairo.vcxproj", "{E6C58C82-71E5-48E6-98ED-1B505D6F10C2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4D7D3626-ADA6-4CA2-9566-ED7B131E3D51} = {4D7D3626-ADA6-4CA2-9566-ED7B131E3D51}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basepixman", "..\..\..\app\thirdparty\appseed\pixman\_ca2pixman.vcxproj", "{63108F1C-EAA8-4C49-A591-13F813A76B05}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "base", "..\..\..\app\appseed\base\base.vcxproj", "{4D7D3626-ADA6-4CA2-9566-ED7B131E3D51}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "boot", "..\..\..\app\appseed\boot\boot.vcxproj", "{20AD9C6F-4EB1-48D7-A696-1D5B277E7E36}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "boot", "..\..\..\app\appseed\boot\boot.vcxproj", "{AB77745A-AF30-4253-9E4B-961BF2D98641}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "core", "..\..\..\app\appseed\core\core.vcxproj", "{E000FFAF-392F-4E32-BF51-FD7ED638991F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "core", "..\..\..\app\appseed\core\core.vcxproj", "{AFC48570-75E4-46BD-B8AB-4590B257E1C8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AB77745A-AF30-4253-9E4B-961BF2D98641} = {AB77745A-AF30-4253-9E4B-961BF2D98641}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basemysql", "..\..\..\app\thirdparty\appseed\mysql\mysql.vcxproj", "{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}"
 EndProject
@@ -537,56 +564,56 @@ Global
 		{4D7D3626-ADA6-4CA2-9566-ED7B131E3D51}.profiler|Win32.Build.0 = profiler|Win32
 		{4D7D3626-ADA6-4CA2-9566-ED7B131E3D51}.profiler|x64.ActiveCfg = profiler|x64
 		{4D7D3626-ADA6-4CA2-9566-ED7B131E3D51}.profiler|x64.Build.0 = profiler|x64
-		{20AD9C6F-4EB1-48D7-A696-1D5B277E7E36}.basis_v110|Android.ActiveCfg = basis|Win32
-		{20AD9C6F-4EB1-48D7-A696-1D5B277E7E36}.basis_v110|Win32.ActiveCfg = basis|Win32
-		{20AD9C6F-4EB1-48D7-A696-1D5B277E7E36}.basis_v110|Win32.Build.0 = basis|Win32
-		{20AD9C6F-4EB1-48D7-A696-1D5B277E7E36}.basis_v110|x64.ActiveCfg = basis|x64
-		{20AD9C6F-4EB1-48D7-A696-1D5B277E7E36}.basis_v110|x64.Build.0 = basis|x64
-		{20AD9C6F-4EB1-48D7-A696-1D5B277E7E36}.basis|Android.ActiveCfg = basis|Win32
-		{20AD9C6F-4EB1-48D7-A696-1D5B277E7E36}.basis|Win32.ActiveCfg = basis|Win32
-		{20AD9C6F-4EB1-48D7-A696-1D5B277E7E36}.basis|Win32.Build.0 = basis|Win32
-		{20AD9C6F-4EB1-48D7-A696-1D5B277E7E36}.basis|x64.ActiveCfg = basis|x64
-		{20AD9C6F-4EB1-48D7-A696-1D5B277E7E36}.basis|x64.Build.0 = basis|x64
-		{20AD9C6F-4EB1-48D7-A696-1D5B277E7E36}.codeanalysis|Android.ActiveCfg = codeanalysis|Win32
-		{20AD9C6F-4EB1-48D7-A696-1D5B277E7E36}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
-		{20AD9C6F-4EB1-48D7-A696-1D5B277E7E36}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
-		{20AD9C6F-4EB1-48D7-A696-1D5B277E7E36}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
-		{20AD9C6F-4EB1-48D7-A696-1D5B277E7E36}.codeanalysis|x64.Build.0 = codeanalysis|x64
-		{20AD9C6F-4EB1-48D7-A696-1D5B277E7E36}.memdleak|Android.ActiveCfg = memdleak|Win32
-		{20AD9C6F-4EB1-48D7-A696-1D5B277E7E36}.memdleak|Win32.ActiveCfg = memdleak|Win32
-		{20AD9C6F-4EB1-48D7-A696-1D5B277E7E36}.memdleak|Win32.Build.0 = memdleak|Win32
-		{20AD9C6F-4EB1-48D7-A696-1D5B277E7E36}.memdleak|x64.ActiveCfg = memdleak|x64
-		{20AD9C6F-4EB1-48D7-A696-1D5B277E7E36}.memdleak|x64.Build.0 = memdleak|x64
-		{20AD9C6F-4EB1-48D7-A696-1D5B277E7E36}.profiler|Android.ActiveCfg = profiler|Win32
-		{20AD9C6F-4EB1-48D7-A696-1D5B277E7E36}.profiler|Win32.ActiveCfg = profiler|Win32
-		{20AD9C6F-4EB1-48D7-A696-1D5B277E7E36}.profiler|Win32.Build.0 = profiler|Win32
-		{20AD9C6F-4EB1-48D7-A696-1D5B277E7E36}.profiler|x64.ActiveCfg = profiler|x64
-		{20AD9C6F-4EB1-48D7-A696-1D5B277E7E36}.profiler|x64.Build.0 = profiler|x64
-		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.basis_v110|Android.ActiveCfg = basis|Win32
-		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.basis_v110|Win32.ActiveCfg = basis|Win32
-		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.basis_v110|Win32.Build.0 = basis|Win32
-		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.basis_v110|x64.ActiveCfg = basis|x64
-		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.basis_v110|x64.Build.0 = basis|x64
-		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.basis|Android.ActiveCfg = basis|Win32
-		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.basis|Win32.ActiveCfg = basis|Win32
-		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.basis|Win32.Build.0 = basis|Win32
-		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.basis|x64.ActiveCfg = basis|x64
-		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.basis|x64.Build.0 = basis|x64
-		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.codeanalysis|Android.ActiveCfg = codeanalysis|Win32
-		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
-		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
-		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
-		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.codeanalysis|x64.Build.0 = codeanalysis|x64
-		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.memdleak|Android.ActiveCfg = memdleak|Win32
-		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.memdleak|Win32.ActiveCfg = memdleak|Win32
-		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.memdleak|Win32.Build.0 = memdleak|Win32
-		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.memdleak|x64.ActiveCfg = memdleak|x64
-		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.memdleak|x64.Build.0 = memdleak|x64
-		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.profiler|Android.ActiveCfg = profiler|Win32
-		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.profiler|Win32.ActiveCfg = profiler|Win32
-		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.profiler|Win32.Build.0 = profiler|Win32
-		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.profiler|x64.ActiveCfg = profiler|x64
-		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.profiler|x64.Build.0 = profiler|x64
+		{AB77745A-AF30-4253-9E4B-961BF2D98641}.basis_v110|Android.ActiveCfg = basis|Win32
+		{AB77745A-AF30-4253-9E4B-961BF2D98641}.basis_v110|Win32.ActiveCfg = basis|Win32
+		{AB77745A-AF30-4253-9E4B-961BF2D98641}.basis_v110|Win32.Build.0 = basis|Win32
+		{AB77745A-AF30-4253-9E4B-961BF2D98641}.basis_v110|x64.ActiveCfg = basis|x64
+		{AB77745A-AF30-4253-9E4B-961BF2D98641}.basis_v110|x64.Build.0 = basis|x64
+		{AB77745A-AF30-4253-9E4B-961BF2D98641}.basis|Android.ActiveCfg = basis|Win32
+		{AB77745A-AF30-4253-9E4B-961BF2D98641}.basis|Win32.ActiveCfg = basis|Win32
+		{AB77745A-AF30-4253-9E4B-961BF2D98641}.basis|Win32.Build.0 = basis|Win32
+		{AB77745A-AF30-4253-9E4B-961BF2D98641}.basis|x64.ActiveCfg = basis|x64
+		{AB77745A-AF30-4253-9E4B-961BF2D98641}.basis|x64.Build.0 = basis|x64
+		{AB77745A-AF30-4253-9E4B-961BF2D98641}.codeanalysis|Android.ActiveCfg = codeanalysis|Win32
+		{AB77745A-AF30-4253-9E4B-961BF2D98641}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
+		{AB77745A-AF30-4253-9E4B-961BF2D98641}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
+		{AB77745A-AF30-4253-9E4B-961BF2D98641}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
+		{AB77745A-AF30-4253-9E4B-961BF2D98641}.codeanalysis|x64.Build.0 = codeanalysis|x64
+		{AB77745A-AF30-4253-9E4B-961BF2D98641}.memdleak|Android.ActiveCfg = memdleak|Win32
+		{AB77745A-AF30-4253-9E4B-961BF2D98641}.memdleak|Win32.ActiveCfg = memdleak|Win32
+		{AB77745A-AF30-4253-9E4B-961BF2D98641}.memdleak|Win32.Build.0 = memdleak|Win32
+		{AB77745A-AF30-4253-9E4B-961BF2D98641}.memdleak|x64.ActiveCfg = memdleak|x64
+		{AB77745A-AF30-4253-9E4B-961BF2D98641}.memdleak|x64.Build.0 = memdleak|x64
+		{AB77745A-AF30-4253-9E4B-961BF2D98641}.profiler|Android.ActiveCfg = profiler|Win32
+		{AB77745A-AF30-4253-9E4B-961BF2D98641}.profiler|Win32.ActiveCfg = profiler|Win32
+		{AB77745A-AF30-4253-9E4B-961BF2D98641}.profiler|Win32.Build.0 = profiler|Win32
+		{AB77745A-AF30-4253-9E4B-961BF2D98641}.profiler|x64.ActiveCfg = profiler|x64
+		{AB77745A-AF30-4253-9E4B-961BF2D98641}.profiler|x64.Build.0 = profiler|x64
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.basis_v110|Android.ActiveCfg = basis|Win32
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.basis_v110|Win32.ActiveCfg = basis|Win32
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.basis_v110|Win32.Build.0 = basis|Win32
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.basis_v110|x64.ActiveCfg = basis|x64
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.basis_v110|x64.Build.0 = basis|x64
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.basis|Android.ActiveCfg = basis|Win32
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.basis|Win32.ActiveCfg = basis|Win32
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.basis|Win32.Build.0 = basis|Win32
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.basis|x64.ActiveCfg = basis|x64
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.basis|x64.Build.0 = basis|x64
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.codeanalysis|Android.ActiveCfg = codeanalysis|Win32
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.codeanalysis|x64.Build.0 = codeanalysis|x64
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.memdleak|Android.ActiveCfg = memdleak|Win32
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.memdleak|Win32.ActiveCfg = memdleak|Win32
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.memdleak|Win32.Build.0 = memdleak|Win32
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.memdleak|x64.ActiveCfg = memdleak|x64
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.memdleak|x64.Build.0 = memdleak|x64
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.profiler|Android.ActiveCfg = profiler|Win32
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.profiler|Win32.ActiveCfg = profiler|Win32
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.profiler|Win32.Build.0 = profiler|Win32
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.profiler|x64.ActiveCfg = profiler|x64
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8}.profiler|x64.Build.0 = profiler|x64
 		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.basis_v110|Android.ActiveCfg = basis|Win32
 		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.basis_v110|Win32.ActiveCfg = basis|Win32
 		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.basis_v110|Win32.Build.0 = basis|Win32
