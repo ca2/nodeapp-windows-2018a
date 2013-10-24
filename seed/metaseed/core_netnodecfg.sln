@@ -32,6 +32,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "baseopenssl", "..\..\..\app\thirdparty\appseed\openssl\openssl.vcxproj", "{AC98B756-E84C-4A70-9CDB-E9812FEF9B98}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tesseract", "..\..\..\app-core\appseed\tesseract\tesseract.vcxproj", "{437699AD-7464-4E5F-ACF3-7167487A9E3D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AB77745A-AF30-4253-9E4B-961BF2D98641} = {AB77745A-AF30-4253-9E4B-961BF2D98641}
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8} = {AFC48570-75E4-46BD-B8AB-4590B257E1C8}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_uinteraction", "..\..\..\app-core\appseed\uinteraction\uinteraction.vcxproj", "{E2D7833B-9B59-4826-BBDF-C270A2115E86}"
 EndProject
