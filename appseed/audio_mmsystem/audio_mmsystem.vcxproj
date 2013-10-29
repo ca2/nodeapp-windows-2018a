@@ -805,6 +805,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="audio_mmsystem.h" />
+    <ClInclude Include="audio_mmsystem_command.h" />
     <ClInclude Include="audio_mmsystem_factory_exchange.h" />
     <ClInclude Include="audio_mmsystem_wave_in.h" />
     <ClInclude Include="audio_mmsystem_wave_out.h" />
