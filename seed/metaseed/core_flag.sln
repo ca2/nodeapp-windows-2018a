@@ -72,6 +72,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "boot", "..\..\..\app\appseed\boot\boot.vcxproj", "{AB77745A-AF30-4253-9E4B-961BF2D98641}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "core", "..\..\..\app\appseed\core\core.vcxproj", "{AFC48570-75E4-46BD-B8AB-4590B257E1C8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AB77745A-AF30-4253-9E4B-961BF2D98641} = {AB77745A-AF30-4253-9E4B-961BF2D98641}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basemysql", "..\..\..\app\thirdparty\appseed\mysql\mysql.vcxproj", "{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}"
 EndProject
