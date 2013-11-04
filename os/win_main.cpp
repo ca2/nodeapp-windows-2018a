@@ -156,8 +156,6 @@ int32_t CLASS_DECL_win __win_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, 
    }*/
 
 
-   set_heap_mutex(NULL);
-
    return nReturnCode;
 
 
@@ -252,10 +250,8 @@ int32_t CLASS_DECL_win ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, co
       {
       }*/
 
-      set_heap_mutex(NULL);
-
-
       return nReturnCode;
+
    }
    catch(...)
    {
