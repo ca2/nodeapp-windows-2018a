@@ -4743,6 +4743,11 @@ ExitModal:
    ::draw2d::font* window::GetFont()
    { 
       ASSERT(::IsWindow(get_handle())); 
+
+      if (m_pfont.is_null())
+         m_pfont.create(allocer());
+
+
       return m_pfont; 
    }
 

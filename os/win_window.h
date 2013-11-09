@@ -675,7 +675,7 @@ namespace win
       static const UINT m_nMsgDragList;
       int32_t m_nModalResult; // for return values from ::user::window::RunModalLoop
 
-      ::draw2d::font * m_pfont;
+      ::draw2d::font_sp m_pfont;
 
       friend class frame_window;
 
