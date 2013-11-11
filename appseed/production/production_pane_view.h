@@ -10,7 +10,7 @@ namespace production
 
    class CLASS_DECL_CA2_PRODUCTION pane_view : 
       public ::userex::pane_tab_view,
-      public FileManagerCallbackInterface,
+      public ::filemanager::callback,
       public ::production::form_callback
    {
    public:

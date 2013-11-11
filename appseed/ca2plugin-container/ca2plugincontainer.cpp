@@ -190,7 +190,7 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
    }
 */
 
-   set_heap_mutex(NULL);
+   //set_heap_mutex(NULL);
 
    return nReturnCode;
 
