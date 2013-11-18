@@ -7,7 +7,6 @@
 
 #define new BASE_NEW
 
-#include <wincrypt.h>
 
 
 #include "win_dir.h"

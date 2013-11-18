@@ -1165,7 +1165,6 @@ gdi_fallback:
 
                keeper < ::draw2d::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
 
-               return System.visual().imaging().true_blend(this, point(x, y), rectText.size(), dib1->get_graphics(), null_point());
 
                /*BLENDFUNCTION bf;
                bf.BlendOp     = AC_SRC_OVER;
@@ -1222,7 +1221,7 @@ gdi_fallback:
 
                keeper < ::draw2d::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
 
-               return System.visual().imaging().true_blend(this, point((int64_t) x, (int64_t) y), rectText.size(), dib1->get_graphics(), null_point());
+               return BitBlt((int32_t)x, (int32_t)y, rectText.width(), rectText.height(), dib1->get_graphics(), 0, 0, SRCCOPY) != FALSE;
 
                /*BLENDFUNCTION bf;
                bf.BlendOp     = AC_SRC_OVER;
@@ -1809,7 +1808,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          keeper < ::draw2d::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
 
 
-         return System.visual().imaging().true_blend(this, ptDest, size, pdibWork->get_graphics(), ptSrc); 
+         return BitBlt(ptDest.x, ptDest.y, size.cx, size.cy, pdibWork->get_graphics(), ptSrc.x, ptSrc.y, SRCCOPY); 
 
 
       }
@@ -2904,7 +2903,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    {
       HINSTANCE hInst = ::GetModuleHandleA("GDI32.DLL");
       ASSERT(hInst != NULL);
-      uint32_t dwGetLayout = LAYOUT_LTR;
+/*      uint32_t dwGetLayout = LAYOUT_LTR;
       __GDIGETLAYOUTPROC pfn;
       pfn = (__GDIGETLAYOUTPROC) GetProcAddress(hInst, "GetLayout");
       // if they API is available, just call it. If it is not
@@ -2915,13 +2914,14 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       {
          dwGetLayout = GDI_ERROR;
          SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
-      }
-      return dwGetLayout;
+      }*/
+      //return dwGetLayout;
+      return 0;
    }
 
    uint32_t graphics::SetLayout(uint32_t dwSetLayout)
    {
-      HINSTANCE hInst = ::GetModuleHandleA("GDI32.DLL");
+      /*HINSTANCE hInst = ::GetModuleHandleA("GDI32.DLL");
       ASSERT(hInst != NULL);
       uint32_t dwGetLayout = LAYOUT_LTR;
       __GDISETLAYOUTPROC pfn;
@@ -2935,7 +2935,10 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          dwGetLayout = GDI_ERROR;
          SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
       }
-      return dwGetLayout;
+      return dwGetLayout;*/
+
+      return 0;
+
    }
    /*
    void window::ScreenToClient(LPRECT lpRect)
@@ -4125,34 +4128,6 @@ namespace draw2d_gdiplus
       return get_handle();
    }
 
-   bool graphics::attach(simple_graphics & g)
-   {
-      
-      if(m_pgraphics != NULL)
-      {
-
-         try
-         {
-      
-            delete m_pgraphics;
-
-         }
-         catch(...)
-         {
-            
-            TRACE("graphics::attach : Failed to delete Gdiplus::Graphics");
-
-         }
-
-         m_pgraphics = NULL;
-
-      }
-
-      m_pgraphics = g.m_pgraphics;
-
-      return false;
-
-   }
 
    bool graphics::attach(void * pdata)
    {

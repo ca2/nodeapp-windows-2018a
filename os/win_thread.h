@@ -204,7 +204,7 @@ namespace win
    };
 
 
-   CLASS_DECL_win base_thread * get_thread();
+   CLASS_DECL_win thread * get_thread();
    CLASS_DECL_win ::thread_state * get_thread_state();
 
 

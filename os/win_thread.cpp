@@ -231,13 +231,13 @@ void __internal_pre_translate_message(signal_details * pobj)
 
       //   ASSERT_VALID(this);
 
-      base_thread * pthread = ::win::get_thread();
+      thread * pthread = ::win::get_thread();
       if(pthread && pthread->m_pthread != NULL)
       {
          // if this is a thread-message, int16_t-circuit this function
          if (pbase->m_pwnd == NULL)
          {
-            pthread->m_pthread->DispatchThreadMessageEx(pobj);
+            pthread->DispatchThreadMessageEx(pobj);
             if(pobj->m_bRet)
                return;
          }
@@ -599,9 +599,9 @@ namespace win
             {
                try
                {
-                  if(WIN_THREAD(pui->m_pthread->m_pthread) == this 
-                     || WIN_THREAD(pui->m_pthread->m_pthread->m_p) == WIN_THREAD(m_p)
-                     || WIN_THREAD(pui->m_pthread->m_pthread) == WIN_THREAD(m_p))
+                  if(WIN_THREAD(pui->m_pthread) == this 
+                     || WIN_THREAD(pui->m_p) == WIN_THREAD(m_p)
+                     || WIN_THREAD(pui->m_pthread) == WIN_THREAD(m_p))
                   {
                      pui->m_pthread = NULL;
                   }
@@ -614,10 +614,10 @@ namespace win
                   sp(::user::interaction) puie = pui->m_pguie;
                   if(puie != NULL 
                      && puie->m_pthread != NULL
-                     && puie->m_pthread->m_pthread != NULL
-                     && (WIN_THREAD(puie->m_pthread->m_pthread) == this 
-                     || WIN_THREAD(puie->m_pthread->m_pthread->m_p) == WIN_THREAD(m_p)
-                     || WIN_THREAD(puie->m_pthread->m_pthread) == WIN_THREAD(m_p)))
+                     && puie->m_pthread != NULL
+                     && (WIN_THREAD(puie->m_pthread) == this 
+                     || WIN_THREAD(puie->m_p) == WIN_THREAD(m_p)
+                     || WIN_THREAD(puie->m_pthread) == WIN_THREAD(m_p)))
                   {
                      puie->m_pthread = NULL;
                   }
@@ -1219,9 +1219,9 @@ stop_run:
                sp(::user::interaction) pui = puiptra->element_at(i);
                if(pui->m_pthread != NULL)
                {
-                  if(WIN_THREAD(pui->m_pthread->m_pthread) == this 
-                     || WIN_THREAD(pui->m_pthread->m_pthread->m_p.m_p) == WIN_THREAD(m_p.m_p)
-                     || WIN_THREAD(pui->m_pthread->m_pthread) == WIN_THREAD(m_p.m_p))
+                  if(WIN_THREAD(pui->m_pthread) == this 
+                     || WIN_THREAD(pui->m_p.m_p) == WIN_THREAD(m_p.m_p)
+                     || WIN_THREAD(pui->m_pthread) == WIN_THREAD(m_p.m_p))
                   {
                      pui->m_pthread = NULL;
                   }
@@ -1931,7 +1931,7 @@ run:
    }
 
 
-   CLASS_DECL_win base_thread * get_thread()
+   CLASS_DECL_win thread * get_thread()
    {
       ::win::thread * pwinthread = __get_thread();
       if(pwinthread == NULL)

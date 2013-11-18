@@ -1,10 +1,11 @@
 #pragma once
 
 
-#include "core/core.h"
+#include "base/base.h"
 
-
-#ifdef _DRAW2D_GDIPLUS_LIBRARY
+#ifdef _DRAW2D_GDIPLUS_STATIC
+    #define CLASS_DECL_DRAW2D_GDIPLUS
+#elif defined(_DRAW2D_GDIPLUS_LIBRARY)
     #define CLASS_DECL_DRAW2D_GDIPLUS  CLASS_DECL_EXPORT
 #else
     #define CLASS_DECL_DRAW2D_GDIPLUS  CLASS_DECL_IMPORT
