@@ -524,10 +524,36 @@ namespace draw2d_gdiplus
    
    }
 
-   void graphics::FillRect(LPCRECT lpRect, ::draw2d::brush* pBrush)
-   { ASSERT(get_handle1() != NULL); ::FillRect(get_handle1(), lpRect, (HBRUSH)pBrush->get_os_data()); }
+   void graphics::FillRect(LPCRECT lpcrect, ::draw2d::brush* pbrush)
+   { 
+   
+      Gdiplus::RectF rectf((Gdiplus::REAL) lpcrect->left, (Gdiplus::REAL) lpcrect->top, (Gdiplus::REAL) width(lpcrect), (Gdiplus::REAL) height(lpcrect));
+
+      m_pgraphics->FillRectangle((::Gdiplus::Brush *) pbrush->get_os_data(), rectf);
+
+   }
+
+
    void graphics::FrameRect(LPCRECT lpRect, ::draw2d::brush* pBrush)
-   { ASSERT(get_handle1() != NULL); ::FrameRect(get_handle1(), lpRect, (HBRUSH)pBrush->get_os_data()); }
+   { 
+      
+      ASSERT(get_handle1() != NULL); 
+      
+      ::FrameRect(get_handle1(), lpRect, (HBRUSH)pBrush->get_os_data()); 
+   
+   }
+
+
+   bool graphics::DrawRect(LPCRECT lpcrect, ::draw2d::pen * ppen)
+   {
+
+      Gdiplus::RectF rectf((Gdiplus::REAL) lpcrect->left, (Gdiplus::REAL) lpcrect->top, (Gdiplus::REAL) width(lpcrect), (Gdiplus::REAL) height(lpcrect));
+
+      return m_pgraphics->DrawRectangle((::Gdiplus::Pen *) ppen->get_os_data(), rectf) == ::Gdiplus::Ok;
+
+   }
+
+
    void graphics::InvertRect(LPCRECT lpRect)
    { ASSERT(get_handle1() != NULL); ::InvertRect(get_handle1(), lpRect); }
 
@@ -810,6 +836,43 @@ namespace draw2d_gdiplus
       return bOk1;
    }
 
+   bool graphics::draw_polygon(const POINT* lpPoints, int32_t nCount)
+   {
+
+      if (nCount <= 0)
+         return TRUE;
+
+      bool bOk1 = FALSE;
+
+      Gdiplus::Point * ppoints = new Gdiplus::Point[nCount];
+
+      try
+      {
+
+         for (int32_t i = 0; i < nCount; i++)
+         {
+            ppoints[i].X = lpPoints[i].x;
+            ppoints[i].Y = lpPoints[i].y;
+         }
+
+         bOk1 = m_pgraphics->DrawPolygon(gdiplus_pen(), ppoints, nCount) == Gdiplus::Status::Ok;
+
+      }
+      catch (...)
+      {
+      }
+
+      try
+      {
+         delete ppoints;
+      }
+      catch (...)
+      {
+      }
+
+
+      return bOk1;
+   }
 
    bool graphics::Polygon(const POINT* lpPoints, int32_t nCount)
    {

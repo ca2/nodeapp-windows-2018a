@@ -42,12 +42,17 @@ int32_t CLASS_DECL_win __win_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, 
 
    //Sleep(15 * 1000);
 
-
    _set_purecall_handler(_ca2_purecall);
 
    sp(::plane::system) psystem = canew(::plane::system());
 
    g_pwindowmap = new ::oswindow_map(psystem);
+
+   {
+
+      draw2d_gdiplus::factory_exchange factoryexchange(psystem);
+
+   }
 
    ASSERT(hPrevInstance == NULL);
 

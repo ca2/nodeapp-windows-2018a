@@ -242,6 +242,7 @@ namespace draw2d_gdiplus
    // Simple Drawing Functions
       void FillRect(LPCRECT lpRect, ::draw2d::brush* pBrush);
       void FrameRect(LPCRECT lpRect, ::draw2d::brush* pBrush);
+      bool DrawRect(LPCRECT lpcrect, ::draw2d::pen * ppen);
       void InvertRect(LPCRECT lpRect);
       bool DrawIcon(int32_t x, int32_t y, ::visual::icon * picon);
       bool DrawIcon(POINT point, ::visual::icon * picon);
@@ -276,6 +277,7 @@ namespace draw2d_gdiplus
       bool Pie(LPCRECT lpRect, POINT ptStart, POINT ptEnd);
       bool fill_polygon(const POINTD * lpPoints, int32_t nCount); 
       bool fill_polygon(const POINT * lpPoints, int32_t nCount); 
+      bool draw_polygon(const POINT * lpPoints, int32_t nCount);
       bool Polygon(const POINT* lpPoints, int32_t nCount);   
       bool PolyPolygon(const POINT* lpPoints, const INT* lpPolyCounts, int32_t nCount);
       bool Rectangle(int32_t x1, int32_t y1, int32_t x2, int32_t y2);
