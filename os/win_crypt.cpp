@@ -7,7 +7,7 @@ namespace win
 
    crypt::crypt(sp(base_application) papp) :
       element(papp),
-      ::core::crypt(papp)
+      ::crypto::crypto(papp)
    {
    }
 

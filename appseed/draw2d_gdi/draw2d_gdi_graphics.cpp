@@ -1548,7 +1548,7 @@ namespace draw2d_gdi
 
                keeper < ::draw2d::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
 
-               return System.visual().imaging().true_blend(this, point(x, y), rectText.size(), dib1->get_graphics(), null_point());
+            return BitBlt(x, y, rectText.width(), rectText.height(), dib1->get_graphics(), 0, 0, SRCCOPY);
 
                /*BLENDFUNCTION bf;
                bf.BlendOp     = AC_SRC_OVER;
@@ -3031,7 +3031,7 @@ namespace draw2d_gdi
          keeper < ::draw2d::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
 
 
-         return System.visual().imaging().true_blend(this, ptDest, size, pdibWork->get_graphics(), ptSrc) != FALSE;
+         return BitBlt(ptDest.x, ptDest.y, size.cx, size.cy, pdibWork->get_graphics(), ptSrc.x, ptSrc.y, SRCCOPY) != FALSE;
 
       }
       if(dOpacity < 0.0)

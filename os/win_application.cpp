@@ -410,7 +410,7 @@ namespace win
 */
    bool application::process_initialize()
    {
-      if(::base_application::m_p->is_system())
+      if(m_pimpl->is_system())
       {
          if(__get_module_state()->m_pmapHWND == NULL)
          {
@@ -690,7 +690,7 @@ namespace win
 
       m_pmaininitdata = (::win::main_init_data *) pdata;
 
-      if(m_pmaininitdata != NULL && ::base_application::m_p->is_system())
+      if(m_pmaininitdata != NULL && m_pimpl->is_system())
       {
          if(!win_init(m_pmaininitdata))
             return false;

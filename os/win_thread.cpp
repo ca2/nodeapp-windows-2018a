@@ -232,7 +232,7 @@ void __internal_pre_translate_message(signal_details * pobj)
       //   ASSERT_VALID(this);
 
       thread * pthread = ::win::get_thread();
-      if(pthread && pthread->m_pthread != NULL)
+      if(pthread != NULL)
       {
          // if this is a thread-message, int16_t-circuit this function
          if (pbase->m_pwnd == NULL)
@@ -741,7 +741,7 @@ namespace win
 
       try
       {
-         if(WIN_THREAD(pui->m_pthread) == this)
+         if(WIN_THREAD(pui->m_pthread.m_p) == this)
          {
             pui->m_pthread = NULL;
          }
@@ -753,7 +753,7 @@ namespace win
       {
          if(pui->m_pimpl != NULL && pui->m_pimpl != pui)
          {
-            if(WIN_THREAD(pui->m_pimpl->m_pthread) == this)
+            if(WIN_THREAD(pui->m_pimpl->m_pthread.m_p) == this)
             {
                pui->m_pimpl->m_pthread = NULL;
             }
@@ -766,7 +766,7 @@ namespace win
       {
          if(pui->m_pguie != NULL && pui->m_pguie != pui)
          {
-            if(WIN_THREAD(pui->m_pguie->m_pthread) == this)
+            if(WIN_THREAD(pui->m_pguie->m_pthread.m_p) == this)
             {
                pui->m_pguie->m_pthread = NULL;
             }
@@ -1219,9 +1219,9 @@ stop_run:
                sp(::user::interaction) pui = puiptra->element_at(i);
                if(pui->m_pthread != NULL)
                {
-                  if(WIN_THREAD(pui->m_pthread) == this 
-                     || WIN_THREAD(pui->m_p.m_p) == WIN_THREAD(m_p.m_p)
-                     || WIN_THREAD(pui->m_pthread) == WIN_THREAD(m_p.m_p))
+                  if(WIN_THREAD(pui->m_pthread.m_p) == this 
+                     || WIN_THREAD(pui->m_pthread->m_p.m_p) == WIN_THREAD(m_p.m_p)
+                     || WIN_THREAD(pui->m_pthread.m_p) == WIN_THREAD(m_p.m_p))
                   {
                      pui->m_pthread = NULL;
                   }
@@ -1931,7 +1931,7 @@ run:
    }
 
 
-   CLASS_DECL_win thread * get_thread()
+   CLASS_DECL_win ::thread * get_thread()
    {
       ::win::thread * pwinthread = __get_thread();
       if(pwinthread == NULL)

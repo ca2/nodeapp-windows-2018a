@@ -6,7 +6,7 @@ namespace win
 
 
    class CLASS_DECL_win crypt :
-      virtual public ::core::crypt
+      virtual public ::crypto::crypto
    {
    public:
 
