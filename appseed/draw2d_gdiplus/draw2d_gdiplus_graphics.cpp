@@ -1494,7 +1494,7 @@ gdi_fallback:
    { ASSERT(get_handle2() != NULL); return ::GetGlyphOutline(get_handle2(), nChar, nFormat,
    lpgm, cbBuffer, lpBuffer, lpmat2); }
 
-   // ::user::document handling functions
+   // ::user::object handling functions
    int32_t graphics::StartDoc(LPDOCINFO lpDocInfo)
    { 
 
@@ -1719,6 +1719,13 @@ gdi_fallback:
 
    }
 
+   bool graphics::draw_path(::draw2d::path * ppath, ::draw2d::pen * ppen)
+   {
+
+      return m_pgraphics->DrawPath((::Gdiplus::Pen * ) ppen->get_os_data(), (Gdiplus::GraphicsPath *) ppath->get_os_data()) == Gdiplus::Status::Ok;
+
+   }
+
    bool graphics::fill_path(::draw2d::path * ppath)
    {
 
@@ -1726,6 +1733,12 @@ gdi_fallback:
 
    }
 
+   bool graphics::fill_path(::draw2d::path * ppath, ::draw2d::brush * pbrush)
+   {
+
+      return m_pgraphics->FillPath((::Gdiplus::Brush *) pbrush->get_os_data(), (Gdiplus::GraphicsPath *) ppath->get_os_data()) == Gdiplus::Status::Ok;
+
+   }
 
    bool graphics::AddMetaFileComment(UINT nDataSize, const BYTE* pCommentData)
    { 
@@ -4127,6 +4140,38 @@ namespace draw2d_gdiplus
 
       m_x = x;
       m_y = y;
+
+      return TRUE;
+
+   }
+
+
+   bool graphics::DrawLine(float x1, float y1, float x2, float y2, ::draw2d::pen * ppen)
+   {
+
+      ((Gdiplus::Pen *) ppen->get_os_data())->SetAlignment(Gdiplus::PenAlignment::PenAlignmentCenter);
+
+      m_pgraphics->DrawLine((Gdiplus::Pen *) ppen->get_os_data(), Gdiplus::PointF((Gdiplus::REAL) x1, (Gdiplus::REAL)  y1), Gdiplus::PointF((Gdiplus::REAL) x2, (Gdiplus::REAL) y2));
+
+      m_x = x2;
+
+      m_y = y2;
+
+      return TRUE;
+
+   }
+
+
+   bool graphics::DrawLine(int32_t x1, int32_t y1, int32_t x2, int32_t y2, ::draw2d::pen * ppen)
+   {
+
+      ((Gdiplus::Pen *) ppen->get_os_data())->SetAlignment(Gdiplus::PenAlignment::PenAlignmentCenter);
+
+      m_pgraphics->DrawLine((Gdiplus::Pen *) ppen->get_os_data(), Gdiplus::Point(x1, y1), Gdiplus::Point(x2, y2));
+
+      m_x = x2;
+
+      m_y = y2;
 
       return TRUE;
 

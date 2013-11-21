@@ -446,7 +446,9 @@ namespace draw2d_gdiplus
       bool WidenPath();
 
       bool draw_path(::draw2d::path * ppath);
+      bool draw_path(::draw2d::path * ppath, ::draw2d::pen * ppen);
       bool fill_path(::draw2d::path * ppath);
+      bool fill_path(::draw2d::path * ppath, ::draw2d::brush * pbrush);
 
 
       float GetMiterLimit() const;
@@ -503,7 +505,8 @@ namespace draw2d_gdiplus
       virtual bool create_window_dc(::user::window * pwnd);
       virtual bool release_dc(::user::window * pwnd);
 
-
+      virtual bool DrawLine(float x1, float y1, float x2, float y2, ::draw2d::pen * ppen);
+      virtual bool DrawLine(int32_t x1, int32_t y1, int32_t x2, int32_t y2, ::draw2d::pen * ppen);
 
    };
 

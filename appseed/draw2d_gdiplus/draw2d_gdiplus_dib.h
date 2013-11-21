@@ -15,7 +15,6 @@ namespace draw2d_gdiplus
    public:
 
 
-      BITMAPINFO           m_info;
       ::draw2d::bitmap_sp      m_spbitmap;
       ::draw2d::graphics_sp    m_spgraphics;
       HBITMAP                    m_hbitmap;

@@ -50,15 +50,15 @@ namespace win
    void application::_001OnFileNew()
    {
 
-      //smart_pointer < application_base >::m_p->_001OnFileNew(NULL);
+      //smart_pointer < base_application >::m_p->_001OnFileNew(NULL);
 
    }
 
 
-   sp(::user::document_interface) application::_001OpenDocumentFile(var varFile)
+   sp(::user::object) application::_001OpenDocumentFile(var varFile)
    {
 
-      //return smart_pointer < application_base >::m_p->_001OpenDocumentFile(varFile);
+      //return smart_pointer < base_application >::m_p->_001OpenDocumentFile(varFile);
 
       return NULL;
 
@@ -222,8 +222,8 @@ namespace win
                __get_module_thread_state()->m_pCurrentWinThread->m_nTempMapLock);
          }
    #endif
-         ::core::LockTempMaps(smart_pointer < application_base >::m_p);
-         ::core::UnlockTempMaps(smart_pointer < application_base >::m_p, -1);
+         ::core::LockTempMaps(smart_pointer < base_application >::m_p);
+         ::core::UnlockTempMaps(smart_pointer < base_application >::m_p, -1);
       }
       catch( ::exception::base* e )
       {
@@ -410,7 +410,7 @@ namespace win
 */
    bool application::process_initialize()
    {
-      if(::application_base::m_p->is_system())
+      if(::base_application::m_p->is_system())
       {
          if(__get_module_state()->m_pmapHWND == NULL)
          {
@@ -466,7 +466,7 @@ namespace win
 
       int32_t iRet = ::application::exit_instance();
 
-      //smart_pointer < application_base >::destroy();
+      //smart_pointer < base_application >::destroy();
 
 
 
@@ -621,8 +621,8 @@ namespace win
       }
 
 
-//      dynamic_cast < ::win::thread * > ((smart_pointer < application_base >::m_p->thread::m_p))->m_hThread = __get_thread()->m_hThread;
-  //    dynamic_cast < ::win::thread * > ((smart_pointer < application_base >::m_p->thread::m_p))->m_nThreadID = __get_thread()->m_nThreadID;
+//      dynamic_cast < ::win::thread * > ((smart_pointer < base_application >::m_p->thread::m_p))->m_hThread = __get_thread()->m_hThread;
+  //    dynamic_cast < ::win::thread * > ((smart_pointer < base_application >::m_p->thread::m_p))->m_nThreadID = __get_thread()->m_nThreadID;
       dynamic_cast < class ::win::thread * > (thread::m_p.m_p)->m_hThread      =  ::GetCurrentThread();
       dynamic_cast < class ::win::thread * > (thread::m_p.m_p)->m_nThreadID    =  ::GetCurrentThreadId();
       
@@ -690,7 +690,7 @@ namespace win
 
       m_pmaininitdata = (::win::main_init_data *) pdata;
 
-      if(m_pmaininitdata != NULL && ::application_base::m_p->is_system())
+      if(m_pmaininitdata != NULL && ::base_application::m_p->is_system())
       {
          if(!win_init(m_pmaininitdata))
             return false;

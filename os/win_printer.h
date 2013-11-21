@@ -12,7 +12,7 @@ namespace win
 
 
       class CLASS_DECL_win document_properties :
-         virtual public object
+         virtual public ::object
       {
       public:
 

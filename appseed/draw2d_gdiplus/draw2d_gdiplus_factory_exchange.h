@@ -4,7 +4,7 @@ namespace draw2d_gdiplus
 {
 
    class CLASS_DECL_DRAW2D_GDIPLUS factory_exchange :
-      virtual public object
+      virtual public ::object
    {
    public:
       factory_exchange(sp(base_application) papp);

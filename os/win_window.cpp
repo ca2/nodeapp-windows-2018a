@@ -2376,7 +2376,7 @@ restart_mouse_hover_check:
    /////////////////////////////////////////////////////////////////////////////
    // Scroll bar helpers
    //  hook for window functions
-   //    only works for derived class (eg: ::user::view) that override 'GetScrollBarCtrl'
+   //    only works for derived class (eg: ::user::impact) that override 'GetScrollBarCtrl'
    // if the window doesn't have a _visible_ windows scrollbar - then
    //   look for a sibling with the appropriate ID
 

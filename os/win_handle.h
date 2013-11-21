@@ -152,7 +152,7 @@ class WindowsThread;       // forward reference for friend declaration
 
 template < class HT, class CT >
 class handle_map :
-   virtual public object
+   virtual public ::object
 {
 public:
 
