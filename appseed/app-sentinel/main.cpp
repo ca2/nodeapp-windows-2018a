@@ -122,7 +122,8 @@ LRESULT CALLBACK sentinel_WndProc(oswindow oswindow, uint32_t message, WPARAM wP
          if(wParam == 1245)
          {
             KillTimer(g_oswindowMessage, 12);
-            spa_install::installer::do_spa();
+            throw todo(get_thread_app());
+            //spa_install::installer::do_spa();
             SetTimer(g_oswindowMessage, 1245, (1984 + 1977) * 8, NULL);
          }
       }
@@ -175,20 +176,23 @@ int32_t spaboot_start()
 
    while(iRetry < iRetryLimit || iRetryLimit < 0)
    {
-      update_ca2_installed(true);
+      throw todo(get_thread_app());
+      /*update_ca2_installed(true);
       if(is_ca2_installed() && is_installed(NULL, NULL, "application", id, "_std", "_std"))
       {  
          break;
-      }
+      }*/
       string strCommandLine;
 
       strCommandLine = ": app=session session_start=" + id + " app_type=application install locale=_std schema=_std";
 
-      ca2_cube_install(strCommandLine, bBackground);
+      throw todo(get_thread_app());
+      //ca2_cube_install(strCommandLine, bBackground);
       iRetry++;
    }
 
-   if(!is_ca2_installed() || !is_installed(NULL, NULL, "application", id, "_std", "_std"))
+   throw todo(get_thread_app());
+   /*if(!is_ca2_installed() || !is_installed(NULL, NULL, "application", id, "_std", "_std"))
    {  
       return 1;
    }
@@ -196,7 +200,7 @@ int32_t spaboot_start()
    if(stricmp_dup(id, "spaboot_install"))
    {
       cube_run(id);
-   }
+   }*/
 
    return 0;
 

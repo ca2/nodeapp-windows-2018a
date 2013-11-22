@@ -88,7 +88,7 @@ _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 }*/
 
-extern bool g_bInstalling;
+//extern bool g_bInstalling;
 extern stringa * g_pstraTrace;
 
 removal::removal()
@@ -435,7 +435,8 @@ void removal::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMess
          return;
       }
       m_bInstallerInstalling = true;
-      synch_spaadmin(pszSuffix);
+      throw todo(get_thread_app());
+      //synch_spaadmin(pszSuffix);
       m_bInstallerInstalling = false;
    }
    else if((pszSuffix = str_begins_inc_dup(strMessage, "spaadmin:")) != NULL)

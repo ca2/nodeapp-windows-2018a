@@ -243,13 +243,13 @@
     <ClCompile>
       <AdditionalOptions>-Zm384 /bigobj </AdditionalOptions>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>.;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/thirdparty/include;$(SolutionDir)../../../app/thirdparty/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../app/appseed/core;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/thirdparty/include;$(SolutionDir)../../../app/thirdparty/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../app/appseed/base;$(SolutionDir)../../../app/appseed/core;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>Async</ExceptionHandling>
       <BasicRuntimeChecks>
       </BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>

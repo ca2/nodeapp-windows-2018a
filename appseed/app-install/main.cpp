@@ -138,7 +138,8 @@ bool installer::initialize()
 
          uint32_t dwStartError;
          
-         spa_install::ca2_app_install_run(strCommandLine, dwStartError, true);
+         throw todo(get_thread_app());
+         //spa_install::ca2_app_install_run(strCommandLine, dwStartError, true);
          
          return false;
 
@@ -154,7 +155,8 @@ bool installer::initialize()
       return false;
    }
 
-   installation_file_lock(false);
+   throw todo(get_thread_app());
+   //installation_file_lock(false);
 
    //Sleep(15 * 1000);
 
@@ -183,14 +185,15 @@ void installer::install_defer_file_transfer()
 {
    if(!g_bInstalling)
    {
-      update_updated();
+      throw todo(get_thread_app());
+/*      update_updated();
       if(!is_updated() && !are_there_user_files_in_use())
       {
          // missing locale schema;
 
          throw "missing locale and schema parameters for installing";
          synch_spaadmin("starter_start: : app=session session_start=session app_type=application install in background in spa");
-      }
+      }*/
    }
 }
 
@@ -294,7 +297,8 @@ void installer::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMe
          return;
       }
       m_bInstallerInstalling = true;
-      synch_spaadmin(pszSuffix);
+      throw todo(get_thread_app());
+      //synch_spaadmin(pszSuffix);
       m_bInstallerInstalling = false;
    }
    else if((pszSuffix = str_begins_inc_dup(strMessage, "spaadmin:")) != NULL)
@@ -310,7 +314,8 @@ void installer::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMe
          //return;
       //}
       //m_bInstallerInstalling = true;
-      start_spaadmin(pszSuffix);
+      throw todo(get_thread_app());
+      //start_spaadmin(pszSuffix);
    }
    else if(stricmp_dup(strMessage, "ok") == 0)
    {
