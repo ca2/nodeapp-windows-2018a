@@ -1734,8 +1734,8 @@ retry2:
    {
       primitive::memory memMd5;
       primitive::memory memSha1;
-      System.hex_to_memory(memMd5, System.crypto().md5(mem));
-      System.hex_to_memory(memSha1, System.crypto().sha1(mem));
+      ::hex_to_memory(memMd5, System.crypto().md5(mem));
+      ::hex_to_memory(memSha1, System.crypto().sha1(mem));
       return string("Digest-Algorithms: MD5 SHA1\n") +
          "MD5-Digest: " + System.base64().encode(memMd5) +  "\n" +
          "SHA1-Digest: " + System.base64().encode(memSha1) + "\n";
