@@ -144,7 +144,7 @@ namespace production
                pdoc->get_filemanager_data()->m_iIconSize = 16;
                pdoc->get_filemanager_data()->m_bListText = true;
                pdoc->get_filemanager_data()->m_bListSelection = false;
-               pdoc->get_filemanager_data()->m_ptemplate->m_strFilePopup = "filemanager\\file_popup.xml";
+               pdoc->get_filemanager_data()->m_pschema->m_strFilePopup = "filemanager\\file_popup.xml";
                pdoc->get_filemanager_data()->m_strDISection = "production_menu";
                pdoc->get_filemanager_data()->m_pcallback = this;
                pdoc->Initialize(true);
