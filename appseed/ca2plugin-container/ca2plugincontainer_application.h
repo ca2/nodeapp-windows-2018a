@@ -5,7 +5,8 @@ namespace ca2plugin_container
 {
 
 
-   class application
+   class application :
+      virtual public ::base_application
    {
    public:
 

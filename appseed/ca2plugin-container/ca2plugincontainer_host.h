@@ -18,13 +18,13 @@ namespace ca2plugin_container
       oswindow                      m_oswindow;
       bool                          m_bStream;
 
-      string                      m_vssPluginName;
-      string                      m_vssPluginDescription;
+      string                        m_vssPluginName;
+      string                        m_vssPluginDescription;
 
-      application *              m_pcontainerapp;      
+      sp(application)               m_pcontainerapp;      
 
 
-      host(application * papp);
+      host(sp(base_application) papp);
       virtual ~host();
 
       virtual oswindow get_host_window();

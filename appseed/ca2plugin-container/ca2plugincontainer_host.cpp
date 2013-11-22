@@ -13,7 +13,11 @@ namespace ca2plugin_container
    ATOM register_class(HINSTANCE hInstance);
 
 
-   host::host(application * papp)
+   host::host(sp(base_application) papp) :
+      element(papp),
+      ::simple_ui::style(papp),
+      hotplugin::plugin(papp),
+      hotplugin::host(papp)
    {
       
       //Sleep(15 * 1000);
@@ -316,10 +320,10 @@ namespace ca2plugin_container
    {
 
 
-      if(is_installation_lock_file_locked())
+      if(System.install().is_lock_file_locked())
       {
          
-         set_installing_ca2();
+         System.install().set_installing_ca2();
 
          if(!m_bInstalling)
          {
@@ -331,9 +335,9 @@ namespace ca2plugin_container
          return;
       }
 
-      update_ca2_installed(false);
+      System.install().update_ca2_installed(false);
 
-      if(is_ca2_installed())
+      if (System.install().is_ca2_installed())
       {
          
 #ifdef WINDOWS
@@ -345,7 +349,7 @@ namespace ca2plugin_container
 #endif
          //Sleep(15 * 1000);
 
-         m_pplugin = new ::plugin::instance();
+         m_pplugin = new ::plugin::instance(get_app());
          m_pplugin->m_phost = this;
          m_pplugin->m_strBitmapChannel = m_strBitmapChannel;
          m_bInstalling = false;
@@ -410,9 +414,11 @@ namespace ca2plugin_container
             try
             {
 
-               simple_graphics g;
+               throw todo(get_thread_app());
 
-               on_paint(g, prect);
+               //simple_graphics g;
+
+               //on_paint(g, prect);
 
             }
             catch(...)
