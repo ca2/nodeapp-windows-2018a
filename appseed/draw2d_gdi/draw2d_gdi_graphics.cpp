@@ -1709,7 +1709,7 @@ namespace draw2d_gdi
    int graphics::draw_text(const char * lpszString, int nCount, LPRECT lpRect, UINT nFormat)
    { 
 
-      return ::visual::graphics_extension(get_app())._DrawText(this, string(lpszString, nCount), lpRect, nFormat);
+      return _DrawText(lpszString, nCount, lpRect, nFormat);
 
       //wstring wstr(string(lpszString, nCount));
 

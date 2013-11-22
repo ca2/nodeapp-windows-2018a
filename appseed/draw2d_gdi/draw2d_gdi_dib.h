@@ -149,8 +149,6 @@ namespace draw2d_gdi
       int height();
       double pi();
 
-      virtual bool from(::draw2d::graphics * pgraphics, FIBITMAP *pfibitmap, bool bUnloadFI);
-
       virtual bool update_window(::user::window * pwnd, signal_details * pobj);
       virtual bool print_window(::user::window * pwnd, signal_details * pobj);
 

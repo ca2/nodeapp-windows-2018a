@@ -1,5 +1,4 @@
 #include "framework.h"
-#include "freeimage/FreeImage.h"
 
 
 inline byte byte_clip(int32_t i)
@@ -3003,7 +3002,7 @@ namespace draw2d_gdi
    }
 
 
-   bool dib::from(::draw2d::graphics * pgraphics, FIBITMAP *pfibitmap, bool bUnloadFI)
+/*   bool dib::from(::draw2d::graphics * pgraphics, FIBITMAP *pfibitmap, bool bUnloadFI)
    {
 
       if(pfibitmap == NULL)
@@ -3069,6 +3068,6 @@ namespace draw2d_gdi
 
 
       return true;
-   }
+   }*/
 
 } // namespace draw2d_gdi

@@ -1,6 +1,4 @@
 #include "framework.h"
-#include <math.h>
-#include "freeimage/FreeImage.h"
 
 
 namespace draw2d_gdiplus

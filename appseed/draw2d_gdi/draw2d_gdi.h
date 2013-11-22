@@ -1,7 +1,8 @@
 #pragma once
 
 
-#include "core.h"
+#include "app/appseed/base/base/base/base.h"
+
 
 
 #ifdef _DRAW2D_GDI_LIBRARY

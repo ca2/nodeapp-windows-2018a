@@ -5,6 +5,7 @@
 
 
 
+#include <D2d1_1.h>
 
 
 #include <winreg.h>

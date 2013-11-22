@@ -222,7 +222,7 @@ namespace draw2d_gdiplus
       ::Gdiplus::RectF rectf((Gdiplus::REAL) rect.left, (Gdiplus::REAL) rect.top, (Gdiplus::REAL) width(rect), (Gdiplus::REAL) height(rect));
 
 
-      m_ppath->AddArc(rectf, iStart, iAngle);
+      m_ppath->AddArc(rectf, (Gdiplus::REAL) iStart, (Gdiplus::REAL) iAngle);
 
       return true;
 
