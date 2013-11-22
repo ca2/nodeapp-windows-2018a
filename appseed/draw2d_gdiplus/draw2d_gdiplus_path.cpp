@@ -216,12 +216,30 @@ namespace draw2d_gdiplus
 
    }
 
-   bool path::set(const ::draw2d::path::arc & a)
+   bool path::internal_add_arc(const RECT & rect, int iStart, int iAngle)
    {
 
-      //internal_add_arc();
+      ::Gdiplus::RectF rectf((Gdiplus::REAL) rect.left, (Gdiplus::REAL) rect.top, (Gdiplus::REAL) width(rect), (Gdiplus::REAL) height(rect));
+
+
+      m_ppath->AddArc(rectf, iStart, iAngle);
 
       return true;
+
+   }
+
+
+   bool path::set(const ::draw2d::path::arc & arc)
+   {
+
+      rect rect;
+
+      rect.left = (LONG)(arc.m_xCenter - arc.m_dRadiusX);
+      rect.right = (LONG)(arc.m_xCenter + arc.m_dRadiusX);
+      rect.top = (LONG)(arc.m_yCenter - arc.m_dRadiusY);
+      rect.bottom = (LONG)(arc.m_yCenter + arc.m_dRadiusY);
+
+      return internal_add_arc(rect, (int)arc.m_dAngle1, (int)arc.m_dAngle2);
 
    }
 

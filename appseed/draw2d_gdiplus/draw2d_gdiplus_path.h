@@ -23,6 +23,7 @@ namespace draw2d_gdiplus
 
       virtual void * get_os_data() const;
 
+      virtual bool internal_add_arc(const RECT & rect, int iStart, int iAngle);
 
       virtual point internal_last_point();
 
