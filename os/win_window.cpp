@@ -6005,7 +6005,7 @@ ExitModal:
             // the window should not be in the permanent map at this time
             ASSERT(::win::window::FromHandlePermanent(oswindow) == NULL);
 
-            pWndInit->m_pthread = dynamic_cast < thread * > (::win::get_thread());
+            pWndInit->m_pthread = dynamic_cast < ::thread * > (::win::get_thread());
             if(pWndInit->m_pthread != NULL)
             {
                pWndInit->m_pthread->add(pWndInit);
