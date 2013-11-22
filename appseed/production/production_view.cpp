@@ -85,27 +85,27 @@ namespace production
    #ifdef DEBUG
    void view::assert_valid() const
    {
-	   ::user::view::assert_valid();
+	   ::user::impact::assert_valid();
    }
 
    void view::dump(dump_context & dumpcontext) const
    {
-	   ::user::view::dump(dumpcontext);
+	   ::user::impact::dump(dumpcontext);
    }
    #endif //DEBUG
 
    bool view::pre_create_window(CREATESTRUCT& cs)
    {
       cs.style &= ~WS_EX_CLIENTEDGE;
-	   return ::user::view::pre_create_window(cs);
+	   return ::user::impact::pre_create_window(cs);
    }
 
    void view::_001OnInitialUpdate(::signal_details * pobj) 
    {
-      ::user::view::_001OnInitialUpdate(pobj);
+      ::user::impact::_001OnInitialUpdate(pobj);
    }
 
-   void view::on_update(sp(::user::view) pSender, LPARAM lHint, ::object * phint) 
+   void view::on_update(sp(::user::impact) pSender, LPARAM lHint, ::object * phint) 
    {
       UNREFERENCED_PARAMETER(pSender);
       if(lHint == 5432108)
@@ -132,7 +132,7 @@ namespace production
 
    void view::_001OnDestroy(::signal_details * pobj) 
    {
-	   ::user::view::_001OnDestroy(pobj);
+	   ::user::impact::_001OnDestroy(pobj);
    }
 
    void view::_001OnSize(::signal_details * pobj) 
@@ -331,7 +331,7 @@ namespace production
 
    sp(::user::object) view::get_document()
    {
-      return  (::user::view::get_document());
+      return  (::user::impact::get_document());
    }
 
    void view::GetAreaThumbRect(LPRECT lprect, int32_t iArea)
