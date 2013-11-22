@@ -452,7 +452,8 @@ void removal::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMess
          //return;
       //}
       //m_bInstallerInstalling = true;
-      start_spaadmin(pszSuffix);
+      throw todo(get_thread_app());
+      //start_spaadmin(pszSuffix);
    }
    else if(stricmp_dup(strMessage, "ok") == 0)
    {

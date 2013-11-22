@@ -329,7 +329,7 @@ namespace production
    }
 
 
-   sp(::user::document) view::get_document()
+   sp(::user::object) view::get_document()
    {
       return  (::user::view::get_document());
    }
