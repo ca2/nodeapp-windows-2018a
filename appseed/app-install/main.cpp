@@ -85,7 +85,6 @@ _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 }*/
 
-extern bool g_bInstalling;
 
 installer::installer()
 {
@@ -136,9 +135,8 @@ bool installer::initialize()
          
          xxdebug_box(strCommandLine, "simple_app::body", 0);
 
-         uint32_t dwStartError;
-         
          throw todo(get_thread_app());
+//         uint32_t dwStartError;
          //spa_install::ca2_app_install_run(strCommandLine, dwStartError, true);
          
          return false;
@@ -183,18 +181,18 @@ bool installer::initialize()
 
 void installer::install_defer_file_transfer()
 {
-   if(!g_bInstalling)
+   throw todo(get_thread_app());
+/*   if (!g_bInstalling)
    {
-      throw todo(get_thread_app());
-/*      update_updated();
+      update_updated();
       if(!is_updated() && !are_there_user_files_in_use())
       {
          // missing locale schema;
 
          throw "missing locale and schema parameters for installing";
          synch_spaadmin("starter_start: : app=session session_start=session app_type=application install in background in spa");
-      }*/
-   }
+      }
+   }*/
 }
 
 
@@ -286,11 +284,12 @@ void installer::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMe
    const char * pszSuffix;
    if((pszSuffix = str_begins_inc_dup(strMessage, "synch_spaadmin:")) != NULL)
    {
-      if(g_bInstalling)
+      throw todo(get_thread_app());
+/*      if (g_bInstalling)
       {
          iRet = 1;
          return;
-      }
+      }*/
       if(m_bInstallerInstalling)
       {
          iRet = 1;
@@ -303,11 +302,13 @@ void installer::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMe
    }
    else if((pszSuffix = str_begins_inc_dup(strMessage, "spaadmin:")) != NULL)
    {
-      if(g_bInstalling)
+      throw todo(get_thread_app());
+
+/*      if(g_bInstalling)
       {
          iRet = 1;
          return;
-      }
+      }*/
       //if(m_bInstallerInstalling)
       //{
         // iRet = 1;

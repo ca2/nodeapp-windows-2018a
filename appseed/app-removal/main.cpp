@@ -89,7 +89,7 @@ _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 }*/
 
 //extern bool g_bInstalling;
-extern stringa * g_pstraTrace;
+//extern stringa * g_pstraTrace;
 
 removal::removal()
 {
@@ -104,7 +104,7 @@ removal::removal()
    m_hmodulea              = NULL;
    m_iSizeModule           = 0;
    m_bInstallerInstalling  = false;
-   g_pstraTrace            = NULL;
+   //g_pstraTrace            = NULL;
 }
 
 removal::~removal()
@@ -424,11 +424,13 @@ void removal::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMess
    const char * pszSuffix;
    if((pszSuffix = str_begins_inc_dup(strMessage, "synch_spaadmin:")) != NULL)
    {
-      if(g_bInstalling)
+      throw todo(get_thread_app());
+
+/*      if(g_bInstalling)
       {
          iRet = 1;
          return;
-      }
+      }*/
       if(m_bInstallerInstalling)
       {
          iRet = 1;
@@ -441,11 +443,13 @@ void removal::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMess
    }
    else if((pszSuffix = str_begins_inc_dup(strMessage, "spaadmin:")) != NULL)
    {
-      if(g_bInstalling)
+      throw todo(get_thread_app());
+
+/*      if(g_bInstalling)
       {
          iRet = 1;
          return;
-      }
+      }*/
       //if(m_bInstallerInstalling)
       //{
         // iRet = 1;
