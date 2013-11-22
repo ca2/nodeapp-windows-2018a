@@ -50,7 +50,7 @@ namespace production
 		   System.type_info < frame > (),
 		   System.type_info < pane_view > ());
 
-      user()->add_document_template(m_pdoctemplateMain);
+      userex()->add_document_template(m_pdoctemplateMain);
 
       return true;
 
