@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "app/appseed/base/base/base.h"
+#include "app/appseed/base/base/base/base.h"
 
 #ifdef _DRAW2D_GDIPLUS_STATIC
     #define CLASS_DECL_DRAW2D_GDIPLUS
