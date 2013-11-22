@@ -24,7 +24,7 @@ namespace production
 
       virtual void on_request(sp(::create_context) pcreatecontext);
 
-	   virtual bool _001OnCmdMsg(BaseCmdMsg * pcmdmsg);
+	   virtual bool _001OnCmdMsg(base_cmd_msg * pcmdmsg);
    		
 
       virtual void OnFileManagerOpenFile(
