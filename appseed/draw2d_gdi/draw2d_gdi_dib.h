@@ -29,9 +29,7 @@ namespace draw2d_gdi
       virtual ~dib();
 
 
-      dib(sp(base_application) papp);
       virtual void construct(int32_t cx, int32_t cy);
-      virtual ~dib();
 
 
       void map(bool bApplyAlphaTransform = true);
@@ -43,11 +41,11 @@ namespace draw2d_gdi
       virtual ::draw2d::bitmap_sp detach_bitmap();
 
 
-      virtual COLORREF * get_data();
+      //virtual COLORREF * get_data();
 
       void stretch_dib(::draw2d::dib * pdib);
 
-      bool dc_select(bool bSelect = true);
+      //bool dc_select(bool bSelect = true);
 
 
 
@@ -154,6 +152,12 @@ namespace draw2d_gdi
 
       //double pi();
 
+      virtual bool process_blend(COLORREF clr, int32_t x, int32_t y, ::draw2d::e_alpha_mode ealphamode, ::draw2d::dib * pdibSrc);
+      virtual bool process_blend(::draw2d::dib * pdib, int32_t x, int32_t y, ::draw2d::e_alpha_mode ealphamode, ::draw2d::dib * pdibSrc);
+      virtual bool process_blend(::draw2d::brush * pbrush, int32_t x, int32_t y, ::draw2d::e_alpha_mode ealphamode, ::draw2d::dib * pdibSrc);
+      virtual bool process_initialize(::draw2d::brush * pbrush, bool bReset = true);
+      virtual bool process_blend(::draw2d::pen * ppen, int32_t x, int32_t y, ::draw2d::e_alpha_mode ealphamode, ::draw2d::dib * pdib);
+      virtual bool process_initialize(::draw2d::pen * ppen, bool bReset = true);
 
    };
 

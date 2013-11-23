@@ -1231,9 +1231,9 @@ namespace draw2d_gdi
             if(size.cy < 0)
                return true;
 
-            int xEnd = min(size.cx, min(pdib->cx - ptSrc.x, m_pdib->cx - ptDst.x));
+            int xEnd = min(size.cx, min(pdib->m_size.cx - ptSrc.x, m_pdib->m_size.cx - ptDst.x));
 
-            int yEnd = min(size.cy, min(pdib->cy - ptSrc.y, m_pdib->cy - ptDst.y));
+            int yEnd = min(size.cy, min(pdib->m_size.cy - ptSrc.y, m_pdib->m_size.cy - ptDst.y));
 
             if(xEnd < 0)
                return false;

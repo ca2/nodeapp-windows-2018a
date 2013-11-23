@@ -104,6 +104,7 @@ namespace music
 
             midi_callback_data            m_midicallbackdata;
 
+            uint32_t                      m_uBuffersInMMSYSTEM;
 
 
 
