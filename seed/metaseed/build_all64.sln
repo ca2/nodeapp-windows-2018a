@@ -110,6 +110,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_updatednsbk", "..\
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "iexca2", "..\..\..\app-core\appseed\iexca2\iexca2.vcxproj", "{DAAAB8A2-50FE-48F5-B38E-6F39E80FBCDA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E3F4B718-BA6B-46EB-A3F1-9AA8B2B4CD9B} = {E3F4B718-BA6B-46EB-A3F1-9AA8B2B4CD9B}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "npca2", "..\..\..\app-core\appseed\npca2\npca2.vcxproj", "{B0EED411-7FBB-48F2-80FA-6B1DD194FB86}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -229,8 +232,14 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_hash_crc", "..\..\..\app-core\appseed\hash_crc\hash_crc.vcxproj", "{34C5CACD-1497-4E80-98EC-E857AB7921EF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app-install", "..\..\appseed\app-install\app-install.vcxproj", "{71BAB50B-DC41-4570-B676-30380CDA3A17}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E3F4B718-BA6B-46EB-A3F1-9AA8B2B4CD9B} = {E3F4B718-BA6B-46EB-A3F1-9AA8B2B4CD9B}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app-sentinel", "..\..\appseed\app-sentinel\app-sentinel.vcxproj", "{46D3B606-0CF7-4F41-9BFB-2CF22FDCEC03}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E3F4B718-BA6B-46EB-A3F1-9AA8B2B4CD9B} = {E3F4B718-BA6B-46EB-A3F1-9AA8B2B4CD9B}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\app.vcxproj", "{19841115-1984-0411-1977-021977151984}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -363,6 +372,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_status", "..\..\..
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app-removal", "..\..\appseed\app-removal\app-removal.vcxproj", "{B18E0FCB-402F-4805-8FCD-AFE8DB6DDF74}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E3F4B718-BA6B-46EB-A3F1-9AA8B2B4CD9B} = {E3F4B718-BA6B-46EB-A3F1-9AA8B2B4CD9B}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_veriwell_vmsshellextension", "..\..\..\app-veriwell\appseed\vmsshellextension\vmsshellextension.vcxproj", "{52881C91-1BB5-45E2-8D1A-F589146157B0}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -543,6 +555,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multimedia_mmsystem", "..\.
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basemysql", "..\..\..\app\thirdparty\appseed\mysql\mysql.vcxproj", "{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E3F4B718-BA6B-46EB-A3F1-9AA8B2B4CD9B} = {E3F4B718-BA6B-46EB-A3F1-9AA8B2B4CD9B}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
