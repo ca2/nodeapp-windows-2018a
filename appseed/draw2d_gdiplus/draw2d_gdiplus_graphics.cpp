@@ -922,7 +922,7 @@ namespace draw2d_gdiplus
    bool graphics::Rectangle(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    { 
       
-      Gdiplus::RectF rectf((Gdiplus::REAL) x1, (Gdiplus::REAL) y1, (Gdiplus::REAL) (x2 - x1), (Gdiplus::REAL) (y2 - y1));
+      Gdiplus::RectF rectf((Gdiplus::REAL) x1, (Gdiplus::REAL) y1, (Gdiplus::REAL) (x2 - x1 - 1), (Gdiplus::REAL) (y2 - y1 - 1));
 
       bool bOk1 = m_pgraphics->FillRectangle(gdiplus_brush(), rectf) == Gdiplus::Status::Ok;
 

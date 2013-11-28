@@ -11,7 +11,7 @@ namespace win
 
       System.factory().cloneable_large    < stdio_file         >  (System.type_info < ::file::text_buffer         > ()        );
       System.factory().cloneable_large    < file               >  (System.type_info < ::file::binary_buffer       > ()  , true);
-      System.factory().cloneable_large    < file_set           >  (System.type_info < ::file::set                 > ()        );
+      System.factory().creatable_large    < file_set           >  (System.type_info < ::file::set                 >());
       System.factory().cloneable          < file_system        >  (System.type_info < ::file::system              > ()  , 1   );
       System.factory().cloneable          < WinResource        >  (System.type_info < ::core::resource            > ()  , 1   );
       System.factory().cloneable          < application        >  (System.type_info < ::base_application          > ()  , 1   );
