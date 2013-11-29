@@ -1091,7 +1091,7 @@ namespace draw2d_gdiplus
          if(pgraphicsSrc == NULL)
             return FALSE;
 
-         if(&pgraphicsSrc->get_current_bitmap() == NULL)
+         if(pgraphicsSrc->get_current_bitmap() == NULL)
             goto gdi_fallback;
 
          if(pgraphicsSrc->get_current_bitmap()->get_os_data() == NULL)

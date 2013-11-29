@@ -323,7 +323,7 @@ namespace music
             {
                m_pinterface = pinterface;
                get_sequence()->m_pthread   = m_psequencethread;
-               m_psequencethread->m_psequence = &get_sequence(); 
+               m_psequencethread->m_psequence = get_sequence(); 
                m_psequencethread->m_pplayer = this; 
                PostNotifyEvent(::music::midi::player::notify_event_set_sequence);
                return success;
