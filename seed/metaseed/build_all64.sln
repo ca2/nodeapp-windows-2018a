@@ -504,6 +504,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_mmsystem", "..\..\appseed\audio_mmsystem\audio_mmsystem.vcxproj", "{54850FD8-653A-43B6-AA90-E59AC030559C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E3F4B718-BA6B-46EB-A3F1-9AA8B2B4CD9B} = {E3F4B718-BA6B-46EB-A3F1-9AA8B2B4CD9B}
+		{20FD0446-AA14-4013-84E0-B5CB63FA354F} = {20FD0446-AA14-4013-84E0-B5CB63FA354F}
+		{E000FFAF-392F-4E32-BF51-FD7ED638991F} = {E000FFAF-392F-4E32-BF51-FD7ED638991F}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_mixer_mmsystem", "..\..\appseed\audio_mixer_mmsystem\audio_mixer_mmsystem.vcxproj", "{B46A198F-4171-4DEE-8CFD-164D99B42057}"
