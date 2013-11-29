@@ -1307,7 +1307,7 @@ smf_Open_File_Cleanup:
             if(pPendingLyricEventV2->m_iCurrentNote <
             pPendingLyricEventV2->m_msaNotesPosition.get_size())
             {
-            uint32_array dwArray;
+            uint_array dwArray;
             //            VERIFY(1 == pPendingLyricEventV2->GetNoteTokens(m_pPendingLyricEventV1->m_iCurrentNote, dwArray));
             pPendingLyricEventV2->GetNoteTokens(pPendingLyricEventV2->m_iCurrentNote, dwArray);
             if(dwArray.get_size() > 0)
