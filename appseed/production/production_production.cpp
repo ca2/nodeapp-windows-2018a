@@ -328,6 +328,8 @@ restart:
 
          m_straRoot.insert_at(0, "app");
 
+         m_straRoot.add("nodeapp");
+
          //   goto skipCompress;
          //goto skipBuild;
 
