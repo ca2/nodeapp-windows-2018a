@@ -10,6 +10,7 @@
     "http://api.flickr.com/"
   ],
   "plugins": [
+    { "path": "base.dll", "public": true },
     { "path": "npca2.dll", "public": true },
     { "path": "app-install.exe" }
   ]  
