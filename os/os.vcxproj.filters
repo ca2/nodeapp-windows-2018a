@@ -146,9 +146,6 @@
     <ClInclude Include="win_registry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="win_resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="win_state.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -196,9 +193,6 @@
     </ClInclude>
     <ClInclude Include="..\operational_system\oswindow.h">
       <Filter>Header Files\operational_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_printer.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\operational_system\_c.h">
       <Filter>Header Files\operational_system</Filter>
@@ -295,9 +289,6 @@
     <ClCompile Include="win_registry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win_resource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="win_shell.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -335,9 +326,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="win_exception.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_printer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="win_window_api.cpp">

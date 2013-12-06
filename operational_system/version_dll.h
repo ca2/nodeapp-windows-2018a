@@ -13,7 +13,7 @@
 // default __XXX_DATA and __XXX_DATADEF macros for using MFC DLLs
 
 #ifdef _C__DLL
-	#define __CORE_DATA       CLASS_DECL_CORE
+	#define __CORE_DATA       CLASS_DECL_BASE
 	#define __CORE_DATADEF
 #elif __CORE_DATA
 	#define __CORE_DATA       __DATA_IMPORT

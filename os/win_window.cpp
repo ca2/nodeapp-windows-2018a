@@ -107,7 +107,7 @@ namespace win
    window::~window()
    {
 
-      if(m_pbaseapp != NULL && m_pbaseapp->m_pplaneapp->m_psystem != NULL && Sys(m_pbaseapp).user().is_set() && Sys(m_pbaseapp).user()->m_pwindowmap != NULL)
+      if(m_pbaseapp != NULL && m_pbaseapp->m_pbasesystem != NULL && Sys(m_pbaseapp).user().is_set() && Sys(m_pbaseapp).user()->m_pwindowmap != NULL)
       {
          Sys(m_pbaseapp).user()->m_pwindowmap->m_map.remove_key((int_ptr) get_handle());
       }
@@ -1414,20 +1414,20 @@ namespace win
          message::mouse * pmouse = (::message::mouse *) pbase;
 
          Application.m_ptCursor = pmouse->m_pt;
-         if(m_pbaseapp != NULL && m_pbaseapp->m_pplaneapp->m_psession != NULL)
+         if(m_pbaseapp != NULL && m_pbaseapp->m_pbasesession != NULL)
          {
             Session.m_ptCursor = pmouse->m_pt;
-            if(m_pbaseapp->m_pplaneapp->m_psession != NULL)
+            if(m_pbaseapp->m_pbasesession != NULL)
             {
-               m_pbaseapp->m_pplaneapp->m_psession->m_pplanesession->m_pplanesession->m_ptCursor = pmouse->m_pt;
+               m_pbaseapp->m_pbasesession->m_ptCursor = pmouse->m_pt;
             }
          }
-         if(m_pguie != NULL && m_pguie != this && m_pguie->m_pbaseapp->m_pplaneapp->m_psession != NULL && m_pguie->m_pbaseapp->m_pplaneapp->m_psession != m_pbaseapp->m_pplaneapp->m_psession)
+         if(m_pguie != NULL && m_pguie != this && m_pguie->m_pbaseapp->m_pbasesession != NULL && m_pguie->m_pbaseapp->m_pbasesession != m_pbaseapp->m_pbasesession)
          {
-            Sess(m_pguie->m_pbaseapp->m_pplaneapp->m_psession).m_ptCursor = pmouse->m_pt;
+            Sess(m_pguie->m_pbaseapp->m_pbasesession).m_ptCursor = pmouse->m_pt;
          }
 
-         sp(::plane::session) psession = NULL;
+         sp(::base_session) psession = NULL;
          if(m_pbaseapp->is_system())
          {
             psession = System.query_session(0);
@@ -2380,10 +2380,10 @@ restart_mouse_hover_check:
    // if the window doesn't have a _visible_ windows scrollbar - then
    //   look for a sibling with the appropriate ID
 
-   CScrollBar* window::GetScrollBarCtrl(int32_t) const
+/*   CScrollBar* window::GetScrollBarCtrl(int32_t) const
    {
       return NULL;        // no special scrollers supported
-   }
+   }*/
 
    int32_t window::SetScrollPos(int32_t nBar, int32_t nPos, bool bRedraw)
    {
@@ -3053,7 +3053,7 @@ restart_mouse_hover_check:
       Default();
    }
 
-   void window::OnHScroll(UINT, UINT, CScrollBar* pScrollBar)
+/*   void window::OnHScroll(UINT, UINT, CScrollBar* pScrollBar)
    {
       UNREFERENCED_PARAMETER(pScrollBar);
       Default();
@@ -3063,7 +3063,7 @@ restart_mouse_hover_check:
    {
       UNREFERENCED_PARAMETER(pScrollBar);
       Default();
-   }
+   }*/
 
    BOOL CALLBACK window::GetAppsEnumWindowsProc(oswindow oswindow, LPARAM lParam)
    {
@@ -3888,11 +3888,11 @@ restart_mouse_hover_check:
             m_pthread->m_p->m_dwAlive = m_pthread->m_dwAlive = ::get_tick_count();
             if(pappThis1 != NULL)
             {
-               pappThis1->m_pplaneapp->m_dwAlive = m_pthread->m_dwAlive;
+               pappThis1->m_dwAlive = m_pthread->m_dwAlive;
             }
             if(pappThis2 != NULL)
             {
-               pappThis2->m_pplaneapp->m_dwAlive = m_pthread->m_dwAlive;
+               pappThis2->m_dwAlive = m_pthread->m_dwAlive;
             }
             if(pliveobject != NULL)
             {
@@ -3936,11 +3936,11 @@ restart_mouse_hover_check:
             m_pthread->m_p->m_dwAlive = m_pthread->m_dwAlive = ::get_tick_count();
             if(pappThis1 != NULL)
             {
-               pappThis1->m_pplaneapp->m_dwAlive = m_pthread->m_dwAlive;
+               pappThis1->m_dwAlive = m_pthread->m_dwAlive;
             }
             if(pappThis2 != NULL)
             {
-               pappThis2->m_pplaneapp->m_dwAlive = m_pthread->m_dwAlive;
+               pappThis2->m_dwAlive = m_pthread->m_dwAlive;
             }
             if(pliveobject != NULL)
             {

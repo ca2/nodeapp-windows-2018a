@@ -247,15 +247,15 @@ void __internal_pre_translate_message(signal_details * pobj)
 
       try
       {
-         if(pthread->m_pbaseapp->m_pplaneapp->m_psession != NULL)
+         if(pthread->m_pbaseapp->m_pbasesession != NULL)
          {
             try
             {
-               for(int32_t i = 0; i < pthread->m_pbaseapp->m_pplaneapp->m_psession->m_pplanesession->m_pplanesession->frames().get_count(); i++)
+               for(int32_t i = 0; i < pthread->m_pbaseapp->m_pbasesession->frames().get_count(); i++)
                {
                   try
                   {
-                     sp(::user::interaction) pui = pthread->m_pbaseapp->m_pplaneapp->m_psession->m_pplanesession->m_pplanesession->frames()(i);
+                     sp(::user::interaction) pui = pthread->m_pbaseapp->m_pbasesession->frames()(i);
                      if(pui != NULL)
                      {
                         if(pui->m_pguie != NULL)
@@ -1089,11 +1089,11 @@ namespace win
             m_p->m_dwAlive = m_dwAlive = ::get_tick_count();
             if(pappThis1 != NULL)
             {
-               pappThis1->m_pplaneapp->m_dwAlive = m_dwAlive;
+               pappThis1->m_dwAlive = m_dwAlive;
             }
             if(pappThis2 != NULL)
             {
-               pappThis2->m_pplaneapp->m_dwAlive = m_dwAlive;
+               pappThis2->m_dwAlive = m_dwAlive;
             }
             try
             {
@@ -1150,11 +1150,11 @@ namespace win
             m_p->m_dwAlive = m_dwAlive = ::get_tick_count();
             if(pappThis1 != NULL)
             {
-               pappThis1->m_pplaneapp->m_dwAlive = m_dwAlive;
+               pappThis1->m_dwAlive = m_dwAlive;
             }
             if(pappThis2 != NULL)
             {
-               pappThis2->m_pplaneapp->m_dwAlive = m_dwAlive;
+               pappThis2->m_dwAlive = m_dwAlive;
             }
          }
          while (::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE) != FALSE);
@@ -1596,16 +1596,16 @@ stop_run:
                         {
                            try
                            {
-                              if(m_pbaseapp->m_pplaneapp->m_psystem != NULL)
+                              if(m_pbaseapp->m_pbasesystem != NULL)
                               {
-                                 m_pbaseapp->m_pplaneapp->m_psystem->pre_translate_message(spbase);
+                                 m_pbaseapp->m_pbasesystem->pre_translate_message(spbase);
                                  if(spbase->m_bRet)
                                     return TRUE;
 /*                                 try
                                  {
-                                    if(m_pbaseapp->m_pplaneapp->m_psystem->m_pcube != NULL)
+                                    if(m_pbaseapp->m_pbasesystem->m_pcube != NULL)
                                     {
-                                       m_pbaseapp->m_pplaneapp->m_psystem->m_pcubeInterface->pre_translate_message(spbase);
+                                       m_pbaseapp->m_pbasesystem->m_pcubeInterface->pre_translate_message(spbase);
                                        if(spbase->m_bRet)
                                           return TRUE;
                                     }
@@ -1620,11 +1620,11 @@ stop_run:
                            catch(...)
                            {
                            }
-                           if(m_pbaseapp->m_pplaneapp->m_psession != NULL)
+                           if(m_pbaseapp->m_pbasesession != NULL)
                            {
                               try
                               {
-                                 m_pbaseapp->m_pplaneapp->m_psession->m_pplanesession->m_pplanesession->pre_translate_message(spbase);
+                                 m_pbaseapp->m_pbasesession->pre_translate_message(spbase);
                                  if(spbase->m_bRet)
                                     return TRUE;
                               }
@@ -1633,9 +1633,9 @@ stop_run:
                               }
 /*                              try
                               {
-                                 if(m_pbaseapp->m_pplaneapp->m_psession->m_pplanesession->m_pplanesession->m_pbergedge != NULL)
+                                 if(m_pbaseapp->m_pbasesession->m_pbergedge != NULL)
                                  {
-                                    m_pbaseapp->m_pplaneapp->m_psession->m_pplanesession->m_pplanesession->m_pbergedgeInterface->pre_translate_message(spbase);
+                                    m_pbaseapp->m_pbasesession->m_pbergedgeInterface->pre_translate_message(spbase);
                                     if(spbase->m_bRet)
                                        return TRUE;
                                  }
@@ -1651,9 +1651,9 @@ stop_run:
                      }
                      try
                      {
-                        if(!m_pbaseapp->is_system() && m_pbaseapp->m_pplaneapp->is_session())
+                        if(!m_pbaseapp->is_system() && m_pbaseapp->is_session())
                         {
-                           m_pbaseapp->m_pplaneapp->pre_translate_message(spbase);
+                           m_pbaseapp->pre_translate_message(spbase);
                            if(spbase->m_bRet)
                               return TRUE;
                         }
@@ -1970,8 +1970,8 @@ run:
             // restore safety pool after temp objects destroyed
             if(papp != NULL &&
                (pThreadState->m_pSafetyPoolBuffer == NULL ||
-               _msize(pThreadState->m_pSafetyPoolBuffer) < papp->m_pplaneapp->m_nSafetyPoolSize) &&
-               papp->m_pplaneapp->m_nSafetyPoolSize != 0)
+               _msize(pThreadState->m_pSafetyPoolBuffer) < papp->m_nSafetyPoolSize) &&
+               papp->m_nSafetyPoolSize != 0)
             {
                // attempt to restore the safety pool to its max size
                size_t nOldSize = 0;
@@ -1985,7 +1985,7 @@ run:
                //bool bEnable = __enable_memory_tracking(FALSE);
                try
                {
-                  pThreadState->m_pSafetyPoolBuffer = malloc(papp->m_pplaneapp->m_nSafetyPoolSize);
+                  pThreadState->m_pSafetyPoolBuffer = malloc(papp->m_nSafetyPoolSize);
                   if (pThreadState->m_pSafetyPoolBuffer == NULL)
                   {
                      //                  TRACE(::core::trace::category_AppMsg, 0, "Warning: failed to reclaim %d bytes for primitive::memory safety pool.\n",

@@ -515,17 +515,17 @@ namespace win
 
    }
 
-   bool os::create_service(sp(::plane::application) papp)
+   bool os::create_service(sp(::base_application) papp)
    {
 
-      if(papp->m_pplaneapp->m_strAppName.is_empty()
-         || papp->m_pplaneapp->m_strAppName.CompareNoCase("bergedge") == 0
-         || !papp->m_pplaneapp->is_serviceable())
+      if(papp->m_strAppName.is_empty()
+         || papp->m_strAppName.CompareNoCase("bergedge") == 0
+         || !papp->is_serviceable())
          return false;
 
       SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_CREATE_SERVICE);
 
-      string strCalling = papp->m_pplaneapp->m_strModulePath + " : app=" + papp->m_pplaneapp->m_strAppId + " build_number=\"" + System.command()->m_varTopicQuery["build_number"] + "\" service usehostlogin";
+      string strCalling = papp->m_strModulePath + " : app=" + papp->m_strAppId + " build_number=\"" + System.command()->m_varTopicQuery["build_number"] + "\" service usehostlogin";
 
       if(hdlSCM == 0)
       {
@@ -533,7 +533,7 @@ namespace win
          return false;
       }
 
-      string strServiceName = "core-" + papp->m_pplaneapp->m_strAppId;
+      string strServiceName = "core-" + papp->m_strAppId;
 
       strServiceName.replace("/", "-");
       strServiceName.replace("\\", "-");
@@ -542,7 +542,7 @@ namespace win
       SC_HANDLE hdlServ = ::CreateService(
          hdlSCM,                    // SCManager database 
          strServiceName,
-         "core : " + papp->m_pplaneapp->m_strAppId,        // service name to display 
+         "core : " + papp->m_strAppId,        // service name to display 
          STANDARD_RIGHTS_REQUIRED,  // desired access 
          SERVICE_WIN32_OWN_PROCESS | SERVICE_INTERACTIVE_PROCESS, // service type 
          SERVICE_AUTO_START,      // start type 
@@ -570,12 +570,12 @@ namespace win
    }
 
 
-   bool os::remove_service(sp(::plane::application) papp)
+   bool os::remove_service(sp(::base_application) papp)
    {
 
-      if(papp->m_pplaneapp->m_strAppName.is_empty()
-         || papp->m_pplaneapp->m_strAppName.CompareNoCase("bergedge") == 0
-         || !papp->m_pplaneapp->is_serviceable())
+      if(papp->m_strAppName.is_empty()
+         || papp->m_strAppName.CompareNoCase("bergedge") == 0
+         || !papp->is_serviceable())
          return false;
 
       SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_ALL_ACCESS);
@@ -585,7 +585,7 @@ namespace win
          //::GetLastError();
          return false;
       }
-      string strServiceName = "core-" + papp->m_pplaneapp->m_strAppId;
+      string strServiceName = "core-" + papp->m_strAppId;
 
       strServiceName.replace("/", "-");
       strServiceName.replace("\\", "-");
@@ -613,12 +613,12 @@ namespace win
 
    }
 
-   bool os::start_service(sp(::plane::application) papp)
+   bool os::start_service(sp(::base_application) papp)
    {
 
-      if(papp->m_pplaneapp->m_strAppName.is_empty()
-         || papp->m_pplaneapp->m_strAppName.CompareNoCase("bergedge") == 0
-         || !papp->m_pplaneapp->is_serviceable())
+      if(papp->m_strAppName.is_empty()
+         || papp->m_strAppName.CompareNoCase("bergedge") == 0
+         || !papp->is_serviceable())
          return false;
 
       SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_ALL_ACCESS);
@@ -629,7 +629,7 @@ namespace win
          return false;
       }
 
-      string strServiceName = "core-" + papp->m_pplaneapp->m_strAppId;
+      string strServiceName = "core-" + papp->m_strAppId;
 
       strServiceName.replace("/", "-");
       strServiceName.replace("\\", "-");
@@ -655,12 +655,12 @@ namespace win
       return bOk != FALSE;
    }
 
-   bool os::stop_service(sp(::plane::application) papp)
+   bool os::stop_service(sp(::base_application) papp)
    {
 
-      if(papp->m_pplaneapp->m_strAppName.is_empty()
-         || papp->m_pplaneapp->m_strAppName.CompareNoCase("bergedge") == 0
-         || !papp->m_pplaneapp->is_serviceable())
+      if(papp->m_strAppName.is_empty()
+         || papp->m_strAppName.CompareNoCase("bergedge") == 0
+         || !papp->is_serviceable())
          return false;
 
       SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_ALL_ACCESS);
@@ -671,7 +671,7 @@ namespace win
          return false;
       }
 
-      string strServiceName = "core-" + papp->m_pplaneapp->m_strAppId;
+      string strServiceName = "core-" + papp->m_strAppId;
 
       strServiceName.replace("/", "-");
       strServiceName.replace("\\", "-");

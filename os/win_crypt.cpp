@@ -64,7 +64,7 @@ namespace win
       }
       else
       {
-         TRACELASTERROR();
+//         TRACELASTERROR();
          TRACE("crypt::decrypt Decryption error! (1)");
          return false;
       }

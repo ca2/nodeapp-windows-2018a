@@ -13,7 +13,7 @@ namespace win
       System.factory().cloneable_large    < file               >  (System.type_info < ::file::binary_buffer       > ()  , true);
       System.factory().creatable_large    < file_set           >  (System.type_info < ::file::set                 >());
       System.factory().cloneable          < file_system        >  (System.type_info < ::file::system              > ()  , 1   );
-      System.factory().cloneable          < WinResource        >  (System.type_info < ::core::resource            > ()  , 1   );
+//      System.factory().cloneable          < WinResource        >  (System.type_info < ::core::resource            > ()  , 1   );
       System.factory().cloneable          < application        >  (System.type_info < ::base_application          > ()  , 1   );
       System.factory().cloneable          < dir                >  (System.type_info < ::file::dir::system         > ()  , 1   );
       System.factory().cloneable_small    < folder_watch       >  (System.type_info < ::file::folder_watch        > ()        );
@@ -25,7 +25,7 @@ namespace win
       System.factory().creatable_small    < copydesk           >  (System.type_info < ::core::copydesk            > ()  , 1   );
       System.factory().creatable_small    < crypt              >  (System.type_info < ::crypto::crypto               > ()  , 1   );
       System.factory().creatable_small    < ip_enum            >  (System.type_info < ::net::ip_enum              > ()        );
-      System.factory().creatable          < printer            >  (System.type_info < ::user::printer             > ()  , 1   );
+//      System.factory().creatable          < printer            >  (System.type_info < ::user::printer             > ()  , 1   );
 
    }
 

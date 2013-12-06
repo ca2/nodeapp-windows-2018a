@@ -18,23 +18,23 @@ namespace win
 
       WIN_THREAD(::thread::m_p.m_p)->m_pAppThread = this;
 
-      m_psystem                        = papp->m_pplaneapp->m_psystem;
+      m_pbasesystem                    =  papp->m_pbaseapp->m_pbasesystem;
 
-      m_pfilemanager                   = NULL;
+      //m_pfilemanager                   = NULL;
       m_hInstance                      = NULL;
-      m_pszHelpFilePath                = NULL;
-      m_pszProfileName                 = NULL;
-      m_pszRegistryKey                 = NULL;
-      m_pdocmanager                    = NULL;
+      //m_pszHelpFilePath                = NULL;
+      //m_pszProfileName                 = NULL;
+      //m_pszRegistryKey                 = NULL;
+      //m_pdocmanager                    = NULL;
       m_atomApp = m_atomSystemTopic    = NULL;
       m_hcurWaitCursorRestore          = NULL;
 
-      m_hDevMode                       = NULL;
-      m_hDevNames                      = NULL;
-      m_nNumPreviewPages               = 0;     // not specified (defaults to 1)
+      //m_hDevMode                       = NULL;
+      //m_hDevNames                      = NULL;
+      //m_nNumPreviewPages               = 0;     // not specified (defaults to 1)
 
-      m_bHelpMode                      = FALSE;
-      m_nSafetyPoolSize                = 512;        // default size
+      //m_bHelpMode                      = FALSE;
+      //m_nSafetyPoolSize                = 512;        // default size
 
       shell::theWindowsShell.Initialize();
 
@@ -464,7 +464,7 @@ namespace win
 
       WIN_THREAD(thread::m_p.m_p)->m_bRun = false;
 
-      int32_t iRet = ::application::exit_instance();
+      int32_t iRet = ::base_application::exit_instance();
 
       //smart_pointer < base_application >::destroy();
 
@@ -721,7 +721,7 @@ namespace win
          // fill in the initial state for the application
          // Windows specific initialization (not done if no application)
          m_hInstance = hInstance;
-         m_pbaseapp->m_pplaneapp->m_hInstance = hInstance;
+         m_pbaseapp->m_hInstance = hInstance;
          //hPrevInstance; // Obsolete.
          m_strCmdLine = strCmdLine;
          m_nCmdShow = nCmdShow;
@@ -802,13 +802,14 @@ namespace win
    
    ::user::printer * application::get_printer(const char * pszDeviceName)
    {
-      ::win::printer * pprinter = new ::win::printer(get_app());
-      if(!pprinter->open(pszDeviceName))
-      {
-         delete pprinter;
-         return NULL;
-      }
-      return pprinter;
+      throw todo(this);
+      //::win::printer * pprinter = new ::win::printer(get_app());
+      //if(!pprinter->open(pszDeviceName))
+      //{
+      //   delete pprinter;
+      //   return NULL;
+      //}
+      //return pprinter;
    }
 
    string application::veriwell_multimedia_music_midi_get_default_library_name()

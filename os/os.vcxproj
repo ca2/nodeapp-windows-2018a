@@ -948,7 +948,6 @@
     <ClInclude Include="..\operational_system\version_dll.h" />
     <ClInclude Include="..\operational_system\version_windows.h" />
     <ClInclude Include="..\operational_system\_.h" />
-    <ClInclude Include="win_printer.h" />
     <ClInclude Include="win_file_find.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="gen_1.h" />
@@ -979,7 +978,6 @@
     <ClInclude Include="win_os.h" />
     <ClInclude Include="win_port_forward.h" />
     <ClInclude Include="win_registry.h" />
-    <ClInclude Include="win_resource.h" />
     <ClInclude Include="win_state.h" />
     <ClInclude Include="win_stdio_file.h" />
     <ClInclude Include="win_thread.h" />
@@ -994,13 +992,13 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='profiler|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='profiler|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='memdleak|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="os.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="win1.cpp" />
     <ClCompile Include="win2.cpp" />
-    <ClCompile Include="win_printer.cpp" />
     <ClCompile Include="win_afxabort.cpp" />
     <ClCompile Include="win_afxmem.cpp" />
     <ClCompile Include="win_afxstate.cpp" />
@@ -1027,7 +1025,6 @@
     <ClCompile Include="win_os.cpp" />
     <ClCompile Include="win_port_forward.cpp" />
     <ClCompile Include="win_registry.cpp" />
-    <ClCompile Include="win_resource.cpp" />
     <ClCompile Include="win_shell.cpp" />
     <ClCompile Include="win_stdio_file.cpp" />
     <ClCompile Include="win_thread.cpp" />
@@ -1045,9 +1042,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\app\appseed\base\base.vcxproj">
       <Project>{4d7d3626-ada6-4ca2-9566-ed7b131e3d51}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\app\appseed\core\core.vcxproj">
-      <Project>{e000ffaf-392f-4e32-bf51-fd7ed638991f}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

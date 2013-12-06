@@ -55,7 +55,7 @@ typedef int32_t (__cdecl * _PNH)( size_t );
 
 _PNH CLASS_DECL_win __get_new_handler();
 _PNH CLASS_DECL_win __set_new_handler(_PNH pfnNewHandler);
-CLASS_DECL_CORE int32_t c_cdecl __new_handler(size_t nSize);
+CLASS_DECL_BASE int32_t c_cdecl __new_handler(size_t nSize);
 
 void CLASS_DECL_win __abort();
 

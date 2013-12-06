@@ -362,7 +362,7 @@ namespace win
             bool bRedraw = TRUE);
       virtual void ShowScrollBar(UINT nBar, bool bShow = TRUE);
       virtual void EnableScrollBarCtrl(int32_t nBar, bool bEnable = TRUE);
-      virtual CScrollBar* GetScrollBarCtrl(int32_t nBar) const;
+//      virtual CScrollBar* GetScrollBarCtrl(int32_t nBar) const;
             // return sibling scrollbar control (or NULL if none)
 
       virtual int32_t ScrollWindowEx(int32_t dx, int32_t dy,
@@ -556,8 +556,8 @@ namespace win
    // Input message handler member functions
       void OnChar(UINT nChar, UINT nRepCnt, UINT nFlags);
       void OnDeadChar(UINT nChar, UINT nRepCnt, UINT nFlags);
-      void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
-      void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+//      void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+  //    void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
       void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
       void OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags);
       void OnLButtonDblClk(UINT nFlags, point point);

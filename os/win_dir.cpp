@@ -615,7 +615,7 @@ namespace win
       }
 
 
-      if(papp->m_pplaneapp->m_bZipIsDir && iLast >= 3  && !strnicmp_dup(&((const char *) str)[iLast - 3], ".zip", 4))
+      if(papp->m_bZipIsDir && iLast >= 3  && !strnicmp_dup(&((const char *) str)[iLast - 3], ".zip", 4))
       {
          m_isdirmap.set(str.Left(iLast + 1), true, 0);
          return true;
@@ -623,7 +623,7 @@ namespace win
       
       strsize iFind = ::str::find_ci(".zip:", str);
 
-      if(papp->m_pplaneapp->m_bZipIsDir && iFind >= 0 && iFind < iLast)
+      if(papp->m_bZipIsDir && iFind >= 0 && iFind < iLast)
       {
          bool bHasSubFolder;
          if(m_isdirmap.lookup(str, bHasSubFolder, uiLastError))

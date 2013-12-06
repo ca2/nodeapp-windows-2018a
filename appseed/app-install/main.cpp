@@ -11,7 +11,8 @@
 
 class installer :
    public simple_app,
-   public small_ipc_rx_channel::receiver
+   public small_ipc_rx_channel::receiver,
+   public ::install::installer
 {
 public:
 
@@ -86,7 +87,10 @@ _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 }*/
 
 
-installer::installer()
+installer::installer() :
+   element(this),
+   base_system(NULL),
+   ::install::installer(this)
 {
    xxdebug_box("app-install", "app", 0);
    m_hinstance             = ::GetModuleHandleA(NULL);
@@ -99,6 +103,9 @@ installer::installer()
    m_hmodulea              = NULL;
    m_iSizeModule           = 0;
    m_bInstallerInstalling  = false;
+   m_bInstalling = false;
+
+   construct();
 }
 
 installer::~installer()
@@ -135,9 +142,7 @@ bool installer::initialize()
          
          xxdebug_box(strCommandLine, "simple_app::body", 0);
 
-         throw todo(get_thread_app());
-//         uint32_t dwStartError;
-         //spa_install::ca2_app_install_run(strCommandLine, dwStartError, true);
+         System.install().asynch_install(strCommandLine, true);
          
          return false;
 
@@ -153,8 +158,7 @@ bool installer::initialize()
       return false;
    }
 
-   throw todo(get_thread_app());
-   //installation_file_lock(false);
+   System.install().installation_file_lock(false);
 
    //Sleep(15 * 1000);
 
@@ -169,7 +173,7 @@ bool installer::initialize()
 
    prepare_small_bell();
 
-   if(!m_rxchannel.create("ca2/spaboot_install", "app-install.exe"))
+   if(!m_rxchannel.create("core/spaboot_install", "app-install.exe"))
    {
       m_iError = -1;
       return false;
@@ -181,18 +185,24 @@ bool installer::initialize()
 
 void installer::install_defer_file_transfer()
 {
-   throw todo(get_thread_app());
-/*   if (!g_bInstalling)
+
+   if (!m_bInstalling)
    {
-      update_updated();
-      if(!is_updated() && !are_there_user_files_in_use())
+
+      System.install().update_updated();
+
+      if(!System.install().is_updated() && !are_there_user_files_in_use())
       {
+
          // missing locale schema;
 
          throw "missing locale and schema parameters for installing";
-         synch_spaadmin("starter_start: : app=session session_start=session app_type=application install in background in spa");
+         install_synch("starter_start: : app=session session_start=session app_type=application install in background in spa");
+
       }
-   }*/
+
+   }
+
 }
 
 
@@ -284,39 +294,33 @@ void installer::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMe
    const char * pszSuffix;
    if((pszSuffix = str_begins_inc_dup(strMessage, "synch_spaadmin:")) != NULL)
    {
-      throw todo(get_thread_app());
-/*      if (g_bInstalling)
+      if (m_bInstalling)
       {
          iRet = 1;
          return;
-      }*/
+      }
       if(m_bInstallerInstalling)
       {
          iRet = 1;
          return;
       }
       m_bInstallerInstalling = true;
-      throw todo(get_thread_app());
-      //synch_spaadmin(pszSuffix);
+      install_synch(pszSuffix);
       m_bInstallerInstalling = false;
    }
    else if((pszSuffix = str_begins_inc_dup(strMessage, "spaadmin:")) != NULL)
    {
-      throw todo(get_thread_app());
-
-/*      if(g_bInstalling)
+      if(m_bInstalling)
       {
          iRet = 1;
          return;
-      }*/
-      //if(m_bInstallerInstalling)
-      //{
-        // iRet = 1;
-         //return;
-      //}
-      //m_bInstallerInstalling = true;
-      throw todo(get_thread_app());
-      //start_spaadmin(pszSuffix);
+      }
+      if(m_bInstallerInstalling)
+      {
+         iRet = 1;
+         return;
+      }
+      install_asynch(pszSuffix);
    }
    else if(stricmp_dup(strMessage, "ok") == 0)
    {
