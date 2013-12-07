@@ -156,6 +156,8 @@ bool __win_init()
 int32_t __win_main(sp(base_system) psystem, ::win::main_init_data * pmaininitdata)
 {
 
+   psystem->construct();
+
    psystem->init_main_data(pmaininitdata);
 
    g_pwindowmap = new ::oswindow_map(psystem);

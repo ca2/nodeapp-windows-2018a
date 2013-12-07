@@ -721,6 +721,7 @@ namespace win
          // Windows specific initialization (not done if no application)
          m_hinstance = hInstance;
          m_pbaseapp->m_hinstance = hInstance;
+         m_pimpl->m_hinstance = hInstance;
          //hPrevInstance; // Obsolete.
          m_strCmdLine = strCmdLine;
          m_nCmdShow = nCmdShow;
