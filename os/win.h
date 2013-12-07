@@ -450,6 +450,3 @@ CLASS_DECL_win himagelist_map * afxMapHIMAGELIST(bool bCreate = FALSE);
 //CLASS_DECL_win hmenu_map * afx_map_HMENU(bool bCreate = FALSE);
 
 
-void CLASS_DECL_win __cdecl _ca2_purecall();
-
-void CLASS_DECL_win __cdecl _null_se_translator(uint32_t uiCode, EXCEPTION_POINTERS * ppointers);

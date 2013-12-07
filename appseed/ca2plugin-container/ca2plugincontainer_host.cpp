@@ -15,9 +15,11 @@ namespace ca2plugin_container
 
    host::host(sp(base_application) papp) :
       element(papp),
+      ::base_system(papp),
       ::simple_ui::style(papp),
-      hotplugin::plugin(papp),
-      hotplugin::host(papp)
+      ::simple_ui::interaction(papp),
+      ::os::simple_ui(papp),
+      hotplugin::plugin(papp)
    {
       
       //Sleep(15 * 1000);

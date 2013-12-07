@@ -126,29 +126,27 @@ CLASS_DECL_win bool unhook_window_create()
 
 
 
-CLASS_DECL_win const char * __register_window_class(UINT nClassStyle,
-                                                    HCURSOR hCursor, HBRUSH hbrBackground, HICON hIcon)
+CLASS_DECL_win const char * __register_window_class(sp(base_application) papp, UINT nClassStyle, HCURSOR hCursor, HBRUSH hbrBackground, HICON hIcon)
 {
    // Returns a temporary string name for the class
    //  Save in a string if you want to use it for a long time
    LPTSTR lpszName = __get_thread_state()->m_szTempClassName;
 
    // generate a synthetic name for this class
-   HINSTANCE hInst = g_hinstance;
 
    if (hCursor == NULL && hbrBackground == NULL && hIcon == NULL)
    {
-      C_RUNTIME_ERRORCHECK_SPRINTF(_sntprintf_s(lpszName, ___TEMP_CLASS_NAME_SIZE, ___TEMP_CLASS_NAME_SIZE - 1, "::core:::%p:%x", hInst, nClassStyle));
+      C_RUNTIME_ERRORCHECK_SPRINTF(_sntprintf_s(lpszName, ___TEMP_CLASS_NAME_SIZE, ___TEMP_CLASS_NAME_SIZE - 1, "::core:::%p:%x", papp->m_hinstance, nClassStyle));
    }
    else
    {
-      C_RUNTIME_ERRORCHECK_SPRINTF(_sntprintf_s(lpszName, ___TEMP_CLASS_NAME_SIZE, ___TEMP_CLASS_NAME_SIZE - 1, "::core:::%p:%x:%p:%p:%p", hInst, nClassStyle,
+      C_RUNTIME_ERRORCHECK_SPRINTF(_sntprintf_s(lpszName, ___TEMP_CLASS_NAME_SIZE, ___TEMP_CLASS_NAME_SIZE - 1, "::core:::%p:%x:%p:%p:%p", papp->m_hinstance, nClassStyle,
          hCursor, hbrBackground, hIcon));
    }
 
    // see if the class already exists
    WNDCLASS wndcls;
-   if (::GetClassInfo(hInst, lpszName, &wndcls))
+   if (::GetClassInfo(papp->m_hinstance, lpszName, &wndcls))
    {
       // already registered, assert everything is good
       ASSERT(wndcls.style == nClassStyle);
@@ -164,7 +162,7 @@ CLASS_DECL_win const char * __register_window_class(UINT nClassStyle,
    wndcls.style = nClassStyle;
    wndcls.lpfnWndProc = DefWindowProc;
    wndcls.cbClsExtra = wndcls.cbWndExtra = 0;
-   wndcls.hInstance = hInst;
+   wndcls.hInstance = papp->m_hinstance;
    wndcls.hIcon = hIcon;
    //wndcls.hCursor = hCursor;
    wndcls.hCursor = NULL;
@@ -286,7 +284,7 @@ string CLASS_DECL_win get_user_interaction_window_class(sp(::user::interaction) 
    WNDCLASS wndcls;
    memset(&wndcls, 0, sizeof(WNDCLASS));   // start with NULL defaults
    wndcls.lpfnWndProc = DefWindowProc;
-   wndcls.hInstance = g_hinstance;
+   wndcls.hInstance = pui->m_pbaseapp->m_hinstance;
    //wndcls.hCursor = afxData.hcurArrow;
 
    INITCOMMONCONTROLSEX init;
@@ -361,7 +359,7 @@ string CLASS_DECL_win get_user_interaction_window_class(sp(::user::interaction) 
       }
    }
 
-   return __register_window_class(0);
+   return __register_window_class(pui->get_app(), 0);
    /*
    // save new state of registered controls
    pModuleState->m_fRegisteredClasses |= fRegisteredClasses;

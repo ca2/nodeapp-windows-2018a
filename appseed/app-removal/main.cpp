@@ -91,7 +91,9 @@ _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 //extern bool g_bInstalling;
 //extern stringa * g_pstraTrace;
 
-removal::removal()
+removal::removal() :
+element(this),
+base_system(this)
 {
    xxdebug_box("app-install", "app", 0);
    m_hinstance             = ::GetModuleHandleA(NULL);

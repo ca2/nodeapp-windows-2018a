@@ -21,7 +21,6 @@ namespace win
       m_pbasesystem                    =  papp->m_pbaseapp->m_pbasesystem;
 
       //m_pfilemanager                   = NULL;
-      m_hInstance                      = NULL;
       //m_pszHelpFilePath                = NULL;
       //m_pszProfileName                 = NULL;
       //m_pszRegistryKey                 = NULL;
@@ -720,8 +719,8 @@ namespace win
 
          // fill in the initial state for the application
          // Windows specific initialization (not done if no application)
-         m_hInstance = hInstance;
-         m_pbaseapp->m_hInstance = hInstance;
+         m_hinstance = hInstance;
+         m_pbaseapp->m_hinstance = hInstance;
          //hPrevInstance; // Obsolete.
          m_strCmdLine = strCmdLine;
          m_nCmdShow = nCmdShow;

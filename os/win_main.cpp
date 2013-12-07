@@ -136,5 +136,40 @@ void __cdecl _null_se_translator(uint32_t uiCode, EXCEPTION_POINTERS * ppointers
 }
 
 
+bool __win_init()
+{
 
-HINSTANCE g_hinstance = NULL;
+   ::CoInitialize(NULL);
+
+   if (!main_initialize())
+      return false;
+
+   //Sleep(15 * 1000);
+
+   _set_purecall_handler(_ca2_purecall);
+
+   return true;
+
+}
+
+
+int32_t __win_main(sp(base_system) psystem, ::win::main_init_data * pmaininitdata)
+{
+
+   psystem->init_main_data(pmaininitdata);
+
+   g_pwindowmap = new ::oswindow_map(psystem);
+
+   xxdebug_box("box1", "box1", MB_ICONINFORMATION);
+
+   set_main_thread(GetCurrentThread());
+
+   set_main_thread_id(GetCurrentThreadId());
+
+   int32_t nReturnCode = psystem->main();
+
+   return nReturnCode;
+
+}
+
+

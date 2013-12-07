@@ -127,4 +127,12 @@ CLASS_DECL_win void __cdecl __pre_translate_message(signal_details * pobj);
 
 
 
-extern HINSTANCE g_hinstance;
+void CLASS_DECL_win __cdecl _ca2_purecall();
+
+void CLASS_DECL_win __cdecl _null_se_translator(uint32_t uiCode, EXCEPTION_POINTERS * ppointers);
+
+bool CLASS_DECL_win __win_init();
+
+int32_t CLASS_DECL_win __win_main(sp(base_system) psystem, ::win::main_init_data * pmaininitdata);
+
+

@@ -61,7 +61,7 @@ void CLASS_DECL_win __abort();
 
 
 // helpers for registering your own WNDCLASSes
-CLASS_DECL_win const char * __register_window_class(UINT nClassStyle, HCURSOR hCursor = 0, HBRUSH hbrBackground = 0, HICON hIcon = 0);
+CLASS_DECL_win const char * __register_window_class(sp(base_application) papp, UINT nClassStyle, HCURSOR hCursor = 0, HBRUSH hbrBackground = 0, HICON hIcon = 0);
 
 CLASS_DECL_win bool __register_class(WNDCLASS* lpWndClass);
 

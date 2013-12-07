@@ -306,7 +306,7 @@ namespace win
       cs.hwndParent = oswindow_Parent;
       //   cs.hMenu = oswindow_Parent == NULL ? NULL : nIDorHMenu;
       cs.hMenu = NULL;
-      cs.hInstance = System.m_hInstance;
+      cs.hInstance = System.m_hinstance;
       cs.lpCreateParams = lpParam;
 
       if(m_pguie != NULL && m_pguie != this)
@@ -369,7 +369,7 @@ namespace win
          return FALSE;
       WNDCLASS wndcls;
       if(lpszClassName != NULL &&
-         GetClassInfo(System.m_hInstance, lpszClassName, &wndcls) &&
+         GetClassInfo(System.m_hinstance, lpszClassName, &wndcls) &&
          wndcls.hIcon != NULL)
       {
          Application.set_icon(m_pguie, new ::visual::icon(wndcls.hIcon), false);
@@ -464,10 +464,10 @@ namespace win
          // ignore instance handle from pre_create_window.
 
          WNDCLASS wndcls;
-         if(strClass.has_char() &&  GetClassInfo(System.m_hInstance, strClass, &wndcls) && wndcls.hIcon != hIcon)
+         if(strClass.has_char() &&  GetClassInfo(System.m_hinstance, strClass, &wndcls) && wndcls.hIcon != hIcon)
          {
             // register a very similar WNDCLASS
-            return __register_window_class(wndcls.style, wndcls.hCursor, wndcls.hbrBackground, hIcon);
+            return __register_window_class(get_app(), wndcls.style, wndcls.hCursor, wndcls.hbrBackground, hIcon);
          }
       }
 
