@@ -44,13 +44,13 @@ void CLASS_DECL_win __win_term()
 
    g_pwindowmap = NULL;
 
-   try
+/*   try
    {
       main_finalize();
    }
    catch (...)
    {
-   }
+   }*/
 
    if (__get_thread_state() != NULL)
    {

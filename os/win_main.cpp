@@ -141,8 +141,8 @@ bool __win_init()
 
    ::CoInitialize(NULL);
 
-   if (!main_initialize())
-      return false;
+/*   if (!main_initialize())
+      return false;*/
 
    //Sleep(15 * 1000);
 
