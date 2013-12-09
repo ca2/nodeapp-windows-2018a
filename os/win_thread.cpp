@@ -1,5 +1,4 @@
 #include "framework.h"
-#include <process.h>    // for _beginthreadex and _endthreadex
 #include <ddeml.h>  // for MSGF_DDEMGR
 
 namespace win
@@ -442,14 +441,6 @@ void CLASS_DECL_win __end_thread(sp(base_application) papp, UINT nExitCode, bool
    // allow cleanup of any thread local objects
    __term_thread(papp);
 
-   // allow C-runtime to cleanup, and exit the thread
-   try
-   {
-      _endthreadex(nExitCode);
-   }
-   catch(...)
-   {
-   }
 }
 
 extern thread_local_storage * __thread_data;
