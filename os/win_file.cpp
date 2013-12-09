@@ -1306,31 +1306,7 @@ bool CLASS_DECL_win vfxResolveShortcut(string & strTarget, const char * pszSourc
    wstring wstrFileOut;
    wstring wstrFileIn = ::str::international::utf8_to_unicode(pszSource);
 
-   DWORD dwVersion = GetVersion();
-
-   // get the Windows version.
-
-   DWORD dwWindowsMajorVersion =  (DWORD)(LOBYTE(LOWORD(dwVersion)));
-   DWORD dwWindowsMinorVersion =  (DWORD)(HIBYTE(LOWORD(dwVersion)));
-
-   // get the build number.
-
-   DWORD dwBuild;
-
-   if (dwVersion < 0x80000000)              // Windows NT
-      dwBuild = (DWORD)(HIWORD(dwVersion));
-   else if (dwWindowsMajorVersion < 4)      // Win32s
-      dwBuild = (DWORD)(HIWORD(dwVersion) & ~0x8000);
-   else                                     // Windows Me/98/95
-      dwBuild =  0;
-
-   bool bNativeUnicode;
-   if (dwVersion < 0x80000000)              // Windows NT
-      bNativeUnicode = TRUE;
-   else if (dwWindowsMajorVersion < 4)      // Win32s
-      bNativeUnicode = FALSE;
-   else                                     // Windows Me/98/95
-      bNativeUnicode = FALSE;
+   bool bNativeUnicode = is_windows_native_unicode() != FALSE;
 
 
    //   __COM com;

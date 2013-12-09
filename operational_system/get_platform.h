@@ -55,9 +55,9 @@ END_EXTERN_C
 
 
 
-#define WINVER 0x0600
-#define _WIN32_WINNT   0x0600
-#define _WIN32_IE 0x0600
+#define _WIN32_WINNT    0x0601 // _WIN32_WINNT_WIN7
+#define _WIN32_IE       0x0800 // _WIN32_IE_IE80
+#define WINVER          _WIN32_WINNT
 
 
 

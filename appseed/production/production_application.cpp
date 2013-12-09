@@ -37,7 +37,7 @@ namespace production
       System.factory().creatable_small < pane_view >();
 
 
-      if(!::plane::application::initialize_instance())
+      if(!::application::initialize_instance())
          return false;
 
       filemanager().std().m_strLevelUp = "levelup";
@@ -65,7 +65,7 @@ namespace production
       try
       {
 
-         iExitCode = ::plane::application::exit_instance();
+         iExitCode = ::application::exit_instance();
 
       }
       catch(...)

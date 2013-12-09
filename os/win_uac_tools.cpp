@@ -172,6 +172,10 @@ MyShellExec(   oswindow oswindow,
 
 bool IsVista()
 {
+
+   return is_windows_vista_or_greater() != FALSE;
+
+   /*
    OSVERSIONINFO osver;
 
    osver.dwOSVersionInfoSize = sizeof( OSVERSIONINFO );
@@ -182,6 +186,8 @@ bool IsVista()
       return TRUE;
 
    return FALSE;
+
+   */
 }
 
 #ifndef WIN64 // we need this when compiling 32-bit code only

@@ -4,7 +4,7 @@ namespace production
 {
 
    class CLASS_DECL_CA2_PRODUCTION application :
-      public ::plane::application
+      public ::application
    {
    public:
       
