@@ -11,7 +11,7 @@ int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lp
 
    string str = ::str::international::unicode_to_utf8(::GetCommandLineW());
 
-   return app_core_main(hinstance, hPrevInstance, lpCmdLine, nCmdShow);
+   return app_core_main(hinstance, hPrevInstance, (char *) (const char *) str, nCmdShow);
    
 }
 
