@@ -115,6 +115,8 @@ installer::~installer()
 bool installer::intro()
 {
 
+   debug_box("app-install", "app-install", MB_OK);
+
    if(__argc >= 2)
    {
 
@@ -142,7 +144,9 @@ bool installer::intro()
          
          xxdebug_box(strCommandLine, "simple_app::body", 0);
 
-         System.install().asynch_install(strCommandLine, true);
+         DWORD dwStartError;
+
+         ca2_app_install_run(strCommandLine, dwStartError, true);
          
          return false;
 
