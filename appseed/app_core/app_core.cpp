@@ -1,13 +1,9 @@
-#pragma once
+#include "framework.h"
 
 
-#include "nodeapp/os/os.h"
 
 
-#include "core/core.h"
-
-
-extern "C" int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
+extern "C" int32_t app_core_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
 {
 
    UNREFERENCED_PARAMETER(lpCmdLine);
@@ -58,3 +54,7 @@ extern "C" int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance
    return nReturnCode;
 
 }
+
+
+
+
