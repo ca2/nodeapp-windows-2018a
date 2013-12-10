@@ -15,7 +15,6 @@ namespace ca2plugin_container
 
    host::host(sp(base_application) papp) :
       element(papp),
-      ::base_system(papp),
       ::simple_ui::style(papp),
       ::simple_ui::interaction(papp),
       ::os::simple_ui(papp),
@@ -23,8 +22,6 @@ namespace ca2plugin_container
    {
       
       //Sleep(15 * 1000);
-
-      m_pvoidSystem     = g_pvoidPluginSystem; 
 
       m_phost           = NULL;
       m_bInitialized    = false;
@@ -46,10 +43,6 @@ namespace ca2plugin_container
       m_oswindowMessage = ::CreateWindowExA(0, "npca2_message_queue", "npca2_message_queue", 0, 0, 0, 0, 0, HWND_MESSAGE, NULL, NULL, NULL);
 
       m_pfile           = NULL;
-
-      m_lpbMemory = NULL;
-      m_iMemory = -1;
-
 
       m_oswindow = NULL;
       m_bStream = false;
@@ -294,14 +287,7 @@ namespace ca2plugin_container
    void * host::get_system()
    {
 
-      if(m_pvoidSystem == NULL)
-      {
-
-         m_pvoidSystem     = g_pvoidPluginSystem; 
-
-      }
-
-      return m_pvoidSystem;
+      return m_pbaseapp->m_pbasesystem;
 
    }
 
@@ -309,9 +295,9 @@ namespace ca2plugin_container
    void host::set_system(void * pvoidSystem)
    {
 
-      ::hotplugin::host::set_system(pvoidSystem);
+      //::hotplugin::host::set_system(pvoidSystem);
 
-      g_pvoidPluginSystem = pvoidSystem;
+      m_pbaseapp = (base_system *) pvoidSystem;
 
 
    }
@@ -434,28 +420,13 @@ namespace ca2plugin_container
             if(pdata != NULL)
             {
 
-               if(m_puchMemory != NULL)
-               {
-                  try
-                  {
-                     memory_free(m_puchMemory);
-                  }
-                  catch(...)
-                  {
-                  }
-               }
-
-               m_countMemory = len;
-
-               m_puchMemory = (uint8_t *) memory_alloc(len);
-
-               memcpy(m_puchMemory, pdata, len);
+               m_memory.assign(pdata, len);
 
 //  xxx             if(m_puchMemory != NULL)
   //                m_bStream = true;
 
 
-               string str((const char *) m_puchMemory, len);
+               string str((const char *) m_memory.get_data(), len);
 
                xxdebug_box(str, "ca2plugincontainer::host::on_receive", 0);
 
