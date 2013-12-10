@@ -1767,6 +1767,9 @@ retry2:
       add_path(pszDir, "chrome.manifest");
       add_path(pszDir, "plugins\\app-install.exe");
       add_path(pszDir, "plugins\\npca2.dll");
+      add_path(pszDir, "plugins\\base.dll");
+      add_path(pszDir, "plugins\\os.dll");
+      add_path(pszDir, "plugins\\draw2d_gdiplus.dll");
       add_path(pszDir, "skin\\classic\\ca2-5c-32.png");
       add_path(pszDir, "META-INF\\manifest.mf");
       add_path(pszDir, "META-INF\\zigbert.sf");
@@ -1963,6 +1966,21 @@ retry2:
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
 
+      strFile = System.dir().path(strDir, "npca2/plugins", "base.dll");
+      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/base.dll"));
+      strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
+      System.process().synch(strCmd);
+
+      strFile = System.dir().path(strDir, "npca2/plugins", "os.dll");
+      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/os.dll"));
+      strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
+      System.process().synch(strCmd);
+
+      strFile = System.dir().path(strDir, "npca2/plugins", "draw2d_gdiplus.dll");
+      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/draw2d_gdiplus.dll"));
+      strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
+      System.process().synch(strCmd);
+
       add_status("Signing code for Firefox ...");
 
       System.file().del(System.dir().path(strDir, "npca2.xpi"));
@@ -1975,8 +1993,8 @@ retry2:
       }
 
 
-      Application.file().copy("C:\\netnodenet\\net\\netseed\\ds\\ca2\\front\\cc\\ca2\\_std\\download\\xpi\\"+strPlatform+strVersion+"\\npca2.xpi", System.dir().path(strDir, "npca2.xpi"));
-      Application.file().copy("C:\\netnodenet\\net\\netseed\\ds\\ca2\\front\\cc\\ca2\\_std\\download\\rdf\\"+strPlatform+strVersion+"\\windows.rdf", System.dir().path(strDir, "windows.rdf"));
+      Application.file().copy("C:\\netnodenet\\net\\netseed\\front\\cc\\ca2\\_std\\download\\xpi\\"+strPlatform+strVersion+"\\npca2.xpi", System.dir().path(strDir, "npca2.xpi"));
+      Application.file().copy("C:\\netnodenet\\net\\netseed\\front\\cc\\ca2\\_std\\download\\rdf\\"+strPlatform+strVersion+"\\windows.rdf", System.dir().path(strDir, "windows.rdf"));
 
       return true;
    }
@@ -2032,7 +2050,7 @@ retry2:
          {
             uint32_t dw = GetLastError();
             string str;
-            str.Format("Error compressing npca2: %d", dw);
+            str.Format("Error compressing npca2: %d is zip command line utility installed?", dw);
             add_status(str);
             return 0;   
          }
@@ -2064,7 +2082,7 @@ retry2:
       {
          uint32_t dw = GetLastError();
          string str;
-         str.Format("Error compressing npca2: %d", dw);
+         str.Format("Error compressing npca2: %d is zip command line utilty installed?", dw);
          add_status(str);
          return 0;   
       }
@@ -2122,7 +2140,7 @@ retry2:
          strVersion = "\\basis";
       }
 
-      Application.file().copy("C:\\netnodenet\\net\\netseed\\ds\\ca2\\front\\cc\\ca2\\_std\\download\\cab\\" +  strPlatform + strVersion + "\\iexca2.cab", System.dir().path(m_strBase, "time\\iexca2\\"+strPlatform+"\\iexca2.cab"));
+      Application.file().copy("C:\\netnodenet\\net\\netseed\\front\\cc\\ca2\\_std\\download\\cab\\" +  strPlatform + strVersion + "\\iexca2.cab", System.dir().path(m_strBase, "time\\iexca2\\"+strPlatform+"\\iexca2.cab"));
 
       return true;
 
@@ -2177,6 +2195,24 @@ retry2:
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
 
+      add_status("Signing base.dll for Chrome ...");
+      strFile = System.dir().path(strDir, "base.dll");
+      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/base.dll"));
+      strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
+      System.process().synch(strCmd);
+
+      add_status("Signing os.dll for Chrome ...");
+      strFile = System.dir().path(strDir, "os.dll");
+      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/os.dll"));
+      strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
+      System.process().synch(strCmd);
+
+      add_status("Signing draw2d_gdiplus.dll for Chrome ...");
+      strFile = System.dir().path(strDir, "draw2d_gdiplus.dll");
+      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/draw2d_gdiplus.dll"));
+      strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
+      System.process().synch(strCmd);
+
       add_status("Creating crxca2.crx for Chrome ...");
 
       WCHAR * pwsz;
@@ -2190,11 +2226,13 @@ retry2:
 
       }
 
-      strCmd = pwsz;
+      strCmd = "\"";
+
+      strCmd += pwsz;
 
       CoTaskMemFree(pwsz);
 
-      strCmd += "\\Google\\Chrome\\Application\\chrome.exe --no-message-box --pack-extension=\"" +strDir + "\" --pack-extension-key=\"X:\\sensitive\\sensitive\\certificate\\npca2pk.pem\"";
+      strCmd += "\\Google\\Chrome\\Application\\chrome.exe\" --no-message-box --pack-extension=\"" +strDir + "\" --pack-extension-key=\"X:\\sensitive\\sensitive\\certificate\\npca2pk.pem\"";
 
       System.process().synch(strCmd);
 
@@ -2206,7 +2244,7 @@ retry2:
       }
 
 
-      Application.file().copy("C:\\netnodenet\\net\\netseed\\ds\\ca2\\front\\cc\\ca2\\_std\\download\\crx\\"+strPlatform+strVersion+"\\crxca2.crx", System.dir().path(System.dir().name(strDir), "crxca2.crx"));
+      Application.file().copy("C:\\netnodenet\\net\\netseed\\front\\cc\\ca2\\_std\\download\\crx\\"+strPlatform+strVersion+"\\crxca2.crx", System.dir().path(System.dir().name(strDir), "crxca2.crx"));
 
       return true;
    }
