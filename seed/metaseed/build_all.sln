@@ -202,6 +202,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_uinteraction", "..
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ca2plugin-container", "..\..\appseed\ca2plugin-container\ca2plugin-container.vcxproj", "{AD997EA3-A120-472D-A216-EC4B0B81FDC4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E000FFAF-392F-4E32-BF51-FD7ED638991F} = {E000FFAF-392F-4E32-BF51-FD7ED638991F}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "nodeapp_production", "..\..\appseed\production\production.vcxproj", "{6945864B-2816-46B3-AB26-C31A208A01C9}"
 EndProject
