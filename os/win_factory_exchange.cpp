@@ -1,5 +1,7 @@
 #include "framework.h"
 
+extern CLASS_DECL_win oswindow_map * g_pwindowmap;
+
 
 namespace win
 {
@@ -8,6 +10,8 @@ namespace win
    factory_exchange::factory_exchange(sp(base_application) papp) :
       element(papp)
    {
+
+      g_pwindowmap = new ::oswindow_map(papp->m_pbasesystem);
 
       System.factory().cloneable_large    < stdio_file         >  (System.type_info < ::file::text_buffer         > ()        );
       System.factory().cloneable_large    < file               >  (System.type_info < ::file::binary_buffer       > ()  , true);

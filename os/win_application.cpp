@@ -625,6 +625,9 @@ namespace win
       dynamic_cast < class ::win::thread * > (thread::m_p.m_p)->m_hThread      =  ::GetCurrentThread();
       dynamic_cast < class ::win::thread * > (thread::m_p.m_p)->m_nThreadID    =  ::GetCurrentThreadId();
       
+      // initialize thread specific data (for main thread)
+      if (!afxContextIsDLL)
+         __init_thread();
 
    }
 
@@ -728,9 +731,6 @@ namespace win
          //pApp->SetCurrentHandles();
          SetCurrentHandles();
 
-         // initialize thread specific data (for main thread)
-         if (!afxContextIsDLL)
-            __init_thread();
 
          // Initialize ::user::window::m_pfnNotifyWinEvent
       /*   HMODULE hModule = ::GetModuleHandle("user32.dll");

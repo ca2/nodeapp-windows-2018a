@@ -63,9 +63,9 @@ public:
 
    virtual void on_receive(small_ipc_rx_channel * prxchannel, const char * pszMessage);
 
-   virtual bool initialize();
+   virtual bool intro();
 
-   virtual bool finalize();
+   virtual bool end();
 
 };
 
@@ -112,7 +112,7 @@ installer::~installer()
 {
 }
 
-bool installer::initialize()
+bool installer::intro()
 {
 
    if(__argc >= 2)
@@ -375,10 +375,10 @@ bool installer::are_there_user_files_in_use()
 }
 
 
-bool installer::finalize()
+bool installer::end()
 {
 
-   simple_app::finalize();
+   simple_app::end();
 
    memory_free(m_hmodulea);
    memory_free(m_dwaProcess);

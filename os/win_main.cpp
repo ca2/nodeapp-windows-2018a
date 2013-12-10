@@ -160,8 +160,6 @@ int32_t __win_main(sp(base_system) psystem, ::win::main_init_data * pmaininitdat
 
    psystem->init_main_data(pmaininitdata);
 
-   g_pwindowmap = new ::oswindow_map(psystem);
-
    xxdebug_box("box1", "box1", MB_ICONINFORMATION);
 
    set_main_thread(GetCurrentThread());
