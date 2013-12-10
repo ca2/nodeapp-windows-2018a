@@ -9,6 +9,8 @@ BEGIN_EXTERN_C
 int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
 {
 
+   string str = ::str::international::unicode_to_utf8(::GetCommandLineW());
+
    return app_core_main(hinstance, hPrevInstance, lpCmdLine, nCmdShow);
    
 }

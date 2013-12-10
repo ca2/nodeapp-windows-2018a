@@ -6,7 +6,7 @@ namespace ca2plugin_container
 
 
    class application :
-      virtual public ::base_application
+      virtual public ::plane::session
    {
    public:
 
@@ -18,16 +18,18 @@ namespace ca2plugin_container
       host *                     m_phost;
 
 
-      application();
+      application(sp(base_application) papp, const char * pszChannel);
       virtual ~application();
 
 
       virtual void on_receive(small_ipc_rx_channel * prxchannel, const char * pszMessage);
       virtual void on_receive(small_ipc_rx_channel * prxchannel, int32_t message, void * pdata, int32_t len);
 
-      virtual bool initialize(const char * pszChannel);
+      virtual bool initialize_communication();
 
       virtual bool finalize();
+
+      virtual bool os_native_bergedge_start();
 
 
       virtual int32_t run();

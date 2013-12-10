@@ -12,13 +12,39 @@ uint32_t thread_proc_app(void * lpParam)
 
    string * pstrChannel = (string *) lpParam;
 
-   ::ca2plugin_container::application * papp = new ::ca2plugin_container::application();
+//   _set_purecall_handler(_ca2_purecall);
 
 
-   if(!papp->initialize(*pstrChannel))
+   ::plane::system * psystem = new ::plane::system(NULL);
+
+//   psystem->m_bExitIfNoApplications = false;
+
+   psystem->m_hinstance = ::GetModuleHandle(NULL);
+
+   manual_reset_event ev(psystem);
+
+   psystem->m_peventReady = &ev;
+
+   ev.ResetEvent();
+
+   __start_system(psystem);
+
+   if (!ev.wait(seconds(180)).signaled())
       return -1;
 
-   int32_t nReturnCode = papp->run();
+   ::ca2plugin_container::application * papp = new ::ca2plugin_container::application(psystem, *pstrChannel);
+
+   papp->m_pbaseapp = psystem;
+
+   papp->m_pbasesystem = psystem;
+
+   papp->m_pplaneapp->m_psystem = psystem;
+
+   papp->m_hinstance = psystem->m_hinstance;
+
+   int32_t nReturnCode = papp->main();
+
+   ExitProcess(nReturnCode);
 
    return nReturnCode;
 
@@ -38,10 +64,6 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 
    if(!main_initialize())
       return -1;
-
-   //_set_purecall_handler(_ca2_purecall);
-
-   //::plane::system * psystem = new ::plane::system();
 
    ASSERT(hPrevInstance == NULL);
 

@@ -5,8 +5,12 @@ namespace ca2plugin_container
 {
 
 
-   application::application()
+   application::application(sp(base_application) papp, const char * pszChannel) :
+      element(papp),
+      plane::session(papp)
    {
+
+      m_strChannel = pszChannel;
 
       m_phost = new host(this);
 
@@ -21,7 +25,7 @@ namespace ca2plugin_container
 
       m_phost->m_strBitmapChannel = m_strChannel;
 
-      string strChannel = "\\ca2\\ca2plugin-container-";
+      string strChannel = "\\core\\ca2plugin-container-";
 
       strChannel += m_strChannel;
 
@@ -29,10 +33,8 @@ namespace ca2plugin_container
 
    }
 
-   bool application::initialize(const char * pszChannel)
+   bool application::initialize_communication()
    {
-
-      m_strChannel = pszChannel;
 
       restart_small_ipc_channel();
 
@@ -43,7 +45,14 @@ namespace ca2plugin_container
    }
 
 
+   bool application::os_native_bergedge_start()
+   {
 
+      if (!initialize_communication())
+         return false;
+
+      return true;
+   }
 
 
    void application::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMessage)
@@ -76,8 +85,9 @@ namespace ca2plugin_container
 
    int32_t application::run()
    {
+      return thread::run();
 
-      MSG msg;
+/*      MSG msg;
       
       while(true)
 	   {
@@ -91,7 +101,7 @@ namespace ca2plugin_container
 		   TranslateMessage(&msg);
 		   DispatchMessage(&msg);
 
-	   }
+	   }*/
 
       return 0;
 

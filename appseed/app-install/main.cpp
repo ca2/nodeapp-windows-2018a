@@ -115,7 +115,7 @@ installer::~installer()
 bool installer::intro()
 {
 
-   debug_box("app-install", "app-install", MB_OK);
+   xxdebug_box("app-install", "app-install", MB_OK);
 
    if(__argc >= 2)
    {
@@ -144,7 +144,7 @@ bool installer::intro()
          
          xxdebug_box(strCommandLine, "simple_app::body", 0);
 
-         DWORD dwStartError;
+         uint32_t dwStartError;
 
          ca2_app_install_run(strCommandLine, dwStartError, true);
          

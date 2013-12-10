@@ -402,11 +402,11 @@ namespace ca2plugin_container
             try
             {
 
-               throw todo(get_thread_app());
+               ::draw2d::graphics_sp g(allocer());
 
-               //simple_graphics g;
+               g->CreateCompatibleDC(NULL);
 
-               //on_paint(g, prect);
+               on_paint(g, prect);
 
             }
             catch(...)

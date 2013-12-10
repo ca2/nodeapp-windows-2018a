@@ -158,6 +158,11 @@ int32_t __win_main(sp(base_system) psystem, ::win::main_init_data * pmaininitdat
 
    psystem->construct();
 
+   if (pmaininitdata == NULL)
+   {
+      psystem->m_hinstance;
+   }
+
    psystem->init_main_data(pmaininitdata);
 
    xxdebug_box("box1", "box1", MB_ICONINFORMATION);
@@ -171,5 +176,4 @@ int32_t __win_main(sp(base_system) psystem, ::win::main_init_data * pmaininitdat
    return nReturnCode;
 
 }
-
 

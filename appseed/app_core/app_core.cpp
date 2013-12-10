@@ -20,7 +20,7 @@ extern "C" int32_t app_core_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, L
 
    pmaininitdata->m_hInstance = hinstance;
    pmaininitdata->m_hPrevInstance = hPrevInstance;
-   pmaininitdata->m_vssCommandLine = ::str::international::unicode_to_utf8(::GetCommandLineW());
+   pmaininitdata->m_vssCommandLine = lpCmdLine;
    pmaininitdata->m_nCmdShow = nCmdShow;
 
 
