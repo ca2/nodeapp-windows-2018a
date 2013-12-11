@@ -63,6 +63,8 @@ public:
 
    virtual void on_receive(small_ipc_rx_channel * prxchannel, const char * pszMessage);
 
+   virtual int32_t simple_app_pre_run();
+
    virtual bool intro();
 
    virtual bool end();
@@ -112,25 +114,24 @@ installer::~installer()
 {
 }
 
-bool installer::intro()
+int32_t installer::simple_app_pre_run()
 {
-
    xxdebug_box("app-install", "app-install", MB_OK);
 
-   if(__argc >= 2)
+   if (__argc >= 2)
    {
 
-      if(!strncmp_dup(__argv[1], "-install:", strlen_dup("-install:")))
+      if (!strncmp_dup(__argv[1], "-install:", strlen_dup("-install:")))
       {
 
          //Sleep(15 * 1000);
 
          string strCommandLine;
 
-         for(int32_t i = 1; i < __argc; i++)
+         for (int32_t i = 1; i < __argc; i++)
          {
 
-            if(i == 1)
+            if (i == 1)
             {
                strCommandLine = &__argv[1][strlen_dup("-install:")];
             }
@@ -141,7 +142,7 @@ bool installer::intro()
             }
 
          }
-         
+
          xxdebug_box(strCommandLine, "simple_app::body", 0);
 
          uint32_t dwStartError;
@@ -157,15 +158,23 @@ bool installer::intro()
 
          }
 
-         debug_box(strCommandLine, "simple_app::body", 0);
+         xxdebug_box(strCommandLine, "simple_app::body", 0);
 
          ca2_app_install_run(strCommandLine, dwStartError, true);
-         
-         return false;
+
+         return -1;
 
       }
 
    }
+
+   return 0;
+
+}
+
+bool installer::intro()
+{
+
 
 
    m_hmutexSpabootInstall = ::CreateMutex(NULL, FALSE, "Global\\::ca2::fontopus::ca2_spaboot_install::7807e510-5579-11dd-ae16-0800200c7784");

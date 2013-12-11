@@ -203,6 +203,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "npca2", "..\..\..\app-core\
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app-install", "..\..\appseed\app-install\app-install.vcxproj", "{71BAB50B-DC41-4570-B676-30380CDA3A17}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9163E31A-2D5A-4F18-AD6F-B561C76E5054} = {9163E31A-2D5A-4F18-AD6F-B561C76E5054}
+		{AFC48570-75E4-46BD-B8AB-4590B257E1C8} = {AFC48570-75E4-46BD-B8AB-4590B257E1C8}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ca2plugin-container", "..\..\appseed\ca2plugin-container\ca2plugin-container.vcxproj", "{AD997EA3-A120-472D-A216-EC4B0B81FDC4}"
 EndProject

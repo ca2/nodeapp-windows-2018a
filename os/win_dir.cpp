@@ -981,6 +981,7 @@ namespace win
       
       doc.load(Application.file().as_string(appdata("configuration\\directory.xml")));
       
+      xxdebug_box("win_dir::initialize (configuration)", "win_dir::initialize", 0);
       if(doc.get_root()->get_name() == "directory_configuration")
       {
 
@@ -996,12 +997,13 @@ namespace win
          m_strNetSeedFolder = element("net/netseed");
 
       mk(m_strTimeFolder, get_app());
+      xxdebug_box("win_dir::initialize (m_strTimeFolder)", "win_dir::initialize", 0);
 
       if(!is(m_strTimeFolder, get_app()))
          return false;
 
       mk(path(m_strTimeFolder, "time"), get_app());
-
+      xxdebug_box("win_dir::initialize", "win_dir::initialize", 0);
       return true;
 
    }
