@@ -149,7 +149,7 @@ int32_t installer::simple_app_pre_run()
 
          strCommandLine = ::str::international::unicode_to_utf8(::GetCommandLineW());
 
-         int iFind;
+         strsize iFind;
 
          if ((iFind = strCommandLine.find_ci("-install:")) >= 0)
          {
