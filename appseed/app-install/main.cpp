@@ -146,6 +146,19 @@ bool installer::intro()
 
          uint32_t dwStartError;
 
+         strCommandLine = ::str::international::unicode_to_utf8(::GetCommandLineW());
+
+         int iFind;
+
+         if ((iFind = strCommandLine.find_ci("-install:")) >= 0)
+         {
+
+            strCommandLine = strCommandLine.Left(iFind) + " " + strCommandLine.substr(iFind + strlen("-install:"));
+
+         }
+
+         debug_box(strCommandLine, "simple_app::body", 0);
+
          ca2_app_install_run(strCommandLine, dwStartError, true);
          
          return false;
