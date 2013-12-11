@@ -94,7 +94,7 @@ installer::installer() :
    base_system(NULL),
    ::install::installer(this)
 {
-   xxdebug_box("app-install", "app", 0);
+   debug_box("app-install", "app", 0);
    m_hinstance             = ::GetModuleHandleA(NULL);
    m_hmutexSpabootInstall  = NULL;
    e_message m_emessage    = message_none;

@@ -729,7 +729,7 @@ namespace win
          m_strCmdLine = strCmdLine;
          m_nCmdShow = nCmdShow;
          //pApp->SetCurrentHandles();
-         SetCurrentHandles();
+         m_pimpl->SetCurrentHandles();
 
 
          // Initialize ::user::window::m_pfnNotifyWinEvent
