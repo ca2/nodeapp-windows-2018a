@@ -246,7 +246,8 @@ void __internal_pre_translate_message(signal_details * pobj)
 
       try
       {
-         if(pthread->m_pbaseapp->m_pbasesession != NULL)
+         if(pthread->m_pbaseapp->m_pbasesession != NULL &&
+            &pthread->m_pbaseapp->m_pbasesession->frames() != NULL)
          {
             try
             {

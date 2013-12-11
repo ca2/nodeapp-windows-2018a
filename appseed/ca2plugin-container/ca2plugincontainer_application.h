@@ -6,7 +6,7 @@ namespace ca2plugin_container
 
 
    class application :
-      virtual public ::plane::session
+      virtual public ::application
    {
    public:
 

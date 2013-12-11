@@ -6,8 +6,7 @@ namespace ca2plugin_container
 
 
    application::application(sp(base_application) papp, const char * pszChannel) :
-      element(papp),
-      plane::session(papp)
+      element(papp)
    {
 
       m_strChannel = pszChannel;

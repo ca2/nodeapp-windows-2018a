@@ -209,6 +209,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app-install", "..\..\appsee
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ca2plugin-container", "..\..\appseed\ca2plugin-container\ca2plugin-container.vcxproj", "{AD997EA3-A120-472D-A216-EC4B0B81FDC4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9163E31A-2D5A-4F18-AD6F-B561C76E5054} = {9163E31A-2D5A-4F18-AD6F-B561C76E5054}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core", "..\..\appseed\app_core\app_core.vcxproj", "{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}"
 	ProjectSection(ProjectDependencies) = postProject
