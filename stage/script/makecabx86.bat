@@ -8,7 +8,7 @@ del ..\..\..\time\iexca2\x86\os.dll
 del ..\..\..\time\iexca2\x86\msvcp120d.dll
 del ..\..\..\time\iexca2\x86\msvcr120d.dll
 del ..\..\..\time\iexca2\x86\draw2d_gdiplus.dll
-del ..\..\time\iexca2\x86\app-install.exe
+del ..\..\..\time\iexca2\x86\app-install.exe
 copy ..\..\..\stage\x86\iexca2.dll ..\..\..\time\iexca2\x86\iexca2.dll
 copy ..\..\..\stage\x86\base.dll ..\..\..\time\iexca2\x86\base.dll
 copy ..\..\..\stage\x86\os.dll ..\..\..\time\iexca2\x86\os.dll
