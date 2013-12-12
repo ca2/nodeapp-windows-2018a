@@ -1769,6 +1769,8 @@ retry2:
       add_path(pszDir, "plugins\\npca2.dll");
       add_path(pszDir, "plugins\\base.dll");
       add_path(pszDir, "plugins\\os.dll");
+      add_path(pszDir, "plugins\\msvcp120d.dll");
+      add_path(pszDir, "plugins\\msvcr120d.dll");
       add_path(pszDir, "plugins\\draw2d_gdiplus.dll");
       add_path(pszDir, "skin\\classic\\ca2-5c-32.png");
       add_path(pszDir, "META-INF\\manifest.mf");
@@ -1966,13 +1968,27 @@ retry2:
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
 
+      add_status("Signing base.dll for Firefox ...");
       strFile = System.dir().path(strDir, "npca2/plugins", "base.dll");
       Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/base.dll"));
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
 
+      add_status("Signing os.dll for Firefox ...");
       strFile = System.dir().path(strDir, "npca2/plugins", "os.dll");
       Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/os.dll"));
+      strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
+      System.process().synch(strCmd);
+
+      add_status("Signing msvcr120d.dll for Firefox ...");
+      strFile = System.dir().path(strDir, "npca2/plugins", "msvcr120d.dll");
+      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/msvcr120d.dll"));
+      strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
+      System.process().synch(strCmd);
+
+      add_status("Signing msvcp120d.dll for Firefox ...");
+      strFile = System.dir().path(strDir, "npca2/plugins", "msvcp120d.dll");
+      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/msvcp120d.dll"));
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
 
@@ -2204,6 +2220,18 @@ retry2:
       add_status("Signing os.dll for Chrome ...");
       strFile = System.dir().path(strDir, "os.dll");
       Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/os.dll"));
+      strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
+      System.process().synch(strCmd);
+
+      add_status("Signing msvcp120d.dll for Chrome ...");
+      strFile = System.dir().path(strDir, "msvcp120d.dll");
+      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/msvcp120d.dll"));
+      strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
+      System.process().synch(strCmd);
+
+      add_status("Signing msvcr120d.dll for Chrome ...");
+      strFile = System.dir().path(strDir, "msvcr120d.dll");
+      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/msvcr120d.dll"));
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
 
