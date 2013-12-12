@@ -60,7 +60,7 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 
    //Sleep(15 * 1000);
 
-   if (file_exists_dup("C:\\ca2\\beg_debug_box.txt"))
+   if (file_exists_dup("C:\\ca2\\config\\beg_debug_box.txt"))
    {
 
       if (debug_box("Run ca2 plugin container?", "Run ca2 plugin container?", MB_YESNO | MB_ICONQUESTION) == IDNO)
