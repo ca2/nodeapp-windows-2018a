@@ -60,7 +60,15 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 
    //Sleep(15 * 1000);
 
-   xxdebug_box("ca2 plugin container win_main", "ca2 plugin container", 0);
+   if (file_exists_dup("C:\\ca2\\beg_debug_box.txt"))
+   {
+
+      if (debug_box("Run ca2 plugin container?", "Run ca2 plugin container?", MB_YESNO | MB_ICONQUESTION) == IDNO)
+         return -1;
+
+   }
+
+   
 	
    UNREFERENCED_PARAMETER(lpCmdLine);
 
