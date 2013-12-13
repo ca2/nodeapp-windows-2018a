@@ -308,11 +308,9 @@ namespace ca2plugin_container
    {
 
 
-      if(System.install().is_lock_file_locked())
+      if(System.install().is_installing_ca2())
       {
          
-         System.install().set_installing_ca2();
-
          if(!m_bInstalling)
          {
             m_bInstalling = true;

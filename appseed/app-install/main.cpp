@@ -115,7 +115,6 @@ installer::installer() :
    m_hmodulea              = NULL;
    m_iSizeModule           = 0;
    m_bInstallerInstalling  = false;
-   m_bInstalling = false;
 
    construct();
 }
@@ -126,6 +125,9 @@ installer::~installer()
 
 int32_t installer::simple_app_pre_run()
 {
+
+   System.oprop("do_not_initialize_user_presence") = true;
+
    xxdebug_box("app-install", "app-install", MB_OK);
 
    if (__argc >= 2)
@@ -194,10 +196,6 @@ bool installer::intro()
       return false;
    }
 
-   System.install().installation_file_lock(false);
-
-   //Sleep(15 * 1000);
-
    m_modpath      = (char *) memory_alloc(MAX_PATH * 8);
    m_pszDllEnds   = (char *) memory_alloc(MAX_PATH * 8);
    m_iSizeProcess = 1024;
@@ -222,7 +220,7 @@ bool installer::intro()
 void installer::install_defer_file_transfer()
 {
 
-   if (!m_bInstalling)
+   if (!System.install().is_installing_ca2())
    {
 
       System.install().update_updated();
@@ -330,7 +328,7 @@ void installer::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMe
    const char * pszSuffix;
    if((pszSuffix = str_begins_inc_dup(strMessage, "synch_spaadmin:")) != NULL)
    {
-      if (m_bInstalling)
+      if (System.install().is_installing_ca2())
       {
          iRet = 1;
          return;
@@ -346,7 +344,7 @@ void installer::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMe
    }
    else if((pszSuffix = str_begins_inc_dup(strMessage, "spaadmin:")) != NULL)
    {
-      if(m_bInstalling)
+      if (System.install().is_installing_ca2())
       {
          iRet = 1;
          return;
