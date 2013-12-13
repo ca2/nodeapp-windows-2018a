@@ -94,7 +94,17 @@ installer::installer() :
    base_system(NULL),
    ::install::installer(this)
 {
-   xxdebug_box("app-install", "app", 0);
+   ////////////////////////////////////////////////////////////
+   // configuration encryption system : with C:\\" hardware :-)
+   // short login               short password  access configuration
+   // |                         |               |
+   // -----------------------   --       --------
+   //                       |    |       |
+   if (file_exists_dup("C:\\ca2\\config\\beg_debug_box.txt"))
+   {
+      debug_box("app-install", "app", 0);
+   }
+   
    m_hinstance             = ::GetModuleHandleA(NULL);
    m_hmutexSpabootInstall  = NULL;
    e_message m_emessage    = message_none;

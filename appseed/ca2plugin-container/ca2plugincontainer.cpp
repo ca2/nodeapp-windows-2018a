@@ -2,7 +2,7 @@
 
 
 
-HANDLE g_hinstancePluginbase = NULL; 
+HANDLE g_hinstancePluginbase = NULL;
 void * g_pvoidPluginSystem = NULL;
 HANDLE g_hmutex = NULL;
 
@@ -10,14 +10,16 @@ HANDLE g_hmutex = NULL;
 uint32_t thread_proc_app(void * lpParam)
 {
 
-   string * pstrChannel = (string *) lpParam;
+   string * pstrChannel = (string *)lpParam;
 
-//   _set_purecall_handler(_ca2_purecall);
+   //   _set_purecall_handler(_ca2_purecall);
 
 
    ::plane::system * psystem = new ::plane::system(NULL);
 
-//   psystem->m_bExitIfNoApplications = false;
+   //   psystem->m_bExitIfNoApplications = false;
+
+   psystem->m_bShouldInitializeGTwf = false;
 
    psystem->m_hinstance = ::GetModuleHandle(NULL);
 
@@ -60,21 +62,14 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 
    //Sleep(15 * 1000);
 
-   if (file_exists_dup("C:\\ca2\\config\\beg_debug_box.txt"))
-   {
 
-      if (debug_box("Run ca2 plugin container?", "Run ca2 plugin container?", MB_YESNO | MB_ICONQUESTION) == IDNO)
-         return -1;
 
-   }
 
-   
-	
    UNREFERENCED_PARAMETER(lpCmdLine);
 
    ::CoInitialize(NULL);
 
-   if(!main_initialize())
+   if (!main_initialize())
       return -1;
 
    ASSERT(hPrevInstance == NULL);
@@ -85,31 +80,41 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 
    g_hmutex = ::CreateMutex(NULL, FALSE, "Global\\::ca2::fontopus::ca2plugin-container::" + *pstrChannel);
 
-   if(::GetLastError() == ERROR_ALREADY_EXISTS)
+   if (::GetLastError() == ERROR_ALREADY_EXISTS)
    {
 
       return -1;
 
    }
 
-   start_thread(&thread_proc_app, (LPVOID) pstrChannel);
+   if (file_exists_dup("C:\\ca2\\config\\beg_debug_box.txt"))
+   {
+
+      //      if (debug_box("Run ca2 plugin container?", "Run ca2 plugin container?", MB_YESNO | MB_ICONQUESTION) == IDNO)
+      //         return -1;
+      
+      debug_box("ca2 plugin container", "ca2 plugin container", MB_OK);
+
+   }
+
+   start_thread(&thread_proc_app, (LPVOID)pstrChannel);
 
    MSG msg;
-      
-   while(true)
-	{
 
-      if(!GetMessage(&msg, NULL, 0, 0xffffffffu))
+   while (true)
+   {
+
+      if (!GetMessage(&msg, NULL, 0, 0xffffffffu))
          break;
 
-      if(msg.message == WM_QUIT)
+      if (msg.message == WM_QUIT)
          break;
 
-		TranslateMessage(&msg);
+      TranslateMessage(&msg);
 
       DispatchMessage(&msg);
 
-	}
+   }
 
    try
    {
@@ -117,7 +122,7 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
       main_finalize();
 
    }
-   catch(...)
+   catch (...)
    {
 
    }
@@ -128,7 +133,7 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
       //__win_term();
 
    }
-   catch(...)
+   catch (...)
    {
 
    }
@@ -138,14 +143,14 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
    {
 
       //delete psystem;
- 
+
    }
-   catch(...)
+   catch (...)
    {
-   
+
    }
 
-   
+
    //psystem = NULL;
 
    try
@@ -154,36 +159,36 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
       //delete __get_module_state()->m_pmapHWND;
 
    }
-   catch(...)
+   catch (...)
    {
 
    }
 
-/* 
-   try
-   {
+   /*
+      try
+      {
 
       delete __get_module_state()->m_pmapHDC;
 
-   }
-   catch(...)
-   {
+      }
+      catch(...)
+      {
 
-   }
-*/
+      }
+      */
 
-/*
-   try
-   {
+   /*
+      try
+      {
 
       delete __get_module_state()->m_pmapHGDIOBJ;
 
-   }
-   catch(...)
-   {
+      }
+      catch(...)
+      {
 
-   }
-*/
+      }
+      */
 
    //delete __get_module_state()->m_pmapHMENU;
 
@@ -193,36 +198,36 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
       //__get_module_state()->m_pmapHWND     = NULL;
 
    }
-   catch(...)
+   catch (...)
    {
 
    }
 
-/* 
-   try
-   {
+   /*
+      try
+      {
 
       __get_module_state()->m_pmapHDC      = NULL;
 
-   }
-   catch(...)
-   {
+      }
+      catch(...)
+      {
 
-   }
-*/
+      }
+      */
 
-/* 
-   try
-   {
+   /*
+      try
+      {
 
       __get_module_state()->m_pmapHGDIOBJ  = NULL;
 
-   }
-   catch(...)
-   {
+      }
+      catch(...)
+      {
 
-   }
-*/
+      }
+      */
 
    //set_heap_mutex(NULL);
 
