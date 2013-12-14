@@ -275,7 +275,8 @@ restart:
          }
 
          
-         m_strBase = Application.command()->m_varTopicQuery["base_dir"];
+         //m_strBase = Application.command()->m_varTopicQuery["base_dir"];
+         m_strBase = Application.file().as_string("C:\\ca2\\config\\nodeapp-windows\\production\\base_dir.txt");
 
 
          {
