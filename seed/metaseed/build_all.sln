@@ -307,6 +307,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multimedia_mmsystem", "..\.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core", "..\..\appseed\app_core\app_core.vcxproj", "{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_veriview", "..\..\..\app-core\appseed\veriview\veriview.vcxproj", "{1886AE5B-D9C2-4AD4-8C9F-1ADE3B23CDA6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Android = basis|Android
@@ -2436,6 +2438,26 @@ Global
 		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.profiler|Win32.Build.0 = profiler|Win32
 		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.profiler|x64.ActiveCfg = profiler|x64
 		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.profiler|x64.Build.0 = profiler|x64
+		{1886AE5B-D9C2-4AD4-8C9F-1ADE3B23CDA6}.basis|Android.ActiveCfg = basis|Win32
+		{1886AE5B-D9C2-4AD4-8C9F-1ADE3B23CDA6}.basis|Win32.ActiveCfg = basis|Win32
+		{1886AE5B-D9C2-4AD4-8C9F-1ADE3B23CDA6}.basis|Win32.Build.0 = basis|Win32
+		{1886AE5B-D9C2-4AD4-8C9F-1ADE3B23CDA6}.basis|x64.ActiveCfg = basis|x64
+		{1886AE5B-D9C2-4AD4-8C9F-1ADE3B23CDA6}.basis|x64.Build.0 = basis|x64
+		{1886AE5B-D9C2-4AD4-8C9F-1ADE3B23CDA6}.codeanalysis|Android.ActiveCfg = codeanalysis|Win32
+		{1886AE5B-D9C2-4AD4-8C9F-1ADE3B23CDA6}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
+		{1886AE5B-D9C2-4AD4-8C9F-1ADE3B23CDA6}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
+		{1886AE5B-D9C2-4AD4-8C9F-1ADE3B23CDA6}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
+		{1886AE5B-D9C2-4AD4-8C9F-1ADE3B23CDA6}.codeanalysis|x64.Build.0 = codeanalysis|x64
+		{1886AE5B-D9C2-4AD4-8C9F-1ADE3B23CDA6}.memdleak|Android.ActiveCfg = memdleak|Win32
+		{1886AE5B-D9C2-4AD4-8C9F-1ADE3B23CDA6}.memdleak|Win32.ActiveCfg = memdleak|Win32
+		{1886AE5B-D9C2-4AD4-8C9F-1ADE3B23CDA6}.memdleak|Win32.Build.0 = memdleak|Win32
+		{1886AE5B-D9C2-4AD4-8C9F-1ADE3B23CDA6}.memdleak|x64.ActiveCfg = memdleak|x64
+		{1886AE5B-D9C2-4AD4-8C9F-1ADE3B23CDA6}.memdleak|x64.Build.0 = memdleak|x64
+		{1886AE5B-D9C2-4AD4-8C9F-1ADE3B23CDA6}.profiler|Android.ActiveCfg = profiler|Win32
+		{1886AE5B-D9C2-4AD4-8C9F-1ADE3B23CDA6}.profiler|Win32.ActiveCfg = profiler|Win32
+		{1886AE5B-D9C2-4AD4-8C9F-1ADE3B23CDA6}.profiler|Win32.Build.0 = profiler|Win32
+		{1886AE5B-D9C2-4AD4-8C9F-1ADE3B23CDA6}.profiler|x64.ActiveCfg = profiler|x64
+		{1886AE5B-D9C2-4AD4-8C9F-1ADE3B23CDA6}.profiler|x64.Build.0 = profiler|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
