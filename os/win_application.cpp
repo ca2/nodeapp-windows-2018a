@@ -852,7 +852,7 @@ namespace win
       if(str.has_char())
          return "draw2d_" + str;
       else
-         return "draw2d_direct2d";
+         return "draw2d_gdiplus";
    }
 
 
