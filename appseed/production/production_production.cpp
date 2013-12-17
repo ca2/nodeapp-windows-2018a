@@ -252,29 +252,55 @@ namespace production
 
 restart:
 
-      if(m_iStep == 1)
+      if (m_iStep == 1)
       {
 
-         if(m_eversion == version_basis)
+         if (m_eversion == version_basis)
          {
-            m_strStdPostColor    = "color: #882277;";
-            m_strBackPostColor   = "background-color: #CFC2CF;";
-            m_strEmpPostColor    = "color: #660060;";
-            m_strVersion         = "basis";
-            m_strStatusEmail     = "ca2dev@ca2.cc";
-            m_strDownloadSite    = "eu-download.ca2.cc";
+            m_strStdPostColor = "color: #882277;";
+            m_strBackPostColor = "background-color: #CFC2CF;";
+            m_strEmpPostColor = "color: #660060;";
+            m_strVersion = "basis";
+            m_strStatusEmail = "ca2dev@ca2.cc";
+            m_strDownloadSite = "eu-download.ca2.cc";
          }
          else
          {
-            m_strStdPostColor    = "color: #448855;";
-            m_strBackPostColor   = "background-color: #A0CCAA;";
-            m_strEmpPostColor    = "color: #007700;";
-            m_strVersion         = "stage";
-            m_strStatusEmail     = "production@ca2.cc";
-            m_strDownloadSite    = "download.ca2.cc";
+            m_strStdPostColor = "color: #448855;";
+            m_strBackPostColor = "background-color: #A0CCAA;";
+            m_strEmpPostColor = "color: #007700;";
+            m_strVersion = "stage";
+            m_strStatusEmail = "production@ca2.cc";
+            m_strDownloadSite = "download.ca2.cc";
          }
 
-         
+
+         bool bMediumSizeStatusText = false;
+
+         if (bMediumSizeStatusText)
+         {
+
+            property_set set;
+
+            Application.http().get("http://api.ca2.cc/status/insert");
+         string strEndTime;
+         m_timeEnd.FormatGmt(strEndTime, "%Y-%m-%d %H-%M-%S");
+         m_strBuild = "\"This a long build version string text description that makes really trigger a size that is will end up making this status rquired and needed to be recorded and written to another set of records or table...\"";
+         if (m_eversion == version_basis)
+         {
+            set["post"]["new_status"] = "<div style=\"display: block; background-color: #FFE0FF; \"><h2 style=\"margin-bottom:0px; color: #FF55CC;\">Medium Size Status Text" + version_to_international_datetime(m_strBuild) + "</h2><span style=\"color: #882255; display: block; margin-bottom: 1.5em;\">" + m_strBuildTook + " and finished at " + strEndTime + "<br>New release of <a href=\"http://code.ca2.cc/\" class=\"fluidbasis\" >basis</a> applications labeled " + m_strBuild + " is ready for download through compatible gateways.<br>Check <a href=\"http://laboratory.ca2.cc/\" class=\"fluidbasis\" >laboratory.ca2.cc</a> or <a href=\"http://warehouse.ca2.cc/\" class=\"fluidbasis\" >warehouse.ca2.cc</a> for simple gateway implementations.</span></div>";
+         }
+         else
+         {
+            set["post"]["new_status"] = "<div style=\"display: block; background-color: #E0FFCC; \"><h2 style=\"margin-bottom:0px; color: #55CCAA;\">Medium Size Status Text" + version_to_international_datetime(m_strBuild) + "</h2><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">" + m_strBuildTook + " and finished at " + strEndTime + "<br>New release of <a href=\"http://ca2.cc/\">stage</a> applications labeled " + m_strBuild + " is ready for download through compatible gateways.<br>Check <a href=\"http://desktop.ca2.cc/\">desktop.ca2.cc</a> or <a href=\"http://store.ca2.cc/\">store.ca2.cc</a> for simple gateway implementations.</span></div";
+         }
+         string str;
+         Application.http().get("http://api.ca2.cc/status/insert", str, set);
+
+         ExitProcess(true);
+
+
+      }
          //m_strBase = Application.command()->m_varTopicQuery["base_dir"];
          m_strBase = Application.file().as_string("C:\\ca2\\config\\nodeapp-windows\\production\\base_dir.txt").trimmed();
 
@@ -332,7 +358,9 @@ restart:
          //   goto skipCompress;
          //goto skipBuild;
 
-         if(m_iGlobalRetry <= 0)
+         bool bSkip1 = false;
+
+         if(!bSkip1 && m_iGlobalRetry <= 0)
          {
 
             for(int32_t i = 0; i < m_straRoot.get_size(); i++)
@@ -375,13 +403,18 @@ restart:
 
          strSVNKey = "app:" + strSVN;
 
-         for(int32_t i = 1; i < m_straRoot.get_size(); i++)
+         if (!bSkip1)
          {
 
-            strSvnVersionCmd.Format("svnversion %s", System.dir().path(m_strBase, m_straRoot[i]));
-            strAddRevision = System.process().get_output(strSvnVersionCmd);
-            strAddRevision.trim();
-            strSVNKey += ", " + m_straRoot[i] + ":SVN" + strAddRevision;
+            for (int32_t i = 1; i < m_straRoot.get_size(); i++)
+            {
+
+               strSvnVersionCmd.Format("svnversion %s", System.dir().path(m_strBase, m_straRoot[i]));
+               strAddRevision = System.process().get_output(strSvnVersionCmd);
+               strAddRevision.trim();
+               strSVNKey += ", " + m_straRoot[i] + ":SVN" + strAddRevision;
+
+            }
 
          }
 
