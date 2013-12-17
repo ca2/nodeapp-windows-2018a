@@ -829,8 +829,25 @@ namespace win
 
    string application::draw2d_get_default_library_name()
    {
-      
-      string str = file_as_string_dup(::dir::userappdata("draw2d.txt"));
+
+      string str;
+
+      if (file_exists_dup("C:\\ca2\\config\\draw2d.txt"))
+      {
+
+         str = file_as_string_dup("C:\\ca2\\config\\draw2d.txt");
+
+      }
+      else
+      {
+
+         string strPath;
+
+         strPath = ::dir::userappdata("draw2d.txt");
+
+         str = file_as_string_dup(strPath);
+
+      }
 
       if(str.has_char())
          return "draw2d_" + str;
