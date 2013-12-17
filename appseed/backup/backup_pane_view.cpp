@@ -117,6 +117,7 @@ namespace backup
             return;
          sp(::user::impact) pview = pdoc->get_view();
          form_update_hint uh;
+         uh.m_actioncontext = ::action::source::system_default();
          uh.m_etype = form_update_hint::type_browse;
          uh.m_strForm = "filemanager\\replace_name_in_file_system.xhtml";
          pdoc->update_all_views(NULL, 0, &uh);

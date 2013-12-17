@@ -114,7 +114,7 @@ namespace production
       else if(m_pviewdata->m_id == PaneViewContextMenu)
       {
          sp(::filemanager::document) pdoc =  (m_pviewdata->m_pdoc);
-         pdoc->FileManagerBrowse(Application.dir().userappdata("production\\menu"));
+         pdoc->FileManagerBrowse(Application.dir().userappdata("production\\menu"), ::action::source::system_default());
       }
       else
       {
@@ -151,7 +151,7 @@ namespace production
                pdoc->update_all_views(NULL, 1234);
                pdoc->update_all_views(NULL, 123458);
                sp(::user::impact) pview = pdoc->get_view();
-               pdoc->FileManagerBrowse(Application.dir().userappdata("production\\menu"));
+               pdoc->FileManagerBrowse(Application.dir().userappdata("production\\menu"), ::action::source::system_default());
                if(pview != NULL)
                {
                   sp(::user::frame_window) pframe =  (pview->GetParentFrame());
@@ -219,7 +219,7 @@ namespace production
                pdoc->update_all_views(NULL, 1234);
                pdoc->update_all_views(NULL, 123458);
                sp(::user::impact) pview = pdoc->get_view();
-               pdoc->FileManagerBrowse(Application.dir().userappdata("production\\3-action-launch"));
+               pdoc->FileManagerBrowse(Application.dir().userappdata("production\\3-action-launch"), ::action::source::system_default());
                if(pview != NULL)
                {
                   sp(::user::frame_window) pframe =  (pview->GetParentFrame());
@@ -245,6 +245,7 @@ namespace production
          m_pviewOptions->m_pcallback = this;
          
          form_update_hint uh;
+         uh.m_actioncontext = ::action::source::system_default();
          uh.m_etype = form_update_hint::type_browse;
          uh.m_strForm = "production\\options.xhtml";
          pdoc->update_all_views(NULL, 0, &uh);

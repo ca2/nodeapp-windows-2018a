@@ -28,17 +28,19 @@ bool form_callback::BaseOnControlEvent(::user::form * pview, ::user::control_eve
       if(pevent->m_puie->m_id == "lfs")
       {
          form_update_hint uh;
+         uh.m_actioncontext = ::action::source::system_default();
          uh.m_etype = form_update_hint::type_browse;
          uh.m_strForm = "filemanager_add_location_lfs.xhtml";
          pview->get_document()->update_all_views(NULL, 0, &uh);
          sp(::user::interaction) pguie = pview->get_child_by_name("lfs");
          sp(text_interface) ptext =pguie;
          string strPath;
-         ptext->_001SetText(strPath);
+         ptext->_001SetText(strPath, uh.m_actioncontext);
       }
       else if(pevent->m_puie->m_id == "ftp")
       {
          form_update_hint uh;
+         uh.m_actioncontext = ::action::source::system_default();
          uh.m_etype = form_update_hint::type_browse;
          uh.m_strForm = "filemanager_add_location_ftp.xhtml";
          pview->get_document()->update_all_views(NULL, 0, &uh);
