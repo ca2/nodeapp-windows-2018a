@@ -268,13 +268,14 @@ restart:
       if (m_iStep == 1)
       {
 
+         m_strStatusEmail = ApplicationUser.m_strLogin;
+
          if (m_eversion == version_basis)
          {
             m_strStdPostColor = "color: #882277;";
             m_strBackPostColor = "background-color: #CFC2CF;";
             m_strEmpPostColor = "color: #660060;";
             m_strVersion = "basis";
-            m_strStatusEmail = "ca2dev@ca2.cc";
             m_strDownloadSite = "eu-download.ca2.cc";
          }
          else
@@ -283,7 +284,6 @@ restart:
             m_strBackPostColor = "background-color: #A0CCAA;";
             m_strEmpPostColor = "color: #007700;";
             m_strVersion = "stage";
-            m_strStatusEmail = "production@ca2.cc";
             m_strDownloadSite = "download.ca2.cc";
          }
 
