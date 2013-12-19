@@ -61,6 +61,19 @@ namespace production
       m_iStep = 1;
       m_iGlobalRetry = 0;
 
+      if (m_eversion == version_basis)
+      {
+         m_strTwitterConsumerKey = "mKYvWA6cZkUEUwjoygUuVw";
+         m_strTwitterConsumerSecret = "JwtNLBLyXlPvGLqKA4c8w4XH0PPLmkoVzm0TOocvSyY";
+      }
+      else
+      {
+         m_strTwitterConsumerKey = "AHsGuuGPEqDheXbx93JQ";
+         m_strTwitterConsumerSecret = "6b8zc7HxM0ImjYgq0kOM1AzrHSIxTCxVOWsM7gRN90";
+      }
+
+
+
       twitter_auth();
 
 
@@ -263,8 +276,6 @@ restart:
             m_strVersion = "basis";
             m_strStatusEmail = "ca2dev@ca2.cc";
             m_strDownloadSite = "eu-download.ca2.cc";
-            m_strTwitterConsumerKey = "mKYvWA6cZkUEUwjoygUuVw";
-            m_strTwitterConsumerSecret = "JwtNLBLyXlPvGLqKA4c8w4XH0PPLmkoVzm0TOocvSyY";
          }
          else
          {
@@ -274,8 +285,6 @@ restart:
             m_strVersion = "stage";
             m_strStatusEmail = "production@ca2.cc";
             m_strDownloadSite = "download.ca2.cc";
-            m_strTwitterConsumerKey = "AHsGuuGPEqDheXbx93JQ";
-            m_strTwitterConsumerSecret = "6b8zc7HxM0ImjYgq0kOM1AzrHSIxTCxVOWsM7gRN90";
          }
 
 
