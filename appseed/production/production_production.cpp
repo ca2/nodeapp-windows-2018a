@@ -263,6 +263,8 @@ restart:
             m_strVersion = "basis";
             m_strStatusEmail = "ca2dev@ca2.cc";
             m_strDownloadSite = "eu-download.ca2.cc";
+            m_strTwitterConsumerKey = "mKYvWA6cZkUEUwjoygUuVw";
+            m_strTwitterConsumerSecret = "JwtNLBLyXlPvGLqKA4c8w4XH0PPLmkoVzm0TOocvSyY";
          }
          else
          {
@@ -272,10 +274,12 @@ restart:
             m_strVersion = "stage";
             m_strStatusEmail = "production@ca2.cc";
             m_strDownloadSite = "download.ca2.cc";
+            m_strTwitterConsumerKey = "AHsGuuGPEqDheXbx93JQ";
+            m_strTwitterConsumerSecret = "6b8zc7HxM0ImjYgq0kOM1AzrHSIxTCxVOWsM7gRN90";
          }
 
 
-         bool bMediumSizeStatusText = false;
+      bool bMediumSizeStatusText = false;
 
          if (bMediumSizeStatusText)
          {
@@ -2433,22 +2437,8 @@ retry2:
 
       /* OAuth flow begins */
       /* Step 0: set OAuth related params. These are got by registering your app at twitter.com */
-      if(m_eversion == version_basis)
-      {
-         twitterObj.get_oauth().setConsumerKey(string( "mKYvWA6cZkUEUwjoygUuVw" ) );
-         twitterObj.get_oauth().setConsumerSecret(string( "JwtNLBLyXlPvGLqKA4c8w4XH0PPLmkoVzm0TOocvSyY" ) );
-         //twitterObj.get_oauth().setOAuthTokenKey( "398494574-zYu5BSEBYPzAZGP9zNI51L9v3yBVQDhhVmWVfMLs" );
-         //twitterObj.get_oauth().setOAuthTokenSecret( "KFfJ6V80MpAwE3w6Q4huGLSs3Ifz30Oywogp8" );
-         twitterObj.get_oauth().setOAuthTokenKey( "" );
-         twitterObj.get_oauth().setOAuthTokenSecret( "" );
-      }
-      else
-      {
-         twitterObj.get_oauth().setConsumerKey(string( "K0pfcpC7Ua1ygWiMWHHSQ" ) );
-         twitterObj.get_oauth().setConsumerSecret(string( "LmgKZmcM5NExmp8cPisHvtuYGxU0KMKH61wNYc0Pn8Q" ) );
-         twitterObj.get_oauth().setOAuthTokenKey( "" );
-         twitterObj.get_oauth().setOAuthTokenSecret( "" );
-      }
+      twitterObj.get_oauth().setConsumerKey(m_strTwitterConsumerKey);
+      twitterObj.get_oauth().setConsumerSecret(m_strTwitterConsumerSecret);
 
       string strPathKey = Application.dir().userappdata("twitterClient_token_key"+::str::from(m_eversion)+".txt");
       string strPathSecret = Application.dir().userappdata("twitterClient_token_secret"+::str::from(m_eversion)+".txt");
@@ -2509,18 +2499,10 @@ Retry2:
 
       /* OAuth flow begins */
       /* Step 0: set OAuth related params. These are got by registering your app at twitter.com */
-      if(m_eversion == version_basis)
-      {
-         twitterObj.get_oauth().setConsumerKey(string( "mKYvWA6cZkUEUwjoygUuVw" ) );
-         twitterObj.get_oauth().setConsumerSecret(string( "JwtNLBLyXlPvGLqKA4c8w4XH0PPLmkoVzm0TOocvSyY" ) );
-      }
-      else
-      {
-         twitterObj.get_oauth().setConsumerKey(string( "K0pfcpC7Ua1ygWiMWHHSQ" ) );
-         twitterObj.get_oauth().setConsumerSecret(string( "LmgKZmcM5NExmp8cPisHvtuYGxU0KMKH61wNYc0Pn8Q" ) );
-      }
+      twitterObj.get_oauth().setConsumerKey(m_strTwitterConsumerKey);
+      twitterObj.get_oauth().setConsumerSecret(m_strTwitterConsumerSecret);
 
-      string strPathKey = Application.dir().userappdata("twitterClient_token_key"+::str::from(m_eversion)+".txt");
+      string strPathKey = Application.dir().userappdata("twitterClient_token_key" + ::str::from(m_eversion) + ".txt");
       string strPathSecret = Application.dir().userappdata("twitterClient_token_secret"+::str::from(m_eversion)+".txt");
       /* Step 1: Check if we alredy have OAuth access token from a previous run */
       //    char szKey[1024];

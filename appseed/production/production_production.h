@@ -68,7 +68,10 @@ namespace production
       string                  m_strTry;
       string                  m_strDownloadSite;
 
-      int32_t                     m_iRelease;
+      string                  m_strTwitterConsumerKey;
+      string                  m_strTwitterConsumerSecret;
+
+      int32_t                 m_iRelease;
 
       e_version               m_eversion;
 
