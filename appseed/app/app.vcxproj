@@ -35,7 +35,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{A0E3F393-5BA6-4A7F-99B8-820A4DAD3E34}</ProjectGuid>
+    <ProjectGuid>{19841115-1984-0411-1977-021977151984}</ProjectGuid>
     <RootNamespace>app</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <ProjectName>app</ProjectName>
