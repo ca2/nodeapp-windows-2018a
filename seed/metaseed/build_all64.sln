@@ -547,6 +547,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_veriview", "..\..\
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "storage_akrip", "..\..\..\app\thirdparty\appseed\storage_akrip\storage_akrip.vcxproj", "{52ED20F8-BB84-4ED2-8024-FD8F46CAFD65}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4D7D3626-ADA6-4CA2-9566-ED7B131E3D51} = {4D7D3626-ADA6-4CA2-9566-ED7B131E3D51}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app.install", "..\..\appseed\app.install\app.install.vcxproj", "{71BAB50B-DC41-4570-B676-30380CDA3A17}"
 EndProject
