@@ -24,11 +24,11 @@ namespace ca2plugin_container
 
       m_phost->m_strBitmapChannel = m_strChannel;
 
-      string strChannel = "\\core\\ca2plugin-container-";
+      string strChannel = "\\core\\app.plugin.container-";
 
       strChannel += m_strChannel;
 
-      m_phost->::small_ipc_channel::open_ba(strChannel, "ca2plugin-container.exe");
+      m_phost->::small_ipc_channel::open_ba(strChannel, "app.plugin.container.exe");
 
    }
 

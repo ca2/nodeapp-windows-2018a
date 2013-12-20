@@ -1812,7 +1812,7 @@ retry2:
       add_path(pszDir, "META-INF\\zigbert.rsa");
       add_path(pszDir, "install.rdf");
       add_path(pszDir, "chrome.manifest");
-      add_path(pszDir, "plugins\\app-install.exe");
+      add_path(pszDir, "plugins\\app.install.exe");
       add_path(pszDir, "plugins\\npca2.dll");
       add_path(pszDir, "plugins\\base.dll");
       add_path(pszDir, "plugins\\os.dll");
@@ -2009,9 +2009,9 @@ retry2:
 
 
 
-      add_status("Signing app-install.exe for Firefox ...");
-      strFile = System.dir().path(strDir, "npca2/plugins", "app-install.exe");
-      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/app-install.exe"));
+      add_status("Signing app.install.exe for Firefox ...");
+      strFile = System.dir().path(strDir, "npca2/plugins", "app.install.exe");
+      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/app.install.exe"));
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
 
@@ -2252,9 +2252,9 @@ retry2:
       string strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
 
-      add_status("Signing app-install.exe for Chrome ...");
-      strFile = System.dir().path(strDir, "app-install.exe");
-      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/app-install.exe"));
+      add_status("Signing app.install.exe for Chrome ...");
+      strFile = System.dir().path(strDir, "app.install.exe");
+      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/app.install.exe"));
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
 

@@ -95,7 +95,7 @@ removal::removal() :
 element(this),
 base_system(this)
 {
-   xxdebug_box("app-install", "app", 0);
+   xxdebug_box("app.install", "app", 0);
    m_hinstance             = ::GetModuleHandleA(NULL);
    m_hmutex_app_removal  = NULL;
    e_message m_emessage    = message_none;
@@ -247,7 +247,7 @@ bool removal::initialize()
    m_hmutex_app_removal = ::CreateMutex(NULL, FALSE, "Global\\::ca2::fontopus::ccca2_spa_app_removal::7807e510-5579-11dd-ae16-0800200c7784");
    if(::GetLastError() == ERROR_ALREADY_EXISTS)
    {
-      ::MessageBox(NULL, "ca2 app-removal.exe is already running.\n\nPlease wait for app-removal to finish or close it - using Task Manager - Ctrl+Shift+ESC - to continue.", "app-install.exe is running!", MB_ICONEXCLAMATION);
+      ::MessageBox(NULL, "ca2 app-removal.exe is already running.\n\nPlease wait for app-removal to finish or close it - using Task Manager - Ctrl+Shift+ESC - to continue.", "app.install.exe is running!", MB_ICONEXCLAMATION);
       m_iError = -202;
       return false;
    }
@@ -281,8 +281,8 @@ bool removal::initialize()
 
 
    my_system("taskkill /F /IM app.exe");
-   my_system("taskkill /F /IM app-install.exe");
-   my_system("taskkill /F /IM ca2plugin-container.exe");
+   my_system("taskkill /F /IM app.install.exe");
+   my_system("taskkill /F /IM app.plugin.container.exe");
    my_system("taskkill /F /IM plugin-container.exe");
    my_system("taskkill /F /IM iexplore.exe");
    my_system("taskkill /F /IM firefox.exe");
@@ -307,8 +307,8 @@ bool removal::initialize()
    ::DeleteFile("C:\\Windows\\Downloaded Program Files\\iexca2.dll");
 //del "C:\Windows\Downloaded Program Files\iexca2.inf"
    ::DeleteFile("C:\\Windows\\Downloaded Program Files\\iexca2.inf");
-//del "C:\Windows\Downloaded Program Files\app-install.exe"
-   ::DeleteFile("C:\\Windows\\Downloaded Program Files\\app-install.exe");
+//del "C:\Windows\Downloaded Program Files\app.install.exe"
+   ::DeleteFile("C:\\Windows\\Downloaded Program Files\\app.install.exe");
 //rmdir /S /Q "C:\Users\ca2os\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\ProgramData\ca2"
    //str = get_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Tempoarary Internet Files\\Virtualized\\VirtualStore\\ProgramsData\\ca2");
    //rmdir(str);

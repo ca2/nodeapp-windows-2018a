@@ -102,7 +102,7 @@ installer::installer() :
    //                       |    |       |
    if (file_exists_dup("C:\\ca2\\config\\beg_debug_box.txt"))
    {
-      debug_box("app-install", "app", 0);
+      debug_box("app.install", "app", 0);
    }
    
    m_hinstance             = ::GetModuleHandleA(NULL);
@@ -128,7 +128,7 @@ int32_t installer::simple_app_pre_run()
 
    System.oprop("do_not_initialize_user_presence") = true;
 
-   xxdebug_box("app-install", "app-install", MB_OK);
+   xxdebug_box("app.install", "app.install", MB_OK);
 
    if (__argc >= 2)
    {
@@ -207,7 +207,7 @@ bool installer::intro()
 
    prepare_small_bell();
 
-   if(!m_rxchannel.create("core/spaboot_install", "app-install.exe"))
+   if(!m_rxchannel.create("core/spaboot_install", "app.install.exe"))
    {
       m_iError = -1;
       return false;
