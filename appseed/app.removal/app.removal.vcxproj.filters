@@ -34,7 +34,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="app-removal.rc">
+    <ResourceCompile Include="appremoval.rc">
       <Filter>Source Files</Filter>
     </ResourceCompile>
   </ItemGroup>

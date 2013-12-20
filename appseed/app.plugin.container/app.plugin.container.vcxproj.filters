@@ -12,13 +12,13 @@
     <ClCompile Include="framework.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include=".\ca2plugincontainer.cpp">
+    <ClCompile Include="appplugincontainer.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include=".\ca2plugincontainer_host.cpp">
+    <ClCompile Include="appplugincontainer_application.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include=".\ca2plugincontainer_application.cpp">
+    <ClCompile Include="appplugincontainer_host.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,18 +29,18 @@
     <ClInclude Include="resource.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include=".\ca2plugincontainer_application.h">
+    <ClInclude Include="appplugincontainer.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include=".\ca2plugincontainer.h">
+    <ClInclude Include="appplugincontainer_application.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include=".\ca2plugincontainer_host.h">
+    <ClInclude Include="appplugincontainer_host.h">
       <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include=".\ca2plugincontainer.rc">
+    <ResourceCompile Include="appplugincontainer.rc">
       <Filter>Source</Filter>
     </ResourceCompile>
   </ItemGroup>

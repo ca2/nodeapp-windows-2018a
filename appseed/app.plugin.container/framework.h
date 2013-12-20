@@ -4,7 +4,7 @@
 #include "core.h"
 
 
-#include "ca2plugincontainer.h"
+#include "appplugincontainer.h"
 
 
 
