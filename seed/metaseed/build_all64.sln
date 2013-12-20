@@ -554,6 +554,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app.install", "..\..\appseed\app.install\app.install.vcxproj", "{71BAB50B-DC41-4570-B676-30380CDA3A17}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app.plugin.container", "..\..\appseed\app.plugin.container\app.plugin.container.vcxproj", "{AD997EA3-A120-472D-A216-EC4B0B81FDC4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E000FFAF-392F-4E32-BF51-FD7ED638991F} = {E000FFAF-392F-4E32-BF51-FD7ED638991F}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app.removal", "..\..\appseed\app.removal\app.removal.vcxproj", "{B18E0FCB-402F-4805-8FCD-AFE8DB6DDF74}"
 EndProject
