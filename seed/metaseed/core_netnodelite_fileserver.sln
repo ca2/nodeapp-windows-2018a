@@ -37,7 +37,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "netnodelite_library", "..\.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "netnodelite_fileserver", "..\..\..\app-core\appseed\netnodelite_fileserver\netnodelite_fileserver.vcxproj", "{84772A0F-CAB3-49E7-99B5-B54EFA54C2A4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_alatel", "..\..\..\app-core\appseed\alatel\alatel.vcxproj", "{19841511-0204-1977-A73E-2CD949AA3AF6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_alatel", "..\..\..\app-core\appseed\alatel\alarm.vcxproj", "{19841511-0204-1977-2204-195149AA3AF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

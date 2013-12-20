@@ -104,7 +104,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "iexca2", "..\..\appseed\iex
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "iexca2plugin", "..\..\appseed\iexca2plugin\iexca2plugin.vcxproj", "{55B0EB9D-8CD6-42E7-8910-3A4CED21C678}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "alarm", "..\..\appseed\alarm\alarm.vcxproj", "{19841511-0204-1977-A73E-2CD949AA3AF6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "alarm", "..\..\appseed\alarm\alarm.vcxproj", "{19841511-0204-1977-2204-195149AA3AF6}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_windows_media", "..\..\appseedcore\audio_decode_windows_media\audio_decode_windows_media.vcxproj", "{2453409D-7D51-4E7E-A739-86234FFF3509}"
 EndProject

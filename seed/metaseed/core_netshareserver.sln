@@ -54,13 +54,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "netnodelite_script", "..\..
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "netnodelite_netshareserver", "..\..\..\app-core\appseed\netnodelite_netshareserver\netnodelite_netshareserver.vcxproj", "{7784C5D3-AA89-4978-8A1C-96179FB2192E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_alatel", "..\..\..\app-core\appseed\alatel\alatel.vcxproj", "{19841511-0204-1977-A73E-2CD949AA3AF6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_alatel", "..\..\..\app-core\appseed\alatel\alarm.vcxproj", "{19841511-0204-1977-2204-195149AA3AF6}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_uinteraction", "..\..\..\app-core\appseed\uinteraction\uinteraction.vcxproj", "{E2D7833B-9B59-4826-BBDF-C270A2115E86}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_deepfish", "..\..\..\app-core\appseed\deepfish\deepfish.vcxproj", "{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_deepfish_alatel", "..\..\..\app-core\appseed\deepfish_alatel\deepfish_alatel.vcxproj", "{52F96A19-6F3A-45AC-926B-256082D8FF5D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_deepfish_alatel", "..\..\..\app-core\appseed\deepfish_alatel\deepfish_alarm.vcxproj", "{11223319-6F3A-45AC-926B-256082D8FF5D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
