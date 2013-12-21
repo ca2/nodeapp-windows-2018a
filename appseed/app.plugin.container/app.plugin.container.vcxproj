@@ -276,8 +276,7 @@
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <CompileAsWinRT>false</CompileAsWinRT>
-      <SDLCheck>
-      </SDLCheck>
+      <SDLCheck>true</SDLCheck>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -376,8 +375,7 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <CompileAsManaged>false</CompileAsManaged>
       <CompileAsWinRT>false</CompileAsWinRT>
-      <SDLCheck>
-      </SDLCheck>
+      <SDLCheck>true</SDLCheck>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -474,8 +472,7 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <CompileAsManaged>false</CompileAsManaged>
       <CompileAsWinRT>false</CompileAsWinRT>
-      <SDLCheck>
-      </SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <ResourceCompile>
@@ -574,8 +571,7 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <CompileAsWinRT>false</CompileAsWinRT>
-      <SDLCheck>
-      </SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
     </ClCompile>
     <ResourceCompile>
@@ -673,8 +669,7 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
       <CompileAsManaged>false</CompileAsManaged>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
-      <SDLCheck>
-      </SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <CompileAsWinRT>false</CompileAsWinRT>
     </ClCompile>
     <ResourceCompile>
@@ -769,8 +764,7 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <CompileAsManaged>false</CompileAsManaged>
-      <SDLCheck>
-      </SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <CompileAsWinRT>false</CompileAsWinRT>
     </ClCompile>
     <ResourceCompile>
@@ -864,8 +858,7 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <CompileAsManaged>false</CompileAsManaged>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <SDLCheck>
-      </SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <CompileAsWinRT>false</CompileAsWinRT>
       <EnablePREfast>true</EnablePREfast>
     </ClCompile>
@@ -961,8 +954,7 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
       <CompileAsManaged>false</CompileAsManaged>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <SDLCheck>
-      </SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <CompileAsWinRT>false</CompileAsWinRT>
     </ClCompile>
     <ResourceCompile>

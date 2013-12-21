@@ -263,8 +263,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <CompileAsWinRT>false</CompileAsWinRT>
-      <SDLCheck>
-      </SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <FunctionLevelLinking>false</FunctionLevelLinking>
     </ClCompile>
     <ResourceCompile>
@@ -334,8 +333,7 @@
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <CompileAsManaged>false</CompileAsManaged>
       <CompileAsWinRT>false</CompileAsWinRT>
-      <SDLCheck>
-      </SDLCheck>
+      <SDLCheck>true</SDLCheck>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -404,8 +402,7 @@
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <CompileAsManaged>false</CompileAsManaged>
       <CompileAsWinRT>false</CompileAsWinRT>
-      <SDLCheck>
-      </SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <ResourceCompile>
@@ -477,8 +474,7 @@
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <CompileAsWinRT>false</CompileAsWinRT>
-      <SDLCheck>
-      </SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
     </ClCompile>
@@ -550,8 +546,7 @@
       <CompileAsManaged>false</CompileAsManaged>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
-      <SDLCheck>
-      </SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <CompileAsWinRT>false</CompileAsWinRT>
     </ClCompile>
     <ResourceCompile>
@@ -619,8 +614,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <CompileAsManaged>false</CompileAsManaged>
-      <SDLCheck>
-      </SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <CompileAsWinRT>false</CompileAsWinRT>
     </ClCompile>
     <ResourceCompile>
@@ -688,8 +682,7 @@
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <CompileAsManaged>false</CompileAsManaged>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <SDLCheck>
-      </SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <CompileAsWinRT>false</CompileAsWinRT>
       <EnablePREfast>true</EnablePREfast>
     </ClCompile>
@@ -759,8 +752,7 @@
       <CompileAsManaged>false</CompileAsManaged>
       <PrecompiledHeaderFile>framework.h</PrecompiledHeaderFile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <SDLCheck>
-      </SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <CompileAsWinRT>false</CompileAsWinRT>
     </ClCompile>
     <ResourceCompile>
