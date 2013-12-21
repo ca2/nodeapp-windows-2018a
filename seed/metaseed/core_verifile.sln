@@ -4,23 +4,34 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "os", "..\..\os\os.vcxproj", "{9163E31A-2D5A-4F18-AD6F-B561C76E5054}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E000FFAF-392F-4E32-BF51-FD7ED638991F} = {E000FFAF-392F-4E32-BF51-FD7ED638991F}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\app.vcxproj", "{19841115-1984-0411-1977-021977151984}"
 	ProjectSection(ProjectDependencies) = postProject
 		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF} = {51F51C57-0947-4D1D-850E-2F4BE6C88DCF}
+		{E000FFAF-392F-4E32-BF51-FD7ED638991F} = {E000FFAF-392F-4E32-BF51-FD7ED638991F}
 		{B39ED2B3-D53A-4077-B957-930979A3577D} = {B39ED2B3-D53A-4077-B957-930979A3577D}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_uinteraction", "..\..\..\app-core\appseed\uinteraction\uinteraction.vcxproj", "{E2D7833B-9B59-4826-BBDF-C270A2115E86}"
 	ProjectSection(ProjectDependencies) = postProject
 		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
+		{E000FFAF-392F-4E32-BF51-FD7ED638991F} = {E000FFAF-392F-4E32-BF51-FD7ED638991F}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_deepfish", "..\..\..\app-core\appseed\deepfish\deepfish.vcxproj", "{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E000FFAF-392F-4E32-BF51-FD7ED638991F} = {E000FFAF-392F-4E32-BF51-FD7ED638991F}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basefreeimage", "..\..\..\app\thirdparty\appseed\FreeImage\FreeImage.vcxproj", "{B39ED2B3-D53A-4077-B957-930979A3577D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_alarm", "..\..\..\app-core\appseed\alarm\alarm.vcxproj", "{19841511-0204-1977-2204-195149AA3AF6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E000FFAF-392F-4E32-BF51-FD7ED638991F} = {E000FFAF-392F-4E32-BF51-FD7ED638991F}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basefreetype", "..\..\..\app\thirdparty\appseed\freetype\freetype.vcxproj", "{771F4B49-CAD1-438F-B272-20F3EB8E88F1}"
 EndProject
@@ -61,11 +72,15 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_verifile", "..\..\
 		{E6C58C82-71E5-48E6-98ED-1B505D6F10C2} = {E6C58C82-71E5-48E6-98ED-1B505D6F10C2}
 		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB} = {1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}
 		{437699AD-7464-4E5F-ACF3-7167487A9E3D} = {437699AD-7464-4E5F-ACF3-7167487A9E3D}
+		{E000FFAF-392F-4E32-BF51-FD7ED638991F} = {E000FFAF-392F-4E32-BF51-FD7ED638991F}
 		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF} = {9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}
 		{B39ED2B3-D53A-4077-B957-930979A3577D} = {B39ED2B3-D53A-4077-B957-930979A3577D}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_deepfish_alarm", "..\..\..\app-core\appseed\deepfish_alarm\deepfish_alarm.vcxproj", "{11223319-6F3A-45AC-926B-256082D8FF5D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E000FFAF-392F-4E32-BF51-FD7ED638991F} = {E000FFAF-392F-4E32-BF51-FD7ED638991F}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
