@@ -1,2 +1,2 @@
 call _setup
-app : app=app-core/fs_windows build_number=basis install
+app : app=app-core/verifile build_number=basis install
