@@ -684,8 +684,8 @@ namespace multimedia
                      {
                         sp(::multimedia::audio_mixer_mmsystem::source) source = m_pmixersource;
                         sp(::multimedia::audio_mixer_mmsystem::device) device = source->get_device();
-                        ::multimedia::audio_mixer::user::level_control * pslBalance;
-                        ::multimedia::audio_mixer::user::level_control * pslVolume;
+                        ::multimedia::audio_mixer::user::level_control * pslBalance = NULL;
+                        ::multimedia::audio_mixer::user::level_control * pslVolume = NULL;
                         if(pData->get_type() == ::multimedia::audio_mixer::control_data::TypeStereoBalance)
                         {
                            pslBalance = pSlider;

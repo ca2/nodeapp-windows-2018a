@@ -2150,8 +2150,8 @@ smf_Open_File_Cleanup:
             UNREFERENCED_PARAMETER(pPreviousEvent);
 
             e_result               smfrc;
-            ::music::midi::event *           pevent;
-            ::music::midi::event *           peventPrevious;
+            ::music::midi::event *           pevent = NULL;
+            ::music::midi::event *           peventPrevious = NULL;
 
             m_ptracks->m_tkPosition = 0;
             GetFlags().unsignalize(file::EndOfFile);
@@ -3122,7 +3122,7 @@ smf_Open_File_Cleanup:
          {
             ASSERT(ptracksv1 != NULL);
             ::ikaraoke::lyric_events_v1 * pEventsV1;
-            ::ikaraoke::lyric_events_v2 * pEventsV2;
+            ::ikaraoke::lyric_events_v2 * pEventsV2 = NULL;
 
             ::index iTokenIndex = -1;
             ::index iNoteIndex = -1;
