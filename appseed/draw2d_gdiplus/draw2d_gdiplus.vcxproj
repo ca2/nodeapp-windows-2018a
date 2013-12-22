@@ -271,7 +271,7 @@
       <CompileAs>Default</CompileAs>
       <OpenMPSupport>false</OpenMPSupport>
       <StringPooling>false</StringPooling>
-      <SmallerTypeCheck>true</SmallerTypeCheck>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
       <InlineFunctionExpansion>Default</InlineFunctionExpansion>
       <CompileAsManaged>false</CompileAsManaged>
       <FunctionLevelLinking>false</FunctionLevelLinking>
@@ -361,7 +361,7 @@
       <CompileAs>Default</CompileAs>
       <OpenMPSupport>false</OpenMPSupport>
       <StringPooling>false</StringPooling>
-      <SmallerTypeCheck>true</SmallerTypeCheck>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <CompileAsManaged>false</CompileAsManaged>
       <FunctionLevelLinking>false</FunctionLevelLinking>
@@ -452,7 +452,7 @@
       <CompileAs>Default</CompileAs>
       <OpenMPSupport>false</OpenMPSupport>
       <StringPooling>false</StringPooling>
-      <SmallerTypeCheck>true</SmallerTypeCheck>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <CompileAsManaged>false</CompileAsManaged>
       <FunctionLevelLinking>false</FunctionLevelLinking>
@@ -641,7 +641,7 @@
       <CompileAs>Default</CompileAs>
       <OpenMPSupport>false</OpenMPSupport>
       <StringPooling>false</StringPooling>
-      <SmallerTypeCheck>true</SmallerTypeCheck>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <CompileAsManaged>false</CompileAsManaged>
@@ -730,7 +730,7 @@
       <CompileAs>Default</CompileAs>
       <OpenMPSupport>false</OpenMPSupport>
       <StringPooling>false</StringPooling>
-      <SmallerTypeCheck>true</SmallerTypeCheck>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <CompileAsManaged>false</CompileAsManaged>
@@ -819,7 +819,7 @@
       <CompileAs>Default</CompileAs>
       <OpenMPSupport>false</OpenMPSupport>
       <StringPooling>false</StringPooling>
-      <SmallerTypeCheck>true</SmallerTypeCheck>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <CompileAsManaged>false</CompileAsManaged>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
