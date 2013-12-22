@@ -1571,7 +1571,7 @@ namespace draw2d_gdi
       ::draw2d::brush & brush = *get_current_brush();
       ::draw2d::font & font = *get_current_font();
 
-      //if(m_spbrush.is_null() || GetAValue(m_spbrush->m_cr) == 255 || m_spdib.is_null())
+      //if(m_spbrush.is_null() || argb_get_a_value(m_spbrush->m_cr) == 255 || m_spdib.is_null())
 
       select_font();
 
@@ -1580,7 +1580,7 @@ namespace draw2d_gdi
 
          ::SetBkMode(m_hdc, TRANSPARENT);
 
-         ::SetTextColor(m_hdc, RGB(GetRValue(brush.m_cr), GetGValue(brush.m_cr), GetBValue(brush.m_cr)));
+         ::SetTextColor(m_hdc, RGB(argb_get_r_value(brush.m_cr), argb_get_g_value(brush.m_cr), argb_get_b_value(brush.m_cr)));
 
          return ::TextOutW(get_handle1(), x, y, wstr, (int) wstr.length()) != FALSE;
 
@@ -1617,7 +1617,7 @@ namespace draw2d_gdi
          else
          {
 
-            GDI_GRAPHICS(pdib->get_graphics())->SetTextColor(RGB(GetRValue(brush.m_cr), GetGValue(brush.m_cr), GetBValue(brush.m_cr)));
+            GDI_GRAPHICS(pdib->get_graphics())->SetTextColor(RGB(argb_get_r_value(brush.m_cr), argb_get_g_value(brush.m_cr), argb_get_b_value(brush.m_cr)));
 
          }
 
@@ -3474,8 +3474,8 @@ namespace draw2d_gdi
          pdib->m_descriptor = d;
 
 
-         pdib->Fill(GetAValue(clr), GetRValue(clr) * GetAValue(clr) / 255, GetGValue(clr) * GetAValue(clr) / 255, GetBValue(clr) * GetAValue(clr) / 255);
-         //pdib->Fill(GetAValue(clr), GetRValue(clr), GetGValue(clr), GetBValue(clr));
+         pdib->Fill(argb_get_a_value(clr), argb_get_r_value(clr) * argb_get_a_value(clr) / 255, argb_get_g_value(clr) * argb_get_a_value(clr) / 255, argb_get_b_value(clr) * argb_get_a_value(clr) / 255);
+         //pdib->Fill(argb_get_a_value(clr), argb_get_r_value(clr), argb_get_g_value(clr), argb_get_b_value(clr));
 
       }
 
@@ -3510,10 +3510,10 @@ namespace draw2d_gdi
          ::ExtTextOut(get_handle1(), 0, 0, ETO_OPAQUE, &rect, NULL, 0, NULL);
 
       }
-      else if(GetAValue(clr) == 255)
+      else if(argb_get_a_value(clr) == 255)
       {
          
-         m_pdib->FillRect(x, y, cx, cy, 255, GetRValue(clr), GetGValue(clr), GetBValue(clr));
+         m_pdib->FillRect(x, y, cx, cy, 255, argb_get_r_value(clr), argb_get_g_value(clr), argb_get_b_value(clr));
 
       }
       else

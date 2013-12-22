@@ -363,10 +363,10 @@ namespace draw2d_gdiplus
             delete m_ppen;
          }
          ((pen *) this)->m_ppen = new Gdiplus::Pen(Gdiplus::Color(
-            GetAValue(m_cr),
-            GetRValue(m_cr),
-            GetGValue(m_cr),
-            GetBValue(m_cr)), (Gdiplus::REAL) m_dWidth);
+            argb_get_a_value(m_cr),
+            argb_get_r_value(m_cr),
+            argb_get_g_value(m_cr),
+            argb_get_b_value(m_cr)), (Gdiplus::REAL) m_dWidth);
          switch(m_elinejoin)
          {
          case line_join_miter:

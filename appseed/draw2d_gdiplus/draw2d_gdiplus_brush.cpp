@@ -31,7 +31,7 @@ namespace draw2d_gdiplus
    //      delete m_pbrush;
    //   }
 
-   //   m_pbrush = new Gdiplus::SolidBrush(Gdiplus::Color(GetAValue(crColor), GetRValue(crColor), GetGValue(crColor), GetBValue(crColor)));
+   //   m_pbrush = new Gdiplus::SolidBrush(Gdiplus::Color(argb_get_a_value(crColor), argb_get_r_value(crColor), argb_get_g_value(crColor), argb_get_b_value(crColor)));
 
    //   return m_pbrush != NULL;
    //      
@@ -141,7 +141,7 @@ namespace draw2d_gdiplus
          {
             try
             {
-               ((brush *) this)->m_pbrush = new Gdiplus::SolidBrush(Gdiplus::Color(GetAValue(m_cr), GetRValue(m_cr), GetGValue(m_cr), GetBValue(m_cr)));
+               ((brush *) this)->m_pbrush = new Gdiplus::SolidBrush(Gdiplus::Color(argb_get_a_value(m_cr), argb_get_r_value(m_cr), argb_get_g_value(m_cr), argb_get_b_value(m_cr)));
             }
             catch(...)
             {
@@ -154,8 +154,8 @@ namespace draw2d_gdiplus
                ((brush *) this)->m_pbrush = new Gdiplus::LinearGradientBrush(
                   Gdiplus::Point(m_pt1.x, m_pt1.y),
                   Gdiplus::Point(m_pt2.x, m_pt2.y),
-                  Gdiplus::Color(GetAValue(m_cr1), GetRValue(m_cr1), GetGValue(m_cr1), GetBValue(m_cr1)),
-                  Gdiplus::Color(GetAValue(m_cr2), GetRValue(m_cr2), GetGValue(m_cr2), GetBValue(m_cr2)));
+                  Gdiplus::Color(argb_get_a_value(m_cr1), argb_get_r_value(m_cr1), argb_get_g_value(m_cr1), argb_get_b_value(m_cr1)),
+                  Gdiplus::Color(argb_get_a_value(m_cr2), argb_get_r_value(m_cr2), argb_get_g_value(m_cr2), argb_get_b_value(m_cr2)));
             }
             catch(...)
             {
@@ -165,7 +165,7 @@ namespace draw2d_gdiplus
          {
             try
             {
-               ((brush *) this)->m_pbrush = new Gdiplus::SolidBrush(Gdiplus::Color(GetAValue(m_cr), GetRValue(m_cr), GetGValue(m_cr), GetBValue(m_cr)));
+               ((brush *) this)->m_pbrush = new Gdiplus::SolidBrush(Gdiplus::Color(argb_get_a_value(m_cr), argb_get_r_value(m_cr), argb_get_g_value(m_cr), argb_get_b_value(m_cr)));
             }
             catch(...)
             {

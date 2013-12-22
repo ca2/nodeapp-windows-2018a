@@ -2662,44 +2662,44 @@ namespace draw2d_gdi
 
       ::GdiFlush();
 
-      int32_t a = GetAValue(clr);
+      int32_t a = argb_get_a_value(clr);
 
       ::visual::rgba::echannel echannel;
 
       int32_t bTune;
 
-      if(GetGValue(clr) > GetBValue(clr))
+      if(argb_get_g_value(clr) > argb_get_b_value(clr))
       {
-         if(GetBValue(clr) > GetRValue(clr))
+         if(argb_get_b_value(clr) > argb_get_r_value(clr))
          {
             echannel = ::visual::rgba::channel_green;
-            bTune = GetGValue(clr);
+            bTune = argb_get_g_value(clr);
          }
-         else if(GetGValue(clr) >  GetRValue(clr))
+         else if(argb_get_g_value(clr) >  argb_get_r_value(clr))
          {
             echannel = ::visual::rgba::channel_green;
-            bTune = GetGValue(clr);
+            bTune = argb_get_g_value(clr);
          }
          else
          {
             echannel = ::visual::rgba::channel_red;
-            bTune = GetRValue(clr);
+            bTune = argb_get_r_value(clr);
          }
       }
-      else if(GetGValue(clr) > GetRValue(clr))
+      else if(argb_get_g_value(clr) > argb_get_r_value(clr))
       {
          echannel = ::visual::rgba::channel_blue;
-         bTune = GetBValue(clr);
+         bTune = argb_get_b_value(clr);
       }
-      else if(GetRValue(clr) > GetBValue(clr))
+      else if(argb_get_r_value(clr) > argb_get_b_value(clr))
       {
          echannel = ::visual::rgba::channel_red;
-         bTune = GetRValue(clr);
+         bTune = argb_get_r_value(clr);
       }
       else
       {
          echannel = ::visual::rgba::channel_blue;
-         bTune = GetBValue(clr);
+         bTune = argb_get_b_value(clr);
       }
 
       int64_t size = area();
@@ -2713,9 +2713,9 @@ namespace draw2d_gdi
 
       int32_t aTune = a * 255;
 
-      int32_t r = GetRValue(clr);
-      int32_t g = GetGValue(clr);
-      int32_t b = GetBValue(clr);
+      int32_t r = argb_get_r_value(clr);
+      int32_t g = argb_get_g_value(clr);
+      int32_t b = argb_get_b_value(clr);
 
       if(bTune == 0)
       {
