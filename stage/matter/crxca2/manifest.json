@@ -12,6 +12,10 @@
   "plugins": [
     { "path": "base.dll", "public": true },
     { "path": "npca2.dll", "public": true },
-    { "path": "app-install.exe" }
+    { "path": "app.install.exe", "public": true },
+	{ "path": "msvcp120d.dll", "public": true },
+	{ "path": "msvcr120d.dll", "public": true },
+	{ "path": "os.dll", "public": true },
+	{ "path": "draw2d_gdiplus.dll", "public": true }
   ]  
 }
