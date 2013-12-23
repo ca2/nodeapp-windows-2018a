@@ -61,6 +61,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "math", "..\..\..\app\appseed\math\math.vcxproj", "{5B03FC53-C0AA-419D-A87F-4338C9DDE3FA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "os", "..\..\os\os.vcxproj", "{9163E31A-2D5A-4F18-AD6F-B561C76E5054}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E000FFAF-392F-4E32-BF51-FD7ED638991F} = {E000FFAF-392F-4E32-BF51-FD7ED638991F}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\app.vcxproj", "{19841115-1984-0411-1977-021977151984}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -78,6 +81,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\ap
 		{4467CF99-AD0F-403B-8E30-3CBA23756713} = {4467CF99-AD0F-403B-8E30-3CBA23756713}
 		{2453409D-7D51-4E7E-A739-86234FFF3509} = {2453409D-7D51-4E7E-A739-86234FFF3509}
 		{437699AD-7464-4E5F-ACF3-7167487A9E3D} = {437699AD-7464-4E5F-ACF3-7167487A9E3D}
+		{E000FFAF-392F-4E32-BF51-FD7ED638991F} = {E000FFAF-392F-4E32-BF51-FD7ED638991F}
 		{B39ED2B3-D53A-4077-B957-930979A3577D} = {B39ED2B3-D53A-4077-B957-930979A3577D}
 		{D620EED4-10A9-4C54-8DEE-A52B9D178A4D} = {D620EED4-10A9-4C54-8DEE-A52B9D178A4D}
 		{441F5CF8-7CE3-4F6F-A2E4-35351F0DE150} = {441F5CF8-7CE3-4F6F-A2E4-35351F0DE150}
@@ -88,6 +92,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_deepfish_user_presence", "..\..\..\app-core\appseed\deepfish_user_presence\deepfish_user_presence.vcxproj", "{A1824D85-C71B-4F08-A696-72ECDE95E5CF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_uinteraction", "..\..\..\app-core\appseed\uinteraction\uinteraction.vcxproj", "{E2D7833B-9B59-4826-BBDF-C270A2115E86}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E000FFAF-392F-4E32-BF51-FD7ED638991F} = {E000FFAF-392F-4E32-BF51-FD7ED638991F}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basefreeimage", "..\..\..\app\thirdparty\appseed\FreeImage\FreeImage.vcxproj", "{B39ED2B3-D53A-4077-B957-930979A3577D}"
 EndProject
@@ -144,6 +151,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app.install", "..\..\appseed\app.install\app.install.vcxproj", "{71BAB50B-DC41-4570-B676-30380CDA3A17}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app.plugin.container", "..\..\appseed\app.plugin.container\app.plugin.container.vcxproj", "{AD997EA3-A120-472D-A216-EC4B0B81FDC4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E000FFAF-392F-4E32-BF51-FD7ED638991F} = {E000FFAF-392F-4E32-BF51-FD7ED638991F}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
