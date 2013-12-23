@@ -90,10 +90,10 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
    if (file_exists_dup("C:\\ca2\\config\\beg_debug_box.txt"))
    {
 
-      //      if (debug_box("Run ca2 plugin container?", "Run ca2 plugin container?", MB_YESNO | MB_ICONQUESTION) == IDNO)
+      //      if (debug_box("Run app.plugin.container?", "Run app.plugin.container?", MB_YESNO | MB_ICONQUESTION) == IDNO)
       //         return -1;
       
-      debug_box("ca2 plugin container", "ca2 plugin container", MB_OK);
+      debug_box("app.plugin.container", "app.plugin.container", MB_OK);
 
    }
 
