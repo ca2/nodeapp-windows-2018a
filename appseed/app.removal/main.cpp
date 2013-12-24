@@ -247,7 +247,7 @@ bool removal::initialize()
    m_hmutex_app_removal = ::CreateMutex(NULL, FALSE, "Global\\::ca2::fontopus::ccca2_spa_app_removal::7807e510-5579-11dd-ae16-0800200c7784");
    if(::GetLastError() == ERROR_ALREADY_EXISTS)
    {
-      ::MessageBox(NULL, "ca2 app-removal.exe is already running.\n\nPlease wait for app-removal to finish or close it - using Task Manager - Ctrl+Shift+ESC - to continue.", "app.install.exe is running!", MB_ICONEXCLAMATION);
+      ::MessageBox(NULL, "ca2 app.removal.exe is already running.\n\nPlease wait for app.removal to finish or close it - using Task Manager - Ctrl+Shift+ESC - to continue.", "app.install.exe is running!", MB_ICONEXCLAMATION);
       m_iError = -202;
       return false;
    }
@@ -256,26 +256,26 @@ bool removal::initialize()
 
    ::GetModuleFileName(NULL, szFile, sizeof(szFile));
 
-   string strTargetDir = get_dir(FOLDERID_ProgramFilesX86, "ca2-app-removal");
+   string strTargetDir = get_dir(FOLDERID_ProgramFilesX86, "ca2.app.removal");
 
    dir::mk(strTargetDir);
 
-   string strTarget = dir::path(strTargetDir, "app-removal.exe");
+   string strTarget = dir::path(strTargetDir, "app.removal.exe");
 
    if(::CopyFile(szFile, strTarget, TRUE))
    {
-      int32_t i = MessageBox(NULL, "Do you want to place a shortcut to ca2 app-removal in Desktop?\n\nProgram has already been copied to Program Files Folder.", "app-removal installation", MB_ICONQUESTION | MB_YESNOCANCEL);
+      int32_t i = MessageBox(NULL, "Do you want to place a shortcut to ca2 app.removal in Desktop?\n\nProgram has already been copied to Program Files Folder.", "app.removal installation", MB_ICONQUESTION | MB_YESNOCANCEL);
 
       if(i == IDCANCEL)
          return false;
 
       if(i == IDYES)
       {
-         string strLink= get_dir(FOLDERID_Desktop, "ca2 app-removal Tool.lnk");
+         string strLink= get_dir(FOLDERID_Desktop, "ca2 app.removal Tool.lnk");
          wstring wstrTarget(strTarget);
          wstring wstrLink(strLink);
          // create shortcurt;
-         CreateLink(wstrTarget, wstrLink, L"ca2 app-removal Tool", wstrTarget, 0);
+         CreateLink(wstrTarget, wstrLink, L"ca2 app.removal Tool", wstrTarget, 0);
       }
    }
 
