@@ -843,6 +843,14 @@ namespace win
       dumpcontext << "\n";
    }
 
+   void window::on_set_parent(sp(::user::interaction) pui)
+   {
+      if (pui != NULL)
+      {
+         detach();
+      }
+   }
+
    bool window::DestroyWindow()
    {
       //single_lock sl(m_spmutex, TRUE);
@@ -870,6 +878,9 @@ namespace win
 #endif
          }
       }
+
+      bool bHasGuie = m_pguie != NULL;
+
       //sl.unlock();
       if (get_handle() != NULL)
          bResult = ::DestroyWindow(get_handle()) != FALSE;
@@ -878,7 +889,7 @@ namespace win
       {
          // Note that 'this' may have been deleted at this point,
          //  (but only if pWnd != NULL)
-         if (pWnd != NULL && bResult)
+         if (pWnd != NULL && bResult && bHasGuie)
          {
             // Should have been detached by OnNcDestroy
 #ifdef DEBUG
@@ -4236,10 +4247,10 @@ ExitModal:
             }
 
          }
-         //else
+         else
          {
-
-            // ::SetWindowPos(get_handle(),(oswindow)  z, x, y, cx, cy, nFlags);
+       
+            ::SetWindowPos(get_handle(),(oswindow)  z, x, y, cx, cy, nFlags); // for Remote Desktop ??
 
          }
          /*         if(nFlags & SWP_SHOWWINDOW)
@@ -4261,10 +4272,10 @@ ExitModal:
 
          }*/
 
-         /*if(m_pguie != NULL)
+         /*if (m_pguie != NULL && !(nFlags & SWP_NOZORDER))
          {
-         m_pguie->oprop("pending_layout") = true;
-         m_pguie->oprop("pending_zorder") = z;
+            m_pguie->oprop("pending_layout") = true;
+            m_pguie->oprop("pending_zorder") = z;
          }*/
          /*if(&System != NULL && System.get_twf() != NULL)
          {
@@ -4494,6 +4505,14 @@ ExitModal:
             {
                m_pguie->m_eappearance = appearance_iconic;
                m_eappearance = appearance_iconic;
+            }
+            else
+            {
+               if (nCmdShow != SW_HIDE)
+               {
+                  ::SetWindowPos(get_safe_handle(), 0, m_rectParentClient.left, m_rectParentClient.top,
+                     m_rectParentClient.width(), m_rectParentClient.height(), SWP_SHOWWINDOW | SWP_NOZORDER);
+               }
             }
             ::ShowWindow(get_handle(), nCmdShow);
          }

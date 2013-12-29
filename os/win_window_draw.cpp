@@ -516,7 +516,12 @@ namespace win
             {
                try
                {
-                  WIN_WINDOW(wndpa[l].m_pimpl)->_001UpdateWindow();
+                  ::win::window * pwindow = WIN_WINDOW(wndpa[l].m_pimpl);
+                  if (pwindow != NULL)
+                  {
+                     pwindow->_001UpdateWindow();
+                  }
+                  
                }
                catch(...)
                {

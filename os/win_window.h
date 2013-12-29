@@ -719,6 +719,8 @@ namespace win
       string calc_icon_window_class(uint32_t dwDefaultStyle, const char * pszMatter);
       string calc_window_class();
 
+      void on_set_parent(sp(::user::interaction) pui);
+
    };
 
 
