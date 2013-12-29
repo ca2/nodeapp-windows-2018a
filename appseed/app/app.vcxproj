@@ -890,12 +890,6 @@
     <ResourceCompile Include="app.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\app\appseed\base\base.vcxproj">
-      <Project>{4d7d3626-ada6-4ca2-9566-ed7b131e3d51}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\app\appseed\core\core.vcxproj">
-      <Project>{afc48570-75e4-46bd-b8ab-4590b257e1c8}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\os\os.vcxproj">
       <Project>{9163e31a-2d5a-4f18-ad6f-b561c76e5054}</Project>
     </ProjectReference>
