@@ -1258,22 +1258,37 @@ stop_run:
 
       if(lCount <= 0 && m_puiptra != NULL)
       {
-         for(int32_t i = 0; i < m_puiptra->get_count(); i++)
+         for(int32_t i = 0; i < m_puiptra->get_count();)
          {
             sp(::user::interaction) pui = m_puiptra->element_at(i);
+            bool bOk = false;
             try
             {
-               if (pui != NULL && pui->IsWindowVisible())
-               {
-                  /*__call_window_procedure(pMainWnd, pMainWnd->get_handle(),
-                  WM_IDLEUPDATECMDUI, (WPARAM)TRUE, 0);*/
-                  pui->send_message(WM_IDLEUPDATECMDUI, (WPARAM)TRUE);
-                  /*   pui->SendMessageToDescendants(WM_IDLEUPDATECMDUI,
-                  (WPARAM)TRUE, 0, TRUE, TRUE);*/
-               }
+               
+               bOk = pui != NULL && pui->IsWindowVisible();
             }
             catch(...)
             {
+            }
+            if (!bOk)
+            {
+               m_puiptra->remove_at(i);
+            }
+            else
+            {
+               try
+               {
+               /*__call_window_procedure(pMainWnd, pMainWnd->get_handle(),
+               WM_IDLEUPDATECMDUI, (WPARAM)TRUE, 0);*/
+               pui->send_message(WM_IDLEUPDATECMDUI, (WPARAM)TRUE);
+               /*   pui->SendMessageToDescendants(WM_IDLEUPDATECMDUI,
+               (WPARAM)TRUE, 0, TRUE, TRUE);*/
+               }
+               catch (...)
+               {
+
+               }
+               i++;
             }
          }
 

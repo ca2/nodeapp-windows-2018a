@@ -862,6 +862,16 @@ namespace win
       if ((get_handle() == NULL) )
          return FALSE;
 
+
+      if (m_pthread.is_set())
+      {
+         if (m_pthread->m_puiptra.is_set())
+         {
+            m_pthread->m_puiptra->remove(this);
+            m_pthread->m_puiptra->remove(m_pguie);
+         }
+      }
+
       bResult = FALSE;
       pMap = NULL;
       pWnd = NULL;
