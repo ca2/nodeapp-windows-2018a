@@ -2302,9 +2302,15 @@ namespace draw2d_gdiplus
    void dib::stretch_dib(::draw2d::dib * pdib)
    {
 
+      if (area() <= 0 || pdib->area() <= 0)
+         return;
+
       Gdiplus::RectF rectDest(0, 0, (Gdiplus::REAL) m_size.cx, (Gdiplus::REAL) m_size.cy);
 
       Gdiplus::RectF rectSource(0, 0, (Gdiplus::REAL) pdib->m_size.cx, (Gdiplus::REAL) pdib->m_size.cy);
+
+      unmap();
+      pdib->unmap();
 
       ((Gdiplus::Graphics * ) m_spgraphics->get_os_data())->DrawImage(((Gdiplus::Bitmap *)pdib->get_bitmap()->get_os_data()), rectDest, rectSource, Gdiplus::UnitPixel);
 

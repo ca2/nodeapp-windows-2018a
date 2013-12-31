@@ -58,7 +58,6 @@ namespace win
       m_pfnSuper = NULL;
       m_nModalResult = 0;
       m_bMouseHover = false;
-      m_pfont = NULL;
       m_pguieCapture = NULL;
       ZERO(m_size);
       ZERO(m_pt);
@@ -75,7 +74,6 @@ namespace win
       m_pfnSuper = NULL;
       m_nModalResult = 0;
       m_bMouseHover = false;
-      m_pfont = NULL;
       m_pguieCapture = NULL;
       ZERO(m_size);
       ZERO(m_pt);
@@ -95,7 +93,6 @@ namespace win
       m_pfnSuper = NULL;
       m_nModalResult = 0;
       m_bMouseHover = false;
-      m_pfont = NULL;
       m_pguieCapture = NULL;
       ZERO(m_size);
       ZERO(m_pt);
@@ -113,11 +110,11 @@ namespace win
       }
 
       single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_mutex, TRUE);
-      if(m_pfont != NULL)
-      {
-         delete m_pfont;
-      }
+
+      m_pfont.release();
+
       sl.unlock();
+
       if (get_handle() != NULL)
       {
          TRACE(::core::trace::category_AppMsg, 0, "Warning: calling DestroyWindow in window::~window; "
@@ -501,6 +498,7 @@ namespace win
          IGUI_WIN_MSG_LINK(ca2m_PRODEVIAN_SYNCH , pinterface, this, &window::_001OnProdevianSynch);
       }
       IGUI_WIN_MSG_LINK(WM_DESTROY           , pinterface, this, &window::_001OnDestroy);
+      IGUI_WIN_MSG_LINK(WM_NCCALCSIZE        , pinterface, this, &window::_001OnNcCalcSize);
    }
 
    void window::_001OnMove(signal_details * pobj)
@@ -663,6 +661,19 @@ namespace win
          }
       }
    }
+
+
+   void window::_001OnNcCalcSize(signal_details * pobj)
+   {
+      
+      SCAST_PTR(message::base, pbase, pobj);
+
+      pbase->set_lresult(layered_window_nc_calc_size(pbase->m_wparam, pbase->m_lparam));
+
+      pobj->m_bRet = true;
+
+   }
+
 
    void window::_001OnCaptureChanged(signal_details * pobj)
    {
@@ -4765,8 +4776,11 @@ ExitModal:
 
    void window::SetFont(::draw2d::font* pfont, bool bRedraw)
    { 
+
       UNREFERENCED_PARAMETER(bRedraw);
-      ASSERT(::IsWindow(get_handle())); m_pfont = new ::draw2d::font(*pfont); 
+
+      m_pfont = canew(::draw2d::font(*pfont));
+
    }
 
    ::draw2d::font* window::GetFont()
