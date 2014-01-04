@@ -4531,8 +4531,8 @@ ExitModal:
             {
                if (nCmdShow != SW_HIDE)
                {
-                  ::SetWindowPos(get_safe_handle(), 0, m_rectParentClient.left, m_rectParentClient.top,
-                     m_rectParentClient.width(), m_rectParentClient.height(), SWP_SHOWWINDOW | SWP_NOZORDER);
+                  ::SetWindowPos(get_safe_handle(), 0, (int) m_rectParentClient.left, (int) m_rectParentClient.top,
+                     (int) m_rectParentClient.width(), (int) m_rectParentClient.height(), SWP_SHOWWINDOW | SWP_NOZORDER);
                }
             }
             ::ShowWindow(get_handle(), nCmdShow);
