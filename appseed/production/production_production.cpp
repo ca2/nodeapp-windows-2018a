@@ -18,13 +18,13 @@ namespace production
       m_evFinish(papp)
    {
 
-      m_bEndProduction  = false;
-      m_bClean          = false;
-      m_bBuild          = true;
-      m_bFinished       = true;
-      m_eversion        = version_stage;
-      m_bReleased       = true;
-      m_iRelease        = 0;
+      m_bEndProduction = false;
+      m_bClean = false;
+      m_bBuild = true;
+      m_bFinished = true;
+      m_eversion = version_stage;
+      m_bReleased = true;
+      m_iRelease = 0;
 
       {
          stringa & stra = m_straStageDirAcceptedFileExtensions;
@@ -32,8 +32,8 @@ namespace production
          stra.add("dll");
          stra.add("manifest");
       }
-      m_bLoop           = false;
-      m_bEndStatus      = false;
+      m_bLoop = false;
+      m_bEndStatus = false;
 
 
    }
@@ -45,7 +45,7 @@ namespace production
    void production::start_loop(e_version eversion, int32_t iLoopCount)
    {
       m_bLoop = true;
-      if(m_iRelease > 0)
+      if (m_iRelease > 0)
       {
          add_status("There are pending releases!!");
          return;
@@ -88,7 +88,7 @@ namespace production
 
       m_bLoop = false;
 
-      if(m_iRelease > 0)
+      if (m_iRelease > 0)
       {
          add_status("There are pending releases!!");
          return;
@@ -118,11 +118,11 @@ namespace production
 
    void production::defer_quit()
    {
-      if(!m_bReleased)
+      if (!m_bReleased)
          return;
-      if(m_iLoopCount > 0)
+      if (m_iLoopCount > 0)
       {
-         if(m_iLoop > m_iLoopCount)
+         if (m_iLoop > m_iLoopCount)
          {
             System.os().post_to_all_threads(WM_QUIT, 0, 0);
          }
@@ -142,21 +142,21 @@ namespace production
 
       int32_t iProduce;
 
-      string strBackPostColor   = "background-color: #CCCCC2;";
+      string strBackPostColor = "background-color: #CCCCC2;";
 
-      while(true)
+      while (true)
       {
 
          try
          {
             iProduce = produce();
          }
-         catch(...)
+         catch (...)
          {
             iProduce = -1;
          }
 
-         if(iProduce >= 0)
+         if (iProduce >= 0)
             break;
 
          m_iStep = 1;
@@ -166,12 +166,12 @@ namespace production
 
          m_iGlobalRetry++;
 
-         if(m_iGlobalRetry > 8)
+         if (m_iGlobalRetry > 8)
          {
 
             add_status("Retried " + ::str::from(m_iGlobalRetry) + " times - \"giving up\" this command!");
 
-            if(m_eversion == version_basis)
+            if (m_eversion == version_basis)
             {
                set["post"]["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #882266; display: block; margin-bottom: 1.5em;\">Retried " + ::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!</span>";
             }
@@ -194,15 +194,15 @@ namespace production
 
          add_status("General build failure. Restarting");
 
-         if(m_iGlobalRetry == 1)
+         if (m_iGlobalRetry == 1)
          {
             m_strTry = "1st";
          }
-         else if(m_iGlobalRetry == 2)
+         else if (m_iGlobalRetry == 2)
          {
             m_strTry = "2nd";
          }
-         else if(m_iGlobalRetry == 3)
+         else if (m_iGlobalRetry == 3)
          {
             m_strTry = "3rd";
          }
@@ -211,20 +211,20 @@ namespace production
             m_strTry = ::str::from(m_iGlobalRetry) + "th";
          }
 
-         if(m_eversion == version_basis)
+         if (m_eversion == version_basis)
          {
             set["post"]["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #222218; display: block; margin-bottom: 1.5em;\">General build failure. Starting " + m_strTry + " retry of new <a href=\"http://code.ca2.cc/\" class=\"fluidbasis\" >basis</a> release.<br />";
          }
          else
          {
-            set["post"]["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #222218; display: block; margin-bottom: 1.5em;\">General build failure. Starting " + m_strTry + " retry  of new <a href=\"http://ca2.cc/\">stage</a> release.<br />"; 
+            set["post"]["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #222218; display: block; margin-bottom: 1.5em;\">General build failure. Starting " + m_strTry + " retry  of new <a href=\"http://ca2.cc/\">stage</a> release.<br />";
          }
 
-         if(m_straStatus.get_count() > 1)
+         if (m_straStatus.get_count() > 1)
          {
 
             set["post"]["new_status"] = set["post"]["new_status"] + "Last Stati:<br />";
-            for(::count i = min(5, m_straStatus.get_count() - 1); i >= 1 ; i--)
+            for (::count i = min(5, m_straStatus.get_count() - 1); i >= 1; i--)
             {
                set["post"]["new_status"] = set["post"]["new_status"] + System.html()->entities(m_straStatus.element_at(i));
                set["post"]["new_status"] = set["post"]["new_status"] + "<br />";
@@ -245,8 +245,8 @@ namespace production
 
       /*if(System.directrix()->m_varTopicQuery.has_property("quit_on_finish"))
       {
-         
-         System.os().post_to_all_threads(WM_QUIT, 0, 0);
+
+      System.os().post_to_all_threads(WM_QUIT, 0, 0);
 
       }*/
 
@@ -263,7 +263,7 @@ namespace production
 
       int32_t iRetry = 0;
 
-restart:
+   restart:
 
       if (m_iStep == 1)
       {
@@ -288,32 +288,48 @@ restart:
          }
 
 
-      bool bMediumSizeStatusText = false;
+         bool bMediumSizeStatusText = false;
 
          if (bMediumSizeStatusText)
          {
 
-            property_set set;
+            {
 
-            Application.http().get("http://api.ca2.cc/status/insert");
-         string strEndTime;
-         m_timeEnd.FormatGmt(strEndTime, "%Y-%m-%d %H-%M-%S");
-         m_strBuild = "\"This a long build version string text description that makes really trigger a size that is will end up making this status rquired and needed to be recorded and written to another set of records or table...\"";
-         if (m_eversion == version_basis)
-         {
-            set["post"]["new_status"] = "<div style=\"display: block; background-color: #FFE0FF; \"><h2 style=\"margin-bottom:0px; color: #FF55CC;\">Medium Size Status Text" + version_to_international_datetime(m_strBuild) + "</h2><span style=\"color: #882255; display: block; margin-bottom: 1.5em;\">" + m_strBuildTook + " and finished at " + strEndTime + "<br>New release of <a href=\"http://code.ca2.cc/\" class=\"fluidbasis\" >basis</a> applications labeled " + m_strBuild + " is ready for download through compatible gateways.<br>Check <a href=\"http://laboratory.ca2.cc/\" class=\"fluidbasis\" >laboratory.ca2.cc</a> or <a href=\"http://warehouse.ca2.cc/\" class=\"fluidbasis\" >warehouse.ca2.cc</a> for simple gateway implementations.</span></div>";
+               property_set set(get_app());
+
+               Application.http().get("http://api.ca2.cc/status/insert", set);
+
+            }
+
+            string strEndTime;
+
+            m_timeEnd.FormatGmt(strEndTime, "%Y-%m-%d %H-%M-%S");
+
+            m_strBuild = "\"This a long build version string text description that makes really trigger a size that is will end up making this status rquired and needed to be recorded and written to another set of records or table...\"";
+
+            string str;
+
+            {
+
+               property_set set(get_app());
+
+               if (m_eversion == version_basis)
+               {
+                  set["post"]["new_status"] = "<div style=\"display: block; background-color: #FFE0FF; \"><h2 style=\"margin-bottom:0px; color: #FF55CC;\">Medium Size Status Text" + version_to_international_datetime(m_strBuild) + "</h2><span style=\"color: #882255; display: block; margin-bottom: 1.5em;\">" + m_strBuildTook + " and finished at " + strEndTime + "<br>New release of <a href=\"http://code.ca2.cc/\" class=\"fluidbasis\" >basis</a> applications labeled " + m_strBuild + " is ready for download through compatible gateways.<br>Check <a href=\"http://laboratory.ca2.cc/\" class=\"fluidbasis\" >laboratory.ca2.cc</a> or <a href=\"http://warehouse.ca2.cc/\" class=\"fluidbasis\" >warehouse.ca2.cc</a> for simple gateway implementations.</span></div>";
+               }
+               else
+               {
+                  set["post"]["new_status"] = "<div style=\"display: block; background-color: #E0FFCC; \"><h2 style=\"margin-bottom:0px; color: #55CCAA;\">Medium Size Status Text" + version_to_international_datetime(m_strBuild) + "</h2><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">" + m_strBuildTook + " and finished at " + strEndTime + "<br>New release of <a href=\"http://ca2.cc/\">stage</a> applications labeled " + m_strBuild + " is ready for download through compatible gateways.<br>Check <a href=\"http://desktop.ca2.cc/\">desktop.ca2.cc</a> or <a href=\"http://store.ca2.cc/\">store.ca2.cc</a> for simple gateway implementations.</span></div";
+               }
+
+               Application.http().get("http://api.ca2.cc/status/insert", str, set);
+
+            }
+
+            ExitProcess(true);
+
+
          }
-         else
-         {
-            set["post"]["new_status"] = "<div style=\"display: block; background-color: #E0FFCC; \"><h2 style=\"margin-bottom:0px; color: #55CCAA;\">Medium Size Status Text" + version_to_international_datetime(m_strBuild) + "</h2><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">" + m_strBuildTook + " and finished at " + strEndTime + "<br>New release of <a href=\"http://ca2.cc/\">stage</a> applications labeled " + m_strBuild + " is ready for download through compatible gateways.<br>Check <a href=\"http://desktop.ca2.cc/\">desktop.ca2.cc</a> or <a href=\"http://store.ca2.cc/\">store.ca2.cc</a> for simple gateway implementations.</span></div";
-         }
-         string str;
-         Application.http().get("http://api.ca2.cc/status/insert", str, set);
-
-         ExitProcess(true);
-
-
-      }
          //m_strBase = Application.command()->m_varTopicQuery["base_dir"];
          m_strBase = Application.file().as_string("C:\\ca2\\config\\nodeapp-windows\\production\\base_dir.txt").trimmed();
 
@@ -321,16 +337,16 @@ restart:
          {
 
             string strContentsSrc = System.dir().path(m_strBase, "include", "product.version.config.h");
-            
+
             string strContentsSet;
-            
+
             string strContentsGet = Application.file().as_string(strContentsSrc);
 
-            if(m_eversion == version_basis)
+            if (m_eversion == version_basis)
             {
 
                strContentsSet = "#pragma once\n\n\n#define CA2_PLATFORM_VERSION CA2_BASIS\n\n\n\n";
-         
+
             }
             else
             {
@@ -339,7 +355,7 @@ restart:
 
             }
 
-            if(strContentsSet != strContentsGet)
+            if (strContentsSet != strContentsGet)
             {
 
                Application.file().put_contents(strContentsSrc, strContentsSet);
@@ -356,7 +372,7 @@ restart:
          m_iLoop++;
          defer_quit();
 
-         
+
 
          m_straRoot.remove_all();
 
@@ -373,13 +389,13 @@ restart:
 
          bool bSkip1 = false;
 
-         if(!bSkip1 && m_iGlobalRetry <= 0)
+         if (!bSkip1 && m_iGlobalRetry <= 0)
          {
 
-            for(int32_t i = 0; i < m_straRoot.get_size(); i++)
+            for (int32_t i = 0; i < m_straRoot.get_size(); i++)
             {
 
-               if(!sync_source(m_straRoot[i], NULL))
+               if (!sync_source(m_straRoot[i], NULL))
                   return 1;
 
             }
@@ -403,10 +419,10 @@ restart:
          strRevision = System.process().get_output(strSvnVersionCmd);
          string strSVN = "SVN" + strRevision;
          strSVN.trim();
-         if(m_iGlobalRetry <= 0 && m_strSubversionRevision == strSVN)
+         if (m_iGlobalRetry <= 0 && m_strSubversionRevision == strSVN)
          {
             iRetry++;
-            if(iRetry > 3)
+            if (iRetry > 3)
                return 3;
             goto restart;
          }
@@ -439,26 +455,35 @@ restart:
          {
             // good pratice to initialize authentication of ca2status.com with account.ca2.cc auth information
             string str;
-            
-            
-            property_set set;
 
-            Application.http().get("http://api.ca2.cc/status/insert");
+            {
 
-            if(m_eversion == version_basis)
-            {
-               set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #552250;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #882266; display: block; margin-bottom: 1.5em;\">Starting production of new <a href=\"http://code.ca2.cc/\" class=\"fluidbasis\" >basis</a> release.</span>";
-            }
-            else
-            {
-               set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #22552F;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">Starting production of new <a href=\"http://ca2.cc/\">stage</a> release.</span>";
+               property_set set(get_app());
+
+               Application.http().get("http://api.ca2.cc/status/insert", set);
+
             }
 
-            Application.http().get("http://api.ca2.cc/status/insert", str, set);
+            {
+
+               property_set set(get_app());
+
+               if (m_eversion == version_basis)
+               {
+                  set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #552250;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #882266; display: block; margin-bottom: 1.5em;\">Starting production of new <a href=\"http://code.ca2.cc/\" class=\"fluidbasis\" >basis</a> release.</span>";
+               }
+               else
+               {
+                  set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #22552F;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">Starting production of new <a href=\"http://ca2.cc/\">stage</a> release.</span>";
+               }
+
+               Application.http().get("http://api.ca2.cc/status/insert", str, set);
+
+            }
 
             string strTwit;
 
-            if(m_iGlobalRetry <= 0)
+            if (m_iGlobalRetry <= 0)
             {
                strTwit = "ca2twit-lib : new " + m_strVersion + " build starting " + version_to_international_datetime(m_strBuild) + ". More details at http://status.ca2.cc/" + System.url().url_encode(m_strStatusEmail);
             }
@@ -479,21 +504,21 @@ restart:
          keeper < bool > keepFinishedFalse(&m_bFinished, false, true, true);
          string str;
          m_iBaseLen = m_strBase.get_length();
-         if(m_strBase.Right(1) != "/" && m_strBase.Right(1) != "\\")
+         if (m_strBase.Right(1) != "/" && m_strBase.Right(1) != "\\")
             m_iBaseLen++;
 
-         
-         
+
+
          string strStatus;
          m_strTag = strTime + " " + strSVNKey;
-         m_strTagPath = System.dir().path("C:\\ca2\\build\\stage", m_strFormatBuild +".txt");
+         m_strTagPath = System.dir().path("C:\\ca2\\build\\stage", m_strFormatBuild + ".txt");
 
          string strBuildH;
          strBuildH.Format("-c1-production -c2-producer -t12n-producing -mmmi- %s", m_strTag);
          strBuildH += " - ";
          strBuildH += Application.file().as_string(System.dir().path(m_strBase, "app/stage", "build_machine_pp_comment.txt"));
-         strBuildH += "#define THIS_PRODUCT_VERSION \"" + m_strTag + "\\0\"\r\n#define THIS_FILE_VERSION \""+ m_strTag +"\\0\"\r\n";
-         strBuildH += "#define __THIS_PRODUCT_VERSION " + strVerWin + "\r\n#define __THIS_FILE_VERSION "+ strVerWin +"\r\n";
+         strBuildH += "#define THIS_PRODUCT_VERSION \"" + m_strTag + "\\0\"\r\n#define THIS_FILE_VERSION \"" + m_strTag + "\\0\"\r\n";
+         strBuildH += "#define __THIS_PRODUCT_VERSION " + strVerWin + "\r\n#define __THIS_FILE_VERSION " + strVerWin + "\r\n";
          strBuildH += "\r\n";
          strBuildH += "\r\n";
          strBuildH += "\r\n";
@@ -512,16 +537,16 @@ restart:
          uint32_t dwExitCode;
 
          int32_t i;
-         if(m_bClean)
+         if (m_bClean)
          {
             add_status("Cleaning ca2 fontopus ca2os ...");
             {
                string str;
-               
-               
+
+
                property_set set;
 
-               set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor +" display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt( "%Y-%m-%d %H-%M-%S")) +  " Cleaning...</span></div>";
+               set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Cleaning...</span></div>";
 
                Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
@@ -529,16 +554,16 @@ restart:
             ::core::process process;
             string strPath;
             strPath = System.dir().element("nodeapp\\stage\\script\\stage_clean.bat");
-            if(!process.create_child_process(strPath, false))
+            if (!process.create_child_process(strPath, false))
             {
                uint32_t dw = GetLastError();
                string str;
                str.Format("Error creating clean process: %d", dw);
                add_status(str);
-               return 0;   
+               return 0;
             }
             i = 1;
-            while(!process.has_exited(&dwExitCode))
+            while (!process.has_exited(&dwExitCode))
             {
                Sleep(5000);
                str.Format("%d Cleaning ca2 fontopus ca2os ...", i);
@@ -552,24 +577,24 @@ restart:
          Application.file().put_contents_utf8(System.dir().path(m_strBase, "app\\this_version_info.h"), strBuildH);
          Application.file().put_contents_utf8(System.dir().path(m_strBase, "app\\this_version_info.txt"), strBuildH); //  + "\r\n\r\n" + strDedicaverse + "\r\n\r\n" + strCgclcst);
 
-         if(!commit_for_new_build_and_new_release())
+         if (!commit_for_new_build_and_new_release())
             return 2;
 
 
          m_strSubversionRevision = "SVN" + ::str::from(atoi(strRevision) + 1);
 
-         if(m_bBuild)
+         if (m_bBuild)
          {
             build("app-veriwell");
          }
 
          {
             string str;
-            
-            
+
+
             property_set set;
 
-            set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor +" display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt( "%Y-%m-%d %H-%M-%S")) +  " Cleaning...</span></div>";
+            set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Cleaning...</span></div>";
 
             Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
@@ -584,16 +609,16 @@ restart:
          add_status("Cleaning ca2os folder...");
          ::core::process process;
          Application.file().put_contents(strPath, "rmdir /s /q C:\\ca2\\vrel\\stage");
-         if(!process.create_child_process(strPath, false))
+         if (!process.create_child_process(strPath, false))
          {
             uint32_t dw = GetLastError();
             string str;
             str.Format("Error creating process: %d", dw);
             add_status(str);
-            return 0;   
+            return 0;
          }
          i = 1;
-         while(!process.has_exited(&dwExitCode))
+         while (!process.has_exited(&dwExitCode))
          {
             Sleep(500);
             str.Format("%d Cleaning ca2os folder ...", i);
@@ -613,9 +638,9 @@ restart:
 
 
          ::count iCount = m_straFiles.get_size();
-         for(int32_t i = 0; i < iCount;)
+         for (int32_t i = 0; i < iCount;)
          {
-            if(m_straFiles[i].find("\\.svn\\") >= 0 || (m_straFiles[i].get_length() < 5 || m_straFiles[i].Right(5) == "\\.svn"))
+            if (m_straFiles[i].find("\\.svn\\") >= 0 || (m_straFiles[i].get_length() < 5 || m_straFiles[i].Right(5) == "\\.svn"))
             {
                m_straFiles.remove_at(i);
             }
@@ -625,7 +650,7 @@ restart:
             }
          }
          TRACE("\n");
-         for(int32_t i = 0; i < m_straFiles.get_size(); i++)
+         for (int32_t i = 0; i < m_straFiles.get_size(); i++)
          {
             const char * lpcsz = m_straFiles[i];
             TRACE("file(%05d)=%s\n", i, lpcsz);
@@ -633,27 +658,27 @@ restart:
          m_pview->post_message(WM_USER, 2);
          {
             string str;
-            
-            
+
+
             property_set set;
 
-            set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor +" display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt( "%Y-%m-%d %H-%M-%S")) +  " Copying...</span></div>";
+            set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Copying...</span></div>";
 
             Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
          }
       }
-      else if(m_iStep == 2)
+      else if (m_iStep == 2)
       {
          string m_strStartTime;
          m_timeStart.FormatGmt(m_strStartTime, "%Y-%m-%d %H-%M-%S");
          {
             string str;
-            
-            
+
+
             property_set set;
 
-            set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor +" display: block; margin-bottom: 0.95em;\">" +version_to_international_datetime( ::datetime::time::get_current_time().FormatGmt( "%Y-%m-%d %H-%M-%S")) +  " Compressing...</span></div>";
+            set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Compressing...</span></div>";
 
             Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
@@ -661,11 +686,11 @@ restart:
          compress();
          {
             string str;
-            
-            
+
+
             property_set set;
 
-            set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor +" display: block; margin-bottom: 0.95em;\">" +version_to_international_datetime( ::datetime::time::get_current_time().FormatGmt( "%Y-%m-%d %H-%M-%S")) +  " Resources...</span></div>";
+            set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Resources...</span></div>";
 
             Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
@@ -673,23 +698,23 @@ restart:
 
          release_production();
 
-         if(!release_npca2("x86"))
+         if (!release_npca2("x86"))
          {
             return 1;
          }
-         if(!release_npca2("x64"))
+         if (!release_npca2("x64"))
          {
             return 1;
          }
-         if(!release_iexca2("x86"))
+         if (!release_iexca2("x86"))
          {
             return 1;
          }
-         if(!release_iexca2("x64"))
+         if (!release_iexca2("x64"))
          {
             return 1;
          }
-         if(!release_crxca2("x86"))
+         if (!release_crxca2("x86"))
          {
             return 1;
          }
@@ -705,18 +730,18 @@ restart:
 
          {
             string str;
-            
-            
+
+
             property_set set;
 
-            set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor +" display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt( "%Y-%m-%d %H-%M-%S")) +  " Storing Symbols...</span></div>";
+            set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Storing Symbols...</span></div>";
 
             Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
          }
 
 
-         
+
          {
 
             add_status("Storing Symbols x86...");
@@ -728,20 +753,20 @@ restart:
             ::core::process process;
             string strCommand = "\"C:\\Program Files (x86)\\Windows Kits\\8.0\\Debuggers\\x86\\symstore.exe\"  add /r  -:REL /f \\\\sewindows\\stage\\" + m_strFormatBuild + "\\stage\\x86\\ /s \\\\sewindows\\SymbolServer\\ /t \"ca2\" /v \"" + m_strFormatBuild + "\"";
             Application.file().put_contents(strPath, strCommand);
-            if(!process.create_child_process(strPath, false))
+            if (!process.create_child_process(strPath, false))
             {
                uint32_t dw = GetLastError();
                string str;
                str.Format("Error creating process: %d", dw);
                add_status(str);
-               return 0;   
+               return 0;
             }
 
             int32_t i = 1;
 
             string str;
 
-            while(!process.has_exited(&dwExitCode))
+            while (!process.has_exited(&dwExitCode))
             {
                Sleep(584);
                str.Format("%d Storing Symbols x86 ...", i);
@@ -766,20 +791,20 @@ restart:
             ::core::process process;
             string strCommand = "\"C:\\Program Files (x86)\\Windows Kits\\8.0\\Debuggers\\x64\\symstore.exe\"  add /r  -:REL /f \\\\sewindows\\stage\\" + m_strFormatBuild + "\\stage\\x64\\ /s \\\\sewindows\\SymbolServer\\ /t \"ca2\" /v \"" + m_strFormatBuild + "\"";
             Application.file().put_contents(strPath, strCommand);
-            if(!process.create_child_process(strPath, false))
+            if (!process.create_child_process(strPath, false))
             {
                uint32_t dw = GetLastError();
                string str;
                str.Format("Error creating process: %d", dw);
                add_status(str);
-               return 0;   
+               return 0;
             }
 
             int32_t i = 1;
 
             string str;
 
-            while(!process.has_exited(&dwExitCode))
+            while (!process.has_exited(&dwExitCode))
             {
                Sleep(584);
                str.Format("%d Storing Symbols x86 ...", i);
@@ -796,11 +821,11 @@ restart:
 
          {
             string str;
-            
-            
+
+
             property_set set;
 
-            set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor +" display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt( "%Y-%m-%d %H-%M-%S")) +  " Packaging...</span></div>";
+            set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Packaging...</span></div>";
 
             Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
@@ -835,11 +860,11 @@ restart:
 
          {
             string str;
-            
-            
+
+
             property_set set;
 
-            set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor +" display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt( "%Y-%m-%d %H-%M-%S")) +  " Releasing...</span></div>";
+            set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Releasing...</span></div>";
 
             Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
@@ -998,7 +1023,7 @@ restart:
          add_status("");
          add_status("");
          m_evFinish.SetEvent();
-         if(m_bLoop)
+         if (m_bLoop)
          {
             m_iStep = 1;
             goto restart;
@@ -1019,7 +1044,7 @@ restart:
       strStatus.Format("compressing %s", System.file().name_(lpcszRelative));
       add_status(strStatus);
       string strSrcFile = System.dir().path(m_strVrel, lpcszRelative);
-      if(::str::ends_ci(lpcszRelative, ".dll")
+      if (::str::ends_ci(lpcszRelative, ".dll")
          || ::str::ends_ci(lpcszRelative, ".exe")
          || ::str::ends_ci(lpcszRelative, ".ocx")
          || ::str::ends_ci(lpcszRelative, ".cab"))
@@ -1035,7 +1060,7 @@ restart:
          add_status("Signing code ...");
 
       }
-      else if(::str::ends_ci(lpcszRelative, ".sys"))
+      else if (::str::ends_ci(lpcszRelative, ".sys"))
       {
 
          string strStatus;
@@ -1049,14 +1074,14 @@ restart:
 
       }
       int32_t iRetry = 0;
-retry2:
+   retry2:
       try
       {
          System.compress().bz(get_app(), System.dir().path(m_strCCAuth, lpcszRelative) + ".bz", strSrcFile);
       }
-      catch(...)
+      catch (...)
       {
-         if(iRetry < 5)
+         if (iRetry < 5)
          {
             iRetry++;
             Sleep(1984 + 1977);
@@ -1089,21 +1114,21 @@ retry2:
       string strUn;
       int32_t i = 0;
       single_lock sl(&m_mutexCompress, TRUE);
-      for(;i < m_straFiles.get_size();i++)
+      for (; i < m_straFiles.get_size(); i++)
       {
          string & strFile = m_straFiles[i];
-         if(System.file().extension(strFile) == "zip")
+         if (System.file().extension(strFile) == "zip")
          {
          }
-         else if(Application.dir().is(strFile))
-         {
-            continue;
-         }
-         else if(System.file().extension(strFile) == "pdb")
+         else if (Application.dir().is(strFile))
          {
             continue;
          }
-         else if(System.file().extension(strFile) == "ilk")
+         else if (System.file().extension(strFile) == "pdb")
+         {
+            continue;
+         }
+         else if (System.file().extension(strFile) == "ilk")
          {
             continue;
          }
@@ -1116,9 +1141,9 @@ retry2:
       uint32_t uiProcessorCount = get_current_process_affinity_order();
 
       array < compress_thread * > threada;
-      if(uiProcessorCount == 0)
+      if (uiProcessorCount == 0)
       {
-         while(compress_next())
+         while (compress_next())
          {
          }
       }
@@ -1127,7 +1152,7 @@ retry2:
          smart_pointer_array < manual_reset_event > eventa(get_app());
          eventa.set_size_create(uiProcessorCount);
          sync_object_ptra syncobjectptra;
-         for(uint32_t ui = 0; ui < uiProcessorCount; ui++)
+         for (uint32_t ui = 0; ui < uiProcessorCount; ui++)
          {
             compress_thread * pthread = new compress_thread(this, eventa(ui));
             threada.add(pthread);
@@ -1135,7 +1160,7 @@ retry2:
             pthread->m_bAutoDelete = FALSE;
             pthread->m_p->m_bAutoDelete = FALSE;
             pthread->begin();
-            syncobjectptra.add(dynamic_cast < waitable * > (eventa(ui).m_p));
+            syncobjectptra.add(dynamic_cast <waitable *> (eventa(ui).m_p));
          }
          multi_lock ml(syncobjectptra);
          ml.lock();
@@ -1158,7 +1183,7 @@ retry2:
    bool production::compress_next()
    {
       single_lock sl(&m_mutexCompress, TRUE);
-      if(m_straCompress.get_size() <= 0)
+      if (m_straCompress.get_size() <= 0)
          return false;
       string strNext = m_straCompress[0];
       m_straCompress.remove_at(0);
@@ -1184,7 +1209,7 @@ retry2:
 
       set_thread_priority(::core::scheduling_priority_highest);
 
-      while(m_pproduction->compress_next())
+      while (m_pproduction->compress_next())
       {
       }
 
@@ -1213,10 +1238,10 @@ retry2:
    strStatus.Format("compress step: %d", i);
    add_status(strStatus);
 
-   
 
-   
-   System.http().ms_download(strUrl, 
+
+
+   System.http().ms_download(strUrl,
    System.dir().element("time\\spaignition_update.txt"), NULL, post, headers, System.user()->get_user());
    i += 8;
    }
@@ -1232,13 +1257,13 @@ retry2:
       string str;
       string strBase = m_strBase;
       STARTUPINFO si;
-      PROCESS_INFORMATION pi; 
+      PROCESS_INFORMATION pi;
       memset(&si, 0, sizeof(si));
       memset(&pi, 0, sizeof(pi));
       si.cb = sizeof(si);
       si.dwFlags = STARTF_USESHOWWINDOW;
-      si.wShowWindow = SW_HIDE; 
-      if(pszRevision != NULL && pszRevision[0] != '\0')
+      si.wShowWindow = SW_HIDE;
+      if (pszRevision != NULL && pszRevision[0] != '\0')
       {
          str.Format("svn update --revision %s %s", pszRevision, System.dir().path(strBase, psz));
       }
@@ -1246,7 +1271,7 @@ retry2:
       {
          str.Format("svn update %s", System.dir().path(strBase, psz));
       }
-      if(!::CreateProcess(NULL, (LPTSTR) (const char *) str, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
+      if (!::CreateProcess(NULL, (LPTSTR)(const char *)str, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
       {
          strStatus.Format("     Error: Check svn installation!!");
          add_status(strStatus);
@@ -1255,11 +1280,11 @@ retry2:
 
       DWORD dwExitCode;
       int32_t i = 1;
-      while(true)
+      while (true)
       {
-         if(!GetExitCodeProcess(pi.hProcess, &dwExitCode))
+         if (!GetExitCodeProcess(pi.hProcess, &dwExitCode))
             break;
-         if(dwExitCode != STILL_ACTIVE)
+         if (dwExitCode != STILL_ACTIVE)
             break;
          Sleep(2300);
          str.Format("%d Updating source: %s ...", i, psz);
@@ -1276,10 +1301,10 @@ retry2:
       add_status(strStatus);
 
 
-      for(int32_t i = 0; i < m_straRoot.get_size(); i++)
+      for (int32_t i = 0; i < m_straRoot.get_size(); i++)
       {
 
-         if(!commit_source(m_straRoot[i]))
+         if (!commit_source(m_straRoot[i]))
             return false;
 
       }
@@ -1296,16 +1321,16 @@ retry2:
       string str;
       string strBase = m_strBase;
       STARTUPINFO si;
-      PROCESS_INFORMATION pi; 
+      PROCESS_INFORMATION pi;
       memset(&si, 0, sizeof(si));
       memset(&pi, 0, sizeof(pi));
       si.cb = sizeof(si);
       si.dwFlags = STARTF_USESHOWWINDOW;
-      si.wShowWindow = SW_HIDE; 
-      str.Format("svn commit --force-log --encoding utf-8 --file %s %s", 
+      si.wShowWindow = SW_HIDE;
+      str.Format("svn commit --force-log --encoding utf-8 --file %s %s",
          System.dir().path(m_strBase, "app\\this_version_info.txt"),
          System.dir().path(strBase, psz));
-      if(!::CreateProcess(NULL, (LPTSTR) (const char *) str, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
+      if (!::CreateProcess(NULL, (LPTSTR)(const char *)str, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
       {
          strStatus.Format("     Error: Check svn installation!!");
          add_status(strStatus);
@@ -1314,11 +1339,11 @@ retry2:
 
       DWORD dwExitCode;
       int32_t i = 1;
-      while(true)
+      while (true)
       {
-         if(!GetExitCodeProcess(pi.hProcess, &dwExitCode))
+         if (!GetExitCodeProcess(pi.hProcess, &dwExitCode))
             break;
-         if(dwExitCode != STILL_ACTIVE)
+         if (dwExitCode != STILL_ACTIVE)
             break;
          Sleep(2300);
          str.Format("%d: Commit for new Build and new Release : %s ...", i, psz);
@@ -1335,13 +1360,13 @@ retry2:
       string strDirParam(pszDir);
       string strLocal(strDirParam);
       strLocal.replace("/", "\\");
-      if(strLocal.Right(1) != "\\") strLocal += "\\";
+      if (strLocal.Right(1) != "\\") strLocal += "\\";
       strRemote = strDirParam;
       strRemote.replace("\\", "/");
-      if(strRemote.Right(1) != "/") strRemote += "/";
-      if(strRemote.Left(1) != "/") strRemote = "/" + strRemote;
+      if (strRemote.Right(1) != "/") strRemote += "/";
+      if (strRemote.Left(1) != "/") strRemote = "/" + strRemote;
       strRelease = System.dir().path(strBase, strLocal);
-      if(bFileSet)
+      if (bFileSet)
       {
          string strFile;
          string strTitle;
@@ -1358,9 +1383,9 @@ retry2:
          stringa stra1;
          stringa stra2;
          Application.dir().rls(strRelease, &stra1, NULL, &stra2);
-         for(int32_t i = 0; i < stra1.get_size();)
+         for (int32_t i = 0; i < stra1.get_size();)
          {
-            if(stra1[i].find("\\.svn\\") >= 0 || (stra1[i].get_length() < 5 || stra1[i].Right(5) == "\\.svn"))
+            if (stra1[i].find("\\.svn\\") >= 0 || (stra1[i].get_length() < 5 || stra1[i].Right(5) == "\\.svn"))
             {
                stra1.remove_at(i);
                stra2.remove_at(i);
@@ -1392,7 +1417,7 @@ retry2:
 
 
       strsize iBaseLen = m_strBase.get_length();
-      if(m_strBase.Right(1) != "/" && m_strBase.Right(1) != "\\")
+      if (m_strBase.Right(1) != "/" && m_strBase.Right(1) != "\\")
          iBaseLen++;
 
       stringa straStageDir;
@@ -1410,17 +1435,17 @@ retry2:
       var varBzSize;
       string strContents;
       int32_t i = 0;
-      for(;i < m_straFiles.get_size();i++)
+      for (; i < m_straFiles.get_size(); i++)
       {
          string & strFile = m_straFiles[i];
-         if(::str::ends_ci(strFile, ".zip"))
+         if (::str::ends_ci(strFile, ".zip"))
          {
          }
-         else if(Application.dir().is(strFile))
+         else if (Application.dir().is(strFile))
          {
             continue;
          }
-         if(straStageDir.str_find_first_begins_ci(strFile) >= 0
+         if (straStageDir.str_find_first_begins_ci(strFile) >= 0
             && !m_straStageDirAcceptedFileExtensions.contains(
             System.file().extension(strFile)))
          {
@@ -1448,7 +1473,7 @@ retry2:
          strContents += ",";
          strContents += varBzSize.get_string();
          strContents += "\n";
-         if(!Application.file().exists(strRelease))
+         if (!Application.file().exists(strRelease))
          {
             Application.file().copy(strRelease, strBz, false);
          }
@@ -1463,13 +1488,13 @@ retry2:
 
       m_strIndexMd5 = System.file().md5(strIndex);
 
-      strBz = System.dir().path(m_strCCAuth, strRelative) + ".bz"; 
+      strBz = System.dir().path(m_strCCAuth, strRelative) + ".bz";
       ::DeleteFileW(::str::international::utf8_to_unicode(strBz));
       compress(strRelative);
 
       string strRelativeMd5 = "app\\stage\\metastage\\index-" + m_strFormatBuild + ".md5";
-      strMd5 =  System.dir().path(m_strVrel, strRelativeMd5);
-      Application.file().put_contents(strMd5 , m_strIndexMd5);
+      strMd5 = System.dir().path(m_strVrel, strRelativeMd5);
+      Application.file().put_contents(strMd5, m_strIndexMd5);
 
       //string strStage = System.dir().path("C:\\home\\ca2os\\ca2_spa\\" + m_strVersionShift, strRelative) + ".bz"; 
       //::DeleteFileW(::str::international::utf8_to_unicode(
@@ -1492,7 +1517,7 @@ retry2:
    void production::generate_appmatter_spa()
    {
 
-      for(int32_t i = 0; i < m_straRoot.get_size(); i++)
+      for (int32_t i = 0; i < m_straRoot.get_size(); i++)
       {
          generate_appmatter_spa(m_straRoot[i]);
       }
@@ -1508,9 +1533,9 @@ retry2:
 
       Application.dir().ls_dir(strBase, NULL, &straRelative);
 
-      for(int32_t i = 0; i < straRelative.get_count(); i++)
+      for (int32_t i = 0; i < straRelative.get_count(); i++)
       {
-         if(::str::begins(straRelative[i], "_"))
+         if (::str::begins(straRelative[i], "_"))
          {
             generate_appmatter_spa_folder(pszRoot, straRelative[i]);
          }
@@ -1533,9 +1558,9 @@ retry2:
 
       Application.dir().ls_dir(strBase, NULL, &straRelative);
 
-      for(int32_t i = 0; i < straRelative.get_count(); i++)
+      for (int32_t i = 0; i < straRelative.get_count(); i++)
       {
-         if(::str::begins(straRelative[i], "_") && straRelative[i] != "_std")
+         if (::str::begins(straRelative[i], "_") && straRelative[i] != "_std")
          {
             generate_appmatter_spa_folder(pszRoot, System.dir().path(pszRelative, straRelative[i]));
          }
@@ -1557,7 +1582,7 @@ retry2:
 
       Application.dir().ls_dir(strBase, NULL, &straRelative);
 
-      for(int32_t i = 0; i < straRelative.get_count(); i++)
+      for (int32_t i = 0; i < straRelative.get_count(); i++)
       {
 
          generate_appmatter_spa_style(pszRoot, System.dir().path(pszRelative, straRelative[i]));
@@ -1577,7 +1602,7 @@ retry2:
 
       Application.dir().ls_dir(strBase, NULL, &straRelative);
 
-      for(int32_t i = 0; i < straRelative.get_count(); i++)
+      for (int32_t i = 0; i < straRelative.get_count(); i++)
       {
 
          generate_appmatter_spa(pszRoot, System.dir().path(pszRelative, straRelative[i]));
@@ -1608,7 +1633,7 @@ retry2:
 
       strsize iBaseLen = m_strBase.get_length();
 
-      if(m_strBase.Right(1) != "/" && m_strBase.Right(1) != "\\")
+      if (m_strBase.Right(1) != "/" && m_strBase.Right(1) != "\\")
          iBaseLen++;
 
       string strRelative;
@@ -1620,29 +1645,29 @@ retry2:
       var varBzSize;
       string strContents;
       int32_t i = 0;
-      for(;i < straFiles.get_size();i++)
+      for (; i < straFiles.get_size(); i++)
       {
          string & strFile = straFiles[i];
-         if(System.file().extension(strFile).CompareNoCase("zip") == 0)
+         if (System.file().extension(strFile).CompareNoCase("zip") == 0)
          {
          }
-         else if(Application.dir().is(strFile))
-         {
-            continue;
-         }
-         else if(System.file().extension(strFile) == "pdb")
+         else if (Application.dir().is(strFile))
          {
             continue;
          }
-         else if(System.file().extension(strFile) == "ilk")
+         else if (System.file().extension(strFile) == "pdb")
          {
             continue;
          }
-         else if(System.file().extension(strFile) == "spa")
+         else if (System.file().extension(strFile) == "ilk")
          {
             continue;
          }
-         else if(System.file().extension(strFile) == "expand_fileset")
+         else if (System.file().extension(strFile) == "spa")
+         {
+            continue;
+         }
+         else if (System.file().extension(strFile) == "expand_fileset")
          {
             continue;
          }
@@ -1661,7 +1686,7 @@ retry2:
 
       }
 
-      strRelative = string(pszRoot) +  + "\\appmatter\\" + string(pszRelative);
+      strRelative = string(pszRoot) + +"\\appmatter\\" + string(pszRelative);
 
       strFile = System.dir().path(m_strBase, "app\\stage\\metastage", strRelative + ".expand_fileset.spa");
 
@@ -1784,7 +1809,7 @@ retry2:
       ::hex_to_memory(memMd5, System.crypto().md5(mem));
       ::hex_to_memory(memSha1, System.crypto().sha1(mem));
       return string("Digest-Algorithms: MD5 SHA1\n") +
-         "MD5-Digest: " + System.base64().encode(memMd5) +  "\n" +
+         "MD5-Digest: " + System.base64().encode(memMd5) + "\n" +
          "SHA1-Digest: " + System.base64().encode(memSha1) + "\n";
 
    }
@@ -1833,17 +1858,17 @@ retry2:
       m_straManifest.remove_all();
       m_straSignature.remove_all();
 
-      string strComment = "Created-By: ca2 production "+ m_strBuild + "\nComments: PLEASE DO NOT EDIT THIS FILE. YOU WILL BREAK IT.\n";
+      string strComment = "Created-By: ca2 production " + m_strBuild + "\nComments: PLEASE DO NOT EDIT THIS FILE. YOU WILL BREAK IT.\n";
 
 
       xpi_section("Manifest-Version: 1.0\n" + strComment, "Signature-Version: 1.0\n" + strComment);
 
       primitive::memory mem;
 
-      for(int32_t i = 0; i < m_straPath.get_count(); i++)
+      for (int32_t i = 0; i < m_straPath.get_count(); i++)
       {
          string strRelative = m_straRelative[i];
-         if(::str::begins_ci(strRelative, "META-INF\\"))
+         if (::str::begins_ci(strRelative, "META-INF\\"))
             continue;
          strRelative.replace("\\", "/");
          mem.allocate(0);
@@ -1862,7 +1887,7 @@ retry2:
       X509 * signer = NULL;
       {
          string strSigner = Application.file().as_string(strSignerPath);
-         BIO * pbio = BIO_new_mem_buf((void *) (LPCTSTR) strSigner, (int32_t) strSigner.get_length());
+         BIO * pbio = BIO_new_mem_buf((void *)(LPCTSTR)strSigner, (int32_t)strSigner.get_length());
          //signer = PEM_read_bio_X509_AUX(pbio, NULL, 0, NULL);
          signer = PEM_read_bio_X509(pbio, NULL, 0, NULL);
          BIO_free(pbio);
@@ -1871,7 +1896,7 @@ retry2:
       EVP_PKEY * pkey;
       {
          string strKey = Application.file().as_string(strKeyPath);
-         BIO * pbio = BIO_new_mem_buf((void *) (LPCTSTR) strKey, (int32_t) strKey.get_length());
+         BIO * pbio = BIO_new_mem_buf((void *)(LPCTSTR)strKey, (int32_t)strKey.get_length());
          pkey = PEM_read_bio_PrivateKey(pbio, NULL, NULL, NULL);
          BIO_free(pbio);
       }
@@ -1887,10 +1912,10 @@ retry2:
          string strCertificate;
          strsize iEndLen = strEnd.get_length();
          ::count iCount = 0;
-         while((iFind = strOthers.find("-----BEGIN CERTIFICATE-----", iStart)) >= 0)
+         while ((iFind = strOthers.find("-----BEGIN CERTIFICATE-----", iStart)) >= 0)
          {
             strsize iEnd = strOthers.find(strEnd, iFind);
-            if(iEnd < 0)
+            if (iEnd < 0)
                break;
             strCertificate = strOthers.Mid(iFind, iEnd + iEndLen - iFind);
             X509 * x;
@@ -1899,7 +1924,7 @@ retry2:
             //x = PEM_read_bio_X509_AUX(pbio, NULL, 0, NULL);
             x = PEM_read_bio_X509(pbio, NULL, 0, NULL);
             BIO_free(pbio);
-            if(x == NULL)
+            if (x == NULL)
             {
                return;
             }
@@ -1909,13 +1934,13 @@ retry2:
          }
          pstack509 = sk_X509_new_null();
 
-         for(int32_t i = 0; i < xptra.get_count(); i++)
+         for (int32_t i = 0; i < xptra.get_count(); i++)
          {
             sk_X509_push(pstack509, xptra[i]);
          }
       }
 
-      BIO * input = BIO_new_mem_buf((void *) (LPCTSTR) strSignature, (int32_t) strSignature.get_length());
+      BIO * input = BIO_new_mem_buf((void *)(LPCTSTR)strSignature, (int32_t)strSignature.get_length());
 
       PKCS7 * pkcs7 = PKCS7_sign(signer, pkey, pstack509, input, PKCS7_BINARY | PKCS7_DETACHED);
 
@@ -1962,7 +1987,7 @@ retry2:
          );
 
       string strVersionUrl;
-      if(m_eversion == version_basis)
+      if (m_eversion == version_basis)
       {
          strVersionUrl = "/basis";
       }
@@ -1975,7 +2000,7 @@ retry2:
       Application.file().put_contents(System.dir().path(strDir, "npca2", "chrome.manifest"), strChromeManifest);
 
       string strIcon;
-      if(m_eversion == version_basis)
+      if (m_eversion == version_basis)
       {
          strIcon = Application.dir().matter("fluidbasis-5c-32.png");
       }
@@ -2050,14 +2075,14 @@ retry2:
 
       create_xpi(pszPlatform, false);
       string strVersion;
-      if(m_eversion == version_basis)
+      if (m_eversion == version_basis)
       {
          strVersion = "\\basis";
       }
 
 
-      Application.file().copy("C:\\netnodenet\\net\\netseed\\front\\cc\\ca2\\_std\\download\\xpi\\"+strPlatform+strVersion+"\\npca2.xpi", System.dir().path(strDir, "npca2.xpi"));
-      Application.file().copy("C:\\netnodenet\\net\\netseed\\front\\cc\\ca2\\_std\\download\\rdf\\"+strPlatform+strVersion+"\\windows.rdf", System.dir().path(strDir, "windows.rdf"));
+      Application.file().copy("C:\\netnodenet\\net\\netseed\\front\\cc\\ca2\\_std\\download\\xpi\\" + strPlatform + strVersion + "\\npca2.xpi", System.dir().path(strDir, "npca2.xpi"));
+      Application.file().copy("C:\\netnodenet\\net\\netseed\\front\\cc\\ca2\\_std\\download\\rdf\\" + strPlatform + strVersion + "\\windows.rdf", System.dir().path(strDir, "windows.rdf"));
 
       return true;
    }
@@ -2073,7 +2098,7 @@ retry2:
       Application.dir().rm(System.dir().path(strDir, "npca2/META-INF"));
 
 
-      if(bSigned)
+      if (bSigned)
       {
          return create_signed_xpi(pszPlatform);
       }
@@ -2098,7 +2123,7 @@ retry2:
 
       string str;
 
-      string strXpi = System.dir().path(strDir, "npca2.xpi") ;
+      string strXpi = System.dir().path(strDir, "npca2.xpi");
 
       string strPath;
 
@@ -2106,18 +2131,18 @@ retry2:
 
       uint32_t dwExitCode;
 
-      for(int32_t i = 0; i < m_straRelative.get_count(); i++)
+      for (int32_t i = 0; i < m_straRelative.get_count(); i++)
       {
          strPath = "zip \"" + strXpi + "\" \"" + m_straRelative[i] + "\"";
-         if(!process.create_child_process(strPath, false,  System.dir().path(strDir, "npca2/")))
+         if (!process.create_child_process(strPath, false, System.dir().path(strDir, "npca2/")))
          {
             uint32_t dw = GetLastError();
             string str;
             str.Format("Error compressing npca2: %d is zip command line utility installed?", dw);
             add_status(str);
-            return 0;   
+            return 0;
          }
-         while(!process.has_exited(&dwExitCode))
+         while (!process.has_exited(&dwExitCode))
          {
             Sleep(284);
             str.Format("%d Compressing npca2 ...", i);
@@ -2138,19 +2163,19 @@ retry2:
       add_status("Creating uint32_t extension ...");
       string str;
       uint32_t dwExitCode;
-      string strXpi = System.dir().path(strDir, "npca2.xpi") ;
+      string strXpi = System.dir().path(strDir, "npca2.xpi");
       ::core::process process;
-      string strPath = "zip -r -D \""+strXpi+"\" * ";
-      if(!process.create_child_process(strPath, false,  System.dir().path(strDir, "npca2/")))
+      string strPath = "zip -r -D \"" + strXpi + "\" * ";
+      if (!process.create_child_process(strPath, false, System.dir().path(strDir, "npca2/")))
       {
          uint32_t dw = GetLastError();
          string str;
          str.Format("Error compressing npca2: %d is zip command line utilty installed?", dw);
          add_status(str);
-         return 0;   
+         return 0;
       }
       int32_t i = 1;
-      while(!process.has_exited(&dwExitCode))
+      while (!process.has_exited(&dwExitCode))
       {
          Sleep(284);
          str.Format("%d Compressing npca2 ...", i);
@@ -2172,24 +2197,24 @@ retry2:
       string strPlatform(pszPlatform);
 
 
-      Application.dir().mk(System.dir().path(m_strBase, "time\\iexca2\\"+strPlatform));
+      Application.dir().mk(System.dir().path(m_strBase, "time\\iexca2\\" + strPlatform));
 
       uint32_t dwExitCode;
       string str;
       ::core::process process;
       string strPath;
       strPath = System.dir().path(m_strBase, "nodeapp\\stage\\script\\makecab" + string(pszPlatform) + ".bat");
-      if(!process.create_child_process(strPath, false, System.dir().name(strPath)))
+      if (!process.create_child_process(strPath, false, System.dir().name(strPath)))
       {
          uint32_t dw = GetLastError();
          string str;
          str.Format("Error creating iexca2.cab: %d", dw);
          add_status(str);
-         return 0;   
+         return 0;
       }
       int32_t i;
       i = 1;
-      while(!process.has_exited(&dwExitCode))
+      while (!process.has_exited(&dwExitCode))
       {
          Sleep(5000);
          str.Format("%d Creating iexca2.cab  " + string(pszPlatform) + "...", i);
@@ -2198,12 +2223,12 @@ retry2:
       }
 
       string strVersion;
-      if(m_eversion == version_basis)
+      if (m_eversion == version_basis)
       {
          strVersion = "\\basis";
       }
 
-      Application.file().copy("C:\\netnodenet\\net\\netseed\\front\\cc\\ca2\\_std\\download\\cab\\" +  strPlatform + strVersion + "\\iexca2.cab", System.dir().path(m_strBase, "time\\iexca2\\"+strPlatform+"\\iexca2.cab"));
+      Application.file().copy("C:\\netnodenet\\net\\netseed\\front\\cc\\ca2\\_std\\download\\cab\\" + strPlatform + strVersion + "\\iexca2.cab", System.dir().path(m_strBase, "time\\iexca2\\" + strPlatform + "\\iexca2.cab"));
 
       return true;
 
@@ -2233,10 +2258,10 @@ retry2:
       strManifestJson.replace("%BUILD%", strCrxca2Version);
       strManifestJson.replace("%PLATFORM%", strPlatform);
       strManifestJson.replace("%DOWNLOADSITE%", m_strDownloadSite);
-      Application.file().put_contents(System.dir().path(strDir,  "manifest.json"), strManifestJson);
+      Application.file().put_contents(System.dir().path(strDir, "manifest.json"), strManifestJson);
 
       string strIcon;
-      if(m_eversion == version_basis)
+      if (m_eversion == version_basis)
       {
          strIcon = Application.dir().matter("fluidbasis-5c-32.png");
       }
@@ -2292,9 +2317,9 @@ retry2:
 
       WCHAR * pwsz;
 
-      if(FAILED(SHGetKnownFolderPath(FOLDERID_ProgramFilesX86, 0, NULL, &pwsz)))
+      if (FAILED(SHGetKnownFolderPath(FOLDERID_ProgramFilesX86, 0, NULL, &pwsz)))
       {
-   
+
          add_status("Chrome not found...");
 
          return false;
@@ -2307,19 +2332,19 @@ retry2:
 
       CoTaskMemFree(pwsz);
 
-      strCmd += "\\Google\\Chrome\\Application\\chrome.exe\" --no-message-box --pack-extension=\"" +strDir + "\" --pack-extension-key=\"X:\\sensitive\\sensitive\\certificate\\npca2pk.pem\"";
+      strCmd += "\\Google\\Chrome\\Application\\chrome.exe\" --no-message-box --pack-extension=\"" + strDir + "\" --pack-extension-key=\"X:\\sensitive\\sensitive\\certificate\\npca2pk.pem\"";
 
       System.process().synch(strCmd);
 
       string strVersion;
 
-      if(m_eversion == version_basis)
+      if (m_eversion == version_basis)
       {
          strVersion = "\\basis";
       }
 
 
-      Application.file().copy("C:\\netnodenet\\net\\netseed\\front\\cc\\ca2\\_std\\download\\crx\\"+strPlatform+strVersion+"\\crxca2.crx", System.dir().path(System.dir().name(strDir), "crxca2.crx"));
+      Application.file().copy("C:\\netnodenet\\net\\netseed\\front\\cc\\ca2\\_std\\download\\crx\\" + strPlatform + strVersion + "\\crxca2.crx", System.dir().path(System.dir().name(strDir), "crxca2.crx"));
 
       return true;
    }
@@ -2336,7 +2361,7 @@ retry2:
    void production::change_status(const char * psz)
    {
       single_lock sl(&m_mutexStatus, TRUE);
-      if(m_straStatus.get_count() == 0)
+      if (m_straStatus.get_count() == 0)
       {
          m_straStatus.add(psz);
       }
@@ -2349,14 +2374,14 @@ retry2:
 
 
 
-   production::release::release(production * pproduction) : 
+   production::release::release(production * pproduction) :
       ::element(pproduction->get_app()),
       thread(pproduction->get_app())
    {
-      m_pproduction = pproduction;
-      m_pproduction->m_iRelease++;
-      m_pproduction->OnUpdateRelease();
-   }
+         m_pproduction = pproduction;
+         m_pproduction->m_iRelease++;
+         m_pproduction->OnUpdateRelease();
+      }
 
    bool production::release::initialize_instance()
    {
@@ -2376,24 +2401,24 @@ retry2:
 
    void production::OnUpdateRelease()
    {
-      if(m_iRelease == 0 && m_bEndProduction && !m_bEndStatus)
+      if (m_iRelease == 0 && m_bEndProduction && !m_bEndStatus)
       {
          m_bEndStatus = true;
          m_evFinish.wait();
          m_evFinish.ResetEvent();
          add_status("All releases have been commanded and production has deemed ended!!.!.!!.");
-         
-         
+
+
          property_set set;
          string strEndTime;
          m_timeEnd.FormatGmt(strEndTime, "%Y-%m-%d %H-%M-%S");
-         if(m_eversion == version_basis)
+         if (m_eversion == version_basis)
          {
-            set["post"]["new_status"] = "<div style=\"display: block; background-color: #FFE0FF; \"><h2 style=\"margin-bottom:0px; color: #FF55CC;\">" + version_to_international_datetime(m_strBuild) + "</h2><span style=\"color: #882255; display: block; margin-bottom: 1.5em;\">"+m_strBuildTook+" and finished at "+ strEndTime + "<br>New release of <a href=\"http://code.ca2.cc/\" class=\"fluidbasis\" >basis</a> applications labeled " + m_strBuild + " is ready for download through compatible gateways.<br>Check <a href=\"http://laboratory.ca2.cc/\" class=\"fluidbasis\" >laboratory.ca2.cc</a> or <a href=\"http://warehouse.ca2.cc/\" class=\"fluidbasis\" >warehouse.ca2.cc</a> for simple gateway implementations.</span></div>";
+            set["post"]["new_status"] = "<div style=\"display: block; background-color: #FFE0FF; \"><h2 style=\"margin-bottom:0px; color: #FF55CC;\">" + version_to_international_datetime(m_strBuild) + "</h2><span style=\"color: #882255; display: block; margin-bottom: 1.5em;\">" + m_strBuildTook + " and finished at " + strEndTime + "<br>New release of <a href=\"http://code.ca2.cc/\" class=\"fluidbasis\" >basis</a> applications labeled " + m_strBuild + " is ready for download through compatible gateways.<br>Check <a href=\"http://laboratory.ca2.cc/\" class=\"fluidbasis\" >laboratory.ca2.cc</a> or <a href=\"http://warehouse.ca2.cc/\" class=\"fluidbasis\" >warehouse.ca2.cc</a> for simple gateway implementations.</span></div>";
          }
          else
          {
-            set["post"]["new_status"] = "<div style=\"display: block; background-color: #E0FFCC; \"><h2 style=\"margin-bottom:0px; color: #55CCAA;\">" + version_to_international_datetime(m_strBuild) + "</h2><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">"+m_strBuildTook+" and finished at "+ strEndTime + "<br>New release of <a href=\"http://ca2.cc/\">stage</a> applications labeled " + m_strBuild + " is ready for download through compatible gateways.<br>Check <a href=\"http://desktop.ca2.cc/\">desktop.ca2.cc</a> or <a href=\"http://store.ca2.cc/\">store.ca2.cc</a> for simple gateway implementations.</span></div";
+            set["post"]["new_status"] = "<div style=\"display: block; background-color: #E0FFCC; \"><h2 style=\"margin-bottom:0px; color: #55CCAA;\">" + version_to_international_datetime(m_strBuild) + "</h2><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">" + m_strBuildTook + " and finished at " + strEndTime + "<br>New release of <a href=\"http://ca2.cc/\">stage</a> applications labeled " + m_strBuild + " is ready for download through compatible gateways.<br>Check <a href=\"http://desktop.ca2.cc/\">desktop.ca2.cc</a> or <a href=\"http://store.ca2.cc/\">store.ca2.cc</a> for simple gateway implementations.</span></div";
          }
          string str;
          Application.http().get("http://api.ca2.cc/status/insert", str, set);
@@ -2402,10 +2427,10 @@ retry2:
 
          strTwit = "New build " + m_strBuild;
 
-         if(m_iGlobalRetry > 0)
+         if (m_iGlobalRetry > 0)
          {
 
-            if(m_iGlobalRetry == 1)
+            if (m_iGlobalRetry == 1)
             {
                strTwit += " with 1 retry";
             }
@@ -2424,7 +2449,7 @@ retry2:
          defer_quit();
 
       }
-      else if(m_iRelease > 0)
+      else if (m_iRelease > 0)
       {
          string strStatus;
          strStatus.Format("There are %d releases in command list!!", m_iRelease);
@@ -2440,8 +2465,8 @@ retry2:
       ::hi5::twit twitterObj(get_app());
 
 
-      string tmpStr( "" );
-      string replyMsg( "" );
+      string tmpStr("");
+      string replyMsg("");
 
 
       /* OAuth flow begins */
@@ -2449,23 +2474,23 @@ retry2:
       twitterObj.get_oauth().setConsumerKey(m_strTwitterConsumerKey);
       twitterObj.get_oauth().setConsumerSecret(m_strTwitterConsumerSecret);
 
-      string strPathKey = Application.dir().userappdata("twitterClient_token_key"+::str::from(m_eversion)+".txt");
-      string strPathSecret = Application.dir().userappdata("twitterClient_token_secret"+::str::from(m_eversion)+".txt");
+      string strPathKey = Application.dir().userappdata("twitterClient_token_key" + ::str::from(m_eversion) + ".txt");
+      string strPathSecret = Application.dir().userappdata("twitterClient_token_secret" + ::str::from(m_eversion) + ".txt");
       /* Step 1: Check if we alredy have OAuth access token from a previous run */
       //    char szKey[1024];
       string myOAuthAccessTokenKey = Application.file().as_string(strPathKey);
       string myOAuthAccessTokenSecret = Application.file().as_string(strPathSecret);
 
-      if( myOAuthAccessTokenKey.has_char() && myOAuthAccessTokenSecret.has_char() )
+      if (myOAuthAccessTokenKey.has_char() && myOAuthAccessTokenSecret.has_char())
       {
          /* If we already have these keys, then no need to go through auth again */
-         twitterObj.get_oauth().setOAuthTokenKey( myOAuthAccessTokenKey );
-         twitterObj.get_oauth().setOAuthTokenSecret( myOAuthAccessTokenSecret );
+         twitterObj.get_oauth().setOAuthTokenKey(myOAuthAccessTokenKey);
+         twitterObj.get_oauth().setOAuthTokenSecret(myOAuthAccessTokenSecret);
       }
       else
       {
          /* Step 2: Get request token key and secret */
-         twitterObj.oAuthRequestToken( tmpStr );
+         twitterObj.oAuthRequestToken(tmpStr);
 
          /* Step 3: Ask user to visit web link and get PIN */
          string szOAuthVerifierPin;
@@ -2474,14 +2499,14 @@ retry2:
          szOAuthVerifierPin = authapp.get_pin();
 
          tmpStr = szOAuthVerifierPin;
-         twitterObj.get_oauth().setOAuthPin( tmpStr );
+         twitterObj.get_oauth().setOAuthPin(tmpStr);
 
          /* Step 4: Exchange request token with access token */
          twitterObj.oAuthAccessToken();
 
          /* Step 5: Now, save this access token key and secret for future use without PIN */
-         twitterObj.get_oauth().getOAuthTokenKey( myOAuthAccessTokenKey );
-         twitterObj.get_oauth().getOAuthTokenSecret( myOAuthAccessTokenSecret );
+         twitterObj.get_oauth().getOAuthTokenKey(myOAuthAccessTokenKey);
+         twitterObj.get_oauth().getOAuthTokenSecret(myOAuthAccessTokenSecret);
 
          /* Step 6: Save these keys in a file or wherever */
 
@@ -2500,11 +2525,11 @@ retry2:
 
       int32_t iRetry = 0;
 
-Retry2:
+   Retry2:
 
       ::hi5::twit twitterObj(get_app());
-      string tmpStr( "" );
-      string replyMsg( "" );
+      string tmpStr("");
+      string replyMsg("");
 
       /* OAuth flow begins */
       /* Step 0: set OAuth related params. These are got by registering your app at twitter.com */
@@ -2512,17 +2537,17 @@ Retry2:
       twitterObj.get_oauth().setConsumerSecret(m_strTwitterConsumerSecret);
 
       string strPathKey = Application.dir().userappdata("twitterClient_token_key" + ::str::from(m_eversion) + ".txt");
-      string strPathSecret = Application.dir().userappdata("twitterClient_token_secret"+::str::from(m_eversion)+".txt");
+      string strPathSecret = Application.dir().userappdata("twitterClient_token_secret" + ::str::from(m_eversion) + ".txt");
       /* Step 1: Check if we alredy have OAuth access token from a previous run */
       //    char szKey[1024];
       string myOAuthAccessTokenKey = Application.file().as_string(strPathKey);
       string myOAuthAccessTokenSecret = Application.file().as_string(strPathSecret);
 
-      if( myOAuthAccessTokenKey.has_char() && myOAuthAccessTokenSecret.has_char() )
+      if (myOAuthAccessTokenKey.has_char() && myOAuthAccessTokenSecret.has_char())
       {
          /* If we already have these keys, then no need to go through auth again */
-         twitterObj.get_oauth().setOAuthTokenKey( myOAuthAccessTokenKey );
-         twitterObj.get_oauth().setOAuthTokenSecret( myOAuthAccessTokenSecret );
+         twitterObj.get_oauth().setOAuthTokenKey(myOAuthAccessTokenKey);
+         twitterObj.get_oauth().setOAuthTokenSecret(myOAuthAccessTokenSecret);
       }
       else
       {
@@ -2538,7 +2563,7 @@ Retry2:
       /* Post a new status message */
       tmpStr = pszMessage;
       replyMsg = "";
-      if( twitterObj.statusUpdate( tmpStr ) )
+      if (twitterObj.statusUpdate(tmpStr))
       {
          //replyMsg=twitterObj.get_response(  );
 
@@ -2550,19 +2575,19 @@ Retry2:
          /*xml::document document(get_app());
          if(document.load(replyMsg))
          {
-            if(document.get_root() != NULL)
-            {
-               if(document.get_root()->child_at(0) != NULL && document.get_root()->child_at(0)->get_name() == "error")
-               {
-                  if(document.get_root()->child_at(0)->attr("code") != 34
-                  && document.get_root()->child_at(0)->get_value().CompareNoCase("Status is a duplicate.") != 0)
-                  {
+         if(document.get_root() != NULL)
+         {
+         if(document.get_root()->child_at(0) != NULL && document.get_root()->child_at(0)->get_name() == "error")
+         {
+         if(document.get_root()->child_at(0)->attr("code") != 34
+         && document.get_root()->child_at(0)->get_value().CompareNoCase("Status is a duplicate.") != 0)
+         {
 
-                     goto retry1;
+         goto retry1;
 
-                  }
-               }
-            }
+         }
+         }
+         }
          }*/
          //printf( "\ntwitterClient:: twitCurl::statusUpdate web response:\n%s\n", replyMsg.c_str() );
       }
@@ -2573,10 +2598,10 @@ Retry2:
          //printf( "\ntwitterClient:: twitCurl::statusUpdate error:\n%s\n", replyMsg.c_str() );
       }
       return replyMsg;
-retry1:
-      if(iRetry >= 3)
+   retry1:
+      if (iRetry >= 3)
       {
-         return replyMsg ="failed";
+         return replyMsg = "failed";
       }
       System.file().del(strPathKey);
       System.file().del(strPathSecret);
@@ -2670,18 +2695,18 @@ retry1:
       add_status("Building ca2 fontopus ca2os " + strApp + "...");
       {
          string str;
-         
-         
+
+
          property_set set;
 
-         set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor +" display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt( "%Y-%m-%d %H-%M-%S")) +  " Building " + strApp + "...</span></div>";
+         set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Building " + strApp + "...</span></div>";
 
          Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
       }
       ::core::process process;
       string strPath;
-      if(Application.m_eversion == version_basis)
+      if (Application.m_eversion == version_basis)
       {
          strPath = System.dir().element(strApp + "\\stage\\script\\stage_build.bat");
       }
@@ -2689,18 +2714,18 @@ retry1:
       {
          strPath = System.dir().element(strApp + "\\stage\\script\\basis_build.bat");
       }
-      if(!process.create_child_process(strPath, false))
+      if (!process.create_child_process(strPath, false))
       {
          uint32_t dw = GetLastError();
          string str;
          str.Format("Error creating build process: %d for build of " + strApp, dw);
          add_status(str);
-         return;   
+         return;
       }
       int32_t i = 1;
       uint32_t dwExitCode;
       string str;
-      while(!process.has_exited(&dwExitCode))
+      while (!process.has_exited(&dwExitCode))
       {
          Sleep(5000);
          str.Format("%d Building ca2 fontopus ca2os " + strApp + "...", i);
