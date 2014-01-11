@@ -104,7 +104,7 @@ namespace win
 
       WIN32_FILE_ATTRIBUTE_DATA data;
 
-      if(!GetFileAttributesExW(::str::international::utf8_to_unicode(pszPath), GetFileExInfoStandard, &data))
+      if(!GetFileAttributesExW(::str::international::utf8_to_unicode(strPath), GetFileExInfoStandard, &data))
       {
          varRet.set_type(var::type_null);
       }
@@ -117,7 +117,7 @@ namespace win
 
       struct stat stat;
 
-      if(::stat(pszPath, &stat)  == -1)
+      if(::stat(strPath, &stat)  == -1)
       {
          varRet.set_type(var::type_null);
       }
