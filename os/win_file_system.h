@@ -26,7 +26,7 @@ namespace win
       virtual bool FullPath(wstring & wstrFullPath, const wstring & wstrPath);
       virtual UINT GetFileName(const char * lpszPathName, string & str);
       virtual void GetModuleShortFileName(HINSTANCE hInst, string & strShortName);
-      virtual var length(const char * pszPath);
+      virtual var length(const string & strPath, sp(base_application) papp);
 
    };
 

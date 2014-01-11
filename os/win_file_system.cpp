@@ -89,10 +89,16 @@ namespace win
       vfxGetModuleShortFileName(hInst, strShortName);
    }
 
-   var file_system::length(const char * pszPath)
+   var file_system::length(const string & strPath, sp(base_application) papp)
    {
-
+      
       var varRet;
+
+      varRet = ::file::system::length(strPath, papp);
+
+      if (!varRet.is_null())
+         return varRet;
+
 
 #ifdef WINDOWS
 
