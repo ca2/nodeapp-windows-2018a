@@ -596,7 +596,7 @@ Seq_Open_File_Cleanup:
                if(success != smfrc && SEndOfFile != smfrc)
                {
                   TRACE( "SFP: smfReadEvents() -> %u", (uint32_t)smfrc);
-                  translate(mmrc, smfrc);
+                  mmrc = translate(smfrc);
                   /*if(bThrow)
                   {
                   SetState(status_opened);

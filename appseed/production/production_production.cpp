@@ -1457,8 +1457,8 @@ namespace production
          strBz = System.dir().path(m_strCCAuth, strRelative) + ".bz";
          strUn = System.dir().path(m_strVrel, strRelative);
          strMd5 = System.file().md5(strUn);
-         varUnSize = System.file().length(strUn);
-         varBzSize = System.file().length(strBz);
+         varUnSize = Application.file().length(strUn);
+         varBzSize = Application.file().length(strBz);
          strRelease = System.dir().path(m_strCCVrel, strRelative);
          strRelease += ".bz.";
          strRelease += strMd5;

@@ -1679,8 +1679,7 @@ smf_Open_File_Cleanup:
                }
                else if((bEvent & 0xF0) == ::music::midi::ControlChange)
                {
-                  m_keyframe.rbControl[(((WORD)bEvent & 0x0F)*120) + pevent->GetChB1()] =
-                     pevent->GetChB2();
+                  m_keyframe.rbControl[bEvent & 0x0F][pevent->GetChB1()] = pevent->GetChB2();
                }
             }
 
@@ -1761,12 +1760,11 @@ smf_Open_File_Cleanup:
 
             /* Controller events?
             */
-            idx = 0;
             for (idxChannel = 0; idxChannel < 16; idxChannel++)
             {
                for (idxController = 0; idxController < 120; idxController++)
                {
-                  if (KF_EMPTY != m_keyframe.rbControl[idx])
+                  if (KF_EMPTY != m_keyframe.rbControl[idxChannel][idxController])
                   {
                      if (lpmh->dwBufferLength - lpmh->dwBytesRecorded < 3*sizeof(uint32_t))
                         return ENoMemory;
@@ -1783,7 +1781,6 @@ smf_Open_File_Cleanup:
                      lpmh->dwBytesRecorded += 3*sizeof(uint32_t);
                   }
 
-                  idx++;
                }
             }
 
@@ -2862,8 +2859,7 @@ smf_Open_File_Cleanup:
                }
                else if((bEvent & 0xF0) == ::music::midi::ControlChange)
                {
-                  m_keyframe.rbControl[(((WORD)bEvent & 0x0F)*120) + pevent->GetChB1()] =
-                     pevent->GetChB2();
+                  m_keyframe.rbControl[bEvent & 0x0F][pevent->GetChB1()] = pevent->GetChB2();
                }
             }
 
@@ -2921,12 +2917,11 @@ smf_Open_File_Cleanup:
 
             /* Controller events?
             */
-            idx = 0;
             for (idxChannel = 0; idxChannel < 16; idxChannel++)
             {
                for (idxController = 0; idxController < 120; idxController++)
                {
-                  if (KF_EMPTY != m_keyframe.rbControl[idx])
+                  if (KF_EMPTY != m_keyframe.rbControl[idxChannel][idxController])
                   {
                      if (lpmh->dwBufferLength - lpmh->dwBytesRecorded < 3*sizeof(uint32_t))
                         return ENoMemory;
@@ -2943,7 +2938,6 @@ smf_Open_File_Cleanup:
                      lpmh->dwBytesRecorded += 3*sizeof(uint32_t);
                   }
 
-                  idx++;
                }
             }
 
