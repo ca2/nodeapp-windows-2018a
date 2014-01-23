@@ -802,14 +802,20 @@ namespace win
    
    ::user::printer * application::get_printer(const char * pszDeviceName)
    {
-      throw todo(this);
-      //::win::printer * pprinter = new ::win::printer(get_app());
-      //if(!pprinter->open(pszDeviceName))
-      //{
-      //   delete pprinter;
-      //   return NULL;
-      //}
-      //return pprinter;
+
+      ::win::printer * pprinter = new ::win::printer(get_app());
+
+      if(!pprinter->open(pszDeviceName))
+      {
+
+         delete pprinter;
+
+         return NULL;
+
+      }
+
+      return pprinter;
+
    }
 
    string application::veriwell_multimedia_music_midi_get_default_library_name()

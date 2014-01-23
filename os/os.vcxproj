@@ -997,6 +997,7 @@
     <ClInclude Include="win1.h" />
     <ClInclude Include="win32_system.h" />
     <ClInclude Include="win_handle.h" />
+    <ClInclude Include="win_printer.h" />
     <ClInclude Include="win_shell.h" />
     <ClInclude Include="win_file.h" />
     <ClInclude Include="win_file_set.h" />
@@ -1060,6 +1061,7 @@
     <ClCompile Include="win_main.cpp" />
     <ClCompile Include="win_os.cpp" />
     <ClCompile Include="win_port_forward.cpp" />
+    <ClCompile Include="win_printer.cpp" />
     <ClCompile Include="win_registry.cpp" />
     <ClCompile Include="win_shell.cpp" />
     <ClCompile Include="win_stdio_file.cpp" />

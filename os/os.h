@@ -121,7 +121,7 @@ CLASS_DECL_win bool __cdecl __is_idle_message(MSG* pMsg);
 CLASS_DECL_win void __process_window_procedure_exception(::exception::base*, signal_details * pobj);
 CLASS_DECL_win void __cdecl __pre_translate_message(signal_details * pobj);
 
-//#include "win_printer.h"
+#include "win_printer.h"
 
 #include "win_application.h"
 
