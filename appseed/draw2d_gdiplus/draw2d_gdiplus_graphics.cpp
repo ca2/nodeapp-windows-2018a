@@ -1365,42 +1365,34 @@ gdi_fallback:
 
    bool graphics::get_text_metrics(LPTEXTMETRICW lpMetrics) const
    { 
-      //ASSERT(get_handle2() != NULL); return ::GetTextMetrics(get_handle2(), lpMetrics); 
-      /*wstring wstr(L"123AWZwmc");
-      Gdiplus::RectF rect;
-      Gdiplus::RectF rect2;
-      Gdiplus::PointF origin(0, 0);
-      m_pgraphics->MeasureString(wstr.m_pwsz, -1, (Gdiplus::Font *) m_font->get_os_data(), origin, &rect);
 
-      wstr = L"123AWZwmcpQçg";
-      m_pgraphics->MeasureString(wstr.m_pwsz, -1, (Gdiplus::Font *) m_font->get_os_data(), origin, &rect2);
+      graphics * pdc = ((graphics *)this);
 
-      lpMetrics->tmAveCharWidth = rect.width / (double) wstr.get_length();
-      lpMetrics->tmAscent = rect.height;
-      lpMetrics->tmDescent = rect2.height - rect.height;*/
+      if(pdc->gdiplus_font() == NULL)
+         return FALSE;
 
-
-      //retry_single_lock slGdiplus(&System.s_mutexGdiplus, millis(1), millis(1));
+      Gdiplus::Font * pfont = pdc->gdiplus_font();
 
       Gdiplus::FontFamily family;
 
+      pfont->GetFamily(&family);
 
-      if(((graphics * )this)->gdiplus_font() == NULL)
-         return FALSE;
+      INT iStyle = pfont->GetStyle();
 
-      ((graphics * )this)->gdiplus_font()->GetFamily(&family);
+      double dHeight = family.GetEmHeight(iStyle);
 
-      double dHeight = family.GetEmHeight(((graphics * )this)->gdiplus_font()->GetStyle());
+      double dSize = pfont->GetSize();
 
-      lpMetrics->tmAscent              = (LONG) (((graphics * )this)->gdiplus_font()->GetSize() * family.GetCellAscent(((graphics * )this)->gdiplus_font()->GetStyle()) / dHeight);
-      lpMetrics->tmDescent             = (LONG) (((graphics * )this)->gdiplus_font()->GetSize() * family.GetCellDescent(((graphics * )this)->gdiplus_font()->GetStyle()) / dHeight);
-      lpMetrics->tmHeight              = (LONG) (((graphics * )this)->gdiplus_font()->GetSize());
+      double dFontHeight = pfont->GetHeight(pdc->get_dpiy());
 
-      lpMetrics->tmInternalLeading     = (LONG) lpMetrics->tmAscent + lpMetrics->tmDescent - lpMetrics->tmHeight;
-      lpMetrics->tmExternalLeading     = (LONG) (((graphics * )this)->gdiplus_font()->GetSize() * 
-                                                (family.GetLineSpacing(((graphics * )this)->gdiplus_font()->GetStyle()) 
-                                                - family.GetCellAscent(((graphics * )this)->gdiplus_font()->GetStyle())
-                                                - family.GetCellDescent(((graphics * )this)->gdiplus_font()->GetStyle())) / dHeight);
+      lpMetrics->tmAscent              = (LONG) (dSize * family.GetCellAscent(iStyle) / dHeight);
+      lpMetrics->tmDescent             = (LONG) (dSize * family.GetCellDescent(iStyle) / dHeight);
+      lpMetrics->tmHeight              = (LONG)dFontHeight;
+
+      double dLineSpacing = max(dFontHeight, dSize * family.GetLineSpacing(iStyle) / dHeight);
+
+      lpMetrics->tmInternalLeading     = (LONG) (lpMetrics->tmAscent + lpMetrics->tmDescent - lpMetrics->tmHeight);
+      lpMetrics->tmExternalLeading     = (LONG) (dLineSpacing - (lpMetrics->tmAscent + lpMetrics->tmDescent));
       
       const Gdiplus::FontFamily * pfamilyMono = family.GenericMonospace();
 
@@ -4386,6 +4378,14 @@ namespace draw2d_gdiplus
    {
 
       return m_pgraphics->GetDpiX();
+
+   }
+
+
+   double graphics::get_dpiy() const
+   {
+
+      return m_pgraphics->GetDpiY();
 
    }
 

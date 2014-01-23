@@ -71,7 +71,7 @@ namespace win
       //virtual sp(::user::interaction) get_owner();
       virtual void set_owner(sp(::user::interaction) pOwnerWnd);
 
-      virtual oswindow get_handle() const;
+      virtual oswindow get_handle();
 
       virtual bool _001OnCmdMsg(base_cmd_msg * pcmdmsg);   
 
@@ -392,7 +392,7 @@ namespace win
       virtual sp(::user::interaction) GetLastActivePopup();
 
       virtual bool IsChild(sp(::user::interaction)  pWnd);
-      virtual sp(::user::interaction) get_parent() const;
+      virtual sp(::user::interaction) get_parent();
       using ::user::interaction::set_parent;
       sp(::user::window) set_parent(sp(::user::window) pWndNewParent);
       static sp(::user::window) WindowFromPoint(POINT point);

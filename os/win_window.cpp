@@ -1071,27 +1071,27 @@ namespace win
 
    bool window::GetWindowInfo(PWINDOWINFO pwi) const
    {
-      ASSERT(::IsWindow(get_handle())); 
-      return ::GetWindowInfo(get_handle(), pwi) != FALSE; 
+      ASSERT(::IsWindow(((window *) this)->get_handle())); 
+      return ::GetWindowInfo(((window *) this)->get_handle(), pwi) != FALSE; 
    }
 
    sp(::user::window) window::GetAncestor(UINT gaFlags) const
-   { ASSERT(::IsWindow(get_handle())); return  ::win::window::from_handle(::GetAncestor(get_handle(), gaFlags)); }
+   { ASSERT(::IsWindow(((window *) this)->get_handle())); return  ::win::window::from_handle(::GetAncestor(((window *) this)->get_handle(), gaFlags)); }
 
 
 
    bool window::GetScrollBarInfo(LONG idObject, PSCROLLBARINFO psbi) const
    {
-      ASSERT(::IsWindow(get_handle())); 
+      ASSERT(::IsWindow(((window *) this)->get_handle())); 
       ASSERT(psbi != NULL);
-      return ::GetScrollBarInfo(get_handle(), idObject, psbi) != FALSE;
+      return ::GetScrollBarInfo(((window *) this)->get_handle(), idObject, psbi) != FALSE;
    }
 
    bool window::GetTitleBarInfo(PTITLEBARINFO pti) const
    {
-      ASSERT(::IsWindow(get_handle())); 
+      ASSERT(::IsWindow(((window *) this)->get_handle())); 
       ASSERT(pti != NULL);
-      return ::GetTitleBarInfo(get_handle(), pti) != FALSE;
+      return ::GetTitleBarInfo(((window *) this)->get_handle(), pti) != FALSE;
    }
 
    bool window::AnimateWindow(uint32_t dwTime, uint32_t dwFlags) 
@@ -1134,13 +1134,13 @@ namespace win
 
    bool window::GetLayeredWindowAttributes(COLORREF *pcrKey, BYTE *pbAlpha, uint32_t *pdwFlags) const
    {
-      ASSERT(::IsWindow(get_handle())); 
-      return ::GetLayeredWindowAttributes(get_handle(), pcrKey, pbAlpha, (LPDWORD) pdwFlags) != FALSE;
+      ASSERT(::IsWindow(((window *) this)->get_handle())); 
+      return ::GetLayeredWindowAttributes(((window *) this)->get_handle(), pcrKey, pbAlpha, (LPDWORD) pdwFlags) != FALSE;
    }
 
    bool window::PrintWindow(::draw2d::graphics * pgraphics, UINT nFlags) const
    {
-      ASSERT(::IsWindow(get_handle())); 
+      ASSERT(::IsWindow(((window *) this)->get_handle())); 
       throw not_implemented(get_app());
 //      return ::PrintWindow(get_handle(), (HDC)(dynamic_cast<::win::graphics * >(pgraphics))->get_handle(), nFlags) != FALSE;
       return false;
@@ -4160,10 +4160,14 @@ ExitModal:
       return ::IsWindow(get_handle()) != FALSE;
    }
 
-   oswindow window::get_handle() const
+
+   oswindow window::get_handle()
    {
+
       return ::win::oswindow_handle::get_handle();
+
    }
+
 
    bool window::SetWindowPos(int32_t z, int32_t x, int32_t y, int32_t cx, int32_t cy, UINT nFlags)
    {
@@ -4578,7 +4582,7 @@ ExitModal:
    }
 
 
-   sp(::user::interaction) window::get_parent() const
+   sp(::user::interaction) window::get_parent()
    {
       
       if(!::IsWindow(get_handle()))
@@ -4674,12 +4678,12 @@ ExitModal:
    { return this == NULL ? NULL : get_handle(); }*/
    bool window::operator==(const ::user::window& wnd) const
    { 
-      return (WIN_WINDOW((::user::window *) &wnd)->get_handle()) == get_handle(); 
+      return (WIN_WINDOW((::user::window *) &wnd)->get_handle()) == ((window *) this)->get_handle(); 
    }
 
    bool window::operator!=(const ::user::window& wnd) const
    { 
-      return (WIN_WINDOW((::user::window *) &wnd)->get_handle()) != get_handle(); 
+      return (WIN_WINDOW((::user::window *) &wnd)->get_handle()) != ((window *) this)->get_handle(); 
    }
 
    uint32_t window::GetStyle()
@@ -4748,9 +4752,9 @@ ExitModal:
    bool window::DragDetect(POINT pt) const
    { 
 
-      ASSERT(::IsWindow(get_handle())); 
+      ASSERT(::IsWindow(((window *) this)->get_handle())); 
 
-      return ::DragDetect(get_handle(), pt) != FALSE; 
+      return ::DragDetect(((window *) this)->get_handle(), pt) != FALSE; 
 
    }
 
@@ -5230,40 +5234,40 @@ ExitModal:
    void window::get_child_by_id(id id, oswindow* poswindow_) const
    {
 
-      ASSERT(::IsWindow(get_handle())); 
+      ASSERT(::IsWindow(((window *) this)->get_handle())); 
       ASSERT(poswindow_ != NULL); 
-      *poswindow_ = ::GetDlgItem(get_handle(), (int32_t) id);
+      *poswindow_ = ::GetDlgItem(((window *) this)->get_handle(), (int32_t) id);
 
    }
 
    UINT window::GetChildByIdInt(int32_t nID, BOOL * lpTrans, bool bSigned) const
    {
 
-      ASSERT(::IsWindow(get_handle())); 
+      ASSERT(::IsWindow(((window *) this)->get_handle())); 
 
-      return ::GetDlgItemInt(get_handle(), nID, lpTrans, bSigned);
+      return ::GetDlgItemInt(((window *) this)->get_handle(), nID, lpTrans, bSigned);
 
    }
 
    int32_t window::GetChildByIdText(__in int32_t nID, __out_ecount_part_z(nMaxCount, return + 1) LPTSTR lpStr, __in int32_t nMaxCount) const
-   { ASSERT(::IsWindow(get_handle())); return ::GetDlgItemText(get_handle(), nID, lpStr, nMaxCount);}
+   { ASSERT(::IsWindow(((window *) this)->get_handle())); return ::GetDlgItemText(((window *) this)->get_handle(), nID, lpStr, nMaxCount);}
 
    sp(::user::window) window::GetNextDlgGroupItem(sp(::user::window) pWndCtl, bool bPrevious) const
    {
-      ASSERT(::IsWindow(get_handle()));
-      return ::win::window::from_handle(::GetNextDlgGroupItem(get_handle(), pWndCtl->get_handle(), bPrevious)); 
+      ASSERT(::IsWindow(((window *) this)->get_handle()));
+      return ::win::window::from_handle(::GetNextDlgGroupItem(((window *) this)->get_handle(), pWndCtl->get_handle(), bPrevious)); 
    }
 
    sp(::user::window) window::GetNextDlgTabItem(sp(::user::window) pWndCtl, bool bPrevious) const
    {
-      ASSERT(::IsWindow(get_handle())); 
-      return ::win::window::from_handle(::GetNextDlgTabItem(get_handle(), pWndCtl->get_handle(), bPrevious)); 
+      ASSERT(::IsWindow(((window *) this)->get_handle())); 
+      return ::win::window::from_handle(::GetNextDlgTabItem(((window *) this)->get_handle(), pWndCtl->get_handle(), bPrevious)); 
    }
 
    UINT window::IsDlgButtonChecked(int32_t nIDButton) const
-   { ASSERT(::IsWindow(get_handle())); return ::IsDlgButtonChecked(get_handle(), nIDButton); }
+   { ASSERT(::IsWindow(((window *) this)->get_handle())); return ::IsDlgButtonChecked(((window *) this)->get_handle(), nIDButton); }
    LPARAM window::SendDlgItemMessage(int32_t nID, UINT message, WPARAM wParam, LPARAM lParam)
-   { ASSERT(::IsWindow(get_handle())); return ::SendDlgItemMessage(get_handle(), nID, message, wParam, lParam); }
+   { ASSERT(::IsWindow(((window *) this)->get_handle())); return ::SendDlgItemMessage(((window *) this)->get_handle(), nID, message, wParam, lParam); }
    void window::SetDlgItemInt(int32_t nID, UINT nValue, bool bSigned)
    { ASSERT(::IsWindow(get_handle())); ::SetDlgItemInt(get_handle(), nID, nValue, bSigned); }
    void window::SetDlgItemText(int32_t nID, const char * lpszString)
@@ -5472,7 +5476,7 @@ ExitModal:
    HICON window::GetIcon(bool bBigIcon) const
    { 
 
-      ASSERT(::IsWindow(get_handle()));
+      ASSERT(::IsWindow(((window *) this)->get_handle()));
 
       return (HICON)const_cast < ::win::window * > (this)->send_message(WM_GETICON, bBigIcon);
 
@@ -5481,7 +5485,7 @@ ExitModal:
    void window::Print(::draw2d::graphics * pgraphics, uint32_t dwFlags) const
    { 
 
-      ASSERT(::IsWindow(get_handle()));
+      ASSERT(::IsWindow(((window *) this)->get_handle()));
 
       throw not_implemented(get_app());
 //      const_cast < ::win::window * > (this)->send_message(WM_PRINT, (WPARAM)(dynamic_cast<::win::graphics * >(pgraphics))->get_handle(), (LPARAM) dwFlags);
@@ -5491,7 +5495,7 @@ ExitModal:
    void window::PrintClient(::draw2d::graphics * pgraphics, uint32_t dwFlags) const
    { 
 
-      ASSERT(::IsWindow(get_handle()));
+      ASSERT(::IsWindow(((window *) this)->get_handle()));
 
       throw not_implemented(get_app());
       //const_cast < ::win::window * > (this)->send_message(WM_PRINTCLIENT, (WPARAM)(dynamic_cast<::win::graphics * >(pgraphics))->get_handle(), (LPARAM) dwFlags);
@@ -5501,18 +5505,18 @@ ExitModal:
    bool window::SetWindowContextHelpId(uint32_t dwContextHelpId)
    { 
 
-      ASSERT(::IsWindow(get_handle()));
+      ASSERT(::IsWindow(((window *) this)->get_handle()));
 
-      return ::SetWindowContextHelpId(get_handle(), dwContextHelpId) != FALSE;
+      return ::SetWindowContextHelpId(((window *) this)->get_handle(), dwContextHelpId) != FALSE;
 
    }
 
    uint32_t window::GetWindowContextHelpId() const
    {
 
-      ASSERT(::IsWindow(get_handle()));
+      ASSERT(::IsWindow(((window *) this)->get_handle()));
 
-      return ::GetWindowContextHelpId(get_handle());
+      return ::GetWindowContextHelpId(((window *) this)->get_handle());
 
    }
 
@@ -6196,7 +6200,9 @@ lCallNextHook:
 
       if(m_bUpdateGraphics)
       {
+
          win_update_graphics();
+
       }
 
       if(m_spdib.is_null() || m_spdib->get_graphics() == NULL)

@@ -81,6 +81,7 @@ namespace draw2d_gdiplus
 
 
       virtual double get_dpix() const;
+      virtual double get_dpiy() const;
 
    // Constructors
       bool CreateDC(const char * lpszDriverName, const char * lpszDeviceName,
