@@ -52,6 +52,9 @@ namespace draw2d_gdiplus
 
       virtual bool Attach(HDC hdc);   // attach/detach affects only the Output DC
       virtual HDC Detach();
+      virtual bool AttachPrinter(HDC hdc);
+      virtual HDC DetachPrinter();
+
 
       virtual void SetAttribDC(HDC hDC);  // set the Attribute DC
       virtual void SetOutputDC(HDC hDC);  // set the Output DC

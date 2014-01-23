@@ -992,6 +992,7 @@
     <ClInclude Include="draw2d_gdiplus_palette.h" />
     <ClInclude Include="draw2d_gdiplus_path.h" />
     <ClInclude Include="draw2d_gdiplus_pen.h" />
+    <ClInclude Include="draw2d_gdiplus_printer.h" />
     <ClInclude Include="draw2d_gdiplus_region.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="template\core.h" />
@@ -1010,6 +1011,7 @@
     <ClCompile Include="draw2d_gdiplus_path.cpp" />
     <ClCompile Include="draw2d_gdiplus_pen.cpp" />
     <ClCompile Include="draw2d_gdiplus_preview_dc.cpp" />
+    <ClCompile Include="draw2d_gdiplus_printer.cpp" />
     <ClCompile Include="draw2d_gdiplus_region.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|x64'">Create</PrecompiledHeader>

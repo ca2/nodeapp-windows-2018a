@@ -800,10 +800,12 @@ namespace win
 
    }
    
-   ::user::printer * application::get_printer(const char * pszDeviceName)
+   sp(::user::printer) application::get_printer(const char * pszDeviceName)
    {
 
-      ::win::printer * pprinter = new ::win::printer(get_app());
+      //::win::printer * pprinter = new ::win::printer(get_app());
+
+      sp(::user::printer) pprinter(allocer());
 
       if(!pprinter->open(pszDeviceName))
       {

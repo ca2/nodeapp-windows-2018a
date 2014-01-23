@@ -209,9 +209,6 @@
     <ClInclude Include="..\operational_system\config.h">
       <Filter>Header Files\operational_system</Filter>
     </ClInclude>
-    <ClInclude Include="win_printer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="framework.cpp">
@@ -332,9 +329,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="win_window_api.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win_printer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -25,12 +25,15 @@
 #include "draw2d_gdiplus_dib.h"
 #include "draw2d_gdiplus_path.h"
 
+#include "draw2d_gdiplus_printer.h"
+
 
 #include "draw2d_gdiplus_graphics.h"
 
 
-#pragma comment(lib, "Msimg32.lib") 
-
 
 #define GDIPLUS_GRAPHICS(pgraphics) (dynamic_cast < ::draw2d_gdiplus::graphics * > (dynamic_cast < ::draw2d::graphics * > (pgraphics)))
 #define GDIPLUS_HDC(pgraphics) ((dynamic_cast < ::draw2d_gdiplus::graphics * > (dynamic_cast < ::draw2d::graphics * > (pgraphics)))->get_handle())
+
+
+

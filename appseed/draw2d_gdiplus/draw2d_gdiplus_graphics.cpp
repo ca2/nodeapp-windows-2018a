@@ -1383,7 +1383,7 @@ gdi_fallback:
 
       double dSize = pfont->GetSize();
 
-      double dFontHeight = pfont->GetHeight(pdc->get_dpiy());
+      double dFontHeight = pfont->GetHeight((Gdiplus::REAL) pdc->get_dpiy());
 
       lpMetrics->tmAscent              = (LONG) (dSize * family.GetCellAscent(iStyle) / dHeight);
       lpMetrics->tmDescent             = (LONG) (dSize * family.GetCellDescent(iStyle) / dHeight);
@@ -1497,15 +1497,60 @@ gdi_fallback:
    }
 
    int32_t graphics::StartPage()
-   { ASSERT(get_handle1() != NULL); return ::StartPage(get_handle1()); }
+   { 
+   
+      ASSERT(m_hdc != NULL);
+      
+      ::StartPage(m_hdc);
+
+      m_pgraphics = new Gdiplus::Graphics(m_hdc);
+
+      return 1;
+   
+   }
+
+
    int32_t graphics::EndPage()
-   { ASSERT(get_handle1() != NULL); return ::EndPage(get_handle1()); }
+   { 
+   
+      ASSERT(m_hdc != NULL);
+
+      delete m_pgraphics;
+
+
+      return ::EndPage(m_hdc); 
+   
+   }
+   
+   
    int32_t graphics::SetAbortProc(bool (CALLBACK* lpfn)(HDC, int32_t))
-   { ASSERT(get_handle1() != NULL); return ::SetAbortProc(get_handle1(), (ABORTPROC)lpfn); }
+   { 
+
+      ASSERT(m_hdc != NULL);
+
+      return ::SetAbortProc(m_hdc, (ABORTPROC)lpfn); 
+   
+   }
+
+
    int32_t graphics::AbortDoc()
-   { ASSERT(get_handle1() != NULL); return ::AbortDoc(get_handle1()); }
+   { 
+      
+      ASSERT(m_hdc != NULL);
+      
+      return ::AbortDoc(m_hdc);
+   
+   }
+
+
    int32_t graphics::EndDoc()
-   { ASSERT(get_handle1() != NULL); return ::EndDoc(get_handle1()); }
+   {
+      
+      ASSERT(m_hdc != NULL);
+
+      return ::EndDoc(m_hdc);
+
+   }
 
    bool graphics::MaskBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc,
       int32_t xSrc, int32_t ySrc, ::draw2d::bitmap& maskBitmap, int32_t xMask, int32_t yMask, uint32_t dwRop)
@@ -1992,17 +2037,25 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    }*/
 
 
-   bool graphics::TransparentBlt(int32_t xDest, int32_t yDest, int32_t nDestWidth, 
-      int32_t nDestHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, 
-      int32_t nSrcHeight, UINT crTransparent)
-   { ASSERT(get_handle1() != NULL); return ::TransparentBlt(get_handle1(), xDest, yDest, 
-   nDestWidth, nDestHeight, GDIPLUS_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth, 
-   nSrcHeight, crTransparent) != FALSE; }
+   bool graphics::TransparentBlt(int32_t xDest, int32_t yDest, int32_t nDestWidth, int32_t nDestHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, UINT crTransparent)
+   { 
+   
+      ASSERT(get_handle1() != NULL); 
+      
+      //return ::TransparentBlt(get_handle1(), xDest, yDest,  nDestWidth, nDestHeight, GDIPLUS_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth,  nSrcHeight, crTransparent) != FALSE; 
+
+      return true;
+   
+   }
    
    bool graphics::GradientFill(TRIVERTEX* pVertices, ULONG nVertices, void * pMesh, ULONG nMeshElements, uint32_t dwMode)
    {
 
-      ASSERT(get_handle1() != NULL); return ::GradientFill(get_handle1(), pVertices, nVertices, pMesh, nMeshElements, dwMode) != FALSE;
+      ASSERT(get_handle1() != NULL); 
+      
+      //return ::GradientFill(get_handle1(), pVertices, nVertices, pMesh, nMeshElements, dwMode) != FALSE;
+
+      return true;
 
    }
 
@@ -2384,6 +2437,47 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return hdc;
       
    }
+
+
+   bool graphics::AttachPrinter(HDC hdc)
+   {
+
+      if (hdc == NULL)
+         return FALSE;
+
+      if (m_hdc == hdc)
+      {
+
+         return TRUE;
+
+      }
+
+      if (hdc != NULL)
+      {
+
+         m_hdc = (HDC)hdc;
+
+      }
+
+      return m_hdc != NULL;
+
+   }
+
+
+   HDC graphics::DetachPrinter()
+   {
+
+      if (m_hdc == NULL)
+         return NULL;
+
+      HDC hdc = m_hdc;
+
+      m_hdc = NULL;
+
+      return hdc;
+
+   }
+
 
    bool graphics::DeleteDC()
    {

@@ -209,7 +209,7 @@ namespace win
       virtual void ShowWaitCursor(bool bShow = true);
 
 
-      virtual ::user::printer * get_printer(const char * pszDeviceName);
+      virtual sp(::user::printer) get_printer(const char * pszDeviceName);
 
       virtual string draw2d_get_default_library_name();
       virtual string multimedia_audio_get_default_library_name();
