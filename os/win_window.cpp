@@ -6220,6 +6220,8 @@ lCallNextHook:
 
       m_spdib->Fill(0, 0, 0, 0);
 
+      m_spdib->get_graphics()->SetViewportOrg(0, 0);
+
       //m_spdib->get_graphics()->FillSolidRect(00, 00, 100, 100, ARGB(127, 0, 127, 0));
       _001Print(m_spdib->get_graphics());
       //m_spdib->get_graphics()->SetViewportOrg(0, 0);
