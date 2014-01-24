@@ -985,102 +985,51 @@ namespace draw2d_gdiplus
    
    
    bool graphics::BitBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, uint32_t dwRop)
-   { 
-      
+   {
 
-      if(m_pdibAlphaBlend != NULL)
+
+      if (m_pdibAlphaBlend != NULL)
       {
-
 
          rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
 
+         rect rectBlt(point((int64_t)x, (int64_t)y), size(nWidth, nHeight));
 
-         ::draw2d::dib * pdibWork = NULL;
-         ::draw2d::dib * pdibWork2 = NULL;
-//         ::draw2d::dib * pdibWork3 = NULL;
-         ::draw2d::dib * pdibWork4 = NULL;
-
-            
-         class point ptSrc(xSrc, ySrc);
-         class point ptDest(x, y);
-         class size size(nWidth, nHeight);
-
-
-
-         ::draw2d::dib_sp spdib;
-         if(pdibWork == NULL)
+         if (rectIntersect.intersect(rectIntersect, rectBlt))
          {
-            spdib.create(allocer());
-            pdibWork = spdib;
+
+            if (m_pdib != NULL && pgraphicsSrc->m_pdib != NULL)
+            {
+
+               point ptOff = GetViewportOrg();
+
+               x += ptOff.x;
+
+               y += ptOff.y;
+
+               return m_pdib->blend(point(x, y), pgraphicsSrc->m_pdib, point(xSrc, ySrc), m_pdibAlphaBlend, point((int)max(0, x - m_ptAlphaBlend.x), (int)max(0, y - m_ptAlphaBlend.y)), rectBlt.size());
+
+            }
+            else
+            {
+
+               ::draw2d::dib_sp dib1(allocer());
+
+               dib1->create(rectBlt.size());
+
+               dib1->Fill(0, 0, 0, 0);
+
+               if (!dib1->from(null_point(), pgraphicsSrc, point(xSrc, ySrc), rectBlt.size()))
+                  return false;
+
+               dib1->blend(point(0, 0), m_pdibAlphaBlend, point((int)max(0, x - m_ptAlphaBlend.x), (int)max(0, y - m_ptAlphaBlend.y)), rectBlt.size());
+
+               bool bOk = m_pgraphics->DrawImage((Gdiplus::Bitmap *) dib1->get_graphics()->get_current_bitmap()->get_os_data(), x, y, 0, 0, nWidth, nHeight, Gdiplus::UnitPixel) == Gdiplus::Status::Ok;
+
+               return bOk;
+            }
+
          }
-         if(pdibWork == NULL)
-            return false;
-         if(!pdibWork->create(size))
-            return false;
-
-         pdibWork->Fill(0, 0, 0, 0);
-
-         pdibWork->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
-
-         if(!pdibWork->from(null_point(), pgraphicsSrc, ptSrc, size))
-            return false;
-
-
-
-
-         ::draw2d::dib_sp spdib2;
-         if(pdibWork2 == NULL)
-         {
-            spdib2.create(allocer());
-            pdibWork2 = spdib2;
-         }
-
-
-         ::draw2d::dib_sp spdib4;
-         if(pdibWork4 == NULL)
-         {
-            spdib4.create(allocer());
-            pdibWork4 = spdib4;
-         }
-         if(pdibWork4 == NULL)
-            return false;
-         if(!pdibWork4->create(size))
-            return false;
-
-
-         pdibWork4->Fill(255, 0, 0, 0);
-
-         pdibWork4->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
-            
-         pdibWork4->from(point(max(0, m_ptAlphaBlend.x - x), max(0, m_ptAlphaBlend.y - y)),
-            m_pdibAlphaBlend->get_graphics(), point(max(0, x - m_ptAlphaBlend.x), max(0, y - m_ptAlphaBlend.y)), 
-                               class size(max(0, m_pdibAlphaBlend->m_size.cx - max(0, x - m_ptAlphaBlend.x)), max(0, m_pdibAlphaBlend->m_size.cy - max(0, y - m_ptAlphaBlend.y))));
-   
-         pdibWork->channel_multiply(visual::rgba::channel_alpha, pdibWork4);
-
-         /*pdibWork->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_blend);
-
-         pdibWork->from(point(max(0, m_ptAlphaBlend.x - x), max(0, m_ptAlphaBlend.y - y)),
-            m_pdibAlphaBlend->get_graphics(), point(max(0, x - m_ptAlphaBlend.x), max(0, y - m_ptAlphaBlend.y)), 
-                               class size(max(0, size.cx - max(0, x - m_ptAlphaBlend.x)), max(0, size.cy - max(0, y - m_ptAlphaBlend.y))));*/
-   
-         //keeper < ::draw2d::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
-
-         Gdiplus::CompositingMode mode = m_pgraphics->GetCompositingMode();
-
-         //m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-
-         bool bOk = m_pgraphics->DrawImage(
-            (Gdiplus::Bitmap *) pdibWork->get_graphics()->get_current_bitmap()->get_os_data(),
-            x, y , 0, 0, nWidth, nHeight, Gdiplus::UnitPixel) == Gdiplus::Status::Ok;
-
-
-         m_pgraphics->SetCompositingMode(mode);
-
-         return bOk;
-
-         //return System.visual().imaging().true_blend(this, ptDest, size, pdibWork->get_graphics(), null_point()); 
-
 
       }
 
@@ -1187,122 +1136,19 @@ gdi_fallback:
 
    bool graphics::TextOut(int32_t x, int32_t y, const string & str)
    { 
-      if(m_pdibAlphaBlend != NULL)
-      {
-         //if(GetBkMode() == TRANSPARENT)
-         {
-         //   return TRUE;
-            rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
-            rect rectText(point(x, y), GetTextExtent(str));
-            if(rectIntersect.intersect(rectIntersect, rectText))
-            {
-               /*::draw2d::dib_sp dib0(get_app());
-               dib0->create(rectText.size());
-               dib0->Fill(0, 0, 0, 0);
-               dib0->get_graphics()->SetTextColor(ARGB(255, 255, 255, 255));
-               dib0->get_graphics()->SelectObject(&get_current_font());
-               dib0->get_graphics()->SetBkMode(TRANSPARENT);
-               dib0->get_graphics()->TextOut(0, 0, str);
-               dib0->ToAlpha(0);*/
-               ::draw2d::brush_sp brush(allocer());
-               ::draw2d::dib_sp dib1(allocer());
-               dib1->create(rectText.size());
-               dib1->Fill(0, 0, 0, 0);
-               //brush->create_solid(m_spbrush.is_null() ? ARGB(255, 0, 0, 0) : m_spbrush->m_cr);
-               dib1->get_graphics()->SelectObject(m_spbrush);
-               dib1->get_graphics()->SelectObject(get_current_font());
-//               dib1->get_graphics()->SetBkMode(TRANSPARENT);
-               dib1->get_graphics()->TextOut(0, 0, str);
-               //dib1->channel_from(visual::rgba::channel_alpha, dib0);
-               ::draw2d::dib_sp dib2(allocer());
-               dib2->create(rectText.size());
-               dib2->Fill(255, 0, 0, 0);
-               dib2->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
-               dib2->from(point(max(0, m_ptAlphaBlend.x - x), max(0, m_ptAlphaBlend.y - y)),
-                  m_pdibAlphaBlend->get_graphics(), point(max(0, x - m_ptAlphaBlend.x), max(0, y - m_ptAlphaBlend.y)), 
-                  size(max(0, m_pdibAlphaBlend->m_size.cx-max(0, x - m_ptAlphaBlend.x)),
-                        max(0, m_pdibAlphaBlend->m_size.cy-max(0, y - m_ptAlphaBlend.y))));
-               dib1->channel_multiply(visual::rgba::channel_alpha, dib2);
-               /*::draw2d::dib_sp dib3(get_app());
-               dib1->mult_alpha(dib3);*/
-
-               keeper < ::draw2d::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
-
-
-               /*BLENDFUNCTION bf;
-               bf.BlendOp     = AC_SRC_OVER;
-               bf.BlendFlags  = 0;
-               bf.SourceConstantAlpha = 0xFF;
-               bf.AlphaFormat = AC_SRC_ALPHA;
-               return ::AlphaBlend(get_handle1(), x, y, 
-                  rectText.width(), rectText.height(), GDIPLUS_HDC(dib1->get_graphics()), 0, 0, rectText.width(), 
-                  rectText.height(), bf) != FALSE; */
-            }
-         }
-      }
       
-      //ASSERT(get_handle1() != NULL); 
-      //wstring wstr = ::str::international::utf8_to_unicode(str);
-      return TextOut(x, y, str, (int32_t) str.get_length()); 
+      return TextOut((double) x, (double) y, str, str.get_length()); 
    
-   } // call virtual
+   } 
+
 
    bool graphics::TextOut(double x, double y, const string & str)
    { 
-      if(m_pdibAlphaBlend != NULL)
-      {
-//         if(GetBkMode() == TRANSPARENT)
-         {
-         //   return TRUE;
-            rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
-            rect rectText(point((int64_t) x, (int64_t) y), GetTextExtent(str));
-            if(rectIntersect.intersect(rectIntersect, rectText))
-            {
-               ::draw2d::dib_sp dib0(allocer());
-               dib0->create(rectText.size());
-               ::draw2d::brush_sp brush(allocer(),ARGB(255, 255, 255, 255));
-               dib0->get_graphics()->SelectObject(brush);
-               dib0->get_graphics()->SelectObject(get_current_font());
-               dib0->get_graphics()->TextOut(0, 0, str);
-               dib0->ToAlpha(0);
-               ::draw2d::dib_sp dib1(allocer());
-               dib1->create(rectText.size());
-               brush->create_solid(m_spbrush->m_cr);
-               dib1->get_graphics()->SelectObject(get_current_font());
-               dib1->get_graphics()->SelectObject(brush);
-//               dib1->get_graphics()->SetBkMode(TRANSPARENT);
-               dib1->get_graphics()->TextOut(0, 0, str);
-               dib1->channel_from(visual::rgba::channel_alpha, dib0);
-               ::draw2d::dib_sp dib2(allocer());
-               dib2->create(rectText.size());
-               dib2->Fill(255, 0, 0, 0);
-               dib2->from(point((int64_t) max(0, m_ptAlphaBlend.x - x), (int64_t) max(0, m_ptAlphaBlend.y - y)),
-               m_pdibAlphaBlend->get_graphics(), point((int64_t) max(0, x - m_ptAlphaBlend.x), (int64_t) max(0, y - m_ptAlphaBlend.y)), rectText.size());
-               dib1->channel_multiply(visual::rgba::channel_alpha, dib2);
-               /*::draw2d::dib_sp dib3(get_app());
-               dib1->mult_alpha(dib3);*/
 
-               keeper < ::draw2d::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
-
-               return BitBlt((int32_t)x, (int32_t)y, rectText.width(), rectText.height(), dib1->get_graphics(), 0, 0, SRCCOPY) != FALSE;
-
-               /*BLENDFUNCTION bf;
-               bf.BlendOp     = AC_SRC_OVER;
-               bf.BlendFlags  = 0;
-               bf.SourceConstantAlpha = 0xFF;
-               bf.AlphaFormat = AC_SRC_ALPHA;
-               return ::AlphaBlend(get_handle1(), x, y, 
-                  rectText.width(), rectText.height(), GDIPLUS_HDC(dib1->get_graphics()), 0, 0, rectText.width(), 
-                  rectText.height(), bf) != FALSE; */
-            }
-         }
-      }
-      
-      //ASSERT(get_handle1() != NULL); 
-      //wstring wstr = ::str::international::utf8_to_unicode(str);
       return TextOut(x, y, str, (int32_t) str.get_length()); 
    
-   } // call virtual
+   } 
+
 
    bool graphics::ExtTextOut(int32_t x, int32_t y, UINT nOptions, LPCRECT lpRect, const char * lpszString, UINT nCount, LPINT lpDxWidths)
    { 
@@ -3986,127 +3832,84 @@ namespace draw2d_gdiplus
    bool graphics::TextOut(int32_t x, int32_t y, const char * lpszString, int32_t nCount)
    {
 
-      ::Gdiplus::PointF origin(0, 0);
-
-      string str(lpszString, nCount);
-      
-      wstring wstr = ::str::international::utf8_to_unicode(str);
-
-
-      try
-      {
-
-         if(m_pgraphics == NULL)
-            return FALSE;
-
-         switch(m_etextrendering)
-         {
-         case ::draw2d::text_rendering_anti_alias:
-            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
-            break;
-         case ::draw2d::text_rendering_anti_alias_grid_fit:
-            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
-            break;
-         case ::draw2d::text_rendering_single_bit_per_pixel:
-            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintSingleBitPerPixel);
-            break;
-         case ::draw2d::text_rendering_clear_type_grid_fit:
-            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintClearTypeGridFit);
-            break;
-         }
-
-      }
-      catch(...)
-      {
-      }
-
-      
-      //
-      //m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-      //m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
-      //m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintClearTypeGridFit);
-      //m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
-   
-      Gdiplus::Matrix m;
-      m_pgraphics->GetTransform(&m);
-
-      Gdiplus::Matrix * pmNew;
-
-      if(m_ppath != NULL)
-      {
-         pmNew = new Gdiplus::Matrix();
-      }
-      else
-      {
-         pmNew = m.Clone();
-      }
-
-      pmNew->Translate((Gdiplus::REAL)  (x / m_spfont->m_dFontWidth), (Gdiplus::REAL) y);
-      pmNew->Scale((Gdiplus::REAL) m_spfont->m_dFontWidth, (Gdiplus::REAL) 1.0, Gdiplus::MatrixOrderAppend);
-
-      Gdiplus::Status status;
-
-      Gdiplus::StringFormat format(Gdiplus::StringFormat::GenericTypographic());
-
-      format.SetFormatFlags(format.GetFormatFlags() 
-                        | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
-                        | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap
-                        | Gdiplus::StringFormatFlagsNoFitBlackBox);
-
-
-      format.SetLineAlignment(Gdiplus::StringAlignmentNear);
-
-      if(m_ppath != NULL)
-      {
-
-         Gdiplus::GraphicsPath path;
-         
-         Gdiplus::FontFamily fontfamily;
-
-         gdiplus_font()->GetFamily(&fontfamily);
-
-         double d1 = gdiplus_font()->GetSize() * m_pgraphics->GetDpiX() / 72.0;
-         double d2 = fontfamily.GetEmHeight(gdiplus_font()->GetStyle());
-         double d3 = d1 * d2;
-
-         status = path.AddString(::str::international::utf8_to_unicode(str), -1, &fontfamily, gdiplus_font()->GetStyle(), (Gdiplus::REAL) d1, origin, &format);
-
-         path.Transform(pmNew);
-
-
-         m_ppath->AddPath(&path, FALSE);
-
-      }
-      else
-      {
-
-         m_pgraphics->SetTransform(pmNew);
-
-         status = m_pgraphics->DrawString(::str::international::utf8_to_unicode(str), -1, gdiplus_font(), origin, &format, gdiplus_brush());
-
-         m_pgraphics->SetTransform(&m);
-
-      }
-
-      delete pmNew;
-
-      return status  == Gdiplus::Status::Ok;
+      return TextOut((double)x, (double)y, lpszString, nCount);
 
    }
+
 
    bool graphics::TextOut(double x, double y, const char * lpszString, int32_t nCount)
    {
 
+      if (m_pdibAlphaBlend != NULL)
+      {
+
+         rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
+
+         rect rectText(point((int64_t)x, (int64_t)y), GetTextExtent(lpszString, nCount));
+
+         if (rectIntersect.intersect(rectIntersect, rectText))
+         {
+
+            ::draw2d::dib_sp dib1(allocer());
+            dib1->create(rectText.size());
+            dib1->Fill(0, 0, 0, 0);
+            dib1->get_graphics()->SelectObject(get_current_font());
+            dib1->get_graphics()->SelectObject(get_current_brush());
+            dib1->get_graphics()->TextOut(0, 0, lpszString, nCount);
+
+
+            if (m_pdib != NULL)
+            {
+
+               point ptOff = GetViewportOrg();
+
+               x += ptOff.x;
+
+               y += ptOff.y;
+
+               m_pdib->blend(point((int)x, (int) y), dib1, point(0, 0), m_pdibAlphaBlend, point((int) max(0, x - m_ptAlphaBlend.x), (int) max(0, y - m_ptAlphaBlend.y)), rectText.size());
+
+            }
+            else
+            {
+
+               dib1->blend(null_point(), m_pdibAlphaBlend, point((int)max(0, x - m_ptAlphaBlend.x), (int)max(0, y - m_ptAlphaBlend.y)), rectText.size());
+
+               set_alpha_mode(::draw2d::alpha_mode_blend);
+
+               keeper < ::draw2d::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
+
+               BitBlt((int)x, (int)y, rectText.width(), rectText.height(), dib1->get_graphics(), 0, 0, SRCCOPY);
+
+            }
+
+/*
+            ::draw2d::pen_sp p(allocer());
+
+            p->create_solid(1.0, ARGB(255, 255, 0, 0));
+            SelectObject(p);
+            MoveTo(0., y);
+            LineTo(500., y);
+            p->create_solid(1.0, ARGB(255, 0, 255, 0));
+            SelectObject(p);
+            MoveTo(0, m_ptAlphaBlend.y);
+            LineTo(500, m_ptAlphaBlend.y);
+            p->create_solid(1.0, ARGB(255, 0, 255, 255));
+            SelectObject(p);
+            MoveTo(0, m_ptAlphaBlend.y + m_pdibAlphaBlend->m_size.cy);
+            LineTo(500, m_ptAlphaBlend.y + m_pdibAlphaBlend->m_size.cy);
+*/
+
+            return true;
+         }
+
+      }
+
       ::Gdiplus::PointF origin(0, 0);
 
       string str(lpszString, nCount);
       
       wstring wstr = ::str::international::utf8_to_unicode(str);
-
 
       try
       {

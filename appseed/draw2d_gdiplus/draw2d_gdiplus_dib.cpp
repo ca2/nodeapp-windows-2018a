@@ -113,6 +113,7 @@ namespace draw2d_gdiplus
             return FALSE;
          }
          ((Gdiplus::Bitmap *)pbitmap->get_os_data())->GetHBITMAP(Gdiplus::Color(0, 0, 0, 0), &m_hbitmapOriginal);*/
+         m_spgraphics->m_pdib = this;
          m_size.cx       = width;
          m_size.cy       = height;
          return true;
