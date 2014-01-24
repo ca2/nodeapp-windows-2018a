@@ -6192,6 +6192,7 @@ lCallNextHook:
    void window::_001UpdateWindow()
    {
 
+      synch_lock slUserMutex(&user_mutex());
 
       single_lock sl(mutex_graphics(), false);
 

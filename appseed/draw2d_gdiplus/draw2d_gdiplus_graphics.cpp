@@ -987,52 +987,8 @@ namespace draw2d_gdiplus
    bool graphics::BitBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, uint32_t dwRop)
    {
 
-
-      if (m_pdibAlphaBlend != NULL)
-      {
-
-         rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
-
-         rect rectBlt(point((int64_t)x, (int64_t)y), size(nWidth, nHeight));
-
-         if (rectIntersect.intersect(rectIntersect, rectBlt))
-         {
-
-            if (m_pdib != NULL && pgraphicsSrc->m_pdib != NULL)
-            {
-
-               point ptOff = GetViewportOrg();
-
-               x += ptOff.x;
-
-               y += ptOff.y;
-
-               return m_pdib->blend(point(x, y), pgraphicsSrc->m_pdib, point(xSrc, ySrc), m_pdibAlphaBlend, point((int)max(0, x - m_ptAlphaBlend.x), (int)max(0, y - m_ptAlphaBlend.y)), rectBlt.size());
-
-            }
-            else
-            {
-
-               ::draw2d::dib_sp dib1(allocer());
-
-               dib1->create(rectBlt.size());
-
-               dib1->Fill(0, 0, 0, 0);
-
-               if (!dib1->from(null_point(), pgraphicsSrc, point(xSrc, ySrc), rectBlt.size()))
-                  return false;
-
-               dib1->blend(point(0, 0), m_pdibAlphaBlend, point((int)max(0, x - m_ptAlphaBlend.x), (int)max(0, y - m_ptAlphaBlend.y)), rectBlt.size());
-
-               bool bOk = m_pgraphics->DrawImage((Gdiplus::Bitmap *) dib1->get_graphics()->get_current_bitmap()->get_os_data(), x, y, 0, 0, nWidth, nHeight, Gdiplus::UnitPixel) == Gdiplus::Status::Ok;
-
-               return bOk;
-            }
-
-         }
-
-      }
-
+      if (::draw2d::graphics::BitBlt(x, y, nWidth, nHeight, pgraphicsSrc, xSrc, ySrc, dwRop))
+         return true;
 
       try
       {
@@ -3840,70 +3796,8 @@ namespace draw2d_gdiplus
    bool graphics::TextOut(double x, double y, const char * lpszString, int32_t nCount)
    {
 
-      if (m_pdibAlphaBlend != NULL)
-      {
-
-         rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
-
-         rect rectText(point((int64_t)x, (int64_t)y), GetTextExtent(lpszString, nCount));
-
-         if (rectIntersect.intersect(rectIntersect, rectText))
-         {
-
-            ::draw2d::dib_sp dib1(allocer());
-            dib1->create(rectText.size());
-            dib1->Fill(0, 0, 0, 0);
-            dib1->get_graphics()->SelectObject(get_current_font());
-            dib1->get_graphics()->SelectObject(get_current_brush());
-            dib1->get_graphics()->TextOut(0, 0, lpszString, nCount);
-
-
-            if (m_pdib != NULL)
-            {
-
-               point ptOff = GetViewportOrg();
-
-               x += ptOff.x;
-
-               y += ptOff.y;
-
-               m_pdib->blend(point((int)x, (int) y), dib1, point(0, 0), m_pdibAlphaBlend, point((int) max(0, x - m_ptAlphaBlend.x), (int) max(0, y - m_ptAlphaBlend.y)), rectText.size());
-
-            }
-            else
-            {
-
-               dib1->blend(null_point(), m_pdibAlphaBlend, point((int)max(0, x - m_ptAlphaBlend.x), (int)max(0, y - m_ptAlphaBlend.y)), rectText.size());
-
-               set_alpha_mode(::draw2d::alpha_mode_blend);
-
-               keeper < ::draw2d::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
-
-               BitBlt((int)x, (int)y, rectText.width(), rectText.height(), dib1->get_graphics(), 0, 0, SRCCOPY);
-
-            }
-
-/*
-            ::draw2d::pen_sp p(allocer());
-
-            p->create_solid(1.0, ARGB(255, 255, 0, 0));
-            SelectObject(p);
-            MoveTo(0., y);
-            LineTo(500., y);
-            p->create_solid(1.0, ARGB(255, 0, 255, 0));
-            SelectObject(p);
-            MoveTo(0, m_ptAlphaBlend.y);
-            LineTo(500, m_ptAlphaBlend.y);
-            p->create_solid(1.0, ARGB(255, 0, 255, 255));
-            SelectObject(p);
-            MoveTo(0, m_ptAlphaBlend.y + m_pdibAlphaBlend->m_size.cy);
-            LineTo(500, m_ptAlphaBlend.y + m_pdibAlphaBlend->m_size.cy);
-*/
-
-            return true;
-         }
-
-      }
+      if (::draw2d::graphics::TextOut(x, y, lpszString, nCount))
+         return true;
 
       ::Gdiplus::PointF origin(0, 0);
 
