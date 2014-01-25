@@ -147,7 +147,7 @@ namespace draw2d_gdi
    }
 
 
-   /*bool dib::dc_select(bool bSelect)
+   bool dib::dc_select(bool bSelect)
    {
       if(bSelect)
       {
@@ -155,9 +155,9 @@ namespace draw2d_gdi
       }
       else
       {
-         return m_spgraphics->SelectObject(m_hbitmapOriginal) != NULL;
+         return m_spgraphics.cast < graphics >()->SelectObject(m_hbitmapOriginal) != NULL;
       }
-   }*/
+   }
 
    bool dib::create(::draw2d::graphics * pdc)
    {
@@ -2751,9 +2751,9 @@ namespace draw2d_gdi
                //if(pb[3] == 0)
                {
                   pb[3] = byte_clip(a * (pb[0] + pb[1] + pb[2]) / bTune);
-                  pb[0] = r * pb[3] / 255;
+                  pb[0] = b * pb[3] / 255;
                   pb[1] = g * pb[3] / 255;
-                  pb[2] = b * pb[3] / 255;
+                  pb[2] = r * pb[3] / 255;
                }
                //else
                {
@@ -3070,4 +3070,18 @@ namespace draw2d_gdi
       return true;
    }*/
 
+
+   COLORREF dib::make_colorref(int32_t a, int32_t r, int32_t g, int32_t b)
+   {
+
+      return ARGB(a, r, g, b);
+
+   }
+
+
 } // namespace draw2d_gdi
+
+
+
+
+

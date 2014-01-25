@@ -40,3 +40,6 @@
 #define GDI_FONT(pfont) (dynamic_cast < ::draw2d_gdi::font * > (dynamic_cast < ::draw2d::font * > (pfont)))
 #define GDI_BITMAP(pbitmap) (dynamic_cast < ::draw2d_gdi::bitmap * > (dynamic_cast < ::draw2d::bitmap * > (pbitmap)))
 #define GDI_REGION(pregion) (dynamic_cast < ::draw2d_gdi::region * > (dynamic_cast < ::draw2d::region * > (pregion)))
+
+
+#define argb_invert(cr) ARGB(argb_get_a_value(cr),argb_get_b_value(cr),argb_get_g_value(cr),argb_get_r_value(cr))

@@ -45,7 +45,7 @@ namespace draw2d_gdi
 
       void stretch_dib(::draw2d::dib * pdib);
 
-      //bool dc_select(bool bSelect = true);
+      bool dc_select(bool bSelect = true);
 
 
 
@@ -158,6 +158,8 @@ namespace draw2d_gdi
       virtual bool process_initialize(::draw2d::brush * pbrush, bool bReset = true);
       virtual bool process_blend(::draw2d::pen * ppen, int32_t x, int32_t y, ::draw2d::e_alpha_mode ealphamode, ::draw2d::dib * pdib);
       virtual bool process_initialize(::draw2d::pen * ppen, bool bReset = true);
+
+      virtual COLORREF make_colorref(int32_t a, int32_t r, int32_t g, int32_t b);
 
    };
 

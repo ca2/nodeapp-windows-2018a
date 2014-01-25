@@ -46,7 +46,7 @@ namespace draw2d_gdi
    bool brush::CreateHatchBrush(int nIndex, COLORREF crColor)
    {
 
-      return Attach(::CreateHatchBrush(nIndex, crColor)); 
+      return Attach(::CreateHatchBrush(nIndex, crColor));
 
    }
 

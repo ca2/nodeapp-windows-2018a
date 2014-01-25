@@ -651,7 +651,44 @@ namespace draw2d_gdi
 
       ASSERT(get_handle1() != NULL); 
 
-      ::FillRect(get_handle1(), lpRect, (HBRUSH)pBrush->get_os_data());
+      //::FillRect(get_handle1(), lpRect, (HBRUSH)pBrush->get_os_data());
+
+      int x = lpRect->left;
+      int y = lpRect->top;
+      int cx = width(lpRect);
+      int cy = height(lpRect);
+
+      COLORREF clr = pBrush->m_cr;
+
+      if (m_pdib == NULL)
+      {
+
+         ::SetBkColor(get_handle1(), clr);
+         rect rect(x, y, x + cx, y + cy);
+         ::ExtTextOut(get_handle1(), 0, 0, ETO_OPAQUE, &rect, NULL, 0, NULL);
+
+      }
+      else if (argb_get_a_value(clr) == 255)
+      {
+
+         m_pdib->FillRect(x, y, cx, cy, 255, argb_get_r_value(clr), argb_get_g_value(clr), argb_get_b_value(clr));
+
+      }
+      else
+      {
+
+         ::draw2d::dib * pdib = fill_dib_work(clr, ::size(cx, cy), false);
+
+         BLENDFUNCTION bf;
+         bf.BlendOp = AC_SRC_OVER;
+         bf.BlendFlags = 0;
+         bf.SourceConstantAlpha = 0xFF;
+         bf.AlphaFormat = AC_SRC_ALPHA;
+
+         ::AlphaBlend(m_hdc, x, y, cx, cy, (HDC)pdib->get_graphics()->get_os_data(), 0, 0, cx, cy, bf);
+
+      }
+
 
    }
 
@@ -1502,65 +1539,13 @@ namespace draw2d_gdi
 
 
 
-   bool graphics::TextOut(int x, int y, const char * lpszString, int nCount)
+   bool graphics::TextOut(double x, double y, const char * lpszString, int nCount)
    {
 
       synch_lock ml(&user_mutex());
 
-      if(get_handle1() == NULL)
-         return FALSE;
-
-      if(m_pdibAlphaBlend != NULL)
-      {
-         if(GetBkMode() == TRANSPARENT)
-         {
-            //   return TRUE;
-            rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
-            rect rectText(point(x, y), GetTextExtent(lpszString, nCount));
-            if(rectIntersect.intersect(rectIntersect, rectText))
-            {
-               ::draw2d::dib_sp dib0(get_app());
-               dib0->create(rectText.size());
-               ::draw2d::brush_sp brush(allocer());
-               brush->create_solid(ARGB(255, 255, 255, 255));
-               dib0->get_graphics()->SelectObject(brush);
-               dib0->get_graphics()->SelectObject(get_current_font());
-               //dib0->get_graphics()->SetBkMode(TRANSPARENT);
-               dib0->get_graphics()->TextOut(0, 0, lpszString, nCount);
-               dib0->ToAlpha(0);
-               ::draw2d::dib_sp dib1(get_app());
-               dib1->create(rectText.size());
-               brush->create_solid(get_current_brush()->m_cr);
-               dib0->get_graphics()->SelectObject(brush);
-               //dib1->get_graphics()->SetTextColor(GetTextColor());
-               dib1->get_graphics()->SelectObject(get_current_font());
-               //dib1->get_graphics()->SetBkMode(TRANSPARENT);
-               dib1->get_graphics()->TextOut(0, 0, lpszString, nCount);
-               dib1->channel_from(visual::rgba::channel_alpha, dib0);
-               ::draw2d::dib_sp dib2(get_app());
-               dib2->create(rectText.size());
-               dib2->Fill(255, 0, 0, 0);
-               dib2->from(point(max(0, m_ptAlphaBlend.x - x), max(0, m_ptAlphaBlend.y - y)),
-                  m_pdibAlphaBlend->get_graphics(), point(max(0, x - m_ptAlphaBlend.x), max(0, y - m_ptAlphaBlend.y)), rectText.size());
-               dib1->channel_multiply(visual::rgba::channel_alpha, dib2);
-               /*::draw2d::dib_sp dib3(get_app());
-               dib1->mult_alpha(dib3);*/
-
-               keeper < ::draw2d::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
-
-            return BitBlt(x, y, rectText.width(), rectText.height(), dib1->get_graphics(), 0, 0, SRCCOPY);
-
-               /*BLENDFUNCTION bf;
-               bf.BlendOp     = AC_SRC_OVER;
-               bf.BlendFlags  = 0;
-               bf.SourceConstantAlpha = 0xFF;
-               bf.AlphaFormat = AC_SRC_ALPHA;
-               return ::AlphaBlend(get_handle1(), x, y, 
-               rectText.width(), rectText.height(), GDI_HDC(dib1->get_graphics()), 0, 0, rectText.width(), 
-               rectText.height(), bf) != FALSE; */
-            }
-         }
-      }
+      if (::draw2d::graphics::TextOut(x, y, lpszString, nCount))
+         return true;
 
       ASSERT(get_handle1() != NULL); 
 
@@ -1617,7 +1602,8 @@ namespace draw2d_gdi
          else
          {
 
-            GDI_GRAPHICS(pdib->get_graphics())->SetTextColor(RGB(argb_get_r_value(brush.m_cr), argb_get_g_value(brush.m_cr), argb_get_b_value(brush.m_cr)));
+            //GDI_GRAPHICS(pdib->get_graphics())->SetTextColor(RGB(argb_get_r_value(brush.m_cr), argb_get_g_value(brush.m_cr), argb_get_b_value(brush.m_cr)));
+            GDI_GRAPHICS(pdib->get_graphics())->SetTextColor(RGB(argb_get_b_value(brush.m_cr), argb_get_g_value(brush.m_cr), argb_get_r_value(brush.m_cr)));
 
          }
 
@@ -1632,6 +1618,8 @@ namespace draw2d_gdi
 
          if(m_ealphamode == ::draw2d::alpha_mode_blend)
          {
+
+            pdib->dc_select();
 
             ::AlphaBlend(m_hdc, x, y, size.cx, size.cy, (HDC) pdib->get_graphics()->get_os_data(), 0, 0, size.cx, size.cy, bf);
 
