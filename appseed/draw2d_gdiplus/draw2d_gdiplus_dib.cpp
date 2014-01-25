@@ -2579,6 +2579,29 @@ namespace draw2d_gdiplus
 
 #define new BASE_NEW
 
+   void dib::map(bool bApplyTransform)
+   {
+      
+      UNREFERENCED_PARAMETER(bApplyTransform);
 
-}
+//      if (m_spgraphics.is_null())
+  //       return;
+
+    //  m_spgraphics->flush();
+
+   }
+
+
+   void dib::unmap()
+   {
+
+//      if (m_spgraphics.is_null())
+  //       return;
+
+    //  m_spgraphics->flush();
+
+   }
+
+
+} // namespace draw2d_gdiplus
 

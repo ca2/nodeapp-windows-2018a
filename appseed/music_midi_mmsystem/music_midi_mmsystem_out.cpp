@@ -12,6 +12,7 @@ namespace music
       namespace mmsystem
       {
 
+         mutex & get_midi_mutex();
 
          out::out(sp(base_application) papp) :
             element(papp),
@@ -33,6 +34,8 @@ namespace music
 
          ::multimedia::e_result out::open()
          {
+
+            synch_lock sl(&get_midi_mutex());
 
             MMRESULT mmrc;
 

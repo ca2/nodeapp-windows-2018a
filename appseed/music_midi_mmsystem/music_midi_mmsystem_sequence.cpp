@@ -12,6 +12,7 @@ namespace music
       namespace mmsystem
       {
 
+         mutex & get_midi_mutex();
 
          sequence::sequence(sp(base_application) papp) :
             element(papp),
@@ -444,8 +445,11 @@ Seq_Open_File_Cleanup:
          {
             
             UNREFERENCED_PARAMETER(pthread);
+
+            synch_lock slMidi(&get_midi_mutex());
             
             single_lock sl(&m_mutex, TRUE);
+
 
             int32_t                 i;
             e_result                smfrc;

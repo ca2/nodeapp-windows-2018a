@@ -24,6 +24,7 @@ namespace draw2d_gdiplus
       virtual void * get_os_data() const;
 
 
+
       //bool create_solid(COLORREF crColor);
       //bool CreateHatchBrush(int32_t nIndex, COLORREF crColor);
       //bool CreatePatternBrush(::draw2d::bitmap* pBitmap);

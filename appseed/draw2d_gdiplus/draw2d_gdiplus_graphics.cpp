@@ -2721,7 +2721,18 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    int32_t graphics::GetClipBox(LPRECT lpRect) const
    {
-      return ::GetClipBox(get_handle1(), lpRect);
+
+      Gdiplus::Rect r;
+
+      m_pgraphics->GetClipBounds(&r);
+
+      lpRect->left = r.X;
+      lpRect->top = r.Y;
+      lpRect->right = r.X + r.Width;
+      lpRect->bottom = r.Y + r.Height;
+
+      return 1;
+
    }
 
    int32_t graphics::SelectClipRgn(::draw2d::region * pregion)
@@ -4183,6 +4194,8 @@ namespace draw2d_gdiplus
 
    bool graphics::flush()
    {
+
+      synch_lock sl(&user_mutex());
       
       m_pgraphics->Flush();
 

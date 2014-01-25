@@ -13,6 +13,16 @@ namespace music
       {
 
 
+         mutex & get_midi_mutex()
+         {
+
+            static mutex s_mutex(NULL);
+
+            return s_mutex;
+
+         }
+
+
          namespace player
          {
 
@@ -490,6 +500,9 @@ namespace music
 
             void player::SendReset()
             {
+
+               synch_lock sl(&get_midi_mutex());
+
                HMIDIOUT hmidiout = NULL;
                ::multimedia::e_result mmrc;
                uint32_t uDeviceID = 0;
@@ -531,6 +544,7 @@ namespace music
                   goto End;
 End:
                midiOutClose( hmidiout);
+
             }
 
 

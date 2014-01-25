@@ -1,13 +1,16 @@
 #pragma once
 
+
 namespace draw2d_gdiplus
 {
+
 
    //////////////////////////////////////////////////////////////////////
    //   Creator : El Barto (ef00@luc.ac.be)
    //   Location : http://www.luc.ac.be/~ef00/ebgfx
    //   Date : 09-04-98
    //////////////////////////////////////////////////////////////////////
+
 
    class CLASS_DECL_DRAW2D_GDIPLUS dib :
       virtual public ::draw2d::dib
@@ -145,7 +148,14 @@ namespace draw2d_gdiplus
       //double pi();
 
 
+      virtual void map(bool bApplyTransform = true);
+      virtual void unmap();
+
 
    };
 
+
 } // namespace draw2d_gdiplus
+
+
+
