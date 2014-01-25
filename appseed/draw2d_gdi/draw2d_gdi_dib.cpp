@@ -3074,7 +3074,7 @@ namespace draw2d_gdi
    COLORREF dib::make_colorref(int32_t a, int32_t r, int32_t g, int32_t b)
    {
 
-      return ARGB(a, r, g, b);
+      return ARGB(a, b, g, r);
 
    }
 
