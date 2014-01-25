@@ -38,7 +38,7 @@ namespace draw2d_gdi
    bool brush::CreateSolid(COLORREF crColor)
    {
 
-      return Attach(::CreateSolidBrush(crColor));
+      return Attach(::CreateSolidBrush(argb_invert(crColor)));
 
    }
 
