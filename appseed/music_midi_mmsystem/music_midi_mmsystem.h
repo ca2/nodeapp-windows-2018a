@@ -25,6 +25,8 @@
           
 #include "music_midi_mmsystem_sequence_thread.h"
 
+#include "music_midi_mmsystem_midi.h"
+
 #include "music_midi_mmsystem_factory_exchange.h"
 
 

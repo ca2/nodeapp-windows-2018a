@@ -44,40 +44,57 @@ namespace music
             class buffer_array;
 
 
-            class buffer
+            class buffer :
+               virtual public ::music::midi::object
             {
             public:
 
 
-               MIDIHDR              m_midihdr;
+               LPMIDIHDR            m_lpmidihdr;
                primitive::memory    m_storage;
                bool                 m_bPrepared;
+               buffer_array *       m_pbuffera;
+
+
+               buffer(sp(base_application) papp);
+               virtual ~buffer();
 
                bool IsPrepared();
                void Reset();
-               void Initialize(int32_t iSize, uint_ptr dwUser);
+               void Initialize(int32_t iSize, buffer_array * pbuffera);
 
                ::multimedia::e_result midiStreamOut(HMIDISTRM hmidiout);
                ::multimedia::e_result midiOutPrepareHeader(HMIDIOUT hmidiout);
                ::multimedia::e_result midiOutUnprepareHeader(HMIDIOUT hmidiout);
 
 
-               inline LPMIDIHDR GetMidiHdr() { return &m_midihdr; }
+               inline LPMIDIHDR GetMidiHdr() { return m_lpmidihdr; }
 
-               void SetNextMidiHdr(LPMIDIHDR lpNext);
+               //void SetNextMidiHdr(LPMIDIHDR lpNext);
 
+               midi_callback_data * get_midi_callback_data();
+
+               static buffer * get(LPMIDIHDR lpmidihdr);
+
+               static sequence * get_sequence(LPMIDIHDR lpmidihdr);
 
             };
 
 
             class buffer_array :
-               public array < buffer, buffer >
+               virtual public spa(buffer)
             {
             public:
 
+               
+               midi_callback_data * m_pcallbackdata;
+
+
+               buffer_array(sp(base_application) papp);
+               virtual ~buffer_array();
 
                void Reset();
-               void Initialize(int32_t iCount, int32_t iSize, uint_ptr dwUser);
+               void Initialize(int32_t iCount, int32_t iSize, midi_callback_data * pcallbackdata);
 
 
                ::multimedia::e_result midiStreamOut(HMIDISTRM hmidiout);
@@ -97,6 +114,9 @@ namespace music
 
             };
 
+            uint32_t                      m_cbPreroll;          /* Streaming buffers -- size of lpmhPreroll     */
+
+            uint32_t                      m_cbPrerollNominalMax;
 
             buffer_array                  m_buffera;
 
@@ -104,7 +124,7 @@ namespace music
 
             midi_callback_data            m_midicallbackdata;
 
-            uint32_t                      m_uBuffersInMMSYSTEM;
+            int32_t                       m_iBuffersInMMSYSTEM;
 
 
 
@@ -136,6 +156,7 @@ namespace music
             imedia::position GetPositionTicks();
             void SetLevelMeter(int32_t iLevel);
             ::multimedia::e_result CloseStream();
+            ::music::e_result close_device();
             bool SetMidiOutDevice(uint32_t uiDevice);
             int32_t SetKeyShift(int32_t iKeyShift);
             int32_t GetKeyShift();
@@ -207,7 +228,7 @@ namespace music
 
             bool IsPlaying();
 
-            static void CALLBACK MidiOutProc(HMIDIOUT hmo, UINT wMsg, DWORD_PTR dwInstance, DWORD_PTR dwParam1, DWORD_PTR dwParam2);
+            // static void CALLBACK MidiOutProc(HMIDIOUT hmo, UINT wMsg, DWORD_PTR dwInstance, DWORD_PTR dwParam1, DWORD_PTR dwParam2);
 
 
             bool IsSettingPosition();
@@ -228,6 +249,12 @@ namespace music
 
             using ::music::midi::sequence::create_new_event;
             virtual ::music::midi::sequence::event * create_new_event(::music::midi::sequence::e_event eevent, LPMIDIHDR lpmidihdr);
+
+
+            virtual ::multimedia::e_result SendGMReset();
+
+
+            virtual ::multimedia::e_result mm_start();
 
          };
 

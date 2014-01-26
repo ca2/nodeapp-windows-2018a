@@ -1436,7 +1436,8 @@ namespace draw2d_gdi
 
       synch_lock ml(&user_mutex());
 
-      ASSERT(get_handle1() != NULL);
+      if (get_handle1() == NULL)
+         return false;
 
       if(m_pdib == NULL)
       {
@@ -1819,9 +1820,12 @@ namespace draw2d_gdi
    bool graphics::get_text_metrics(LPTEXTMETRICW lpMetrics) const
    { 
 
-      ASSERT(get_handle2() != NULL); 
+      HDC h2 = get_handle2();
 
-      return ::GetTextMetricsW(get_handle2(), lpMetrics) != FALSE;
+      if (h2 == NULL)
+         return false;
+
+      return ::GetTextMetricsW(h2, lpMetrics) != FALSE;
 
    }
 

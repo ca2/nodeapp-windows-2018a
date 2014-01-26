@@ -16,8 +16,8 @@ namespace music
       {
 
 
-         CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM ::multimedia::e_result translate_mmr(MMRESULT mmr);
-
+         CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM ::multimedia::e_result translate_mmr(MMRESULT mmr, string & strOsMessage, string  & strMessage);
+         CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM UINT translate_out_device(UINT uiDevice);
 
       } // namespace mmsystem
 

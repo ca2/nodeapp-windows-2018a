@@ -16,6 +16,7 @@ namespace music
 
          out::out(sp(base_application) papp) :
             element(papp),
+            ::music::midi::object(papp),
             ::music::midi::out(papp)
          {
 
@@ -70,7 +71,7 @@ namespace music
          ::multimedia::e_result out::send_short_message(::music::midi::e_type etype, int iChannel, int iData1, int iData2)
          {
 
-            return translate_mmr(midiOutShortMsg(m_hmidiout, MIDIMSG(((int) etype) >> 4, iChannel, iData1, iData2)));
+            return translate_os_result(midiOutShortMsg(m_hmidiout, MIDIMSG(((int) etype) >> 4, iChannel, iData1, iData2)), "out::send_short_message");
 
          }
 

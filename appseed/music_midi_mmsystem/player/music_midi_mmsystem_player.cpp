@@ -85,10 +85,17 @@ namespace music
             bool player::Play(imedia::position tkStart, uint32_t dwEllapse)
             {
 
-               ::music::midi::player::command * pcommand = new ::music::midi::player::command(get_app());
+               sp(::music::midi::player::command) pcommand = canew(::music::midi::player::command(get_app()));
 
                pcommand->m_ecommand = ::music::midi::player::command_play;
-               pcommand->m_dwEllapse = dwEllapse;
+
+               if (dwEllapse != (uint32_t)-1)
+               {
+
+                  pcommand->m_dwEllapse = dwEllapse;
+
+               }
+               
                pcommand->m_flags.signalize(::music::midi::player::command::flag_ticks);
                pcommand->m_ticks = tkStart;
 
@@ -96,18 +103,25 @@ namespace music
 
                bool bFinished = pcommand->wait_ready();
 
-               pcommand->release();
+//               pcommand->release();
 
-               return bFinished;
+               return bFinished && pcommand->m_eresult == ::multimedia::result_success;
+
             }
+
 
             bool player::Play(double dRate, uint32_t dwEllapse)
             {
 
-               ::music::midi::player::command * pcommand = new ::music::midi::player::command(get_app());
+               sp(::music::midi::player::command) pcommand = canew(::music::midi::player::command(get_app()));
 
                pcommand->m_ecommand = ::music::midi::player::command_play;
-               pcommand->m_dwEllapse = dwEllapse;
+               if (dwEllapse != (uint32_t)-1)
+               {
+
+                  pcommand->m_dwEllapse = dwEllapse;
+
+               }
                pcommand->m_flags.signalize(::music::midi::player::command::flag_dRate);
                pcommand->m_dRate = dRate;
 
@@ -115,9 +129,9 @@ namespace music
 
                bool bFinished = pcommand->wait_ready();
 
-               pcommand->release();
+               //pcommand->release();
 
-               return bFinished;
+               return bFinished && pcommand->m_eresult == ::multimedia::result_success;
 
             }
 
@@ -139,7 +153,10 @@ namespace music
 
             bool player::ExecuteCommand(::music::midi::player::e_command ecommand, uint32_t dwEllapse)
             {
+               
+               return ::music::midi::player::player::ExecuteCommand(ecommand, dwEllapse);
 
+               /*
                ::music::midi::player::command * pcommand = new ::music::midi::player::command(get_app());
 
                pcommand->m_ecommand = ecommand;
@@ -151,7 +168,7 @@ namespace music
 
                pcommand->release();
 
-               return bFinished;
+               return bFinished;*/
             }
 
 
@@ -387,20 +404,31 @@ namespace music
 
             void player::PostNotifyEvent(::music::midi::player::e_notify_event eevent)
             {
+
                if(m_puie != NULL)
                {
+
                   ::music::midi::player::notify_event * pdata = new ::music::midi::player::notify_event;
+
                   pdata->m_pplayer = this;
+
                   pdata->m_enotifyevent = eevent;
+
                   m_puie->post_message(::music::midi::player::message_notify_event, 0 , (LPARAM) pdata);      
+
                }
+
             }
+
 
             void player::SendMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd)
             {
+
                if(m_puie != NULL)
                {
+
                   m_puie->post_message(MMSG_DONE, (WPARAM) pSeq, (LPARAM) lpmdd);      
+
                }
 
             }
@@ -409,12 +437,17 @@ namespace music
             {
 
                return Application.midi()->GetMidiOutDevice();
+
             }
+
 
             void player::SetCallbackWindow(sp(::user::interaction) puie)
             {
+
                m_puie = puie;
+
             }
+
 
             void player::on_attribute_change(::signal_details * pobj)
             {
@@ -498,54 +531,6 @@ namespace music
 
 
 
-            void player::SendReset()
-            {
-
-               synch_lock sl(&get_midi_mutex());
-
-               HMIDIOUT hmidiout = NULL;
-               ::multimedia::e_result mmrc;
-               uint32_t uDeviceID = 0;
-               mmrc = translate_mmr(midiOutOpen(&hmidiout, uDeviceID,  0, 0, CALLBACK_NULL));
-               if(mmrc != MMSYSERR_NOERROR)
-                  return;
-               Sleep(284);
-               const uchar gmModeOn[] = {
-                  //        0x00, 0x00, 0x00, 0x00,
-                  //        0x00, 0x00, 0x00, 0x00,
-                  //        0x1b, 0x8a, 0x06, MEVT_TEMPO,
-                  0x00, 0x00, 0x00, 0x00,
-                  0x00, 0x00, 0x00, 0x00,
-                  0x06, 0x00, 0x00, MEVT_LONGMSG,
-                  0xf0, 0x7e, 0x7f, 0x09,
-                  0x01, 0xf7, 0x00, 0x00};
-               //        0x70, 0x01, 0x00, 0x00,
-               //      0x00, 0x00, 0x00, 0x00 };
-               //      0x09, 0x00, 0x00, MEVT_LONGMSG,
-               //      0x43, 0x10, 0x4c,
-               //    0x00, 0x00, 0x7e, 0x00,
-               //  0xf7, 0x00, 0x00, 0x00,};
-               MIDIHDR mh;
-               LPMIDIHDR lpmh = &mh;
-               lpmh->lpData = (char *) gmModeOn;
-               lpmh->dwBufferLength = sizeof(gmModeOn);
-               lpmh->dwBytesRecorded = 0;
-               lpmh->dwFlags = 0;
-               mmrc = translate_mmr(midiOutPrepareHeader( hmidiout, lpmh, sizeof(MIDIHDR)));
-               if(mmrc != MMSYSERR_NOERROR)
-                  goto End;
-               lpmh->dwBytesRecorded = sizeof(gmModeOn);
-               if(mmrc != MMSYSERR_NOERROR)
-                  goto End;
-               mmrc = translate_mmr(midiOutLongMsg( hmidiout, lpmh, sizeof(MIDIHDR)));
-               Sleep(284);
-               mmrc = translate_mmr(midiOutUnprepareHeader( hmidiout, lpmh, sizeof(MIDIHDR)));
-               if(mmrc != MMSYSERR_NOERROR)
-                  goto End;
-End:
-               midiOutClose( hmidiout);
-
-            }
 
 
          } // namespace player

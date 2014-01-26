@@ -48,8 +48,8 @@ namespace music
 
                void SendMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd);
                void SetCallbackWindow(sp(::user::interaction) puie);
-               bool Play(double dRate = 0.0, uint32_t dwEllapse = 584);
-               bool Play(imedia::position tkStart, uint32_t dwEllapse = 584);
+               bool Play(double dRate = 0.0, uint32_t dwEllapse = (uint32_t) -1);
+               bool Play(imedia::position tkStart, uint32_t dwEllapse = (uint32_t)-1);
 
                virtual bool initialize_instance();
                virtual int32_t exit_instance();
@@ -60,7 +60,6 @@ namespace music
                void SetPosition(double dRate);
                void Pause();
                void CloseFile();
-               void SendReset();
                bool ExecuteCommand(::music::midi::player::e_command ecommand, uint32_t dwEllapse);
                virtual void OnMidiOutDeviceChange();
 
