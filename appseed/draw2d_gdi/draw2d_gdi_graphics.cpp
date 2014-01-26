@@ -1568,7 +1568,7 @@ namespace draw2d_gdi
 
          ::SetTextColor(m_hdc, RGB(argb_get_r_value(brush.m_cr), argb_get_g_value(brush.m_cr), argb_get_b_value(brush.m_cr)));
 
-         return ::TextOutW(get_handle1(), x, y, wstr, (int) wstr.length()) != FALSE;
+         return ::TextOutW(get_handle1(), (int) x, (int) y, wstr, (int) wstr.length()) != FALSE;
 
       }
       else
@@ -1615,14 +1615,14 @@ namespace draw2d_gdi
 
          ::TextOutW((HDC) pdib->get_graphics()->get_os_data(), 0, 0, wstr, (int) wstr.length());
 
-         GDI_DIB(pdib.m_p)->process_blend(&brush, x, y, m_ealphamode, m_pdib);
+         GDI_DIB(pdib.m_p)->process_blend(&brush, (int) x, (int) y, m_ealphamode, m_pdib);
 
          if(m_ealphamode == ::draw2d::alpha_mode_blend)
          {
 
             pdib->dc_select();
 
-            ::AlphaBlend(m_hdc, x, y, size.cx, size.cy, (HDC) pdib->get_graphics()->get_os_data(), 0, 0, size.cx, size.cy, bf);
+            ::AlphaBlend(m_hdc, (int) x, (int) y, size.cx, size.cy, (HDC) pdib->get_graphics()->get_os_data(), 0, 0, size.cx, size.cy, bf);
 
          }
 
