@@ -1093,7 +1093,7 @@ gdi_fallback:
    bool graphics::TextOut(int32_t x, int32_t y, const string & str)
    { 
       
-      return TextOut((double) x, (double) y, str, str.get_length()); 
+      return TextOut((double) x, (double) y, str, (int32_t) str.get_length()); 
    
    } 
 
