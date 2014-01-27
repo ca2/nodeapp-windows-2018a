@@ -122,6 +122,7 @@ CLASS_DECL_win void __process_window_procedure_exception(::exception::base*, sig
 CLASS_DECL_win void __cdecl __pre_translate_message(signal_details * pobj);
 
 //#include "win_printer.h"
+#include "win_print_job.h"
 
 #include "win_application.h"
 

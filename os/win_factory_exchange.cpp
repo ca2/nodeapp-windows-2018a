@@ -30,6 +30,7 @@ namespace win
       System.factory().creatable_small    < crypt              >  (System.type_info < ::crypto::crypto               > ()  , 1   );
       System.factory().creatable_small    < ip_enum            >  (System.type_info < ::net::ip_enum              > ()        );
 //      System.factory().creatable          < printer            >  (System.type_info < ::user::printer             > ()  , 1   );
+      System.factory().creatable_large          < print_job            >  (System.type_info < ::user::print_job             > ());
 
    }
 
