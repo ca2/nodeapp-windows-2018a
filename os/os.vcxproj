@@ -1061,6 +1061,7 @@
     <ClCompile Include="win_main.cpp" />
     <ClCompile Include="win_os.cpp" />
     <ClCompile Include="win_port_forward.cpp" />
+    <ClCompile Include="win_print_job.cpp" />
     <ClCompile Include="win_registry.cpp" />
     <ClCompile Include="win_shell.cpp" />
     <ClCompile Include="win_stdio_file.cpp" />

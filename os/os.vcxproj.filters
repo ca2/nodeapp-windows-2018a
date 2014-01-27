@@ -334,6 +334,9 @@
     <ClCompile Include="win_window_api.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="win_print_job.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="os.def">
