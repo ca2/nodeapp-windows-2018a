@@ -1,7 +1,7 @@
 #include "framework.h"
 
 
-namespace user
+namespace win
 {
 
 
@@ -90,7 +90,7 @@ namespace user
    }
 
 
-} // namespace user
+} // namespace win
 
 
 

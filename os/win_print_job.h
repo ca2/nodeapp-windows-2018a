@@ -15,7 +15,7 @@ namespace win
 	   virtual ~print_job();
 
 
-	   virtual int32_t run() = 0;
+	   virtual int32_t run();
 
 	};
 
