@@ -10,6 +10,7 @@ namespace win
       ::print_job(papp),
       ::job(papp),
       ::user::job(papp),
+      ::user::print_job(papp),
       thread(papp)
    {
 
