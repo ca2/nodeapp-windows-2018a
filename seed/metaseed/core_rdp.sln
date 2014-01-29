@@ -103,6 +103,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basewinpr", "..\..\..\app\t
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_rdpclient", "..\..\..\app-core\appseed\rdpclient\rdpclient.vcxproj", "{A4122E96-400B-4A1A-ACE1-021CC5556A3F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "baseclientchannels", "..\..\..\app\thirdparty\appseed\channels\clientchannels.vcxproj", "{3C27B10B-E5DB-4DBA-8292-051830AAF103}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis_v110|Android = basis_v110|Android
@@ -902,6 +904,41 @@ Global
 		{A4122E96-400B-4A1A-ACE1-021CC5556A3F}.profiler|Win32.Build.0 = profiler|Win32
 		{A4122E96-400B-4A1A-ACE1-021CC5556A3F}.profiler|x64.ActiveCfg = profiler|x64
 		{A4122E96-400B-4A1A-ACE1-021CC5556A3F}.profiler|x64.Build.0 = profiler|x64
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.basis_v110|Android.ActiveCfg = basis|Android
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.basis_v110|Android.Build.0 = basis|Android
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.basis_v110|Android.Deploy.0 = basis|Android
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.basis_v110|Win32.ActiveCfg = basis|Win32
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.basis_v110|Win32.Build.0 = basis|Win32
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.basis_v110|x64.ActiveCfg = basis|x64
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.basis_v110|x64.Build.0 = basis|x64
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.basis|Android.ActiveCfg = basis|Android
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.basis|Android.Build.0 = basis|Android
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.basis|Android.Deploy.0 = basis|Android
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.basis|Win32.ActiveCfg = basis|Win32
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.basis|Win32.Build.0 = basis|Win32
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.basis|x64.ActiveCfg = basis|x64
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.basis|x64.Build.0 = basis|x64
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.codeanalysis|Android.ActiveCfg = codeanalysis|Android
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.codeanalysis|Android.Build.0 = codeanalysis|Android
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.codeanalysis|Android.Deploy.0 = codeanalysis|Android
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.codeanalysis|x64.Build.0 = codeanalysis|x64
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.memdleak|Android.ActiveCfg = memdleak|Android
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.memdleak|Android.Build.0 = memdleak|Android
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.memdleak|Android.Deploy.0 = memdleak|Android
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.memdleak|Win32.ActiveCfg = memdleak|Win32
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.memdleak|Win32.Build.0 = memdleak|Win32
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.memdleak|x64.ActiveCfg = memdleak|x64
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.memdleak|x64.Build.0 = memdleak|x64
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.profiler|Android.ActiveCfg = profiler|Android
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.profiler|Android.Build.0 = profiler|Android
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.profiler|Android.Deploy.0 = profiler|Android
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.profiler|Win32.ActiveCfg = profiler|Win32
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.profiler|Win32.Build.0 = profiler|Win32
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.profiler|x64.ActiveCfg = profiler|x64
+		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.profiler|x64.Build.0 = profiler|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
