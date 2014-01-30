@@ -8,6 +8,7 @@
 #endif
 #define DECL_C __cdecl
 
+#define NOCRYPT
 
 #ifndef _CRT_SECURE_NO_WARNINGS
 #define _CRT_SECURE_NO_WARNINGS
@@ -50,5 +51,6 @@
 
 #define HAVE_UINT64_T 1
 #define HAVE_WINSOCK2_H 1
+
 
 
