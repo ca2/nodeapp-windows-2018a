@@ -731,6 +731,13 @@ namespace win
          //pApp->SetCurrentHandles();
          m_pimpl->SetCurrentHandles();
 
+         string strCgcl = read_resource_as_string_dup(NULL, 1984, "CGCL");
+
+         if (strCgcl.has_char())
+         {
+            directrix()->m_varTopicQuery["cgcl_app"] = strCgcl;
+            m_pimpl->directrix()->m_varTopicQuery["cgcl_app"] = strCgcl;
+         }
 
          // Initialize ::user::window::m_pfnNotifyWinEvent
       /*   HMODULE hModule = ::GetModuleHandle("user32.dll");
