@@ -975,6 +975,36 @@ namespace draw2d_gdi
    }
 
 
+   bool graphics::DrawRect(LPCRECT lpcrect, ::draw2d::pen * ppen)
+   {
+
+      if (width(lpcrect) <= 0 || height(lpcrect) <= 0)
+         return false;
+
+      ::draw2d::pen_sp penPrevious = m_sppen;
+
+      SelectObject(ppen);
+
+      bool bOk = false;
+
+      try
+      {
+
+         bOk = internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path_rectangle, (void *)lpcrect, lpcrect);
+
+      }
+      catch (...)
+      {
+
+      }
+
+      SelectObject(penPrevious);
+
+      return bOk;
+
+   }
+
+
    bool graphics::DrawRectangle(LPCRECT lpRect)
    {
 
@@ -2718,9 +2748,9 @@ namespace draw2d_gdi
          ::rect rect(rectBound);
 
          rect.left   -= (int32_t) floor(pen.m_dWidth / 2.0);
-         rect.right  += (int32_t) ceil(pen.m_dWidth / 2.0);
+         rect.right  += (int32_t) floor(pen.m_dWidth / 2.0);
          rect.top    -= (int32_t) floor(pen.m_dWidth / 2.0);
-         rect.bottom += (int32_t) ceil(pen.m_dWidth / 2.0);
+         rect.bottom += (int32_t) floor(pen.m_dWidth / 2.0);
 
          BLENDFUNCTION bf;
          bf.BlendOp     = AC_SRC_OVER;

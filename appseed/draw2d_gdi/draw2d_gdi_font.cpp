@@ -181,7 +181,7 @@ namespace draw2d_gdi
       if(m_eunitFontSize == ::draw2d::unit_pixel)
       {
       
-         CreatePointFont((int32_t) (m_dFontSize * 72.0 / 96.0), m_strFontFamilyName, NULL);
+         CreatePointFont((int32_t) (m_dFontSize * 720.0 / 96.0), m_strFontFamilyName, NULL);
 
       }
       else

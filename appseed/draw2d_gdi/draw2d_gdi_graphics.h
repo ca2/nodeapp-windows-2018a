@@ -299,6 +299,8 @@ namespace draw2d_gdi
       bool DrawState(point pt, size size, DRAWSTATEPROC lpDrawProc,
          LPARAM lData, UINT nFlags, ::draw2d::brush* pBrush = NULL);
 
+      virtual bool DrawRect(LPCRECT lpcrect, ::draw2d::pen * ppen);
+
    // Ellipse and Polygon Functions
       bool Chord(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4);
       bool Chord(LPCRECT lpRect, POINT ptStart, POINT ptEnd);
