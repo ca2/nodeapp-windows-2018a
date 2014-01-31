@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 #define COMPILE_MULTIMON_STUBS
 //#include <multimon.h>
@@ -4831,6 +4831,9 @@ ExitModal:
    void window::SetWindowText(const char * lpszString)
    { 
       m_strWindowText = lpszString;
+      wstring wstr(m_strWindowText);
+      wstr = wstr;
+      ::SetWindowTextW(get_handle(), wstr);
    }
 
    strsize window::GetWindowText(LPTSTR lpszString, strsize nMaxCount)
