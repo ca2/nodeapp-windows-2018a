@@ -178,7 +178,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basewinpr", "..\..\..\app\t
 		{E000FFAF-392F-4E32-BF51-FD7ED638991F} = {E000FFAF-392F-4E32-BF51-FD7ED638991F}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_rdpclient", "..\..\..\app-core\appseed\rdpclient\rdpclient.vcxproj", "{A4122E96-400B-4A1A-ACE1-021CC5556A3F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_rdpclient", "..\..\..\app-core\appseed\rdpclient\rdpclient.vcxproj", "{8CE1D482-81F1-48E8-989F-8EA919841977}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E4841F02-7CCA-4144-89A2-149302677B3F} = {E4841F02-7CCA-4144-89A2-149302677B3F}
 		{3C27B10B-E5DB-4DBA-8292-051830AAF103} = {3C27B10B-E5DB-4DBA-8292-051830AAF103}
