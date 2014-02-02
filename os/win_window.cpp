@@ -4373,6 +4373,8 @@ ExitModal:
       else
       {
 
+         sl.unlock();
+
          if(z == -3)
          {
 

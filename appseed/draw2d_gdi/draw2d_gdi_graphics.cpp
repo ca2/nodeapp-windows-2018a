@@ -1578,6 +1578,9 @@ namespace draw2d_gdi
       if (::draw2d::graphics::TextOut(x, y, lpszString, nCount))
          return true;
 
+      if (get_handle1() == NULL)
+         return false;
+
       ASSERT(get_handle1() != NULL); 
 
       string str(lpszString, nCount);
