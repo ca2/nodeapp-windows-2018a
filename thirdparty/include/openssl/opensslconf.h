@@ -1,6 +1,18 @@
+#ifndef CA2_APP_BASE_BASE_BASE_BASE_H
+// ca2 configuration for openssl
+#include "app/appseed/base/base/base/base.h"
+#define OPENSSL_NO_ASM
+#define OPENSSL_NO_DYNAMIC_ENGINE
+#define OPENSSL_NO_RSAX
+#define OPENSSL_NO_HW
+#define OPENSSL_NO_RDRAND
 #ifndef OPENSSL_SYSNAME_WIN32
 # define OPENSSL_SYSNAME_WIN32
 #endif
+// end of ca2 configuration for openssl
+#endif
+
+
 
 
 
