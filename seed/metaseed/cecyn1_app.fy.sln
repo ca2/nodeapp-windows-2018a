@@ -42,8 +42,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "core", "..\..\..\app\appsee
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basemysql", "..\..\..\app\thirdparty\appseed\mysql\mysql.vcxproj", "{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basempg123", "..\..\..\app-veriwell\appseed\libmpg123\libmpg123.vcxproj", "{67CAA87B-7CF1-4F93-BB67-21C513F40803}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core", "..\..\appseed\app_core\app_core.vcxproj", "{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app._", "..\..\..\app-core\appseed\appfy\appfy.vcxproj", "{3DDD6C31-218E-4979-B095-8AF22563D9C1}"
@@ -464,34 +462,6 @@ Global
 		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.profiler|Win32.Build.0 = profiler|Win32
 		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.profiler|x64.ActiveCfg = profiler|x64
 		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}.profiler|x64.Build.0 = profiler|x64
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.basis|Android.ActiveCfg = basis|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.basis|Mixed Platforms.ActiveCfg = basis|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.basis|Mixed Platforms.Build.0 = basis|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.basis|Win32.ActiveCfg = basis|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.basis|Win32.Build.0 = basis|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.basis|x64.ActiveCfg = basis|x64
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.basis|x64.Build.0 = basis|x64
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.codeanalysis|Android.ActiveCfg = codeanalysis|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.codeanalysis|Mixed Platforms.ActiveCfg = codeanalysis|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.codeanalysis|Mixed Platforms.Build.0 = codeanalysis|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.codeanalysis|x64.Build.0 = codeanalysis|x64
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.memdleak|Android.ActiveCfg = memdleak|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.memdleak|Mixed Platforms.ActiveCfg = memdleak|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.memdleak|Mixed Platforms.Build.0 = memdleak|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.memdleak|Win32.ActiveCfg = memdleak|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.memdleak|Win32.Build.0 = memdleak|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.memdleak|x64.ActiveCfg = memdleak|x64
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.memdleak|x64.Build.0 = memdleak|x64
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.profiler|Android.ActiveCfg = profiler|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.profiler|Mixed Platforms.ActiveCfg = profiler|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.profiler|Mixed Platforms.Build.0 = profiler|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.profiler|Win32.ActiveCfg = profiler|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.profiler|Win32.Build.0 = profiler|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.profiler|x64.ActiveCfg = profiler|x64
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.profiler|x64.Build.0 = profiler|x64
 		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.basis|Android.ActiveCfg = basis|Win32
 		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.basis|Mixed Platforms.ActiveCfg = basis|Win32
 		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.basis|Mixed Platforms.Build.0 = basis|Win32

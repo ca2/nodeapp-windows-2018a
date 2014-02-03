@@ -7,8 +7,10 @@
 #define OPENSSL_NO_HW
 #define OPENSSL_NO_RDRAND
 #ifndef OPENSSL_SYSNAME_WIN32
-# define OPENSSL_SYSNAME_WIN32
+#define OPENSSL_SYSNAME_WIN32
 #endif
+#pragma warning ( disable : 4267 ) // conversion from '' to '', possible loss of data
+#pragma warning ( disable : 4244 ) // '' : conversion from '' to '', possible loss of data
 // end of ca2 configuration for openssl
 #endif
 
