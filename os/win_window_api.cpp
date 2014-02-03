@@ -351,7 +351,8 @@ string CLASS_DECL_win get_user_interaction_window_class(sp(::user::interaction) 
    if (etype == ::user::interaction::type_frame || etype == ::user::interaction::type_view)
    {
       // SDI Frame or MDI Child windows or views - normal colors
-      wndcls.style = CS_DBLCLKS | CS_HREDRAW | CS_VREDRAW;
+      //wndcls.style = CS_DBLCLKS | CS_HREDRAW | CS_VREDRAW;
+      wndcls.style = CS_HREDRAW | CS_VREDRAW;
       wndcls.hbrBackground = (HBRUSH) (COLOR_WINDOW + 1);
       if (__register_with_icon(&wndcls, gen_WndFrameOrView, 0))
       {
