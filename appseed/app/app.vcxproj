@@ -894,9 +894,6 @@
     <ProjectReference Include="..\..\os\os.vcxproj">
       <Project>{9163e31a-2d5a-4f18-ad6f-b561c76e5054}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\app_core\app_core.vcxproj">
-      <Project>{1ab44f85-c63d-4f5e-bb76-b416dc4da2cb}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
