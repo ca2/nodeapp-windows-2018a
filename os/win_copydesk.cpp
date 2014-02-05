@@ -213,7 +213,7 @@ namespace win
       HBITMAP hbitmap = (HBITMAP) ::GetClipboardData(CF_BITMAP);
       try
       {
-         ::draw2d::bitmap_sp bitmap(get_app());
+         ::draw2d::bitmap_sp bitmap(allocer());
          bitmap->attach(new Gdiplus::Bitmap(hbitmap, NULL));
          //HDC hdc = ::CreateCompatibleDC(NULL);
          //::draw2d::graphics_sp g(allocer());

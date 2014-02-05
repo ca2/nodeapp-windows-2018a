@@ -1648,7 +1648,9 @@ namespace draw2d_gdi
 
          ::TextOutW((HDC) pdib->get_graphics()->get_os_data(), 0, 0, wstr, (int) wstr.length());
 
-         GDI_DIB(pdib.m_p)->process_blend(&brush, (int) x, (int) y, m_ealphamode, m_pdib);
+         point pt = GetViewportOrg();
+
+         GDI_DIB(pdib.m_p)->process_blend(&brush, (int) x + pt.x, (int) y + pt.y, m_ealphamode, m_pdib);
 
          if(m_ealphamode == ::draw2d::alpha_mode_blend)
          {
@@ -3537,8 +3539,8 @@ namespace draw2d_gdi
       }
       else if(argb_get_a_value(clr) == 255)
       {
-         
-         m_pdib->FillRect(x, y, cx, cy, 255, argb_get_r_value(clr), argb_get_g_value(clr), argb_get_b_value(clr));
+         point pt = GetViewportOrg();
+         m_pdib->FillRect(x + pt.x, y + pt.y, cx, cy, 255, argb_get_r_value(clr), argb_get_g_value(clr), argb_get_b_value(clr));
 
       }
       else
