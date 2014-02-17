@@ -1063,8 +1063,6 @@ namespace win
       // for tracking the idle time state
       bool bIdle = TRUE;
       LONG lIdleCount = 0;
-      sp(base_application) pappThis1 = (this);
-      sp(base_application) pappThis2 = (m_p);
 
       // acquire and dispatch messages until a WM_QUIT message is received.
       MSG msg;
@@ -1077,37 +1075,10 @@ namespace win
             // call on_idle while in bIdle state
             if (!on_idle(lIdleCount++))
                bIdle = FALSE; // assume "no idle" state
-            step_timer();
-            m_p->m_dwAlive = m_dwAlive = ::get_tick_count();
-            if(pappThis1 != NULL)
-            {
-               pappThis1->m_dwAlive = m_dwAlive;
-            }
-            if(pappThis2 != NULL)
-            {
-               pappThis2->m_dwAlive = m_dwAlive;
-            }
-            try
-            {
-               if(!m_p->verb())
-                  goto stop_run;
-            }
-            catch(::exit_exception & e)
-            {
 
-               throw e;
 
-            }
-            catch(::exception::exception & e)
-            {
-
-               if(!Application.on_run_exception(e))
-                  throw exit_exception(get_app());
-
-            }
-            catch(...)
-            {
-            }
+            if (!m_p->on_run_step())
+               goto stop_run;
 
          }
 
@@ -1136,18 +1107,9 @@ namespace win
                lIdleCount = 0;
             }
 
-            step_timer();
-            if(m_p == NULL)
+            if (!m_p->on_run_step())
                goto stop_run;
-            m_p->m_dwAlive = m_dwAlive = ::get_tick_count();
-            if(pappThis1 != NULL)
-            {
-               pappThis1->m_dwAlive = m_dwAlive;
-            }
-            if(pappThis2 != NULL)
-            {
-               pappThis2->m_dwAlive = m_dwAlive;
-            }
+
          }
          while (::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE) != FALSE);
 
