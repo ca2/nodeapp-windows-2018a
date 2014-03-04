@@ -8,6 +8,7 @@
 #define OPENSSL_NO_RDRAND
 #ifndef OPENSSL_SYSNAME_WIN32
 #define OPENSSL_SYSNAME_WIN32
+#define OPENSSL_BUILD_SHLIBCRYPTO
 #endif
 #pragma warning ( disable : 4267 ) // conversion from '' to '', possible loss of data
 #pragma warning ( disable : 4244 ) // '' : conversion from '' to '', possible loss of data
