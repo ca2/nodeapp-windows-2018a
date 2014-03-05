@@ -162,6 +162,7 @@ uint32_t __thread_entry(void * pParam)
       gen_ThreadState = NULL;
    }
 
+
    return uiRet;
 
 }
@@ -634,8 +635,8 @@ namespace win
       pState->m_pmapHWND->delete_temp();*/
 
       // free thread object
-      if (m_hThread != NULL)
-         CloseHandle(m_hThread);
+      //if (m_hThread != NULL)
+        // CloseHandle(m_hThread);
 
       // cleanup module state
       if (pState->m_pCurrentWinThread == this)
@@ -993,6 +994,13 @@ namespace win
          catch(...)
          {
          }
+         try
+         {
+            m_bRun = false;
+         }
+         catch (...)
+         {
+         }
       }
       try
       {
@@ -1035,6 +1043,13 @@ namespace win
       }
       else
       {
+         try
+         {
+            m_p->m_bRun = false;
+         }
+         catch (...)
+         {
+         }
       }
    }
 
@@ -2103,6 +2118,8 @@ run:
       catch(...)
       {
       }
+
+
       return nResult;
    }
 
