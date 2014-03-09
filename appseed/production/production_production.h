@@ -173,6 +173,8 @@ namespace production
       virtual bool twitter_auth();
       virtual string twitter_twit(const char * pszMessage);
 
+      virtual bool facebook_auth();
+      virtual string facebook_status(const char * pszMessage);
 
       void compress(const char * lpszRelative);
 

@@ -1,12 +1,20 @@
 #pragma once
 
+
 namespace production
 {
+
+
+   class view;
+
 
    class CLASS_DECL_CA2_PRODUCTION application :
       public ::application
    {
    public:
+
+
+      view * m_pview;
       
       
       sp(::user::single_document_template) m_pdoctemplateMain;

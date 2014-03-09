@@ -12,6 +12,7 @@ namespace production
       m_strBaseSupportId   = "ca2_production";
       m_bZipIsDir          = false;
       m_bLicense           = false;
+      m_pview = NULL;
 
    }
 
@@ -103,6 +104,16 @@ namespace production
       }
       
       m_pdoctemplateMain->open_document_file(pcreatecontext);
+
+      if (pcreatecontext->m_spCommandLine->m_varQuery.has_property("start"))
+      {
+         m_pview->make_production();
+      }
+      else if (pcreatecontext->m_spCommandLine->m_varQuery.has_property("start_deferred"))
+      {
+         m_pview->production_loop(Application.command()->m_varTopicQuery["start_deferred"]);
+      }
+
 
    }
 

@@ -72,6 +72,8 @@ namespace production
 
       twitter_auth();
 
+      //facebook_auth();
+
 
       begin();
 
@@ -100,6 +102,8 @@ namespace production
       m_iGlobalRetry = 0;
 
       twitter_auth();
+
+      //facebook_auth();
 
       begin();
 
@@ -2529,6 +2533,102 @@ namespace production
       iRetry++;
       goto Retry2;
 
+   }
+
+   string production::facebook_status(const char * pszMessage)
+   {
+
+      int32_t iRetry = 0;
+
+   Retry2:
+
+      ::hi5::twit twitterObj(get_app());
+      string tmpStr("");
+      string replyMsg("");
+
+      /* OAuth flow begins */
+      /* Step 0: set OAuth related params. These are got by registering your app at twitter.com */
+      twitterObj.get_oauth().setConsumerKey(m_strTwitterConsumerKey);
+      twitterObj.get_oauth().setConsumerSecret(m_strTwitterConsumerSecret);
+
+      string strPathKey = Application.dir().userappdata("facebookClient_token_key" + ::str::from(m_eversion) + ".txt");
+      string strPathSecret = Application.dir().userappdata("facebookClient_token_secret" + ::str::from(m_eversion) + ".txt");
+      /* Step 1: Check if we alredy have OAuth access token from a previous run */
+      //    char szKey[1024];
+      string myOAuthAccessTokenKey = Application.file().as_string(strPathKey);
+      string myOAuthAccessTokenSecret = Application.file().as_string(strPathSecret);
+
+      if (myOAuthAccessTokenKey.has_char() && myOAuthAccessTokenSecret.has_char())
+      {
+         /* If we already have these keys, then no need to go through auth again */
+         twitterObj.get_oauth().setOAuthTokenKey(myOAuthAccessTokenKey);
+         twitterObj.get_oauth().setOAuthTokenSecret(myOAuthAccessTokenSecret);
+      }
+      else
+      {
+         return "failed";
+      }
+
+      /* OAuth flow ends */
+
+      // /* set twitter username and password */
+      //twitterObj.setTwitterUsername( userName );
+      //twitterObj.setTwitterPassword( passWord );
+
+      /* Post a new status message */
+      tmpStr = pszMessage;
+      replyMsg = "";
+      if (twitterObj.statusUpdate(tmpStr))
+      {
+         //replyMsg=twitterObj.get_response(  );
+
+         //property_set set(get_app());
+
+         //set.parse_json(replyMsg);
+
+         //set[""]
+         /*xml::document document(get_app());
+         if(document.load(replyMsg))
+         {
+         if(document.get_root() != NULL)
+         {
+         if(document.get_root()->child_at(0) != NULL && document.get_root()->child_at(0)->get_name() == "error")
+         {
+         if(document.get_root()->child_at(0)->attr("code") != 34
+         && document.get_root()->child_at(0)->get_value().CompareNoCase("Status is a duplicate.") != 0)
+         {
+
+         goto retry1;
+
+         }
+         }
+         }
+         }*/
+         //printf( "\ntwitterClient:: twitCurl::statusUpdate web response:\n%s\n", replyMsg.c_str() );
+      }
+      else
+      {
+         goto retry1;
+
+         //printf( "\ntwitterClient:: twitCurl::statusUpdate error:\n%s\n", replyMsg.c_str() );
+      }
+      return replyMsg;
+   retry1:
+      if (iRetry >= 3)
+      {
+         return replyMsg = "failed";
+      }
+      System.file().del(strPathKey);
+      System.file().del(strPathSecret);
+      facebook_auth();
+      iRetry++;
+      goto Retry2;
+
+   }
+
+   bool production::facebook_auth()
+   {
+      return true;
    }
 
    /* Destroy a status message */

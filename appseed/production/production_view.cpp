@@ -285,19 +285,14 @@ namespace production
 
       m_pproduction->m_pview  = this;
 
+
+      Application.m_pview = this;
+
       //m_pproduction->twitter_auth();
 //      m_pproduction->twitter_twit("starting ca2 production application");
 
 
 
-      if(Application.command()->m_varTopicQuery.has_property("start"))
-      {
-         make_production();
-      }
-      else if(Application.command()->m_varTopicQuery.has_property("start_deferred"))
-      {
-         production_loop(Application.command()->m_varTopicQuery["start_deferred"]);
-      }
 
    }
 
