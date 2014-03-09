@@ -281,7 +281,8 @@
       <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PostBuildEvent>
-      <Command>$(OutDir)app.removal.exe</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32</PreprocessorDefinitions>
