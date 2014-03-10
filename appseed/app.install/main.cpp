@@ -140,7 +140,7 @@ int32_t installer::simple_app_pre_run()
 
          string strCommandLine;
 
-         for (int32_t i = 1; i < __argc; i++)
+         /*for (int32_t i = 1; i < __argc; i++)
          {
 
             if (i == 1)
@@ -155,7 +155,7 @@ int32_t installer::simple_app_pre_run()
 
          }
 
-         xxdebug_box(strCommandLine, "simple_app::body", 0);
+         xxdebug_box(strCommandLine, "simple_app::body", 0);*/
 
          uint32_t dwStartError;
 
@@ -166,7 +166,9 @@ int32_t installer::simple_app_pre_run()
          if ((iFind = strCommandLine.find_ci("-install:")) >= 0)
          {
 
-            strCommandLine = strCommandLine.Left(iFind) + " " + strCommandLine.substr(iFind + strlen("-install:"));
+            //strCommandLine = strCommandLine.Left(iFind) + " " + strCommandLine.substr(iFind + strlen("-install:"));
+
+            strCommandLine = strCommandLine.substr(iFind + strlen("-install:"));
 
          }
 
