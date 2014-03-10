@@ -1084,12 +1084,16 @@ namespace win
       while(m_bRun)
       {
          // phase1: check to see if we can do idle work
-         while (bIdle &&
-            !::PeekMessage(&msg, NULL, 0,0, PM_NOREMOVE))
+         while (bIdle && !::PeekMessage(&msg, NULL, 0,0, PM_NOREMOVE))
          {
             // call on_idle while in bIdle state
             if (!on_idle(lIdleCount++))
+            {
+               Sleep(10);
+               lIdleCount = 0;
                bIdle = FALSE; // assume "no idle" state
+            }
+               
 
 
             if (!m_p->on_run_step())
@@ -1098,7 +1102,7 @@ namespace win
          }
 
          // phase2: pump messages while available
-         do
+         while (::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE) != FALSE)
          {
 
             // pump message, but quit on WM_QUIT
@@ -1126,7 +1130,8 @@ namespace win
                goto stop_run;
 
          }
-         while (::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE) != FALSE);
+         
+         bIdle = true;
 
       }
 stop_run:
