@@ -937,7 +937,7 @@ namespace production
          }
 
          straStatus.add("050 releasing at netnode : sverige");
-         straServer.add("fr-api.ca2.cc");
+         straServer.add("se-api.ca2.cc");
 
          if (m_eversion != version_basis)
          {
