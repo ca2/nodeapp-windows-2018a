@@ -11,7 +11,7 @@
 						<em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
 						<em:minVersion>2.0</em:minVersion>
 						<em:maxVersion>42.*.*</em:maxVersion>
-						<em:updateLink>https://%DOWNLOADSITE%/%PLATFORM%%VERSION%/npca2.xpi</em:updateLink>
+						<em:updateLink>http://%DOWNLOADSITE%/%PLATFORM%%VERSION%/npca2.xpi</em:updateLink>
 					</r:Description>
 					</em:targetApplication>
 				</r:Description>
