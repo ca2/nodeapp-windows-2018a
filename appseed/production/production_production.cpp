@@ -2083,7 +2083,7 @@ namespace production
 
       string strInstall = Application.file().as_string(System.dir().path(m_strBase, "nodeapp/stage/matter/npca2/install.rdf"));
       strInstall.replace("%BUILD%", strNpca2Version);
-      strInstall.replace("%PLATFORM%", "/" + m_strFormatBuild + "/stage/" + strPlatform);
+      strInstall.replace("%PLATFORM%", "/plugin/" + strPlatform);
       strInstall.replace("%DOWNLOADSITE%", "anycast.ca2.cc/ccvotagus");
       strInstall.replace("%VERSION%", strVersionUrl);
       Application.file().put_contents(System.dir().path(strDir, "npca2", "install.rdf"), strInstall);
@@ -2147,7 +2147,7 @@ namespace production
       create_xpi(pszPlatform, false);
 
       Application.file().copy(System.dir().path(m_strVrel, "stage\\" + strPlatform + "\\npca2.xpi"), System.dir().path(strDir, "npca2.xpi"));
-      Application.file().copy(System.dir().path(m_strCCVrel, "stage\\" + strPlatform + "\\npca2_windows.rdf"), System.dir().path(strDir, "npca2_windows.rdf"));
+      Application.file().copy(System.dir().path(m_strCCVrel, "plugin\\" + strPlatform + "\\npca2_windows.rdf"), System.dir().path(strDir, "npca2_windows.rdf"));
 
       return true;
    }
