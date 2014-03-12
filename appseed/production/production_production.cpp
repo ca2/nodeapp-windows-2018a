@@ -19,7 +19,7 @@ namespace production
       m_bBuild = true;
       m_bFinished = true;
       m_eversion = version_stage;
-      m_bReleased = true;
+      m_bReleased = false;
       m_iRelease = 0;
 
       {
@@ -120,13 +120,14 @@ namespace production
    {
       if (!m_bReleased)
          return;
-      if (m_iLoopCount > 0)
+      System.os().post_to_all_threads(WM_QUIT, 0, 0);
+      /*if (m_iLoopCount > 0)
       {
          if (m_iLoop > m_iLoopCount)
          {
             System.os().post_to_all_threads(WM_QUIT, 0, 0);
          }
-      }
+      }*/
 
    }
 
@@ -922,6 +923,9 @@ namespace production
          stringa straStatus;
          stringa straServer;
          
+         straStatus.add("330 releasing at netnode : west us");
+         straServer.add("west-api.ca2.cc");
+
          straStatus.add("010 releasing at netnode : east us");
          straServer.add("east-api.ca2.cc");
 
@@ -936,8 +940,8 @@ namespace production
 
          }
 
-         straStatus.add("050 releasing at netnode : sverige");
-         straServer.add("se-api.ca2.cc");
+         straStatus.add("050 releasing at netnode : europe (sverige named-seed-sitted)");
+         straServer.add("eu-api.ca2.cc");
 
          if (m_eversion != version_basis)
          {
@@ -954,11 +958,9 @@ namespace production
          straStatus.add("077 releasing at netnode : hong kong");
          straServer.add("hk-api.ca2.cc");
 
-         straStatus.add("084 releasing at netnode : asia");
+         straStatus.add("084 releasing at netnode : asia (japan named-seeded-sitted)");
          straServer.add("asia-api.ca2.cc");
 
-         straStatus.add("330 releasing at netnode : west us");
-         straServer.add("west-api.ca2.cc");
 
          string strObject = "/production/release_ca2?authnone=1&version=" + m_strVersion + "&build=" + m_strFormatBuild;
 
@@ -1005,138 +1007,8 @@ namespace production
 
          }
 
-         //Application.http().get("http://account.ca2.cc/update_plugins?authnone");
-
-
-
-
-/*         add_status("ca2.se - freigeben auf Deutschland, Hessen, Frankfurt, ServerLoft...");
-         prelease = new class release(this);
-         prelease->m_strRelease = "http://production.server4serves.ccvotagus.com/release_ca2_ccauth_spa?secure=0&authnone=1&format_build=" + m_strFormatBuild;
-         prelease->begin();
-
-         add_status(unitext("ca2.cl - lançando no Brasil, Rio Grande do Sul, Porto Alegre, RedeHost..."));
-         //add_status("ca2.cl - lancando no Brasil, Rio Grande do Sul, Porto Alegre, RedeHost...");
-         prelease = new class release(this);
-         prelease->m_strRelease = "http://production.server5serves.ccvotagus.com/release_ca2_ccauth_spa?secure=0&authnone=1&format_build=" + m_strFormatBuild;
-         prelease->begin();*/
-
-         /*
-         add_status("releasing in server1serves.ccvotagus.com - United States...");
-         {
-         CInternetSession session;
-         CFtpConnection ftpconn(
-         &session,
-         "server1serves.ccvotagus.com",
-         "ccvotagus",
-         "ccauth514Lund");
-         ftp_put_dir(ftpconn, "C:\\home\\ccvotagus", "ca2_spa/" + m_strVersionShiftFwd + "stage", 0);
-         ftp_put_dir(ftpconn, "C:\\home\\ccvotagus", "ca2_spa/" + m_strVersionShiftFwd + "app", 0);
-         }
-         */
-
-         /*
-         add_status("releasing in server2serves.ccvotagus.com - United States...");
-         {
-         CInternetSession session;
-         CFtpConnection ftpconn(
-         &session,
-         "server2serves.ccvotagus.com",
-         "ccvotagus",
-         "ccauth514Lund");
-         ftp_put_dir(ftpconn, "C:\\home\\ccvotagus", "ca2_spa/" + m_strVersionShiftFwd + "stage", 0);
-         ftp_put_dir(ftpconn, "C:\\home\\ccvotagus", "ca2_spa/" + m_strVersionShiftFwd + "app", 0);
-         }
-         */
-
-         /*
-         add_status("releasing in server3serves.ccvotagus.com - United States...");
-         {
-         CInternetSession session;
-         CFtpConnection ftpconn(
-         &session,
-         "server3serves.ccvotagus.com",
-         "ccvotagues",
-         "ccauth514Lund");
-         ftp_put_dir(ftpconn, "C:\\home\\ccvotagus", "ca2_spa/" + m_strVersionShiftFwd + "stage", 0);
-         ftp_put_dir(ftpconn, "C:\\home\\ccvotagus", "ca2_spa/" + m_strVersionShiftFwd + "app", 0);
-         }
-         */
-
-         /*System.http().ms_get("http://veriwell.us/release_ca2_ccauth_spa?authnone=1");
-         try
-         {
-         CFtpConnection ftpconn(
-         &session,
-         "veriwell.de",
-         "ccvotagus",
-         "ccauth514Lund");
-         add_status("send app to Germany...");
-         ftpconn.PutFile("C:\\home\\ccvotagus\\ca2_spa_app.fileset.gz", "ca2_spa_app.fileset.gz");
-         add_status("send stage to Germany...");
-         ftpconn.PutFile("C:\\home\\ccvotagus\\ca2_spa_stage.fileset.gz", "ca2_spa_stage.fileset.gz");
-
-
-         }
-         catch(...)
-         {
-         }
-         add_status("releasing in Germany...");
-         System.http().ms_get("http://veriwell.de/release_ca2_ccauth_spa?authnone=1");
-         try
-         {
-         CFtpConnection ftpconn(
-         &session,
-         "veriwell.co.uk",
-         "ccvotagus",
-         "ccauth514Lund");
-         add_status("send app to United Kingdom...");
-         ftpconn.PutFile("C:\\home\\ccvotagus\\ca2_spa_app.fileset.gz", "ca2_spa_app.fileset.gz");
-         add_status("send stage to United Kingdom...");
-         ftpconn.PutFile("C:\\home\\ccvotagus\\ca2_spa_stage.fileset.gz", "ca2_spa_stage.fileset.gz");
-
-
-         }
-         catch(...)
-         {
-         }
-         add_status("releasing in United Kingdom...");
-         System.http().ms_get("http://veriwell.co.uk/release_ca2_ccauth_spa?authnone=1");
-         try
-         {
-         CFtpConnection ftpconn(
-         &session,
-         "veriwell.jp",
-         "ccvotagus",
-         "ccauth514Lund");
-         add_status("send app to Japan...");
-         ftpconn.PutFile("C:\\home\\ccvotagus\\ca2_spa_app.fileset.gz", "ca2_spa_app.fileset.gz");
-         add_status("send stage to Japan...");
-         ftpconn.PutFile("C:\\home\\ccvotagus\\ca2_spa_stage.fileset.gz", "ca2_spa_stage.fileset.gz");
-         }
-         catch(...)
-         {
-         }
-         add_status("releasing in Japan...");
-         System.http().ms_get("http://xn--gckc2msch3hc.jp/release_ca2_ccauth_spa?authnone=1");
-         try
-         {
-         CFtpConnection ftpconn(
-         &session,
-         "veriwell.com.br",
-         "ccvotagus",
-         "ccauth514Lund");
-         add_status("send app to Brazil...");
-         ftpconn.PutFile("C:\\home\\ccvotagus\\ca2_spa_app.fileset.gz", "ca2_spa_app.fileset.gz");
-         add_status("send stage to Brazil...");
-         ftpconn.PutFile("C:\\home\\ccvotagus\\ca2_spa_stage.fileset.gz", "ca2_spa_stage.fileset.gz");
-         }
-         catch(...)
-         {
-         }
-         add_status("releasing in Brazil...");
-         System.http().ms_get("http://veriwell.com.br/release_ca2_ccauth_spa?authnone=1");*/
          m_bFinished = true;
+
          m_timeEnd = ::datetime::time::get_current_time();
          m_dwEndTick = ::GetTickCount();
          uint32_t dwMin = (m_dwEndTick - m_dwStartTick) / 1000 / 60;
@@ -1156,12 +1028,9 @@ namespace production
          add_status("");
          add_status("");
          add_status("");
+
          m_evFinish.SetEvent();
-         if (m_bLoop)
-         {
-            m_iStep = 1;
-            goto restart;
-         }
+
       }
 
       return 0;
