@@ -904,17 +904,57 @@ namespace production
 
 
 
-         add_status("dtf - fileset - file from directory app");
-         System.file().dtf(m_strCCVrelNew + "\\ca2_spa_app.fileset", m_strCCVrelNew + "\\app", get_app());
-         add_status("dtf - fileset - file from directory stage");
-         System.file().dtf(m_strCCVrelNew + "\\ca2_spa_stage.fileset", m_strCCVrelNew + "\\stage", get_app());
-         add_status("bz - bzip - compressing app");
-         System.compress().bz(get_app(), m_strCCVrelNew + "\\ca2_spa_app.fileset.bz", m_strCCVrelNew + "\\ca2_spa_app.fileset");
-         add_status("bz - bzip - compressing stage");
-         System.compress().bz(get_app(), m_strCCVrelNew + "\\ca2_spa_stage.fileset.bz", m_strCCVrelNew + "\\ca2_spa_stage.fileset");
+         add_status("");
+         add_status("");
+         add_status("");
+         add_status("");
+         add_status("");
+
+         
+         add_status("");
+
+         stringa straRoot;
+
+         straRoot = m_straRoot;
+
+         straRoot.add("stage");
+
+         add_status("***Preparing to release to mirrors in two phases with " + ::str::from(straRoot.get_count()) +  " steps each...");
+
+         add_status("1st phase : archiving files and directories into one archive...");
+
+         for (index i = 0; i < straRoot.get_count(); i++)
+         {
+
+            string strRoot = straRoot[i];
+
+            string strSpa = "ca2_spa_" + ::str::replace("-", "_", strRoot);
+
+            add_status(::str::from(i + 1) + ". dtf - fileset - file from directory " + strRoot);
+
+            System.file().dtf(m_strCCVrelNew + "\\" + strSpa + ".fileset", m_strCCVrelNew + "\\" + strRoot, get_app());
+
+         }
 
 
+         add_status("");
+         add_status("");
 
+         add_status("2st phase : compressing archives...");
+
+         for (index i = 0; i < straRoot.get_count(); i++)
+         {
+
+            string strRoot = straRoot[i];
+
+            string strSpa = "ca2_spa_" + ::str::replace("-", "_", strRoot);
+
+            add_status(::str::from(i + 1) + ". bz - bzip - compressing " + strRoot);
+
+            System.compress().bz(get_app(), m_strCCVrelNew + "\\" + strSpa + ".fileset.bz", m_strCCVrelNew + "\\" + strSpa + ".fileset");
+
+         }
+         
 
          m_bEndProduction = true;
 
@@ -932,25 +972,14 @@ namespace production
          straStatus.add("023 releasing at netnode : américa latina");
          straServer.add("la-api.ca2.cc");
 
-         if (m_eversion != version_stage)
-         {
-
-            straStatus.add("049 releasing at netnode : france");
-            straServer.add("fr-api.ca2.cc");
-
-         }
+         straStatus.add("049 releasing at netnode : france");
+         straServer.add("fr-api.ca2.cc");
 
          straStatus.add("050 releasing at netnode : europe (sverige named-seed-sitted)");
          straServer.add("eu-api.ca2.cc");
 
-         if (m_eversion != version_basis)
-         {
-
-            straStatus.add("051 releasing at netnode : deutsch");
-            straServer.add("de-api.ca2.cc");
-
-         }
-
+         straStatus.add("051 releasing at netnode : deutsch");
+         straServer.add("de-api.ca2.cc");
 
          straStatus.add("070 releasing at netnode : india");
          straServer.add("in-api.ca2.cc");
@@ -990,6 +1019,8 @@ namespace production
                Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
             }
+
+            Sleep(1984);
 
          }
 
