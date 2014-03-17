@@ -6299,7 +6299,19 @@ lCallNextHook:
 
       rectWindow = m_rectParentClient;
 
-      m_spdib->Fill(0, 0, 0, 0);
+      if (GetExStyle() & WS_EX_LAYERED)
+      {
+
+         m_spdib->Fill(0, 0, 0, 0);
+
+      }
+      else
+      {
+
+         m_spdib->Fill(255, 255, 255, 255);
+
+      }
+         
 
       m_spdib->get_graphics()->SetViewportOrg(0, 0);
 

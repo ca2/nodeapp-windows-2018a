@@ -80,7 +80,7 @@ namespace draw2d_gdiplus
 
    bool printer::document_properties::close()
    {
-      throw todo(get_app());
+      //throw todo(get_app());
       if (m_hdc != NULL)
       {
          ::DeleteDC(m_hdc);
