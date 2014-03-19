@@ -38,7 +38,7 @@ namespace core
 struct ___THREAD_STARTUP : ::core::thread_startup
 {
    // following are "in" parameters to thread startup
-   ___THREAD_STATE* pThreadState;    // thread state of parent thread
+//   ___THREAD_STATE* pThreadState;    // thread state of parent thread
    ::win::thread * pThread;    // thread for new thread
    DWORD dwCreateFlags;    // thread creation flags
    _PNH pfnNewHandler;     // new handler for new thread
@@ -59,7 +59,7 @@ uint32_t __thread_entry(void * pParam)
 
       ___THREAD_STARTUP* pStartup = (___THREAD_STARTUP*)pParam;
       ASSERT(pStartup != NULL);
-      ASSERT(pStartup->pThreadState != NULL);
+//      ASSERT(pStartup->pThreadState != NULL);
       ASSERT(pStartup->pThread != NULL);
       //ASSERT(pStartup->hEvent != NULL);
       ASSERT(!pStartup->bError);
@@ -76,13 +76,13 @@ uint32_t __thread_entry(void * pParam)
       try
       {
          // inherit parent's module state
-         ___THREAD_STATE* pThreadState = __get_thread_state();
-         pThreadState->m_pModuleState = pStartup->pThreadState->m_pModuleState;
+         //___THREAD_STATE* pThreadState = __get_thread_state();
+         //pThreadState->m_pModuleState = pStartup->pThreadState->m_pModuleState;
 
-         // set current thread pointer for System.GetThread
-         __MODULE_STATE* pModuleState = __get_module_state();
-         __MODULE_THREAD_STATE* pState = pModuleState->m_thread;
-         pState->m_pCurrentWinThread = pThread;
+         //// set current thread pointer for System.GetThread
+         //__MODULE_STATE* pModuleState = __get_module_state();
+         //__MODULE_THREAD_STATE* pState = pModuleState->m_thread;
+         //pState->m_pCurrentWinThread = pThread;
 
          // forced initialization of the thread
          __init_thread();
@@ -156,11 +156,11 @@ uint32_t __thread_entry(void * pParam)
       return -1;
    }
    
-   if(__get_thread_state()  != NULL)
-   {
-      __get_thread_state()->finalize();
-      gen_ThreadState = NULL;
-   }
+   //if(__get_thread_state()  != NULL)
+   //{
+   //   __get_thread_state()->finalize();
+   //   gen_ThreadState = NULL;
+   //}
 
 
    return uiRet;
@@ -169,30 +169,29 @@ uint32_t __thread_entry(void * pParam)
 
 #endif //_MT
 
+__declspec(thread) ::win::thread * t_pCurrentWinThread = NULL;
+
 CLASS_DECL_win ::win::thread * __get_thread()
 {
-   // check for current thread in module thread state
-   __MODULE_THREAD_STATE* pState = __get_module_thread_state();
-   ::win::thread* pThread = pState->m_pCurrentWinThread;
-   return pThread;
+
+   return t_pCurrentWinThread;
+
 }
 
 
 CLASS_DECL_win void __set_thread(thread * pthread)
 {
-   // check for current thread in module thread state
-   __MODULE_THREAD_STATE* pState = __get_module_thread_state();
-   pState->m_pCurrentWinThread = dynamic_cast < ::win::thread * > (pthread->thread::m_p.m_p);
+   
+   t_pCurrentWinThread = dynamic_cast <::win::thread *> (pthread->thread::m_p.m_p);
+
 }
 
 
 
-CLASS_DECL_win MSG * __get_current_message()
-{
-   ___THREAD_STATE* pState = __get_thread_state();
-   ASSERT(pState);
-   return &(pState->m_msgCur);
-}
+//CLASS_DECL_win MSG * __get_current_message()
+//{
+//   return &(t_pCurrentWinThread->m_message);
+//}
 
 
 
@@ -334,14 +333,14 @@ bool __internal_is_idle_message(signal_details * pobj)
    if (pbase->m_uiMessage == WM_MOUSEMOVE || pbase->m_uiMessage == WM_NCMOUSEMOVE)
    {
       // mouse move at same position as last mouse move?
-      ___THREAD_STATE *pState = __get_thread_state();
-      point ptCursor;
-      App(pobj->get_app()).get_cursor_pos(&ptCursor);
-      if (pState->m_ptCursorLast == ptCursor && pbase->m_uiMessage == pState->m_nMsgLast)
-         return FALSE;
+      //___THREAD_STATE *pState = __get_thread_state();
+      //point ptCursor;
+      //App(pobj->get_app()).get_cursor_pos(&ptCursor);
+      //if (pState->m_ptCursorLast == ptCursor && pbase->m_uiMessage == pState->m_nMsgLast)
+      //   return FALSE;
 
-      pState->m_ptCursorLast = ptCursor;  // remember for next time
-      pState->m_nMsgLast = pbase->m_uiMessage;
+      //pState->m_ptCursorLast = ptCursor;  // remember for next time
+      //pState->m_nMsgLast = pbase->m_uiMessage;
       return TRUE;
    }
 
@@ -365,12 +364,12 @@ bool __internal_is_idle_message(LPMSG lpmsg)
    if (lpmsg->message == WM_MOUSEMOVE || lpmsg->message == WM_NCMOUSEMOVE)
    {
       // mouse move at same position as last mouse move?
-      ___THREAD_STATE *pState = __get_thread_state();
-      if (pState->m_ptCursorLast == lpmsg->pt && lpmsg->message == pState->m_nMsgLast)
-         return FALSE;
+      //___THREAD_STATE *pState = __get_thread_state();
+      //if (pState->m_ptCursorLast == lpmsg->pt && lpmsg->message == pState->m_nMsgLast)
+      //   return FALSE;
 
-      pState->m_ptCursorLast = lpmsg->pt;  // remember for next time
-      pState->m_nMsgLast = lpmsg->message;
+      //pState->m_ptCursorLast = lpmsg->pt;  // remember for next time
+      //pState->m_nMsgLast = lpmsg->message;
       return TRUE;
    }
 
@@ -421,8 +420,8 @@ return pThread;
 void CLASS_DECL_win __end_thread(sp(base_application) papp, UINT nExitCode, bool bDelete)
 {
    // remove current thread object from primitive::memory
-   __MODULE_THREAD_STATE* pState = __get_module_thread_state();
-   ::win::thread* pThread = pState->m_pCurrentWinThread;
+   //__MODULE_THREAD_STATE* pState = __get_module_thread_state();
+   ::win::thread* pThread = t_pCurrentWinThread;
    if (pThread != NULL)
    {
 
@@ -437,7 +436,7 @@ void CLASS_DECL_win __end_thread(sp(base_application) papp, UINT nExitCode, bool
 
       if (bDelete)
          pThread->Delete();
-      pState->m_pCurrentWinThread = NULL;
+      t_pCurrentWinThread = NULL;
    }
 
    // allow cleanup of any thread local objects
@@ -481,15 +480,16 @@ void CLASS_DECL_win __term_thread(sp(base_application) papp, HINSTANCE hInstTerm
 
 LRESULT CALLBACK __message_filter_hook(int32_t code, WPARAM wParam, LPARAM lParam);
 
+__declspec(thread) HHOOK t_hHookOldMsgFilter = NULL;
+
 void CLASS_DECL_win __init_thread()
 {
-   if (!afxContextIsDLL)
+//   if (!afxContextIsDLL)
    {
       // set message filter proc
-      ___THREAD_STATE* pThreadState = __get_thread_state();
-      ASSERT(pThreadState->m_hHookOldMsgFilter == NULL);
-      pThreadState->m_hHookOldMsgFilter = ::SetWindowsHookEx(WH_MSGFILTER,
-         __message_filter_hook, NULL, ::GetCurrentThreadId());
+      //___THREAD_STATE* pThreadState = __get_thread_state();
+      ASSERT(t_hHookOldMsgFilter == NULL);
+      t_hHookOldMsgFilter = ::SetWindowsHookEx(WH_MSGFILTER, __message_filter_hook, NULL, ::GetCurrentThreadId());
    }
 }
 
@@ -561,11 +561,11 @@ namespace win
       m_hThread = NULL;
       m_nThreadID = 0;
 
-      ___THREAD_STATE* pState = __get_thread_state();
+//      ___THREAD_STATE* pState = __get_thread_state();
       // initialize message pump
       m_nDisablePumpCount = 0;
-      pState->m_nMsgLast = WM_NULL;
-      System.get_cursor_pos(&(pState->m_ptCursorLast));
+      //pState->m_nMsgLast = WM_NULL;
+  //    System.get_cursor_pos(&(pState->m_ptCursorLast));
 
       // most threads are deleted when not needed
       m_bAutoDelete  = TRUE;
@@ -628,7 +628,7 @@ namespace win
 
       }
       */
-      __MODULE_THREAD_STATE* pState = __get_module_thread_state();
+//      __MODULE_THREAD_STATE* pState = __get_module_thread_state();
       /*      // clean up temp objects
       pState->m_pmapHGDIOBJ->delete_temp();
       pState->m_pmapHDC->delete_temp();
@@ -639,8 +639,8 @@ namespace win
         // CloseHandle(m_hThread);
 
       // cleanup module state
-      if (pState->m_pCurrentWinThread == this)
-         pState->m_pCurrentWinThread = NULL;
+      if (t_pCurrentWinThread == this)
+         t_pCurrentWinThread = NULL;
 
       window::DeleteTempMap();
       //      graphics::DeleteTempMap();
@@ -906,7 +906,7 @@ namespace win
       startup.bError = FALSE;
       startup.pfnNewHandler = NULL;
       //memset(&startup, 0, sizeof(startup));
-      startup.pThreadState = __get_thread_state();
+//      startup.pThreadState = __get_thread_state();
       startup.pThread = this;
       startup.m_pthread = NULL;
       startup.hEvent = ::CreateEvent(NULL, TRUE, FALSE, NULL);
@@ -1221,8 +1221,8 @@ stop_run:
 
 
 
-      int32_t nResult = (int32_t)__get_current_message()->wParam;  // returns the value from PostQuitMessage
-      return nResult;
+      //int32_t nResult = (int32_t)__get_current_message()->wParam;  // returns the value from PostQuitMessage
+      return m_iReturnCode;
    }
 
    bool thread::on_idle(LONG lCount)
@@ -1469,7 +1469,7 @@ stop_run:
             if (pTopFrameWnd != NULL && pTopFrameWnd->IsTracking() &&
                pTopFrameWnd->m_bHelpMode)
             {
-               pMainWnd = __get_main_window();
+               //pMainWnd = __get_main_window();
                if ((GetMainWnd() != NULL) && (IsEnterKey(pbase) || IsButtonUp(pbase)))
                {
                   //                  pMainWnd->SendMessage(WM_COMMAND, ID_HELP);
@@ -1481,27 +1481,27 @@ stop_run:
          // fall through...
 
       case MSGF_DIALOGBOX:    // handles message boxes as well.
-         pMainWnd = __get_main_window();
+         //pMainWnd = __get_main_window();
          if (code == MSGF_DIALOGBOX && m_puiActive != NULL &&
             pbase->m_uiMessage >= WM_KEYFIRST && pbase->m_uiMessage <= WM_KEYLAST)
          {
-            // need to translate messages for the in-place container
-            ___THREAD_STATE* pThreadState = __get_thread_state();
-            ENSURE(pThreadState);
+            //// need to translate messages for the in-place container
+            //___THREAD_STATE* pThreadState = __get_thread_state();
+            //ENSURE(pThreadState);
 
-            if (pThreadState->m_bInMsgFilter)
-               return;
-            pThreadState->m_bInMsgFilter = TRUE;    // avoid reentering this code
-            if (m_puiActive->IsWindowEnabled())
-            {
-               pre_translate_message(pobj);
-               if(pobj->m_bRet)
-               {
-                  pThreadState->m_bInMsgFilter = FALSE;
-                  return;
-               }
-            }
-            pThreadState->m_bInMsgFilter = FALSE;    // ok again
+            //if (pThreadState->m_bInMsgFilter)
+            //   return;
+            //pThreadState->m_bInMsgFilter = TRUE;    // avoid reentering this code
+            //if (m_puiActive->IsWindowEnabled())
+            //{
+            //   pre_translate_message(pobj);
+            //   if(pobj->m_bRet)
+            //   {
+            //      pThreadState->m_bInMsgFilter = FALSE;
+            //      return;
+            //   }
+            //}
+            //pThreadState->m_bInMsgFilter = FALSE;    // ok again
          }
          break;
       }
@@ -1539,6 +1539,8 @@ stop_run:
             // will never be decremented
             return FALSE;
          }
+         //m_message = msg;
+         //m_p->m_message = msg;
 
          if(m_nDisablePumpCount != 0)
          {
@@ -1700,7 +1702,7 @@ stop_run:
    void thread::dump(dump_context & dumpcontext) const
    {
       command_target::dump(dumpcontext);
-      ___THREAD_STATE *pState = __get_thread_state();
+//      ___THREAD_STATE *pState = __get_thread_state();
 
       dumpcontext << "m_pThreadParams = " << m_pThreadParams;
       dumpcontext << "\nm_pfnThreadProc = " << (void *)m_pfnThreadProc;
@@ -1708,24 +1710,24 @@ stop_run:
       dumpcontext << "\nm_hThread = " << (void *)m_hThread;
       dumpcontext << "\nm_nThreadID = " << m_nThreadID;
 #ifdef DEBUG
-      dumpcontext << "\nm_nDisablePumpCount = " << pState->m_nDisablePumpCount;
+  //    dumpcontext << "\nm_nDisablePumpCount = " << pState->m_nDisablePumpCount;
 #endif
       if (__get_thread() == this)
          dumpcontext << "\nm_pMainWnd = " << m_puiMain.m_p;
 
       dumpcontext << "\nm_msgCur = {";
-      dumpcontext << "\n\toswindow = " << (void *)pState->m_msgCur.hwnd;
+/*      dumpcontext << "\n\toswindow = " << (void *)pState->m_msgCur.hwnd;
       dumpcontext << "\n\tmessage = " << (UINT)pState->m_msgCur.message;
       dumpcontext << "\n\twParam = " << (UINT)pState->m_msgCur.wParam;
       dumpcontext << "\n\tlParam = " << (void *)pState->m_msgCur.lParam;
       dumpcontext << "\n\ttime = " << (uint_ptr) pState->m_msgCur.time;
-      dumpcontext << "\n\tpt = " << point(pState->m_msgCur.pt);
+      dumpcontext << "\n\tpt = " << point(pState->m_msgCur.pt);*/
       dumpcontext << "\n}";
 
       dumpcontext << "\nm_pThreadParams = " << m_pThreadParams;
       dumpcontext << "\nm_pfnThreadProc = " << (void *)m_pfnThreadProc;
-      dumpcontext << "\nm_ptCursorLast = " << pState->m_ptCursorLast;
-      dumpcontext << "\nm_nMsgLast = " << pState->m_nMsgLast;
+      //dumpcontext << "\nm_ptCursorLast = " << pState->m_ptCursorLast;
+      //dumpcontext << "\nm_nMsgLast = " << pState->m_nMsgLast;
 
       dumpcontext << "\n";
    }
@@ -1772,12 +1774,12 @@ stop_run:
          return;
       }
 
-      ___THREAD_STATE* pThreadState = __get_thread_state();
-      MSG oldState = pThreadState->m_lastSentMsg;   // save for nesting
-      pThreadState->m_lastSentMsg.hwnd       = pbase->m_pwnd->get_safe_handle();
-      pThreadState->m_lastSentMsg.message    = pbase->m_uiMessage;
-      pThreadState->m_lastSentMsg.wParam     = pbase->m_wparam;
-      pThreadState->m_lastSentMsg.lParam     = pbase->m_lparam;
+      //___THREAD_STATE* pThreadState = __get_thread_state();
+      //MSG oldState = pThreadState->m_lastSentMsg;   // save for nesting
+      //pThreadState->m_lastSentMsg.hwnd       = pbase->m_pwnd->get_safe_handle();
+      //pThreadState->m_lastSentMsg.message    = pbase->m_uiMessage;
+      //pThreadState->m_lastSentMsg.wParam     = pbase->m_wparam;
+      //pThreadState->m_lastSentMsg.lParam     = pbase->m_lparam;
 
       __trace_message("message_handler", pobj);
 
@@ -1822,8 +1824,8 @@ stop_run:
          TRACE(::core::trace::category_AppMsg, 0, "Warning: Uncaught exception in message_handler (returning %ld).\n", pbase->get_lresult());
          pe->Delete();
       }
-run:
-      pThreadState->m_lastSentMsg = oldState;
+   run:;
+//      pThreadState->m_lastSentMsg = oldState;
    }
 
 
@@ -1928,10 +1930,10 @@ run:
       return pwinthread->m_p;
    }
 
-   CLASS_DECL_win ::thread_state * get_thread_state()
-   {
-      return __get_thread_state();
-   }
+   //CLASS_DECL_win ::thread_state * get_thread_state()
+   //{
+   //   return __get_thread_state();
+   //}
 
    void thread::LockTempMaps()
    {
@@ -1951,52 +1953,52 @@ run:
 
 
 
-#ifndef ___PORTABLE
-         sp(base_application) papp = (get_app());
-         ___THREAD_STATE* pThreadState = __get_thread_state();
-         if( pThreadState != NULL )
-         {
-            // restore safety pool after temp objects destroyed
-            if(papp != NULL &&
-               (pThreadState->m_pSafetyPoolBuffer == NULL ||
-               _msize(pThreadState->m_pSafetyPoolBuffer) < papp->m_nSafetyPoolSize) &&
-               papp->m_nSafetyPoolSize != 0)
-            {
-               // attempt to restore the safety pool to its max size
-               size_t nOldSize = 0;
-               if (pThreadState->m_pSafetyPoolBuffer != NULL)
-               {
-                  nOldSize = _msize(pThreadState->m_pSafetyPoolBuffer);
-                  free(pThreadState->m_pSafetyPoolBuffer);
-               }
-
-               // undo handler trap for the following allocation
-               //bool bEnable = __enable_memory_tracking(FALSE);
-               try
-               {
-                  pThreadState->m_pSafetyPoolBuffer = malloc(papp->m_nSafetyPoolSize);
-                  if (pThreadState->m_pSafetyPoolBuffer == NULL)
-                  {
-                     //                  TRACE(::core::trace::category_AppMsg, 0, "Warning: failed to reclaim %d bytes for primitive::memory safety pool.\n",
-                     //                   pApp->m_nSafetyPoolSize);
-                     // at least get the old buffer back
-                     if (nOldSize != 0)
-                     {
-                        //get it back
-                        pThreadState->m_pSafetyPoolBuffer = malloc(nOldSize);
-                        ASSERT(pThreadState->m_pSafetyPoolBuffer != NULL);
-                     }
-                  }
-               }
-               catch( ::exception::base * )
-               {
-                  //__enable_memory_tracking(bEnable);
-                  throw;
-               }
-               //__enable_memory_tracking(bEnable);
-            }
-         }
-#endif  // !___PORTABLE
+//#ifndef ___PORTABLE
+//         sp(base_application) papp = (get_app());
+//         ___THREAD_STATE* pThreadState = __get_thread_state();
+//         if( pThreadState != NULL )
+//         {
+//            // restore safety pool after temp objects destroyed
+//            if(papp != NULL &&
+//               (pThreadState->m_pSafetyPoolBuffer == NULL ||
+//               _msize(pThreadState->m_pSafetyPoolBuffer) < papp->m_nSafetyPoolSize) &&
+//               papp->m_nSafetyPoolSize != 0)
+//            {
+//               // attempt to restore the safety pool to its max size
+//               size_t nOldSize = 0;
+//               if (pThreadState->m_pSafetyPoolBuffer != NULL)
+//               {
+//                  nOldSize = _msize(pThreadState->m_pSafetyPoolBuffer);
+//                  free(pThreadState->m_pSafetyPoolBuffer);
+//               }
+//
+//               // undo handler trap for the following allocation
+//               //bool bEnable = __enable_memory_tracking(FALSE);
+//               try
+//               {
+//                  pThreadState->m_pSafetyPoolBuffer = malloc(papp->m_nSafetyPoolSize);
+//                  if (pThreadState->m_pSafetyPoolBuffer == NULL)
+//                  {
+//                     //                  TRACE(::core::trace::category_AppMsg, 0, "Warning: failed to reclaim %d bytes for primitive::memory safety pool.\n",
+//                     //                   pApp->m_nSafetyPoolSize);
+//                     // at least get the old buffer back
+//                     if (nOldSize != 0)
+//                     {
+//                        //get it back
+//                        pThreadState->m_pSafetyPoolBuffer = malloc(nOldSize);
+//                        ASSERT(pThreadState->m_pSafetyPoolBuffer != NULL);
+//                     }
+//                  }
+//               }
+//               catch( ::exception::base * )
+//               {
+//                  //__enable_memory_tracking(bEnable);
+//                  throw;
+//               }
+//               //__enable_memory_tracking(bEnable);
+//            }
+//         }
+//#endif  // !___PORTABLE
       }
       // return TRUE if temp maps still locked
       return m_nTempMapLock != 0;
@@ -2007,7 +2009,7 @@ run:
 
       ___THREAD_STARTUP* pStartup = (___THREAD_STARTUP*)pstartup;
       ASSERT(pStartup != NULL);
-      ASSERT(pStartup->pThreadState != NULL);
+//      ASSERT(pStartup->pThreadState != NULL);
       ASSERT(pStartup->pThread != NULL);
       ASSERT(!pStartup->bError);
 
@@ -2764,9 +2766,10 @@ return __internal_process_wnd_proc_exception( e, pMsg );
 LRESULT CALLBACK __message_filter_hook(int32_t code, WPARAM wParam, LPARAM lParam)
 {
    thread* pthread;
-   if (afxContextIsDLL || (code < 0 && code != MSGF_DDEMGR) || (pthread = dynamic_cast < thread * > (::win::get_thread())) == NULL)
+//   if (afxContextIsDLL || (code < 0 && code != MSGF_DDEMGR) || (pthread = dynamic_cast < thread * > (::win::get_thread())) == NULL)
+   if ((code < 0 && code != MSGF_DDEMGR) || (pthread = dynamic_cast < thread * > (::win::get_thread())) == NULL)
    {
-      return ::CallNextHookEx(gen_ThreadState->m_hHookOldMsgFilter, code, wParam, lParam);
+      return ::CallNextHookEx(t_hHookOldMsgFilter, code, wParam, lParam);
    }
    ASSERT(pthread != NULL);
    smart_pointer < message::base > spbase;

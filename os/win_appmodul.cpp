@@ -13,15 +13,15 @@ extern int32_t CLASS_DECL_win __win_main(HINSTANCE hInstance, HINSTANCE hPrevIns
 
 CLASS_DECL_win bool __initialize(bool bDLL, DWORD dwVersion)
 {
-   __MODULE_STATE* pModuleState = __get_module_state();
-   pModuleState->m_bDLL = (BYTE)bDLL;
+//   __MODULE_STATE* pModuleState = __get_module_state();
+//   pModuleState->m_bDLL = (BYTE)bDLL;
    ASSERT(dwVersion <= _MFC_VER);
    UNUSED(dwVersion);  // not used in release build
-   pModuleState->m_dwVersion = dwVersion;
+//   pModuleState->m_dwVersion = dwVersion;
 #ifdef _MBCS
    // set correct multi-byte code-page for Win32 apps
-   if (!bDLL)
-      _setmbcp(_MB_CP_ANSI);
+//   if (!bDLL)
+  //    _setmbcp(_MB_CP_ANSI);
 #endif //_MBCS
    return TRUE;
 }

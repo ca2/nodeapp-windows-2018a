@@ -153,38 +153,38 @@ void CLASS_DECL_win __global_free(HGLOBAL hGlobal)
 
 #define MIN_MALLOC_OVERHEAD 4   // LocalAlloc or other overhead
 
-int32_t c_cdecl __critical_new_handler(size_t nSize)
-   // nSize is already rounded
-{
-   // called during critical primitive::memory allocation
-   //  free up part of the cast's safety cache
-//   TRACE(::core::trace::category_Memory, 0, "Warning: Critical primitive::memory allocation failed!\n");
-   ___THREAD_STATE* pThreadState = __get_thread_state();
-   if (pThreadState != NULL && pThreadState->m_pSafetyPoolBuffer != NULL)
-   {
-      size_t nOldBufferSize = _msize(pThreadState->m_pSafetyPoolBuffer);
-      if (nOldBufferSize <= nSize + MIN_MALLOC_OVERHEAD)
-      {
-         // give it all up
-  ///       TRACE(::core::trace::category_Memory, 0, "Warning: Freeing application's primitive::memory safety pool!\n");
-         free(pThreadState->m_pSafetyPoolBuffer);
-         pThreadState->m_pSafetyPoolBuffer = NULL;
-      }
-      else
-      {
-         //bool bEnable = __enable_memory_tracking(FALSE);
-         _expand(pThreadState->m_pSafetyPoolBuffer,
-            nOldBufferSize - (nSize + MIN_MALLOC_OVERHEAD));
-         //__enable_memory_tracking(bEnable);
-//         TRACE(::core::trace::category_Memory, 0, "Warning: Shrinking safety pool from %d to %d to satisfy request of %d bytes.\n",
-  //           nOldBufferSize, _msize(pThreadState->m_pSafetyPoolBuffer), nSize);
-      }
-      return 1;       // retry it
-   }
-
-//   TRACE(::core::trace::category_Memory, 0, "ERROR: Critical primitive::memory allocation from safety pool failed!\n");
-   throw memory_exception(get_thread_app());      // oops
-}
+//int32_t c_cdecl __critical_new_handler(size_t nSize)
+//   // nSize is already rounded
+//{
+//   // called during critical primitive::memory allocation
+//   //  free up part of the cast's safety cache
+////   TRACE(::core::trace::category_Memory, 0, "Warning: Critical primitive::memory allocation failed!\n");
+////   ___THREAD_STATE* pThreadState = __get_thread_state();
+////   if (pThreadState != NULL && pThreadState->m_pSafetyPoolBuffer != NULL)
+////   {
+////      size_t nOldBufferSize = _msize(pThreadState->m_pSafetyPoolBuffer);
+////      if (nOldBufferSize <= nSize + MIN_MALLOC_OVERHEAD)
+////      {
+////         // give it all up
+////  ///       TRACE(::core::trace::category_Memory, 0, "Warning: Freeing application's primitive::memory safety pool!\n");
+////         free(pThreadState->m_pSafetyPoolBuffer);
+////         pThreadState->m_pSafetyPoolBuffer = NULL;
+////      }
+////      else
+////      {
+////         //bool bEnable = __enable_memory_tracking(FALSE);
+////         _expand(pThreadState->m_pSafetyPoolBuffer,
+////            nOldBufferSize - (nSize + MIN_MALLOC_OVERHEAD));
+////         //__enable_memory_tracking(bEnable);
+//////         TRACE(::core::trace::category_Memory, 0, "Warning: Shrinking safety pool from %d to %d to satisfy request of %d bytes.\n",
+////  //           nOldBufferSize, _msize(pThreadState->m_pSafetyPoolBuffer), nSize);
+////      }
+////      return 1;       // retry it
+////   }
+////
+//////   TRACE(::core::trace::category_Memory, 0, "ERROR: Critical primitive::memory allocation from safety pool failed!\n");
+////   throw memory_exception(get_thread_app());      // oops
+//}
 #endif // !___PORTABLE
 
 /////////////////////////////////////////////////////////////////////////////

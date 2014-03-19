@@ -40,7 +40,8 @@ LRESULT CALLBACK __window_procedure(oswindow oswindow, UINT nMsg, WPARAM wParam,
 // always indirectly accessed via __get_window_procedure
 WNDPROC CLASS_DECL_win __get_window_procedure()
 {
-   return __get_module_state()->m_pfn_window_procedure;
+   //return __get_module_state()->m_pfn_window_procedure;
+   return &::__window_procedure;
 }
 /////////////////////////////////////////////////////////////////////////////
 // Special helpers for certain windows messages
@@ -84,53 +85,52 @@ __STATIC void CLASS_DECL_win __post_init_dialog(
    //WIN_WINDOW(pWnd)->CenterWindow();
 }
 
-
+__declspec(thread) ::user::interaction * t_pwndInit = NULL;
+__declspec(thread) HHOOK t_hHookOldCbtFilter = NULL;
 
 CLASS_DECL_win void hook_window_create(sp(::win::window) pwindow)
 {
 
-   ___THREAD_STATE* pThreadState = __get_thread_state();
-
-   if (pThreadState->m_pWndInit == pwindow)
+   if (t_pwndInit == pwindow)
       return;
 
-   if (pThreadState->m_hHookOldCbtFilter == NULL)
+   if (t_hHookOldCbtFilter == NULL)
    {
-      pThreadState->m_hHookOldCbtFilter = ::SetWindowsHookEx(WH_CBT, win::__cbt_filter_hook, NULL, ::GetCurrentThreadId());
-      if (pThreadState->m_hHookOldCbtFilter == NULL)
+      t_hHookOldCbtFilter = ::SetWindowsHookEx(WH_CBT, win::__cbt_filter_hook, NULL, ::GetCurrentThreadId());
+      if (t_hHookOldCbtFilter == NULL)
          throw memory_exception(pwindow->get_app());
    }
 
-   ASSERT(pThreadState->m_hHookOldCbtFilter != NULL);
+   ASSERT(t_hHookOldCbtFilter != NULL);
    
    ASSERT(pwindow != NULL);
    
    ASSERT(WIN_WINDOW(pwindow)->get_handle() == NULL);   // only do once
 
-   ASSERT(pThreadState->m_pWndInit == NULL);   // hook not already in progress
+   ASSERT(t_pwndInit == NULL);   // hook not already in progress
 
-   pThreadState->m_pWndInit = pwindow;
+   t_pwndInit = pwindow;
 
 }
 
 CLASS_DECL_win bool unhook_window_create()
 {
-   ___THREAD_STATE* pThreadState = __get_thread_state();
-   if (pThreadState->m_pWndInit != NULL)
+   //___THREAD_STATE* pThreadState = __get_thread_state();
+   if (t_pwndInit != NULL)
    {
-      pThreadState->m_pWndInit = NULL;
+      t_pwndInit = NULL;
       return FALSE;   // was not successfully hooked
    }
    return TRUE;
 }
 
-
+__declspec(thread) char t_szTempClassName[___TEMP_CLASS_NAME_SIZE] = {0};
 
 CLASS_DECL_win const char * __register_window_class(sp(base_application) papp, UINT nClassStyle, HCURSOR hCursor, HBRUSH hbrBackground, HICON hIcon)
 {
    // Returns a temporary string name for the class
    //  Save in a string if you want to use it for a long time
-   LPTSTR lpszName = __get_thread_state()->m_szTempClassName;
+   LPTSTR lpszName = t_szTempClassName;
 
    // generate a synthetic name for this class
 
@@ -471,26 +471,26 @@ bool CLASS_DECL_win __register_class(WNDCLASS* lpWndClass)
 
    bool bRet = TRUE;
 
-   if (afxContextIsDLL)
-   {
+   //if (afxContextIsDLL)
+   //{
 
-      try
-      {
-         // class registered successfully, add to registered list
-         __MODULE_STATE* pModuleState = __get_module_state();
-         single_lock sl(&pModuleState->m_mutexRegClassList, TRUE);
-         if(pModuleState->m_pstrUnregisterList == NULL)
-            pModuleState->m_pstrUnregisterList = new string;
-         *pModuleState->m_pstrUnregisterList += lpWndClass->lpszClassName;
-         *pModuleState->m_pstrUnregisterList +='\n';
-      }
-      catch(::exception::base * pe)
-      {
-         ::exception::rethrow(pe);
-         // Note: DELETE_EXCEPTION not required.
-      }
+      //try
+      //{
+      //   // class registered successfully, add to registered list
+      //   __MODULE_STATE* pModuleState = __get_module_state();
+      //   single_lock sl(&pModuleState->m_mutexRegClassList, TRUE);
+      //   if(pModuleState->m_pstrUnregisterList == NULL)
+      //      pModuleState->m_pstrUnregisterList = new string;
+      //   *pModuleState->m_pstrUnregisterList += lpWndClass->lpszClassName;
+      //   *pModuleState->m_pstrUnregisterList +='\n';
+      //}
+      //catch(::exception::base * pe)
+      //{
+      //   ::exception::rethrow(pe);
+      //   // Note: DELETE_EXCEPTION not required.
+      //}
 
-   }
+   //}
 
    return bRet;
 }

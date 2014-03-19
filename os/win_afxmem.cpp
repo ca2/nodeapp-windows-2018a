@@ -2,14 +2,14 @@
 
 
 
-
-_PNH CLASS_DECL_win __set_new_handler(_PNH pfnNewHandler)
-{
-   __MODULE_THREAD_STATE* pState = __get_module_thread_state();
-   _PNH pfnOldHandler = pState->m_pfnNewHandler;
-   pState->m_pfnNewHandler = pfnNewHandler;
-   return pfnOldHandler;
-}
+//
+//_PNH CLASS_DECL_win __set_new_handler(_PNH pfnNewHandler)
+//{
+//   __MODULE_THREAD_STATE* pState = __get_module_thread_state();
+//   _PNH pfnOldHandler = pState->m_pfnNewHandler;
+//   pState->m_pfnNewHandler = pfnNewHandler;
+//   return pfnOldHandler;
+//}
 
 
 

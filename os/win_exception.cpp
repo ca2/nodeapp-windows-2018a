@@ -3,60 +3,60 @@
 /////////////////////////////////////////////////////////////////////////////
 // __EXCEPTION_CONTEXT (thread global state)
 
-inline __EXCEPTION_CONTEXT* __get_exception_context()
-{
-   DWORD lError = GetLastError();
-   __EXCEPTION_CONTEXT* pContext = &gen_ThreadState->m_exceptionContext;
-   SetLastError(lError);
-   return pContext;
-}
+//inline __EXCEPTION_CONTEXT* __get_exception_context()
+//{
+//   DWORD lError = GetLastError();
+//   __EXCEPTION_CONTEXT* pContext = &gen_ThreadState->m_exceptionContext;
+//   SetLastError(lError);
+//   return pContext;
+//}
 
 /////////////////////////////////////////////////////////////////////////////
 // __exception_link linked 'jmpbuf' and out-of-line helpers
 
-__exception_link::__exception_link()
-{
-   // setup initial link state
-   m_pException = NULL;    // no current exception yet
-
-   // wire into top of exception link stack
-   __EXCEPTION_CONTEXT* pContext = __get_exception_context();
-   m_pLinkPrev = pContext->m_pLinkTop;
-   pContext->m_pLinkTop = this;
-}
+//__exception_link::__exception_link()
+//{
+//   // setup initial link state
+//   m_pException = NULL;    // no current exception yet
+//
+//   // wire into top of exception link stack
+//   __EXCEPTION_CONTEXT* pContext = __get_exception_context();
+//   m_pLinkPrev = pContext->m_pLinkTop;
+//   pContext->m_pLinkTop = this;
+//}
 
 
 // out-of-line cleanup called from inline __exception_link destructor
 CLASS_DECL_win void __try_cleanup()
 {
-   __EXCEPTION_CONTEXT* pContext = __get_exception_context();
-   __exception_link* pLinkTop = pContext->m_pLinkTop;
+   //__EXCEPTION_CONTEXT* pContext = __get_exception_context();
+   //__exception_link* pLinkTop = pContext->m_pLinkTop;
 
    // delete current exception
-   ASSERT(pLinkTop != NULL);
-   if (pLinkTop == NULL)
-      return;
-   if (pLinkTop->m_pException != NULL)
-      pLinkTop->m_pException->Delete();
+   //ASSERT(pLinkTop != NULL);
+   //if (pLinkTop == NULL)
+   //   return;
+   //if (pLinkTop->m_pException != NULL)
+   //   pLinkTop->m_pException->Delete();
 
-   // remove ourself from the top of the chain
-   pContext->m_pLinkTop = pLinkTop->m_pLinkPrev;
+   //// remove ourself from the top of the chain
+   //pContext->m_pLinkTop = pLinkTop->m_pLinkPrev;
 }
 
 // special out-of-line implementation of THROW_LAST (for auto-delete behavior)
 void CLASS_DECL_win __throw_last_cleanup()
 {
-   __EXCEPTION_CONTEXT* pContext = __get_exception_context();
-   __exception_link* pLinkTop = pContext->m_pLinkTop;
+   //__EXCEPTION_CONTEXT* pContext = __get_exception_context();
+   //__exception_link* pLinkTop = pContext->m_pLinkTop;
 
-   // check for THROW_LAST inside of auto-delete block
-   if (pLinkTop != NULL)
-   {
-      // make sure current exception does not get auto-deleted
-      pLinkTop->m_pException = NULL;
-   }
+   //// check for THROW_LAST inside of auto-delete block
+   //if (pLinkTop != NULL)
+   //{
+   //   // make sure current exception does not get auto-deleted
+   //   pLinkTop->m_pException = NULL;
+   //}
 
-   // THROW_LAST macro will do actual 'throw'
+   //// THROW_LAST macro will do actual 'throw'
 }
 
 

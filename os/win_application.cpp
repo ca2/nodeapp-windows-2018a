@@ -411,11 +411,11 @@ namespace win
    {
       if(m_pimpl->is_system())
       {
-         if(__get_module_state()->m_pmapHWND == NULL)
-         {
-            __get_module_state()->m_pmapHWND = new oswindow_map(this);
-            __get_module_state()->m_pmutexoswindow_ = new mutex(this);
-         }
+         //if(__get_module_state()->m_pmapHWND == NULL)
+         //{
+         //   __get_module_state()->m_pmapHWND = new oswindow_map(this);
+         //   __get_module_state()->m_pmutexoswindow_ = new mutex(this);
+         //}
 /*         if(__get_module_state()->m_pmapHDC == NULL)
          {
             __get_module_state()->m_pmapHDC = new hdc_map;
@@ -600,24 +600,24 @@ namespace win
       // get the exe title from the full path name [no extension]
       strExeName = System.get_module_title();
 
-      __get_module_state()->m_lpszCurrentAppName = _tcsdup(m_strAppName);
+//      __get_module_state()->m_lpszCurrentAppName = _tcsdup(m_strAppName);
 
       // initialize thread state
-      __MODULE_STATE* pModuleState = __get_module_state();
-      ENSURE(pModuleState);
-      if(pModuleState->m_pCurrentWinApp == NULL)
-      {
-         __MODULE_THREAD_STATE* pThreadState = pModuleState->m_thread;
-         ENSURE(pThreadState);
-//         ASSERT(System.GetThread() == NULL);
-         pThreadState->m_pCurrentWinThread = dynamic_cast < class ::win::thread * > (thread::m_p.m_p);
-  //       ASSERT(System.GetThread() == this);
-
-         // initialize application state
-         //ASSERT(afxCurrentWinApp == NULL); // only one application object please
-         pModuleState->m_pCurrentWinApp =  (this);
-         //ASSERT(&System == this);
-      }
+//      __MODULE_STATE* pModuleState = __get_module_state();
+//      ENSURE(pModuleState);
+//      if(pModuleState->m_pCurrentWinApp == NULL)
+//      {
+//         __MODULE_THREAD_STATE* pThreadState = pModuleState->m_thread;
+//         ENSURE(pThreadState);
+////         ASSERT(System.GetThread() == NULL);
+//         pThreadState->m_pCurrentWinThread = dynamic_cast < class ::win::thread * > (thread::m_p.m_p);
+//  //       ASSERT(System.GetThread() == this);
+//
+//         // initialize application state
+//         //ASSERT(afxCurrentWinApp == NULL); // only one application object please
+//         pModuleState->m_pCurrentWinApp =  (this);
+//         //ASSERT(&System == this);
+//      }
 
 
 //      dynamic_cast < ::win::thread * > ((smart_pointer < base_application >::m_p->thread::m_p))->m_hThread = __get_thread()->m_hThread;
@@ -626,8 +626,8 @@ namespace win
       dynamic_cast < class ::win::thread * > (thread::m_p.m_p)->m_nThreadID    =  ::GetCurrentThreadId();
       
       // initialize thread specific data (for main thread)
-      if (!afxContextIsDLL)
-         __init_thread();
+//      if (!afxContextIsDLL)
+      __init_thread();
 
    }
 
@@ -715,10 +715,10 @@ namespace win
          SetErrorMode(SetErrorMode(0) | SEM_FAILCRITICALERRORS | SEM_NOOPENFILEERRORBOX);
 
          // set resource handles
-         __MODULE_STATE* pModuleState = __get_module_state();
-         pModuleState->m_hCurrentInstanceHandle = hInstance;
-         pModuleState->m_hCurrentResourceHandle = hInstance;
-         pModuleState->CreateActivationContext();
+         //__MODULE_STATE* pModuleState = __get_module_state();
+         //pModuleState->m_hCurrentInstanceHandle = hInstance;
+         //pModuleState->m_hCurrentResourceHandle = hInstance;
+         //pModuleState->CreateActivationContext();
 
          // fill in the initial state for the application
          // Windows specific initialization (not done if no application)

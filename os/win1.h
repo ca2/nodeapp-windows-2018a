@@ -88,7 +88,7 @@ CLASS_DECL_win LONG delete_registry_tree_helper(HKEY hParentKey, const string & 
 
 CLASS_DECL_win ::win::thread * __get_thread();
 CLASS_DECL_win void __set_thread(thread * pthread);
-CLASS_DECL_win MSG* __get_current_message();
+//CLASS_DECL_win MSG* __get_current_message();
 
 CLASS_DECL_win void __end_thread(sp(base_application) papp, UINT nExitCode, bool bDelete = TRUE);
 
@@ -113,11 +113,11 @@ CLASS_DECL_win void __term_thread(sp(base_application) papp, HINSTANCE hInstTerm
 CLASS_DECL_win void __win_term();
 
 CLASS_DECL_win sp(base_application) __get_app();
-CLASS_DECL_win sp(::user::interaction) __get_main_window();
+//CLASS_DECL_win sp(::user::interaction) __get_main_window();
 //CLASS_DECL_win HINSTANCE CLASS_DECL_win System.m_hInstance;
 CLASS_DECL_win HINSTANCE __get_resource_handle();
 CLASS_DECL_win void __set_resource_handle(HINSTANCE hInstResource);
-CLASS_DECL_win const char * __get_app_name();
+//CLASS_DECL_win const char * __get_app_name();
 
 CLASS_DECL_win HINSTANCE __get_resource_handle();
 CLASS_DECL_win HINSTANCE __find_string_resource_handle(UINT nID);

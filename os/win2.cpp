@@ -1,54 +1,54 @@
 #include "framework.h"
 
-// Global helper functions
- CLASS_DECL_win sp(base_application) __get_app()
-{ return (afxCurrentWinApp); }
+//// Global helper functions
+// CLASS_DECL_win sp(base_application) __get_app()
+//{ return (afxCurrentWinApp); }
 
- CLASS_DECL_win HINSTANCE __get_instance_handle()
-   { ASSERT(afxCurrentInstanceHandle != NULL);
-      return afxCurrentInstanceHandle; }
- CLASS_DECL_win HINSTANCE __get_resource_handle()
-   { ASSERT(afxCurrentResourceHandle != NULL);
-      return afxCurrentResourceHandle; }
- CLASS_DECL_win void __set_resource_handle(HINSTANCE hInstResource)
-   { ASSERT(hInstResource != NULL); afxCurrentResourceHandle = hInstResource; }
- CLASS_DECL_win const char * __get_app_name()
-   { ASSERT(afxCurrentAppName != NULL); return afxCurrentAppName; }
- CLASS_DECL_win sp(::user::interaction) __get_main_window()
-{
-      thread* pThread = dynamic_cast < thread * > (::win::get_thread());
-      return pThread != NULL ? pThread->GetMainWnd() : NULL; 
- }
-
- CLASS_DECL_win bool __gen_get_ambient_act_ctx()
-   {    return afxAmbientActCtx; }
- CLASS_DECL_win void __set_ambient_act_ctx(bool bSet)
-   {  afxAmbientActCtx = bSet; }
-
-
-
-// __MAINTAIN_STATE functions
- __MAINTAIN_STATE::__MAINTAIN_STATE(__MODULE_STATE* pNewState)
-   {  m_pPrevModuleState = __set_module_state(pNewState); }
-
-// __MAINTAIN_STATE2 functions
- __MAINTAIN_STATE2::~__MAINTAIN_STATE2()
-{
-   // Not a good place to report errors here, so just be safe
-   if(m_pThreadState)
-   {
-      m_pThreadState->m_pModuleState = m_pPrevModuleState;
-   }
-
-/*   if (m_bValidActCtxCookie)
-   {
-      bool bRet;
-      bRet = __deactivate_act_ctx(0, m_ulActCtxCookie);
-      ASSERT(bRet == TRUE);
-   }*/
-}
+// CLASS_DECL_win HINSTANCE __get_instance_handle()
+//   { ASSERT(afxCurrentInstanceHandle != NULL);
+//      return afxCurrentInstanceHandle; }
+// CLASS_DECL_win HINSTANCE __get_resource_handle()
+//   { ASSERT(afxCurrentResourceHandle != NULL);
+//      return afxCurrentResourceHandle; }
+// CLASS_DECL_win void __set_resource_handle(HINSTANCE hInstResource)
+//   { ASSERT(hInstResource != NULL); afxCurrentResourceHandle = hInstResource; }
+// CLASS_DECL_win const char * __get_app_name()
+//   { ASSERT(afxCurrentAppName != NULL); return afxCurrentAppName; }
+// CLASS_DECL_win sp(::user::interaction) __get_main_window()
+//{
+//      thread* pThread = dynamic_cast < thread * > (::win::get_thread());
+//      return pThread != NULL ? pThread->GetMainWnd() : NULL; 
+// }
+//
+// CLASS_DECL_win bool __gen_get_ambient_act_ctx()
+//   {    return afxAmbientActCtx; }
+// CLASS_DECL_win void __set_ambient_act_ctx(bool bSet)
+//   {  afxAmbientActCtx = bSet; }
+//
 
 
+//// __MAINTAIN_STATE functions
+// __MAINTAIN_STATE::__MAINTAIN_STATE(__MODULE_STATE* pNewState)
+//   {  m_pPrevModuleState = __set_module_state(pNewState); }
+//
+//// __MAINTAIN_STATE2 functions
+// __MAINTAIN_STATE2::~__MAINTAIN_STATE2()
+//{
+//   // Not a good place to report errors here, so just be safe
+//   if(m_pThreadState)
+//   {
+//      m_pThreadState->m_pModuleState = m_pPrevModuleState;
+//   }
+//
+///*   if (m_bValidActCtxCookie)
+//   {
+//      bool bRet;
+//      bRet = __deactivate_act_ctx(0, m_ulActCtxCookie);
+//      ASSERT(bRet == TRUE);
+//   }*/
+//}
+//
+//
 
 
 

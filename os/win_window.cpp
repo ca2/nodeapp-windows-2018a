@@ -5,6 +5,9 @@
 
 #include "sal.h"
 
+extern __declspec(thread) HHOOK t_hHookOldMsgFilter;
+extern __declspec(thread) HHOOK t_hHookOldCbtFilter;
+extern __declspec(thread) ::user::interaction * t_pwndInit;
 
 __STATIC void CLASS_DECL_win __pre_init_dialog(sp(::user::interaction) pWnd, LPRECT lpRectOld, uint32_t* pdwStyleOld);
 __STATIC void CLASS_DECL_win __post_init_dialog(sp(::user::interaction) pWnd, const RECT& rectOld, uint32_t dwStyleOld);
@@ -171,21 +174,21 @@ namespace win
 
 
 
-   const MSG* window::GetCurrentMessage()
-   {
-      // fill in time and position when asked for
-      ___THREAD_STATE* pThreadState = __get_thread_state();
-      pThreadState->m_lastSentMsg.time = ::GetMessageTime();
-      pThreadState->m_lastSentMsg.pt = point((LPARAM) ::GetMessagePos());
-      return &pThreadState->m_lastSentMsg;
-   }
+//   const MSG* window::GetCurrentMessage()
+//   {
+//      // fill in time and position when asked for
+////      ___THREAD_STATE* pThreadState = __get_thread_state();
+//  //    pThreadState->m_lastSentMsg.time = ::GetMessageTime();
+//    //  pThreadState->m_lastSentMsg.pt = point((LPARAM) ::GetMessagePos());
+//      //return &pThreadState->m_lastSentMsg;
+//   }
 
    LRESULT window::Default()
    {
       // call DefWindowProc with the last message
-      ___THREAD_STATE* pThreadState = __get_thread_state();
-      return DefWindowProc(pThreadState->m_lastSentMsg.message,
-         pThreadState->m_lastSentMsg.wParam, pThreadState->m_lastSentMsg.lParam);
+      //___THREAD_STATE* pThreadState = __get_thread_state();
+//      return DefWindowProc(m_pthread->m_message.message, m_pthread->m_message.wParam, m_pthread->m_message.lParam);
+      return 0;
    }
 
 
@@ -692,7 +695,7 @@ namespace win
       {
          if (pThread->GetMainWnd() == this)
          {
-            if (!afxContextIsDLL)
+//            if (!afxContextIsDLL)
             {
                // shut down current thread if possible
                if (pThread != &System)
@@ -1016,8 +1019,8 @@ namespace win
    {
 
       // reflect notification to child window control
-      if (ReflectLastMsg(lpDrawItemStruct->hwndItem))
-         return;     // eat it
+//      if (ReflectMessage(lpDrawItemStruct->hwndItem))
+  //       return;     // eat it
 
       // not handled - do default
       Default();
@@ -1028,8 +1031,8 @@ namespace win
    {
       // reflect notification to child window control
       LRESULT lResult;
-      if (ReflectLastMsg(lpCompareItemStruct->hwndItem, &lResult))
-         return (int32_t)lResult;        // eat it
+//      if (ReflectLastMsg(lpCompareItemStruct->hwndItem, &lResult))
+  //       return (int32_t)lResult;        // eat it
 
       // not handled - do default
       return (int32_t)Default();
@@ -1038,8 +1041,8 @@ namespace win
    void window::OnDeleteItem(int32_t /*nIDCtl*/, LPDELETEITEMSTRUCT lpDeleteItemStruct)
    {
       // reflect notification to child window control
-      if (ReflectLastMsg(lpDeleteItemStruct->hwndItem))
-         return;     // eat it
+      //if (ReflectLastMsg(lpDeleteItemStruct->hwndItem))
+        // return;     // eat it
       // not handled - do default
       Default();
    }
@@ -1062,8 +1065,8 @@ namespace win
       else
       {
          sp(::user::interaction) pChild = GetDescendantWindow(lpMeasureItemStruct->CtlID);
-         if (pChild != NULL && pChild->SendChildNotifyLastMsg())
-            return;     // eaten by child
+//         if (pChild != NULL && pChild->OnChildNotify(0, 0, 0, NULL))
+  //          return;     // eaten by child
       }
       // not handled - do default
       Default();
@@ -1153,10 +1156,10 @@ namespace win
       __CTLCOLOR ctl;
       ctl.hDC = (HDC)wParam;
       ctl.oswindow = (oswindow) lParam;
-      ___THREAD_STATE* pThreadState = __get_thread_state();
-      ctl.nCtlType = pThreadState->m_lastSentMsg.message - WM_CTLCOLORMSGBOX;
+      //___THREAD_STATE* pThreadState = __get_thread_state();
+      //ctl.nCtlType = pThreadState->m_lastSentMsg.message - WM_CTLCOLORMSGBOX;
       //ASSERT(ctl.nCtlType >= CTLCOLOR_MSGBOX);
-      ASSERT(ctl.nCtlType <= CTLCOLOR_STATIC);
+//      ASSERT(ctl.nCtlType <= CTLCOLOR_STATIC);
 
       // Note: We call the virtual message_handler for this window directly,
       //  instead of calling ::core::CallWindowProc, so that Default()
@@ -2070,11 +2073,11 @@ restart_mouse_hover_check:
    /////////////////////////////////////////////////////////////////////////////
    // window command handling
 
-   bool window::OnCommand(WPARAM wParam, LPARAM lParam)
+   bool window::OnCommand(::message::base * pbase)
       // return TRUE if command invocation was attempted
    {
-      UNREFERENCED_PARAMETER(wParam);
-      UNREFERENCED_PARAMETER(lParam);
+      UNREFERENCED_PARAMETER(pbase);
+      //UNREFERENCED_PARAMETER(lParam);
       /*   UINT nID = LOWORD(wParam);
       oswindow oswindow_Ctrl = lParam;
       int32_t nCode = HIWORD(wParam);
@@ -2090,7 +2093,7 @@ restart_mouse_hover_check:
       // make sure command has not become disabled before routing
       CTestCmdUI state;
       state.m_id = nID;
-      _001OnCommand(nID, CN_UPDATE_COMMAND_UI, &state, NULL);
+      on_simple_action(nID, CN_UPDATE_COMMAND_UI, &state, NULL);
       if (!state.m_bEnabled)
       {
       TRACE(::core::trace::category_AppMsg, 0, "Warning: not executing disabled command %d\n", nID);
@@ -2123,14 +2126,16 @@ restart_mouse_hover_check:
       nCode);
       #endif
 
-      return _001OnCommand(nID, nCode, NULL, NULL);*/
+      return on_simple_action(nID, nCode, NULL, NULL);*/
       return FALSE;
    }
 
-   bool window::OnNotify(WPARAM, LPARAM lParam, LRESULT* pResult)
+
+   bool window::OnNotify(::message::base * pbase)
    {
-      ASSERT(pResult != NULL);
-      NMHDR* pNMHDR = (NMHDR*)lParam;
+
+      ASSERT(pbase != NULL);
+      NMHDR* pNMHDR = (NMHDR*)pbase->m_lparam;
       oswindow oswindow_Ctrl = pNMHDR->hwndFrom;
 
       // get the child ID from the window itself
@@ -2140,17 +2145,17 @@ restart_mouse_hover_check:
       ASSERT(oswindow_Ctrl != NULL);
       ASSERT(::IsWindow(oswindow_Ctrl));
 
-      if (gen_ThreadState->m_hLockoutNotifyWindow == get_handle())
-         return true;        // locked out - ignore control notification
+//      if (gen_ThreadState->m_hLockoutNotifyWindow == get_handle())
+  //       return true;        // locked out - ignore control notification
 
       // reflect notification to child window control
-      if (ReflectLastMsg(oswindow_Ctrl, pResult))
+      if (ReflectMessage(oswindow_Ctrl, pbase))
          return true;        // eaten by child
 
       //      __NOTIFY notify;
       //    notify.pResult = pResult;
       //  notify.pNMHDR = pNMHDR;
-      //xxx   return _001OnCommand((UINT)nID, MAKELONG(nCode, WM_NOTIFY), &notify, NULL);
+      //xxx   return _001OnCommand(pbase);
       return false;
    }
 
@@ -2311,7 +2316,7 @@ restart_mouse_hover_check:
    int32_t window::message_box(const char * lpszText, const char * lpszCaption, UINT nType)
    {
       if (lpszCaption == NULL)
-         lpszCaption = __get_app_name();
+         lpszCaption = Application.m_strAppName;
       int32_t nResult = ::MessageBox(get_handle(), lpszText, lpszCaption, nType);
       return nResult;
    }
@@ -2841,14 +2846,13 @@ restart_mouse_hover_check:
       // no special processing
    }
 
-   bool window::SendChildNotifyLastMsg(LRESULT* pResult)
-   {
-      ___THREAD_STATE* pThreadState = __get_thread_state();
-      return OnChildNotify(pThreadState->m_lastSentMsg.message,
-         pThreadState->m_lastSentMsg.wParam, pThreadState->m_lastSentMsg.lParam, pResult);
-   }
+//   bool window::SendChildNotifyLastMsg(LRESULT* pResult)
+  // {
+//      ___THREAD_STATE* pThreadState = __get_thread_state();
+    //  return OnChildNotify(m_pthread->m_message.message, m_pthread->m_message.wParam, m_pthread->m_message.lParam, pResult);
+   //}
 
-   bool window::ReflectLastMsg(oswindow oswindow_Child, LRESULT* pResult)
+   bool window::ReflectMessage(oswindow oswindow_Child, ::message::base * pbase)
    {
       // get the map, and if no map, then this message does not need reflection
       oswindow_map * pMap = get_oswindow_map();
@@ -2866,23 +2870,23 @@ restart_mouse_hover_check:
 
       // only OLE controls and permanent windows will get reflected msgs
       ASSERT(pWnd != NULL);
-      return WIN_WINDOW(pWnd)->SendChildNotifyLastMsg(pResult);
+      return WIN_WINDOW(pWnd)->OnChildNotify(pbase);
    }
 
-   bool window::OnChildNotify(UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* pResult)
+   bool window::OnChildNotify(::message::base * pbase)
    {
 
-      return ReflectChildNotify(uMsg, wParam, lParam, pResult);
+      return ReflectChildNotify(pbase);
    }
 
-   bool window::ReflectChildNotify(UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* pResult)
+   bool window::ReflectChildNotify(::message::base * pbase)
    {
-      UNREFERENCED_PARAMETER(wParam);
+
       // Note: reflected messages are send directly to window::OnWndMsg
       //  and window::_001OnCommand for speed and because these messages are not
       //  routed by normal _001OnCommand routing (they are only dispatched)
 
-      switch (uMsg)
+      switch (pbase->m_uiMessage)
       {
          // normal messages (just wParam, lParam through OnWndMsg)
       case WM_HSCROLL:
@@ -2902,13 +2906,12 @@ restart_mouse_hover_check:
       case WM_COMMAND:
          {
             // reflect the message through the message map as OCM_COMMAND
-            /* xxx         int32_t nCode = HIWORD(wParam);
-            if (window::_001OnCommand(0, MAKELONG(nCode, WM_REFLECT_BASE+WM_COMMAND), NULL, NULL))
+            keeper < bool > keepReflect(&pbase->m_bReflect, true, pbase->m_bReflect, true);
+            if (window::OnCommand(pbase))
             {
-            if (pResult != NULL)
-            *pResult = 1;
-            return TRUE;
-            } */
+               pbase->m_bRet = true;
+               return true;
+            }
          }
          break;
 
@@ -2916,7 +2919,7 @@ restart_mouse_hover_check:
       case WM_NOTIFY:
          {
             // reflect the message through the message map as OCM_NOTIFY
-            NMHDR* pNMHDR = (NMHDR*)lParam;
+            NMHDR* pNMHDR = (NMHDR*)pbase->m_lparam;
             //            int32_t nCode = pNMHDR->code;
             //            __NOTIFY notify;
             //          notify.pResult = pResult;
@@ -2926,7 +2929,7 @@ restart_mouse_hover_check:
 
          // other special cases (WM_CTLCOLOR family)
       default:
-         if (uMsg >= WM_CTLCOLORMSGBOX && uMsg <= WM_CTLCOLORSTATIC)
+         if (pbase->m_uiMessage >= WM_CTLCOLORMSGBOX && pbase->m_uiMessage <= WM_CTLCOLORSTATIC)
          {
             // fill in special struct for compatiblity with 16-bit WM_CTLCOLOR
             /*__CTLCOLOR ctl;
@@ -2952,8 +2955,8 @@ restart_mouse_hover_check:
    {
       if ((LOWORD(message) == WM_CREATE || LOWORD(message) == WM_DESTROY))
       {
-         if (ReflectLastMsg((oswindow) lParam))
-            return;     // eat it
+         //if (ReflectMessage((oswindow) lParam))
+           // return;     // eat it
       }
       // not handled - do default
       Default();
@@ -3046,7 +3049,7 @@ restart_mouse_hover_check:
       return Default() != 0;
    }
 
-   LRESULT window::OnDisplayChange(WPARAM, LPARAM)
+   LRESULT window::OnDisplayChange(WPARAM wparam, LPARAM lparam)
    {
       // update metrics if this window is the main window
       if (System.GetMainWnd() == this)
@@ -3058,9 +3061,8 @@ restart_mouse_hover_check:
       // forward this message to all other child windows
       if (!(GetStyle() & WS_CHILD))
       {
-         const MSG* pMsg = GetCurrentMessage();
-         SendMessageToDescendants(pMsg->message, pMsg->wParam, pMsg->lParam,
-            TRUE, TRUE);
+//         const MSG* pMsg = GetCurrentMessage();
+         SendMessageToDescendants(WM_DISPLAYCHANGE, wparam, lparam,   TRUE, TRUE);
       }
 
       return Default();
@@ -3072,8 +3074,8 @@ restart_mouse_hover_check:
       ASSERT(lpInfo != NULL);
 
       LRESULT lResult;
-      if (ReflectLastMsg(lpInfo->hWnd, &lResult))
-         return (int32_t)lResult;    // eat it
+      //if (ReflectLastMsg(lpInfo->hWnd, &lResult))
+      //   return (int32_t)lResult;    // eat it
 
       // not handled - do default
       return (int32_t)Default();
@@ -3585,8 +3587,8 @@ restart_mouse_hover_check:
    {
       ASSERT(pWnd != NULL && WIN_WINDOW(pWnd)->get_handle() != NULL);
       LRESULT lResult;
-      if (WIN_WINDOW(pWnd)->SendChildNotifyLastMsg(&lResult))
-         return (HBRUSH)lResult;     // eat it
+      //if (WIN_WINDOW(pWnd)->OnChildNotify(&lResult))
+      //   return (HBRUSH)lResult;     // eat it
       return (HBRUSH)Default();
    }
 
@@ -5973,12 +5975,12 @@ ExitModal:
 
    CLASS_DECL_win LRESULT __call_window_procedure(sp(::user::interaction) pinteraction, oswindow oswindow, UINT nMsg, WPARAM wParam, LPARAM lParam)
    {
-      ___THREAD_STATE* pThreadState = __get_thread_state();
-      MSG oldState = pThreadState->m_lastSentMsg;   // save for nesting
-      pThreadState->m_lastSentMsg.hwnd = oswindow;
-      pThreadState->m_lastSentMsg.message = nMsg;
-      pThreadState->m_lastSentMsg.wParam = wParam;
-      pThreadState->m_lastSentMsg.lParam = lParam;
+      //___THREAD_STATE* pThreadState = __get_thread_state();
+      //MSG oldState = t->m_messageLast;   // save for nesting
+      //pThreadState->m_lastSentMsg.hwnd = oswindow;
+      //pThreadState->m_lastSentMsg.message = nMsg;
+      //pThreadState->m_lastSentMsg.wParam = wParam;
+      //pThreadState->m_lastSentMsg.lParam = lParam;
 
       // Catch exceptions thrown outside the scope of a callback
       // in debug builds and warn the ::fontopus::user.
@@ -6053,7 +6055,7 @@ ExitModal:
 
       try
       {
-         pThreadState->m_lastSentMsg = oldState;
+         //pThreadState->m_lastSentMsg = oldState;
          LRESULT lresult = spbase->get_lresult();
          return lresult;
       }
@@ -6077,11 +6079,11 @@ ExitModal:
 
    LRESULT CALLBACK __cbt_filter_hook(int32_t code, WPARAM wParam, LPARAM lParam)
    {
-      ___THREAD_STATE* pThreadState = __get_thread_state();
+//      ___THREAD_STATE* pThreadState = __get_thread_state();
       if (code != HCBT_CREATEWND)
       {
          // wait for HCBT_CREATEWND just pass others on...
-         return CallNextHookEx(pThreadState->m_hHookOldCbtFilter, code,
+         return CallNextHookEx(t_hHookOldCbtFilter, code,
             wParam, lParam);
       }
 
@@ -6089,9 +6091,9 @@ ExitModal:
       LPCREATESTRUCT lpcs = ((LPCBT_CREATEWND)lParam)->lpcs;
       ASSERT(lpcs != NULL);
 
-      sp(::win::window) pWndInit = pThreadState->m_pWndInit;
-      bool bContextIsDLL = afxContextIsDLL;
-      if (pWndInit != NULL || (!(lpcs->style & WS_CHILD) && !bContextIsDLL))
+      sp(::win::window) pWndInit = t_pwndInit;
+//      bool bContextIsDLL = afxContextIsDLL;
+      if (pWndInit != NULL || (!(lpcs->style & WS_CHILD)))
       {
          // Note: special check to avoid subclassing the IME window
          //if (gen_DBCS)
@@ -6155,61 +6157,60 @@ ExitModal:
             if (oldWndProc != afxWndProc)
                *pOldWndProc = oldWndProc;
 
-            pThreadState->m_pWndInit = NULL;
+            t_pwndInit = NULL;
          }
-         else
-         {
-            ASSERT(!bContextIsDLL);   // should never get here
+         //else
+         //{
+         //   ASSERT(!bContextIsDLL);   // should never get here
 
-            static ATOM s_atomMenu = 0;
-            bool bSubclass = true;         
+         //   static ATOM s_atomMenu = 0;
+         //   bool bSubclass = true;         
 
-            if (s_atomMenu == 0)
-            {
-               WNDCLASSEX wc;
-               memset(&wc, 0, sizeof(WNDCLASSEX));
-               wc.cbSize = sizeof(WNDCLASSEX);
-               s_atomMenu = (ATOM)::GetClassInfoEx(NULL, "#32768", &wc);
-            }
+         //   if (s_atomMenu == 0)
+         //   {
+         //      WNDCLASSEX wc;
+         //      memset(&wc, 0, sizeof(WNDCLASSEX));
+         //      wc.cbSize = sizeof(WNDCLASSEX);
+         //      s_atomMenu = (ATOM)::GetClassInfoEx(NULL, "#32768", &wc);
+         //   }
 
-            // Do not subclass menus.
-            if (s_atomMenu != 0)
-            {
-               ATOM atomWnd = (ATOM)::GetClassLongPtr(oswindow, GCW_ATOM);
-               if (atomWnd == s_atomMenu)
-                  bSubclass = false;
-            }
-            else
-            {         
-               char szClassName[256];
-               if (::GetClassName(oswindow, szClassName, 256))
-               {
-                  szClassName[255] = NULL;
-                  if (_tcscmp(szClassName, "#32768") == 0)
-                     bSubclass = false;
-               }
-            }         
-            if (bSubclass)
-            {
-               // subclass the window with the proc which does gray backgrounds
-               oldWndProc = (WNDPROC)GetWindowLongPtr(oswindow, GWLP_WNDPROC);
-               if (oldWndProc != NULL && GetProp(oswindow, gen_OldWndProc) == NULL)
-               {
-                  SetProp(oswindow, gen_OldWndProc, oldWndProc);
-                  if ((WNDPROC)GetProp(oswindow, gen_OldWndProc) == oldWndProc)
-                  {
-                     GlobalAddAtom(gen_OldWndProc);
-                     SetWindowLongPtr(oswindow, GWLP_WNDPROC, (uint_ptr)__activation_window_procedure);
-                     ASSERT(oldWndProc != NULL);
-                  }
-               }
-            }
-         }
+         //   // Do not subclass menus.
+         //   if (s_atomMenu != 0)
+         //   {
+         //      ATOM atomWnd = (ATOM)::GetClassLongPtr(oswindow, GCW_ATOM);
+         //      if (atomWnd == s_atomMenu)
+         //         bSubclass = false;
+         //   }
+         //   else
+         //   {         
+         //      char szClassName[256];
+         //      if (::GetClassName(oswindow, szClassName, 256))
+         //      {
+         //         szClassName[255] = NULL;
+         //         if (_tcscmp(szClassName, "#32768") == 0)
+         //            bSubclass = false;
+         //      }
+         //   }         
+         //   if (bSubclass)
+         //   {
+         //      // subclass the window with the proc which does gray backgrounds
+         //      oldWndProc = (WNDPROC)GetWindowLongPtr(oswindow, GWLP_WNDPROC);
+         //      if (oldWndProc != NULL && GetProp(oswindow, gen_OldWndProc) == NULL)
+         //      {
+         //         SetProp(oswindow, gen_OldWndProc, oldWndProc);
+         //         if ((WNDPROC)GetProp(oswindow, gen_OldWndProc) == oldWndProc)
+         //         {
+         //            GlobalAddAtom(gen_OldWndProc);
+         //            SetWindowLongPtr(oswindow, GWLP_WNDPROC, (uint_ptr)__activation_window_procedure);
+         //            ASSERT(oldWndProc != NULL);
+         //         }
+         //      }
+         //   }
+         //}
       }
 
 lCallNextHook:
-      LRESULT lResult = CallNextHookEx(pThreadState->m_hHookOldCbtFilter, code,
-         wParam, lParam);
+      LRESULT lResult = CallNextHookEx(t_hHookOldCbtFilter, code, wParam, lParam);
 
       return lResult;
    }

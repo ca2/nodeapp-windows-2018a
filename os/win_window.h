@@ -56,7 +56,7 @@ namespace win
 
       bool create_message_queue(const char * pszName, ::message_queue_listener * pcallback = NULL);
 
-      static const MSG* GetCurrentMessage();
+      //static const MSG* GetCurrentMessage();
 
       virtual void install_message_handling(::message::dispatch * pinterface);
 
@@ -175,7 +175,7 @@ namespace win
       bool post_message(UINT message, WPARAM wParam = 0, lparam lParam = NULL);
 
       bool SendNotifyMessage(UINT message, WPARAM wParam, lparam lParam);
-      bool SendChildNotifyLastMsg(LRESULT* pResult = NULL);
+      //bool SendChildNotifyLastMsg(LRESULT* pResult = NULL);
 
       bool DragDetect(POINT pt) const;
 
@@ -470,8 +470,8 @@ namespace win
       virtual void EndAllModalLoops(id nResult);
 
    // Window-Management message handler member functions
-      virtual bool OnCommand(WPARAM wParam, LPARAM lParam);
-      virtual bool OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult);
+      virtual bool OnCommand(::message::base * pbase);
+      virtual bool OnNotify(::message::base * pbase);
 
       void OnActivate(UINT nState, sp(::user::window) pWndOther, bool bMinimized);
       void OnActivateApp(bool bActive, uint32_t dwThreadID);
@@ -643,10 +643,10 @@ namespace win
       virtual void PostNcDestroy();
 
       // for notifications from parent
-      virtual bool OnChildNotify(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
+      virtual bool OnChildNotify(::message::base * pbase);
          // return TRUE if parent should not process this message
-      bool ReflectChildNotify(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
-      static bool ReflectLastMsg(oswindow oswindow_Child, LRESULT* pResult = NULL);
+      virtual bool ReflectChildNotify(::message::base * pbase);
+      static bool ReflectMessage(oswindow oswindow_Child, ::message::base * pbase);
 
    // Implementation
       virtual bool CheckAutoCenter();
