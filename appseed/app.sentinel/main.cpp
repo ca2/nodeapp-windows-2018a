@@ -17,7 +17,7 @@ ATOM sentinel_RegisterClass(HINSTANCE hInstance);
 LRESULT CALLBACK sentinel_WndProc(oswindow oswindow, uint32_t message, WPARAM wParam, LPARAM lParam);
 
 
-
+void win_factory_exchange(sp(base_application) papp);
 
 
 
@@ -155,6 +155,16 @@ public:
    virtual bool end();
 
    int32_t spaboot_start();
+
+
+   void Ex1OnFactoryExchange()
+   {
+      // os.dll -> os.lib statically linked
+      win_factory_exchange(this);
+
+
+   }
+
 
 };
 

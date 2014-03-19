@@ -51,3 +51,8 @@ void ca2_factory_exchange(sp(base_application) papp)
 
 
 
+void win_factory_exchange(sp(base_application) papp)
+{
+   win::factory_exchange factoryexchange(papp);
+}
+
