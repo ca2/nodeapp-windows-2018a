@@ -31,11 +31,16 @@ namespace draw2d_gdiplus
 } // namespace draw2d_gdiplus
 
 
-
+#ifdef CUBE
+void draw2d_gdiplus_factory_exchange(sp(base_application) papp)
+{
+   draw2d_gdiplus::factory_exchange factoryexchange(papp);
+}
+#else
 void ca2_factory_exchange(sp(base_application) papp)
 {
    draw2d_gdiplus::factory_exchange factoryexchange(papp);
 }
-
+#endif
 
 

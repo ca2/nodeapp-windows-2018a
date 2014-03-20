@@ -43,16 +43,18 @@ namespace win
 } // namespace win
 
 
+#ifdef CUBE
+void win_factory_exchange(sp(base_application) papp)
+{
+   win::factory_exchange factoryexchange(papp);
+}
 
+#else
 void ca2_factory_exchange(sp(base_application) papp)
 {
    win::factory_exchange factoryexchange(papp);
 }
 
+#endif
 
-
-void win_factory_exchange(sp(base_application) papp)
-{
-   win::factory_exchange factoryexchange(papp);
-}
 

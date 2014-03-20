@@ -19,9 +19,13 @@
 #define _CRT_NONSTDC_NO_DEPRECATE
 #define _CRT_RAND_S
 
-
+#ifdef CUBE
+#define CLASS_DECL_EXPORT
+#define CLASS_DECL_IMPORT
+#else
 #define CLASS_DECL_EXPORT _declspec(dllexport)
 #define CLASS_DECL_IMPORT _declspec(dllimport)
+#endif
 #define CLASS_DECL_THREAD _declspec(thread)
 
 #define SECURITY_WIN32
