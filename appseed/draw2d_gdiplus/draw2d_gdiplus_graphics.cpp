@@ -3533,6 +3533,9 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       //retry_single_lock slGdiplus(&System.s_mutexGdiplus, millis(1), millis(1));
 
+      if (m_pgraphics == NULL)
+         return false;
+
       if(lpszString == NULL || *lpszString == '\0')
          return false;
 
@@ -4179,6 +4182,9 @@ namespace draw2d_gdiplus
    double graphics::get_dpix() const
    {
 
+      if (m_pgraphics == NULL)
+         return 96.0;
+
       return m_pgraphics->GetDpiX();
 
    }
@@ -4186,6 +4192,9 @@ namespace draw2d_gdiplus
 
    double graphics::get_dpiy() const
    {
+      
+      if (m_pgraphics == NULL)
+         return 96.0;
 
       return m_pgraphics->GetDpiY();
 

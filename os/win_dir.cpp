@@ -787,53 +787,68 @@ namespace win
       System.file().get_ascendants_path(lpcsz, stra);
       for(int32_t i = 0; i < stra.get_size(); i++)
       {
-         if(!is(stra[i], papp))
+         
+         string strDir = stra[i];
+
+         if(!is(strDir, papp))
          {
             
-            if(!::CreateDirectoryW(::str::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
+            if(::CreateDirectoryW(::str::international::utf8_to_unicode("\\\\?\\" + strDir), NULL))
             {
-               DWORD dwError = ::GetLastError();
-               if(dwError == ERROR_ALREADY_EXISTS)
-               {
-                  string str;
-                  str = "\\\\?\\" + stra[i];
-                  str.trim_right("\\/");
-                  try
-                  {
-                     System.file().del(str);
-                  }
-                  catch(...)
-                  {
-                  }
-                  str = stra[i];
-                  str.trim_right("\\/");
-                  try
-                  {
-                     System.file().del(str);
-                  }
-                  catch(...)
-                  {
-                  }
-                  if(::CreateDirectoryW(::str::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
-                  {
-                     m_isdirmap.set(stra[i], true, 0);
-                     goto try1;
-                  }
-                  else
-                  {
-                     dwError = ::GetLastError();
-                  }
-               }
-               char * pszError;
-               FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwError, 0, (LPTSTR) &pszError, 8, NULL);
 
-               //TRACE("dir::mk CreateDirectoryW last error(%d)=%s", dwError, pszError);
-               ::LocalFree(pszError);
-               //m_isdirmap.set(stra[i], false);
+               m_isdirmap.set(strDir, true, 0);
+
             }
             else
             {
-               m_isdirmap.set(stra[i], true, 0);
+
+               DWORD dwError = ::GetLastError();
+
+               if (dwError == ERROR_ALREADY_EXISTS)
+               {
+
+                  if (::dir::is(strDir))
+                  {
+                     m_isdirmap.set(strDir, true, 0);
+                  }
+                  else
+                  {
+                     string str;
+                     str = "\\\\?\\" + strDir;
+                     str.trim_right("\\/");
+                     try
+                     {
+                        System.file().del(str);
+                     }
+                     catch (...)
+                     {
+                     }
+                     str = stra[i];
+                     str.trim_right("\\/");
+                     try
+                     {
+                        System.file().del(str);
+                     }
+                     catch (...)
+                     {
+                     }
+                     if (::CreateDirectoryW(::str::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
+                     {
+                        m_isdirmap.set(stra[i], true, 0);
+                        goto try1;
+                     }
+                     else
+                     {
+                        dwError = ::GetLastError();
+                     }
+                  }
+                  char * pszError;
+                  FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, dwError, 0, (LPTSTR)&pszError, 8, NULL);
+
+                  //TRACE("dir::mk CreateDirectoryW last error(%d)=%s", dwError, pszError);
+                  ::LocalFree(pszError);
+                  //m_isdirmap.set(stra[i], false);
+               }
             }
             try1:
             
