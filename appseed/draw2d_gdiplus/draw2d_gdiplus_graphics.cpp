@@ -1168,10 +1168,13 @@ gdi_fallback:
    bool graphics::get_text_metrics(LPTEXTMETRICW lpMetrics) const
    { 
 
+      if (m_pgraphics == NULL)
+         return false;
+
       graphics * pdc = ((graphics *)this);
 
       if(pdc->gdiplus_font() == NULL)
-         return FALSE;
+         return false;
 
       Gdiplus::Font * pfont = pdc->gdiplus_font();
 
