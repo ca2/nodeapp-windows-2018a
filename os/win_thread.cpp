@@ -1,6 +1,8 @@
 #include "framework.h"
 #include <ddeml.h>  // for MSGF_DDEMGR
 
+__declspec(thread) ::win::thread * t_pCurrentWinThread = NULL;
+
 namespace win
 {
    class thread;
@@ -82,7 +84,7 @@ uint32_t __thread_entry(void * pParam)
          //// set current thread pointer for System.GetThread
          //__MODULE_STATE* pModuleState = __get_module_state();
          //__MODULE_THREAD_STATE* pState = pModuleState->m_thread;
-         //pState->m_pCurrentWinThread = pThread;
+         t_pCurrentWinThread = pThread;
 
          // forced initialization of the thread
          __init_thread();
@@ -169,7 +171,6 @@ uint32_t __thread_entry(void * pParam)
 
 #endif //_MT
 
-__declspec(thread) ::win::thread * t_pCurrentWinThread = NULL;
 
 CLASS_DECL_win ::win::thread * __get_thread()
 {
