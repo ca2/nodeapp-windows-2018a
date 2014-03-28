@@ -414,8 +414,8 @@ Global
 		{B263829E-241C-4E9F-9EC2-626165028D01}.profiler|x64.ActiveCfg = profiler|x64
 		{B263829E-241C-4E9F-9EC2-626165028D01}.profiler|x64.Build.0 = profiler|x64
 		{B263829E-241C-4E9F-9EC2-626165028D01}.static_basis|Android.ActiveCfg = basis|Win32
-		{B263829E-241C-4E9F-9EC2-626165028D01}.static_basis|Win32.ActiveCfg = static_basis|Win32
-		{B263829E-241C-4E9F-9EC2-626165028D01}.static_basis|Win32.Build.0 = static_basis|Win32
+		{B263829E-241C-4E9F-9EC2-626165028D01}.static_basis|Win32.ActiveCfg = basis|Win32
+		{B263829E-241C-4E9F-9EC2-626165028D01}.static_basis|Win32.Build.0 = basis|Win32
 		{B263829E-241C-4E9F-9EC2-626165028D01}.static_basis|x64.ActiveCfg = basis|x64
 		{B263829E-241C-4E9F-9EC2-626165028D01}.static_basis|x64.Build.0 = basis|x64
 		{19841511-0204-1977-A73E-2CD949AA3AF6}.basis|Android.ActiveCfg = basis|Win32
@@ -474,8 +474,8 @@ Global
 		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.static_basis|Android.ActiveCfg = basis|Android
 		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.static_basis|Android.Build.0 = basis|Android
 		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.static_basis|Android.Deploy.0 = basis|Android
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.static_basis|Win32.ActiveCfg = static_basis|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.static_basis|Win32.Build.0 = static_basis|Win32
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.static_basis|Win32.ActiveCfg = basis|Win32
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.static_basis|Win32.Build.0 = basis|Win32
 		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.static_basis|x64.ActiveCfg = basis|x64
 		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.static_basis|x64.Build.0 = basis|x64
 		{19841115-1984-0411-1977-021977151984}.basis|Android.ActiveCfg = basis|Win32
@@ -499,8 +499,8 @@ Global
 		{19841115-1984-0411-1977-021977151984}.profiler|x64.ActiveCfg = profiler|x64
 		{19841115-1984-0411-1977-021977151984}.profiler|x64.Build.0 = profiler|x64
 		{19841115-1984-0411-1977-021977151984}.static_basis|Android.ActiveCfg = basis|Win32
-		{19841115-1984-0411-1977-021977151984}.static_basis|Win32.ActiveCfg = static_basis|Win32
-		{19841115-1984-0411-1977-021977151984}.static_basis|Win32.Build.0 = static_basis|Win32
+		{19841115-1984-0411-1977-021977151984}.static_basis|Win32.ActiveCfg = basis|Win32
+		{19841115-1984-0411-1977-021977151984}.static_basis|Win32.Build.0 = basis|Win32
 		{19841115-1984-0411-1977-021977151984}.static_basis|x64.ActiveCfg = basis|x64
 		{19841115-1984-0411-1977-021977151984}.static_basis|x64.Build.0 = basis|x64
 		{400C9EC2-5401-4C7D-A588-8A626026320C}.basis|Android.ActiveCfg = basis|Win32
