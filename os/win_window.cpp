@@ -4860,7 +4860,10 @@ ExitModal:
 
       UNREFERENCED_PARAMETER(bRedraw);
 
-      m_pfont = canew(::draw2d::font(*pfont));
+      if (m_pfont.is_null())
+         m_pfont.create(allocer());
+
+      *m_pfont = *pfont;
 
    }
 
