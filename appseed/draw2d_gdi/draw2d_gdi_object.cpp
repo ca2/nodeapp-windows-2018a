@@ -118,20 +118,6 @@ namespace draw2d_gdi
 
    }
 
-   ::draw2d::object * object::from_handle(base_application * papp, HGDIOBJ h)
-   {
-      
-      ::draw2d_gdi::object * pobject = graphics_object_allocator(papp, h);
-
-      if(pobject == NULL)
-         return NULL;
-
-      pobject->Attach(h);
-
-      return pobject;
-
-   }
-
    bool object::Attach(HGDIOBJ hObject)
    {
       
@@ -295,5 +281,10 @@ namespace draw2d_gdi
    }
 
 
+
+
 }  // namespace draw2d_gdi
+
+
+
 

@@ -552,8 +552,8 @@ namespace win
       {
          oswindow oswindowTopic = wndaApp[j];
 
-         sp(window) pwnd = NULL;
-         //sp(window) pwnd = (System.user()->window_map().get((int_ptr) oswindowTopic));
+         ::window_sp pwnd = NULL;
+         //::window_sp pwnd = (System.user()->window_map().get((int_ptr) oswindowTopic));
          //if(pwnd == NULL)
          //{
          for(int32_t l = 0; l < wndpa.get_count(); l++)
@@ -816,7 +816,7 @@ namespace win
          return OptimizeNone;
       }
 
-   //    sp(window) pwnd = window::FromHandlePermanent(oswindow);
+   //    ::window_sp pwnd = window::FromHandlePermanent(oswindow);
        
       
       if(ptwi == NULL)
@@ -908,7 +908,7 @@ namespace win
       ::GetWindowRect(oswindow, rectWindow);
 
 
-   //   sp(window) pwnd = ::win::window::from_handle;
+   //   ::window_sp pwnd = ::win::window::from_handle;
 
       if(!TwfGetTopWindow(
             oswindowParam,
@@ -1011,7 +1011,7 @@ namespace win
    {
       rect rectWindow;
 
-   //   sp(window) pwndOpaque = window::FromHandlePermanent(oswindowOpaque);
+   //   ::window_sp pwndOpaque = window::FromHandlePermanent(oswindowOpaque);
 
       ::GetWindowRect(oswindowOpaque, rectWindow);
 

@@ -64,7 +64,7 @@ namespace draw2d_gdiplus
    }
 
 
-   sp(window) graphics::GetWindow() const
+   ::window_sp graphics::GetWindow() const
    { 
       //ASSERT(get_handle1() != NULL); return ::draw2d_gdiplus::window::from_handle(::WindowFromDC(get_handle1())); 
       return NULL;
@@ -176,11 +176,11 @@ namespace draw2d_gdiplus
    }
 
 
-   int32_t graphics::ExcludeUpdateRgn(sp(window) pWnd)
+   int32_t graphics::ExcludeUpdateRgn(::window_sp pwindow)
    { 
       ASSERT(get_handle1() != NULL); 
       throw not_implemented(get_app());
-      //return ::ExcludeUpdateRgn(get_handle1(), WIN_WINDOW(pWnd)->get_handle()); 
+      //return ::ExcludeUpdateRgn(get_handle1(), WIN_WINDOW(pwindow)->get_handle()); 
       return 0;
    }
 

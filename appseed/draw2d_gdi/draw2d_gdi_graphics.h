@@ -53,6 +53,9 @@ namespace draw2d_gdi
       graphics(base_application * papp);
       virtual ~graphics();
 
+
+      bool Attach(HDC hdc);
+      HDC Detach();
      
       operator HDC() const;
       HDC get_handle1() const; // Always returns the Output DC
@@ -75,18 +78,6 @@ namespace draw2d_gdi
       void internal_set_path_line(void * pparam);
       void internal_set_path_polygon(void * pparam);
       void internal_set_path_poly_polygon(void * pparam);
-
-      static ::draw2d::graphics * from_handle(base_application * papp, HDC hDC);
-      static void DeleteTempMap();
-      bool Attach(HDC hDC);   // Attach/Detach affects only the Output DC
-      HDC Detach();
-
-/*
-      virtual void SetAttribDC(HDC hDC);  // Set the Attribute DC
-      virtual void SetOutputDC(HDC hDC);  // Set the Output DC
-      virtual void ReleaseAttribDC();     // Release the Attribute DC
-      virtual void ReleaseOutputDC();     // Release the Output DC
-*/
 
       bool IsPrinting() const;            // TRUE if being used for printing
 
@@ -126,7 +117,7 @@ namespace draw2d_gdi
 
    // Type-safe selection helpers
    public:
-      virtual ::draw2d::object* SelectStockObject(int nIndex);
+      //virtual ::draw2d::object* SelectStockObject(int nIndex);
       virtual ::draw2d::pen* SelectObject(::draw2d::pen* pPen);
       virtual ::draw2d::brush* SelectObject(::draw2d::brush* pBrush);
       virtual ::draw2d::font* SelectObject(::draw2d::font* pFont);
@@ -242,7 +233,7 @@ namespace draw2d_gdi
             int SelectClipRgn(::draw2d::region* pRgn);
             int ExcludeClipRect(int x1, int y1, int x2, int y2);
             int ExcludeClipRect(LPCRECT lpRect);
-            int ExcludeUpdateRgn(window * pWnd);
+            int ExcludeUpdateRgn(window * pwindow);
             int IntersectClipRect(int x1, int y1, int x2, int y2);
             int IntersectClipRect(LPCRECT lpRect);
             int OffsetClipRgn(int x, int y);

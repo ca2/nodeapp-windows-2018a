@@ -525,14 +525,14 @@ namespace win
       return ::win::graphics::from_handle((HDC) pdata);
    }*/
 
-   sp(window) application::window_from_os_data(void * pdata)
+   ::window_sp application::window_from_os_data(void * pdata)
    {
       return ::win::window::from_handle((oswindow) pdata);
    }
 
-   sp(window) application::window_from_os_data_permanent(void * pdata)
+   ::window_sp application::window_from_os_data_permanent(void * pdata)
    {
-      sp(window) pwnd = ::win::window::FromHandlePermanent((oswindow) pdata);
+      ::window_sp pwnd = ::win::window::FromHandlePermanent((oswindow) pdata);
       if(pwnd != NULL)
          return pwnd;
       user::interaction_ptr_array wndptra = System.frames();
@@ -631,12 +631,12 @@ namespace win
 
    }
 
-   sp(window) application::FindWindow(const char * lpszClassName, const char * lpszWindowName)
+   ::window_sp application::FindWindow(const char * lpszClassName, const char * lpszWindowName)
    {
       return window::FindWindow(lpszClassName, lpszWindowName);
    }
 
-   sp(window) application::FindWindowEx(oswindow oswindowParent, oswindow oswindowChildAfter, const char * lpszClass, const char * lpszWindow)
+   ::window_sp application::FindWindowEx(oswindow oswindowParent, oswindow oswindowChildAfter, const char * lpszClass, const char * lpszWindow)
    {
       return window::FindWindowEx(oswindowParent, oswindowChildAfter, lpszClass, lpszWindow);
    }

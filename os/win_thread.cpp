@@ -12,8 +12,8 @@ bool CLASS_DECL_win __internal_pump_message();
 LRESULT CLASS_DECL_win __internal_process_wnd_proc_exception(::exception::base*, const MSG* pMsg);
 bool __internal_pre_translate_message(MSG* pMsg);
 bool __internal_is_idle_message(MSG* pMsg);
-__STATIC void CLASS_DECL_win __pre_init_dialog(sp(::user::interaction) pWnd, LPRECT lpRectOld, uint32_t * pdwStyleOld);
-__STATIC void CLASS_DECL_win __post_init_dialog(sp(::user::interaction) pWnd, const RECT& rectOld, uint32_t dwStyleOld);
+__STATIC void CLASS_DECL_win __pre_init_dialog(sp(::user::interaction) pwindow, LPRECT lpRectOld, uint32_t * pdwStyleOld);
+__STATIC void CLASS_DECL_win __post_init_dialog(sp(::user::interaction) pwindow, const RECT& rectOld, uint32_t dwStyleOld);
 
 namespace core
 {
@@ -771,22 +771,34 @@ namespace win
       }
    }
 
+
    ::count thread::get_ui_count()
    {
+
       single_lock sl(&m_mutexUiPtra, TRUE);
+
       return m_puiptra->get_count();
+
    }
 
-   sp(::user::interaction) thread::get_ui(index iIndex)
+
+   ::user::interaction * thread::get_ui(index iIndex)
    {
+
       single_lock sl(&m_mutexUiPtra, TRUE);
+
       return m_puiptra->element_at(iIndex);
+
    }
+
 
    void thread::_001PostCreateMessageWindow()
    {
+
       post_thread_message(WM_USER + 123);
+
    }
+
 
    void thread::_001OnCreateMessageWindow(signal_details * pobj)
    {
@@ -1765,7 +1777,7 @@ stop_run:
      // }
 
       // all other messages route through message map
-      sp(window) pwindow = pbase->m_pwnd->get_wnd();
+      ::window_sp pwindow = pbase->m_pwnd->get_wnd();
 
       ASSERT(pwindow == NULL || pwindow == pbase->m_pwnd->m_pimpl);
 
@@ -2299,8 +2311,8 @@ return TRUE; */
 //   window's accelerator table
 /*   if (pMainWnd != NULL)
 {
-sp(window) pWnd = ::win::window::from_handle(pMsg->oswindow);
-if (pWnd != NULL && WIN_WINDOW(pWnd)->GetTopLevelParent() != pMainWnd)
+::window_sp pwindow = ::win::window::from_handle(pMsg->oswindow);
+if (pwindow != NULL && WIN_WINDOW(pwindow)->GetTopLevelParent() != pMainWnd)
 return pMainWnd->pre_translate_message(pMsg);
 }
 

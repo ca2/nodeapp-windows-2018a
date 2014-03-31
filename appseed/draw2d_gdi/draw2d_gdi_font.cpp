@@ -26,14 +26,6 @@ namespace draw2d_gdi
    }
 
 
-   ::draw2d::font * font::from_handle(base_application * papp, HFONT hFont)
-   {
-
-      return dynamic_cast < font * > (::draw2d_gdi::object::from_handle(papp, hFont)); 
-
-   }
-
-
    bool font::CreateFontIndirect(const LOGFONTW * lpLogFont)
    { 
 

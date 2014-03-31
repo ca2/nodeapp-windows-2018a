@@ -9,8 +9,8 @@ extern __declspec(thread) HHOOK t_hHookOldMsgFilter;
 extern __declspec(thread) HHOOK t_hHookOldCbtFilter;
 extern __declspec(thread) ::user::interaction * t_pwndInit;
 
-__STATIC void CLASS_DECL_win __pre_init_dialog(sp(::user::interaction) pWnd, LPRECT lpRectOld, uint32_t* pdwStyleOld);
-__STATIC void CLASS_DECL_win __post_init_dialog(sp(::user::interaction) pWnd, const RECT& rectOld, uint32_t dwStyleOld);
+__STATIC void CLASS_DECL_win __pre_init_dialog(sp(::user::interaction) pwindow, LPRECT lpRectOld, uint32_t* pdwStyleOld);
+__STATIC void CLASS_DECL_win __post_init_dialog(sp(::user::interaction) pwindow, const RECT& rectOld, uint32_t dwStyleOld);
 LRESULT CALLBACK __activation_window_procedure(oswindow oswindow, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
 const char * gen_OldWndProc = "::core::OldWndProc423";
@@ -127,7 +127,7 @@ namespace win
       }
    }
 
-   sp(window) window::from_os_data(void * pdata)
+   ::window_sp window::from_os_data(void * pdata)
    {
       return from_handle((oswindow) pdata);   
    }
@@ -192,17 +192,17 @@ namespace win
    }
 
 
-   sp(window) window::from_handle(oswindow oswindow)
+   ::window_sp window::from_handle(oswindow oswindow)
    {
       oswindow_map* pMap = get_oswindow_map(TRUE); //create map if not exist
       single_lock sl(&pMap->m_mutex, true);
       try
       {
          ASSERT(pMap != NULL);
-         sp(window) pWnd =  pMap->from_handle(oswindow);
-         if(pWnd != NULL && WIN_WINDOW(pWnd.m_p)->get_handle() != oswindow)
+         ::window_sp pwindow =  pMap->from_handle(oswindow);
+         if(pwindow != NULL && WIN_WINDOW(pwindow.m_p)->get_handle() != oswindow)
             return NULL;
-         return pWnd;
+         return pwindow;
       }
       catch(...)
       {
@@ -210,19 +210,19 @@ namespace win
       }
    }
 
-   sp(window) window::FromHandlePermanent(oswindow oswindow)
+   ::window_sp window::FromHandlePermanent(oswindow oswindow)
    {
       oswindow_map* pMap = get_oswindow_map();
       single_lock sl(&pMap->m_mutex, true);
-      sp(window) pWnd = NULL;
+      ::window_sp pwindow = NULL;
       if (pMap != NULL)
       {
          // only look in the permanent map - does no allocations
-         pWnd = pMap->lookup_permanent(oswindow);
-         if(pWnd != NULL && WIN_WINDOW(pWnd)->get_handle() != oswindow)
+         pwindow = pMap->lookup_permanent(oswindow);
+         if(pwindow != NULL && WIN_WINDOW(pwindow)->get_handle() != oswindow)
             return NULL;
       }
-      return pWnd;
+      return pwindow;
    }
 
    bool window::attach(oswindow oswindow_New)
@@ -828,15 +828,15 @@ namespace win
          return; // don't do anything more
       }
 
-      sp(window) pWnd = ::win::window::FromHandlePermanent(((::win::window *)this)->get_handle());
-      if (pWnd.m_p != this)
+      ::window_sp pwindow = ::win::window::FromHandlePermanent(((::win::window *)this)->get_handle());
+      if (pwindow.m_p != this)
          dumpcontext << " (Detached or temporary window)";
       else
          dumpcontext << " (permanent window)";
 
       // dump out window specific statistics
       char szBuf [64];    
-      //if (!const_cast < window * > (this)->send_message(WM_QUERYAFXWNDPROC, 0, 0) && pWnd == this)
+      //if (!const_cast < window * > (this)->send_message(WM_QUERYAFXWNDPROC, 0, 0) && pwindow == this)
         // ((::win::window *)this)->GetWindowText(szBuf, _countof(szBuf));
       //else
         // ::DefWindowProc(((::win::window *)this)->get_handle(), WM_GETTEXT, _countof(szBuf), (LPARAM)&szBuf[0]);
@@ -848,7 +848,7 @@ namespace win
       rect rect;
       ((::win::window *) this)->GetWindowRect(&rect);
       dumpcontext << "\nrect = " << rect;
-      dumpcontext << "\nparent sp(window) = " << ((::win::window *)this)->get_parent();
+      dumpcontext << "\nparent ::window_sp = " << ((::win::window *)this)->get_parent();
 
       dumpcontext << "\nstyle = " << (uint_ptr)::GetWindowLong(((::win::window *)this)->get_handle(), GWL_STYLE);
       if (::GetWindowLong(((::win::window *)this)->get_handle(), GWL_STYLE) & WS_CHILD)
@@ -868,7 +868,7 @@ namespace win
    bool window::DestroyWindow()
    {
       //single_lock sl(m_spmutex, TRUE);
-      sp(window) pWnd;
+      ::window_sp pwindow;
       oswindow_map * pMap;
       oswindow oswindow_Orig;
       bool bResult;
@@ -888,7 +888,7 @@ namespace win
 
       bResult = FALSE;
       pMap = NULL;
-      pWnd = NULL;
+      pwindow = NULL;
       oswindow_Orig = NULL;
       if (get_handle() != NULL)
       {
@@ -896,7 +896,7 @@ namespace win
          single_lock sl(&pMap->m_mutex, true);
          if(pMap != NULL)
          {
-            pWnd = (pMap->lookup_permanent(get_handle()));
+            pwindow = (pMap->lookup_permanent(get_handle()));
 #ifdef DEBUG
             oswindow_Orig = get_handle();
 #endif
@@ -912,12 +912,12 @@ namespace win
       if (oswindow_Orig != NULL)
       {
          // Note that 'this' may have been deleted at this point,
-         //  (but only if pWnd != NULL)
-         if (pWnd != NULL && bResult && bHasGuie)
+         //  (but only if pwindow != NULL)
+         if (pwindow != NULL && bResult && bHasGuie)
          {
             // Should have been detached by OnNcDestroy
 #ifdef DEBUG
-            sp(window) pWndPermanent = (pMap->lookup_permanent(oswindow_Orig));;
+            ::window_sp pWndPermanent = (pMap->lookup_permanent(oswindow_Orig));;
             ASSERT(pWndPermanent == NULL);
             // It is important to call base class, including core core
             // base classes implementation of install_message_handling
@@ -1078,7 +1078,7 @@ namespace win
       return ::GetWindowInfo(((window *) this)->get_handle(), pwi) != FALSE; 
    }
 
-   sp(window) window::GetAncestor(UINT gaFlags) const
+   ::window_sp window::GetAncestor(UINT gaFlags) const
    { ASSERT(::IsWindow(((window *) this)->get_handle())); return  ::win::window::from_handle(::GetAncestor(((window *) this)->get_handle(), gaFlags)); }
 
 
@@ -1189,12 +1189,12 @@ namespace win
       PrepareForHelp();
 
       // need to use top level parent (for the case where get_handle() is in DLL)
-      sp(::user::interaction) pWnd = EnsureTopLevelParent();
+      sp(::user::interaction) pwindow = EnsureTopLevelParent();
 
       TRACE(::core::trace::category_AppMsg, 0, "WinHelp: pszHelpFile = '%s', dwData: $%lx, fuCommand: %d.\n", pApp->m_pszHelpFilePath, dwData, nCmd);
 
       // finally, run the Windows Help engine
-      /* trans   if (!::WinHelp(WIN_WINDOW(pWnd)->get_handle(), pApp->m_pszHelpFilePath, nCmd, dwData))
+      /* trans   if (!::WinHelp(WIN_WINDOW(pwindow)->get_handle(), pApp->m_pszHelpFilePath, nCmd, dwData))
       {
       // linux System.simple_message_box(__IDP_FAILED_TO_LAUNCH_HELP);
       System.simple_message_box("Failed to launch help");
@@ -1217,12 +1217,12 @@ namespace win
    PrepareForHelp();
 
    // need to use top level parent (for the case where get_handle() is in DLL)
-   sp(::user::interaction) pWnd = EnsureTopLevelParent();
+   sp(::user::interaction) pwindow = EnsureTopLevelParent();
 
    TRACE(::core::trace::category_AppMsg, 0, "HtmlHelp: pszHelpFile = '%s', dwData: $%lx, fuCommand: %d.\n", pApp->m_pszHelpFilePath, dwData, nCmd);
 
    // run the HTML Help engine
-   /* trans   if (!::core::HtmlHelp(WIN_WINDOW(pWnd)->get_handle(), pApp->m_pszHelpFilePath, nCmd, dwData))
+   /* trans   if (!::core::HtmlHelp(WIN_WINDOW(pwindow)->get_handle(), pApp->m_pszHelpFilePath, nCmd, dwData))
    {
    // linux System.simple_message_box(__IDP_FAILED_TO_LAUNCH_HELP);
    System.simple_message_box("Failed to launch help");
@@ -1243,9 +1243,9 @@ namespace win
       SendMessageToDescendants(WM_CANCELMODE, 0, 0, TRUE, TRUE);
 
       // need to use top level parent (for the case where get_handle() is in DLL)
-      sp(::user::interaction) pWnd = EnsureTopLevelParent();
-      WIN_WINDOW(pWnd.m_p)->send_message(WM_CANCELMODE);
-      WIN_WINDOW(pWnd.m_p)->SendMessageToDescendants(WM_CANCELMODE, 0, 0, TRUE, TRUE);
+      sp(::user::interaction) pwindow = EnsureTopLevelParent();
+      WIN_WINDOW(pwindow.m_p)->send_message(WM_CANCELMODE);
+      WIN_WINDOW(pwindow.m_p)->SendMessageToDescendants(WM_CANCELMODE, 0, 0, TRUE, TRUE);
 
       // attempt to cancel capture
       oswindow oswindow_Capture = ::GetCapture();
@@ -1834,12 +1834,12 @@ restart_mouse_hover_check:
    wndTemp.set_handle(pCtl->oswindow);
    UINT nCtlType = pCtl->nCtlType;
    // if not coming from a permanent window, use stack temporary
-   sp(window) pWnd = ::win::window::FromHandlePermanent(wndTemp.get_handle());
-   if (pWnd == NULL)
+   ::window_sp pwindow = ::win::window::FromHandlePermanent(wndTemp.get_handle());
+   if (pwindow == NULL)
    {
-   pWnd = &wndTemp;
+   pwindow = &wndTemp;
    }
-   HBRUSH hbr = (this->*mmf.pfn_B_D_W_u)(&dcTemp, pWnd, nCtlType);
+   HBRUSH hbr = (this->*mmf.pfn_B_D_W_u)(&dcTemp, pwindow, nCtlType);
    // fast detach of temporary objects
    dcTemp.set_handle1(NULL);
    wndTemp.set_handle(NULL);
@@ -2231,7 +2231,7 @@ restart_mouse_hover_check:
    void window::ActivateTopParent()
    {
       // special activate logic for floating toolbars and palettes
-      sp(window) pActiveWnd = GetForegroundWindow();
+      ::window_sp pActiveWnd = GetForegroundWindow();
       if (pActiveWnd == NULL || !(WIN_WINDOW(pActiveWnd)->get_handle() == get_handle() || ::IsChild(WIN_WINDOW(pActiveWnd)->get_handle(), get_handle())))
       {
          // clicking on floating frame when it does not have
@@ -2279,7 +2279,7 @@ restart_mouse_hover_check:
       return pFrameWnd;
    }
 
-   sp(window) window::get_safe_owner(sp(window) pParent, oswindow* pWndTop)
+   ::window_sp window::get_safe_owner(::window_sp pParent, oswindow* pWndTop)
    {
       oswindow oswindow = get_safe_owner(pParent->get_handle(), pWndTop);
       return ::win::window::from_handle(oswindow);
@@ -2348,11 +2348,11 @@ restart_mouse_hover_check:
          // if bOnlyPerm is TRUE, don't send to non-permanent windows
          if (bOnlyPerm)
          {
-            sp(window) pWnd = ::win::window::FromHandlePermanent(oswindow_Child);
-            if (pWnd != NULL)
+            ::window_sp pwindow = ::win::window::FromHandlePermanent(oswindow_Child);
+            if (pwindow != NULL)
             {
                // call window proc directly since it is a C++ window
-               __call_window_procedure(pWnd, WIN_WINDOW(pWnd)->get_handle(), message, wParam, lParam);
+               __call_window_procedure(pwindow, WIN_WINDOW(pwindow)->get_handle(), message, wParam, lParam);
             }
          }
          else
@@ -2529,20 +2529,20 @@ restart_mouse_hover_check:
    oswindow_Child = oswindow_Child->GetNextWindow(GW_HWNDNEXT))
    {
    string strIdc = oswindow_Child->GetDlgCtrlId();
-   sp(::user::interaction) pWnd = oswindow_Child;
+   sp(::user::interaction) pwindow = oswindow_Child;
    if (strIdc == pszIdLeftOver)
    oswindow_LeftOver = oswindow_Child;
-   else if (::str::begins(strIdc, pszPrefix) && pWnd != NULL)
+   else if (::str::begins(strIdc, pszPrefix) && pwindow != NULL)
    oswindow_Child->SendMessage(WM_SIZEPARENT, 0, (LPARAM)&layout);
    }
    for (int32_t i = 0; i < m_pui->m_uiptra.get_count();   i++)
    {
    sp(::user::interaction) oswindow_Child = m_pui->m_uiptra[i];
    string strIdc = oswindow_Child->GetDlgCtrlId();
-   sp(::user::interaction) pWnd = oswindow_Child;
+   sp(::user::interaction) pwindow = oswindow_Child;
    if (strIdc == pszIdLeftOver)
    oswindow_LeftOver = oswindow_Child;
-   else if (::str::begins(strIdc, pszPrefix) && pWnd != NULL)
+   else if (::str::begins(strIdc, pszPrefix) && pwindow != NULL)
    oswindow_Child->SendMessage(WM_SIZEPARENT, 0, (LPARAM)&layout);
    }
    }
@@ -2552,20 +2552,20 @@ restart_mouse_hover_check:
    oswindow_Child = oswindow_Child->GetNextWindow(GW_HWNDNEXT))
    {
    string strIdc = oswindow_Child->GetDlgCtrlId();
-   sp(::user::interaction) pWnd = oswindow_Child;
+   sp(::user::interaction) pwindow = oswindow_Child;
    if (strIdc == pszIdLeftOver)
    oswindow_LeftOver = oswindow_Child;
-   else if (::str::begins(strIdc, pszPrefix) && pWnd != NULL)
+   else if (::str::begins(strIdc, pszPrefix) && pwindow != NULL)
    oswindow_Child->SendMessage(WM_SIZEPARENT, 0, (LPARAM)&layout);
    }
    for (int32_t i = 0; i < m_uiptra.get_count();   i++)
    {
    sp(::user::interaction) oswindow_Child = m_uiptra[i];
    string strIdc = oswindow_Child->GetDlgCtrlId();
-   sp(::user::interaction) pWnd = oswindow_Child;
+   sp(::user::interaction) pwindow = oswindow_Child;
    if (strIdc == pszIdLeftOver)
    oswindow_LeftOver = oswindow_Child;
-   else if (::str::begins(strIdc, pszPrefix) && pWnd != NULL)
+   else if (::str::begins(strIdc, pszPrefix) && pwindow != NULL)
    oswindow_Child->SendMessage(WM_SIZEPARENT, 0, (LPARAM)&layout);
    }
    }
@@ -2653,20 +2653,20 @@ restart_mouse_hover_check:
             oswindow_Child = oswindow_Child->GetNextWindow(GW_HWNDNEXT))
          {
             id id = oswindow_Child->GetDlgCtrlId();
-            sp(::user::interaction) pWnd = oswindow_Child;
+            sp(::user::interaction) pwindow = oswindow_Child;
             if (id == (int32_t) nIdLeftOver)
                oswindow_LeftOver = oswindow_Child;
-            else if (pWnd != NULL)
+            else if (pwindow != NULL)
                oswindow_Child->send_message(WM_SIZEPARENT, 0, (LPARAM)&layout);
          }
          for (sp(::user::interaction) oswindow_Child = m_pui->get_top_child(); oswindow_Child != NULL;
             oswindow_Child = oswindow_Child->under_sibling())
          {
             id id = oswindow_Child->GetDlgCtrlId();
-            sp(::user::interaction) pWnd = oswindow_Child;
+            sp(::user::interaction) pwindow = oswindow_Child;
             if (id == nIdLeftOver)
                oswindow_LeftOver = oswindow_Child;
-            else if (pWnd != NULL)
+            else if (pwindow != NULL)
                oswindow_Child->send_message(WM_SIZEPARENT, 0, (LPARAM)&layout);
          }
       }
@@ -2676,20 +2676,20 @@ restart_mouse_hover_check:
             oswindow_Child = oswindow_Child->GetNextWindow(GW_HWNDNEXT))
          {
             id id = oswindow_Child->GetDlgCtrlId();
-            sp(::user::interaction) pWnd = oswindow_Child;
+            sp(::user::interaction) pwindow = oswindow_Child;
             if (id == nIdLeftOver)
                oswindow_LeftOver = oswindow_Child;
-            else if (pWnd != NULL)
+            else if (pwindow != NULL)
                oswindow_Child->send_message(WM_SIZEPARENT, 0, (LPARAM)&layout);
          }
          for (sp(::user::interaction) oswindow_Child = m_pui->get_top_child(); oswindow_Child != NULL;
             oswindow_Child = oswindow_Child->under_sibling())
          {
             id id = oswindow_Child->GetDlgCtrlId();
-            sp(::user::interaction) pWnd = oswindow_Child;
+            sp(::user::interaction) pwindow = oswindow_Child;
             if (id == nIdLeftOver)
                oswindow_LeftOver = oswindow_Child;
-            else if (pWnd != NULL)
+            else if (pwindow != NULL)
                oswindow_Child->send_message(WM_SIZEPARENT, 0, (LPARAM)&layout);
          }
       }
@@ -2833,16 +2833,16 @@ restart_mouse_hover_check:
          return FALSE;
 
       // check if in permanent map, if it is reflect it (could be OLE control)
-      sp(window) pWnd = (pMap->lookup_permanent(oswindow_Child));
-      ASSERT(pWnd == NULL || WIN_WINDOW(pWnd)->get_handle() == oswindow_Child);
-      if (pWnd == NULL)
+      ::window_sp pwindow = (pMap->lookup_permanent(oswindow_Child));
+      ASSERT(pwindow == NULL || WIN_WINDOW(pwindow)->get_handle() == oswindow_Child);
+      if (pwindow == NULL)
       {
          return FALSE;
       }
 
       // only OLE controls and permanent windows will get reflected msgs
-      ASSERT(pWnd != NULL);
-      return WIN_WINDOW(pWnd)->OnChildNotify(pbase);
+      ASSERT(pwindow != NULL);
+      return WIN_WINDOW(pwindow)->OnChildNotify(pbase);
    }
 
    bool window::OnChildNotify(::message::base * pbase)
@@ -2934,7 +2934,7 @@ restart_mouse_hover_check:
       Default();
    }
 
-   void window::OnSetFocus(sp(window))
+   void window::OnSetFocus(::window_sp)
    { 
       bool bHandled;
 
@@ -3269,7 +3269,7 @@ restart_mouse_hover_check:
                if(rect9.width() > 0 && rect9.height() > 0)
                {
 
-                  /*sp(window) pwnd = (window::FromHandlePermanent);
+                  /*::window_sp pwnd = (window::FromHandlePermanent);
 
                   if(pwnd == NULL)
                   {
@@ -3538,7 +3538,7 @@ restart_mouse_hover_check:
    }
 
 
-   void window::OnEnterIdle(UINT /*nWhy*/, sp(window) /*pWho*/)
+   void window::OnEnterIdle(UINT /*nWhy*/, ::window_sp /*pWho*/)
    {
       // In some OLE inplace active scenarios, OLE will post a
       // message instead of sending it.  This causes so many WM_ENTERIDLE
@@ -3555,11 +3555,11 @@ restart_mouse_hover_check:
       Default();
    }
 
-   HBRUSH window::OnCtlColor(::draw2d::graphics *, sp(window) pWnd, UINT)
+   HBRUSH window::OnCtlColor(::draw2d::graphics *, ::window_sp pwindow, UINT)
    {
-      ASSERT(pWnd != NULL && WIN_WINDOW(pWnd)->get_handle() != NULL);
+      ASSERT(pwindow != NULL && WIN_WINDOW(pwindow)->get_handle() != NULL);
       LRESULT lResult;
-      //if (WIN_WINDOW(pWnd)->OnChildNotify(&lResult))
+      //if (WIN_WINDOW(pwindow)->OnChildNotify(&lResult))
       //   return (HBRUSH)lResult;     // eat it
       return (HBRUSH)Default();
    }
@@ -3865,11 +3865,11 @@ restart_mouse_hover_check:
       state.m_pOther = &wndTemp;
 
       // check for reflect handlers in the child window
-      sp(window) pWnd = ::win::window::FromHandlePermanent(oswindow_Child);
-      if (pWnd != NULL)
+      ::window_sp pwindow = ::win::window::FromHandlePermanent(oswindow_Child);
+      if (pwindow != NULL)
       {
       // call it directly to disable any routing
-      if (WIN_WINDOW(pWnd)->window::_001OnCommand(0, MAKELONG(0xffff,
+      if (WIN_WINDOW(pwindow)->window::_001OnCommand(0, MAKELONG(0xffff,
       WM_COMMAND+WM_REFLECT_BASE), &state, NULL))
       continue;
       }
@@ -4143,7 +4143,7 @@ ExitModal:
       return TRUE;
    }
 
-   bool window::SubclassDlgItem(UINT nID, sp(window) pParent)
+   bool window::SubclassDlgItem(UINT nID, ::window_sp pParent)
    {
       ASSERT(pParent != NULL);
       ASSERT(::IsWindow(WIN_WINDOW(pParent)->get_handle()));
@@ -4179,16 +4179,16 @@ ExitModal:
 
 
 
-   bool window::IsChild(sp(::user::interaction) pWnd)
+   bool window::IsChild(sp(::user::interaction) pwindow)
    {
       ASSERT(::IsWindow(get_handle())); 
-      if(WIN_WINDOW(pWnd.m_p)->get_handle() == NULL)
+      if(WIN_WINDOW(pwindow.m_p)->get_handle() == NULL)
       {
-         return ::user::interaction::IsChild(pWnd);
+         return ::user::interaction::IsChild(pwindow);
       }
       else
       {
-         return ::IsChild(get_handle(), WIN_WINDOW(pWnd.m_p)->get_handle()) != FALSE;
+         return ::IsChild(get_handle(), WIN_WINDOW(pwindow.m_p)->get_handle()) != FALSE;
       }
    }
 
@@ -4628,7 +4628,7 @@ ExitModal:
    }
 
 
-   sp(::user::interaction) window::get_parent()
+   ::user::interaction * window::get_parent()
    {
       
       if(!::IsWindow(get_handle()))
@@ -4865,9 +4865,9 @@ ExitModal:
 
    sp(::user::interaction) window::EnsureTopLevelParent()
    {
-      sp(::user::interaction)pWnd=GetTopLevelParent();
-      ENSURE_VALID(pWnd);
-      return pWnd;
+      sp(::user::interaction)pwindow=GetTopLevelParent();
+      ENSURE_VALID(pwindow);
+      return pwindow;
    }
 
    void window::MoveWindow(LPCRECT lpRect, bool bRepaint)
@@ -4897,13 +4897,13 @@ ExitModal:
 
    }
 
-   void window::MapWindowPoints(sp(window) pwndTo, LPPOINT lpPoint, UINT nCount)
+   void window::MapWindowPoints(::window_sp pwndTo, LPPOINT lpPoint, UINT nCount)
    {
       ASSERT(::IsWindow(get_handle())); 
       ::MapWindowPoints(get_handle(), pwndTo->get_handle(), lpPoint, nCount); 
    }
 
-   void window::MapWindowPoints(sp(window) pwndTo, LPRECT lpRect)
+   void window::MapWindowPoints(::window_sp pwndTo, LPRECT lpRect)
    { 
       ASSERT(::IsWindow(get_handle())); 
       ::MapWindowPoints(get_handle(), pwndTo->get_handle(), (LPPOINT)lpRect, 2); 
@@ -5175,7 +5175,7 @@ ExitModal:
 
    }
 
-   sp(window) window::GetCapture()
+   ::window_sp window::GetCapture()
    {
 
       return ::win::window::from_handle(::GetCapture());
@@ -5210,7 +5210,7 @@ ExitModal:
 
    }
 
-   sp(window) window::GetDesktopWindow()
+   ::window_sp window::GetDesktopWindow()
    {
 
       return ::win::window::from_handle(::GetDesktopWindow());
@@ -5304,13 +5304,13 @@ ExitModal:
    int32_t window::GetChildByIdText(__in int32_t nID, __out_ecount_part_z(nMaxCount, return + 1) LPTSTR lpStr, __in int32_t nMaxCount) const
    { ASSERT(::IsWindow(((window *) this)->get_handle())); return ::GetDlgItemText(((window *) this)->get_handle(), nID, lpStr, nMaxCount);}
 
-   sp(window) window::GetNextDlgGroupItem(sp(window) pWndCtl, bool bPrevious) const
+   ::window_sp window::GetNextDlgGroupItem(::window_sp pWndCtl, bool bPrevious) const
    {
       ASSERT(::IsWindow(((window *) this)->get_handle()));
       return ::win::window::from_handle(::GetNextDlgGroupItem(((window *) this)->get_handle(), pWndCtl->get_handle(), bPrevious)); 
    }
 
-   sp(window) window::GetNextDlgTabItem(sp(window) pWndCtl, bool bPrevious) const
+   ::window_sp window::GetNextDlgTabItem(::window_sp pWndCtl, bool bPrevious) const
    {
       ASSERT(::IsWindow(((window *) this)->get_handle())); 
       return ::win::window::from_handle(::GetNextDlgTabItem(((window *) this)->get_handle(), pWndCtl->get_handle(), bPrevious)); 
@@ -5350,9 +5350,9 @@ ExitModal:
 
    }
 
-   sp(window) window::FindWindow(const char * lpszClassName, const char * lpszWindowName)
+   ::window_sp window::FindWindow(const char * lpszClassName, const char * lpszWindowName)
    { return ::win::window::from_handle(::FindWindow(lpszClassName, lpszWindowName)); }
-   sp(window) window::FindWindowEx(oswindow oswindowParent, oswindow oswindowChildAfter, const char * lpszClass, const char * lpszWindow)
+   ::window_sp window::FindWindowEx(oswindow oswindowParent, oswindow oswindowChildAfter, const char * lpszClass, const char * lpszWindow)
    { return ::win::window::from_handle(::FindWindowEx(oswindowParent, oswindowChildAfter, lpszClass, lpszWindow)); }
 
    sp(::user::interaction) window::GetNextWindow(UINT nFlag)
@@ -5369,13 +5369,13 @@ ExitModal:
    sp(::user::interaction) window::GetLastActivePopup()
    { ASSERT(::IsWindow(get_handle())); return (sp(::user::interaction)) ::win::window::from_handle(::GetLastActivePopup(get_handle())).m_p; }
 
-   sp(window) window::set_parent(sp(window) pWndNewParent)
+   ::window_sp window::set_parent(::window_sp pWndNewParent)
    {
       ASSERT(::IsWindow(get_handle())); 
       return ::win::window::from_handle(::SetParent(get_handle(), pWndNewParent->get_handle())); 
    }
 
-   sp(window) window::WindowFromPoint(POINT point)
+   ::window_sp window::WindowFromPoint(POINT point)
    { 
 
       return ::win::window::from_handle(::WindowFromPoint(point));
@@ -5418,21 +5418,21 @@ ExitModal:
 
    }
 
-   sp(window) window::GetOpenClipboardWindow()
+   ::window_sp window::GetOpenClipboardWindow()
    {
 
       return ::win::window::from_handle(::GetOpenClipboardWindow());
 
    }
 
-   sp(window) window::GetClipboardOwner()
+   ::window_sp window::GetClipboardOwner()
    {
 
       return ::win::window::from_handle(::GetClipboardOwner());
 
    }
 
-   sp(window) window::GetClipboardViewer()
+   ::window_sp window::GetClipboardViewer()
    {
 
       return ::win::window::from_handle(::GetClipboardViewer());
@@ -5503,7 +5503,7 @@ ExitModal:
 
    }
 
-   sp(window) window::GetForegroundWindow()
+   ::window_sp window::GetForegroundWindow()
    {
 
       return ::win::window::from_handle(::GetForegroundWindow());
@@ -5576,7 +5576,7 @@ ExitModal:
    // Default message map implementations
    void window::OnActivateApp(bool, uint32_t)
    { Default(); }
-   void window::OnActivate(UINT, sp(window), bool)
+   void window::OnActivate(UINT, ::window_sp, bool)
    { Default(); }
    void window::OnCancelMode()
    { Default(); }
@@ -5584,10 +5584,10 @@ ExitModal:
    { Default(); }
    void window::OnClose()
    { Default(); }
-   void window::OnContextMenu(sp(window), point)
+   void window::OnContextMenu(::window_sp, point)
    { Default(); }
 
-   bool window::OnCopyData(sp(window), COPYDATASTRUCT*)
+   bool window::OnCopyData(::window_sp, COPYDATASTRUCT*)
    { 
 
       return Default() != FALSE;
@@ -5610,7 +5610,7 @@ ExitModal:
    { Default(); }
    void window::OnIconEraseBkgnd(::draw2d::graphics *)
    { Default(); }
-   void window::OnKillFocus(sp(window))
+   void window::OnKillFocus(::window_sp)
    { Default(); }
    LRESULT window::OnMenuChar(UINT, UINT, ::user::menu*)
    { return Default(); }
@@ -5673,7 +5673,7 @@ ExitModal:
    { Default(); }
    void window::OnDropFiles(HDROP)
    { Default(); }
-   void window::OnPaletteIsChanging(sp(window))
+   void window::OnPaletteIsChanging(::window_sp)
    { Default(); }
 
    bool window::OnNcActivate(bool)
@@ -5731,7 +5731,7 @@ ExitModal:
    { Default(); }
    void window::OnFontChange()
    { Default(); }
-   void window::OnPaletteChanged(sp(window))
+   void window::OnPaletteChanged(::window_sp)
    { Default(); }
    void window::OnSpoolerStatus(UINT, UINT)
    { Default(); }
@@ -5757,7 +5757,7 @@ ExitModal:
    { Default(); }
    void window::OnMButtonUp(UINT, point)
    { Default(); }
-   int32_t window::OnMouseActivate(sp(window), UINT, UINT)
+   int32_t window::OnMouseActivate(::window_sp, UINT, UINT)
    { return (int32_t)Default(); }
    void window::OnMouseMove(UINT, point)
    { Default(); }
@@ -5799,21 +5799,21 @@ ExitModal:
    { Default(); }
    void window::OnDrawClipboard()
    { Default(); }
-   void window::OnHScrollClipboard(sp(window), UINT, UINT)
+   void window::OnHScrollClipboard(::window_sp, UINT, UINT)
    { Default(); }
-   void window::OnPaintClipboard(sp(window), HGLOBAL)
+   void window::OnPaintClipboard(::window_sp, HGLOBAL)
    { Default(); }
    void window::OnRenderAllFormats()
    { Default(); }
    void window::OnRenderFormat(UINT)
    { Default(); }
-   void window::OnSizeClipboard(sp(window), HGLOBAL)
+   void window::OnSizeClipboard(::window_sp, HGLOBAL)
    { Default(); }
-   void window::OnVScrollClipboard(sp(window), UINT, UINT)
+   void window::OnVScrollClipboard(::window_sp, UINT, UINT)
    { Default(); }
    UINT window::OnGetDlgCode()
    { return (UINT)Default(); }
-   void window::OnMDIActivate(bool, sp(window), sp(window))
+   void window::OnMDIActivate(bool, ::window_sp, ::window_sp)
    { Default(); }
    void window::OnEnterMenuLoop(bool)
    { Default(); }
@@ -5828,7 +5828,7 @@ ExitModal:
    { Default(); }
    void window::OnMoving(UINT, LPRECT)
    { Default(); }
-   void window::OnCaptureChanged(sp(window))
+   void window::OnCaptureChanged(::window_sp)
    { Default(); }
 
    bool window::OnDeviceChange(UINT, uint_ptr)
@@ -6041,7 +6041,7 @@ ExitModal:
    }
 
 
-   /*CDataExchange::CDataExchange(sp(window) pDlgWnd, bool bSaveAndValidate)
+   /*CDataExchange::CDataExchange(::window_sp pDlgWnd, bool bSaveAndValidate)
    {
    ASSERT_VALID(pDlgWnd);
    m_bSaveAndValidate = bSaveAndValidate;

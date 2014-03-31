@@ -25,13 +25,6 @@ namespace draw2d_gdi
 
    }
 
-   ::draw2d::pen * pen::from_handle(base_application * papp, HPEN hPen)
-   { 
-
-      return dynamic_cast < pen* > (::draw2d_gdi::object::from_handle(papp, hPen));
-
-   }
-
 
    bool pen::CreatePen(int nPenStyle, int nWidth, COLORREF crColor)
    {

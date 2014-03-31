@@ -193,14 +193,14 @@ namespace win
 
       //::draw2d::graphics * graphics_from_os_data(void * pdata);
 
-      sp(window) window_from_os_data(void * pdata);
-      sp(window) window_from_os_data_permanent(void * pdata);
+      ::window_sp window_from_os_data(void * pdata);
+      ::window_sp window_from_os_data_permanent(void * pdata);
 
       virtual thread * GetThread();
       virtual void set_thread(thread * pthread);
 
-      virtual sp(window) FindWindow(const char * lpszClassName, const char * lpszWindowName);
-      virtual sp(window) FindWindowEx(oswindow oswindowParent, oswindow oswindowChildAfter, const char * lpszClass, const char * lpszWindow);
+      virtual ::window_sp FindWindow(const char * lpszClassName, const char * lpszWindowName);
+      virtual ::window_sp FindWindowEx(oswindow oswindowParent, oswindow oswindowChildAfter, const char * lpszClass, const char * lpszWindow);
 
       virtual void get_time(struct timeval *p);
       virtual void set_env_var(const string & var,const string & value);

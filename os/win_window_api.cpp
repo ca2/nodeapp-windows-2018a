@@ -7,7 +7,7 @@ extern const char * gen_OldWndProc;
 
 
 /////////////////////////////////////////////////////////////////////////////
-// Map from oswindow to sp(window)
+// Map from oswindow to ::window_sp
 
 oswindow_map* get_oswindow_map(bool bCreate)
 {
@@ -29,12 +29,12 @@ LRESULT CALLBACK __window_procedure(oswindow oswindow, UINT nMsg, WPARAM wParam,
   //    return 1;
 
    // all other messages route through message map
-   sp(window) pWnd = ::win::window::FromHandlePermanent(oswindow);
-   //ASSERT(pWnd != NULL);               
-   //ASSERT(pWnd==NULL || WIN_WINDOW(pWnd)->get_handle() == oswindow);
-   if (pWnd == NULL || WIN_WINDOW(pWnd)->get_handle() != oswindow)
+   ::window_sp pwindow = ::win::window::FromHandlePermanent(oswindow);
+   //ASSERT(pwindow != NULL);               
+   //ASSERT(pwindow==NULL || WIN_WINDOW(pwindow)->get_handle() == oswindow);
+   if (pwindow == NULL || WIN_WINDOW(pwindow)->get_handle() != oswindow)
       return ::DefWindowProc(oswindow, nMsg, wParam, lParam);
-   return win::__call_window_procedure(pWnd, oswindow, nMsg, wParam, lParam);
+   return win::__call_window_procedure(pwindow, oswindow, nMsg, wParam, lParam);
 }
 
 // always indirectly accessed via __get_window_procedure
@@ -47,42 +47,42 @@ WNDPROC CLASS_DECL_win __get_window_procedure()
 // Special helpers for certain windows messages
 
 __STATIC void CLASS_DECL_win __pre_init_dialog(
-   sp(::user::interaction) pWnd, LPRECT lpRectOld, uint32_t* pdwStyleOld)
+   sp(::user::interaction) pwindow, LPRECT lpRectOld, uint32_t* pdwStyleOld)
 {
    ASSERT(lpRectOld != NULL);   
    ASSERT(pdwStyleOld != NULL);
 
-   WIN_WINDOW(pWnd.m_p)->GetWindowRect(lpRectOld);
-   *pdwStyleOld = WIN_WINDOW(pWnd.m_p)->GetStyle();
+   WIN_WINDOW(pwindow.m_p)->GetWindowRect(lpRectOld);
+   *pdwStyleOld = WIN_WINDOW(pwindow.m_p)->GetStyle();
 }
 
 __STATIC void CLASS_DECL_win __post_init_dialog(
-   sp(::user::interaction) pWnd, const RECT& rectOld, uint32_t dwStyleOld)
+   sp(::user::interaction) pwindow, const RECT& rectOld, uint32_t dwStyleOld)
 {
    // must be hidden to start with      
    if (dwStyleOld & WS_VISIBLE)
       return;
 
    // must not be visible after WM_INITDIALOG
-   if (WIN_WINDOW(pWnd.m_p)->GetStyle() & (WS_VISIBLE|WS_CHILD))
+   if (WIN_WINDOW(pwindow.m_p)->GetStyle() & (WS_VISIBLE|WS_CHILD))
       return;
 
    // must not move during WM_INITDIALOG
    rect rect;
-   WIN_WINDOW(pWnd.m_p)->GetWindowRect(rect);
+   WIN_WINDOW(pwindow.m_p)->GetWindowRect(rect);
    if (rectOld.left != rect.left || rectOld.top != rect.top)
       return;
 
    // must be unowned or owner disabled
-   sp(::user::interaction) pParent = WIN_WINDOW(pWnd.m_p)->GetWindow(GW_OWNER);
+   sp(::user::interaction) pParent = WIN_WINDOW(pwindow.m_p)->GetWindow(GW_OWNER);
    if (pParent != NULL && pParent->is_window_enabled())
       return;
 
-   if (!WIN_WINDOW(pWnd.m_p)->CheckAutoCenter())
+   if (!WIN_WINDOW(pwindow.m_p)->CheckAutoCenter())
       return;
 
    // center modal dialog boxes/message boxes
-   //WIN_WINDOW(pWnd)->CenterWindow();
+   //WIN_WINDOW(pwindow)->CenterWindow();
 }
 
 __declspec(thread) ::user::interaction * t_pwndInit = NULL;
@@ -178,20 +178,20 @@ CLASS_DECL_win const char * __register_window_class(sp(base_application) papp, U
 
 
 __STATIC void CLASS_DECL_win
-   __handle_activate(sp(window) pWnd, WPARAM nState, sp(window) pWndOther)
+   __handle_activate(::window_sp pwindow, WPARAM nState, ::window_sp pWndOther)
 {
-   ASSERT(pWnd != NULL);      
+   ASSERT(pwindow != NULL);      
 
    // send WM_ACTIVATETOPLEVEL when top-level parents change
-   if (!(WIN_WINDOW(pWnd)->GetStyle() & WS_CHILD))
+   if (!(WIN_WINDOW(pwindow)->GetStyle() & WS_CHILD))
    {
-      sp(::user::interaction) pTopLevel= WIN_WINDOW(pWnd)->GetTopLevelParent();
+      sp(::user::interaction) pTopLevel= WIN_WINDOW(pwindow)->GetTopLevelParent();
       if (pTopLevel && (pWndOther == NULL || !::IsWindow(WIN_WINDOW(pWndOther)->get_handle()) || pTopLevel != WIN_WINDOW(pWndOther)->GetTopLevelParent()))
       {
          // lParam points to window getting the WM_ACTIVATE message and
          //  oswindow_Other from the WM_ACTIVATE.
          oswindow oswindow_2[2];
-         oswindow_2[0] = WIN_WINDOW(pWnd)->get_handle();
+         oswindow_2[0] = WIN_WINDOW(pwindow)->get_handle();
          if(pWndOther == NULL || WIN_WINDOW(pWndOther) == NULL)
          {
             oswindow_2[1] = NULL;
@@ -207,14 +207,14 @@ __STATIC void CLASS_DECL_win
 }
 
 __STATIC bool CLASS_DECL_win
-   __handle_set_cursor(sp(window) pWnd, UINT nHitTest, UINT nMsg)
+   __handle_set_cursor(::window_sp pwindow, UINT nHitTest, UINT nMsg)
 {
    if (nHitTest == HTERROR &&
       (nMsg == WM_LBUTTONDOWN || nMsg == WM_MBUTTONDOWN ||
       nMsg == WM_RBUTTONDOWN))
    {
       // activate the last active window if not active
-      sp(::user::interaction) pLastActive = WIN_WINDOW(pWnd)->GetTopLevelParent();      
+      sp(::user::interaction) pLastActive = WIN_WINDOW(pwindow)->GetTopLevelParent();      
       if (pLastActive != NULL)
          pLastActive = pLastActive->GetLastActivePopup();
       if (pLastActive != NULL &&
@@ -397,11 +397,11 @@ LRESULT CALLBACK
          {
             uint32_t dwStyle;
             rect rectOld;
-            sp(window) pWnd = ::win::window::from_handle(oswindow);
-            __pre_init_dialog(pWnd, &rectOld, &dwStyle);
+            ::window_sp pwindow = ::win::window::from_handle(oswindow);
+            __pre_init_dialog(pwindow, &rectOld, &dwStyle);
             bCallDefault = FALSE;
             lResult = CallWindowProc(oldWndProc, oswindow, nMsg, wParam, lParam);
-            __post_init_dialog(pWnd, rectOld, dwStyle);
+            __post_init_dialog(pwindow, rectOld, dwStyle);
          }
          break;
 

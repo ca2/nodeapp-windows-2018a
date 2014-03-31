@@ -17,9 +17,6 @@ namespace draw2d_gdi
       operator HRGN() const;
 
 
-      static ::draw2d::region * from_handle(base_application * papp, HRGN hRgn);
-
-
       bool create_rect(int x1, int y1, int x2, int y2);
       bool create_rect(LPCRECT lpRect);
       bool create_oval(int x1, int y1, int x2, int y2);

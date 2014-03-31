@@ -4,8 +4,9 @@
 namespace draw2d_gdi
 {
 
-
+   
    class graphics;
+
 
    class CLASS_DECL_DRAW2D_GDI object :
       virtual public ::draw2d::object
@@ -25,7 +26,8 @@ namespace draw2d_gdi
       virtual void * get_os_data() const;
       virtual HGDIOBJ get_handle() const;
 
-      static ::draw2d::object * from_handle(base_application * papp, HGDIOBJ hObject);
+
+      bool attach(void * posdata);
 
       bool Attach(HGDIOBJ hObject);
       HGDIOBJ Detach();
@@ -50,6 +52,8 @@ namespace draw2d_gdi
 
 
    };
+
+
 
 
 } // namespace draw2d_gdi

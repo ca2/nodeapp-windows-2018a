@@ -27,13 +27,6 @@ namespace draw2d_gdi
    }
 
 
-   ::draw2d::palette * palette::from_handle(base_application * papp, HPALETTE hPalette)
-   { 
-
-      return dynamic_cast < palette * > (::draw2d_gdi::object::from_handle(papp, hPalette)); 
-
-   }
-
    bool palette::CreatePalette(LPLOGPALETTE lpLogPalette)
    { 
       

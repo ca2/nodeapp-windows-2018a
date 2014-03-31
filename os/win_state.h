@@ -104,7 +104,7 @@ public:
 //
 //   // common controls thread state
 //   CToolTipCtrl* m_pToolTip;
-//   sp(window) m_pLastHit;       // last window to own tooltip
+//   ::window_sp m_pLastHit;       // last window to own tooltip
 //   int_ptr m_nLastHit;         // last hittest code
 //   TOOLINFO* m_pLastInfo;    // last TOOLINFO structure
 //   int_ptr m_nLastStatus;      // last flyby status message
@@ -167,7 +167,7 @@ class CCommDlgWrapper;
 //
 //   // variables related to a given process in a module
 //   //  (used to be __MODULE_PROCESS_STATE)
-//   void (*m_pfnFilterToolTipMessage)(MSG*, sp(window));
+//   void (*m_pfnFilterToolTipMessage)(MSG*, ::window_sp);
 //
 //
 //   // define thread local portions of module state
@@ -264,7 +264,7 @@ namespace win
 //
 //   // window create, gray dialog hook, and other hook data
 //   sp(::win::window) m_pWndInit;
-//   sp(window) m_pAlternateWndInit;      // special case commdlg hooking
+//   ::window_sp m_pAlternateWndInit;      // special case commdlg hooking
 //   DWORD m_dwPropStyle;
 //   DWORD m_dwPropExStyle;
 //   oswindow m_oswindow_Init;
@@ -295,7 +295,7 @@ namespace win
 //   bool m_bWaitForDataSource;
 //
 //   // OLE control thread-local data
-//   sp(window) m_pWndPark;       // "parking space" window
+//   ::window_sp m_pWndPark;       // "parking space" window
 //   long m_nCtrlRef;        // reference ::count on parking window
 //   bool m_bNeedTerm;       // TRUE if OleUninitialize needs to be called
 //};

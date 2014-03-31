@@ -177,12 +177,12 @@ namespace draw2d_gdi
    }
 
 
-   int graphics::ExcludeUpdateRgn(window * pWnd)
+   int graphics::ExcludeUpdateRgn(window * pwindow)
    { 
 
       ASSERT(get_handle1() != NULL); 
 
-      return ::ExcludeUpdateRgn(get_handle1(), (oswindow) pWnd->get_handle()) ;
+      return ::ExcludeUpdateRgn(get_handle1(), (oswindow) pwindow->get_handle()) ;
 
    }
 
@@ -2208,7 +2208,7 @@ namespace draw2d_gdi
 
       ASSERT(get_handle2() != NULL); 
 
-      ((graphics *) this)->m_sppen = ::draw2d_gdi::pen::from_handle(get_app(), (HPEN)::GetCurrentObject(get_handle2(), OBJ_PEN)); 
+      ::draw2d_gdi::attach(this, m_sppen, OBJ_PEN);
 
       return m_sppen;
 
@@ -2221,21 +2221,24 @@ namespace draw2d_gdi
       if(m_spbrush.is_set())
          return m_spbrush;
 
-      ASSERT(get_handle2() != NULL); 
+      ASSERT(get_handle2() != NULL);
 
-      ((graphics *) this)->m_spbrush = ::draw2d_gdi::brush::from_handle(get_app(), (HBRUSH)::GetCurrentObject(get_handle2(), OBJ_BRUSH)); 
+      ::draw2d_gdi::attach(this, m_spbrush, OBJ_BRUSH);
 
       LOGBRUSH lb;
 
       (dynamic_cast < ::draw2d_gdi::brush * > (((graphics *) this)->m_spbrush.m_p))->GetLogBrush(&lb);
 
       m_spbrush->m_cr = lb.lbColor | 255 << 24;
+
       m_spbrush->m_etype = ::draw2d::brush::type_solid;
+
       m_spbrush->m_bUpdated = true;
 
       return m_spbrush;
 
    }
+
 
    ::draw2d::palette_sp graphics::get_current_palette() const
    { 
@@ -2243,14 +2246,6 @@ namespace draw2d_gdi
 
       return ((::draw2d::palette *) NULL);
 
-      /*      if(m_sppalette.is_set() && m_sppalette->get_os_data() == (void *) ::GetCurrentObject(get_handle2(), OBJ_PAL))
-      return m_sppalette;
-
-      ASSERT(get_handle2() != NULL); 
-
-      ((graphics *) this)->m_sppalette = ::draw2d_gdi::palette::from_handle(get_app(), (HPALETTE)::GetCurrentObject(get_handle2(), OBJ_PAL)); 
-
-      return m_sppalette;*/
 
    }
 
@@ -2263,11 +2258,12 @@ namespace draw2d_gdi
 
       ASSERT(get_handle2() != NULL);
 
-      ((graphics *) this)->m_spfont = ::draw2d_gdi::font::from_handle(get_app(), (HFONT)::GetCurrentObject(get_handle2(), OBJ_FONT)); 
+      ::draw2d_gdi::attach(this, m_spbrush, OBJ_FONT);
 
       return m_spfont;
 
    }
+
 
    ::draw2d::bitmap_sp graphics::get_current_bitmap() const
    {
@@ -2277,7 +2273,7 @@ namespace draw2d_gdi
 
       ASSERT(get_handle2() != NULL);
 
-      ((graphics *) this)->m_spbitmap = ::draw2d_gdi::bitmap::from_handle(get_app(), (HBITMAP)::GetCurrentObject(get_handle2(), OBJ_BITMAP)); 
+      ::draw2d_gdi::attach(this, m_spbrush, OBJ_BITMAP);
 
       return m_spbitmap;
 
@@ -3607,19 +3603,6 @@ namespace draw2d_gdi
 #endif //_DEBUG
 
 
-   ::draw2d::graphics * graphics::from_handle(base_application * papp, HDC hdc)
-   {
-
-      ::draw2d_gdi::graphics * pgraphics = new ::draw2d_gdi::graphics (papp);
-
-      pgraphics->attach(hdc);
-
-      return dynamic_cast < ::draw2d::graphics * > (pgraphics);
-
-   }
-
-
-
    bool graphics::Attach(HDC hdc)
    {
 
@@ -3728,24 +3711,24 @@ namespace draw2d_gdi
 
    }
 
-   ::draw2d::object* graphics::SelectStockObject(int nIndex)
-   {
+   //::draw2d::object* graphics::SelectStockObject(int nIndex)
+   //{
 
-      HGDIOBJ hObject = ::GetStockObject(nIndex);
+   //   HGDIOBJ hObject = ::GetStockObject(nIndex);
 
-      HGDIOBJ hOldObj = NULL;
+   //   HGDIOBJ hOldObj = NULL;
 
-      ASSERT(hObject != NULL);
+   //   ASSERT(hObject != NULL);
 
-      if(get_handle1() != NULL && get_handle1() != get_handle2())
-         hOldObj = ::SelectObject(get_handle1(), hObject);
+   //   if(get_handle1() != NULL && get_handle1() != get_handle2())
+   //      hOldObj = ::SelectObject(get_handle1(), hObject);
 
-      if(get_handle2() != NULL)
-         hOldObj = ::SelectObject(get_handle2(), hObject);
+   //   if(get_handle2() != NULL)
+   //      hOldObj = ::SelectObject(get_handle2(), hObject);
 
-      return ::draw2d_gdi::object::from_handle(get_app(), hOldObj);
+   //   return ::draw2d_gdi::object::from_handle(get_app(), hOldObj);
 
-   }
+   //}
 
 
 
@@ -4524,7 +4507,7 @@ namespace draw2d_gdi
                if (hObjOld == hStockFont)
                {
                   // got the stock object back, so must be selecting a font
-                  (dynamic_cast<::draw2d_gdi::graphics * >(pgraphics))->SelectObject(::draw2d_gdi::font::from_handle(pgraphics->get_app(), (HFONT)hObject));
+                  //(dynamic_cast<::draw2d_gdi::graphics * >(pgraphics))->SelectObject(::draw2d_gdi::font::from_handle_dup(pgraphics->get_app(), (HFONT)hObject));
                   break;  // don't play the default record
                }
                else
@@ -4541,7 +4524,7 @@ namespace draw2d_gdi
             else if (nObjType == OBJ_FONT)
             {
                // play back as graphics::SelectObject(::draw2d::font*)
-               (dynamic_cast<::draw2d_gdi::graphics * >(pgraphics))->SelectObject(::draw2d_gdi::font::from_handle(pgraphics->get_app(), (HFONT)hObject));
+               //(dynamic_cast<::draw2d_gdi::graphics * >(pgraphics))->SelectObject(::draw2d_gdi::font::from_handle_dup(pgraphics->get_app(), (HFONT)hObject));
                break;  // don't play the default record
             }
          }

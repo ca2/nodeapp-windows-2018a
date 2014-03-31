@@ -43,3 +43,33 @@
 
 
 #define argb_invert(cr) ARGB(argb_get_a_value(cr),argb_get_b_value(cr),argb_get_g_value(cr),argb_get_r_value(cr))
+
+
+namespace draw2d_gdi
+{
+
+
+   template < class T >
+   void attach(const ::draw2d::graphics * pgraphicsConst, const sp(T) & objectConst, int iType)
+   {
+
+      ::draw2d::graphics * pgraphics = (::draw2d::graphics *) pgraphicsConst;
+      sp(T) & o = (sp(T) &) objectConst;
+
+      if (o.is_null())
+         o.create(pgraphics->allocer());
+
+      ::draw2d_gdi::object * pgdiobject = dynamic_cast <::draw2d_gdi::object *> (o.m_p);
+
+      if (pgdiobject == NULL)
+         throw invalid_argument_exception(pgraphics->get_app());
+
+      pgdiobject->Attach(::GetCurrentObject(GDI_GRAPHICS(pgraphics)->get_handle2(), iType));
+
+   }
+
+
+} // namespace draw2d_gdi
+
+
+

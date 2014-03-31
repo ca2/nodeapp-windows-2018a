@@ -26,13 +26,6 @@ namespace draw2d_gdi
    }
 
 
-   ::draw2d::bitmap * bitmap::from_handle(base_application * papp, HBITMAP hBitmap)
-   { 
-
-      return dynamic_cast < bitmap * > (::draw2d_gdi::object::from_handle(papp, hBitmap)); 
-
-   }
-
    bool bitmap::CreateBitmap(::draw2d::graphics * pgraphics, int nWidth, int nHeight, UINT nPlanes, UINT nBitcount, const void * lpBits, int32_t stride)
    {
 
