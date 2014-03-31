@@ -148,7 +148,7 @@ namespace win
       DWORD SuspendThread();
       DWORD ResumeThread();
       bool post_thread_message(UINT message, WPARAM wParam, LPARAM lParam);
-      bool post_message(sp(::user::interaction) pguie, UINT message, WPARAM wParam, LPARAM lParam);
+      bool post_message(sp(::user::interaction) pui, UINT message, WPARAM wParam, LPARAM lParam);
 
       virtual bool PreInitInstance();
 
@@ -193,14 +193,14 @@ namespace win
 
       //::draw2d::graphics * graphics_from_os_data(void * pdata);
 
-      sp(::user::window) window_from_os_data(void * pdata);
-      sp(::user::window) window_from_os_data_permanent(void * pdata);
+      sp(window) window_from_os_data(void * pdata);
+      sp(window) window_from_os_data_permanent(void * pdata);
 
       virtual thread * GetThread();
       virtual void set_thread(thread * pthread);
 
-      virtual sp(::user::window) FindWindow(const char * lpszClassName, const char * lpszWindowName);
-      virtual sp(::user::window) FindWindowEx(oswindow oswindowParent, oswindow oswindowChildAfter, const char * lpszClass, const char * lpszWindow);
+      virtual sp(window) FindWindow(const char * lpszClassName, const char * lpszWindowName);
+      virtual sp(window) FindWindowEx(oswindow oswindowParent, oswindow oswindowChildAfter, const char * lpszClass, const char * lpszWindow);
 
       virtual void get_time(struct timeval *p);
       virtual void set_env_var(const string & var,const string & value);

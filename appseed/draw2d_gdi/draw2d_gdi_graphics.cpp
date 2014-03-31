@@ -177,7 +177,7 @@ namespace draw2d_gdi
    }
 
 
-   int graphics::ExcludeUpdateRgn(::user::window * pWnd)
+   int graphics::ExcludeUpdateRgn(window * pWnd)
    { 
 
       ASSERT(get_handle1() != NULL); 

@@ -135,8 +135,8 @@ namespace multimedia
             }
 
             //    ListBox_SetCurSel(ptlb->hlb, 0);
-            //  EnableWindow(get_child_by_id(oswindow, IDD_LINECONTROLS_BTN_INFO), TRUE);
-            //EnableWindow(get_child_by_id(oswindow, IDD_LINECONTROLS_BTN_SETTINGS), TRUE);
+            //  enable_window(get_child_by_id(oswindow, IDD_LINECONTROLS_BTN_INFO), TRUE);
+            //enable_window(get_child_by_id(oswindow, IDD_LINECONTROLS_BTN_SETTINGS), TRUE);
          }
 
          //    SetWindowRedraw(ptlb->hlb, TRUE);

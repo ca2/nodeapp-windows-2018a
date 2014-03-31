@@ -231,7 +231,7 @@ namespace win
 
       try
       {
-         // cleanup thread local tooltip ::user::window
+         // cleanup thread local tooltip window
          if (hInstTerm == NULL)
          {
 //            __MODULE_THREAD_STATE* pModuleThreadState = __get_module_thread_state();
@@ -356,9 +356,9 @@ namespace win
    {
       return ::win::thread::post_thread_message(message, wParam, lParam);
    }
-   bool application::post_message(sp(::user::interaction) pguie, UINT message, WPARAM wParam, LPARAM lParam)
+   bool application::post_message(sp(::user::interaction) pui, UINT message, WPARAM wParam, LPARAM lParam)
    {
-      return ::win::thread::post_message(pguie, message, wParam, lParam);
+      return ::win::thread::post_message(pui, message, wParam, lParam);
    }
 
    bool application::PreInitInstance()
@@ -525,14 +525,14 @@ namespace win
       return ::win::graphics::from_handle((HDC) pdata);
    }*/
 
-   sp(::user::window) application::window_from_os_data(void * pdata)
+   sp(window) application::window_from_os_data(void * pdata)
    {
       return ::win::window::from_handle((oswindow) pdata);
    }
 
-   sp(::user::window) application::window_from_os_data_permanent(void * pdata)
+   sp(window) application::window_from_os_data_permanent(void * pdata)
    {
-      sp(::user::window) pwnd = ::win::window::FromHandlePermanent((oswindow) pdata);
+      sp(window) pwnd = ::win::window::FromHandlePermanent((oswindow) pdata);
       if(pwnd != NULL)
          return pwnd;
       user::interaction_ptr_array wndptra = System.frames();
@@ -631,12 +631,12 @@ namespace win
 
    }
 
-   sp(::user::window) application::FindWindow(const char * lpszClassName, const char * lpszWindowName)
+   sp(window) application::FindWindow(const char * lpszClassName, const char * lpszWindowName)
    {
       return window::FindWindow(lpszClassName, lpszWindowName);
    }
 
-   sp(::user::window) application::FindWindowEx(oswindow oswindowParent, oswindow oswindowChildAfter, const char * lpszClass, const char * lpszWindow)
+   sp(window) application::FindWindowEx(oswindow oswindowParent, oswindow oswindowChildAfter, const char * lpszClass, const char * lpszWindow)
    {
       return window::FindWindowEx(oswindowParent, oswindowChildAfter, lpszClass, lpszWindow);
    }
@@ -739,11 +739,11 @@ namespace win
             m_pimpl->directrix()->m_varTopicQuery["cgcl_app"] = strCgcl;
          }
 
-         // Initialize ::user::window::m_pfnNotifyWinEvent
+         // Initialize window::m_pfnNotifyWinEvent
       /*   HMODULE hModule = ::GetModuleHandle("user32.dll");
          if (hModule != NULL)
          {
-            ::user::window::m_pfnNotifyWinEvent = (::user::window::PFNNOTIFYWINEVENT)::GetProcAddress(hModule, "NotifyWinEvent");
+            window::m_pfnNotifyWinEvent = (window::PFNNOTIFYWINEVENT)::GetProcAddress(hModule, "NotifyWinEvent");
          }*/
 
       return true;

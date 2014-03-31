@@ -89,7 +89,7 @@ uint32_t __thread_entry(void * pParam)
          // forced initialization of the thread
          __init_thread();
 
-         // thread inherits cast's main ::user::window if not already set
+         // thread inherits cast's main window if not already set
          //if (papp != NULL && GetMainWnd() == NULL)
          {
             // just attach the oswindow
@@ -206,7 +206,7 @@ CLASS_DECL_win void __internal_process_wnd_proc_exception(::exception::base*, si
    }
    else if (pbase->m_uiMessage == WM_PAINT)
    {
-      // force validation of ::user::window to prevent getting WM_PAINT again
+      // force validation of window to prevent getting WM_PAINT again
       ValidateRect(pbase->m_pwnd->get_safe_handle(), NULL);
       pbase->set_lresult(0);
       return;
@@ -243,7 +243,7 @@ void __internal_pre_translate_message(signal_details * pobj)
          }
       }
 
-      sp(::user::interaction) puiTopic = pbase->m_pwnd->m_pguie;
+      sp(::user::interaction) puiTopic = pbase->m_pwnd->m_pui;
 
       try
       {
@@ -259,9 +259,9 @@ void __internal_pre_translate_message(signal_details * pobj)
                      sp(::user::interaction) pui = pthread->m_pbaseapp->m_pbasesession->frames()(i);
                      if(pui != NULL)
                      {
-                        if(pui->m_pguie != NULL)
+                        if(pui->m_pui != NULL)
                         {
-                           pui->m_pguie->pre_translate_message(pobj);
+                           pui->m_pui->pre_translate_message(pobj);
                            if(pobj->m_bRet)
                               return;
                         }
@@ -605,7 +605,7 @@ namespace win
                }
                try
                {
-                  sp(::user::interaction) puie = pui->m_pguie;
+                  sp(::user::interaction) puie = pui->m_pui;
                   if(puie != NULL 
                      && puie->m_pthread != NULL
                      && puie->m_pthread != NULL
@@ -722,14 +722,14 @@ namespace win
       if(m_puiptra != NULL)
       {
          m_puiptra->remove(pui);
-         m_puiptra->remove(pui->m_pguie);
+         m_puiptra->remove(pui->m_pui);
          m_puiptra->remove(pui->m_pimpl);
       }
       sl.unlock();
       if(m_ptimera != NULL)
       {
          m_ptimera->unset(pui);
-         m_ptimera->unset(pui->m_pguie);
+         m_ptimera->unset(pui->m_pui);
          m_ptimera->unset(pui->m_pimpl);
       }
 
@@ -758,11 +758,11 @@ namespace win
       }
       try
       {
-         if(pui->m_pguie != NULL && pui->m_pguie != pui)
+         if(pui->m_pui != NULL && pui->m_pui != pui)
          {
-            if(WIN_THREAD(pui->m_pguie->m_pthread.m_p) == this)
+            if(WIN_THREAD(pui->m_pui->m_pthread.m_p) == this)
             {
-               pui->m_pguie->m_pthread = NULL;
+               pui->m_pui->m_pthread = NULL;
             }
          }
       }
@@ -1493,7 +1493,7 @@ stop_run:
             //if (pThreadState->m_bInMsgFilter)
             //   return;
             //pThreadState->m_bInMsgFilter = TRUE;    // avoid reentering this code
-            //if (m_puiActive->IsWindowEnabled())
+            //if (m_puiActive->is_window_enabled())
             //{
             //   pre_translate_message(pobj);
             //   if(pobj->m_bRet)
@@ -1734,12 +1734,12 @@ stop_run:
    }
 
 
-   bool thread::post_message(sp(::user::interaction) pguie, UINT uiMessage, WPARAM wparam, lparam lparam)
+   bool thread::post_message(sp(::user::interaction) pui, UINT uiMessage, WPARAM wparam, lparam lparam)
    {
       if(m_hThread == NULL)
          return false;
       ::user::message * pmessage = new ::user::message;
-      pmessage->m_pguie       = pguie;
+      pmessage->m_pui       = pui;
       pmessage->m_uiMessage   = uiMessage;
       pmessage->m_wparam      = wparam;
       pmessage->m_lparam      = lparam;
@@ -1765,7 +1765,7 @@ stop_run:
      // }
 
       // all other messages route through message map
-      sp(::user::window) pwindow = pbase->m_pwnd->get_wnd();
+      sp(window) pwindow = pbase->m_pwnd->get_wnd();
 
       ASSERT(pwindow == NULL || pwindow == pbase->m_pwnd->m_pimpl);
 
@@ -1796,9 +1796,9 @@ stop_run:
             __pre_init_dialog(pwindow, &rectOld, &dwStyle);
 
          // delegate to object's message_handler
-         if(pwindow->m_pguie != NULL && pwindow->m_pguie != pwindow)
+         if(pwindow->m_pui != NULL && pwindow->m_pui != pwindow)
          {
-            pwindow->m_pguie->message_handler(pobj);
+            pwindow->m_pui->message_handler(pobj);
          }
          else
          {
@@ -2263,7 +2263,7 @@ return -1;  // just fail
 }
 else if (pMsg->message == WM_PAINT)
 {
-// force validation of ::user::window to prevent getting WM_PAINT again
+// force validation of window to prevent getting WM_PAINT again
 ValidateRect(pMsg->oswindow, NULL);
 return 0;
 }
@@ -2290,16 +2290,16 @@ if (pMsg->oswindow == NULL && pThread->DispatchThreadMessageEx(pMsg))
 return TRUE;
 }
 
-// walk from target to main ::user::window
+// walk from target to main window
 sp(::user::interaction) pMainWnd = System.GetMainWnd();
-/* trans   if (::user::window::WalkPreTranslateTree(pMainWnd->GetSafeoswindow_(), pMsg))
+/* trans   if (window::WalkPreTranslateTree(pMainWnd->GetSafeoswindow_(), pMsg))
 return TRUE; */
 
 // in case of modeless dialogs, last chance route through main
-//   ::user::window's accelerator table
+//   window's accelerator table
 /*   if (pMainWnd != NULL)
 {
-sp(::user::window) pWnd = ::win::window::from_handle(pMsg->oswindow);
+sp(window) pWnd = ::win::window::from_handle(pMsg->oswindow);
 if (pWnd != NULL && WIN_WINDOW(pWnd)->GetTopLevelParent() != pMainWnd)
 return pMainWnd->pre_translate_message(pMsg);
 }
@@ -2616,7 +2616,7 @@ ASSERT(__check_memory());
 
 if (lCount <= 0)
 {
-// send WM_IDLEUPDATECMDUI to the main ::user::window
+// send WM_IDLEUPDATECMDUI to the main window
 sp(::user::interaction) pMainWnd = GetMainWnd();
 if (pMainWnd != NULL && pMainWnd->IsWindowVisible())
 {
@@ -2696,7 +2696,7 @@ pMessageMap = (*pMessageMap->pfnGetBaseMap)())
 ASSERT(pMessageMap != (*pMessageMap->pfnGetBaseMap)());
 if (pMsg->message < 0xC000)
 {
-// constant ::user::window message
+// constant window message
 if ((lpEntry = ::core::FindMessageEntry(pMessageMap->lpEntries,
 pMsg->message, 0, 0)) != NULL)
 goto LDispatch;
@@ -2845,7 +2845,7 @@ if (pThreadState->m_bInMsgFilter)
 return FALSE;
 pThreadState->m_bInMsgFilter = TRUE;    // avoid reentering this code
 MSG msg = *lpMsg;
-if (m_pActiveWnd->IsWindowEnabled() && pre_translate_message(&msg))
+if (m_pActiveWnd->is_window_enabled() && pre_translate_message(&msg))
 {
 pThreadState->m_bInMsgFilter = FALSE;
 return TRUE;
@@ -2867,7 +2867,7 @@ sp(::user::interaction) thread::GetMainWnd()
 if (m_pActiveWnd != NULL)
 return m_pActiveWnd;    // probably in-place active
 
-// when not inplace active, just return main ::user::window
+// when not inplace active, just return main window
 if (GetMainWnd() != NULL)
 return GetMainWnd();
 
@@ -2935,10 +2935,10 @@ dumpcontext << "\n";
 }
 
 
-bool thread::post_message(sp(::user::interaction) pguie, UINT uiMessage, WPARAM wparam, LPARAM lparam)
+bool thread::post_message(sp(::user::interaction) pui, UINT uiMessage, WPARAM wparam, LPARAM lparam)
 {
 win::message * pmessage = new win::message;
-pmessage->m_pguie       = pguie;
+pmessage->m_pui       = pui;
 pmessage->m_uiMessage   = uiMessage;
 pmessage->m_wparam      = wparam;
 pmessage->m_lparam      = lparam;
@@ -2956,7 +2956,7 @@ namespace win
 {
 LRESULT message::send()
 {
-return m_pguie->SendMessage(m_uiMessage, m_wparam, m_lparam);
+return m_pui->SendMessage(m_uiMessage, m_wparam, m_lparam);
 }
 
 UINT message::ThreadProcSendMessage(LPVOID lp)
@@ -2970,7 +2970,7 @@ return 0;
 void message::post(sp(::user::interaction) puie, UINT uiMessage, WPARAM wparam, LPARAM lparam, int32_t nPriority)
 {
 message * pmessage = new message;
-pmessage->m_pguie = puie;
+pmessage->m_pui = puie;
 pmessage->m_uiMessage = uiMessage;
 pmessage->m_wparam = wparam;
 pmessage->m_lparam = lparam;

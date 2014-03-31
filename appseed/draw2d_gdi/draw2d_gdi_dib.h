@@ -63,8 +63,8 @@ namespace draw2d_gdi
 
       bool to(::draw2d::graphics * pgraphics, point pt, class size size, point ptSrc);
 
-      virtual bool update_window(::user::window * pwnd, signal_details * pobj);
-      virtual bool print_window(::user::window * pwnd, signal_details * pobj);
+      virtual bool update_window(window * pwnd, signal_details * pobj);
+      virtual bool print_window(window * pwnd, signal_details * pobj);
 
       void SetIconMask(::visual::icon * picon, int32_t cx, int32_t cy);
 

@@ -7,7 +7,7 @@ extern const char * gen_OldWndProc;
 
 
 /////////////////////////////////////////////////////////////////////////////
-// Map from oswindow to sp(::user::window)
+// Map from oswindow to sp(window)
 
 oswindow_map* get_oswindow_map(bool bCreate)
 {
@@ -29,7 +29,7 @@ LRESULT CALLBACK __window_procedure(oswindow oswindow, UINT nMsg, WPARAM wParam,
   //    return 1;
 
    // all other messages route through message map
-   sp(::user::window) pWnd = ::win::window::FromHandlePermanent(oswindow);
+   sp(window) pWnd = ::win::window::FromHandlePermanent(oswindow);
    //ASSERT(pWnd != NULL);               
    //ASSERT(pWnd==NULL || WIN_WINDOW(pWnd)->get_handle() == oswindow);
    if (pWnd == NULL || WIN_WINDOW(pWnd)->get_handle() != oswindow)
@@ -75,7 +75,7 @@ __STATIC void CLASS_DECL_win __post_init_dialog(
 
    // must be unowned or owner disabled
    sp(::user::interaction) pParent = WIN_WINDOW(pWnd.m_p)->GetWindow(GW_OWNER);
-   if (pParent != NULL && pParent->IsWindowEnabled())
+   if (pParent != NULL && pParent->is_window_enabled())
       return;
 
    if (!WIN_WINDOW(pWnd.m_p)->CheckAutoCenter())
@@ -178,7 +178,7 @@ CLASS_DECL_win const char * __register_window_class(sp(base_application) papp, U
 
 
 __STATIC void CLASS_DECL_win
-   __handle_activate(sp(::user::window) pWnd, WPARAM nState, sp(::user::window) pWndOther)
+   __handle_activate(sp(window) pWnd, WPARAM nState, sp(window) pWndOther)
 {
    ASSERT(pWnd != NULL);      
 
@@ -207,7 +207,7 @@ __STATIC void CLASS_DECL_win
 }
 
 __STATIC bool CLASS_DECL_win
-   __handle_set_cursor(sp(::user::window) pWnd, UINT nHitTest, UINT nMsg)
+   __handle_set_cursor(sp(window) pWnd, UINT nHitTest, UINT nMsg)
 {
    if (nHitTest == HTERROR &&
       (nMsg == WM_LBUTTONDOWN || nMsg == WM_MBUTTONDOWN ||
@@ -219,7 +219,7 @@ __STATIC bool CLASS_DECL_win
          pLastActive = pLastActive->GetLastActivePopup();
       if (pLastActive != NULL &&
          pLastActive != ::win::window::GetForegroundWindow() &&
-         pLastActive->IsWindowEnabled())
+         pLastActive->is_window_enabled())
       {
          pLastActive->SetForegroundWindow();
          return TRUE;
@@ -397,7 +397,7 @@ LRESULT CALLBACK
          {
             uint32_t dwStyle;
             rect rectOld;
-            sp(::user::window) pWnd = ::win::window::from_handle(oswindow);
+            sp(window) pWnd = ::win::window::from_handle(oswindow);
             __pre_init_dialog(pWnd, &rectOld, &dwStyle);
             bCallDefault = FALSE;
             lResult = CallWindowProc(oldWndProc, oswindow, nMsg, wParam, lParam);

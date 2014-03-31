@@ -322,8 +322,8 @@ namespace production
       {
          if(pevent->m_puie->m_id == "clean")
          {
-            sp(::user::interaction) pguie = m_pviewOptions->get_child_by_id("clean");
-            sp(::user::check_box) pcheckbox =  (pguie);
+            sp(::user::interaction) pui = m_pviewOptions->get_child_by_id("clean");
+            sp(::user::check_box) pcheckbox =  (pui);
             view_update_hint uh;
             uh.m_eoption = view_update_hint::OptionClean;
             uh.m_bOption = pcheckbox->_001GetCheck() == check::checked;
@@ -331,8 +331,8 @@ namespace production
          }
          else if(pevent->m_puie->m_id == "build")
          {
-            sp(::user::interaction) pguie = m_pviewOptions->get_child_by_id("build");
-            sp(::user::check_box) pcheckbox =  (pguie);
+            sp(::user::interaction) pui = m_pviewOptions->get_child_by_id("build");
+            sp(::user::check_box) pcheckbox =  (pui);
             view_update_hint uh;
             uh.m_eoption = view_update_hint::OptionBuild;
             uh.m_bOption = pcheckbox->_001GetCheck() == check::checked;

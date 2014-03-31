@@ -265,7 +265,7 @@ namespace win
       else
       {
          ::user::window_interface * ptwi = System.user()->window_map().get((int_ptr) oswindowParam);
-         sp(::user::interaction) pguie =  (ptwi);
+         sp(::user::interaction) pui =  (ptwi);
          rect rectWindow;
          ::GetWindowRect(oswindowParam, rectWindow);
          //::GetClientRect(oswindowParam, rectWindow);
@@ -280,9 +280,9 @@ namespace win
 
        
             if(!bExcludeParamWnd &&
-               pguie != NULL )
+               pui != NULL )
             {
-               pguie->_001OnDraw(pdc);
+               pui->_001OnDraw(pdc);
             }
 
 
@@ -552,8 +552,8 @@ namespace win
       {
          oswindow oswindowTopic = wndaApp[j];
 
-         sp(::user::window) pwnd = NULL;
-         //sp(::user::window) pwnd = (System.user()->window_map().get((int_ptr) oswindowTopic));
+         sp(window) pwnd = NULL;
+         //sp(window) pwnd = (System.user()->window_map().get((int_ptr) oswindowTopic));
          //if(pwnd == NULL)
          //{
          for(int32_t l = 0; l < wndpa.get_count(); l++)
@@ -681,8 +681,8 @@ namespace win
       return &m_semaphoreBuffer;
    }
 
-   // The first ::user::window handle in the array must belong
-   // to the higher z order ::user::window.
+   // The first window handle in the array must belong
+   // to the higher z order window.
    // The rectangle must contain all update region.
    // It must be in screen coordinates.
 
@@ -690,7 +690,7 @@ namespace win
 
    // Remark: this optimization eliminates top level windows
    // that are lower z order siblings of a higher z order
-   // top level ::user::window that contains all
+   // top level window that contains all
    // the update region in a opaque area.
    // It doesn´t eliminates from the update parent windows
    // obscured by opaque children.
@@ -795,10 +795,10 @@ namespace win
 
       rect rectClient;
 
-      sp(::user::interaction) pguie =  (ptwi);
+      sp(::user::interaction) pui =  (ptwi);
 
-      pguie->GetClientRect(rectClient);
-      pguie->ClientToScreen(rectClient);
+      pui->GetClientRect(rectClient);
+      pui->ClientToScreen(rectClient);
 
       
 
@@ -816,7 +816,7 @@ namespace win
          return OptimizeNone;
       }
 
-   //    sp(::user::window) pwnd = window::FromHandlePermanent(oswindow);
+   //    sp(window) pwnd = window::FromHandlePermanent(oswindow);
        
       
       if(ptwi == NULL)
@@ -908,7 +908,7 @@ namespace win
       ::GetWindowRect(oswindow, rectWindow);
 
 
-   //   sp(::user::window) pwnd = ::win::window::from_handle;
+   //   sp(window) pwnd = ::win::window::from_handle;
 
       if(!TwfGetTopWindow(
             oswindowParam,
@@ -1011,7 +1011,7 @@ namespace win
    {
       rect rectWindow;
 
-   //   sp(::user::window) pwndOpaque = window::FromHandlePermanent(oswindowOpaque);
+   //   sp(window) pwndOpaque = window::FromHandlePermanent(oswindowOpaque);
 
       ::GetWindowRect(oswindowOpaque, rectWindow);
 
@@ -1099,7 +1099,7 @@ namespace win
       // pdc is the source primitive::memory device context
       // from which bitmap the screen is updated.
       user::buffer * pbuffer,
-      // oswindowParam ::user::window device context
+      // oswindowParam window device context
       // is used from screen output
       sp(::user::interaction) pwnd)
    {
@@ -1117,7 +1117,7 @@ namespace win
          {
             return true;
          }
-         if(pwnd->m_pguie != NULL && pwnd->m_pguie != pwnd && !pwnd->m_pguie->m_bVisible)
+         if(pwnd->m_pui != NULL && pwnd->m_pui != pwnd && !pwnd->m_pui->m_bVisible)
          {
             return true;
          }
@@ -1142,8 +1142,8 @@ namespace win
 
 
 
-   // The first ::user::window handle in the array must belong
-   // to the higher z order ::user::window.
+   // The first window handle in the array must belong
+   // to the higher z order window.
    // The rectangle must contain all update region.
    // It must be in screen coordinates.
 
@@ -1151,7 +1151,7 @@ namespace win
 
    // Remark: this optimization eliminates top level windows
    // that are lower z order siblings of a higher z order
-   // top level ::user::window that contains all
+   // top level window that contains all
    // the update region in a opaque area.
    // It doesn´t eliminates from the update parent windows
    // obscured by opaque children.

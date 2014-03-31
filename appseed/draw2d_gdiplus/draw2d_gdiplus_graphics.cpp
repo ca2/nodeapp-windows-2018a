@@ -64,7 +64,7 @@ namespace draw2d_gdiplus
    }
 
 
-   sp(::user::window) graphics::GetWindow() const
+   sp(window) graphics::GetWindow() const
    { 
       //ASSERT(get_handle1() != NULL); return ::draw2d_gdiplus::window::from_handle(::WindowFromDC(get_handle1())); 
       return NULL;
@@ -176,7 +176,7 @@ namespace draw2d_gdiplus
    }
 
 
-   int32_t graphics::ExcludeUpdateRgn(sp(::user::window) pWnd)
+   int32_t graphics::ExcludeUpdateRgn(sp(window) pWnd)
    { 
       ASSERT(get_handle1() != NULL); 
       throw not_implemented(get_app());
@@ -4239,75 +4239,7 @@ namespace draw2d_gdiplus
    }
 
 
-   bool graphics::create_client_dc(::user::window * pwnd)
-   { 
-      
-      if(pwnd == NULL)
-      {
-         Attach(::GetDC(NULL));
-      }
-      else
-      {
-         Attach(::GetDC(pwnd->get_handle()));
-      }
 
-      return true;
-
-   }
-
-
-   bool graphics::create_window_dc(::user::window * pwnd)
-   {
-
-      ASSERT(::IsWindow(pwnd->get_handle())); 
-
-      Attach(::GetWindowDC(pwnd->get_handle()));
-
-      return true;
-
-   }
-
-
-   bool graphics::release_dc(::user::window * pwnd)
-   { 
-
-      if(pwnd == NULL)
-         return false;
-
-      if(get_handle() == NULL)
-         return false;
-
-      try
-      {
-
-         delete m_pgraphics;
-
-      }
-      catch(...)
-      {
-
-         TRACE("::win::window::ReleaseDC : Failed to delete Gdiplus::Graphics");
-
-      }
-
-      m_pgraphics = NULL;
-
-      BOOL bOk = ::ReleaseDC(pwnd->get_handle(), m_hdc); 
-
-      if(!bOk)
-      {
-
-         TRACE("::win::window::ReleaseDC : Failed to Release window dc");
-
-      }
-
-      m_hdc = NULL;
-
-
-
-      return true;
-
-   }
 
 
 } // namespace draw2d_gdiplus

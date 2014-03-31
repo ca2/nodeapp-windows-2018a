@@ -96,7 +96,7 @@ namespace win
       virtual void add(sp(::user::interaction) pui);
       virtual void remove(::user::interaction * pui);
       virtual ::count get_ui_count();
-      virtual sp(::user::interaction) get_ui(::index iIndex);
+      virtual ::user::interaction * get_ui(::index iIndex);
       virtual void set_timer(sp(::user::interaction) pui, uint_ptr nIDEvent, UINT nEllapse);
       virtual void unset_timer(sp(::user::interaction) pui, uint_ptr nIDEvent);
       virtual void set_auto_delete(bool bAutoDelete = true);
@@ -123,7 +123,7 @@ namespace win
       //DWORD SuspendThread();
       uint32_t ResumeThread();
       bool post_thread_message(UINT message, WPARAM wParam = 0, lparam lParam = NULL);
-      bool post_message(sp(::user::interaction) pguie, UINT message, WPARAM wParam = 0, lparam lParam = NULL);
+      bool post_message(sp(::user::interaction) pui, UINT message, WPARAM wParam = 0, lparam lParam = NULL);
 
       virtual bool PreInitInstance();
 
