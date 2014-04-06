@@ -191,8 +191,8 @@ namespace win
       inline mutex * mutex_graphics() { if(m_pmutexGraphics != NULL) return m_pmutexGraphics; m_pmutexGraphics = new mutex(get_app()); return m_pmutexGraphics; }
 
    // Window size and position Functions
-      virtual bool IsIconic();
-      virtual bool IsZoomed();
+      virtual bool WfiIsIconic();
+      virtual bool WfiIsZoomed();
       void MoveWindow(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight,
                bool bRepaint = TRUE);
       void MoveWindow(LPCRECT lpRect, bool bRepaint = TRUE);

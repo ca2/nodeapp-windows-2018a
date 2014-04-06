@@ -1113,7 +1113,7 @@ namespace win
          {
             return true;
          }
-         if(pwnd->IsIconic())
+         if(pwnd->WfiIsIconic())
          {
             return true;
          }

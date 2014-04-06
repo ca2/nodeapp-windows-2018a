@@ -90,6 +90,8 @@ namespace draw2d_gdiplus
    bool graphics::CreateCompatibleDC(::draw2d::graphics * pgraphics)
    { 
 
+      synch_lock sl(&user_mutex());
+
       HDC hdc = Detach();
       
       if(hdc != NULL)
@@ -719,22 +721,26 @@ namespace draw2d_gdiplus
    void graphics::DrawFocusRect(LPCRECT lpRect)
    { ASSERT(get_handle1() != NULL); ::DrawFocusRect(get_handle1(), lpRect); }
    
+
    bool graphics::DrawEllipse(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    {
       
+      m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
+
       return (m_pgraphics->DrawEllipse(gdiplus_pen(), x1, y1, x2 - x1, y2 - y1)) == Gdiplus::Status::Ok;
 
    }
 
+
    bool graphics::DrawEllipse(LPCRECT lpRect)
    { 
    
-      /*return ::Ellipse(get_handle1(), lpRect->left, lpRect->top,
-   lpRect->right, lpRect->bottom); */
+      m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
 
       return (m_pgraphics->DrawEllipse(gdiplus_pen(), lpRect->left, lpRect->top, lpRect->right - lpRect->left, lpRect->bottom - lpRect->top)) == Gdiplus::Status::Ok;
    
    }
+
 
    bool graphics::FillEllipse(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    {
@@ -3782,6 +3788,8 @@ namespace draw2d_gdiplus
 
          if(m_pgraphics == NULL)
             return;
+
+         m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeNone);
 
          ::draw2d::brush_sp brushCurrent(m_spbrush);
 

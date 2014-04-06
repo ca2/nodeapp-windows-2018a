@@ -4531,16 +4531,19 @@ ExitModal:
 
    void window::_001WindowMaximize()
    {
-      ::user::interaction::_001WindowMaximize();
+      
+      ::ShowWindow(get_handle(), SW_MAXIMIZE);
+
    }
+
 
    void window::_001WindowRestore()
    {
-      m_eappearance = appearance_normal;
-      if(m_pui != NULL)
-         m_pui->m_eappearance = appearance_normal;
+
       ::ShowWindow(get_handle(), SW_RESTORE);
+
    }
+
 
    bool window::ShowWindow(int32_t nCmdShow)
    {
@@ -4568,8 +4571,8 @@ ExitModal:
          {
             if(nCmdShow == SW_MINIMIZE)
             {
-               m_pui->m_eappearance = appearance_iconic;
-               m_eappearance = appearance_iconic;
+               m_pui->m_eappearance = ::user::AppearanceIconic;
+               m_eappearance = ::user::AppearanceIconic;
             }
             else
             {
@@ -4584,7 +4587,7 @@ ExitModal:
          m_bVisible = ::IsWindowVisible(get_handle()) != FALSE;
          if(m_pui!= NULL && m_pui != this)
             m_pui->m_bVisible = m_bVisible;
-         if(!m_bVisible || IsIconic())
+         if(!m_bVisible || WfiIsIconic())
          {
             ::UpdateLayeredWindow(get_handle(), NULL, NULL, NULL, NULL, NULL, 0, NULL, 0);
          }
@@ -4607,12 +4610,12 @@ ExitModal:
    }
 
 
-   bool window::IsIconic()
+   bool window::WfiIsIconic()
    {
       ASSERT(::IsWindow(get_handle())); 
       if(GetExStyle() & WS_EX_LAYERED)
       {
-         return m_pui->m_eappearance == appearance_iconic;
+         return m_pui->m_eappearance == ::user::AppearanceIconic;
       }
       else
       {
@@ -4620,11 +4623,15 @@ ExitModal:
       }
    }
 
-   bool window::IsZoomed()
+
+   bool window::WfiIsZoomed()
    {
+      
       if(!::IsWindow(get_handle()))
          return false;
-      return m_pui->m_eappearance == appearance_zoomed;
+
+      return m_pui->m_eappearance == ::user::AppearanceZoomed;
+
    }
 
 
