@@ -1171,7 +1171,7 @@ gdi_fallback:
    256, rString.GetBuffer(256)); rString.ReleaseBuffer();
    return nResult; }
 
-   bool graphics::get_text_metrics(LPTEXTMETRICW lpMetrics) const
+   bool graphics::get_text_metrics(::draw2d::text_metric * lpMetrics) const
    { 
 
       if (m_pgraphics == NULL)
@@ -1227,12 +1227,16 @@ gdi_fallback:
    }
 
 
-   bool graphics::get_output_text_metrics(LPTEXTMETRICW lpMetrics) const
+   bool graphics::get_output_text_metrics(::draw2d::text_metric * lpMetrics) const
    {
    
       ASSERT(get_handle1() != NULL);
       
-      return ::GetTextMetricsW(get_handle1(), lpMetrics) != FALSE;
+      //return ::GetTextMetricsW(get_handle1(), lpMetrics) != FALSE;
+
+      throw not_implemented(get_app());
+
+      return false;
    
    }
 
