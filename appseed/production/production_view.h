@@ -86,18 +86,18 @@ namespace production
 
       sp(::user::object) get_document();
 
-      DECL_GEN_SIGNAL(_001OnInitialUpdate)
-      DECL_GEN_SIGNAL(_001OnLButtonDown)
-      DECL_GEN_SIGNAL(_001OnLButtonUp)
-      DECL_GEN_SIGNAL(_001OnTimer)
-      DECL_GEN_SIGNAL(_001OnRButtonUp)
-	   DECL_GEN_SIGNAL(_001OnDestroy)
-	   DECL_GEN_SIGNAL(_001OnSize)
-	   DECL_GEN_SIGNAL(_001OnCreate)
-	   DECL_GEN_SIGNAL(_001OnContextMenu)
-	   DECL_GEN_SIGNAL(_001OnSetCursor)
-      DECL_GEN_SIGNAL(_001OnShowWindow)
-      DECL_GEN_SIGNAL(_001OnUser)
+      DECL_GEN_SIGNAL(_001OnInitialUpdate);
+      DECL_GEN_SIGNAL(_001OnLButtonDown);
+      DECL_GEN_SIGNAL(_001OnLButtonUp);
+      DECL_GEN_SIGNAL(_001OnTimer);
+      DECL_GEN_SIGNAL(_001OnRButtonUp);
+	   DECL_GEN_SIGNAL(_001OnDestroy);
+	   DECL_GEN_SIGNAL(_001OnSize);
+	   DECL_GEN_SIGNAL(_001OnCreate);
+	   DECL_GEN_SIGNAL(_001OnContextMenu);
+	   DECL_GEN_SIGNAL(_001OnSetCursor);
+      DECL_GEN_SIGNAL(_001OnShowWindow);
+      DECL_GEN_SIGNAL(_001OnUser);
 
 
    };

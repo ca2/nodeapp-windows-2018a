@@ -23,7 +23,7 @@ namespace production
 	   virtual ~pane_view();
 
 
-      DECL_GEN_SIGNAL(_001OnUserMessage)
+      DECL_GEN_SIGNAL(_001OnUserMessage);
 
       sp(::production::document) get_document();
 
@@ -42,13 +42,13 @@ namespace production
          ::filemanager::data * pdata, 
          ::fs::item_array & itema);
 
-      DECL_GEN_SIGNAL(_001OnMenuMessage)
+      DECL_GEN_SIGNAL(_001OnMenuMessage);
    #ifdef DEBUG
 	   virtual void assert_valid() const;
 	   virtual void dump(dump_context & dumpcontext) const;
    #endif
 
-	   DECL_GEN_SIGNAL(_001OnCreate)
+	   DECL_GEN_SIGNAL(_001OnCreate);
    };
 
 

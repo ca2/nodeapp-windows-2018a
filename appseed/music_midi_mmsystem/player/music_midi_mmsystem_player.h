@@ -55,7 +55,7 @@ namespace music
                virtual int32_t exit_instance();
                virtual void pre_translate_message(::signal_details * pobj);
                void OnMmsgDone(::music::midi::sequence *pSeq);
-               DECL_GEN_SIGNAL(OnUserMessage)
+               DECL_GEN_SIGNAL(OnUserMessage);
                   void SaveFile(const char * lpszPathName);
                void SetPosition(double dRate);
                void Pause();
@@ -83,9 +83,9 @@ namespace music
                void SendTempoChange(); // verificar
 
 
-               DECL_GEN_SIGNAL(OnNotifyEvent)
-                  DECL_GEN_SIGNAL(OnMultimediaMidiOutputMessageDone)
-                  DECL_GEN_SIGNAL(OnMultimediaMidiOutputMessagePositionCB)
+               DECL_GEN_SIGNAL(OnNotifyEvent);
+                  DECL_GEN_SIGNAL(OnMultimediaMidiOutputMessageDone);
+                  DECL_GEN_SIGNAL(OnMultimediaMidiOutputMessagePositionCB);
 
                   // midi central listener
                   DECL_GEN_VSIGNAL(on_attribute_change);

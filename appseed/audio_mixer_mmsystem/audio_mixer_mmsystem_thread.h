@@ -45,9 +45,9 @@ namespace multimedia
          virtual void pre_translate_message(::signal_details * pobj);
 
 
-         DECL_GEN_SIGNAL(OnMixerMessage)
-            DECL_GEN_SIGNAL(OnVmsmException)
-            DECL_GEN_SIGNAL(OnUserMessage)
+         DECL_GEN_SIGNAL(OnMixerMessage);
+            DECL_GEN_SIGNAL(OnVmsmException);
+            DECL_GEN_SIGNAL(OnUserMessage);
 
 
       };

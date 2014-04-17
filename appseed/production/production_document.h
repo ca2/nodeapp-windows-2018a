@@ -13,7 +13,7 @@ namespace production
 
       document(sp(base_application) papp);
 
-      DECL_GEN_VSIGNAL(data_on_after_change)
+      DECL_GEN_VSIGNAL(data_on_after_change);
 
 	   virtual bool on_new_document();
 

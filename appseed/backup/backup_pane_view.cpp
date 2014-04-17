@@ -57,7 +57,7 @@ namespace backup
       }
       if(pHint != NULL)
       {
-         if(base < pane_view_update_hint >::bases(pHint))
+         if(base_class <pane_view_update_hint >::bases(pHint))
          {
             pane_view_update_hint * puh = (pane_view_update_hint *) pHint;
             if(puh->is_type_of(pane_view_update_hint::TypeGetView))
@@ -71,7 +71,7 @@ namespace backup
       }
 	      if(pHint != NULL)
       {
-   	   if(base < pane_view_update_hint >::bases(pHint))
+   	   if(base_class <pane_view_update_hint >::bases(pHint))
          {
             pane_view_update_hint * puh = (pane_view_update_hint * ) pHint;
             if(puh->is_type_of(pane_view_update_hint::TypeOnShowView))

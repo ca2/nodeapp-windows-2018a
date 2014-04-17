@@ -28,8 +28,8 @@ namespace multimedia
          void install_message_handling(::message::dispatch * pinterface);
 
 
-         DECL_GEN_SIGNAL(_001OnMixerControlChange)
-            DECL_GEN_SIGNAL(_001OnMixerLineChange)
+         DECL_GEN_SIGNAL(_001OnMixerControlChange);
+            DECL_GEN_SIGNAL(_001OnMixerLineChange);
 
 
       };

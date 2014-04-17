@@ -46,9 +46,9 @@ namespace multimedia
          virtual bool initialize_instance();
          virtual int32_t exit_instance();
 
-         DECL_GEN_SIGNAL(OnMultimediaOpen)
-         DECL_GEN_SIGNAL(OnMultimediaDone)
-         DECL_GEN_SIGNAL(OnMultimediaClose)
+         DECL_GEN_SIGNAL(OnMultimediaOpen);
+         DECL_GEN_SIGNAL(OnMultimediaDone);
+         DECL_GEN_SIGNAL(OnMultimediaClose);
 
 //         virtual void wave_out_out_buffer_done(int iBuffer);
   //       virtual void wave_out_out_buffer_done(LPWAVEHDR lpwavehdr);

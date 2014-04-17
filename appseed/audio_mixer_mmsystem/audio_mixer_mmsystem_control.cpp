@@ -496,7 +496,7 @@ namespace multimedia
       if(pcontrol != NULL)
       {
       //            ::multimedia::audio_mixer::user::level_control * plevelcontrol = (::multimedia::audio_mixer::user::level_control *) pcontrol;
-      /*if(base < CSliderCtrl >::bases(pusercontrol))
+      /*if(base_class <CSliderCtrl >::bases(pusercontrol))
       {
       CSliderCtrl * pSlider = (CSliderCtrl *) pusercontrol;
       ::multimedia::audio_mixer::control_data * pData;
