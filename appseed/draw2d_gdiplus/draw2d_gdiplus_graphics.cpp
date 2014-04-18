@@ -1011,7 +1011,7 @@ namespace draw2d_gdiplus
 
          return m_pgraphics->DrawImage(
             (Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data(),
-            x, y , xSrc, ySrc, nWidth, nHeight, Gdiplus::UnitPixel) == Gdiplus::Status::Ok;
+            x, y, xSrc + pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y, nWidth, nHeight, Gdiplus::UnitPixel) == Gdiplus::Status::Ok;
 
       }
       catch(...)
