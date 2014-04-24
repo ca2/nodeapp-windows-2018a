@@ -1422,10 +1422,10 @@ namespace win
          {
             if(Session.fontopus()->m_puser != NULL)
             {
-               if(&Application.fontopus() != NULL)
+               if(&Session.fontopus() != NULL)
                if(&ApplicationUser != NULL)
                {
-                  if(Application.fontopus()->m_puser != NULL)
+                  if(Session.fontopus()->m_puser != NULL)
                   {
                      if(ApplicationUser.m_ppresence != NULL)
                      {

@@ -36,6 +36,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_gtech_sensible_administrator", "..\..\..\app-gtech\appseed\sensible_administrator\sensible_administrator.vcxproj", "{400C9EC2-5401-4C7D-A588-8A626026320C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_gtech_sensible_sensor", "..\..\..\app-gtech\appseed\sensible_sensor\sensible_sensor.vcxproj", "{E0344EEB-1A45-492B-80EC-137E95F8CD54}"
+	ProjectSection(ProjectDependencies) = postProject
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1} = {56749E96-56B2-4FD1-B72C-C5B4D3A051A1}
+		{437699AD-7464-4E5F-ACF3-7167487A9E3D} = {437699AD-7464-4E5F-ACF3-7167487A9E3D}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "draw2d_gdiplus", "..\..\appseed\draw2d_gdiplus\draw2d_gdiplus.vcxproj", "{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}"
 EndProject
