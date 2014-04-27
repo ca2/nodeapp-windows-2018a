@@ -58,3 +58,8 @@
 
 
 
+#ifdef cplus
+
+#define inline static
+
+#endif
