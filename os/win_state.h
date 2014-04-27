@@ -26,7 +26,7 @@ namespace user
 
 #ifdef DEBUG
 
-class ___DEBUG_STATE : public no_track_object
+class ___DEBUG_STATE : public ::win::no_track_object
 {
 public:
    ___DEBUG_STATE();
@@ -41,7 +41,7 @@ EXTERN_PROCESS_LOCAL(___DEBUG_STATE, afxDebugState)
 // ___WIN_STATE
 
 
-class ___WIN_STATE : public no_track_object
+class ___WIN_STATE : public ::win::no_track_object
 {
 public:
    // printing abort

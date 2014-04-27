@@ -5,7 +5,11 @@ __declspec(thread) ::win::thread * t_pCurrentWinThread = NULL;
 
 namespace win
 {
+
    class thread;
+
+   extern thread_local_storage * __thread_data;
+
 } // namespace win
 
 bool CLASS_DECL_win __internal_pump_message();
@@ -445,7 +449,6 @@ void CLASS_DECL_win __end_thread(sp(base_application) papp, UINT nExitCode, bool
 
 }
 
-extern thread_local_storage * __thread_data;
 
 void CLASS_DECL_win __term_thread(sp(base_application) papp, HINSTANCE hInstTerm)
 {
@@ -466,8 +469,8 @@ void CLASS_DECL_win __term_thread(sp(base_application) papp, HINSTANCE hInstTerm
    try
    {
       // cleanup the rest of the thread local data
-      if (__thread_data != NULL)
-         __thread_data->delete_data();
+      if (::win::__thread_data != NULL)
+         ::win::__thread_data->delete_data();
    }
    catch( ::exception::base* e )
    {

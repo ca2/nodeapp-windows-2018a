@@ -1,11 +1,11 @@
 #include "framework.h"
 
 
-extern thread_local_storage * __thread_data;
-
-
 namespace win
 {
+
+
+   extern thread_local_storage * __thread_data;
 
 
    application::application(sp(base_application) papp) :
