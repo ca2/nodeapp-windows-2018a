@@ -204,13 +204,22 @@ namespace draw2d_gdiplus
       }
       bool bOk = GetDIBits(GDIPLUS_HDC(pdc), (HBITMAP) pbitmap->get_os_data(), 0, m_size.cy, m_pcolorref, &(m_info), DIB_RGB_COLORS) != FALSE; 
       GDIPLUS_GRAPHICS(pdc)->SelectObject(pbitmap);
+
       return bOk;
+
    }
+
 
    bool dib::from(point ptDest, ::draw2d::graphics * pdc, point pt, class size sz)
    {
+
+      if (m_spgraphics.is_null())
+         return false;
+
       return m_spgraphics->BitBlt(ptDest, sz, pdc, pt, SRCCOPY) != FALSE;
+
    }
+
 
    /*void dib::Fill ( int32_t R, int32_t G, int32_t B )
    {
