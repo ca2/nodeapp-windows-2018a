@@ -1320,7 +1320,7 @@ namespace win
       if(pbase->m_uiMessage == WM_SIZE || pbase->m_uiMessage == WM_MOVE)
       {
 
-         win_update_graphics();
+         //win_update_graphics();
 
       }
 
@@ -3404,12 +3404,7 @@ restart_mouse_hover_check:
 
       SCAST_PTR(::message::base, pbase, pobj);
 
-      if (m_bUpdateGraphics)
-      {
-
-         win_update_graphics();
-
-      }
+      win_update_graphics();
 
       if (m_spdib.is_null() || m_spdib->get_graphics() == NULL)
          return;
@@ -4212,20 +4207,7 @@ ExitModal:
 
       single_lock sl(mutex_graphics());
 
-      /*
-      bool b;
-      bool * pb = &b;
-      if(m_pbaseapp->s_ptwf != NULL)
-      pb = &m_pbaseapp->s_ptwf->m_bProDevianMode;
-      keeper < bool > keepOnDemandDraw(pb, false, *pb, true);
-      */
-
       ASSERT(::IsWindow(get_handle())); 
-
-      /*
-      return ::SetWindowPos(get_handle(), pWndInsertAfter->get_handle(),
-      x, y, cx, cy, nFlags) != FALSE; 
-      */
 
       rect64 rectWindowOld = m_rectParentClient;
 
@@ -4256,12 +4238,17 @@ ExitModal:
             m_rectParentClient.right   = m_rectParentClient.left + cx;
             m_rectParentClient.bottom  = m_rectParentClient.top + cy;
          }
+
       }
+
 
       if(m_pui != this && m_pui != NULL)
       {
+
          m_pui->m_rectParentClient = m_rectParentClient;
+
       }
+
 
       if(GetExStyle() & WS_EX_LAYERED)
       {
@@ -4270,80 +4257,26 @@ ExitModal:
 
          nFlags |= SWP_NOREDRAW;
 
-         //nFlags |= SWP_NOMOVE;
+         nFlags |= SWP_FRAMECHANGED;
 
-         //nFlags |= SWP_NOSIZE;
-
-         if(z == 0)
-         {
-
-            nFlags |= SWP_NOZORDER;
-
-         }
-
-         if(rectWindowOld.top_left() != m_rectParentClient.top_left())
+         //if(rectWindowOld.top_left() != m_rectParentClient.top_left())
          {
 
             send_message(WM_MOVE);
 
          }
 
-         if(rectWindowOld.size() != m_rectParentClient.size())
+         //if(rectWindowOld.size() != m_rectParentClient.size())
          {
 
             send_message(WM_SIZE);
 
          }
 
-         //nFlags |= SWP_FRAMECHANGED;
+         _001UpdateWindow();
 
-         if(nFlags & SWP_SHOWWINDOW)
-         {
+         ::SetWindowPos(get_handle(), (oswindow)z, x, y, cx, cy, nFlags);
 
-            if(!IsWindowVisible())
-            {
-
-               ::SetWindowPos(get_handle(), (oswindow) z, x, y, cx, cy, nFlags);
-
-               ShowWindow(SW_SHOW);
-
-            }
-
-         }
-         else
-         {
-       
-            ::SetWindowPos(get_handle(),(oswindow)  z, x, y, cx, cy, nFlags); // for Remote Desktop ??
-
-         }
-         /*         if(nFlags & SWP_SHOWWINDOW)
-         {
-
-         //            ::SetWindowPos(get_handle(), (oswindow) z, x, y, cx, cy, nFlags);
-         if(!IsWindowVisible())
-         {
-
-         ShowWindow(SW_SHOW);
-
-         }
-
-         }
-         else
-         {
-
-         //  ::SetWindowPos(get_handle(),(oswindow)  z, x, y, cx, cy, nFlags);
-
-         }*/
-
-         /*if (m_pui != NULL && !(nFlags & SWP_NOZORDER))
-         {
-            m_pui->oprop("pending_layout") = true;
-            m_pui->oprop("pending_zorder") = z;
-         }*/
-         /*if(&System != NULL && System.get_twf() != NULL)
-         {
-         System.get_twf()->synch_redraw();
-         }*/
       }
       else
       {
@@ -4532,14 +4465,32 @@ ExitModal:
 
    void window::_001WindowMaximize()
    {
-      
+
+      m_eappearance = ::user::AppearanceZoomed;
+
       ::ShowWindow(get_handle(), SW_MAXIMIZE);
+
+      if (GetExStyle() & WS_EX_LAYERED)
+      {
+
+         rect rectDesktop;
+
+         ::GetWindowRect(::GetDesktopWindow(), rectDesktop);
+
+         m_pui->SetWindowPos(ZORDER_TOP, rectDesktop.left, rectDesktop.top, rectDesktop.width(), rectDesktop.height(), SWP_SHOWWINDOW | SWP_FRAMECHANGED);
+
+         m_pui->layout();
+
+      }
+
 
    }
 
 
    void window::_001WindowRestore()
    {
+
+      m_eappearance = ::user::AppearanceNormal;
 
       ::ShowWindow(get_handle(), SW_RESTORE);
 
@@ -6264,12 +6215,7 @@ lCallNextHook:
       if(!sl.lock(millis(84)))
          return;
 
-      if(m_bUpdateGraphics)
-      {
-
-         win_update_graphics();
-
-      }
+      win_update_graphics();
 
       if(m_spdib.is_null() || m_spdib->get_graphics() == NULL)
          return;
@@ -6308,7 +6254,7 @@ lCallNextHook:
 
       sl.unlock();
 
-      if(GetExStyle() & WS_EX_LAYERED)
+/*      if(GetExStyle() & WS_EX_LAYERED)
       {
 
          class rect rectWin;
@@ -6334,7 +6280,7 @@ lCallNextHook:
                {
                   pframe->ActivateFrame();
                }*/
-               m_pui->oprop("pending_layout") = false;
+/*               m_pui->oprop("pending_layout") = false;
             }
             else
             {
@@ -6342,7 +6288,7 @@ lCallNextHook:
             }
          }
 
-      }
+      }*/
 
 
    }
