@@ -240,7 +240,9 @@ namespace win
       virtual void ValidateRect(LPCRECT lpRect);
       virtual void ValidateRgn(::draw2d::region* pRgn);
       virtual bool ShowWindow(int32_t nCmdShow);
+      virtual void _001WindowMinimize();
       virtual void _001WindowMaximize();
+      virtual void _001WindowFullScreen();
       virtual void _001WindowRestore();
       virtual bool IsWindowVisible();
       virtual void ShowOwnedPopups(bool bShow = TRUE);

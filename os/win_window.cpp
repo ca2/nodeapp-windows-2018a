@@ -10,7 +10,7 @@ extern __declspec(thread) HHOOK t_hHookOldCbtFilter;
 extern __declspec(thread) ::user::interaction * t_pwndInit;
 
 __STATIC void CLASS_DECL_win __pre_init_dialog(sp(::user::interaction) pwindow, LPRECT lpRectOld, uint32_t* pdwStyleOld);
-__STATIC void CLASS_DECL_win __post_init_dialog(sp(::user::interaction) pwindow, const RECT& rectOld, uint32_t dwStyleOld);
+__STATIC void CLASS_DECL_win __post_init_dialog(sp(::user::interaction) pwindow, const RECT& rec_001tOld, uint32_t dwStyleOld);
 LRESULT CALLBACK __activation_window_procedure(oswindow oswindow, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
 const char * gen_OldWndProc = "::core::OldWndProc423";
@@ -4463,6 +4463,23 @@ ExitModal:
    }
    }*/
 
+   void window::_001WindowMinimize()
+   {
+
+      m_eappearance = ::user::AppearanceIconic;
+
+      ::ShowWindow(get_handle(), SW_MINIMIZE);
+
+      if (GetExStyle() & WS_EX_LAYERED)
+      {
+
+         m_pui->SetWindowPos(ZORDER_TOP, 0, 0, 0, 0, SWP_SHOWWINDOW | SWP_FRAMECHANGED);
+
+      }
+
+
+   }
+
    void window::_001WindowMaximize()
    {
 
@@ -4479,13 +4496,32 @@ ExitModal:
 
          m_pui->SetWindowPos(ZORDER_TOP, rectDesktop.left, rectDesktop.top, rectDesktop.width(), rectDesktop.height(), SWP_SHOWWINDOW | SWP_FRAMECHANGED);
 
-         m_pui->layout();
-
       }
 
 
    }
 
+
+   void window::_001WindowFullScreen()
+   {
+
+      m_eappearance = ::user::AppearanceFullScreen;
+
+      ::ShowWindow(get_handle(), SW_MAXIMIZE);
+
+      if (GetExStyle() & WS_EX_LAYERED)
+      {
+
+         rect rectDesktop;
+
+         ::GetWindowRect(::GetDesktopWindow(), rectDesktop);
+
+         m_pui->SetWindowPos(ZORDER_TOP, rectDesktop.left, rectDesktop.top, rectDesktop.width(), rectDesktop.height(), SWP_SHOWWINDOW | SWP_FRAMECHANGED);
+
+      }
+
+
+   }
 
    void window::_001WindowRestore()
    {
@@ -4519,20 +4555,16 @@ ExitModal:
          {
             _001WindowRestore();
          }
+         else if (nCmdShow == SW_MINIMIZE)
+         {
+            _001WindowMinimize();
+         }
          else
          {
-            if(nCmdShow == SW_MINIMIZE)
+            if (nCmdShow != SW_HIDE)
             {
-               m_pui->m_eappearance = ::user::AppearanceIconic;
-               m_eappearance = ::user::AppearanceIconic;
-            }
-            else
-            {
-               if (nCmdShow != SW_HIDE)
-               {
-                  ::SetWindowPos(get_safe_handle(), 0, (int) m_rectParentClient.left, (int) m_rectParentClient.top,
-                     (int) m_rectParentClient.width(), (int) m_rectParentClient.height(), SWP_SHOWWINDOW | SWP_NOZORDER);
-               }
+               ::SetWindowPos(get_safe_handle(), 0, (int) m_rectParentClient.left, (int) m_rectParentClient.top,
+                  (int) m_rectParentClient.width(), (int) m_rectParentClient.height(), SWP_SHOWWINDOW | SWP_NOZORDER);
             }
             ::ShowWindow(get_handle(), nCmdShow);
          }
