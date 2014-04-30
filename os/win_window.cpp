@@ -4259,14 +4259,14 @@ ExitModal:
 
          nFlags |= SWP_FRAMECHANGED;
 
-         //if(rectWindowOld.top_left() != m_rectParentClient.top_left())
+         if(rectWindowOld.top_left() != m_rectParentClient.top_left())
          {
 
             send_message(WM_MOVE);
 
          }
 
-         //if(rectWindowOld.size() != m_rectParentClient.size())
+         if(rectWindowOld.size() != m_rectParentClient.size())
          {
 
             send_message(WM_SIZE);
