@@ -56,7 +56,7 @@ namespace win
       virtual bool  name_is(const string & str, sp(base_application) papp);
       virtual bool  is_inside(const char * lpcszDir, const char * lpcszPath, sp(base_application) papp);
       virtual bool  is_inside_time(const char * lpcsz, sp(base_application) papp);
-      virtual void root_ones(stringa & stra, sp(base_application) papp);
+      virtual void root_ones(stringa & straPath, stringa & straTitle, sp(base_application) papp);
       virtual bool mk(const char * lpcsz, sp(base_application) papp);
       virtual bool rm(sp(base_application) papp, const char * psz, bool bRecursive = true);
       

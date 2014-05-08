@@ -234,7 +234,7 @@ namespace win
       return TRUE; // otherwise file name is truly the same
    }
 
-   void dir::root_ones(stringa & stra, sp(base_application) papp)
+   void dir::root_ones(stringa & straPath, stringa & straTitle, sp(base_application) papp)
    {
       DWORD dwSize = ::GetLogicalDriveStrings(0, NULL);
       LPTSTR lpszAlloc = (LPTSTR) malloc(dwSize + 1);
@@ -250,7 +250,9 @@ namespace win
             str += *lpsz;  
             lpsz++;
          }
-         stra.add(str);
+         straPath.add(str);
+         str.trim(":/\\");
+         straTitle.add("Drive " + str);
          lpsz++;
       }
 
