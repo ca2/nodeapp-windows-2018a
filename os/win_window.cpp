@@ -4904,7 +4904,7 @@ ExitModal:
 
             oswindow = ::GetLastActivePopup(oswindow);
 
-            BringWindowToTop(oswindow);
+            from_handle(oswindow)->BringWindowToTop();
 
          }
 
@@ -4918,15 +4918,19 @@ ExitModal:
       bool bOk = ::BringWindowToTop(get_handle()) != FALSE; 
 
 
-      if((GetStyleEx() & WS_EX_LAYERED)
+      if(GetExStyle() & WS_EX_LAYERED)
       {
 
-         if(!(GetStyleEx() & WS_EX_TOPMOST))
+         if(!(GetExStyle() & WS_EX_TOPMOST))
          {
 
-            SetWindowPos(ZORDER_TOPMOST,0,0,0,0,SWP_NOMOVE | SWP_NOSIZE);
+            ::SetWindowPos(get_handle(),(HWND) ZORDER_TOP,0,0,0,0,SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
 
-            SetWindowPos(ZORDER_TOP,0,0,0,0,SWP_NOMOVE | SWP_NOSIZE);
+            //::SetWindowPos(get_handle(),(HWND)ZORDER_TOP,0,0,0,0,SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
+
+            //::SetWindowPos(get_handle(),(HWND)ZORDER_TOPMOST,0,0,0,0,SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
+
+            //::SetWindowPos(get_handle(),(HWND)ZORDER_TOP,0,0,0,0,SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
 
          }
 
