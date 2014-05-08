@@ -106,7 +106,7 @@ namespace win
 	
 	   // initialize COM for this thread
 	
-	   HRESULT result = CoInitialize(NULL);  // STA model
+      HRESULT result = ::CoInitializeEx(NULL,COINIT_MULTITHREADED);
 	   if ( !SUCCEEDED(result) )
 	   {
 		   return E_FAIL;
@@ -546,7 +546,7 @@ namespace win
 	
 	   // initialize COM
 	
-	   if ( !SUCCEEDED( CoInitialize(NULL) ) )  // STA model
+	   if ( !SUCCEEDED( ::CoInitializeEx(NULL,COINIT_MULTITHREADED) ) )  // STA model
 		   bContinue = FALSE;
 	
 	
@@ -684,7 +684,7 @@ namespace win
 	
 	   // initialize COM
 	
-	   if ( !SUCCEEDED( CoInitialize(NULL) ) )  // STA model
+	   if ( !SUCCEEDED( ::CoInitializeEx(NULL,COINIT_MULTITHREADED) ) )  // STA model
 		   bContinue = FALSE;
 	
 	   // create COM instance of IUPnPDeviceFinder
@@ -819,7 +819,7 @@ namespace win
 	
 	   // initialize COM
 	
-	   if ( !SUCCEEDED( CoInitialize(NULL) ) )  // STA model
+	   if ( !SUCCEEDED( ::CoInitializeEx(NULL,COINIT_MULTITHREADED) ) )  // STA model
 		   bContinue = FALSE;
 	
 	
@@ -940,7 +940,7 @@ namespace win
 	
 	   // initialize COM
 	
-	   if ( !SUCCEEDED( CoInitialize(NULL) ) )  // STA model
+	   if ( !SUCCEEDED( ::CoInitializeEx(NULL,COINIT_MULTITHREADED) ) )  // STA model
 		   bContinue = FALSE;
 	
 	
@@ -1023,7 +1023,7 @@ namespace win
 	
 	   // initialize COM
 	
-	   if ( !SUCCEEDED( CoInitialize(NULL) ) )  // STA model
+	   if ( !SUCCEEDED( ::CoInitializeEx(NULL,COINIT_MULTITHREADED) ) )  // STA model
 		   bContinue = FALSE;
 	
 	

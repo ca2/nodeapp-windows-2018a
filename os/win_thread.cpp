@@ -74,7 +74,7 @@ uint32_t __thread_entry(void * pParam)
       ::win::thread * pThread = pStartup->pThread;
 
 
-      ::CoInitialize(NULL);
+      ::CoInitializeEx(NULL,COINIT_MULTITHREADED);
 
 
       pThread->::exception::translator::attach();

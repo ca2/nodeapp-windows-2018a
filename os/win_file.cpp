@@ -1314,8 +1314,10 @@ bool CLASS_DECL_win vfxResolveShortcut(string & strTarget, const char * pszSourc
    wstrFileOut = L"";
 
    SHFILEINFOW info;
-   if ((::win::shell::SHGetFileInfo(wstrFileIn, 0, &info, sizeof(info),
-      SHGFI_ATTRIBUTES) == 0) || !(info.dwAttributes & SFGAO_LINK))
+   
+   ZERO(info);
+   
+   if ((::win::shell::SHGetFileInfo(wstrFileIn, 0, &info, sizeof(info), SHGFI_ATTRIBUTES) == 0) || !(info.dwAttributes & SFGAO_LINK))
    {
       return FALSE;
    }

@@ -4881,10 +4881,58 @@ ExitModal:
       ASSERT(::IsWindow(get_handle()) && hRgn != NULL); return ::GetWindowRgn(get_handle(), hRgn); 
    }
 
+
+
+   void window::BringToTop(int nCmdShow)
+   {
+
+      if(get_parent() == NULL)
+      {
+
+         // place the window on top except for certain nCmdShow
+
+         if(
+            nCmdShow != SW_HIDE
+            && nCmdShow != SW_MINIMIZE
+            && nCmdShow != SW_SHOWMINNOACTIVE
+            && nCmdShow != SW_SHOWNA
+            && nCmdShow != SW_SHOWNOACTIVATE
+            )
+         {
+
+            oswindow oswindow = get_handle();
+
+            oswindow = ::GetLastActivePopup(oswindow);
+
+            BringWindowToTop(oswindow);
+
+         }
+
+      }
+
+   }
+
    bool window::BringWindowToTop()
    {
 
-      return ::BringWindowToTop(get_handle()) != FALSE; 
+      bool bOk = ::BringWindowToTop(get_handle()) != FALSE; 
+
+
+      if((GetStyleEx() & WS_EX_LAYERED)
+      {
+
+         if(!(GetStyleEx() & WS_EX_TOPMOST))
+         {
+
+            SetWindowPos(ZORDER_TOPMOST,0,0,0,0,SWP_NOMOVE | SWP_NOSIZE);
+
+            SetWindowPos(ZORDER_TOP,0,0,0,0,SWP_NOMOVE | SWP_NOSIZE);
+
+         }
+
+      }
+
+      return bOk;
 
    }
 
@@ -6324,6 +6372,10 @@ lCallNextHook:
 
 
    }
+
+
+
+
 
 
 } // namespace win

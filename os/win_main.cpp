@@ -139,7 +139,7 @@ void __cdecl _null_se_translator(uint32_t uiCode, EXCEPTION_POINTERS * ppointers
 bool __win_init()
 {
 
-   ::CoInitialize(NULL);
+   ::CoInitializeEx(NULL,COINIT_MULTITHREADED);
 
    if (!main_initialize())
       return false;
