@@ -6299,7 +6299,7 @@ lCallNextHook:
       if(!sl.lock(millis(84)))
         return;
 
-      static s_last_update;
+      static DWORD s_last_update = 0;
 
       if(GetTickCount() - s_last_update >= 25)
       {
@@ -6356,8 +6356,8 @@ lCallNextHook:
          ::visual::cursor * pcursor = Session.get_cursor();
          if(pcursor != NULL)
          {
-            pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
-            pcursor->to(pgraphics,ptCursor);
+            m_spdib->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_blend);
+            pcursor->to(m_spdib->get_graphics(),ptCursor);
             //pgraphics->FillSolidRect(100, 100, 100, 100, ARGB(100, 0, 255, 0));
          }
          else
