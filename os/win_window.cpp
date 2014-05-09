@@ -6297,44 +6297,81 @@ lCallNextHook:
       single_lock sl(mutex_graphics(), false);
 
       if(!sl.lock(millis(84)))
-         return;
+        return;
 
-      win_update_graphics();
+      static s_last_update;
 
-      if(m_spdib.is_null() || m_spdib->get_graphics() == NULL)
-         return;
-
-      m_spdib->map();
-
-      if(m_spdib->get_data() == NULL)
-         return;
-
-      rect64 rectWindow;
-
-      rectWindow = m_rectParentClient;
-
-      if (GetExStyle() & WS_EX_LAYERED)
+      if(GetTickCount() - s_last_update >= 25)
       {
 
-         m_spdib->Fill(0, 0, 0, 0);
+         s_last_update = GetTickCount();
+
+         win_update_graphics();
+
+         if(m_spdib.is_null() || m_spdib->get_graphics() == NULL)
+            return;
+
+         m_spdib->map();
+
+         if(m_spdib->get_data() == NULL)
+            return;
+
+         rect64 rectWindow;
+
+         rectWindow = m_rectParentClient;
+
+         if(GetExStyle() & WS_EX_LAYERED)
+         {
+
+            m_spdib->Fill(0,0,0,0);
+
+         }
+         else
+         {
+
+            m_spdib->Fill(255,255,255,255);
+
+         }
+
+
+         m_spdib->get_graphics()->SetViewportOrg(0,0);
+
+         //m_spdib->get_graphics()->FillSolidRect(00, 00, 100, 100, ARGB(127, 0, 127, 0));
+         _001Print(m_spdib->get_graphics());
+
+
+         //pgraphics->FillSolidRect(300, 300, 100, 100, ARGB(127, 127, 127, 0));
+
+         //m_spdib->get_graphics()->SetViewportOrg(0, 0);
+         //m_spdib->get_graphics()->FillSolidRect(100, 100, 100, 100, ARGB(127, 127, 0, 0));
+
 
       }
-      else
+
+      if(Session.m_bDrawCursor)
       {
-
-         m_spdib->Fill(255, 255, 255, 255);
-
+         point ptCursor;
+         Session.get_cursor_pos(&ptCursor);
+         ScreenToClient(&ptCursor);
+         ::visual::cursor * pcursor = Session.get_cursor();
+         if(pcursor != NULL)
+         {
+            pgraphics->set_alpha_mode(::draw2d::alpha_mode_blend);
+            pcursor->to(pgraphics,ptCursor);
+            //pgraphics->FillSolidRect(100, 100, 100, 100, ARGB(100, 0, 255, 0));
+         }
+         else
+         {
+            //pgraphics->FillSolidRect(100, 100, 100, 100, ARGB(100, 255, 0, 0));
+         }
+         //pgraphics->SelectObject(GetFont());
+         //string strCursor;
+         //strCursor.Format("(%d,%d)", ptCursor.x, ptCursor.y);
+         //pgraphics->TextOut(200, 200, strCursor);
       }
-         
 
-      m_spdib->get_graphics()->SetViewportOrg(0, 0);
 
-      //m_spdib->get_graphics()->FillSolidRect(00, 00, 100, 100, ARGB(127, 0, 127, 0));
-      _001Print(m_spdib->get_graphics());
-      //m_spdib->get_graphics()->SetViewportOrg(0, 0);
-      //m_spdib->get_graphics()->FillSolidRect(100, 100, 100, 100, ARGB(127, 127, 0, 0));
-
-      m_spdib->update_window(this, NULL);
+      m_spdib->update_window(this,NULL);
 
       sl.unlock();
 
