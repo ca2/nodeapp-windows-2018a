@@ -6,7 +6,7 @@ namespace draw2d_gdiplus
 {
 
 
-   brush::brush(sp(base_application) papp) :
+   brush::brush(sp(::base::application) papp) :
       element(papp)
    { 
 

@@ -12,7 +12,7 @@ namespace draw2d_gdi
    public:
 
 
-      palette(base_application * papp);
+      palette(::base::application * papp);
       virtual ~palette();
 
 

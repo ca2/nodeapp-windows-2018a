@@ -50,7 +50,7 @@ namespace draw2d_gdi
       comparable_array < ::draw2d_gdi::object * >        m_ptraObject;
 
       //graphics();
-      graphics(base_application * papp);
+      graphics(::base::application * papp);
       virtual ~graphics();
 
 
@@ -482,7 +482,7 @@ namespace draw2d_gdi
       bool SelectClipPath(int nMode);
 
    // Misc Helper Functions
-      static ::draw2d::brush* GetHalftoneBrush(base_application * papp);
+      static ::draw2d::brush* GetHalftoneBrush(::base::application * papp);
       void DrawDragRect(LPCRECT lpRect, SIZE size,
          LPCRECT lpRectLast, SIZE sizeLast, ::draw2d::brush* pBrush = NULL, ::draw2d::brush* pBrushLast = NULL);
       void FillSolidRect(const __rect64 * lpRect, COLORREF clr);

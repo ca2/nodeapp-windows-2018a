@@ -20,7 +20,7 @@ namespace draw2d_gdiplus
 
       ::Gdiplus::Pen *  m_ppen;
 
-      pen(sp(base_application) papp);
+      pen(sp(::base::application) papp);
       /*virtual void construct(int32_t nPenStyle, double nWidth, COLORREF crColor);
       virtual void construct(int32_t nPenStyle, double nWidth, const LOGBRUSH* pLogBrush, int32_t nStyleCount = 0, const DWORD* lpStyle = NULL);
       bool CreatePen(int32_t nPenStyle, double nWidth, COLORREF crColor);

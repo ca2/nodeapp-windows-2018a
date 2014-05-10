@@ -12,7 +12,7 @@ namespace draw2d_gdi
    public:
 
 
-      bitmap(base_application * papp);
+      bitmap(::base::application * papp);
       virtual ~bitmap();
 
 

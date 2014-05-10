@@ -25,7 +25,7 @@ namespace draw2d_gdi
 
 
 
-      dib(base_application * papp);
+      dib(::base::application * papp);
       virtual ~dib();
 
 

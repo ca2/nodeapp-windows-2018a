@@ -5,7 +5,7 @@ namespace draw2d_gdi
 {
 
 
-   factory_exchange::factory_exchange(base_application * papp) :
+   factory_exchange::factory_exchange(::base::application * papp) :
       element(papp)
    {
 
@@ -31,7 +31,7 @@ namespace draw2d_gdi
 } // namespace draw2d_gdi
 
 
-void ca2_factory_exchange(sp(base_application) papp)
+void ca2_factory_exchange(sp(::base::application) papp)
 {
    draw2d_gdi::factory_exchange factoryexchange(papp);
 }

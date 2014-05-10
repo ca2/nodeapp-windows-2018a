@@ -12,7 +12,7 @@ namespace draw2d_gdiplus
 
 
 
-   dib::dib(sp(base_application) papp) :
+   dib::dib(sp(::base::application) papp) :
       element(papp),
       m_spbitmap(papp),
       m_spgraphics(allocer())

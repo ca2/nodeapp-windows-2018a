@@ -5,7 +5,7 @@ namespace draw2d_gdi
 {
 
 
-   font::font(base_application * papp) :
+   font::font(::base::application * papp) :
       element(papp)
    { 
 

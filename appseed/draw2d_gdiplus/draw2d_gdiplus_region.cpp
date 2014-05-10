@@ -8,7 +8,7 @@ namespace draw2d_gdiplus
 {
 
    
-   region::region(sp(base_application) papp) :
+   region::region(sp(::base::application) papp) :
       element(papp)
    { 
       

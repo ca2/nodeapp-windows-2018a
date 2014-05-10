@@ -30,7 +30,7 @@ namespace draw2d_gdiplus
 
 
       graphics();
-      graphics(sp(base_application) papp);
+      graphics(sp(::base::application) papp);
       virtual ~graphics();
 
 
@@ -461,7 +461,7 @@ namespace draw2d_gdiplus
       bool SelectClipPath(int32_t nMode);
 
    // Misc Helper Functions
-      static ::draw2d::brush* GetHalftoneBrush(sp(base_application) papp);
+      static ::draw2d::brush* GetHalftoneBrush(sp(::base::application) papp);
       void DrawDragRect(LPCRECT lpRect, SIZE size,
          LPCRECT lpRectLast, SIZE sizeLast,
          ::draw2d::brush* pBrush = NULL, ::draw2d::brush* pBrushLast = NULL);
