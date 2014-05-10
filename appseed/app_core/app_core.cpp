@@ -6,6 +6,8 @@
 
 
 
+CLASS_DECL_BASE int32_t __win_main(sp(base_system) psystem,::windows::main_init_data * pmaininitdata);
+
 extern "C" int32_t app_core_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
 {
 
@@ -23,7 +25,7 @@ extern "C" int32_t app_core_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, L
 
    ASSERT(hPrevInstance == NULL);
 
-   ::win::main_init_data * pmaininitdata = new ::win::main_init_data;
+   ::windows::main_init_data * pmaininitdata = new ::windows::main_init_data;
 
 
    pmaininitdata->m_hInstance = hinstance;

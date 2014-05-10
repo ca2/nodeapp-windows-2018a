@@ -1,5 +1,7 @@
 #pragma once
 
+#define SECURITY_WIN32
+
 
 #define WINDOWS
 #define WINDOWSEX

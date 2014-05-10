@@ -1102,9 +1102,6 @@
     <ProjectReference Include="..\..\..\app\thirdparty\appseed\freetype\basefreetype.vcxproj">
       <Project>{771f4b49-cad1-438f-b272-20f3eb8e88f1}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\os\os.vcxproj">
-      <Project>{9163e31a-2d5a-4f18-ad6f-b561c76e5054}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="app_core.cpp" />
