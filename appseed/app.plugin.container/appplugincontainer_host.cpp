@@ -16,7 +16,6 @@ namespace ca2plugin_container
    host::host(sp(::base::application) papp) :
       element(papp),
       ::simple_ui::style(papp),
-      ::simple_ui::interaction(papp),
       ::user::interaction(papp),
       hotplugin::plugin(papp)
    {
@@ -26,10 +25,6 @@ namespace ca2plugin_container
       m_phost           = NULL;
       m_bInitialized    = false;
       m_bOk             = false;
-      m_rect.left       = 0;
-      m_rect.top        = 0;
-      m_rect.bottom     = 0;
-      m_rect.right      = 0;
 
       m_bRunningSpaAdmin = false;
 
@@ -66,10 +61,7 @@ namespace ca2plugin_container
       if(aWindow == NULL)
          return FALSE;
 
-      m_rect.left = aWindow->x;
-      m_rect.top = aWindow->y;
-      m_rect.right = m_rect.left + aWindow->width;
-      m_rect.bottom = m_rect.top + aWindow->height;
+      RepositionWindow(aWindow->x, aWindow->y, aWindow->width, aWindow->height);
 
       m_oswindow = (oswindow) aWindow->window;
 
@@ -187,10 +179,10 @@ namespace ca2plugin_container
    }
 
 
-   LRESULT host::message_handler(uint32_t uiMessage, WPARAM wparam, LPARAM lparam)
+   void host::message_handler(signal_details * pobj)
    {
 
-      return ::hotplugin::host::message_handler(uiMessage, wparam, lparam);      
+      return ::hotplugin::host::message_handler(pobj);      
 
    }
 
@@ -383,7 +375,7 @@ namespace ca2plugin_container
             try
             {
 
-               set_window_rect(lpcrect);
+               SetPlacement(lpcrect);
 
             }
             catch(...)
@@ -455,7 +447,7 @@ namespace ca2plugin_container
             try
             {
 
-               message_handler(pmsg->message, pmsg->wParam, pmsg->lParam);
+               message_handler(m_pplugin->get_base(pmsg));
 
             }
             catch(...)

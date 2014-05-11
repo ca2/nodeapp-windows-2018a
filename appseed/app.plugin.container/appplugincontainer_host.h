@@ -47,15 +47,7 @@ namespace ca2plugin_container
 
 
 
-#ifdef WINDOWS
-
-      LRESULT message_handler(uint32_t uiMessage, WPARAM wparam, LPARAM lparam);
-
-#else
-
-      int32_t message_handler(XEvent * pevent);
-
-#endif
+      void message_handler(signal_details * pobj);
 
 
       virtual void * get_system();
