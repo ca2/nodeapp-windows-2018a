@@ -19,7 +19,7 @@ namespace production
       sp(form_view) m_pviewOptions;
 
 
-	   pane_view(sp(base_application) papp);
+	   pane_view(sp(::base::application) papp);
 	   virtual ~pane_view();
 
 

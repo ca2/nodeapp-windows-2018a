@@ -93,7 +93,7 @@ _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 removal::removal() :
 element(this),
-base_system(this)
+::base::system(this)
 {
    xxdebug_box("app.install", "app", 0);
    m_hinstance             = ::GetModuleHandleA(NULL);

@@ -297,7 +297,7 @@ namespace ca2plugin_container
 
       //::hotplugin::host::set_system(pvoidSystem);
 
-      m_pbaseapp = (base_system *) pvoidSystem;
+      m_pbaseapp = (::base::system *) pvoidSystem;
 
 
    }

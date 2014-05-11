@@ -13,7 +13,7 @@ namespace backup
 
 
 
-      backup(sp(base_application) papp);
+      backup(sp(::base::application) papp);
       virtual ~backup();
 
       virtual int32_t run();

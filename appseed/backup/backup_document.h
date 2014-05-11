@@ -11,7 +11,7 @@ namespace backup
    public:
    
       
-      document(sp(base_application) papp);
+      document(sp(::base::application) papp);
       virtual ~document();
 
 

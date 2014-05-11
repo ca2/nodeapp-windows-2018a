@@ -43,7 +43,7 @@ namespace production
       simple_scroll_bar         m_scrollbarHorz;
 
 
-	   view(sp(base_application) papp);
+	   view(sp(::base::application) papp);
 	   virtual ~view();
    #ifdef DEBUG
 	   virtual void assert_valid() const;
