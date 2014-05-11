@@ -24,7 +24,7 @@ namespace ca2plugin_container
       sp(application)               m_pcontainerapp;      
 
 
-      host(sp(base_application) papp);
+      host(sp(::base::application) papp);
       virtual ~host();
 
       virtual oswindow get_host_window();
