@@ -17,7 +17,7 @@ namespace music
          {
 
 
-            callback::callback(sp(base_application) papp) :
+            callback::callback(sp(::base::application) papp) :
                m_wnd(papp)
             {
             }

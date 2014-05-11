@@ -19,7 +19,7 @@ namespace multimedia
          WAVEFORMATEX                     m_waveformatex;
 
 
-         wave_out(sp(base_application) papp);
+         wave_out(sp(::base::application) papp);
          virtual ~wave_out();
 
 

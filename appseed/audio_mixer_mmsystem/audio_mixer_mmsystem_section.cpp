@@ -9,7 +9,7 @@ namespace multimedia
    {
 
 
-      departament::departament(sp(base_application) papp) :
+      departament::departament(sp(::base::application) papp) :
          element(papp),
          base_departament(papp)
       {

@@ -26,7 +26,7 @@ namespace multimedia
          };
 
 
-         departament(sp(base_application) papp);
+         departament(sp(::base::application) papp);
          virtual ~departament();
 
 

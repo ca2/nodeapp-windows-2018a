@@ -13,7 +13,7 @@ namespace music
       {
 
 
-         factory_exchange::factory_exchange(sp(base_application) papp) :
+         factory_exchange::factory_exchange(sp(::base::application) papp) :
             element(papp),
             ::multimedia::mmsystem::factory_exchange(papp)
          {
@@ -45,7 +45,7 @@ namespace music
 } // namespace music
 
 
-void ca2_factory_exchange(sp(base_application) papp)
+void ca2_factory_exchange(sp(::base::application) papp)
 {
 
    ::music::midi::mmsystem::factory_exchange factoryexchange(papp);

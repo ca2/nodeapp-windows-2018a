@@ -20,7 +20,7 @@ namespace music
          public:
 
 
-            sequence_thread(sp(base_application) papp);
+            sequence_thread(sp(::base::application) papp);
             virtual ~sequence_thread();
 
 

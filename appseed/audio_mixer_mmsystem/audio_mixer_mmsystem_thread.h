@@ -26,7 +26,7 @@ namespace multimedia
          sp(::multimedia::audio_mixer::departament) m_psection;
 
 
-         thread(sp(base_application) papp);
+         thread(sp(::base::application) papp);
          virtual ~thread();
 
 

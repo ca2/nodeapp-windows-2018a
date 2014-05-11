@@ -56,7 +56,7 @@ namespace music
                buffer_array *       m_pbuffera;
 
 
-               buffer(sp(base_application) papp);
+               buffer(sp(::base::application) papp);
                virtual ~buffer();
 
                bool IsPrepared();
@@ -90,7 +90,7 @@ namespace music
                midi_callback_data * m_pcallbackdata;
 
 
-               buffer_array(sp(base_application) papp);
+               buffer_array(sp(::base::application) papp);
                virtual ~buffer_array();
 
                void Reset();
@@ -128,7 +128,7 @@ namespace music
 
 
 
-            sequence(sp(base_application) papp);
+            sequence(sp(::base::application) papp);
             virtual ~sequence();
 
 
