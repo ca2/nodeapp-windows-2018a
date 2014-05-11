@@ -17,7 +17,7 @@ namespace ca2plugin_container
       element(papp),
       ::simple_ui::style(papp),
       ::simple_ui::interaction(papp),
-      ::os::simple_ui(papp),
+      ::user::interaction(papp),
       hotplugin::plugin(papp)
    {
       

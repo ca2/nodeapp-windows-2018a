@@ -10,7 +10,7 @@ namespace multimedia
 
 
       class CLASS_DECL_AUDIO_MIXER_MMSYSTEM departament :
-         virtual public base_departament,
+         virtual public ::base::departament,
          virtual public ::user::interaction
       {
       public:

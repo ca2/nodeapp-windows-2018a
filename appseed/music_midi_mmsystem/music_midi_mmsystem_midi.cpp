@@ -26,7 +26,7 @@ namespace music
 
          midi::midi(sp(::base::application) papp) :
             element(papp),
-            base_departament(papp),
+            ::base::departament(papp),
             ::music::midi::object(papp),
             ::music::midi::midi(papp)
          {
