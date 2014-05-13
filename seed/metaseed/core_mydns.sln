@@ -3,11 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "os", "..\..\os\os.vcxproj", "{9163E31A-2D5A-4F18-AD6F-B561C76E5054}"
-	ProjectSection(ProjectDependencies) = postProject
-		{E000FFAF-392F-4E32-BF51-FD7ED638991F} = {E000FFAF-392F-4E32-BF51-FD7ED638991F}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\app.vcxproj", "{19841115-1984-0411-1977-021977151984}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E000FFAF-392F-4E32-BF51-FD7ED638991F} = {E000FFAF-392F-4E32-BF51-FD7ED638991F}
@@ -40,7 +35,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_mydns", "..\..\..\app-core\appseed\mydns\mydns.vcxproj", "{AEF1C751-5174-4AFE-A4BC-8F5C3CEE51B4}"
 	ProjectSection(ProjectDependencies) = postProject
 		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054} = {9163E31A-2D5A-4F18-AD6F-B561C76E5054}
 		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
 		{771F4B49-CAD1-438F-B272-20F3EB8E88F1} = {771F4B49-CAD1-438F-B272-20F3EB8E88F1}
 		{2652C96F-6E86-4ED1-B3B6-AC977DFB0593} = {2652C96F-6E86-4ED1-B3B6-AC977DFB0593}
@@ -73,41 +67,6 @@ Global
 		profiler|x64 = profiler|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.basis_v110|Android.ActiveCfg = basis|Win32
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.basis_v110|Mixed Platforms.ActiveCfg = basis|Win32
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.basis_v110|Mixed Platforms.Build.0 = basis|Win32
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.basis_v110|Win32.ActiveCfg = basis|Win32
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.basis_v110|Win32.Build.0 = basis|Win32
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.basis_v110|x64.ActiveCfg = basis|x64
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.basis_v110|x64.Build.0 = basis|x64
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.basis|Android.ActiveCfg = basis|Win32
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.basis|Mixed Platforms.ActiveCfg = basis|Win32
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.basis|Mixed Platforms.Build.0 = basis|Win32
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.basis|Win32.ActiveCfg = basis|Win32
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.basis|Win32.Build.0 = basis|Win32
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.basis|x64.ActiveCfg = basis|x64
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.basis|x64.Build.0 = basis|x64
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.codeanalysis|Android.ActiveCfg = codeanalysis|Win32
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.codeanalysis|Mixed Platforms.ActiveCfg = codeanalysis|Win32
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.codeanalysis|Mixed Platforms.Build.0 = codeanalysis|Win32
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.codeanalysis|x64.Build.0 = codeanalysis|x64
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.memdleak|Android.ActiveCfg = memdleak|Win32
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.memdleak|Mixed Platforms.ActiveCfg = memdleak|Win32
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.memdleak|Mixed Platforms.Build.0 = memdleak|Win32
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.memdleak|Win32.ActiveCfg = memdleak|Win32
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.memdleak|Win32.Build.0 = memdleak|Win32
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.memdleak|x64.ActiveCfg = memdleak|x64
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.memdleak|x64.Build.0 = memdleak|x64
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.profiler|Android.ActiveCfg = profiler|Win32
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.profiler|Mixed Platforms.ActiveCfg = profiler|Win32
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.profiler|Mixed Platforms.Build.0 = profiler|Win32
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.profiler|Win32.ActiveCfg = profiler|Win32
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.profiler|Win32.Build.0 = profiler|Win32
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.profiler|x64.ActiveCfg = profiler|x64
-		{9163E31A-2D5A-4F18-AD6F-B561C76E5054}.profiler|x64.Build.0 = profiler|x64
 		{19841115-1984-0411-1977-021977151984}.basis_v110|Android.ActiveCfg = basis|Win32
 		{19841115-1984-0411-1977-021977151984}.basis_v110|Mixed Platforms.ActiveCfg = basis|Win32
 		{19841115-1984-0411-1977-021977151984}.basis_v110|Mixed Platforms.Build.0 = basis|Win32
