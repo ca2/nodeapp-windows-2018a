@@ -1181,6 +1181,9 @@ seq_Preroll_Cleanup:
 
          void sequence::OnPositionCB(LPMIDIHDR lpmidihdr)
          {
+
+            return;
+
             ASSERT(lpmidihdr != NULL);
             LPBYTE lpbData = (LPBYTE) (lpmidihdr->lpData + lpmidihdr->dwOffset);
             MIDIEVENT * lpme = (MIDIEVENT *) lpbData;
