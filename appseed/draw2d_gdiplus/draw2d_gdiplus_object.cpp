@@ -158,20 +158,4 @@ namespace draw2d_gdiplus
 } // namespace draw2d_gdiplus
 
 
-/*hgdiobj_map * afxMapHGDIOBJ(bool bCreate)
-{
-   UNREFERENCED_PARAMETER(bCreate);
-   try
-   {
-      __MODULE_STATE* pState = __get_module_state();
-      if(pState == NULL)
-         return NULL;
-      return pState->m_pmapHGDIOBJ;
-   }
-   catch(...)
-   {
-      return NULL;
-   }
 
-}
-*/

@@ -3755,22 +3755,6 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 
 
-/*hdc_map* afxMapHDC(bool bCreate)
-{
-   UNREFERENCED_PARAMETER(bCreate);
-   try
-   {
-      __MODULE_STATE* pState = __get_module_state();
-      if(pState == NULL)
-         return NULL;
-      return pState->m_pmapHDC;
-   }
-   catch(...)
-   {
-      return NULL;
-   }
-
-}*/
 
 
 
