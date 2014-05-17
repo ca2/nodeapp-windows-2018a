@@ -45,8 +45,6 @@ namespace draw2d_gdiplus
 
       ::window_sp GetWindow() const;
 
-      //static ::draw2d::graphics * from_handle(HDC hDC);
-      //static void DeleteTempMap();
       virtual bool attach(void * pgraphics) override;   // attach/detach affects only the Output DC
       virtual void * detach() override;
 
