@@ -118,16 +118,11 @@ namespace production
 
    void production::defer_quit()
    {
+
       if (!m_bReleased)
          return;
-      System.os().post_to_all_threads(WM_QUIT, 0, 0);
-      /*if (m_iLoopCount > 0)
-      {
-         if (m_iLoop > m_iLoopCount)
-         {
-            System.os().post_to_all_threads(WM_QUIT, 0, 0);
-         }
-      }*/
+
+      Application.post_to_all_threads(WM_QUIT, 0, 0);
 
    }
 
@@ -1192,7 +1187,7 @@ namespace production
             threada.add(pthread);
             pthread->m_dwThreadAffinityMask = 1 << ui;
             pthread->m_bAutoDelete = FALSE;
-            pthread->m_p->m_bAutoDelete = FALSE;
+            pthread->m_pimpl->m_bAutoDelete = FALSE;
             pthread->begin();
             syncobjectptra.add(dynamic_cast <waitable *> (eventa(ui).m_p));
          }

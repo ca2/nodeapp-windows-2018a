@@ -13,39 +13,28 @@ namespace multimedia
          element(papp),
          ::thread(papp)
       {
-         SetMainWnd(NULL);
+
          m_bPendingShowCommand = false;
-         //    m_pmfmh = new CMessageFilterMainHook();
+
       }
 
 
       thread::~thread()
       {
-         //    if(m_pmfmh != NULL)
-         //      delete m_pmfmh;
+         
+
       }
 
 
       bool thread::initialize_instance()
       {
-         //CoInitialize(NULL);
-         // xxx   if(!::ca2::OleInit())
-         //      return FALSE;
+
          set_auto_delete(false);
-         SetMainWnd(NULL);
-         ASSERT(GetMainWnd() == NULL);
-         // TODO:  perform and per-thread initialization here
 
-         //    CVMSApp * pApp = (CVMSApp *) &System;
-         //CVMSApp * pApp = (CVMSApp *) &System;
-         //   MessageFilterHookManager * pmfmh;
-         //  MessageFilterHookManager::AppGetMessageFilterHookManager(&pmfmh);
-         //pmfmh->MessageFilterHook();
-         //MessageFilterHook();
-
-         //ViewToolsAlbum();
          return true;
+
       }
+
 
       int32_t thread::exit_instance()
       {
