@@ -1236,7 +1236,7 @@ namespace production
 
       SetThreadAffinityMask(::GetCurrentThread(), m_dwThreadAffinityMask);
 
-      set_thread_priority(::core::scheduling_priority_highest);
+      set_thread_priority(::base::scheduling_priority_highest);
 
       while (m_pproduction->compress_next())
       {
