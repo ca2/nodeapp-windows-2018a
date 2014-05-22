@@ -1919,17 +1919,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 
 
-  // __STATIC_DATA HBRUSH gen_HalftoneBrush = 0;
-
-//   void c_cdecl __win_gdi_x_term()
-  // {
-   //  __delete_object((HGDIOBJ*)&gen_HalftoneBrush);
-   //}
-   //char gen_WingdixTerm = 0;
-//
-   /////////////////////////////////////////////////////////////////////////////
-   // More coordinate transforms (in separate file to avoid transitive refs)
-
+  
 #define HIMETRIC_INCH   2540    // HIMETRIC units per inch
 
    void graphics::DPtoHIMETRIC(LPSIZE lpSize) const

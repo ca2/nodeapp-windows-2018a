@@ -16,7 +16,7 @@
 
 
 class removal :
-   public simple_app,
+   public ::base::simple_app,
    public small_ipc_rx_channel::receiver
 {
 public:
@@ -77,7 +77,7 @@ _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
    __in LPTSTR lpCmdLine, int32_t nCmdShow)
 {
    // call shared/exported WinMain
-   return simple_app::s_main < removal >();
+   return ::base::simple_app::s_main < removal >();
 }
 
 // if MSVC CRT is stripped

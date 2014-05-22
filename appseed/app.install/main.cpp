@@ -10,7 +10,7 @@
 
 
 class installer :
-   public simple_app,
+   public ::base::simple_app,
    public small_ipc_rx_channel::receiver,
    public ::install::installer
 {
@@ -77,7 +77,7 @@ _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
    __in LPTSTR lpCmdLine, int32_t nCmdShow)
 {
    // call shared/exported WinMain
-   return simple_app::s_main < installer > ();
+   return ::base::simple_app::s_main < installer > ();
 }
 
 // if MSVC CRT is stripped

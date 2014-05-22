@@ -29,7 +29,7 @@ uint32_t thread_proc_app(void * lpParam)
 
    ev.ResetEvent();
 
-   __start_system(psystem);
+   __start_core_system(psystem);
 
    if (!ev.wait(seconds(180)).signaled())
       return -1;
@@ -69,7 +69,7 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 
    ::CoInitialize(NULL);
 
-   if (!main_initialize())
+   if (!defer_base_init())
       return -1;
 
    ASSERT(hPrevInstance == NULL);
@@ -119,7 +119,7 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
    try
    {
 
-      main_finalize();
+      defer_base_term();
 
    }
    catch (...)
