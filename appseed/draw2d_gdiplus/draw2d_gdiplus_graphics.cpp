@@ -2376,7 +2376,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 /*      hdc_map* pMap = afxMapHDC();
       if (pMap != NULL && pMap->lookup_permanent(get_handle1()) == this)
       {
-         TRACE(::core::trace::category_AppMsg, 0, "Cannot set Output hDC on Attached graphics.\n");
+         TRACE(::base::trace::category_AppMsg, 0, "Cannot set Output hDC on Attached graphics.\n");
          ASSERT(FALSE);
       }*/
 #endif
@@ -2394,7 +2394,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 /*      hdc_map* pMap = afxMapHDC();
       if (pMap != NULL && pMap->lookup_permanent(get_handle1()) == this)
       {
-         TRACE(::core::trace::category_AppMsg, 0, "Cannot Release Output hDC on Attached graphics.\n");
+         TRACE(::base::trace::category_AppMsg, 0, "Cannot Release Output hDC on Attached graphics.\n");
          ASSERT(FALSE);
       }*/
 #endif
@@ -3030,7 +3030,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          HRGN hRgn = ::CreateRectRgn(0, 0, 0, 0);
          if (::GetClipRgn(get_handle1(), hRgn) < 0 || !::SelectClipRgn(get_handle2(), hRgn))
          {
-            TRACE(::core::trace::category_AppMsg, 0, "Error: unable to transfer clip region in graphics::SelectClipPath!\n");
+            TRACE(::base::trace::category_AppMsg, 0, "Error: unable to transfer clip region in graphics::SelectClipPath!\n");
             bResult = FALSE;
          }
          ::DeleteObject(hRgn);
