@@ -1,20 +1,15 @@
 #include "framework.h"
 
-#ifdef CUBE
-#include "freeimage/freeimage.h"
-#endif
-
-
 
 CLASS_DECL_BASE int32_t __win_main(sp(::base::system) psystem,::windows::main_init_data * pmaininitdata);
+
 
 extern "C" int32_t app_core_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
 {
 
-#ifdef CUBE
-   FreeImage_Initialise(FALSE);
-#endif
+   ::base::static_start::init();
 
+   ::core::init_core();
 
    UNREFERENCED_PARAMETER(lpCmdLine);
 
@@ -60,9 +55,10 @@ extern "C" int32_t app_core_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, L
    }
 
    psystem = NULL;
-#ifdef CUBE
-   FreeImage_DeInitialise();
-#endif
+
+   ::core::term_core();
+
+   ::base::static_start::term();
 
    return nReturnCode;
 
