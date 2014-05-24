@@ -9,10 +9,15 @@ BEGIN_EXTERN_C
 int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
 {
 
-   string str = ::str::international::unicode_to_utf8(::GetCommandLineW());
+   if(!defer_core_init())
+      return -1;
 
-   return app_core_main(hinstance, hPrevInstance, (char *) (const char *) str, nCmdShow);
-   
+   int iRet = app_core_main(hinstance,hPrevInstance,NULL,nCmdShow);
+
+   defer_core_term();
+
+   return iRet;
+
 }
 
 END_EXTERN_C
