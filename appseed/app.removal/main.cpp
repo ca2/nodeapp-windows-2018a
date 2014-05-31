@@ -247,7 +247,7 @@ bool removal::initialize()
    m_hmutex_app_removal = ::CreateMutex(NULL, FALSE, "Global\\::ca2::fontopus::ccca2_spa_app_removal::7807e510-5579-11dd-ae16-0800200c7784");
    if(::GetLastError() == ERROR_ALREADY_EXISTS)
    {
-      ::MessageBox(NULL, "ca2 app.removal.exe is already running.\n\nPlease wait for app.removal to finish or close it - using Task Manager - Ctrl+Shift+ESC - to continue.", "app.install.exe is running!", MB_ICONEXCLAMATION);
+      ::simple_message_box(NULL, "ca2 app.removal.exe is already running.\n\nPlease wait for app.removal to finish or close it - using Task Manager - Ctrl+Shift+ESC - to continue.", "app.install.exe is running!", MB_ICONEXCLAMATION);
       m_iError = -202;
       return false;
    }
@@ -264,7 +264,7 @@ bool removal::initialize()
 
    if(::CopyFile(szFile, strTarget, TRUE))
    {
-      int32_t i = MessageBox(NULL, "Do you want to place a shortcut to ca2 app.removal in Desktop?\n\nProgram has already been copied to Program Files Folder.", "app.removal installation", MB_ICONQUESTION | MB_YESNOCANCEL);
+      int32_t i = ::simple_message_box(NULL, "Do you want to place a shortcut to ca2 app.removal in Desktop?\n\nProgram has already been copied to Program Files Folder.", "app.removal installation", MB_ICONQUESTION | MB_YESNOCANCEL);
 
       if(i == IDCANCEL)
          return false;
@@ -334,7 +334,7 @@ bool removal::initialize()
    ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "ca2os.ca2.fontopus.iexca2.2");
    ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "ca2_spaboot_file");
 
-   //MessageBox(NULL, "Hope Helped!", "Hope Helped!", MB_ICONINFORMATION);
+   //simple_message_box(NULL, "Hope Helped!", "Hope Helped!", MB_ICONINFORMATION);
 
    return false;
 
