@@ -669,7 +669,7 @@ namespace production
 
          //System.http().ms_download("http://api.ca2.cc/spaignition/clean", 
          //   System.dir().element("time\\spaignition_update.txt"), NULL, post, headers, ::ca2::app(get_app()).user()->get_user());
-         add_status("Cleaning ccvotagus folder...");
+         /*add_status("Cleaning ccvotagus folder...");
          ::core::process process;
          Application.file().put_contents(strPath, "rmdir /s /q C:\\ca2\\vrel\\" + m_strVersion);
          if (!process.create_child_process(strPath, false))
@@ -687,7 +687,7 @@ namespace production
             str.Format("%d Cleaning ccvotagus folder ...", i);
             add_status(str);
             i++;
-         }
+         }*/
 
          m_straFiles.remove_all();
 
@@ -979,8 +979,8 @@ namespace production
          straStatus.add("070 releasing at netnode : india");
          straServer.add("in-api.ca2.cc");
 
-         straStatus.add("077 releasing at netnode : hong kong");
-         straServer.add("hk-api.ca2.cc");
+         //straStatus.add("077 releasing at netnode : hong kong");
+         //straServer.add("hk-api.ca2.cc");
 
          straStatus.add("084 releasing at netnode : asia (japan named-seeded-sitted)");
          straServer.add("asia-api.ca2.cc");
