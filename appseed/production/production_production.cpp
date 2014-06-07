@@ -232,7 +232,9 @@ namespace production
 
          Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
-         string strTwit = "General failure of build " + version_to_international_datetime(m_strBuild) + ". Starting " + m_strTry + " retry of build " + m_strVersion + ". More details at http://status.ca2.cc/" + System.url().url_encode(m_strStatusEmail);
+         ::datetime::time timeNow = ::datetime::time::get_current_time();
+
+         string strTwit = "General failure of build " + version_to_international_datetime(m_strBuild) + ". Starting " + m_strTry + " retry of build " + m_strVersion + " - " + System.datetime().international().get_gmt_date_time(timeNow) + ". More details at http://status.ca2.cc/" + System.url().url_encode(m_strStatusEmail);
 
          twitter_twit(strTwit);
 
@@ -329,6 +331,8 @@ namespace production
          m_strBase = Application.file().as_string("C:\\ca2\\config\\nodeapp-windows\\production\\base_dir.txt").trimmed();
 
 
+         /*
+         
          {
 
             string strContentsSrc = System.dir().path(m_strBase, "include", "product.version.config.h");
@@ -358,6 +362,8 @@ namespace production
             }
 
          }
+
+         */
 
 
          m_strSignTool = System.dir().element("nodeapp/thirdparty/binary/signtool.exe");
@@ -410,11 +416,27 @@ namespace production
          strSvnVersionCmd.Format("svnversion %s", System.dir().path(m_strBase, "app"));
          m_strBuild = strTime;
          m_strFormatBuild = strTime;
-         m_strFormatBuild.replace(" ", "_");
+         m_strFormatBuild.replace(" ","_");
+
+         {
+
+            string strStatus;
+            strStatus.Format("Getting Revision: %s ...","app");
+            add_status(strStatus);
+
+         }
+
          strRevision = System.process().get_output(strSvnVersionCmd);
          strRevision.trim();
 
-         if (str::from(atoi(strRevision)) != strRevision)
+         {
+
+            string strStatus;
+            strStatus.Format("Revision of %s is %s","app",strRevision);
+            add_status(strStatus);
+
+         }
+         if(str::from(atoi(strRevision)) != strRevision)
          {
             // good pratice to initialize authentication of ca2status.com with account.ca2.cc auth information
             string str;
@@ -475,8 +497,23 @@ namespace production
             {
 
                strSvnVersionCmd.Format("svnversion %s", System.dir().path(m_strBase, m_straRoot[i]));
+               {
+
+                  string strStatus;
+                  strStatus.Format("Getting Revision: %s ...",m_straRoot[i]);
+                  add_status(strStatus);
+
+               }
                strAddRevision = System.process().get_output(strSvnVersionCmd);
                strAddRevision.trim();
+               {
+
+                  string strStatus;
+                  strStatus.Format("Revision of %s is %s", m_straRoot[i], strAddRevision);
+                  add_status(strStatus);
+
+               }
+
                strSVNKey += ", " + m_straRoot[i] + ":SVN" + strAddRevision;
 
             }
@@ -1878,7 +1915,7 @@ namespace production
       add_path(pszDir, "plugins\\app.install.exe");
       add_path(pszDir, "plugins\\npca2.dll");
       add_path(pszDir, "plugins\\base.dll");
-      add_path(pszDir, "plugins\\os.dll");
+      //add_path(pszDir, "plugins\\os.dll");
       add_path(pszDir, "plugins\\msvcp120d.dll");
       add_path(pszDir, "plugins\\msvcr120d.dll");
       add_path(pszDir, "plugins\\draw2d_gdiplus.dll");
@@ -2012,11 +2049,13 @@ namespace production
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
 
+/*
       add_status("Signing os.dll for Firefox ...");
       strFile = System.dir().path(strDir, "npca2/plugins", "os.dll");
       Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/os.dll"));
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
+      */
 
       add_status("Signing msvcr120d.dll for Firefox ...");
       strFile = System.dir().path(strDir, "npca2/plugins", "msvcr120d.dll");
@@ -2249,11 +2288,13 @@ namespace production
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
 
+/*
       add_status("Signing os.dll for Chrome ...");
       strFile = System.dir().path(strDir, "os.dll");
       Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/os.dll"));
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
+      */
 
       add_status("Signing msvcp120d.dll for Chrome ...");
       strFile = System.dir().path(strDir, "msvcp120d.dll");
