@@ -41,7 +41,7 @@ namespace production
       if(!::application::initialize_instance())
          return false;
 
-      Session.filemanager().std().m_strLevelUp = "levelup";
+//      Session.filemanager().std().m_strLevelUp = "levelup";
 
 
 	   m_pdoctemplateMain = new ::user::single_document_template(
@@ -103,7 +103,10 @@ namespace production
 
       }
       
-      m_pdoctemplateMain->open_document_file(pcreatecontext);
+      sp(::user::object) pdoc = m_pdoctemplateMain->open_document_file(pcreatecontext);
+
+      if(pdoc.is_null())
+         return;
 
       if (pcreatecontext->m_spCommandLine->m_varQuery.has_property("start"))
       {

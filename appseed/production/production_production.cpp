@@ -958,23 +958,23 @@ namespace production
          stringa straStatus;
          stringa straServer;
          
-         straStatus.add("330 releasing at netnode : west us");
-         straServer.add("west-api.ca2.cc");
+         //straStatus.add("330 releasing at netnode : west us");
+         //straServer.add("west-api.ca2.cc");
 
-         straStatus.add("010 releasing at netnode : east us");
-         straServer.add("east-api.ca2.cc");
+         //straStatus.add("010 releasing at netnode : east us");
+         //straServer.add("east-api.ca2.cc");
 
-         straStatus.add("023 releasing at netnode : américa latina");
-         straServer.add("la-api.ca2.cc");
+         //straStatus.add("023 releasing at netnode : américa latina");
+         //straServer.add("la-api.ca2.cc");
 
-         straStatus.add("049 releasing at netnode : france");
-         straServer.add("fr-api.ca2.cc");
+         //straStatus.add("049 releasing at netnode : france");
+         //straServer.add("fr-api.ca2.cc");
 
          straStatus.add("050 releasing at netnode : europe (sverige named-seed-sitted)");
          straServer.add("eu-api.ca2.cc");
 
-         straStatus.add("051 releasing at netnode : deutsch");
-         straServer.add("de-api.ca2.cc");
+         //straStatus.add("051 releasing at netnode : deutsch");
+         //straServer.add("de-api.ca2.cc");
 
          straStatus.add("070 releasing at netnode : india");
          straServer.add("in-api.ca2.cc");
@@ -982,8 +982,8 @@ namespace production
          //straStatus.add("077 releasing at netnode : hong kong");
          //straServer.add("hk-api.ca2.cc");
 
-         straStatus.add("084 releasing at netnode : asia (japan named-seeded-sitted)");
-         straServer.add("asia-api.ca2.cc");
+         //straStatus.add("084 releasing at netnode : asia (japan named-seeded-sitted)");
+         //straServer.add("asia-api.ca2.cc");
 
 
          string strObject = "/production/release_ca2?authnone=1&version=" + m_strVersion + "&build=" + m_strFormatBuild;
