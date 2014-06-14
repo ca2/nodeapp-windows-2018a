@@ -173,6 +173,8 @@ namespace draw2d_gdiplus
 
       m_pgraphics = new Gdiplus::Graphics(m_hdc);
 
+      m_pgraphics->SetPageUnit(Gdiplus::UnitPixel);
+
       return true;
 
    }
@@ -254,6 +256,8 @@ namespace draw2d_gdiplus
 
       m_pgraphics = new Gdiplus::Graphics((Gdiplus::Bitmap *) pBitmap->get_os_data());
 
+      m_pgraphics->SetPageUnit(Gdiplus::UnitPixel);
+
       set_text_rendering(::draw2d::text_rendering_anti_alias_grid_fit);
 
       m_spbitmap = pBitmap;
@@ -310,6 +314,8 @@ namespace draw2d_gdiplus
          }
 
          m_pgraphics = new Gdiplus::Graphics((Gdiplus::Bitmap *) m_spbitmap->get_os_data());
+
+         m_pgraphics->SetPageUnit(Gdiplus::UnitPixel);
 
          set_text_rendering(::draw2d::text_rendering_anti_alias_grid_fit);
 
@@ -1320,6 +1326,8 @@ gdi_fallback:
 
       m_pgraphics = new Gdiplus::Graphics(m_hdc);
 
+      m_pgraphics->SetPageUnit(Gdiplus::UnitPixel);
+
       return 1;
    
    }
@@ -2186,6 +2194,8 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       {
          
          m_pgraphics = new ::Gdiplus::Graphics((HDC) hdc);
+
+         m_pgraphics->SetPageUnit(Gdiplus::UnitPixel);
 
          set_text_rendering(::draw2d::text_rendering_anti_alias_grid_fit);
 
@@ -3224,7 +3234,9 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
          if(m_pgraphics == NULL)
             return FALSE;
-
+         
+         /*
+         
          switch(m_etextrendering)
          {
          case ::draw2d::text_rendering_anti_alias:
@@ -3244,6 +3256,11 @@ VOID Example_EnumerateMetafile9(HDC hdc)
             m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintClearTypeGridFit);
             break;
          }
+
+*/
+         m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
+         m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
+
 
       }
       catch(...)
@@ -3297,17 +3314,23 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       Gdiplus::Matrix m;
       m_pgraphics->GetTransform(&m);
-
       Gdiplus::Matrix * pmNew = m.Clone();
+      try
+      {
 
-      pmNew->Translate((Gdiplus::REAL) lpRect->left, (Gdiplus::REAL) lpRect->top);
-      pmNew->Scale((Gdiplus::REAL) m_spfont->m_dFontWidth, (Gdiplus::REAL) 1.0, Gdiplus::MatrixOrderAppend);
 
-      Gdiplus::RectF rectf(0, 0, (Gdiplus::REAL) ((lpRect->right - lpRect->left) * m_spfont->m_dFontWidth), (Gdiplus::REAL) (lpRect->bottom - lpRect->top));
+         pmNew->Translate((Gdiplus::REAL) lpRect->left,(Gdiplus::REAL) lpRect->top);
+         pmNew->Scale((Gdiplus::REAL) m_spfont->m_dFontWidth,(Gdiplus::REAL) 1.0,Gdiplus::MatrixOrderAppend);
 
-      m_pgraphics->SetTransform(pmNew);
+         Gdiplus::RectF rectf(0,0,(Gdiplus::REAL) ((lpRect->right - lpRect->left) * m_spfont->m_dFontWidth),(Gdiplus::REAL) (lpRect->bottom - lpRect->top));
 
-      m_pgraphics->DrawString(::str::international::utf8_to_unicode(str), -1, gdiplus_font(), rectf, &format, gdiplus_brush());
+         m_pgraphics->SetTransform(pmNew);
+
+         m_pgraphics->DrawString(::str::international::utf8_to_unicode(str),-1,gdiplus_font(),rectf,&format,gdiplus_brush());
+      }
+      catch(...)
+      {
+      }
 
       m_pgraphics->SetTransform(&m);
 
@@ -3814,7 +3837,10 @@ namespace draw2d_gdiplus
          if(m_pgraphics == NULL)
             return FALSE;
 
-         switch(m_etextrendering)
+         m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
+         m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
+
+/*         switch(m_etextrendering)
          {
          case ::draw2d::text_rendering_anti_alias:
             m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
@@ -3833,6 +3859,7 @@ namespace draw2d_gdiplus
             m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintClearTypeGridFit);
             break;
          }
+         */
 
       }
       catch(...)
@@ -3846,6 +3873,10 @@ namespace draw2d_gdiplus
       //m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintClearTypeGridFit);
       //m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
    
+
+
+      FLOAT fDpiX = m_pgraphics->GetDpiX();
+
       Gdiplus::Matrix m;
       m_pgraphics->GetTransform(&m);
 
