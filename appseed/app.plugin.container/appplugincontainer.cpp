@@ -44,9 +44,7 @@ uint32_t thread_proc_app(void * lpParam)
 
    papp->m_hinstance = psystem->m_hinstance;
 
-   papp->m_pplaneapp->m_psession = psystem->get_session(0, NULL);
-
-   papp->m_pbasesession = papp->m_pplaneapp->m_psession;
+   papp->m_pbasesession->m_pplanesession = psystem->get_session(0, NULL);
 
    int32_t nReturnCode = papp->main();
 
