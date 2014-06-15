@@ -41,7 +41,7 @@ namespace production
       if(!::application::initialize_instance())
          return false;
 
-//      Session.filemanager().std().m_strLevelUp = "levelup";
+//      PlaneSession.filemanager().std().m_strLevelUp = "levelup";
 
 
 	   m_pdoctemplateMain = new ::user::single_document_template(

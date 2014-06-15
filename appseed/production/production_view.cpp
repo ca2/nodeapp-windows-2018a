@@ -141,7 +141,7 @@ namespace production
 //      SCAST_PTR(::message::size, psize, pobj)
 
       rect rectDesktop;
-      Application.get_screen_rect(rectDesktop);
+      best_monitor(rectDesktop);
 
       m_iWScreen = rectDesktop.width();
       m_iHScreen = rectDesktop.height();
