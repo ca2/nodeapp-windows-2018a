@@ -77,7 +77,7 @@ _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
    __in LPTSTR lpCmdLine, int32_t nCmdShow)
 {
    // call shared/exported WinMain
-   return ::base::simple_app::s_main < removal >();
+   return s_main < removal >(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
 }
 
 // if MSVC CRT is stripped
