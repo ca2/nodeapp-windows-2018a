@@ -248,7 +248,7 @@ bool removal::initialize()
    if(::GetLastError() == ERROR_ALREADY_EXISTS)
    {
       ::simple_message_box(NULL, "ca2 app.removal.exe is already running.\n\nPlease wait for app.removal to finish or close it - using Task Manager - Ctrl+Shift+ESC - to continue.", "app.install.exe is running!", MB_ICONEXCLAMATION);
-      m_iError = -202;
+      m_iReturnCode = -202;
       return false;
    }
 

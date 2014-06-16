@@ -194,7 +194,7 @@ bool installer::intro()
    m_hmutexSpabootInstall = ::CreateMutex(NULL, FALSE, "Global\\::ca2::fontopus::ca2_spaboot_install::7807e510-5579-11dd-ae16-0800200c7784");
    if(::GetLastError() == ERROR_ALREADY_EXISTS)
    {
-      m_iError = -202;
+      m_iReturnCode = -202;
       return false;
    }
 
@@ -211,7 +211,7 @@ bool installer::intro()
 
    if(!m_rxchannel.create("core/spaboot_install", "app.install.exe"))
    {
-      m_iError = -1;
+      m_iReturnCode = -1;
       return false;
    }
 
