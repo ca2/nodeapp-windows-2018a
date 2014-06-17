@@ -2254,7 +2254,7 @@ namespace production
          iSecond = 60;
 
       strCrxca2Version.Format(
-         "%d.%d%02d.%d%02d.%d",re
+         "%d.%d%02d.%d%02d.%d",
          atoi(m_strFormatBuild.Mid(0, 4)),
          atoi(m_strFormatBuild.Mid(5, 2)),
          atoi(m_strFormatBuild.Mid(8, 2)),
