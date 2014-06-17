@@ -1004,14 +1004,14 @@ namespace production
          //straStatus.add("023 releasing at netnode : américa latina");
          //straServer.add("la-api.ca2.cc");
 
-         //straStatus.add("049 releasing at netnode : france");
-         //straServer.add("fr-api.ca2.cc");
+         straStatus.add("049 releasing at netnode : france");
+         straServer.add("fr-api.ca2.cc");
 
          straStatus.add("050 releasing at netnode : europe (sverige named-seed-sitted)");
          straServer.add("eu-api.ca2.cc");
 
-         //straStatus.add("051 releasing at netnode : deutsch");
-         //straServer.add("de-api.ca2.cc");
+         straStatus.add("051 releasing at netnode : deutsch");
+         straServer.add("de-api.ca2.cc");
 
          straStatus.add("070 releasing at netnode : india");
          straServer.add("in-api.ca2.cc");
@@ -2243,15 +2243,25 @@ namespace production
 
       string strCrxca2Version;
 
+      int iHour = atoi(m_strFormatBuild.Mid(11,2));
+
+      if(iHour == 0)
+         iHour = 24;
+
+      int iSecond = atoi(m_strFormatBuild.Mid(17,2));
+
+      if(iSecond == 0)
+         iSecond = 60;
+
       strCrxca2Version.Format(
-         "%d.%d%02d.%d%02d.%d",
+         "%d.%d%02d.%d%02d.%d",re
          atoi(m_strFormatBuild.Mid(0, 4)),
          atoi(m_strFormatBuild.Mid(5, 2)),
          atoi(m_strFormatBuild.Mid(8, 2)),
-         atoi(m_strFormatBuild.Mid(11, 2)),
+         iHour,
          atoi(m_strFormatBuild.Mid(14, 2)),
-         atoi(m_strFormatBuild.Mid(17, 2))
-         );
+         atoi(m_strFormatBuild.Mid(17, 2)),
+         iSecond);
 
       string strManifestJson = Application.file().as_string(System.dir().path(m_strBase, "nodeapp/stage/matter/crxca2/manifest.json"));
       strManifestJson.replace("%BUILD%", strCrxca2Version);
