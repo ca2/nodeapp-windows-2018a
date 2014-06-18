@@ -17,7 +17,8 @@ namespace ca2plugin_container
       element(papp),
       ::simple_ui::style(papp),
       ::user::interaction(papp),
-      hotplugin::plugin(papp)
+      hotplugin::plugin(papp),
+      base::session(papp)
    {
       
       //Sleep(15 * 1000);
@@ -80,7 +81,7 @@ namespace ca2plugin_container
       start_plugin();
 
 
-      if(!initialize())
+      if(!plugin_initialize())
          return FALSE;
 
 
@@ -115,7 +116,7 @@ namespace ca2plugin_container
       
       ::KillTimer(m_oswindowMessage, (uint_ptr) this);
 
-      finalize();
+      plugin_finalize();
 
       m_oswindow = NULL;
 
@@ -214,12 +215,12 @@ namespace ca2plugin_container
    }
 
 
-   bool host::finalize()
+   bool host::plugin_finalize()
    {
       
       ::KillTimer(m_oswindowMessage, (uint_ptr) this);
 
-      return ::hotplugin::host::finalize();
+      return ::hotplugin::host::plugin_finalize();
 
    }
 

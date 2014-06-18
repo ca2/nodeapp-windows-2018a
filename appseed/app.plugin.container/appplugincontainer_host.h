@@ -21,7 +21,7 @@ namespace ca2plugin_container
       string                        m_vssPluginName;
       string                        m_vssPluginDescription;
 
-      sp(application)               m_pcontainerapp;      
+      sp(::ca2plugin_container::application)               m_pcontainerapp;
 
 
       host(sp(::base::application) papp);
@@ -43,7 +43,7 @@ namespace ca2plugin_container
       virtual string  calc_location_url();
 
 
-      bool finalize();
+      bool plugin_finalize();
 
 
 
