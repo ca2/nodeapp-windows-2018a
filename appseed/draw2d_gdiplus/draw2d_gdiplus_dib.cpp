@@ -2427,12 +2427,12 @@ namespace draw2d_gdiplus
 
 
 
-   bool dib::update_window(window * pwnd, signal_details * pobj)
+   bool dib::update_window(::user::interaction_impl * pwnd, signal_details * pobj)
    {
 
       rect64 rectWindow;
 
-      rectWindow = pwnd->m_rectParentClient;
+      rectWindow = pwnd->m_pui->m_rectParentClient;
 
       m_spgraphics->SetViewportOrg(0, 0);
 
@@ -2491,8 +2491,6 @@ namespace draw2d_gdiplus
             dst += 4;
          }
 
-
-
       rect rect(rectWindow);
 
       window_graphics::update_window(pwnd->m_pgraphics, pwnd->get_handle(), m_pcolorref, rect, m_iScan);
@@ -2502,7 +2500,7 @@ namespace draw2d_gdiplus
    }
 
 
-   bool dib::print_window(window * pwnd, signal_details * pobj)
+   bool dib::print_window(::user::interaction_impl * pwnd, signal_details * pobj)
    {
 
       SCAST_PTR(::message::base, pbase, pobj);
@@ -2549,16 +2547,9 @@ namespace draw2d_gdiplus
          rectPaint = rectWindow;
          rectPaint.offset(-rectPaint.top_left());
          m_spgraphics->SelectClipRgn(NULL);
-         if(pwnd->m_pui != NULL && pwnd->m_pui != this)
-         {
-            pwnd->m_pui->_001OnDeferPaintLayeredWindowBackground(pdc);
-         }
-         else
-         {
-            pwnd->_001OnDeferPaintLayeredWindowBackground(pdc);
-         }
+         pwnd->_001OnDeferPaintLayeredWindowBackground(pdc);
          m_spgraphics->SelectClipRgn(NULL);
-        m_spgraphics-> SetViewportOrg(point(0, 0));
+         m_spgraphics-> SetViewportOrg(point(0, 0));
          pwnd->_000OnDraw(pdc);
          m_spgraphics->SetViewportOrg(point(0, 0));
          //(dynamic_cast<::win::graphics * >(pdc))->FillSolidRect(rectUpdate.left, rectUpdate.top, 100, 100, 255);
@@ -2571,7 +2562,6 @@ namespace draw2d_gdiplus
             pdc, rectUpdate.left, rectUpdate.top,
             SRCCOPY);
 
-         m_spgraphics->TextOut(0, 0, "Te Amo CGCL", 11);
       }
       catch(...)
       {

@@ -675,7 +675,7 @@ namespace production
          //Application.dir().mk(System.dir().path(m_strBase, "time"));
          Application.file().put_contents(System.dir().path(m_strBase, "app\\build.txt"), m_strBuild);
          Application.file().put_contents_utf8(System.dir().path(m_strBase, "app\\this_version_info.h"), strBuildH);
-         Application.file().put_contents_utf8(System.dir().path(m_strBase, "app\\this_version_info.txt"), strBuildH); //  + "\r\n\r\n" + strDedicaverse + "\r\n\r\n" + strCgclcst);
+         Application.file().put_contents_utf8(System.dir().path(m_strBase, "app\\this_version_info.txt"), strBuildH); 
 
          if (!commit_for_new_build_and_new_release())
             return 2;
@@ -1150,7 +1150,7 @@ namespace production
          if (iRetry < 5)
          {
             iRetry++;
-            Sleep(1984 + 1977);
+            Sleep(5000);
             goto retry2;
          }
          else

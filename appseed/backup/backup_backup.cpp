@@ -95,30 +95,6 @@ namespace backup
 
          throw not_implemented(get_app());
 
-         /*      string strServer;
-         strServer = "loft3099.myftpbackup.com";
-         add_status("ftp-putting in backup server " + strServer);
-         {
-         CInternetSession session;
-         CFtpConnection ftpconn(
-         &session,
-         strServer,
-         "loft3099",
-         "gustavo514Lund");
-         ftp_put_dir(ftpconn, "C:\\", "ca2/bk/"  + m_strTag, 0);
-         }
-         strServer = "netnode.ca2.cc";
-         add_status("ftp-putting in backup server " + strServer);
-         {
-         CInternetSession session;
-         CFtpConnection ftpconn(
-         &session,
-         strServer,
-         "ccauthbk",
-         "gustavo514Lund");
-         ftp_put_dir(ftpconn, "C:\\", "ca2/bk/"  + m_strTag, 0);
-         }*/
-
 
          m_bFinished = true;
          m_timeEnd = ::datetime::time::get_current_time();
