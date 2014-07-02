@@ -2959,7 +2959,7 @@ namespace draw2d_gdi
    pdibWork->channel_multiply(visual::rgba::channel_alpha, pdibWork4);
 
 
-   keeper < ::draw2d::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
+   keep < ::draw2d::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
 
 
    return System.visual().imaging().true_blend(this, ptDest, size, pdibWork->get_graphics(), ptSrc) != FALSE;
@@ -3051,7 +3051,7 @@ namespace draw2d_gdi
          pdibWork->channel_multiply(visual::rgba::channel_alpha, pdibWork4);
 
 
-         keeper < ::draw2d::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
+         keep < ::draw2d::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
 
 
          return BitBlt(ptDest.x, ptDest.y, size.cx, size.cy, pdibWork->get_graphics(), ptSrc.x, ptSrc.y, SRCCOPY) != FALSE;
