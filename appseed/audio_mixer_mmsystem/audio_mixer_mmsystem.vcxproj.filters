@@ -34,10 +34,10 @@
     <ClInclude Include="audio_mixer_mmsystem_thread.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="audio_mixer_mmsystem_window.h">
+    <ClInclude Include="audio_mixer_mmsystem_factory_exchange.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="audio_mixer_mmsystem_factory_exchange.h">
+    <ClInclude Include="audio_mixer_mmsystem_interaction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -80,10 +80,10 @@
     <ClCompile Include="audio_mixer_mmsystem_thread.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="audio_mixer_mmsystem_window.cpp">
+    <ClCompile Include="audio_mixer_mmsystem_factory_exchange.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="audio_mixer_mmsystem_factory_exchange.cpp">
+    <ClCompile Include="audio_mixer_mmsystem_interaction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

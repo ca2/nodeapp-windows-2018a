@@ -15,7 +15,7 @@ namespace multimedia
       public:
 
 
-         ::multimedia::audio_mixer_mmsystem::window            m_window;
+         ::multimedia::audio_mixer_mmsystem::interaction            m_window;
 
 
          audio_mixer(sp(::base::application) papp);

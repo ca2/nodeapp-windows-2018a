@@ -857,7 +857,7 @@
     <ClInclude Include="audio_mixer_mmsystem_section.h" />
     <ClInclude Include="audio_mixer_mmsystem_source.h" />
     <ClInclude Include="audio_mixer_mmsystem_thread.h" />
-    <ClInclude Include="audio_mixer_mmsystem_window.h" />
+    <ClInclude Include="audio_mixer_mmsystem_interaction.h" />
     <ClInclude Include="framework.h" />
   </ItemGroup>
   <ItemGroup>
@@ -871,7 +871,7 @@
     <ClCompile Include="audio_mixer_mmsystem_section.cpp" />
     <ClCompile Include="audio_mixer_mmsystem_source.cpp" />
     <ClCompile Include="audio_mixer_mmsystem_thread.cpp" />
-    <ClCompile Include="audio_mixer_mmsystem_window.cpp" />
+    <ClCompile Include="audio_mixer_mmsystem_interaction.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='codeanalysis|Win32'">Create</PrecompiledHeader>

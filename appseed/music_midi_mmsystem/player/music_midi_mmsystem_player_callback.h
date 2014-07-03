@@ -24,8 +24,8 @@ namespace music
 
 
 
-               friend class window;
-               window m_wnd;
+               friend class interaction;
+               interaction m_ui;
 
                callback(sp(::base::application) papp);
                virtual ~callback();

@@ -18,7 +18,7 @@ namespace music
 
 
             callback::callback(sp(::base::application) papp) :
-               m_wnd(papp)
+               m_ui(papp)
             {
             }
 
@@ -28,17 +28,17 @@ namespace music
 
             bool callback::initialize()
             {
-               if(!m_wnd.create())
+               if(!m_ui.create())
                   return false;
-               m_wnd.set_callback(this);
+               m_ui.set_callback(this);
                return true;
             }
 
             bool callback::finalize()
             {
-               if(!m_wnd.IsWindow())
+               if(!m_ui.IsWindow())
                   return true;
-               m_wnd.DestroyWindow();
+               m_ui.DestroyWindow();
                return true;
             }
 

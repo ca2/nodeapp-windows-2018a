@@ -857,7 +857,7 @@
     <ClInclude Include="music_midi_mmsystem_translation.h" />
     <ClInclude Include="player\music_midi_mmsystem_player.h" />
     <ClInclude Include="player\music_midi_mmsystem_player_callback.h" />
-    <ClInclude Include="player\music_midi_mmsystem_player_window.h" />
+    <ClInclude Include="player\music_midi_mmsystem_player_interaction.h" />
     <ClInclude Include="player\music_midi_mmsystem_player_interface.h" />
   </ItemGroup>
   <ItemGroup>
@@ -881,7 +881,7 @@
     <ClCompile Include="music_midi_mmsystem_translation.cpp" />
     <ClCompile Include="player\music_midi_mmsystem_player.cpp" />
     <ClCompile Include="player\music_midi_mmsystem_player_callback.cpp" />
-    <ClCompile Include="player\music_midi_mmsystem_player_window.cpp" />
+    <ClCompile Include="player\music_midi_mmsystem_player_interaction.cpp" />
     <ClCompile Include="player\music_midi_mmsystem_player_interface.cpp" />
   </ItemGroup>
   <ItemGroup>

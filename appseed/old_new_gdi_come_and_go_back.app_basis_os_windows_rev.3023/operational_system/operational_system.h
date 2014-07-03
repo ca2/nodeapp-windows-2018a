@@ -110,9 +110,7 @@
 // Special AfxDebugBreak: used to break into debugger at critical times
 
 #ifndef AfxDebugBreak
-#if core_level_1
-#define AfxDebugBreak() DebugBreak()
-#elif _AFX_NO_DEBUG_CRT
+#if _AFX_NO_DEBUG_CRT
 // by default, debug break is asm int 3, or a call to DebugBreak, or nothing
 #if defined(_M_IX86) && !defined(_AFX_PORTABLE)
 #define AfxDebugBreak() _asm { int 3 }

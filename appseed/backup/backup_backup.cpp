@@ -46,7 +46,7 @@ namespace backup
          m_dwStartTick = ::GetTickCount();
          m_timeStart.Format(m_strTag, "%Y-%m-%d_%H-%M-%S");
 
-         keeper < bool > keepFinishedFalse(&m_bFinished, false, true, true);
+         keep < bool > keepFinishedFalse(&m_bFinished, false, true, true);
          string str;
 
          string strFile = System.dir().element("basis/ca2/app/dbbk.bat");

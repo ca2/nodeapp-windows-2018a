@@ -107,7 +107,7 @@ namespace production
    void pane_view::on_show_view()
    {
       ::userex::pane_tab_view::on_show_view();
-      //sp(frame) pframe =  (dynamic_cast < ::window * > (GetParentFrame()));
+      //sp(frame) pframe =  (dynamic_cast < ::user::interaction_impl * > (GetParentFrame()));
       if(m_pviewdata->m_id == PaneViewFileManager)
       {
       }
@@ -157,7 +157,7 @@ namespace production
                   if(pframe != NULL)
                   {
                      pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
-                     pframe->set_parent(this);
+                     pframe->SetParent(this);
                      pcreatordata->m_pdoc = pdoc;
                      pcreatordata->m_pwnd = pframe;
                   }
@@ -225,7 +225,7 @@ namespace production
                   if(pframe != NULL)
                   {
                      pframe->ModifyStyle(WS_CAPTION, WS_CHILD, 0);
-                     pframe->set_parent(this);
+                     pframe->SetParent(this);
                      pcreatordata->m_pdoc = pdoc;
                      pcreatordata->m_pwnd = pframe;
                   }

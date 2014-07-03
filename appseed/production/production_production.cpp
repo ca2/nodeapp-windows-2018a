@@ -601,7 +601,7 @@ namespace production
 
          m_bEndStatus = false;
 
-         keeper < bool > keepFinishedFalse(&m_bFinished, false, true, true);
+         keep < bool > keepFinishedFalse(&m_bFinished, false, true, true);
          string str;
          m_iBaseLen = m_strBase.get_length();
          if (m_strBase.Right(1) != "/" && m_strBase.Right(1) != "\\")
@@ -1223,8 +1223,7 @@ namespace production
             compress_thread * pthread = new compress_thread(this, eventa(ui));
             threada.add(pthread);
             pthread->m_dwThreadAffinityMask = 1 << ui;
-            pthread->m_bAutoDelete = FALSE;
-            pthread->m_pimpl->m_bAutoDelete = FALSE;
+            pthread->m_bAutoDelete = false;
             pthread->begin();
             syncobjectptra.add(dynamic_cast <waitable *> (eventa(ui).m_p));
          }

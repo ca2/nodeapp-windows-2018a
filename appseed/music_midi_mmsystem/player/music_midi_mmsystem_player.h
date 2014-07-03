@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "music_midi_mmsystem_player_window.h"
+#include "music_midi_mmsystem_player_interaction.h"
 #include "music_midi_mmsystem_player_callback.h"
 #include "music_midi_mmsystem_player_interface.h"
 
@@ -47,7 +47,7 @@ namespace music
 
 
                void SendMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd);
-               void SetCallbackWindow(sp(::user::interaction) puie);
+               void SetCallbackUi(sp(::user::interaction) puie);
                bool Play(double dRate = 0.0, uint32_t dwEllapse = (uint32_t) -1);
                bool Play(imedia::position tkStart, uint32_t dwEllapse = (uint32_t)-1);
 

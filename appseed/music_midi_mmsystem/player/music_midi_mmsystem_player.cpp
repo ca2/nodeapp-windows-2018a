@@ -441,7 +441,7 @@ namespace music
             }
 
 
-            void player::SetCallbackWindow(sp(::user::interaction) puie)
+            void player::SetCallbackUi(sp(::user::interaction) puie)
             {
 
                m_puie = puie;

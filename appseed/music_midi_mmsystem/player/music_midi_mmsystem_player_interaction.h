@@ -20,7 +20,7 @@ namespace music
             class callback;
 
 
-            class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM window :
+            class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM interaction :
                public ::user::interaction
             {
             public:
@@ -29,8 +29,8 @@ namespace music
                ::music::midi::player::callback_interface * m_pcallback;
 
 
-               window(sp(::base::application) papp);
-               virtual ~window();
+               interaction(sp(::base::application) papp);
+               virtual ~interaction();
 
                ::music::midi::player::callback_interface * get_callback();
 

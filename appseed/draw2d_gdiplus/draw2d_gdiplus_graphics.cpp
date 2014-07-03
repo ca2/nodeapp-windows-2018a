@@ -66,7 +66,7 @@ namespace draw2d_gdiplus
 
    ::window_sp graphics::GetWindow() const
    { 
-      //ASSERT(get_handle1() != NULL); return ::draw2d_gdiplus::window::from_handle(::WindowFromDC(get_handle1())); 
+      //ASSERT(get_handle1() != NULL); return ::draw2d_gdiplus::user::interaction_impl::from_handle(::WindowFromDC(get_handle1())); 
       return NULL;
    }
    

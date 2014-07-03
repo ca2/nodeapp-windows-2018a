@@ -12,7 +12,7 @@ namespace multimedia
       class audio_mixer;
 
 
-      class window : 
+      class interaction : 
          public ::user::interaction
       {
       public:
@@ -21,8 +21,8 @@ namespace multimedia
          ::multimedia::audio_mixer::audio_mixer                    * m_pmixer;
 
 
-         window(sp(::base::application) papp);
-         virtual ~window();
+         interaction(sp(::base::application) papp);
+         virtual ~interaction();
 
 
          void install_message_handling(::message::dispatch * pinterface);

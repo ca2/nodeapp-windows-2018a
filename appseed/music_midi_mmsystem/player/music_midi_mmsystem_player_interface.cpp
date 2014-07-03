@@ -73,7 +73,7 @@ namespace music
 
                m_pmidiplayer->SetMidiCentral(m_psection);
 
-               m_pmidiplayer->SetCallbackWindow(&m_wnd);
+               m_pmidiplayer->SetCallbackWindow(&m_ui);
 
                if(failed(m_pmidiplayer->Initialize(GetMidiPlayerCallbackThread())))
                {
@@ -96,7 +96,7 @@ namespace music
             bool player_interface::OnOpenMidiPlayer()
             {
                GetMidiPlayer()->SetInterface(this);
-               m_wnd.set_callback(m_composite);
+               m_ui.set_callback(m_composite);
                return true;
             }
 
