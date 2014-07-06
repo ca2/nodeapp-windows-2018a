@@ -13,6 +13,12 @@ namespace ca2plugin_container
 
       m_phost = new host(this);
 
+      m_phost->m_pbaseapp = this;
+
+      m_phost->m_pplaneapp = this;
+
+      m_phost->m_pbaseapp->m_pplaneapp = this;
+
    }
 
    application::~application()

@@ -15,7 +15,7 @@ int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lp
    if(!defer_core_init())
       return -1;
 
-   int iRet = app_core_main(hinstance, hPrevInstance, NULL, nCmdShow);
+   int iRet = app_core_main(hinstance, hPrevInstance, (char *) (const char *) ::str::international::unicode_to_utf8(::GetCommandLineW()), nCmdShow);
 
    defer_core_term();
 

@@ -11,20 +11,20 @@ extern "C" int32_t app_core_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, L
 
    UNREFERENCED_PARAMETER(lpCmdLine);
 
-   sp(::plane::system) psystem = canew(::plane::system);
+   sp(::plane::system) psystem                  = canew(::plane::system);
 
    ASSERT(hPrevInstance == NULL);
 
-   ::windows::main_init_data * pmaininitdata = new ::windows::main_init_data;
+   ::windows::main_init_data * pmaininitdata    = new ::windows::main_init_data;
 
 
-   pmaininitdata->m_hInstance = hinstance;
-   pmaininitdata->m_hPrevInstance = hPrevInstance;
-   pmaininitdata->m_vssCommandLine = ::str::international::unicode_to_utf8(::GetCommandLineW());
-   pmaininitdata->m_nCmdShow = nCmdShow;
+   pmaininitdata->m_hInstance                   = hinstance;
+   pmaininitdata->m_hPrevInstance               = hPrevInstance;
+   pmaininitdata->m_vssCommandLine              = lpCmdLine;
+   pmaininitdata->m_nCmdShow                    = nCmdShow;
 
 
-   int32_t nReturnCode = __win_main(psystem, pmaininitdata);
+   int32_t nReturnCode                          = __win_main(psystem, pmaininitdata);
 
 
    try

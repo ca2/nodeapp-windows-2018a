@@ -76,6 +76,9 @@ namespace ca2plugin_container
 
       //NPN_GetValue(m_instance, NPNVnetscapeWindow, &m_oswindow);
 
+      if(!::simple_ui::interaction::create_message_queue("ca2plugin_container::host::init create_message_queue",NULL))
+         return FALSE;
+
 
       //Sleep(15 * 1000);
       start_plugin();
@@ -183,7 +186,7 @@ namespace ca2plugin_container
    void host::message_handler(signal_details * pobj)
    {
 
-      return ::hotplugin::host::message_handler(pobj);      
+      ::hotplugin::host::message_handler(pobj);
 
    }
 
@@ -328,7 +331,12 @@ namespace ca2plugin_container
 #endif
          //Sleep(15 * 1000);
 
-         m_pplugin = new ::plugin::instance(get_app());
+         m_pplugin = new ::plugin::instance(this);
+         m_pplugin->m_pbasesession = m_pbasesession;
+         m_pplugin->m_pbasesystem = m_pbasesystem;
+         m_pplugin->m_pplaneapp = m_pplaneapp;
+         m_pplugin->m_pplanecomposite = m_pplanecomposite;
+         m_pplugin->m_pbaseapp = this;
          m_pplugin->m_phost = this;
          m_pplugin->m_strBitmapChannel = m_strBitmapChannel;
          m_bInstalling = false;
@@ -372,6 +380,15 @@ namespace ca2plugin_container
          {
             
             LPCRECT lpcrect = (LPCRECT) pdata;
+
+            m_rect = *lpcrect;
+
+            if(!IsWindow())
+            {
+
+               ::simple_ui::interaction::create_message_queue("ca2plugin_container::host::init create_message_queue",NULL);
+
+            }
 
             try
             {

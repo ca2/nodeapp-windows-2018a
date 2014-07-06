@@ -115,6 +115,7 @@ installer::installer() :
    m_hmodulea              = NULL;
    m_iSizeModule           = 0;
    m_bInstallerInstalling  = false;
+   m_bMatterFromHttpCache  = true;
 
    construct();
 }
