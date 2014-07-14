@@ -91,7 +91,7 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 
    }
 
-   if (file_exists_dup("C:\\ca2\\config\\beg_debug_box.txt"))
+   if (file_exists_dup("C:\\ca2\\config\\system\\beg_debug_box.txt"))
    {
 
       debug_box("app.plugin.container", "app.plugin.container", MB_OK);

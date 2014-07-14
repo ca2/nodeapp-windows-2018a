@@ -100,7 +100,7 @@ installer::installer() :
    // |                         |               |
    // -----------------------   --       --------
    //                       |    |       |
-   if (file_exists_dup("C:\\ca2\\config\\beg_debug_box.txt"))
+   if (file_exists_dup("C:\\ca2\\config\\system\\beg_debug_box.txt"))
    {
       debug_box("app.install", "app", 0);
    }
