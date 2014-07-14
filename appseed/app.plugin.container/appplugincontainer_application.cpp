@@ -113,6 +113,17 @@ namespace ca2plugin_container
    }
 
 
+   ::hotplugin::host * application::create_host(sp(::base::system) psystem)
+   {
+
+      m_pbasehost = new ::ca2plugin_container::host(this);
+
+      return m_pbasehost;
+
+
+   }
+
+
 } // namespace ca2plugin_container
 
 

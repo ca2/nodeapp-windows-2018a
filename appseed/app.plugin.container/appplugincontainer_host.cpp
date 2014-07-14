@@ -13,38 +13,38 @@ namespace ca2plugin_container
    ATOM register_class(HINSTANCE hInstance);
 
 
-   host::host(sp(::base::application) papp) :
+   host::host(sp(::ca2plugin_container::application) papp):
       element(papp),
       ::simple_ui::style(papp),
       ::user::interaction(papp),
       hotplugin::plugin(papp),
       base::session(papp)
    {
-      
-      //Sleep(15 * 1000);
 
-      m_phost           = NULL;
-      m_bInitialized    = false;
-      m_bOk             = false;
+      m_pcontainerapp         = papp;
 
-      m_bRunningSpaAdmin = false;
+      m_pbasecomposer         = papp;
 
-      m_pcontainerapp  = papp;
+      m_phost                 = NULL;
+      m_bInitialized          = false;
+      m_bOk                   = false;
 
-      m_vssPluginName = "ca2 plugin";
-      m_vssPluginDescription = "ca2 plugin for Firefox";
+      m_bRunningSpaAdmin      = false;
+
+      m_vssPluginName         = "ca2 plugin";
+      m_vssPluginDescription  = "ca2 plugin for Firefox";
 
       ::ca2plugin_container::register_class((HINSTANCE) ::GetModuleHandleA("ca2plugin_container.dll"));
 
-      m_oswindowMessage = ::CreateWindowExA(0, "npca2_message_queue", "npca2_message_queue", 0, 0, 0, 0, 0, HWND_MESSAGE, NULL, NULL, NULL);
+      m_oswindowMessage       = ::CreateWindowExA(0, "npca2_message_queue", "npca2_message_queue", 0, 0, 0, 0, 0, HWND_MESSAGE, NULL, NULL, NULL);
 
-      m_pfile           = NULL;
+      m_pfile                 = NULL;
 
-      m_oswindow = NULL;
-      m_bStream = false;
+      m_oswindow              = NULL;
+      m_bStream               = false;
 
 
-      m_strHostPluginLocation = calc_location_url();
+      m_pbasecomposer->m_strHostPluginLocation = calc_location_url();
 
 
 
@@ -454,7 +454,7 @@ namespace ca2plugin_container
 
             xxdebug_box(str, "ca2plugincontainer::host::on_receive", 0);
 
-            m_strPluginUrl = str;
+            m_pbasecomposer->m_strPluginUrl = str;
 
          }
          else if(message == ::hotplugin::message_message)

@@ -6,12 +6,13 @@ namespace ca2plugin_container
 
 
    class application :
-      virtual public ::application
+      virtual public ::application,
+      virtual public ::hotplugin::composer
    {
    public:
 
 
-      int32_t                        m_iReturn;
+      int32_t                    m_iReturn;
 
       string                     m_strChannel;
 
@@ -36,6 +37,10 @@ namespace ca2plugin_container
 
 
       virtual void restart_small_ipc_channel();
+
+
+      virtual ::hotplugin::host * create_host(sp(::base::system) psystem);
+
 
    };
 
