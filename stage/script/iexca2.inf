@@ -1,4 +1,4 @@
-; Version number and signature of INF file.
+; ca2 ActiveX control for Internet Explorer
 
 [version]
    signature="$CHICAGO$"
@@ -6,39 +6,34 @@
 
 [Add.Code]
    iexca2.dll=iexca2.dll
-   iexca2.inf=iexca2.inf
    app-install.exe=app-install.exe
-   base.dll=base.dll
    draw2d_gdiplus.dll=draw2d_gdiplus.dll
+   base.dll=base.dll
    msvcp120d.dll=msvcp120d.dll
    msvcr120d.dll=msvcr120d.dll
 
-[iexca2.dll]
-   file=thiscab
-   FileVersion=%VERSION%
-   clsid = {CA211984-1984-1977-A861-F8AA2A7AEE4B}
-   RegisterServer=Yes
-
-[iexca2.inf]
-   file=thiscab
-
-[app-install.exe]
-   FileVersion=%VERSION%
-   file=thiscab
-
-[base.dll]
-   FileVersion=%VERSION%
-   file=thiscab
-
-[draw2d_gdiplus.dll]
-   FileVersion=%VERSION%
-   file=thiscab
+[msvcr120d.dll]
+   file-win32-x86=thiscab
+   FileVersion=12,0,21005,1
 
 [msvcp120d.dll]
+   file-win32-x86=thiscab
    FileVersion=12,0,21005,1
-   file=thiscab
 
-[msvcr120d.dll]
-   FileVersion=12,0,21005,1
-   file=thiscab
+[base.dll]
+   file-win32-x86=thiscab
+   FileVersion=%VERSION%
 
+[draw2d_gdiplus.dll]
+   file-win32-x86=thiscab
+   FileVersion=%VERSION%
+
+[app-install.exe]
+   file-win32-x86=thiscab
+   FileVersion=%VERSION%
+
+[iexca2.dll]
+   file-win32-x86=thiscab
+   FileVersion=%VERSION%
+   clsid={CA211984-1984-1977-A861-F8AA2A7AEE4B}
+   RegisterServer=Yes
