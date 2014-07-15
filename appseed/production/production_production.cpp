@@ -2906,7 +2906,7 @@ namespace production
 
       string str = Application.file().as_string(pszUrl);
 
-      index iFind1 = str.find("FILEVERSION ");
+      index iFind1 = str.find_tail("FILEVERSION ");
       if(iFind1 > 0)
       {
 
@@ -2924,11 +2924,11 @@ namespace production
             atoi(m_strFormatBuild.Mid(17,2))
             );
 
-         str = str.Left(iFind1 + strlen("FILEVERSION ")) + strVersion1 + str.Mid(iFind2);
+         str = str.Left(iFind1) + strVersion1 + str.Mid(iFind2);
 
       }
 
-      iFind1 = str.find("VALUE \"FileVersion\", \"");
+      iFind1 = str.find_tail("VALUE \"FileVersion\", \"");
       if(iFind1 > 0)
       {
 
@@ -2946,7 +2946,7 @@ namespace production
             atoi(m_strFormatBuild.Mid(17,2))
             );
 
-         str = str.Left(iFind1 + strlen("VALUE \"FileVersion\", \"")) + strVersion2 + str.Mid(iFind2);
+         str = str.Left(iFind1) + strVersion2 + str.Mid(iFind2);
 
       }
 
