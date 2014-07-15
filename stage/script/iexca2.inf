@@ -15,7 +15,7 @@
 
 [iexca2.dll]
    file=thiscab
-   FileVersion=0,9,0,0
+   FileVersion=%VERSION%
    clsid = {CA211984-1984-1977-A861-F8AA2A7AEE4B}
    RegisterServer=Yes
 
@@ -23,17 +23,22 @@
    file=thiscab
 
 [app-install.exe]
+   FileVersion=%VERSION%
    file=thiscab
 
 [base.dll]
+   FileVersion=%VERSION%
    file=thiscab
 
 [draw2d_gdiplus.dll]
+   FileVersion=%VERSION%
    file=thiscab
 
 [msvcp120d.dll]
+   FileVersion=12,0,21005,1
    file=thiscab
 
 [msvcr120d.dll]
+   FileVersion=12,0,21005,1
    file=thiscab
 

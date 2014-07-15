@@ -191,6 +191,8 @@ namespace production
 
       void build(const char * psz);
 
+      virtual void update_rc_file_version(const char * pszUrl);
+
    };
 
 

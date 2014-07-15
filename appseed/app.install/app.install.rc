@@ -1,0 +1,36 @@
+#include "resource.h"
+#include "base/version.h"
+
+ID_MP3_SMALL_BELL       MP3                     "small_bell.mp3"
+#if CA2_PLATFORM_VERSION == CA2_BASIS
+IDI_CA2_SPA   ICON                    "basis.ico"
+#else
+IDI_CA2_SPA   ICON                    "stage.ico"
+#endif
+
+1 VERSIONINFO
+   FILEVERSION 0,0,0,0
+   PRODUCTVERSION 0,0,0,0
+   FILEFLAGSMASK 0x0L
+   FILEFLAGS 0x1L
+   FILEOS 0x4L
+   FILETYPE 0x1L
+   FILESUBTYPE 0x0L
+   BEGIN
+      BLOCK "StringFileInfo"
+      BEGIN
+         BLOCK "040904E4"
+         BEGIN
+            VALUE "CompanyName", "ca2 Desenvolvimento de Software Ltda."
+            VALUE "FileVersion", "0.0.0"
+            VALUE "FileDescription", "app.install Executable"
+            VALUE "LegalCopyright", "2014 ca2 Desenvolvimento de Software Ltda."
+        END
+      END
+      BLOCK "VarFileInfo"
+      BEGIN
+         VALUE "Translation", 0x409, 1200
+      END
+   END
+
+

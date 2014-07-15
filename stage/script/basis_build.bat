@@ -1,6 +1,6 @@
-call "%VS100COMNTOOLS%\..\..\VC\bin\vcvars32.bat"
+call "%VS120COMNTOOLS%\..\..\VC\bin\vcvars32.bat"
 
-VCExpress "V:\basis\app\seed\metaseed\seed_all.sln" /build basis
-VCExpress "V:\basis\app\seed\metaseed\seed_all64.sln" /build basis
+devenv "Z:\basis\cgcl\seed\metaseed\all.sln" /build basis
+devenv "Z:\basis\cgcl\seed\metaseed\all64.sln" /build basis
 
 

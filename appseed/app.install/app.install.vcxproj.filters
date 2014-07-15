@@ -42,7 +42,7 @@
     </Media>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="appinstall.rc">
+    <ResourceCompile Include="app.install.rc">
       <Filter>Source Files</Filter>
     </ResourceCompile>
   </ItemGroup>

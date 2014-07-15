@@ -21,7 +21,7 @@ copy ..\..\..\stage\x64\app.install.exe ..\..\..\time\iexca2\x64\app.install.exe
 ..\..\..\nodeapp\thirdparty\binary\signtool sign /f "X:\sensitive\sensitive\certificate\ca2.p12" /p none ..\..\..\time\iexca2\x64\draw2d_gdiplus.dll
 ..\..\..\nodeapp\thirdparty\binary\signtool sign /f "X:\sensitive\sensitive\certificate\ca2.p12" /p none ..\..\..\time\iexca2\x64\app.install.exe
 IF NOT EXIST ..\..\..\time\iexca2\x64\iexca2.cab ECHO Deleted iexca2.cab
-..\..\..\nodeapp\thirdparty\binary\cabarc N ..\..\..\time\iexca2\x64\iexca2.cab iexca2.inf ..\..\..\time\iexca2\x64\draw2d_gdiplus.dll  ..\..\..\time\iexca2\x64\msvcp120d.dll ..\..\..\time\iexca2\x64\msvcr120d.dll ..\..\..\time\iexca2\x64\base.dll ..\..\..\time\iexca2\x64\iexca2.dll ..\..\..\time\iexca2\x64\app.install.exe
+..\..\..\nodeapp\thirdparty\binary\cabarc N ..\..\..\time\iexca2\x64\iexca2.cab ..\..\..\time\iexca2\x64\iexca2.inf ..\..\..\time\iexca2\x64\draw2d_gdiplus.dll  ..\..\..\time\iexca2\x64\msvcp120d.dll ..\..\..\time\iexca2\x64\msvcr120d.dll ..\..\..\time\iexca2\x64\base.dll ..\..\..\time\iexca2\x64\iexca2.dll ..\..\..\time\iexca2\x64\app.install.exe
 IF NOT EXIST ..\..\..\time\iexca2\x64\iexca2.cab ECHO ERROR WAS HAPPEND!!! 
 IF EXIST ;.\..\..\time\iexca2\x64\iexca2.cab ECHO Copy was successfully
 ..\..\..\nodeapp\thirdparty\binary\signtool sign /f "X:\sensitive\sensitive\certificate\ca2.p12" /p none ..\..\..\time\iexca2\x64\iexca2.cab

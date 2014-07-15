@@ -675,7 +675,12 @@ namespace production
          //Application.dir().mk(System.dir().path(m_strBase, "time"));
          Application.file().put_contents(System.dir().path(m_strBase, "app\\build.txt"), m_strBuild);
          Application.file().put_contents_utf8(System.dir().path(m_strBase, "app\\this_version_info.h"), strBuildH);
-         Application.file().put_contents_utf8(System.dir().path(m_strBase, "app\\this_version_info.txt"), strBuildH); 
+         Application.file().put_contents_utf8(System.dir().path(m_strBase, "app\\this_version_info.txt"), strBuildH);
+
+         update_rc_file_version(System.dir().path(m_strBase,"app\\appseed\\base\\base.rc"));
+         update_rc_file_version(System.dir().path(m_strBase,"app-core\\appseed\\iexca2\\iexca2.rc"));
+         update_rc_file_version(System.dir().path(m_strBase,"nodeapp\\appseed\\app.install\\app.install.rc"));
+         update_rc_file_version(System.dir().path(m_strBase,"nodeapp\\appseed\\draw2d_gdiplus\\draw2d_gdiplus.rc"));
 
          if (!commit_for_new_build_and_new_release())
             return 2;
@@ -683,9 +688,10 @@ namespace production
 
          m_strSubversionRevision = "SVN" + str::from(atoi(strRevision) + 1);
 
-         if (m_bBuild)
+         //if (m_bBuild)
          {
-            build("app-veriwell");
+            //build()
+            build("nodeapp");
          }
 
          {
@@ -2197,6 +2203,26 @@ namespace production
 
       Application.dir().mk(System.dir().path(m_strBase, "time\\iexca2\\" + strPlatform));
 
+      string strNpca2Version;
+
+      strNpca2Version.Format(
+         "%d,%d%02d,%d%02d,%d",
+         atoi(m_strFormatBuild.Mid(0,4)),
+         atoi(m_strFormatBuild.Mid(5,2)),
+         atoi(m_strFormatBuild.Mid(8,2)),
+         atoi(m_strFormatBuild.Mid(11,2)),
+         atoi(m_strFormatBuild.Mid(14,2)),
+         atoi(m_strFormatBuild.Mid(17,2))
+         );
+
+      string strChromeManifest = Application.file().as_string(System.dir().path(m_strBase,"nodeapp/stage/script/iexca2.inf"));
+      strChromeManifest.replace("%VERSION%",strNpca2Version);
+      //      strChromeManifest.replace("%PLATFORM%", "/" + m_strFormatBuild + "/stage/" + strPlatform);
+      //    strChromeManifest.replace("%DOWNLOADSITE%", m_strDownloadSite);
+      //      strChromeManifest.replace("%VERSION%", strVersionUrl);
+      Application.file().put_contents System.dir().path(m_strBase,"time\\iexca2\\" + strPlatform + "\\iexca2.inf"),strChromeManifest);
+
+
       uint32_t dwExitCode;
       string str;
       ::core::process process;
@@ -2851,6 +2877,59 @@ namespace production
       string str(psz);
       str.replace("-", ":", 11);
       return str;
+   }
+
+
+   void production::update_rc_file_version(const char * pszUrl)
+   {
+
+      string str = Application.file().as_string(pszUrl);
+
+      index iFind1 = str.find("FILEVERSION ");
+      if(iFind1 > 0)
+      {
+
+         index iFind2 = str.find("\r\n", iFind1);
+
+         string strVersion1;
+
+         strVersion1.Format(
+            "%d,%d%02d,%d%02d,%d",
+            atoi(m_strFormatBuild.Mid(0,4)),
+            atoi(m_strFormatBuild.Mid(5,2)),
+            atoi(m_strFormatBuild.Mid(8,2)),
+            atoi(m_strFormatBuild.Mid(11,2)),
+            atoi(m_strFormatBuild.Mid(14,2)),
+            atoi(m_strFormatBuild.Mid(17,2))
+            );
+
+         str = str.Left(iFind1 + strlen("FILEVERSION ")) + strVersion1 + str.Mid(iFind2);
+
+      }
+
+      iFind1 = str.find("VALUE \"FileVersion\", \"");
+      if(iFind1 > 0)
+      {
+
+         index iFind2 = str.find("\"",iFind1);
+
+         string strVersion2;
+
+         strVersion2.Format(
+            "%d.%d%02d.%d%02d.%d",
+            atoi(m_strFormatBuild.Mid(0,4)),
+            atoi(m_strFormatBuild.Mid(5,2)),
+            atoi(m_strFormatBuild.Mid(8,2)),
+            atoi(m_strFormatBuild.Mid(11,2)),
+            atoi(m_strFormatBuild.Mid(14,2)),
+            atoi(m_strFormatBuild.Mid(17,2))
+            );
+
+         str = str.Left(iFind1 + strlen("VALUE \"FileVersion\", \"")) + strVersion2 + str.Mid(iFind2);
+
+      }
+
+
    }
 
 
