@@ -2220,7 +2220,7 @@ namespace production
       //      strChromeManifest.replace("%PLATFORM%", "/" + m_strFormatBuild + "/stage/" + strPlatform);
       //    strChromeManifest.replace("%DOWNLOADSITE%", m_strDownloadSite);
       //      strChromeManifest.replace("%VERSION%", strVersionUrl);
-      Application.file().put_contents System.dir().path(m_strBase,"time\\iexca2\\" + strPlatform + "\\iexca2.inf"),strChromeManifest);
+      Application.file().put_contents(System.dir().path(m_strBase,"time\\iexca2\\" + strPlatform + "\\iexca2.inf"),strChromeManifest);
 
 
       uint32_t dwExitCode;
