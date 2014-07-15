@@ -2862,13 +2862,34 @@ namespace production
       int32_t i = 1;
       uint32_t dwExitCode;
       string str;
+      string strAccumul;
       while (!process.has_exited(&dwExitCode))
       {
-         Sleep(5000);
-         str.Format("%d Building ca2 fontopus ccvotagus " + strApp + "...", i);
-         add_status(str);
+         Sleep(84);
+         //str.Format("%d Building ca2 fontopus ccvotagus " + strApp + "...", i);
+         while(true)
+         {
+            str = process.read();
+            strAccumul+=str;
+            if(!str.has_char())
+               break;
+         }
+         index iFind;
+         while((iFind = strAccumul.find("\r\n")) >= 0)
+         {
+            add_status(strAccumul.Left(iFind));
+            strAccumul = strAccumul.Mid(iFind + 2);
+         }
+         
          i++;
       }
+      index iFind;
+      while((iFind = strAccumul.find("\r\n")) >= 0)
+      {
+         add_status(strAccumul.Left(iFind));
+         strAccumul = strAccumul.Mid(iFind + 2);
+      }
+      add_status(strAccumul);
 
    }
 
@@ -2928,6 +2949,8 @@ namespace production
          str = str.Left(iFind1 + strlen("VALUE \"FileVersion\", \"")) + strVersion2 + str.Mid(iFind2);
 
       }
+
+      Application.file().put_contents(pszUrl, str);
 
 
    }
