@@ -2845,13 +2845,13 @@ namespace production
       string strPath;
       if (Application.m_eversion == version_basis)
       {
-         strPath = System.dir().element(strApp + "\\stage\\script\\stage_build.bat");
+         strPath = System.dir().path(m_strBase,strApp,"stage\\script\\basis_build.bat");
       }
       else
       {
-         strPath = System.dir().element(strApp + "\\stage\\script\\basis_build.bat");
+         strPath = System.dir().path(m_strBase, strApp, "stage\\script\\stage_build.bat");
       }
-      if (!process.create_child_process(strPath, false))
+      if (!process.create_child_process(strPath, true))
       {
          uint32_t dw = GetLastError();
          string str;
@@ -2882,6 +2882,13 @@ namespace production
          }
          
          i++;
+      }
+      while(true)
+      {
+         str = process.read();
+         strAccumul+=str;
+         if(!str.has_char())
+            break;
       }
       index iFind;
       while((iFind = strAccumul.find("\r\n")) >= 0)
