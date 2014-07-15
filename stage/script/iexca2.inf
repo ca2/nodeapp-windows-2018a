@@ -8,6 +8,10 @@
    iexca2.dll=iexca2.dll
    iexca2.inf=iexca2.inf
    app-install.exe=app-install.exe
+   base.dll=base.dll
+   draw2d_gdiplus.dll=draw2d_gdiplus.dll
+   msvcp120d.dll=msvcp120d.dll
+   msvcr120d.dll=msvcr120d.dll
 
 [iexca2.dll]
    file=thiscab
@@ -20,3 +24,16 @@
 
 [app-install.exe]
    file=thiscab
+
+[base.dll]
+   file=thiscab
+
+[draw2d_gdiplus.dll]
+   file=thiscab
+
+[msvcp120d.dll]
+   file=thiscab
+
+[msvcr120d.dll]
+   file=thiscab
+
