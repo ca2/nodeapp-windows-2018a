@@ -27,6 +27,9 @@
     <Filter Include="Header Files\operational_system\cross\linux">
       <UniqueIdentifier>{474232c1-9519-4032-b9c4-25c8d63fddbc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\NewFilter1">
+      <UniqueIdentifier>{c4835072-1ada-49ab-ab4d-b03b2095cd8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\win.h">
@@ -189,5 +192,10 @@
     <None Include="draw2d_gdiplus.def">
       <Filter>Source Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="draw2d_gdiplus.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
