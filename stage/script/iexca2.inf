@@ -6,7 +6,7 @@
 
 [Add.Code]
    iexca2.dll=iexca2.dll
-   app-install.exe=app-install.exe
+   app.install.exe=app.install.exe
    draw2d_gdiplus.dll=draw2d_gdiplus.dll
    base.dll=base.dll
    msvcp120d.dll=msvcp120d.dll
@@ -28,7 +28,7 @@
    file-win32-x86=thiscab
    FileVersion=%VERSION%
 
-[app-install.exe]
+[app.install.exe]
    file-win32-x86=thiscab
    FileVersion=%VERSION%
 
