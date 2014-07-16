@@ -3048,16 +3048,50 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return bResult;
    }
 
-   int32_t graphics::SelectClipRgn(::draw2d::region* pRgn, int32_t nMode)
+
+   int32_t graphics::SelectClipRgn(::draw2d::region* pregion,int32_t nMode)
    {
-      ASSERT(get_handle1() != NULL);
-      int32_t nRetVal = ERROR;
-      if (get_handle1() != get_handle2())
-         nRetVal = ::ExtSelectClipRgn(get_handle1(), (HRGN)pRgn->get_os_data(), nMode);
-      if (get_handle2() != NULL)
-         nRetVal = ::ExtSelectClipRgn(get_handle2(), (HRGN)pRgn->get_os_data(), nMode);
-      return nRetVal;
+
+      if(pregion == NULL)
+      {
+
+         m_pgraphics->ResetClip();
+
+      }
+      else
+      {
+
+         if(nMode == RGN_AND)
+         {
+
+            m_pgraphics->SetClip((Gdiplus::Region *) pregion->get_os_data(), Gdiplus::CombineModeIntersect);
+
+         }
+         else if(nMode == RGN_OR)
+         {
+
+            m_pgraphics->SetClip((Gdiplus::Region *) pregion->get_os_data(),Gdiplus::CombineModeUnion);
+
+         }
+         else if(nMode == RGN_XOR)
+         {
+
+            m_pgraphics->SetClip((Gdiplus::Region *) pregion->get_os_data(),Gdiplus::CombineModeXor);
+
+         }
+         else if(nMode == RGN_COPY)
+         {
+
+            m_pgraphics->SetClip((Gdiplus::Region *) pregion->get_os_data(),Gdiplus::CombineModeReplace);
+
+         }
+
+      }
+
+      return 0;
+
    }
+
 
    /////////////////////////////////////////////////////////////////////////////
    // Special handling for metafile playback
