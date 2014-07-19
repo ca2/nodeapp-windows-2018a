@@ -90,8 +90,6 @@ namespace draw2d_gdiplus
    bool graphics::CreateCompatibleDC(::draw2d::graphics * pgraphics)
    { 
 
-      synch_lock sl(&user_mutex());
-
       HDC hdc = Detach();
       
       if(hdc != NULL)
