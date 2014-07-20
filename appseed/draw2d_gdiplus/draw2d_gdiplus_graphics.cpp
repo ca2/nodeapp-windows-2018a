@@ -258,6 +258,8 @@ namespace draw2d_gdiplus
 
       set_text_rendering(::draw2d::text_rendering_anti_alias_grid_fit);
 
+      m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
+
       m_spbitmap = pBitmap;
 
       return m_spbitmap;
@@ -524,10 +526,39 @@ namespace draw2d_gdiplus
    bool graphics::Polyline(const POINT* lpPoints, int32_t nCount)
    {
    
-      ASSERT(get_handle1() != NULL);
-      
-      return ::Polyline(get_handle1(), lpPoints, nCount) != FALSE;
-   
+      if(nCount <= 0)
+         return TRUE;
+
+      bool bOk1 = FALSE;
+
+      Gdiplus::Point * ppoints = new Gdiplus::Point[nCount];
+
+      try
+      {
+
+         for(int32_t i = 0; i < nCount; i++)
+         {
+            ppoints[i].X = lpPoints[i].x;
+            ppoints[i].Y = lpPoints[i].y;
+         }
+
+         bOk1 = m_pgraphics->DrawLines(gdiplus_pen(),ppoints,nCount) == Gdiplus::Status::Ok;
+
+      }
+      catch(...)
+      {
+      }
+
+      try
+      {
+         delete ppoints;
+      }
+      catch(...)
+      {
+      }
+
+
+      return bOk1;
    }
 
    void graphics::FillRect(LPCRECT lpcrect, ::draw2d::brush* pbrush)
@@ -729,7 +760,7 @@ namespace draw2d_gdiplus
    bool graphics::DrawEllipse(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    {
       
-      m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
+      m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
 
       return (m_pgraphics->DrawEllipse(gdiplus_pen(), x1, y1, x2 - x1, y2 - y1)) == Gdiplus::Status::Ok;
 
@@ -739,7 +770,7 @@ namespace draw2d_gdiplus
    bool graphics::DrawEllipse(LPCRECT lpRect)
    { 
    
-      m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
+      m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
 
       return (m_pgraphics->DrawEllipse(gdiplus_pen(), lpRect->left, lpRect->top, lpRect->right - lpRect->left, lpRect->bottom - lpRect->top)) == Gdiplus::Status::Ok;
    
@@ -932,7 +963,7 @@ namespace draw2d_gdiplus
    bool graphics::Rectangle(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    { 
       
-      Gdiplus::RectF rectf((Gdiplus::REAL) x1, (Gdiplus::REAL) y1, (Gdiplus::REAL) (x2 - x1 - 1), (Gdiplus::REAL) (y2 - y1 - 1));
+      Gdiplus::RectF rectf((Gdiplus::REAL) x1, (Gdiplus::REAL) y1, (Gdiplus::REAL) (x2 - x1), (Gdiplus::REAL) (y2 - y1));
 
       bool bOk1 = m_pgraphics->FillRectangle(gdiplus_brush(), rectf) == Gdiplus::Status::Ok;
 
@@ -3822,6 +3853,8 @@ namespace draw2d_gdiplus
          if(m_pgraphics == NULL)
             return;
 
+         Gdiplus::SmoothingMode emode = m_pgraphics->GetSmoothingMode();
+
          m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeNone);
 
          ::draw2d::brush_sp brushCurrent(m_spbrush);
@@ -3831,6 +3864,8 @@ namespace draw2d_gdiplus
          SelectObject(brush);
 
          m_pgraphics->FillRectangle(gdiplus_brush(), x, y, cx, cy);
+
+         m_pgraphics->SetSmoothingMode(emode);
 
          m_spbrush = brushCurrent;
 

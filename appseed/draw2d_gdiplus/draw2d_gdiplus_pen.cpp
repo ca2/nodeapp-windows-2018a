@@ -382,15 +382,25 @@ namespace draw2d_gdiplus
             ((pen *) this)->m_ppen->SetLineJoin(Gdiplus::LineJoinMiterClipped);
             break;
          }
-         switch(m_eendcap)
+         switch(m_elinecapBeg)
          {
-         case end_cap_flat:
+         case line_cap_flat:
+            ((pen *) this)->m_ppen->SetStartCap(Gdiplus::LineCapFlat);
+            break;
+         case line_cap_round:
+            ((pen *) this)->m_ppen->SetStartCap(Gdiplus::LineCapRound);
+            break;
+         }
+         switch(m_elinecapEnd)
+         {
+         case line_cap_flat:
             ((pen *) this)->m_ppen->SetEndCap(Gdiplus::LineCapFlat);
             break;
-         case end_cap_round:
+         case line_cap_round:
             ((pen *) this)->m_ppen->SetEndCap(Gdiplus::LineCapRound);
             break;
          }
+         
       }
 
       if(m_ppen != NULL)
