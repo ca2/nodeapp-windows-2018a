@@ -130,8 +130,8 @@ namespace draw2d_gdiplus
       ::draw2d::bitmap_sp bmpMask(papp);
       ::draw2d::bitmap *pOldMask, *pOldMem;
       const DWORD   CP_ROP = 0xE20746;
-      ::draw2d::brush_sp brHighLight(papp, BaseSession.get_default_color(COLOR_3DHIGHLIGHT)),
-         brShadow(papp, BaseSession.get_default_color(COLOR_3DSHADOW)), spbr;
+      ::draw2d::brush_sp brHighLight(papp, session().get_default_color(COLOR_3DHIGHLIGHT)),
+         brShadow(papp, session().get_default_color(COLOR_3DSHADOW)), spbr;
 
       if(graphicsMem->CreateCompatibleDC(NULL) &&
          graphicsMask->CreateCompatibleDC(NULL))
@@ -188,8 +188,8 @@ namespace draw2d_gdiplus
       ::draw2d::bitmap_sp bmpMask(papp);
       ::draw2d::bitmap *pOldMask, *pOldMem;
       const DWORD   CP_ROP = 0xE20746;
-      ::draw2d::brush_sp brHighLight(papp, BaseSession.get_default_color(COLOR_3DHIGHLIGHT)),
-         brShadow(papp, BaseSession.get_default_color(COLOR_3DSHADOW)), spbr;
+      ::draw2d::brush_sp brHighLight(papp, session().get_default_color(COLOR_3DHIGHLIGHT)),
+         brShadow(papp, session().get_default_color(COLOR_3DSHADOW)), spbr;
 
       if(graphicsMem->CreateCompatibleDC(pgraphics) &&
          graphicsMask->CreateCompatibleDC(pgraphics) &&

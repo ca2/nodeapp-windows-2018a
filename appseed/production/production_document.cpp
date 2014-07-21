@@ -55,7 +55,7 @@ namespace production
    bool document::on_open_document(var varFile)
    {
 
-      string str = Application.file().as_string(varFile);
+      string str = Session.file().as_string(varFile);
 
    //  m_document.load(str);
 
