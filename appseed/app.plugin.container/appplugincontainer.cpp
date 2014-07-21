@@ -33,7 +33,7 @@ uint32_t plugin_container_app(const string & strChannel)
 
    papp->m_pbasesystem = psystem;
 
-   papp->m_pplaneapp->m_psystem = psystem;
+   papp->m_pplanesystem = psystem;
 
    papp->m_hinstance = psystem->m_hinstance;
 

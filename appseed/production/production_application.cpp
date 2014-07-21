@@ -10,7 +10,6 @@ namespace production
       
       m_strAppName         = "production";
       m_strBaseSupportId   = "ca2_production";
-      m_bZipIsDir          = false;
       m_bLicense           = false;
       m_pview = NULL;
 
@@ -88,7 +87,7 @@ namespace production
    void application::on_request(sp(::create_context) pcreatecontext)
    {
 
-      string strVersion = file().as_string("C:\\ca2\\config\\nodeapp-windows\\production\\version.txt").trimmed();
+      string strVersion = session().file().as_string("C:\\ca2\\config\\nodeapp-windows\\production\\version.txt").trimmed();
 
       if (strVersion == "stage")
       {

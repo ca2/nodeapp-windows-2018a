@@ -244,7 +244,7 @@ namespace production
       rect.null();
 
 	   if(!m_pscrollbarHorz->create(
-		   ::user::scroll_bar::orientation_horizontal,
+		   orientation_horizontal,
 		   WS_CHILD 
 		   | WS_VISIBLE,
 		   rect,
@@ -257,7 +257,7 @@ namespace production
       rect.null();
 
 	   if(!m_pscrollbarVert->create(
-		   ::user::scroll_bar::orientation_vertical,
+		   orientation_vertical,
 		   WS_CHILD 
 		   | WS_VISIBLE,
 		   rect,
