@@ -5,65 +5,93 @@
 #include "objbase.h"
 #include "objidl.h"
 #include "shlguid.h"
-
+#include <codecvt>
+#include <string.h>
 
 #include <psapi.h>
 
-
+#define WINDOWS
 #include <tlhelp32.h>
 
 
+int str_ends_dup(const char * psz,const char * pszSuffix);
+string ca2_module_folder_dup()
+;
+bool dir_is(const char * path1);
 
+bool eat_end_level_dup(string & str,INT iLevelCount,const char * lpSeparator);
+INT str_ends_ci_dup(const char * psz,const char * pszSuffix)
+{
 
-class removal :
-   public ::base::simple_app,
-   public small_ipc_rx_channel::receiver
+   INT iLen = strlen(psz);
+
+   INT iLenSuffix = strlen(pszSuffix);
+
+   if(iLen < iLenSuffix)
+      return false;
+
+   return _stricmp(&psz[iLen - iLenSuffix],pszSuffix) == 0;
+
+}
+
+#define PATH_SEPARATOR "\\"
+bool dir_mk(const char * lpcsz);
+
+void reg_delete_tree_dup(HKEY hkey,const char * name);
+
+// convert UTF-8 string to wstring
+std::wstring from_utf8(const std::string& str)
+{
+   std::wstring_convert<std::codecvt_utf8<wchar_t>> myconv;
+   return myconv.from_bytes(str);
+}
+
+// convert wstring to UTF-8 string
+std::string to_utf8(const std::wstring& str)
+{
+   std::wstring_convert<std::codecvt_utf8<wchar_t>> myconv;
+   return myconv.to_bytes(str);
+}
+void str_replace_all(string &s,const string &search,const string &replace) {
+   for(size_t pos = 0; ; pos += replace.length()) {
+      // Locate the substring to replace
+      pos = s.find(search,pos);
+      if(pos == string::npos) break;
+      // Replace by erasing and inserting
+      s.erase(pos,search.length());
+      s.insert(pos,replace);
+   }
+}
+
+string dir_get_ca2_module_folder();
+string dir_element(const char * path1=NULL,const char * path2=NULL,const char * path3=NULL,const char * path4=NULL);
+
+class removal
 {
 public:
 
    
-   enum e_message
-   {
-      message_none,
-      message_ok,
-      message_failed,
-      message_unknown,
-   };
-
-
-   e_message                  m_emessage;
    HANDLE                     m_hmutex_app_removal;
    
    char *                     m_modpath;
    char *                     m_pszDllEnds;
-   uint32_t *                    m_dwaProcess;
-   int32_t                        m_iSizeProcess;
+   UINT *                    m_dwaProcess;
+   INT                        m_iSizeProcess;
    HMODULE *                  m_hmodulea;
-   int32_t                        m_iSizeModule;
+   INT                        m_iSizeModule;
    bool                       m_bInstallerInstalling;
+   HINSTANCE m_hinstance;
 
    removal();
    virtual ~removal();
    
    bool is_user_using(const char * pszDll);
 
-   ATOM spaboot_message_register_class(HINSTANCE hInstance);
-
-   int32_t cube_run(const char * id);
-
-   void call_self_privileged_sync(const char * param);
-
-   int32_t spaboot_registry_register(const char * lpszFile);
-
-   void call_sync(const char * path, const char * param);
-
-   void installer_call_sync(const char * path, const char * param);
+   INT cube_run(const char * id);
 
    bool are_there_user_files_in_use();
 
-   bool is_user_using(uint32_t processid, const char * pszDll);
-
-   virtual void on_receive(small_ipc_rx_channel * prxchannel, const char * pszMessage);
+   bool is_user_using(UINT processid, const char * pszDll);
 
    virtual bool initialize();
 
@@ -72,16 +100,24 @@ public:
 };
 
 // if MSVC CRT is used
-extern "C" int32_t WINAPI
-_tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
-   __in LPTSTR lpCmdLine, int32_t nCmdShow)
+extern "C" INT WINAPI
+WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+   __in LPTSTR lpCmdLine, INT nCmdShow)
 {
    // call shared/exported WinMain
-   return s_main < removal >(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+   removal app;
+
+   app.initialize();
+
+
+   app.finalize();
+
+   return 0;
+   
 }
 
 // if MSVC CRT is stripped
-/*extern "C" int32_t WinMainCRTStartup() \
+/*extern "C" INT WinMainCRTStartup() \
 { 
 
    ExitProcess(simple_app::s_main < removal > ());
@@ -91,14 +127,10 @@ _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 //extern bool g_bInstalling;
 //extern stringa * g_pstraTrace;
 
-removal::removal() :
-element(this),
-::base::system(this)
+removal::removal()
 {
-   xxdebug_box("app.install", "app", 0);
    m_hinstance             = ::GetModuleHandleA(NULL);
    m_hmutex_app_removal  = NULL;
-   e_message m_emessage    = message_none;
    m_modpath               = NULL;
    m_pszDllEnds            = NULL;
    m_dwaProcess            = NULL;
@@ -129,7 +161,7 @@ removal::~removal()
 //                properties.
 
 
-HRESULT CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc, LPCWSTR lpszIconPath = NULL, int32_t iIcon = 0) 
+HRESULT CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc, LPCWSTR lpszIconPath = NULL, INT iIcon = 0) 
 { 
     HRESULT hres; 
     IShellLinkW* psl; 
@@ -173,6 +205,59 @@ HRESULT CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc, 
 
 }
 
+
+string dir_path(const char * path1,const char * path2,const char * path3= NULL,const char * path4= NULL,const char * path5= NULL)
+{
+   string str(path1);
+   if(str.substr(str.length() - 1,1) == PATH_SEPARATOR)
+   {
+      str = str.substr(0,str.length() - 1);
+   }
+   if(path2 != NULL)
+   {
+      string strAdd(path2);
+      if(strAdd.substr(0,1) != PATH_SEPARATOR)
+      {
+         strAdd = PATH_SEPARATOR + strAdd;
+      }
+      str += strAdd;
+   }
+   if(path3 != NULL)
+   {
+      string strAdd(path3);
+      if(strAdd.substr(0,1) != PATH_SEPARATOR)
+      {
+         strAdd = PATH_SEPARATOR + strAdd;
+      }
+      str += strAdd;
+   }
+   if(path4 != NULL)
+   {
+      string strAdd(path4);
+      if(strAdd.substr(0,1) != PATH_SEPARATOR)
+      {
+         strAdd = PATH_SEPARATOR + strAdd;
+      }
+      str += strAdd;
+   }
+   if(path5 != NULL)
+   {
+      string strAdd(path5);
+      if(strAdd.substr(0,1) != PATH_SEPARATOR)
+      {
+         strAdd = PATH_SEPARATOR + strAdd;
+      }
+      str += strAdd;
+   }
+#if defined(LINUX) || defined(APPLEOS)
+   str_replace_all(str, "\\","/");
+#else
+   str_replace_all(str, "/","\\");
+#endif
+   return str;
+}
+
+
 string get_dir(const KNOWNFOLDERID & rfid, const char * lpcsz)
 {
 
@@ -180,15 +265,18 @@ string get_dir(const KNOWNFOLDERID & rfid, const char * lpcsz)
    
    SHGetKnownFolderPath(rfid, 0, NULL, &buf);
 
-   string str(buf);
+   wstring wstr(buf);
 
-   str = dir::path(str, lpcsz);
+   string str = dir_path(to_utf8(wstr).c_str(), lpcsz);
 
    CoTaskMemFree(buf);
 
    return str;
 
 }
+
+
+
 
 void my_system(const char * pszCmd)
 {
@@ -214,17 +302,24 @@ if (CreateProcess(NULL, (char *) pszCmd, NULL, NULL, FALSE, CREATE_NO_WINDOW | C
 
 void rmdir(const char * pszDir)
 {
-   my_system("cmd.exe /C rmdir /S /Q \"" + string(pszDir) + "\"");
+   my_system(("cmd.exe /C rmdir /S /Q \"" + string(pszDir) + "\"").c_str());
 }
 
 void rmdir_n_v(const char * pszDir)
 {
-   string str(pszDir);
-   rmdir(str);
 
-   str.replace(":", "");
-   str = dir::path(get_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Temporary Internet Files\\Virtualized"), str);
-   rmdir(str);
+   string str(pszDir);
+   rmdir(str.c_str());
+
+   str_replace_all(str, ":", "");
+
+   string str2 = dir_path(get_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Temporary Internet Files\\Virtualized").c_str(), str.c_str());
+   rmdir(str2.c_str());
+
+  
+   str2 = dir_path(get_dir(FOLDERID_LocalAppData,"Microsoft\\Windows\\INetCache\\Virtualized").c_str(),str.c_str());
+   rmdir(str2.c_str());
+
 }
 
 
@@ -233,7 +328,7 @@ void g_n_rmdir_n_v(const KNOWNFOLDERID & rfid, const char * pszDir)
 
    string strDir = get_dir(rfid, pszDir);
 
-   rmdir_n_v(strDir);
+   rmdir_n_v(strDir.c_str());
 
 }
 
@@ -247,8 +342,7 @@ bool removal::initialize()
    m_hmutex_app_removal = ::CreateMutex(NULL, FALSE, "Global\\::ca2::fontopus::ccca2_spa_app_removal::7807e510-5579-11dd-ae16-0800200c7784");
    if(::GetLastError() == ERROR_ALREADY_EXISTS)
    {
-      ::simple_message_box(NULL, "ca2 app.removal.exe is already running.\n\nPlease wait for app.removal to finish or close it - using Task Manager - Ctrl+Shift+ESC - to continue.", "app.install.exe is running!", MB_ICONEXCLAMATION);
-      m_iReturnCode = -202;
+      ::MessageBox(NULL, "ca2 app.removal.exe is already running.\n\nPlease wait for app.removal to finish or close it - using Task Manager - Ctrl+Shift+ESC - to continue.", "app.install.exe is running!", MB_ICONEXCLAMATION);
       return false;
    }
 
@@ -258,13 +352,13 @@ bool removal::initialize()
 
    string strTargetDir = get_dir(FOLDERID_ProgramFilesX86, "ca2.app.removal");
 
-   dir::mk(strTargetDir);
+   dir_mk(strTargetDir.c_str());
 
-   string strTarget = dir::path(strTargetDir, "app.removal.exe");
+   string strTarget = dir_path(strTargetDir.c_str(),"app.removal.exe");
 
-   if(::CopyFile(szFile, strTarget, TRUE))
+   if(::CopyFile(szFile,strTarget.c_str(),TRUE))
    {
-      int32_t i = ::simple_message_box(NULL, "Do you want to place a shortcut to ca2 app.removal in Desktop?\n\nProgram has already been copied to Program Files Folder.", "app.removal installation", MB_ICONQUESTION | MB_YESNOCANCEL);
+      INT i = ::MessageBox(NULL,"Do you want to place a shortcut to ca2 app.removal in Desktop?\n\nProgram has already been copied to Program Files Folder.","app.removal installation",MB_ICONQUESTION | MB_YESNOCANCEL);
 
       if(i == IDCANCEL)
          return false;
@@ -272,10 +366,10 @@ bool removal::initialize()
       if(i == IDYES)
       {
          string strLink= get_dir(FOLDERID_Desktop, "ca2 app.removal Tool.lnk");
-         wstring wstrTarget(strTarget);
-         wstring wstrLink(strLink);
+         wstring wstrTarget(from_utf8(strTarget));
+         wstring wstrLink(from_utf8(strLink));
          // create shortcurt;
-         CreateLink(wstrTarget, wstrLink, L"ca2 app.removal Tool", wstrTarget, 0);
+         CreateLink(wstrTarget.c_str(), wstrLink.c_str(), L"ca2 app.removal Tool", wstrTarget.c_str(), 0);
       }
    }
 
@@ -286,44 +380,28 @@ bool removal::initialize()
    my_system("taskkill /F /IM plugin-container.exe");
    my_system("taskkill /F /IM iexplore.exe");
    my_system("taskkill /F /IM firefox.exe");
+   
    g_n_rmdir_n_v(FOLDERID_ProgramFilesX86, "ca2");
+   g_n_rmdir_n_v(FOLDERID_ProgramFiles,"ca2");
    g_n_rmdir_n_v(FOLDERID_ProgramData, "ca2");
 
-   string str;
-
-   g_n_rmdir_n_v(FOLDERID_Profile, "ca2");
-//rmdir /S /Q "C:\Users\ca2os\ca2"
-   g_n_rmdir_n_v(FOLDERID_LocalAppData, "ca2");
-//rmdir /S /Q "C:\Users\ca2os\AppData\Local\ca2"
-//rmdir /S /Q "C:\Users\ca2os\AppData\Local\VirtualStore\Program Files (x86)\ca2"
    g_n_rmdir_n_v(FOLDERID_LocalAppData, "VirtualStore\\Program Files (x86)\\ca2");
-//rmdir /S /Q "C:\Users\ca2os\AppData\Local\VirtualStore\ProgramData\ca2"
+   g_n_rmdir_n_v(FOLDERID_LocalAppData,"VirtualStore\\Program Files\\ca2");
    g_n_rmdir_n_v(FOLDERID_LocalAppData, "VirtualStore\\ProgramData\\ca2");
-//rmdir /S /Q "C:\Users\ca2os\AppData\LocalLow\ca2"
-   g_n_rmdir_n_v(FOLDERID_LocalAppDataLow, "ca2");
-//rmdir /S /Q "C:\Users\ca2os\AppData\Roaming\ca2"
+
+   g_n_rmdir_n_v(FOLDERID_Profile,"ca2");
+   g_n_rmdir_n_v(FOLDERID_LocalAppDataLow,"ca2");
    g_n_rmdir_n_v(FOLDERID_RoamingAppData, "ca2");
-//del "C:\Windows\Downloaded Program Files\iexca2.dll"
+   g_n_rmdir_n_v(FOLDERID_LocalAppData,"ca2");
+
+   g_n_rmdir_n_v(FOLDERID_LocalAppDataLow,"core");
+   g_n_rmdir_n_v(FOLDERID_Profile,"core");
+   g_n_rmdir_n_v(FOLDERID_RoamingAppData,"core");
+   g_n_rmdir_n_v(FOLDERID_RoamingAppData,"core");
+
    ::DeleteFile("C:\\Windows\\Downloaded Program Files\\iexca2.dll");
-//del "C:\Windows\Downloaded Program Files\iexca2.inf"
    ::DeleteFile("C:\\Windows\\Downloaded Program Files\\iexca2.inf");
-//del "C:\Windows\Downloaded Program Files\app.install.exe"
    ::DeleteFile("C:\\Windows\\Downloaded Program Files\\app.install.exe");
-//rmdir /S /Q "C:\Users\ca2os\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\ProgramData\ca2"
-   //str = get_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Tempoarary Internet Files\\Virtualized\\VirtualStore\\ProgramsData\\ca2");
-   //rmdir(str);
-//rmdir /S /Q "C:\Users\ca2os\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Program Files (x86)\ca2"
-   //str = get_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Tempoarary Internet Files\\Virtualized\\VirtualStore\\Programs Files(x86)\\ca2");
-   //rmdir(str);
-//rmdir /S /Q "C:\Users\ca2os\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\ca2os\ca2"
-   //str = get_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Tempoarary Internet Files\\Virtualized\\VirtualStore\\ProgramsData\\ca2");
-   //rmdir(str);
-//rmdir /S /Q "C:\Users\ca2os\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\ca2os\AppData\Local\ca2"
-//rmdir /S /Q "C:\Users\ca2os\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\ca2os\AppData\Local\VirtualStore\Program Files (x86)\ca2"
-//rmdir /S /Q "C:\Users\ca2os\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\ca2os\AppData\Local\VirtualStore\ProgramData\ca2"
-//rmdir /S /Q "C:\Users\ca2os\AppData\Local\Microsoft\Windows\Temporary Internet Files\Virtualized\C\Users\ca2os\AppData\Roaming\ca2"
-//call ".\windows_registry\delete_global_npca2.bat"
-//call ".\windows_registry\delete_activex_iexca2.bat"
 
    ::reg_delete_tree_dup(HKEY_LOCAL_MACHINE, "SOFTWARE\\Wow6432Node\\MozillaPlugins\\@ca2.cc/npca2");
    ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "Wow6432Node\\CLSID\\{CA211984-1984-1977-A861-F8AA2A7AEE4B}");
@@ -336,13 +414,18 @@ bool removal::initialize()
 
    //simple_message_box(NULL, "Hope Helped!", "Hope Helped!", MB_ICONINFORMATION);
 
+
+   ::MessageBox(NULL,"app-removal has finished cleaning ca2 directories.","ca2 app-removal",MB_ICONINFORMATION);
+
+
+
    return false;
 
 }
 
 
 // non-thread safe
-bool removal::is_user_using(uint32_t processid, const char * pszDll)
+bool removal::is_user_using(UINT processid, const char * pszDll)
 {
 
    HANDLE hModuleSnap = INVALID_HANDLE_VALUE;
@@ -363,12 +446,12 @@ bool removal::is_user_using(uint32_t processid, const char * pszDll)
       return false;
    }
 
-   strcpy_dup(m_pszDllEnds, "\\");
-   strcat_dup(m_pszDllEnds, pszDll);
+   strcpy(m_pszDllEnds, "\\");
+   strcat(m_pszDllEnds, pszDll);
 
    do
    {
-      if(str_ends_ci_dup(me32.szModule, m_pszDllEnds) || stricmp_dup(me32.szModule, pszDll) == 0)
+      if(str_ends_ci_dup(me32.szModule, m_pszDllEnds) || _stricmp(me32.szModule, pszDll) == 0)
       {
          bFound = true;
          break;
@@ -419,95 +502,32 @@ bool removal::is_user_using(const char * pszDll)
 
 }
 
-void removal::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMessage)
-{
-   string strMessage(pszMessage);
-   int32_t iRet = 0;
-   const char * pszSuffix;
-   if((pszSuffix = str_begins_inc_dup(strMessage, "synch_spaadmin:")) != NULL)
-   {
-      throw todo(get_thread_app());
-
-/*      if(g_bInstalling)
-      {
-         iRet = 1;
-         return;
-      }*/
-      if(m_bInstallerInstalling)
-      {
-         iRet = 1;
-         return;
-      }
-      m_bInstallerInstalling = true;
-      throw todo(get_thread_app());
-      //synch_spaadmin(pszSuffix);
-      m_bInstallerInstalling = false;
-   }
-   else if((pszSuffix = str_begins_inc_dup(strMessage, "spaadmin:")) != NULL)
-   {
-      throw todo(get_thread_app());
-
-/*      if(g_bInstalling)
-      {
-         iRet = 1;
-         return;
-      }*/
-      //if(m_bInstallerInstalling)
-      //{
-        // iRet = 1;
-         //return;
-      //}
-      //m_bInstallerInstalling = true;
-      throw todo(get_thread_app());
-      //start_spaadmin(pszSuffix);
-   }
-   else if(stricmp_dup(strMessage, "ok") == 0)
-   {
-      m_emessage = message_ok;
-   }
-   else if(stricmp_dup(strMessage, "failed") == 0)
-   {
-      m_emessage = message_failed;
-   }
-   else if(stricmp_dup(strMessage, "exit") == 0)
-   {
-      PostQuitMessage(0);
-   }
-   else if(stricmp_dup(strMessage, "quit") == 0)
-   {
-      PostQuitMessage(0);
-   }
-   else
-   {
-      m_emessage = message_unknown;
-   }
-}
 
 
 
 bool removal::are_there_user_files_in_use()
 {
 #ifdef X86
-   if(is_user_using(dir::element("stage\\x86\\msvcp110d.dll")))
+   if(is_user_using(dir_element("stage\\x86\\msvcp110d.dll")))
       return true;
-   if(is_user_using(dir::element("stage\\x86\\msvcr110d.dll")))
+   if(is_user_using(dir_element("stage\\x86\\msvcr110d.dll")))
       return true;
-   if(is_user_using(dir::element("stage\\x86\\ca.dll")))
+   if(is_user_using(dir_element("stage\\x86\\ca.dll")))
       return true;
-   if(is_user_using(dir::element("stage\\x86\\ca2.dll")))
+   if(is_user_using(dir_element("stage\\x86\\ca2.dll")))
       return true;
-   if(is_user_using(dir::element("stage\\x86\\ca2.dll")))
+   if(is_user_using(dir_element("stage\\x86\\ca2.dll")))
       return true;
 #else
-   if(is_user_using(dir::element("stage\\x64\\msvcp110d.dll")))
+   if(is_user_using(dir_element("stage\\x64\\msvcp110d.dll").c_str()))
       return true;
-   if(is_user_using(dir::element("stage\\x64\\msvcr110d.dll")))
+   if(is_user_using(dir_element("stage\\x64\\msvcr110d.dll").c_str()))
       return true;
-   if(is_user_using(dir::element("stage\\x64\\ca.dll")))
+   if(is_user_using(dir_element("stage\\x64\\ca.dll").c_str()))
       return true;
-   if(is_user_using(dir::element("stage\\x64\\ca2.dll")))
+   if(is_user_using(dir_element("stage\\x64\\ca2.dll").c_str()))
       return true;
-   if(is_user_using(dir::element("stage\\x64\\ca2.dll")))
+   if(is_user_using(dir_element("stage\\x64\\ca2.dll").c_str()))
       return true;
 #endif
    return false;
@@ -516,13 +536,6 @@ bool removal::are_there_user_files_in_use()
 
 bool removal::finalize()
 {
-
-   simple_app::finalize();
-
-   //memory_free(m_hmodulea);
-   //memory_free(m_dwaProcess);
-   //memory_free(m_pszDllEnds);
-   //memory_free(m_modpath);
 
    return true;
 
@@ -535,3 +548,461 @@ bool removal::finalize()
 
 
 
+
+
+string dir_element(const char * path1,const char * path2,const char * path3,const char * path4)
+{
+
+#ifdef WINDOWS
+
+   if(path1 == NULL && path2 == NULL && path3 == NULL && path4 == NULL)
+   {
+
+      string str;
+
+
+      str = dir_get_ca2_module_folder();
+      int i = str.rfind('\\');
+      if(i == string::npos)
+         return "";
+      i = str.rfind('\\', i -1);
+      if(i == string::npos)
+         return "";
+
+      str =str.substr(0,i);
+
+      return str;
+   }
+   else
+   {
+
+      return dir_path(dir_element().c_str(),path1,path2,path3,path4);
+
+   }
+
+#else
+
+   string strRelative = ca2_module_folder_dup();
+
+   eat_end_level_dup(strRelative,2,"/");
+
+   string str = dir_path(getenv("HOME"),".core/appdata");
+
+   return dir_path(dir_path(str.c_str(),"ca2",strRelative.c_str()).c_str(),path1,path2,path3,path4);
+
+#endif
+
+}
+
+
+
+string dir_get_ca2_module_folder()
+{
+   wchar_t lpszModuleFolder[MAX_PATH * 8];
+#if defined(METROWIN)
+
+   return "";
+
+   char lpszModuleFilePath[MAX_PATH * 8];
+
+   HMODULE hmodule = ::LoadPackagedLibrary(L"ca.dll",0);
+
+   if(hmodule == NULL)
+      hmodule = ::LoadPackagedLibrary(L"spalib.dll",0);
+
+   if(hmodule == NULL)
+   {
+
+      string buf;
+
+      throw metrowin_todo();
+      //HRESULT hr = SHGetKnownFolderPath(FOLDERID_ProgramFiles, KF_FLAG_NO_ALIAS, NULL, wtostring(buf, 4096));
+      //if(FAILED(hr))
+      // throw "dir::get_ca2_module_folder_dup : SHGetKnownFolderPath failed";
+
+      strcpy(lpszModuleFilePath,buf.c_str());
+
+      if(lpszModuleFilePath[strlen(lpszModuleFilePath) - 1] == '\\'
+         || lpszModuleFilePath[strlen(lpszModuleFilePath) - 1] == '/')
+      {
+         lpszModuleFilePath[strlen(lpszModuleFilePath) - 1] = '\0';
+      }
+      strcat(lpszModuleFilePath,"\\core\\");
+#ifdef X86
+      strcat(lpszModuleFilePath,"stage\\x86\\");
+#else
+      strcat(lpszModuleFilePath,"stage\\x64\\");
+#endif
+
+      strcpy(lpszModuleFolder,lpszModuleFilePath);
+
+      return true;
+
+   }
+
+   throw metrowin_todo();
+   //GetModuleFileName(hmodule, lpszModuleFilePath, sizeof(lpszModuleFilePath));
+
+   // xxx   LPTSTR lpszModuleFileName;
+
+   throw metrowin_todo();
+   //GetFullPathName(lpszModuleFilePath, sizeof(lpszModuleFilePath), lpszModuleFolder, &lpszModuleFileName);
+
+   throw metrowin_todo();
+   //lpszModuleFolder[lpszModuleFileName - lpszModuleFolder] = '\0';
+
+   throw metrowin_todo();
+   /*
+   if(strlen(lpszModuleFolder) > 0)
+   {
+
+   if(lpszModuleFolder[strlen(lpszModuleFolder) - 1] == '\\' || lpszModuleFolder[strlen(lpszModuleFolder) - 1] == '/')
+   {
+
+   lpszModuleFolder[strlen(lpszModuleFolder) - 1] = '\0';
+
+   }
+
+   }
+   */
+
+   return true;
+
+#elif defined(WINDOWS)
+
+   wchar_t lpszModuleFilePath[MAX_PATH * 8];
+
+   HMODULE hmodule = ::GetModuleHandleA("core.dll");
+
+   if(hmodule == NULL)
+      hmodule = ::GetModuleHandleA("spalib.dll");
+
+   if(hmodule == NULL)
+   {
+
+      SHGetSpecialFolderPathW(
+         NULL,
+         lpszModuleFilePath,
+         CSIDL_PROGRAM_FILES,
+         FALSE);
+      if(lpszModuleFilePath[wcslen(lpszModuleFilePath) - 1] == '\\'
+         || lpszModuleFilePath[wcslen(lpszModuleFilePath) - 1] == '/')
+      {
+         lpszModuleFilePath[wcslen(lpszModuleFilePath) - 1] = '\0';
+      }
+      wcscat(lpszModuleFilePath,L"\\ca2\\");
+#ifdef X86
+      wcscat(lpszModuleFilePath,L"stage\\x86\\");
+#else
+      wcscat(lpszModuleFilePath,L"stage\\x64\\");
+#endif
+
+      wcscpy(lpszModuleFolder,lpszModuleFilePath);
+
+      return to_utf8(lpszModuleFolder);
+
+   }
+
+   if(!GetModuleFileNameW(hmodule,lpszModuleFilePath,sizeof(lpszModuleFilePath) / sizeof(wchar_t)))
+      return "";
+
+   LPWSTR lpszModuleFileName;
+
+   if(!GetFullPathNameW(lpszModuleFilePath,sizeof(lpszModuleFilePath) / sizeof(wchar_t),lpszModuleFolder,&lpszModuleFileName))
+      return "";
+
+   lpszModuleFolder[lpszModuleFileName - lpszModuleFolder] = '\0';
+
+   if(wcslen(lpszModuleFolder) > 0)
+   {
+
+      if(lpszModuleFolder[wcslen(lpszModuleFolder) - 1] == '\\' || lpszModuleFolder[wcslen(lpszModuleFolder) - 1] == '/')
+      {
+
+         lpszModuleFolder[wcslen(lpszModuleFolder) - 1] = '\0';
+
+      }
+
+   }
+
+
+#else
+
+   wcscpy(lpszModuleFolder,L"/ca2/");
+
+
+
+#endif
+
+   return to_utf8(lpszModuleFolder);
+
+}
+
+
+
+
+void reg_delete_tree_dup(HKEY hkey,const char * name)
+{
+   HKEY hkeySub = NULL;
+   if(ERROR_SUCCESS == ::RegOpenKey(
+      hkey,
+      name,
+      &hkeySub))
+   {
+      UINT dwAlloc = 1026 * 64;
+      char * szKey = (char *)malloc(dwAlloc);
+      UINT dwIndex = 0;
+      while(ERROR_SUCCESS == ::RegEnumKey(hkeySub,dwIndex,szKey,dwAlloc))
+      {
+         reg_delete_tree_dup(hkeySub,szKey);
+         dwIndex++;
+      }
+      free(szKey);
+      ::RegCloseKey(hkeySub);
+   }
+   ::RegDeleteKey(hkey,name);
+}
+
+
+bool dir_mk(const char * lpcsz)
+{
+
+#ifdef WINDOWS
+
+   if(dir_is(lpcsz))
+      return true;
+
+   string url(lpcsz);
+   string tmp;
+   string dir;
+   int oldpos = -1;
+   int pos = url.find("\\");
+   string unc("\\\\?\\");
+   while(pos >= 0)
+   {
+      tmp = url.substr(oldpos + 1,pos - oldpos - 1);
+      dir += tmp + "\\";
+      wstring wstr(from_utf8(unc) + from_utf8(dir));
+      UINT dw = ::GetFileAttributesW(wstr.c_str());
+      if(dw == INVALID_FILE_ATTRIBUTES)
+      {
+         ::CreateDirectoryW(wstr.c_str(),NULL);
+      }
+      oldpos = pos;
+      pos = url.find("\\",oldpos + 1);
+
+   }
+   tmp = url.substr(oldpos + 1);
+   dir += tmp + "\\";
+   wstring wstr(from_utf8(unc) + from_utf8(dir));
+   if(::GetFileAttributesW(wstr.c_str()) == INVALID_FILE_ATTRIBUTES)
+   {
+      ::CreateDirectoryW(wstr.c_str(),NULL);
+   }
+   return true;
+
+#else
+
+   // stat -> Sir And Arthur - Serenato
+   struct stat st;
+
+   string url(lpcsz);
+   string tmp;
+   string dir;
+   INT oldpos = -1;
+   INT pos = url.find("/");
+   while(pos >= 0)
+   {
+      tmp = url.substr(oldpos + 1,pos - oldpos - 1);
+      dir += tmp + "/";
+      if(stat(dir,&st))
+      {
+         mkdir(dir,S_IRWXU | S_IRWXG | S_IRWXO);
+      }
+      oldpos = pos;
+      pos = url.find("/",oldpos + 1);
+
+   }
+   tmp = url.substr(oldpos + 1);
+   dir += tmp + "/";
+   if(stat(dir,&st))
+   {
+      mkdir(dir,S_IRWXU | S_IRWXG | S_IRWXO);
+   }
+   return true;
+
+#endif
+
+}
+
+
+string ca2_module_folder_dup()
+{
+
+   static string * s_pstrCalc = NULL;
+
+   if(s_pstrCalc != NULL)
+   {
+
+      return *s_pstrCalc;
+
+   }
+
+   string str;
+
+#ifdef WINDOWSEX
+
+   wchar_t lpszModuleFilePath[MAX_PATH + 1];
+   GetModuleFileNameW(::GetModuleHandleA("ca.dll"),lpszModuleFilePath,MAX_PATH + 1);
+   wchar_t lpszModuleFolder[MAX_PATH + 1];
+   LPWSTR lpszModuleFileName;
+   GetFullPathNameW(lpszModuleFilePath,MAX_PATH + 1,lpszModuleFolder,&lpszModuleFileName);
+   str = string(lpszModuleFolder,lpszModuleFileName - lpszModuleFolder);
+
+#elif defined(LINUX)
+
+   void * handle = dlopen("libcore.so",RTLD_NOW);
+
+   if(handle == NULL)
+      return "";
+
+   link_map * plm;
+
+   dlinfo(handle,RTLD_DI_LINKMAP,&plm);
+
+   string strCa2ModuleFolder = ::dir::name(plm->l_name);
+
+   dlclose(handle);
+
+   str = strCa2ModuleFolder;
+
+#elif defined(METROWIN)
+
+   str = "";
+
+#elif defined(APPLEOS)
+
+   {
+
+      char * pszCurDir = getcwd(NULL,0);
+
+      string strCurDir = pszCurDir;
+
+      free(pszCurDir);
+
+      if(file_exists_dup(::dir::path(strCurDir,"libca2.dylib")))
+      {
+         return strCurDir;
+      }
+
+
+      str = ::dir::name(::dir::pathfind(getenv("DYLD_LIBRARY_PATH"),"libca2.dylib","rfs")); // readable - normal file - non zero sized
+
+   }
+
+#endif
+
+   s_pstrCalc = new string(str);
+
+   return *s_pstrCalc;
+
+
+}
+
+
+
+
+bool eat_end_level_dup(string & str,INT iLevelCount,const char * lpSeparator)
+{
+
+   int iLast = str.length() - 1;
+
+   if(iLast < 0)
+      return iLevelCount <= 0;
+
+   while(str[iLast] == '/' || str[iLast] == '\\')
+      iLast--;
+
+   for(INT i = 0; i < iLevelCount; i++)
+   {
+
+      int iFind1 = str.rfind('/',iLast);
+
+      int iFind2 = str.rfind('\\',iLast);
+
+      int iFind = max(iFind1,iFind2);
+
+      if(iFind >= iLast)
+         return false;
+
+      if(iFind < 0)
+         return false;
+
+      iLast = iFind;
+
+      while(str[iLast] == '/' || str[iLast] == '\\')
+         iLast--;
+
+   }
+
+   str = str.substr(0,iLast + 1);
+
+   return true;
+
+}
+
+
+bool dir_is(const char * path1)
+{
+
+#ifdef WINDOWS
+   string str;
+
+   str = "\\\\?\\";
+   str += path1;
+
+   while(str_ends_dup(str.c_str(),"\\") || str_ends_dup(str.c_str(),"/"))
+   {
+      str = str.substr(0,str.length() - 1);
+   }
+
+   UINT dwFileAttributes = ::GetFileAttributesW(from_utf8(str).c_str());
+   if(dwFileAttributes != INVALID_FILE_ATTRIBUTES &&
+      dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+      return true;
+   else
+      return false;
+
+#else
+
+   // dedicaverse stat -> Sir And Arthur - Cesar Serenato
+
+   struct stat st;
+
+   if(stat(path1,&st))
+      return false;
+
+   if(!(st.st_mode & S_IFDIR))
+      return false;
+
+   return true;
+
+#endif
+
+}
+
+
+
+int str_ends_dup(const char * psz,const char * pszSuffix)
+{
+
+   int iLen = strlen(psz);
+
+   int iLenSuffix = strlen(pszSuffix);
+
+   if(iLen < iLenSuffix)
+      return false;
+
+   return strcmp(&psz[iLen - iLenSuffix],pszSuffix) == 0;
+
+}

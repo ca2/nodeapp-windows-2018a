@@ -4,4 +4,8 @@
     <LocalDebuggerCommand>C:\Program Files %28x86%29\ca2.app.removal\app.removal.exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='static_basis|Win32'">
+    <LocalDebuggerCommand>C:\Program Files %28x86%29\ca2.app.removal\app.removal.exe</LocalDebuggerCommand>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
 </Project>

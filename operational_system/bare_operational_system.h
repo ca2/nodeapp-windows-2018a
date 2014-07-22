@@ -87,7 +87,7 @@
 #define VK_KANA             0x15
 #endif
 
-#define __debug_break() DebugBreak()
+#define __debug_break __debugbreak
 
 
 /////////////////////////////////////////////////////////////////////////////

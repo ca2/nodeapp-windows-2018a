@@ -1,8 +1,10 @@
 #pragma once 
 
 
-#include "base/base/base/base.h"
+#include <Windows.h>
+#include <string>
 
 
 
 
+using namespace std;
