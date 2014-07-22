@@ -479,18 +479,21 @@ namespace production
       if(pbase->m_wparam == 1)
       {
          int32_t iLineHeight = m_iLineHeight;
-         single_lock sl(&m_pproduction->m_mutexStatus, TRUE);
-         if(m_pproduction->m_straStatus.get_size() > 0)
          {
-            m_scrollinfo.m_sizeTotal.cx = 80;
-            m_scrollinfo.m_sizeTotal.cy = (LONG) (m_pproduction->m_straStatus.get_size() * iLineHeight + 84);
-            m_scrollinfo.m_ptScroll.y = max(0, m_scrollinfo.m_sizeTotal.cy - m_scrollinfo.m_sizePage.cy + iLineHeight);
-            _001LayoutScrollBars();
-         }
-         else
-         {
-            m_scrollinfo.m_sizeTotal.cx = 80;
-            m_scrollinfo.m_sizeTotal.cy = 80;
+            single_lock sl(&m_pproduction->m_mutexStatus,TRUE);
+            if(m_pproduction->m_straStatus.get_size() > 0)
+            {
+               m_scrollinfo.m_sizeTotal.cx = 80;
+               m_scrollinfo.m_sizeTotal.cy = (LONG)(m_pproduction->m_straStatus.get_size() * iLineHeight + 84);
+               m_scrollinfo.m_ptScroll.y = max(0,m_scrollinfo.m_sizeTotal.cy - m_scrollinfo.m_sizePage.cy + iLineHeight);
+               sl.unlock();
+               _001LayoutScrollBars();
+            }
+            else
+            {
+               m_scrollinfo.m_sizeTotal.cx = 80;
+               m_scrollinfo.m_sizeTotal.cy = 80;
+            }
          }
          _001RedrawWindow();
       }

@@ -2388,24 +2388,28 @@ namespace production
 
    void production::add_status(const char * psz)
    {
-      single_lock sl(&m_mutexStatus, TRUE);
-      m_straStatus.add(psz);
+      {
+         single_lock sl(&m_mutexStatus,TRUE);
+         m_straStatus.add(psz);
+      }
       TRACE0(psz);
-      m_pview->send_message(WM_USER, 1);
+      m_pview->post_message(WM_USER, 1);
    }
 
    void production::change_status(const char * psz)
    {
-      single_lock sl(&m_mutexStatus, TRUE);
-      if (m_straStatus.get_count() == 0)
       {
-         m_straStatus.add(psz);
+         single_lock sl(&m_mutexStatus,TRUE);
+         if(m_straStatus.get_count() == 0)
+         {
+            m_straStatus.add(psz);
+         }
+         else
+         {
+            m_straStatus.last_element() = psz;
+         }
       }
-      else
-      {
-         m_straStatus.last_element() = psz;
-      }
-      m_pview->send_message(WM_USER, 1);
+      m_pview->post_message(WM_USER, 1);
    }
 
 
