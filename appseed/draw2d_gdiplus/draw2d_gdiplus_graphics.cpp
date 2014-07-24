@@ -566,7 +566,13 @@ namespace draw2d_gdiplus
    
       Gdiplus::RectF rectf((Gdiplus::REAL) lpcrect->left, (Gdiplus::REAL) lpcrect->top, (Gdiplus::REAL) width(lpcrect), (Gdiplus::REAL) height(lpcrect));
 
-      m_pgraphics->FillRectangle((::Gdiplus::Brush *) pbrush->get_os_data(), rectf);
+      m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeNone);
+
+      Gdiplus::SmoothingMode emode = m_pgraphics->GetSmoothingMode();
+
+      m_pgraphics->FillRectangle((::Gdiplus::Brush *) pbrush->get_os_data(),rectf);
+
+      m_pgraphics->SetSmoothingMode(emode);
 
    }
 
@@ -1336,7 +1342,7 @@ gdi_fallback:
    { ASSERT(get_handle2() != NULL); return ::GetGlyphOutline(get_handle2(), nChar, nFormat,
    lpgm, cbBuffer, lpBuffer, lpmat2); }
 
-   // ::user::object handling functions
+   // ::user::document handling functions
    int32_t graphics::StartDoc(LPDOCINFO lpDocInfo)
    { 
 
