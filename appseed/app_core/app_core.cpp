@@ -11,7 +11,7 @@ extern "C" int32_t app_core_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, L
 
    UNREFERENCED_PARAMETER(lpCmdLine);
 
-   sp(::plane::system) psystem                  = canew(::plane::system);
+   sp(::core::system) psystem                  = canew(::core::system);
 
    ASSERT(hPrevInstance == NULL);
 
