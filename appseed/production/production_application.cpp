@@ -37,7 +37,7 @@ namespace production
       System.factory().creatable_small < pane_view >();
 
 
-      if(!::application::initialize_instance())
+      if(!::core::application::initialize_instance())
          return false;
 
 //      PlaneSession.filemanager().std().m_strLevelUp = "levelup";
@@ -65,7 +65,7 @@ namespace production
       try
       {
 
-         iExitCode = ::application::exit_instance();
+         iExitCode = ::core::application::exit_instance();
 
       }
       catch(...)
@@ -102,7 +102,7 @@ namespace production
 
       }
       
-      sp(::user::object) pdoc = m_pdoctemplateMain->open_document_file(pcreatecontext);
+      sp(::user::document) pdoc = m_pdoctemplateMain->open_document_file(pcreatecontext);
 
       if(pdoc.is_null())
          return;
@@ -123,7 +123,7 @@ namespace production
    bool application::_001OnCmdMsg(::base::cmd_msg * pcmdmsg)
    		
    {
-      return ::application::_001OnCmdMsg(pcmdmsg);
+      return ::core::application::_001OnCmdMsg(pcmdmsg);
    }
 
 
@@ -153,10 +153,10 @@ namespace production
 
 
 extern "C"
-::core::library * get_new_library(sp(::base::application) papp)
+::base::library * get_new_library(sp(::base::application) papp)
 {
 
-   return new ::core::single_application_library < production::application > (papp, "nodeapp");
+   return new ::base::single_application_library < production::application > (papp, "nodeapp");
 
 }
 

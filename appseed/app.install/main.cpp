@@ -117,7 +117,8 @@ installer::installer() :
    m_bInstallerInstalling  = false;
    m_bMatterFromHttpCache  = true;
 
-   construct();
+   construct(NULL);
+
 }
 
 installer::~installer()

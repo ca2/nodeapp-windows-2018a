@@ -84,7 +84,7 @@ namespace production
       virtual bool pre_create_window(CREATESTRUCT& cs);
       virtual void on_update(sp(::user::impact) pSender, LPARAM lHint, ::object * pHint);
 
-      sp(::user::object) get_document();
+      sp(::user::document) get_document();
 
       DECL_GEN_SIGNAL(_001OnInitialUpdate);
       DECL_GEN_SIGNAL(_001OnLButtonDown);

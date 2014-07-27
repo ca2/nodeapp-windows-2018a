@@ -6,7 +6,7 @@ namespace ca2plugin_container
 
 
    class application :
-      virtual public ::application,
+      virtual public ::core::application,
       virtual public ::hotplugin::composer
    {
    public:

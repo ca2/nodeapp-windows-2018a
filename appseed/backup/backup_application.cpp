@@ -18,7 +18,7 @@ namespace backup
    bool application::initialize_instance()
    {
 
-      if(!::application::initialize_instance())
+      if(!::core::application::initialize_instance())
          return false;
 
 
