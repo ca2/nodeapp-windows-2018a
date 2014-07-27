@@ -15,9 +15,9 @@ namespace ca2plugin_container
 
       m_phost->m_pbaseapp = this;
 
-      m_phost->m_pplaneapp = this;
+      m_phost->m_pcoreapp = this;
 
-      m_phost->m_pbaseapp->m_pplaneapp = this;
+      m_phost->m_pbaseapp->m_pcoreapp = this;
 
    }
 

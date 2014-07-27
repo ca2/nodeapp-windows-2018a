@@ -334,8 +334,8 @@ namespace ca2plugin_container
          m_pplugin = new ::plugin::instance(this);
          m_pplugin->m_pbasesession = m_pbasesession;
          m_pplugin->m_pbasesystem = m_pbasesystem;
-         m_pplugin->m_pplaneapp = m_pplaneapp;
-         m_pplugin->m_pplanecomposite = m_pplanecomposite;
+         m_pplugin->m_pcoreapp = m_pcoreapp;
+         m_pplugin->m_pplatformcomposite = m_pplatformcomposite;
          m_pplugin->m_pbaseapp = this;
          m_pplugin->m_phost = this;
          m_pplugin->m_strBitmapChannel = m_strBitmapChannel;

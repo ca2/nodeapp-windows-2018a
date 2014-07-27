@@ -10,7 +10,7 @@ HANDLE g_hmutex = NULL;
 uint32_t plugin_container_app(const string & strChannel)
 {
 
-   ::plane::system * psystem = new ::plane::system(NULL);
+   ::core::system * psystem = new ::core::system(NULL);
 
    psystem->m_bShouldInitializeGTwf = false;
 
@@ -33,7 +33,7 @@ uint32_t plugin_container_app(const string & strChannel)
 
    papp->m_pbasesystem = psystem;
 
-   papp->m_pplanesystem = psystem;
+   papp->m_pcoresystem = psystem;
 
    papp->m_hinstance = psystem->m_hinstance;
 

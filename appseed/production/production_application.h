@@ -9,7 +9,7 @@ namespace production
 
 
    class CLASS_DECL_CA2_PRODUCTION application :
-      public ::application
+      virtual public ::core::application
    {
    public:
 
