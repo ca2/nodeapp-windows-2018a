@@ -12,6 +12,7 @@
 
 
 
+
 namespace music
 {
 
@@ -287,7 +288,24 @@ namespace music
 
          }
 
+         static mutex * s_pmutex = NULL;
 
+         mutex & get_midi_mutex()
+         {
+
+            if(s_pmutex == NULL)
+            {
+               s_pmutex = new mutex(::get_thread_app());
+
+               // TODO :
+               // register s_pmutex in Sys(::get_thread_app()).register_static_system_object
+               // for example, for deletion before alloc system is deleted.
+
+            }
+
+            return *s_pmutex;
+
+         }
 
       } // namespace mmsystem
 

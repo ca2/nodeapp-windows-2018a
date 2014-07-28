@@ -13,16 +13,6 @@ namespace music
       {
 
 
-         mutex & get_midi_mutex()
-         {
-
-            static mutex s_mutex(NULL);
-
-            return s_mutex;
-
-         }
-
-
          namespace player
          {
 
