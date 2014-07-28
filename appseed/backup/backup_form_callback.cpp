@@ -50,13 +50,13 @@ bool form_callback::BaseOnControlEvent(::user::form * pview, ::user::control_eve
 /*         if(pview->m_strPathName == "filemanager_add_location_lfs.xhtml")
          {
             stringa wstra;
-            //VmsDataGet(m_pmanager->get_filemanager_data()->m_pschema->m_datakeyStatic, 0, 0, wstra);
+            //VmsDataGet(m_pmanager->get_filemanager_template()->m_datakeyStatic, 0, 0, wstra);
             Ex1VirtualGuie * pui = pview->get_child_by_name("lfs");
             sp(text_interface) ptext =pui;
             string str;
             ptext->_001GetText(str);
             wstra.AddUnique(str);
-            //VmsDataSet(m_pmanager->get_filemanager_data()->m_pschema->m_datakeyStatic, 0, 0, wstra);
+            //VmsDataSet(m_pmanager->get_filemanager_template()->m_datakeyStatic, 0, 0, wstra);
 
          }
          else if(pview->m_strPathName == "filemanager_add_location_ftp.xhtml")

@@ -509,7 +509,7 @@ namespace production
 
          pview->set_cur_tab_by_id("tabbed_file_manager");
 
-         sp(::filemanager::document) pdoc = pview->get_tabbed_filemanager_document();
+         sp(::filemanager::manager) pdoc = pview->get_tabbed_filemanager_document();
 
          string strBase = m_pproduction->m_strBase;
 

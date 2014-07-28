@@ -113,7 +113,7 @@ namespace production
       }
       else if(m_pviewdata->m_id == PaneViewContextMenu)
       {
-         sp(::filemanager::document) pdoc =  (m_pviewdata->m_pdoc);
+         sp(::filemanager::manager) pdoc =  (m_pviewdata->m_pdoc);
          pdoc->FileManagerBrowse(session().dir().userappdata("production\\menu"), ::action::source::system_default());
       }
       else
@@ -137,13 +137,13 @@ namespace production
       {
       case PaneViewContextMenu:
          {
-            sp(::filemanager::document) pdoc = PlaneSession.filemanager().std().open_child_list(false, true);
+            sp(::filemanager::manager) pdoc = platform().filemanager().std().open_child_list(false, true);
             if(pdoc != NULL)
             {
                pdoc->get_filemanager_data()->m_iIconSize = 16;
                pdoc->get_filemanager_data()->m_bListText = true;
                pdoc->get_filemanager_data()->m_bListSelection = false;
-               pdoc->get_filemanager_data()->m_pschema->m_strFilePopup = "filemanager\\file_popup.xml";
+               pdoc->get_filemanager_template()->m_strFilePopup = "filemanager\\file_popup.xml";
                pdoc->get_filemanager_data()->m_strDISection = "production_menu";
                pdoc->get_filemanager_data()->m_pcallback = this;
                pdoc->Initialize(true);
@@ -181,8 +181,8 @@ namespace production
             cc->m_bTransparentBackground = true;
             cc->m_puiParent = this;
 
-            get_document()->m_pfilemanagerdoc = papp->PlaneSession.filemanager().std().open(papp, cc);
-            sp(::filemanager::document) pdoc = get_document()->m_pfilemanagerdoc;
+            get_document()->m_pfilemanagerdoc = papp->platform().filemanager().std().open(papp, cc);
+            sp(::filemanager::manager) pdoc = get_document()->m_pfilemanagerdoc;
             if(pdoc != NULL)
             {
                pdoc->get_filemanager_data()->m_strDISection = "production_filemanager";
@@ -206,7 +206,7 @@ namespace production
          break;*/
       case PaneViewThreeActionLaunch:
          {
-            sp(::filemanager::document) pdoc = PlaneSession.filemanager().std().open_child_list(false, true);
+            sp(::filemanager::manager) pdoc = platform().filemanager().std().open_child_list(false, true);
             if(pdoc != NULL)
             {
                pdoc->get_filemanager_data()->m_iIconSize = 48;
