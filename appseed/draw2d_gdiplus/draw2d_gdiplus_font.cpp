@@ -15,6 +15,17 @@ namespace draw2d_gdiplus
 
    }
 
+   font::font(const font & font):
+      element(font.get_app())
+   {
+
+      m_pfont     = NULL;
+      m_bUpdated  = false;
+
+      ::draw2d::font::operator = (font);
+
+   }
+
 
    font::~font()
    { 

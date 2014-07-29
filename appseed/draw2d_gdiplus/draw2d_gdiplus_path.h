@@ -21,7 +21,7 @@ namespace draw2d_gdiplus
       virtual ~path();
 
 
-      virtual void * get_os_data() const;
+      virtual Gdiplus::GraphicsPath * get_os_path(Gdiplus::Graphics * pgraphics);
 
       virtual bool internal_add_arc(const RECT & rect, int iStart, int iAngle);
 
@@ -37,18 +37,21 @@ namespace draw2d_gdiplus
       virtual bool internal_add_line(int32_t x, int32_t y);
 
       virtual bool internal_add_move(int32_t x, int32_t y);
+      
+      virtual bool internal_add_string(Gdiplus::Graphics * pgraphics, int32_t x,int32_t y,const string & strText,::draw2d::font_sp spfont);
 
-
-      virtual bool create();
+      virtual bool create(Gdiplus::Graphics * pgraphics);
       virtual bool destroy();
 
-      virtual bool set(const ::draw2d::path::element & e);
+      virtual bool set(Gdiplus::Graphics * pgraphics, const ::draw2d::path::element & e);
    
       virtual bool set(const ::draw2d::path::arc & a);
 
       virtual bool set(const ::draw2d::path::line & l);
 
       virtual bool set(const ::draw2d::path::move & p);
+
+      virtual bool set(Gdiplus::Graphics * pgraphics, const ::draw2d::path::string_path & p);
 
 
    };

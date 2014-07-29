@@ -26,12 +26,17 @@ namespace draw2d_gdiplus
    }
 
 
-   void * path::get_os_data() const
+   Gdiplus::GraphicsPath * path::get_os_path(Gdiplus::Graphics * pgraphics) 
    {
 
-      defer_update();
+      if(m_bUpdated)
+         return m_ppath;
 
-      return (void *) m_ppath;
+      destroy();
+
+      create(pgraphics);
+
+      return m_ppath;
 
    }
 
@@ -146,7 +151,7 @@ namespace draw2d_gdiplus
 
 
 
-   bool path::create()
+   bool path::create(Gdiplus::Graphics * pgraphics)
    {
 
       m_ppath = new Gdiplus::GraphicsPath();
@@ -159,13 +164,15 @@ namespace draw2d_gdiplus
 
       m_bHasPointInternal = false;
 
-
-      internal_begin_figure(m_bFill, m_efillmode);
+      //if(m_elementa.get_count() != 1 && m_elementa[0].m_etype != element::type_string)
+      {
+         internal_begin_figure(m_bFill,m_efillmode);
+      }
 
       for(int32_t i = 0; i < m_elementa.get_count(); i++)
       {
 
-         set(m_elementa[i]);
+         set(pgraphics, m_elementa[i]);
 
       }
 
@@ -191,22 +198,25 @@ namespace draw2d_gdiplus
    }
 
 
-   bool path::set(const ::draw2d::path::element & e)
+   bool path::set(Gdiplus::Graphics * pgraphics, const ::draw2d::path::element & e)
    {
 
       switch(e.m_etype)
       {
       case ::draw2d::path::element::type_arc:
-         set(e.m_arc);
+         set(e.u.m_arc);
          break;
       case ::draw2d::path::element::type_move:
-         set(e.m_move);
+         set(e.u.m_move);
          break;
       case ::draw2d::path::element::type_line:
-         set(e.m_line);
+         set(e.u.m_line);
+         break;
+      case ::draw2d::path::element::type_string:
+         set(pgraphics,e.m_stringpath);
          break;
       case ::draw2d::path::element::type_end:
-         internal_end_figure(e.m_end.m_bClose);
+         internal_end_figure(e.u.m_end.m_bClose);
          break;
       default:
          throw "unexpected simple os graphics element type";
@@ -229,7 +239,61 @@ namespace draw2d_gdiplus
    }
 
 
-   bool path::set(const ::draw2d::path::arc & arc)
+   bool path::internal_add_string(Gdiplus::Graphics * pgraphics,int32_t x,int32_t y,const string & strText,::draw2d::font_sp spfont)
+   {
+      
+      Gdiplus::FontFamily fontFamily;
+      
+      Gdiplus::StringFormat format(Gdiplus::StringFormat::GenericTypographic());
+
+      wstring wstr(strText);
+
+      Gdiplus::REAL dSize = (Gdiplus::REAL) spfont->m_dFontSize;
+
+      Gdiplus::Unit unit = pgraphics->GetPageUnit();
+
+      switch(unit)
+
+      {
+
+      case Gdiplus::UnitMillimeter:
+         dSize = dSize * 25.4f / pgraphics->GetDpiY();
+         break;
+
+      case Gdiplus::UnitInch:
+
+         dSize = dSize / pgraphics->GetDpiY();
+         break;
+      case Gdiplus::UnitPoint:
+
+         dSize = dSize * 72.0f / pgraphics->GetDpiY();
+         break;
+
+      }
+
+      INT iStyle = ((Gdiplus::Font *) spfont->get_os_data())->GetStyle();
+      ((Gdiplus::Font *) spfont->get_os_data())->GetFamily(&fontFamily);
+      Gdiplus::Status status;
+
+      //Gdiplus::StringFormat format();
+
+      format.SetFormatFlags(format.GetFormatFlags()
+         | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
+         | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap
+         | Gdiplus::StringFormatFlagsNoFitBlackBox);
+
+
+      format.SetLineAlignment(Gdiplus::StringAlignmentNear);
+
+
+      m_ppath->AddString(wstr,wstr.get_length(),&fontFamily,iStyle,dSize,Gdiplus::Point(x,y),&format);
+
+      return true;
+
+   }
+
+
+   bool path::set( const ::draw2d::path::arc & arc)
    {
 
       rect rect;
@@ -258,6 +322,15 @@ namespace draw2d_gdiplus
 
       internal_add_move((int32_t) p.m_x, (int32_t) p.m_y);
 
+
+      return true;
+
+   }
+
+   bool path::set(Gdiplus::Graphics * pgraphics, const ::draw2d::path::string_path & s)
+   {
+      
+      internal_add_string(pgraphics,(int32_t)s.m_x,(int32_t)s.m_y,s.m_strText,s.m_spfont);
 
       return true;
 

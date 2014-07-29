@@ -1610,28 +1610,32 @@ gdi_fallback:
    bool graphics::draw_path(::draw2d::path * ppath)
    {
 
-      return m_pgraphics->DrawPath(gdiplus_pen(), (Gdiplus::GraphicsPath *) ppath->get_os_data()) == Gdiplus::Status::Ok;
+      //m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
+      m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
+
+
+      return m_pgraphics->DrawPath(gdiplus_pen(),(dynamic_cast < ::draw2d_gdiplus::path * > (ppath))->get_os_path(m_pgraphics)) == Gdiplus::Status::Ok;
 
    }
 
    bool graphics::draw_path(::draw2d::path * ppath, ::draw2d::pen * ppen)
    {
 
-      return m_pgraphics->DrawPath((::Gdiplus::Pen * ) ppen->get_os_data(), (Gdiplus::GraphicsPath *) ppath->get_os_data()) == Gdiplus::Status::Ok;
+      return m_pgraphics->DrawPath((::Gdiplus::Pen *) ppen->get_os_data(),(dynamic_cast < ::draw2d_gdiplus::path * > (ppath))->get_os_path(m_pgraphics)) == Gdiplus::Status::Ok;
 
    }
 
    bool graphics::fill_path(::draw2d::path * ppath)
    {
 
-      return m_pgraphics->FillPath(gdiplus_brush(), (Gdiplus::GraphicsPath *) ppath->get_os_data()) == Gdiplus::Status::Ok;
+      return m_pgraphics->FillPath(gdiplus_brush(),(dynamic_cast < ::draw2d_gdiplus::path * > (ppath))->get_os_path(m_pgraphics)) == Gdiplus::Status::Ok;
 
    }
 
    bool graphics::fill_path(::draw2d::path * ppath, ::draw2d::brush * pbrush)
    {
 
-      return m_pgraphics->FillPath((::Gdiplus::Brush *) pbrush->get_os_data(), (Gdiplus::GraphicsPath *) ppath->get_os_data()) == Gdiplus::Status::Ok;
+      return m_pgraphics->FillPath((::Gdiplus::Brush *) pbrush->get_os_data(),(dynamic_cast < ::draw2d_gdiplus::path * > (ppath))->get_os_path(m_pgraphics)) == Gdiplus::Status::Ok;
 
    }
 
@@ -4330,8 +4334,7 @@ namespace draw2d_gdiplus
 
 
 
-
-
+   
 } // namespace draw2d_gdiplus
 
 

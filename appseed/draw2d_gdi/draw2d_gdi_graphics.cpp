@@ -4691,18 +4691,18 @@ namespace draw2d_gdi
       switch(e.m_etype)
       {
       case ::draw2d::path::element::type_arc:
-         set(e.m_arc);
+         set(e.u.m_arc);
          break;
       case ::draw2d::path::element::type_line:
-         set(e.m_line);
+         set(e.u.m_line);
          break;
       case ::draw2d::path::element::type_move:
-         set(e.m_move);
+         set(e.u.m_move);
          break;
       case ::draw2d::path::element::type_end:
          {
 
-            if(e.m_end.m_bClose)
+            if(e.u.m_end.m_bClose)
             {
                CloseFigure();
             }

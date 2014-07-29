@@ -15,13 +15,14 @@ namespace draw2d_gdiplus
 
 
       font(sp(::base::application) papp);
+      font(const font & font);
       virtual ~font();
 
 
       virtual void * get_os_data() const;
 
 
-      virtual void font::construct(const ::draw2d::font & fontParam);
+      virtual void construct(const ::draw2d::font & fontParam);
 
       /*
       virtual bool CreateFontIndirect(const LOGFONTW* lpLogFont);
@@ -37,6 +38,9 @@ namespace draw2d_gdiplus
       //virtual int32_t GetLogFont(LOGFONTW* pLogFont);
 
       virtual void dump(dump_context & dumpcontext) const;
+
+
+
 
 
    };
