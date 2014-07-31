@@ -498,31 +498,6 @@ namespace draw2d_gdiplus
       return point;
    }
 
-   bool graphics::Arc(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3, int32_t x4, int32_t y4)
-   { 
-
-      ::Gdiplus::RectF rectf((Gdiplus::REAL) x1, (Gdiplus::REAL) y1, (Gdiplus::REAL) x2, (Gdiplus::REAL) y2);
-
-      double centerx    = (x2 + x1) / 2.0;
-      double centery    = (y2 + y1) / 2.0;
-      
-      double start      = atan2(y3 - centery, x3 - centerx);
-      double end        = atan2(y4 - centery, x4 - centerx);
-
-   
-      return m_pgraphics->DrawArc(gdiplus_pen(), rectf, (Gdiplus::REAL) start, (Gdiplus::REAL) end) == Gdiplus::Status::Ok;
-      
-   }
-
-   bool graphics::Arc(LPCRECT lpRect, POINT ptStart, POINT ptEnd)
-   {
-   
-      ASSERT(get_handle1() != NULL);
-      
-      return ::Arc(get_handle1(), lpRect->left, lpRect->top, lpRect->right, lpRect->bottom, ptStart.x, ptStart.y, ptEnd.x, ptEnd.y)  != FALSE; 
-   
-   }
-
    bool graphics::Polyline(const POINT* lpPoints, int32_t nCount)
    {
    
@@ -561,16 +536,79 @@ namespace draw2d_gdiplus
       return bOk1;
    }
 
+
+   bool graphics::Arc(int32_t x1,int32_t y1,int32_t x2,int32_t y2,int32_t x3,int32_t y3,int32_t x4,int32_t y4)
+   {
+
+      double centerx    = (x2 + x1) / 2.0;
+      double centery    = (y2 + y1) / 2.0;
+
+      double start      = atan2(y3 - centery,x3 - centerx) * 180.0 / System.math().GetPi();
+      double end        = atan2(y4 - centery,x4 - centerx) * 180.0 / System.math().GetPi();
+      double sweep      = abs(end - start);
+
+      /*if(GetArcDirection() == AD_COUNTERCLOCKWISE)
+      {
+         sweep = -sweep;
+      }
+      */
+
+      return Arc(x1,y1,x2-x1,y2-y1,start,sweep);
+
+   }
+
+
+   bool graphics::Arc(double x1,double y1,double x2,double y2,double x3,double y3,double x4,double y4)
+   {
+
+      double centerx    = (x2 + x1) / 2.0;
+      double centery    = (y2 + y1) / 2.0;
+
+      double start      = atan2(y3 - centery,x3 - centerx) * 180.0 / System.math().GetPi();
+      double end        = atan2(y4 - centery,x4 - centerx) * 180.0 / System.math().GetPi();
+      double sweep      = abs(end - start);
+
+      /*if(GetArcDirection() == AD_COUNTERCLOCKWISE)
+      {
+         sweep = -sweep;
+      }
+      */
+
+      return Arc(x1,y1, x2-x1, y2-y1, start, sweep);
+
+   }
+
+
+   bool graphics::Arc(int32_t x1,int32_t y1,int32_t w,int32_t h,double start, double extends)
+   {
+
+      ::Gdiplus::Rect rect(x1,y1,w,h);
+
+      return m_pgraphics->DrawArc(gdiplus_pen(),rect,(Gdiplus::REAL) start,(Gdiplus::REAL) extends) == Gdiplus::Status::Ok;
+
+   }
+
+
+   bool graphics::Arc(double x1,double y1,double w,double h,double start,double extends)
+   {
+
+      ::Gdiplus::RectF rectf((Gdiplus::REAL) x1,(Gdiplus::REAL) y1,(Gdiplus::REAL) w,(Gdiplus::REAL) h);
+
+      return m_pgraphics->DrawArc(gdiplus_pen(),rectf,(Gdiplus::REAL) start,(Gdiplus::REAL) extends) == Gdiplus::Status::Ok;
+
+   }
+
+
    void graphics::FillRect(LPCRECT lpcrect, ::draw2d::brush* pbrush)
    { 
    
-      Gdiplus::RectF rectf((Gdiplus::REAL) lpcrect->left, (Gdiplus::REAL) lpcrect->top, (Gdiplus::REAL) width(lpcrect), (Gdiplus::REAL) height(lpcrect));
+      Gdiplus::Rect rect(lpcrect->left,  lpcrect->top, width(lpcrect), height(lpcrect));
 
       m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeNone);
 
       Gdiplus::SmoothingMode emode = m_pgraphics->GetSmoothingMode();
 
-      m_pgraphics->FillRectangle((::Gdiplus::Brush *) pbrush->get_os_data(),rectf);
+      m_pgraphics->FillRectangle((::Gdiplus::Brush *) pbrush->get_os_data(),rect);
 
       m_pgraphics->SetSmoothingMode(emode);
 
@@ -785,7 +823,9 @@ namespace draw2d_gdiplus
 
    bool graphics::FillEllipse(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    {
-      
+
+      m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
+
       return (m_pgraphics->FillEllipse(gdiplus_brush(), x1, y1, x2 - x1, y2 - y1)) == Gdiplus::Status::Ok;
 
    }
@@ -793,12 +833,56 @@ namespace draw2d_gdiplus
    bool graphics::FillEllipse(LPCRECT lpRect)
    { 
    
-      /*return ::Ellipse(get_handle1(), lpRect->left, lpRect->top,
-   lpRect->right, lpRect->bottom); */
+      m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
 
       return (m_pgraphics->FillEllipse(gdiplus_brush(), lpRect->left, lpRect->top, lpRect->right - lpRect->left, lpRect->bottom - lpRect->top)) == Gdiplus::Status::Ok;
    
    }
+
+
+
+   bool graphics::DrawEllipse(double x1,double y1,double x2,double y2)
+   {
+
+      m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
+
+      return (m_pgraphics->DrawEllipse(gdiplus_pen(),(Gdiplus::REAL)x1,(Gdiplus::REAL)y1,(Gdiplus::REAL)(x2 - x1),(Gdiplus::REAL)(y2 - y1))) == Gdiplus::Status::Ok;
+
+   }
+
+
+   bool graphics::DrawEllipse(LPCRECTD lpRect)
+   {
+
+      m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
+
+      return (m_pgraphics->DrawEllipse(gdiplus_pen(),(Gdiplus::REAL)lpRect->left,(Gdiplus::REAL)lpRect->top,
+         (Gdiplus::REAL)(lpRect->right - lpRect->left),
+         (Gdiplus::REAL)(lpRect->bottom - lpRect->top))) == Gdiplus::Status::Ok;
+
+   }
+
+
+   bool graphics::FillEllipse(double x1,double y1,double x2,double y2)
+   {
+
+      m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
+
+      return (m_pgraphics->FillEllipse(gdiplus_brush(),(Gdiplus::REAL)x1,(Gdiplus::REAL)y1,(Gdiplus::REAL)(x2 - x1),(Gdiplus::REAL)(y2 - y1))) == Gdiplus::Status::Ok;
+
+   }
+
+   bool graphics::FillEllipse(LPCRECTD lpRect)
+   {
+
+      m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
+
+      return (m_pgraphics->FillEllipse(gdiplus_brush(),(Gdiplus::REAL)lpRect->left,(Gdiplus::REAL)lpRect->top,
+         (Gdiplus::REAL)(lpRect->right - lpRect->left),
+         (Gdiplus::REAL)(lpRect->bottom - lpRect->top))) == Gdiplus::Status::Ok;
+
+   }
+
 
    bool graphics::Pie(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3, int32_t x4, int32_t y4)
    { ASSERT(get_handle1() != NULL); return ::Pie(get_handle1(), x1, y1, x2, y2, x3, y3, x4, y4) != FALSE; }

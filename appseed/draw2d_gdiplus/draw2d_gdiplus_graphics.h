@@ -1,12 +1,6 @@
 #pragma once
 
 
-#undef new
-
-
-#include <GdiPlus.h>
-
-
 namespace draw2d_gdiplus
 {
 
@@ -14,7 +8,6 @@ namespace draw2d_gdiplus
    class CLASS_DECL_DRAW2D_GDIPLUS graphics : 
       virtual public ::draw2d::graphics
    {
-      // // DECLARE_DYNCREATE(::draw2d::graphics_sp)
    public:
 
 
@@ -223,11 +216,16 @@ namespace draw2d_gdiplus
   //    point MoveTo(POINT point);
       bool LineTo(double x, double y);
     //  bool LineTo(POINT point);
-      bool Arc(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3, int32_t x4, int32_t y4);
-      bool Arc(LPCRECT lpRect, POINT ptStart, POINT ptEnd);
-      bool Polyline(const POINT* lpPoints, int32_t nCount);
+      bool Polyline(const POINT* lpPoints,int32_t nCount);
 
-      bool AngleArc(int32_t x, int32_t y, int32_t nRadius, float fStartAngle, float fSweepAngle);
+      using ::draw2d::graphics::Arc;
+      bool Arc(int32_t x1,int32_t y1,int32_t x2,int32_t y2,int32_t x3,int32_t y3,int32_t x4,int32_t y4);
+      bool Arc(double x1,double y1,double x2,double y2,double x3,double y3,double x4,double y4);
+
+      bool Arc(int32_t x1,int32_t y1,int32_t x2,int32_t y2,double start, double extends);
+      bool Arc(double x1,double y1,double x2,double y2,double start, double extends);
+
+      bool AngleArc(int32_t x,int32_t y,int32_t nRadius,float fStartAngle,float fSweepAngle);
       bool ArcTo(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3, int32_t x4, int32_t y4);
       bool ArcTo(LPCRECT lpRect, POINT ptStart, POINT ptEnd);
       int32_t GetArcDirection() const;
@@ -271,10 +269,17 @@ namespace draw2d_gdiplus
          int32_t x4, int32_t y4);
       bool Chord(LPCRECT lpRect, POINT ptStart, POINT ptEnd);
       void DrawFocusRect(LPCRECT lpRect);
+      
       bool DrawEllipse(int32_t x1, int32_t y1, int32_t x2, int32_t y2);
       bool DrawEllipse(LPCRECT lpRect);
       bool FillEllipse(int32_t x1, int32_t y1, int32_t x2, int32_t y2);
       bool FillEllipse(LPCRECT lpRect);
+
+      bool DrawEllipse(double x1,double y1,double x2,double y2);
+      bool DrawEllipse(LPCRECTD lpRect);
+      bool FillEllipse(double x1,double y1,double x2,double y2);
+      bool FillEllipse(LPCRECTD lpRect);
+
       bool Pie(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3, int32_t x4, int32_t y4);
       bool Pie(LPCRECT lpRect, POINT ptStart, POINT ptEnd);
       bool fill_polygon(const POINTD * lpPoints, int32_t nCount); 
