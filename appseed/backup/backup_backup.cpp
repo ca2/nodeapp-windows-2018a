@@ -138,7 +138,7 @@ namespace backup
       si.dwFlags = STARTF_USESHOWWINDOW;
       si.wShowWindow = SW_HIDE; 
       string strNewRepos = get_new_repos_local_path(psz);
-      session().dir().mk(System.dir().name(strNewRepos));
+      Application.dir().mk(System.dir().name(strNewRepos));
       str.Format("svnadmin hotcopy C:\\repos\\%s %s", psz, strNewRepos);
 
       if(!::CreateProcess(NULL, (LPTSTR) (const char *) str, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
@@ -180,7 +180,7 @@ namespace backup
       si.dwFlags = STARTF_USESHOWWINDOW;
       si.wShowWindow = SW_HIDE; 
       string strdump = get_new_db_local_path("all.sql");
-      session().dir().mk(System.dir().name(strdump));
+      Application.dir().mk(System.dir().name(strdump));
 
       str.Format("%s \"%s\"",
          System.dir().element("basis/ca2/app/dbbk.bat"),
@@ -229,7 +229,7 @@ namespace backup
       string strNewRepos = get_new_repos_local_path(psz);
       string strTar;
       strTar.Format("C:\\ca2\\bk\\%s\\repos\\%s.tar", m_strTag, psz);
-      session().dir().mk(System.dir().name(strTar));
+      Application.dir().mk(System.dir().name(strTar));
       str.Format("7za.exe a -r -ttar \"%s\" \"%s\"", strTar, strNewRepos);
 
       if(!::CreateProcess(NULL, (LPTSTR) (const char *) str, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))

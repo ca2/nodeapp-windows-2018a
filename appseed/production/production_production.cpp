@@ -377,7 +377,7 @@ namespace production
 
          m_straRoot.remove_all();
 
-         session().dir().ls_dir(m_strBase, NULL, &m_straRoot);
+         Application.dir().ls_dir(m_strBase, NULL, &m_straRoot);
 
          m_straRoot.filter_begins_ci("app-");
 
@@ -672,7 +672,7 @@ namespace production
             }
          }
 
-         //session().dir().mk(System.dir().path(m_strBase, "time"));
+         //Application.dir().mk(System.dir().path(m_strBase, "time"));
          Application.file().put_contents(System.dir().path(m_strBase, "app\\build.txt"), m_strBuild);
          Application.file().put_contents_utf8(System.dir().path(m_strBase, "app\\this_version_info.h"), strBuildH);
          Application.file().put_contents_utf8(System.dir().path(m_strBase, "app\\this_version_info.txt"), strBuildH);
@@ -828,10 +828,10 @@ namespace production
          {
          return 1;
          }*/
-         session().dir().mk("C:\\home\\ccvotagus\\ca2_spa\\"+m_strVersion+"\\app\\");
+         Application.dir().mk("C:\\home\\ccvotagus\\ca2_spa\\"+m_strVersion+"\\app\\");
          Application.file().put_contents("C:\\home\\ccvotagus\\ca2_spa\\"+m_strVersion+"\\app\\build.txt", m_strBuild);
          Application.file().put_contents(m_strCCVrelNew + "\\app\\build.txt", m_strBuild);
-         session().dir().mk(System.dir().name(m_strTagPath));
+         Application.dir().mk(System.dir().name(m_strTagPath));
          Application.file().put_contents(m_strTagPath, m_strTag);
 
          //commit_source("C:\\netnodenet\\net");
@@ -1192,7 +1192,7 @@ namespace production
          if (System.file().extension(strFile) == "zip")
          {
          }
-         else if (session().dir().is(strFile))
+         else if (Application.dir().is(strFile))
          {
             continue;
          }
@@ -1462,7 +1462,7 @@ namespace production
 
          stringa stra1;
          stringa stra2;
-         session().dir().rls(strRelease, &stra1, NULL, &stra2);
+         Application.dir().rls(strRelease, &stra1, NULL, &stra2);
          for (int32_t i = 0; i < stra1.get_size();)
          {
             if (stra1[i].find("\\.svn\\") >= 0 || (stra1[i].get_length() < 5 || stra1[i].Right(5) == "\\.svn"))
@@ -1482,7 +1482,7 @@ namespace production
       }
       else
       {
-         session().dir().rls(strRelease, &stra, &straTitle, &straRelative);
+         Application.dir().rls(strRelease, &stra, &straTitle, &straRelative);
       }
       strRemote = strRemote + "/stage/" + m_strFormatBuild + "/";
       return true;
@@ -1521,7 +1521,7 @@ namespace production
          if (::str::ends_ci(strFile, ".zip"))
          {
          }
-         else if (session().dir().is(strFile))
+         else if (Application.dir().is(strFile))
          {
             continue;
          }
@@ -1611,7 +1611,7 @@ namespace production
 
       string strBase = System.dir().path(m_strBase, pszRoot, "appmatter");
 
-      session().dir().ls_dir(strBase, NULL, &straRelative);
+      Application.dir().ls_dir(strBase, NULL, &straRelative);
 
       for (int32_t i = 0; i < straRelative.get_count(); i++)
       {
@@ -1636,7 +1636,7 @@ namespace production
 
       strBase = System.dir().path(strBase, pszRelative);
 
-      session().dir().ls_dir(strBase, NULL, &straRelative);
+      Application.dir().ls_dir(strBase, NULL, &straRelative);
 
       for (int32_t i = 0; i < straRelative.get_count(); i++)
       {
@@ -1660,7 +1660,7 @@ namespace production
 
       strBase = System.dir().path(strBase, pszRelative);
 
-      session().dir().ls_dir(strBase, NULL, &straRelative);
+      Application.dir().ls_dir(strBase, NULL, &straRelative);
 
       for (int32_t i = 0; i < straRelative.get_count(); i++)
       {
@@ -1680,7 +1680,7 @@ namespace production
 
       strBase = System.dir().path(strBase, pszRelative);
 
-      session().dir().ls_dir(strBase, NULL, &straRelative);
+      Application.dir().ls_dir(strBase, NULL, &straRelative);
 
       for (int32_t i = 0; i < straRelative.get_count(); i++)
       {
@@ -1709,7 +1709,7 @@ namespace production
 
       stringa stra2;
 
-      session().dir().rls(System.dir().path(m_strBase, System.dir().path(pszRoot, "appmatter", pszRelative)), &straFiles, NULL, &straRelative);
+      Application.dir().rls(System.dir().path(m_strBase, System.dir().path(pszRoot, "appmatter", pszRelative)), &straFiles, NULL, &straRelative);
 
       strsize iBaseLen = m_strBase.get_length();
 
@@ -1731,7 +1731,7 @@ namespace production
          if (System.file().extension(strFile).CompareNoCase("zip") == 0)
          {
          }
-         else if (session().dir().is(strFile))
+         else if (Application.dir().is(strFile))
          {
             continue;
          }
@@ -2010,11 +2010,11 @@ namespace production
       string strIcon;
       if (m_eversion == version_basis)
       {
-         strIcon = session().dir().matter("fluidbasis-5c-32.png");
+         strIcon = Application.dir().matter("fluidbasis-5c-32.png");
       }
       else
       {
-         strIcon = session().dir().matter("ca2-5c-32.png");
+         strIcon = Application.dir().matter("ca2-5c-32.png");
       }
       Application.file().copy(System.dir().path(strDir, "npca2/skin/classic", "ca2-5c-32.png"), strIcon);
 
@@ -2099,7 +2099,7 @@ namespace production
       string strDir;
       strDir = System.dir().path(m_strBase, "time/npca2/" + strPlatform);
 
-      session().dir().rm(System.dir().path(strDir, "npca2/META-INF"));
+      Application.dir().rm(System.dir().path(strDir, "npca2/META-INF"));
 
 
       if (bSigned)
@@ -2201,7 +2201,7 @@ namespace production
       string strPlatform(pszPlatform);
 
 
-      session().dir().mk(System.dir().path(m_strBase, "time\\iexca2\\" + strPlatform));
+      Application.dir().mk(System.dir().path(m_strBase, "time\\iexca2\\" + strPlatform));
 
       string strNpca2Version;
 
@@ -2297,11 +2297,11 @@ namespace production
       string strIcon;
       if (m_eversion == version_basis)
       {
-         strIcon = session().dir().matter("fluidbasis-5c-32.png");
+         strIcon = Application.dir().matter("fluidbasis-5c-32.png");
       }
       else
       {
-         strIcon = session().dir().matter("ca2-5c-32.png");
+         strIcon = Application.dir().matter("ca2-5c-32.png");
       }
       Application.file().copy(System.dir().path(strDir, "ca2-5c-32.png"), strIcon);
 
@@ -2519,8 +2519,8 @@ namespace production
       twitterObj.get_oauth().setConsumerKey(m_strTwitterConsumerKey);
       twitterObj.get_oauth().setConsumerSecret(m_strTwitterConsumerSecret);
 
-      string strPathKey = session().dir().userappdata("twitterClient_token_key" + ::str::from(m_eversion) + ".txt");
-      string strPathSecret = session().dir().userappdata("twitterClient_token_secret" + ::str::from(m_eversion) + ".txt");
+      string strPathKey = Application.dir().userappdata("twitterClient_token_key" + ::str::from(m_eversion) + ".txt");
+      string strPathSecret = Application.dir().userappdata("twitterClient_token_secret" + ::str::from(m_eversion) + ".txt");
       /* Step 1: Check if we alredy have OAuth access token from a previous run */
       //    char szKey[1024];
       string myOAuthAccessTokenKey = Application.file().as_string(strPathKey);
@@ -2581,8 +2581,8 @@ namespace production
       twitterObj.get_oauth().setConsumerKey(m_strTwitterConsumerKey);
       twitterObj.get_oauth().setConsumerSecret(m_strTwitterConsumerSecret);
 
-      string strPathKey = session().dir().userappdata("twitterClient_token_key" + ::str::from(m_eversion) + ".txt");
-      string strPathSecret = session().dir().userappdata("twitterClient_token_secret" + ::str::from(m_eversion) + ".txt");
+      string strPathKey = Application.dir().userappdata("twitterClient_token_key" + ::str::from(m_eversion) + ".txt");
+      string strPathSecret = Application.dir().userappdata("twitterClient_token_secret" + ::str::from(m_eversion) + ".txt");
       /* Step 1: Check if we alredy have OAuth access token from a previous run */
       //    char szKey[1024];
       string myOAuthAccessTokenKey = Application.file().as_string(strPathKey);
@@ -2672,8 +2672,8 @@ namespace production
       twitterObj.get_oauth().setConsumerKey(m_strTwitterConsumerKey);
       twitterObj.get_oauth().setConsumerSecret(m_strTwitterConsumerSecret);
 
-      string strPathKey = session().dir().userappdata("facebookClient_token_key" + ::str::from(m_eversion) + ".txt");
-      string strPathSecret = session().dir().userappdata("facebookClient_token_secret" + ::str::from(m_eversion) + ".txt");
+      string strPathKey = Application.dir().userappdata("facebookClient_token_key" + ::str::from(m_eversion) + ".txt");
+      string strPathSecret = Application.dir().userappdata("facebookClient_token_secret" + ::str::from(m_eversion) + ".txt");
       /* Step 1: Check if we alredy have OAuth access token from a previous run */
       //    char szKey[1024];
       string myOAuthAccessTokenKey = Application.file().as_string(strPathKey);
