@@ -3899,6 +3899,9 @@ namespace draw2d_gdiplus
    bool graphics::TextOut(double x, double y, const char * lpszString, int32_t nCount)
    {
 
+      if(m_spfont.is_null())
+         return false;
+
       if (::draw2d::graphics::TextOut(x, y, lpszString, nCount))
          return true;
 
