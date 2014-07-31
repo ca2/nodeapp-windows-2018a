@@ -328,7 +328,7 @@ namespace production
 
          }
          //m_strBase = Application.command()->m_varTopicQuery["base_dir"];
-         m_strBase = session().file().as_string("C:\\ca2\\config\\nodeapp-windows\\production\\base_dir.txt").trimmed();
+         m_strBase = Application.file().as_string("C:\\ca2\\config\\nodeapp-windows\\production\\base_dir.txt").trimmed();
 
 
          /*
@@ -339,7 +339,7 @@ namespace production
 
             string strContentsSet;
 
-            string strContentsGet = session().file().as_string(strContentsSrc);
+            string strContentsGet = Application.file().as_string(strContentsSrc);
 
             if (m_eversion == version_basis)
             {
@@ -357,7 +357,7 @@ namespace production
             if (strContentsSet != strContentsGet)
             {
 
-               session().file().put_contents(strContentsSrc, strContentsSet);
+               Application.file().put_contents(strContentsSrc, strContentsSet);
 
             }
 
@@ -368,7 +368,7 @@ namespace production
 
          m_strSignTool = System.dir().element("nodeapp/thirdparty/binary/signtool.exe");
          m_strSpc = "X:\\sensitive\\sensitive\\certificate\\ca2.p12";
-         m_strSignPass = session().file().as_string("X:\\sensitive\\sensitive\\certificate\\2011-05-ca2.pass");
+         m_strSignPass = Application.file().as_string("X:\\sensitive\\sensitive\\certificate\\2011-05-ca2.pass");
 
          m_iLoop++;
          defer_quit();
@@ -616,7 +616,7 @@ namespace production
          string strBuildH;
          strBuildH.Format("-c1-production -c2-producer -t12n-producing -mmmi- %s", m_strTag);
          strBuildH += " - ";
-         strBuildH += session().file().as_string(System.dir().path(m_strBase, "app/stage", "build_machine_pp_comment.txt"));
+         strBuildH += Application.file().as_string(System.dir().path(m_strBase, "app/stage", "build_machine_pp_comment.txt"));
          strBuildH += "#define THIS_PRODUCT_VERSION \"" + m_strTag + "\\0\"\r\n#define THIS_FILE_VERSION \"" + m_strTag + "\\0\"\r\n";
          strBuildH += "#define __THIS_PRODUCT_VERSION " + strVerWin + "\r\n#define __THIS_FILE_VERSION " + strVerWin + "\r\n";
          strBuildH += "\r\n";
@@ -673,9 +673,9 @@ namespace production
          }
 
          //session().dir().mk(System.dir().path(m_strBase, "time"));
-         session().file().put_contents(System.dir().path(m_strBase, "app\\build.txt"), m_strBuild);
-         session().file().put_contents_utf8(System.dir().path(m_strBase, "app\\this_version_info.h"), strBuildH);
-         session().file().put_contents_utf8(System.dir().path(m_strBase, "app\\this_version_info.txt"), strBuildH);
+         Application.file().put_contents(System.dir().path(m_strBase, "app\\build.txt"), m_strBuild);
+         Application.file().put_contents_utf8(System.dir().path(m_strBase, "app\\this_version_info.h"), strBuildH);
+         Application.file().put_contents_utf8(System.dir().path(m_strBase, "app\\this_version_info.txt"), strBuildH);
 
          update_rc_file_version(System.dir().path(m_strBase,"app\\appseed\\base\\base.rc"));
          update_rc_file_version(System.dir().path(m_strBase,"app-core\\appseed\\iexca2\\iexca2.rc"));
@@ -714,7 +714,7 @@ namespace production
          //   System.dir().element("time\\spaignition_update.txt"), NULL, post, headers, ::ca2::app(get_app()).user()->get_user());
          /*add_status("Cleaning ccvotagus folder...");
          ::core::process process;
-         session().file().put_contents(strPath, "rmdir /s /q C:\\ca2\\vrel\\" + m_strVersion);
+         Application.file().put_contents(strPath, "rmdir /s /q C:\\ca2\\vrel\\" + m_strVersion);
          if (!process.create_child_process(strPath, false))
          {
             uint32_t dw = GetLastError();
@@ -829,10 +829,10 @@ namespace production
          return 1;
          }*/
          session().dir().mk("C:\\home\\ccvotagus\\ca2_spa\\"+m_strVersion+"\\app\\");
-         session().file().put_contents("C:\\home\\ccvotagus\\ca2_spa\\"+m_strVersion+"\\app\\build.txt", m_strBuild);
-         session().file().put_contents(m_strCCVrelNew + "\\app\\build.txt", m_strBuild);
+         Application.file().put_contents("C:\\home\\ccvotagus\\ca2_spa\\"+m_strVersion+"\\app\\build.txt", m_strBuild);
+         Application.file().put_contents(m_strCCVrelNew + "\\app\\build.txt", m_strBuild);
          session().dir().mk(System.dir().name(m_strTagPath));
-         session().file().put_contents(m_strTagPath, m_strTag);
+         Application.file().put_contents(m_strTagPath, m_strTag);
 
          //commit_source("C:\\netnodenet\\net");
 
@@ -860,7 +860,7 @@ namespace production
 
             ::core::process process;
             string strCommand = "\"C:\\Program Files (x86)\\Windows Kits\\8.0\\Debuggers\\x86\\symstore.exe\"  add /r  -:REL /f \\\\sewindows\\stage\\" + m_strFormatBuild + "\\stage\\x86\\ /s \\\\sewindows\\SymbolServer\\ /t \"ca2\" /v \"" + m_strFormatBuild + "\"";
-            session().file().put_contents(strPath, strCommand);
+            Application.file().put_contents(strPath, strCommand);
             if (!process.create_child_process(strPath, false))
             {
                uint32_t dw = GetLastError();
@@ -898,7 +898,7 @@ namespace production
 
             ::core::process process;
             string strCommand = "\"C:\\Program Files (x86)\\Windows Kits\\8.0\\Debuggers\\x64\\symstore.exe\"  add /r  -:REL /f \\\\sewindows\\stage\\" + m_strFormatBuild + "\\stage\\x64\\ /s \\\\sewindows\\SymbolServer\\ /t \"ca2\" /v \"" + m_strFormatBuild + "\"";
-            session().file().put_contents(strPath, strCommand);
+            Application.file().put_contents(strPath, strCommand);
             if (!process.create_child_process(strPath, false))
             {
                uint32_t dw = GetLastError();
@@ -1537,8 +1537,8 @@ namespace production
          strBz = System.dir().path(m_strCCAuth, strRelative) + ".bz";
          strUn = System.dir().path(m_strVrel, strRelative);
          strMd5 = System.file().md5(strUn);
-         varUnSize = session().file().length(strUn);
-         varBzSize = session().file().length(strBz);
+         varUnSize = Application.file().length(strUn);
+         varBzSize = Application.file().length(strBz);
          strRelease = System.dir().path(m_strCCVrel, strRelative);
          strRelease += ".bz.";
          strRelease += strMd5;
@@ -1553,16 +1553,16 @@ namespace production
          strContents += ",";
          strContents += varBzSize.get_string();
          strContents += "\n";
-         if (!session().file().exists(strRelease))
+         if (!Application.file().exists(strRelease))
          {
-            session().file().copy(strRelease, strBz, false);
+            Application.file().copy(strRelease, strBz, false);
          }
-         session().file().copy(strReleaseNew, strBz, false);
+         Application.file().copy(strReleaseNew, strBz, false);
       }
 
       strRelative = "app\\stage\\metastage\\index-" + m_strFormatBuild + ".spa";
       string strIndex = System.dir().path(m_strVrel, strRelative);
-      session().file().put_contents(
+      Application.file().put_contents(
          strIndex,
          strContents);
 
@@ -1574,7 +1574,7 @@ namespace production
 
       string strRelativeMd5 = "app\\stage\\metastage\\index-" + m_strFormatBuild + ".md5";
       strMd5 = System.dir().path(m_strVrel, strRelativeMd5);
-      session().file().put_contents(strMd5, m_strIndexMd5);
+      Application.file().put_contents(strMd5, m_strIndexMd5);
 
       //string strStage = System.dir().path("C:\\home\\ccvotagus\\ca2_spa\\" + m_strVersionShift, strRelative) + ".bz"; 
       //::DeleteFileW(::str::international::utf8_to_unicode(
@@ -1583,15 +1583,15 @@ namespace production
       strRelease = System.dir().path(m_strCCVrel, strRelative) + ".bz";
       //::DeleteFileW(::str::international::utf8_to_unicode(
       // strRelease));
-      session().file().copy(strRelease, strBz);
+      Application.file().copy(strRelease, strBz);
       strRelease = System.dir().path(m_strCCVrel, strRelativeMd5);
-      session().file().copy(strRelease, strMd5);
+      Application.file().copy(strRelease, strMd5);
       strReleaseNew = System.dir().path(m_strCCVrelNew, strRelative) + ".bz";
       //::DeleteFileW(::str::international::utf8_to_unicode(
       // strRelease));
-      session().file().copy(strReleaseNew, strBz);
+      Application.file().copy(strReleaseNew, strBz);
       strReleaseNew = System.dir().path(m_strCCVrelNew, strRelativeMd5);
-      session().file().copy(strReleaseNew, strMd5);
+      Application.file().copy(strReleaseNew, strMd5);
    }
 
    void production::generate_appmatter_spa()
@@ -1776,7 +1776,7 @@ namespace production
 
       m_straRelative.add("app\\stage\\metastagez\\" + strRelative + ".expand_fileset.spa");
 
-      session().file().put_contents(strFile, strContents);
+      Application.file().put_contents(strFile, strContents);
 
 
       strFile = System.dir().path(m_strBase, strRelative + ".expand_fileset");
@@ -1952,7 +1952,7 @@ namespace production
             continue;
          strRelative.replace("\\", "/");
          mem.allocate(0);
-         session().file().as_memory(m_straPath[i], mem);
+         Application.file().as_memory(m_straPath[i], mem);
          xpi_section("Name: " + strRelative + "\n" + xpi_digest(mem), "Name: " + strRelative + "\n");
       }
 
@@ -1960,8 +1960,8 @@ namespace production
       string strManifest = m_straManifest.implode("\n");
       string strSignature = m_straSignature.implode("\n");
 
-      session().file().put_contents(System.dir().path(pszDir, "META-INF/manifest.mf"), strManifest);
-      session().file().put_contents(System.dir().path(pszDir, "META-INF/zigbert.sf"), strSignature);
+      Application.file().put_contents(System.dir().path(pszDir, "META-INF/manifest.mf"), strManifest);
+      Application.file().put_contents(System.dir().path(pszDir, "META-INF/zigbert.sf"), strSignature);
 
       System.crypto().np_make_zigbert_rsa(pszDir, strSignerPath, strKeyPath, strOthersPath, strSignature);
 
@@ -2000,12 +2000,12 @@ namespace production
          strVersionUrl = "stage";
       }
 
-      string strChromeManifest = session().file().as_string(System.dir().path(m_strBase, "nodeapp/stage/matter/npca2/chrome.manifest"));
+      string strChromeManifest = Application.file().as_string(System.dir().path(m_strBase, "nodeapp/stage/matter/npca2/chrome.manifest"));
       strChromeManifest.replace("%BUILD%", strNpca2Version);
       strChromeManifest.replace("%PLATFORM%", "/" + m_strFormatBuild + "/stage/" + strPlatform);
       strChromeManifest.replace("%DOWNLOADSITE%", m_strDownloadSite);
       strChromeManifest.replace("%VERSION%", strVersionUrl);
-      session().file().put_contents(System.dir().path(strDir, "npca2", "chrome.manifest"), strChromeManifest);
+      Application.file().put_contents(System.dir().path(strDir, "npca2", "chrome.manifest"), strChromeManifest);
 
       string strIcon;
       if (m_eversion == version_basis)
@@ -2016,27 +2016,27 @@ namespace production
       {
          strIcon = session().dir().matter("ca2-5c-32.png");
       }
-      session().file().copy(System.dir().path(strDir, "npca2/skin/classic", "ca2-5c-32.png"), strIcon);
+      Application.file().copy(System.dir().path(strDir, "npca2/skin/classic", "ca2-5c-32.png"), strIcon);
 
-      string strInstall = session().file().as_string(System.dir().path(m_strBase, "nodeapp/stage/matter/npca2/install.rdf"));
+      string strInstall = Application.file().as_string(System.dir().path(m_strBase, "nodeapp/stage/matter/npca2/install.rdf"));
       strInstall.replace("%BUILD%", strNpca2Version);
       strInstall.replace("%PLATFORM%", "/plugin/" + strPlatform);
       strInstall.replace("%DOWNLOADSITE%", "anycast.ca2.cc/ccvotagus");
       strInstall.replace("%VERSION%", strVersionUrl);
-      session().file().put_contents(System.dir().path(strDir, "npca2", "install.rdf"), strInstall);
+      Application.file().put_contents(System.dir().path(strDir, "npca2", "install.rdf"), strInstall);
 
 
-      string strWindows = session().file().as_string(System.dir().path(m_strBase, "nodeapp/stage/matter/npca2/npca2_windows.rdf"));
+      string strWindows = Application.file().as_string(System.dir().path(m_strBase, "nodeapp/stage/matter/npca2/npca2_windows.rdf"));
       strWindows.replace("%BUILD%", strNpca2Version);
       strWindows.replace("%PLATFORM%", "/" + m_strFormatBuild + "/stage/" + strPlatform);
       strWindows.replace("%DOWNLOADSITE%", m_strDownloadSite + "/ccvotagus");
       strWindows.replace("%VERSION%", strVersionUrl);
-      session().file().put_contents(System.dir().path(strDir, "npca2_windows.rdf"), strWindows);
+      Application.file().put_contents(System.dir().path(strDir, "npca2_windows.rdf"), strWindows);
 
 
       add_status("Signing npca2.dll for Firefox ...");
       string strFile = System.dir().path(strDir, "npca2/plugins", "npca2.dll");
-      session().file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/npca2.dll"));
+      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/npca2.dll"));
       string strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
 
@@ -2044,38 +2044,38 @@ namespace production
 
       add_status("Signing app.install.exe for Firefox ...");
       strFile = System.dir().path(strDir, "npca2/plugins", "app.install.exe");
-      session().file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/app.install.exe"));
+      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/app.install.exe"));
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
 
       add_status("Signing base.dll for Firefox ...");
       strFile = System.dir().path(strDir, "npca2/plugins", "base.dll");
-      session().file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/base.dll"));
+      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/base.dll"));
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
 
 /*
       add_status("Signing os.dll for Firefox ...");
       strFile = System.dir().path(strDir, "npca2/plugins", "os.dll");
-      session().file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/os.dll"));
+      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/os.dll"));
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
       */
 
       add_status("Signing msvcr120d.dll for Firefox ...");
       strFile = System.dir().path(strDir, "npca2/plugins", "msvcr120d.dll");
-      session().file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/msvcr120d.dll"));
+      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/msvcr120d.dll"));
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
 
       add_status("Signing msvcp120d.dll for Firefox ...");
       strFile = System.dir().path(strDir, "npca2/plugins", "msvcp120d.dll");
-      session().file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/msvcp120d.dll"));
+      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/msvcp120d.dll"));
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
 
       strFile = System.dir().path(strDir, "npca2/plugins", "draw2d_gdiplus.dll");
-      session().file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/draw2d_gdiplus.dll"));
+      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/draw2d_gdiplus.dll"));
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
 
@@ -2085,8 +2085,8 @@ namespace production
 
       create_xpi(pszPlatform, false);
 
-      session().file().copy(System.dir().path(m_strVrel, "stage\\" + strPlatform + "\\npca2.xpi"), System.dir().path(strDir, "npca2.xpi"));
-      session().file().copy(System.dir().path(m_strCCVrel, "plugin\\" + strPlatform + "\\npca2_windows.rdf"), System.dir().path(strDir, "npca2_windows.rdf"));
+      Application.file().copy(System.dir().path(m_strVrel, "stage\\" + strPlatform + "\\npca2.xpi"), System.dir().path(strDir, "npca2.xpi"));
+      Application.file().copy(System.dir().path(m_strCCVrel, "plugin\\" + strPlatform + "\\npca2_windows.rdf"), System.dir().path(strDir, "npca2_windows.rdf"));
 
       return true;
    }
@@ -2215,12 +2215,12 @@ namespace production
          atoi(m_strFormatBuild.Mid(17,2))
          );
 
-      string strChromeManifest = session().file().as_string(System.dir().path(m_strBase,"nodeapp/stage/script/iexca2.inf"));
+      string strChromeManifest = Application.file().as_string(System.dir().path(m_strBase,"nodeapp/stage/script/iexca2.inf"));
       strChromeManifest.replace("%VERSION%",strNpca2Version);
       //      strChromeManifest.replace("%PLATFORM%", "/" + m_strFormatBuild + "/stage/" + strPlatform);
       //    strChromeManifest.replace("%DOWNLOADSITE%", m_strDownloadSite);
       //      strChromeManifest.replace("%VERSION%", strVersionUrl);
-      session().file().put_contents(System.dir().path(m_strBase,"time\\iexca2\\" + strPlatform + "\\iexca2.inf"),strChromeManifest);
+      Application.file().put_contents(System.dir().path(m_strBase,"time\\iexca2\\" + strPlatform + "\\iexca2.inf"),strChromeManifest);
 
 
       uint32_t dwExitCode;
@@ -2252,7 +2252,7 @@ namespace production
          strVersion = "\\basis";
       }
 
-      session().file().copy(System.dir().path(m_strVrel, "stage\\" + strPlatform + "\\iexca2.cab"), System.dir().path(m_strBase, "time\\iexca2\\" + strPlatform + "\\iexca2.cab"));
+      Application.file().copy(System.dir().path(m_strVrel, "stage\\" + strPlatform + "\\iexca2.cab"), System.dir().path(m_strBase, "time\\iexca2\\" + strPlatform + "\\iexca2.cab"));
 
       return true;
 
@@ -2288,11 +2288,11 @@ namespace production
          atoi(m_strFormatBuild.Mid(17, 2)),
          iSecond);
 
-      string strManifestJson = session().file().as_string(System.dir().path(m_strBase, "nodeapp/stage/matter/crxca2/manifest.json"));
+      string strManifestJson = Application.file().as_string(System.dir().path(m_strBase, "nodeapp/stage/matter/crxca2/manifest.json"));
       strManifestJson.replace("%BUILD%", strCrxca2Version);
       strManifestJson.replace("%PLATFORM%", strPlatform);
       strManifestJson.replace("%DOWNLOADSITE%", m_strDownloadSite);
-      session().file().put_contents(System.dir().path(strDir, "manifest.json"), strManifestJson);
+      Application.file().put_contents(System.dir().path(strDir, "manifest.json"), strManifestJson);
 
       string strIcon;
       if (m_eversion == version_basis)
@@ -2303,49 +2303,49 @@ namespace production
       {
          strIcon = session().dir().matter("ca2-5c-32.png");
       }
-      session().file().copy(System.dir().path(strDir, "ca2-5c-32.png"), strIcon);
+      Application.file().copy(System.dir().path(strDir, "ca2-5c-32.png"), strIcon);
 
       add_status("Signing npca2.dll for Chrome ...");
       string strFile = System.dir().path(strDir, "npca2.dll");
-      session().file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/npca2.dll"));
+      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/npca2.dll"));
       string strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
 
       add_status("Signing app.install.exe for Chrome ...");
       strFile = System.dir().path(strDir, "app.install.exe");
-      session().file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/app.install.exe"));
+      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/app.install.exe"));
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
 
       add_status("Signing base.dll for Chrome ...");
       strFile = System.dir().path(strDir, "base.dll");
-      session().file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/base.dll"));
+      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/base.dll"));
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
 
 /*
       add_status("Signing os.dll for Chrome ...");
       strFile = System.dir().path(strDir, "os.dll");
-      session().file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/os.dll"));
+      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/os.dll"));
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
       */
 
       add_status("Signing msvcp120d.dll for Chrome ...");
       strFile = System.dir().path(strDir, "msvcp120d.dll");
-      session().file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/msvcp120d.dll"));
+      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/msvcp120d.dll"));
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
 
       add_status("Signing msvcr120d.dll for Chrome ...");
       strFile = System.dir().path(strDir, "msvcr120d.dll");
-      session().file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/msvcr120d.dll"));
+      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/msvcr120d.dll"));
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
 
       add_status("Signing draw2d_gdiplus.dll for Chrome ...");
       strFile = System.dir().path(strDir, "draw2d_gdiplus.dll");
-      session().file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/draw2d_gdiplus.dll"));
+      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/draw2d_gdiplus.dll"));
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
 
@@ -2380,7 +2380,7 @@ namespace production
       }
 
 
-      session().file().copy(System.dir().path(m_strVrel, "stage\\" + strPlatform + "\\crxca2.crx"), System.dir().path(System.dir().name(strDir), "crxca2.crx"));
+      Application.file().copy(System.dir().path(m_strVrel, "stage\\" + strPlatform + "\\crxca2.crx"), System.dir().path(System.dir().name(strDir), "crxca2.crx"));
 
       return true;
    }
@@ -2523,8 +2523,8 @@ namespace production
       string strPathSecret = session().dir().userappdata("twitterClient_token_secret" + ::str::from(m_eversion) + ".txt");
       /* Step 1: Check if we alredy have OAuth access token from a previous run */
       //    char szKey[1024];
-      string myOAuthAccessTokenKey = session().file().as_string(strPathKey);
-      string myOAuthAccessTokenSecret = session().file().as_string(strPathSecret);
+      string myOAuthAccessTokenKey = Application.file().as_string(strPathKey);
+      string myOAuthAccessTokenSecret = Application.file().as_string(strPathSecret);
 
       if (myOAuthAccessTokenKey.has_char() && myOAuthAccessTokenSecret.has_char())
       {
@@ -2555,8 +2555,8 @@ namespace production
 
          /* Step 6: Save these keys in a file or wherever */
 
-         session().file().put_contents(strPathKey, myOAuthAccessTokenKey);
-         session().file().put_contents(strPathSecret, myOAuthAccessTokenSecret);
+         Application.file().put_contents(strPathKey, myOAuthAccessTokenKey);
+         Application.file().put_contents(strPathSecret, myOAuthAccessTokenSecret);
 
       }
 
@@ -2585,8 +2585,8 @@ namespace production
       string strPathSecret = session().dir().userappdata("twitterClient_token_secret" + ::str::from(m_eversion) + ".txt");
       /* Step 1: Check if we alredy have OAuth access token from a previous run */
       //    char szKey[1024];
-      string myOAuthAccessTokenKey = session().file().as_string(strPathKey);
-      string myOAuthAccessTokenSecret = session().file().as_string(strPathSecret);
+      string myOAuthAccessTokenKey = Application.file().as_string(strPathKey);
+      string myOAuthAccessTokenSecret = Application.file().as_string(strPathSecret);
 
       if (myOAuthAccessTokenKey.has_char() && myOAuthAccessTokenSecret.has_char())
       {
@@ -2676,8 +2676,8 @@ namespace production
       string strPathSecret = session().dir().userappdata("facebookClient_token_secret" + ::str::from(m_eversion) + ".txt");
       /* Step 1: Check if we alredy have OAuth access token from a previous run */
       //    char szKey[1024];
-      string myOAuthAccessTokenKey = session().file().as_string(strPathKey);
-      string myOAuthAccessTokenSecret = session().file().as_string(strPathSecret);
+      string myOAuthAccessTokenKey = Application.file().as_string(strPathKey);
+      string myOAuthAccessTokenSecret = Application.file().as_string(strPathSecret);
 
       if (myOAuthAccessTokenKey.has_char() && myOAuthAccessTokenSecret.has_char())
       {
@@ -2915,7 +2915,7 @@ namespace production
    void production::update_rc_file_version(const char * pszUrl)
    {
 
-      string str = session().file().as_string(pszUrl);
+      string str = Application.file().as_string(pszUrl);
 
       index iFind1 = str.find_tail("FILEVERSION ");
       if(iFind1 > 0)
@@ -2961,7 +2961,7 @@ namespace production
 
       }
 
-      session().file().put_contents(pszUrl, str);
+      Application.file().put_contents(pszUrl, str);
 
 
    }

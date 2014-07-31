@@ -87,7 +87,7 @@ namespace production
    void application::on_request(sp(::create_context) pcreatecontext)
    {
 
-      string strVersion = session().file().as_string("C:\\ca2\\config\\nodeapp-windows\\production\\version.txt").trimmed();
+      string strVersion = Application.file().as_string("C:\\ca2\\config\\nodeapp-windows\\production\\version.txt").trimmed();
 
       if (strVersion == "stage")
       {

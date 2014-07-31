@@ -50,7 +50,7 @@ namespace backup
          string str;
 
          string strFile = System.dir().element("basis/ca2/app/dbbk.bat");
-         if(!session().file().exists(strFile))
+         if(!Application.file().exists(strFile))
          {
             string str;
             str.Format("***File %s does not exist. (mysqldump -uroot -ppassword --opt --all-databases > %%1)", strFile);
@@ -267,7 +267,7 @@ namespace backup
       string strSrc = get_new_db_local_path("all.sql");
       string strDst;
       strDst.Format("C:\\ca2\\bk\\%s\\db\\all.sql", m_strTag);
-      session().file().copy(strDst, strSrc);
+      Application.file().copy(strDst, strSrc);
 
       return true;
 
