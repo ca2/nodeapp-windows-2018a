@@ -815,16 +815,19 @@ namespace draw2d_gdiplus
 
       bool bOk1 = FALSE;
 
-      Gdiplus::Point * ppoints = new Gdiplus::Point[nCount];
+      Gdiplus::PointF * ppoints = new Gdiplus::PointF[nCount];
 
       try
       {
 
          for(int32_t i = 0; i < nCount; i++)
          {
-            ppoints[i].X = (INT) lpPoints[i].x;
-            ppoints[i].Y = (INT) lpPoints[i].y;
+            ppoints[i].X = (Gdiplus::REAL) lpPoints[i].x;
+            ppoints[i].Y = (Gdiplus::REAL) lpPoints[i].y;
          }
+
+         m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
+
    
          bOk1 = m_pgraphics->FillPolygon(gdiplus_brush(), ppoints, nCount, gdiplus_get_fill_mode()) == Gdiplus::Status::Ok;
 
@@ -863,6 +866,8 @@ namespace draw2d_gdiplus
             ppoints[i].X = lpPoints[i].x;
             ppoints[i].Y = lpPoints[i].y;
          }
+
+         m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
    
          bOk1 = m_pgraphics->FillPolygon(gdiplus_brush(), ppoints, nCount, gdiplus_get_fill_mode()) == Gdiplus::Status::Ok;
 
@@ -902,6 +907,8 @@ namespace draw2d_gdiplus
             ppoints[i].Y = lpPoints[i].y;
          }
 
+         m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
+
          bOk1 = m_pgraphics->DrawPolygon(gdiplus_pen(), ppoints, nCount) == Gdiplus::Status::Ok;
 
       }
@@ -914,6 +921,46 @@ namespace draw2d_gdiplus
          delete ppoints;
       }
       catch (...)
+      {
+      }
+
+
+      return bOk1;
+   }
+
+   bool graphics::draw_polygon(const POINTD* lpPoints,int32_t nCount)
+   {
+
+      if(nCount <= 0)
+         return TRUE;
+
+      bool bOk1 = FALSE;
+
+      Gdiplus::PointF * ppoints = new Gdiplus::PointF[nCount];
+
+      try
+      {
+
+         for(int32_t i = 0; i < nCount; i++)
+         {
+            ppoints[i].X = (Gdiplus::REAL) lpPoints[i].x;
+            ppoints[i].Y = (Gdiplus::REAL) lpPoints[i].y;
+         }
+
+         m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
+
+         bOk1 = m_pgraphics->DrawPolygon(gdiplus_pen(),ppoints,nCount) == Gdiplus::Status::Ok;
+
+      }
+      catch(...)
+      {
+      }
+
+      try
+      {
+         delete ppoints;
+      }
+      catch(...)
       {
       }
 
@@ -941,6 +988,9 @@ namespace draw2d_gdiplus
             ppoints[i].X = lpPoints[i].x;
             ppoints[i].Y = lpPoints[i].y;
          }
+
+         m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
+
    
          bOk1 = m_pgraphics->FillPolygon(gdiplus_brush(), ppoints, nCount, gdiplus_get_fill_mode()) == Gdiplus::Status::Ok;
 
@@ -978,7 +1028,53 @@ namespace draw2d_gdiplus
       return bOk1 && bOk2;
 
    }
-   
+
+   bool graphics::Polygon(const POINTD* lpPoints,int32_t nCount)
+   {
+
+      if(nCount <= 0)
+         return TRUE;
+
+      bool bOk1 = FALSE;
+
+      bool bOk2 = FALSE;
+
+      Gdiplus::PointF * ppoints = new Gdiplus::PointF[nCount];
+
+      try
+      {
+
+         for(int32_t i = 0; i < nCount; i++)
+         {
+            ppoints[i].X = (Gdiplus::REAL) lpPoints[i].x;
+            ppoints[i].Y = (Gdiplus::REAL) lpPoints[i].y;
+         }
+
+         m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
+
+
+         bOk1 = m_pgraphics->FillPolygon(gdiplus_brush(),ppoints,nCount,gdiplus_get_fill_mode()) == Gdiplus::Status::Ok;
+
+         bOk2 = m_pgraphics->DrawPolygon(gdiplus_pen(),ppoints,nCount) == Gdiplus::Status::Ok;
+
+      }
+      catch(...)
+      {
+      }
+
+      try
+      {
+         delete ppoints;
+      }
+      catch(...)
+      {
+      }
+
+
+      return bOk1 && bOk2;
+
+   }
+
    bool graphics::Rectangle(LPCRECT lpRect)
    { 
 
@@ -3275,9 +3371,21 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       lpSize->cy = MulDiv(lpSize->cy, abs(sizeWinExt.cy), abs(sizeVpExt.cy));
    }
 
+   int32_t graphics::draw_text(const char * lpszString,int32_t nCount,LPRECT lpRect,UINT nFormat)
+   {
+      return draw_text(string(lpszString,nCount),lpRect,nFormat);
+
+   }
+
+   int32_t graphics::draw_text(const string & str,LPRECT lpRect,UINT nFormat)
+   {
+      ::rectd rect;
+      ::copy(rect,lpRect);
+      return draw_text(str,rect,nFormat);
+   }
 
 
-   int32_t graphics::draw_text(const char * lpszString, int32_t nCount, LPRECT lpRect, UINT nFormat)
+   int32_t graphics::draw_text(const char * lpszString, int32_t nCount, LPRECTD lpRect, UINT nFormat)
    { 
       /*if(get_handle1() == NULL)
          return -1;
@@ -3291,7 +3399,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   int32_t graphics::draw_text(const string & str, LPRECT lpRect, UINT nFormat)
+   int32_t graphics::draw_text(const string & str, LPRECTD lpRect, UINT nFormat)
    { 
       
       /*if(get_handle1() == NULL)
@@ -3433,6 +3541,23 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       wstring wstr = ::str::international::utf8_to_unicode(str);
       return ::DrawTextExW(get_handle1(), const_cast<wchar_t *>((const wchar_t *)wstr), (int32_t)wcslen(wstr), lpRect, nFormat, lpDTParams); 
    }
+
+
+   int32_t graphics::draw_text_ex(LPTSTR lpszString,int32_t nCount,LPRECTD lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
+   {
+
+      return ::draw2d::graphics::draw_text_ex(lpszString,nCount,lpRect,nFormat,lpDTParams);
+
+   }
+
+
+   int32_t graphics::draw_text_ex(const string & str,LPRECTD lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
+   {
+
+      return ::draw2d::graphics::draw_text_ex(str, lpRect,nFormat,lpDTParams);
+
+   }
+
 
    size graphics::GetTextExtent(const char * lpszString, strsize nCount, int32_t iIndex) const
    {

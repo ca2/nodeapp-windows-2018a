@@ -280,7 +280,9 @@ namespace draw2d_gdiplus
       bool fill_polygon(const POINTD * lpPoints, int32_t nCount); 
       bool fill_polygon(const POINT * lpPoints, int32_t nCount); 
       bool draw_polygon(const POINT * lpPoints, int32_t nCount);
+      bool draw_polygon(const POINTD * lpPoints,int32_t nCount);
       bool Polygon(const POINT* lpPoints, int32_t nCount);   
+      bool Polygon(const POINTD* lpPoints,int32_t nCount);
       bool PolyPolygon(const POINT* lpPoints, const INT* lpPolyCounts, int32_t nCount);
       bool Rectangle(int32_t x1, int32_t y1, int32_t x2, int32_t y2);
       bool Rectangle(LPCRECT lpRect);
@@ -341,6 +343,12 @@ namespace draw2d_gdiplus
 
       virtual int32_t draw_text_ex(LPTSTR lpszString, int32_t nCount, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
       virtual int32_t draw_text_ex(const string & str, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
+
+      virtual int32_t draw_text(const char * lpszString,int32_t nCount,LPRECTD lpRect,UINT nFormat);
+      virtual int32_t draw_text(const string & str,LPRECTD lpRect,UINT nFormat);
+
+      virtual int32_t draw_text_ex(LPTSTR lpszString,int32_t nCount,LPRECTD lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams);
+      virtual int32_t draw_text_ex(const string & str,LPRECTD lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams);
 
       size GetTextExtent(const char * lpszString, strsize nCount, int32_t iIndex) const;
       size GetTextExtent(const char * lpszString, strsize nCount) const;
