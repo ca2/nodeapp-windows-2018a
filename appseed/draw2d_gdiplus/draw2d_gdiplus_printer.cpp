@@ -21,7 +21,16 @@ namespace draw2d_gdiplus
    {
       if (is_opened())
          close();
-      return OpenPrinter((LPSTR)(LPCSTR)pszDeviceName, &m_hPrinter, NULL) != FALSE && m_hPrinter != NULL;
+      if(!OpenPrinter((LPSTR)(LPCSTR)pszDeviceName,&m_hPrinter,NULL))
+         return false;
+         
+      if(m_hPrinter == NULL)
+         return false;
+
+      m_strName = pszDeviceName;
+
+      return true;
+
    }
 
    bool printer::is_opened()
