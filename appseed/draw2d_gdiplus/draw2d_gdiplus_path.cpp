@@ -273,7 +273,7 @@ namespace draw2d_gdiplus
 
       INT iStyle = ((Gdiplus::Font *) spfont->get_os_data())->GetStyle();
       ((Gdiplus::Font *) spfont->get_os_data())->GetFamily(&fontFamily);
-      Gdiplus::Status status;
+//      Gdiplus::Status status;
 
       //Gdiplus::StringFormat format();
 

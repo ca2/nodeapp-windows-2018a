@@ -498,6 +498,8 @@ namespace draw2d_gdiplus
       virtual void set_text_rendering(::draw2d::e_text_rendering etextrendering);
 
       virtual void * get_os_data() const;
+      virtual void * get_os_data_ex(int i) const;
+      virtual void release_os_data_ex(int i, void *p);
       virtual HDC get_handle() const;
       virtual HDC get_handle1() const;
       virtual HDC get_handle2() const;

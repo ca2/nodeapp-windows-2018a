@@ -4329,6 +4329,34 @@ namespace draw2d_gdiplus
 
    }
 
+   void * graphics::get_os_data_ex(int i) const
+   {
+
+      if(i == 1)
+      {
+         return m_pgraphics->GetHDC();
+      }
+      else
+      {
+         return ::draw2d::graphics::get_os_data_ex(i);
+      }
+
+
+   }
+
+   void graphics::release_os_data_ex(int i,void * p)
+   {
+      if(i == 1)
+      {
+         m_pgraphics->ReleaseHDC((HDC)p);
+      }
+      else
+      {
+         ::draw2d::graphics::release_os_data_ex(i, p);
+      }
+   }
+
+
 
    HDC graphics::get_handle() const
    {
