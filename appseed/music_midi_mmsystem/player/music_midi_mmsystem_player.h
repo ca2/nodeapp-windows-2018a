@@ -1,9 +1,6 @@
 #pragma once
 
 
-#include "music_midi_mmsystem_player_interaction.h"
-#include "music_midi_mmsystem_player_callback.h"
-#include "music_midi_mmsystem_player_interface.h"
 
 
 
@@ -72,9 +69,7 @@ namespace music
 
                bool SetMidiOutDevice(uint32_t uiDevice);
 
-               ::music::e_result SetInterface(player_interface * pinterface);
-
-               ::multimedia::e_result Initialize(::thread * pthread);
+               virtual ::multimedia::e_result set_client(::music::midi::player::player_client * pclient);
 
                bool IsPlaying();
 

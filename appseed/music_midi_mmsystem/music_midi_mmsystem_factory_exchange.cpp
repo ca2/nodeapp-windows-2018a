@@ -22,7 +22,6 @@ namespace music
             System.factory().cloneable_large < buffer                      >  (System.type_info < ::music::midi::file::buffer                 > ());
             System.factory().cloneable_large < sequence_thread             >  (System.type_info < ::music::midi::sequence_thread                 > ());
             System.factory().cloneable_large < player::player              >  (System.type_info < ::music::midi::player::player                 > ());
-            System.factory().cloneable_large < player:: player_interface   >  (System.type_info < ::music::midi::player::player_interface                 > ());
             System.factory().cloneable_large < out                         >  (System.type_info < ::music::midi::out                  >());
             System.factory().cloneable_large < midi                         >(System.type_info < ::music::midi::midi                  >());
             System.factory().cloneable_large < sequence::buffer             >();

@@ -23,7 +23,7 @@ namespace music
                ::music::midi::player::player(papp)
             {
 
-               m_psequencethread = dynamic_cast < ::music::midi::sequence_thread * > (__begin_thread < sequence_thread >(papp, ::base::scheduling_priority_normal, 0, CREATE_SUSPENDED));
+                  m_psequencethread = NULL;
 
                m_puie               = NULL;
 
@@ -325,25 +325,21 @@ namespace music
             }
 
 
-            ::multimedia::e_result player::Initialize(thread * pthread)
+            ::multimedia::e_result player::set_client(::music::midi::player::player_client * pclient)
             {
-               UNREFERENCED_PARAMETER(pthread);
-               return ::multimedia::result_success;
-            }
 
-            //void player::SetView(CXfplayerView *pview)
-            //{
-            //    m_pView = pview;
-            //}
+               m_pclient = pclient;
 
-            ::music::e_result player::SetInterface(player_interface * pinterface)
-            {
-               m_pinterface = pinterface;
                get_sequence()->m_pthread   = m_psequencethread;
+
                m_psequencethread->m_psequence = get_sequence(); 
+
                m_psequencethread->m_pplayer = this; 
+
                PostNotifyEvent(::music::midi::player::notify_event_set_sequence);
-               return success;
+
+               return ::multimedia::result_success;
+
             }
 
 
