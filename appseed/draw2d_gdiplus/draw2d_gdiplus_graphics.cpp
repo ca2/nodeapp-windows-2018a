@@ -1073,6 +1073,9 @@ namespace draw2d_gdiplus
             ppoints[i].Y = lpPoints[i].y;
          }
 
+
+         m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
+
          m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
 
    
