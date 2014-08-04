@@ -76,7 +76,7 @@ namespace ca2plugin_container
 
       //NPN_GetValue(m_instance, NPNVnetscapeWindow, &m_oswindow);
 
-      if(!::simple_ui::interaction::create_message_queue("ca2plugin_container::host::init create_message_queue",NULL))
+      if(!::simple_ui::interaction::create_message_queue("ca2plugin_container::host::init create_message_queue"))
          return FALSE;
 
 
@@ -386,7 +386,7 @@ namespace ca2plugin_container
             if(!IsWindow())
             {
 
-               ::simple_ui::interaction::create_message_queue("ca2plugin_container::host::init create_message_queue",NULL);
+               ::simple_ui::interaction::create_message_queue("ca2plugin_container::host::init create_message_queue");
 
             }
 
