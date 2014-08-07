@@ -350,7 +350,7 @@ namespace draw2d_gdi
 
    //   if(pdibWork == NULL)
    //   {
-   //      dibWork.create(allocer());
+   //      dibWork.alloc(allocer());
    //      pdibWork = dibWork;
    //   }
 

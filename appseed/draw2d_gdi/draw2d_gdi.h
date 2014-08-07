@@ -57,7 +57,7 @@ namespace draw2d_gdi
       sp(T) & o = (sp(T) &) objectConst;
 
       if (o.is_null())
-         o.create(pgraphics->allocer());
+         o.alloc(pgraphics->allocer());
 
       ::draw2d_gdi::object * pgdiobject = dynamic_cast <::draw2d_gdi::object *> (o.m_p);
 

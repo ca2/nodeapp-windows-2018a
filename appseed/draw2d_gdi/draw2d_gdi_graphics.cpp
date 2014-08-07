@@ -2913,7 +2913,7 @@ namespace draw2d_gdi
    if(pdibWork == NULL)
    {
 
-   spdib.create(allocer());
+   spdib.alloc(allocer());
 
    pdibWork = spdib;
 
@@ -2934,7 +2934,7 @@ namespace draw2d_gdi
    ::draw2d::dib_sp spdib2;
    if(pdibWork2 == NULL)
    {
-   spdib2.create(allocer());
+   spdib2.alloc(allocer());
    pdibWork2 = spdib2;
    }
 
@@ -2942,7 +2942,7 @@ namespace draw2d_gdi
    ::draw2d::dib_sp spdib4;
    if(pdibWork4 == NULL)
    {
-   spdib4.create(allocer());
+   spdib4.alloc(allocer());
    pdibWork4 = spdib4;
    }
    if(pdibWork4 == NULL)
@@ -3005,7 +3005,7 @@ namespace draw2d_gdi
          if(pdibWork == NULL)
          {
 
-            spdib.create(allocer());
+            spdib.alloc(allocer());
 
             pdibWork = spdib;
 
@@ -3026,7 +3026,7 @@ namespace draw2d_gdi
          ::draw2d::dib_sp spdib2;
          if(pdibWork2 == NULL)
          {
-            spdib2.create(allocer());
+            spdib2.alloc(allocer());
             pdibWork2 = spdib2;
          }
 
@@ -3034,7 +3034,7 @@ namespace draw2d_gdi
          ::draw2d::dib_sp spdib4;
          if(pdibWork4 == NULL)
          {
-            spdib4.create(allocer());
+            spdib4.alloc(allocer());
             pdibWork4 = spdib4;
          }
          if(pdibWork4 == NULL)

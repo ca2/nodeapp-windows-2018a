@@ -83,8 +83,8 @@ namespace draw2d_gdiplus
       m_info.bmiHeader.biCompression   = BI_RGB;
       m_info.bmiHeader.biSizeImage     = width * height * 4;
 
-      m_spbitmap.create(allocer());
-      m_spgraphics.create(allocer());
+      m_spbitmap.alloc(allocer());
+      m_spgraphics.alloc(allocer());
 
       if(m_spbitmap.m_p == NULL)
       {
@@ -330,7 +330,7 @@ namespace draw2d_gdiplus
 
       if(pdibWork == NULL)
       {
-         dibWork.create(allocer());
+         dibWork.alloc(allocer());
          pdibWork = dibWork;
       }
 

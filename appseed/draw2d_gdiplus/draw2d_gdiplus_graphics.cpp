@@ -286,7 +286,7 @@ namespace draw2d_gdiplus
          HBITMAP hbitmap = (HBITMAP) hObject;
 
          if(m_spbitmap.is_null())
-            m_spbitmap.create(allocer());
+            m_spbitmap.alloc(allocer());
 
          if(m_spbitmap.is_null())
             return NULL;
@@ -1922,7 +1922,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          ::draw2d::dib_sp spdib;
          if(pdibWork == NULL)
          {
-            spdib.create(allocer());
+            spdib.alloc(allocer());
             pdibWork = spdib;
          }
          if(pdibWork == NULL)
@@ -1938,7 +1938,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          ::draw2d::dib_sp spdib2;
          if(pdibWork2 == NULL)
          {
-            spdib2.create(allocer());
+            spdib2.alloc(allocer());
             pdibWork2 = spdib2;
          }
 
@@ -1946,7 +1946,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          ::draw2d::dib_sp spdib4;
          if(pdibWork4 == NULL)
          {
-            spdib4.create(allocer());
+            spdib4.alloc(allocer());
             pdibWork4 = spdib4;
          }
          if(pdibWork4 == NULL)
@@ -2027,7 +2027,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          ::draw2d::dib_sp spdib;
          if(pdibWork == NULL)
          {
-            spdib.create(allocer());
+            spdib.alloc(allocer());
             pdibWork = spdib;
          }
          if(pdibWork == NULL)
@@ -2043,7 +2043,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          ::draw2d::dib_sp spdib2;
          if(pdibWork2 == NULL)
          {
-            spdib2.create(allocer());
+            spdib2.alloc(allocer());
             pdibWork2 = spdib2;
          }
 
@@ -2051,7 +2051,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          ::draw2d::dib_sp spdib4;
          if(pdibWork4 == NULL)
          {
-            spdib4.create(allocer());
+            spdib4.alloc(allocer());
             pdibWork4 = spdib4;
          }
          if(pdibWork4 == NULL)
@@ -4421,7 +4421,7 @@ namespace draw2d_gdiplus
    {
       if(m_spfont.is_null())
       {
-         m_spfont.create(allocer());
+         m_spfont.alloc(allocer());
          if(m_spfont.is_set())
          {
             m_spfont->m_powner = this;
@@ -4438,7 +4438,7 @@ namespace draw2d_gdiplus
    {
       if(m_spbrush.is_null())
       {
-         m_spbrush.create(allocer());
+         m_spbrush.alloc(allocer());
          if(m_spbrush.is_set())
          {
             m_spbrush->m_powner = this;
@@ -4455,7 +4455,7 @@ namespace draw2d_gdiplus
    {
       if(m_sppen.is_null())
       {
-         m_sppen.create(allocer());
+         m_sppen.alloc(allocer());
          if(m_sppen.is_set())
          {
             m_sppen->m_powner = this;
