@@ -481,12 +481,12 @@ namespace draw2d_gdiplus
    bool graphics::PtVisible(POINT point) const
    { ASSERT(get_handle1() != NULL); return PtVisible(point.x, point.y); } // call virtual
 
-   bool graphics::RectVisible(LPCRECT lpRect) const
+   bool graphics::RectVisible(const RECT &  lpRect) const
    {
       
       ASSERT(get_handle1() != NULL);
       
-      return ::RectVisible(get_handle1(), lpRect) != FALSE;
+      return ::RectVisible(get_handle1(), &lpRect) != FALSE;
    
    }
 
@@ -599,10 +599,10 @@ namespace draw2d_gdiplus
    }
 
 
-   void graphics::FillRect(LPCRECT lpcrect, ::draw2d::brush* pbrush)
+   void graphics::FillRect(const RECT & rectParam, ::draw2d::brush* pbrush)
    { 
    
-      Gdiplus::Rect rect(lpcrect->left,  lpcrect->top, width(lpcrect), height(lpcrect));
+      Gdiplus::Rect rect(rectParam.left,rectParam.top,width(rectParam),height(rectParam));
 
       m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeNone);
 
@@ -615,28 +615,30 @@ namespace draw2d_gdiplus
    }
 
 
-   void graphics::FrameRect(LPCRECT lpRect, ::draw2d::brush* pBrush)
+   void graphics::FrameRect(const RECT &  rectParam,::draw2d::brush* pBrush)
    { 
       
       ASSERT(get_handle1() != NULL); 
       
-      ::FrameRect(get_handle1(), lpRect, (HBRUSH)pBrush->get_os_data()); 
+      ::FrameRect(get_handle1(),&rectParam,(HBRUSH)pBrush->get_os_data());
    
    }
 
 
-   bool graphics::DrawRect(LPCRECT lpcrect, ::draw2d::pen * ppen)
+   bool graphics::DrawRect(const RECT & rectParam,::draw2d::pen * ppen)
    {
 
-      Gdiplus::RectF rectf((Gdiplus::REAL) lpcrect->left, (Gdiplus::REAL) lpcrect->top, (Gdiplus::REAL) width(lpcrect), (Gdiplus::REAL) height(lpcrect));
+      Gdiplus::RectF rectf((Gdiplus::REAL) rectParam.left,(Gdiplus::REAL) rectParam.top,(Gdiplus::REAL) width(rectParam),(Gdiplus::REAL) height(rectParam));
 
       return m_pgraphics->DrawRectangle((::Gdiplus::Pen *) ppen->get_os_data(), rectf) == ::Gdiplus::Ok;
 
    }
 
 
-   void graphics::InvertRect(LPCRECT lpRect)
-   { ASSERT(get_handle1() != NULL); ::InvertRect(get_handle1(), lpRect); }
+   void graphics::InvertRect(const RECT &  rectParam)
+   {
+      ASSERT(get_handle1() != NULL); ::InvertRect(get_handle1(),&rectParam);
+   }
 
    bool graphics::DrawIcon(int32_t x, int32_t y, ::visual::icon * picon)
    {
@@ -785,20 +787,27 @@ namespace draw2d_gdiplus
    bool graphics::DrawState(point pt, size size, DRAWSTATEPROC lpDrawProc, LPARAM lData, UINT nFlags, ::draw2d::brush* pBrush)
    { ASSERT(get_handle1() != NULL); return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(),
    lpDrawProc, lData, 0, pt.x, pt.y, size.cx, size.cy, nFlags|DST_COMPLEX) != FALSE; }
-   bool graphics::DrawEdge(LPRECT lpRect, UINT nEdge, UINT nFlags)
-   { ASSERT(get_handle1() != NULL); return ::DrawEdge(get_handle1(), lpRect, nEdge, nFlags) != FALSE; }
-   bool graphics::DrawFrameControl(LPRECT lpRect, UINT nType, UINT nState)
-   { ASSERT(get_handle1() != NULL); return ::DrawFrameControl(get_handle1(), lpRect, nType, nState) != FALSE; }
+   bool graphics::DrawEdge(const RECT & rectParam,UINT nEdge,UINT nFlags)
+   {
+      ASSERT(get_handle1() != NULL); return ::DrawEdge(get_handle1(),(LPRECT)&rectParam,nEdge,nFlags) != FALSE;
+   }
+   bool graphics::DrawFrameControl(const RECT & rectParam,UINT nType,UINT nState)
+   {
+      ASSERT(get_handle1() != NULL); return ::DrawFrameControl(get_handle1(),(LPRECT) &rectParam,nType,nState) != FALSE;
+   }
 
    bool graphics::Chord(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3,
       int32_t x4, int32_t y4)
    { ASSERT(get_handle1() != NULL); return ::Chord(get_handle1(), x1, y1, x2, y2, x3, y3, x4, y4) != FALSE; }
-   bool graphics::Chord(LPCRECT lpRect, POINT ptStart, POINT ptEnd)
-   { ASSERT(get_handle1() != NULL); return ::Chord(get_handle1(), lpRect->left, lpRect->top,
-   lpRect->right, lpRect->bottom, ptStart.x, ptStart.y,
+   bool graphics::Chord(const RECT &  rectParam,POINT ptStart,POINT ptEnd)
+   {
+      ASSERT(get_handle1() != NULL); return ::Chord(get_handle1(),rectParam.left,rectParam.top,
+         rectParam.right,rectParam.bottom,ptStart.x,ptStart.y,
    ptEnd.x, ptEnd.y) != FALSE; }
-   void graphics::DrawFocusRect(LPCRECT lpRect)
-   { ASSERT(get_handle1() != NULL); ::DrawFocusRect(get_handle1(), lpRect); }
+   void graphics::DrawFocusRect(const RECT &  rectParam)
+   {
+      ASSERT(get_handle1() != NULL); ::DrawFocusRect(get_handle1(),&rectParam);
+   }
    
 
    bool graphics::DrawEllipse(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
@@ -811,12 +820,12 @@ namespace draw2d_gdiplus
    }
 
 
-   bool graphics::DrawEllipse(LPCRECT lpRect)
+   bool graphics::DrawEllipse(const RECT &  rectParam)
    { 
    
       m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
 
-      return (m_pgraphics->DrawEllipse(gdiplus_pen(), lpRect->left, lpRect->top, lpRect->right - lpRect->left, lpRect->bottom - lpRect->top)) == Gdiplus::Status::Ok;
+      return (m_pgraphics->DrawEllipse(gdiplus_pen(),rectParam.left,rectParam.top,rectParam.right - rectParam.left,rectParam.bottom - rectParam.top)) == Gdiplus::Status::Ok;
    
    }
 
@@ -830,12 +839,12 @@ namespace draw2d_gdiplus
 
    }
 
-   bool graphics::FillEllipse(LPCRECT lpRect)
+   bool graphics::FillEllipse(const RECT &  rectParam)
    { 
    
       m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
 
-      return (m_pgraphics->FillEllipse(gdiplus_brush(), lpRect->left, lpRect->top, lpRect->right - lpRect->left, lpRect->bottom - lpRect->top)) == Gdiplus::Status::Ok;
+      return (m_pgraphics->FillEllipse(gdiplus_brush(), rectParam.left, rectParam.top, rectParam.right - rectParam.left, rectParam.bottom - rectParam.top)) == Gdiplus::Status::Ok;
    
    }
 
@@ -851,14 +860,14 @@ namespace draw2d_gdiplus
    }
 
 
-   bool graphics::DrawEllipse(LPCRECTD lpRect)
+   bool graphics::DrawEllipse(const RECTD & rectParam)
    {
 
       m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
 
-      return (m_pgraphics->DrawEllipse(gdiplus_pen(),(Gdiplus::REAL)lpRect->left,(Gdiplus::REAL)lpRect->top,
-         (Gdiplus::REAL)(lpRect->right - lpRect->left),
-         (Gdiplus::REAL)(lpRect->bottom - lpRect->top))) == Gdiplus::Status::Ok;
+      return (m_pgraphics->DrawEllipse(gdiplus_pen(),(Gdiplus::REAL)rectParam.left,(Gdiplus::REAL)rectParam.top,
+         (Gdiplus::REAL)(rectParam.right - rectParam.left),
+         (Gdiplus::REAL)(rectParam.bottom - rectParam.top))) == Gdiplus::Status::Ok;
 
    }
 
@@ -872,23 +881,23 @@ namespace draw2d_gdiplus
 
    }
 
-   bool graphics::FillEllipse(LPCRECTD lpRect)
+   bool graphics::FillEllipse(const RECTD & rectParam)
    {
 
       m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
 
-      return (m_pgraphics->FillEllipse(gdiplus_brush(),(Gdiplus::REAL)lpRect->left,(Gdiplus::REAL)lpRect->top,
-         (Gdiplus::REAL)(lpRect->right - lpRect->left),
-         (Gdiplus::REAL)(lpRect->bottom - lpRect->top))) == Gdiplus::Status::Ok;
+      return (m_pgraphics->FillEllipse(gdiplus_brush(),(Gdiplus::REAL)rectParam.left,(Gdiplus::REAL)rectParam.top,
+         (Gdiplus::REAL)(rectParam.right - rectParam.left),
+         (Gdiplus::REAL)(rectParam.bottom - rectParam.top))) == Gdiplus::Status::Ok;
 
    }
 
 
    bool graphics::Pie(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3, int32_t x4, int32_t y4)
    { ASSERT(get_handle1() != NULL); return ::Pie(get_handle1(), x1, y1, x2, y2, x3, y3, x4, y4) != FALSE; }
-   bool graphics::Pie(LPCRECT lpRect, POINT ptStart, POINT ptEnd)
-   { ASSERT(get_handle1() != NULL); return ::Pie(get_handle1(), lpRect->left, lpRect->top,
-   lpRect->right, lpRect->bottom, ptStart.x, ptStart.y,
+   bool graphics::Pie(const RECT &  rectParam,POINT ptStart,POINT ptEnd)
+   { ASSERT(get_handle1() != NULL); return ::Pie(get_handle1(), rectParam.left, rectParam.top,
+   rectParam.right, rectParam.bottom, ptStart.x, ptStart.y,
    ptEnd.x, ptEnd.y) != FALSE; }
 
    bool graphics::fill_polygon(const POINTD * lpPoints, int32_t nCount)
@@ -1162,10 +1171,10 @@ namespace draw2d_gdiplus
 
    }
 
-   bool graphics::Rectangle(LPCRECT lpRect)
+   bool graphics::Rectangle(const RECT &  rectParam)
    { 
 
-      return Rectangle(lpRect->left, lpRect->top, lpRect->right, lpRect->bottom);
+      return Rectangle(rectParam.left, rectParam.top, rectParam.right, rectParam.bottom);
 
    }
 
@@ -1180,10 +1189,10 @@ namespace draw2d_gdiplus
 
    }
    
-   bool graphics::DrawRectangle(LPCRECT lpRect)
+   bool graphics::DrawRectangle(const RECT &  rectParam)
    { 
 
-      return DrawRectangle(lpRect->left, lpRect->top, lpRect->right, lpRect->bottom);
+      return DrawRectangle(rectParam.left, rectParam.top, rectParam.right, rectParam.bottom);
 
    }
 
@@ -1198,18 +1207,18 @@ namespace draw2d_gdiplus
 
    }
    
-   bool graphics::FillRectangle(LPCRECT lpRect)
+   bool graphics::FillRectangle(const RECT &  rectParam)
    { 
 
-      return FillRectangle(lpRect->left, lpRect->top, lpRect->right, lpRect->bottom);
+      return FillRectangle(rectParam.left, rectParam.top, rectParam.right, rectParam.bottom);
 
    }
 
    bool graphics::RoundRect(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3)
    { ASSERT(get_handle1() != NULL); return ::RoundRect(get_handle1(), x1, y1, x2, y2, x3, y3) != FALSE; }
-   bool graphics::RoundRect(LPCRECT lpRect, POINT point)
-   { ASSERT(get_handle1() != NULL); return ::RoundRect(get_handle1(), lpRect->left, lpRect->top,
-   lpRect->right, lpRect->bottom, point.x, point.y) != FALSE; }
+   bool graphics::RoundRect(const RECT &  rectParam,POINT point)
+   { ASSERT(get_handle1() != NULL); return ::RoundRect(get_handle1(), rectParam.left, rectParam.top,
+   rectParam.right, rectParam.bottom, point.x, point.y) != FALSE; }
    bool graphics::PatBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, uint32_t dwRop)
    { ASSERT(get_handle1() != NULL); return ::PatBlt(get_handle1(), x, y, nWidth, nHeight, dwRop) != FALSE; }
    
@@ -1336,15 +1345,16 @@ gdi_fallback:
    } 
 
 
-   bool graphics::ExtTextOut(int32_t x, int32_t y, UINT nOptions, LPCRECT lpRect, const char * lpszString, UINT nCount, LPINT lpDxWidths)
+   bool graphics::ExtTextOut(int32_t x,int32_t y,UINT nOptions,const RECT &  rectParam,const char * lpszString,UINT nCount,LPINT lpDxWidths)
    { 
       ASSERT(get_handle1() != NULL); 
-      return ::ExtTextOut(get_handle1(), x, y, nOptions, lpRect, lpszString, nCount, lpDxWidths) != FALSE; 
+      return ::ExtTextOut(get_handle1(),x,y,nOptions,&rectParam,lpszString,nCount,lpDxWidths) != FALSE;
    }
 
-   bool graphics::ExtTextOut(int32_t x, int32_t y, UINT nOptions, LPCRECT lpRect,
+   bool graphics::ExtTextOut(int32_t x,int32_t y,UINT nOptions,const RECT &  rectParam,
       const string & str, LPINT lpDxWidths)
-   { ASSERT(get_handle1() != NULL); return ::ExtTextOut(get_handle1(), x, y, nOptions, lpRect,
+   {
+      ASSERT(get_handle1() != NULL); return ::ExtTextOut(get_handle1(),x,y,nOptions,&rectParam,
    str, (UINT)str.get_length(), lpDxWidths) != FALSE; }
    size graphics::TabbedTextOut(int32_t x, int32_t y, const char * lpszString, int32_t nCount,
       int32_t nTabPositions, LPINT lpnTabStopPositions, int32_t nTabOrigin)
@@ -1495,18 +1505,19 @@ gdi_fallback:
       return size;
    }
    bool graphics::ScrollDC(int32_t dx, int32_t dy,
-      LPCRECT lpRectScroll, LPCRECT lpRectClip,
+      const RECT &  lpRectScroll,const RECT &  rectClip,
       ::draw2d::region* pRgnUpdate, LPRECT lpRectUpdate)
-   { ASSERT(get_handle1() != NULL); return ::ScrollDC(get_handle1(), dx, dy, lpRectScroll,
-   lpRectClip, (HRGN)pRgnUpdate->get_os_data(), lpRectUpdate) != FALSE; }
+   {
+      ASSERT(get_handle1() != NULL); return ::ScrollDC(get_handle1(),dx,dy,&rectClip,
+   &rectClip, (HRGN)pRgnUpdate->get_os_data(), lpRectUpdate) != FALSE; }
 
    // Printer Escape Functions
    int32_t graphics::Escape(int32_t nEscape, int32_t nCount, const char * lpszInData, LPVOID lpOutData)
    { ASSERT(get_handle1() != NULL); return ::Escape(get_handle1(), nEscape, nCount, lpszInData, lpOutData);}
 
    // graphics 3.1 Specific functions
-   UINT graphics::SetBoundsRect(LPCRECT lpRectBounds, UINT flags)
-   { ASSERT(get_handle1() != NULL); return ::SetBoundsRect(get_handle1(), lpRectBounds, flags); }
+   UINT graphics::SetBoundsRect(const RECT &  rectBounds, UINT flags)
+   { ASSERT(get_handle1() != NULL); return ::SetBoundsRect(get_handle1(), &rectBounds, flags); }
    UINT graphics::GetBoundsRect(LPRECT lpRectBounds, UINT flags)
    { ASSERT(get_handle2() != NULL); return ::GetBoundsRect(get_handle2(), lpRectBounds, flags); }
    bool graphics::ResetDC(const DEVMODE* lpDevMode)
@@ -1612,10 +1623,10 @@ gdi_fallback:
       float fStartAngle, float fSweepAngle)
    { ASSERT(get_handle1() != NULL); 
    return ::AngleArc(get_handle1(), x, y, nRadius, fStartAngle, fSweepAngle) != FALSE; }
-   bool graphics::ArcTo(LPCRECT lpRect, POINT ptStart, POINT ptEnd)
+   bool graphics::ArcTo(const RECT &  rectParam,POINT ptStart,POINT ptEnd)
    { ASSERT(get_handle1() != NULL); 
-   return ArcTo(lpRect->left, lpRect->top, lpRect->right,
-   lpRect->bottom, ptStart.x, ptStart.y, ptEnd.x, ptEnd.y); }
+   return ArcTo(rectParam.left, rectParam.top, rectParam.right,
+   rectParam.bottom, ptStart.x, ptStart.y, ptEnd.x, ptEnd.y); }
    int32_t graphics::GetArcDirection() const
    { ASSERT(get_handle2() != NULL);
    return ::GetArcDirection(get_handle2()); }
@@ -1867,10 +1878,10 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    graphics.DrawImage(pMeta, Point(0, 150));
    delete pMeta;;
 }*/
-   bool graphics::PlayMetaFile(HENHMETAFILE hEnhMF, LPCRECT lpBounds)
+   bool graphics::PlayMetaFile(HENHMETAFILE hEnhMF, const RECT &  rectBounds)
    { 
 
-      Gdiplus::RectF rect((Gdiplus::REAL) lpBounds->left, (Gdiplus::REAL) lpBounds->top, (Gdiplus::REAL) width(lpBounds), (Gdiplus::REAL) height(lpBounds));
+      Gdiplus::RectF rect((Gdiplus::REAL) rectBounds.left,(Gdiplus::REAL) rectBounds.top,(Gdiplus::REAL) width(rectBounds),(Gdiplus::REAL) height(rectBounds));
 
       Gdiplus::Metafile* pMeta = new Gdiplus::Metafile(hEnhMF, false);
 
@@ -2264,7 +2275,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return NULL;
    }
 
-   void graphics::DrawDragRect(LPCRECT lpRect, SIZE size, LPCRECT lpRectLast, SIZE sizeLast, ::draw2d::brush* pBrush, ::draw2d::brush* pBrushLast)
+   void graphics::DrawDragRect(const RECT &  lpRect, SIZE size, const RECT &  lpRectLast, SIZE sizeLast, ::draw2d::brush* pBrush, ::draw2d::brush* pBrushLast)
    {
 
       throw not_implemented(get_app());
@@ -2343,7 +2354,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 */
    }
 
-   /*void graphics::FillSolidRect(LPCRECT lpRect, COLORREF clr)
+   /*void graphics::FillSolidRect(const RECT &  lpRect, COLORREF clr)
    {
       ::SetBkColor(get_handle1(), clr);
       ::ExtTextOut(get_handle1(), 0, 0, ETO_OPAQUE, lpRect, NULL, 0, NULL);
@@ -2368,11 +2379,11 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    */
 
-   void graphics::Draw3dRect(LPCRECT lpRect,
+   void graphics::Draw3dRect(const RECT &  rectParam,
       COLORREF clrTopLeft, COLORREF clrBottomRight)
    {
-      Draw3dRect(lpRect->left, lpRect->top, lpRect->right - lpRect->left,
-         lpRect->bottom - lpRect->top, clrTopLeft, clrBottomRight);
+      Draw3dRect(rectParam.left, rectParam.top, rectParam.right - rectParam.left,
+         rectParam.bottom - rectParam.top, clrTopLeft, clrBottomRight);
    }
 
    void graphics::Draw3dRect(int32_t x, int32_t y, int32_t cx, int32_t cy,
@@ -3002,15 +3013,15 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return nRetVal;
    }
 
-   int32_t graphics::ExcludeClipRect(LPCRECT lpRect)
+   int32_t graphics::ExcludeClipRect(const RECT &  rectParam)
    {
       int32_t nRetVal = ERROR;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
-         nRetVal = ::ExcludeClipRect(get_handle1(), lpRect->left, lpRect->top,
-         lpRect->right, lpRect->bottom);
+         nRetVal = ::ExcludeClipRect(get_handle1(), rectParam.left, rectParam.top,
+         rectParam.right, rectParam.bottom);
       if(get_handle2() != NULL)
-         nRetVal = ::ExcludeClipRect(get_handle2(), lpRect->left, lpRect->top,
-         lpRect->right, lpRect->bottom);
+         nRetVal = ::ExcludeClipRect(get_handle2(), rectParam.left, rectParam.top,
+         rectParam.right, rectParam.bottom);
       return nRetVal;
    }
 
@@ -3024,13 +3035,13 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return nRetVal;
    }
 
-   int32_t graphics::IntersectClipRect(LPCRECT lpRect)
+   int32_t graphics::IntersectClipRect(const RECT &  rectBounds)
    {
       int32_t nRetVal = ERROR;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
-         nRetVal = ::IntersectClipRect(get_handle1(), lpRect->left, lpRect->top, lpRect->right, lpRect->bottom);
+         nRetVal = ::IntersectClipRect(get_handle1(),rectBounds.left,rectBounds.top,rectBounds.right,rectBounds.bottom);
       if(get_handle2() != NULL)
-         nRetVal = ::IntersectClipRect(get_handle2(), lpRect->left, lpRect->top, lpRect->right, lpRect->bottom);
+         nRetVal = ::IntersectClipRect(get_handle2(),rectBounds.left,rectBounds.top,rectBounds.right,rectBounds.bottom);
       return nRetVal;
    }
 
@@ -3458,21 +3469,21 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       lpSize->cy = MulDiv(lpSize->cy, abs(sizeWinExt.cy), abs(sizeVpExt.cy));
    }
 
-   int32_t graphics::draw_text(const char * lpszString,int32_t nCount,LPRECT lpRect,UINT nFormat)
+   int32_t graphics::draw_text(const char * lpszString,int32_t nCount,const RECT & lpRect,UINT nFormat)
    {
       return draw_text(string(lpszString,nCount),lpRect,nFormat);
 
    }
 
-   int32_t graphics::draw_text(const string & str,LPRECT lpRect,UINT nFormat)
+   int32_t graphics::draw_text(const string & str,const RECT & rectParam,UINT nFormat)
    {
       ::rectd rect;
-      ::copy(rect,lpRect);
+      ::copy(rect,&rectParam);
       return draw_text(str,rect,nFormat);
    }
 
 
-   int32_t graphics::draw_text(const char * lpszString, int32_t nCount, LPRECTD lpRect, UINT nFormat)
+   int32_t graphics::draw_text(const char * lpszString, int32_t nCount, const RECTD & rectParam, UINT nFormat)
    { 
       /*if(get_handle1() == NULL)
          return -1;
@@ -3482,11 +3493,11 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       wstring wstr = ::str::international::utf8_to_unicode(string(lpszString, nCount));
       return ::DrawTextW(get_handle1(), wstr, (int32_t) wcslen(wstr), lpRect, nFormat); */
 
-      return draw_text(string(lpszString, nCount), lpRect, nFormat);
+      return draw_text(string(lpszString,nCount),rectParam,nFormat);
 
    }
 
-   int32_t graphics::draw_text(const string & str, LPRECTD lpRect, UINT nFormat)
+   int32_t graphics::draw_text(const string & str, const RECTD & rectParam, UINT nFormat)
    { 
       
       /*if(get_handle1() == NULL)
@@ -3587,10 +3598,10 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       {
 
 
-         pmNew->Translate((Gdiplus::REAL) lpRect->left,(Gdiplus::REAL) lpRect->top);
+         pmNew->Translate((Gdiplus::REAL) rectParam.left,(Gdiplus::REAL) rectParam.top);
          pmNew->Scale((Gdiplus::REAL) m_spfont->m_dFontWidth,(Gdiplus::REAL) 1.0,Gdiplus::MatrixOrderAppend);
 
-         Gdiplus::RectF rectf(0,0,(Gdiplus::REAL) ((lpRect->right - lpRect->left) * m_spfont->m_dFontWidth),(Gdiplus::REAL) (lpRect->bottom - lpRect->top));
+         Gdiplus::RectF rectf(0,0,(Gdiplus::REAL) ((rectParam.right - rectParam.left) * m_spfont->m_dFontWidth),(Gdiplus::REAL) (rectParam.bottom - rectParam.top));
 
          m_pgraphics->SetTransform(pmNew);
 
@@ -3608,7 +3619,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   int32_t graphics::draw_text_ex(LPTSTR lpszString, int32_t nCount, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
+   int32_t graphics::draw_text_ex(LPTSTR lpszString,int32_t nCount,const RECT & rectParam,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
    { 
       if(get_handle1() == NULL)
          return -1;
@@ -3616,32 +3627,32 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
       ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
       wstring wstr = ::str::international::utf8_to_unicode(string(lpszString, nCount));
-      return ::DrawTextExW(get_handle1(), const_cast<wchar_t *>((const wchar_t *)wstr), (int32_t)wcslen(wstr), lpRect, nFormat, lpDTParams); 
+      return ::DrawTextExW(get_handle1(),const_cast<wchar_t *>((const wchar_t *)wstr),(int32_t)wcslen(wstr),(LPRECT) &rectParam,nFormat,lpDTParams);
    }
 
-   int32_t graphics::draw_text_ex(const string & str, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
+   int32_t graphics::draw_text_ex(const string & str,const RECT & rectParam,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
    { 
       ASSERT(get_handle1() != NULL);
       // these flags would modify the string
       ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
       ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
       wstring wstr = ::str::international::utf8_to_unicode(str);
-      return ::DrawTextExW(get_handle1(), const_cast<wchar_t *>((const wchar_t *)wstr), (int32_t)wcslen(wstr), lpRect, nFormat, lpDTParams); 
+      return ::DrawTextExW(get_handle1(),const_cast<wchar_t *>((const wchar_t *)wstr),(int32_t)wcslen(wstr),(LPRECT) &rectParam,nFormat,lpDTParams);
    }
 
 
-   int32_t graphics::draw_text_ex(LPTSTR lpszString,int32_t nCount,LPRECTD lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
+   int32_t graphics::draw_text_ex(LPTSTR lpszString,int32_t nCount,const RECTD & rectParam,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
    {
 
-      return ::draw2d::graphics::draw_text_ex(lpszString,nCount,lpRect,nFormat,lpDTParams);
+      return ::draw2d::graphics::draw_text_ex(lpszString,nCount,rectParam,nFormat,lpDTParams);
 
    }
 
 
-   int32_t graphics::draw_text_ex(const string & str,LPRECTD lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
+   int32_t graphics::draw_text_ex(const string & str,const RECTD & rectParam,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
    {
 
-      return ::draw2d::graphics::draw_text_ex(str, lpRect,nFormat,lpDTParams);
+      return ::draw2d::graphics::draw_text_ex(str,rectParam,nFormat,lpDTParams);
 
    }
 
@@ -4059,10 +4070,10 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 namespace draw2d_gdiplus
 {
 
-   void graphics::FillSolidRect(LPCRECT lprect, COLORREF clr)
+   void graphics::FillSolidRect(const RECT &  rectParam,COLORREF clr)
    {
 
-      FillSolidRect(lprect->left, lprect->top, width(lprect), height(lprect), clr);
+      FillSolidRect(rectParam.left,rectParam.top,width(rectParam),height(rectParam),clr);
       
    }
 
@@ -4473,7 +4484,7 @@ namespace draw2d_gdiplus
       return Gdiplus::FillModeWinding;
    }
 
-   bool graphics::blur(bool bExpand, double dRadius, LPCRECT lpcrect)
+   bool graphics::blur(bool bExpand,double dRadius,const RECT & rectParam)
    {
 
       if(m_spbitmap.is_null() || m_spbitmap->get_os_data() == NULL)
@@ -4494,10 +4505,10 @@ namespace draw2d_gdiplus
 
       Gdiplus::PointF points[2];
 
-      points[0].X    = (Gdiplus::REAL) lpcrect->left;
-      points[0].Y    = (Gdiplus::REAL) lpcrect->top;
-      points[1].X    = (Gdiplus::REAL) lpcrect->right;
-      points[1].Y    = (Gdiplus::REAL) lpcrect->bottom;
+      points[0].X    = (Gdiplus::REAL) rectParam.left;
+      points[0].Y    = (Gdiplus::REAL) rectParam.top;
+      points[1].X    = (Gdiplus::REAL) rectParam.right;
+      points[1].Y    = (Gdiplus::REAL) rectParam.bottom;
 
       m.TransformPoints(points, 2);
 

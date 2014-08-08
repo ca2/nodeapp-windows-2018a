@@ -292,7 +292,7 @@ namespace multimedia
             for(int32_t l = 0; l < control->get_size(); l++)
             {
                sp(::multimedia::audio_mixer::user::control) pcontrol = control->operator ()(l);
-               m_mapDlgItemIDToControl.set_at(pcontrol->_GetDlgCtrlID(), control);
+               m_mapDlgItemIDToControl.set_at(pcontrol->GetDlgCtrlId(), control);
             }
          }
       }
@@ -325,7 +325,7 @@ namespace multimedia
             for(int32_t l = 0; l < control->get_size(); l++)
             {
                sp(::multimedia::audio_mixer::user::control) pcontrol = control->operator()(l);
-               m_mapDlgItemIDToControl.set_at(pcontrol->_GetDlgCtrlID(), control);
+               m_mapDlgItemIDToControl.set_at(pcontrol->GetDlgCtrlId(), control);
             }
          }
       }

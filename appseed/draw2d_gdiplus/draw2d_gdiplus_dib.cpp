@@ -1885,7 +1885,7 @@ namespace draw2d_gdiplus
 
    //void dib::rotate(
    //   ::draw2d::dib * pdib,
-   //   LPCRECT lpcrect,
+   //   const RECT & rect,
    //   double dAngle, 
    //   double dScale)
    //{

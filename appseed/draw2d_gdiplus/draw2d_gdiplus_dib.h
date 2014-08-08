@@ -83,7 +83,7 @@ namespace draw2d_gdiplus
       //void mult_alpha(::draw2d::dib * pdibWork, bool bPreserveAlpha = true);
       //void set_rgb(int32_t R, int32_t G, int32_t B);
 
-      //void rotate(::draw2d::dib * pdib, LPCRECT lpcrect, double dAngle, double dScale);
+      //void rotate(::draw2d::dib * pdib, const RECT & rect, double dAngle, double dScale);
       //void rotate(::draw2d::dib * pdib, double dAngle, double dScale);
       //void Rotate034(::draw2d::dib * pdib, double dAngle, double dScale);
       
