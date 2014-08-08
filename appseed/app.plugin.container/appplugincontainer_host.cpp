@@ -379,9 +379,9 @@ namespace ca2plugin_container
          else if(message == ::hotplugin::message_set_window)
          {
             
-            const RECT & rect = (LPCRECT) pdata;
+            const RECT & rect = *((LPCRECT) pdata);
 
-            m_rect = *lpcrect;
+            m_rect = rect;
 
             if(!IsWindow())
             {

@@ -161,7 +161,7 @@ namespace multimedia
          ::multimedia::audio_mixer::user::label * plabelVolume = source->get_device()->get_mixer()->get_callback()->allocate_label();
          if(plabelVolume == NULL)
             return false;
-         plabelVolume->create_window((LPCRECT)NULL,pParent,nVolumeLabelID);
+         plabelVolume->create_window(null_rect(),pParent,nVolumeLabelID);
          //xxx   str.load_string(IDS_MIXER_VOLUME);
          plabelVolume->SetText(str);
          ::multimedia::audio_mixer::control_data & mcdVolumeLabel = plabelVolume->get_data();
@@ -178,7 +178,7 @@ namespace multimedia
             if(pcontrol == NULL)
                return false;
 
-            pcontrol->create_window((LPCRECT)NULL,pParent,nBalanceID);
+            pcontrol->create_window(null_rect(),pParent,nBalanceID);
             ::multimedia::audio_mixer::control_data_volume & mcdvBalance = pcontrol->get_data();
             mcdvBalance.m_iType = ::multimedia::audio_mixer::control_data::TypeStereoBalance;
             mcdvBalance.m_uiMixerID = m_pmixersource->get_device()->m_uiMixerID;
@@ -198,7 +198,7 @@ namespace multimedia
             if(plabel == NULL)
                return false;
 
-            plabel->create_window((LPCRECT)NULL,pParent,nBalanceLabelID);
+            plabel->create_window(null_rect(),pParent,nBalanceLabelID);
             ::multimedia::audio_mixer::control_data & mcdBalanceLabel = plabel->get_data();
             mcdBalanceLabel.m_iType = ::multimedia::audio_mixer::control_data::TypeStereoBalanceLabel;
             mcdBalanceLabel.m_uiMixerID = m_pmixersource->get_device()->m_uiMixerID;
@@ -268,7 +268,7 @@ namespace multimedia
          {
             nMuteID = nID++;
             ::multimedia::audio_mixer::user::toggle_control * pbtMute = m_pmixersource->get_device()->get_mixer()->get_callback()->allocate_toggle_control();
-            pbtMute->create_window((LPCRECT)NULL,pParent,nMuteID);
+            pbtMute->create_window(null_rect(),pParent,nMuteID);
             pbtMute->set_label(str);
             ::multimedia::audio_mixer::control_data_switch & mcdmMute = pbtMute->get_data();
             mcdmMute.m_iType = ::multimedia::audio_mixer::control_data::TypeUniformMute;
