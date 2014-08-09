@@ -4,7 +4,7 @@
 CLASS_DECL_THREAD ::draw2d::dibmap_ex1 * t_pdibmap = NULL;
 
 
-inline ::size rect_size(LPCRECT lpcrect)
+inline ::size rect_size(const RECT & lpcrect)
 {
 
    return ::size(width(lpcrect), height(lpcrect));
@@ -572,12 +572,12 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::RectVisible(LPCRECT lpRect) const
+   bool graphics::RectVisible(LPCRECT lpcect) const
    { 
 
       ASSERT(get_handle1() != NULL);
 
-      return ::RectVisible(get_handle1(), lpRect) != FALSE; 
+      return ::RectVisible(get_handle1(),lpcect) != FALSE;
 
    }
 
@@ -626,12 +626,12 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::Arc(LPCRECT lpRect, POINT ptStart, POINT ptEnd)
+   bool graphics::Arc(const RECT & lpRect, POINT ptStart, POINT ptEnd)
    { 
 
       ASSERT(get_handle1() != NULL); 
 
-      return ::Arc(get_handle1(), lpRect->left, lpRect->top, lpRect->right, lpRect->bottom, ptStart.x, ptStart.y, ptEnd.x, ptEnd.y) != FALSE; 
+      return ::Arc(get_handle1(), lpRect.left, lpRect.top, lpRect.right, lpRect.bottom, ptStart.x, ptStart.y, ptEnd.x, ptEnd.y) != FALSE; 
 
    }
 
@@ -646,15 +646,15 @@ namespace draw2d_gdi
    }
 
 
-   void graphics::FillRect(LPCRECT lpRect, ::draw2d::brush* pBrush)
+   void graphics::FillRect(const RECT & lpRect, ::draw2d::brush* pBrush)
    { 
 
       ASSERT(get_handle1() != NULL); 
 
       //::FillRect(get_handle1(), lpRect, (HBRUSH)pBrush->get_os_data());
 
-      int x = lpRect->left;
-      int y = lpRect->top;
+      int x = lpRect.left;
+      int y = lpRect.top;
       int cx = width(lpRect);
       int cy = height(lpRect);
 
@@ -695,24 +695,24 @@ namespace draw2d_gdi
 
 
 
-   void graphics::FrameRect(LPCRECT lpRect, ::draw2d::brush* pBrush)
+   void graphics::FrameRect(const RECT & lpRect, ::draw2d::brush* pBrush)
    { 
 
       ASSERT(get_handle1() != NULL); 
 
-      ::FrameRect(get_handle1(), lpRect, (HBRUSH)pBrush->get_os_data());
+      ::FrameRect(get_handle1(), &lpRect, (HBRUSH)pBrush->get_os_data());
 
    }
 
 
 
 
-   void graphics::InvertRect(LPCRECT lpRect)
+   void graphics::InvertRect(const RECT & lpRect)
    {
 
       ASSERT(get_handle1() != NULL); 
 
-      ::InvertRect(get_handle1(), lpRect);
+      ::InvertRect(get_handle1(), &lpRect);
 
    }
 
@@ -903,79 +903,79 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::Chord(LPCRECT lpRect, POINT ptStart, POINT ptEnd)
+   bool graphics::Chord(const RECT & lpRect, POINT ptStart, POINT ptEnd)
    {
 
       ASSERT(get_handle1() != NULL);
 
-      return ::Chord(get_handle1(), lpRect->left, lpRect->top, lpRect->right, lpRect->bottom, ptStart.x, ptStart.y, ptEnd.x, ptEnd.y) != FALSE;
+      return ::Chord(get_handle1(), lpRect.left, lpRect.top, lpRect.right, lpRect.bottom, ptStart.x, ptStart.y, ptEnd.x, ptEnd.y) != FALSE;
 
    }
 
 
-   void graphics::DrawFocusRect(LPCRECT lpRect)
+   void graphics::DrawFocusRect(const RECT & lpRect)
    { 
 
       ASSERT(get_handle1() != NULL); 
 
-      ::DrawFocusRect(get_handle1(), lpRect);
+      ::DrawFocusRect(get_handle1(), &lpRect);
 
    }
 
 
-   bool graphics::Ellipse(LPCRECT lpRect)
+   bool graphics::Ellipse(const RECT & lpRect)
    {
 
       if(width(lpRect) <= 0 || height(lpRect) <= 0)
          return false;
 
-      bool bOk = internal_fill_and_stroke_path(&::draw2d_gdi::graphics::internal_set_path_ellipse, (void *) lpRect, lpRect);
+      bool bOk = internal_fill_and_stroke_path(&::draw2d_gdi::graphics::internal_set_path_ellipse, (void *) &lpRect, lpRect);
 
       return bOk;
 
    }
 
 
-   bool graphics::DrawEllipse(LPCRECT lpRect)
+   bool graphics::DrawEllipse(const RECT & lpRect)
    {
 
       if(width(lpRect) <= 0 || height(lpRect) <= 0)
          return false;
 
-      bool bOk = internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path_ellipse, (void *) lpRect, lpRect);
+      bool bOk = internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path_ellipse, (void *) &lpRect, lpRect);
 
       return bOk;
 
    }
 
 
-   bool graphics::FillEllipse(LPCRECT lpRect)
+   bool graphics::FillEllipse(const RECT & lpRect)
    {
 
       if(width(lpRect) <= 0 || height(lpRect) <= 0)
          return false;
 
-      bool bOk = internal_fill_path(&::draw2d_gdi::graphics::internal_set_path_ellipse, (void *) lpRect, lpRect);
+      bool bOk = internal_fill_path(&::draw2d_gdi::graphics::internal_set_path_ellipse, (void *) &lpRect, lpRect);
 
       return bOk;
 
    }
 
 
-   bool graphics::Rectangle(LPCRECT lpRect)
+   bool graphics::Rectangle(const RECT & lpRect)
    {
 
       if(width(lpRect) <= 0 || height(lpRect) <= 0)
          return false;
 
-      bool bOk = internal_fill_and_stroke_path(&::draw2d_gdi::graphics::internal_set_path_rectangle, (void *) lpRect, lpRect);
+      bool bOk = internal_fill_and_stroke_path(&::draw2d_gdi::graphics::internal_set_path_rectangle, (void *) &lpRect, lpRect);
 
       return bOk;
 
    }
 
 
-   bool graphics::DrawRect(LPCRECT lpcrect, ::draw2d::pen * ppen)
+   bool graphics::DrawRect(const RECT & lpcrect, ::draw2d::pen * ppen)
    {
 
       if (width(lpcrect) <= 0 || height(lpcrect) <= 0)
@@ -1005,26 +1005,26 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::DrawRectangle(LPCRECT lpRect)
+   bool graphics::DrawRectangle(const RECT & lpRect)
    {
 
       if(width(lpRect) <= 0 || height(lpRect) <= 0)
          return false;
 
-      bool bOk = internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path_rectangle, (void *) lpRect, lpRect);
+      bool bOk = internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path_rectangle, (void *) &lpRect, lpRect);
 
       return bOk;
 
    }
 
 
-   bool graphics::FillRectangle(LPCRECT lpRect)
+   bool graphics::FillRectangle(const RECT & lpRect)
    {
 
       if(width(lpRect) <= 0 || height(lpRect) <= 0)
          return false;
 
-      bool bOk = internal_fill_path(&::draw2d_gdi::graphics::internal_set_path_rectangle, (void *) lpRect, lpRect);
+      bool bOk = internal_fill_path(&::draw2d_gdi::graphics::internal_set_path_rectangle, (void *) &lpRect, lpRect);
 
       return bOk;
 
@@ -1195,13 +1195,13 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::Pie(LPCRECT lpRect, POINT ptStart, POINT ptEnd)
+   bool graphics::Pie(const RECT & lpRect, POINT ptStart, POINT ptEnd)
    {
 
       ASSERT(get_handle1() != NULL);
 
-      return ::Pie(get_handle1(), lpRect->left, lpRect->top,
-         lpRect->right, lpRect->bottom, ptStart.x, ptStart.y,
+      return ::Pie(get_handle1(), lpRect.left, lpRect.top,
+         lpRect.right, lpRect.bottom, ptStart.x, ptStart.y,
          ptEnd.x, ptEnd.y) != FALSE;
 
    }
@@ -1217,13 +1217,13 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::RoundRect(LPCRECT lpRect, POINT point)
+   bool graphics::RoundRect(const RECT & lpRect, POINT point)
    {
 
       ASSERT(get_handle1() != NULL);
 
-      return ::RoundRect(get_handle1(), lpRect->left, lpRect->top,
-         lpRect->right, lpRect->bottom, point.x, point.y) != FALSE;
+      return ::RoundRect(get_handle1(), lpRect.left, lpRect.top,
+         lpRect.right, lpRect.bottom, point.x, point.y) != FALSE;
 
    }
 
@@ -1685,7 +1685,7 @@ namespace draw2d_gdi
 
    // call virtual
 
-   bool graphics::ExtTextOut(int x, int y, UINT nOptions, LPCRECT lpRect, const char * lpszString, UINT nCount, LPINT lpDxWidths)
+   bool graphics::ExtTextOut(int x, int y, UINT nOptions, const RECT & lpRect, const char * lpszString, UINT nCount, LPINT lpDxWidths)
    { 
       ASSERT(get_handle1() != NULL); 
       return ::ExtTextOut(get_handle1(), x, y, nOptions, lpRect, lpszString, nCount, lpDxWidths) != FALSE;
@@ -1694,7 +1694,7 @@ namespace draw2d_gdi
 
 
 
-   bool graphics::ExtTextOut(int x, int y, UINT nOptions, LPCRECT lpRect,
+   bool graphics::ExtTextOut(int x, int y, UINT nOptions, const RECT & lpRect,
       const string & str, LPINT lpDxWidths)
    {
 
@@ -1938,7 +1938,7 @@ namespace draw2d_gdi
       return size;
    }
    bool graphics::ScrollDC(int dx, int dy,
-      LPCRECT lpRectScroll, LPCRECT lpRectClip,
+      const RECT & lpRectScroll, const RECT & lpRectClip,
       ::draw2d::region* pRgnUpdate, LPRECT lpRectUpdate)
    {
 
@@ -1960,7 +1960,7 @@ namespace draw2d_gdi
       return ::Escape(get_handle1(), nEscape, nCount, lpszInData, lpOutData);}
 
    // graphics 3.1 Specific functions
-   UINT graphics::SetBoundsRect(LPCRECT lpRectBounds, UINT flags)
+   UINT graphics::SetBoundsRect(const RECT & lpRectBounds, UINT flags)
    {
 
       ASSERT(get_handle1() != NULL);
@@ -2131,10 +2131,10 @@ namespace draw2d_gdi
 
 
 
-   bool graphics::ArcTo(LPCRECT lpRect, POINT ptStart, POINT ptEnd)
+   bool graphics::ArcTo(const RECT & lpRect, POINT ptStart, POINT ptEnd)
    {
 
-      ASSERT(get_handle1() != NULL); return ArcTo(lpRect->left, lpRect->top, lpRect->right, lpRect->bottom, ptStart.x, ptStart.y, ptEnd.x, ptEnd.y) != FALSE;
+      ASSERT(get_handle1() != NULL); return ArcTo(lpRect.left, lpRect.top, lpRect.right, lpRect.bottom, ptStart.x, ptStart.y, ptEnd.x, ptEnd.y) != FALSE;
 
    }
 
@@ -2513,7 +2513,7 @@ namespace draw2d_gdi
 
    }
 
-   bool graphics::internal_fill_path(void (::draw2d_gdi::graphics::* pfnInternalSetPath)(void *), void * pparam, LPCRECT lpcrect)
+   bool graphics::internal_fill_path(void (::draw2d_gdi::graphics::* pfnInternalSetPath)(void *), void * pparam, const RECT & lpcrect)
    { 
 
       synch_lock ml(&user_mutex());
@@ -2645,7 +2645,7 @@ namespace draw2d_gdi
 
    }
 
-   bool graphics::internal_stroke_path(void (::draw2d_gdi::graphics::* pfnInternalSetPath)(void *), void * pparam, LPCRECT lpcrect)
+   bool graphics::internal_stroke_path(void (::draw2d_gdi::graphics::* pfnInternalSetPath)(void *), void * pparam, const RECT & lpcrect)
    {
 
       synch_lock ml(&user_mutex());
@@ -2716,7 +2716,7 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::internal_fill_and_stroke_path(void (::draw2d_gdi::graphics::* pfnInternalSetPath)(void *), void * pparam, LPCRECT lpcrect)
+   bool graphics::internal_fill_and_stroke_path(void (::draw2d_gdi::graphics::* pfnInternalSetPath)(void *), void * pparam, const RECT & lpcrect)
    {
 
       synch_lock ml(&user_mutex());
@@ -2867,7 +2867,7 @@ namespace draw2d_gdi
 
 
 
-   bool graphics::PlayMetaFile(HENHMETAFILE hEnhMF, LPCRECT lpBounds)
+   bool graphics::PlayMetaFile(HENHMETAFILE hEnhMF, const RECT & lpBounds)
    { 
 
       return ::PlayEnhMetaFile(get_handle1(), hEnhMF, lpBounds) != FALSE;
@@ -3362,8 +3362,8 @@ namespace draw2d_gdi
 
 
 
-   void graphics::DrawDragRect(LPCRECT lpRect, SIZE size,
-      LPCRECT lpRectLast, SIZE sizeLast, ::draw2d::brush* pBrush, ::draw2d::brush* pBrushLast)
+   void graphics::DrawDragRect(const RECT & lpRect, SIZE size,
+      const RECT & lpRectLast, SIZE sizeLast, ::draw2d::brush* pBrush, ::draw2d::brush* pBrushLast)
    {
 
       // first, determine the update region and select it
@@ -3441,10 +3441,10 @@ namespace draw2d_gdi
 
 
 
-   void graphics::FillSolidRect(LPCRECT lpRect, COLORREF clr)
+   void graphics::FillSolidRect(const RECT & lpRect, COLORREF clr)
    {
 
-      FillSolidRect(lpRect->left, lpRect->top, width(lpRect), height(lpRect), clr);
+      FillSolidRect(lpRect.left, lpRect.top, width(lpRect), height(lpRect), clr);
 
    }
 
@@ -3558,10 +3558,10 @@ namespace draw2d_gdi
 
 
 
-   void graphics::Draw3dRect(LPCRECT lpRect, COLORREF clrTopLeft, COLORREF clrBottomRight)
+   void graphics::Draw3dRect(const RECT & lpRect, COLORREF clrTopLeft, COLORREF clrBottomRight)
    {
 
-      Draw3dRect(lpRect->left, lpRect->top, lpRect->right - lpRect->left, lpRect->bottom - lpRect->top, clrTopLeft, clrBottomRight);
+      Draw3dRect(lpRect.left, lpRect.top, lpRect.right - lpRect.left, lpRect.bottom - lpRect.top, clrTopLeft, clrBottomRight);
 
    }
 
@@ -4083,15 +4083,15 @@ namespace draw2d_gdi
       return nRetVal;
    }
 
-   int graphics::ExcludeClipRect(LPCRECT lpRect)
+   int graphics::ExcludeClipRect(const RECT & lpRect)
    {
       int nRetVal = ERROR;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
-         nRetVal = ::ExcludeClipRect(get_handle1(), lpRect->left, lpRect->top,
-         lpRect->right, lpRect->bottom);
+         nRetVal = ::ExcludeClipRect(get_handle1(), lpRect.left, lpRect.top,
+         lpRect.right, lpRect.bottom);
       if(get_handle2() != NULL)
-         nRetVal = ::ExcludeClipRect(get_handle2(), lpRect->left, lpRect->top,
-         lpRect->right, lpRect->bottom);
+         nRetVal = ::ExcludeClipRect(get_handle2(), lpRect.left, lpRect.top,
+         lpRect.right, lpRect.bottom);
       return nRetVal;
    }
 
@@ -4105,13 +4105,13 @@ namespace draw2d_gdi
       return nRetVal;
    }
 
-   int graphics::IntersectClipRect(LPCRECT lpRect)
+   int graphics::IntersectClipRect(const RECT & lpRect)
    {
       int nRetVal = ERROR;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
-         nRetVal = ::IntersectClipRect(get_handle1(), lpRect->left, lpRect->top, lpRect->right, lpRect->bottom);
+         nRetVal = ::IntersectClipRect(get_handle1(), lpRect.left, lpRect.top, lpRect.right, lpRect.bottom);
       if(get_handle2() != NULL)
-         nRetVal = ::IntersectClipRect(get_handle2(), lpRect->left, lpRect->top, lpRect->right, lpRect->bottom);
+         nRetVal = ::IntersectClipRect(get_handle2(), lpRect.left, lpRect.top, lpRect.right, lpRect.bottom);
       return nRetVal;
    }
 
