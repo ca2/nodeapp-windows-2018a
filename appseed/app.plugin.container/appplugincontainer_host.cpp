@@ -393,7 +393,7 @@ namespace ca2plugin_container
             try
             {
 
-               SetPlacement(lpcrect);
+               SetPlacement(rect);
 
             }
             catch(...)
@@ -405,7 +405,7 @@ namespace ca2plugin_container
          {
             
             
-            LPRECT prect = (LPRECT) pdata;
+            const rect & rect = *((LPCRECT) pdata);
 
             try
             {
@@ -414,7 +414,7 @@ namespace ca2plugin_container
 
                g->CreateCompatibleDC(NULL);
 
-               on_paint(g, prect);
+               on_paint(g, rect);
 
             }
             catch(...)
