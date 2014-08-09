@@ -446,8 +446,7 @@ namespace multimedia
          {
             for(int32_t i = 0; i < this->get_size(); i++)
             {
-               ::multimedia::audio_mixer::user::toggle_control * pmutecontrol = (::multimedia::audio_mixer::user::toggle_control *)
-                  GetControlByIndex(i);
+               sp(::multimedia::audio_mixer::user::toggle_control) pmutecontrol =  GetControlByIndex(i);
 
 
                PMIXERCONTROLDETAILS_BOOLEAN pmxcd_f = (PMIXERCONTROLDETAILS_BOOLEAN) m_mixercontroldetails.paDetails;

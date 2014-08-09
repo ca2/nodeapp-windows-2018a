@@ -243,7 +243,7 @@ namespace production
       class rect rect;
       rect.null();
 
-	   if(!m_pscrollbarHorz->create(
+	   if(!m_pscrollbarHorz->create_window(
 		   orientation_horizontal,
 		   WS_CHILD 
 		   | WS_VISIBLE,
@@ -256,7 +256,7 @@ namespace production
 
       rect.null();
 
-	   if(!m_pscrollbarVert->create(
+	   if(!m_pscrollbarVert->create_window(
 		   orientation_vertical,
 		   WS_CHILD 
 		   | WS_VISIBLE,

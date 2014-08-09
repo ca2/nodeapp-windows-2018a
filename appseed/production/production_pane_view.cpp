@@ -167,7 +167,7 @@ namespace production
          break;
       case PaneViewProduction:
          {
-            sp(::user::interaction) puie = ::user::impact::create_view < ::production::view > (get_document(), pcreatordata->m_pholder);
+            sp(::user::interaction) puie = ::user::impact::create_view < ::production::view > (pcreatordata);
             if(puie != NULL)
             {
                pcreatordata->m_pdoc = get_document();
