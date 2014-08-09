@@ -141,7 +141,7 @@ namespace multimedia
          ::multimedia::audio_mixer::user::level_control * plevelcontrol = source->get_device()->get_mixer()->get_callback()->allocate_level_control();
          if(plevelcontrol == NULL)
             return false;
-         plevelcontrol->create_window((LPCRECT) NULL, pParent, nVolumeID);
+         plevelcontrol->create_window(null_rect(), pParent, nVolumeID);
          ::multimedia::audio_mixer::control_data_volume & mcdvVolume = plevelcontrol->get_data();
          mcdvVolume.m_iType = ::multimedia::audio_mixer::control_data::TypeStereoVolume;
          mcdvVolume.m_uiMixerID = source->get_device()->m_uiMixerID;
