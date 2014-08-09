@@ -572,12 +572,12 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::RectVisible(LPCRECT lpcect) const
+   bool graphics::RectVisible(const RECT & rect) const
    { 
 
       ASSERT(get_handle1() != NULL);
 
-      return ::RectVisible(get_handle1(),lpcect) != FALSE;
+      return ::RectVisible(get_handle1(),&rect) != FALSE;
 
    }
 
@@ -975,10 +975,10 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::DrawRect(const RECT & lpcrect, ::draw2d::pen * ppen)
+   bool graphics::DrawRect(const RECT & rect, ::draw2d::pen * ppen)
    {
 
-      if (width(lpcrect) <= 0 || height(lpcrect) <= 0)
+      if(width(rect) <= 0 || height(rect) <= 0)
          return false;
 
       ::draw2d::pen_sp penPrevious = m_sppen;
@@ -990,7 +990,7 @@ namespace draw2d_gdi
       try
       {
 
-         bOk = internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path_rectangle, (void *)lpcrect, lpcrect);
+         bOk = internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path_rectangle, (void *)&rect, rect);
 
       }
       catch (...)
@@ -1048,7 +1048,7 @@ namespace draw2d_gdi
 
       item.nCount = nCount;
 
-      bool bOk = internal_fill_and_stroke_path(&::draw2d_gdi::graphics::internal_set_path_polygon, (void *) &item, &rect);
+      bool bOk = internal_fill_and_stroke_path(&::draw2d_gdi::graphics::internal_set_path_polygon, (void *) &item, rect);
 
       return bOk;
 
@@ -1073,7 +1073,7 @@ namespace draw2d_gdi
 
       item.nCount = nCount;
 
-      bool bOk = internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path_polygon, (void *) &item, &rect);
+      bool bOk = internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path_polygon, (void *) &item, rect);
 
       return bOk;
 
@@ -1098,7 +1098,7 @@ namespace draw2d_gdi
 
       item.nCount = nCount;
 
-      bool bOk = internal_fill_path(&::draw2d_gdi::graphics::internal_set_path_polygon, (void *) &item, &rect);
+      bool bOk = internal_fill_path(&::draw2d_gdi::graphics::internal_set_path_polygon, (void *) &item, rect);
 
       return bOk;
 
@@ -1125,7 +1125,7 @@ namespace draw2d_gdi
 
       item.nCount = nCount;
 
-      bool bOk = internal_fill_and_stroke_path(&::draw2d_gdi::graphics::internal_set_path_poly_polygon, (void *) &item, &rect);
+      bool bOk = internal_fill_and_stroke_path(&::draw2d_gdi::graphics::internal_set_path_poly_polygon, (void *) &item, rect);
 
       return bOk;
 
@@ -1152,7 +1152,7 @@ namespace draw2d_gdi
 
       item.nCount = nCount;
 
-      bool bOk = internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path_poly_polygon, (void *) &item, &rect);
+      bool bOk = internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path_poly_polygon, (void *) &item, rect);
 
       return bOk;
 
@@ -1179,7 +1179,7 @@ namespace draw2d_gdi
 
       item.nCount = nCount;
 
-      bool bOk = internal_fill_path(&::draw2d_gdi::graphics::internal_set_path_poly_polygon, (void *) &item, &rect);
+      bool bOk = internal_fill_path(&::draw2d_gdi::graphics::internal_set_path_poly_polygon, (void *) &item, rect);
 
       return bOk;
 
@@ -1688,7 +1688,7 @@ namespace draw2d_gdi
    bool graphics::ExtTextOut(int x, int y, UINT nOptions, const RECT & lpRect, const char * lpszString, UINT nCount, LPINT lpDxWidths)
    { 
       ASSERT(get_handle1() != NULL); 
-      return ::ExtTextOut(get_handle1(), x, y, nOptions, lpRect, lpszString, nCount, lpDxWidths) != FALSE;
+      return ::ExtTextOut(get_handle1(), x, y, nOptions, &lpRect, lpszString, nCount, lpDxWidths) != FALSE;
 
    }
 
@@ -1700,7 +1700,7 @@ namespace draw2d_gdi
 
       ASSERT(get_handle1() != NULL);
 
-      return ::ExtTextOut(get_handle1(), x, y, nOptions, lpRect,
+      return ::ExtTextOut(get_handle1(), x, y, nOptions, &lpRect,
          str, (UINT)str.get_length(), lpDxWidths) != FALSE;
 
    }
@@ -1730,7 +1730,7 @@ namespace draw2d_gdi
    }
 
 
-   int graphics::draw_text(const char * lpszString, int nCount, LPRECT lpRect, UINT nFormat)
+   int graphics::draw_text(const char * lpszString, int nCount, const RECT & lpRect, UINT nFormat)
    { 
 
       return _DrawText(lpszString, nCount, lpRect, nFormat);
@@ -1744,7 +1744,7 @@ namespace draw2d_gdi
    }
 
 
-   int graphics::draw_text(const string & str, LPRECT lpRect, UINT nFormat)
+   int graphics::draw_text(const string & str,const RECT & lpRect,UINT nFormat)
    { 
 
       return draw_text(str, (int) str.get_length(), lpRect, nFormat);
@@ -1752,17 +1752,17 @@ namespace draw2d_gdi
    }
 
 
-   int graphics::draw_text_ex(LPTSTR lpszString, int nCount, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
+   int graphics::draw_text_ex(LPTSTR lpszString,int nCount,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
    { 
 
       wstring wstr(string(lpszString, nCount));
 
-      return DrawTextExW(get_handle(), (wchar_t *) (const wchar_t *)  wstr, (int) wstr.get_length(), lpRect, nFormat, lpDTParams);
+      return DrawTextExW(get_handle(), (wchar_t *) (const wchar_t *)  wstr, (int) wstr.get_length(),(LPRECT) &lpRect, nFormat, lpDTParams);
 
    }
 
 
-   int graphics::draw_text_ex(const string & str, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
+   int graphics::draw_text_ex(const string & str,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
    { 
 
       return draw_text_ex((char *) (const char *) str, (int) str.get_length(), lpRect, nFormat, lpDTParams);
@@ -1944,8 +1944,8 @@ namespace draw2d_gdi
 
       ASSERT(get_handle1() != NULL);
 
-      return ::ScrollDC(get_handle1(), dx, dy, lpRectScroll,
-         lpRectClip, (HRGN)pRgnUpdate->get_os_data(), lpRectUpdate) != FALSE;
+      return ::ScrollDC(get_handle1(), dx, dy, &lpRectScroll,
+         &lpRectClip, (HRGN)pRgnUpdate->get_os_data(), lpRectUpdate) != FALSE;
 
    }
 
@@ -1965,7 +1965,7 @@ namespace draw2d_gdi
 
       ASSERT(get_handle1() != NULL);
 
-      return ::SetBoundsRect(get_handle1(), lpRectBounds, flags);
+      return ::SetBoundsRect(get_handle1(), &lpRectBounds, flags);
 
    }
 
@@ -2870,7 +2870,7 @@ namespace draw2d_gdi
    bool graphics::PlayMetaFile(HENHMETAFILE hEnhMF, const RECT & lpBounds)
    { 
 
-      return ::PlayEnhMetaFile(get_handle1(), hEnhMF, lpBounds) != FALSE;
+      return ::PlayEnhMetaFile(get_handle1(), hEnhMF, &lpBounds) != FALSE;
 
    }
 
@@ -3369,10 +3369,10 @@ namespace draw2d_gdi
       // first, determine the update region and select it
       ::draw2d::region_sp rgnNew(allocer());
       ::draw2d::region_sp rgnOutside(allocer()), rgnInside(allocer());
-      rgnOutside->create_rect(lpRect);
-      rect rect = *lpRect;
+      rgnOutside->create_rect(&lpRect);
+      rect rect = lpRect;
       rect.inflate(-size.cx, -size.cy);
-      rect.intersect(rect, lpRect);
+      rect.intersect(rect, &lpRect);
       rgnInside->create_rect(rect);
       rgnNew->create_rect(0, 0, 0, 0);
       rgnNew->combine(rgnOutside, rgnInside, ::draw2d::region::combine_xor);
@@ -3394,14 +3394,14 @@ namespace draw2d_gdi
       }
 
       ::draw2d::region_sp rgnLast(allocer()), rgnUpdate(allocer());
-      if (lpRectLast != NULL)
+      if (!IsRectEmpty(&lpRectLast))
       {
          // find difference between new region and old region
          rgnLast->create_rect(0, 0, 0, 0);
-         rgnOutside->create_rect(lpRectLast);
-         rect = *lpRectLast;
+         rgnOutside->create_rect(&lpRectLast);
+         rect = lpRectLast;
          rect.inflate(-sizeLast.cx, -sizeLast.cy);
-         rect.intersect(rect, lpRectLast);
+         rect.intersect(rect, &lpRectLast);
          rgnInside->create_rect(rect);
          rgnLast->combine(rgnOutside, rgnInside, ::draw2d::region::combine_xor);
 
@@ -3415,7 +3415,7 @@ namespace draw2d_gdi
 
 
       }
-      if (pBrush->get_os_data() != pBrushLast->get_os_data() && lpRectLast != NULL)
+      if (pBrush->get_os_data() != pBrushLast->get_os_data() && !IsRectEmpty(&lpRectLast))
       {
          // brushes are different -- erase old region first
          SelectClipRgn(rgnLast);
@@ -4162,7 +4162,7 @@ namespace draw2d_gdi
 
       ::sort::sort(rectBound.top, rectBound.bottom);
 
-      internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path_line, &rect, &rectBound);
+      internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path_line, &rect, rectBound);
 
       ::MoveToEx(m_hdc, rect.right, rect.bottom, NULL);
 

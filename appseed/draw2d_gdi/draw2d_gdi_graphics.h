@@ -363,13 +363,13 @@ namespace draw2d_gdi
             size TabbedTextOut(int x, int y, const string & str,
                int nTabPositions, LPINT lpnTabStopPositions, int nTabOrigin);
 
-      int draw_text(const char * lpszString, int nCount, LPRECT lpRect,
+            int draw_text(const char * lpszString,int nCount,const RECT & lpRect,
          UINT nFormat);
-      int draw_text(const string & str, LPRECT lpRect, UINT nFormat);
+            int draw_text(const string & str,const RECT & lpRect,UINT nFormat);
 
-      int draw_text_ex(LPTSTR lpszString, int nCount, LPRECT lpRect,
+            int draw_text_ex(LPTSTR lpszString,int nCount,const RECT & lpRect,
          UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
-      int draw_text_ex(const string & str, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
+            int draw_text_ex(const string & str,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams);
 
       size GetTextExtent(const char * lpszString, int nCount) const;
       size GetTextExtent(const string & str) const;
