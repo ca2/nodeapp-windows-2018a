@@ -400,13 +400,9 @@ namespace multimedia
             ASSERT(cMultipleItems == 1);
             if(cChannels == 2)
             {
-               ::multimedia::audio_mixer::user::level_control * pslVolume =
-                  (::multimedia::audio_mixer::user::level_control *)
-                  (GetControl(::multimedia::audio_mixer::control_data::TypeStereoVolume));
-               ::multimedia::audio_mixer::control_data_volume * lpmcdVolume = (::multimedia::audio_mixer::control_data_volume *) GetWindowData(::multimedia::audio_mixer::control_data::TypeStereoVolume);
-               ::multimedia::audio_mixer::user::level_control * pslBalance =
-                  (::multimedia::audio_mixer::user::level_control *)
-                  (GetControl(::multimedia::audio_mixer::control_data::TypeStereoBalance));
+               sp(::multimedia::audio_mixer::user::level_control) pslVolume = GetControl(::multimedia::audio_mixer::control_data::TypeStereoVolume);
+               sp(::multimedia::audio_mixer::control_data_volume) lpmcdVolume = GetWindowData(::multimedia::audio_mixer::control_data::TypeStereoVolume);
+               sp(::multimedia::audio_mixer::user::level_control) pslBalance = GetControl(::multimedia::audio_mixer::control_data::TypeStereoBalance);
                double dActualBalance = pslBalance->GetPos();
 
                nRange = lpmcdVolume->nRange;
@@ -436,9 +432,8 @@ namespace multimedia
             }
             else if(cChannels == 1)
             {
-               ::multimedia::audio_mixer::user::level_control * pslVolume = (::multimedia::audio_mixer::user::level_control *)
-                  (GetControl(::multimedia::audio_mixer::control_data::TypeStereoVolume));
-               ::multimedia::audio_mixer::control_data_volume * lpmcdVolume = (::multimedia::audio_mixer::control_data_volume *) GetWindowData(::multimedia::audio_mixer::control_data::TypeStereoVolume);
+               sp(::multimedia::audio_mixer::user::level_control) pslVolume = GetControl(::multimedia::audio_mixer::control_data::TypeStereoVolume);
+               sp(::multimedia::audio_mixer::control_data_volume) lpmcdVolume =  GetWindowData(::multimedia::audio_mixer::control_data::TypeStereoVolume);
 
                nRange = lpmcdVolume->nRange;
                pmxcd_u = (PMIXERCONTROLDETAILS_UNSIGNED) m_mixercontroldetails.paDetails;

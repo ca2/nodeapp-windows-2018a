@@ -81,7 +81,7 @@ namespace production
 
       virtual void _001OnTabClick(int32_t iTab);
       virtual void install_message_handling(::message::dispatch * pinterface);
-      virtual bool pre_create_window(CREATESTRUCT& cs);
+      virtual bool pre_create_window(::user::create_struct& cs);
       virtual void on_update(sp(::user::impact) pSender, LPARAM lHint, ::object * pHint);
 
       sp(::user::document) get_document();
