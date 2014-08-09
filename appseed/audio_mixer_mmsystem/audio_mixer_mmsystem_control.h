@@ -34,14 +34,14 @@ namespace multimedia
 
          bool control_type(::multimedia::audio_mixer::e_control econtrol) const;
          bool OnCommand(WPARAM wParam, LPARAM lParam);
-         ::multimedia::audio_mixer::control_data * GetWindowDataByDlgCtrlID(uint32_t nID);
-         ::multimedia::audio_mixer::user::control * GetControlByDlgCtrlID(uint32_t nID);
+         //::multimedia::audio_mixer::control_data * GetWindowDataByDlgCtrlID(uint32_t nID);
+         //::multimedia::audio_mixer::user::control * GetControlByDlgCtrlID(uint32_t nID);
          //   bool OnNotify(uint32_t nID, LPNMHDR lpnmhdr);
          void OnVHScroll(uint32_t nSBCode, uint32_t nPos, sp(::user::interaction) pScrollBar);
-         ::multimedia::audio_mixer::control_data * GetWindowData(int32_t iType);
+         //::multimedia::audio_mixer::control_data * GetWindowData(int32_t iType);
          void OnMixerControlChange();
-         ::multimedia::audio_mixer::user::control * GetControl(int32_t iType);
-         ::multimedia::audio_mixer::user::control * GetControlByIndex(::index iIndex);
+         //::multimedia::audio_mixer::user::control * GetControl(int32_t iType);
+         //::multimedia::audio_mixer::user::control * GetControlByIndex(::index iIndex);
          void Prepare();
          bool CreateWindowsVolumeV001(sp(::user::interaction) pParent, uint32_t nStartID, uint32_t * nNextID);
 
