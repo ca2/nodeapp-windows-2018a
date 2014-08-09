@@ -172,6 +172,7 @@ namespace production
             {
                pcreatordata->m_pdoc = get_document();
             }
+            pcreatordata->m_eflag.signalize(::user::view_creator_data::flag_hide_all_others_on_show);
          }
          break;
 /*      case PaneViewFileManager:

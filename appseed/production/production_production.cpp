@@ -258,6 +258,9 @@ namespace production
    int32_t production::produce()
    {
 
+      string str;
+
+
       int32_t iRetry = 0;
 
    restart:
@@ -388,72 +391,75 @@ namespace production
          //   goto skipCompress;
          //goto skipBuild;
 
-         bool bSkip1 = false;
-
-         if (!bSkip1 && m_iGlobalRetry <= 0)
+         //if(false)
          {
 
-            for (int32_t i = 0; i < m_straRoot.get_size(); i++)
+            bool bSkip1 = false;
+
+            if(!bSkip1 && m_iGlobalRetry <= 0)
             {
 
-               if (!sync_source(m_straRoot[i], NULL))
-                  return 1;
+               for(int32_t i = 0; i < m_straRoot.get_size(); i++)
+               {
+
+                  if(!sync_source(m_straRoot[i],NULL))
+                     return 1;
+
+               }
 
             }
 
-         }
 
+            string strRevision;
 
-         string strRevision;
+            string strTime;
+            ::datetime::time time;
+            time = m_timeStart;
+            time.FormatGmt(strTime,"%Y-%m-%d %H-%M-%S");
+            string strVerWin;
+            time.FormatGmt(strVerWin,"%Y,%m%d,%H%M,%S");
+            string strSvnVersionCmd;
+            strSvnVersionCmd.Format("svnversion %s",System.dir().path(m_strBase,"app"));
+            m_strBuild = strTime;
+            m_strFormatBuild = strTime;
+            m_strFormatBuild.replace(" ","_");
 
-         string strTime;
-         ::datetime::time time;
-         time = m_timeStart;
-         time.FormatGmt(strTime, "%Y-%m-%d %H-%M-%S");
-         string strVerWin;
-         time.FormatGmt(strVerWin, "%Y,%m%d,%H%M,%S");
-         string strSvnVersionCmd;
-         strSvnVersionCmd.Format("svnversion %s", System.dir().path(m_strBase, "app"));
-         m_strBuild = strTime;
-         m_strFormatBuild = strTime;
-         m_strFormatBuild.replace(" ","_");
+            {
 
-         {
+               string strStatus;
+               strStatus.Format("Getting Revision: %s ...","app");
+               add_status(strStatus);
 
-            string strStatus;
-            strStatus.Format("Getting Revision: %s ...","app");
-            add_status(strStatus);
+            }
 
-         }
+            strRevision = System.process().get_output(strSvnVersionCmd);
+            strRevision.trim();
 
-         strRevision = System.process().get_output(strSvnVersionCmd);
-         strRevision.trim();
+            {
 
-         {
+               string strStatus;
+               strStatus.Format("Revision of %s is %s","app",strRevision);
+               add_status(strStatus);
 
-            string strStatus;
-            strStatus.Format("Revision of %s is %s","app",strRevision);
-            add_status(strStatus);
+            }
+            if(str::from(atoi(strRevision)) != strRevision)
+            {
+               // good pratice to initialize authentication of ca2status.com with account.ca2.cc auth information
+               string str;
 
-         }
-         if(str::from(atoi(strRevision)) != strRevision)
-         {
-            // good pratice to initialize authentication of ca2status.com with account.ca2.cc auth information
-            string str;
+               {
+
+                  property_set set(get_app());
+
+                  Application.http().get("http://api.ca2.cc/status/insert",set);
+
+               }
 
             {
 
                property_set set(get_app());
 
-               Application.http().get("http://api.ca2.cc/status/insert", set);
-
-            }
-
-            {
-
-               property_set set(get_app());
-
-               if (m_eversion == version_basis)
+               if(m_eversion == version_basis)
                {
                   set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #552250;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #882266; display: block; margin-bottom: 1.5em;\">Check app working copy.</span>";
                }
@@ -462,88 +468,87 @@ namespace production
                   set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #22552F;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">Check app working copy.</span>";
                }
 
-               Application.http().get("http://api.ca2.cc/status/insert", str, set);
+               Application.http().get("http://api.ca2.cc/status/insert",str,set);
 
             }
 
-            return 4;
-         }
+               return 4;
+            }
 
 
-         string strSVN = "SVN" + strRevision;
-         strSVN.trim();
+            string strSVN = "SVN" + strRevision;
+            strSVN.trim();
 
-         if (m_iGlobalRetry <= 0 && m_strSubversionRevision == strSVN)
-         {
-
-            iRetry++;
-
-            if (iRetry > 3)
-               return 3;
-
-            goto restart;
-
-         }
-
-         string strSVNKey;
-         string strAddRevision;
-
-         strSVNKey = "app:" + strSVN;
-
-         if (!bSkip1)
-         {
-
-            for (int32_t i = 1; i < m_straRoot.get_size(); i++)
+            if(m_iGlobalRetry <= 0 && m_strSubversionRevision == strSVN)
             {
 
-               strSvnVersionCmd.Format("svnversion %s", System.dir().path(m_strBase, m_straRoot[i]));
-               {
+               iRetry++;
 
-                  string strStatus;
-                  strStatus.Format("Getting Revision: %s ...",m_straRoot[i]);
-                  add_status(strStatus);
+               if(iRetry > 3)
+                  return 3;
 
-               }
-               strAddRevision = System.process().get_output(strSvnVersionCmd);
-               strAddRevision.trim();
-               {
-
-                  string strStatus;
-                  strStatus.Format("Revision of %s is %s", m_straRoot[i], strAddRevision);
-                  add_status(strStatus);
-
-               }
-
-               strSVNKey += ", " + m_straRoot[i] + ":SVN" + strAddRevision;
+               goto restart;
 
             }
 
-         }
+            string strSVNKey;
+            string strAddRevision;
 
-         m_iGlobalRetry++;
+            strSVNKey = "app:" + strSVN;
 
-         m_bReleased = false;
-         m_iLoop = -1;
-         m_timeStart.FormatGmt(m_strStartTime, "%Y-%m-%d %H-%M-%S");
-         add_status("Build starting at " + version_to_international_datetime(m_strStartTime) + " - build version!");
+            if(!bSkip1)
+            {
 
-         {
-            // good pratice to initialize authentication of ca2status.com with account.ca2.cc auth information
-            string str;
+               for(int32_t i = 1; i < m_straRoot.get_size(); i++)
+               {
+
+                  strSvnVersionCmd.Format("svnversion %s",System.dir().path(m_strBase,m_straRoot[i]));
+                  {
+
+                     string strStatus;
+                     strStatus.Format("Getting Revision: %s ...",m_straRoot[i]);
+                     add_status(strStatus);
+
+                  }
+                  strAddRevision = System.process().get_output(strSvnVersionCmd);
+                  strAddRevision.trim();
+                  {
+
+                     string strStatus;
+                     strStatus.Format("Revision of %s is %s",m_straRoot[i],strAddRevision);
+                     add_status(strStatus);
+
+                  }
+
+                  strSVNKey += ", " + m_straRoot[i] + ":SVN" + strAddRevision;
+
+               }
+
+            }
+
+            m_iGlobalRetry++;
+
+            m_bReleased = false;
+            m_iLoop = -1;
+            m_timeStart.FormatGmt(m_strStartTime,"%Y-%m-%d %H-%M-%S");
+            add_status("Build starting at " + version_to_international_datetime(m_strStartTime) + " - build version!");
+
+            {
+               // good pratice to initialize authentication of ca2status.com with account.ca2.cc auth information
+
+               {
+
+                  property_set set(get_app());
+
+                  Application.http().get("http://api.ca2.cc/status/insert",set);
+
+               }
 
             {
 
                property_set set(get_app());
 
-               Application.http().get("http://api.ca2.cc/status/insert", set);
-
-            }
-
-            {
-
-               property_set set(get_app());
-
-               if (m_eversion == version_basis)
+               if(m_eversion == version_basis)
                {
                   set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #552250;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #882266; display: block; margin-bottom: 1.5em;\">Starting production of new <a href=\"http://code.ca2.cc/\" class=\"fluidbasis\" >basis</a> release.</span>";
                }
@@ -552,81 +557,78 @@ namespace production
                   set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #22552F;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">Starting production of new <a href=\"http://ca2.cc/\">stage</a> release.</span>";
                }
 
-               Application.http().get("http://api.ca2.cc/status/insert", str, set);
+               Application.http().get("http://api.ca2.cc/status/insert",str,set);
 
             }
 
-            //{
+               //{
 
-            //   property_set set(get_app());
+               //   property_set set(get_app());
 
-            //   string str;
+               //   string str;
 
-            //   m_timeEnd = m_timeStart;
-            //      string strEndTime;
+               //   m_timeEnd = m_timeStart;
+               //      string strEndTime;
 
-            //   m_timeEnd.FormatGmt(strEndTime, "%Y-%m-%d %H-%M-%S");
+               //   m_timeEnd.FormatGmt(strEndTime, "%Y-%m-%d %H-%M-%S");
 
-            //if (m_eversion == version_basis)
-            //{
-            //   set["post"]["new_status"] = "<div style=\"display: block; background-color: #FFE0FF; \"><h2 style=\"margin-bottom:0px; color: #FF55CC;\">" + version_to_international_datetime(m_strBuild) + "</h2><span style=\"color: #882255; display: block; margin-bottom: 1.5em;\">" + m_strBuildTook + " and finished at " + strEndTime + "<br>New release of <a href=\"http://code.ca2.cc/\" class=\"fluidbasis\" >basis</a> applications labeled " + m_strBuild + " is ready for download through compatible gateways.<br>Check <a href=\"http://laboratory.ca2.cc/\" class=\"fluidbasis\" >laboratory.ca2.cc</a> or <a href=\"http://warehouse.ca2.cc/\" class=\"fluidbasis\" >warehouse.ca2.cc</a> for simple gateway implementations.</span></div>";
-            //}
-            //else
-            //{
-            //   set["post"]["new_status"] = "<div style=\"display: block; background-color: #E0FFCC; \"><h2 style=\"margin-bottom:0px; color: #55CCAA;\">" + version_to_international_datetime(m_strBuild) + "</h2><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">" + m_strBuildTook + " and finished at " + strEndTime + "<br>New release of <a href=\"http://ca2.cc/\">stage</a> applications labeled " + m_strBuild + " is ready for download through compatible gateways.<br>Check <a href=\"http://desktop.ca2.cc/\">desktop.ca2.cc</a> or <a href=\"http://store.ca2.cc/\">store.ca2.cc</a> for simple gateway implementations.</span></div";
-            //}
+               //if (m_eversion == version_basis)
+               //{
+               //   set["post"]["new_status"] = "<div style=\"display: block; background-color: #FFE0FF; \"><h2 style=\"margin-bottom:0px; color: #FF55CC;\">" + version_to_international_datetime(m_strBuild) + "</h2><span style=\"color: #882255; display: block; margin-bottom: 1.5em;\">" + m_strBuildTook + " and finished at " + strEndTime + "<br>New release of <a href=\"http://code.ca2.cc/\" class=\"fluidbasis\" >basis</a> applications labeled " + m_strBuild + " is ready for download through compatible gateways.<br>Check <a href=\"http://laboratory.ca2.cc/\" class=\"fluidbasis\" >laboratory.ca2.cc</a> or <a href=\"http://warehouse.ca2.cc/\" class=\"fluidbasis\" >warehouse.ca2.cc</a> for simple gateway implementations.</span></div>";
+               //}
+               //else
+               //{
+               //   set["post"]["new_status"] = "<div style=\"display: block; background-color: #E0FFCC; \"><h2 style=\"margin-bottom:0px; color: #55CCAA;\">" + version_to_international_datetime(m_strBuild) + "</h2><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">" + m_strBuildTook + " and finished at " + strEndTime + "<br>New release of <a href=\"http://ca2.cc/\">stage</a> applications labeled " + m_strBuild + " is ready for download through compatible gateways.<br>Check <a href=\"http://desktop.ca2.cc/\">desktop.ca2.cc</a> or <a href=\"http://store.ca2.cc/\">store.ca2.cc</a> for simple gateway implementations.</span></div";
+               //}
 
-            //Application.http().get("http://api.ca2.cc/status/insert", str, set);
+               //Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
-            //}
+               //}
 
 
-            string strTwit;
+               string strTwit;
 
-            if (m_iGlobalRetry <= 0)
-            {
-               strTwit = "ca2twit-lib : new " + m_strVersion + " build starting " + version_to_international_datetime(m_strBuild) + ". More details at http://status.ca2.cc/" + System.url().url_encode(m_strStatusEmail);
+               if(m_iGlobalRetry <= 0)
+               {
+                  strTwit = "ca2twit-lib : new " + m_strVersion + " build starting " + version_to_international_datetime(m_strBuild) + ". More details at http://status.ca2.cc/" + System.url().url_encode(m_strStatusEmail);
+               }
+               else
+               {
+                  strTwit = "ca2twit-lib : " + m_strTry + " automatic retry " + m_strVersion + " build starting " + version_to_international_datetime(m_strBuild) + ". More details at http://status.ca2.cc/" + System.url().url_encode(m_strStatusEmail);
+               }
+
+               twitter_twit(strTwit);
+
             }
-            else
-            {
-               strTwit = "ca2twit-lib : " + m_strTry + " automatic retry " + m_strVersion + " build starting " + version_to_international_datetime(m_strBuild) + ". More details at http://status.ca2.cc/" + System.url().url_encode(m_strStatusEmail);
-            }
 
-            twitter_twit(strTwit);
+            add_status(unitext("Thank you!!"));
+            m_dwStartTick = ::GetTickCount();
 
-         }
+            m_bEndStatus = false;
 
-         add_status(unitext("Thank you!!"));
-         m_dwStartTick = ::GetTickCount();
-
-         m_bEndStatus = false;
-
-         keep < bool > keepFinishedFalse(&m_bFinished, false, true, true);
-         string str;
-         m_iBaseLen = m_strBase.get_length();
-         if (m_strBase.Right(1) != "/" && m_strBase.Right(1) != "\\")
-            m_iBaseLen++;
+            keep < bool > keepFinishedFalse(&m_bFinished,false,true,true);
+            string str;
+            m_iBaseLen = m_strBase.get_length();
+            if(m_strBase.Right(1) != "/" && m_strBase.Right(1) != "\\")
+               m_iBaseLen++;
 
 
 
-         string strStatus;
-         m_strTag = strTime + " " + strSVNKey;
-         m_strTagPath = System.dir().path("C:\\ca2\\build\\" + m_strVersion, m_strFormatBuild + ".txt");
+            string strStatus;
+            m_strTag = strTime + " " + strSVNKey;
+            m_strTagPath = System.dir().path("C:\\ca2\\build\\" + m_strVersion,m_strFormatBuild + ".txt");
 
-         string strBuildH;
-         strBuildH.Format("-c1-production -c2-producer -t12n-producing -mmmi- %s", m_strTag);
-         strBuildH += " - ";
-         strBuildH += Application.file().as_string(System.dir().path(m_strBase, "app/stage", "build_machine_pp_comment.txt"));
-         strBuildH += "#define THIS_PRODUCT_VERSION \"" + m_strTag + "\\0\"\r\n#define THIS_FILE_VERSION \"" + m_strTag + "\\0\"\r\n";
-         strBuildH += "#define __THIS_PRODUCT_VERSION " + strVerWin + "\r\n#define __THIS_FILE_VERSION " + strVerWin + "\r\n";
-         strBuildH += "\r\n";
-         strBuildH += "\r\n";
-         strBuildH += "\r\n";
-         strBuildH += "\r\n";
-         strBuildH += "\r\n";
-
-
-
+            string strBuildH;
+            strBuildH.Format("-c1-production -c2-producer -t12n-producing -mmmi- %s",m_strTag);
+            strBuildH += " - ";
+            strBuildH += Application.file().as_string(System.dir().path(m_strBase,"app/stage","build_machine_pp_comment.txt"));
+            strBuildH += "#define THIS_PRODUCT_VERSION \"" + m_strTag + "\\0\"\r\n#define THIS_FILE_VERSION \"" + m_strTag + "\\0\"\r\n";
+            strBuildH += "#define __THIS_PRODUCT_VERSION " + strVerWin + "\r\n#define __THIS_FILE_VERSION " + strVerWin + "\r\n";
+            strBuildH += "\r\n";
+            strBuildH += "\r\n";
+            strBuildH += "\r\n";
+            strBuildH += "\r\n";
+            strBuildH += "\r\n";
 
          m_strVrel = "C:\\ca2\\vrel\\" + m_strVersion + "\\" + m_strFormatBuild;
 
@@ -731,6 +733,11 @@ namespace production
             add_status(str);
             i++;
          }*/
+
+                  }
+
+
+
 
          m_straFiles.remove_all();
 
