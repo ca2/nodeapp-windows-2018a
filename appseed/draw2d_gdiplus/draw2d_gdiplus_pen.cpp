@@ -390,6 +390,9 @@ namespace draw2d_gdiplus
          case line_cap_round:
             ((pen *) this)->m_ppen->SetStartCap(Gdiplus::LineCapRound);
             break;
+         case line_cap_square:
+            ((pen *) this)->m_ppen->SetStartCap(Gdiplus::LineCapSquare);
+            break;
          }
          switch(m_elinecapEnd)
          {
@@ -398,6 +401,9 @@ namespace draw2d_gdiplus
             break;
          case line_cap_round:
             ((pen *) this)->m_ppen->SetEndCap(Gdiplus::LineCapRound);
+            break;
+         case line_cap_square:
+            ((pen *) this)->m_ppen->SetEndCap(Gdiplus::LineCapSquare);
             break;
          }
          
