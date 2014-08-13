@@ -155,7 +155,7 @@
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">$(SolutionDir)..\..\..\stage\x86\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='static_basis|Win32'">$(SolutionDir)..\..\..\stage\x86\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='static_basis|Win32'">$(SolutionDir)..\..\..\..\static_basis\x86\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='memdleak|Win32'">$(SolutionDir)..\..\..\stage\x86\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='codeanalysis|Win32'">$(SolutionDir)..\..\..\stage\x86\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='profiler|Win32'">$(SolutionDir)..\..\..\stage\x86\</OutDir>
