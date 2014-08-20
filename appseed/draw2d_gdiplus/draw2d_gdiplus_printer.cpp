@@ -6,7 +6,7 @@ namespace draw2d_gdiplus
 {
 
 
-   printer::printer(::base::application * papp) :
+   printer::printer(sp(::axis::application) papp) :
       element(papp),
       ::user::printer(papp),
       m_documentproperties(papp)
@@ -58,7 +58,7 @@ namespace draw2d_gdiplus
    }
 
 
-   printer::document_properties::document_properties(::base::application * papp) :
+   printer::document_properties::document_properties(sp(::axis::application) papp) :
       element(papp)
    {
       m_hdc = NULL;
