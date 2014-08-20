@@ -14,7 +14,7 @@ namespace draw2d_gdiplus
       Gdiplus::Font *   m_pfont;
 
 
-      font(sp(::base::application) papp);
+      font(sp(::axis::application) papp);
       font(const font & font);
       virtual ~font();
 

@@ -8,7 +8,7 @@ namespace draw2d_gdiplus
 {
 
 
-   graphics::graphics(sp(::base::application) papp) :
+   graphics::graphics(sp(::axis::application) papp) :
       element(papp)
    {
 
@@ -2252,7 +2252,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    /////////////////////////////////////////////////////////////////////////////
    // special graphics drawing primitives/helpers
 
-   ::draw2d::brush* graphics::GetHalftoneBrush(sp(::base::application) papp)
+   ::draw2d::brush* graphics::GetHalftoneBrush(sp(::axis::application) papp)
    {
 /*      ::core::LockGlobals(CRIT_HALFTONEBRUSH);
       if (gen_HalftoneBrush == NULL)
@@ -2619,7 +2619,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 /*      hdc_map* pMap = afxMapHDC();
       if (pMap != NULL && pMap->lookup_permanent(get_handle1()) == this)
       {
-         TRACE(::base::trace::category_AppMsg, 0, "Cannot set Output hDC on Attached graphics.\n");
+         TRACE(::axis::trace::category_AppMsg, 0, "Cannot set Output hDC on Attached graphics.\n");
          ASSERT(FALSE);
       }*/
 #endif
@@ -2637,7 +2637,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 /*      hdc_map* pMap = afxMapHDC();
       if (pMap != NULL && pMap->lookup_permanent(get_handle1()) == this)
       {
-         TRACE(::base::trace::category_AppMsg, 0, "Cannot Release Output hDC on Attached graphics.\n");
+         TRACE(::axis::trace::category_AppMsg, 0, "Cannot Release Output hDC on Attached graphics.\n");
          ASSERT(FALSE);
       }*/
 #endif
@@ -2676,7 +2676,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return bRetVal;
    }
 
-//   ::draw2d::object* graphics::SelectGdiObject(sp(::base::application) papp, HDC hDC, HGDIOBJ h)
+//   ::draw2d::object* graphics::SelectGdiObject(sp(::axis::application) papp, HDC hDC, HGDIOBJ h)
   // {
 //      return ::draw2d_gdiplus::object::from_handle(papp, ::SelectObject(hDC, h));
    //}
@@ -3273,7 +3273,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          HRGN hRgn = ::CreateRectRgn(0, 0, 0, 0);
          if (::GetClipRgn(get_handle1(), hRgn) < 0 || !::SelectClipRgn(get_handle2(), hRgn))
          {
-            TRACE(::base::trace::category_AppMsg, 0, "Error: unable to transfer clip region in graphics::SelectClipPath!\n");
+            TRACE(::axis::trace::category_AppMsg, 0, "Error: unable to transfer clip region in graphics::SelectClipPath!\n");
             bResult = FALSE;
          }
          ::DeleteObject(hRgn);

@@ -8,7 +8,7 @@ namespace draw2d_gdiplus
 {
 
 
-   bitmap::bitmap(sp(::base::application) papp) :
+   bitmap::bitmap(sp(::axis::application) papp) :
       element(papp)
    { 
 
