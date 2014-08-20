@@ -945,7 +945,6 @@
     <ClInclude Include="draw2d_gdi_path.h" />
     <ClInclude Include="draw2d_gdi_pen.h" />
     <ClInclude Include="draw2d_gdi_region.h" />
-    <ClInclude Include="framework.h" />
     <ClInclude Include="framework\framework.h" />
   </ItemGroup>
   <ItemGroup>
