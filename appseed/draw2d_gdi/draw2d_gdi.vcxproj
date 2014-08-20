@@ -243,7 +243,7 @@
     <ClCompile>
       <AdditionalOptions>-Zm384 /bigobj</AdditionalOptions>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)../../../include;$(SolutionDir)../../../app/include;.;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/base/include;$(SolutionDir)../../../app/base/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../app/appseed/core;$(SolutionDir)../../../app/appseed/base;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../../include;$(SolutionDir)../../../app/include;.;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/base/include;$(SolutionDir)../../../app/base/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../app/appseed/core;$(SolutionDir)../../../app/appseed/base;$(SolutionDir)../../../app/appseed/axis;$(SolutionDir)../../../app/axis;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DRAW2D_GDI_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>Async</ExceptionHandling>
@@ -942,9 +942,11 @@
     <ClInclude Include="draw2d_gdi_graphics.h" />
     <ClInclude Include="draw2d_gdi_object.h" />
     <ClInclude Include="draw2d_gdi_palette.h" />
+    <ClInclude Include="draw2d_gdi_path.h" />
     <ClInclude Include="draw2d_gdi_pen.h" />
     <ClInclude Include="draw2d_gdi_region.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="framework\framework.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="draw2d_gdi.cpp" />
@@ -956,20 +958,21 @@
     <ClCompile Include="draw2d_gdi_graphics.cpp" />
     <ClCompile Include="draw2d_gdi_object.cpp" />
     <ClCompile Include="draw2d_gdi_palette.cpp" />
+    <ClCompile Include="draw2d_gdi_path.cpp" />
     <ClCompile Include="draw2d_gdi_pen.cpp" />
     <ClCompile Include="draw2d_gdi_preview_dc.cpp" />
     <ClCompile Include="draw2d_gdi_region.cpp" />
-    <ClCompile Include="framework.cpp">
+    <ClCompile Include="framework\framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='memdleak|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='memdleak|x64'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="draw2d_gdi.def" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\app\appseed\axis\axis.vcxproj">
+      <Project>{73a245f9-c92f-4487-aef7-cb0531f665bd}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\app\appseed\base\base.vcxproj">
       <Project>{4d7d3626-ada6-4ca2-9566-ed7b131e3d51}</Project>
     </ProjectReference>

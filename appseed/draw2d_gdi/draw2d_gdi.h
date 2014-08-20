@@ -23,7 +23,7 @@
 #include "draw2d_gdi_palette.h"
 #include "draw2d_gdi_region.h"
 #include "draw2d_gdi_dib.h"
-//#include "draw2d_gdi_path.h"
+#include "draw2d_gdi_path.h"
 
 
 #include "draw2d_gdi_graphics.h"

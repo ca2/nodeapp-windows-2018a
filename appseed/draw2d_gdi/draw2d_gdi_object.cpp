@@ -15,7 +15,7 @@ namespace draw2d_gdi
    object::~object()
    { 
 
-      synch_lock ml(&user_mutex());
+      synch_lock ml(&draw2d_gdi_mutex());
 
       for(int i = 0; i < m_ptraGraphics.get_size(); i++)
       {
@@ -95,7 +95,7 @@ namespace draw2d_gdi
    }
 
 
-   ::draw2d_gdi::object * graphics_object_allocator(::base::application * papp, HANDLE h)
+   ::draw2d_gdi::object * graphics_object_allocator(sp(::axis::application) papp, HANDLE h)
    {
 
       switch(::GetObjectType(h))
@@ -157,7 +157,7 @@ namespace draw2d_gdi
    bool object::destroy()
    {
 
-      synch_lock ml(&user_mutex());
+      synch_lock ml(&draw2d_gdi_mutex());
       
       for(int i = 0; i < m_ptraGraphics.get_size(); i++)
       {

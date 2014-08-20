@@ -16,7 +16,7 @@ namespace draw2d_gdi
 {
 
 
-   graphics::graphics(::base::application * papp) :
+   graphics::graphics(sp(::axis::application) papp) :
       element(papp)
    {
 
@@ -41,7 +41,7 @@ namespace draw2d_gdi
    graphics::~graphics()
    {
 
-      synch_lock ml(&user_mutex());
+      synch_lock ml(&draw2d_gdi_mutex());
 
       for(int i = 0; i < m_ptraObject.get_count(); i++)
       {
@@ -256,7 +256,7 @@ namespace draw2d_gdi
       if(pbitmap == NULL)
          return NULL;
 
-      synch_lock ml(&user_mutex());
+      synch_lock ml(&draw2d_gdi_mutex());
 
       pbitmap->m_bUpdated = true;
 
@@ -929,7 +929,7 @@ namespace draw2d_gdi
       if(width(lpRect) <= 0 || height(lpRect) <= 0)
          return false;
 
-      bool bOk = internal_fill_and_stroke_path(&::draw2d_gdi::graphics::internal_set_path_ellipse, (void *) &lpRect, lpRect);
+      bool bOk = internal_fill_and_stroke_path(&::draw2d_gdi::graphics::internal_set_path_ellipse, (void *) &lpRect, lpRect, m_spbrush, m_sppen);
 
       return bOk;
 
@@ -942,7 +942,7 @@ namespace draw2d_gdi
       if(width(lpRect) <= 0 || height(lpRect) <= 0)
          return false;
 
-      bool bOk = internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path_ellipse, (void *) &lpRect, lpRect);
+      bool bOk = internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path_ellipse, (void *) &lpRect, lpRect, m_sppen);
 
       return bOk;
 
@@ -955,7 +955,7 @@ namespace draw2d_gdi
       if(width(lpRect) <= 0 || height(lpRect) <= 0)
          return false;
 
-      bool bOk = internal_fill_path(&::draw2d_gdi::graphics::internal_set_path_ellipse, (void *) &lpRect, lpRect);
+      bool bOk = internal_fill_path(&::draw2d_gdi::graphics::internal_set_path_ellipse, (void *) &lpRect, lpRect, m_spbrush);
 
       return bOk;
 
@@ -968,7 +968,7 @@ namespace draw2d_gdi
       if(width(lpRect) <= 0 || height(lpRect) <= 0)
          return false;
 
-      bool bOk = internal_fill_and_stroke_path(&::draw2d_gdi::graphics::internal_set_path_rectangle, (void *) &lpRect, lpRect);
+      bool bOk = internal_fill_and_stroke_path(&::draw2d_gdi::graphics::internal_set_path_rectangle, (void *) &lpRect, lpRect, m_spbrush, m_sppen);
 
       return bOk;
 
@@ -990,7 +990,7 @@ namespace draw2d_gdi
       try
       {
 
-         bOk = internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path_rectangle, (void *)&rect, rect);
+         bOk = internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path_rectangle, (void *)&rect, rect, m_sppen);
 
       }
       catch (...)
@@ -1011,7 +1011,7 @@ namespace draw2d_gdi
       if(width(lpRect) <= 0 || height(lpRect) <= 0)
          return false;
 
-      bool bOk = internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path_rectangle, (void *) &lpRect, lpRect);
+      bool bOk = internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path_rectangle, (void *) &lpRect, lpRect,m_sppen);
 
       return bOk;
 
@@ -1024,7 +1024,7 @@ namespace draw2d_gdi
       if(width(lpRect) <= 0 || height(lpRect) <= 0)
          return false;
 
-      bool bOk = internal_fill_path(&::draw2d_gdi::graphics::internal_set_path_rectangle, (void *) &lpRect, lpRect);
+      bool bOk = internal_fill_path(&::draw2d_gdi::graphics::internal_set_path_rectangle, (void *) &lpRect, lpRect, m_spbrush);
 
       return bOk;
 
@@ -1048,7 +1048,7 @@ namespace draw2d_gdi
 
       item.nCount = nCount;
 
-      bool bOk = internal_fill_and_stroke_path(&::draw2d_gdi::graphics::internal_set_path_polygon, (void *) &item, rect);
+      bool bOk = internal_fill_and_stroke_path(&::draw2d_gdi::graphics::internal_set_path_polygon, (void *) &item, rect, m_spbrush, m_sppen);
 
       return bOk;
 
@@ -1073,7 +1073,7 @@ namespace draw2d_gdi
 
       item.nCount = nCount;
 
-      bool bOk = internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path_polygon, (void *) &item, rect);
+      bool bOk = internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path_polygon, (void *) &item, rect, m_sppen);
 
       return bOk;
 
@@ -1098,7 +1098,7 @@ namespace draw2d_gdi
 
       item.nCount = nCount;
 
-      bool bOk = internal_fill_path(&::draw2d_gdi::graphics::internal_set_path_polygon, (void *) &item, rect);
+      bool bOk = internal_fill_path(&::draw2d_gdi::graphics::internal_set_path_polygon, (void *) &item, rect, m_spbrush);
 
       return bOk;
 
@@ -1125,7 +1125,7 @@ namespace draw2d_gdi
 
       item.nCount = nCount;
 
-      bool bOk = internal_fill_and_stroke_path(&::draw2d_gdi::graphics::internal_set_path_poly_polygon, (void *) &item, rect);
+      bool bOk = internal_fill_and_stroke_path(&::draw2d_gdi::graphics::internal_set_path_poly_polygon, (void *) &item, rect,m_spbrush, m_sppen);
 
       return bOk;
 
@@ -1152,7 +1152,7 @@ namespace draw2d_gdi
 
       item.nCount = nCount;
 
-      bool bOk = internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path_poly_polygon, (void *) &item, rect);
+      bool bOk = internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path_poly_polygon, (void *) &item, rect, m_sppen);
 
       return bOk;
 
@@ -1179,7 +1179,7 @@ namespace draw2d_gdi
 
       item.nCount = nCount;
 
-      bool bOk = internal_fill_path(&::draw2d_gdi::graphics::internal_set_path_poly_polygon, (void *) &item, rect);
+      bool bOk = internal_fill_path(&::draw2d_gdi::graphics::internal_set_path_poly_polygon, (void *) &item, rect, m_spbrush);
 
       return bOk;
 
@@ -1243,7 +1243,7 @@ namespace draw2d_gdi
    bool graphics::BitBlt(int x, int y, int nWidth, int nHeight, ::draw2d::graphics * pgraphicsSrc, int xSrc, int ySrc, uint32_t dwRop)
    { 
 
-      synch_lock ml(&user_mutex());
+      synch_lock ml(&draw2d_gdi_mutex());
 
       if(get_handle1() == NULL)
          return false;
@@ -1316,7 +1316,7 @@ namespace draw2d_gdi
 
             pdib  = dib_work(size, false);
 
-            if(pdib == NULL)
+            if(pdib == NULL || pdib->area() <= 0)
                return false;
 
             pdib->from(point(0, 0), pgraphicsSrc->m_pdib, point(xSrc, ySrc), size);
@@ -1464,7 +1464,7 @@ namespace draw2d_gdi
    bool graphics::StretchBlt(int x, int y, int nWidth, int nHeight, ::draw2d::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, uint32_t dwRop)
    {
 
-      synch_lock ml(&user_mutex());
+      synch_lock ml(&draw2d_gdi_mutex());
 
       if (get_handle1() == NULL)
          return false;
@@ -1573,7 +1573,7 @@ namespace draw2d_gdi
    bool graphics::TextOut(double x, double y, const char * lpszString, int nCount)
    {
 
-      synch_lock ml(&user_mutex());
+      synch_lock ml(&draw2d_gdi_mutex());
 
       if (::draw2d::graphics::TextOut(x, y, lpszString, nCount))
          return true;
@@ -1852,7 +1852,7 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::get_text_metrics(LPTEXTMETRICW lpMetrics) const
+   bool graphics::get_text_metrics(::draw2d::text_metric * lpMetrics) const
    { 
 
       HDC h2 = get_handle2();
@@ -1860,17 +1860,70 @@ namespace draw2d_gdi
       if (h2 == NULL)
          return false;
 
-      return ::GetTextMetricsW(h2, lpMetrics) != FALSE;
+      TEXTMETRICW tm;
+
+      if(!::GetTextMetricsW(h2,&tm))
+         return false;
+
+      lpMetrics->tmAscent = tm.tmAscent;
+      lpMetrics->tmAveCharWidth = tm.tmAveCharWidth;
+      lpMetrics->tmBreakChar = tm.tmBreakChar;
+      lpMetrics->tmCharSet = tm.tmCharSet;
+      lpMetrics->tmDefaultChar = tm.tmDefaultChar;
+      lpMetrics->tmDescent = tm.tmDescent;
+      lpMetrics->tmDigitizedAspectX = tm.tmDigitizedAspectX;
+      lpMetrics->tmDigitizedAspectY = tm.tmDigitizedAspectY;
+      lpMetrics->tmExternalLeading = tm.tmExternalLeading;
+      lpMetrics->tmFirstChar = tm.tmFirstChar;
+      lpMetrics->tmHeight = tm.tmHeight;
+      lpMetrics->tmInternalLeading = tm.tmInternalLeading;
+      lpMetrics->tmItalic = tm.tmItalic;
+      lpMetrics->tmLastChar = tm.tmLastChar;
+      lpMetrics->tmMaxCharWidth = tm.tmMaxCharWidth;
+      lpMetrics->tmOverhang = tm.tmOverhang;
+      lpMetrics->tmPitchAndFamily = tm.tmPitchAndFamily;
+      lpMetrics->tmStruckOut = tm.tmStruckOut;
+      lpMetrics->tmUnderlined = tm.tmUnderlined;
+      lpMetrics->tmWeight = tm.tmWeight;
+
+      return true;
 
    }
 
 
-   bool graphics::get_output_text_metrics(LPTEXTMETRICW lpMetrics) const
+   bool graphics::get_output_text_metrics(::draw2d::text_metric * lpMetrics) const
    {
 
       ASSERT(get_handle1() != NULL);
 
-      return ::GetTextMetricsW(get_handle1(), lpMetrics) != FALSE;
+      TEXTMETRICW tm;
+
+      if(!::GetTextMetricsW(get_handle1(),&tm))
+         return false;
+
+      lpMetrics->tmAscent = tm.tmAscent;
+      lpMetrics->tmAveCharWidth = tm.tmAveCharWidth;
+      lpMetrics->tmBreakChar = tm.tmBreakChar;
+      lpMetrics->tmCharSet = tm.tmCharSet;
+      lpMetrics->tmDefaultChar = tm.tmDefaultChar;
+      lpMetrics->tmDescent = tm.tmDescent;
+      lpMetrics->tmDigitizedAspectX = tm.tmDigitizedAspectX;
+      lpMetrics->tmDigitizedAspectY = tm.tmDigitizedAspectY;
+      lpMetrics->tmExternalLeading = tm.tmExternalLeading;
+      lpMetrics->tmFirstChar = tm.tmFirstChar;
+      lpMetrics->tmHeight = tm.tmHeight;
+      lpMetrics->tmInternalLeading = tm.tmInternalLeading;
+      lpMetrics->tmItalic = tm.tmItalic;
+      lpMetrics->tmLastChar = tm.tmLastChar;
+      lpMetrics->tmMaxCharWidth = tm.tmMaxCharWidth;
+      lpMetrics->tmOverhang = tm.tmOverhang;
+      lpMetrics->tmPitchAndFamily = tm.tmPitchAndFamily;
+      lpMetrics->tmStruckOut = tm.tmStruckOut;
+      lpMetrics->tmUnderlined = tm.tmUnderlined;
+      lpMetrics->tmWeight = tm.tmWeight;
+
+      return true;
+
 
    }
 
@@ -2382,7 +2435,7 @@ namespace draw2d_gdi
 
       m_sppath->get_bounding_rect(rect);
 
-      return internal_fill_path(&::draw2d_gdi::graphics::internal_set_path, m_sppath.m_p, rect);
+      return internal_fill_path(&::draw2d_gdi::graphics::internal_set_path, m_sppath.m_p, rect, m_spbrush);
 
       /*if(m_sppath.is_null())
       return false;
@@ -2437,6 +2490,18 @@ namespace draw2d_gdi
 
    }
 
+   bool graphics::FillPath(::draw2d::brush * pbrush)
+   {
+
+      rect rect;
+
+      m_sppath->get_bounding_rect(rect);
+
+      return internal_fill_path(&::draw2d_gdi::graphics::internal_set_path,m_sppath.m_p,rect,pbrush);
+
+    
+
+   }
    void graphics::internal_set_path(void * pparam)
    {
 
@@ -2513,14 +2578,14 @@ namespace draw2d_gdi
 
    }
 
-   bool graphics::internal_fill_path(void (::draw2d_gdi::graphics::* pfnInternalSetPath)(void *), void * pparam, const RECT & lpcrect)
+   bool graphics::internal_fill_path(void(::draw2d_gdi::graphics::* pfnInternalSetPath)(void *),void * pparam,const RECT & lpcrect,::draw2d::brush * pbrush)
    { 
 
-      synch_lock ml(&user_mutex());
+      synch_lock ml(&draw2d_gdi_mutex());
 
       ASSERT(get_handle1() != NULL); 
 
-      ::draw2d::brush & brush = *get_current_brush();
+      ::draw2d::brush & brush = *pbrush;
 
       if(brush.m_etype == ::draw2d::brush::type_null)
          return true;
@@ -2541,6 +2606,9 @@ namespace draw2d_gdi
          //m_sppath->get_bounding_rect(rect);
 
          ::draw2d::dib * pdib = dib_work(rect.size(), false);
+
+         if(pdib == NULL || pdib->area() <= 0)
+            return false;
 
          BLENDFUNCTION bf;
          bf.BlendOp     = AC_SRC_OVER;
@@ -2621,7 +2689,27 @@ namespace draw2d_gdi
       return ::SetMiterLimit(get_handle1(), fMiterLimit, NULL) != FALSE;
 
    }
+   bool graphics::StrokeAndFillPath(::draw2d::brush * pbrush, ::draw2d::pen * ppen)
+   {
 
+      rect rect;
+
+      m_sppath->get_bounding_rect(rect);
+
+      return internal_fill_and_stroke_path(&::draw2d_gdi::graphics::internal_set_path,m_sppath.m_p,rect,pbrush,ppen);
+
+   }
+
+   bool graphics::StrokePath(::draw2d::pen * ppen)
+   {
+
+      rect rect;
+
+      m_sppath->get_bounding_rect(rect);
+
+      return internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path,m_sppath.m_p,rect,ppen);
+
+   }
 
    bool graphics::StrokeAndFillPath()
    { 
@@ -2630,7 +2718,7 @@ namespace draw2d_gdi
 
       m_sppath->get_bounding_rect(rect);
 
-      return internal_fill_and_stroke_path(&::draw2d_gdi::graphics::internal_set_path, m_sppath.m_p, rect);
+      return internal_fill_and_stroke_path(&::draw2d_gdi::graphics::internal_set_path, m_sppath.m_p, rect, m_spbrush, m_sppen);
 
    }
 
@@ -2641,18 +2729,18 @@ namespace draw2d_gdi
 
       m_sppath->get_bounding_rect(rect);
 
-      return internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path, m_sppath.m_p, rect);
+      return internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path, m_sppath.m_p, rect, m_sppen);
 
    }
 
-   bool graphics::internal_stroke_path(void (::draw2d_gdi::graphics::* pfnInternalSetPath)(void *), void * pparam, const RECT & lpcrect)
+   bool graphics::internal_stroke_path(void(::draw2d_gdi::graphics::* pfnInternalSetPath)(void *),void * pparam,const RECT & lpcrect,::draw2d::pen * ppen)
    {
 
-      synch_lock ml(&user_mutex());
+      synch_lock ml(&draw2d_gdi_mutex());
 
       ASSERT(get_handle1() != NULL); 
 
-      ::draw2d::pen & pen = *get_current_pen();
+      ::draw2d::pen & pen = *ppen;
 
       if(pen.m_etype == ::draw2d::pen::type_null)
          return true;
@@ -2687,6 +2775,9 @@ namespace draw2d_gdi
 
          ::draw2d::dib * pdib = dib_work(rect.size(), false);
 
+         if(pdib == NULL || pdib->area() <= 0)
+            return false;
+
          if(!GDI_DIB(pdib)->process_initialize(&pen))
             return false;
 
@@ -2716,22 +2807,22 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::internal_fill_and_stroke_path(void (::draw2d_gdi::graphics::* pfnInternalSetPath)(void *), void * pparam, const RECT & lpcrect)
+   bool graphics::internal_fill_and_stroke_path(void(::draw2d_gdi::graphics::* pfnInternalSetPath)(void *),void * pparam,const RECT & lpcrect,::draw2d::brush * pbrush,::draw2d::pen * ppen)
    {
 
-      synch_lock ml(&user_mutex());
+      synch_lock ml(&draw2d_gdi_mutex());
 
       ASSERT(get_handle1() != NULL); 
 
-      ::draw2d::pen & pen = *get_current_pen();
+      ::draw2d::pen & pen = *ppen;
 
       if(pen.m_etype == ::draw2d::pen::type_null)
-         return internal_fill_path(pfnInternalSetPath, pparam, lpcrect);
+         return internal_fill_path(pfnInternalSetPath, pparam, lpcrect, pbrush);
 
-      ::draw2d::brush & brush = *get_current_brush();
+      ::draw2d::brush & brush = *pbrush;
 
       if(brush.m_etype == ::draw2d::brush::type_null)
-         return internal_stroke_path(pfnInternalSetPath, pparam, lpcrect);
+         return internal_stroke_path(pfnInternalSetPath, pparam, lpcrect, ppen);
 
       if(m_pdib == NULL)
       {
@@ -2760,6 +2851,9 @@ namespace draw2d_gdi
          bf.AlphaFormat = AC_SRC_ALPHA;
 
          ::draw2d::dib * pdib = dib_work(rect.size(), false);
+
+         if(pdib == NULL || pdib->area() <= 0)
+            return false;
 
          if(GDI_DIB(pdib)->process_initialize(&brush))
          {
@@ -3333,7 +3427,7 @@ namespace draw2d_gdi
    /////////////////////////////////////////////////////////////////////////////
    // special graphics drawing primitives/helpers
 
-   ::draw2d::brush* graphics::GetHalftoneBrush(::base::application * papp)
+   ::draw2d::brush* graphics::GetHalftoneBrush(sp(::axis::application) papp)
    {
       /*      AfxLockGlobals(CRIT_HALFTONEBRUSH);
       if (_afxHalftoneBrush == NULL)
@@ -3451,6 +3545,10 @@ namespace draw2d_gdi
    ::draw2d::dib * graphics::dib_work(class size size, bool bReset)
    {
 
+      if(size.area() < 0)
+         return NULL;
+
+
       ::draw2d::dib::descriptor d;
 
       d.m_etype = ::draw2d::dib::type_complex;
@@ -3523,7 +3621,7 @@ namespace draw2d_gdi
    void graphics::FillSolidRect(int x, int y, int cx, int cy, COLORREF clr)
    {
 
-      synch_lock ml(&user_mutex());
+      synch_lock ml(&draw2d_gdi_mutex());
 
       if(m_pdib == NULL)
       {
@@ -3741,7 +3839,7 @@ namespace draw2d_gdi
       if(ppen == NULL)
          return NULL;
 
-      synch_lock ml(&user_mutex());
+      synch_lock ml(&draw2d_gdi_mutex());
 
       SelectObject(ppen->get_os_data());
 
@@ -3767,7 +3865,7 @@ namespace draw2d_gdi
       if(pbrush == NULL)
          return NULL;
 
-      synch_lock ml(&user_mutex());
+      synch_lock ml(&draw2d_gdi_mutex());
 
       SelectObject(pbrush->get_os_data());
 
@@ -3792,7 +3890,7 @@ namespace draw2d_gdi
       if(pfont == NULL)
          return NULL;
 
-      synch_lock ml(&user_mutex());
+      synch_lock ml(&draw2d_gdi_mutex());
 
       SelectObject(pfont->get_os_data());
 
@@ -3819,7 +3917,7 @@ namespace draw2d_gdi
       if(pregion == NULL)
          return nRetVal;
 
-      synch_lock ml(&user_mutex());
+      synch_lock ml(&draw2d_gdi_mutex());
 
       SelectObject(pregion->get_os_data());
 
@@ -4162,7 +4260,7 @@ namespace draw2d_gdi
 
       ::sort::sort(rectBound.top, rectBound.bottom);
 
-      internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path_line, &rect, rectBound);
+      internal_stroke_path(&::draw2d_gdi::graphics::internal_set_path_line, &rect, rectBound, m_sppen);
 
       ::MoveToEx(m_hdc, rect.right, rect.bottom, NULL);
 
@@ -4699,6 +4797,9 @@ namespace draw2d_gdi
       case ::draw2d::path::element::type_move:
          set(e.u.m_move);
          break;
+      case ::draw2d::path::element::type_string:
+         set(e.m_stringpath);
+         break;
       case ::draw2d::path::element::type_end:
          {
 
@@ -4715,6 +4816,24 @@ namespace draw2d_gdi
 
       return false;
 
+
+   }
+
+
+   bool graphics::set(::draw2d::path::string_path  & path)
+   {
+
+      wstring wstr(path.m_strText);
+      
+      ::SelectObject(m_hdc,path.m_spfont->get_os_data());
+
+      ::SetBkMode(m_hdc, TRANSPARENT);
+
+      if(!TextOutW(m_hdc,path.m_x,path.m_y,wstr,wstr.length()))
+         return false;
+
+
+      return true;
 
    }
 
@@ -4783,6 +4902,26 @@ namespace draw2d_gdi
          return false;
 
       return FillPath();
+
+   }
+
+   bool graphics::draw_path(::draw2d::path * ppath, ::draw2d::pen * ppen)
+   {
+
+      if(!select_path(ppath))
+         return false;
+
+      return StrokePath(ppen);
+
+   }
+
+   bool graphics::fill_path(::draw2d::path * ppath, ::draw2d::brush * pbrush)
+   {
+
+      if(!select_path(ppath))
+         return false;
+
+      return FillPath(pbrush);
 
    }
 

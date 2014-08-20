@@ -29,3 +29,20 @@ DllMain(HINSTANCE hInstance, uint32_t dwReason, LPVOID lpReserved)
 
 
 
+
+static mutex * s_pmutex = NULL;
+
+mutex & draw2d_gdi_mutex()
+{
+
+   return *s_pmutex;
+
+}
+
+
+void init_draw2d_gdi_mutex(sp(::axis::application) papp)
+{
+
+   s_pmutex = new mutex(papp);
+
+}

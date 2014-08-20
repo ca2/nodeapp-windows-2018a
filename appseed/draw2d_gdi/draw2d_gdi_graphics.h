@@ -50,7 +50,7 @@ namespace draw2d_gdi
       comparable_array < ::draw2d_gdi::object * >        m_ptraObject;
 
       //graphics();
-      graphics(::base::application * papp);
+      graphics(sp(::axis::application) papp);
       virtual ~graphics();
 
 
@@ -68,9 +68,9 @@ namespace draw2d_gdi
       ::draw2d::dib * dib_work(class size size, bool bReset);
       ::draw2d::dib * fill_dib_work(COLORREF clr, class size size, bool bReset);
      
-      bool internal_fill_path(void (::draw2d_gdi::graphics::* pfnInternalSetPath)(void *), void * pparam, const RECT & lpcrect);
-      bool internal_stroke_path(void (::draw2d_gdi::graphics::* pfnInternalSetPath)(void *), void * pparam, const RECT & lpcrect);
-      bool internal_fill_and_stroke_path(void (::draw2d_gdi::graphics::* pfnInternalSetPath)(void *), void * pparam, const RECT & lpcrect);
+      bool internal_fill_path(void (::draw2d_gdi::graphics::* pfnInternalSetPath)(void *), void * pparam, const RECT & lpcrect, ::draw2d::brush * pbrush);
+      bool internal_stroke_path(void (::draw2d_gdi::graphics::* pfnInternalSetPath)(void *), void * pparam, const RECT & lpcrect, ::draw2d::pen * ppen);
+      bool internal_fill_and_stroke_path(void(::draw2d_gdi::graphics::* pfnInternalSetPath)(void *),void * pparam,const RECT & lpcrect,::draw2d::brush * pbrush,::draw2d::pen * ppen);
 
       void internal_set_path(void * pparam);
       void internal_set_path_ellipse(void * pparam);
@@ -391,8 +391,8 @@ namespace draw2d_gdi
       int GetTextFace(int nCount, __out_ecount_part_z(nCount, return + 1) LPTSTR lpszFacename) const;
       int GetTextFace(string & rString) const;
 
-      bool get_text_metrics(LPTEXTMETRICW lpMetrics) const;
-      bool get_output_text_metrics(LPTEXTMETRICW lpMetrics) const;
+      bool get_text_metrics(::draw2d::text_metric * lpMetrics) const;
+      bool get_output_text_metrics(::draw2d::text_metric * lpMetrics) const;
 
       int SetTextJustification(int nBreakExtra, int nBreakCount);
       int GetTextCharacterExtra() const;
@@ -471,10 +471,13 @@ namespace draw2d_gdi
       bool BeginPath();
       bool CloseFigure();
       bool EndPath();
-      bool FillPath();
       bool FlattenPath();
+      bool FillPath();
       bool StrokeAndFillPath();
       bool StrokePath();
+      bool FillPath(::draw2d::brush * pbrush);
+      bool StrokeAndFillPath(::draw2d::brush * pbrush,::draw2d::pen * ppen);
+      bool StrokePath(::draw2d::pen * ppen);
       bool WidenPath();
       float GetMiterLimit() const;
       bool SetMiterLimit(float fMiterLimit);
@@ -482,7 +485,7 @@ namespace draw2d_gdi
       bool SelectClipPath(int nMode);
 
    // Misc Helper Functions
-      static ::draw2d::brush* GetHalftoneBrush(::base::application * papp);
+      static ::draw2d::brush* GetHalftoneBrush(sp(::axis::application) papp);
       void DrawDragRect(const RECT & lpRect, SIZE size,
          const RECT & lpRectLast, SIZE sizeLast, ::draw2d::brush* pBrush = NULL, ::draw2d::brush* pBrushLast = NULL);
       void FillSolidRect(const __rect64 * lpRect, COLORREF clr);
@@ -503,8 +506,11 @@ namespace draw2d_gdi
       bool set(::draw2d::path::line & pline);
       bool set(::draw2d::path::arc & parc);
       bool set(::draw2d::path::move & pmove);
+      bool set(::draw2d::path::string_path & stringpath);
       bool draw_path(::draw2d::path * ppath);
       bool fill_path(::draw2d::path * ppath);
+      bool draw_path(::draw2d::path * ppath, ::draw2d::pen * ppen);
+      bool fill_path(::draw2d::path * ppath,::draw2d::brush * pbrush);
 
       bool select_path(::draw2d::path * ppath);
 

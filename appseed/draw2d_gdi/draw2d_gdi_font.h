@@ -12,7 +12,7 @@ namespace draw2d_gdi
    public:
 
 
-      font(::base::application * papp);
+      font(sp(::axis::application) papp);
       virtual ~font();
 
 

@@ -5,9 +5,11 @@ namespace draw2d_gdi
 {
 
 
-   factory_exchange::factory_exchange(::base::application * papp) :
+   factory_exchange::factory_exchange(sp(::axis::application) papp) :
       element(papp)
    {
+
+      init_draw2d_gdi_mutex(papp);
 
       System.factory().cloneable_large < dib                  >  (System.type_info < ::draw2d::dib                > ());
       System.factory().cloneable_large < graphics             >  (System.type_info < ::draw2d::graphics           > ());
@@ -17,7 +19,7 @@ namespace draw2d_gdi
       System.factory().cloneable_large < palette              >  (System.type_info < ::draw2d::palette            > ());
       System.factory().cloneable_large < region               >  (System.type_info < ::draw2d::region             > ());
       System.factory().cloneable_large < font                 >  (System.type_info < ::draw2d::font               > ());
-      System.factory().cloneable_large < ::draw2d::path       >  (System.type_info < ::draw2d::path               > ());
+      System.factory().cloneable_large < path       >  (System.type_info < ::draw2d::path               > ());
 
    }
 
@@ -31,7 +33,7 @@ namespace draw2d_gdi
 } // namespace draw2d_gdi
 
 
-void ca2_factory_exchange(sp(::base::application) papp)
+void ca2_factory_exchange(sp(::axis::application) papp)
 {
    draw2d_gdi::factory_exchange factoryexchange(papp);
 }

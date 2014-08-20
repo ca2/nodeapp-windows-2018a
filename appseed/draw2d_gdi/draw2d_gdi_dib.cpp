@@ -23,7 +23,7 @@ namespace draw2d_gdi
 
 
 
-   dib::dib(::base::application * papp) :
+   dib::dib(sp(::axis::application) papp) :
       element(papp),
       m_spbitmap(allocer()),
       m_spgraphics(allocer())
@@ -72,7 +72,7 @@ namespace draw2d_gdi
    bool dib::create(int width, int height)
    {
 
-      synch_lock ml(&user_mutex());
+      synch_lock ml(&draw2d_gdi_mutex());
 
 
       if(m_spbitmap.is_set()
@@ -177,7 +177,7 @@ namespace draw2d_gdi
    bool dib::Destroy ()
    {
 
-      synch_lock ml(&user_mutex());
+      synch_lock ml(&draw2d_gdi_mutex());
 
       m_spbitmap->destroy();
 

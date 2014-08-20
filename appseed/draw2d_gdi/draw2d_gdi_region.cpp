@@ -26,7 +26,7 @@ namespace draw2d_gdi
    }
 
 
-   region::region(::base::application * papp) :
+   region::region(sp(::axis::application) papp) :
       element(papp)
    {
       m_bUpdated = true;   
