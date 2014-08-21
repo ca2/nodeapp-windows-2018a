@@ -62,6 +62,11 @@
 
 #ifdef cplus
 
+#ifdef inline
+#undef inline
+#endif
+
+
 #define inline static
 
 #endif
