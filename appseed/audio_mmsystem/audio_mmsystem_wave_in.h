@@ -20,7 +20,7 @@ namespace multimedia
          WAVEFORMATEX         m_waveformatex; 
 
 
-         wave_in(sp(::base::application) papp);
+         wave_in(sp(::axis::application) papp);
          virtual ~wave_in();
 
 

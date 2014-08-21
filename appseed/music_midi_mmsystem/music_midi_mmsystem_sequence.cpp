@@ -18,7 +18,7 @@ namespace music
          mutex & get_midi_mutex();
 
 
-         sequence::sequence(sp(::base::application) papp) :
+         sequence::sequence(sp(::axis::application) papp) :
             element(papp),
             ::ikaraoke::karaoke(papp),
             ::music::midi::object(papp),
@@ -2358,7 +2358,7 @@ seq_Preroll_Cleanup:
          
          }
 
-         sequence::buffer::buffer(sp(::base::application) papp) :
+         sequence::buffer::buffer(sp(::axis::application) papp) :
             element(papp),
             ::music::midi::object(papp),
             m_storage(papp, true)
@@ -2377,7 +2377,7 @@ seq_Preroll_Cleanup:
 
          }
 
-         sequence::buffer_array::buffer_array(sp(::base::application) papp) :
+         sequence::buffer_array::buffer_array(sp(::axis::application) papp) :
             element(papp)
          {
 

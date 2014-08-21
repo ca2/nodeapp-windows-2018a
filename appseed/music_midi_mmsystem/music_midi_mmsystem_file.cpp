@@ -13,7 +13,7 @@ namespace music
       {
 
 
-         buffer::buffer(sp(::base::application) papp) :
+         buffer::buffer(sp(::axis::application) papp) :
             element(papp),
             primitive::memory_container (papp),
             ::music::midi::file::buffer(papp)

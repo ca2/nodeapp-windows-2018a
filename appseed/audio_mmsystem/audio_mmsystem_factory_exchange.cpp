@@ -9,7 +9,7 @@ namespace multimedia
    {
 
 
-      factory_exchange::factory_exchange(sp(::base::application) papp) :
+      factory_exchange::factory_exchange(sp(::axis::application) papp) :
          element(papp),
          ::multimedia::mmsystem::factory_exchange(papp)
       {
@@ -31,7 +31,7 @@ namespace multimedia
 } // namespace multimedia
 
 
-void ca2_factory_exchange(sp(::base::application) papp)
+void ca2_factory_exchange(sp(::axis::application) papp)
 {
 
    ::multimedia::audio_mmsystem::factory_exchange factoryexchange(papp);

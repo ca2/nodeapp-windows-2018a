@@ -23,7 +23,7 @@ namespace music
 
 
 
-            buffer(sp(::base::application) papp);
+            buffer(sp(::axis::application) papp);
             virtual ~buffer();
 
 

@@ -16,7 +16,7 @@ namespace multimedia
       public:
 
 
-         destination(sp(::base::application) papp);
+         destination(sp(::axis::application) papp);
          destination(const destination & destination);
          virtual ~destination();
 
