@@ -19,7 +19,7 @@ namespace music
          public:
 
 
-            //::base::library                 m_library;
+            //::axis::library                 m_library;
             //midi_listener_set             m_listenerptra;
             //uint32_t                      m_uiMidiOutDevice;
 
