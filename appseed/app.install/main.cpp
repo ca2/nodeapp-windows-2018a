@@ -91,6 +91,7 @@ _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 installer::installer() :
    element(this),
+   ::axis::system(NULL),
    ::base::system(NULL),
    ::install::installer(this)
 {
