@@ -921,6 +921,8 @@ namespace draw2d_gdiplus
 
          m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
 
+         m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
+
    
          bOk1 = m_pgraphics->FillPolygon(gdiplus_brush(), ppoints, nCount, gdiplus_get_fill_mode()) == Gdiplus::Status::Ok;
 
@@ -1001,6 +1003,8 @@ namespace draw2d_gdiplus
          }
 
          m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
+
+         m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
 
          bOk1 = m_pgraphics->DrawPolygon(gdiplus_pen(), ppoints, nCount) == Gdiplus::Status::Ok;
 
@@ -1147,6 +1151,8 @@ namespace draw2d_gdiplus
          }
 
          m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
+
+         m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
 
 
          bOk1 = m_pgraphics->FillPolygon(gdiplus_brush(),ppoints,nCount,gdiplus_get_fill_mode()) == Gdiplus::Status::Ok;
