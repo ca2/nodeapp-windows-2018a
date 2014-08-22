@@ -1298,9 +1298,9 @@ namespace draw2d_gdi
             if(size.cy < 0)
                return true;
 
-            int xEnd = min(size.cx, min(pdib->m_size.cx - ptSrc.x, m_pdib->m_size.cx - ptDst.x));
+            int xEnd = MIN(size.cx, MIN(pdib->m_size.cx - ptSrc.x, m_pdib->m_size.cx - ptDst.x));
 
-            int yEnd = min(size.cy, min(pdib->m_size.cy - ptSrc.y, m_pdib->m_size.cy - ptDst.y));
+            int yEnd = MIN(size.cy, MIN(pdib->m_size.cy - ptSrc.y, m_pdib->m_size.cy - ptDst.y));
 
             if(xEnd < 0)
                return false;
@@ -1342,8 +1342,8 @@ namespace draw2d_gdi
             x += pt.x;
             y += pt.y;
 
-            nWidth  = min(nWidth   , min(cx - xSrc, cx1 - x));
-            nHeight = min(nHeight  , min(cy - ySrc, cy1 - y));
+            nWidth  = MIN(nWidth   , MIN(cx - xSrc, cx1 - x));
+            nHeight = MIN(nHeight  , MIN(cy - ySrc, cy1 - y));
 
             for(int i = 0; i < nHeight; i++)
             {
@@ -3047,8 +3047,8 @@ namespace draw2d_gdi
 
    pdibWork4->Fill(255, 0, 0, 0);
 
-   pdibWork4->from(point(max(0, m_ptAlphaBlend.x - xDest), max(0, m_ptAlphaBlend.y - yDest)),
-   m_pdibAlphaBlend->get_graphics(), point(max(0, xDest - m_ptAlphaBlend.x), max(0, yDest - m_ptAlphaBlend.y)), size);
+   pdibWork4->from(point(MAX(0, m_ptAlphaBlend.x - xDest), MAX(0, m_ptAlphaBlend.y - yDest)),
+   m_pdibAlphaBlend->get_graphics(), point(MAX(0, xDest - m_ptAlphaBlend.x), MAX(0, yDest - m_ptAlphaBlend.y)), size);
 
    pdibWork->channel_multiply(visual::rgba::channel_alpha, pdibWork4);
 
@@ -3139,8 +3139,8 @@ namespace draw2d_gdi
 
          pdibWork4->Fill(255, 0, 0, 0);
 
-         pdibWork4->from(point(max(0, m_ptAlphaBlend.x - xDest), max(0, m_ptAlphaBlend.y - yDest)),
-            m_pdibAlphaBlend->get_graphics(), point(max(0, xDest - m_ptAlphaBlend.x), max(0, yDest - m_ptAlphaBlend.y)), size);
+         pdibWork4->from(point(MAX(0, m_ptAlphaBlend.x - xDest), MAX(0, m_ptAlphaBlend.y - yDest)),
+            m_pdibAlphaBlend->get_graphics(), point(MAX(0, xDest - m_ptAlphaBlend.x), MAX(0, yDest - m_ptAlphaBlend.y)), size);
 
          pdibWork->channel_multiply(visual::rgba::channel_alpha, pdibWork4);
 

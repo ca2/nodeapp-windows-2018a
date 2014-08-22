@@ -35,13 +35,13 @@ namespace draw2d_gdi
 
       if(::GetTextExtentPoint32W(hdc,wstr,(int)wstr.get_length(),&size))
       {
-         lprect->left   = (LONG)min(p.m_x,lprect->left);
+         lprect->left   = (LONG)MIN(p.m_x,lprect->left);
 
-         lprect->top    = (LONG)min(p.m_y,lprect->top);
+         lprect->top    = (LONG)MIN(p.m_y,lprect->top);
 
-         lprect->right  = (LONG)max(p.m_x + size.cx,lprect->right);
+         lprect->right  = (LONG)MAX(p.m_x + size.cx,lprect->right);
 
-         lprect->bottom = (LONG)max(p.m_y + size.cy,lprect->bottom);
+         lprect->bottom = (LONG)MAX(p.m_y + size.cy,lprect->bottom);
       }
 
 

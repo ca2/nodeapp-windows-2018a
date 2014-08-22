@@ -1681,11 +1681,11 @@ namespace draw2d_gdi
             {
                bMax = 0;
                b =(BYTE)(r1[0]  - r2[0]);
-               bMax = max(b, bMax);
+               bMax = MAX(b, bMax);
                b =(BYTE)(r1[1]  - r2[1]);
-               bMax = max(b, bMax);
+               bMax = MAX(b, bMax);
                b =(BYTE)(r1[2]  - r2[2]); 
-               bMax = max(b, bMax);
+               bMax = MAX(b, bMax);
                bMax = 255 - bMax;
             }
             dest[0]  =  bMax;
@@ -1709,12 +1709,12 @@ namespace draw2d_gdi
    //   int cx = this->cx;
    //   int cy = this->cy;
 
-   //   int l = max(cx, cy);
+   //   int l = MAX(cx, cy);
 
    //   
-   //   int jmax = min(l, cy / 2);
+   //   int jmax = MIN(l, cy / 2);
    //   int jmin = - jmax;
-   //   int imax = min(l, cx / 2);
+   //   int imax = MIN(l, cx / 2);
    //   int imin = - imax;
 
 
@@ -1794,12 +1794,12 @@ namespace draw2d_gdi
    //   int cx = this->cx;
    //   int cy = this->cy;
 
-   //   int l = max(cx, cy);
+   //   int l = MAX(cx, cy);
 
    //   
-   //   int jmax = min(l, cy / 2);
+   //   int jmax = MIN(l, cy / 2);
    //   int jmin = - jmax;
-   //   int imax = min(l, cx / 2);
+   //   int imax = MIN(l, cx / 2);
    //   int imin = - imax;
 
 
@@ -1874,11 +1874,11 @@ namespace draw2d_gdi
    //   int cx = rect.width();
    //   int cy = rect.height();
 
-   //   int l = max(cx, cy);
+   //   int l = MAX(cx, cy);
    //   
-   //   int jmax = min(l, cy / 2);
+   //   int jmax = MIN(l, cy / 2);
    //   int jmin = - jmax;
-   //   int imax = min(l, cx / 2);
+   //   int imax = MIN(l, cx / 2);
    //   int imin = - imax;
 
 
@@ -2767,7 +2767,7 @@ namespace draw2d_gdi
 
             r3.intersect(r1, r2);
 
-            size = min(size, (int32_t) r3.area());
+            size = MIN(size, (int32_t) r3.area());
             while(size > 0)
             {
                if(pb[3] == 0)

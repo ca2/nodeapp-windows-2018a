@@ -1706,11 +1706,11 @@ namespace draw2d_gdiplus
             {
                bMax = 0;
                b =(BYTE)(r1[0]  - r2[0]);
-               bMax = max(b, bMax);
+               bMax = MAX(b, bMax);
                b =(BYTE)(r1[1]  - r2[1]);
-               bMax = max(b, bMax);
+               bMax = MAX(b, bMax);
                b =(BYTE)(r1[2]  - r2[2]); 
-               bMax = max(b, bMax);
+               bMax = MAX(b, bMax);
                bMax = 255 - bMax;
             }
             dest[0]  =  bMax;
@@ -1734,12 +1734,12 @@ namespace draw2d_gdiplus
    //   int32_t cx = this->cx;
    //   int32_t cy = this->cy;
 
-   //   int32_t l = max(cx, cy);
+   //   int32_t l = MAX(cx, cy);
 
    //   
-   //   int32_t jmax = min(l, cy / 2);
+   //   int32_t jmax = MIN(l, cy / 2);
    //   int32_t jmin = - jmax;
-   //   int32_t imax = min(l, cx / 2);
+   //   int32_t imax = MIN(l, cx / 2);
    //   int32_t imin = - imax;
 
 
@@ -1819,12 +1819,12 @@ namespace draw2d_gdiplus
    //   int32_t cx = this->cx;
    //   int32_t cy = this->cy;
 
-   //   int32_t l = max(cx, cy);
+   //   int32_t l = MAX(cx, cy);
 
    //   
-   //   int32_t jmax = min(l, cy / 2);
+   //   int32_t jmax = MIN(l, cy / 2);
    //   int32_t jmin = - jmax;
-   //   int32_t imax = min(l, cx / 2);
+   //   int32_t imax = MIN(l, cx / 2);
    //   int32_t imin = - imax;
 
 
@@ -1899,11 +1899,11 @@ namespace draw2d_gdiplus
    //   int32_t cx = rect.width();
    //   int32_t cy = rect.height();
 
-   //   int32_t l = max(cx, cy);
+   //   int32_t l = MAX(cx, cy);
    //   
-   //   int32_t jmax = min(l, cy / 2);
+   //   int32_t jmax = MIN(l, cy / 2);
    //   int32_t jmin = - jmax;
-   //   int32_t imax = min(l, cx / 2);
+   //   int32_t imax = MIN(l, cx / 2);
    //   int32_t imin = - imax;
 
 
