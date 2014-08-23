@@ -5015,6 +5015,13 @@ namespace draw2d_gdi
 
    }
 
+   bool graphics::flush()
+   {
+
+      return ::GdiFlush() != FALSE;
+
+   }
+
 } // namespace draw2d_gdi
 
 

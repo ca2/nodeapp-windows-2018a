@@ -50,6 +50,8 @@ namespace draw2d_gdiplus
       virtual bool attach(void * posdata);
       virtual void * detach();
 
+      virtual HBITMAP _GetHBITMAP();
+      virtual void _ReleaseHBITMAP(HBITMAP hbitmap);
 
    };
 

@@ -39,10 +39,11 @@ namespace draw2d_gdi
       class size SetBitmapDimension(int nWidth, int nHeight);
       class size GetBitmapDimension() const;
 
-   #ifdef _DEBUG
       virtual void dump(dump_context & dumpcontext) const;
-   #endif
 
+
+      virtual HBITMAP _GetHBITMAP();
+      virtual void _ReleaseHBITMAP(HBITMAP hbitmap);
 
    };
 

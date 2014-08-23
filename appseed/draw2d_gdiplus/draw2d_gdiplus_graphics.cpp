@@ -4569,6 +4569,18 @@ namespace draw2d_gdiplus
 
    }
 
+
+   bool graphics::sync_flush()
+   {
+
+      synch_lock sl(&user_mutex());
+
+      m_pgraphics->Flush(Gdiplus::FlushIntentionSync);
+
+      return true;
+
+   }
+
    HDC graphics::get_hdc()
    {
       

@@ -514,6 +514,9 @@ namespace draw2d_gdi
 
       bool select_path(::draw2d::path * ppath);
 
+
+      virtual bool flush();
+
    };
 
 
