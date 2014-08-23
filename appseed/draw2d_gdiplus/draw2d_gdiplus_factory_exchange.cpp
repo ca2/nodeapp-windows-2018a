@@ -5,7 +5,7 @@ namespace draw2d_gdiplus
 {
 
 
-   factory_exchange::factory_exchange(sp(::axis::application) papp) :
+   factory_exchange::factory_exchange(sp(::aura::application) papp) :
       element(papp)
    {
 
@@ -32,12 +32,12 @@ namespace draw2d_gdiplus
 
 
 #ifdef CUBE
-void draw2d_factory_exchange(sp(::axis::application) papp)
+void draw2d_factory_exchange(sp(::aura::application) papp)
 {
    draw2d_gdiplus::factory_exchange factoryexchange(papp);
 }
 #else
-void ca2_factory_exchange(sp(::axis::application) papp)
+void ca2_factory_exchange(sp(::aura::application) papp)
 {
    draw2d_gdiplus::factory_exchange factoryexchange(papp);
 }

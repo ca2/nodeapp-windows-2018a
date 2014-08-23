@@ -13,7 +13,7 @@ namespace draw2d_gdiplus
 
       Gdiplus::Region *       m_pregion;
 
-      region(sp(::axis::application) papp);
+      region(sp(::aura::application) papp);
       virtual ~region();
 
 

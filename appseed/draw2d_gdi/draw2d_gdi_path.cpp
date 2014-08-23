@@ -9,7 +9,7 @@ namespace draw2d_gdi
 
    }
 
-   path::path(sp(::axis::application) papp):
+   path::path(sp(::aura::application) papp):
       ::element(papp)
    {
 

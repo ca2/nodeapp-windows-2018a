@@ -5,7 +5,7 @@ namespace draw2d_gdi
 {
 
 
-   palette::palette(sp(::axis::application) papp) :
+   palette::palette(sp(::aura::application) papp) :
       element(papp)
    {
    

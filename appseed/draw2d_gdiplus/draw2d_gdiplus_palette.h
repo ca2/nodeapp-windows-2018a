@@ -8,9 +8,9 @@ namespace draw2d_gdiplus
       virtual public ::draw2d::palette
    {
    public:
-      static palette* from_handle(sp(::axis::application) papp, HPALETTE hPalette);
+      static palette* from_handle(sp(::aura::application) papp, HPALETTE hPalette);
 
-      palette(sp(::axis::application) papp);
+      palette(sp(::aura::application) papp);
       bool CreatePalette(LPLOGPALETTE lpLogPalette);
       bool CreateHalftonePalette(::draw2d::graphics * pgraphics);
 

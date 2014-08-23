@@ -14,7 +14,7 @@ namespace draw2d_gdi
       bool m_bProcess;
 
       // Constructors
-      brush(sp(::axis::application) papp);
+      brush(sp(::aura::application) papp);
       virtual ~brush();
 
 

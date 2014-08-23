@@ -5,7 +5,7 @@ namespace draw2d_gdi
 {
 
 
-   brush::brush(sp(::axis::application) papp) :
+   brush::brush(sp(::aura::application) papp) :
       element(papp)
    { 
       m_bProcess = false;

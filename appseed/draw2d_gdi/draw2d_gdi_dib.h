@@ -25,7 +25,7 @@ namespace draw2d_gdi
 
 
 
-      dib(sp(::axis::application) papp);
+      dib(sp(::aura::application) papp);
       virtual ~dib();
 
 

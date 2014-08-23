@@ -10,7 +10,7 @@ namespace draw2d_gdi
    public:
 
       
-      region(sp(::axis::application) papp);
+      region(sp(::aura::application) papp);
       virtual ~region();
 
       

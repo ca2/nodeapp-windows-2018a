@@ -95,7 +95,7 @@ namespace draw2d_gdi
    }
 
 
-   ::draw2d_gdi::object * graphics_object_allocator(sp(::axis::application) papp, HANDLE h)
+   ::draw2d_gdi::object * graphics_object_allocator(sp(::aura::application) papp, HANDLE h)
    {
 
       switch(::GetObjectType(h))

@@ -46,7 +46,7 @@ namespace draw2d_gdiplus
    }
 
 
-   object * graphics_object_allocator(sp(::axis::application) papp, HANDLE h)
+   object * graphics_object_allocator(sp(::aura::application) papp, HANDLE h)
    {
       /*switch(::GetObjectType(h))
       {
@@ -67,7 +67,7 @@ namespace draw2d_gdiplus
       return NULL;
    }
 
-   /*object* object::from_handle(sp(::axis::application) papp, HGDIOBJ h)
+   /*object* object::from_handle(sp(::aura::application) papp, HGDIOBJ h)
    {
       hgdiobj_map* pMap = afxMapHGDIOBJ(TRUE); //create map if not exist
       ASSERT(pMap != NULL);
