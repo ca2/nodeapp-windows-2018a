@@ -66,7 +66,7 @@ extern "C" int32_t WINAPI _tWinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,
 
    UNREFERENCED_PARAMETER(lpCmdLine);
 
-   int iRet = s_main < removal >(hInstance,hPrevInstance,lpCmdLine,nCmdShow);
+   int iRet = ::aura::simple_app_main < removal >(hInstance,hPrevInstance,lpCmdLine,nCmdShow);
 
    return iRet;
 
