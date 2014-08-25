@@ -22,14 +22,15 @@ public:
    
    char *                     m_modpath;
    char *                     m_pszDllEnds;
-   UINT *                    m_dwaProcess;
+   UINT *                     m_dwaProcess;
    INT                        m_iSizeProcess;
    HMODULE *                  m_hmodulea;
    INT                        m_iSizeModule;
    bool                       m_bInstallerInstalling;
-   HINSTANCE m_hinstance;
+   HINSTANCE                  m_hinstance;
 
    removal();
+
    virtual ~removal();
    
    bool is_user_using(const char * pszDll);
@@ -43,6 +44,18 @@ public:
    virtual int32_t run();
 
    virtual bool finalize();
+
+
+   virtual void system(const char * pszCmd);
+
+   virtual string get_known_folder_dir(const KNOWNFOLDERID & rfid,const char * lpcsz);
+
+
+   virtual void rmdir(const char * pszDir);
+
+   virtual void rmdir_n_v(const char * pszDir);
+
+   virtual void g_n_rmdir_n_v(const KNOWNFOLDERID & rfid,const char * pszDir);
 
 };
 
@@ -61,33 +74,7 @@ extern "C" int32_t WINAPI _tWinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,
 
 }
 
-// if MSVC CRT is used
-//extern "C" INT WINAPI
-//WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
-//   __in LPTSTR lpCmdLine, INT nCmdShow)
-//{
-//   // call shared/exported WinMain
-//   removal app;
-//
-//   app.initialize();
-//
-//
-//   app.finalize();
-//
-//   return 0;
-//   
-//}
 
-// if MSVC CRT is stripped
-/*extern "C" INT WinMainCRTStartup() \
-{ 
-
-   ExitProcess(simple_app::s_main < removal > ());
-
-}*/
-
-//extern bool g_bInstalling;
-//extern stringa * g_pstraTrace;
 
 removal::removal() :
 ::aura::system(this)
@@ -170,7 +157,7 @@ HRESULT CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc, 
 
 
 
-string get_dir(::aura::application * papp, const KNOWNFOLDERID & rfid, const char * lpcsz)
+string removal::get_known_folder_dir(const KNOWNFOLDERID & rfid, const char * lpcsz)
 {
 
    wchar_t * buf = NULL;
@@ -181,16 +168,18 @@ string get_dir(::aura::application * papp, const KNOWNFOLDERID & rfid, const cha
 
    CoTaskMemFree(buf);
 
-   return App(papp).dir_path(str, lpsz);
+   return dir_path(str, lpcsz);
 
 }
 
 
 
 
-void my_system(::aura::application * papp, char * pszCmd)
+void removal::system(const char * pszCmd)
 {
-STARTUPINFO si;
+   System.process().system(pszCmd);
+
+/*STARTUPINFO si;
 PROCESS_INFORMATION pi;
 
 ZeroMemory(&si, sizeof(si));
@@ -205,17 +194,17 @@ if (CreateProcess(NULL, (char *) pszCmd, NULL, NULL, FALSE, CREATE_NO_WINDOW | C
     WaitForSingleObject(pi.hProcess, INFINITE);
     CloseHandle(pi.hProcess);
     CloseHandle(pi.hThread);
-}
+}*/
 
 }
 
 
-void rmdir(const char * pszDir)
+void removal::rmdir(const char * pszDir)
 {
-   my_system(("cmd.exe /C rmdir /S /Q \"" + string(pszDir) + "\"").c_str());
+   system(("cmd.exe /C rmdir /S /Q \"" + string(pszDir) + "\"").c_str());
 }
 
-void rmdir_n_v(const char * pszDir)
+void removal::rmdir_n_v(const char * pszDir)
 {
 
    string str(pszDir);
@@ -223,20 +212,20 @@ void rmdir_n_v(const char * pszDir)
 
    str.replace(":", "");
 
-   string str2 = dir::path(get_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Temporary Internet Files\\Virtualized").c_str(), str.c_str());
+   string str2 = dir::path(get_known_folder_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Temporary Internet Files\\Virtualized").c_str(), str.c_str());
    rmdir(str2.c_str());
 
   
-   str2 = dir::path(get_dir(FOLDERID_LocalAppData,"Microsoft\\Windows\\INetCache\\Virtualized").c_str(),str.c_str());
+   str2 = dir::path(get_known_folder_dir(FOLDERID_LocalAppData,"Microsoft\\Windows\\INetCache\\Virtualized").c_str(),str.c_str());
    rmdir(str2.c_str());
 
 }
 
 
-void g_n_rmdir_n_v(const KNOWNFOLDERID & rfid, const char * pszDir)
+void removal::g_n_rmdir_n_v(const KNOWNFOLDERID & rfid, const char * pszDir)
 {
 
-   string strDir = get_dir(rfid, pszDir);
+   string strDir = get_known_folder_dir(rfid,pszDir);
 
    rmdir_n_v(strDir.c_str());
 
@@ -245,7 +234,7 @@ void g_n_rmdir_n_v(const KNOWNFOLDERID & rfid, const char * pszDir)
 
 
 
-bool removal::initialize()
+int32_t removal::run()
 {
 
 
@@ -260,7 +249,7 @@ bool removal::initialize()
 
    ::GetModuleFileName(NULL, szFile, sizeof(szFile));
 
-   string strTargetDir = get_dir(FOLDERID_ProgramFilesX86, "ca2.app.removal");
+   string strTargetDir = get_known_folder_dir(FOLDERID_ProgramFilesX86, "ca2.app.removal");
 
    dir_mk(strTargetDir.c_str());
 
@@ -275,21 +264,21 @@ bool removal::initialize()
 
       if(i == IDYES)
       {
-         string strLink= get_dir(FOLDERID_Desktop, "ca2 app.removal Tool.lnk");
-         wstring wstrTarget(from_utf8(strTarget));
-         wstring wstrLink(from_utf8(strLink));
+         string strLink= get_known_folder_dir(FOLDERID_Desktop,"ca2 app.removal Tool.lnk");
+         wstring wstrTarget(strTarget);
+         wstring wstrLink(strLink);
          // create shortcurt;
          CreateLink(wstrTarget.c_str(), wstrLink.c_str(), L"ca2 app.removal Tool", wstrTarget.c_str(), 0);
       }
    }
 
 
-   my_system("taskkill /F /IM app.exe");
-   my_system("taskkill /F /IM app.install.exe");
-   my_system("taskkill /F /IM app.plugin.container.exe");
-   my_system("taskkill /F /IM plugin-container.exe");
-   my_system("taskkill /F /IM iexplore.exe");
-   my_system("taskkill /F /IM firefox.exe");
+   system("taskkill /F /IM app.exe");
+   system("taskkill /F /IM app.install.exe");
+   system("taskkill /F /IM app.plugin.container.exe");
+   system("taskkill /F /IM plugin-container.exe");
+   system("taskkill /F /IM iexplore.exe");
+   system("taskkill /F /IM firefox.exe");
    
    g_n_rmdir_n_v(FOLDERID_ProgramFilesX86, "ca2");
    g_n_rmdir_n_v(FOLDERID_ProgramFiles,"ca2");
