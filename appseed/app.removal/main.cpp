@@ -66,7 +66,8 @@ void str_replace_all(string &s,const string &search,const string &replace) {
 string dir_get_ca2_module_folder();
 string dir_element(const char * path1=NULL,const char * path2=NULL,const char * path3=NULL,const char * path4=NULL);
 
-class removal
+class removal :
+   virtual public ::aura::simple_app
 {
 public:
 
@@ -99,22 +100,37 @@ public:
 
 };
 
+
 // if MSVC CRT is used
-extern "C" INT WINAPI
-WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
-   __in LPTSTR lpCmdLine, INT nCmdShow)
+extern "C" int32_t WINAPI _tWinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLine,int32_t nCmdShow)
 {
-   // call shared/exported WinMain
-   removal app;
 
-   app.initialize();
+   UNREFERENCED_PARAMETER(lpCmdLine);
+
+   int iRet = s_main < removal >(hInstance,hPrevInstance,lpCmdLine,nCmdShow);
+
+   return iRet;
 
 
-   app.finalize();
 
-   return 0;
-   
 }
+
+// if MSVC CRT is used
+//extern "C" INT WINAPI
+//WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+//   __in LPTSTR lpCmdLine, INT nCmdShow)
+//{
+//   // call shared/exported WinMain
+//   removal app;
+//
+//   app.initialize();
+//
+//
+//   app.finalize();
+//
+//   return 0;
+//   
+//}
 
 // if MSVC CRT is stripped
 /*extern "C" INT WinMainCRTStartup() \
