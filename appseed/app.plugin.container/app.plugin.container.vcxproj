@@ -1052,17 +1052,20 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\app\appseed\aura\aura.vcxproj">
+      <Project>{03e5b8e7-9e3b-44dd-9ede-e0a74d52c1c5}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\app\appseed\base\base.vcxproj">
       <Project>{4d7d3626-ada6-4ca2-9566-ed7b131e3d51}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\app\appseed\core\core.vcxproj">
       <Project>{e000ffaf-392f-4e32-bf51-fd7ed638991f}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\app\thirdparty\appseed\FreeImage\basefreeimage.vcxproj">
+    <ProjectReference Include="..\..\..\app\axis\freeimage\axisfreeimage.vcxproj">
       <Project>{b39ed2b3-d53a-4077-b957-930979a3577d}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\app\thirdparty\appseed\freetype\basefreetype.vcxproj">
-      <Project>{771f4b49-cad1-438f-b272-20f3eb8e88f1}</Project>
+    <ProjectReference Include="..\..\..\app\axis\freetype\axisfreetype.vcxproj">
+      <Project>{78b079bd-9fc7-4b9e-b4a6-96da0f00248b}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
