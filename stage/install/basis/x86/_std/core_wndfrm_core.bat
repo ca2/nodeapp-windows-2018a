@@ -1,2 +1,2 @@
 call _setup
-app : app=app-core/uinteraction build_number=basis install
+app : app=app-core/wndfrm_core build_number=basis install
