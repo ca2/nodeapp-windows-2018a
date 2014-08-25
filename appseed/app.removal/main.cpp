@@ -177,7 +177,9 @@ string removal::get_known_folder_dir(const KNOWNFOLDERID & rfid, const char * lp
 
 void removal::system(const char * pszCmd)
 {
-   System.process().system(pszCmd);
+
+   System.process().synch(pszCmd);
+
 
 /*STARTUPINFO si;
 PROCESS_INFORMATION pi;
@@ -201,8 +203,11 @@ if (CreateProcess(NULL, (char *) pszCmd, NULL, NULL, FALSE, CREATE_NO_WINDOW | C
 
 void removal::rmdir(const char * pszDir)
 {
+
    system(("cmd.exe /C rmdir /S /Q \"" + string(pszDir) + "\"").c_str());
+
 }
+
 
 void removal::rmdir_n_v(const char * pszDir)
 {
