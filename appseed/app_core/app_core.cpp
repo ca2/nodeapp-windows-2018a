@@ -1,7 +1,7 @@
 #include "framework.h"
 
 
-CLASS_DECL_AXIS int32_t __win_main(sp(::axis::system) psystem,::windows::main_init_data * pmaininitdata);
+CLASS_DECL_AURA int32_t __win_main(sp(::aura::system) psystem,::windows::main_init_data * pmaininitdata);
 
 
 
