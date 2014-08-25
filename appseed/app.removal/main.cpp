@@ -13,7 +13,7 @@
 #include <tlhelp32.h>
 
 class removal :
-   virtual public ::aura::simple_app
+    public ::aura::simple_app
 {
 public:
 
@@ -89,7 +89,8 @@ extern "C" int32_t WINAPI _tWinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,
 //extern bool g_bInstalling;
 //extern stringa * g_pstraTrace;
 
-removal::removal()
+removal::removal() :
+::aura::system(this)
 {
    m_hinstance             = ::GetModuleHandleA(NULL);
    m_hmutex_app_removal  = NULL;
@@ -169,27 +170,25 @@ HRESULT CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc, 
 
 
 
-string get_dir(const KNOWNFOLDERID & rfid, const char * lpcsz)
+string get_dir(::aura::application * papp, const KNOWNFOLDERID & rfid, const char * lpcsz)
 {
 
    wchar_t * buf = NULL;
    
    SHGetKnownFolderPath(rfid, 0, NULL, &buf);
 
-   wstring wstr(buf);
-
-   string str = dir_path(to_utf8(wstr).c_str(), lpcsz);
+   string str(buf);
 
    CoTaskMemFree(buf);
 
-   return str;
+   return App(papp).dir_path(str, lpsz);
 
 }
 
 
 
 
-void my_system(const char * pszCmd)
+void my_system(::aura::application * papp, char * pszCmd)
 {
 STARTUPINFO si;
 PROCESS_INFORMATION pi;
@@ -222,13 +221,13 @@ void rmdir_n_v(const char * pszDir)
    string str(pszDir);
    rmdir(str.c_str());
 
-   str_replace_all(str, ":", "");
+   str.replace(":", "");
 
-   string str2 = dir_path(get_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Temporary Internet Files\\Virtualized").c_str(), str.c_str());
+   string str2 = dir::path(get_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Temporary Internet Files\\Virtualized").c_str(), str.c_str());
    rmdir(str2.c_str());
 
   
-   str2 = dir_path(get_dir(FOLDERID_LocalAppData,"Microsoft\\Windows\\INetCache\\Virtualized").c_str(),str.c_str());
+   str2 = dir::path(get_dir(FOLDERID_LocalAppData,"Microsoft\\Windows\\INetCache\\Virtualized").c_str(),str.c_str());
    rmdir(str2.c_str());
 
 }
