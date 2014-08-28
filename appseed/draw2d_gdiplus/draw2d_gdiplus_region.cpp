@@ -208,7 +208,7 @@ namespace draw2d_gdiplus
       
       Gdiplus::GraphicsPath path;
 
-      path.AddEllipse((INT) m_x1, m_y1, (INT) (m_x2 - m_x1), (INT) (m_y2 - m_y1));
+      path.AddEllipse((INT) m_x1, (INT) m_y1, (INT) (m_x2 - m_x1), (INT) (m_y2 - m_y1));
 
       return new Gdiplus::Region(&path);
 

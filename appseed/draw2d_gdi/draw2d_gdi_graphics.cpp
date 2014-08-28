@@ -4829,7 +4829,7 @@ namespace draw2d_gdi
 
       ::SetBkMode(m_hdc, TRANSPARENT);
 
-      if(!TextOutW(m_hdc,path.m_x,path.m_y,wstr,wstr.length()))
+      if(!TextOutW(m_hdc,(int) path.m_x,(int) path.m_y,wstr,wstr.length()))
          return false;
 
 
