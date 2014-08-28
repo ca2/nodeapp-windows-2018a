@@ -41,13 +41,13 @@ namespace draw2d_gdiplus
    }
 
 
-   point path::internal_last_point()
+   pointd path::internal_last_point()
    {
 
       if(m_bHasPointInternal)
       {
 
-         return point((LONG) m_ptInternal.X, (LONG) m_ptInternal.Y);
+         return pointd((LONG) m_ptInternal.X, (LONG) m_ptInternal.Y);
 
       }
       else
@@ -129,7 +129,7 @@ namespace draw2d_gdiplus
 
    }
 
-   point path::internal_current_point()
+   pointd path::internal_current_point()
    {
 
       return last_point();

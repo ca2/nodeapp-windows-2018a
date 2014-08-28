@@ -25,9 +25,9 @@ namespace draw2d_gdiplus
 
       virtual bool internal_add_arc(const RECT & rect, int iStart, int iAngle);
 
-      virtual point internal_last_point();
+      virtual pointd internal_last_point();
 
-      virtual point internal_current_point();
+      virtual pointd internal_current_point();
 
 
       virtual bool internal_begin_figure(bool bFill, ::draw2d::e_fill_mode efillmode);
