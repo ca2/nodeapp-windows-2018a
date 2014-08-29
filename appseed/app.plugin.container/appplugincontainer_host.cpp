@@ -18,6 +18,8 @@ namespace ca2plugin_container
       ::simple_ui::style(papp),
       ::user::interaction(papp),
       hotplugin::plugin(papp),
+      aura::session(papp),
+      axis::session(papp),
       base::session(papp)
    {
 
@@ -465,7 +467,7 @@ namespace ca2plugin_container
             try
             {
 
-               message_handler(m_pplugin->get_base(pmsg));
+               message_handler(Application.get_base(pmsg));
 
             }
             catch(...)
