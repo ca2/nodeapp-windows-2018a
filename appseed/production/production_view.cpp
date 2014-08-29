@@ -150,7 +150,7 @@ namespace production
       rectClient.deflate(2, 2);
       int32_t iW = rectClient.width() / 2;
       int32_t iH = rectClient.height() / 2;
-      iH = min(iH, 120);
+      iH = MIN(iH, 120);
       double r = (double) iW / (double) iH;
       double rScreen = (double) rectDesktop.width() / (double) rectDesktop.height();
       if(r < rScreen)
@@ -176,7 +176,7 @@ namespace production
       pdc->SelectObject(System.visual().font_central().GetListCtrlFont());
 
       size sz = pdc->GetTextExtent("ÁÍqg");
-      m_iLineHeight = max(1, sz.cy);
+      m_iLineHeight = MAX(1, sz.cy);
 
       pdc->FillSolidRect(rectClient, ARGB(255, 255, 255, 255));
 
@@ -485,7 +485,7 @@ namespace production
             {
                m_scrollinfo.m_sizeTotal.cx = 80;
                m_scrollinfo.m_sizeTotal.cy = (LONG)(m_pproduction->m_straStatus.get_size() * iLineHeight + 84);
-               m_scrollinfo.m_ptScroll.y = max(0,m_scrollinfo.m_sizeTotal.cy - m_scrollinfo.m_sizePage.cy + iLineHeight);
+               m_scrollinfo.m_ptScroll.y = MAX(0,m_scrollinfo.m_sizeTotal.cy - m_scrollinfo.m_sizePage.cy + iLineHeight);
                sl.unlock();
                _001LayoutScrollBars();
             }

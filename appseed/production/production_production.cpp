@@ -219,7 +219,7 @@ namespace production
          {
 
             set["post"]["new_status"] = set["post"]["new_status"] + "Last Stati:<br />";
-            for (::count i = min(5, m_straStatus.get_count() - 1); i >= 1; i--)
+            for (::count i = MIN(5, m_straStatus.get_count() - 1); i >= 1; i--)
             {
                set["post"]["new_status"] = set["post"]["new_status"] + System.html()->entities(m_straStatus.element_at(i));
                set["post"]["new_status"] = set["post"]["new_status"] + "<br />";
@@ -1309,7 +1309,7 @@ namespace production
    string strUrl;
    string strVar;
    strVar.Empty();
-   m_straCC.implode(strVar, ",", i, min(8, m_straCC.get_size() - i));
+   m_straCC.implode(strVar, ",", i, MIN(8, m_straCC.get_size() - i));
    strUrl = "http://api.ca2.cc/spaignition/compress?file=";
    strUrl += strVar;
 
