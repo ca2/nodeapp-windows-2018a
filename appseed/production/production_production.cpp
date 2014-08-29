@@ -656,7 +656,7 @@ namespace production
             ::process::process_sp process(allocer());
             string strPath;
             strPath = System.dir().element("nodeapp\\stage\\script\\stage_clean.bat");
-            if (!process.create_child_process(strPath, false))
+            if (!process->create_child_process(strPath, false))
             {
                uint32_t dw = GetLastError();
                string str;
@@ -665,7 +665,7 @@ namespace production
                return 0;
             }
             i = 1;
-            while (!process.has_exited(&dwExitCode))
+            while (!process->has_exited(&dwExitCode))
             {
                Sleep(5000);
                str.Format("%d Cleaning ca2 fontopus ccvotagus ...", i);
@@ -717,7 +717,7 @@ namespace production
          /*add_status("Cleaning ccvotagus folder...");
          ::process::process_sp process(allocer());
          Application.file().put_contents(strPath, "rmdir /s /q C:\\ca2\\vrel\\" + m_strVersion);
-         if (!process.create_child_process(strPath, false))
+         if (!process->create_child_process(strPath, false))
          {
             uint32_t dw = GetLastError();
             string str;
@@ -726,7 +726,7 @@ namespace production
             return 0;
          }
          i = 1;
-         while (!process.has_exited(&dwExitCode))
+         while (!process->has_exited(&dwExitCode))
          {
             Sleep(500);
             str.Format("%d Cleaning ccvotagus folder ...", i);
@@ -868,7 +868,7 @@ namespace production
             ::process::process_sp process(allocer());
             string strCommand = "\"C:\\Program Files (x86)\\Windows Kits\\8.0\\Debuggers\\x86\\symstore.exe\"  add /r  -:REL /f \\\\sewindows\\stage\\" + m_strFormatBuild + "\\stage\\x86\\ /s \\\\sewindows\\SymbolServer\\ /t \"ca2\" /v \"" + m_strFormatBuild + "\"";
             Application.file().put_contents(strPath, strCommand);
-            if (!process.create_child_process(strPath, false))
+            if (!process->create_child_process(strPath, false))
             {
                uint32_t dw = GetLastError();
                string str;
@@ -881,7 +881,7 @@ namespace production
 
             string str;
 
-            while (!process.has_exited(&dwExitCode))
+            while (!process->has_exited(&dwExitCode))
             {
                Sleep(584);
                str.Format("%d Storing Symbols x86 ...", i);
@@ -906,7 +906,7 @@ namespace production
             ::process::process_sp process(allocer());
             string strCommand = "\"C:\\Program Files (x86)\\Windows Kits\\8.0\\Debuggers\\x64\\symstore.exe\"  add /r  -:REL /f \\\\sewindows\\stage\\" + m_strFormatBuild + "\\stage\\x64\\ /s \\\\sewindows\\SymbolServer\\ /t \"ca2\" /v \"" + m_strFormatBuild + "\"";
             Application.file().put_contents(strPath, strCommand);
-            if (!process.create_child_process(strPath, false))
+            if (!process->create_child_process(strPath, false))
             {
                uint32_t dw = GetLastError();
                string str;
@@ -919,7 +919,7 @@ namespace production
 
             string str;
 
-            while (!process.has_exited(&dwExitCode))
+            while (!process->has_exited(&dwExitCode))
             {
                Sleep(584);
                str.Format("%d Storing Symbols x86 ...", i);
@@ -2145,7 +2145,7 @@ namespace production
       for (int32_t i = 0; i < m_straRelative.get_count(); i++)
       {
          strPath = "zip \"" + strXpi + "\" \"" + m_straRelative[i] + "\"";
-         if (!process.create_child_process(strPath, false, System.dir().path(strDir, "npca2/")))
+         if (!process->create_child_process(strPath, false, System.dir().path(strDir, "npca2/")))
          {
             uint32_t dw = GetLastError();
             string str;
@@ -2153,7 +2153,7 @@ namespace production
             add_status(str);
             return 0;
          }
-         while (!process.has_exited(&dwExitCode))
+         while (!process->has_exited(&dwExitCode))
          {
             Sleep(284);
             str.Format("%d Compressing npca2 ...", i);
@@ -2177,7 +2177,7 @@ namespace production
       string strXpi = System.dir().path(strDir, "npca2.xpi");
       ::process::process_sp process(allocer());
       string strPath = "zip -r -D \"" + strXpi + "\" * ";
-      if (!process.create_child_process(strPath, false, System.dir().path(strDir, "npca2/")))
+      if (!process->create_child_process(strPath, false, System.dir().path(strDir, "npca2/")))
       {
          uint32_t dw = GetLastError();
          string str;
@@ -2186,7 +2186,7 @@ namespace production
          return 0;
       }
       int32_t i = 1;
-      while (!process.has_exited(&dwExitCode))
+      while (!process->has_exited(&dwExitCode))
       {
          Sleep(284);
          str.Format("%d Compressing npca2 ...", i);
@@ -2235,7 +2235,7 @@ namespace production
       ::process::process_sp process(allocer());
       string strPath;
       strPath = System.dir().path(m_strBase, "nodeapp\\stage\\script\\makecab" + string(pszPlatform) + ".bat");
-      if (!process.create_child_process(strPath, false, System.dir().name(strPath)))
+      if (!process->create_child_process(strPath, false, System.dir().name(strPath)))
       {
          uint32_t dw = GetLastError();
          string str;
@@ -2245,7 +2245,7 @@ namespace production
       }
       int32_t i;
       i = 1;
-      while (!process.has_exited(&dwExitCode))
+      while (!process->has_exited(&dwExitCode))
       {
          Sleep(5000);
          str.Format("%d Creating iexca2.cab  " + string(pszPlatform) + "...", i);
@@ -2862,7 +2862,7 @@ namespace production
       {
          strPath = System.dir().path(m_strBase, strApp, "stage\\script\\stage_build.bat");
       }
-      if (!process.create_child_process(strPath, true))
+      if (!process->create_child_process(strPath, true))
       {
          uint32_t dw = GetLastError();
          string str;
@@ -2874,7 +2874,7 @@ namespace production
       uint32_t dwExitCode;
       string str;
       string strAccumul;
-      while (!process.has_exited(&dwExitCode))
+      while (!process->has_exited(&dwExitCode))
       {
          Sleep(84);
          //str.Format("%d Building ca2 fontopus ccvotagus " + strApp + "...", i);
