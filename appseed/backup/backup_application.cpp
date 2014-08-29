@@ -30,7 +30,7 @@ namespace backup
       System.factory().creatable_small < view > ();
       System.factory().creatable_small < pane_view > ();
 
-      platform().filemanager().std().m_strLevelUp = "levelup";
+      Platform.filemanager().std().m_strLevelUp = "levelup";
 
 
 	   m_pdoctemplateMain = new ::user::single_document_template(

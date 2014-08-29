@@ -137,7 +137,7 @@ namespace production
       {
       case PaneViewContextMenu:
          {
-            sp(::filemanager::manager) pdoc = platform().filemanager().std().open_child_list(false, true);
+            sp(::filemanager::manager) pdoc = Platform.filemanager().std().open_child_list(false, true);
             if(pdoc != NULL)
             {
                pdoc->get_filemanager_data()->m_iIconSize = 16;
@@ -182,7 +182,7 @@ namespace production
             cc->m_bTransparentBackground = true;
             cc->m_puiParent = this;
 
-            get_document()->m_pfilemanagerdoc = papp->platform().filemanager().std().open(papp, cc);
+            get_document()->m_pfilemanagerdoc = papp->Platform.filemanager().std().open(papp, cc);
             sp(::filemanager::manager) pdoc = get_document()->m_pfilemanagerdoc;
             if(pdoc != NULL)
             {
@@ -207,7 +207,7 @@ namespace production
          break;*/
       case PaneViewThreeActionLaunch:
          {
-            sp(::filemanager::manager) pdoc = platform().filemanager().std().open_child_list(false, true);
+            sp(::filemanager::manager) pdoc = Platform.filemanager().std().open_child_list(false, true);
             if(pdoc != NULL)
             {
                pdoc->get_filemanager_data()->m_iIconSize = 48;
