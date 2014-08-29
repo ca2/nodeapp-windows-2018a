@@ -19,7 +19,7 @@ namespace ca2plugin_container
       host *                     m_phost;
 
 
-      application(sp(::base::application) papp, const char * pszChannel);
+      application(sp(::aura::application) papp, const char * pszChannel);
       virtual ~application();
 
 

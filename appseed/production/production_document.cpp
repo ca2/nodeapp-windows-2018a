@@ -5,7 +5,7 @@ namespace production
 {
 
 
-   document::document(sp(::base::application) papp):
+   document::document(sp(::aura::application) papp):
       element(papp),
       ::data::data_container_base(papp),
       ::user::document(papp)

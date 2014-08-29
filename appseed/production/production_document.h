@@ -11,7 +11,7 @@ namespace production
    public:
 
 
-      document(sp(::base::application) papp);
+      document(sp(::aura::application) papp);
 
       DECL_GEN_VSIGNAL(data_on_after_change);
 

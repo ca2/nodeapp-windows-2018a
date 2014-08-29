@@ -84,7 +84,7 @@ namespace backup
 } //namespace backup
 
 
-CLASS_DECL_CA2_BACKUP sp(::base::application) get_new_app()
+CLASS_DECL_CA2_BACKUP sp(::aura::application) get_new_app()
 {
    return new ::backup::application;
 }

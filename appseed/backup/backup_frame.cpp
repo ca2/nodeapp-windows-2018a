@@ -5,7 +5,7 @@ namespace backup
 {
 
 
-   frame::frame(sp(::base::application) papp) :
+   frame::frame(sp(::aura::application) papp) :
       element(papp),
       production::frame(papp)
    {

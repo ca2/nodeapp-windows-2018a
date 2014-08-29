@@ -123,7 +123,7 @@ namespace production
       manual_reset_event      m_evFinish;
 
 
-      production(sp(::base::application) papp);
+      production(sp(::aura::application) papp);
       virtual ~production();
 
 

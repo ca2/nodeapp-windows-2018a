@@ -5,7 +5,7 @@ namespace ca2plugin_container
 {
 
 
-   application::application(sp(::base::application) papp, const char * pszChannel) :
+   application::application(sp(::aura::application) papp, const char * pszChannel) :
       element(papp)
    {
 

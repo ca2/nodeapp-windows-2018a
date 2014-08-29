@@ -11,7 +11,7 @@ namespace backup
    public:
 	   
       
-      view(sp(::base::application) papp);
+      view(sp(::aura::application) papp);
       virtual ~view();
 
 

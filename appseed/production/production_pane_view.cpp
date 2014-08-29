@@ -5,7 +5,7 @@ namespace production
 {
 
 
-   pane_view::pane_view(sp(::base::application) papp) :
+   pane_view::pane_view(sp(::aura::application) papp) :
       element(papp),
       ::user::tab(papp),
       

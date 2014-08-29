@@ -4,7 +4,7 @@
 namespace backup
 {
 
-   view::view(sp(::base::application) papp) :
+   view::view(sp(::aura::application) papp) :
       element(papp),
       ::user::interaction(papp), 
       ::user::scroll_view(papp),

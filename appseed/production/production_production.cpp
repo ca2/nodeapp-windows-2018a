@@ -5,7 +5,7 @@ namespace production
 {
 
 
-   production::production(sp(::base::application) papp) :
+   production::production(sp(::aura::application) papp) :
       element(papp),
       thread(papp),
       simple_thread(papp),
