@@ -318,6 +318,9 @@
       <Outputs>$(OutDir)$(TargetName).exe</Outputs>
       <Inputs>$(OutDir)app.exe</Inputs>
     </CustomBuildStep>
+    <Xdcmake>
+      <DocumentLibraryDependencies>false</DocumentLibraryDependencies>
+    </Xdcmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='memdleak|Win32'">
     <PreBuildEvent>

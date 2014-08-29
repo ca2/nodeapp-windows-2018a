@@ -313,6 +313,9 @@
     <Bscmake>
       <PreserveSBR>false</PreserveSBR>
     </Bscmake>
+    <Xdcmake>
+      <DocumentLibraryDependencies>false</DocumentLibraryDependencies>
+    </Xdcmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='memdleak|Win32'">
     <ClCompile>

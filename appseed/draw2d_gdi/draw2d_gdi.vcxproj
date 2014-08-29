@@ -315,6 +315,9 @@
     <Bscmake>
       <PreserveSBR>false</PreserveSBR>
     </Bscmake>
+    <Xdcmake>
+      <DocumentLibraryDependencies>false</DocumentLibraryDependencies>
+    </Xdcmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='memdleak|Win32'">
     <PreBuildEvent>
@@ -931,8 +934,6 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\win.h" />
-    <ClInclude Include="..\include\win32_system.h" />
     <ClInclude Include="draw2d_gdi.h" />
     <ClInclude Include="draw2d_gdi_bitmap.h" />
     <ClInclude Include="draw2d_gdi_brush.h" />

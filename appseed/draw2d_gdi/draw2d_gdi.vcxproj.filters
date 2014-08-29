@@ -9,17 +9,8 @@
       <UniqueIdentifier>{740b13d3-bf25-4793-a3e0-4d13e3e71c4a}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl</Extensions>
     </Filter>
-    <Filter Include="External Include">
-      <UniqueIdentifier>{4718090b-859b-4c99-b88b-2b479297146a}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\win.h">
-      <Filter>External Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\win32_system.h">
-      <Filter>External Include</Filter>
-    </ClInclude>
     <ClInclude Include="draw2d_gdi.h">
       <Filter>Header Files</Filter>
     </ClInclude>

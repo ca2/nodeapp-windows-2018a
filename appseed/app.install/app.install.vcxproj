@@ -292,6 +292,9 @@
       </Culture>
       <AdditionalIncludeDirectories>$(SolutionDir)../../../include;$(SolutionDir)../../../app/include/;$(SolutionDir)../../../;$(SolutionDir)../../../app/appseed</AdditionalIncludeDirectories>
     </ResourceCompile>
+    <Xdcmake>
+      <DocumentLibraryDependencies>false</DocumentLibraryDependencies>
+    </Xdcmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='memdleak|Win32'">
     <ClCompile>
