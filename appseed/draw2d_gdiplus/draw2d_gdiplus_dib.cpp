@@ -2576,7 +2576,7 @@ namespace draw2d_gdiplus
 
 
 
-#define new AXIS_NEW
+#define new AURA_NEW
 
    void dib::map(bool bApplyTransform)
    {
