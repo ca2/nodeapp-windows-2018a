@@ -153,7 +153,7 @@ namespace production
 
 
 extern "C"
-::base::library * get_new_library(sp(::base::application) papp)
+::aura::library * get_new_library(sp(::base::application) papp)
 {
 
    return new ::base::single_application_library < production::application > (papp, "nodeapp");
