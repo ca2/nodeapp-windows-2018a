@@ -2880,7 +2880,7 @@ namespace production
          //str.Format("%d Building ca2 fontopus ccvotagus " + strApp + "...", i);
          while(true)
          {
-            str = process.read();
+            str = process->read();
             strAccumul+=str;
             if(!str.has_char())
                break;
@@ -2896,7 +2896,7 @@ namespace production
       }
       while(true)
       {
-         str = process.read();
+         str = process->read();
          strAccumul+=str;
          if(!str.has_char())
             break;
