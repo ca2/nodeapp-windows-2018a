@@ -71,14 +71,17 @@ public:
 
 };
 
+
 // if MSVC CRT is used
 extern "C" int32_t WINAPI
-_tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
-   __in LPTSTR lpCmdLine, int32_t nCmdShow)
+_tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, __in LPTSTR lpCmdLine, int32_t nCmdShow)
 {
+
    // call shared/exported WinMain
-   return s_main < installer > (hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+   return ::base::simple_app_main < installer > (hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+
 }
+
 
 // if MSVC CRT is stripped
 /*extern "C" int32_t WinMainCRTStartup() \
@@ -91,6 +94,7 @@ _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 installer::installer() :
    element(this),
+   ::aura::system(NULL),
    ::axis::system(NULL),
    ::base::system(NULL),
    ::install::installer(this)
