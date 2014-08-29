@@ -1320,7 +1320,7 @@ namespace production
 
 
    System.http().ms_download(strUrl,
-   System.dir().element("time\\spaignition_update.txt"), NULL, post, headers, session().user()->get_user());
+   System.dir().element("time\\spaignition_update.txt"), NULL, post, headers, Session.user()->get_user());
    i += 8;
    }
    }*/
