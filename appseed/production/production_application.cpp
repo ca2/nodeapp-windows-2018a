@@ -156,7 +156,7 @@ extern "C"
 ::aura::library * get_new_library(sp(::base::application) papp)
 {
 
-   return new ::base::single_application_library < production::application > (papp, "nodeapp");
+   return new ::aura::single_application_library < production::application > (papp, "nodeapp");
 
 }
 
