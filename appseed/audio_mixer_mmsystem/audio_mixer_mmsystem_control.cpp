@@ -412,7 +412,7 @@ namespace multimedia
                int32_t nRightValue = (int32_t)MulDivRN(pmxcd_u[1].dwValue - m_mixercontrol.Bounds.dwMinimum, nRange, m_mixercontrol.Bounds.dwMaximum - m_mixercontrol.Bounds.dwMinimum);
 
 
-               int32_t nMaxValue = max(nLeftValue, nRightValue);
+               int32_t nMaxValue = MAX(nLeftValue, nRightValue);
                int32_t nBalance = nMaxValue == 0 ?
                   nRange / 2 :
                (nRange +
