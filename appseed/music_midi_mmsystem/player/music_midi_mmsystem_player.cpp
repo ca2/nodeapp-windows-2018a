@@ -43,7 +43,7 @@ namespace music
                //SetMainWnd(NULL);
                //ASSERT(GetMainWnd() == NULL);
 
-               set_thread_priority(::axis::scheduling_priority_normal);
+               set_thread_priority(::multithreading::priority_normal);
 
                m_evInitialized.SetEvent();
 
