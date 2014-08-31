@@ -1,9 +1,27 @@
 ﻿#include "framework.h"
 
 
+
 namespace production
 {
 
+   void get_base(stringa & straBase)
+   {
+
+      straBase.add("aura.dll");
+      straBase.add("aurasqlite.dll");
+      straBase.add("axis.dll");
+      straBase.add("axisbsdiff.dll");
+      straBase.add("axisbzip2.dll");
+      straBase.add("axisfreeimage.dll");
+      straBase.add("axisfreetype.dll");
+      straBase.add("axisidn.dll");
+      straBase.add("axismysql.dll");
+      straBase.add("axisopenssl.dll");
+      straBase.add("axiszlib.dll");
+      straBase.add("base.dll");
+
+   }
 
    production::production(sp(::aura::application) papp) :
       element(papp),
@@ -1921,13 +1939,35 @@ namespace production
       m_straRelative.remove_all();
       m_straPath.remove_all();
 
+
+      stringa straBase;
+
+      get_base(straBase);
+
       add_path(pszDir, "META-INF\\zigbert.rsa");
       add_path(pszDir, "install.rdf");
       add_path(pszDir, "chrome.manifest");
       add_path(pszDir, "plugins\\app.install.exe");
       add_path(pszDir, "plugins\\npca2.dll");
-      add_path(pszDir, "plugins\\base.dll");
-      //add_path(pszDir, "plugins\\os.dll");
+
+      for(index i = 0; i < straBase; i++)
+      {
+         add_path(pszDir,"plugins\\" + straBase[i]);
+
+      }
+
+      //add_path(pszDir,"plugins\\aura.dll");
+      //add_path(pszDir,"plugins\\aurasqlite.dll");
+      //add_path(pszDir,"plugins\\axis.dll");
+      //add_path(pszDir,"plugins\\axisbsdiff.dll");
+      //add_path(pszDir,"plugins\\axisbzip2.dll");
+      //add_path(pszDir,"plugins\\axisfreeimage.dll");
+      //add_path(pszDir,"plugins\\axisfreetype.dll");
+      //add_path(pszDir,"plugins\\axisidn.dll");
+      //add_path(pszDir,"plugins\\axismysql.dll");
+      //add_path(pszDir,"plugins\\axisopenssl.dll");
+      //add_path(pszDir,"plugins\\axiszlib.dll");
+      //add_path(pszDir, "plugins\\base.dll");
       add_path(pszDir, "plugins\\msvcp120d.dll");
       add_path(pszDir, "plugins\\msvcr120d.dll");
       add_path(pszDir, "plugins\\draw2d_gdiplus.dll");
@@ -2055,11 +2095,25 @@ namespace production
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
 
-      add_status("Signing base.dll for Firefox ...");
-      strFile = System.dir().path(strDir, "npca2/plugins", "base.dll");
-      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/base.dll"));
-      strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
-      System.process().synch(strCmd);
+
+      stringa straBase;
+
+      get_base(straBase);
+
+      for(index i = 0; i < straBase; i++)
+      {
+         add_status("Signing base.dll for Firefox ...");
+         strFile = System.dir().path(strDir, "npca2/plugins", "base.dll");
+         Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/base.dll"));
+         strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
+         System.process().synch(strCmd);
+
+      }
+      //add_status("Signing base.dll for Firefox ...");
+      //strFile = System.dir().path(strDir, "npca2/plugins", "base.dll");
+      //Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/base.dll"));
+      //strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
+      //System.process().synch(strCmd);
 
 /*
       add_status("Signing os.dll for Firefox ...");
