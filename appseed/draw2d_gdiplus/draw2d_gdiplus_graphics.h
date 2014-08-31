@@ -17,12 +17,7 @@ namespace draw2d_gdiplus
       HDC                           m_hdc;
       HDC                           m_hdcGraphics;
 
-      // advanced use and implementation
-      bool                          m_bPrinting;
 
-
-
-      graphics();
       graphics(sp(::aura::application) papp);
       virtual ~graphics();
 
