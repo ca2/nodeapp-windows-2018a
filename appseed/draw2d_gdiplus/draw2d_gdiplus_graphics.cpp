@@ -25,25 +25,14 @@ namespace draw2d_gdiplus
 
    }
 
-   graphics::graphics()
-   {
-
-      m_bPrinting       = FALSE;
-      m_pgraphics       = NULL;
-      m_pgraphics       = NULL;
-      m_hdc             = NULL;
-      m_ppath           = NULL;
-      m_ppathPaint      = NULL;
-      m_etextrendering  = ::draw2d::text_rendering_anti_alias_grid_fit;
-;
-
-   }
-
 
    void graphics::assert_valid() const
    {
+
       object::assert_valid();
+
    }
+
 
    void graphics::dump(dump_context & dumpcontext) const
    {
