@@ -9,7 +9,8 @@ namespace draw2d_gdiplus
 
 
    graphics::graphics(sp(::aura::application) papp) :
-      element(papp)
+      element(papp),
+      ::draw2d::graphics(papp)
    {
 
       m_bPrinting       = FALSE;
@@ -4249,7 +4250,7 @@ namespace draw2d_gdiplus
    bool graphics::LineTo(double x, double y)
    {
 
-      synch_lock sl(&user_mutex());
+      synch_lock sl(m_spmutex);
 
       gdiplus_pen()->SetAlignment(Gdiplus::PenAlignment::PenAlignmentCenter);
 
@@ -4267,7 +4268,7 @@ namespace draw2d_gdiplus
    bool graphics::DrawLine(float x1, float y1, float x2, float y2, ::draw2d::pen * ppen)
    {
 
-      synch_lock sl(&user_mutex());
+      synch_lock sl(m_spmutex);
 
       ((Gdiplus::Pen *) ppen->get_os_data())->SetAlignment(Gdiplus::PenAlignment::PenAlignmentCenter);
 
@@ -4285,7 +4286,7 @@ namespace draw2d_gdiplus
    bool graphics::DrawLine(int32_t x1, int32_t y1, int32_t x2, int32_t y2, ::draw2d::pen * ppen)
    {
 
-      synch_lock sl(&user_mutex());
+      synch_lock sl(m_spmutex);
 
       ((Gdiplus::Pen *) ppen->get_os_data())->SetAlignment(Gdiplus::PenAlignment::PenAlignmentCenter);
 
@@ -4467,7 +4468,7 @@ namespace draw2d_gdiplus
    Gdiplus::Pen * graphics::gdiplus_pen()
    {
 
-      synch_lock sl(&user_mutex());
+      synch_lock sl(m_spmutex);
 
       if(m_sppen.is_null())
       {
@@ -4560,7 +4561,7 @@ namespace draw2d_gdiplus
    bool graphics::flush()
    {
 
-      synch_lock sl(&user_mutex());
+      synch_lock sl(m_spmutex);
       
       m_pgraphics->Flush();
 
@@ -4572,7 +4573,7 @@ namespace draw2d_gdiplus
    bool graphics::sync_flush()
    {
 
-      synch_lock sl(&user_mutex());
+      synch_lock sl(m_spmutex);
 
       m_pgraphics->Flush(Gdiplus::FlushIntentionSync);
 
