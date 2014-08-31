@@ -3071,15 +3071,6 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return nRetVal;
    }
 
-   /*point graphics::MoveTo(int32_t x, int32_t y)
-   {
-      point point(0, 0);
-      if(get_handle1() != NULL && get_handle1() != get_handle2())
-         ::MoveToEx(get_handle1(), x, y, &point);
-      if(get_handle2() != NULL)
-         ::MoveToEx(get_handle2(), x, y, &point);
-      return point;
-   }*/
 
    UINT graphics::SetTextAlign(UINT nFlags)
    {
@@ -4258,13 +4249,14 @@ namespace draw2d_gdiplus
    bool graphics::LineTo(double x, double y)
    {
 
-//      ::Gdiplus::Pen pen(::Gdiplus::Color(argb_get_a_value(m_crColor), argb_get_r_value(m_crColor), argb_get_g_value(m_crColor), argb_get_b_value(m_crColor)), m_dPenWidth);
+      synch_lock sl(&user_mutex());
 
       gdiplus_pen()->SetAlignment(Gdiplus::PenAlignment::PenAlignmentCenter);
 
       m_pgraphics->DrawLine(gdiplus_pen(), Gdiplus::PointF((Gdiplus::REAL) m_x, (Gdiplus::REAL)  m_y), Gdiplus::PointF((Gdiplus::REAL) x, (Gdiplus::REAL) y));
 
       m_x = x;
+
       m_y = y;
 
       return TRUE;
@@ -4274,6 +4266,8 @@ namespace draw2d_gdiplus
 
    bool graphics::DrawLine(float x1, float y1, float x2, float y2, ::draw2d::pen * ppen)
    {
+
+      synch_lock sl(&user_mutex());
 
       ((Gdiplus::Pen *) ppen->get_os_data())->SetAlignment(Gdiplus::PenAlignment::PenAlignmentCenter);
 
@@ -4290,6 +4284,8 @@ namespace draw2d_gdiplus
 
    bool graphics::DrawLine(int32_t x1, int32_t y1, int32_t x2, int32_t y2, ::draw2d::pen * ppen)
    {
+
+      synch_lock sl(&user_mutex());
 
       ((Gdiplus::Pen *) ppen->get_os_data())->SetAlignment(Gdiplus::PenAlignment::PenAlignmentCenter);
 
@@ -4470,6 +4466,9 @@ namespace draw2d_gdiplus
 
    Gdiplus::Pen * graphics::gdiplus_pen()
    {
+
+      synch_lock sl(&user_mutex());
+
       if(m_sppen.is_null())
       {
          m_sppen.alloc(allocer());
