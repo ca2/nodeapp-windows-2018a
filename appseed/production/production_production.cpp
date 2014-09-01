@@ -5,7 +5,7 @@
 namespace production
 {
 
-   void get_base(stringa & straBase)
+   void get_plugin_base_library_list(stringa & straBase)
    {
 
       straBase.add("aura.dll");
@@ -1940,18 +1940,19 @@ namespace production
       m_straPath.remove_all();
 
 
-      stringa straBase;
-
-      get_base(straBase);
-
       add_path(pszDir, "META-INF\\zigbert.rsa");
       add_path(pszDir, "install.rdf");
       add_path(pszDir, "chrome.manifest");
       add_path(pszDir, "plugins\\app.install.exe");
       add_path(pszDir, "plugins\\npca2.dll");
 
+      stringa straBase;
+
+      get_plugin_base_library_list(straBase);
+
       for(index i = 0; i < straBase; i++)
       {
+
          add_path(pszDir,"plugins\\" + straBase[i]);
 
       }
@@ -2095,20 +2096,28 @@ namespace production
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
 
-
       stringa straBase;
 
-      get_base(straBase);
+      get_plugin_base_library_list(straBase);
 
       for(index i = 0; i < straBase; i++)
       {
-         add_status("Signing base.dll for Firefox ...");
-         strFile = System.dir().path(strDir, "npca2/plugins", "base.dll");
-         Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/base.dll"));
+         
+         string strLibrary = straBase[i];
+
+         add_status("Signing " + strLibrary + " for Firefox ...");
+
+         strFile = System.dir().path(strDir, "npca2/plugins", strLibrary);
+
+         Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/" + strLibrary));
+
          strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
+
          System.process().synch(strCmd);
 
       }
+
+
       //add_status("Signing base.dll for Firefox ...");
       //strFile = System.dir().path(strDir, "npca2/plugins", "base.dll");
       //Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/base.dll"));

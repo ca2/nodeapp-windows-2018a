@@ -29,14 +29,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="ca2v_2011_04_02.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="fluidbasis_2011_10_26.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
     <Media Include="small_bell.mp3">
       <Filter>Resource Files</Filter>
     </Media>

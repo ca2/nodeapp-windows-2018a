@@ -722,10 +722,6 @@
     <ClInclude Include="framework.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="ca2v_2011_04_02.ico" />
-    <Image Include="fluidbasis_2011_10_26.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Media Include="small_bell.mp3" />
   </ItemGroup>
   <ItemGroup>
