@@ -309,6 +309,10 @@ namespace draw2d_gdi
       bool DrawPolygon(const POINT * lpPoints, int nCount);
       bool FillPolygon(const POINT * lpPoints, int nCount);
 
+      bool Polygon(const POINTD * lpPoints,int nCount);
+      bool DrawPolygon(const POINTD * lpPoints,int nCount);
+      bool FillPolygon(const POINTD * lpPoints,int nCount);
+
       bool PolyPolygon(const POINT * lpPoints, const INT * lpPolyCounts, int nCount);
       bool DrawPolyPolygon(const POINT * lpPoints, const INT * lpPolyCounts, int nCount);
       bool FillPolyPolygon(const POINT * lpPoints, const INT * lpPolyCounts, int nCount);

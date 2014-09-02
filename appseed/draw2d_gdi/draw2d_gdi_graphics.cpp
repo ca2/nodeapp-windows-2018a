@@ -1031,6 +1031,32 @@ namespace draw2d_gdi
 
    }
 
+   bool graphics::Polygon(const POINTD * lpPoints,int nCount)
+   {
+
+      rectd rectd;
+
+      rectd.get_bounding_rect(lpPoints,nCount);
+
+      if(rectd.width() <= 0 || rectd.height() <= 0)
+         return false;
+
+      draw_item item;
+
+      point_array pa(lpPoints);
+
+      ZERO(item);
+
+      item.lpPoints = pa.get_data();
+
+      item.nCount = nCount;
+
+      bool bOk = internal_fill_and_stroke_path(&::draw2d_gdi::graphics::internal_set_path_polygon,(void *)&item,rect,m_spbrush,m_sppen);
+
+      return bOk;
+
+   }
+
    bool graphics::Polygon(const POINT * lpPoints, int nCount)
    {
 
