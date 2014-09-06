@@ -2460,7 +2460,7 @@ namespace draw2d_gdi
 
       rect rect(rectWindow);
 
-      window_graphics::update_window(pwnd->m_pgraphics,pwnd->get_handle(),m_pcolorref,rect);
+      Application.window_graphics_update_window(pwnd->get_window_graphics(),pwnd->get_handle(),m_pcolorref,rect);
 
       return true;
 
@@ -2547,7 +2547,7 @@ namespace draw2d_gdi
    }
 
 
-   bool dib::print_window(::user::interaction_impl * pwnd, signal_details * pobj)
+   bool dib::print_window(::user::draw_interface * pwnd, signal_details * pobj)
    {
 
       SCAST_PTR(::message::base, pbase, pobj);

@@ -183,7 +183,8 @@ namespace draw2d_gdi
 
       ASSERT(get_handle1() != NULL); 
 
-      return ::ExcludeUpdateRgn(get_handle1(), (oswindow) pwindow->get_handle()) ;
+//      return ::ExcludeUpdateRgn(get_handle1(), (oswindow) pwindow->get_handle()) ;
+      return 0;
 
    }
 
