@@ -2427,14 +2427,14 @@ namespace draw2d_gdiplus
 
 
 
-   bool dib::update_window(::user::interaction_impl * pwnd, signal_details * pobj)
+   bool dib::update_window(::user::draw_interface * pwnd, signal_details * pobj)
    {
 
       rect64 rectWindow;
 
-      pwnd->m_pui->GetWindowRect(rectWindow);
+      pwnd->GetWindowRect(rectWindow);
 
-      m_spgraphics->SetViewportOrg(0, 0);
+      m_spgraphics->SetViewportOrg(0,0);
 
       map();
 
@@ -2446,61 +2446,61 @@ namespace draw2d_gdiplus
       // >> 8 instead of / 255 subsequent alpha_blend operations say thanks on true_blend because (255) * (1/254) + (255) * (254/255) > 255
 
 
-         while (size >= 8)
-         {
-            dst[0] = LOBYTE(((int32_t)dst[0] * (int32_t)dst[3])>> 8);
-            dst[1] = LOBYTE(((int32_t)dst[1] * (int32_t)dst[3])>> 8);
-            dst[2] = LOBYTE(((int32_t)dst[2] * (int32_t)dst[3])>> 8);
+      while(size >= 8)
+      {
+         dst[0] = LOBYTE(((int32_t)dst[0] * (int32_t)dst[3]) >> 8);
+         dst[1] = LOBYTE(((int32_t)dst[1] * (int32_t)dst[3]) >> 8);
+         dst[2] = LOBYTE(((int32_t)dst[2] * (int32_t)dst[3]) >> 8);
 
-            dst[4+0] = LOBYTE(((int32_t)dst[4+0] * (int32_t)dst[4+3])>> 8);
-            dst[4+1] = LOBYTE(((int32_t)dst[4+1] * (int32_t)dst[4+3])>> 8);
-            dst[4+2] = LOBYTE(((int32_t)dst[4+2] * (int32_t)dst[4+3])>> 8);
+         dst[4 + 0] = LOBYTE(((int32_t)dst[4 + 0] * (int32_t)dst[4 + 3]) >> 8);
+         dst[4 + 1] = LOBYTE(((int32_t)dst[4 + 1] * (int32_t)dst[4 + 3]) >> 8);
+         dst[4 + 2] = LOBYTE(((int32_t)dst[4 + 2] * (int32_t)dst[4 + 3]) >> 8);
 
-            dst[8+0] = LOBYTE(((int32_t)dst[8+0] * (int32_t)dst[8+3])>> 8);
-            dst[8+1] = LOBYTE(((int32_t)dst[8+1] * (int32_t)dst[8+3])>> 8);
-            dst[8+2] = LOBYTE(((int32_t)dst[8+2] * (int32_t)dst[8+3])>> 8);
+         dst[8 + 0] = LOBYTE(((int32_t)dst[8 + 0] * (int32_t)dst[8 + 3]) >> 8);
+         dst[8 + 1] = LOBYTE(((int32_t)dst[8 + 1] * (int32_t)dst[8 + 3]) >> 8);
+         dst[8 + 2] = LOBYTE(((int32_t)dst[8 + 2] * (int32_t)dst[8 + 3]) >> 8);
 
-            dst[12+0] = LOBYTE(((int32_t)dst[12+0] * (int32_t)dst[12+3])>> 8);
-            dst[12+1] = LOBYTE(((int32_t)dst[12+1] * (int32_t)dst[12+3])>> 8);
-            dst[12+2] = LOBYTE(((int32_t)dst[12+2] * (int32_t)dst[12+3])>> 8);
+         dst[12 + 0] = LOBYTE(((int32_t)dst[12 + 0] * (int32_t)dst[12 + 3]) >> 8);
+         dst[12 + 1] = LOBYTE(((int32_t)dst[12 + 1] * (int32_t)dst[12 + 3]) >> 8);
+         dst[12 + 2] = LOBYTE(((int32_t)dst[12 + 2] * (int32_t)dst[12 + 3]) >> 8);
 
-            dst[16+0] = LOBYTE(((int32_t)dst[16+0] * (int32_t)dst[16+3])>> 8);
-            dst[16+1] = LOBYTE(((int32_t)dst[16+1] * (int32_t)dst[16+3])>> 8);
-            dst[16+2] = LOBYTE(((int32_t)dst[16+2] * (int32_t)dst[16+3])>> 8);
+         dst[16 + 0] = LOBYTE(((int32_t)dst[16 + 0] * (int32_t)dst[16 + 3]) >> 8);
+         dst[16 + 1] = LOBYTE(((int32_t)dst[16 + 1] * (int32_t)dst[16 + 3]) >> 8);
+         dst[16 + 2] = LOBYTE(((int32_t)dst[16 + 2] * (int32_t)dst[16 + 3]) >> 8);
 
-            dst[20+0] = LOBYTE(((int32_t)dst[20+0] * (int32_t)dst[20+3])>> 8);
-            dst[20+1] = LOBYTE(((int32_t)dst[20+1] * (int32_t)dst[20+3])>> 8);
-            dst[20+2] = LOBYTE(((int32_t)dst[20+2] * (int32_t)dst[20+3])>> 8);
+         dst[20 + 0] = LOBYTE(((int32_t)dst[20 + 0] * (int32_t)dst[20 + 3]) >> 8);
+         dst[20 + 1] = LOBYTE(((int32_t)dst[20 + 1] * (int32_t)dst[20 + 3]) >> 8);
+         dst[20 + 2] = LOBYTE(((int32_t)dst[20 + 2] * (int32_t)dst[20 + 3]) >> 8);
 
-            dst[24+0] = LOBYTE(((int32_t)dst[24+0] * (int32_t)dst[24+3])>> 8);
-            dst[24+1] = LOBYTE(((int32_t)dst[24+1] * (int32_t)dst[24+3])>> 8);
-            dst[24+2] = LOBYTE(((int32_t)dst[24+2] * (int32_t)dst[24+3])>> 8);
+         dst[24 + 0] = LOBYTE(((int32_t)dst[24 + 0] * (int32_t)dst[24 + 3]) >> 8);
+         dst[24 + 1] = LOBYTE(((int32_t)dst[24 + 1] * (int32_t)dst[24 + 3]) >> 8);
+         dst[24 + 2] = LOBYTE(((int32_t)dst[24 + 2] * (int32_t)dst[24 + 3]) >> 8);
 
-            dst[28+0] = LOBYTE(((int32_t)dst[28+0] * (int32_t)dst[28+3])>> 8);
-            dst[28+1] = LOBYTE(((int32_t)dst[28+1] * (int32_t)dst[28+3])>> 8);
-            dst[28+2] = LOBYTE(((int32_t)dst[28+2] * (int32_t)dst[28+3])>> 8);
+         dst[28 + 0] = LOBYTE(((int32_t)dst[28 + 0] * (int32_t)dst[28 + 3]) >> 8);
+         dst[28 + 1] = LOBYTE(((int32_t)dst[28 + 1] * (int32_t)dst[28 + 3]) >> 8);
+         dst[28 + 2] = LOBYTE(((int32_t)dst[28 + 2] * (int32_t)dst[28 + 3]) >> 8);
 
-            dst += 4 * 8;
-            size -= 8;
-         }
-         while(size--)
-         {
-            dst[0] = LOBYTE(((int32_t)dst[0] * (int32_t)dst[3])>> 8);
-            dst[1] = LOBYTE(((int32_t)dst[1] * (int32_t)dst[3])>> 8);
-            dst[2] = LOBYTE(((int32_t)dst[2] * (int32_t)dst[3])>> 8);
-            dst += 4;
-         }
+         dst += 4 * 8;
+         size -= 8;
+      }
+      while(size--)
+      {
+         dst[0] = LOBYTE(((int32_t)dst[0] * (int32_t)dst[3]) >> 8);
+         dst[1] = LOBYTE(((int32_t)dst[1] * (int32_t)dst[3]) >> 8);
+         dst[2] = LOBYTE(((int32_t)dst[2] * (int32_t)dst[3]) >> 8);
+         dst += 4;
+      }
 
       rect rect(rectWindow);
 
-      window_graphics::update_window(pwnd->m_pgraphics, pwnd->get_handle(), m_pcolorref, rect, m_iScan);
+      Application.window_graphics_update_window(pwnd->get_window_graphics(),pwnd->get_handle(),m_pcolorref,rect,m_iScan);
 
       return true;
 
    }
 
 
-   bool dib::print_window(::user::interaction_impl * pwnd, signal_details * pobj)
+   bool dib::print_window(::user::draw_interface * pwnd,signal_details * pobj)
    {
 
       SCAST_PTR(::message::base, pbase, pobj);

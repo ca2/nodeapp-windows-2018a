@@ -2393,12 +2393,12 @@ namespace draw2d_gdi
   // }
 
 
-   bool dib::update_window(::user::interaction_impl * pwnd, signal_details * pobj)
+   bool dib::update_window(::user::draw_interface * pwnd, signal_details * pobj)
    {
 
       rect64 rectWindow;
 
-      pwnd->m_pui->GetWindowRect(rectWindow);
+      pwnd->GetWindowRect(rectWindow);
 
       m_spgraphics->SetViewportOrg(0, 0);
 

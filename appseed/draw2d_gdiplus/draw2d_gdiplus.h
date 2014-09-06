@@ -1,7 +1,10 @@
 #pragma once
 
 
-#include "app/appseed/base/base/base/base.h"
+#include "aura/aura/aura.h"
+#include "aura/graphics/graphics.h"
+#include "aura/user/user/user_printer.h"
+
 
 #ifdef _DRAW2D_GDIPLUS_STATIC
     #define CLASS_DECL_DRAW2D_GDIPLUS

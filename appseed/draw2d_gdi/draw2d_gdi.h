@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "app/appseed/base/base/base/base.h"
+#include "aura/aura/aura.h"
 
 
 
@@ -13,6 +13,7 @@
 
 
 #include "draw2d_gdi_factory_exchange.h"
+#include "aura/graphics/graphics.h"
 
 
 #include "draw2d_gdi_object.h"

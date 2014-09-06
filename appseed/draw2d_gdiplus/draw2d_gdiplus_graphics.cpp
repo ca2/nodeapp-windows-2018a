@@ -54,11 +54,11 @@ namespace draw2d_gdiplus
    }
 
 
-   ::window_sp graphics::GetWindow() const
-   { 
-      //ASSERT(get_handle1() != NULL); return ::draw2d_gdiplus::user::interaction_impl::from_handle(::WindowFromDC(get_handle1())); 
-      return NULL;
-   }
+   //::window_sp graphics::GetWindow() const
+   //{ 
+   //   //ASSERT(get_handle1() != NULL); return ::draw2d_gdiplus::user::interaction_impl::from_handle(::WindowFromDC(get_handle1())); 
+   //   return NULL;
+   //}
    
    bool graphics::IsPrinting() const
    {
@@ -168,7 +168,7 @@ namespace draw2d_gdiplus
    }
 
 
-   int32_t graphics::ExcludeUpdateRgn(::window_sp pwindow)
+   int32_t graphics::ExcludeUpdateRgn(::user::interaction * pwindow)
    { 
       ASSERT(get_handle1() != NULL); 
       throw not_implemented(get_app());
