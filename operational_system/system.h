@@ -16,11 +16,5 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <math.h>
-#include <errno.h>
-#include <assert.h>
-#include <time.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 
 
