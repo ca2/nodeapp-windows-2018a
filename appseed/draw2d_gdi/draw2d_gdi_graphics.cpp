@@ -1,4 +1,5 @@
 #include "framework.h"
+#include <math.h>
 
 
 CLASS_DECL_THREAD ::draw2d::dibmap_ex1 * t_pdibmap = NULL;
