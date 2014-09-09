@@ -1,4 +1,5 @@
 #include "framework.h"
+#include "aura/node/windows/windows.h"
 
 
 CLASS_DECL_AURA int32_t __win_main(sp(::aura::system) psystem,::windows::main_init_data * pmaininitdata);
