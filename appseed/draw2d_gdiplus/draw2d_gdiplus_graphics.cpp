@@ -1,4 +1,5 @@
 #include "framework.h"
+#include <math.h>
 
 
 #undef new
