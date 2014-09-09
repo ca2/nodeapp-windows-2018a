@@ -1,4 +1,5 @@
 ﻿#include "framework.h"
+#include "aura/node/windows/windows.h"
 #include <Shlobj.h>
 #include "winnls.h"
 #include "shobjidl.h"
