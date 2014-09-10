@@ -69,7 +69,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_alarm", "..\..\..\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{56736A07-B792-4940-BE20-638CB27A2200}"
 	ProjectSection(SolutionItems) = preProject
-		Performance2.psess = Performance2.psess
+		Performance1.psess = Performance1.psess
 	EndProjectSection
 EndProject
 Global
