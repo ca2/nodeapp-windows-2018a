@@ -73,12 +73,13 @@ namespace draw2d_gdiplus
       if(bClose)
       {
 
+         m_bHasPointInternal = false;
          return m_ppath->CloseFigure() == Gdiplus::Status::Ok;
 
       }
       else
       {
-
+         m_bHasPointInternal = false;
          return true;
 
       }
@@ -140,6 +141,11 @@ namespace draw2d_gdiplus
    bool path::internal_add_move(int32_t x, int32_t y)
    {
 
+      if(!m_bHasPointInternal)
+      {
+         internal_begin_figure(m_bFill,m_efillmode);
+      }
+
       m_ptInternal.X   = (Gdiplus::REAL) x;
       m_ptInternal.Y   = (Gdiplus::REAL) y;
       m_bHasPointInternal     = true;
@@ -166,7 +172,7 @@ namespace draw2d_gdiplus
 
       //if(m_elementa.get_count() != 1 && m_elementa[0].m_etype != element::type_string)
       {
-         internal_begin_figure(m_bFill,m_efillmode);
+         //internal_begin_figure(m_bFill,m_efillmode);
       }
 
       for(int32_t i = 0; i < m_elementa.get_count(); i++)
