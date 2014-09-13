@@ -2000,8 +2000,8 @@ Global
 		{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.static_basis|Android.ActiveCfg = basis|Win32
 		{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.static_basis|Mixed Platforms.ActiveCfg = basis|Win32
 		{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.static_basis|Mixed Platforms.Build.0 = basis|Win32
-		{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.static_basis|Win32.ActiveCfg = basis|Win32
-		{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.static_basis|Win32.Build.0 = basis|Win32
+		{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.static_basis|Win32.ActiveCfg = static_basis|Win32
+		{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.static_basis|Win32.Build.0 = static_basis|Win32
 		{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.static_basis|x64.ActiveCfg = basis|x64
 		{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.static_basis|x64.Build.0 = basis|x64
 		{A5A649E1-D516-4F29-A627-DA6884DD421C}.basis|Android.ActiveCfg = basis|Win32
