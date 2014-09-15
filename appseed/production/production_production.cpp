@@ -1089,7 +1089,7 @@ namespace production
             if(i == 0)
             {
                
-               prelease->run();
+               prelease->raw_run();
 
             }
             else
@@ -2516,24 +2516,49 @@ namespace production
       ::element(pproduction->get_app()),
       thread(pproduction->get_app())
    {
-         m_pproduction = pproduction;
-         m_pproduction->m_iRelease++;
-         m_pproduction->OnUpdateRelease();
-      }
+
+      m_pproduction = pproduction;
+      m_pproduction->m_iRelease++;
+      m_pproduction->OnUpdateRelease();
+
+   }
 
    bool production::release::initialize_instance()
    {
+
       return true;
+
    }
+
+
+   int32_t production::release::raw_run()
+   {
+      
+      string str;
+
+      property_set set(get_app());
+
+      set["disable_ca2_sessid"] = true;
+
+      Application.http().get(m_strRelease,str,set);
+
+      m_pproduction->m_iRelease--;
+
+      return 0;
+
+   }
+
+
+
    int32_t production::release::run()
    {
-      string str;
-      property_set set(get_app());
-      set["disable_ca2_sessid"] = true;
-      Application.http().get(m_strRelease, str, set);
-      m_pproduction->m_iRelease--;
+      
+      int32_t iResult = raw_run();
+
       m_pproduction->OnUpdateRelease();
-      return 0;
+
+      return iResult;
+
    }
 
 

@@ -24,12 +24,19 @@ namespace production
          virtual public thread
       {
       public:
+         
          release(production * pproduction);
 
          string m_strRelease;
+
          production * m_pproduction;
-         bool initialize_instance();
-         int32_t run();
+
+         virtual bool initialize_instance();
+
+         virtual int32_t run();
+
+         virtual int32_t raw_run();
+
       };
 
       class compress_thread :
