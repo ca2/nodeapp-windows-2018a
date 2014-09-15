@@ -1035,14 +1035,31 @@ namespace production
          //straStatus.add("023 releasing at netnode : américa latina");
          //straServer.add("la-api.ca2.cc");
 
-         straStatus.add("049 releasing at netnode : france");
-         straServer.add("fr-api.ca2.cc");
+
+         if(m_strVersion == "stage")
+         {
+
+            straStatus.add("049 releasing at netnode : france");
+            straServer.add("fr-api.ca2.cc");
+
+            straStatus.add("051 releasing at netnode : deutsch");
+            straServer.add("de-api.ca2.cc");
+
+         }
+         else
+         {
+
+            straStatus.add("051 releasing at netnode : deutsch");
+            straServer.add("de-api.ca2.cc");
+
+            straStatus.add("049 releasing at netnode : france");
+            straServer.add("fr-api.ca2.cc");
+
+         }
 
          straStatus.add("050 releasing at netnode : europe (sverige named-seed-sitted)");
          straServer.add("eu-api.ca2.cc");
 
-         straStatus.add("051 releasing at netnode : deutsch");
-         straServer.add("de-api.ca2.cc");
 
          straStatus.add("070 releasing at netnode : india");
          straServer.add("in-api.ca2.cc");
@@ -1069,7 +1086,18 @@ namespace production
 
             prelease->m_strRelease = "http://" + strServer + strObject;
 
-            prelease->begin();
+            if(i == 0)
+            {
+               
+               prelease->run();
+
+            }
+            else
+            {
+
+               prelease->begin();
+
+            }
 
             {
 
