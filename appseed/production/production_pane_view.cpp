@@ -182,7 +182,7 @@ namespace production
             cc->m_bTransparentBackground = true;
             cc->m_puiParent = this;
 
-            get_document()->m_pfilemanagerdoc = papp->Platform.filemanager().std().open(papp, cc);
+            get_document()->m_pfilemanagerdoc = Plat(papp).filemanager().std().open(papp, cc);
             sp(::filemanager::manager) pdoc = get_document()->m_pfilemanagerdoc;
             if(pdoc != NULL)
             {
