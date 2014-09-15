@@ -236,7 +236,7 @@ namespace production
          break;
       case PaneViewConfiguration:
       {
-         sp(form_document) pdoc = System.Platform.userex()->create_form(this, pcreatordata->m_pholder);
+         sp(form_document) pdoc = Platfomr.userex()->create_form(this, pcreatordata->m_pholder);
          if(pdoc == NULL)
             return;
          sp(::user::impact) pview = pdoc->get_view();
