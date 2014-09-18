@@ -165,7 +165,7 @@ namespace music
             /* Track buffers must be big enough to hold the state data returned
             ** by smfSeek()
             */
-            cbBuffer = min(m_cbBuffer, ::music::midi::GetStateMaxSize());
+            cbBuffer = MIN(m_cbBuffer, ::music::midi::GetStateMaxSize());
 
 
 Seq_Open_File_Cleanup:
@@ -234,7 +234,7 @@ Seq_Open_File_Cleanup:
                /* Track buffers must be big enough to hold the state data returned
                ** by smfSeek()
                */
-               cbBuffer = min(m_cbBuffer, ::music::midi::GetStateMaxSize());
+               cbBuffer = MIN(m_cbBuffer, ::music::midi::GetStateMaxSize());
             }
 
             if(::music::success != smfrc)
@@ -295,7 +295,7 @@ Seq_Open_File_Cleanup:
                /* Track buffers must be big enough to hold the state data returned
                ** by smfSeek()
                */
-               cbBuffer = min(m_cbBuffer, ::music::midi::GetStateMaxSize());
+               cbBuffer = MIN(m_cbBuffer, ::music::midi::GetStateMaxSize());
             }
 
             if(success != smfrc)
