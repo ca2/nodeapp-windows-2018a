@@ -100,7 +100,7 @@ namespace multimedia
             free(m_mixercontroldetails.paDetails);
          m_mixercontroldetails.paDetails = malloc(cb);
 
-         nRange = (int32_t) min(32767, m_mixercontrol.Metrics.cSteps - 1);
+         nRange = (int32_t) MIN(32767, m_mixercontrol.Metrics.cSteps - 1);
          bool bOk = false;
          for(int32_t i = 5; i <= 10; i++)
          {
