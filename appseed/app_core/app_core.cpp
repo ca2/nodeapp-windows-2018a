@@ -12,7 +12,7 @@ extern "C" int32_t app_core_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, L
 
    UNREFERENCED_PARAMETER(lpCmdLine);
 
-   sp(::core::system) psystem                  = canew(::core::system);
+   ::core::system * psystem                     = new ::core::system;
 
    ASSERT(hPrevInstance == NULL);
 
