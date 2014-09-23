@@ -41,6 +41,7 @@ extern "C" int32_t app_core_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, L
 
    psystem = NULL;
 
+
    return nReturnCode;
 
 }

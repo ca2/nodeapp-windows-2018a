@@ -19,9 +19,9 @@ int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lp
 
    defer_core_term();
 
-   char szTimeMessage;
+   char szTimeMessage[2048];
 
-   sprintf(szTimeMessage,"Elapsed Time %d",(uint32_t) ::get_tick_count() - g_dwStartTime);
+   sprintf(szTimeMessage,"\n\n\n\n\n\n-------------------------------\n|\n|\n|  Total Elapsed Time %d\n|\n|\n-------------------------------\n\n\n",(uint32_t) ::get_tick_count() - g_dwStartTime);
 
    ::OutputDebugStringA(szTimeMessage);
 
