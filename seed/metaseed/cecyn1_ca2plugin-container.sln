@@ -167,7 +167,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "storage_akrip", "..\..\..\a
 		{4D7D3626-ADA6-4CA2-9566-ED7B131E3D51} = {4D7D3626-ADA6-4CA2-9566-ED7B131E3D51}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_votagus_gateway", "..\..\..\app-core\appseed\votagus_gateway\votagus_gateway.vcxproj", "{69872362-D35B-4952-B9B8-08EAEF85F925}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_votagus_gateway", "..\..\..\app-core\appseed\votagus_gateway\votagus_gateway.vcxproj", "{C78451FA-2012-9999-8F97-4543BB980265}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
