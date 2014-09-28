@@ -1713,8 +1713,8 @@ Global
 		{AC6A52B4-C049-439C-88FF-5A262D968C8F}.profiler|ARM.ActiveCfg = basis|Win32
 		{AC6A52B4-C049-439C-88FF-5A262D968C8F}.profiler|Mixed Platforms.ActiveCfg = basis|Win32
 		{AC6A52B4-C049-439C-88FF-5A262D968C8F}.profiler|Mixed Platforms.Build.0 = basis|Win32
-		{AC6A52B4-C049-439C-88FF-5A262D968C8F}.profiler|Win32.ActiveCfg = basis|Win32
-		{AC6A52B4-C049-439C-88FF-5A262D968C8F}.profiler|Win32.Build.0 = basis|Win32
+		{AC6A52B4-C049-439C-88FF-5A262D968C8F}.profiler|Win32.ActiveCfg = profiler|Win32
+		{AC6A52B4-C049-439C-88FF-5A262D968C8F}.profiler|Win32.Build.0 = profiler|Win32
 		{AC6A52B4-C049-439C-88FF-5A262D968C8F}.profiler|x64.ActiveCfg = basis|x64
 		{AC6A52B4-C049-439C-88FF-5A262D968C8F}.profiler|x64.Build.0 = basis|x64
 		{AC6A52B4-C049-439C-88FF-5A262D968C8F}.Release Multithreaded|Android.ActiveCfg = basis|Win32
@@ -1818,8 +1818,8 @@ Global
 		{424F72D6-053A-41C5-BE03-3B0BD535F1EB}.profiler|ARM.ActiveCfg = basis|Win32
 		{424F72D6-053A-41C5-BE03-3B0BD535F1EB}.profiler|Mixed Platforms.ActiveCfg = basis|Win32
 		{424F72D6-053A-41C5-BE03-3B0BD535F1EB}.profiler|Mixed Platforms.Build.0 = basis|Win32
-		{424F72D6-053A-41C5-BE03-3B0BD535F1EB}.profiler|Win32.ActiveCfg = basis|Win32
-		{424F72D6-053A-41C5-BE03-3B0BD535F1EB}.profiler|Win32.Build.0 = basis|Win32
+		{424F72D6-053A-41C5-BE03-3B0BD535F1EB}.profiler|Win32.ActiveCfg = profiler|Win32
+		{424F72D6-053A-41C5-BE03-3B0BD535F1EB}.profiler|Win32.Build.0 = profiler|Win32
 		{424F72D6-053A-41C5-BE03-3B0BD535F1EB}.profiler|x64.ActiveCfg = basis|x64
 		{424F72D6-053A-41C5-BE03-3B0BD535F1EB}.profiler|x64.Build.0 = basis|x64
 		{424F72D6-053A-41C5-BE03-3B0BD535F1EB}.Release Multithreaded|Android.ActiveCfg = basis|Win32
@@ -2439,8 +2439,8 @@ Global
 		{B39ED2B3-D53A-4077-B957-930979A3577D}.profiler|ARM.ActiveCfg = basis|Win32
 		{B39ED2B3-D53A-4077-B957-930979A3577D}.profiler|Mixed Platforms.ActiveCfg = basis|Win32
 		{B39ED2B3-D53A-4077-B957-930979A3577D}.profiler|Mixed Platforms.Build.0 = basis|Win32
-		{B39ED2B3-D53A-4077-B957-930979A3577D}.profiler|Win32.ActiveCfg = basis|Win32
-		{B39ED2B3-D53A-4077-B957-930979A3577D}.profiler|Win32.Build.0 = basis|Win32
+		{B39ED2B3-D53A-4077-B957-930979A3577D}.profiler|Win32.ActiveCfg = profiler|Win32
+		{B39ED2B3-D53A-4077-B957-930979A3577D}.profiler|Win32.Build.0 = profiler|Win32
 		{B39ED2B3-D53A-4077-B957-930979A3577D}.profiler|x64.ActiveCfg = basis|x64
 		{B39ED2B3-D53A-4077-B957-930979A3577D}.profiler|x64.Build.0 = basis|x64
 		{B39ED2B3-D53A-4077-B957-930979A3577D}.Release Multithreaded|Android.ActiveCfg = basis|Win32
@@ -2544,8 +2544,8 @@ Global
 		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}.profiler|ARM.ActiveCfg = Debug Multithreaded|Win32
 		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}.profiler|Mixed Platforms.ActiveCfg = Debug Multithreaded|Win32
 		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}.profiler|Mixed Platforms.Build.0 = Debug Multithreaded|Win32
-		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}.profiler|Win32.ActiveCfg = Debug Multithreaded|Win32
-		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}.profiler|Win32.Build.0 = Debug Multithreaded|Win32
+		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}.profiler|Win32.ActiveCfg = profiler|Win32
+		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}.profiler|Win32.Build.0 = profiler|Win32
 		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}.profiler|x64.ActiveCfg = Debug Multithreaded|x64
 		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}.profiler|x64.Build.0 = Debug Multithreaded|x64
 		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}.Release Multithreaded|Android.ActiveCfg = Release Multithreaded|Win32
@@ -2754,8 +2754,8 @@ Global
 		{A5A649E1-D516-4F29-A627-DA6884DD421C}.profiler|ARM.ActiveCfg = basis|Win32
 		{A5A649E1-D516-4F29-A627-DA6884DD421C}.profiler|Mixed Platforms.ActiveCfg = basis|Win32
 		{A5A649E1-D516-4F29-A627-DA6884DD421C}.profiler|Mixed Platforms.Build.0 = basis|Win32
-		{A5A649E1-D516-4F29-A627-DA6884DD421C}.profiler|Win32.ActiveCfg = basis|Win32
-		{A5A649E1-D516-4F29-A627-DA6884DD421C}.profiler|Win32.Build.0 = basis|Win32
+		{A5A649E1-D516-4F29-A627-DA6884DD421C}.profiler|Win32.ActiveCfg = profiler|Win32
+		{A5A649E1-D516-4F29-A627-DA6884DD421C}.profiler|Win32.Build.0 = profiler|Win32
 		{A5A649E1-D516-4F29-A627-DA6884DD421C}.profiler|x64.ActiveCfg = basis|x64
 		{A5A649E1-D516-4F29-A627-DA6884DD421C}.profiler|x64.Build.0 = basis|x64
 		{A5A649E1-D516-4F29-A627-DA6884DD421C}.Release Multithreaded|Android.ActiveCfg = basis|Win32
@@ -2859,8 +2859,8 @@ Global
 		{E8AC3EF0-11C5-4E12-A944-5F7EFED6E0C4}.profiler|ARM.ActiveCfg = basis|Win32
 		{E8AC3EF0-11C5-4E12-A944-5F7EFED6E0C4}.profiler|Mixed Platforms.ActiveCfg = basis|Win32
 		{E8AC3EF0-11C5-4E12-A944-5F7EFED6E0C4}.profiler|Mixed Platforms.Build.0 = basis|Win32
-		{E8AC3EF0-11C5-4E12-A944-5F7EFED6E0C4}.profiler|Win32.ActiveCfg = basis|Win32
-		{E8AC3EF0-11C5-4E12-A944-5F7EFED6E0C4}.profiler|Win32.Build.0 = basis|Win32
+		{E8AC3EF0-11C5-4E12-A944-5F7EFED6E0C4}.profiler|Win32.ActiveCfg = profiler|Win32
+		{E8AC3EF0-11C5-4E12-A944-5F7EFED6E0C4}.profiler|Win32.Build.0 = profiler|Win32
 		{E8AC3EF0-11C5-4E12-A944-5F7EFED6E0C4}.profiler|x64.ActiveCfg = basis|x64
 		{E8AC3EF0-11C5-4E12-A944-5F7EFED6E0C4}.profiler|x64.Build.0 = basis|x64
 		{E8AC3EF0-11C5-4E12-A944-5F7EFED6E0C4}.Release Multithreaded|Android.ActiveCfg = basis|Win32
