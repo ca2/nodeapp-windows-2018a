@@ -88,8 +88,6 @@ namespace draw2d_gdi
    }
 
 
-#ifdef _DEBUG
-
 
    void pen::dump(dump_context & dumpcontext) const
    {
@@ -113,9 +111,6 @@ namespace draw2d_gdi
 
       dumpcontext << "\n";
    }
-
-
-#endif
 
 
    bool pen::create()

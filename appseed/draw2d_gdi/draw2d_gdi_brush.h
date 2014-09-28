@@ -36,9 +36,7 @@ namespace draw2d_gdi
       bool CreateSysColorBrush(int nIndex);
 
 
-#ifdef _DEBUG
       virtual void dump(dump_context & dumpcontext) const;
-#endif
 
 
       virtual bool create();

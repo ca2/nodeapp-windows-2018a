@@ -160,9 +160,6 @@ namespace draw2d_gdi
    }
 
 
-#ifdef _DEBUG
-
-
    void bitmap::dump(dump_context & dumpcontext) const
    {
       ::draw2d::object::dump(dumpcontext);
@@ -190,7 +187,6 @@ namespace draw2d_gdi
    }
 
 
-#endif
 
 
    HBITMAP bitmap::_GetHBITMAP()

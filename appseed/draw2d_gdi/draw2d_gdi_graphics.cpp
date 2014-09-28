@@ -3716,7 +3716,6 @@ namespace draw2d_gdi
 
 
 
-#ifdef _DEBUG
    void graphics::assert_valid() const
    {
       object::assert_valid();
@@ -3735,7 +3734,6 @@ namespace draw2d_gdi
 
       dumpcontext << "\n";
    }
-#endif //_DEBUG
 
 
    bool graphics::Attach(HDC hdc)

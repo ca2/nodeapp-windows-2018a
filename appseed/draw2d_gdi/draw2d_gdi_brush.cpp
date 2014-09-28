@@ -98,7 +98,6 @@ namespace draw2d_gdi
       return bResult;
    }
 
-#ifdef _DEBUG
    void brush::dump(dump_context & dumpcontext) const
    {
       ::draw2d::object::dump(dumpcontext);
@@ -123,7 +122,6 @@ namespace draw2d_gdi
    }
 
 
-#endif
 
    bool brush::create()
    {

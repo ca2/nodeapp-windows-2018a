@@ -498,10 +498,8 @@ namespace draw2d_gdi
       void Draw3dRect(const RECT & lpRect, COLORREF clrTopLeft, COLORREF clrBottomRight);
       void Draw3dRect(int x, int y, int cx, int cy, COLORREF clrTopLeft, COLORREF clrBottomRight);
 
-   #ifdef _DEBUG
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
-   #endif
 
       HGDIOBJ SelectObject(HGDIOBJ);      // do not use for regions
 

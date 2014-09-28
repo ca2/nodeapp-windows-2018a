@@ -68,7 +68,6 @@ namespace draw2d_gdi
 
    }
 
-#ifdef _DEBUG
 
    void font::dump(dump_context & dumpcontext) const
    {
@@ -103,7 +102,6 @@ namespace draw2d_gdi
 
       dumpcontext << "\n";
    }
-#endif
 
    /////////////////////////////////////////////////////////////////////////////
    // out-of-line ::draw2d::brush, font, etc. helpers

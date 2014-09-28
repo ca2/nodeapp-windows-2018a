@@ -31,9 +31,7 @@ namespace draw2d_gdi
       bool CreatePenIndirect(LPLOGPEN lpLogPen);
 
 
-   #ifdef _DEBUG
       virtual void dump(dump_context & dumpcontext) const;
-   #endif
 
 
       virtual bool create();

@@ -29,9 +29,7 @@ namespace draw2d_gdi
       virtual bool CreatePointFontIndirect(const LOGFONTW* lpLogFont, ::draw2d::graphics * pgraphics = NULL);
 
 
-#ifdef _DEBUG
       virtual void dump(dump_context & dumpcontext) const;
-#endif
 
       
       virtual bool create();
