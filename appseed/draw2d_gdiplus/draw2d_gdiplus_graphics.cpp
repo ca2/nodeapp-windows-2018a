@@ -1996,8 +1996,30 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       Gdiplus::RectF dstRect((Gdiplus::REAL) xDest, (Gdiplus::REAL) yDest, (Gdiplus::REAL) nDestWidth, (Gdiplus::REAL) nDestHeight);
 
-      m_pgraphics->DrawImage((Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data(), dstRect, 
-         (Gdiplus::REAL) xSrc, (Gdiplus::REAL) ySrc, (Gdiplus::REAL) nSrcWidth, (Gdiplus::REAL) nSrcHeight, Gdiplus::UnitPixel, &attributes);
+      if(pgraphicsSrc == NULL)
+         return false;
+      
+      if(pgraphicsSrc->get_current_bitmap() == NULL)
+         return false;
+      
+      Gdiplus::Bitmap * pbitmap = NULL;
+      
+      try
+      {
+
+         pbitmap = (Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data();
+
+      }
+      catch(...)
+      {
+      }
+
+      if(pbitmap != NULL)
+      {
+
+         m_pgraphics->DrawImage(pbitmap,dstRect,(Gdiplus::REAL) xSrc,(Gdiplus::REAL) ySrc,(Gdiplus::REAL) nSrcWidth,(Gdiplus::REAL) nSrcHeight,Gdiplus::UnitPixel,&attributes);
+
+      }
 
       return true;
 
