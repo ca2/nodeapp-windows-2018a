@@ -1143,7 +1143,18 @@ namespace draw2d_gdiplus
 
          m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
 
-         m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
+         if(m_ealphamode == ::draw2d::alpha_mode_set)
+         {
+
+            m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeNone);
+
+         }
+         else
+         {
+
+            m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
+
+         }
 
 
          bOk1 = m_pgraphics->FillPolygon(gdiplus_brush(),ppoints,nCount,gdiplus_get_fill_mode()) == Gdiplus::Status::Ok;
