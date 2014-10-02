@@ -1026,14 +1026,14 @@ namespace production
          stringa straStatus;
          stringa straServer;
          
-         //straStatus.add("330 releasing at netnode : west us");
+         //straStatus.add("230 releasing at netnode : west us");
          //straServer.add("west-api.ca2.cc");
 
          //straStatus.add("010 releasing at netnode : east us");
          //straServer.add("east-api.ca2.cc");
 
-         //straStatus.add("023 releasing at netnode : américa latina");
-         //straServer.add("la-api.ca2.cc");
+         straStatus.add("033 releasing at netnode : américa latina");
+         straServer.add("la-api.ca2.cc");
 
 
          if(m_strVersion == "stage")
