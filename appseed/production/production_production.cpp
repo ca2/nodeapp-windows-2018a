@@ -1,27 +1,15 @@
 ﻿#include "framework.h"
 
+namespace install
+{
 
+   CLASS_DECL_BASE void get_plugin_base_library_list(stringa & straFile);
+
+} // namespace install
 
 namespace production
 {
 
-   void get_plugin_base_library_list(stringa & straBase)
-   {
-
-      straBase.add("aura.dll");
-      straBase.add("aurasqlite.dll");
-      straBase.add("axis.dll");
-      straBase.add("axisbsdiff.dll");
-      straBase.add("axisbzip2.dll");
-      straBase.add("axisfreeimage.dll");
-      straBase.add("axisfreetype.dll");
-      straBase.add("axisidn.dll");
-      straBase.add("axismysql.dll");
-      straBase.add("axisopenssl.dll");
-      straBase.add("axiszlib.dll");
-      straBase.add("base.dll");
-
-   }
 
    production::production(sp(::aura::application) papp) :
       element(papp),
@@ -1976,12 +1964,11 @@ namespace production
       add_path(pszDir, "META-INF\\zigbert.rsa");
       add_path(pszDir, "install.rdf");
       add_path(pszDir, "chrome.manifest");
-      add_path(pszDir, "plugins\\app.install.exe");
       add_path(pszDir, "plugins\\npca2.dll");
 
       stringa straBase;
 
-      get_plugin_base_library_list(straBase);
+      ::install::get_plugin_base_library_list(straBase);
 
       for(index i = 0; i < straBase; i++)
       {
@@ -2131,7 +2118,7 @@ namespace production
 
       stringa straBase;
 
-      get_plugin_base_library_list(straBase);
+      ::install::get_plugin_base_library_list(straBase);
 
       for(index i = 0; i < straBase; i++)
       {
