@@ -1032,8 +1032,8 @@ namespace production
          //straStatus.add("010 releasing at netnode : east us");
          //straServer.add("east-api.ca2.cc");
 
-         straStatus.add("033 releasing at netnode : américa latina");
-         straServer.add("la-api.ca2.cc");
+         //straStatus.add("033 releasing at netnode : américa latina");
+         //straServer.add("la-api.ca2.cc");
 
 
          if(m_strVersion == "stage")
@@ -1056,6 +1056,11 @@ namespace production
             straServer.add("fr-api.ca2.cc");
 
          }
+
+         straStatus.add("033 releasing at netnode : américa latina");
+         straServer.add("la-api.ca2.cc");
+
+
 
          straStatus.add("050 releasing at netnode : europe (sverige named-seed-sitted)");
          straServer.add("eu-api.ca2.cc");
