@@ -16,16 +16,27 @@ uint32_t plugin_container_app(const string & strChannel)
 
    psystem->m_hinstance = ::GetModuleHandle(NULL);
 
-   manual_reset_event ev(psystem);
+   ::set_thread(psystem);
 
-   psystem->m_peventReady = &ev;
+   try
+   {
 
-   ev.ResetEvent();
+      if(!psystem->pre_run())
+      {
 
-   __start_core_system(psystem);
+         return psystem->m_iReturnCode;
 
-   if (!ev.wait(seconds(180)).signaled())
+      }
+
+   }
+   catch(...)
+   {
+
       return -1;
+
+   }
+
+   __start_core_system_main(psystem);
 
    ::ca2plugin_container::application * papp = new ::ca2plugin_container::application(psystem, strChannel);
 
@@ -75,6 +86,14 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
    {
 
       return -6;
+
+   }
+
+
+   if(file_exists_dup("C:\\ca2\\config\\plugin\\npca2_beg_debug_box.txt"))
+   {
+
+      debug_box("app.plugin.container boxmain NP_Initialize","app.plugin.container box",MB_OK);
 
    }
 
