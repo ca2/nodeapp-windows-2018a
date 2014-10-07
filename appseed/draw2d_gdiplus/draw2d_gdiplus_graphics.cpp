@@ -4516,43 +4516,45 @@ namespace draw2d_gdiplus
    bool graphics::blur(bool bExpand,double dRadius,const RECT & rectParam)
    {
 
-      if(m_spbitmap.is_null() || m_spbitmap->get_os_data() == NULL)
-         return false;
+      // Commented Out for Running in cosan machine running Windows 2008
 
-      Gdiplus::BlurParams myBlurParams;
+      //if(m_spbitmap.is_null() || m_spbitmap->get_os_data() == NULL)
+      //   return false;
 
-      myBlurParams.expandEdge    = bExpand ? 1 : 0;
-      myBlurParams.radius        = (float) dRadius;
+      //Gdiplus::BlurParams myBlurParams;
 
-      Gdiplus::Blur myBlur;
-      myBlur.SetParameters(&myBlurParams);
+      //myBlurParams.expandEdge    = bExpand ? 1 : 0;
+      //myBlurParams.radius        = (float) dRadius;
 
-      
+      //Gdiplus::Blur myBlur;
+      //myBlur.SetParameters(&myBlurParams);
 
-      Gdiplus::Matrix m;
-      m_pgraphics->GetTransform(&m);
+      //
 
-      Gdiplus::PointF points[2];
+      //Gdiplus::Matrix m;
+      //m_pgraphics->GetTransform(&m);
 
-      points[0].X    = (Gdiplus::REAL) rectParam.left;
-      points[0].Y    = (Gdiplus::REAL) rectParam.top;
-      points[1].X    = (Gdiplus::REAL) rectParam.right;
-      points[1].Y    = (Gdiplus::REAL) rectParam.bottom;
+      //Gdiplus::PointF points[2];
 
-      m.TransformPoints(points, 2);
+      //points[0].X    = (Gdiplus::REAL) rectParam.left;
+      //points[0].Y    = (Gdiplus::REAL) rectParam.top;
+      //points[1].X    = (Gdiplus::REAL) rectParam.right;
+      //points[1].Y    = (Gdiplus::REAL) rectParam.bottom;
 
-      //Gdiplus::RectF rectf(points[0].X, points[0].Y, points[1].X - points[0].X, points[1].Y - points[0].Y);
+      //m.TransformPoints(points, 2);
 
-      RECT rect;
+      ////Gdiplus::RectF rectf(points[0].X, points[0].Y, points[1].X - points[0].X, points[1].Y - points[0].Y);
 
-      rect.left      = (LONG) points[0].X;
-      rect.top       = (LONG) points[0].Y;
-      rect.right     = (LONG) points[1].X;
-      rect.bottom    = (LONG) points[1].Y;
+      //RECT rect;
 
-      Gdiplus::Bitmap * pbitmap = ((Gdiplus::Bitmap *) m_spbitmap->get_os_data());
+      //rect.left      = (LONG) points[0].X;
+      //rect.top       = (LONG) points[0].Y;
+      //rect.right     = (LONG) points[1].X;
+      //rect.bottom    = (LONG) points[1].Y;
 
-      pbitmap->ApplyEffect(&myBlur, &rect);
+      //Gdiplus::Bitmap * pbitmap = ((Gdiplus::Bitmap *) m_spbitmap->get_os_data());
+
+      //pbitmap->ApplyEffect(&myBlur, &rect);
 
       return true;
 
