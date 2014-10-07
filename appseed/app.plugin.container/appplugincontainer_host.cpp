@@ -385,6 +385,12 @@ namespace ca2plugin_container
 
             m_rect = rect;
 
+            m_rectClient = rect;
+
+            m_rectClient.offset(-m_rectClient.top_left());
+
+            m_rectWindow = rect;
+
             if(!IsWindow())
             {
 
@@ -467,7 +473,7 @@ namespace ca2plugin_container
             try
             {
 
-               message_handler(Application.get_base(pmsg));
+               message_handler(get_base(pmsg->message, pmsg->wParam, pmsg->lParam));
 
             }
             catch(...)
