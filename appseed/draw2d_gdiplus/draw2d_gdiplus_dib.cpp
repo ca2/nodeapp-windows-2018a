@@ -2435,65 +2435,37 @@ namespace draw2d_gdiplus
 
       pwnd->GetWindowRect(rectWindow);
 
-      if(pwnd->is_composite())
+      if(pwnd->is_composite() && !m_bReduced)
       {
+
+         m_bReduced = true;
 
          m_spgraphics->SetViewportOrg(0,0);
 
          map();
 
 
-         BYTE *dst=(BYTE*)get_data();
-         int64_t size = area();
+         BYTE *dstR=(BYTE*)get_data();
+         BYTE *dstG=dstR+1;
+         BYTE *dstB=dstR+2;
+         BYTE *dstA=dstR+3;
+         int64_t size = area() * 4;
 
 
          // >> 8 instead of / 255 subsequent alpha_blend operations say thanks on true_blend because (255) * (1/254) + (255) * (254/255) > 255
-
-
-         while(size >= 8)
+#pragma omp parallel
          {
-            dst[0] = LOBYTE(((int32_t)dst[0] * (int32_t)dst[3]) >> 8);
-            dst[1] = LOBYTE(((int32_t)dst[1] * (int32_t)dst[3]) >> 8);
-            dst[2] = LOBYTE(((int32_t)dst[2] * (int32_t)dst[3]) >> 8);
-
-            dst[4 + 0] = LOBYTE(((int32_t)dst[4 + 0] * (int32_t)dst[4 + 3]) >> 8);
-            dst[4 + 1] = LOBYTE(((int32_t)dst[4 + 1] * (int32_t)dst[4 + 3]) >> 8);
-            dst[4 + 2] = LOBYTE(((int32_t)dst[4 + 2] * (int32_t)dst[4 + 3]) >> 8);
-
-            dst[8 + 0] = LOBYTE(((int32_t)dst[8 + 0] * (int32_t)dst[8 + 3]) >> 8);
-            dst[8 + 1] = LOBYTE(((int32_t)dst[8 + 1] * (int32_t)dst[8 + 3]) >> 8);
-            dst[8 + 2] = LOBYTE(((int32_t)dst[8 + 2] * (int32_t)dst[8 + 3]) >> 8);
-
-            dst[12 + 0] = LOBYTE(((int32_t)dst[12 + 0] * (int32_t)dst[12 + 3]) >> 8);
-            dst[12 + 1] = LOBYTE(((int32_t)dst[12 + 1] * (int32_t)dst[12 + 3]) >> 8);
-            dst[12 + 2] = LOBYTE(((int32_t)dst[12 + 2] * (int32_t)dst[12 + 3]) >> 8);
-
-            dst[16 + 0] = LOBYTE(((int32_t)dst[16 + 0] * (int32_t)dst[16 + 3]) >> 8);
-            dst[16 + 1] = LOBYTE(((int32_t)dst[16 + 1] * (int32_t)dst[16 + 3]) >> 8);
-            dst[16 + 2] = LOBYTE(((int32_t)dst[16 + 2] * (int32_t)dst[16 + 3]) >> 8);
-
-            dst[20 + 0] = LOBYTE(((int32_t)dst[20 + 0] * (int32_t)dst[20 + 3]) >> 8);
-            dst[20 + 1] = LOBYTE(((int32_t)dst[20 + 1] * (int32_t)dst[20 + 3]) >> 8);
-            dst[20 + 2] = LOBYTE(((int32_t)dst[20 + 2] * (int32_t)dst[20 + 3]) >> 8);
-
-            dst[24 + 0] = LOBYTE(((int32_t)dst[24 + 0] * (int32_t)dst[24 + 3]) >> 8);
-            dst[24 + 1] = LOBYTE(((int32_t)dst[24 + 1] * (int32_t)dst[24 + 3]) >> 8);
-            dst[24 + 2] = LOBYTE(((int32_t)dst[24 + 2] * (int32_t)dst[24 + 3]) >> 8);
-
-            dst[28 + 0] = LOBYTE(((int32_t)dst[28 + 0] * (int32_t)dst[28 + 3]) >> 8);
-            dst[28 + 1] = LOBYTE(((int32_t)dst[28 + 1] * (int32_t)dst[28 + 3]) >> 8);
-            dst[28 + 2] = LOBYTE(((int32_t)dst[28 + 2] * (int32_t)dst[28 + 3]) >> 8);
-
-            dst += 4 * 8;
-            size -= 8;
+#pragma omp parallel for
+            for(index i = 0; i < size; i+=4)
+               dstR[i] = LOBYTE(((int32_t)dstR[i] * (int32_t)dstA[i]) >> 8);
+#pragma omp parallel for
+            for(index i = 0; i < size; i+=4)
+               dstG[i] = LOBYTE(((int32_t)dstG[i] * (int32_t)dstA[i]) >> 8);
+#pragma omp parallel for
+            for(index i = 0; i < size; i+=4)
+               dstB[i] = LOBYTE(((int32_t)dstB[i] * (int32_t)dstA[i]) >> 8);
          }
-         while(size--)
-         {
-            dst[0] = LOBYTE(((int32_t)dst[0] * (int32_t)dst[3]) >> 8);
-            dst[1] = LOBYTE(((int32_t)dst[1] * (int32_t)dst[3]) >> 8);
-            dst[2] = LOBYTE(((int32_t)dst[2] * (int32_t)dst[3]) >> 8);
-            dst += 4;
-         }
+
 
       }
 
