@@ -1,5 +1,7 @@
 #include "framework.h"
 
+#include "omp.h"
+
 
 namespace draw2d_gdiplus
 {
@@ -2453,19 +2455,22 @@ namespace draw2d_gdiplus
 
 
          // >> 8 instead of / 255 subsequent alpha_blend operations say thanks on true_blend because (255) * (1/254) + (255) * (254/255) > 255
-#pragma omp parallel
+#if defined(_OPENMP)
+#pragma omp parallel num_threads(3)
          {
+            BYTE *dst = dstR + omp_get_thread_num();
 #pragma omp parallel for
             for(index i = 0; i < size; i+=4)
-               dstR[i] = LOBYTE(((int32_t)dstR[i] * (int32_t)dstA[i]) >> 8);
-#pragma omp parallel for
-            for(index i = 0; i < size; i+=4)
-               dstG[i] = LOBYTE(((int32_t)dstG[i] * (int32_t)dstA[i]) >> 8);
-#pragma omp parallel for
-            for(index i = 0; i < size; i+=4)
-               dstB[i] = LOBYTE(((int32_t)dstB[i] * (int32_t)dstA[i]) >> 8);
+               dst[i] = LOBYTE(((int32_t)dst[i] * (int32_t)dstA[i]) >> 8);
          }
-
+#else
+         for(index i = 0; i < size; i+=4)
+         {
+            dstR[i] = LOBYTE(((int32_t)dstR[i] * (int32_t)dstA[i]) >> 8);
+            dstG[i] = LOBYTE(((int32_t)dstG[i] * (int32_t)dstA[i]) >> 8);
+            dstB[i] = LOBYTE(((int32_t)dstB[i] * (int32_t)dstA[i]) >> 8);
+         }
+#endif
 
       }
 

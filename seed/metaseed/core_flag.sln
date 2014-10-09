@@ -229,6 +229,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axismysql", "..\..\..\app\axis\mysql\axismysql.vcxproj", "{2652C96F-6E86-4ED1-B3B6-AC977DFB0593}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axispixman", "..\..\..\app\axis\pixman\axispixman.vcxproj", "{0A298E22-839B-4D11-B5A7-456EAD013C11}"
+	ProjectSection(ProjectDependencies) = postProject
+		{03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5} = {03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axiscairo", "..\..\..\app\axis\cairo\axiscairo.vcxproj", "{E6C58C82-71E5-48E6-98ED-1B505D6F10C2}"
 	ProjectSection(ProjectDependencies) = postProject
