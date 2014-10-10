@@ -3,10 +3,9 @@
 
 
 
-
-
+#if WINVER >= 0x602
 #include <D2d1_1.h>
-
+#endif
 
 #include <winreg.h>
 #include <winnls.h>
