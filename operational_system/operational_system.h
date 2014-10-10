@@ -3,7 +3,7 @@
 
 
 
-#if WINVER >= 0x602
+#if WINVER >= 0x600
 #include <D2d1_1.h>
 #endif
 
