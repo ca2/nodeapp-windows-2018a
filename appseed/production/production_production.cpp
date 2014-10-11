@@ -1014,16 +1014,6 @@ namespace production
          stringa straStatus;
          stringa straServer;
          
-         //straStatus.add("230 releasing at netnode : west us");
-         //straServer.add("west-api.ca2.cc");
-
-         //straStatus.add("010 releasing at netnode : east us");
-         //straServer.add("east-api.ca2.cc");
-
-         //straStatus.add("033 releasing at netnode : américa latina");
-         //straServer.add("la-api.ca2.cc");
-
-
          if(m_strVersion == "stage")
          {
 
@@ -1045,9 +1035,17 @@ namespace production
 
          }
 
-         straStatus.add("033 releasing at netnode : américa latina");
-         straServer.add("la-api.ca2.cc");
 
+         //straStatus.add("230 releasing at netnode : west us");
+         //straServer.add("west-api.ca2.cc");
+
+
+         //straStatus.add("010 releasing at netnode : east us");
+         //straServer.add("east-api.ca2.cc");
+
+
+         //straStatus.add("033 releasing at netnode : américa latina");
+         //straServer.add("la-api.ca2.cc");
 
 
          straStatus.add("050 releasing at netnode : europe (sverige named-seed-sitted)");
@@ -1056,6 +1054,7 @@ namespace production
 
          straStatus.add("070 releasing at netnode : india");
          straServer.add("in-api.ca2.cc");
+
 
          //straStatus.add("077 releasing at netnode : hong kong");
          //straServer.add("hk-api.ca2.cc");
