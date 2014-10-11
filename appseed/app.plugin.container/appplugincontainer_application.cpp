@@ -11,13 +11,6 @@ namespace ca2plugin_container
 
       m_strChannel = pszChannel;
 
-      m_phost = new host(this);
-
-      m_phost->m_pbaseapp = this;
-
-      m_phost->m_pcoreapp = this;
-
-      m_phost->m_pauraapp->m_pcoreapp = this;
 
    }
 
@@ -118,11 +111,42 @@ namespace ca2plugin_container
 
       m_pbasehost = new ::ca2plugin_container::host(this);
 
+      m_pbasehost->m_paurasession = m_paurasession;
+
+      m_pbasehost->m_paxissession = m_paxissession;
+
+      m_pbasehost->m_pbasesession = m_pbasesession;
+
+      m_pbasehost->m_paxisapp = m_paxisapp;
+
       return m_pbasehost;
 
 
    }
 
+
+   ::hotplugin::host * application::create_host()
+   {
+
+      m_phost = new host(this);
+
+      m_phost->m_paurasession = m_paurasession;
+
+      m_phost->m_paxissession = m_paxissession;
+
+      m_phost->m_pbasesession = m_pbasesession;
+
+      m_phost->m_paxisapp = m_paxisapp;
+
+      m_phost->m_pbaseapp = this;
+
+      m_phost->m_pcoreapp = this;
+
+      m_phost->m_pauraapp->m_pcoreapp = this;
+
+      return m_phost;
+
+   }
 
 } // namespace ca2plugin_container
 

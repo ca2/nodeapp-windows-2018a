@@ -41,6 +41,8 @@ namespace ca2plugin_container
 
       virtual ::hotplugin::host * create_host(sp(::base::system) psystem);
 
+      virtual ::hotplugin::host * create_host();
+
 
    };
 

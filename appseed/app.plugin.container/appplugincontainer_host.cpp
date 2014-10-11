@@ -470,6 +470,17 @@ namespace ca2plugin_container
 
             MSG * pmsg = (MSG *) pdata;
 
+            if(pmsg->message == WM_SETFOCUS)
+            {
+               Session.m_puiFocus = this;
+               return;
+            }
+            if(pmsg->message == WM_KILLFOCUS)
+            {
+               Session.m_puiFocus = NULL;
+               return;
+            }
+
             try
             {
 

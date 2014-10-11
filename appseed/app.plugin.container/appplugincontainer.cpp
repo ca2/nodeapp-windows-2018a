@@ -40,6 +40,14 @@ uint32_t plugin_container_app(const string & strChannel)
 
    ::ca2plugin_container::application * papp = new ::ca2plugin_container::application(psystem, strChannel);
 
+   papp->m_paurasession = psystem->m_paurasession;
+
+   papp->m_paxissession = psystem->m_paxissession;
+
+   papp->m_pbasesession = psystem->m_pbasesession;
+
+   papp->m_paxisapp = psystem->m_paxisapp;
+
    papp->m_pbaseapp = psystem;
 
    papp->m_pbasesystem = psystem;
@@ -49,6 +57,8 @@ uint32_t plugin_container_app(const string & strChannel)
    papp->m_hinstance = psystem->m_hinstance;
 
    papp->m_pbasesession->m_pcoreplatform = psystem->get_session(0, NULL);
+
+   papp->create_host();
 
    try
    {
