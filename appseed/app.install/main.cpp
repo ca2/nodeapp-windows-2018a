@@ -122,6 +122,8 @@ installer::installer() :
    m_bInstallerInstalling  = false;
    m_bMatterFromHttpCache  = true;
 
+   m_bAdvancedGUI          = false;
+
    construct(NULL);
 
 }
