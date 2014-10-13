@@ -4161,10 +4161,10 @@ namespace draw2d_gdiplus
          if(m_pgraphics == NULL)
             return FALSE;
 
-         m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-         m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
+//         m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
+//         m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
 
-/*         switch(m_etextrendering)
+         switch(m_etextrendering)
          {
          case ::draw2d::text_rendering_anti_alias:
             m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
@@ -4183,7 +4183,6 @@ namespace draw2d_gdiplus
             m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintClearTypeGridFit);
             break;
          }
-         */
 
       }
       catch(...)
