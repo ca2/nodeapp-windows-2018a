@@ -470,15 +470,40 @@ namespace ca2plugin_container
 
             MSG * pmsg = (MSG *) pdata;
 
-            if(pmsg->message == WM_SETFOCUS)
+            if(pmsg->message == WM_ACTIVATE)
             {
-               Session.m_puiFocus = this;
+
+               if(LOWORD(pmsg->wParam) == WA_ACTIVE)
+               {
+                  
+                  Session.m_puiActive = this;
+                  
+               }
+               else
+               {
+
+                  Session.m_puiActive = NULL;
+
+               }
+
                return;
+
             }
-            if(pmsg->message == WM_KILLFOCUS)
+            else if(pmsg->message == WM_SETFOCUS)
             {
-               Session.m_puiFocus = NULL;
+               
+               Session.m_puiFocus = this;
+
                return;
+
+            }
+            else if(pmsg->message == WM_KILLFOCUS)
+            {
+               
+               Session.m_puiFocus = NULL;
+
+               return;
+
             }
 
             try
