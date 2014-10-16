@@ -44,6 +44,9 @@ namespace ca2plugin_container
       virtual ::hotplugin::host * create_host();
 
 
+      virtual bool on_run_step();
+
+
    };
 
 

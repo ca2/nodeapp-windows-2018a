@@ -11,6 +11,7 @@ namespace ca2plugin_container
 
       m_strChannel = pszChannel;
 
+      m_durationRunLock = millis(884);
 
    }
 
@@ -147,6 +148,32 @@ namespace ca2plugin_container
       return m_phost;
 
    }
+
+
+   bool application::on_run_step()
+   {
+
+      if(!::core::application::on_run_step())
+      {
+       
+         return false;
+
+      }
+
+      if(System.install().is_installing_ca2())
+      {
+
+         System.post_thread_message(WM_QUIT);
+
+         return false;
+
+      }
+
+      return true;
+
+   }
+
+
 
 } // namespace ca2plugin_container
 
