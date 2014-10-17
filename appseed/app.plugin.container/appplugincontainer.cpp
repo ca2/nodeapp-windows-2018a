@@ -10,9 +10,7 @@ HANDLE g_hmutex = NULL;
 uint32_t plugin_container_app(const string & strChannel)
 {
 
-   ::core::system * psystem = new ::core::system(NULL);
-
-   psystem->m_bShouldInitializeGTwf = false;
+   ::plugin::system * psystem = new ::plugin::system(NULL);
 
    psystem->m_hinstance = ::GetModuleHandle(NULL);
 
@@ -100,12 +98,12 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
    }
 
 
-   if(file_exists_dup("C:\\ca2\\config\\plugin\\npca2_beg_debug_box.txt"))
-   {
+   //if(file_exists_dup("C:\\ca2\\config\\plugin\\npca2_beg_debug_box.txt"))
+   //{
 
-      debug_box("app.plugin.container boxmain NP_Initialize","app.plugin.container box",MB_OK);
+   //   debug_box("app.plugin.container boxmain NP_Initialize","app.plugin.container box",MB_OK);
 
-   }
+   //}
 
    int32_t nReturnCode = 0;
 

@@ -5,9 +5,11 @@ namespace ca2plugin_container
 {
 
 
-   application::application(sp(::aura::application) papp, const char * pszChannel) :
-      element(papp)
+   application::application(::plugin::system * psystem, const char * pszChannel) :
+      element(psystem)
    {
+
+      m_psystem = psystem;
 
       m_strChannel = pszChannel;
 
@@ -15,9 +17,12 @@ namespace ca2plugin_container
 
    }
 
+
    application::~application()
    {
+
    }
+
 
    void application::restart_small_ipc_channel()
    {
@@ -51,6 +56,7 @@ namespace ca2plugin_container
          return false;
 
       return true;
+
    }
 
 
@@ -60,6 +66,7 @@ namespace ca2plugin_container
       UNREFERENCED_PARAMETER(pszMessage);
 
    }
+
 
    void application::on_receive(small_ipc_rx_channel * prxchannel, int32_t message, void * pdata, int32_t len)
    {
@@ -74,7 +81,6 @@ namespace ca2plugin_container
    }
 
 
-
    bool application::finalize()
    {
 
@@ -82,46 +88,11 @@ namespace ca2plugin_container
 
    }
 
+
    int32_t application::run()
    {
+
       return thread::run();
-
-/*      MSG msg;
-      
-      while(true)
-	   {
-
-         if(!GetMessage(&msg, NULL, 0, 0xffffffffu))
-            break;
-
-         if(msg.message == WM_QUIT)
-            break;
-
-		   TranslateMessage(&msg);
-		   DispatchMessage(&msg);
-
-	   }*/
-
-      return 0;
-
-   }
-
-
-   ::hotplugin::host * application::create_host(sp(::base::system) psystem)
-   {
-
-      m_pbasehost = new ::ca2plugin_container::host(this);
-
-      m_pbasehost->m_paurasession = m_paurasession;
-
-      m_pbasehost->m_paxissession = m_paxissession;
-
-      m_pbasehost->m_pbasesession = m_pbasesession;
-
-      m_pbasehost->m_paxisapp = m_paxisapp;
-
-      return m_pbasehost;
-
 
    }
 
@@ -163,8 +134,6 @@ namespace ca2plugin_container
       if(System.install().is_installing_ca2())
       {
 
-         System.post_thread_message(WM_QUIT);
-
          return false;
 
       }
@@ -176,6 +145,12 @@ namespace ca2plugin_container
 
 
 } // namespace ca2plugin_container
+
+
+
+
+
+
 
 
 

@@ -13,7 +13,7 @@ namespace ca2plugin_container
    ATOM register_class(HINSTANCE hInstance);
 
 
-   host::host(sp(::ca2plugin_container::application) papp):
+   host::host(sp(::ca2plugin_container::application) papp) :
       element(papp),
       ::simple_ui::style(papp),
       ::user::interaction(papp),
@@ -45,9 +45,7 @@ namespace ca2plugin_container
       m_oswindow              = NULL;
       m_bStream               = false;
 
-
-      m_pbasecomposer->m_strHostPluginLocation = calc_location_url();
-
+      m_bMayProDevian         = false;
 
 
    }
@@ -58,37 +56,56 @@ namespace ca2plugin_container
    }
 
 
-   NPBool host::init(NPWindow* aWindow)
+   void host::install_message_handling(::message::dispatch * pinterface)
    {
 
-      if(aWindow == NULL)
-         return FALSE;
+      ::hotplugin::host::install_message_handling(pinterface);
 
-      RepositionWindow(aWindow->x, aWindow->y, aWindow->width, aWindow->height);
+      IGUI_WIN_MSG_LINK(WM_TIMER,pinterface,this,&host::_001OnTimer);
 
-      m_oswindow = (oswindow) aWindow->window;
+   }
 
-      if(m_oswindow == NULL)
-         return FALSE;
 
+   void host::_001OnTimer(signal_details * pobj)
+   {
+
+      SCAST_PTR(::message::timer,ptimer,pobj);
+
+      if(ptimer->m_nIDEvent == 1984 + 77 + 3)
+      {
+
+         _001UpdateBuffer();
+
+         on_paint(NULL,m_rectClient);
+
+         //if(!m_bMayProDevian && GetParent() == NULL)
+         //{
+
+         //   //_001RedrawWindow();
+
+         //}
+
+      }
+
+
+   }
+
+
+   bool host::init()
+   {
+
+      if(m_bInitialized)
+         return true;
 
       m_bInitialized    = true;
-//      m_bReload         = false;
-
-
-      //NPN_GetValue(m_instance, NPNVnetscapeWindow, &m_oswindow);
 
       if(!::simple_ui::interaction::create_message_queue("ca2plugin_container::host::init create_message_queue"))
          return FALSE;
 
-
-      //Sleep(15 * 1000);
       start_plugin();
-
 
       if(!plugin_initialize())
          return FALSE;
-
 
       return TRUE;
 
@@ -96,6 +113,38 @@ namespace ca2plugin_container
    }
 
 
+   void host::start_plugin()
+   {
+
+      ::plugin::instance * pplugin           = new ::plugin::instance(this);
+
+      m_pplugin                              = pplugin;
+
+      m_pplugin->m_paurasession              = m_paurasession;
+
+      m_pplugin->m_paxissession              = m_paxissession;
+
+      m_pplugin->m_pbasesession              = m_pbasesession;
+
+      m_pplugin->m_pbasesystem               = m_pbasesystem;
+
+      m_pplugin->m_paxisapp                  = m_paxisapp;
+
+      m_pplugin->m_pbaseapp                  = m_pbaseapp;
+
+      m_pplugin->m_pcoreapp                  = m_pcoreapp;
+
+      m_pplugin->m_pplatformcomposite        = m_pplatformcomposite;
+
+      m_pplugin->m_phost                     = this;
+
+      m_pcontainerapp->m_psystem->m_pplugin  = pplugin;
+
+      m_pplugin->m_strBitmapChannel          = m_strBitmapChannel;
+
+      m_bInstalling                          = false;
+
+   }
 
 
    bool host::is_ok()
@@ -128,11 +177,11 @@ namespace ca2plugin_container
    }
 
 
-   bool host::open_url(const char * pszUrl)
+   bool host::open_link(const string & strLink,const string & strTarget)
    {
 
-      ensure_tx(::hotplugin::message_open_url, (void *) pszUrl, (int32_t) strlen(pszUrl));
-
+      ensure_tx(::hotplugin::message_open_url,(void *)strLink.c_str(),(int32_t)strLink.get_length(), 1984);
+      
       return true;
 
    }
@@ -156,28 +205,6 @@ namespace ca2plugin_container
 
    }
 
-   string host::calc_location_url()
-   {
-/*      NPVariant varLocation;
-      if(!NPN_GetProperty(m_instance, m_pobjectWindow, sLocation_id, &varLocation))
-         return "";
-      NPObject * plocation = varLocation.value.objectValue;
-      // Create a "href" identifier.
-      NPIdentifier identifier = NPN_GetStringIdentifier("href");
-      // Get the location property from the location object.
-      NPVariant varValue;
-      if(!NPN_GetProperty(m_instance, plocation, identifier, &varValue))
-      {
-         NPN_ReleaseVariantValue(&varLocation);
-         return "";
-      }
-      string strUrl(varValue.value.stringValue.UTF8Characters, varValue.value.stringValue.UTF8Length);
-      NPN_ReleaseVariantValue(&varValue);
-      NPN_ReleaseVariantValue(&varLocation);*/
-      //return strUrl;
-
-      return "";
-   }
 
    oswindow host::get_host_window()
    {
@@ -323,27 +350,12 @@ namespace ca2plugin_container
 
       if (System.install().is_ca2_installed())
       {
-         
-#ifdef WINDOWS
-#ifdef X86
-         //::SetDllDirectory(dir::element("stage\\x86"));
-#else
-         //::SetDllDirectory(dir::element("stage\\x64"));
-#endif
-#endif
-         //Sleep(15 * 1000);
 
-         m_pplugin = new ::plugin::instance(this);
-         m_pplugin->m_pbasesession = m_pbasesession;
-         m_pplugin->m_pbasesystem = m_pbasesystem;
-         m_pplugin->m_pcoreapp = m_pcoreapp;
-         m_pplugin->m_pplatformcomposite = m_pplatformcomposite;
-         m_pplugin->m_pbaseapp = this;
-         m_pplugin->m_phost = this;
-         m_pplugin->m_strBitmapChannel = m_strBitmapChannel;
-         m_bInstalling = false;
-         start_ca2_system();
+         if(!init())
+            return;
+
          return;
+
       }
       else
       {
@@ -361,51 +373,50 @@ namespace ca2plugin_container
       if(prxchannel == &m_rxchannel)
       {
 
-         if(message == ::hotplugin::message_init)
-         {
-            
-            NPWindow * pwindow = (NPWindow *) pdata;
+         //if(message == ::hotplugin::message_init)
+         //{
+         //   
+         //   NPWindow * pwindow = (NPWindow *) pdata;
 
-            try
-            {
+         //   try
+         //   {
 
-               init(pwindow);
+         //      init(pwindow);
 
-            }
-            catch(...)
-            {
-            }
+         //   }
+         //   catch(...)
+         //   {
+         //   }
 
 
-         }
-         else if(message == ::hotplugin::message_set_window)
+         //}
+//         else if(message == ::hotplugin::message_set_window)
+         if(message == ::hotplugin::message_set_window)
          {
             
             const RECT & rect = *((LPCRECT) pdata);
 
-            m_rect = rect;
-
-            m_rectClient = rect;
-
-            m_rectClient.offset(-m_rectClient.top_left());
-
-            m_rectWindow = rect;
-
-            if(!IsWindow())
+            if(m_rect != rect)
             {
 
-               ::simple_ui::interaction::create_message_queue("ca2plugin_container::host::init create_message_queue");
+               m_rect = rect;
 
-            }
+               m_rectClient = rect;
 
-            try
-            {
+               m_rectClient.offset(-m_rectClient.top_left());
 
-               SetPlacement(rect);
+               m_rectWindow = rect;
 
-            }
-            catch(...)
-            {
+               try
+               {
+
+                  SetPlacement(rect);
+
+               }
+               catch(...)
+               {
+               }
+
             }
 
          }
@@ -423,6 +434,27 @@ namespace ca2plugin_container
                g->CreateCompatibleDC(NULL);
 
                on_paint(g, rect);
+
+            }
+            catch(...)
+            {
+            }
+
+         }
+         else if(message == WM_APP+WM_PAINT)
+         {
+
+
+            try
+            {
+
+               //::draw2d::graphics_sp g(allocer());
+
+               //g->CreateCompatibleDC(NULL);
+
+               //on_paint(g,m_rectClient);
+
+               on_paint(NULL,m_rectClient);
 
             }
             catch(...)
@@ -505,6 +537,14 @@ namespace ca2plugin_container
                return;
 
             }
+            else if(pmsg->message == WM_CLOSE)
+            {
+
+               m_pcontainerapp->set_end_thread();
+
+               return;
+
+            }
 
             try
             {
@@ -522,6 +562,68 @@ namespace ca2plugin_container
       }
 
    }
+
+   
+   void host::_001Print(::draw2d::graphics * pgraphics)
+   {
+
+      if(m_pcontainerapp != NULL)
+      {
+
+         if(m_pcontainerapp->m_psystem != NULL)
+         {
+
+            if(m_pcontainerapp->m_psystem->m_pplugin != NULL)
+            {
+
+               if(m_pcontainerapp->m_psystem->m_pplugin->m_puiHost != NULL)
+               {
+
+                  m_pcontainerapp->m_psystem->m_pplugin->m_puiHost->_001Print(pgraphics);
+
+                  {
+
+                     static DWORD dwLast = 0;
+                     static ::count c = 0;
+                     static double dLast = 0.0;
+
+                     c++;
+
+                     DWORD dwNow = ::get_tick_count();
+
+                     DWORD dwSpan = dwNow - dwLast;
+
+                     if(dwSpan > 1000)
+                     {
+
+                        dLast = c * 1000.0 / dwSpan;
+
+                        c = 0;
+
+                        dwLast = dwNow;
+
+                     }
+
+                     string str;
+
+                     str.Format("%0.1f fps",dLast);
+
+                     pgraphics->set_text_color(ARGB(255,255,255,0));
+
+                     pgraphics->TextOutA(300,20,str);
+
+                  }
+
+               }
+
+            }
+
+         }
+
+      }
+
+   }
+
 
 } // namespace ca2plugin_container
 

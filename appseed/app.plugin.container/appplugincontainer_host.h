@@ -1,6 +1,6 @@
 #pragma once
 
-#include "npapi.h"
+
 
 namespace ca2plugin_container
 {
@@ -14,14 +14,14 @@ namespace ca2plugin_container
    public:
 
    
-      oswindow                      m_oswindowMessage;
-      oswindow                      m_oswindow;
-      bool                          m_bStream;
+      oswindow                                  m_oswindowMessage;
+      oswindow                                  m_oswindow;
+      bool                                      m_bStream;
 
-      string                        m_vssPluginName;
-      string                        m_vssPluginDescription;
+      string                                    m_vssPluginName;
+      string                                    m_vssPluginDescription;
 
-      sp(::ca2plugin_container::application)               m_pcontainerapp;
+      ::ca2plugin_container::application *      m_pcontainerapp;
 
 
       host(sp(::ca2plugin_container::application) papp);
@@ -32,16 +32,17 @@ namespace ca2plugin_container
       virtual void post_message(uint32_t uiMessage, WPARAM wparam, LPARAM lparam);
       
 
-      NPBool init(NPWindow* aWindow);
+      bool init();
       void shut();
 
       // host
-      virtual bool      open_url(const char * pszUrl);
-      virtual bool      reload_plugin();
+      virtual bool open_link(const string & strLink,const string & strTarget);
+      virtual bool reload_plugin();
 
 
-      virtual string  calc_location_url();
+      virtual void install_message_handling(::message::dispatch * pinterface);
 
+      void start_plugin();
 
       bool plugin_finalize();
 
@@ -59,6 +60,10 @@ namespace ca2plugin_container
       virtual void start_ca2();
 
       virtual void restart_small_ipc_channel();
+
+      DECL_GEN_SIGNAL(_001OnTimer);
+
+      void _001Print(::draw2d::graphics * pgraphics);
 
 
    };

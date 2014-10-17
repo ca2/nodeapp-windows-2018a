@@ -18,12 +18,15 @@ namespace ca2plugin_container
 
       host *                     m_phost;
 
+      ::plugin::system *         m_psystem;
 
-      application(sp(::aura::application) papp, const char * pszChannel);
+
+      application(::plugin::system * psystem,const char * pszChannel);
       virtual ~application();
 
 
       virtual void on_receive(small_ipc_rx_channel * prxchannel, const char * pszMessage);
+
       virtual void on_receive(small_ipc_rx_channel * prxchannel, int32_t message, void * pdata, int32_t len);
 
       virtual bool initialize_communication();
@@ -32,17 +35,11 @@ namespace ca2plugin_container
 
       virtual bool os_native_bergedge_start();
 
-
       virtual int32_t run();
-
 
       virtual void restart_small_ipc_channel();
 
-
-      virtual ::hotplugin::host * create_host(sp(::base::system) psystem);
-
       virtual ::hotplugin::host * create_host();
-
 
       virtual bool on_run_step();
 
