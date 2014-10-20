@@ -28,11 +28,11 @@ namespace draw2d_gdiplus
 
    }
 
-   COLORREF * dib::get_data()
-   {
-      return m_pcolorref;
-   }
-   ::draw2d::bitmap_sp dib::get_bitmap()
+   //COLORREF * dib::get_data()
+   //{
+   //   return m_pcolorref;
+   //}
+   ::draw2d::bitmap_sp dib::get_bitmap() const
    {
       return m_spbitmap;
    }
@@ -2329,7 +2329,7 @@ namespace draw2d_gdiplus
    }
 
 
-   ::draw2d::graphics * dib::get_graphics()
+   ::draw2d::graphics * dib::get_graphics() const
    {
 
       return m_spgraphics;
