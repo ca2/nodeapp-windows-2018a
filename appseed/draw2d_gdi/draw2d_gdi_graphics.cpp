@@ -4807,7 +4807,7 @@ namespace draw2d_gdi
       for(int i = 0; i < ppath->m_elementa.get_count(); i++)
       {
 
-         set(ppath->m_elementa[i]);
+         set(ppath->m_elementa(i));
 
       }
 
