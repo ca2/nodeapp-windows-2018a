@@ -178,7 +178,7 @@ namespace draw2d_gdiplus
       for(int32_t i = 0; i < m_elementa.get_count(); i++)
       {
 
-         set(pgraphics, m_elementa[i]);
+         set(pgraphics, m_elementa(i));
 
       }
 
