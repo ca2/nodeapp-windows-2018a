@@ -1271,12 +1271,12 @@ namespace production
          sync_object_ptra syncobjectptra;
          for (uint32_t ui = 0; ui < uiProcessorCount; ui++)
          {
-            compress_thread * pthread = new compress_thread(this, eventa(ui));
+            compress_thread * pthread = new compress_thread(this, eventa[ui]);
             threada.add(pthread);
             pthread->m_dwThreadAffinityMask = 1 << ui;
             pthread->m_bAutoDelete = false;
             pthread->begin();
-            syncobjectptra.add(dynamic_cast <waitable *> (eventa(ui).m_p));
+            syncobjectptra.add(eventa[ui].cast < waitable >());
          }
          multi_lock ml(syncobjectptra);
          ml.lock();

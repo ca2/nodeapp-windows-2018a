@@ -327,8 +327,10 @@ namespace production
    ::user::document * view::get_document()
    {
 
-      return ::user::impact::get_document());
+      return ::user::impact::get_document();
+
    }
+
 
    void view::GetAreaThumbRect(LPRECT lprect, int32_t iArea)
    {
