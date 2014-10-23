@@ -245,7 +245,7 @@ namespace multimedia
          for(int32_t i = 0; i < m_mixerdestinationa.get_size(); i++)
          {
             
-            sp(::multimedia::audio_mixer_mmsystem::destination) destination = m_mixerdestinationa(i);
+            sp(::multimedia::audio_mixer_mmsystem::destination) destination = m_mixerdestinationa[i];
             
             m_mapIDToLine.set_at(destination->get_mixer_line().dwLineID, destination);
 
@@ -254,7 +254,7 @@ namespace multimedia
             for(int32_t j = 0; j < sourcea.get_size(); j++)
             {
 
-               sp(::multimedia::audio_mixer_mmsystem::source) source = sourcea(j);
+               sp(::multimedia::audio_mixer_mmsystem::source) source = sourcea[j];
 
                m_mapIDToLine.set_at(source->m_mixerline.dwLineID, source);
 
