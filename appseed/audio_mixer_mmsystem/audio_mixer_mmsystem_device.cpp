@@ -127,7 +127,7 @@ namespace multimedia
 
          for (int32_t i = 0; (uint32_t) i < m_mixercaps.cDestinations; i++)
          {
-            lpDestination = m_mixerdestinationa(i);
+            lpDestination = m_mixerdestinationa[i];
             lpDestination->set_device(this);
             lpDestination->mixerGetLineInfo(0, i, MIXER_GETLINEINFOF_DESTINATION);
             //        ::multimedia::audio_mixer::audio_mixer::get_component_name(lpmxl, lpDestination->m_strComponent);
@@ -190,14 +190,14 @@ namespace multimedia
          for(int32_t i = 0; i < m_mixerdestinationa.get_size(); i++)
          {
 
-            sp(::multimedia::audio_mixer_mmsystem::destination) destination = m_mixerdestinationa(i);
+            sp(::multimedia::audio_mixer_mmsystem::destination) destination = m_mixerdestinationa[i];
 
             uint32_t dw = destination->m_mixerline.dwComponentType;
 
             if(dw == dwComponentType)
             {
 
-               *ppDestination = m_mixerdestinationa(i);
+               *ppDestination = m_mixerdestinationa[i];
 
                return ::multimedia::result_success;
 
@@ -217,7 +217,7 @@ namespace multimedia
          for(int32_t i = 0; i < m_mixerdestinationa.get_size(); i++)
          {
 
-            sp(::multimedia::audio_mixer_mmsystem::destination) destination = m_mixerdestinationa(i);
+            sp(::multimedia::audio_mixer_mmsystem::destination) destination = m_mixerdestinationa[i];
 
             MapLineControls(destination);
 

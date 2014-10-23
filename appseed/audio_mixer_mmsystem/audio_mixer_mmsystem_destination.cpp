@@ -83,7 +83,7 @@ namespace multimedia
          for(int32_t i = 0; i < sourcea.get_size(); i++)
          {
 
-            sourcea[i].GetLineControls();
+            sourcea[i]->GetLineControls();
 
          }
          
@@ -101,7 +101,7 @@ namespace multimedia
          for(int32_t i = 0; i < sourcea.get_size(); i++)
          {
 
-            sourcea[i].update_all_controls();
+            sourcea[i]->update_all_controls();
 
          }
 
