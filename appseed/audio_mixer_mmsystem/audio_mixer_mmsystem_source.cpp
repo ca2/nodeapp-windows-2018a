@@ -181,7 +181,7 @@ namespace multimedia
          ::multimedia::audio_mixer::control_array & controla = get_control_array();
          for(int32_t i = 0; i < controla.get_size(); i++)
          {
-            controla[i].OnMixerControlChange();
+            controla[i]->OnMixerControlChange();
          }
       }
 

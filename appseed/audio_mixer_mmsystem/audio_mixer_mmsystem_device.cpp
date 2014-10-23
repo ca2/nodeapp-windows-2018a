@@ -226,7 +226,7 @@ namespace multimedia
             for(int32_t j = 0; j < sourcea.get_size(); j++)
             {
 
-               sp(::multimedia::audio_mixer::source) source = sourcea(j);
+               sp(::multimedia::audio_mixer::source) source = sourcea[j];
 
                MapLineControls(source);
 
