@@ -287,11 +287,11 @@ namespace multimedia
          ::multimedia::audio_mixer::control_array & controla = psource->get_control_array();
          for(int32_t k = 0; k < controla.get_size(); k++)
          {
-            sp(::multimedia::audio_mixer_mmsystem::control) control = controla(k);
+            sp(::multimedia::audio_mixer_mmsystem::control) control = controla[k];
             m_mapIDToControl.set_at(control->GetMixerControl().dwControlID, control);
             for(int32_t l = 0; l < control->get_size(); l++)
             {
-               sp(::multimedia::audio_mixer::user::control) pcontrol = control->operator ()(l);
+               sp(::multimedia::audio_mixer::user::control) pcontrol = control->operator ()[l];
                m_mapDlgItemIDToControl.set_at(pcontrol->GetDlgCtrlId(), control);
             }
          }
@@ -304,12 +304,12 @@ namespace multimedia
          ::multimedia::audio_mixer::destination_array & destinationa = m_mixerdestinationa;
          for(int32_t i = 0; i < destinationa.get_size(); i++)
          {
-            sp(::multimedia::audio_mixer_mmsystem::destination) destination = destinationa(i);
+            sp(::multimedia::audio_mixer_mmsystem::destination) destination = destinationa[i];
             MapDlgCtrlIDToLineControls(destination);
             ::multimedia::audio_mixer::source_array & sourcea = destination->get_source_info();
             for(int32_t j = 0; j < sourcea.get_size(); j++)
             {
-               ::multimedia::audio_mixer::source & source = sourcea[j];
+               ::multimedia::audio_mixer::source & source = sourcea(j);
                MapDlgCtrlIDToLineControls(&source);
             }
          }
@@ -321,10 +321,10 @@ namespace multimedia
          ::multimedia::audio_mixer::control_array & controla = psource->get_control_array();
          for(int32_t k = 0; k < controla.get_size(); k++)
          {
-            sp(::multimedia::audio_mixer::control) control = controla(k);
+            sp(::multimedia::audio_mixer::control) control = controla[k];
             for(int32_t l = 0; l < control->get_size(); l++)
             {
-               sp(::multimedia::audio_mixer::user::control) pcontrol = control->operator()(l);
+               sp(::multimedia::audio_mixer::user::control) pcontrol = control->operator[](l);
                m_mapDlgItemIDToControl.set_at(pcontrol->GetDlgCtrlId(), control);
             }
          }
