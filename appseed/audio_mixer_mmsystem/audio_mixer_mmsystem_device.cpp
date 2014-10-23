@@ -291,7 +291,7 @@ namespace multimedia
             m_mapIDToControl.set_at(control->GetMixerControl().dwControlID, control);
             for(int32_t l = 0; l < control->get_size(); l++)
             {
-               sp(::multimedia::audio_mixer::user::control) pcontrol = control->operator ()[l];
+               sp(::multimedia::audio_mixer::user::control) pcontrol = control->operator [](l);
                m_mapDlgItemIDToControl.set_at(pcontrol->GetDlgCtrlId(), control);
             }
          }
