@@ -85,7 +85,7 @@ namespace multimedia
 
             for (int32_t i = 0; (uint32_t) i < m_mixerlinecontrols.cControls; i++)
             {
-               lpMixerControl = m_mixercontrola(i);
+               lpMixerControl = m_mixercontrola[i];
                lpMixerControl->m_pmixersource = this;
                pamxctrl = &lpMixerControl->GetMixerControl();
                //m_mixerlinecontrols.pamxctrl = pamxctrl;
