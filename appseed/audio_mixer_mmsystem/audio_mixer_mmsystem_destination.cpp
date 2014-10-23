@@ -60,7 +60,7 @@ namespace multimedia
          for (int32_t i = 0; i < iConnections; i++)
          {
 
-            lpSource = m_mixersourcea(i);
+            lpSource = m_mixersourcea[i];
 
             lpSource->SetDestination(this);
 
