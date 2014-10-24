@@ -461,8 +461,8 @@ Seq_Open_File_Cleanup:
                      0x06, 0x00, 0x00, MEVT_LONGMSG,
                      0xf0, 0x7e, 0x7f, 0x09,
                      0x01, 0xf7, 0x00, 0x00 };
-                  char * lpch = m_buffera[0].m_lpmidihdr->lpData + m_buffera[0].m_lpmidihdr->dwBytesRecorded;
-                  m_buffera[0].m_lpmidihdr->dwBytesRecorded += sizeof(gmModeOn);
+                  char * lpch = m_buffera[0]->m_lpmidihdr->lpData + m_buffera[0]->m_lpmidihdr->dwBytesRecorded;
+                  m_buffera[0]->m_lpmidihdr->dwBytesRecorded += sizeof(gmModeOn);
                   memcpy(lpch, gmModeOn, sizeof(gmModeOn));
                   SetSpecialModeV001Flag(false);
                }
@@ -588,7 +588,7 @@ Seq_Open_File_Cleanup:
 
             m_buffera.Reset();
 
-            smfrc = file()->WorkSeek(m_tkBase, m_buffera[0].m_lpmidihdr);
+            smfrc = file()->WorkSeek(m_tkBase, m_buffera[0]->m_lpmidihdr);
 
             m_tkPrerollBase = get_file()->GetPosition();
 
@@ -599,7 +599,7 @@ Seq_Open_File_Cleanup:
             for (i = 1; i < m_buffera.get_size(); i++)
             {
                
-               LPMIDIHDR lpmh = m_buffera[i].GetMidiHdr();
+               LPMIDIHDR lpmh = m_buffera[i]->GetMidiHdr();
 
                smfrc = file()->WorkStreamRender(lpmh, m_tkEnd, m_cbPrerollNominalMax);
 
@@ -1861,7 +1861,7 @@ seq_Preroll_Cleanup:
                   pLyricEventsV2->m_iTrack =
                      file.WorkCalcMelodyTrack(
                      &pMidiEventsV1,
-                     tka2DTokensTicks.operator[](i),
+                     tka2DTokensTicks.operator()(i),
                      ia2TokenLine[i]);
                }
                else
@@ -1917,7 +1917,7 @@ seq_Preroll_Cleanup:
                   (int32_t) pLyricEventsV2->m_iTrack,
                   file.GetFormat(),
                   &midiEvents,
-                  tka2DTokensTicks.operator[](i));
+                  tka2DTokensTicks.operator()(i));
 
                miditutil.PrepareLevel2Events(
                   &eventsLevel2Beg,
@@ -1925,13 +1925,13 @@ seq_Preroll_Cleanup:
                   (int32_t) pLyricEventsV2->m_iTrack,
                   file.GetFormat(),
                   &midiEventsLevel2,
-                  tka2DTokensTicks.operator[](i));
+                  tka2DTokensTicks.operator()(i));
 
 
-               tk2DNoteOnPositions[i]     = noteOnEvents.m_tkaEventsPosition;
-               tk2DNoteOffPositions[i]    = noteOffEvents.m_tkaEventsPosition;
-               tk2DBegPositions[i]        = eventsLevel2Beg.m_tkaEventsPosition;
-               tk2DEndPositions[i]        = eventsLevel2End.m_tkaEventsPosition;
+               tk2DNoteOnPositions(i)     = noteOnEvents.m_tkaEventsPosition;
+               tk2DNoteOffPositions(i)    = noteOffEvents.m_tkaEventsPosition;
+               tk2DBegPositions(i)        = eventsLevel2Beg.m_tkaEventsPosition;
+               tk2DEndPositions(i)        = eventsLevel2End.m_tkaEventsPosition;
                pLyricEventsV2->m_dwaNotesData.copy(noteOnEvents.m_dwaEventsData);
                pLyricEventsV2B->m_dwaNotesData.copy(eventsLevel2Beg.m_dwaEventsData);
                pLyricEventsV2C->m_dwaNotesData.copy(eventsLevel2Beg.m_dwaEventsData);
@@ -1975,37 +1975,37 @@ seq_Preroll_Cleanup:
                staticdata.m_eventstracks.add(pLyricEventsV2);
                file.TimeToPosition(
                   pLyricEventsV2->m_tkaTokensPosition,
-                  ms2DTokensMillis[i],
+                  ms2DTokensMillis(i),
                   0);
                file.TimeToPosition(
                   pLyricEventsV2->m_tkaNotesPosition,
-                  ms2DNoteOnMillis[i],
+                  ms2DNoteOnMillis(i),
                   0);
 
                imedia::time time1(0);
                imedia::time time2(0);
 
                pLyricEventsV2->m_msaTokensPosition.CopySorted(
-                  ms2DTokensMillis[i],
+                  ms2DTokensMillis(i),
                   time1,
                   time2);
 
                pLyricEventsV2->m_msaNotesDuration.Diff(
-                  ms2DNoteOffMillis[i],
-                  ms2DNoteOnMillis[i]);
+                  ms2DNoteOffMillis(i),
+                  ms2DNoteOnMillis(i));
 
                imedia::time time3(0);
                imedia::time time4(0);
 
                pLyricEventsV2->m_msaNotesPosition.CopySorted(
-                  ms2DNoteOnMillis[i],
+                  ms2DNoteOnMilli(i),
                   time3,
                   time4);
 
                imedia::time time5(0x7fffffff);
 
                pLyricEventsV2->m_msaTokensDuration.ElementDiff(
-                  ms2DTokensMillis[i],
+                  ms2DTokensMillis(i),
                   time5);
 
             }

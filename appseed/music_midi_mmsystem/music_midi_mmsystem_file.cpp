@@ -594,8 +594,8 @@ smf_Open_File_Cleanup:
             for(i = 0; i < positiona.get_size(); i++)
             {
                PositionToTime(
-                  timea[i],
-                  positiona[i],
+                  timea(i),
+                  positiona(i),
                   tkOffset);
             }
 
