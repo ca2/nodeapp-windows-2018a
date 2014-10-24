@@ -2145,25 +2145,25 @@ seq_Preroll_Cleanup:
 
                file.TimeToPosition(
                   pLyricEventsV2->m_tkaTokensPosition,
-                  ms2DTokensMillis[i],
+                  ms2DTokensMillis(i),
                   -100);
 
                file.TimeToPosition(
                   pLyricEventsV2->m_tkaNotesPosition,
-                  ms2DNoteOnMillis[i],
+                  ms2DNoteOnMillis(i),
                   -100);
 
                imedia::time time1(-100);
                imedia::time time2(0);
 
                pLyricEventsV2->m_msaTokensPosition.CopySorted(
-                  ms2DTokensMillis[i],
+                  ms2DTokensMillis(i),
                   time1,
                   time2);
 
                pLyricEventsV2->m_msaNotesDuration.Diff(
-                  ms2DEndMillis[i],
-                  ms2DBegMillis[i]);
+                  ms2DEndMillis(i),
+                  ms2DBegMillis(i));
 
                /*
                pLyricEventsV2->m_msaNotesDuration.Diff(
@@ -2175,14 +2175,14 @@ seq_Preroll_Cleanup:
                imedia::time time4(0);
 
                pLyricEventsV2->m_msaNotesPosition.CopySorted(
-                  ms2DNoteOnMillis[i],
+                  ms2DNoteOnMillis(i),
                   time3,
                   time4);
 
                imedia::time time5(0x7fffffff);
 
                pLyricEventsV2->m_msaTokensDuration.ElementDiff(
-                  ms2DTokensMillis[i],
+                  ms2DTokensMillis(i),
                   time5);
 
                pLyricEventsV2->PrepareForBouncingBall(this);
