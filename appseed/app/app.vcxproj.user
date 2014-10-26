@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">
-    <LocalDebuggerCommandArguments>: app=app-core/veredit install build_number=basis</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>: app=app-core/hellomultiverse locale=_std schema=_std version=stage</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerCommand>C:\Program Files (x86)\ca2\stage\x86\app.exe</LocalDebuggerCommand>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">
     <LocalDebuggerCommandArguments>: app=app-core/veredit install build_number=basis</LocalDebuggerCommandArguments>
@@ -10,6 +11,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">
     <LocalDebuggerCommandArguments>: app=app-core/veredit install build_number=basis</LocalDebuggerCommandArguments>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|x64'">
+    <LocalDebuggerCommand>C:\Program Files (x86)\ca2\stage\x86\app.exe</LocalDebuggerCommand>
+    <LocalDebuggerCommandArguments>: app=app-core/hellomultiverse locale=_std schema=_std version=stage</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>
