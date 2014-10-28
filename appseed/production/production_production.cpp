@@ -223,7 +223,7 @@ namespace production
 
          if (m_straStatus.get_count() > 1)
          {
-
+            single_lock sl(&m_mutexStatus,TRUE);
             set["post"]["new_status"] = set["post"]["new_status"] + "Last Stati:<br />";
             for (::count i = MIN(5, m_straStatus.get_count() - 1); i >= 1; i--)
             {

@@ -169,6 +169,7 @@ namespace production
    void view:: _001OnDraw(::draw2d::graphics * pdc)
    {
       
+      single_lock sl(&m_pproduction->m_mutexStatus,TRUE);
 
       rect rectClient;
       GetClientRect(rectClient);
