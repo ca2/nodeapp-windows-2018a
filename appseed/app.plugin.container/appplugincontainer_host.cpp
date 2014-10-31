@@ -396,7 +396,7 @@ namespace ca2plugin_container
             
             const RECT & rect = *((LPCRECT) pdata);
 
-            if(m_rect != rect)
+            //if(m_rect != rect)
             {
 
                m_rect = rect;
@@ -429,11 +429,15 @@ namespace ca2plugin_container
             try
             {
 
-               ::draw2d::graphics_sp g(allocer());
+               _001UpdateBuffer();
 
-               g->CreateCompatibleDC(NULL);
+               //::draw2d::graphics_sp g(allocer());
 
-               on_paint(g, rect);
+               //g->CreateCompatibleDC(NULL);
+
+               //on_paint(g, rect);
+
+               on_paint(NULL,rect);
 
             }
             catch(...)
@@ -560,6 +564,46 @@ namespace ca2plugin_container
          }
       
       }
+
+   }
+
+   bool host::SetWindowPos(int32_t z,int32_t x,int32_t y,int32_t cx,int32_t cy,UINT nFlags)
+   {
+
+      bool bOk = ::hotplugin::host::SetWindowPos(z,x,y,cx,cy,nFlags);
+
+  
+      try
+      {
+
+         if(m_pcontainerapp != NULL)
+         {
+
+            if(m_pcontainerapp->m_psystem != NULL)
+            {
+
+               if(m_pcontainerapp->m_psystem->m_pplugin != NULL)
+               {
+
+                  if(m_pcontainerapp->m_psystem->m_pplugin->m_puiHost != NULL)
+                  {
+
+                     m_pcontainerapp->m_psystem->m_pplugin->m_puiHost->SetWindowPos(z,x,y,cx,cy,nFlags);
+
+                  }
+
+               }
+
+            }
+
+         }
+
+      }
+      catch(...)
+      {
+      }
+
+      return bOk;
 
    }
 

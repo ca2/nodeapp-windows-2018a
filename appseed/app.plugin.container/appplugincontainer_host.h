@@ -55,7 +55,7 @@ namespace ca2plugin_container
       virtual void set_system(void * pvoidPluginSystem);
 
       virtual void on_receive(small_ipc_rx_channel * prxchannel, int32_t message, void * pdata, int32_t len);
-
+      virtual bool SetWindowPos(int32_t z,int32_t x,int32_t y,int32_t cx,int32_t cy,UINT nFlags);
 
       virtual void start_ca2();
 
