@@ -14,6 +14,10 @@ int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lp
 
    if(!defer_core_init())
       return -1;
+   if(file_exists_dup("C:\\ca2\\config\\system\\beg_debug_box.txt"))
+   {
+      debug_box("zzzAPPzzz app","zzzAPPzzz app",MB_ICONINFORMATION);
+   }
 
    int iRet = app_core_main(hinstance, hPrevInstance, (char *) (const char *) ::str::international::unicode_to_utf8(::GetCommandLineW()), nCmdShow);
 
