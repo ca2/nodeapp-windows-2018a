@@ -6,12 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\app.vcxproj", "{19841115-1984-0411-1977-021977151984}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86} = {E2D7833B-9B59-4826-BBDF-C270A2115E86}
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF} = {51F51C57-0947-4D1D-850E-2F4BE6C88DCF}
 		{A1824D85-C71B-4F08-A696-72ECDE95E5CF} = {A1824D85-C71B-4F08-A696-72ECDE95E5CF}
 		{B39ED2B3-D53A-4077-B957-930979A3577D} = {B39ED2B3-D53A-4077-B957-930979A3577D}
 	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_deepfish", "..\..\..\app-core\appseed\deepfish\deepfish.vcxproj", "{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_deepfish_user_presence", "..\..\..\app-core\appseed\deepfish_user_presence\deepfish_user_presence.vcxproj", "{A1824D85-C71B-4F08-A696-72ECDE95E5CF}"
 EndProject
@@ -113,41 +110,6 @@ Global
 		{19841115-1984-0411-1977-021977151984}.static_basis|Win32.Build.0 = basis|Win32
 		{19841115-1984-0411-1977-021977151984}.static_basis|x64.ActiveCfg = basis|x64
 		{19841115-1984-0411-1977-021977151984}.static_basis|x64.Build.0 = basis|x64
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.basis|Android.ActiveCfg = basis|Win32
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.basis|Win32.ActiveCfg = basis|Win32
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.basis|Win32.Build.0 = basis|Win32
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.basis|x64.ActiveCfg = basis|x64
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.basis|x64.Build.0 = basis|x64
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.codeanalysis|Android.ActiveCfg = codeanalysis|Win32
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.codeanalysis|x64.Build.0 = codeanalysis|x64
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.memdleak|Android.ActiveCfg = memdleak|Win32
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.memdleak|Win32.ActiveCfg = memdleak|Win32
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.memdleak|Win32.Build.0 = memdleak|Win32
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.memdleak|x64.ActiveCfg = memdleak|x64
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.memdleak|x64.Build.0 = memdleak|x64
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.no_precompiled_header|Android.ActiveCfg = stage|Win32
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.no_precompiled_header|Win32.ActiveCfg = stage|Win32
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.no_precompiled_header|Win32.Build.0 = stage|Win32
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.no_precompiled_header|x64.ActiveCfg = stage|x64
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.no_precompiled_header|x64.Build.0 = stage|x64
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.profiler|Android.ActiveCfg = profiler|Win32
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.profiler|Win32.ActiveCfg = profiler|Win32
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.profiler|Win32.Build.0 = profiler|Win32
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.profiler|x64.ActiveCfg = profiler|x64
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.profiler|x64.Build.0 = profiler|x64
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.stage|Android.ActiveCfg = stage|Win32
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.stage|Win32.ActiveCfg = stage|Win32
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.stage|Win32.Build.0 = stage|Win32
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.stage|x64.ActiveCfg = stage|x64
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.stage|x64.Build.0 = stage|x64
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.static_basis|Android.ActiveCfg = static_basis|Win32
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.static_basis|Win32.ActiveCfg = static_basis|Win32
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.static_basis|Win32.Build.0 = static_basis|Win32
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.static_basis|x64.ActiveCfg = static_basis|x64
-		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.static_basis|x64.Build.0 = static_basis|x64
 		{A1824D85-C71B-4F08-A696-72ECDE95E5CF}.basis|Android.ActiveCfg = basis|Win32
 		{A1824D85-C71B-4F08-A696-72ECDE95E5CF}.basis|Win32.ActiveCfg = basis|Win32
 		{A1824D85-C71B-4F08-A696-72ECDE95E5CF}.basis|Win32.Build.0 = basis|Win32
