@@ -240,7 +240,7 @@ namespace production
 
          ::datetime::time timeNow = ::datetime::time::get_current_time();
 
-         string strTwit = "General failure of build " + version_to_international_datetime(m_strBuild) + ". Starting " + m_strTry + " retry of build " + m_strVersion + " - " + System.datetime().international().get_gmt_date_time(timeNow) + ". More details at http://status.ca2.cc/" + System.url().url_encode(m_strStatusEmail);
+         string strTwit = "General failure of build " + version_to_international_datetime(m_strBuild) + ". Starting " + m_strTry + " retry of build " + m_strVersion + " - " + System.datetime().international().get_gmt_date_time(timeNow) + ". More details at http://status.ca2.cc/" + m_strStatusEmail;
 
          twitter_twit(strTwit);
 
@@ -596,11 +596,11 @@ namespace production
 
                if(m_iGlobalRetry <= 0)
                {
-                  strTwit = "ca2twit-lib : new " + m_strVersion + " build starting " + version_to_international_datetime(m_strBuild) + ". More details at http://status.ca2.cc/" + System.url().url_encode(m_strStatusEmail);
+                  strTwit = "ca2twit-lib : new " + m_strVersion + " build starting " + version_to_international_datetime(m_strBuild) + ". More details at http://status.ca2.cc/" + m_strStatusEmail;
                }
                else
                {
-                  strTwit = "ca2twit-lib : " + m_strTry + " automatic retry " + m_strVersion + " build starting " + version_to_international_datetime(m_strBuild) + ". More details at http://status.ca2.cc/" + System.url().url_encode(m_strStatusEmail);
+                  strTwit = "ca2twit-lib : " + m_strTry + " automatic retry " + m_strVersion + " build starting " + version_to_international_datetime(m_strBuild) + ". More details at http://status.ca2.cc/" + m_strStatusEmail;
                }
 
                twitter_twit(strTwit);
@@ -2599,7 +2599,18 @@ namespace production
             }
          }
 
-         strTwit += " : http://status.ca2.cc/" + System.url().url_encode(m_strStatusEmail);
+         if(Application.m_eversion == version_basis)
+         {
+
+            strTwit += " : http://basis.ca2.cc/demo_rapid";
+
+         }
+         else
+         {
+
+            strTwit += " : http://ca2.cc/demo_rapid";
+
+         }
 
          twitter_twit(strTwit);
 
