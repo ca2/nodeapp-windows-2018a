@@ -1059,7 +1059,7 @@ namespace production
          //straStatus.add("077 releasing at netnode : hong kong");
          //straServer.add("hk-api.ca2.cc");
 
-         //straStatus.add("084 releasing at netnode : asia (japan named-seeded-sitted)");
+         //straStatus.add("077 releasing at netnode : asia (japan named-seeded-sitted)");
          //straServer.add("asia-api.ca2.cc");
 
 
