@@ -77,10 +77,21 @@ namespace draw2d_gdiplus
          m_pdata = NULL;
       }
 
-      m_pdata = memory_alloc(abs(4 * lpbmi->bmiHeader.biWidth * lpbmi->bmiHeader.biHeight));
+      try
+      {
+
+         m_pdata = memory_alloc(abs(4 * lpbmi->bmiHeader.biWidth * lpbmi->bmiHeader.biHeight));
+
+      }
+      catch(...)
+      {
+         
+         return false;
+
+      }
 
       if(m_pdata == NULL)
-         return FALSE;
+         return false;
 
       m_pbitmap = new Gdiplus::Bitmap(abs(lpbmi->bmiHeader.biWidth), abs(lpbmi->bmiHeader.biHeight), abs(lpbmi->bmiHeader.biWidth) * 4, PixelFormat32bppARGB, (BYTE *) m_pdata);
 
