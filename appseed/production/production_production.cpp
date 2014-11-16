@@ -1982,9 +1982,9 @@ namespace production
       //add_path(pszDir,"plugins\\axisopenssl.dll");
       //add_path(pszDir,"plugins\\axiszlib.dll");
       //add_path(pszDir, "plugins\\base.dll");
-      add_path(pszDir, "plugins\\msvcp120d.dll");
-      add_path(pszDir, "plugins\\msvcr120d.dll");
-      add_path(pszDir, "plugins\\draw2d_gdiplus.dll");
+      //add_path(pszDir, "plugins\\msvcp120d.dll");
+      //add_path(pszDir, "plugins\\msvcr120d.dll");
+      //add_path(pszDir, "plugins\\draw2d_gdiplus.dll");
       add_path(pszDir, "skin\\classic\\ca2-5c-32.png");
       add_path(pszDir, "META-INF\\manifest.mf");
       add_path(pszDir, "META-INF\\zigbert.sf");
@@ -2095,23 +2095,27 @@ namespace production
       Application.file().put_contents(System.dir().path(strDir, "npca2_windows.rdf"), strWindows);
 
 
-      add_status("Signing npca2.dll for Firefox ...");
-      string strFile = System.dir().path(strDir, "npca2/plugins", "npca2.dll");
-      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/npca2.dll"));
-      string strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
-      System.process().synch(strCmd);
+      //add_status("Signing npca2.dll for Firefox ...");
+      //string strFile = System.dir().path(strDir, "npca2/plugins", "npca2.dll");
+      //Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/npca2.dll"));
+      //string strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
+      //System.process().synch(strCmd);
 
 
 
-      add_status("Signing app.install.exe for Firefox ...");
-      strFile = System.dir().path(strDir, "npca2/plugins", "app.install.exe");
-      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/app.install.exe"));
-      strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
-      System.process().synch(strCmd);
+      //add_status("Signing app.install.exe for Firefox ...");
+      //strFile = System.dir().path(strDir, "npca2/plugins", "app.install.exe");
+      //Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/app.install.exe"));
+      //strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
+      //System.process().synch(strCmd);
 
       stringa straBase;
 
       ::install::get_plugin_base_library_list(straBase,m_strVersion);
+
+      string strFile;
+
+      string strCmd;
 
       for(index i = 0; i < straBase; i++)
       {
@@ -2145,22 +2149,22 @@ namespace production
       System.process().synch(strCmd);
       */
 
-      add_status("Signing msvcr120d.dll for Firefox ...");
-      strFile = System.dir().path(strDir, "npca2/plugins", "msvcr120d.dll");
-      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/msvcr120d.dll"));
-      strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
-      System.process().synch(strCmd);
+      //add_status("Signing msvcr120d.dll for Firefox ...");
+      //strFile = System.dir().path(strDir, "npca2/plugins", "msvcr120d.dll");
+      //Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/msvcr120d.dll"));
+      //strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
+      //System.process().synch(strCmd);
 
-      add_status("Signing msvcp120d.dll for Firefox ...");
-      strFile = System.dir().path(strDir, "npca2/plugins", "msvcp120d.dll");
-      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/msvcp120d.dll"));
-      strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
-      System.process().synch(strCmd);
+      //add_status("Signing msvcp120d.dll for Firefox ...");
+      //strFile = System.dir().path(strDir, "npca2/plugins", "msvcp120d.dll");
+      //Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/msvcp120d.dll"));
+      //strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
+      //System.process().synch(strCmd);
 
-      strFile = System.dir().path(strDir, "npca2/plugins", "draw2d_gdiplus.dll");
-      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/draw2d_gdiplus.dll"));
-      strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
-      System.process().synch(strCmd);
+      //strFile = System.dir().path(strDir, "npca2/plugins", "draw2d_gdiplus.dll");
+      //Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/draw2d_gdiplus.dll"));
+      //strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
+      //System.process().synch(strCmd);
 
       add_status("Signing code for Firefox ...");
 
@@ -2388,23 +2392,49 @@ namespace production
       }
       Application.file().copy(System.dir().path(strDir, "ca2-5c-32.png"), strIcon);
 
-      add_status("Signing npca2.dll for Chrome ...");
-      string strFile = System.dir().path(strDir, "npca2.dll");
-      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/npca2.dll"));
-      string strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
-      System.process().synch(strCmd);
 
-      add_status("Signing app.install.exe for Chrome ...");
-      strFile = System.dir().path(strDir, "app.install.exe");
-      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/app.install.exe"));
-      strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
-      System.process().synch(strCmd);
+      stringa straBase;
 
-      add_status("Signing base.dll for Chrome ...");
-      strFile = System.dir().path(strDir, "base.dll");
-      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/base.dll"));
-      strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
-      System.process().synch(strCmd);
+      ::install::get_plugin_base_library_list(straBase,m_strVersion);
+
+      string strFile;
+
+      string strCmd;
+
+      for(index i = 0; i < straBase; i++)
+      {
+
+         string strLibrary = straBase[i];
+
+         add_status("Signing " + strLibrary + " for Chrome ...");
+
+         strFile = System.dir().path(strDir,"npca2/plugins",strLibrary);
+
+         Application.file().copy(strFile,System.dir().path(m_strVrel,"stage/" + strPlatform + "/" + strLibrary));
+
+         strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
+
+         System.process().synch(strCmd);
+
+      }
+
+      //add_status("Signing npca2.dll for Chrome ...");
+      //string strFile = System.dir().path(strDir, "npca2.dll");
+      //Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/npca2.dll"));
+      //string strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
+      //System.process().synch(strCmd);
+
+      //add_status("Signing app.install.exe for Chrome ...");
+      //strFile = System.dir().path(strDir, "app.install.exe");
+      //Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/app.install.exe"));
+      //strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
+      //System.process().synch(strCmd);
+
+      //add_status("Signing base.dll for Chrome ...");
+      //strFile = System.dir().path(strDir, "base.dll");
+      //Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/base.dll"));
+      //strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
+      //System.process().synch(strCmd);
 
 /*
       add_status("Signing os.dll for Chrome ...");
@@ -2414,23 +2444,23 @@ namespace production
       System.process().synch(strCmd);
       */
 
-      add_status("Signing msvcp120d.dll for Chrome ...");
-      strFile = System.dir().path(strDir, "msvcp120d.dll");
-      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/msvcp120d.dll"));
-      strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
-      System.process().synch(strCmd);
+      //add_status("Signing msvcp120d.dll for Chrome ...");
+      //strFile = System.dir().path(strDir, "msvcp120d.dll");
+      //Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/msvcp120d.dll"));
+      //strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
+      //System.process().synch(strCmd);
 
-      add_status("Signing msvcr120d.dll for Chrome ...");
-      strFile = System.dir().path(strDir, "msvcr120d.dll");
-      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/msvcr120d.dll"));
-      strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
-      System.process().synch(strCmd);
+      //add_status("Signing msvcr120d.dll for Chrome ...");
+      //strFile = System.dir().path(strDir, "msvcr120d.dll");
+      //Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/msvcr120d.dll"));
+      //strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
+      //System.process().synch(strCmd);
 
-      add_status("Signing draw2d_gdiplus.dll for Chrome ...");
-      strFile = System.dir().path(strDir, "draw2d_gdiplus.dll");
-      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/draw2d_gdiplus.dll"));
-      strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
-      System.process().synch(strCmd);
+      //add_status("Signing draw2d_gdiplus.dll for Chrome ...");
+      //strFile = System.dir().path(strDir, "draw2d_gdiplus.dll");
+      //Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/draw2d_gdiplus.dll"));
+      //strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
+      //System.process().synch(strCmd);
 
       add_status("Creating crxca2.crx for Chrome ...");
 
