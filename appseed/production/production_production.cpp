@@ -1,11 +1,5 @@
 ﻿#include "framework.h"
 
-namespace install
-{
-
-   CLASS_DECL_BASE void get_plugin_base_library_list(stringa & straFile);
-
-} // namespace install
 
 namespace production
 {
@@ -1967,7 +1961,7 @@ namespace production
 
       stringa straBase;
 
-      ::install::get_plugin_base_library_list(straBase);
+      ::install::get_plugin_base_library_list(straBase, m_strVersion);
 
       for(index i = 0; i < straBase; i++)
       {
@@ -2117,7 +2111,7 @@ namespace production
 
       stringa straBase;
 
-      ::install::get_plugin_base_library_list(straBase);
+      ::install::get_plugin_base_library_list(straBase,m_strVersion);
 
       for(index i = 0; i < straBase; i++)
       {
