@@ -47,7 +47,7 @@ namespace draw2d_gdi
       HFONT                                              m_hfontOriginal;
       HRGN                                               m_hrgnOriginal;
 
-      comparable_array < ::draw2d_gdi::object * >        m_ptraObject;
+      ptr_array < ::draw2d_gdi::object >        m_ptraObject;
 
       //graphics();
       graphics(sp(::aura::application) papp);
