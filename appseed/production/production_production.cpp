@@ -2113,6 +2113,8 @@ namespace production
 
       ::install::get_plugin_base_library_list(straBase,m_strVersion);
 
+      straBase.add("npca2.dll");
+
       string strFile;
 
       string strCmd;
@@ -2396,6 +2398,8 @@ namespace production
       stringa straBase;
 
       ::install::get_plugin_base_library_list(straBase,m_strVersion);
+
+      straBase.add("npca2.dll");
 
       string strFile;
 
