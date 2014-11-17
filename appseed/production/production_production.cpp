@@ -2314,7 +2314,7 @@ namespace production
       string str;
       ::process::process_sp process(allocer());
       string strPath;
-      strPath = System.dir().path(m_strBase, "nodeapp\\stage\\script\\makecab" + string(pszPlatform) + ".bat");
+      strPath = System.dir().path(m_strBase, "nodeapp\\stage\\script\\makecab" + string(pszPlatform) + "_" + m_strVersion + ".bat");
       if (!process->create_child_process(strPath, false, System.dir().name(strPath)))
       {
          uint32_t dw = GetLastError();
