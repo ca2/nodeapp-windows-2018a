@@ -33,7 +33,7 @@ bool form_callback::BaseOnControlEvent(::user::form * pview, ::user::control_eve
          uh.m_strForm = "filemanager_add_location_lfs.xhtml";
          pview->get_document()->update_all_views(NULL, 0, &uh);
          sp(::user::interaction) pui = pview->get_child_by_name("lfs");
-         sp(text_interface) ptext =pui;
+         sp(::user::elemental) ptext =pui;
          string strPath;
          ptext->_001SetText(strPath, uh.m_actioncontext);
       }
@@ -52,7 +52,7 @@ bool form_callback::BaseOnControlEvent(::user::form * pview, ::user::control_eve
             stringa wstra;
             //VmsDataGet(m_pmanager->get_filemanager_template()->m_datakeyStatic, 0, 0, wstra);
             Ex1VirtualGuie * pui = pview->get_child_by_name("lfs");
-            sp(text_interface) ptext =pui;
+            sp(::user::elemental) ptext =pui;
             string str;
             ptext->_001GetText(str);
             wstra.AddUnique(str);
@@ -66,7 +66,7 @@ bool form_callback::BaseOnControlEvent(::user::form * pview, ::user::control_eve
          {
             form_update_hint uh;
             Ex1VirtualGuieInterface * pui = pview->get_child_by_name("encontrar");
-            sp(text_interface) ptext =pui;
+            sp(::user::elemental) ptext =pui;
             //ptext->_001GetText(uh.m_strFind);
             pui = pview->get_child_by_name("substituir");
             ptext =pui;
