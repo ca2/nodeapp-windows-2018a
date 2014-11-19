@@ -178,7 +178,7 @@ namespace draw2d_gdiplus
       case type_combine:
          return get_combine();
       default:
-         throw not_implemented(get_app());
+         ::exception::throw_not_implemented(get_app());
       }
 
       return NULL;

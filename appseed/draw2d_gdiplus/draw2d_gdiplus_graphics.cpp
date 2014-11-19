@@ -172,7 +172,7 @@ namespace draw2d_gdiplus
    int32_t graphics::ExcludeUpdateRgn(::user::interaction * pwindow)
    { 
       ASSERT(get_handle1() != NULL); 
-      throw not_implemented(get_app());
+      ::exception::throw_not_implemented(get_app());
       //return ::ExcludeUpdateRgn(get_handle1(), WIN_WINDOW(pwindow)->get_handle()); 
       return 0;
    }
@@ -1476,7 +1476,7 @@ gdi_fallback:
       
       //return ::GetTextMetricsW(get_handle1(), lpMetrics) != FALSE;
 
-      throw not_implemented(get_app());
+      ::exception::throw_not_implemented(get_app());
 
       return false;
    
@@ -2041,7 +2041,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, BLENDFUNCTION blend)
    { 
       
-      throw not_implemented(get_app());
+      ::exception::throw_not_implemented(get_app());
       //if(get_handle1() == NULL)
         // return false;
 
@@ -2308,7 +2308,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    void graphics::DrawDragRect(const RECT &  lpRect, SIZE size, const RECT &  lpRectLast, SIZE sizeLast, ::draw2d::brush* pBrush, ::draw2d::brush* pBrushLast)
    {
 
-      throw not_implemented(get_app());
+      ::exception::throw_not_implemented(get_app());
 
 /*
 

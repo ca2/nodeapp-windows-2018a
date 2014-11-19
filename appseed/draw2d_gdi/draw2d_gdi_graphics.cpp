@@ -3970,7 +3970,7 @@ namespace draw2d_gdi
 
       // return dynamic_cast < ::draw2d::palette * > (::draw2d_gdi::object::from_handle(get_app(), ::SelectPalette(get_handle1(), (HPALETTE)pPalette->get_os_data(), bForceBackground))) != FALSE;
 
-      throw not_implemented(get_app());
+      ::exception::throw_not_implemented(get_app());
 
       return NULL;
 
