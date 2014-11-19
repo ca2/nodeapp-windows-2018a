@@ -1627,8 +1627,6 @@ namespace draw2d_gdi
       ::draw2d::brush & brush = *get_current_brush();
       ::draw2d::font & font = *get_current_font();
 
-      //if(m_spbrush.is_null() || argb_get_a_value(m_spbrush->m_cr) == 255 || m_spdib.is_null())
-
       select_font();
 
       if(m_pdib == NULL)
