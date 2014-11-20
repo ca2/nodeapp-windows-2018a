@@ -1639,7 +1639,7 @@ namespace draw2d_gdi
          DI_IMAGE | DI_MASK);
     
       // Black blend dib
-      ::draw2d::dib_sp spdib2(get_app());
+      ::draw2d::dib_sp spdib2(allocer());
       spdib2->create(cx, cy);
       spdib2->Fill(0, 0, 0, 0);
 
