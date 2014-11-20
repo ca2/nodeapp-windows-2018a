@@ -8,7 +8,7 @@ namespace draw2d_gdiplus
 {
 
 
-   bitmap::bitmap(sp(::aura::application) papp) :
+   bitmap::bitmap(::aura::application * papp) :
       element(papp)
    { 
 

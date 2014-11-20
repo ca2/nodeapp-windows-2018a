@@ -25,7 +25,7 @@ namespace draw2d_gdiplus
       BITMAPINFO           m_bitmapinfo;
 
 
-      dib(sp(::aura::application) papp);
+      dib(::aura::application * papp);
       virtual void construct(int32_t cx, int32_t cy);
       virtual ~dib();
 

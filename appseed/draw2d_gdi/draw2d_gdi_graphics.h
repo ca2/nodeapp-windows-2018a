@@ -50,7 +50,7 @@ namespace draw2d_gdi
       ptr_array < ::draw2d_gdi::object >        m_ptraObject;
 
       //graphics();
-      graphics(sp(::aura::application) papp);
+      graphics(::aura::application * papp);
       virtual ~graphics();
 
 
@@ -489,7 +489,7 @@ namespace draw2d_gdi
       bool SelectClipPath(int nMode);
 
    // Misc Helper Functions
-      static ::draw2d::brush* GetHalftoneBrush(sp(::aura::application) papp);
+      static ::draw2d::brush* GetHalftoneBrush(::aura::application * papp);
       void DrawDragRect(const RECT & lpRect, SIZE size,
          const RECT & lpRectLast, SIZE sizeLast, ::draw2d::brush* pBrush = NULL, ::draw2d::brush* pBrushLast = NULL);
       void FillSolidRect(const __rect64 * lpRect, COLORREF clr);

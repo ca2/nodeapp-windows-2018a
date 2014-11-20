@@ -15,7 +15,7 @@ namespace draw2d_gdiplus
       void *               m_pdata;
 
 
-      bitmap(sp(::aura::application) papp);
+      bitmap(::aura::application * papp);
       virtual ~bitmap();
 
 

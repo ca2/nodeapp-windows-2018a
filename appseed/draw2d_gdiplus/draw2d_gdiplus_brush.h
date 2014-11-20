@@ -14,7 +14,7 @@ namespace draw2d_gdiplus
       Gdiplus::Brush * m_pbrush;
 
 
-      brush(sp(::aura::application) papp);
+      brush(::aura::application * papp);
       //virtual void construct(COLORREF crColor);                // create_solid
       //virtual void construct(int32_t nIndex, COLORREF crColor);    // CreateHatchBrush
       //virtual void construct(::draw2d::bitmap * pbitmap);                // CreatePatternBrush

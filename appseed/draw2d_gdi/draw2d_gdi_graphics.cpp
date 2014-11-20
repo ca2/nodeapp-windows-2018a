@@ -17,7 +17,7 @@ namespace draw2d_gdi
 {
 
 
-   graphics::graphics(sp(::aura::application) papp) :
+   graphics::graphics(::aura::application * papp) :
       element(papp),
       ::draw2d::graphics(papp)
    {
@@ -3462,7 +3462,7 @@ namespace draw2d_gdi
    /////////////////////////////////////////////////////////////////////////////
    // special graphics drawing primitives/helpers
 
-   ::draw2d::brush* graphics::GetHalftoneBrush(sp(::aura::application) papp)
+   ::draw2d::brush* graphics::GetHalftoneBrush(::aura::application * papp)
    {
       /*      AfxLockGlobals(CRIT_HALFTONEBRUSH);
       if (_afxHalftoneBrush == NULL)

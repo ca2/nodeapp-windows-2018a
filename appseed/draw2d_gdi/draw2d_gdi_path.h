@@ -12,7 +12,7 @@ namespace draw2d_gdi
 
 
       path();
-      path(sp(::aura::application) papp);
+      path(::aura::application * papp);
       virtual ~path();
 
 

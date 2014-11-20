@@ -16,7 +16,7 @@ namespace draw2d_gdiplus
 
 
 
-   dib::dib(sp(::aura::application) papp) :
+   dib::dib(::aura::application * papp) :
       element(papp),
       m_spbitmap(papp),
       m_spgraphics(allocer())

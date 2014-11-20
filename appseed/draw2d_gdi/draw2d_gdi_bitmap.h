@@ -12,7 +12,7 @@ namespace draw2d_gdi
    public:
 
 
-      bitmap(sp(::aura::application) papp);
+      bitmap(::aura::application * papp);
       virtual ~bitmap();
 
 

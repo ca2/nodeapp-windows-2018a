@@ -6,7 +6,7 @@ namespace draw2d_gdiplus
 {
 
 
-   font::font(sp(::aura::application) papp) :
+   font::font(::aura::application * papp) :
    element(papp)
    {
 
@@ -42,7 +42,7 @@ namespace draw2d_gdiplus
   // {
     //  return (HFONT)(this == NULL ? NULL : get_handle()); 
    //}
-   //font* font::from_handle(sp(::aura::application) papp, HFONT hFont)
+   //font* font::from_handle(::aura::application * papp, HFONT hFont)
    //{
      // return dynamic_cast < font * > (::draw2d_gdiplus::object::from_handle(papp, hFont)); 
    //}

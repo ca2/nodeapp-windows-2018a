@@ -21,7 +21,7 @@ namespace draw2d_gdiplus
          HDC            m_hdc;
 
 
-         document_properties(sp(::aura::application) papp);
+         document_properties(::aura::application * papp);
          virtual ~document_properties();
 
 
@@ -36,7 +36,7 @@ namespace draw2d_gdiplus
       document_properties     m_documentproperties;
 
 
-      printer(sp(::aura::application) papp);
+      printer(::aura::application * papp);
       virtual ~printer();
 
 
