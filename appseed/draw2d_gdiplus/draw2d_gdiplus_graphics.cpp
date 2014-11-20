@@ -619,9 +619,9 @@ namespace draw2d_gdiplus
    bool graphics::DrawRect(const RECT & rectParam,::draw2d::pen * ppen)
    {
 
-      Gdiplus::RectF rectf((Gdiplus::REAL) rectParam.left,(Gdiplus::REAL) rectParam.top,(Gdiplus::REAL) width(rectParam),(Gdiplus::REAL) height(rectParam));
+      Gdiplus::Rect rect(rectParam.left,rectParam.top,width(rectParam), height(rectParam));
 
-      return m_pgraphics->DrawRectangle((::Gdiplus::Pen *) ppen->get_os_data(), rectf) == ::Gdiplus::Ok;
+      return m_pgraphics->DrawRectangle((::Gdiplus::Pen *) ppen->get_os_data(), rect) == ::Gdiplus::Ok;
 
    }
 

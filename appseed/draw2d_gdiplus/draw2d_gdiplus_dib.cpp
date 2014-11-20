@@ -2429,7 +2429,7 @@ namespace draw2d_gdiplus
 
 
 
-   bool dib::update_window(::user::draw_interface * pwnd, signal_details * pobj)
+   bool dib::update_window(::user::draw_interface * pwnd,signal_details * pobj)
    {
 
 
@@ -2448,20 +2448,41 @@ namespace draw2d_gdiplus
 
 
          BYTE *dstR=(BYTE*)get_data();
-         BYTE *dstG=dstR+1;
-         BYTE *dstB=dstR+2;
-         BYTE *dstA=dstR+3;
+         BYTE *dstG=dstR + 1;
+         BYTE *dstB=dstR + 2;
+         BYTE *dstA=dstR + 3;
          int64_t size = area() * 4;
 
 
          // >> 8 instead of / 255 subsequent alpha_blend operations say thanks on true_blend because (255) * (1/254) + (255) * (254/255) > 255
 #if defined(_OPENMP)
-#pragma omp parallel num_threads(3)
+#pragma omp parallel num_threads(4)
          {
-            BYTE *dst = dstR + omp_get_thread_num();
+
+            if(omp_get_thread_num() == 3)
+            {
+               COLORREF *dst = get_data();
 #pragma omp parallel for
-            for(index i = 0; i < size; i+=4)
-               dst[i] = LOBYTE(((int32_t)dst[i] * (int32_t)dstA[i]) >> 8);
+               for(index i = 0; i < size; i+=4)
+               {
+                  if(dstA[i] <= 3)
+                  {
+                     dst[i>>2] = 0;
+                  }
+               }
+            }
+            else
+            {
+               BYTE *dst = dstR + omp_get_thread_num();
+#pragma omp parallel for
+               for(index i = 0; i < size; i+=4)
+               {
+                  if(dstA[i] > 3)
+                  {
+                     dst[i] = LOBYTE(((int32_t)dst[i] * (int32_t)dstA[i]) >> 8);
+                  }
+               }
+            }
          }
 #else
          for(index i = 0; i < size; i+=4)
