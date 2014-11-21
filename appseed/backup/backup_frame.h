@@ -11,7 +11,7 @@ namespace backup
    {
    	
    public:
-	   frame(sp(::aura::application) papp);
+	   frame(::aura::application * papp);
       virtual ~frame();
 
    };

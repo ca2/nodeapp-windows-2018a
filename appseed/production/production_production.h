@@ -130,7 +130,7 @@ namespace production
       manual_reset_event      m_evFinish;
 
 
-      production(sp(::aura::application) papp);
+      production(::aura::application * papp);
       virtual ~production();
 
 

@@ -10,7 +10,7 @@ namespace backup
       public production::form_callback
    {
    public:
-	   pane_view(sp(::aura::application) papp);
+	   pane_view(::aura::application * papp);
 	   virtual ~pane_view();
    #ifdef DEBUG
 	   virtual void assert_valid() const;

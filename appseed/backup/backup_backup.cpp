@@ -5,7 +5,7 @@ namespace backup
 {
 
 
-   backup::backup(sp(::aura::application) papp) :
+   backup::backup(::aura::application * papp) :
       element(papp),
       thread(papp),
       ::simple_thread(papp),

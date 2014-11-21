@@ -5,7 +5,7 @@ namespace backup
 {
 
 
-   document::document(sp(::aura::application) papp) :
+   document::document(::aura::application * papp) :
       element(papp),
       ::data::data_container_base(papp),
       production::document(papp)

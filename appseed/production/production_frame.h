@@ -7,7 +7,7 @@ namespace production
       public simple_frame_window
    {
    public:
-	   frame(sp(::aura::application) papp);
+	   frame(::aura::application * papp);
    public:
 	   virtual ~frame();
    #ifdef DEBUG

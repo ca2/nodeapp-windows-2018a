@@ -13,7 +13,7 @@ namespace backup
 
 
 
-      backup(sp(::aura::application) papp);
+      backup(::aura::application * papp);
       virtual ~backup();
 
       virtual int32_t run();
