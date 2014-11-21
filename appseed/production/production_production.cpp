@@ -1281,7 +1281,7 @@ namespace production
       {
       try
       {
-      delete threada.last_element();
+      delete threada.last();
       }
       catch(...)
       {
@@ -2523,7 +2523,7 @@ namespace production
          }
          else
          {
-            m_straStatus.last_element() = psz;
+            m_straStatus.last() = psz;
          }
       }
       m_pview->post_message(WM_USER, 1);
