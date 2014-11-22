@@ -4,7 +4,7 @@
   "version": "%BUILD%",
   "description": "ca2 plugin for Google Chrome",
   "browser_action": {
-    "default_icon": "ca2-5c-32.png"
+    "default_icon": "%ICONURL%"
   },
   "plugins": [
     { "path": "base.dll", "public": true },

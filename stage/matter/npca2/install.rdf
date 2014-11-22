@@ -8,7 +8,7 @@
 		<em:description>This is the ca2 plugin for Mozilla Firefox.</em:description>
 		<em:homepageURL>http://ca2.cc/</em:homepageURL>
 		<em:updateURL>https://%DOWNLOADSITE%/%VERSION%%PLATFORM%/npca2_windows.rdf</em:updateURL>
-		<em:iconURL>chrome://npca2@ca2.cc/skin/ca2-5c-32.png</em:iconURL>
+		<em:iconURL>%ICONURL%</em:iconURL>
 		<em:unpack>true</em:unpack>
 		<em:targetApplication>
 			<r:Description>

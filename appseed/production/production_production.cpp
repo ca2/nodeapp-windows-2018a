@@ -1985,7 +1985,15 @@ namespace production
       //add_path(pszDir, "plugins\\msvcp120d.dll");
       //add_path(pszDir, "plugins\\msvcr120d.dll");
       //add_path(pszDir, "plugins\\draw2d_gdiplus.dll");
-      add_path(pszDir, "skin\\classic\\ca2-5c-32.png");
+      string strIconUrl;
+      if(m_eversion == version_basis)
+      {
+         add_path(pszDir,"skin\\classic\\fluidbasis-5c-32.png");
+      }
+      else
+      {
+         add_path(pszDir,"skin\\classic\\ca2-5c-32.png");
+      }
       add_path(pszDir, "META-INF\\manifest.mf");
       add_path(pszDir, "META-INF\\zigbert.sf");
 
@@ -2052,13 +2060,16 @@ namespace production
          );
 
       string strVersionUrl;
+      string strIconUrl;
       if (m_eversion == version_basis)
       {
          strVersionUrl = "basis";
+         strIconUrl = "chrome://npca2@ca2.cc/skin/fluidbasis-5c-32.png";
       }
       else
       {
          strVersionUrl = "stage";
+         strIconUrl = "chrome://npca2@ca2.cc/skin/ca2-5c-32.png";
       }
 
       string strChromeManifest = Application.file().as_string(System.dir().path(m_strBase, "nodeapp/stage/matter/npca2/chrome.manifest"));
@@ -2066,24 +2077,33 @@ namespace production
       strChromeManifest.replace("%PLATFORM%", "/" + m_strFormatBuild + "/stage/" + strPlatform);
       strChromeManifest.replace("%DOWNLOADSITE%", m_strDownloadSite);
       strChromeManifest.replace("%VERSION%", strVersionUrl);
+      strChromeManifest.replace("%ICONURL%",strIconUrl);
+      
       Application.file().put_contents(System.dir().path(strDir, "npca2", "chrome.manifest"), strChromeManifest);
 
       string strIcon;
+      string strIconName;
       if (m_eversion == version_basis)
       {
          strIcon = Application.dir().matter("fluidbasis-5c-32.png");
+         strIconName = "fluidbasis-5c-32.png";
+
+
       }
       else
       {
          strIcon = Application.dir().matter("ca2-5c-32.png");
+         strIconName = "ca2-5c-32.png";
       }
-      Application.file().copy(System.dir().path(strDir, "npca2/skin/classic", "ca2-5c-32.png"), strIcon);
+      Application.file().copy(System.dir().path(strDir, "npca2/skin/classic", strIconName), strIcon);
 
       string strInstall = Application.file().as_string(System.dir().path(m_strBase, "nodeapp/stage/matter/npca2/install.rdf"));
       strInstall.replace("%BUILD%", strNpca2Version);
       strInstall.replace("%PLATFORM%", "/plugin/" + strPlatform);
       strInstall.replace("%DOWNLOADSITE%", "anycast.ca2.cc/ccvotagus");
       strInstall.replace("%VERSION%", strVersionUrl);
+      strInstall.replace("%ICONURL%",strIconUrl);
+
       Application.file().put_contents(System.dir().path(strDir, "npca2", "install.rdf"), strInstall);
 
 
@@ -2092,6 +2112,7 @@ namespace production
       strWindows.replace("%PLATFORM%", "/" + m_strFormatBuild + "/stage/" + strPlatform);
       strWindows.replace("%DOWNLOADSITE%", m_strDownloadSite + "/ccvotagus");
       strWindows.replace("%VERSION%", strVersionUrl);
+      strWindows.replace("%ICONURL%",strIconUrl);
       Application.file().put_contents(System.dir().path(strDir, "npca2_windows.rdf"), strWindows);
 
 
@@ -2377,22 +2398,39 @@ namespace production
          atoi(m_strFormatBuild.Mid(17, 2)),
          iSecond);
 
+      string strIconUrl;
+      if(m_eversion == version_basis)
+      {
+         strIconUrl = "fluidbasis-5c-32.png";
+      }
+      else
+      {
+         strIconUrl = "ca2-5c-32.png";
+      }
+
+
       string strManifestJson = Application.file().as_string(System.dir().path(m_strBase, "nodeapp/stage/matter/crxca2/manifest.json"));
       strManifestJson.replace("%BUILD%", strCrxca2Version);
       strManifestJson.replace("%PLATFORM%", strPlatform);
       strManifestJson.replace("%DOWNLOADSITE%", m_strDownloadSite);
+      strManifestJson.replace("%ICONURL%",strIconUrl);
       Application.file().put_contents(System.dir().path(strDir, "manifest.json"), strManifestJson);
 
       string strIcon;
-      if (m_eversion == version_basis)
+      string strIconName;
+      if(m_eversion == version_basis)
       {
          strIcon = Application.dir().matter("fluidbasis-5c-32.png");
+         strIconName = "fluidbasis-5c-32.png";
+
+
       }
       else
       {
          strIcon = Application.dir().matter("ca2-5c-32.png");
+         strIconName = "ca2-5c-32.png";
       }
-      Application.file().copy(System.dir().path(strDir, "ca2-5c-32.png"), strIcon);
+      Application.file().copy(System.dir().path(strDir,strIconName),strIcon);
 
 
       stringa straBase;
