@@ -878,7 +878,8 @@ namespace multimedia
       int_ptr control::add(::multimedia::audio_mixer::user::control * pcontrol)
       {
          pcontrol->get_data()->m_iIndex = this->get_size();
-         return control_ptr_array::add(pcontrol);
+         control_ptr_array::add(pcontrol);
+         return control_ptr_array::get_upper_bound();
       }
 
 
