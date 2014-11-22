@@ -22,8 +22,8 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ca2.ico">
-      <Filter>Resource Files</Filter>
-    </None>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
