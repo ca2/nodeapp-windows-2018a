@@ -329,7 +329,7 @@ namespace draw2d_gdiplus
    bool path::set( const ::draw2d::path::arc & arc)
    {
 
-      rect rect;
+      ::rect rect;
 
       rect.left = (LONG)(arc.m_xCenter - arc.m_dRadiusX);
       rect.right = (LONG)(arc.m_xCenter + arc.m_dRadiusX);
