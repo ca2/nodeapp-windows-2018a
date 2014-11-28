@@ -362,7 +362,23 @@ namespace draw2d_gdiplus
    bool graphics::GetWorldTransform(XFORM* pXform) const
    { 
 
-      return ::GetWorldTransform(get_handle2(),pXform) != FALSE; 
+      Gdiplus::Matrix m;
+
+      m_pgraphics->GetTransform(&m);
+
+      Gdiplus::REAL r[6];
+
+      m.GetElements(r);
+
+      pXform->eDx = r[0];
+      pXform->eDy = r[1];
+
+      pXform->eM11 = r[2];
+      pXform->eM12 = r[3];
+      pXform->eM21 = r[4];
+      pXform->eM22 = r[5];
+
+      return true; 
 
    }
 
@@ -2856,16 +2872,24 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    bool graphics::SetWorldTransform(const XFORM* pXform)
    {
-      bool nRetVal = 0;
-      if(get_handle1() != NULL && get_handle1() != get_handle2())
-      {
-         nRetVal = ::SetWorldTransform(get_handle1(), pXform) != FALSE;
-      }
-      if(get_handle2() != NULL)
-      {
-         nRetVal = ::SetWorldTransform(get_handle2(), pXform) != FALSE;
-      }
-      return nRetVal;
+
+      Gdiplus::REAL r[6];
+
+      r[0] = pXform->eDx;
+      r[1] = pXform->eDy;
+
+      r[2] = pXform->eM11;
+      r[3] = pXform->eM12;
+      r[4] = pXform->eM21;
+      r[5] = pXform->eM22;
+
+      Gdiplus::Matrix m;
+
+      m.SetElements(r[2],r[3],r[4],r[5],r[0],r[1]);
+
+      m_pgraphics->SetTransform(&m);
+
+      return true;
    }
 
    bool graphics::ModifyWorldTransform(const XFORM* pXform,uint32_t iMode)

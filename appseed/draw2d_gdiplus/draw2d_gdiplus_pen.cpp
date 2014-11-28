@@ -406,7 +406,18 @@ namespace draw2d_gdiplus
             ((pen *) this)->m_ppen->SetEndCap(Gdiplus::LineCapSquare);
             break;
          }
-         
+         if(m_etype == type_dot)
+         {
+            Gdiplus::REAL dashVals[4];
+
+            dashVals[0] = 1;
+            dashVals[1] = 2;
+
+            // Create a Pen object.
+
+            // Set the dash pattern for the custom dashed line.
+            ((pen *) this)->m_ppen->SetDashPattern(dashVals,2);
+         }
       }
 
       if(m_ppen != NULL)
