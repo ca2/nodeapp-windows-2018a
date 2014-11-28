@@ -309,7 +309,7 @@ namespace draw2d_gdiplus
       rect.top = (LONG)(arc.m_yCenter - arc.m_dRadiusY);
       rect.bottom = (LONG)(arc.m_yCenter + arc.m_dRadiusY);
 
-      return internal_add_arc(rect, (int)arc.m_dAngle1, (int)arc.m_dAngle2);
+      return internal_add_arc(rect,(int)(arc.m_dAngle1 * 180.0 / 3.1415),(int)(arc.m_dAngle2 * 180.0 / 3.1415));
 
    }
 
