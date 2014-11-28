@@ -34,6 +34,7 @@ namespace draw2d_gdiplus
       virtual bool internal_end_figure(bool bClose);
 
       virtual bool internal_add_line(int32_t x1, int32_t y1, int32_t x2, int32_t y2);
+      virtual bool internal_add_rect(int32_t x,int32_t y,int32_t cx,int32_t cy);
       virtual bool internal_add_line(int32_t x, int32_t y);
 
       virtual bool internal_add_move(int32_t x, int32_t y);
@@ -46,6 +47,8 @@ namespace draw2d_gdiplus
       virtual bool set(Gdiplus::Graphics * pgraphics, const ::draw2d::path::element & e);
    
       virtual bool set(const ::draw2d::path::arc & a);
+
+      virtual bool set(const ::draw2d::path::rect & r);
 
       virtual bool set(const ::draw2d::path::line & l);
 

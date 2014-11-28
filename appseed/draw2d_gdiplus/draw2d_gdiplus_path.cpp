@@ -108,7 +108,20 @@ namespace draw2d_gdiplus
       return bOk1 && bOk2;
 
    }
-   
+
+
+   bool path::internal_add_rect(int32_t x,int32_t y,int32_t cx,int32_t cy)
+   {
+
+      Gdiplus::RectF rectf(x,y,cx,cy);
+
+      bool bOk2 = m_ppath->AddRectangle(rectf) == Gdiplus::Status::Ok;
+
+
+      return bOk2;
+
+   }
+
    bool path::internal_add_line(int32_t x, int32_t y)
    {
 
@@ -229,6 +242,9 @@ namespace draw2d_gdiplus
       case ::draw2d::path::element::type_line:
          set(e.u.m_line);
          break;
+      case ::draw2d::path::element::type_rect:
+         set(e.u.m_rect);
+         break;
       case ::draw2d::path::element::type_string:
          set(pgraphics,e.m_stringpath);
          break;
@@ -321,6 +337,14 @@ namespace draw2d_gdiplus
       rect.bottom = (LONG)(arc.m_yCenter + arc.m_dRadiusY);
 
       return internal_add_arc(rect,(int)(arc.m_dAngle1 * 180.0 / 3.1415),(int)(arc.m_dAngle2 * 180.0 / 3.1415));
+
+   }
+
+   bool path::set(const ::draw2d::path::rect & rect)
+   {
+
+
+      return internal_add_rect(rect.m_x, rect.m_y, rect.m_cx, rect.m_cy);
 
    }
 
