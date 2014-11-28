@@ -160,7 +160,18 @@ namespace draw2d_gdiplus
    bool path::create(Gdiplus::Graphics * pgraphics)
    {
 
-      m_ppath = new Gdiplus::GraphicsPath();
+      if(m_efillmode == ::draw2d::fill_mode_winding)
+      {
+
+         m_ppath = new Gdiplus::GraphicsPath(Gdiplus::FillModeWinding);
+
+      }
+      else
+      {
+
+         m_ppath = new Gdiplus::GraphicsPath(Gdiplus::FillModeAlternate);
+
+      }
 
       m_bHasPoint = false;
 
