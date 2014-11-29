@@ -370,13 +370,14 @@ namespace draw2d_gdiplus
 
       m.GetElements(r);
 
-      pXform->eDx = r[0];
-      pXform->eDy = r[1];
+      pXform->eM11 = r[0];
+      pXform->eM12 = r[1];
+      pXform->eM21 = r[2];
+      pXform->eM22 = r[3];
 
-      pXform->eM11 = r[2];
-      pXform->eM12 = r[3];
-      pXform->eM21 = r[4];
-      pXform->eM22 = r[5];
+      pXform->eDx = r[4];
+      pXform->eDy = r[5];
+
 
       return true; 
 
