@@ -1633,11 +1633,48 @@ gdi_fallback:
       int32_t xSrc, int32_t ySrc, ::draw2d::bitmap& maskBitmap, int32_t xMask, int32_t yMask, uint32_t dwRop)
    { ASSERT(get_handle1() != NULL); return ::MaskBlt(get_handle1(), x, y, nWidth, nHeight, GDIPLUS_HDC(pgraphicsSrc),
    xSrc, ySrc,  (HBITMAP)maskBitmap.get_os_data(), xMask, yMask, dwRop) != FALSE; }
+   
    bool graphics::PlgBlt(LPPOINT lpPoint, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc,
       int32_t nWidth, int32_t nHeight, ::draw2d::bitmap& maskBitmap, int32_t xMask, int32_t yMask)
-   { ASSERT(get_handle1() != NULL); 
-   return ::PlgBlt(get_handle1(), lpPoint, GDIPLUS_HDC(pgraphicsSrc), xSrc, ySrc, nWidth,
-   nHeight, (HBITMAP)maskBitmap.get_os_data(), xMask, yMask) != FALSE; }
+   {
+
+      try
+      {
+
+         if(pgraphicsSrc == NULL)
+            return FALSE;
+
+         if(pgraphicsSrc->get_current_bitmap() == NULL)
+            return false;
+
+         if(pgraphicsSrc->get_current_bitmap()->get_os_data() == NULL)
+            return false;
+
+         Gdiplus::PointF p[3];
+
+         p[0].X = lpPoint[0].x;
+         p[0].Y = lpPoint[0].y;
+         p[1].X = lpPoint[1].x;
+         p[1].Y = lpPoint[1].y;
+         p[2].X = lpPoint[2].x;
+         p[2].Y = lpPoint[2].y;
+
+         return m_pgraphics->DrawImage(
+            (Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data(),
+            p, 3) == Gdiplus::Status::Ok;
+
+      }
+      catch(...)
+      {
+         return FALSE;
+      }
+
+      return true;
+   
+   }
+
+
+
    bool graphics::SetPixelV(int32_t x, int32_t y, COLORREF crColor)
    { ASSERT(get_handle1() != NULL); 
    return ::SetPixelV(get_handle1(), x, y, crColor) != FALSE; }
