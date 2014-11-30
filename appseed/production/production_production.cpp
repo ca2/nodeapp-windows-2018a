@@ -2247,7 +2247,7 @@ namespace production
 
       for (int32_t i = 0; i < m_straRelative.get_count(); i++)
       {
-         strPath = "zip \"" + strXpi + "\" \"" + m_straRelative[i] + "\"";
+         strPath = "zip -9 \"" + strXpi + "\" \"" + m_straRelative[i] + "\"";
          if (!process->create_child_process(strPath, false, System.dir().path(strDir, "npca2/")))
          {
             uint32_t dw = GetLastError();
@@ -2279,7 +2279,7 @@ namespace production
       uint32_t dwExitCode;
       string strXpi = System.dir().path(strDir, "npca2.xpi");
       ::process::process_sp process(allocer());
-      string strPath = "zip -r -D \"" + strXpi + "\" * ";
+      string strPath = "zip -9 -r -D \"" + strXpi + "\" * ";
       if (!process->create_child_process(strPath, false, System.dir().path(strDir, "npca2/")))
       {
          uint32_t dw = GetLastError();
