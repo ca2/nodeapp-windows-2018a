@@ -2,6 +2,7 @@
 
 
 #include "core/core/core.h"
+#include "html/html/html.h"
 
 
 #ifdef _CA2_FONTOPUS_PRODUCTION_DLL
