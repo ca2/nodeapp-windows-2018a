@@ -318,7 +318,7 @@ namespace music
 
       }
 
-      ::music::e_result FillTypeCombo(sp(simple_combo_box)lpcombo)
+      ::music::e_result FillTypeCombo(sp(::user::combo_box)lpcombo)
       {
          UNREFERENCED_PARAMETER(lpcombo);
          /*   lpcombo->ResetContent();
@@ -347,7 +347,7 @@ namespace music
          return success;
       }
 
-      e_result FillPitchCombo(sp(simple_combo_box)lpcombo)
+      e_result FillPitchCombo(sp(::user::combo_box)lpcombo)
       {
          UNREFERENCED_PARAMETER(lpcombo);
          /*    lpcombo->ResetContent();
