@@ -161,6 +161,31 @@ namespace draw2d_gdiplus
             {
             }
          }
+         else if(m_etype == type_radial_gradient_color)
+         {
+            try
+            {
+
+               Gdiplus::GraphicsPath * gp = new Gdiplus::GraphicsPath();
+               gp->AddEllipse(m_pt.x - m_size.cx / 2, m_pt.y - m_size.cy/2, m_size.cx, m_size.cy);
+
+               Gdiplus::PathGradientBrush * pgb = new Gdiplus::PathGradientBrush(gp);
+
+               Gdiplus::Color c1(argb_get_a_value(m_cr1),argb_get_r_value(m_cr1),argb_get_g_value(m_cr1),argb_get_b_value(m_cr1));
+               Gdiplus::Color c2(argb_get_a_value(m_cr2),argb_get_r_value(m_cr2),argb_get_g_value(m_cr2),argb_get_b_value(m_cr2));
+
+                  INT c = 1;
+
+               pgb->SetCenterPoint(Gdiplus::PointF(m_pt.x,m_pt.y));
+               pgb->SetCenterColor(c1);
+               pgb->SetSurroundColors(&c2,&c);
+
+               ((brush *) this)->m_pbrush = pgb;
+            }
+            catch(...)
+            {
+            }
+         }
          else
          {
             try
