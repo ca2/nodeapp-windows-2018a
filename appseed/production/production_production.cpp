@@ -1042,13 +1042,16 @@ namespace production
          //straServer.add("la-api.ca2.cc");
 
 
-         straStatus.add("050 releasing at netnode : europe (sverige named-seed-sitted)");
-         straServer.add("eu-api.ca2.cc");
+         straStatus.add("033 releasing at netnode : europe (sverige named-seed-sitted)");
+         straServer.add("east-api.ca2.cc");
 
 
-         straStatus.add("070 releasing at netnode : india");
-         straServer.add("in-api.ca2.cc");
+         straStatus.add("023 releasing at netnode : india");
+         straServer.add("west-api.ca2.cc");
 
+
+         straStatus.add("022 releasing at netnode : license");
+         straServer.add("license-api.ca2.cc");
 
          //straStatus.add("077 releasing at netnode : hong kong");
          //straServer.add("hk-api.ca2.cc");
