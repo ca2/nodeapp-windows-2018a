@@ -553,7 +553,7 @@ namespace draw2d_gdiplus
 
       double start      = atan2(y3 - centery,x3 - centerx) * 180.0 / System.math().GetPi();
       double end        = atan2(y4 - centery,x4 - centerx) * 180.0 / System.math().GetPi();
-      double sweep      = abs(end - start);
+      double sweep      = fabs(end - start);
 
       /*if(GetArcDirection() == AD_COUNTERCLOCKWISE)
       {
@@ -574,7 +574,7 @@ namespace draw2d_gdiplus
 
       double start      = atan2(y3 - centery,x3 - centerx) * 180.0 / System.math().GetPi();
       double end        = atan2(y4 - centery,x4 - centerx) * 180.0 / System.math().GetPi();
-      double sweep      = abs(end - start);
+      double sweep      = fabs(end - start);
 
       /*if(GetArcDirection() == AD_COUNTERCLOCKWISE)
       {
