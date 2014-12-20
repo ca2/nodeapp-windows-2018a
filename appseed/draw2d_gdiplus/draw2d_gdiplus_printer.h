@@ -6,7 +6,7 @@ namespace draw2d_gdiplus
 
 
    class CLASS_DECL_DRAW2D_GDIPLUS printer :
-      virtual public ::user::printer
+      virtual public ::aura::printer
    {
    public:
 

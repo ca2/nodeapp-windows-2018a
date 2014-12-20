@@ -8,7 +8,7 @@ namespace draw2d_gdiplus
 
    printer::printer(::aura::application * papp) :
       element(papp),
-      ::user::printer(papp),
+      ::aura::printer(papp),
       m_documentproperties(papp)
    {
       }
