@@ -2431,7 +2431,7 @@ namespace draw2d_gdiplus
 
 
 
-   bool dib::update_window(::user::draw_interface * pwnd,signal_details * pobj)
+   bool dib::update_window(::aura::draw_interface * pwnd,signal_details * pobj)
    {
 
 
@@ -2518,7 +2518,7 @@ namespace draw2d_gdiplus
    }
 
 
-   bool dib::print_window(::user::draw_interface * pwnd,signal_details * pobj)
+   bool dib::print_window(::aura::draw_interface * pwnd,signal_details * pobj)
    {
 
       SCAST_PTR(::message::base, pbase, pobj);
