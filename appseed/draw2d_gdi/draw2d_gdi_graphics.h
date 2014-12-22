@@ -233,7 +233,7 @@ namespace draw2d_gdi
             int SelectClipRgn(::draw2d::region* pRgn);
             int ExcludeClipRect(int x1, int y1, int x2, int y2);
             int ExcludeClipRect(const RECT & lpRect);
-            int ExcludeUpdateRgn(::user::interaction * pwindow);
+            int ExcludeUpdateRgn(::aura::interaction * pwindow);
             int IntersectClipRect(int x1, int y1, int x2, int y2);
             int IntersectClipRect(const RECT & lpRect);
             int OffsetClipRgn(int x, int y);
