@@ -9,7 +9,7 @@ namespace multimedia
    {
 
 
-      class CLASS_DECL_MULTIMEDIA_MMSYSTEM factory_exchange :
+      class CLASS_DECL_MULTIMEDIA_DIRECTSOUND factory_exchange :
          virtual public ::object
       {
       public:

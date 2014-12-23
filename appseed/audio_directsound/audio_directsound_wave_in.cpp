@@ -5,7 +5,7 @@ namespace multimedia
 {
 
 
-   namespace audio_mmsystem
+   namespace audio_directsound
    {
 
 
@@ -84,7 +84,7 @@ namespace multimedia
          sp(::multimedia::audio::wave) audiowave = Application.audiowave();
          m_iBuffer = 0;
 
-         if(MMSYSERR_NOERROR == (mmr = mmsystem::translate(waveInOpen(
+         if(MMSYSERR_NOERROR == (mmr = directsound::translate(waveInOpen(
             &m_hwavein,
             audiowave->m_uiWaveInDevice,
             wave_format(),
@@ -95,7 +95,7 @@ namespace multimedia
 
          m_pwaveformat->nSamplesPerSec = 22050;
          m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
-         if(MMSYSERR_NOERROR == (mmr = mmsystem::translate(waveInOpen(
+         if(MMSYSERR_NOERROR == (mmr = directsound::translate(waveInOpen(
             &m_hwavein,
             WAVE_MAPPER,
             wave_format(),
@@ -105,7 +105,7 @@ namespace multimedia
             goto Opened;
          m_pwaveformat->nSamplesPerSec = 11025;
          m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
-         if(MMSYSERR_NOERROR == (mmr = mmsystem::translate(waveInOpen(
+         if(MMSYSERR_NOERROR == (mmr = directsound::translate(waveInOpen(
             &m_hwavein,
             WAVE_MAPPER,
             wave_format(),
@@ -126,7 +126,7 @@ namespace multimedia
             }
             else if(mmr == WAVERR_BADFORMAT)
             {
-               TRACE("Attempted to open with an unsupported waveform-audio_mmsystem format.");
+               TRACE("Attempted to open with an unsupported waveform-audio_directsound format.");
             }
             TRACE("ERROR OPENING WAVE INPUT DEVICE");
             return mmr;
@@ -188,7 +188,7 @@ Opened:
          for(i = 0; i < iSize; i++)
          {
             
-            if(MMSYSERR_NOERROR != (mmr = mmsystem::translate(waveInPrepareHeader(m_hwavein, mmsystem::create_new_WAVEHDR(wave_in_get_buffer(), i), sizeof(WAVEHDR)))))
+            if(MMSYSERR_NOERROR != (mmr = directsound::translate(waveInPrepareHeader(m_hwavein, directsound::create_new_WAVEHDR(wave_in_get_buffer(), i), sizeof(WAVEHDR)))))
             {
                TRACE("ERROR OPENING Preparing INPUT DEVICE buffer");
                return mmr;
@@ -235,7 +235,7 @@ Opened:
          for(i = 0; i < iSize; i++)
          {
 
-            if(::multimedia::result_success != (mmr = mmsystem::translate(waveInUnprepareHeader(m_hwavein, wave_hdr(i), sizeof(WAVEHDR)))))
+            if(::multimedia::result_success != (mmr = directsound::translate(waveInUnprepareHeader(m_hwavein, wave_hdr(i), sizeof(WAVEHDR)))))
             {
                TRACE("ERROR OPENING Unpreparing INPUT DEVICE buffer");
                //return mmr;
@@ -245,7 +245,7 @@ Opened:
 
          }
 
-         mmr = mmsystem::translate(waveInClose(m_hwavein));
+         mmr = directsound::translate(waveInClose(m_hwavein));
 
          m_hwavein = NULL;
 
@@ -270,7 +270,7 @@ Opened:
 
          ::multimedia::e_result mmr;
 
-         if(::multimedia::result_success != (mmr = mmsystem::translate(waveInStart(m_hwavein))))
+         if(::multimedia::result_success != (mmr = directsound::translate(waveInStart(m_hwavein))))
          {
             TRACE("ERROR starting INPUT DEVICE ");
             return mmr;
@@ -297,7 +297,7 @@ Opened:
          try
          {
 
-            if(::multimedia::result_success != (mmr = mmsystem::translate(waveInStop(m_hwavein))))
+            if(::multimedia::result_success != (mmr = directsound::translate(waveInStop(m_hwavein))))
             {
 
                TRACE("wave_in::wave_in_stop : ERROR OPENING stopping INPUT DEVICE ");
@@ -386,7 +386,7 @@ Opened:
          try
          {
 
-            if(::multimedia::result_success != (mmr = mmsystem::translate(waveInReset(m_hwavein))))
+            if(::multimedia::result_success != (mmr = directsound::translate(waveInReset(m_hwavein))))
             {
                
                TRACE("wave_in::Reset error resetting input device");
@@ -459,7 +459,7 @@ Opened:
 
          ::multimedia::e_result mmr;
 
-         if(::multimedia::result_success != (mmr = mmsystem::translate(waveInAddBuffer(m_hwavein, lpwavehdr, sizeof(WAVEHDR)))))
+         if(::multimedia::result_success != (mmr = directsound::translate(waveInAddBuffer(m_hwavein, lpwavehdr, sizeof(WAVEHDR)))))
          {
 
             TRACE("ERROR OPENING Adding INPUT DEVICE buffer");
@@ -489,7 +489,7 @@ Opened:
       WAVEFORMATEX * wave_in::wave_format()
       {
 
-         mmsystem::translate(m_waveformatex, m_pwaveformat);
+         directsound::translate(m_waveformatex, m_pwaveformat);
 
          return &m_waveformatex;
 
@@ -516,12 +516,12 @@ Opened:
       LPWAVEHDR wave_in::wave_hdr(int iBuffer)
       {
 
-         return ::multimedia::mmsystem::get_os_data(wave_in_get_buffer(), iBuffer);
+         return ::multimedia::directsound::get_os_data(wave_in_get_buffer(), iBuffer);
 
       }
 
 
-   } // namespace audio_mmsystem
+   } // namespace audio_directsound
 
 
 } // namespace multimedia

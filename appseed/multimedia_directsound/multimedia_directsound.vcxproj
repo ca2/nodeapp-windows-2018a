@@ -44,9 +44,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{21DA4A8C-5A05-40A4-BF5B-FF62B9778451}</ProjectGuid>
-    <RootNamespace>multimedia_mmsystem</RootNamespace>
+    <RootNamespace>multimedia_directsound</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <ProjectName>multimedia_mmsystem</ProjectName>
+    <ProjectName>multimedia_directsound</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|Win32'" Label="Configuration">
@@ -298,7 +298,7 @@
       <AdditionalOptions>-Zm384 /bigobj</AdditionalOptions>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(SolutionDir)../../../include;$(SolutionDir)../../../app/include;.;$(ProjectDir)framework;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/base/include;$(SolutionDir)../../../app/base/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../app/appseed/core;$(SolutionDir)../../../app/appseed/base;$(SolutionDir)../../../app/appseed/axis;$(SolutionDir)../../../app/appseed/aura;$(SolutionDir)../../../app/axis;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_MULTIMEDIA_MMSYSTEM_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_MULTIMEDIA_DIRECTSOUND_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>Async</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -1077,20 +1077,20 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="multimedia_mmsystem.h" />
-    <ClInclude Include="multimedia_mmsystem_factory_exchange.h" />
-    <ClInclude Include="multimedia_mmsystem_translation.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="multimedia_directsound.h" />
+    <ClInclude Include="multimedia_directsound_factory_exchange.h" />
+    <ClInclude Include="multimedia_directsound_translation.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="multimedia_mmsystem_factory_exchange.cpp" />
-    <ClCompile Include="multimedia_mmsystem_translation.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='stage|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="multimedia_directsound_factory_exchange.cpp" />
+    <ClCompile Include="multimedia_directsound_translation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\app-core\appseed\multimedia\multimedia.vcxproj">
@@ -1110,7 +1110,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="multimedia_mmsystem.def" />
+    <None Include="multimedia_directsound.def" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

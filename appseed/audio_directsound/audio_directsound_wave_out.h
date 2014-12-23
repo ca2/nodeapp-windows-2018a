@@ -5,17 +5,18 @@ namespace multimedia
 {
 
 
-   namespace audio_mmsystem
+   namespace audio_directsound
    {
 
 
-      class  CLASS_DECL_AUDIO_MMSYSTEM wave_out :
+      class  CLASS_DECL_AUDIO_DIRECTSOUND wave_out :
          virtual public ::multimedia::audio::wave_out
       {
       public:
 
 
-         HWAVEOUT                         m_hwaveout;
+         LPDIRECTSOUND8                   m_pdirectsound;
+         LPDIRECTSOUNDBUFFER              m_psoundbuffer;
          WAVEFORMATEX                     m_waveformatex;
 
 
@@ -59,7 +60,7 @@ namespace multimedia
       };
 
 
-   } // namespace audio_mmsystem
+   } // namespace audio_directsound
 
 
 } // namespace multimedia

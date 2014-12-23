@@ -5,7 +5,7 @@ namespace multimedia
 {
 
 
-   namespace audio_mmsystem
+   namespace audio_directsound
    {
 
 
@@ -16,9 +16,12 @@ namespace multimedia
          ::multimedia::audio::wave_out(papp)
       {
 
+
+         
+
          m_estate             = state_initial;
          m_pthreadCallback    = NULL;
-         m_hwaveout           = NULL;
+         m_pdirectsound       = NULL;
          m_iBufferedCount     = 0;
          m_peffect            = NULL;
          m_dwLostSampleCount  = 0;
@@ -66,13 +69,33 @@ namespace multimedia
          
          single_lock sLock(&m_mutex, TRUE);
 
-         if(m_hwaveout != NULL && m_estate != state_initial)
+
+         if(m_pdirectsound != NULL && m_psoundbuffer != NULL && m_estate != state_initial)
             return ::multimedia::result_success;
+
 
          m_pthreadCallback = pthreadCallback;
          ::multimedia::e_result mmr;
-         ASSERT(m_hwaveout == NULL);
+         ASSERT(m_pdirectsound == NULL);
+         ASSERT(m_psoundbuffer == NULL);
          ASSERT(m_estate == state_initial);
+
+         // by (indirect casey)
+         if(FAILED(DirectSoundCreate8(NULL,m_pdirectsound,NULL)))
+         {
+
+            return ::multimedia::result_error;
+
+         }
+
+
+         if(FAILED(m_pdirectsound->SetCooperativeLevel((HWND) Application.m_puiMain->get_safe_handle(),DSSCL_PRIORITY)))
+         {
+
+            return ::multimedia::result_error;
+
+         }
+
 
          m_pwaveformat->wFormatTag = WAVE_FORMAT_PCM;
          m_pwaveformat->nChannels = 2;
@@ -83,39 +106,72 @@ namespace multimedia
          m_pwaveformat->cbSize = 0;
          sp(::multimedia::audio::wave) audiowave = Application.audiowave();
 
-         if(MMSYSERR_NOERROR == (mmr = mmsystem::translate(waveOutOpen(
-            &m_hwaveout,
-            audiowave->m_uiWaveInDevice,
-            wave_format(),
-            get_os_int(),
-            (uint32_t) 0,
-            CALLBACK_THREAD))))
-            goto Opened;
-         m_pwaveformat->nSamplesPerSec = 22050;
-         m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
-         if(MMSYSERR_NOERROR == (mmr = mmsystem::translate(waveOutOpen(
-            &m_hwaveout,
-            WAVE_MAPPER,
-            wave_format(),
-            (uint32_t) get_os_int(),
-            (uint32_t) 0,
-            CALLBACK_THREAD))))
-            goto Opened;
-         m_pwaveformat->nSamplesPerSec = 11025;
-         m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
-         if(MMSYSERR_NOERROR == (mmr = mmsystem::translate(waveOutOpen(
-            &m_hwaveout,
-            WAVE_MAPPER,
-            wave_format(),
-            (uint32_t) get_os_int(),
-            (uint32_t) 0,
-            CALLBACK_THREAD))))
-            goto Opened;
 
-         if(mmr != ::multimedia::result_success)
+         DSBUFFERDESC BufferDescription ={};
+         BufferDescription.dwSize = sizeof(BufferDescription);
+         BufferDescription.dwFlags = DSBCAPS_PRIMARYBUFFER;
+
+         // NOTE(casey): "Create" a primary buffer
+         // TODO(casey): DSBCAPS_GLOBALFOCUS?
+         LPDIRECTSOUNDBUFFER PrimaryBuffer;
+         if(SUCCEEDED(m_pdirectsound->CreateSoundBuffer(&BufferDescription,&PrimaryBuffer,0)))
          {
-            return mmr;
+            HRESULT Error = PrimaryBuffer->SetFormat(wave_format());
+            if(SUCCEEDED(Error))
+            {
+               // NOTE(casey): We have finally set the format!
+               OutputDebugStringA("Primary buffer format was set.\n");
+               m_pdirectsound->Release();
+               return ::multimedia::result_error;
+            }
+            else
+            {
+               // TODO(casey): Diagnostic
+            }
          }
+         else
+         {
+            // TODO(casey): Diagnostic
+         }
+
+
+
+
+
+
+         //if(mmr = directsound::translate(waveOutOpen(
+         //   &m_hwaveout,
+         //   audiowave->m_uiWaveInDevice,
+         //   wave_format(),
+         //   get_os_int(),
+         //   (uint32_t) 0,
+         //   CALLBACK_THREAD))))
+         //   goto Opened;
+         //m_pwaveformat->nSamplesPerSec = 22050;
+         //m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
+         //if(MMSYSERR_NOERROR == (mmr = directsound::translate(waveOutOpen(
+         //   &m_hwaveout,
+         //   WAVE_MAPPER,
+         //   ,
+         //   (uint32_t) get_os_int(),
+         //   (uint32_t) 0,
+         //   CALLBACK_THREAD))))
+         //   goto Opened;
+         //m_pwaveformat->nSamplesPerSec = 11025;
+         //m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
+         //if(MMSYSERR_NOERROR == (mmr = directsound::translate(waveOutOpen(
+         //   &m_hwaveout,
+         //   WAVE_MAPPER,
+         //   wave_format(),
+         //   (uint32_t) get_os_int(),
+         //   (uint32_t) 0,
+         //   CALLBACK_THREAD))))
+         //   goto Opened;
+
+         //if(mmr != ::multimedia::result_success)
+         //{
+         //   return mmr;
+         //}
 
 Opened:
          uint32_t uiBufferSizeLog2;
@@ -169,17 +225,32 @@ Opened:
             uiBufferCount, // group count
             iBufferSampleCount); // group sample count
 
-         int32_t i, iSize;
-         iSize = wave_out_get_buffer()->GetBufferCount();
-         for(i = 0; i < iSize; i++)
-         {
 
-            if(MMSYSERR_NOERROR != (mmr =  mmsystem::translate(waveOutPrepareHeader(m_hwaveout, mmsystem::create_new_WAVEHDR(m_pwavebuffer, i), sizeof(WAVEHDR)))))
-            {
-               TRACE("ERROR OPENING Preparing INPUT DEVICE buffer");
-               return mmr;
-            }
+         // TODO(casey): DSBCAPS_GETCURRENTPOSITION2
+         DSBUFFERDESC BufferDescription ={};
+         BufferDescription.dwSize = sizeof(BufferDescription);
+         BufferDescription.dwFlags = 0;
+         BufferDescription.dwBufferBytes = uiBufferSize * uiBufferCount;
+         BufferDescription.lpwfxFormat = wave_format();
+         LPDIRECTSOUNDBUFFER SecondaryBuffer;
+         HRESULT Error = m_pdirectsound->CreateSoundBuffer(&BufferDescription,&m_psoundbuffer,0);
+         if(FAILED(Error))
+         {
+            OutputDebugStringA("Secondary buffer created successfully.\n");
+            return ::multimedia::result_error;
          }
+
+         //int32_t i, iSize;
+         //iSize = wave_out_get_buffer()->GetBufferCount();
+         //for(i = 0; i < iSize; i++)
+         //{
+
+         //   if(MMSYSERR_NOERROR != (mmr =  directsound::translate(waveOutPrepareHeader(m_hwaveout, directsound::create_new_WAVEHDR(m_pwavebuffer, i), sizeof(WAVEHDR)))))
+         //   {
+         //      TRACE("ERROR OPENING Preparing INPUT DEVICE buffer");
+         //      return mmr;
+         //   }
+         //}
          
          m_estate = state_opened;
 
@@ -213,7 +284,7 @@ Opened:
          try
          {
 
-            if(MMSYSERR_NOERROR == (mmr = mmsystem::translate(waveOutOpen(
+            if(MMSYSERR_NOERROR == (mmr = directsound::translate(waveOutOpen(
                &m_hwaveout,
                audiowave->m_uiWaveInDevice,
                wave_format(),
@@ -302,7 +373,7 @@ Opened:
          for(i = 0; i < iSize; i++)
          {
 
-            if(MMSYSERR_NOERROR != (mmr = mmsystem::translate(waveOutPrepareHeader(m_hwaveout, mmsystem::create_new_WAVEHDR(wave_out_get_buffer(), i), sizeof(WAVEHDR)))))
+            if(MMSYSERR_NOERROR != (mmr = directsound::translate(waveOutPrepareHeader(m_hwaveout, directsound::create_new_WAVEHDR(wave_out_get_buffer(), i), sizeof(WAVEHDR)))))
             {
 
                TRACE("ERROR OPENING Preparing INPUT DEVICE buffer");
@@ -347,7 +418,7 @@ Opened:
          for(i = 0; i < iSize; i++)
          {
 
-            if(::multimedia::result_success != (mmr = mmsystem::translate(waveOutUnprepareHeader(m_hwaveout, wave_hdr(i), sizeof(WAVEHDR)))))
+            if(::multimedia::result_success != (mmr = directsound::translate(waveOutUnprepareHeader(m_hwaveout, wave_hdr(i), sizeof(WAVEHDR)))))
             {
                TRACE("ERROR OPENING Unpreparing INPUT DEVICE buffer =%d", mmr);
             }
@@ -356,7 +427,7 @@ Opened:
 
          }
 
-         mmr = mmsystem::translate(waveOutClose(m_hwaveout));
+         mmr = directsound::translate(waveOutClose(m_hwaveout));
 
          m_hwaveout = NULL;
 
@@ -423,7 +494,7 @@ Opened:
 
          single_lock sLock(&m_mutex, TRUE);
          
-         mmr = mmsystem::translate(waveOutWrite(m_hwaveout, lpwavehdr, sizeof(WAVEHDR)));
+         mmr = directsound::translate(waveOutWrite(m_hwaveout, lpwavehdr, sizeof(WAVEHDR)));
          
          VERIFY(::multimedia::result_success == mmr);
 
@@ -452,10 +523,10 @@ Opened:
 
          // waveOutReset
          // The waveOutReset function stops playback on the given
-         // waveform-audio_mmsystem output device and resets the current position
+         // waveform-audio_directsound output device and resets the current position
          // to zero. All pending playback buffers are marked as done and
          // returned to the application.
-         m_mmr = mmsystem::translate(waveOutReset(m_hwaveout));
+         m_mmr = directsound::translate(waveOutReset(m_hwaveout));
 
          if(m_mmr == ::multimedia::result_success)
          {
@@ -481,11 +552,11 @@ Opened:
 
          // waveOutReset
          // The waveOutReset function stops playback on the given
-         // waveform-audio_mmsystem output device and resets the current position
+         // waveform-audio_directsound output device and resets the current position
          // to zero. All pending playback buffers are marked as done and
          // returned to the application.
 
-         m_mmr = mmsystem::translate(waveOutPause(m_hwaveout));
+         m_mmr = directsound::translate(waveOutPause(m_hwaveout));
 
          ASSERT(m_mmr == ::multimedia::result_success);
 
@@ -510,10 +581,10 @@ Opened:
 
          // waveOutReset
          // The waveOutReset function stops playback on the given
-         // waveform-audio_mmsystem output device and resets the current position
+         // waveform-audio_directsound output device and resets the current position
          // to zero. All pending playback buffers are marked as done and
          // returned to the application.
-         m_mmr = mmsystem::translate(waveOutRestart(m_hwaveout));
+         m_mmr = directsound::translate(waveOutRestart(m_hwaveout));
 
          ASSERT(m_mmr == ::multimedia::result_success);
 
@@ -556,7 +627,7 @@ Opened:
          if(m_hwaveout != NULL)
          {
 
-            mmr = mmsystem::translate(waveOutGetPosition(m_hwaveout, &mmt, sizeof(mmt)));
+            mmr = directsound::translate(waveOutGetPosition(m_hwaveout, &mmt, sizeof(mmt)));
 
             try
             {
@@ -615,7 +686,7 @@ Opened:
          if(m_hwaveout != NULL)
          {
             
-            mmr = mmsystem::translate(waveOutGetPosition(m_hwaveout, &mmt, sizeof(mmt)));
+            mmr = directsound::translate(waveOutGetPosition(m_hwaveout, &mmt, sizeof(mmt)));
 
             try
             {
@@ -690,7 +761,7 @@ Opened:
       WAVEFORMATEX * wave_out::wave_format()
       {
 
-         mmsystem::translate(m_waveformatex, m_pwaveformat);
+         directsound::translate(m_waveformatex, m_pwaveformat);
 
          return &m_waveformatex;
 
@@ -713,11 +784,11 @@ Opened:
 
       LPWAVEHDR wave_out::wave_hdr(int iBuffer)
       {
-         return ::multimedia::mmsystem::get_os_data(wave_out_get_buffer(), iBuffer);
+         return ::multimedia::directsound::get_os_data(wave_out_get_buffer(), iBuffer);
       }
 
 
-   } // namespace audio_mmsystem
+   } // namespace audio_directsound
 
 
 } // namespace multimedia

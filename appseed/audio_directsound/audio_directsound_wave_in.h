@@ -5,11 +5,11 @@ namespace multimedia
 {
 
 
-   namespace audio_mmsystem
+   namespace audio_directsound
    {
 
 
-      class  CLASS_DECL_AUDIO_MMSYSTEM wave_in :
+      class  CLASS_DECL_AUDIO_DIRECTSOUND wave_in :
          virtual public ::multimedia::audio::wave_in
       {
       public:
@@ -53,7 +53,7 @@ namespace multimedia
       };
 
 
-   } // namespace audio_mmsystem
+   } // namespace audio_directsound
 
 
 } // namespace multimedia

@@ -5,7 +5,7 @@ namespace multimedia
 {
 
 
-   namespace mmsystem
+   namespace directsound
    {
 
 
@@ -21,16 +21,16 @@ namespace multimedia
       }
 
 
-   } // namespace mmsystem
+   } // namespace directsound
 
 
 } // namespace multimedia
 
 
-void ca2_factory_exchange(sp(::axis::application) papp)
+void ca2_factory_exchange(::aura::application * papp)
 {
 
-   ::multimedia::mmsystem::factory_exchange factoryexchange(papp);
+   ::multimedia::directsound::factory_exchange factoryexchange(papp);
 
 }
 
