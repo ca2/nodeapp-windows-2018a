@@ -31,7 +31,7 @@ namespace multimedia
 } // namespace multimedia
 
 
-void ca2_factory_exchange(sp(::axis::application) papp)
+void ca2_factory_exchange(::aura::application * papp)
 {
 
    ::multimedia::audio_mmsystem::factory_exchange factoryexchange(papp);

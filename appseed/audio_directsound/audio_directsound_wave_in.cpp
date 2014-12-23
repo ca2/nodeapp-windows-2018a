@@ -17,7 +17,7 @@ namespace multimedia
       {
 
          m_pencoder = NULL;
-         m_hwavein = NULL;
+//         m_hwavein = NULL;
          m_estate = state_initial;
          m_bResetting = false;
 
@@ -47,170 +47,170 @@ namespace multimedia
       {
          SCAST_PTR(::message::base, pbase, pobj);
          //ASSERT(GetMainWnd() == NULL);
-         if(pbase->m_uiMessage == MM_WIM_OPEN ||
-            pbase->m_uiMessage == MM_WIM_CLOSE ||
-            pbase->m_uiMessage == MM_WIM_DATA)
-         {
-            translate_wave_in_message(pbase);
-            if(pbase->m_bRet)
-               return;
-         }
+         //if(pbase->m_uiMessage == MM_WIM_OPEN ||
+         //   pbase->m_uiMessage == MM_WIM_CLOSE ||
+         //   pbase->m_uiMessage == MM_WIM_DATA)
+         //{
+         //   translate_wave_in_message(pbase);
+         //   if(pbase->m_bRet)
+         //      return;
+         //}
          return thread::pre_translate_message(pbase);
       }
 
       ::multimedia::e_result wave_in::wave_in_open(int32_t iBufferCount, int32_t iBufferSampleCount)
       {
 
-         if(m_hwavein != NULL && m_estate != state_initial)
-         {
-            wave_in_initialize_encoder();
-
-            return ::multimedia::result_success;
-
-         }
-
-         single_lock sLock(&m_mutex, TRUE);
-         ::multimedia::e_result mmr;
-         ASSERT(m_hwavein == NULL);
-         ASSERT(m_estate == state_initial);
-
-         m_pwaveformat->wFormatTag = WAVE_FORMAT_PCM;
-         m_pwaveformat->nChannels = 2;
-         m_pwaveformat->nSamplesPerSec = 44100;
-         m_pwaveformat->wBitsPerSample = sizeof(::multimedia::audio::WAVEBUFFERDATA) * 8;
-         m_pwaveformat->nBlockAlign = m_pwaveformat->wBitsPerSample * m_pwaveformat->nChannels / 8;
-         m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
-         m_pwaveformat->cbSize = 0;
-         sp(::multimedia::audio::wave) audiowave = Application.audiowave();
-         m_iBuffer = 0;
-
-         if(MMSYSERR_NOERROR == (mmr = directsound::translate(waveInOpen(
-            &m_hwavein,
-            audiowave->m_uiWaveInDevice,
-            wave_format(),
-            get_os_int(),
-            (uint32_t) 0,
-            CALLBACK_THREAD))))
-            goto Opened;
-
-         m_pwaveformat->nSamplesPerSec = 22050;
-         m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
-         if(MMSYSERR_NOERROR == (mmr = directsound::translate(waveInOpen(
-            &m_hwavein,
-            WAVE_MAPPER,
-            wave_format(),
-            (uint32_t) get_os_int(),
-            (uint32_t) 0,
-            CALLBACK_THREAD))))
-            goto Opened;
-         m_pwaveformat->nSamplesPerSec = 11025;
-         m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
-         if(MMSYSERR_NOERROR == (mmr = directsound::translate(waveInOpen(
-            &m_hwavein,
-            WAVE_MAPPER,
-            wave_format(),
-            (uint32_t) get_os_int(),
-            (uint32_t) 0,
-            CALLBACK_THREAD))))
-            goto Opened;
-
-         if(mmr !=MMSYSERR_NOERROR)
-         {
-            if(mmr == MMSYSERR_ALLOCATED)
-            {
-               TRACE("Specified resource is already allocated.");
-            }
-            else if(mmr == MMSYSERR_BADDEVICEID)
-            {
-               TRACE("Specified device identifier is out of range.");
-            }
-            else if(mmr == WAVERR_BADFORMAT)
-            {
-               TRACE("Attempted to open with an unsupported waveform-audio_directsound format.");
-            }
-            TRACE("ERROR OPENING WAVE INPUT DEVICE");
-            return mmr;
-         }
-
-Opened:
-         uint32_t uiBufferSizeLog2;
-         uint32_t uiBufferSize;
-         uint32_t uiAnalysisSize;
-         uint32_t uiAllocationSize;
-         uint32_t uiInterestSize;
-         uint32_t uiSkippedSamplesCount;
-
-         if(m_pwaveformat->nSamplesPerSec == 44100)
-         {
-            uiBufferSizeLog2 = 16;
-            uiBufferSize = m_pwaveformat->nChannels * 2 * iBufferSampleCount; // 512 kbytes
-            uiAnalysisSize = 4 * 1 << uiBufferSizeLog2;
-            if(iBufferCount > 0)
-            {
-               uiAllocationSize = iBufferCount * uiBufferSize;
-            }
-            else
-            {
-               uiAllocationSize = 8 * uiAnalysisSize;
-            }
-            uiInterestSize = 200;
-            uiSkippedSamplesCount = 2;
-         }
-         else if(m_pwaveformat->nSamplesPerSec == 22050)
-         {
-            uiBufferSizeLog2 = 9;
-            uiBufferSize = 4 * 1 << uiBufferSizeLog2;
-            uiAnalysisSize = 16 * 1 << uiBufferSizeLog2;
-            uiAllocationSize = 4 * uiAnalysisSize;
-            uiInterestSize = 600;
-            uiSkippedSamplesCount = 1;
-         }
-         else if(m_pwaveformat->nSamplesPerSec == 11025)
-         {
-            uiBufferSizeLog2 = 9;
-            uiBufferSize = 2 * 1 << uiBufferSizeLog2;
-            uiAnalysisSize = 8 * 1 << uiBufferSizeLog2;
-            uiAllocationSize = 4 * uiAnalysisSize;
-            uiInterestSize = 600;
-            uiSkippedSamplesCount = 1;
-         }
-         wave_in_get_buffer()->FFTOpen(
-            uiAllocationSize,
-            uiBufferSize,
-            uiAnalysisSize,
-            uiInterestSize,
-            uiSkippedSamplesCount);
-         
-         int32_t i, iSize;
-         
-         iSize = (int32_t) wave_in_get_buffer()->GetBufferCount();
-
-         for(i = 0; i < iSize; i++)
-         {
-            
-            if(MMSYSERR_NOERROR != (mmr = directsound::translate(waveInPrepareHeader(m_hwavein, directsound::create_new_WAVEHDR(wave_in_get_buffer(), i), sizeof(WAVEHDR)))))
-            {
-               TRACE("ERROR OPENING Preparing INPUT DEVICE buffer");
-               return mmr;
-            }
-
-            wave_in_add_buffer(i);
-
-         }
-
-         if(m_pencoder != NULL && !wave_in_initialize_encoder())
-         {
-
-            m_estate = state_opened;
-
-            wave_in_close();
-
-            return (::multimedia::e_result) -1;
-
-         }
-
-         m_estate = state_opened;
-
+//         if(m_hwavein != NULL && m_estate != state_initial)
+//         {
+//            wave_in_initialize_encoder();
+//
+//            return ::multimedia::result_success;
+//
+//         }
+//
+//         single_lock sLock(&m_mutex, TRUE);
+//         ::multimedia::e_result mmr;
+//         ASSERT(m_hwavein == NULL);
+//         ASSERT(m_estate == state_initial);
+//
+//         m_pwaveformat->wFormatTag = WAVE_FORMAT_PCM;
+//         m_pwaveformat->nChannels = 2;
+//         m_pwaveformat->nSamplesPerSec = 44100;
+//         m_pwaveformat->wBitsPerSample = sizeof(::multimedia::audio::WAVEBUFFERDATA) * 8;
+//         m_pwaveformat->nBlockAlign = m_pwaveformat->wBitsPerSample * m_pwaveformat->nChannels / 8;
+//         m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
+//         m_pwaveformat->cbSize = 0;
+//         sp(::multimedia::audio::wave) audiowave = Application.audiowave();
+//         m_iBuffer = 0;
+//
+//         if(MMSYSERR_NOERROR == (mmr = directsound::translate(waveInOpen(
+//            &m_hwavein,
+//            audiowave->m_uiWaveInDevice,
+//            wave_format(),
+//            get_os_int(),
+//            (uint32_t) 0,
+//            CALLBACK_THREAD))))
+//            goto Opened;
+//
+//         m_pwaveformat->nSamplesPerSec = 22050;
+//         m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
+//         if(MMSYSERR_NOERROR == (mmr = directsound::translate(waveInOpen(
+//            &m_hwavein,
+//            WAVE_MAPPER,
+//            wave_format(),
+//            (uint32_t) get_os_int(),
+//            (uint32_t) 0,
+//            CALLBACK_THREAD))))
+//            goto Opened;
+//         m_pwaveformat->nSamplesPerSec = 11025;
+//         m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
+//         if(MMSYSERR_NOERROR == (mmr = directsound::translate(waveInOpen(
+//            &m_hwavein,
+//            WAVE_MAPPER,
+//            wave_format(),
+//            (uint32_t) get_os_int(),
+//            (uint32_t) 0,
+//            CALLBACK_THREAD))))
+//            goto Opened;
+//
+//         if(mmr !=MMSYSERR_NOERROR)
+//         {
+//            if(mmr == MMSYSERR_ALLOCATED)
+//            {
+//               TRACE("Specified resource is already allocated.");
+//            }
+//            else if(mmr == MMSYSERR_BADDEVICEID)
+//            {
+//               TRACE("Specified device identifier is out of range.");
+//            }
+//            else if(mmr == WAVERR_BADFORMAT)
+//            {
+//               TRACE("Attempted to open with an unsupported waveform-audio_directsound format.");
+//            }
+//            TRACE("ERROR OPENING WAVE INPUT DEVICE");
+//            return mmr;
+//         }
+//
+//Opened:
+//         uint32_t uiBufferSizeLog2;
+//         uint32_t uiBufferSize;
+//         uint32_t uiAnalysisSize;
+//         uint32_t uiAllocationSize;
+//         uint32_t uiInterestSize;
+//         uint32_t uiSkippedSamplesCount;
+//
+//         if(m_pwaveformat->nSamplesPerSec == 44100)
+//         {
+//            uiBufferSizeLog2 = 16;
+//            uiBufferSize = m_pwaveformat->nChannels * 2 * iBufferSampleCount; // 512 kbytes
+//            uiAnalysisSize = 4 * 1 << uiBufferSizeLog2;
+//            if(iBufferCount > 0)
+//            {
+//               uiAllocationSize = iBufferCount * uiBufferSize;
+//            }
+//            else
+//            {
+//               uiAllocationSize = 8 * uiAnalysisSize;
+//            }
+//            uiInterestSize = 200;
+//            uiSkippedSamplesCount = 2;
+//         }
+//         else if(m_pwaveformat->nSamplesPerSec == 22050)
+//         {
+//            uiBufferSizeLog2 = 9;
+//            uiBufferSize = 4 * 1 << uiBufferSizeLog2;
+//            uiAnalysisSize = 16 * 1 << uiBufferSizeLog2;
+//            uiAllocationSize = 4 * uiAnalysisSize;
+//            uiInterestSize = 600;
+//            uiSkippedSamplesCount = 1;
+//         }
+//         else if(m_pwaveformat->nSamplesPerSec == 11025)
+//         {
+//            uiBufferSizeLog2 = 9;
+//            uiBufferSize = 2 * 1 << uiBufferSizeLog2;
+//            uiAnalysisSize = 8 * 1 << uiBufferSizeLog2;
+//            uiAllocationSize = 4 * uiAnalysisSize;
+//            uiInterestSize = 600;
+//            uiSkippedSamplesCount = 1;
+//         }
+//         wave_in_get_buffer()->FFTOpen(
+//            uiAllocationSize,
+//            uiBufferSize,
+//            uiAnalysisSize,
+//            uiInterestSize,
+//            uiSkippedSamplesCount);
+//         
+//         int32_t i, iSize;
+//         
+//         iSize = (int32_t) wave_in_get_buffer()->GetBufferCount();
+//
+//         for(i = 0; i < iSize; i++)
+//         {
+//            
+//            if(MMSYSERR_NOERROR != (mmr = directsound::translate(waveInPrepareHeader(m_hwavein, directsound::create_new_WAVEHDR(wave_in_get_buffer(), i), sizeof(WAVEHDR)))))
+//            {
+//               TRACE("ERROR OPENING Preparing INPUT DEVICE buffer");
+//               return mmr;
+//            }
+//
+//            wave_in_add_buffer(i);
+//
+//         }
+//
+//         if(m_pencoder != NULL && !wave_in_initialize_encoder())
+//         {
+//
+//            m_estate = state_opened;
+//
+//            wave_in_close();
+//
+//            return (::multimedia::e_result) -1;
+//
+//         }
+//
+//         m_estate = state_opened;
+//
          return ::multimedia::result_success;
 
       }
@@ -221,35 +221,35 @@ Opened:
 
          single_lock sLock(&m_mutex, TRUE);
 
-         ::multimedia::e_result mmr;
+         //::multimedia::e_result mmr;
 
-         if(m_estate != state_opened && m_estate != state_stopped)
-            return ::multimedia::result_success;
+         //if(m_estate != state_opened && m_estate != state_stopped)
+         //   return ::multimedia::result_success;
 
-         mmr = wave_in_reset();
+         //mmr = wave_in_reset();
 
-         int32_t i, iSize;
+         //int32_t i, iSize;
 
-         iSize = (int32_t) wave_in_get_buffer()->GetBufferCount();
+         //iSize = (int32_t) wave_in_get_buffer()->GetBufferCount();
 
-         for(i = 0; i < iSize; i++)
-         {
+         //for(i = 0; i < iSize; i++)
+         //{
 
-            if(::multimedia::result_success != (mmr = directsound::translate(waveInUnprepareHeader(m_hwavein, wave_hdr(i), sizeof(WAVEHDR)))))
-            {
-               TRACE("ERROR OPENING Unpreparing INPUT DEVICE buffer");
-               //return mmr;
-            }
+         //   if(::multimedia::result_success != (mmr = directsound::translate(waveInUnprepareHeader(m_hwavein, wave_hdr(i), sizeof(WAVEHDR)))))
+         //   {
+         //      TRACE("ERROR OPENING Unpreparing INPUT DEVICE buffer");
+         //      //return mmr;
+         //   }
 
-            delete wave_hdr(i);
+         //   delete wave_hdr(i);
 
-         }
+         //}
 
-         mmr = directsound::translate(waveInClose(m_hwavein));
+         //mmr = directsound::translate(waveInClose(m_hwavein));
 
-         m_hwavein = NULL;
+         //m_hwavein = NULL;
 
-         m_estate = state_initial;
+         //m_estate = state_initial;
 
          return ::multimedia::result_success;
 
@@ -268,13 +268,13 @@ Opened:
          if(m_estate != state_opened && m_estate != state_stopped)
             return ::multimedia::result_success;
 
-         ::multimedia::e_result mmr;
+         //::multimedia::e_result mmr;
 
-         if(::multimedia::result_success != (mmr = directsound::translate(waveInStart(m_hwavein))))
-         {
-            TRACE("ERROR starting INPUT DEVICE ");
-            return mmr;
-         }
+         //if(::multimedia::result_success != (mmr = directsound::translate(waveInStart(m_hwavein))))
+         //{
+         //   TRACE("ERROR starting INPUT DEVICE ");
+         //   return mmr;
+         //}
 
          m_estate = state_recording;
 
@@ -294,23 +294,23 @@ Opened:
 
          m_estate = state_stopping;
 
-         try
-         {
+         //try
+         //{
 
-            if(::multimedia::result_success != (mmr = directsound::translate(waveInStop(m_hwavein))))
-            {
+         //   if(::multimedia::result_success != (mmr = directsound::translate(waveInStop(m_hwavein))))
+         //   {
 
-               TRACE("wave_in::wave_in_stop : ERROR OPENING stopping INPUT DEVICE ");
+         //      TRACE("wave_in::wave_in_stop : ERROR OPENING stopping INPUT DEVICE ");
 
-            }
+         //   }
 
-         }
-         catch(...)
-         {
+         //}
+         //catch(...)
+         //{
 
-            TRACE("wave_in::wave_in_stop : Exception OPENING stopping INPUT DEVICE ");
+         //   TRACE("wave_in::wave_in_stop : Exception OPENING stopping INPUT DEVICE ");
 
-         }
+         //}
 
          m_estate = state_stopped;
 
@@ -321,35 +321,35 @@ Opened:
       }
 
 
-      void CALLBACK wave_in::wave_in_proc(HWAVEIN hwi, UINT uMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2)
-      {
+      //void CALLBACK wave_in::wave_in_proc(HWAVEIN hwi, UINT uMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2)
+      //{
 
-         UNREFERENCED_PARAMETER(hwi);
-         UNREFERENCED_PARAMETER(dwInstance);
-         UNREFERENCED_PARAMETER(dwParam1);
-         UNREFERENCED_PARAMETER(dwParam2);
-         if(uMsg == WIM_DATA)
-         {
-            ASSERT(FALSE);
-            /*      uint32_t msSampleTime = timeGetTime();
-            thread * pthread = (thread *) dwInstance;
-            ASSERT(pthread != NULL);
-            LPWAVEHDR lpWaveHdr = (LPWAVEHDR) dwParam1;
-            LPWAVEPROCDATAMESSAGE lpxfwm = new WAVEPROCDATAMESSAGE;
-            lpxfwm->bDelete = TRUE;
-            lpxfwm->msSampleTime = msSampleTime;
-            //      lpxfwm->tkSamplePosition = tkPosition;
-            lpxfwm->lpWaveHdr = lpWaveHdr;
-            pthread->post_thread_message(
-            WM_USER,
-            (WPARAM) WAVM_WAVE_PROC_DATA,
-            (LPARAM) lpxfwm);
-            //      i++;
-            //      if( i > 2)
-            //         i = 0;*/
-         }
+      //   UNREFERENCED_PARAMETER(hwi);
+      //   UNREFERENCED_PARAMETER(dwInstance);
+      //   UNREFERENCED_PARAMETER(dwParam1);
+      //   UNREFERENCED_PARAMETER(dwParam2);
+      //   if(uMsg == WIM_DATA)
+      //   {
+      //      ASSERT(FALSE);
+      //      /*      uint32_t msSampleTime = timeGetTime();
+      //      thread * pthread = (thread *) dwInstance;
+      //      ASSERT(pthread != NULL);
+      //      LPWAVEHDR lpWaveHdr = (LPWAVEHDR) dwParam1;
+      //      LPWAVEPROCDATAMESSAGE lpxfwm = new WAVEPROCDATAMESSAGE;
+      //      lpxfwm->bDelete = TRUE;
+      //      lpxfwm->msSampleTime = msSampleTime;
+      //      //      lpxfwm->tkSamplePosition = tkPosition;
+      //      lpxfwm->lpWaveHdr = lpWaveHdr;
+      //      pthread->post_thread_message(
+      //      WM_USER,
+      //      (WPARAM) WAVM_WAVE_PROC_DATA,
+      //      (LPARAM) lpxfwm);
+      //      //      i++;
+      //      //      if( i > 2)
+      //      //         i = 0;*/
+      //   }
 
-      }
+      //}
 
 
       ::multimedia::e_result wave_in::wave_in_reset()
@@ -359,48 +359,48 @@ Opened:
 
          m_bResetting = true;
 
-         if(m_hwavein == NULL)
-         {
+         //if(m_hwavein == NULL)
+         //{
 
-            return ::multimedia::result_success;
+         //   return ::multimedia::result_success;
 
-         }
+         //}
 
-         ::multimedia::e_result mmr;
+         //::multimedia::e_result mmr;
 
-         if(m_estate == state_recording)
-         {
+         //if(m_estate == state_recording)
+         //{
 
-            if(::multimedia::result_success != (mmr = wave_in_stop()))
-            {
+         //   if(::multimedia::result_success != (mmr = wave_in_stop()))
+         //   {
 
-               TRACE("wave_in::Reset error stopping input device");
+         //      TRACE("wave_in::Reset error stopping input device");
 
-               return mmr;
+         //      return mmr;
 
-            }
+         //   }
 
-         }
+         //}
 
 
-         try
-         {
+         //try
+         //{
 
-            if(::multimedia::result_success != (mmr = directsound::translate(waveInReset(m_hwavein))))
-            {
-               
-               TRACE("wave_in::Reset error resetting input device");
+         //   if(::multimedia::result_success != (mmr = directsound::translate(waveInReset(m_hwavein))))
+         //   {
+         //      
+         //      TRACE("wave_in::Reset error resetting input device");
 
-               return mmr;
+         //      return mmr;
 
-            }
+         //   }
 
-         }
-         catch(...)
-         {
-         }
+         //}
+         //catch(...)
+         //{
+         //}
 
-         m_estate = state_opened;
+         //m_estate = state_opened;
 
          m_bResetting = false;
 
@@ -414,32 +414,32 @@ Opened:
 
          SCAST_PTR(::message::base, pbase, pobj);
 
-         ASSERT(pbase->m_uiMessage == MM_WIM_OPEN || pbase->m_uiMessage == MM_WIM_CLOSE || pbase->m_uiMessage == MM_WIM_DATA);
+         //ASSERT(pbase->m_uiMessage == MM_WIM_OPEN || pbase->m_uiMessage == MM_WIM_CLOSE || pbase->m_uiMessage == MM_WIM_DATA);
 
-         if(pbase->m_uiMessage == MM_WIM_DATA)
-         {
-            
-            m_iBuffer--;
-            
-            uint32_t msSampleTime = timeGetTime();
-            
-            LPWAVEHDR lpwavehdr = (LPWAVEHDR) pbase->m_lparam.m_lparam;
+         //if(pbase->m_uiMessage == MM_WIM_DATA)
+         //{
+         //   
+         //   m_iBuffer--;
+         //   
+         //   uint32_t msSampleTime = timeGetTime();
+         //   
+         //   LPWAVEHDR lpwavehdr = (LPWAVEHDR) pbase->m_lparam.m_lparam;
 
-            wave_in_get_buffer()->get_buffer((int32_t) lpwavehdr->dwUser)->OnMultimediaDone();
+         //   wave_in_get_buffer()->get_buffer((int32_t) lpwavehdr->dwUser)->OnMultimediaDone();
 
-            m_listenerset.wave_in_data_proc(this, msSampleTime, (int32_t) lpwavehdr->dwUser);
+         //   m_listenerset.wave_in_data_proc(this, msSampleTime, (int32_t) lpwavehdr->dwUser);
 
-            if(m_pencoder != NULL)
-            {
-               m_pencoder->EncoderWriteBuffer(lpwavehdr->lpData, lpwavehdr->dwBytesRecorded);
-            }
+         //   if(m_pencoder != NULL)
+         //   {
+         //      m_pencoder->EncoderWriteBuffer(lpwavehdr->lpData, lpwavehdr->dwBytesRecorded);
+         //   }
 
-            if(!wave_in_is_resetting() && wave_in_is_recording())
-            {
-               wave_in_add_buffer((int32_t) lpwavehdr->dwUser);
-            }
+         //   if(!wave_in_is_resetting() && wave_in_is_recording())
+         //   {
+         //      wave_in_add_buffer((int32_t) lpwavehdr->dwUser);
+         //   }
 
-         }
+         //}
 
          pbase->m_bRet = true;
 
@@ -449,28 +449,30 @@ Opened:
       ::multimedia::e_result wave_in::wave_in_add_buffer(int32_t iBuffer)
       {
          
-         return wave_in_add_buffer(wave_hdr(iBuffer));
+         //return wave_in_add_buffer(wave_hdr(iBuffer));
+
+         return ::multimedia::result_success;
 
       }
 
 
-      ::multimedia::e_result wave_in::wave_in_add_buffer(LPWAVEHDR lpwavehdr)
-      {
+      //::multimedia::e_result wave_in::wave_in_add_buffer(LPWAVEHDR lpwavehdr)
+      //{
 
-         ::multimedia::e_result mmr;
+      //   ::multimedia::e_result mmr;
 
-         if(::multimedia::result_success != (mmr = directsound::translate(waveInAddBuffer(m_hwavein, lpwavehdr, sizeof(WAVEHDR)))))
-         {
+      //   if(::multimedia::result_success != (mmr = directsound::translate(waveInAddBuffer(m_hwavein, lpwavehdr, sizeof(WAVEHDR)))))
+      //   {
 
-            TRACE("ERROR OPENING Adding INPUT DEVICE buffer");
+      //      TRACE("ERROR OPENING Adding INPUT DEVICE buffer");
 
-         }
+      //   }
 
-         m_iBuffer++;
+      //   m_iBuffer++;
 
-         return mmr;
+      //   return mmr;
 
-      }
+      //}
 
 
       bool wave_in::wave_in_initialize_encoder()
@@ -495,30 +497,31 @@ Opened:
 
       }
 
-      HWAVEIN wave_in::wave_in_get_safe_HWAVEIN()
-      {
-         
-         if(this == NULL)
-            return NULL;
+      //HWAVEIN wave_in::wave_in_get_safe_HWAVEIN()
+      //{
+      //   
+      //   if(this == NULL)
+      //      return NULL;
 
-         return m_hwavein;
+      //   return m_hwavein;
 
-      }
+      //}
 
       void * wave_in::get_os_data()
       {
 
-         return m_hwavein;
+         //return m_hwavein;
 
+         return NULL;
       }
 
 
-      LPWAVEHDR wave_in::wave_hdr(int iBuffer)
-      {
+      //LPWAVEHDR wave_in::wave_hdr(int iBuffer)
+      //{
 
-         return ::multimedia::directsound::get_os_data(wave_in_get_buffer(), iBuffer);
+      //   return ::multimedia::directsound::get_os_data(wave_in_get_buffer(), iBuffer);
 
-      }
+      //}
 
 
    } // namespace audio_directsound

@@ -5,7 +5,7 @@ namespace multimedia
 {
 
 
-   namespace mmsystem
+   namespace directsound
    {
 
 
@@ -21,7 +21,7 @@ namespace multimedia
       };
 
 
-   } // namespace mmsystem
+   } // namespace directsound
 
 
 } // namespace multimedia

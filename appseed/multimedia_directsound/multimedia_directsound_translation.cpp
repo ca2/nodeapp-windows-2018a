@@ -8,21 +8,21 @@ namespace multimedia
    namespace directsound
    {
 
-      //
-      //void translate(WAVEFORMATEX & waveformatex, ::multimedia::audio::wave_format * pwaveformat)
-      //{
+      
+      void translate(WAVEFORMATEX & waveformatex, ::multimedia::audio::wave_format * pwaveformat)
+      {
 
 
-      //   waveformatex.wFormatTag        = pwaveformat->wFormatTag;           /* format type */
-      //   waveformatex.nChannels         = pwaveformat->nChannels;            /* number of channels (i.e. mono, stereo...) */
-      //   waveformatex.nSamplesPerSec    = pwaveformat->nSamplesPerSec;       /* sample rate */
-      //   waveformatex.nAvgBytesPerSec   = pwaveformat->nAvgBytesPerSec;      /* for buffer estimation */
-      //   waveformatex.nBlockAlign       = pwaveformat->nBlockAlign;          /* block size of data */
-      //   waveformatex.wBitsPerSample    = pwaveformat->wBitsPerSample;       /* number of bits per sample of mono data */
-      //   waveformatex.cbSize            = pwaveformat->cbSize;               /* the count in bytes of the size of */
-      //                                                                           /* extra information (after cbSize) */
+         waveformatex.wFormatTag        = pwaveformat->wFormatTag;           /* format type */
+         waveformatex.nChannels         = pwaveformat->nChannels;            /* number of channels (i.e. mono, stereo...) */
+         waveformatex.nSamplesPerSec    = pwaveformat->nSamplesPerSec;       /* sample rate */
+         waveformatex.nAvgBytesPerSec   = pwaveformat->nAvgBytesPerSec;      /* for buffer estimation */
+         waveformatex.nBlockAlign       = pwaveformat->nBlockAlign;          /* block size of data */
+         waveformatex.wBitsPerSample    = pwaveformat->wBitsPerSample;       /* number of bits per sample of mono data */
+         waveformatex.cbSize            = pwaveformat->cbSize;               /* the count in bytes of the size of */
+                                                                                 /* extra information (after cbSize) */
 
-      //}
+      }
 
 
       //void translate(WAVEHDR & wavehdr, ::multimedia::audio::wave_buffer * pwavebuffer, int iBuffer)
@@ -63,26 +63,15 @@ namespace multimedia
 
       //}
 
-      //::multimedia::e_result translate(MMRESULT mmr)
-      //{
+      ::multimedia::e_result translate(HRESULT hr)
+      {
 
-      //   switch(mmr)
-      //   {
-      //   case MMSYSERR_NOERROR:
+         if(SUCCEEDED(hr))
+            return ::multimedia::result_success;
+         else
+            return ::multimedia::result_error;
 
-      //      return ::multimedia::result_success;
-
-      //   case MMSYSERR_ALLOCATED:
-
-      //      return ::multimedia::result_already_allocated;
-
-      //   default:
-
-      //      return ::multimedia::result_error;
-
-      //   };
-
-      //}
+      }
 
 
    } // namespace directsound

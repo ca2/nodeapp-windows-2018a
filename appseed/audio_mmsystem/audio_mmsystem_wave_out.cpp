@@ -246,7 +246,8 @@ Opened:
          }
 
 Opened:
-
+         iBufferCount = 4;
+         iBufferSampleCount = (1 << 10);
          uint32_t uiBufferSizeLog2;
          uint32_t uiBufferSize;
          uint32_t uiAnalysisSize;

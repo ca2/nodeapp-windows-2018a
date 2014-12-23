@@ -31,6 +31,7 @@ namespace multimedia
 } // namespace multimedia
 
 
+extern "C"
 void ca2_factory_exchange(::aura::application * papp)
 {
 

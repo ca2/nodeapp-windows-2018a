@@ -1318,6 +1318,9 @@ gdi_fallback:
 
       Gdiplus::RectF srcRect((Gdiplus::REAL) xSrc, (Gdiplus::REAL) ySrc, (Gdiplus::REAL) nSrcWidth, (Gdiplus::REAL) nSrcHeight);
 
+      if(pgraphicsSrc == NULL || pgraphicsSrc->get_current_bitmap() == NULL)
+         return false;
+
       try
       {
          return m_pgraphics->DrawImage((Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data(),  dstRect, srcRect, Gdiplus::UnitPixel) == Gdiplus::Status::Ok;

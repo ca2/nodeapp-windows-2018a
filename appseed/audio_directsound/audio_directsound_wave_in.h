@@ -15,7 +15,7 @@ namespace multimedia
       public:
 
 
-         HWAVEIN              m_hwavein;
+         //HWAVEIN              m_hwavein;
 
          WAVEFORMATEX         m_waveformatex; 
 
@@ -27,9 +27,9 @@ namespace multimedia
          virtual bool wave_in_initialize_encoder();
 
          virtual ::multimedia::e_result wave_in_add_buffer(int32_t iBuffer);
-         virtual ::multimedia::e_result wave_in_add_buffer(LPWAVEHDR lpwavehdr);
+         //virtual ::multimedia::e_result wave_in_add_buffer(LPWAVEHDR lpwavehdr);
 
-         HWAVEIN wave_in_get_safe_HWAVEIN();
+         //HWAVEIN wave_in_get_safe_HWAVEIN();
          virtual void * get_os_data();
          
          ::multimedia::e_result wave_in_open(int32_t iBufferCount, int32_t iBufferSampleCount);
@@ -44,10 +44,10 @@ namespace multimedia
          virtual int32_t exit_instance();
          virtual void pre_translate_message(::signal_details * pobj);
 
-         static void CALLBACK wave_in_proc(HWAVEIN hwi, UINT uMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2);
+         //static void CALLBACK wave_in_proc(HWAVEIN hwi, UINT uMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2);
 
          WAVEFORMATEX * wave_format();
-         LPWAVEHDR wave_hdr(int iBuffer);
+         //LPWAVEHDR wave_hdr(int iBuffer);
 
 
       };

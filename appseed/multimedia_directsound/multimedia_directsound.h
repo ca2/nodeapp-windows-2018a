@@ -2,7 +2,9 @@
 
 
 #include "app-core/appseed/multimedia/multimedia/multimedia.h"
+#include <Mmreg.h>
 #include <dsound.h>
+
 
 
 #if defined(_MULTIMEDIA_DIRECTSOUND_LIBRARY)

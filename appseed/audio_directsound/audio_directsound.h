@@ -4,6 +4,7 @@
 #include "nodeapp/appseed/multimedia_directsound/multimedia_directsound.h"
 
 
+
 #if defined(_AUDIO_DIRECTSOUND_LIBRARY)
    #define CLASS_DECL_AUDIO_DIRECTSOUND  CLASS_DECL_EXPORT
 #else
