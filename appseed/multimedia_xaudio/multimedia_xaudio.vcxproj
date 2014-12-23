@@ -43,7 +43,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{21DA4A8C-5A05-40A4-BF5B-FF62B9778451}</ProjectGuid>
+    <ProjectGuid>{8451778C-2015-40A4-BF5B-FF62B9778451}</ProjectGuid>
     <RootNamespace>multimedia_directsound</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <ProjectName>multimedia_directsound</ProjectName>
