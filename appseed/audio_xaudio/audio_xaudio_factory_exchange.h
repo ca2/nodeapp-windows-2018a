@@ -5,12 +5,12 @@ namespace multimedia
 {
 
 
-   namespace audio_directsound
+   namespace audio_xaudio
    {
 
 
-      class CLASS_DECL_AUDIO_DIRECTSOUND factory_exchange :
-         virtual public ::multimedia::directsound::factory_exchange
+      class CLASS_DECL_AUDIO_XAUDIO factory_exchange :
+         virtual public ::multimedia::xaudio::factory_exchange
       {
       public:
 
@@ -21,7 +21,7 @@ namespace multimedia
       };
 
 
-   } // namespace audio_directsound
+   } // namespace audio_xaudio
 
 
 } // namespace multimedia

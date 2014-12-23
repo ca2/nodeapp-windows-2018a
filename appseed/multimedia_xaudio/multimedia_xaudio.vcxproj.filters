@@ -4,13 +4,13 @@
     <ClInclude Include="framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="multimedia_directsound.h">
+    <ClInclude Include="multimedia_xaudio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="multimedia_directsound_factory_exchange.h">
+    <ClInclude Include="multimedia_xaudio_factory_exchange.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="multimedia_directsound_translation.h">
+    <ClInclude Include="multimedia_xaudio_translation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -26,15 +26,15 @@
     <ClCompile Include="framework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="multimedia_directsound_factory_exchange.cpp">
+    <ClCompile Include="multimedia_xaudio_factory_exchange.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="multimedia_directsound_translation.cpp">
+    <ClCompile Include="multimedia_xaudio_translation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="multimedia_directsound.def">
+    <None Include="multimedia_xaudio.def">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>

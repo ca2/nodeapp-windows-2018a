@@ -5,7 +5,7 @@ namespace multimedia
 {
 
 
-   namespace directsound
+   namespace xaudio
    {
 
       
@@ -74,7 +74,7 @@ namespace multimedia
       }
 
 
-   } // namespace directsound
+   } // namespace xaudio
 
 
 } // namespace multimedia

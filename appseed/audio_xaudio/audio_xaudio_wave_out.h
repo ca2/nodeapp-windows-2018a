@@ -98,11 +98,11 @@ namespace multimedia
 {
 
 
-   namespace audio_directsound
+   namespace audio_xaudio
    {
 
 
-      class  CLASS_DECL_AUDIO_DIRECTSOUND wave_out :
+      class  CLASS_DECL_AUDIO_XAUDIO wave_out :
          virtual public ::multimedia::audio::wave_out
       {
       public:
@@ -124,10 +124,10 @@ namespace multimedia
 
          int                              m_iBuffer;
 
-         LPDIRECTSOUND8                   m_pdirectsound;
-         LPDIRECTSOUNDBUFFER              m_psoundbuffer;
+         LPXAUDIO8                   m_pxaudio;
+         LPXAUDIOBUFFER              m_psoundbuffer;
          WAVEFORMATEX                     m_waveformatex;
-         LPDIRECTSOUNDNOTIFY              m_psoundnotify;
+         LPXAUDIONOTIFY              m_psoundnotify;
 
          array < HANDLE >                 m_haEvent;
          array < DSBPOSITIONNOTIFY >      m_notifya;
@@ -178,7 +178,7 @@ namespace multimedia
       };
 
 
-   } // namespace audio_directsound
+   } // namespace audio_xaudio
 
 
 } // namespace multimedia

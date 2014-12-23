@@ -53,6 +53,8 @@ END_EXTERN_C
 #define RELEASENOTHROW throw()
 #endif
 
+#ifndef _WIN32_WINNT
+
 #if _MSC_VER <= 1600
 #define WINDOWSXP
 //#define _WIN32_WINNT 0x603 // _WIN32_WINNT_WINBLUE
@@ -72,7 +74,7 @@ END_EXTERN_C
 
 
 
-
+#endif
 
 
 

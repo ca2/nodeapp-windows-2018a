@@ -43,10 +43,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{845177-2015-43B6-AA90-E59AC0778451}</ProjectGuid>
-    <RootNamespace>audio_directsound</RootNamespace>
+    <ProjectGuid>{00845177-0000-0000-0000-000000000000}</ProjectGuid>
+    <RootNamespace>audio_xaudio</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <ProjectName>audio_directsound</ProjectName>
+    <ProjectName>audio_xaudio</ProjectName>
     <VCTargetsPath Condition="'$(VCTargetsPath11)' != '' and '$(VSVersion)' == '' and $(VisualStudioVersion) == ''">$(VCTargetsPath11)</VCTargetsPath>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -1078,18 +1078,17 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="audio_directsound.h" />
-    <ClInclude Include="audio_directsound_command.h" />
-    <ClInclude Include="audio_directsound_factory_exchange.h" />
-    <ClInclude Include="audio_directsound_wave_in.h" />
-    <ClInclude Include="audio_directsound_wave_out.h" />
-    <ClInclude Include="audio_mmsystem_command.h" />
+    <ClInclude Include="audio_xaudio.h" />
+    <ClInclude Include="audio_xaudio_command.h" />
+    <ClInclude Include="audio_xaudio_factory_exchange.h" />
+    <ClInclude Include="audio_xaudio_wave_in.h" />
+    <ClInclude Include="audio_xaudio_wave_out.h" />
     <ClInclude Include="framework.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="audio_directsound_factory_exchange.cpp" />
-    <ClCompile Include="audio_directsound_wave_in.cpp" />
-    <ClCompile Include="audio_directsound_wave_out.cpp" />
+    <ClCompile Include="audio_xaudio_factory_exchange.cpp" />
+    <ClCompile Include="audio_xaudio_wave_in.cpp" />
+    <ClCompile Include="audio_xaudio_wave_out.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">Create</PrecompiledHeader>
@@ -1118,7 +1117,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="audio_directsound.def" />
+    <None Include="audio_xaudio.def" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

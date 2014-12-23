@@ -5,13 +5,13 @@ namespace multimedia
 {
 
 
-   namespace audio_directsound
+   namespace audio_xaudio
    {
 
 
       factory_exchange::factory_exchange(sp(::axis::application) papp) :
          element(papp),
-         ::multimedia::directsound::factory_exchange(papp)
+         ::multimedia::xaudio::factory_exchange(papp)
       {
 
          System.factory().cloneable_large < wave_in               >  (System.type_info < ::multimedia::audio::wave_in                  > ());
@@ -25,7 +25,7 @@ namespace multimedia
       }
 
 
-   } // namespace audio_directsound
+   } // namespace audio_xaudio
 
 
 } // namespace multimedia
@@ -35,7 +35,7 @@ extern "C"
 void ca2_factory_exchange(::aura::application * papp)
 {
 
-   ::multimedia::audio_directsound::factory_exchange factoryexchange(papp);
+   ::multimedia::audio_xaudio::factory_exchange factoryexchange(papp);
 
 }
 

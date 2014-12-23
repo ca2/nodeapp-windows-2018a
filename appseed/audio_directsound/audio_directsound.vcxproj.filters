@@ -4,7 +4,6 @@
     <ClInclude Include="framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="audio_mmsystem_command.h" />
     <ClInclude Include="audio_directsound.h">
       <Filter>Header Files</Filter>
     </ClInclude>
