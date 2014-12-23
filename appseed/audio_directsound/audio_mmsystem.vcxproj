@@ -43,7 +43,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{54850FD8-653A-43B6-AA90-E59AC030559C}</ProjectGuid>
+    <ProjectGuid>{54850FD8-653A-43B6-AA90-E59AC0778451}</ProjectGuid>
     <RootNamespace>audio_mmsystem</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <ProjectName>audio_mmsystem</ProjectName>

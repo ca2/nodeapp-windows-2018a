@@ -43,7 +43,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{21DA4A8C-5A05-40A4-BF5B-FF62B9DDD150}</ProjectGuid>
+    <ProjectGuid>{21DA4A8C-5A05-40A4-BF5B-FF62B9778451}</ProjectGuid>
     <RootNamespace>multimedia_mmsystem</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <ProjectName>multimedia_mmsystem</ProjectName>
