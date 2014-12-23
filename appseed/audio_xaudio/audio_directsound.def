@@ -1,0 +1,4 @@
+LIBRARY  "audio_directsound"
+
+EXPORTS
+ca2_factory_exchange
