@@ -20,7 +20,7 @@ namespace backup
       void on_create_view(::user::view_creator_data * pcreatordata);
       void install_message_handling(::message::dispatch * pinterface);
 
-	   virtual void on_update(sp(::user::impact) pSender, LPARAM lHint, ::object* pHint);
+	   virtual void on_update(sp(::aura::impact) pSender, LPARAM lHint, ::object* pHint);
 
 
 

@@ -1,5 +1,5 @@
 #include "resource.h"
-#include "base/version.h"
+#include "axis/version.h"
 
 #if CA2_PLATFORM_VERSION == CA2_BASIS
 1 ICON                    "basis.ico"

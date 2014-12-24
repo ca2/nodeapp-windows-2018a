@@ -25,12 +25,12 @@ namespace backup
    #ifdef DEBUG
    void pane_view::assert_valid() const
    {
-	   ::user::impact::assert_valid();
+	   ::aura::impact::assert_valid();
    }
 
    void pane_view::dump(dump_context & dumpcontext) const
    {
-	   ::user::impact::dump(dumpcontext);
+	   ::aura::impact::dump(dumpcontext);
    }
    #endif //DEBUG
 
@@ -48,7 +48,7 @@ namespace backup
       
    }
 
-   void pane_view::on_update(sp(::user::impact) pSender, LPARAM lHint, ::object* pHint) 
+   void pane_view::on_update(sp(::aura::impact) pSender, LPARAM lHint, ::object* pHint) 
    {
       ::user::tab_view::on_update(pSender, lHint, pHint);
       if(lHint == 543218)
@@ -115,7 +115,7 @@ namespace backup
          sp(form_document) pdoc = Plat(get_app()).userex()->create_form(this, this);
          if(pdoc == NULL)
             return;
-         sp(::user::impact) pview = pdoc->get_view();
+         sp(::aura::impact) pview = pdoc->get_view();
          form_update_hint uh;
          uh.m_actioncontext = ::action::source::system_default();
          uh.m_etype = form_update_hint::type_browse;

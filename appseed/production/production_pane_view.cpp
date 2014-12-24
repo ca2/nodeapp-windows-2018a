@@ -30,12 +30,12 @@ namespace production
    #ifdef DEBUG
    void pane_view::assert_valid() const
    {
-	   ::user::impact::assert_valid();
+	   ::aura::impact::assert_valid();
    }
 
    void pane_view::dump(dump_context & dumpcontext) const
    {
-	   ::user::impact::dump(dumpcontext);
+	   ::aura::impact::dump(dumpcontext);
    }
    #endif //DEBUG
 
@@ -55,7 +55,7 @@ namespace production
       
    }
 
-   void pane_view::on_update(sp(::user::impact) pSender, LPARAM lHint, ::object* pHint) 
+   void pane_view::on_update(sp(::aura::impact) pSender, LPARAM lHint, ::object* pHint) 
    {
       ::user::tab_view::on_update(pSender, lHint, pHint);
       if(lHint == 543218)
@@ -127,7 +127,7 @@ namespace production
    {
       cs.dwExStyle &= ~WS_EX_CLIENTEDGE;	
 
-	   return ::user::impact::pre_create_window(cs);
+	   return ::aura::impact::pre_create_window(cs);
    }
 
 
@@ -149,7 +149,7 @@ namespace production
                pdoc->Initialize(true);
                pdoc->update_all_views(NULL, 1234);
                pdoc->update_all_views(NULL, 123458);
-               sp(::user::impact) pview = pdoc->get_view();
+               sp(::aura::impact) pview = pdoc->get_view();
                pdoc->FileManagerBrowse(Application.dir().userappdata("production\\menu"), ::action::source::system_default());
                if(pview != NULL)
                {
@@ -167,7 +167,7 @@ namespace production
          break;
       case PaneViewProduction:
          {
-            sp(::user::interaction) puie = ::user::impact::create_view < ::production::view > (pcreatordata);
+            sp(::user::interaction) puie = ::aura::impact::create_view < ::production::view > (pcreatordata);
             if(puie != NULL)
             {
                pcreatordata->m_pdoc = get_document();
@@ -190,7 +190,7 @@ namespace production
                pdoc->Initialize(true);
                pdoc->update_all_views(NULL, 1234);
                pdoc->update_all_views(NULL, 123458);
-               sp(::user::impact) pview = pdoc->get_view();
+               sp(::aura::impact) pview = pdoc->get_view();
                if(pview != NULL)
                {
                   sp(::user::frame_window) pframe =  (pview->GetParentFrame());
@@ -218,7 +218,7 @@ namespace production
                pdoc->Initialize(true);
                pdoc->update_all_views(NULL, 1234);
                pdoc->update_all_views(NULL, 123458);
-               sp(::user::impact) pview = pdoc->get_view();
+               sp(::aura::impact) pview = pdoc->get_view();
                pdoc->FileManagerBrowse(Application.dir().userappdata("production\\3-action-launch"), ::action::source::system_default());
                if(pview != NULL)
                {
@@ -239,7 +239,7 @@ namespace production
          sp(form_document) pdoc = Platform.userex()->create_form(this, pcreatordata->m_pholder);
          if(pdoc == NULL)
             return;
-         sp(::user::impact) pview = pdoc->get_view();
+         sp(::aura::impact) pview = pdoc->get_view();
          m_pviewOptions =  (pview);
 
          m_pviewOptions->m_pcallback = this;
@@ -345,7 +345,7 @@ namespace production
 
      sp(::production::document) pane_view::get_document()
      {
-        return  (::user::impact::get_document());
+        return  (::aura::impact::get_document());
      }
 
      void pane_view::_001OnUserMessage(::signal_details * pobj)

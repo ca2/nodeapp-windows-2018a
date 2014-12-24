@@ -8,14 +8,14 @@ namespace production
    document::document(::aura::application * papp):
       element(papp),
       ::data::data_container_base(papp),
-      ::user::document(papp)
+      ::aura::document(papp)
    {
    }
 
    bool document::on_new_document()
    {
 
-	   if (!::user::document::on_new_document())
+	   if (!::aura::document::on_new_document())
 		   return FALSE;
 
 
@@ -34,12 +34,12 @@ namespace production
    #ifdef DEBUG
    void document::assert_valid() const
    {
-	   ::user::document::assert_valid();
+	   ::aura::document::assert_valid();
    }
 
    void document::dump(dump_context & dumpcontext) const
    {
-	   ::user::document::dump(dumpcontext);
+	   ::aura::document::dump(dumpcontext);
    }
    #endif //DEBUG
 
