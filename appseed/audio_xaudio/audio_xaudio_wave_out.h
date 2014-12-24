@@ -103,10 +103,32 @@ namespace multimedia
 
 
       class  CLASS_DECL_AUDIO_XAUDIO wave_out :
-         virtual public ::multimedia::audio::wave_out
+         virtual public ::multimedia::audio::wave_out,
+         virtual public IXAudio2VoiceCallback
       {
       public:
 
+
+            //HANDLE streamEndEventHandle;
+            //VoiceCallback(): streamEndEventHandle(CreateEvent(NULL,FALSE,FALSE,NULL)){}
+            //~VoiceCallback()
+            //{
+               //CloseHandle(streamEndEventHandle);
+            //}
+
+            // Called when the voice has just finished playing a contiguous audio stream.
+            STDMETHOD_(void,OnStreamEnd())
+            {
+               
+            }
+
+            // Unused methods in this application
+            STDMETHOD_(void,OnVoiceProcessingPassEnd()) { }
+            STDMETHOD_(void,OnVoiceProcessingPassStart(UINT32 SamplesRequired)) {    }
+            STDMETHOD_(void,OnBufferEnd(void * pBufferContext))  ;
+            STDMETHOD_(void,OnBufferStart(void * pBufferContext)) {    }
+            STDMETHOD_(void,OnLoopEnd(void * pBufferContext)) {    }
+            STDMETHOD_(void,OnVoiceError(void * pBufferContext,HRESULT Error)) { }
          class run_step_thread :
             virtual public ::thread
          {
@@ -120,24 +142,22 @@ namespace multimedia
 
          };
 
+         IXAudio2 *                       m_pxaudio;
+         IXAudio2MasteringVoice *         m_pvoice;
+         IXAudio2SourceVoice *            m_psourcevoice;
+
          run_step_thread *                m_prunstepthread;
 
          int                              m_iBuffer;
 
-         LPXAUDIO8                   m_pxaudio;
-         LPXAUDIOBUFFER              m_psoundbuffer;
          WAVEFORMATEX                     m_waveformatex;
-         LPXAUDIONOTIFY              m_psoundnotify;
 
-         array < HANDLE >                 m_haEvent;
-         array < DSBPOSITIONNOTIFY >      m_notifya;
 
 
          wave_out(sp(::axis::application) papp);
          virtual ~wave_out();
 
-         virtual void on_free(int i);
-
+         
          ::multimedia::e_result wave_out_start(const imedia::position & position);
          virtual bool  on_run_step();
          void install_message_handling(::message::dispatch * pinterface);

@@ -23,7 +23,8 @@ namespace multimedia
          m_estate             = state_initial;
          m_pthreadCallback    = NULL;
          m_pxaudio       = NULL;
-         m_psoundbuffer       = NULL;
+         m_pvoice       = NULL;
+         m_psourcevoice       = NULL;
          m_iBufferedCount     = 0;
          m_peffect            = NULL;
          m_dwLostSampleCount  = 0;
@@ -88,32 +89,34 @@ namespace multimedia
          single_lock sLock(&m_mutex, TRUE);
 
 
-         if(m_pxaudio != NULL && m_psoundbuffer != NULL && m_estate != state_initial)
+         if(m_pxaudio != NULL && m_pvoice != NULL && m_psourcevoice != NULL && m_estate != state_initial)
             return ::multimedia::result_success;
 
 
          m_pthreadCallback = pthreadCallback;
          ::multimedia::e_result mmr;
          ASSERT(m_pxaudio == NULL);
-         ASSERT(m_psoundbuffer == NULL);
+         ASSERT(m_pvoice == NULL);
+         ASSERT(m_psourcevoice == NULL);
          ASSERT(m_estate == state_initial);
 
          // by (indirect casey)
-         if(FAILED(DirectSoundCreate8(NULL,&m_pxaudio,NULL)))
+         if(FAILED(XAudio2Create(&m_pxaudio,0,XAUDIO2_DEFAULT_PROCESSOR)))
          {
 
             return ::multimedia::result_error;
 
          }
 
+         HRESULT hr;
 
-         if(FAILED(m_pxaudio->SetCooperativeLevel((HWND) Application.m_puiMain->get_safe_handle(),DSSCL_PRIORITY)))
+         if(FAILED(hr = m_pxaudio->CreateMasteringVoice(&m_pvoice)))
          {
-
             return ::multimedia::result_error;
-
          }
 
+         // Set up the source voice and register the callback class
+         //VoiceCallback voiceCallback;
 
          m_pwaveformat->wFormatTag = WAVE_FORMAT_PCM;
          m_pwaveformat->nChannels = 2;
@@ -124,40 +127,10 @@ namespace multimedia
          m_pwaveformat->cbSize = 0;
          sp(::multimedia::audio::wave) audiowave = Application.audiowave();
 
+         if(FAILED(hr = m_pxaudio->CreateSourceVoice(&m_psourcevoice,wave_format(), 0,XAUDIO2_DEFAULT_FREQ_RATIO,this,NULL,NULL)))
          {
-
-            DSBUFFERDESC BufferDescription ={};
-            BufferDescription.dwSize = sizeof(BufferDescription);
-            BufferDescription.dwFlags = DSBCAPS_PRIMARYBUFFER;
-
-            // NOTE(casey): "Create" a primary buffer
-            // TODO(casey): DSBCAPS_GLOBALFOCUS?
-            LPXAUDIOBUFFER PrimaryBuffer;
-            if(SUCCEEDED(m_pxaudio->CreateSoundBuffer(&BufferDescription,&PrimaryBuffer,0)))
-            {
-               HRESULT Error = PrimaryBuffer->SetFormat(wave_format());
-               if(SUCCEEDED(Error))
-               {
-                  // NOTE(casey): We have finally set the format!
-                  OutputDebugStringA("Primary buffer format was set.\n");
-                  m_pxaudio->Release();
-                  return ::multimedia::result_error;
-               }
-               else
-               {
-                  // TODO(casey): Diagnostic
-               }
-            }
-            else
-            {
-               // TODO(casey): Diagnostic
-            }
-
-
+            return ::multimedia::result_error;
          }
-
-
-
          //if(mmr = xaudio::translate(waveOutOpen(
          //   &m_hwaveout,
          //   audiowave->m_uiWaveInDevice,
@@ -246,30 +219,9 @@ Opened:
 
 
          // TODO(casey): DSBCAPS_GETCURRENTPOSITION2
-         DSBUFFERDESC BufferDescription ={};
-         BufferDescription.dwSize = sizeof(BufferDescription);
-         BufferDescription.dwFlags = 0;
-         BufferDescription.dwBufferBytes = uiBufferSize * uiBufferCount;
-         BufferDescription.lpwfxFormat = wave_format();
-         LPXAUDIOBUFFER SecondaryBuffer;
-         HRESULT Error = m_pxaudio->CreateSoundBuffer(&BufferDescription,&m_psoundbuffer,0);
-         if(FAILED(Error))
-         {
-            OutputDebugStringA("Secondary buffer created successfully.\n");
-            return ::multimedia::result_error;
-         }
+         
 
-         //int32_t i, iSize;
-         //iSize = wave_out_get_buffer()->GetBufferCount();
-         //for(i = 0; i < iSize; i++)
-         //{
-
-         //   if(MMSYSERR_NOERROR != (mmr =  xaudio::translate(waveOutPrepareHeader(m_hwaveout, xaudio::create_new_WAVEHDR(m_pwavebuffer, i), sizeof(WAVEHDR)))))
-         //   {
-         //      TRACE("ERROR OPENING Preparing INPUT DEVICE buffer");
-         //      return mmr;
-         //   }
-         //}
+         
          
          m_estate = state_opened;
 
@@ -282,7 +234,7 @@ Opened:
 
          single_lock sLock(&m_mutex, TRUE);
 
-         if(m_pxaudio != NULL && m_psoundbuffer != NULL && m_estate != state_initial)
+         if(m_pxaudio != NULL && m_pvoice != NULL && m_psourcevoice != NULL && m_estate != state_initial)
             return ::multimedia::result_success;
 
          m_iBuffer = 0;
@@ -290,67 +242,53 @@ Opened:
          m_pthreadCallback = pthreadCallback;
          ::multimedia::e_result mmr;
          ASSERT(m_pxaudio == NULL);
-         ASSERT(m_psoundbuffer == NULL);
+         ASSERT(m_pvoice == NULL);
+         ASSERT(m_psourcevoice == NULL);
          ASSERT(m_estate == state_initial);
 
+         CoInitializeEx(nullptr,COINIT_MULTITHREADED);
+
          // by (indirect casey)
-         if(FAILED(DirectSoundCreate8(NULL,&m_pxaudio,NULL)))
+         if(FAILED(XAudio2Create(&m_pxaudio,0,XAUDIO2_DEFAULT_PROCESSOR)))
          {
 
             return ::multimedia::result_error;
 
          }
 
+#if (_WIN32_WINNT >= 0x0602 /*_WIN32_WINNT_WIN8*/) && defined(_DEBUG)
+         // To see the trace output, you need to view ETW logs for this application:
+         //    Go to Control Panel, Administrative Tools, Event Viewer.
+         //    View->Show Analytic and Debug Logs.
+         //    Applications and Services Logs / Microsoft / Windows / XAudio2. 
+         //    Right click on Microsoft Windows XAudio2 debug logging, Properties, then Enable Logging, and hit OK 
+         XAUDIO2_DEBUG_CONFIGURATION debug ={0};
+         debug.TraceMask = XAUDIO2_LOG_ERRORS | XAUDIO2_LOG_WARNINGS;
+         debug.BreakMask = XAUDIO2_LOG_ERRORS;
+         m_pxaudio->SetDebugConfiguration(&debug,0);
+#endif
 
-         if(FAILED(m_pxaudio->SetCooperativeLevel((HWND)Application.m_puiMain->get_safe_handle(),DSSCL_PRIORITY)))
+
+         HRESULT hr;
+
+         if(FAILED(hr = m_pxaudio->CreateMasteringVoice(&m_pvoice,uiChannelCount, uiSamplesPerSec)))
          {
-
             return ::multimedia::result_error;
-
          }
 
          mmr = ::multimedia::result_success;
          m_pwaveformat->wFormatTag = WAVE_FORMAT_PCM;
-         m_pwaveformat->nChannels = 2;
-         m_pwaveformat->nSamplesPerSec = 44100;
+         m_pwaveformat->nChannels = uiChannelCount;
+         m_pwaveformat->nSamplesPerSec = uiSamplesPerSec;
          m_pwaveformat->wBitsPerSample = sizeof(::multimedia::audio::WAVEBUFFERDATA) * 8;
          m_pwaveformat->nBlockAlign = m_pwaveformat->wBitsPerSample * m_pwaveformat->nChannels / 8;
          m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
          m_pwaveformat->cbSize = 0;
          sp(::multimedia::audio::wave) audiowave = Application.audiowave();
 
+         if(FAILED(hr = m_pxaudio->CreateSourceVoice(&m_psourcevoice,wave_format(),XAUDIO2_VOICE_NOSRC | XAUDIO2_VOICE_NOPITCH,1.0f,this)))
          {
-
-            DSBUFFERDESC BufferDescription ={};
-            BufferDescription.dwSize = sizeof(BufferDescription);
-            BufferDescription.dwFlags = DSBCAPS_PRIMARYBUFFER;
-
-            // NOTE(casey): "Create" a primary buffer
-            // TODO(casey): DSBCAPS_GLOBALFOCUS?
-            LPXAUDIOBUFFER PrimaryBuffer;
-            if(FAILED(m_pxaudio->CreateSoundBuffer(&BufferDescription,&PrimaryBuffer,0)))
-            {
-               // TODO(casey): Diagnostic
-               m_pxaudio->Release();
-               return ::multimedia::result_error;
-            }
-            else
-            {
-               HRESULT Error = PrimaryBuffer->SetFormat(wave_format());
-               if(FAILED(Error))
-               {
-                  // TODO(casey): Diagnostic
-                  m_pxaudio->Release();
-                  return ::multimedia::result_error;
-               }
-               else
-               {
-                  // NOTE(casey): We have finally set the format!
-                  OutputDebugStringA("Primary buffer format was set.\n");
-               }
-            }
-
-
+            return ::multimedia::result_error;
          }
 
          if(mmr != ::multimedia::result_success)
@@ -363,51 +301,15 @@ Opened:
          }
 
 Opened:
-
+         int iAlign = 2048;
          iBufferCount = 4;
          iBufferSampleCount = (1 << 10);
 
          uint32_t uiBufferSize = iBufferSampleCount * m_pwaveformat->nChannels * 2;
 
+         ASSERT((uiBufferSize % 2048) == 0);// Streaming size must be 2K aligned to use for async I/O
 
 
-         // TODO(casey): DSBCAPS_GETCURRENTPOSITION2
-         DSBUFFERDESC BufferDescription ={};
-         BufferDescription.dwSize = sizeof(BufferDescription);
-         BufferDescription.dwFlags = DSBCAPS_CTRLPOSITIONNOTIFY;
-         BufferDescription.dwBufferBytes = uiBufferSize * iBufferCount;
-         BufferDescription.lpwfxFormat = wave_format();
-         LPXAUDIOBUFFER SecondaryBuffer;
-         HRESULT Error = m_pxaudio->CreateSoundBuffer(&BufferDescription,&m_psoundbuffer,0);
-         if(FAILED(Error))
-         {
-            OutputDebugStringA("Secondary buffer created successfully.\n");
-            return ::multimedia::result_error;
-         }
-         //Query DirectSoundNotify
-         if(FAILED(m_psoundbuffer->QueryInterface(IID_IDirectSoundNotify,(LPVOID *)&m_psoundnotify))) {
-            OutputDebugString(_T("QueryInterface DirectSoundNotify Failed!"));
-            //m_strLastError = _T("MyDirectSound SetFormat Failed!");
-            return ::multimedia::result_error;
-         }
-
-         m_haEvent.remove_all();
-         m_notifya.remove_all();
-
-         for(index i = 0; i < iBufferCount; i++)
-         {
-
-            m_haEvent.add(CreateEvent(NULL,FALSE,FALSE,NULL));
-            m_notifya.element_at_grow(i).dwOffset = uiBufferSize *i;
-            m_notifya.element_at_grow(i).hEventNotify = m_haEvent[i];
-         }
-
-
-         if(FAILED(m_psoundnotify->SetNotificationPositions(m_notifya.get_count(),m_notifya.get_data())))
-         {
-            OutputDebugString(_T("Set NotificationPosition Failed!"));
-            return ::multimedia::result_error;
-         }
 
 
          
@@ -472,53 +374,48 @@ Opened:
 
       void wave_out::wave_out_buffer_ready(int iBuffer)
       {
-         
-         on_free(iBuffer);
 
-         return;
-
-      }
-
-
-      void wave_out::on_free(int i)
-      {
-         single_lock sLock(&m_mutex,TRUE);
-         LPVOID lpvAudio1 = NULL,lpvAudio2 = NULL;
-         DWORD dwBytesAudio1 = 0,dwBytesAudio2 = 0;
-         DWORD dwRetSamples = 0,dwRetBytes = 0;
-
-         DWORD dwWrite;
-
-
-         //         wave_out_out_buffer_done(i);
-
-         if(i >= 0)
+         if(wave_out_get_state() != state_playing)
          {
-            HRESULT hr = m_psoundbuffer->Lock(i * wave_out_get_buffer_size(),wave_out_get_buffer_size(),&lpvAudio1,&dwBytesAudio1,&lpvAudio2,&dwBytesAudio2,0);
-            if(FAILED(hr))
-            {
-               return;
-            }
-            if(NULL == lpvAudio2)
-            {
-               memcpy(lpvAudio1,wave_out_get_buffer_data(i),dwBytesAudio1);
-            }
-            else
-            {
-               memcpy(lpvAudio1,wave_out_get_buffer_data(i),dwBytesAudio1);
-               memcpy(lpvAudio2,(byte *)wave_out_get_buffer_data(i) + dwBytesAudio1,dwBytesAudio2);
-            }
-
-            //Unlock DirectSoundBuffer
-            m_psoundbuffer->Unlock(lpvAudio1,dwBytesAudio1,lpvAudio2,dwBytesAudio2);
+            TRACE("ERROR wave_out::BufferReady while wave_out_get_state() != state_playing");
+            return;
          }
 
+         ::multimedia::audio::wave_buffer * pwbuffer = wave_out_get_buffer();
+         ::multimedia::audio::wave_buffer::buffer * pbuffer = pwbuffer->get_buffer(iBuffer);
 
+         ::multimedia::e_result mmr;
+         if(m_peffect != NULL)
+         {
+            m_peffect->Process16bits((int16_t *)pbuffer->m_pData,pwbuffer->m_uiBufferSize / 2);
+         }
 
+         XAUDIO2_BUFFER b;
+         ZERO(b);
+         b.pContext = pbuffer;
+         b.AudioBytes = pwbuffer->m_uiBufferSize;
+         b.pAudioData = (const BYTE *)pbuffer->m_pData;
+
+         //single_lock sLock(&m_mutex,TRUE);
+
+         
+
+         mmr = xaudio::translate(m_psourcevoice->SubmitSourceBuffer(&b));
+
+         VERIFY(::multimedia::result_success == mmr);
+
+         if(mmr == ::multimedia::result_success)
+         {
+
+            m_iBufferedCount++;
+
+         }
 
       }
 
 
+
+      
       ::multimedia::e_result wave_out::wave_out_stop()
       {
 
@@ -538,7 +435,7 @@ Opened:
          //// waveform-audio_xaudio output device and resets the current position
          //// to zero. All pending playback buffers are marked as done and
          //// returned to the application.
-         //m_mmr = xaudio::translate(waveOutReset(m_hwaveout));
+         m_mmr = xaudio::translate(m_psourcevoice->Stop());
 
          if(m_mmr == ::multimedia::result_success)
          {
@@ -581,6 +478,17 @@ Opened:
 
       }
 
+      void wave_out::OnBufferEnd(void * pBufferContext)
+      { 
+
+         ::multimedia::audio::wave_buffer::buffer * pbuffer = (::multimedia::audio::wave_buffer::buffer *)pBufferContext;
+
+         int32_t iBuffer = (int32_t)pbuffer->m_iIndex;
+
+         wave_out_out_buffer_done(iBuffer);
+      
+      }
+
       ::multimedia::e_result wave_out::wave_out_start(const imedia::position & position)
       {
 
@@ -600,9 +508,9 @@ Opened:
 
          }
 
-         m_mmr = xaudio::translate(m_psoundbuffer->Play(0,0,DSBPLAY_LOOPING));
+         m_mmr = xaudio::translate(m_psourcevoice->Start(0,XAUDIO2_COMMIT_NOW));
 
-         m_prunstepthread = new run_step_thread(this);
+         //         m_prunstepthread = new run_step_thread(this);
 
 
          return result_success;
@@ -625,7 +533,7 @@ Opened:
          // waveform-audio_xaudio output device and resets the current position
          // to zero. All pending playback buffers are marked as done and
          // returned to the application.
-         m_mmr = xaudio::translate(m_psoundbuffer->Play(0,0,DSBPLAY_LOOPING));
+         m_mmr = xaudio::translate(m_psourcevoice->Start(0,XAUDIO2_COMMIT_NOW));
 
          ASSERT(m_mmr == ::multimedia::result_success);
 
@@ -839,35 +747,35 @@ Opened:
 
          int iPlay =  -1;
 
-         int r = WaitForMultipleObjects(m_haEvent.get_count(),m_haEvent.get_data(),FALSE,INFINITE);
-         
-         if(r >= WAIT_OBJECT_0 && r < WAIT_OBJECT_0 + MAXIMUM_WAIT_OBJECTS)
-         {
+         //int r = WaitForMultipleObjects(m_haEvent.get_count(),m_haEvent.get_data(),FALSE,INFINITE);
+         //
+         //if(r >= WAIT_OBJECT_0 && r < WAIT_OBJECT_0 + MAXIMUM_WAIT_OBJECTS)
+         //{
 
-            iPlay = r - WAIT_OBJECT_0;
+         //   iPlay = r - WAIT_OBJECT_0;
 
-            ::ResetEvent(m_haEvent[iPlay]);
-
-
-         }
+         //   ::ResetEvent(m_haEvent[iPlay]);
 
 
-         while(true)
-         {
+         //}
 
-            int iNext = m_iBuffer + 1;
 
-            if(iNext >= wave_out_get_buffer()->GetBufferCount())
-               iNext = 0;
+         //while(true)
+         //{
 
-            if(iNext == iPlay)
-               break;
+         //   int iNext = m_iBuffer + 1;
 
-            wave_out_out_buffer_done(iNext);
+         //   if(iNext >= wave_out_get_buffer()->GetBufferCount())
+         //      iNext = 0;
 
-            m_iBuffer = iNext;
+         //   if(iNext == iPlay)
+         //      break;
 
-         }
+         //   wave_out_out_buffer_done(iNext);
+
+         //   m_iBuffer = iNext;
+
+         //}
 
          
 

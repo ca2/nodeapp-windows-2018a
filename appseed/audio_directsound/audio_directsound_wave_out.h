@@ -124,7 +124,7 @@ namespace multimedia
 
          int                              m_iBuffer;
 
-         IXAudio2 *                       m_pxaudio;
+         LPDIRECTSOUND8                   m_pdirectsound;
          LPDIRECTSOUNDBUFFER              m_psoundbuffer;
          WAVEFORMATEX                     m_waveformatex;
          LPDIRECTSOUNDNOTIFY              m_psoundnotify;
