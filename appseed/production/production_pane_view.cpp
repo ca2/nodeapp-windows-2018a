@@ -177,7 +177,7 @@ namespace production
          break;
 /*      case PaneViewFileManager:
          {
-            sp(::create_context) cc(get_app());
+            sp(::create) cc(get_app());
             cc->m_bMakeVisible = false;
             cc->m_bTransparentBackground = true;
             cc->m_puiParent = this;
