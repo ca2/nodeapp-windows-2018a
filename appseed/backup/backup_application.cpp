@@ -70,15 +70,13 @@ namespace backup
       return m_pdoctemplateMain->open_document_file(NULL, TRUE) != NULL;
    }
 
+   
    void application::_001OnFileNew()
    {
-      m_pdocmanager->_001OnFileNew();
+      
+      document_manager()._001OnFileNew();
+
    }
-
-
-
-
-
 
 
 } //namespace backup
@@ -86,5 +84,8 @@ namespace backup
 
 CLASS_DECL_CA2_BACKUP sp(::aura::application) get_new_app()
 {
+
    return new ::backup::application;
+
 }
+
