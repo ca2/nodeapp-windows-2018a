@@ -407,10 +407,10 @@ namespace production
 
 //      int32_t iHitArea = hit_test(pmouse->m_pt);
    /*   {
-         ::user::menu menu;
+         ::aura::menu menu;
          menu.LoadXmlMenu(get_app(), "production\\popup_production.xml");
          menu.set_app(get_app());
-         ::user::menu menuPopup(menu.GetSubMenu(0));
+         ::aura::menu menuPopup(menu.GetSubMenu(0));
          menuPopup.set_app(get_app());
          menuPopup.TrackPopupMenu(0, pmouse->m_pt.x, pmouse->m_pt.y, GetParentFrame()->GetSafeoswindow_());
       }
