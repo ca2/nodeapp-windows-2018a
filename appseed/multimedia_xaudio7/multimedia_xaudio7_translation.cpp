@@ -5,7 +5,7 @@ namespace multimedia
 {
 
 
-   namespace xaudio
+   namespace xaudio7
    {
 
       
@@ -74,7 +74,7 @@ namespace multimedia
       }
 
 
-   } // namespace xaudio
+   } // namespace xaudio7
 
 
 } // namespace multimedia

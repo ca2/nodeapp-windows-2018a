@@ -4,13 +4,19 @@
     <ClInclude Include="framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="multimedia_xaudio.h">
+    <ClInclude Include="audio_xaudio7.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="multimedia_xaudio_factory_exchange.h">
+    <ClInclude Include="audio_xaudio7_command.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="multimedia_xaudio_translation.h">
+    <ClInclude Include="audio_xaudio7_factory_exchange.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="audio_xaudio7_wave_in.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="audio_xaudio7_wave_out.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -26,15 +32,18 @@
     <ClCompile Include="framework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="multimedia_xaudio_factory_exchange.cpp">
+    <ClCompile Include="audio_xaudio7_factory_exchange.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="multimedia_xaudio_translation.cpp">
+    <ClCompile Include="audio_xaudio7_wave_in.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="audio_xaudio7_wave_out.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="multimedia_xaudio.def">
+    <None Include="audio_xaudio7.def">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>

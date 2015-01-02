@@ -5,7 +5,7 @@ namespace multimedia
 {
 
 
-   namespace audio_xaudio
+   namespace audio_xaudio7
    {
       
       
@@ -131,7 +131,7 @@ namespace multimedia
          {
             return ::multimedia::result_error;
          }
-         //if(mmr = xaudio::translate(waveOutOpen(
+         //if(mmr = xaudio7::translate(waveOutOpen(
          //   &m_hwaveout,
          //   audiowave->m_uiWaveInDevice,
          //   wave_format(),
@@ -141,7 +141,7 @@ namespace multimedia
          //   goto Opened;
          //m_pwaveformat->nSamplesPerSec = 22050;
          //m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
-         //if(MMSYSERR_NOERROR == (mmr = xaudio::translate(waveOutOpen(
+         //if(MMSYSERR_NOERROR == (mmr = xaudio7::translate(waveOutOpen(
          //   &m_hwaveout,
          //   WAVE_MAPPER,
          //   ,
@@ -151,7 +151,7 @@ namespace multimedia
          //   goto Opened;
          //m_pwaveformat->nSamplesPerSec = 11025;
          //m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
-         //if(MMSYSERR_NOERROR == (mmr = xaudio::translate(waveOutOpen(
+         //if(MMSYSERR_NOERROR == (mmr = xaudio7::translate(waveOutOpen(
          //   &m_hwaveout,
          //   WAVE_MAPPER,
          //   wave_format(),
@@ -260,8 +260,8 @@ Opened:
          // To see the trace output, you need to view ETW logs for this application:
          //    Go to Control Panel, Administrative Tools, Event Viewer.
          //    View->Show Analytic and Debug Logs.
-         //    Applications and Services Logs / Microsoft / Windows / XAudio2. 
-         //    Right click on Microsoft Windows XAudio2 debug logging, Properties, then Enable Logging, and hit OK 
+         //    Applications and Services Logs / Microsoft / Windows / xaudio72. 
+         //    Right click on Microsoft Windows xaudio72 debug logging, Properties, then Enable Logging, and hit OK 
          XAUDIO2_DEBUG_CONFIGURATION debug ={0};
          debug.TraceMask = XAUDIO2_LOG_ERRORS | XAUDIO2_LOG_WARNINGS;
          debug.BreakMask = XAUDIO2_LOG_ERRORS;
@@ -349,7 +349,7 @@ Opened:
          //for(i = 0; i < iSize; i++)
          //{
 
-         //   if(::multimedia::result_success != (mmr = xaudio::translate(waveOutUnprepareHeader(m_hwaveout, wave_hdr(i), sizeof(WAVEHDR)))))
+         //   if(::multimedia::result_success != (mmr = xaudio7::translate(waveOutUnprepareHeader(m_hwaveout, wave_hdr(i), sizeof(WAVEHDR)))))
          //   {
          //      TRACE("ERROR OPENING Unpreparing INPUT DEVICE buffer =%d", mmr);
          //   }
@@ -358,7 +358,7 @@ Opened:
 
          //}
 
-         //;mmr = xaudio::translate(waveOutClose(m_hwaveout));
+         //;mmr = xaudio7::translate(waveOutClose(m_hwaveout));
 
          //m_hwaveout = NULL;
 
@@ -400,7 +400,7 @@ Opened:
 
          
 
-         mmr = xaudio::translate(m_psourcevoice->SubmitSourceBuffer(&b));
+         mmr = xaudio7::translate(m_psourcevoice->SubmitSourceBuffer(&b));
 
          VERIFY(::multimedia::result_success == mmr);
 
@@ -432,10 +432,10 @@ Opened:
 
          //// waveOutReset
          //// The waveOutReset function stops playback on the given
-         //// waveform-audio_xaudio output device and resets the current position
+         //// waveform-audio_xaudio7 output device and resets the current position
          //// to zero. All pending playback buffers are marked as done and
          //// returned to the application.
-         m_mmr = xaudio::translate(m_psourcevoice->Stop());
+         m_mmr = xaudio7::translate(m_psourcevoice->Stop());
 
          if(m_mmr == ::multimedia::result_success)
          {
@@ -461,11 +461,11 @@ Opened:
 
          // waveOutReset
          // The waveOutReset function stops playback on the given
-         // waveform-audio_xaudio output device and resets the current position
+         // waveform-audio_xaudio7 output device and resets the current position
          // to zero. All pending playback buffers are marked as done and
          // returned to the application.
 
-         //m_mmr = xaudio::translate(waveOutPause(m_hwaveout));
+         //m_mmr = xaudio7::translate(waveOutPause(m_hwaveout));
 
          ASSERT(m_mmr == ::multimedia::result_success);
 
@@ -508,7 +508,7 @@ Opened:
 
          }
 
-         m_mmr = xaudio::translate(m_psourcevoice->Start(0,XAUDIO2_COMMIT_NOW));
+         m_mmr = xaudio7::translate(m_psourcevoice->Start(0,XAUDIO2_COMMIT_NOW));
 
          //         m_prunstepthread = new run_step_thread(this);
 
@@ -530,10 +530,10 @@ Opened:
 
          // waveOutReset
          // The waveOutReset function stops playback on the given
-         // waveform-audio_xaudio output device and resets the current position
+         // waveform-audio_xaudio7 output device and resets the current position
          // to zero. All pending playback buffers are marked as done and
          // returned to the application.
-         m_mmr = xaudio::translate(m_psourcevoice->Start(0,XAUDIO2_COMMIT_NOW));
+         m_mmr = xaudio7::translate(m_psourcevoice->Start(0,XAUDIO2_COMMIT_NOW));
 
          ASSERT(m_mmr == ::multimedia::result_success);
 
@@ -578,7 +578,7 @@ Opened:
          //if(m_hwaveout != NULL)
          //{
 
-         //   mmr = xaudio::translate(waveOutGetPosition(m_hwaveout, &mmt, sizeof(mmt)));
+         //   mmr = xaudio7::translate(waveOutGetPosition(m_hwaveout, &mmt, sizeof(mmt)));
 
          //   try
          //   {
@@ -637,7 +637,7 @@ Opened:
          //if(m_hwaveout != NULL)
          //{
          //   
-         //   mmr = xaudio::translate(waveOutGetPosition(m_hwaveout, &mmt, sizeof(mmt)));
+         //   mmr = xaudio7::translate(waveOutGetPosition(m_hwaveout, &mmt, sizeof(mmt)));
 
          //   try
          //   {
@@ -712,7 +712,7 @@ Opened:
       WAVEFORMATEX * wave_out::wave_format()
       {
 
-         xaudio::translate(m_waveformatex, m_pwaveformat);
+         xaudio7::translate(m_waveformatex, m_pwaveformat);
 
          return &m_waveformatex;
 
@@ -736,7 +736,7 @@ Opened:
 
       //LPWAVEHDR wave_out::wave_hdr(int iBuffer)
       //{
-      //   return ::multimedia::xaudio::get_os_data(wave_out_get_buffer(), iBuffer);
+      //   return ::multimedia::xaudio7::get_os_data(wave_out_get_buffer(), iBuffer);
       //}
 
 
@@ -803,7 +803,7 @@ Opened:
       }
 
 
-   } // namespace audio_xaudio
+   } // namespace audio_xaudio7
 
 
 } // namespace multimedia

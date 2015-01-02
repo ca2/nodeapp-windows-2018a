@@ -5,7 +5,7 @@ namespace multimedia
 {
 
 
-   namespace xaudio
+   namespace xaudio7
    {
 
 
@@ -21,7 +21,7 @@ namespace multimedia
       }
 
 
-   } // namespace xaudio
+   } // namespace xaudio7
 
 
 } // namespace multimedia
@@ -30,7 +30,7 @@ namespace multimedia
 void ca2_factory_exchange(::aura::application * papp)
 {
 
-   ::multimedia::xaudio::factory_exchange factoryexchange(papp);
+   ::multimedia::xaudio7::factory_exchange factoryexchange(papp);
 
 }
 

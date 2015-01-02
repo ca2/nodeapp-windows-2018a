@@ -5,7 +5,7 @@ namespace multimedia
 {
 
 
-   namespace audio_xaudio
+   namespace audio_xaudio7
    {
 
 
@@ -84,7 +84,7 @@ namespace multimedia
 //         sp(::multimedia::audio::wave) audiowave = Application.audiowave();
 //         m_iBuffer = 0;
 //
-//         if(MMSYSERR_NOERROR == (mmr = xaudio::translate(waveInOpen(
+//         if(MMSYSERR_NOERROR == (mmr = xaudio7::translate(waveInOpen(
 //            &m_hwavein,
 //            audiowave->m_uiWaveInDevice,
 //            wave_format(),
@@ -95,7 +95,7 @@ namespace multimedia
 //
 //         m_pwaveformat->nSamplesPerSec = 22050;
 //         m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
-//         if(MMSYSERR_NOERROR == (mmr = xaudio::translate(waveInOpen(
+//         if(MMSYSERR_NOERROR == (mmr = xaudio7::translate(waveInOpen(
 //            &m_hwavein,
 //            WAVE_MAPPER,
 //            wave_format(),
@@ -105,7 +105,7 @@ namespace multimedia
 //            goto Opened;
 //         m_pwaveformat->nSamplesPerSec = 11025;
 //         m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
-//         if(MMSYSERR_NOERROR == (mmr = xaudio::translate(waveInOpen(
+//         if(MMSYSERR_NOERROR == (mmr = xaudio7::translate(waveInOpen(
 //            &m_hwavein,
 //            WAVE_MAPPER,
 //            wave_format(),
@@ -126,7 +126,7 @@ namespace multimedia
 //            }
 //            else if(mmr == WAVERR_BADFORMAT)
 //            {
-//               TRACE("Attempted to open with an unsupported waveform-audio_xaudio format.");
+//               TRACE("Attempted to open with an unsupported waveform-audio_xaudio7 format.");
 //            }
 //            TRACE("ERROR OPENING WAVE INPUT DEVICE");
 //            return mmr;
@@ -188,7 +188,7 @@ namespace multimedia
 //         for(i = 0; i < iSize; i++)
 //         {
 //            
-//            if(MMSYSERR_NOERROR != (mmr = xaudio::translate(waveInPrepareHeader(m_hwavein, xaudio::create_new_WAVEHDR(wave_in_get_buffer(), i), sizeof(WAVEHDR)))))
+//            if(MMSYSERR_NOERROR != (mmr = xaudio7::translate(waveInPrepareHeader(m_hwavein, xaudio7::create_new_WAVEHDR(wave_in_get_buffer(), i), sizeof(WAVEHDR)))))
 //            {
 //               TRACE("ERROR OPENING Preparing INPUT DEVICE buffer");
 //               return mmr;
@@ -235,7 +235,7 @@ namespace multimedia
          //for(i = 0; i < iSize; i++)
          //{
 
-         //   if(::multimedia::result_success != (mmr = xaudio::translate(waveInUnprepareHeader(m_hwavein, wave_hdr(i), sizeof(WAVEHDR)))))
+         //   if(::multimedia::result_success != (mmr = xaudio7::translate(waveInUnprepareHeader(m_hwavein, wave_hdr(i), sizeof(WAVEHDR)))))
          //   {
          //      TRACE("ERROR OPENING Unpreparing INPUT DEVICE buffer");
          //      //return mmr;
@@ -245,7 +245,7 @@ namespace multimedia
 
          //}
 
-         //mmr = xaudio::translate(waveInClose(m_hwavein));
+         //mmr = xaudio7::translate(waveInClose(m_hwavein));
 
          //m_hwavein = NULL;
 
@@ -270,7 +270,7 @@ namespace multimedia
 
          //::multimedia::e_result mmr;
 
-         //if(::multimedia::result_success != (mmr = xaudio::translate(waveInStart(m_hwavein))))
+         //if(::multimedia::result_success != (mmr = xaudio7::translate(waveInStart(m_hwavein))))
          //{
          //   TRACE("ERROR starting INPUT DEVICE ");
          //   return mmr;
@@ -297,7 +297,7 @@ namespace multimedia
          //try
          //{
 
-         //   if(::multimedia::result_success != (mmr = xaudio::translate(waveInStop(m_hwavein))))
+         //   if(::multimedia::result_success != (mmr = xaudio7::translate(waveInStop(m_hwavein))))
          //   {
 
          //      TRACE("wave_in::wave_in_stop : ERROR OPENING stopping INPUT DEVICE ");
@@ -386,7 +386,7 @@ namespace multimedia
          //try
          //{
 
-         //   if(::multimedia::result_success != (mmr = xaudio::translate(waveInReset(m_hwavein))))
+         //   if(::multimedia::result_success != (mmr = xaudio7::translate(waveInReset(m_hwavein))))
          //   {
          //      
          //      TRACE("wave_in::Reset error resetting input device");
@@ -461,7 +461,7 @@ namespace multimedia
 
       //   ::multimedia::e_result mmr;
 
-      //   if(::multimedia::result_success != (mmr = xaudio::translate(waveInAddBuffer(m_hwavein, lpwavehdr, sizeof(WAVEHDR)))))
+      //   if(::multimedia::result_success != (mmr = xaudio7::translate(waveInAddBuffer(m_hwavein, lpwavehdr, sizeof(WAVEHDR)))))
       //   {
 
       //      TRACE("ERROR OPENING Adding INPUT DEVICE buffer");
@@ -491,7 +491,7 @@ namespace multimedia
       WAVEFORMATEX * wave_in::wave_format()
       {
 
-         xaudio::translate(m_waveformatex, m_pwaveformat);
+         xaudio7::translate(m_waveformatex, m_pwaveformat);
 
          return &m_waveformatex;
 
@@ -519,12 +519,12 @@ namespace multimedia
       //LPWAVEHDR wave_in::wave_hdr(int iBuffer)
       //{
 
-      //   return ::multimedia::xaudio::get_os_data(wave_in_get_buffer(), iBuffer);
+      //   return ::multimedia::xaudio7::get_os_data(wave_in_get_buffer(), iBuffer);
 
       //}
 
 
-   } // namespace audio_xaudio
+   } // namespace audio_xaudio7
 
 
 } // namespace multimedia

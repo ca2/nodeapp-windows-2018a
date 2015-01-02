@@ -98,11 +98,11 @@ namespace multimedia
 {
 
 
-   namespace audio_xaudio
+   namespace audio_xaudio7
    {
 
 
-      class  CLASS_DECL_AUDIO_XAUDIO wave_out :
+      class  CLASS_DECL_AUDIO_XAUDIO7 wave_out :
          virtual public ::multimedia::audio::wave_out,
          virtual public IXAudio2VoiceCallback
       {
@@ -198,7 +198,7 @@ namespace multimedia
       };
 
 
-   } // namespace audio_xaudio
+   } // namespace audio_xaudio7
 
 
 } // namespace multimedia

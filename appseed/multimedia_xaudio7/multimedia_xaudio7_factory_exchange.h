@@ -5,11 +5,11 @@ namespace multimedia
 {
 
 
-   namespace xaudio
+   namespace xaudio7
    {
 
 
-      class CLASS_DECL_MULTIMEDIA_XAUDIO factory_exchange :
+      class CLASS_DECL_MULTIMEDIA_XAUDIO7 factory_exchange :
          virtual public ::object
       {
       public:
@@ -21,7 +21,7 @@ namespace multimedia
       };
 
 
-   } // namespace xaudio
+   } // namespace xaudio7
 
 
 } // namespace multimedia
