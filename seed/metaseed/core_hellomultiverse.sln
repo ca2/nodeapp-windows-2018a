@@ -109,8 +109,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axiszlib", "..\..\..\app\ax
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "aqua", "..\..\..\app\appseed\aqua\aqua.vcxproj", "{51778453-C0AA-419D-A87F-4338C9DDE3FA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{720BDB27-174B-4029-9B46-AA4BE8DB9133}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Android = basis|Android
