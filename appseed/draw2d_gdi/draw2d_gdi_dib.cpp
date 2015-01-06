@@ -35,7 +35,7 @@ namespace draw2d_gdi
    }
 
 
-   ::draw2d::bitmap_sp dib::get_bitmap()
+   ::draw2d::bitmap_sp dib::get_bitmap() const
    {
 
       return m_spbitmap;
@@ -2298,7 +2298,7 @@ namespace draw2d_gdi
          SRCCOPY);
    }
 
-   ::draw2d::graphics * dib::get_graphics()
+   ::draw2d::graphics * dib::get_graphics() const
    {
       unmap();
       return m_spgraphics;
@@ -2467,7 +2467,7 @@ namespace draw2d_gdi
    }
 
 
-   void dib::map(bool bApplyAlphaTransform)
+   void dib::map(bool bApplyAlphaTransform) const
    {
 
       if(m_bMapped)
@@ -2508,11 +2508,11 @@ namespace draw2d_gdi
 
       }*/
 
-      m_bMapped = true;
+      ((dib *) this)->m_bMapped = true;
 
    }
 
-   void dib::unmap()
+   void dib::unmap() const
    {
 
       if(!m_bMapped)
@@ -2542,7 +2542,7 @@ namespace draw2d_gdi
 
       */
 
-      m_bMapped = false;
+       ((dib *) this)->m_bMapped = false;
 
    }
 

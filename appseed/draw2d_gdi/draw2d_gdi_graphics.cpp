@@ -50,8 +50,9 @@ namespace draw2d_gdi
 
          try
          {
+            ::draw2d_gdi::object * pobject = m_ptraObject[i];
 
-            m_ptraObject[i]->m_ptraGraphics.remove(this);
+            pobject->m_ptraGraphics.remove(this);
 
          }
          catch(...)
@@ -265,9 +266,8 @@ namespace draw2d_gdi
 
       ::SelectObject(get_handle1(), pbitmap->get_os_data());
 
-      GDI_BITMAP(pbitmap)->m_ptraGraphics.add_unique(this);
+      on_select_object(pbitmap);
 
-      m_ptraObject.add_unique(GDI_BITMAP(pbitmap));
 
       m_spbitmap = pbitmap;
 
@@ -275,6 +275,18 @@ namespace draw2d_gdi
 
    }
 
+   void graphics::on_select_object(::draw2d::object * pobjectParam)
+   {
+
+      synch_lock ml(m_spmutex);
+
+      ::draw2d_gdi::object * pobject = dynamic_cast <::draw2d_gdi::object *> (pobjectParam);
+
+      pobject->m_ptraGraphics.add_unique(this);
+
+      m_ptraObject.add_unique(pobject);
+
+   }
 
 
    HGDIOBJ graphics::SelectObject(HGDIOBJ hObject) // Safe for NULL handles
@@ -3876,9 +3888,7 @@ namespace draw2d_gdi
 
       SelectObject(ppen->get_os_data());
 
-      GDI_PEN(ppen)->m_ptraGraphics.add_unique(this);
-
-      m_ptraObject.add_unique(GDI_PEN(ppen));
+      on_select_object(ppen);
 
       m_sppen = ppen;
 
@@ -3902,9 +3912,7 @@ namespace draw2d_gdi
 
       SelectObject(pbrush->get_os_data());
 
-      GDI_BRUSH(pbrush)->m_ptraGraphics.add_unique(this);
-
-      m_ptraObject.add_unique(GDI_BRUSH(pbrush));
+      on_select_object(pbrush);
 
       m_spbrush = pbrush;
 
@@ -3927,9 +3935,7 @@ namespace draw2d_gdi
 
       SelectObject(pfont->get_os_data());
 
-      GDI_FONT(pfont)->m_ptraGraphics.add_unique(this);
-
-      m_ptraObject.add_unique(GDI_FONT(pfont));
+      on_select_object(pfont);
 
       m_spfont = pfont;
 
@@ -3954,9 +3960,7 @@ namespace draw2d_gdi
 
       SelectObject(pregion->get_os_data());
 
-      GDI_REGION(pregion)->m_ptraGraphics.add_unique(this);
-
-      m_ptraObject.add_unique(GDI_REGION(pregion));
+      on_select_object(pregion);
 
       return nRetVal;
 

@@ -47,7 +47,7 @@ namespace draw2d_gdi
       HFONT                                              m_hfontOriginal;
       HRGN                                               m_hrgnOriginal;
 
-      ptr_array < ::draw2d_gdi::object >        m_ptraObject;
+      ptr_array < ::draw2d_gdi::object >                 m_ptraObject;
 
       //graphics();
       graphics(::aura::application * papp);
@@ -123,6 +123,8 @@ namespace draw2d_gdi
       virtual ::draw2d::font* SelectObject(::draw2d::font* pFont);
       virtual ::draw2d::bitmap* SelectObject(::draw2d::bitmap* pBitmap);
       virtual int SelectObject(::draw2d::region* pRgn);       // special return for regions
+
+      virtual void on_select_object(::draw2d::object * pobjectParam);
 
       bool SelectFont(::draw2d::font * pfont);
 

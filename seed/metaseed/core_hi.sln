@@ -828,7 +828,6 @@ Global
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.static_basis|x64.ActiveCfg = static_basis|x64
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.static_basis|x64.Build.0 = static_basis|x64
 		{73544CBD-8909-40D1-89C3-D5F33894313A}.basis|Win32.ActiveCfg = basis|Win32
-		{73544CBD-8909-40D1-89C3-D5F33894313A}.basis|Win32.Build.0 = basis|Win32
 		{73544CBD-8909-40D1-89C3-D5F33894313A}.basis|x64.ActiveCfg = basis|x64
 		{73544CBD-8909-40D1-89C3-D5F33894313A}.basis|x64.Build.0 = basis|x64
 		{73544CBD-8909-40D1-89C3-D5F33894313A}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32

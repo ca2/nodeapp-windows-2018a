@@ -32,12 +32,12 @@ namespace draw2d_gdi
       virtual void construct(int32_t cx, int32_t cy);
 
 
-      void map(bool bApplyAlphaTransform = true);
-      void unmap();
+      void map(bool bApplyAlphaTransform = true) const;
+      void unmap() const;
 
 
-      virtual ::draw2d::graphics * get_graphics();
-      virtual ::draw2d::bitmap_sp get_bitmap();
+      virtual ::draw2d::graphics * get_graphics() const;
+      virtual ::draw2d::bitmap_sp get_bitmap() const;
       virtual ::draw2d::bitmap_sp detach_bitmap();
 
 
