@@ -27,7 +27,7 @@ namespace music
             virtual ~buffer();
 
 
-            double GetTempoShiftRate();
+            virtual double GetTempoShiftRate();
 
             bool IsTrackMute(int32_t iIndex);
 
@@ -57,7 +57,7 @@ namespace music
 
             ::music::midi::tempo_map_entry * GetTempoMapEntry(const imedia::position & position);
 
-            int32_t GetTempoShift();
+            virtual double GetTempoShift();
 
             ::music::e_result SetTempoShift(int32_t iTempoShift);
 

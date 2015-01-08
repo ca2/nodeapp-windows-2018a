@@ -162,7 +162,7 @@ namespace music
             int32_t GetKeyShift();
 
             void OnMidiPlaybackEnd(::music::midi::sequence::event * pevent);
-            int32_t SetTempoShift(int32_t iTempoShift);
+            virtual ::music::e_result SetTempoShift(double dTempoShift);
 
             void OnPositionCB(LPMIDIHDR lpmidihdr);
             void OnDone(HMIDISTRM hmidistream, LPMIDIHDR lpmidihdr);
@@ -181,7 +181,7 @@ namespace music
             virtual void SetTempoChangeFlag(bool bSet = true);
             virtual bool IsChangingTempo();
 
-            virtual int32_t GetTempoShift();
+            virtual double GetTempoShift();
             virtual void GetMidiDoneData(::music::midi::LPMIDIDONEDATA lpmdd);
             virtual bool IsInSpecialModeV001();
             virtual bool WasInSpecialModeV001();

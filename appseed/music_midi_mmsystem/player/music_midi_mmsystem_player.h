@@ -65,7 +65,7 @@ namespace music
 
                imedia::position RateToTicks(double dRate);
 
-               bool SetTempoShift(int32_t iTempoShift);
+               virtual ::music::e_result SetTempoShift(double dTempoShift);
 
                bool SetMidiOutDevice(uint32_t uiDevice);
 
@@ -78,7 +78,7 @@ namespace music
                void SendTempoChange(); // verificar
 
 
-               DECL_GEN_SIGNAL(OnNotifyEvent);
+               //DECL_GEN_SIGNAL(OnNotifyEvent);
                   DECL_GEN_SIGNAL(OnMultimediaMidiOutputMessageDone);
                   DECL_GEN_SIGNAL(OnMultimediaMidiOutputMessagePositionCB);
 

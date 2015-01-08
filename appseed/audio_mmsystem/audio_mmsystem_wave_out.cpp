@@ -671,6 +671,8 @@ Opened:
       void wave_out::wave_out_on_playback_end()
       {
 
+         wave_out::e_state estate = wave_out_get_state();
+
          wave_out_stop();
 
          if(m_pprebuffer->m_pstreameffectOut != NULL)

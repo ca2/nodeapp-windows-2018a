@@ -1,4 +1,5 @@
 #include "framework.h"
+#include <math.h>
 
 
 namespace music
@@ -88,6 +89,10 @@ namespace music
                
                pcommand->m_flags.signalize(::music::midi::player::command::flag_ticks);
                pcommand->m_ticks = tkStart;
+
+               //ASSERT(m_psequencethread->get_sequence() == get_sequence());
+
+               //m_psequencethread->m_psequence = get_sequence();
 
                m_psequencethread->ExecuteCommand(pcommand);
 
@@ -352,39 +357,43 @@ namespace music
 
 
 
-            bool player::SetTempoShift(int32_t iTempoShift)
+            ::music::e_result player::SetTempoShift(double dTempoShift)
             {
-               //   if(IsPlaying())
-               {/*
-                get_sequence()->SetTempoChangeFlag();
-                ::music::midi::sequence::PlayerLink & link = get_sequence()->GetPlayerLink();
-                link.ModifyFlag(
-                ::music::midi::sequence::FlagTempoChange,
-                ::music::midi::sequence::FlagNull);
-                imedia::position tk = get_sequence()->GetPositionTicks();
-                get_sequence()->m_evMmsgDone.ResetEvent();
-                link.m_tkRestart = tk + get_sequence()->m_tkBase;
-                //m_bChangingTempo = true;
-                get_sequence()->Stop();
-                //get_sequence()->m_evMmsgDone.lock();
-                */
-                  bool bPlay = IsPlaying();
-                  imedia::position ticks = 0;
-                  if(bPlay)
-                  {
-                     ticks = get_sequence()->GetPositionTicks();
-                     get_sequence()->Stop();
-                  }
-                  if(!get_sequence()->SetTempoShift(iTempoShift))
-                     return false;
-                  if(bPlay)
-                  {
-                     get_sequence()->m_pthread->PrerollAndWait(ticks);
-                     get_sequence()->Start();
-                  }
+               if(fabs(get_sequence()->GetTempoShift() - dTempoShift) >= 1.0)
+               {
+                  //   if(IsPlaying())
+                  {/*
+                   get_sequence()->SetTempoChangeFlag();
+                   ::music::midi::sequence::PlayerLink & link = get_sequence()->GetPlayerLink();
+                   link.ModifyFlag(
+                   ::music::midi::sequence::FlagTempoChange,
+                   ::music::midi::sequence::FlagNull);
+                   imedia::position tk = get_sequence()->GetPositionTicks();
+                   get_sequence()->m_evMmsgDone.ResetEvent();
+                   link.m_tkRestart = tk + get_sequence()->m_tkBase;
+                   //m_bChangingTempo = true;
+                   get_sequence()->Stop();
+                   //get_sequence()->m_evMmsgDone.lock();
+                   */
+                     bool bPlay = IsPlaying();
+                     imedia::position ticks = 0;
+                     if(bPlay)
+                     {
+                        ticks = get_sequence()->GetPositionTicks();
+                        get_sequence()->Stop();
+                     }
+                     ::music::e_result eresult;
+                     if(failed(eresult = get_sequence()->SetTempoShift(dTempoShift)))
+                        return eresult;
+                     if(bPlay)
+                     {
+                        get_sequence()->m_pthread->PrerollAndWait(ticks);
+                        get_sequence()->Start();
+                     }
 
+                  }
                }
-               return true;
+               return ::music::success;
             }
 
 
@@ -499,20 +508,20 @@ namespace music
 
 
 
-            void player::OnNotifyEvent(::signal_details * pobj)
-            {
-               SCAST_PTR(::message::base, pbase, pobj);
-               ::music::midi::player::notify_event * pdata = (::music::midi::player::notify_event *) pbase->m_lparam.m_lparam;
-               pdata->m_pplayer = this;
-               if(m_puie != NULL)
-               {
-                  m_puie->post_message(::music::midi::player::message_notify_event, 0 , (LPARAM) pdata);      
-               }
-               else
-               {
-                  delete pdata;
-               }
-            }
+            //void player::OnNotifyEvent(::signal_details * pobj)
+            //{
+            //   SCAST_PTR(::message::base, pbase, pobj);
+            //   ::music::midi::player::notify_event * pdata = (::music::midi::player::notify_event *) pbase->m_lparam.m_lparam;
+            //   pdata->m_pplayer = this;
+            //   if(m_puie != NULL)
+            //   {
+            //      m_puie->post_message(::music::midi::player::message_notify_event, 0 , (LPARAM) pdata);      
+            //   }
+            //   else
+            //   {
+            //      delete pdata;
+            //   }
+            //}
 
 
 

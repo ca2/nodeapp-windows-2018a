@@ -28,9 +28,9 @@ namespace music
 
             m_hstream = NULL;
 
-            m_cbPreroll = 4 * 1024;
+            m_cbPreroll = 8 * 1024;
 
-            m_cbPrerollNominalMax = 2 * 1024;
+            m_cbPrerollNominalMax =  128;
 
             m_midicallbackdata.m_psequence = this;
 
@@ -566,6 +566,13 @@ Seq_Open_File_Cleanup:
             int32_t                 i;
             e_result                smfrc;
             ::multimedia::e_result  mmrc = ::multimedia::result_success;
+
+            if(GetState() == status_playing)
+            {
+               
+               Stop();
+
+            }
 
 
             ASSERT(m_iOpenMode == file::OpenForPlaying || IsInSpecialModeV001());
@@ -1437,7 +1444,7 @@ seq_Preroll_Cleanup:
          }
 
 
-         int32_t sequence::GetTempoShift()
+         double sequence::GetTempoShift()
          {
 
             return file()->GetTempoShift();
@@ -1446,17 +1453,10 @@ seq_Preroll_Cleanup:
 
 
 
-         int32_t sequence::SetTempoShift(int32_t iTempoShift)
+         ::music::e_result sequence::SetTempoShift(double dTempoShift)
          {
 
-            //midiStreamPause(m_hstream);
-
-            if(failed(file()->SetTempoShift(iTempoShift)))
-               return false;
-
-            //midiStreamRestart(m_hstream);
-
-            return true;
+            return file()->SetTempoShift(dTempoShift);
 
          }
 

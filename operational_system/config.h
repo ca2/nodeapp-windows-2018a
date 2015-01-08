@@ -92,3 +92,48 @@
 #define inline static
 
 #endif
+
+
+#define static_inline __forceinline
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Turn off warnings for /W4
+// To resume any of these warning: #pragma warning(default: 4xxx)
+// which should be placed after the _ include files
+
+#pragma warning(disable: 4505)  // unreferenced local function has been removed
+#pragma warning(disable: 4511)  // private copy constructors are good to have
+#pragma warning(disable: 4512)  // private operator= are good to have
+#pragma warning(disable: 4514)  // unreferenced inlines are common
+#pragma warning(disable: 4710)  // function not inlined
+#pragma warning(disable: 4660)  // template is already instantiated
+#pragma warning(disable: 4127)  // constant expression used in macros do while(0);
+
+#pragma warning(disable: 4275)  // deriving exported class from non-exported
+#pragma warning(disable: 4251)  // using non-exported as public in exported
+
+
+#ifdef ___ALL_WARNINGS
+#pragma warning( push )
+#endif
+
+// warnings caerated with common core API/Windows code
+#pragma warning(disable: 4134)  // message map member fxn casts
+#pragma warning(disable: 4201)  // nameless unions are part of C++
+#pragma warning(disable: 4320)  // structs with uuid handled as interfaces
+#pragma warning(disable: 4705)  // statement has no effect in optimized code
+#pragma warning(disable: 4191)  // pointer-to-function casting
+// warnings caused by normal optimizations
+#ifndef DEBUG
+#pragma warning(disable: 4701)  // local var *may* be used without init
+#pragma warning(disable: 4702)  // unreachable code caused by optimizations
+#pragma warning(disable: 4791)  // loss of debugging info in release version
+#pragma warning(disable: 4189)  // initialized but unused var
+#pragma warning(disable: 4390)  // is_empty controlled statement
+#endif
+#pragma warning(disable: 4204)  // non-constant aggregate initializer
+#pragma warning(disable: 4263 4264)  // base class method is hidden

@@ -34,7 +34,7 @@ namespace music
             m_tempomap.set_size(0, C_TEMPO_MAP_CHK);
 
             m_iKeyShift             = 0;
-            m_iTempoShift           = 0;
+            m_dTempoShift           = 0.0;
 
 
             m_pFileHeader = NULL;
@@ -314,7 +314,7 @@ smf_Open_File_Cleanup:
 
 
             m_iKeyShift             = 0;
-            m_iTempoShift           = 0;
+            m_dTempoShift           = 0.0;
 
             m_pFileHeader           = NULL;
 
@@ -1069,7 +1069,7 @@ smf_Open_File_Cleanup:
             while(TRUE)
             {
                ASSERT(lpmh->dwBytesRecorded <= lpmh->dwBufferLength);
-               if(lpmh->dwBytesRecorded > cbPrerollNominalMax)
+               if(lpmh->dwBytesRecorded > cbPrerollNominalMax && lpmh->dwBytesRecorded > 0)
                {
                   break;
                }
@@ -2339,20 +2339,28 @@ smf_Open_File_Cleanup:
             m_ptracks->ToWorkStorage();
          }
 
-         ::music::e_result buffer::SetTempoShift(int32_t iTempoShift)
+
+         ::music::e_result buffer::SetTempoShift(int32_t dTempoShift)
          {
-            m_iTempoShift = iTempoShift;
-            return ::music::success;
+
+            return ::music::midi::file::buffer::SetTempoShift(dTempoShift);
+            
          }
 
-         int32_t buffer::GetTempoShift()
+
+         double buffer::GetTempoShift()
          {
-            return m_iTempoShift;
+
+            return ::music::midi::file::buffer::GetTempoShift();
+
          }
+
 
          double buffer::GetTempoShiftRate()
          {
-            return exp((double) m_iTempoShift * log(3.0) / 10.0);
+
+            return ::music::midi::file::buffer::GetTempoShiftRate();
+
          }
 
 
@@ -2517,7 +2525,7 @@ smf_Open_File_Cleanup:
             while(true)
             {
                ASSERT(lpmh->dwBytesRecorded <= lpmh->dwBufferLength);
-               if(lpmh->dwBytesRecorded > cbPrerollNominalMax
+               if(lpmh->dwBytesRecorded > cbPrerollNominalMax && lpmh->dwBytesRecorded > 0
                   && eventptraPositionCB.get_size() <= 0)
                {
                   break;
@@ -2887,7 +2895,8 @@ smf_Open_File_Cleanup:
                uint32_t dwTempo =   (((uint32_t)m_keyframe.rbTempo[0])<<16)|
                   (((uint32_t)m_keyframe.rbTempo[1])<<8)|
                   ((uint32_t)m_keyframe.rbTempo[2]);
-               dwTempo = (uint32_t) ((double) dwTempo / GetTempoShiftRate());
+               double dTempoShiftRate = GetTempoShiftRate();
+               dwTempo = (uint32_t) ((double) dwTempo / dTempoShiftRate);
                uint32_t dw = (((uint32_t)MEVT_TEMPO)<<24)| dwTempo;
 
                *lpdw++ = dw;
