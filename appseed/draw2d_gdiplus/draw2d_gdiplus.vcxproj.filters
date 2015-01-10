@@ -9,9 +9,6 @@
       <UniqueIdentifier>{740b13d3-bf25-4793-a3e0-4d13e3e71c4a}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl</Extensions>
     </Filter>
-    <Filter Include="Source Files\NewFilter1">
-      <UniqueIdentifier>{c4835072-1ada-49ab-ab4d-b03b2095cd8f}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
