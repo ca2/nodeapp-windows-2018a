@@ -1684,10 +1684,12 @@ gdi_fallback:
    bool graphics::SetPixelV(POINT point, COLORREF crColor)
    { ASSERT(get_handle1() != NULL); 
    return ::SetPixelV(get_handle1(), point.x, point.y, crColor) != FALSE; }
-   bool graphics::AngleArc(int32_t x, int32_t y, int32_t nRadius,
-      float fStartAngle, float fSweepAngle)
+   
+   bool graphics::AngleArc(int32_t x, int32_t y, int32_t nRadius, float fStartAngle, float fSweepAngle)
    { ASSERT(get_handle1() != NULL); 
    return ::AngleArc(get_handle1(), x, y, nRadius, fStartAngle, fSweepAngle) != FALSE; }
+
+
    bool graphics::ArcTo(const RECT &  rectParam,POINT ptStart,POINT ptEnd)
    { ASSERT(get_handle1() != NULL); 
    return ArcTo(rectParam.left, rectParam.top, rectParam.right,
