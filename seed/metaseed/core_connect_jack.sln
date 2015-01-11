@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\app.vcxproj", "{19841115-1984-0411-1977-021977151984}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86} = {E2D7833B-9B59-4826-BBDF-C270A2115E86}
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E} = {7784C5D3-AA89-4978-8A1C-96179FB2192E}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "aqua", "..\..\..\app\appseed\aqua\aqua.vcxproj", "{51778453-C0AA-419D-A87F-4338C9DDE3FA}"
@@ -33,6 +34,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "draw2d_gdiplus", "..\..\appseed\draw2d_gdiplus\draw2d_gdiplus.vcxproj", "{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wndfrm_core", "..\..\..\app-core\appseed\wndfrm_core\wndfrm_core.vcxproj", "{E2D7833B-9B59-4826-BBDF-C270A2115E86}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "netnode_netshare_server", "..\..\..\app-core\appseed\connect_jack\connect_jack_server.vcxproj", "{7784C5D3-AA89-4978-8A1C-96179FB2192E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -444,6 +447,34 @@ Global
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.static_basis|Win32.Build.0 = static_basis|Win32
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.static_basis|x64.ActiveCfg = static_basis|x64
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.static_basis|x64.Build.0 = static_basis|x64
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.basis|Win32.ActiveCfg = basis|Win32
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.basis|Win32.Build.0 = basis|Win32
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.basis|x64.ActiveCfg = basis|x64
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.basis|x64.Build.0 = basis|x64
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.codeanalysis|x64.Build.0 = codeanalysis|x64
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.memdleak|Win32.ActiveCfg = memdleak|Win32
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.memdleak|Win32.Build.0 = memdleak|Win32
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.memdleak|x64.ActiveCfg = memdleak|x64
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.memdleak|x64.Build.0 = memdleak|x64
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.no_precompiled_header|Win32.ActiveCfg = basis|Win32
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.no_precompiled_header|Win32.Build.0 = basis|Win32
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.no_precompiled_header|x64.ActiveCfg = basis|x64
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.no_precompiled_header|x64.Build.0 = basis|x64
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.profiler|Win32.ActiveCfg = profiler|Win32
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.profiler|Win32.Build.0 = profiler|Win32
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.profiler|x64.ActiveCfg = profiler|x64
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.profiler|x64.Build.0 = profiler|x64
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.stage|Win32.ActiveCfg = stage|Win32
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.stage|Win32.Build.0 = stage|Win32
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.stage|x64.ActiveCfg = stage|x64
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.stage|x64.Build.0 = stage|x64
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.static_basis|Win32.ActiveCfg = basis|Win32
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.static_basis|Win32.Build.0 = basis|Win32
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.static_basis|x64.ActiveCfg = basis|x64
+		{7784C5D3-AA89-4978-8A1C-96179FB2192E}.static_basis|x64.Build.0 = basis|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
