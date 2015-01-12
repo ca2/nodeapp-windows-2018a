@@ -36,6 +36,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wndfrm_core", "..\..\..\app
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_connect_jack", "..\..\..\app-core\appseed\connect_jack\connect_jack.vcxproj", "{7784C5D3-AA89-4978-8A1C-96179FB2192E}"
 	ProjectSection(ProjectDependencies) = postProject
+		{84517714-2000-419D-A87F-4338C9DDE3FA} = {84517714-2000-419D-A87F-4338C9DDE3FA}
 		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
 		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86} = {E2D7833B-9B59-4826-BBDF-C270A2115E86}
@@ -59,6 +60,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core", "..\..\appseed\app_core\app_core.vcxproj", "{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "draw2d_gdi", "..\..\appseed\draw2d_gdi\draw2d_gdi.vcxproj", "{87965269-EA4E-42AA-A3AF-A2030D49DC5C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axispng", "..\..\..\app\axis\png\axispng.vcxproj", "{84517714-2000-419D-A87F-4338C9DDE3FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -610,6 +613,34 @@ Global
 		{87965269-EA4E-42AA-A3AF-A2030D49DC5C}.static_basis|Win32.Build.0 = static_basis|Win32
 		{87965269-EA4E-42AA-A3AF-A2030D49DC5C}.static_basis|x64.ActiveCfg = static_basis|x64
 		{87965269-EA4E-42AA-A3AF-A2030D49DC5C}.static_basis|x64.Build.0 = static_basis|x64
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.basis|Win32.ActiveCfg = basis|Win32
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.basis|Win32.Build.0 = basis|Win32
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.basis|x64.ActiveCfg = basis|x64
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.basis|x64.Build.0 = basis|x64
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.codeanalysis|x64.Build.0 = codeanalysis|x64
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.memdleak|Win32.ActiveCfg = memdleak|Win32
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.memdleak|Win32.Build.0 = memdleak|Win32
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.memdleak|x64.ActiveCfg = memdleak|x64
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.memdleak|x64.Build.0 = memdleak|x64
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.no_precompiled_header|Win32.ActiveCfg = no_precompiled_header|Win32
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.no_precompiled_header|Win32.Build.0 = no_precompiled_header|Win32
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.no_precompiled_header|x64.ActiveCfg = no_precompiled_header|x64
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.no_precompiled_header|x64.Build.0 = no_precompiled_header|x64
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.profiler|Win32.ActiveCfg = profiler|Win32
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.profiler|Win32.Build.0 = profiler|Win32
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.profiler|x64.ActiveCfg = profiler|x64
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.profiler|x64.Build.0 = profiler|x64
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.stage|Win32.ActiveCfg = stage|Win32
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.stage|Win32.Build.0 = stage|Win32
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.stage|x64.ActiveCfg = stage|x64
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.stage|x64.Build.0 = stage|x64
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.static_basis|Win32.ActiveCfg = static_basis|Win32
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.static_basis|Win32.Build.0 = static_basis|Win32
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.static_basis|x64.ActiveCfg = static_basis|x64
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.static_basis|x64.Build.0 = static_basis|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
