@@ -1653,7 +1653,7 @@ gdi_fallback:
          if(pgraphicsSrc->get_current_bitmap()->get_os_data() == NULL)
             return false;
 
-         Gdiplus::PointF p[3];
+         Gdiplus::Point p[3];
 
          p[0].X = lpPoint[0].x;
          p[0].Y = lpPoint[0].y;
@@ -1662,9 +1662,7 @@ gdi_fallback:
          p[2].X = lpPoint[2].x;
          p[2].Y = lpPoint[2].y;
 
-         return m_pgraphics->DrawImage(
-            (Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data(),
-            p, 3) == Gdiplus::Status::Ok;
+         return m_pgraphics->DrawImage((Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data(), p, 3) == Gdiplus::Status::Ok;
 
       }
       catch(...)
