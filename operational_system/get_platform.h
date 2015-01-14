@@ -18,7 +18,8 @@
 
 
 
-#include "inttypes.h"
+#include <inttypes.h>
+#include <wchar.h>
 
 
 #define IMPLEMENT_VISTA_TOOLS
