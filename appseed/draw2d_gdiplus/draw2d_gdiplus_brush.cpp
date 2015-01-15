@@ -152,8 +152,8 @@ namespace draw2d_gdiplus
             try
             {
                ((brush *) this)->m_pbrush = new Gdiplus::LinearGradientBrush(
-                  Gdiplus::Point(m_pt1.x, m_pt1.y),
-                  Gdiplus::Point(m_pt2.x, m_pt2.y),
+                  Gdiplus::PointF((Gdiplus::REAL) m_pt1.x,(Gdiplus::REAL) m_pt1.y),
+                  Gdiplus::PointF((Gdiplus::REAL) m_pt2.x,(Gdiplus::REAL) m_pt2.y),
                   Gdiplus::Color(argb_get_a_value(m_cr1), argb_get_r_value(m_cr1), argb_get_g_value(m_cr1), argb_get_b_value(m_cr1)),
                   Gdiplus::Color(argb_get_a_value(m_cr2), argb_get_r_value(m_cr2), argb_get_g_value(m_cr2), argb_get_b_value(m_cr2)));
             }
@@ -167,7 +167,7 @@ namespace draw2d_gdiplus
             {
 
                Gdiplus::GraphicsPath * gp = new Gdiplus::GraphicsPath();
-               gp->AddEllipse(m_pt.x - m_size.cx / 2, m_pt.y - m_size.cy/2, m_size.cx, m_size.cy);
+               gp->AddEllipse((Gdiplus::REAL) (m_pt.x - m_size.cx / 2),(Gdiplus::REAL)(m_pt.y - m_size.cy / 2),(Gdiplus::REAL) (m_size.cx),(Gdiplus::REAL) (m_size.cy));
 
                Gdiplus::PathGradientBrush * pgb = new Gdiplus::PathGradientBrush(gp);
 
@@ -176,7 +176,7 @@ namespace draw2d_gdiplus
 
                   INT c = 1;
 
-               pgb->SetCenterPoint(Gdiplus::PointF(m_pt.x,m_pt.y));
+                  pgb->SetCenterPoint(Gdiplus::PointF((Gdiplus::REAL) m_pt.x,(Gdiplus::REAL) m_pt.y));
                pgb->SetCenterColor(c1);
                pgb->SetSurroundColors(&c2,&c);
 
