@@ -11,9 +11,20 @@ BEGIN_EXTERN_C
 
 int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
 {
-
    if(!defer_core_init())
       return -1;
+
+   if(::str::find_ci("session=",lpCmdLine) >= 0)
+   {
+    
+      if(file_exists_dup("C:\\ca2\\config\\system\\wait_on_session_arg.txt"))
+      {
+         
+         Sleep(10000);
+
+      }
+
+   }
 
    if(file_exists_dup("C:\\ca2\\config\\system\\beg_debug_box.txt"))
    {
