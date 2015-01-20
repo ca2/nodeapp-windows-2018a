@@ -16,7 +16,9 @@
     <ClInclude Include="audio_mmsystem_wave_out.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="audio_mmsystem_command.h" />
+    <ClInclude Include="audio_mmsystem_command.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
