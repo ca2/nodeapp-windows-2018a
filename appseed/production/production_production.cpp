@@ -827,10 +827,10 @@ namespace production
          {
             return 1;
          }
-         if (!release_crxca2("x86"))
-         {
-            return 1;
-         }
+         //if (!release_crxca2("x86"))
+         //{
+           // return 1;
+         //}
          /*if(!release_crxca2("x64"))
          {
          return 1;
