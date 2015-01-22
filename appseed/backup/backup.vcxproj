@@ -1120,6 +1120,9 @@
     <ProjectReference Include="..\..\..\app\appseed\core\core.vcxproj">
       <Project>{e000ffaf-392f-4e32-bf51-fd7ed638991f}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\app\appseed\html\html.vcxproj">
+      <Project>{6c7004d3-ff6c-4872-8ddc-5d7f44b0bc57}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\production\production.vcxproj">
       <Project>{6945864b-2816-46b3-ab26-c31a208a01c9}</Project>
     </ProjectReference>
