@@ -3639,7 +3639,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       format.SetFormatFlags(format.GetFormatFlags() 
                              | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
-                             | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap);
+                             | Gdiplus::StringFormatFlagsLineLimit);
 
       if(nFormat & DT_LEFT)
       {
@@ -3674,6 +3674,8 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       {
          format.SetLineAlignment(Gdiplus::StringAlignmentNear);
       }
+
+//      format.SetFormatFlags(Gdiplus::Form
 
       //m_dFontSize             = fontSrc.m_dFontSize;
 
