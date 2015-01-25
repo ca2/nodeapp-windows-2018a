@@ -34,7 +34,7 @@ namespace production
 
       virtual void install_message_handling(::message::dispatch * pinterface);
 
-	   virtual void on_update(sp(::aura::impact) pSender, LPARAM lHint, ::object* pHint);
+	   virtual void on_update(::aura::impact * pSender, LPARAM lHint, ::object* pHint);
 	   virtual bool pre_create_window(::user::create_struct& cs);
 
 

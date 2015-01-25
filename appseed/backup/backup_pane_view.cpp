@@ -48,7 +48,7 @@ namespace backup
       
    }
 
-   void pane_view::on_update(sp(::aura::impact) pSender, LPARAM lHint, ::object* pHint) 
+   void pane_view::on_update(::aura::impact * pSender, LPARAM lHint, ::object* pHint) 
    {
       ::user::tab_view::on_update(pSender, lHint, pHint);
       if(lHint == 543218)
