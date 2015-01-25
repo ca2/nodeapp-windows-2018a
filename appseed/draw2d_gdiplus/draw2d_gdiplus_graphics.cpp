@@ -3675,7 +3675,9 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          format.SetLineAlignment(Gdiplus::StringAlignmentNear);
       }
 
-//      format.SetFormatFlags(Gdiplus::Form
+      Gdiplus::REAL stops[] ={16,32,48, 64,80,96,112,128};
+
+      format.SetTabStops(0,8,stops);
 
       //m_dFontSize             = fontSrc.m_dFontSize;
 
