@@ -267,6 +267,8 @@ namespace draw2d_gdiplus
 
       m_ppath->AddArc(rectf, (Gdiplus::REAL) iStart, (Gdiplus::REAL) iAngle);
 
+      
+
       return true;
 
    }
@@ -336,7 +338,16 @@ namespace draw2d_gdiplus
       rect.top = (LONG)(arc.m_yCenter - arc.m_dRadiusY);
       rect.bottom = (LONG)(arc.m_yCenter + arc.m_dRadiusY);
 
-      return internal_add_arc(rect,(int)(arc.m_dAngle1 * 180.0 / 3.1415),(int)(arc.m_dAngle2 * 180.0 / 3.1415));
+      bool bOk = internal_add_arc(rect,(int)(arc.m_dAngle1 * 180.0 / 3.1415),(int)(arc.m_dAngle* 180.0 / 3.1415));
+
+      if(bOk)
+      {
+
+         internal_add_move(arc.m_ptEnd.x,arc.m_ptEnd.y);
+
+      }
+
+      return bOk;
 
    }
 
