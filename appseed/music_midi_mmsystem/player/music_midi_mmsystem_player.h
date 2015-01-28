@@ -83,7 +83,7 @@ namespace music
                   DECL_GEN_SIGNAL(OnMultimediaMidiOutputMessagePositionCB);
 
                   // midi central listener
-                  DECL_GEN_VSIGNAL(on_attribute_change);
+                  DECL_GEN_SIGNAL(on_attribute_change);
 
 
             };
