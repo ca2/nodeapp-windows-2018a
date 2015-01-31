@@ -523,6 +523,7 @@ namespace production
             m_pproduction->m_straFiles, 
             "C:\\ca2\\vrel\\" + m_pproduction->m_strVersion + "\\" + m_pproduction->m_strFormatBuild, 
             strBase,
+            true,
             false, 
             this);
 
