@@ -178,7 +178,7 @@ namespace production
             Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
 
-            string strTwit =  version_to_international_datetime(::datetime::time::get_current_time()) + "UTC Retried " + ::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!";
+            string strTwit =  version_to_international_datetime(m_strStartTime) + " UTC Retried " + ::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!";
 
             twitter_twit(strTwit);
 
