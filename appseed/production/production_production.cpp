@@ -178,7 +178,7 @@ namespace production
             Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
 
-            string strTwit = "Retried " + ::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!";
+            string strTwit =  version_to_international_datetime(::datetime::time::get_current_time()) + "UTC Retried " + ::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!";
 
             twitter_twit(strTwit);
 
@@ -590,11 +590,11 @@ namespace production
 
                if(m_iGlobalRetry <= 0)
                {
-                  strTwit = "ca2twit-lib : new " + m_strVersion + " build starting " + version_to_international_datetime(m_strBuild) + ". More details at http://status.ca2.cc/" + m_strStatusEmail;
+                  strTwit = "ca2twit-lib : new " + m_strVersion + " build starting " + version_to_international_datetime(m_strBuild) + " UTC. More details at http://status.ca2.cc/" + m_strStatusEmail;
                }
                else
                {
-                  strTwit = "ca2twit-lib : " + m_strTry + " automatic retry " + m_strVersion + " build starting " + version_to_international_datetime(m_strBuild) + ". More details at http://status.ca2.cc/" + m_strStatusEmail;
+                  strTwit = "ca2twit-lib : " + m_strTry + " automatic retry " + m_strVersion + " build starting " + version_to_international_datetime(m_strBuild) + " UTC. More details at http://status.ca2.cc/" + m_strStatusEmail;
                }
 
                twitter_twit(strTwit);
