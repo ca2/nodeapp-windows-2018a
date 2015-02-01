@@ -11,6 +11,9 @@ BEGIN_EXTERN_C
 
 int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
 {
+
+   DWORD dwStartTime = ::get_tick_count();
+
    if(!defer_core_init())
       return -1;
 
@@ -32,7 +35,7 @@ int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lp
 
    char szTimeMessage[2048];
 
-   sprintf(szTimeMessage,"\n\n\n\n\n\n-------------------------------\n|\n|\n|  Total Elapsed Time %d\n|\n|\n-------------------------------\n\n\n",(uint32_t) ::get_tick_count() - g_dwStartTime);
+   sprintf(szTimeMessage,"\n\n\n\n\n\n-------------------------------\n|\n|\n|  Total Elapsed Time %d\n|\n|\n-------------------------------\n\n\n",(uint32_t) ::get_tick_count() - dwStartTime);
 
    ::OutputDebugStringA(szTimeMessage);
 

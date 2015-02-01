@@ -65,6 +65,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_rdpclient", "..\..
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app._", "..\..\..\app-core\appseed\appfy\appfy.vcxproj", "{3DDD6C31-218E-4979-B095-8AF22563D9C1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB} = {1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axis", "..\..\..\app\appseed\axis\axis.vcxproj", "{73A245F9-C92F-4487-AEF7-CB0531F665BD}"
 EndProject
@@ -109,12 +113,39 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axiscrypto", "..\..\..\app\axis\crypto\axiscrypto.vcxproj", "{39807406-816F-4C0D-A632-4BB8AB13887B}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_veriedit", "..\..\..\app-core\appseed\veriedit\veriedit.vcxproj", "{A3BC8F29-5353-4E22-8362-C531B2727FE3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB} = {1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_verilux", "..\..\..\app-core\appseed\verilux\verilux.vcxproj", "{32AFCA36-804D-4FC9-9D86-6EB6655B8EC0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB} = {1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_verifile", "..\..\..\app-core\appseed\verifile\verifile.vcxproj", "{736FAF53-E163-4D5F-94FA-E3DCF2EC43AB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB} = {1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tesseract", "..\..\..\app-core\appseed\tesseract\tesseract.vcxproj", "{437699AD-7464-4E5F-ACF3-7167487A9E3D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_tarsila", "..\..\..\app-core\appseed\tarsila\tarsila.vcxproj", "{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB} = {1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1438D45C-7748-48E3-BCA9-21E5A72EB46E}"
+	ProjectSection(SolutionItems) = preProject
+		Performance1.psess = Performance1.psess
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1114,8 +1145,39 @@ Global
 		{437699AD-7464-4E5F-ACF3-7167487A9E3D}.static_basis|Win32.Build.0 = static_basis|Win32
 		{437699AD-7464-4E5F-ACF3-7167487A9E3D}.static_basis|x64.ActiveCfg = static_basis|x64
 		{437699AD-7464-4E5F-ACF3-7167487A9E3D}.static_basis|x64.Build.0 = static_basis|x64
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.basis|Win32.ActiveCfg = basis|Win32
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.basis|Win32.Build.0 = basis|Win32
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.basis|x64.ActiveCfg = basis|x64
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.basis|x64.Build.0 = basis|x64
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.codeanalysis|x64.Build.0 = codeanalysis|x64
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.memdleak|Win32.ActiveCfg = memdleak|Win32
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.memdleak|Win32.Build.0 = memdleak|Win32
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.memdleak|x64.ActiveCfg = memdleak|x64
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.memdleak|x64.Build.0 = memdleak|x64
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.no_precompiled_header|Win32.ActiveCfg = basis|Win32
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.no_precompiled_header|Win32.Build.0 = basis|Win32
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.no_precompiled_header|x64.ActiveCfg = basis|x64
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.no_precompiled_header|x64.Build.0 = basis|x64
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.profiler|Win32.ActiveCfg = profiler|Win32
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.profiler|Win32.Build.0 = profiler|Win32
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.profiler|x64.ActiveCfg = profiler|x64
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.profiler|x64.Build.0 = profiler|x64
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.stage|Win32.ActiveCfg = stage|Win32
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.stage|Win32.Build.0 = stage|Win32
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.stage|x64.ActiveCfg = stage|x64
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.stage|x64.Build.0 = stage|x64
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.static_basis|Win32.ActiveCfg = static_basis|Win32
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.static_basis|Win32.Build.0 = static_basis|Win32
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.static_basis|x64.ActiveCfg = static_basis|x64
+		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.static_basis|x64.Build.0 = static_basis|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal
