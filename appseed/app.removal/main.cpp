@@ -285,24 +285,72 @@ int32_t removal::run()
    system("taskkill /F /IM plugin-container.exe");
    system("taskkill /F /IM iexplore.exe");
    system("taskkill /F /IM firefox.exe");
+
+   string strOnlyDrives = file_as_string_dup("C:\\ca2\\app-removal\\only_drives.txt");
+   stringa straDrives;
+   straDrives.explode(",",strOnlyDrives);
    
    g_n_rmdir_n_v(FOLDERID_ProgramFilesX86, "ca2");
    g_n_rmdir_n_v(FOLDERID_ProgramFiles,"ca2");
-   g_n_rmdir_n_v(FOLDERID_ProgramData, "ca2");
+
+   if(straDrives.has_elements())
+   {
+      for(index i = 0; i < straDrives.get_count(); i++)
+      {
+         g_n_rmdir_n_v(FOLDERID_ProgramData,"ca2\\_" + straDrives[i]);
+      }
+   }
+   else
+   {
+      g_n_rmdir_n_v(FOLDERID_ProgramData,"ca2");
+   }
 
    g_n_rmdir_n_v(FOLDERID_LocalAppData, "VirtualStore\\Program Files (x86)\\ca2");
    g_n_rmdir_n_v(FOLDERID_LocalAppData,"VirtualStore\\Program Files\\ca2");
-   g_n_rmdir_n_v(FOLDERID_LocalAppData, "VirtualStore\\ProgramData\\ca2");
+   if(straDrives.has_elements())
+   {
+      for(index i = 0; i < straDrives.get_count(); i++)
+      {
+         g_n_rmdir_n_v(FOLDERID_LocalAppData,"VirtualStore\\ProgramData\\ca2\\_" + straDrives[i]);
+      }
+   }
+   else
+   {
+      g_n_rmdir_n_v(FOLDERID_LocalAppData,"VirtualStore\\ProgramData\\ca2");
+   }
 
-   g_n_rmdir_n_v(FOLDERID_Profile,"ca2");
-   g_n_rmdir_n_v(FOLDERID_LocalAppDataLow,"ca2");
-   g_n_rmdir_n_v(FOLDERID_RoamingAppData, "ca2");
-   g_n_rmdir_n_v(FOLDERID_LocalAppData,"ca2");
+   if(straDrives.has_elements())
+   {
+      for(index i = 0; i < straDrives.get_count(); i++)
+      {
 
-   g_n_rmdir_n_v(FOLDERID_LocalAppDataLow,"core");
-   g_n_rmdir_n_v(FOLDERID_Profile,"core");
-   g_n_rmdir_n_v(FOLDERID_RoamingAppData,"core");
-   g_n_rmdir_n_v(FOLDERID_RoamingAppData,"core");
+         string strCa2 = "ca2\\_" + straDrives[i];
+
+         g_n_rmdir_n_v(FOLDERID_Profile,strCa2);
+         g_n_rmdir_n_v(FOLDERID_LocalAppDataLow,strCa2);
+         g_n_rmdir_n_v(FOLDERID_RoamingAppData,strCa2);
+         g_n_rmdir_n_v(FOLDERID_LocalAppData,strCa2);
+
+         string strCore = "core\\_" + straDrives[i];
+
+         g_n_rmdir_n_v(FOLDERID_LocalAppDataLow,strCore);
+         g_n_rmdir_n_v(FOLDERID_Profile,strCore);
+         g_n_rmdir_n_v(FOLDERID_RoamingAppData,strCore);
+         g_n_rmdir_n_v(FOLDERID_RoamingAppData,strCore);
+      }
+   }
+   else
+   {
+      g_n_rmdir_n_v(FOLDERID_Profile,"ca2");
+      g_n_rmdir_n_v(FOLDERID_LocalAppDataLow,"ca2");
+      g_n_rmdir_n_v(FOLDERID_RoamingAppData,"ca2");
+      g_n_rmdir_n_v(FOLDERID_LocalAppData,"ca2");
+
+      g_n_rmdir_n_v(FOLDERID_LocalAppDataLow,"core");
+      g_n_rmdir_n_v(FOLDERID_Profile,"core");
+      g_n_rmdir_n_v(FOLDERID_RoamingAppData,"core");
+      g_n_rmdir_n_v(FOLDERID_RoamingAppData,"core");
+   }
 
    ::DeleteFile("C:\\Windows\\Downloaded Program Files\\iexca2.dll");
    ::DeleteFile("C:\\Windows\\Downloaded Program Files\\iexca2.inf");
