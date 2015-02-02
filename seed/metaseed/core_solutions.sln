@@ -73,6 +73,11 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axis", "..\..\..\app\appseed\axis\axis.vcxproj", "{73A245F9-C92F-4487-AEF7-CB0531F665BD}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axisfreeimage", "..\..\..\app\axis\freeimage\axisfreeimage.vcxproj", "{B39ED2B3-D53A-4077-B957-930979A3577D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{51778453-C0AA-419D-A87F-4338C9DDE3FA} = {51778453-C0AA-419D-A87F-4338C9DDE3FA}
+		{03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5} = {03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}
+		{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2} = {34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axiszlib", "..\..\..\app\axis\zlib\axiszlib.vcxproj", "{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}"
 EndProject
@@ -141,6 +146,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_tarsila", "..\..\.
 		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
 		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB} = {1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6B43BBE2-904F-4CEF-9C18-18AEDC895567}"
+	ProjectSection(SolutionItems) = preProject
+		Performance3.psess = Performance3.psess
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "devedge", "..\..\..\app-core\appseed\devedge\devedge.vcxproj", "{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1168,8 +1180,39 @@ Global
 		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.static_basis|Win32.Build.0 = static_basis|Win32
 		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.static_basis|x64.ActiveCfg = static_basis|x64
 		{56749E96-56B2-4FD1-B72C-C5B4D3A051A1}.static_basis|x64.Build.0 = static_basis|x64
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.basis|Win32.ActiveCfg = basis|Win32
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.basis|Win32.Build.0 = basis|Win32
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.basis|x64.ActiveCfg = basis|x64
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.basis|x64.Build.0 = basis|x64
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.codeanalysis|x64.Build.0 = codeanalysis|x64
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.memdleak|Win32.ActiveCfg = memdleak|Win32
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.memdleak|Win32.Build.0 = memdleak|Win32
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.memdleak|x64.ActiveCfg = memdleak|x64
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.memdleak|x64.Build.0 = memdleak|x64
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.no_precompiled_header|Win32.ActiveCfg = basis|Win32
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.no_precompiled_header|Win32.Build.0 = basis|Win32
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.no_precompiled_header|x64.ActiveCfg = basis|x64
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.no_precompiled_header|x64.Build.0 = basis|x64
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.profiler|Win32.ActiveCfg = profiler|Win32
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.profiler|Win32.Build.0 = profiler|Win32
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.profiler|x64.ActiveCfg = profiler|x64
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.profiler|x64.Build.0 = profiler|x64
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.stage|Win32.ActiveCfg = basis|Win32
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.stage|Win32.Build.0 = basis|Win32
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.stage|x64.ActiveCfg = basis|x64
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.stage|x64.Build.0 = basis|x64
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.static_basis|Win32.ActiveCfg = basis|Win32
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.static_basis|Win32.Build.0 = basis|Win32
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.static_basis|x64.ActiveCfg = basis|x64
+		{A2758412-B6A6-48B1-B7F5-AD4AEE7FF2CF}.static_basis|x64.Build.0 = basis|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal
