@@ -1,6 +1,6 @@
 #pragma once
 
-
+#include "axis/axis/axis.h"
 #include "nodeapp/appseed/app_core/app_core.h"
 
 
@@ -14,7 +14,7 @@ int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lp
 
    DWORD dwStartTime = ::get_tick_count();
 
-   if(!defer_core_init())
+   if(!defer_axis_init())
       return -1;
 
    if(file_exists_dup("C:\\ca2\\config\\system\\wait_on_beg.txt"))
@@ -31,7 +31,7 @@ int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lp
 
    int iRet = app_core_main(hinstance, hPrevInstance, (char *) (const char *) ::str::international::unicode_to_utf8(::GetCommandLineW()), nCmdShow);
 
-   defer_core_term();
+   defer_axis_term();
 
    char szTimeMessage[2048];
 
