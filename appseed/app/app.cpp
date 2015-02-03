@@ -1,6 +1,6 @@
 #pragma once
 
-
+#include "core/core/core.h"
 #include "nodeapp/appseed/app_core/app_core.h"
 
 
