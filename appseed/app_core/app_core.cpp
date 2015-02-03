@@ -12,7 +12,7 @@ extern "C" int32_t app_core_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, L
 
    UNREFERENCED_PARAMETER(lpCmdLine);
 
-   ::core::system * psystem                     = new ::core::system;
+   ::aura::system * psystem                     = g_pfn_create_system();
 
    ASSERT(hPrevInstance == NULL);
 
