@@ -291,7 +291,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_devedge", "..\..\.
 		{73A245F9-C92F-4487-AEF7-CB0531F665BD} = {73A245F9-C92F-4487-AEF7-CB0531F665BD}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "html_lite", "..\..\..\app\axis\html_lite\html_lite.vcxproj", "{9E15C807-E565-4CA8-B007-DCBF55DFF46D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "html_lite", "..\..\..\app\axis\html_lite\html_lite.vcxproj", "{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}"
 	ProjectSection(ProjectDependencies) = postProject
 		{51778453-C0AA-419D-A87F-4338C9DDE3FA} = {51778453-C0AA-419D-A87F-4338C9DDE3FA}
 		{03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5} = {03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}

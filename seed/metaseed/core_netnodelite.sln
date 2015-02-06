@@ -165,7 +165,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axisfreeimage", "..\..\..\a
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axiscrypto", "..\..\..\app\axis\crypto\axiscrypto.vcxproj", "{39807406-816F-4C0D-A632-4BB8AB13887B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "html_lite", "..\..\..\app\axis\html_lite\html_lite.vcxproj", "{6C7004D3-FF6C-4872-8DDC-5D7F44B0BC57}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "html_lite", "..\..\..\app\axis\html_lite\html_lite.vcxproj", "{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "base", "..\..\..\app\appseed\base\base.vcxproj", "{4D7D3626-ADA6-4CA2-9566-ED7B131E3D51}"
 EndProject
