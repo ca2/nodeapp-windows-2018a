@@ -40,6 +40,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_verilux", "..\..\.
 	ProjectSection(ProjectDependencies) = postProject
 		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
 		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86} = {E2D7833B-9B59-4826-BBDF-C270A2115E86}
 		{29676444-4D0F-4DD0-9104-0499D94DA2C9} = {29676444-4D0F-4DD0-9104-0499D94DA2C9}
 		{51778453-C0AA-419D-A87F-4338C9DDE3FA} = {51778453-C0AA-419D-A87F-4338C9DDE3FA}
 		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB} = {1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}
@@ -52,6 +53,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_verilux", "..\..\.
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axiscrypto", "..\..\..\app\axis\crypto\axiscrypto.vcxproj", "{39807406-816F-4C0D-A632-4BB8AB13887B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{83491936-E852-4350-9911-001967692CB4}"
+	ProjectSection(SolutionItems) = preProject
+		Performance2.psess = Performance2.psess
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wndfrm_core", "..\..\..\app-core\appseed\wndfrm_core\wndfrm_core.vcxproj", "{E2D7833B-9B59-4826-BBDF-C270A2115E86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -547,8 +555,39 @@ Global
 		{39807406-816F-4C0D-A632-4BB8AB13887B}.static_basis|Win32.Build.0 = static_basis|Win32
 		{39807406-816F-4C0D-A632-4BB8AB13887B}.static_basis|x64.ActiveCfg = static_basis|x64
 		{39807406-816F-4C0D-A632-4BB8AB13887B}.static_basis|x64.Build.0 = static_basis|x64
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.basis|Win32.ActiveCfg = basis|Win32
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.basis|Win32.Build.0 = basis|Win32
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.basis|x64.ActiveCfg = basis|x64
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.basis|x64.Build.0 = basis|x64
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.codeanalysis|x64.Build.0 = codeanalysis|x64
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.memdleak|Win32.ActiveCfg = memdleak|Win32
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.memdleak|Win32.Build.0 = memdleak|Win32
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.memdleak|x64.ActiveCfg = memdleak|x64
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.memdleak|x64.Build.0 = memdleak|x64
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.no_precompiled_header|Win32.ActiveCfg = no_precompiled_header|Win32
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.no_precompiled_header|Win32.Build.0 = no_precompiled_header|Win32
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.no_precompiled_header|x64.ActiveCfg = no_precompiled_header|x64
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.no_precompiled_header|x64.Build.0 = no_precompiled_header|x64
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.profiler|Win32.ActiveCfg = profiler|Win32
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.profiler|Win32.Build.0 = profiler|Win32
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.profiler|x64.ActiveCfg = profiler|x64
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.profiler|x64.Build.0 = profiler|x64
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.stage|Win32.ActiveCfg = stage|Win32
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.stage|Win32.Build.0 = stage|Win32
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.stage|x64.ActiveCfg = stage|x64
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.stage|x64.Build.0 = stage|x64
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.static_basis|Win32.ActiveCfg = static_basis|Win32
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.static_basis|Win32.Build.0 = static_basis|Win32
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.static_basis|x64.ActiveCfg = static_basis|x64
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.static_basis|x64.Build.0 = static_basis|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal
