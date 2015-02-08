@@ -95,42 +95,49 @@ namespace draw2d_gdiplus
 
       if(m_spbitmap.m_p == NULL)
       {
+
          m_size.cx       = 0;
+
          m_size.cy       = 0;
+
          m_iScan     = 0;
+
          return false;
+
       }
       
       if(!m_spbitmap->CreateDIBSection(NULL, &m_info, DIB_RGB_COLORS, (void **) &m_pcolorref, &m_iScan, NULL, 0))
       {
-         m_size.cx       = 0;
-         m_size.cy       = 0;
-         m_iScan     = 0;
+
+         m_size.cx      = 0;
+
+         m_size.cy      = 0;
+
+         m_iScan        = 0;
+
          return false;
+
       }
 
-      if(m_spbitmap->get_os_data() != NULL)
+      if(m_spbitmap->get_os_data() == NULL)
       {
-         //m_spgraphics->CreateCompatibleDC(NULL);
-         ::draw2d::bitmap * pbitmap = m_spgraphics->SelectObject(m_spbitmap);
-         //m_hbitmapOriginal
-         /*if(pbitmap == NULL || pbitmap->get_os_data() == NULL)
-         {
-            Destroy();
-            return FALSE;
-         }
-         ((Gdiplus::Bitmap *)pbitmap->get_os_data())->GetHBITMAP(Gdiplus::Color(0, 0, 0, 0), &m_hbitmapOriginal);*/
-         m_spgraphics->m_pdib = this;
-         m_size.cx       = width;
-         m_size.cy       = height;
-         return true;
-      }
-      else
-      {
-         Destroy();
+         
+         destroy();
+
          return false;
+
       }
+
+      m_spgraphics->m_pdib = this;
+
+      m_size.cx       = width;
+
+      m_size.cy       = height;
+
+      return true;
+
    }
+
 
    bool dib::dc_select(bool bSelect)
    {
