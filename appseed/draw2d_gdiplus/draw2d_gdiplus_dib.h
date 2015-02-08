@@ -48,7 +48,7 @@ namespace draw2d_gdiplus
       bool create(class size size);
       bool create(int32_t iWidth, int32_t iHeight);
       bool create(::draw2d::graphics * pdc);
-      bool Destroy();
+      bool destroy();
 
 
 

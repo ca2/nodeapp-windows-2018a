@@ -56,7 +56,9 @@ namespace draw2d_gdiplus
 
    dib::~dib ()
    {
-      Destroy ();
+      
+      destroy ();
+
    }
 
    bool dib::create(class size size)
@@ -66,18 +68,19 @@ namespace draw2d_gdiplus
 
    bool dib::create(int32_t width, int32_t height)
    {
+
       if(m_spbitmap.is_set()
       && m_spbitmap->get_os_data() != NULL 
       && width == m_size.cx
       && height == m_size.cy)
          return TRUE;
 
-      Destroy();
+      destroy();
 
       if(width <= 0 || height <= 0)
-         return FALSE;
+         return true;
 
-      ZeroMemory(&m_info, sizeof (BITMAPINFO));
+      m_info ={};
 
       m_info.bmiHeader.biSize          = sizeof (BITMAPINFOHEADER);
       m_info.bmiHeader.biWidth         = width;
@@ -161,22 +164,22 @@ namespace draw2d_gdiplus
 
    }
 
-   bool dib::Destroy ()
+   
+   bool dib::destroy ()
    {
-      if(m_spbitmap.is_set())
-         ::release(m_spbitmap.m_p);
-
       
-      if(m_spgraphics.is_set())
-         ::release(m_spgraphics.m_p);
+      m_spbitmap.release();
+
+      m_spgraphics.release();
  
-      m_size.cx             = 0;
-      m_size.cy             = 0;
-      m_iScan           = 0;
+      m_size         = {};
+      m_iScan        = 0;
       m_pcolorref    = NULL;
       
-      return TRUE;
+      return true;
+
    }
+
 
    bool dib::to(::draw2d::graphics * pgraphics, point pt, class size size, point ptSrc)
    {
