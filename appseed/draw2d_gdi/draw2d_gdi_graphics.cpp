@@ -1549,7 +1549,7 @@ namespace draw2d_gdi
          bf.SourceConstantAlpha = 0xFF;
          bf.AlphaFormat = AC_SRC_ALPHA;
 
-         return ::AlphaBlend(m_hdc, x, y, nWidth, nHeight, (HDC) pdib1->get_graphics()->get_os_data(), 0, 0, nSrcWidth, nSrcHeight, bf) != FALSE;
+         return ::AlphaBlend(m_hdc,x,y,nWidth,nHeight,(HDC)pdib1->get_graphics()->get_os_data(),0,0,nWidth,nHeight,bf) != FALSE;
 
 
 
@@ -3653,7 +3653,7 @@ namespace draw2d_gdi
    }
 
 
-   void graphics::FillSolidRect(const __rect64 * lpRect, COLORREF clr)
+   void graphics::FillSolidRect(const RECT64 * lpRect, COLORREF clr)
    {
 
       rect rect32;
