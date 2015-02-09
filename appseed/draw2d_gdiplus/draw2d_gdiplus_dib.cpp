@@ -128,6 +128,8 @@ namespace draw2d_gdiplus
 
       }
 
+      m_spgraphics->SelectObject(m_spbitmap);
+
       m_spgraphics->m_pdib = this;
 
       m_size.cx       = width;
