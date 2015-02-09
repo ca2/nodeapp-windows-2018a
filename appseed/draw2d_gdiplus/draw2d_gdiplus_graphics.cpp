@@ -2447,7 +2447,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       ::ExtTextOut(get_handle1(), 0, 0, ETO_OPAQUE, lpRect, NULL, 0, NULL);
    }*/
 
-   void graphics::FillSolidRect(const __rect64 * lpRect, COLORREF clr)
+   void graphics::FillSolidRect(const RECT64 * lpRect, COLORREF clr)
    {
       rect rect32;
       ::copy(rect32, lpRect);
