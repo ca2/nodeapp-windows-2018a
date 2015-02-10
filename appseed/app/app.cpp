@@ -15,7 +15,13 @@ int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lp
    DWORD dwStartTime = ::get_tick_count();
 
    if(!defer_core_init())
-      return -1;
+   {
+
+      ::OutputDebugString("Failed to defer_core_init");
+
+      return -4;
+
+   }
 
    if(file_exists_dup("C:\\ca2\\config\\system\\wait_on_beg.txt"))
    {
@@ -31,7 +37,14 @@ int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lp
 
    int iRet = app_core_main(hinstance, hPrevInstance, (char *) (const char *) ::str::international::unicode_to_utf8(::GetCommandLineW()), nCmdShow);
 
-   defer_core_term();
+   if(!defer_core_term())
+   {
+
+      ::OutputDebugString("Failed to defer_core_term");
+
+      iRet -= 10000;
+
+   }
 
    char szTimeMessage[2048];
 
