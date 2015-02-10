@@ -1,9 +1,5 @@
 #include "framework.h"
 
-Gdiplus::GdiplusStartupInput *   g_pgdiplusStartupInput     = NULL;
-Gdiplus::GdiplusStartupOutput *  g_pgdiplusStartupOutput    = NULL;
-DWORD_PTR                        g_gdiplusToken             = NULL;
-DWORD_PTR                        g_gdiplusHookToken         = NULL;
 
 BOOL WINAPI DllMain(HINSTANCE hInstance,DWORD dwReason,LPVOID lpReserved)
 {
@@ -24,76 +20,6 @@ BOOL WINAPI DllMain(HINSTANCE hInstance,DWORD dwReason,LPVOID lpReserved)
    if(dwReason == DLL_PROCESS_ATTACH)
    {
 
-      OutputDebugStringW(L"draw2d_gdiplus.dll initializing!\n");
-
-      xxdebug_box("draw2d_gdiplus.dll DllMain","box",MB_OK);
-      g_pgdiplusStartupInput     = new Gdiplus::GdiplusStartupInput();
-      g_pgdiplusStartupOutput    = new Gdiplus::GdiplusStartupOutput();
-      g_gdiplusToken             = NULL;
-      g_gdiplusHookToken         = NULL;
-
-      g_pgdiplusStartupInput->SuppressBackgroundThread = TRUE;
-
-      Gdiplus::Status statusStartup = GdiplusStartup(&g_gdiplusToken,g_pgdiplusStartupInput,g_pgdiplusStartupOutput);
-
-      if(statusStartup != Gdiplus::Ok)
-      {
-
-         simple_message_box(NULL,"Gdiplus Failed to Startup. ca cannot continue.","Gdiplus Failure",MB_ICONERROR);
-
-         return 0;
-
-      }
-
-
-
-
-      statusStartup = g_pgdiplusStartupOutput->NotificationHook(&g_gdiplusHookToken);
-
-
-      if(statusStartup != Gdiplus::Ok)
-      {
-
-      simple_message_box(NULL,"Gdiplus Failed to Hook. ca cannot continue.","Gdiplus Failure",MB_ICONERROR);
-
-      return 0;
-
-      }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -101,13 +27,6 @@ BOOL WINAPI DllMain(HINSTANCE hInstance,DWORD dwReason,LPVOID lpReserved)
    else if(dwReason == DLL_PROCESS_DETACH)
    {
 
-      g_pgdiplusStartupOutput->NotificationUnhook(g_gdiplusHookToken);
-
-
-       ::Gdiplus::GdiplusShutdown(g_gdiplusToken);
-
-
-      OutputDebugStringW(L"draw2d_gdiplus.dll terminating!\n");
 
 
    }
