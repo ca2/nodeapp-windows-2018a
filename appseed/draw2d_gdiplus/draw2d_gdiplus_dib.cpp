@@ -2441,7 +2441,7 @@ namespace draw2d_gdiplus
    */
 #undef new
 
-
+#define NO_SCREEN_PRE_MULTIPLY_ALPHA 1
 
    bool dib::update_window(::aura::draw_interface * pwnd,signal_details * pobj)
    {
@@ -2451,6 +2451,7 @@ namespace draw2d_gdiplus
 
       pwnd->GetWindowRect(rectWindow);
 
+#if !NO_SCREEN_PRE_MULTIPLY_ALPHA
       if(pwnd->is_composite() && !m_bReduced)
       {
 
@@ -2520,7 +2521,7 @@ namespace draw2d_gdiplus
 //#endif
 //         
       }
-      
+#endif 
       rect rect(rectWindow);
 
       Application.window_graphics_update_window(pwnd->get_window_graphics(),pwnd->get_handle(),m_pcolorref,rect,m_size.cx, m_size.cy, m_iScan);
