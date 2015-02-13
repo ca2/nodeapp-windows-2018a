@@ -7,7 +7,7 @@ namespace draw2d_gdiplus
 
 
    font::font(::aura::application * papp) :
-   element(papp)
+      ::object(papp)
    {
 
       m_pfont     = NULL;
@@ -16,7 +16,7 @@ namespace draw2d_gdiplus
    }
 
    font::font(const font & font):
-      element(font.get_app())
+      ::object(font.get_app())
    {
 
       m_pfont     = NULL;

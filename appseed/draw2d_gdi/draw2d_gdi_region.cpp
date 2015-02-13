@@ -27,7 +27,7 @@ namespace draw2d_gdi
 
 
    region::region(::aura::application * papp) :
-      element(papp)
+      ::object(papp)
    {
       m_bUpdated = true;   
    }

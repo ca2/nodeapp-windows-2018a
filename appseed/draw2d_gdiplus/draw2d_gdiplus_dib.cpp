@@ -17,7 +17,7 @@ namespace draw2d_gdiplus
 
 
    dib::dib(::aura::application * papp) :
-      element(papp),
+      object(papp),
       m_spbitmap(papp),
       m_spgraphics(allocer())
    {
@@ -2441,7 +2441,7 @@ namespace draw2d_gdiplus
    */
 #undef new
 
-#define NO_SCREEN_PRE_MULTIPLY_ALPHA 1
+#define NO_SCREEN_PRE_MULTIPLY_ALPHA 0
 
    bool dib::update_window(::aura::draw_interface * pwnd,signal_details * pobj)
    {

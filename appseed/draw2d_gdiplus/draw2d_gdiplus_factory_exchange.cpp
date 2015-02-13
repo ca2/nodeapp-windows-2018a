@@ -6,7 +6,7 @@ namespace draw2d_gdiplus
 
 
    factory_exchange::factory_exchange(::aura::application * papp) :
-      element(papp)
+      object(papp)
    {
 
       System.factory().cloneable_large < dib                   >  (System.type_info < ::draw2d::dib                  > ());

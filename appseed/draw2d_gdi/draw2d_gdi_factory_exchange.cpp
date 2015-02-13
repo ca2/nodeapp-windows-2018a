@@ -6,7 +6,7 @@ namespace draw2d_gdi
 
 
    factory_exchange::factory_exchange(::aura::application * papp) :
-      element(papp)
+      object(papp)
    {
 
       init_draw2d_gdi_mutex(papp);

@@ -9,7 +9,7 @@ namespace draw2d_gdiplus
 
 
    pen::pen(::aura::application * papp) :
-      element(papp)
+      ::object(papp)
    { 
 
       m_ppen = NULL;

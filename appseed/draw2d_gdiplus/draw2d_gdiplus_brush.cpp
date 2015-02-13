@@ -7,7 +7,7 @@ namespace draw2d_gdiplus
 
 
    brush::brush(::aura::application * papp) :
-      element(papp)
+      ::object(papp)
    { 
 
       m_pbrush = NULL;

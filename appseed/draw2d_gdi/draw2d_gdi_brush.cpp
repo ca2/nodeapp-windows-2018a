@@ -6,7 +6,7 @@ namespace draw2d_gdi
 
 
    brush::brush(::aura::application * papp) :
-      element(papp)
+      ::object(papp)
    { 
       m_bProcess = false;
    }

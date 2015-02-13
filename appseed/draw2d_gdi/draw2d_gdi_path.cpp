@@ -10,7 +10,7 @@ namespace draw2d_gdi
    }
 
    path::path(::aura::application * papp):
-      ::element(papp)
+      ::object(papp)
    {
 
       }

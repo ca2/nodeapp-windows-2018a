@@ -9,7 +9,7 @@ namespace draw2d_gdiplus
 
    
    region::region(::aura::application * papp) :
-      element(papp)
+      ::object(papp)
    { 
       
       m_pregion = NULL;

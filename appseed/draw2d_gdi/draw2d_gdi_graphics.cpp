@@ -18,7 +18,7 @@ namespace draw2d_gdi
 
 
    graphics::graphics(::aura::application * papp) :
-      element(papp),
+      object(papp),
       ::draw2d::graphics(papp)
    {
 

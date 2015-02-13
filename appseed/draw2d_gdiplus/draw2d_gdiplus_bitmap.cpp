@@ -9,7 +9,7 @@ namespace draw2d_gdiplus
 
 
    bitmap::bitmap(::aura::application * papp) :
-      element(papp)
+      ::object(papp)
    { 
 
       m_pbitmap   = NULL;

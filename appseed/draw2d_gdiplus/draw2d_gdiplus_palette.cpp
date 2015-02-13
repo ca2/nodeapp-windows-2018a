@@ -4,7 +4,7 @@ namespace draw2d_gdiplus
 {
 
    palette::palette(::aura::application * papp) :
-      element(papp)
+      ::object(papp)
    { }
    palette::~palette()
    { }
