@@ -10,7 +10,7 @@ namespace multimedia
 
 
       audio_mixer::audio_mixer(sp(::axis::application) papp) :
-         element(papp),
+         ::object(papp),
          m_window(papp),
          ::multimedia::audio_mixer::audio_mixer(papp)
       {

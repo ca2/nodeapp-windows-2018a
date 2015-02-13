@@ -9,7 +9,7 @@ namespace multimedia
    {
 
       destination::destination(sp(::axis::application) papp) :
-         element(papp),
+         ::object(papp),
          ::multimedia::audio_mixer::source(papp),
          ::multimedia::audio_mixer_mmsystem::source(papp),
          ::multimedia::audio_mixer::destination(papp)

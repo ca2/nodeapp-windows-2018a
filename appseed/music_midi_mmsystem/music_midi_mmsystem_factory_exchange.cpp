@@ -14,7 +14,7 @@ namespace music
 
 
          factory_exchange::factory_exchange(sp(::axis::application) papp) :
-            element(papp),
+            ::object(papp),
             ::multimedia::mmsystem::factory_exchange(papp)
          {
 

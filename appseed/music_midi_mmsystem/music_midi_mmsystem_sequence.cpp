@@ -19,7 +19,7 @@ namespace music
 
 
          sequence::sequence(sp(::axis::application) papp) :
-            element(papp),
+            ::object(papp),
             ::ikaraoke::karaoke(papp),
             ::music::midi::object(papp),
             ::music::midi::sequence(papp),
@@ -2359,7 +2359,7 @@ seq_Preroll_Cleanup:
          }
 
          sequence::buffer::buffer(sp(::axis::application) papp) :
-            element(papp),
+            ::object(papp),
             ::music::midi::object(papp),
             m_storage(papp, true)
          {
@@ -2378,7 +2378,7 @@ seq_Preroll_Cleanup:
          }
 
          sequence::buffer_array::buffer_array(sp(::axis::application) papp) :
-            element(papp)
+            ::object(papp)
          {
 
             m_pcallbackdata = NULL;

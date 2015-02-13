@@ -6,7 +6,7 @@ namespace production
 
 
    document::document(::aura::application * papp):
-      element(papp),
+      ::object(papp),
       ::data::data_container_base(papp),
       ::aura::document(papp)
    {

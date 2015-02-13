@@ -14,7 +14,7 @@ namespace music
 
 
          sequence_thread::sequence_thread(sp(::axis::application) papp) :
-            element(papp),
+            ::object(papp),
             thread(papp),
             ::music::midi::sequence_thread(papp)
          {

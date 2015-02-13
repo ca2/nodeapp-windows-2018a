@@ -14,7 +14,7 @@ namespace ca2plugin_container
 
 
    host::host(sp(::ca2plugin_container::application) papp) :
-      element(papp),
+      ::object(papp),
       ::simple_ui::style(papp),
       ::user::interaction(papp),
       hotplugin::plugin(papp),

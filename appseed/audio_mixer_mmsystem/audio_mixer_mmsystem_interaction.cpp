@@ -10,7 +10,7 @@ namespace multimedia
 
 
       interaction::interaction(sp(::axis::application) papp) :
-         element(papp)
+         ::object(papp)
       {
          create_message_queue("");
       }

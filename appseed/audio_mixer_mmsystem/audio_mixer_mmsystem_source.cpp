@@ -10,7 +10,7 @@ namespace multimedia
 
 
       source::source(sp(::axis::application) papp) :
-         element(papp),
+         ::object(papp),
          ::multimedia::audio_mixer::source(papp)
       {
          m_mixercontrola.set_app(papp);

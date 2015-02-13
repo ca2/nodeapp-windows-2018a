@@ -14,7 +14,7 @@ namespace music
 
 
          buffer::buffer(sp(::axis::application) papp) :
-            element(papp),
+            ::object(papp),
             primitive::memory_container (papp),
             ::music::midi::file::buffer(papp)
          {

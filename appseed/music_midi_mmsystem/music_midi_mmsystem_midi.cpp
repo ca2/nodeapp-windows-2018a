@@ -26,7 +26,7 @@ namespace music
 
 
          midi::midi(sp(::axis::application) papp) :
-            element(papp),
+            ::object(papp),
             ::aura::departament(papp),
             ::music::midi::object(papp),
             ::music::midi::midi(papp)

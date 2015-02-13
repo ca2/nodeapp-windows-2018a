@@ -10,7 +10,7 @@ namespace multimedia
 
 
       departament::departament(sp(::axis::application) papp) :
-         element(papp),
+         ::object(papp),
          ::aura::departament(papp)
       {
 

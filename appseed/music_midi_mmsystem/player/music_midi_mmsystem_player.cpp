@@ -19,7 +19,7 @@ namespace music
 
 
             player::player(sp(::axis::application) papp) :
-               element(papp),
+               ::object(papp),
                thread(papp),
                ::music::midi::player::player(papp)
             {

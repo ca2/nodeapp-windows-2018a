@@ -15,7 +15,7 @@ namespace music
          mutex & get_midi_mutex();
 
          out::out(sp(::axis::application) papp) :
-            element(papp),
+            ::object(papp),
             ::music::midi::object(papp),
             ::music::midi::out(papp)
          {

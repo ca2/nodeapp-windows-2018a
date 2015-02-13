@@ -10,7 +10,7 @@ namespace multimedia
 
 
       thread::thread(sp(::axis::application) papp) :
-         element(papp),
+         ::object(papp),
          ::thread(papp)
       {
 

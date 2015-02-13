@@ -10,7 +10,7 @@ namespace multimedia
 
 
       control::control(sp(::axis::application) papp) :
-         element(papp),
+         ::object(papp),
          ::multimedia::audio_mixer::control(papp)
       {
 

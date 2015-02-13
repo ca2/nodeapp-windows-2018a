@@ -8,7 +8,7 @@ namespace production
 
 
    view::view(::aura::application * papp) :
-      element(papp),
+      ::object(papp),
       ::user::interaction(papp), 
       ::user::scroll_view(papp),
       m_scrollbarVert(papp),

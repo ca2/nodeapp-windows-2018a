@@ -6,7 +6,7 @@ namespace backup
 
 
    frame::frame(::aura::application * papp) :
-      element(papp),
+      ::object(papp),
       production::frame(papp)
    {
       m_iFrameData = 10;

@@ -6,7 +6,7 @@ namespace production
 
 
    pane_view::pane_view(::aura::application * papp) :
-      element(papp),
+      ::object(papp),
       ::user::tab(papp),
       
       ::user::tab_view(papp),
