@@ -97,16 +97,24 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "aqua", "..\..\..\app\appseed\aqua\aqua.vcxproj", "{51778453-C0AA-419D-A87F-4338C9DDE3FA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "html", "..\..\..\app\appseed\html\html.vcxproj", "{6C7004D3-FF6C-4872-8DDC-5D7F44B0BC57}"
+	ProjectSection(ProjectDependencies) = postProject
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6} = {845177E8-8B1E-4AE0-9B96-1ABC24B797A6}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "math", "..\..\..\app\appseed\math\math.vcxproj", "{5B03FC53-C0AA-419D-A87F-4338C9DDE3FA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "userdatetime", "..\..\..\app-core\appseed\userdatetime\userdatetime.vcxproj", "{51042284-1115-7704-027F-4338C9DDE3FA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axispng", "..\..\..\app\axis\png\axispng.vcxproj", "{84517714-2000-419D-A87F-4338C9DDE3FA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B39ED2B3-D53A-4077-B957-930979A3577D} = {B39ED2B3-D53A-4077-B957-930979A3577D}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axisjpeg", "..\..\..\app\axis\jpeg\axisjpeg.vcxproj", "{84517713-2000-419D-A87F-4338C9DDE3FA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axiscrypto", "..\..\..\app\axis\crypto\axiscrypto.vcxproj", "{39807406-816F-4C0D-A632-4BB8AB13887B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "html_lite", "..\..\..\app\axis\html_lite\html_lite.vcxproj", "{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -994,6 +1002,34 @@ Global
 		{39807406-816F-4C0D-A632-4BB8AB13887B}.static_basis|Win32.Build.0 = static_basis|Win32
 		{39807406-816F-4C0D-A632-4BB8AB13887B}.static_basis|x64.ActiveCfg = static_basis|x64
 		{39807406-816F-4C0D-A632-4BB8AB13887B}.static_basis|x64.Build.0 = static_basis|x64
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.basis|Win32.ActiveCfg = basis|Win32
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.basis|Win32.Build.0 = basis|Win32
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.basis|x64.ActiveCfg = basis|x64
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.basis|x64.Build.0 = basis|x64
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.codeanalysis|x64.Build.0 = codeanalysis|x64
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.memdleak|Win32.ActiveCfg = memdleak|Win32
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.memdleak|Win32.Build.0 = memdleak|Win32
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.memdleak|x64.ActiveCfg = memdleak|x64
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.memdleak|x64.Build.0 = memdleak|x64
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.no_precompiled_header|Win32.ActiveCfg = no_precompiled_header|Win32
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.no_precompiled_header|Win32.Build.0 = no_precompiled_header|Win32
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.no_precompiled_header|x64.ActiveCfg = no_precompiled_header|x64
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.no_precompiled_header|x64.Build.0 = no_precompiled_header|x64
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.profiler|Win32.ActiveCfg = profiler|Win32
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.profiler|Win32.Build.0 = profiler|Win32
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.profiler|x64.ActiveCfg = profiler|x64
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.profiler|x64.Build.0 = profiler|x64
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.stage|Win32.ActiveCfg = stage|Win32
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.stage|Win32.Build.0 = stage|Win32
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.stage|x64.ActiveCfg = stage|x64
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.stage|x64.Build.0 = stage|x64
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.static_basis|Win32.ActiveCfg = static_basis|Win32
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.static_basis|Win32.Build.0 = static_basis|Win32
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.static_basis|x64.ActiveCfg = static_basis|x64
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.static_basis|x64.Build.0 = static_basis|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
