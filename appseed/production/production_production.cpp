@@ -1265,7 +1265,7 @@ namespace production
       {
          smart_pointer_array < manual_reset_event > eventa(get_app());
          eventa.set_size_create(uiProcessorCount);
-         sync_object_ptra syncobjectptra;
+         object_ptra ptra;
          for (uint32_t ui = 0; ui < uiProcessorCount; ui++)
          {
             compress_thread * pthread = new compress_thread(this, eventa[ui]);
@@ -1273,9 +1273,9 @@ namespace production
             pthread->m_dwThreadAffinityMask = 1 << ui;
             pthread->m_bAutoDelete = false;
             pthread->begin();
-            syncobjectptra.add(eventa[ui].cast < waitable >());
+            ptra.add(eventa[ui].cast < object >());
          }
-         multi_lock ml(syncobjectptra);
+         multi_lock ml(objectptra);
          ml.lock();
          add_status("finished multi-threaded compression task");
          Sleep(584);
