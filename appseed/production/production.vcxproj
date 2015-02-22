@@ -1179,6 +1179,9 @@
     <ProjectReference Include="..\..\..\app\appseed\html\html.vcxproj">
       <Project>{6c7004d3-ff6c-4872-8ddc-5d7f44b0bc57}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\app\axis\html_lite\html_lite.vcxproj">
+      <Project>{845177e8-8b1e-4ae0-9b96-1abc24b797a6}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

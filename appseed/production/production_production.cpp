@@ -1265,7 +1265,7 @@ namespace production
       {
          smart_pointer_array < manual_reset_event > eventa(get_app());
          eventa.set_size_create(uiProcessorCount);
-         object_ptra ptra;
+         sync_object_ptra ptra;
          for (uint32_t ui = 0; ui < uiProcessorCount; ui++)
          {
             compress_thread * pthread = new compress_thread(this, eventa[ui]);
@@ -1273,9 +1273,9 @@ namespace production
             pthread->m_dwThreadAffinityMask = 1 << ui;
             pthread->m_bAutoDelete = false;
             pthread->begin();
-            ptra.add(eventa[ui].cast < object >());
+            ptra.add(eventa[ui]);
          }
-         multi_lock ml(objectptra);
+         multi_lock ml(ptra);
          ml.lock();
          add_status("finished multi-threaded compression task");
          Sleep(584);
@@ -2573,7 +2573,7 @@ namespace production
 
 
    production::release::release(production * pproduction) :
-      ::element(pproduction->get_app()),
+      ::object(pproduction->get_app()),
       thread(pproduction->get_app())
    {
 
