@@ -19,8 +19,7 @@ namespace ca2plugin_container
       ::user::interaction(papp),
       hotplugin::plugin(papp),
       aura::session(papp),
-      axis::session(papp),
-      base::session(papp)
+      axis::session(papp)
    {
 
       m_pcontainerapp         = papp;

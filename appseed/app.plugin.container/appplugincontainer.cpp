@@ -54,7 +54,7 @@ uint32_t plugin_container_app(const string & strChannel)
 
    papp->m_hinstance = psystem->m_hinstance;
 
-   papp->m_pbasesession->m_pcoreplatform = psystem->get_session(0, NULL);
+   papp->m_pbasesession->m_pcoreplatform = psystem->get_platform(0, NULL);
 
    papp->create_host();
 

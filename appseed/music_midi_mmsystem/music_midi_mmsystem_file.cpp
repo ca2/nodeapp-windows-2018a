@@ -267,7 +267,7 @@ smf_Open_File_Cleanup:
          *****************************************************************************/
          e_result buffer::CloseFile()
          {
-            single_lock(&m_cs, TRUE);
+            cslock sl(&m_cs);
             SetOpened(false);
             delete_contents();
             return ::music::success;
@@ -276,7 +276,7 @@ smf_Open_File_Cleanup:
 
          void buffer::delete_contents()
          {
-            single_lock(&m_cs, TRUE);
+            cslock sl(&m_cs);
             SetOpened(false);
 
 
@@ -378,7 +378,7 @@ smf_Open_File_Cleanup:
          *****************************************************************************/
          int_ptr buffer::TicksToMillisecs(imedia::position tkOffset)
          {
-            single_lock(&m_cs, true);
+            cslock sl(&m_cs);
             if(!IsOpened())
                return 0xffffffff;
 
@@ -467,7 +467,7 @@ smf_Open_File_Cleanup:
          imedia::position buffer::MillisecsToTicks(imedia::time msOffset)
          {
 
-            single_lock(&m_cs, true);
+            cslock sl(&m_cs);
 
             if(!IsOpened())
                return 0xffffffff;

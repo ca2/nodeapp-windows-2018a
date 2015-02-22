@@ -1307,7 +1307,7 @@ namespace production
 
 
    production::compress_thread::compress_thread(production * pproduction, manual_reset_event * peventFinished) :
-      element(pproduction->get_app()),
+      ::object(pproduction->get_app()),
       thread(pproduction->get_app()),
       m_pevFinished(peventFinished)
    {

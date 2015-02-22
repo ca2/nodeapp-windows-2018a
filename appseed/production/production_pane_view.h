@@ -16,7 +16,7 @@ namespace production
    public:
       
       
-      sp(form_view) m_pviewOptions;
+      sp(::user::form) m_pviewOptions;
 
 
 	   pane_view(::aura::application * papp);

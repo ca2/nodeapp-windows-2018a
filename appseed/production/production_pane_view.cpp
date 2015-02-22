@@ -236,7 +236,7 @@ namespace production
          break;
       case PaneViewConfiguration:
       {
-         sp(form_document) pdoc = Platform.userex()->create_form(this, pcreatordata->m_pholder);
+         sp(::aura::document) pdoc = Platform.userex()->create_form(this, pcreatordata->m_pholder);
          if(pdoc == NULL)
             return;
          sp(::aura::impact) pview = pdoc->get_view();
@@ -244,16 +244,16 @@ namespace production
 
          m_pviewOptions->m_pcallback = this;
          
-         form_update_hint uh;
+         ::user::form_update_hint uh;
          uh.m_actioncontext = ::action::source::system_default();
-         uh.m_etype = form_update_hint::type_browse;
+         uh.m_etype = ::user::form_update_hint::type_browse;
          uh.m_strForm = "production\\options.xhtml";
          pdoc->update_all_views(NULL, 0, &uh);
          
-         uh.m_etype = form_update_hint::type_get_form_view;
+         uh.m_etype = ::user::form_update_hint::type_get_form_view;
          pdoc->update_all_views(NULL, 0, &uh);
 
-         uh.m_etype = form_update_hint::type_after_browse;
+         uh.m_etype = ::user::form_update_hint::type_after_browse;
          pdoc->update_all_views(NULL, 0, &uh);
 
 

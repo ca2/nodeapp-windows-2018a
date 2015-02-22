@@ -19,7 +19,7 @@ namespace multimedia
       }
 
       source::source(source & source) :
-         ::element(source.get_app()),
+         ::object(source.get_app()),
          ::multimedia::audio_mixer::source(source.get_app())
       {
          operator =(source);

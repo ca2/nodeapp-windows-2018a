@@ -6,7 +6,7 @@ namespace ca2plugin_container
 
 
    application::application(::plugin::system * psystem, const char * pszChannel) :
-      element(psystem)
+      ::object(psystem)
    {
 
       m_psystem = psystem;

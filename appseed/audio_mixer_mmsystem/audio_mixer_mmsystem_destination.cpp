@@ -22,7 +22,7 @@ namespace multimedia
       }
 
       destination::destination(const destination & destination) :
-         ::element(((class destination &) destination).get_app()),
+         ::object(((class destination &) destination).get_app()),
          ::multimedia::audio_mixer::source(((class destination &)destination).get_app()),
          ::multimedia::audio_mixer_mmsystem::source(((class destination &)destination).get_app()),
          ::multimedia::audio_mixer::destination(((class destination &)destination).get_app())

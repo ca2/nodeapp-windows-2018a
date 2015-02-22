@@ -27,9 +27,9 @@ bool form_callback::BaseOnControlEvent(::user::form * pview, ::user::control_eve
    {
       if(pevent->m_puie->m_id == "lfs")
       {
-         form_update_hint uh;
+         ::user::form_update_hint uh;
          uh.m_actioncontext = ::action::source::system_default();
-         uh.m_etype = form_update_hint::type_browse;
+         uh.m_etype = ::user::form_update_hint::type_browse;
          uh.m_strForm = "filemanager_add_location_lfs.xhtml";
          pview->get_document()->update_all_views(NULL, 0, &uh);
          sp(::user::interaction) pui = pview->get_child_by_name("lfs");
@@ -39,9 +39,9 @@ bool form_callback::BaseOnControlEvent(::user::form * pview, ::user::control_eve
       }
       else if(pevent->m_puie->m_id == "ftp")
       {
-         form_update_hint uh;
+         ::user::form_update_hint uh;
          uh.m_actioncontext = ::action::source::system_default();
-         uh.m_etype = form_update_hint::type_browse;
+         uh.m_etype = ::user::form_update_hint::type_browse;
          uh.m_strForm = "filemanager_add_location_ftp.xhtml";
          pview->get_document()->update_all_views(NULL, 0, &uh);
       }
@@ -64,7 +64,7 @@ bool form_callback::BaseOnControlEvent(::user::form * pview, ::user::control_eve
          }
          else if(pview->m_strPathName == "filemanager\\replace_name_in_file_system.xhtml")
          {
-            form_update_hint uh;
+            ::user::form_update_hint uh;
             Ex1VirtualGuieInterface * pui = pview->get_child_by_name("encontrar");
             sp(::user::elemental) ptext =pui;
             //ptext->_001GetText(uh.m_strFind);
