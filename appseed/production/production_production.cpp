@@ -386,6 +386,8 @@ namespace production
 
          m_straRoot.insert_at(0, "app");
 
+         m_straRoot.add("design");
+
          m_straRoot.add("nodeapp");
 
          //   goto skipCompress;
