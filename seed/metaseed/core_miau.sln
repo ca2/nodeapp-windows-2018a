@@ -120,11 +120,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_miau", "..\..\..\a
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "aqua", "..\..\..\app\appseed\aqua\aqua.vcxproj", "{51778453-C0AA-419D-A87F-4338C9DDE3FA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C0AAFDF5-17F0-4792-BFBD-9A7DF04539DA}"
-	ProjectSection(SolutionItems) = preProject
-		Performance1.psess = Performance1.psess
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axiscrypto", "..\..\..\app\axis\crypto\axiscrypto.vcxproj", "{39807406-816F-4C0D-A632-4BB8AB13887B}"
 EndProject
 Global
@@ -359,8 +354,8 @@ Global
 		{AC6A52B4-C049-439C-88FF-5A262D968C8F}.no_precompiled_header|x64.Build.0 = basis|x64
 		{AC6A52B4-C049-439C-88FF-5A262D968C8F}.profiler|Win32.ActiveCfg = profiler|Win32
 		{AC6A52B4-C049-439C-88FF-5A262D968C8F}.profiler|Win32.Build.0 = profiler|Win32
-		{AC6A52B4-C049-439C-88FF-5A262D968C8F}.profiler|x64.ActiveCfg = basis|x64
-		{AC6A52B4-C049-439C-88FF-5A262D968C8F}.profiler|x64.Build.0 = basis|x64
+		{AC6A52B4-C049-439C-88FF-5A262D968C8F}.profiler|x64.ActiveCfg = profiler|x64
+		{AC6A52B4-C049-439C-88FF-5A262D968C8F}.profiler|x64.Build.0 = profiler|x64
 		{AC6A52B4-C049-439C-88FF-5A262D968C8F}.stage|Win32.ActiveCfg = stage|Win32
 		{AC6A52B4-C049-439C-88FF-5A262D968C8F}.stage|Win32.Build.0 = stage|Win32
 		{AC6A52B4-C049-439C-88FF-5A262D968C8F}.stage|x64.ActiveCfg = stage|x64
@@ -387,8 +382,8 @@ Global
 		{424F72D6-053A-41C5-BE03-3B0BD535F1EB}.no_precompiled_header|x64.Build.0 = basis|x64
 		{424F72D6-053A-41C5-BE03-3B0BD535F1EB}.profiler|Win32.ActiveCfg = profiler|Win32
 		{424F72D6-053A-41C5-BE03-3B0BD535F1EB}.profiler|Win32.Build.0 = profiler|Win32
-		{424F72D6-053A-41C5-BE03-3B0BD535F1EB}.profiler|x64.ActiveCfg = basis|x64
-		{424F72D6-053A-41C5-BE03-3B0BD535F1EB}.profiler|x64.Build.0 = basis|x64
+		{424F72D6-053A-41C5-BE03-3B0BD535F1EB}.profiler|x64.ActiveCfg = profiler|x64
+		{424F72D6-053A-41C5-BE03-3B0BD535F1EB}.profiler|x64.Build.0 = profiler|x64
 		{424F72D6-053A-41C5-BE03-3B0BD535F1EB}.stage|Win32.ActiveCfg = stage|Win32
 		{424F72D6-053A-41C5-BE03-3B0BD535F1EB}.stage|Win32.Build.0 = stage|Win32
 		{424F72D6-053A-41C5-BE03-3B0BD535F1EB}.stage|x64.ActiveCfg = stage|x64
@@ -471,8 +466,8 @@ Global
 		{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.no_precompiled_header|x64.Build.0 = basis|x64
 		{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.profiler|Win32.ActiveCfg = profiler|Win32
 		{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.profiler|Win32.Build.0 = profiler|Win32
-		{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.profiler|x64.ActiveCfg = basis|x64
-		{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.profiler|x64.Build.0 = basis|x64
+		{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.profiler|x64.ActiveCfg = profiler|x64
+		{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.profiler|x64.Build.0 = profiler|x64
 		{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.stage|Win32.ActiveCfg = stage|Win32
 		{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.stage|Win32.Build.0 = stage|Win32
 		{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.stage|x64.ActiveCfg = stage|x64
@@ -499,8 +494,8 @@ Global
 		{A5A649E1-D516-4F29-A627-DA6884DD421C}.no_precompiled_header|x64.Build.0 = basis|x64
 		{A5A649E1-D516-4F29-A627-DA6884DD421C}.profiler|Win32.ActiveCfg = profiler|Win32
 		{A5A649E1-D516-4F29-A627-DA6884DD421C}.profiler|Win32.Build.0 = profiler|Win32
-		{A5A649E1-D516-4F29-A627-DA6884DD421C}.profiler|x64.ActiveCfg = basis|x64
-		{A5A649E1-D516-4F29-A627-DA6884DD421C}.profiler|x64.Build.0 = basis|x64
+		{A5A649E1-D516-4F29-A627-DA6884DD421C}.profiler|x64.ActiveCfg = profiler|x64
+		{A5A649E1-D516-4F29-A627-DA6884DD421C}.profiler|x64.Build.0 = profiler|x64
 		{A5A649E1-D516-4F29-A627-DA6884DD421C}.stage|Win32.ActiveCfg = stage|Win32
 		{A5A649E1-D516-4F29-A627-DA6884DD421C}.stage|Win32.Build.0 = stage|Win32
 		{A5A649E1-D516-4F29-A627-DA6884DD421C}.stage|x64.ActiveCfg = stage|x64
@@ -527,8 +522,8 @@ Global
 		{E8AC3EF0-11C5-4E12-A944-5F7EFED6E0C4}.no_precompiled_header|x64.Build.0 = basis|x64
 		{E8AC3EF0-11C5-4E12-A944-5F7EFED6E0C4}.profiler|Win32.ActiveCfg = profiler|Win32
 		{E8AC3EF0-11C5-4E12-A944-5F7EFED6E0C4}.profiler|Win32.Build.0 = profiler|Win32
-		{E8AC3EF0-11C5-4E12-A944-5F7EFED6E0C4}.profiler|x64.ActiveCfg = basis|x64
-		{E8AC3EF0-11C5-4E12-A944-5F7EFED6E0C4}.profiler|x64.Build.0 = basis|x64
+		{E8AC3EF0-11C5-4E12-A944-5F7EFED6E0C4}.profiler|x64.ActiveCfg = profiler|x64
+		{E8AC3EF0-11C5-4E12-A944-5F7EFED6E0C4}.profiler|x64.Build.0 = profiler|x64
 		{E8AC3EF0-11C5-4E12-A944-5F7EFED6E0C4}.stage|Win32.ActiveCfg = stage|Win32
 		{E8AC3EF0-11C5-4E12-A944-5F7EFED6E0C4}.stage|Win32.Build.0 = stage|Win32
 		{E8AC3EF0-11C5-4E12-A944-5F7EFED6E0C4}.stage|x64.ActiveCfg = stage|x64
@@ -652,8 +647,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal
