@@ -94,8 +94,11 @@ BEGIN_EXTERN_C
 
 int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
 {
+   
+   app_core appcore;
 
-   DWORD dwStartTime = ::get_tick_count();
+   appcore.m_dwStartTime = ::get_tick_count();
+   appcore.m_dwAfterApplicationFirstRequest = appcore.m_dwStartTime;
 
    if(!defer_core_init())
    {
@@ -118,7 +121,7 @@ int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lp
       debug_box("zzzAPPzzz app","zzzAPPzzz app",MB_ICONINFORMATION);
    }
 
-   int iRet = app_core_main(hinstance, hPrevInstance, (char *) (const char *) ::str::international::unicode_to_utf8(::GetCommandLineW()), nCmdShow, dwStartTime);
+   int iRet = app_core_main(hinstance, hPrevInstance, (char *) (const char *) ::str::international::unicode_to_utf8(::GetCommandLineW()), nCmdShow, appcore);
 
    if(!defer_core_term())
    {
@@ -133,7 +136,10 @@ int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lp
 
    char szTimeMessage[2048];
 
-   sprintf(szTimeMessage,"\n\n\n\n\n\n-------------------------------\n|\n|\n|  Total Elapsed Time %d\n|\n|\n-------------------------------\n\n\n",(uint32_t)dwEnd - dwStartTime);
+   sprintf(szTimeMessage,"\n\n\n---------------------------------------------------------------------------------------------\n|\n|\n|  Just After First Application Request Completion %d",(uint32_t)appcore.m_dwAfterApplicationFirstRequest - appcore.m_dwStartTime);
+   ::OutputDebugStringA(szTimeMessage);
+
+   sprintf(szTimeMessage,"\n|  Total Elapsed Time %d\n|\n|\n---------------------------------------------------------------------------------------------\n\n\n",(uint32_t)dwEnd - appcore.m_dwStartTime);
 
    ::OutputDebugStringA(szTimeMessage);
 
@@ -151,15 +157,20 @@ int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lp
       g = gmtime(&rawtime);
       sprintf(szUTCTime,"%04d-%02d-%02d %02d:%02d:%02d UTC",g->tm_year + 1900,g->tm_mon,g->tm_mday,g->tm_hour,g->tm_min,g->tm_sec);
       //   sprintf(szLocalTime,"%04d-%02d-%02d %02d:%02d:%02d local : ",l->tm_year + 1900,l->tm_mon,l->tm_mday,l->tm_hour,l->tm_min,l->tm_sec);
-      char szTimeMessage[2048];
-      sprintf(szTimeMessage," Total Elapsed Time %d",(uint32_t)dwEnd - dwStartTime);
+      char szTimeMessage1[2048];
+      sprintf(szTimeMessage1," Just After First Application Request Completion %d",(uint32_t)appcore.m_dwAfterApplicationFirstRequest - appcore.m_dwStartTime);
       if(file_length_raw("C:\\ca2\\config\\system\\show_elapsed.txt") > 0)
       {
-         file_beg_contents_raw("C:\\ca2\\config\\system\\show_elapsed.txt","\n");
+         file_add_contents_raw("C:\\ca2\\config\\system\\show_elapsed.txt","\n");
       }
-      file_beg_contents_raw("C:\\ca2\\config\\system\\show_elapsed.txt",szTimeMessage);
-      file_beg_contents_raw("C:\\ca2\\config\\system\\show_elapsed.txt",szUTCTime);
+      file_add_contents_raw("C:\\ca2\\config\\system\\show_elapsed.txt",szUTCTime);
+      file_add_contents_raw("C:\\ca2\\config\\system\\show_elapsed.txt",szTimeMessage1);
       //file_add_contents_raw("C:\\ca2\\config\\system\\show_elapsed.txt",szLocalTime);
+      file_add_contents_raw("C:\\ca2\\config\\system\\show_elapsed.txt","\n");
+      char szTimeMessage2[2048];
+      sprintf(szTimeMessage2," Total Elapsed Time %d",(uint32_t)dwEnd - appcore.m_dwStartTime);
+      file_add_contents_raw("C:\\ca2\\config\\system\\show_elapsed.txt",szUTCTime);
+      file_add_contents_raw("C:\\ca2\\config\\system\\show_elapsed.txt",szTimeMessage2);
 
    }
 

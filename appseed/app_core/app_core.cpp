@@ -6,7 +6,7 @@ CLASS_DECL_AURA int32_t __win_main(sp(::aura::system) psystem,::windows::main_in
 
 
 
-extern "C" int32_t app_core_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow, DWORD dwMainStartTime)
+extern "C" int32_t app_core_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow, app_core & appcore)
 {
 
 
@@ -16,7 +16,7 @@ extern "C" int32_t app_core_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, L
 
    // what could influence time before main?
    // cold start (never previously called program and its Dlls...)?
-   psystem->m_dwMainStartTime                   = dwMainStartTime;
+   psystem->m_dwMainStartTime                   = appcore.m_dwStartTime;
 
    ASSERT(hPrevInstance == NULL);
 
@@ -31,6 +31,7 @@ extern "C" int32_t app_core_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, L
 
    int32_t nReturnCode                          = __win_main(psystem, pmaininitdata);
 
+   appcore.m_dwAfterApplicationFirstRequest     = psystem->m_dwAfterApplicationFirstRequest;
 
    try
    {

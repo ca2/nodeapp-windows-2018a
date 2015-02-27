@@ -3,5 +3,16 @@
 
 #include "aura/aura/aura.h"
 
+class app_core
+{
+public:
 
-extern "C" int32_t app_core_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow, DWORD give_me_one_please_dwStartTime);
+
+   DWORD m_dwStartTime;
+   DWORD m_dwAfterApplicationFirstRequest;
+
+
+};
+
+
+extern "C" int32_t app_core_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow, app_core & appcore);
