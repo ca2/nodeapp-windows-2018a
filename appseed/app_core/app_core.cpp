@@ -6,13 +6,17 @@ CLASS_DECL_AURA int32_t __win_main(sp(::aura::system) psystem,::windows::main_in
 
 
 
-extern "C" int32_t app_core_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
+extern "C" int32_t app_core_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow, DWORD dwMainStartTime)
 {
 
 
    UNREFERENCED_PARAMETER(lpCmdLine);
 
    ::aura::system * psystem                     = g_pfn_create_system();
+
+   // what could influence time before main?
+   // cold start (never previously called program and its Dlls...)?
+   psystem->m_dwMainStartTime                   = dwMainStartTime;
 
    ASSERT(hPrevInstance == NULL);
 

@@ -3,9 +3,92 @@
 #include "core/core/core.h"
 #include "nodeapp/appseed/app_core/app_core.h"
 
+#include <sys/types.h>
+#include <sys/stat.h>
 
+int_bool file_exists_raw(const char * path1)
+{
 
+   uint32_t dwFileAttributes = GetFileAttributesA(path1);
 
+   if(dwFileAttributes == INVALID_FILE_ATTRIBUTES || (dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0)
+      return FALSE;
+
+   return TRUE;
+
+}
+
+void file_put_contents_raw(const char * path, const char * psz)
+{
+
+   FILE * f = fopen(path,"wb");
+
+   if(f == NULL)
+      return;
+
+   ::count iSize = strlen(psz);
+
+   ::count iRead = fwrite(psz,1,iSize,f);
+
+   fclose(f);
+
+}
+
+void file_add_contents_raw(const char * path,const char * psz)
+{
+
+   FILE * f = fopen(path,"ab");
+
+   if(f == NULL)
+      return;
+
+   ::count iSize = strlen(psz);
+
+   ::count iRead = fwrite(psz,1,iSize,f);
+
+   fclose(f);
+
+}
+
+void file_beg_contents_raw(const char * path,const char * psz)
+{
+   
+   FILE * f = fopen(path,"rb+");
+
+   ::count iLen = strlen(psz);
+
+   fseek(f,iLen,SEEK_END);
+
+   long  iEnd = ftell(f);
+
+   int iSize = 1024 * 1024;
+   char * buf = (char *) malloc(iSize);
+   int iRemain = iEnd - iLen;
+   while(iRemain > 0)
+   {
+      fseek(f,iEnd-iRemain-iLen,SEEK_SET);
+      fread(buf,1,MIN(iRemain,iSize),f);
+      fseek(f,iEnd-iRemain,SEEK_SET);
+      fwrite(buf,1,MIN(iRemain,iSize),f);
+      iRemain -= MIN(iRemain, iSize);
+   }
+   free(buf);
+   fseek(f,0,SEEK_SET);
+
+   ::count iRead = fwrite(psz,1,iLen,f);
+
+   fclose(f);
+
+}
+
+uint64_t file_length_raw(const char * path)
+{
+
+   struct _stat st;
+   ::_stat(path,&st);
+   return st.st_size;
+
+}
 
 BEGIN_EXTERN_C
 
@@ -35,7 +118,7 @@ int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lp
       debug_box("zzzAPPzzz app","zzzAPPzzz app",MB_ICONINFORMATION);
    }
 
-   int iRet = app_core_main(hinstance, hPrevInstance, (char *) (const char *) ::str::international::unicode_to_utf8(::GetCommandLineW()), nCmdShow);
+   int iRet = app_core_main(hinstance, hPrevInstance, (char *) (const char *) ::str::international::unicode_to_utf8(::GetCommandLineW()), nCmdShow, dwStartTime);
 
    if(!defer_core_term())
    {
@@ -46,13 +129,39 @@ int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lp
 
    }
 
+   DWORD dwEnd = ::get_tick_count();
+
    char szTimeMessage[2048];
 
-   sprintf(szTimeMessage,"\n\n\n\n\n\n-------------------------------\n|\n|\n|  Total Elapsed Time %d\n|\n|\n-------------------------------\n\n\n",(uint32_t) ::get_tick_count() - dwStartTime);
+   sprintf(szTimeMessage,"\n\n\n\n\n\n-------------------------------\n|\n|\n|  Total Elapsed Time %d\n|\n|\n-------------------------------\n\n\n",(uint32_t)dwEnd - dwStartTime);
 
    ::OutputDebugStringA(szTimeMessage);
 
    printf(szTimeMessage);
+
+   if(file_exists_raw("C:\\ca2\\config\\system\\show_elapsed.txt"))
+   {
+      char szUTCTime[2048];
+      char szLocalTime[2048];
+      time_t rawtime;
+      struct tm * l;
+      struct tm * g;
+      time(&rawtime);
+      l = localtime(&rawtime);
+      g = gmtime(&rawtime);
+      sprintf(szUTCTime,"%04d-%02d-%02d %02d:%02d:%02d UTC",g->tm_year + 1900,g->tm_mon,g->tm_mday,g->tm_hour,g->tm_min,g->tm_sec);
+      //   sprintf(szLocalTime,"%04d-%02d-%02d %02d:%02d:%02d local : ",l->tm_year + 1900,l->tm_mon,l->tm_mday,l->tm_hour,l->tm_min,l->tm_sec);
+      char szTimeMessage[2048];
+      sprintf(szTimeMessage," Total Elapsed Time %d",(uint32_t)dwEnd - dwStartTime);
+      if(file_length_raw("C:\\ca2\\config\\system\\show_elapsed.txt") > 0)
+      {
+         file_beg_contents_raw("C:\\ca2\\config\\system\\show_elapsed.txt","\n");
+      }
+      file_beg_contents_raw("C:\\ca2\\config\\system\\show_elapsed.txt",szTimeMessage);
+      file_beg_contents_raw("C:\\ca2\\config\\system\\show_elapsed.txt",szUTCTime);
+      //file_add_contents_raw("C:\\ca2\\config\\system\\show_elapsed.txt",szLocalTime);
+
+   }
 
    return iRet;
    
