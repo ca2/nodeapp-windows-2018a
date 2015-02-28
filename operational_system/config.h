@@ -1,5 +1,11 @@
 #pragma once
 
+#ifndef _WINDLL
+#define CUBE
+#endif
+
+
+
 
 #define BSD_STYLE_SOCKETS
 #define HAVE_MYSQL
@@ -139,3 +145,5 @@
 #endif
 #pragma warning(disable: 4204)  // non-constant aggregate initializer
 #pragma warning(disable: 4263 4264)  // base class method is hidden
+
+
