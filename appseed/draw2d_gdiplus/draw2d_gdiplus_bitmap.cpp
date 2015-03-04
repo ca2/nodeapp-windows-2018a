@@ -20,17 +20,8 @@ namespace draw2d_gdiplus
    bitmap::~bitmap()
    { 
 
-      if(m_pbitmap != NULL)
-      {
-         delete m_pbitmap;
-         m_pbitmap = NULL;
-      }
-
-      if(m_pdata != NULL)
-      {
-         memory_free(m_pdata);
-         m_pdata = NULL;
-      }
+      ::aura::del(m_pbitmap);
+      ::aura::del(m_pdata);
 
    }
 
