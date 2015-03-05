@@ -1,6 +1,6 @@
 #pragma once
 
-#if !defined(_WINDLL) && !defined(_DLLAPP)
+#if !defined(_DLL)
 #define CUBE
 #endif
 

@@ -2742,25 +2742,15 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       di.lpszDocName = lpszDocName;
       return StartDoc(&di);
    }
-
+   
    int32_t graphics::SaveDC()
    {
-      int32_t nRetVal = 0;
-      if(get_handle2() != NULL)
-         nRetVal = ::SaveDC(get_handle2());
-      if(get_handle1() != NULL && get_handle1() != get_handle2() && ::SaveDC(get_handle1()) != 0)
-         nRetVal = -1;   // -1 is the only valid restore value for complex DCs
-      return nRetVal;
+      return m_pgraphics->Save();
    }
 
    bool graphics::RestoreDC(int32_t nSavedDC)
    {
-      bool bRetVal = TRUE;
-      if(get_handle1() != NULL && get_handle1() != get_handle2())
-         bRetVal = ::RestoreDC(get_handle1(), nSavedDC) != FALSE;
-      if(get_handle2() != NULL)
-         bRetVal = (bRetVal && ::RestoreDC(get_handle2(), nSavedDC) != FALSE);
-      return bRetVal;
+      return m_pgraphics->Restore(nSavedDC);
    }
 
 //   ::draw2d::object* graphics::SelectGdiObject(::aura::application * papp, HDC hDC, HGDIOBJ h)
