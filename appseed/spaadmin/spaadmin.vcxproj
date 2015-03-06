@@ -55,9 +55,10 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">
     <CustomBuildStep>
-      <Command>copy "$(SolutionDir)..\..\stage\ccvotagus\Debug\spa.xml" "$(OutDir)spa.xml"
-</Command>
-      <Outputs>$(OutDir)spa.xml;%(Outputs)</Outputs>
+      <Command>
+      </Command>
+      <Outputs>
+      </Outputs>
     </CustomBuildStep>
     <ClCompile>
       <Optimization>Disabled</Optimization>
@@ -160,6 +161,11 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\spalib\spalib.vcxproj">
+      <Project>{fa039458-2e43-45de-9fa9-66dfa7e11e64}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
