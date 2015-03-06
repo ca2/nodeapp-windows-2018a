@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{cf50fb9f-904f-4923-a9ac-13d951d2ef27}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ccvotagus_ca2_spa.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\spares\ccvotagus_ca2_spa.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ccvotagus_ca2_spa.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spares\Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\spares\res\1977.ca2sp">
+      <Filter>Resources</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\spares\res\ccvotagus_ca2_spa.ico">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\spares\res\ccvotagus_ca2_spa_veriwell.ico">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\spares\res\controlbox.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\spares\res\controlbox_basis.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\spares\res\login24_2.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\spares\res\login24_hover.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\spares\res\login24_press.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\spares\res\login48_1.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\spares\res\login48_2.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\spares\res\login48_hover.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\spares\res\register24_2.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\spares\res\register24_hover.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\spares\res\register24_press.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\spares\res\register48_1.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\spares\res\register48_2.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\spares\res\register48_hover.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\spares\res\votaguslogo-300.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\spares\res\spa.xml">
+      <Filter>Resources</Filter>
+    </Xml>
+    <Xml Include="..\spares\res\stringtable_en-intl.xml">
+      <Filter>Resources</Filter>
+    </Xml>
+    <Xml Include="..\spares\res\stringtable_ja.xml">
+      <Filter>Resources</Filter>
+    </Xml>
+    <Xml Include="..\spares\res\stringtable_pt-br.xml">
+      <Filter>Resources</Filter>
+    </Xml>
+    <Xml Include="..\spares\res\stringtable_sv.xml">
+      <Filter>Resources</Filter>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+</Project>

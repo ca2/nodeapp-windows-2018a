@@ -1,0 +1,5 @@
+#include "resource.h"
+
+IDI_CCVOTAGUS_CA2_SPA   ICON        "res\\ca2v_2010_07_01.ico"
+
+

@@ -1,0 +1,15 @@
+<stringtable>
+  <string id="ccvotagus ca2">ccvotagus ca2</string>
+  <string id="dedicated to Carlos Gustavo Cecyn Lundgren">dedicated to Carlos Gustavo Cecyn Lundgren</string>
+  <string id="program created on 2008-03-27">program created on 2008-03-27</string>
+  <string id="by Camilo Sasuke Tsumanuma">by Camilo Sasuke Tsumanuma</string>
+  <string id="internet_install_warning_1">You will need a Internet connection to perform the SP - Simple Patch.</string>
+  <string id="internet_install_warning_2">If a firewall is installed, it should permit ccvotagus_ca2_spa - spa, Simple Patch Applier - to connect to the Internet.</string>
+  <string id="option_remark_1">Current just only option is to Start.</string>
+  <string id="option_remark_2">Installation will be done under C:\\Program Files\\ or similar Program Files folder of your Windows machine</string>
+  <string id="option_remark_3">within subfolder ca2\\stage and it may be hard coded as so due Windows Registry access policy.</string>
+  <string id="karaoke.veriwell.com.br_fun_Join">http://sjunga.veriwell.se/fun?Join</string>
+  <string id="install_filter_title_multimedia">Multimedia</string>
+  <string id="install_item_remove">remove</string>
+  <string id="install_item_install">install</string>
+</stringtable>
