@@ -336,6 +336,16 @@ int check_soon_file_launch(std::wstring wstr)
 
    }
 
+   if(pnode->GetChildCount() <= 0)
+   {
+      if(pnode->name == "meta")
+      {
+         return check_soon_app_id(utf8_to_16(file::name(strPath.c_str()).c_str()));
+      }
+
+      return 0;
+   }
+
    const char * psz = pnode->GetChildAttrValue("launch","app");
 
    if(psz == NULL || *psz == '\0')
@@ -350,11 +360,9 @@ int check_soon_file_launch(std::wstring wstr)
 }
 
 
-int check_soon_app_id(std::wstring strId)
+std::wstring spa_app_id_to_app_name(std::wstring strId)
 {
-
    std::wstring strName;
-
    for(std::wstring::iterator it = strId.begin(); it != strId.end(); it++)
    {
       if(!iswalpha(*it))
@@ -366,6 +374,15 @@ int check_soon_app_id(std::wstring strId)
          strName += *it;
       }
    }
+   return strName;
+}
+
+int check_soon_app_id(std::wstring strId)
+{
+
+   std::wstring strName = spa_app_id_to_app_name(strId);
+
+
 
    {
 
