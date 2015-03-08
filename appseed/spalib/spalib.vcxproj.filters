@@ -101,6 +101,12 @@
     <ClCompile Include="..\..\..\app\axis\bzip2\bsdiff\libbsdiff.c">
       <Filter>Source Files\bzip2\bsdiff</Filter>
     </ClCompile>
+    <ClCompile Include="_spalib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="_spalib_c.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ccvotagus_ca2_spa.h">

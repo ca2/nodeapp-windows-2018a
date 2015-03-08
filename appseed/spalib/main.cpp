@@ -244,50 +244,77 @@ int check_soon_launch()
 }
 
 
+// trim initial quote
+int trim(::std::wstring & wstr,wchar_t wch)
+{
 
+   if(wstr.length() <= 0)
+   {
+
+      return 0;
+
+   }
+
+   int c = 0;
+
+   while(wstr[0] == wch)
+   {
+
+      wstr = wstr.substr(1);
+
+      if(wstr.length() <= 0)
+         return c;
+
+      c++;
+
+   }
+
+   // trim final quote
+   while(wstr[wstr.length() - 1] == wch)
+   {
+
+      wstr = wstr.substr(0,wstr.length() - 1);
+
+      if(wstr.length() <= 0)
+         return c;
+
+      c++;
+
+   }
+
+   return c;
+
+}
 
 
 int check_soon_file_launch(std::wstring wstr)
 {
 
+   if(wstr.length() <= 0)
+   {
 
+      return 0;
 
-   // trim initial quote
-   while(wstr[0] == L'\"')
-      wstr = wstr.substr(1);
+   }
 
-   // trim final quote
-   while(wstr[wstr.length() - 1] == '\"')
-      wstr = wstr.substr(0,wstr.length() - 1);
+   int c = 1;
 
+   while(c > 0)
+   {
+      c = 0;
+      c += trim(wstr,'\"');
+      c += trim(wstr,' ');
+      
+   }
 
-   while(wstr[0] == L' ')
-      wstr = wstr.substr(1);
+   if(wstr.length() <= 0)
+   {
 
-   // trim final quote
-   while(wstr[wstr.length() - 1] == ' ')
-      wstr = wstr.substr(0,wstr.length() - 1);
+      return 0;
 
-   // trim initial quote
-   while(wstr[0] == L'\"')
-      wstr = wstr.substr(1);
-
-   // trim final quote
-   while(wstr[wstr.length() - 1] == '\"')
-      wstr = wstr.substr(0,wstr.length() - 1);
-
-
-   while(wstr[0] == L' ')
-      wstr = wstr.substr(1);
-
-   // trim final quote
-   while(wstr[wstr.length() - 1] == ' ')
-      wstr = wstr.substr(0,wstr.length() - 1);
-
+   }
 
    XDoc doc;
-
-
 
    ::std::string strPath = utf16_to_8(wstr.c_str());
 

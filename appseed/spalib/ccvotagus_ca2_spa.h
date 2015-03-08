@@ -21,12 +21,14 @@
 
 
 
-#ifdef SPALIB_LIB
-#define SPALIB_API
-#elif defined(SPALIB_DLL)
+#ifdef _DLL
+#if defined(SPALIB_DLL)
 #define SPALIB_API __declspec(dllexport)
 #else
 #define SPALIB_API __declspec(dllimport)
+#endif
+#else
+#define SPALIB_API
 #endif
 
 #ifdef CLASS_DECL_MACHINE_EVENT

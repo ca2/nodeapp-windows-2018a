@@ -1,11 +1,11 @@
 #include "../spalib/spalib.h"
 
 HANDLE g_hmutexBoot = NULL;
-std::string g_strId;
+extern std::string g_strId;
 std::string g_strVersion;
-stra g_straRestartCommandLine;
+//stra g_straRestartCommandLine;
 HWND g_hwndMessage = NULL;
-MSG g_msg;
+//MSG g_msg;
 
 void parse_spaboot(const char * psz);
 bool parse_spaboot_start(const char * psz);
@@ -14,9 +14,9 @@ SPALIB_API std::string read_resource_as_string(HINSTANCE hinst, UINT nID, LPCTST
 
 int start();
 
-ATOM MyRegisterClass(HINSTANCE hInstance);
+ATOM spaboot_RegisterClass(HINSTANCE hInstance);
 
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK spaboot_WndProc(HWND hWnd,UINT message,WPARAM wParam,LPARAM lParam);
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
                      HINSTANCE hPrevInstance,
@@ -69,7 +69,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
    prepare_small_bell();
 
-   if(!MyRegisterClass(hInstance))
+   if(!spaboot_RegisterClass(hInstance))
       return -1;
 
    g_hwndMessage = ::CreateWindowExA(0, "TeDigoSó", "ca2::fontopus::ccvotagus::spaboot:callback_window", 0, 0, 0, 0, 0, HWND_MESSAGE, NULL, NULL, NULL);
@@ -336,10 +336,10 @@ bool parse_spaboot_start(const char * psz)
    return parse_spaboot_start(node);
 }
 
-void trace(const char * psz)
-{
-   printf("%s", psz);
-}
+//void trace(const char * psz)
+//{
+//   printf("%s", psz);
+//}
 
 int start()
 {
@@ -406,9 +406,14 @@ int start()
       std::string & str = g_straRestartCommandLine.at(ui);
       memset(&si, 0, sizeof(si));
       memset(&pi, 0, sizeof(pi));
-      !::CreateProcess(NULL, (LPSTR)  str.c_str(),
-         NULL, NULL, FALSE, 0, NULL, NULL,
-         &si, &pi);
+      if(!::CreateProcess(NULL,(LPSTR)str.c_str(),NULL,NULL,FALSE,0,NULL,NULL,&si,&pi))
+      {
+         trace(("failed to create process " + str).c_str());
+      }
+      else
+      {
+         trace(("successfully created process " + str).c_str());
+      }
    }
    defer_play_small_bell();
    return 0;
@@ -416,27 +421,27 @@ int start()
 
 
 
-//
-//  FUNCTION: MyRegisterClass()
-//
-//  PURPOSE: Registers the window class.
-//
-//  COMMENTS:
-//
-//    This function and its usage are only necessary if you want this code
-//    to be compatible with Win32 systems prior to the 'RegisterClassEx'
-//    function that was added to Windows 95. It is important to call this function
-//    so that the application will get 'well formed' small icons associated
-//    with it.
-//
-ATOM MyRegisterClass(HINSTANCE hInstance)
+
+  //FUNCTION: MyRegisterClass()
+
+  //PURPOSE: Registers the window class.
+
+  //COMMENTS:
+
+  //  This function and its usage are only necessary if you want this code
+  //  to be compatible with Win32 systems prior to the 'RegisterClassEx'
+  //  function that was added to Windows 95. It is important to call this function
+  //  so that the application will get 'well formed' small icons associated
+  //  with it.
+
+ATOM spaboot_RegisterClass(HINSTANCE hInstance)
 {
 	WNDCLASSEX wcex;
 
 	wcex.cbSize = sizeof(WNDCLASSEX);
 
 	wcex.style			   = 0;
-	wcex.lpfnWndProc	   = WndProc;
+	wcex.lpfnWndProc	   = spaboot_WndProc;
 	wcex.cbClsExtra	   = 0;
 	wcex.cbWndExtra	   = 0;
 	wcex.hInstance		   = hInstance;
@@ -461,7 +466,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //  WM_DESTROY	- post a quit message and return
 //
 //
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK spaboot_WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
