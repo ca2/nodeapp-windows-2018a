@@ -5,6 +5,7 @@ class SPALIB_API stra : public std::vector < std::string >
 public:
    bool spa_insert(const char * psz);
    void add_tokens(const char * psz, const char * pszSeparator);
+   std::string implode(const char * pszSeparator) const;
    void trim();
    void remove_empty();
    void add_stra(stra & stra);

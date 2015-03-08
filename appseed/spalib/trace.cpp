@@ -97,8 +97,11 @@ void on_trace(std::string & str, std::string & str2)
    {
       if(str2.length() > 0)
       {
-         fwrite(str2.c_str(), str2.length(), 1, g_ftrace);
-         fflush(g_ftrace);
+         if(g_ftrace != NULL)
+         {
+            fwrite(str2.c_str(),str2.length(),1,g_ftrace);
+            fflush(g_ftrace);
+         }
       }
    }
    catch(...)

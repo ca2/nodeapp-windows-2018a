@@ -24,6 +24,6 @@
 #include "stra.cpp"
 #include "trace.cpp"
 #include "XMLite.cpp"
-
+#include "window.cpp"
               //20 arquivo(s)        260.510 bytes
               // 0 pasta(s)   60.825.305.088 bytes dispon¡veis

@@ -2,7 +2,7 @@
 
 HANDLE g_hmutexBoot = NULL;
 extern std::string g_strId;
-std::string g_strVersion;
+extern std::string g_strVersion;
 //stra g_straRestartCommandLine;
 HWND g_hwndMessage = NULL;
 //MSG g_msg;

@@ -177,11 +177,9 @@ public:
 
 // Global Variables:
 HINSTANCE hInst;								// current instance
-TCHAR szTitle[MAX_LOADSTRING];					// The title bar text
-TCHAR szWindowClass[MAX_LOADSTRING];			// the main window class name
 
 // Forward declarations of functions included in this code module:
-ATOM				MyRegisterClass(HINSTANCE hInstance);
+//ATOM				MyRegisterClass(HINSTANCE hInstance);
 BOOL				InitInstance(HINSTANCE, int);
 LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
 void CommandRegister();
@@ -248,10 +246,6 @@ int run_spa(int nCmdShow)
 
    
 
-	// Initialize global strings
-	strcpy(szTitle, strName.c_str());
-	strcpy(szWindowClass, strName.c_str());
-	MyRegisterClass(g_hinstance);
 
 	// Perform application initialization:
 	if (!InitInstance (g_hinstance, nCmdShow))
@@ -277,40 +271,6 @@ int run_spa(int nCmdShow)
 
 
 
-//
-//  FUNCTION: MyRegisterClass()
-//
-//  PURPOSE: Registers the window class.
-//
-//  COMMENTS:
-//
-//    This function and its usage are only necessary if you want this code
-//    to be compatible with Win32 systems prior to the 'RegisterClassEx'
-//    function that was added to Windows 95. It is important to call this function
-//    so that the application will get 'well formed' small icons associated
-//    with it.
-//
-ATOM MyRegisterClass(HINSTANCE hInstance)
-{
-	WNDCLASSEX wcex;
-
-	wcex.cbSize = sizeof(WNDCLASSEX);
-
-	wcex.style			   = 0;
-	wcex.lpfnWndProc	   = WndProc;
-	wcex.cbClsExtra	   = 0;
-	wcex.cbWndExtra	   = 0;
-	wcex.hInstance		   = hInstance;
-	wcex.hIcon			   = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_CCVOTAGUS_CA2_SPA));
-	wcex.hCursor		   = LoadCursor(NULL, IDC_ARROW);
-	wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
-	//wcex.lpszMenuName	= MAKEINTRESOURCE(IDC_CCVOTAGUS_CA2_SPA);
-   wcex.lpszMenuName	   = NULL;
-	wcex.lpszClassName	= szWindowClass;
-	wcex.hIconSm		   = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
-
-	return RegisterClassEx(&wcex);
-}
 
 //
 //   FUNCTION: InitInstance(HINSTANCE, int)
@@ -324,7 +284,6 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-   HWND hWnd;
 
    hInst = hInstance; // Store instance handle in our global variable
    
@@ -368,80 +327,10 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    }
 
 
-int Width = 800;
-   int Height = 584;
-
-   BITMAPINFO m_Info;
-
-   ZeroMemory(&m_Info, sizeof (BITMAPINFO));
-
-	m_Info.bmiHeader.biSize=sizeof (BITMAPINFOHEADER);
-	m_Info.bmiHeader.biWidth=Width;
-	m_Info.bmiHeader.biHeight=-Height;
-	m_Info.bmiHeader.biPlanes=1;
-	m_Info.bmiHeader.biBitCount=32; 
-	m_Info.bmiHeader.biCompression=BI_RGB;
-	m_Info.bmiHeader.biSizeImage=Width*Height*4;
-
-   LPDWORD lpdata;
-	
-	g_hbmAlpha=CreateDIBSection ( NULL, &m_Info, DIB_RGB_COLORS, (void **)&lpdata, NULL, NULL ); 
-   for(int y = 0; y < 584; y++)
-   {
-      for(int x = 0; x < 800; x++)
-      {
-         lpdata++;
-/*         if(x < 23 || x > 777 || y < 23 || y > 561)
-         {
-            //*lpdata = (*lpdata & 0xffffff) | 0x7f888888;
-            *lpdata = (*lpdata & 0xffffff) | 0x1fffffff;
-            *lpdata = 0xCA888888;
-         }
-         else*/
-         {
-            *lpdata = 0x88888888;
-         }
-      }
-   }
-
-
-   g_hdcAlpha = ::CreateCompatibleDC(NULL);
-   ::SelectObject(g_hdcAlpha, g_hbmAlpha);
-
-
-   g_strIndexGz = dir::path(g_strInstallGz.c_str(), ("app\\stage\\metastage\\" + g_strStart + ".spa.bz").c_str());
-   g_strIndex = dir::path(g_strInstallGz.c_str(), ("app\\stage\\metastage\\" + g_strStart + ".spa").c_str());
-
-   //read_resource
+   g_strIndexGz = dir::path(g_strInstallGz.c_str(),("app\\stage\\metastage\\" + g_strStart + ".spa.bz").c_str());
+   g_strIndex = dir::path(g_strInstallGz.c_str(),("app\\stage\\metastage\\" + g_strStart + ".spa").c_str());
 
    g_bInternetInstall = !g_bOfflineInstall;
-
-   hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPED,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInstance, NULL);
-
-   g_iStyle = 0;
-
-g_hbrushBk = ::CreateSolidBrush(RGB(255, 255, 255));
-
-   if (!hWnd)
-   {
-      return FALSE;
-   }
-   if(g_iStyle == 0)
-   {
-   }
-   else
-   {
-      ::SetWindowLong(hWnd, GWL_EXSTYLE, ::GetWindowLong(hWnd, GWL_EXSTYLE)
-         | WS_EX_LAYERED);
-   }
-   ::SetWindowLong(hWnd, GWL_STYLE, ::GetWindowLong(hWnd, GWL_EXSTYLE)
-      & ~(WS_BORDER | WS_CAPTION));
-   
-   g_hwnd = hWnd;
-
-
-
 
    if(g_iStart == 4)
    {
@@ -454,26 +343,7 @@ g_hbrushBk = ::CreateSolidBrush(RGB(255, 255, 255));
          CommandStart();
       }
    }
-   int cxScreen = ::GetSystemMetrics(SM_CXSCREEN);
-   int cyScreen = ::GetSystemMetrics(SM_CYSCREEN);
 
-   g_cx = 800;
-   g_cy = 400;
-
-   int x = (cxScreen - g_cx) / 2;
-   int y = (cyScreen - g_cy) / 2;
-
-   SetWindowPos(hWnd, NULL, x, y, g_cx, g_cy, SWP_NOCOPYBITS);
-   UpdateWindow(hWnd);
-   SetTimer(hWnd, 184, 25, NULL);
-   if(g_bShow)
-   {
-      ShowWindow(hWnd, SW_SHOW);
-   }
-   else
-   {
-      ShowWindow(hWnd, SW_HIDE);
-   }
 
    return TRUE;
 }
@@ -2634,6 +2504,24 @@ void remove_spa_start(const char * pszId)
 	   node.RemoveChild(lpnode);
 	   file::put_contents(strPath.c_str(), node.GetXML().c_str());
    }
+}
+
+std::string stra::implode(const char * psz) const
+{
+
+   std::string str;
+
+   if(size() > 0)
+      str+= at(0);
+
+   for(int i = 1; i < size(); i++)
+   {
+      str+= psz;
+      str += at(i);
+   }
+
+
+   return str;
 }
 
 

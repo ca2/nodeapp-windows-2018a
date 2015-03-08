@@ -107,6 +107,9 @@
     <ClCompile Include="_spalib_c.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ccvotagus_ca2_spa.h">
