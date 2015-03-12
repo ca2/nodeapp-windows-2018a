@@ -11,7 +11,7 @@ namespace multimedia
       
 
       wave_out::wave_out(sp(::axis::application) papp) :
-         element(papp),
+         ::object(papp),
          ::thread(papp),
          wave_base(papp),
          ::multimedia::audio::wave_out(papp)
