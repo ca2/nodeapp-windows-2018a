@@ -113,7 +113,7 @@ namespace production
                               
       stringa                 m_straManifest;
       stringa                 m_straSignature;
-      stringa                 m_straPath;
+      ::file::listing         m_straPath;
 
 
       bool                    m_bClean;
@@ -170,7 +170,7 @@ namespace production
       virtual bool release_iexca2(const char * pszPlatform);
       virtual bool release_crxca2(const char * pszPlatform);
 
-      virtual void add_path(const char * pszDir, const char * pszRelative);
+      virtual void add_path(const ::file::path & pszDir, const ::file::path & pszRelative);
 
       bool sync_source(const char * psz, const char * pszRevision);
       bool commit_for_new_build_and_new_release();
@@ -189,7 +189,7 @@ namespace production
 
       string xpi_digest(primitive::memory & mem);
 
-      void xpi_sign_dir(const char * pszDir);
+      void xpi_sign_dir(const ::file::path & pszDir);
       void xpi_section(const char * pszManifest, const char * pszSignature);
 
       bool create_xpi(const char * pszPlatform, bool bSigned = true);

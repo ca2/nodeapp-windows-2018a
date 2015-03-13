@@ -49,7 +49,7 @@ namespace backup
          keep < bool > keepFinishedFalse(&m_bFinished, false, true, true);
          string str;
 
-         string strFile = System.dir().element("basis/ca2/app/dbbk.bat");
+         string strFile = System.dir().element() / "basis/ca2/app/dbbk.bat";
          if(!Application.file().exists(strFile))
          {
             string str;
@@ -137,8 +137,8 @@ namespace backup
       si.cb = sizeof(si);
       si.dwFlags = STARTF_USESHOWWINDOW;
       si.wShowWindow = SW_HIDE; 
-      string strNewRepos = get_new_repos_local_path(psz);
-      Application.dir().mk(System.dir().name(strNewRepos));
+      ::file::path strNewRepos = get_new_repos_local_path(psz);
+      Application.dir().mk(strNewRepos.folder());
       str.Format("svnadmin hotcopy C:\\repos\\%s %s", psz, strNewRepos);
 
       if(!::CreateProcess(NULL, (LPTSTR) (const char *) str, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
@@ -179,12 +179,10 @@ namespace backup
       si.cb = sizeof(si);
       si.dwFlags = STARTF_USESHOWWINDOW;
       si.wShowWindow = SW_HIDE; 
-      string strdump = get_new_db_local_path("all.sql");
-      Application.dir().mk(System.dir().name(strdump));
+      ::file::path strdump = get_new_db_local_path("all.sql");
+      Application.dir().mk(strdump.folder());
 
-      str.Format("%s \"%s\"",
-         System.dir().element("basis/ca2/app/dbbk.bat"),
-         strdump);
+      str.Format("%s \"%s\"", System.dir().element() / "basis/ca2/app/dbbk.bat", strdump);
 
       if(!::CreateProcess(NULL, (LPTSTR) (const char *) str,
          NULL, NULL, FALSE, 0, NULL,
@@ -227,9 +225,9 @@ namespace backup
       si.dwFlags = STARTF_USESHOWWINDOW;
       si.wShowWindow = SW_HIDE; 
       string strNewRepos = get_new_repos_local_path(psz);
-      string strTar;
-      strTar.Format("C:\\ca2\\bk\\%s\\repos\\%s.tar", m_strTag, psz);
-      Application.dir().mk(System.dir().name(strTar));
+      ::file::path strTar;
+      strTar = ::file::path("C:\\ca2\\bk") / m_strTag  / "repos" / psz + ".tar";
+      Application.dir().mk(strTar.folder());
       str.Format("7za.exe a -r -ttar \"%s\" \"%s\"", strTar, strNewRepos);
 
       if(!::CreateProcess(NULL, (LPTSTR) (const char *) str, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
