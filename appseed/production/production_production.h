@@ -104,7 +104,7 @@ namespace production
                               
       string                  m_strStatus;
       ::file::path            m_strBase;
-      stringa                 m_straRoot;
+      ::file::listing         m_straRoot;
       strsize                 m_iBaseLen;
       ::file::listing         m_straFiles;
       stringa                 m_straTitle;

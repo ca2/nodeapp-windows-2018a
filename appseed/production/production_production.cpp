@@ -378,9 +378,11 @@ namespace production
 
 
 
-         m_straRoot.remove_all();
+         m_straRoot.clear_results();
 
-         Application.dir().ls_dir(m_strBase, NULL, &m_straRoot);
+         m_straRoot.m_pprovider = get_app();
+
+         m_straRoot.ls_dir(m_strBase);
 
          m_straRoot.filter_begins_ci("app-");
 
@@ -618,12 +620,12 @@ namespace production
 
             string strStatus;
             m_strTag = strTime + " " + strSVNKey;
-            m_strTagPath = System.dir().path("C:\\ca2\\build\\" + m_strVersion,m_strFormatBuild + ".txt");
+            m_strTagPath = ::file::path("C:\\ca2\\build")/ m_strVersion,m_strFormatBuild + ".txt";
 
             string strBuildH;
             strBuildH.Format("-c1-production -c2-producer -t12n-producing -mmmi- %s",m_strTag);
             strBuildH += " - ";
-            strBuildH += Application.file().as_string(m_strBase / "app/stage","build_machine_pp_comment.txt"));
+            strBuildH += Application.file().as_string(m_strBase / "app/stage" / "build_machine_pp_comment.txt");
             strBuildH += "#define THIS_PRODUCT_VERSION \"" + m_strTag + "\\0\"\r\n#define THIS_FILE_VERSION \"" + m_strTag + "\\0\"\r\n";
             strBuildH += "#define __THIS_PRODUCT_VERSION " + strVerWin + "\r\n#define __THIS_FILE_VERSION " + strVerWin + "\r\n";
             strBuildH += "\r\n";
@@ -657,7 +659,7 @@ namespace production
             }
             ::process::process_sp process(allocer());
             string strPath;
-            strPath = System.dir().element("nodeapp\\stage\\script\\stage_clean.bat");
+            strPath = System.dir().element() / "nodeapp\\stage\\script\\stage_clean.bat";
             if (!process->create_child_process(strPath, false))
             {
                uint32_t dw = GetLastError();
@@ -677,14 +679,14 @@ namespace production
          }
 
          //Application.dir().mk(m_strBase /  "time"));
-         Application.file().put_contents(m_strBase /  "app\\build.txt"), m_strBuild);
-         Application.file().put_contents_utf8(m_strBase /  "app\\this_version_info.h"), strBuildH);
-         Application.file().put_contents_utf8(m_strBase /  "app\\this_version_info.txt"), strBuildH);
+         Application.file().put_contents(m_strBase /  "app\\build.txt", m_strBuild);
+         Application.file().put_contents_utf8(m_strBase /  "app\\this_version_info.h", strBuildH);
+         Application.file().put_contents_utf8(m_strBase /  "app\\this_version_info.txt", strBuildH);
 
-         update_rc_file_version(m_strBase / "app\\appseed\\base\\base.rc"));
-         update_rc_file_version(m_strBase / "app-core\\appseed\\iexca2\\iexca2.rc"));
-         update_rc_file_version(m_strBase / "nodeapp\\appseed\\app.install\\app.install.rc"));
-         update_rc_file_version(m_strBase / "nodeapp\\appseed\\draw2d_gdiplus\\draw2d_gdiplus.rc"));
+         update_rc_file_version(m_strBase / "app\\appseed\\base\\base.rc");
+         update_rc_file_version(m_strBase / "app-core\\appseed\\iexca2\\iexca2.rc");
+         update_rc_file_version(m_strBase / "nodeapp\\appseed\\app.install\\app.install.rc");
+         update_rc_file_version(m_strBase / "nodeapp\\appseed\\draw2d_gdiplus\\draw2d_gdiplus.rc");
 
          if (!commit_for_new_build_and_new_release())
             return 2;
@@ -711,7 +713,7 @@ namespace production
          }
 
          add_status("Cleaning site...");
-         string strPath = System.dir().element("time\\stage\\app\\matter\\job.bat");
+         string strPath = System.dir().element() "time\\stage\\app\\matter\\job.bat";
 
 
          //System.http().ms_download("http://api.ca2.cc/spaignition/clean", 
