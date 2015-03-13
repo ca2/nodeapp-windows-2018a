@@ -713,7 +713,7 @@ namespace production
          }
 
          add_status("Cleaning site...");
-         string strPath = System.dir().element() "time\\stage\\app\\matter\\job.bat";
+         ::file::path strPath = System.dir().element() / "time\\stage\\app\\matter\\job.bat";
 
 
          //System.http().ms_download("http://api.ca2.cc/spaignition/clean", 
@@ -746,9 +746,9 @@ namespace production
          m_straFiles.remove_all();
 
 
-         get_file_list(m_strBase, "stage/x86", m_strRemote, m_straFiles, m_straTitle, m_straRelative);
-         get_file_list(m_strBase, "stage/x64", m_strRemote, m_straFiles, m_straTitle, m_straRelative);
-         get_file_list(m_strBase, "app/stage/metastage", m_strRemote, m_straFiles, m_straTitle, m_straRelative);
+         get_file_list(m_strBase, "stage/x86", m_strRemote, m_straFiles);
+         get_file_list(m_strBase, "stage/x64", m_strRemote, m_straFiles);
+         get_file_list(m_strBase, "app/stage/metastage", m_strRemote, m_straFiles);
 
 
          generate_appmatter_spa();
@@ -842,7 +842,7 @@ namespace production
          Application.dir().mk("C:\\home\\ccvotagus\\ca2_spa\\"+m_strVersion+"\\app\\");
          Application.file().put_contents("C:\\home\\ccvotagus\\ca2_spa\\"+m_strVersion+"\\app\\build.txt", m_strBuild);
          Application.file().put_contents(m_strCCVrelNew + "\\app\\build.txt", m_strBuild);
-         Application.dir().mk(System.dir().name(m_strTagPath));
+         Application.dir().mk(m_strTagPath.folder());
          Application.file().put_contents(m_strTagPath, m_strTag);
 
          //commit_source("C:\\netnodenet\\net");
@@ -867,7 +867,7 @@ namespace production
 
             uint32_t dwExitCode;
 
-            string strPath = System.dir().element("time\\stage\\app\\matter\\store_symbols_job_x86.bat");
+            ::file::path strPath = System.dir().element() / "time\\stage\\app\\matter\\store_symbols_job_x86.bat";
 
             ::process::process_sp process(allocer());
             string strCommand = "\"C:\\Program Files (x86)\\Windows Kits\\8.0\\Debuggers\\x86\\symstore.exe\"  add /r  -:REL /f \\\\sewindows\\stage\\" + m_strFormatBuild + "\\stage\\x86\\ /s \\\\sewindows\\SymbolServer\\ /t \"ca2\" /v \"" + m_strFormatBuild + "\"";
@@ -905,7 +905,7 @@ namespace production
 
             uint32_t dwExitCode;
 
-            string strPath = System.dir().element("time\\stage\\app\\matter\\store_symbols_job_x64.bat");
+            ::file::path strPath = System.dir().element() / "time\\stage\\app\\matter\\store_symbols_job_x64.bat";
 
             ::process::process_sp process(allocer());
             string strCommand = "\"C:\\Program Files (x86)\\Windows Kits\\8.0\\Debuggers\\x64\\symstore.exe\"  add /r  -:REL /f \\\\sewindows\\stage\\" + m_strFormatBuild + "\\stage\\x64\\ /s \\\\sewindows\\SymbolServer\\ /t \"ca2\" /v \"" + m_strFormatBuild + "\"";
@@ -962,7 +962,7 @@ namespace production
          
          add_status("");
 
-         stringa straRoot;
+         ::file::listing straRoot;
 
          straRoot = m_straRoot;
 
@@ -1156,12 +1156,12 @@ namespace production
 
 
 
-   void production::compress(const char * lpcszRelative)
+   void production::compress(const ::file::path & lpcszRelative)
    {
       string strStatus;
-      strStatus.Format("compressing %s", System.file().name_(lpcszRelative));
+      strStatus.Format("compressing %s", lpcszRelative.name());
       add_status(strStatus);
-      string strSrcFile = System.dir().path(m_strVrel, lpcszRelative);
+      string strSrcFile = m_strVrel / lpcszRelative;
       if (::str::ends_ci(lpcszRelative, ".dll")
          || ::str::ends_ci(lpcszRelative, ".exe")
          || ::str::ends_ci(lpcszRelative, ".ocx")
@@ -1169,7 +1169,7 @@ namespace production
       {
 
          string strStatus;
-         strStatus.Format("signing %s", System.file().name_(lpcszRelative));
+         strStatus.Format("signing %s", lpcszRelative.name());
          add_status(strStatus);
 
          string strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strSrcFile + "\"";
@@ -1182,7 +1182,7 @@ namespace production
       {
 
          string strStatus;
-         strStatus.Format("signing driver %s", System.file().name_(lpcszRelative));
+         strStatus.Format("signing driver %s", lpcszRelative.name());
          add_status(strStatus);
 
          string strCmd = "\"" + m_strSignTool + "\" sign /v /ac \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strSrcFile + "\"";
@@ -1195,7 +1195,7 @@ namespace production
    retry2:
       try
       {
-         System.compress().bz(get_app(), System.dir().path(m_strCCAuth, lpcszRelative) + ".bz", strSrcFile);
+         System.compress().bz(get_app(), m_strCCAuth /  lpcszRelative + ".bz", strSrcFile);
       }
       catch (...)
       {
@@ -1210,8 +1210,11 @@ namespace production
             add_status("build failure compressing " + string(lpcszRelative));
          }
       }
-      strStatus.Format("%s compressed", System.file().name_(lpcszRelative));
+      
+      strStatus.Format("%s compressed", lpcszRelative.name());
+
       add_status(strStatus);
+
    }
 
 
@@ -1234,19 +1237,19 @@ namespace production
       single_lock sl(&m_mutexCompress, TRUE);
       for (; i < m_straFiles.get_size(); i++)
       {
-         string & strFile = m_straFiles[i];
-         if (System.file().extension(strFile) == "zip")
+         ::file::path & strFile = m_straFiles[i];
+         if (strFile.extension() == "zip")
          {
          }
          else if (Application.dir().is(strFile))
          {
             continue;
          }
-         else if (System.file().extension(strFile) == "pdb")
+         else if (strFile.ext() == "pdb")
          {
             continue;
          }
-         else if (System.file().extension(strFile) == "ilk")
+         else if (strFile.ext() == "ilk")
          {
             continue;
          }
@@ -1372,7 +1375,7 @@ namespace production
       add_status(strStatus);
 
       string str;
-      string strBase = m_strBase;
+      ::file::path strBase = m_strBase;
       STARTUPINFO si;
       PROCESS_INFORMATION pi;
       memset(&si, 0, sizeof(si));
@@ -1382,11 +1385,11 @@ namespace production
       si.wShowWindow = SW_HIDE;
       if (pszRevision != NULL && pszRevision[0] != '\0')
       {
-         str.Format("svn update --revision %s %s", pszRevision, System.dir().path(strBase, psz));
+         str.Format("svn update --revision %s %s",pszRevision,strBase / psz);
       }
       else
       {
-         str.Format("svn update %s", System.dir().path(strBase, psz));
+         str.Format("svn update %s", strBase / psz);
       }
       if (!::CreateProcess(NULL, (LPTSTR)(const char *)str, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
       {
@@ -1446,15 +1449,11 @@ namespace production
       si.wShowWindow = SW_HIDE;
       if (string(psz).find(":\\") > 0)
       {
-         str.Format("svn commit --force-log --encoding utf-8 --file %s %s",
-            m_strBase /  "app\\this_version_info.txt"),
-            psz);
+         str.Format("svn commit --force-log --encoding utf-8 --file %s %s",          m_strBase /  "app\\this_version_info.txt",           psz);
       }
       else
       {
-         str.Format("svn commit --force-log --encoding utf-8 --file %s %s",
-            m_strBase /  "app\\this_version_info.txt"),
-            System.dir().path(strBase, psz));
+         str.Format("svn commit --force-log --encoding utf-8 --file %s %s",            m_strBase /  "app\\this_version_info.txt", strBase/ psz);
       }
       if (!::CreateProcess(NULL, (LPTSTR)(const char *)str, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
       {
@@ -1479,10 +1478,10 @@ namespace production
       return true;
    }
 
-   bool production::get_file_list(const char * pszBase, const char * pszDir, string & strRemote, stringa & stra, stringa & straTitle, stringa & straRelative, bool bFileSet)
+   bool production::get_file_list(const char * pszBase, const char * pszDir, string & strRemote, ::file::listing & stra, bool bFileSet)
    {
-      string strBase(pszBase);
-      string strRelease;
+      ::file::path strBase(pszBase);
+      ::file::path strRelease;
       string strDirParam(pszDir);
       string strLocal(strDirParam);
       strLocal.replace("/", "\\");
@@ -1491,10 +1490,10 @@ namespace production
       strRemote.replace("\\", "/");
       if (strRemote.Right(1) != "/") strRemote += "/";
       if (strRemote.Left(1) != "/") strRemote = "/" + strRemote;
-      strRelease = System.dir().path(strBase, strLocal);
+      strRelease = strBase / strLocal;
       if (bFileSet)
       {
-         string strFile;
+         ::file::path strFile;
          string strTitle;
          string strRelative;
          ::str::ends_eat(strRelease, "\\");
@@ -1502,33 +1501,30 @@ namespace production
          ::str::ends_eat(strLocal, "\\");
          ::str::ends_eat(strLocal, "/");
          strFile = strRelease + ".expand_fileset";
-         strTitle = System.file().name_(strRelease) + ".expand_fileset";
+         strTitle = strRelease.name() + ".expand_fileset";
          strRelative = strLocal + ".expand_fileset";
          strRelative.replace("/", "\\");
 
-         stringa stra1;
-         stringa stra2;
-         Application.dir().rls(strRelease, &stra1, NULL, &stra2);
+         ::file::listing stra1(get_app());
+         stra1.rls(strRelease);
          for (int32_t i = 0; i < stra1.get_size();)
          {
             if (stra1[i].find("\\.svn\\") >= 0 || (stra1[i].get_length() < 5 || stra1[i].Right(5) == "\\.svn"))
             {
                stra1.remove_at(i);
-               stra2.remove_at(i);
             }
             else
             {
                i++;
             }
          }
-         System.file().dtf(strFile, stra1, stra2, get_app());
+         System.file().dtf(strFile, stra1, get_app());
          stra.add(strFile);
-         straTitle.add(strTitle);
-         straRelative.add(strRelative);
       }
       else
       {
-         Application.dir().rls(strRelease, &stra, &straTitle, &straRelative);
+         stra.m_pprovider = get_app();
+         stra.rls(strRelease);
       }
       strRemote = strRemote + "/stage/" + m_strFormatBuild + "/";
       return true;
@@ -1548,8 +1544,8 @@ namespace production
 
       stringa straStageDir;
 
-      straStageDir.add(m_strBase /  "stage/x86"));
-      straStageDir.add(m_strBase /  "stage/x64"));
+      straStageDir.add(m_strBase /  "stage/x86");
+      straStageDir.add(m_strBase /  "stage/x64");
 
       string strRelative;
       string strBz;
@@ -1563,7 +1559,7 @@ namespace production
       int32_t i = 0;
       for (; i < m_straFiles.get_size(); i++)
       {
-         string & strFile = m_straFiles[i];
+         ::file::path & strFile = m_straFiles[i];
          if (::str::ends_ci(strFile, ".zip"))
          {
          }
@@ -1573,22 +1569,22 @@ namespace production
          }
          if (straStageDir.str_find_first_begins_ci(strFile) >= 0
             && !m_straStageDirAcceptedFileExtensions.contains(
-            System.file().extension(strFile)))
+            strFile.ext()))
          {
             continue;
          }
          //strStatus.Format("compressing %s", strFile);
          //add_status(strStatus);
          strRelative = strFile.Mid(iBaseLen);
-         strBz = System.dir().path(m_strCCAuth, strRelative) + ".bz";
-         strUn = System.dir().path(m_strVrel, strRelative);
+         strBz = m_strCCAuth / strRelative + ".bz";
+         strUn = m_strVrel / strRelative;
          strMd5 = System.file().md5(strUn);
          varUnSize = Application.file().length(strUn);
          varBzSize = Application.file().length(strBz);
-         strRelease = System.dir().path(m_strCCVrel, strRelative);
+         strRelease = m_strCCVrel / strRelative;
          strRelease += ".bz.";
          strRelease += strMd5;
-         strReleaseNew = System.dir().path(m_strCCVrelNew, strRelative);
+         strReleaseNew = m_strCCVrelNew / strRelative;
          strReleaseNew += ".bz.";
          strReleaseNew += strMd5;
          strContents += strRelative;
@@ -1607,36 +1603,34 @@ namespace production
       }
 
       strRelative = "app\\stage\\metastage\\index-" + m_strFormatBuild + ".spa";
-      string strIndex = System.dir().path(m_strVrel, strRelative);
-      Application.file().put_contents(
-         strIndex,
-         strContents);
+      string strIndex = m_strVrel / strRelative;
+      Application.file().put_contents(strIndex, strContents);
 
       m_strIndexMd5 = System.file().md5(strIndex);
 
-      strBz = System.dir().path(m_strCCAuth, strRelative) + ".bz";
+      strBz = m_strCCAuth /  strRelative + ".bz";
       ::DeleteFileW(::str::international::utf8_to_unicode(strBz));
       compress(strRelative);
 
       string strRelativeMd5 = "app\\stage\\metastage\\index-" + m_strFormatBuild + ".md5";
-      strMd5 = System.dir().path(m_strVrel, strRelativeMd5);
+      strMd5 = m_strVrel / strRelativeMd5;
       Application.file().put_contents(strMd5, m_strIndexMd5);
 
       //string strStage = System.dir().path("C:\\home\\ccvotagus\\ca2_spa\\" + m_strVersionShift, strRelative) + ".bz"; 
       //::DeleteFileW(::str::international::utf8_to_unicode(
       // strStage));
       //System.file().copy(strStage, strBz);
-      strRelease = System.dir().path(m_strCCVrel, strRelative) + ".bz";
+      strRelease = m_strCCVrel / strRelative + ".bz";
       //::DeleteFileW(::str::international::utf8_to_unicode(
       // strRelease));
       Application.file().copy(strRelease, strBz);
-      strRelease = System.dir().path(m_strCCVrel, strRelativeMd5);
+      strRelease = m_strCCVrel / strRelativeMd5;
       Application.file().copy(strRelease, strMd5);
-      strReleaseNew = System.dir().path(m_strCCVrelNew, strRelative) + ".bz";
+      strReleaseNew = m_strCCVrelNew/ strRelative + ".bz";
       //::DeleteFileW(::str::international::utf8_to_unicode(
       // strRelease));
       Application.file().copy(strReleaseNew, strBz);
-      strReleaseNew = System.dir().path(m_strCCVrelNew, strRelativeMd5);
+      strReleaseNew = m_strCCVrelNew/ strRelativeMd5;
       Application.file().copy(strReleaseNew, strMd5);
    }
 
@@ -1650,95 +1644,96 @@ namespace production
 
    }
 
-   void production::generate_appmatter_spa(const char * pszRoot)
+   void production::generate_appmatter_spa(const ::file::path & pszRoot)
    {
 
-      stringa straRelative;
+      ::file::listing listing(get_app());
 
-      string strBase = m_strBase /  pszRoot, "appmatter");
+      string strBase = m_strBase /  pszRoot / "appmatter";
 
-      Application.dir().ls_dir(strBase, NULL, &straRelative);
+      listing.ls_dir(strBase);
 
-      for (int32_t i = 0; i < straRelative.get_count(); i++)
+      for(int32_t i = 0; i < listing.get_count(); i++)
       {
-         if (::str::begins(straRelative[i], "_"))
+         if(::str::begins(listing[i].relative(),"_"))
          {
-            generate_appmatter_spa_folder(pszRoot, straRelative[i]);
+            generate_appmatter_spa_folder(pszRoot,listing[i].relative());
          }
          else
          {
-            generate_appmatter_spa_locale(pszRoot, straRelative[i]);
+            generate_appmatter_spa_locale(pszRoot,listing[i].relative());
          }
       }
 
    }
 
-   void production::generate_appmatter_spa_folder(const char * pszRoot, const char * pszRelative)
+   void production::generate_appmatter_spa_folder(const ::file::path & pszRoot, const ::file::path & pszRelative)
    {
 
-      stringa straRelative;
+      ::file::listing listing(get_app());
 
-      string strBase = m_strBase /  pszRoot, "appmatter");
+      ::file::path strBase = m_strBase /  pszRoot/ "appmatter";
 
-      strBase = System.dir().path(strBase, pszRelative);
+      strBase = strBase /  pszRelative;
 
-      Application.dir().ls_dir(strBase, NULL, &straRelative);
+      listing.ls_dir(strBase);
 
-      for (int32_t i = 0; i < straRelative.get_count(); i++)
+      for(int32_t i = 0; i < listing.get_count(); i++)
       {
-         if (::str::begins(straRelative[i], "_") && straRelative[i] != "_std")
+         if(::str::begins(listing[i].relative(),"_") && listing[i].relative() != "_std")
          {
-            generate_appmatter_spa_folder(pszRoot, System.dir().path(pszRelative, straRelative[i]));
+            generate_appmatter_spa_folder(pszRoot,pszRelative/listing[i].relative());
          }
          else
          {
-            generate_appmatter_spa_locale(pszRoot, System.dir().path(pszRelative, straRelative[i]));
+            generate_appmatter_spa_locale(pszRoot,pszRelative / listing[i].relative());
          }
       }
 
    }
 
-   void production::generate_appmatter_spa_locale(const char * pszRoot, const char * pszRelative)
+   void production::generate_appmatter_spa_locale(const ::file::path & pszRoot, const ::file::path & pszRelative)
    {
-      stringa straRelative;
+      
+      ::file::listing listing(get_app());
 
-      string strBase = m_strBase /  pszRoot, "appmatter");
+      ::file::path strBase = m_strBase /  pszRoot / "appmatter";
 
-      strBase = System.dir().path(strBase, pszRelative);
+      strBase = strBase / pszRelative;
 
-      Application.dir().ls_dir(strBase, NULL, &straRelative);
+      listing.ls_dir(strBase);
 
-      for (int32_t i = 0; i < straRelative.get_count(); i++)
+      for (int32_t i = 0; i < listing.get_count(); i++)
       {
 
-         generate_appmatter_spa_style(pszRoot, System.dir().path(pszRelative, straRelative[i]));
+         generate_appmatter_spa_style(pszRoot,pszRelative / listing[i].relative());
 
       }
 
    }
 
-   void production::generate_appmatter_spa_style(const char * pszRoot, const char * pszRelative)
+   void production::generate_appmatter_spa_style(const ::file::path & pszRoot, const ::file::path & pszRelative)
    {
 
-      stringa straRelative;
+      ::file::listing listing(get_app());
 
-      string strBase = m_strBase /  pszRoot, "appmatter");
+      ::file::path strBase = m_strBase /  pszRoot/ "appmatter";
 
-      strBase = System.dir().path(strBase, pszRelative);
+      strBase /= pszRelative;
 
-      Application.dir().ls_dir(strBase, NULL, &straRelative);
+      listing.ls_dir(strBase);
 
-      for (int32_t i = 0; i < straRelative.get_count(); i++)
+      for(int32_t i = 0; i < listing.get_count(); i++)
       {
 
-         generate_appmatter_spa(pszRoot, System.dir().path(pszRelative, straRelative[i]));
+         generate_appmatter_spa(pszRoot,pszRelative / listing[i].relative());
 
       }
 
    }
 
 
-   void production::generate_appmatter_spa(const char * pszRoot, const char * pszRelative)
+   void production::generate_appmatter_spa(const ::file::path & pszRoot, const ::file::path & pszRelative)
    {
 
       string strStatus;
@@ -1747,15 +1742,13 @@ namespace production
 
       add_status(strStatus);
 
-      stringa straFiles;
-
-      stringa straRelative;
+      ::file::listing straFiles(get_app());
 
       stringa stra1;
 
       stringa stra2;
 
-      Application.dir().rls(m_strBase /  System.dir().path(pszRoot, "appmatter", pszRelative)), &straFiles, NULL, &straRelative);
+      straFiles.rls(m_strBase / pszRoot / "appmatter" / pszRelative);
 
       strsize iBaseLen = m_strBase.get_length();
 
@@ -1763,7 +1756,7 @@ namespace production
          iBaseLen++;
 
       string strRelative;
-      string strFile;
+      ::file::path strFile;
       string strBz;
       string strUn;
       var varUnSize;
@@ -1773,27 +1766,27 @@ namespace production
       int32_t i = 0;
       for (; i < straFiles.get_size(); i++)
       {
-         string & strFile = straFiles[i];
-         if (System.file().extension(strFile).CompareNoCase("zip") == 0)
+         ::file::path & strFile = straFiles[i];
+         if (strFile.ext().CompareNoCase("zip") == 0)
          {
          }
          else if (Application.dir().is(strFile))
          {
             continue;
          }
-         else if (System.file().extension(strFile) == "pdb")
+         else if (strFile.ext() == "pdb")
          {
             continue;
          }
-         else if (System.file().extension(strFile) == "ilk")
+         else if (strFile.ext() == "ilk")
          {
             continue;
          }
-         else if (System.file().extension(strFile) == "spa")
+         else if (strFile.ext() == "spa")
          {
             continue;
          }
-         else if (System.file().extension(strFile) == "expand_fileset")
+         else if (strFile.ext() == "expand_fileset")
          {
             continue;
          }
@@ -1804,23 +1797,23 @@ namespace production
          strContents += "\n";
 
          m_straFiles.add(strFile);
-         m_straTitle.add(System.file().title_(strFile));
-         m_straRelative.add(strRelative);
+//         m_straTitle.add(System.file().title_(strFile));
+  //       m_straRelative.add(strRelative);
 
          stra1.add(strFile);
-         stra2.add(straRelative[i]);
+    //     stra2.add(straRelative[i]);
 
       }
 
       strRelative = string(pszRoot) + +"\\appmatter\\" + string(pszRelative);
 
-      strFile = m_strBase /  "app\\stage\\metastage", strRelative + ".expand_fileset.spa");
+      strFile = m_strBase /  "app\\stage\\metastage"/ strRelative / ".expand_fileset.spa";
 
       m_straFiles.add(strFile);
 
-      m_straTitle.add(System.file().title_(strFile));
+//      m_straTitle.add(System.file().title_(strFile));
 
-      m_straRelative.add("app\\stage\\metastagez\\" + strRelative + ".expand_fileset.spa");
+      //m_straRelative.add("app\\stage\\metastagez\\" + strRelative + ".expand_fileset.spa");
 
       Application.file().put_contents(strFile, strContents);
 
@@ -1830,8 +1823,8 @@ namespace production
 
       System.file().dtf(strFile, stra1, stra2, get_app());
       m_straFiles.add(strFile);
-      m_straTitle.add(System.file().title_(strFile));
-      m_straRelative.add(strRelative + ".expand_fileset.spa");
+      //m_straTitle.add(System.file().title_(strFile));
+      //m_straRelative.add(strRelative + ".expand_fileset.spa");
 
 
       //get_file_list(m_strBase, strRelative, m_strRemote, m_straFiles, m_straTitle, m_straRelative);
@@ -2125,7 +2118,7 @@ namespace production
 
       //add_status("Signing npca2.dll for Firefox ...");
       //string strFile = System.dir().path(strDir, "npca2/plugins", "npca2.dll");
-      //Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/npca2.dll"));
+      //Application.file().copy(strFile, m_strVrel / "stage/" + strPlatform + "/npca2.dll"));
       //string strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       //System.process().synch(strCmd);
 
@@ -2133,7 +2126,7 @@ namespace production
 
       //add_status("Signing app.install.exe for Firefox ...");
       //strFile = System.dir().path(strDir, "npca2/plugins", "app.install.exe");
-      //Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/app.install.exe"));
+      //Application.file().copy(strFile, m_strVrel / "stage/" + strPlatform + "/app.install.exe"));
       //strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       //System.process().synch(strCmd);
 
@@ -2156,7 +2149,7 @@ namespace production
 
          strFile = System.dir().path(strDir, "npca2/plugins", strLibrary);
 
-         Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/" + strLibrary));
+         Application.file().copy(strFile, m_strVrel / "stage/" + strPlatform + "/" + strLibrary));
 
          strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
 
@@ -2167,32 +2160,32 @@ namespace production
 
       //add_status("Signing base.dll for Firefox ...");
       //strFile = System.dir().path(strDir, "npca2/plugins", "base.dll");
-      //Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/base.dll"));
+      //Application.file().copy(strFile, m_strVrel / "stage/" + strPlatform + "/base.dll"));
       //strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       //System.process().synch(strCmd);
 
 /*
       add_status("Signing os.dll for Firefox ...");
       strFile = System.dir().path(strDir, "npca2/plugins", "os.dll");
-      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/os.dll"));
+      Application.file().copy(strFile, m_strVrel / "stage/" + strPlatform + "/os.dll"));
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
       */
 
       //add_status("Signing msvcr120d.dll for Firefox ...");
       //strFile = System.dir().path(strDir, "npca2/plugins", "msvcr120d.dll");
-      //Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/msvcr120d.dll"));
+      //Application.file().copy(strFile, m_strVrel / "stage/" + strPlatform + "/msvcr120d.dll"));
       //strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       //System.process().synch(strCmd);
 
       //add_status("Signing msvcp120d.dll for Firefox ...");
       //strFile = System.dir().path(strDir, "npca2/plugins", "msvcp120d.dll");
-      //Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/msvcp120d.dll"));
+      //Application.file().copy(strFile, m_strVrel / "stage/" + strPlatform + "/msvcp120d.dll"));
       //strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       //System.process().synch(strCmd);
 
       //strFile = System.dir().path(strDir, "npca2/plugins", "draw2d_gdiplus.dll");
-      //Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/draw2d_gdiplus.dll"));
+      //Application.file().copy(strFile, m_strVrel / "stage/" + strPlatform + "/draw2d_gdiplus.dll"));
       //strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       //System.process().synch(strCmd);
 
@@ -2202,8 +2195,8 @@ namespace production
 
       create_xpi(pszPlatform, false);
 
-      Application.file().copy(System.dir().path(m_strVrel, "stage\\" + strPlatform + "\\npca2.xpi"), System.dir().path(strDir, "npca2.xpi"));
-      Application.file().copy(System.dir().path(m_strCCVrel, "plugin\\" + strPlatform + "\\npca2_windows.rdf"), System.dir().path(strDir, "npca2_windows.rdf"));
+      Application.file().copy(m_strVrel / "stage\\" + strPlatform + "\\npca2.xpi"), System.dir().path(strDir, "npca2.xpi"));
+      Application.file().copy(m_strCCVrel / "plugin\\" + strPlatform + "\\npca2_windows.rdf"), System.dir().path(strDir, "npca2_windows.rdf"));
 
       return true;
    }
@@ -2369,7 +2362,7 @@ namespace production
          strVersion = "\\basis";
       }
 
-      Application.file().copy(System.dir().path(m_strVrel, "stage\\" + strPlatform + "\\iexca2.cab"), m_strBase /  "time\\iexca2\\" + strPlatform + "\\iexca2.cab"));
+      Application.file().copy(m_strVrel / "stage\\" + strPlatform + "\\iexca2.cab"), m_strBase /  "time\\iexca2\\" + strPlatform + "\\iexca2.cab"));
 
       return true;
 
@@ -2459,7 +2452,7 @@ namespace production
 
          strFile = System.dir().path(strDir,"npca2/plugins",strLibrary);
 
-         Application.file().copy(strFile,System.dir().path(m_strVrel,"stage/" + strPlatform + "/" + strLibrary));
+         Application.file().copy(strFile,m_strVrel /"stage/" + strPlatform + "/" + strLibrary));
 
          strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
 
@@ -2469,45 +2462,45 @@ namespace production
 
       //add_status("Signing npca2.dll for Chrome ...");
       //string strFile = System.dir().path(strDir, "npca2.dll");
-      //Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/npca2.dll"));
+      //Application.file().copy(strFile, m_strVrel / "stage/" + strPlatform + "/npca2.dll"));
       //string strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       //System.process().synch(strCmd);
 
       //add_status("Signing app.install.exe for Chrome ...");
       //strFile = System.dir().path(strDir, "app.install.exe");
-      //Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/app.install.exe"));
+      //Application.file().copy(strFile, m_strVrel / "stage/" + strPlatform + "/app.install.exe"));
       //strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       //System.process().synch(strCmd);
 
       //add_status("Signing base.dll for Chrome ...");
       //strFile = System.dir().path(strDir, "base.dll");
-      //Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/base.dll"));
+      //Application.file().copy(strFile, m_strVrel / "stage/" + strPlatform + "/base.dll"));
       //strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       //System.process().synch(strCmd);
 
 /*
       add_status("Signing os.dll for Chrome ...");
       strFile = System.dir().path(strDir, "os.dll");
-      Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/os.dll"));
+      Application.file().copy(strFile, m_strVrel / "stage/" + strPlatform + "/os.dll"));
       strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       System.process().synch(strCmd);
       */
 
       //add_status("Signing msvcp120d.dll for Chrome ...");
       //strFile = System.dir().path(strDir, "msvcp120d.dll");
-      //Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/msvcp120d.dll"));
+      //Application.file().copy(strFile, m_strVrel / "stage/" + strPlatform + "/msvcp120d.dll"));
       //strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       //System.process().synch(strCmd);
 
       //add_status("Signing msvcr120d.dll for Chrome ...");
       //strFile = System.dir().path(strDir, "msvcr120d.dll");
-      //Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/msvcr120d.dll"));
+      //Application.file().copy(strFile, m_strVrel / "stage/" + strPlatform + "/msvcr120d.dll"));
       //strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       //System.process().synch(strCmd);
 
       //add_status("Signing draw2d_gdiplus.dll for Chrome ...");
       //strFile = System.dir().path(strDir, "draw2d_gdiplus.dll");
-      //Application.file().copy(strFile, System.dir().path(m_strVrel, "stage/" + strPlatform + "/draw2d_gdiplus.dll"));
+      //Application.file().copy(strFile, m_strVrel / "stage/" + strPlatform + "/draw2d_gdiplus.dll"));
       //strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       //System.process().synch(strCmd);
 
@@ -2542,7 +2535,7 @@ namespace production
       }
 
 
-      Application.file().copy(System.dir().path(m_strVrel, "stage\\" + strPlatform + "\\crxca2.crx"), System.dir().path(System.dir().name(strDir), "crxca2.crx"));
+      Application.file().copy(m_strVrel / "stage\\" + strPlatform + "\\crxca2.crx"), System.dir().path(System.dir().name(strDir), "crxca2.crx"));
 
       return true;
    }

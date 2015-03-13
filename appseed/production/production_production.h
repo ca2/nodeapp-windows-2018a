@@ -100,15 +100,15 @@ namespace production
       bool                    m_bEndProduction;
                               
       string                  m_strTag;
-      string                  m_strTagPath;
+      ::file::path            m_strTagPath;
                               
       string                  m_strStatus;
       ::file::path            m_strBase;
       ::file::listing         m_straRoot;
       strsize                 m_iBaseLen;
       ::file::listing         m_straFiles;
-      stringa                 m_straTitle;
-      stringa                 m_straRelative;
+      //stringa                 m_straTitle;
+      //stringa                 m_straRelative;
       string                  m_strRemote;
                               
       stringa                 m_straManifest;
@@ -120,9 +120,9 @@ namespace production
       bool                    m_bBuild;
                               
                               
-      string                  m_strVrel;
-      string                  m_strCCAuth;
-      string                  m_strCCVrel;
+      ::file::path            m_strVrel;
+      ::file::path            m_strCCAuth;
+      ::file::path            m_strCCVrel;
       string                  m_strCCVrelNew;
       string                  m_strIndexMd5;
 
@@ -152,18 +152,18 @@ namespace production
 
       virtual int32_t produce();
 
-      bool get_file_list(const char * pszBase, const char * pszDir,string &  strRemote, stringa & stra, stringa & straTitle, stringa & straRelative, bool bFileSet = false);
+      bool get_file_list(const char * pszBase, const char * pszDir,string &  strRemote, ::file::listing & stra, bool bFileSet = false);
       // bool ftp_put_dir(CFtpConnection & ftpconn, const char * pszBase, const char * pszDir, int32_t iMode);
 
       virtual void compress();
       virtual bool compress_next();
 
       virtual void generate_appmatter_spa();
-      virtual void generate_appmatter_spa(const char * pszRoot);
-      virtual void generate_appmatter_spa_folder(const char * pszRoot, const char * pszRelative);
-      virtual void generate_appmatter_spa_locale(const char * pszRoot, const char * pszRelative);
-      virtual void generate_appmatter_spa_style(const char * pszRoot, const char * pszRelative);
-      virtual void generate_appmatter_spa(const char * pszRoot, const char * pszRelative);
+      virtual void generate_appmatter_spa(const ::file::path & pszRoot);
+      virtual void generate_appmatter_spa_folder(const ::file::path & pszRoot,const ::file::path & pszRelative);
+      virtual void generate_appmatter_spa_locale(const ::file::path & pszRoot,const ::file::path & pszRelative);
+      virtual void generate_appmatter_spa_style(const ::file::path & pszRoot,const ::file::path & pszRelative);
+      virtual void generate_appmatter_spa(const ::file::path & pszRoot,const ::file::path & pszRelative);
 
       virtual void release_production();
       virtual bool release_npca2(const char * pszPlatform);
@@ -183,7 +183,7 @@ namespace production
       virtual bool facebook_auth();
       virtual string facebook_status(const char * pszMessage);
 
-      void compress(const char * lpszRelative);
+      void compress(const ::file::path & lpszRelative);
 
       void OnUpdateRelease();
 
