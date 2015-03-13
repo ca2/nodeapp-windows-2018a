@@ -338,7 +338,7 @@ namespace production
          
          {
 
-            string strContentsSrc = System.dir().path(m_strBase, "include", "product.version.config.h");
+            string strContentsSrc = m_strBase /  "include", "product.version.config.h");
 
             string strContentsSet;
 
@@ -369,7 +369,7 @@ namespace production
          */
 
 
-         m_strSignTool = System.dir().element("nodeapp/thirdparty/binary/signtool.exe");
+         m_strSignTool = System.dir().element()/ "nodeapp/thirdparty/binary/signtool.exe";
          m_strSpc = "X:\\sensitive\\sensitive\\certificate\\ca2.p12";
          m_strSignPass = Application.file().as_string("X:\\sensitive\\sensitive\\certificate\\2011-05-ca2.pass");
 
@@ -421,7 +421,7 @@ namespace production
             string strVerWin;
             time.FormatGmt(strVerWin,"%Y,%m%d,%H%M,%S");
             string strSvnVersionCmd;
-            strSvnVersionCmd.Format("svnversion %s",System.dir().path(m_strBase,"app"));
+            strSvnVersionCmd.Format("svnversion %s",m_strBase/"app");
             m_strBuild = strTime;
             m_strFormatBuild = strTime;
             m_strFormatBuild.replace(" ","_");
@@ -504,7 +504,7 @@ namespace production
                for(int32_t i = 1; i < m_straRoot.get_size(); i++)
                {
 
-                  strSvnVersionCmd.Format("svnversion %s",System.dir().path(m_strBase,m_straRoot[i]));
+                  strSvnVersionCmd.Format("svnversion %s",m_strBase / m_straRoot[i]);
                   {
 
                      string strStatus;
@@ -623,7 +623,7 @@ namespace production
             string strBuildH;
             strBuildH.Format("-c1-production -c2-producer -t12n-producing -mmmi- %s",m_strTag);
             strBuildH += " - ";
-            strBuildH += Application.file().as_string(System.dir().path(m_strBase,"app/stage","build_machine_pp_comment.txt"));
+            strBuildH += Application.file().as_string(m_strBase / "app/stage","build_machine_pp_comment.txt"));
             strBuildH += "#define THIS_PRODUCT_VERSION \"" + m_strTag + "\\0\"\r\n#define THIS_FILE_VERSION \"" + m_strTag + "\\0\"\r\n";
             strBuildH += "#define __THIS_PRODUCT_VERSION " + strVerWin + "\r\n#define __THIS_FILE_VERSION " + strVerWin + "\r\n";
             strBuildH += "\r\n";
@@ -676,15 +676,15 @@ namespace production
             }
          }
 
-         //Application.dir().mk(System.dir().path(m_strBase, "time"));
-         Application.file().put_contents(System.dir().path(m_strBase, "app\\build.txt"), m_strBuild);
-         Application.file().put_contents_utf8(System.dir().path(m_strBase, "app\\this_version_info.h"), strBuildH);
-         Application.file().put_contents_utf8(System.dir().path(m_strBase, "app\\this_version_info.txt"), strBuildH);
+         //Application.dir().mk(m_strBase /  "time"));
+         Application.file().put_contents(m_strBase /  "app\\build.txt"), m_strBuild);
+         Application.file().put_contents_utf8(m_strBase /  "app\\this_version_info.h"), strBuildH);
+         Application.file().put_contents_utf8(m_strBase /  "app\\this_version_info.txt"), strBuildH);
 
-         update_rc_file_version(System.dir().path(m_strBase,"app\\appseed\\base\\base.rc"));
-         update_rc_file_version(System.dir().path(m_strBase,"app-core\\appseed\\iexca2\\iexca2.rc"));
-         update_rc_file_version(System.dir().path(m_strBase,"nodeapp\\appseed\\app.install\\app.install.rc"));
-         update_rc_file_version(System.dir().path(m_strBase,"nodeapp\\appseed\\draw2d_gdiplus\\draw2d_gdiplus.rc"));
+         update_rc_file_version(m_strBase / "app\\appseed\\base\\base.rc"));
+         update_rc_file_version(m_strBase / "app-core\\appseed\\iexca2\\iexca2.rc"));
+         update_rc_file_version(m_strBase / "nodeapp\\appseed\\app.install\\app.install.rc"));
+         update_rc_file_version(m_strBase / "nodeapp\\appseed\\draw2d_gdiplus\\draw2d_gdiplus.rc"));
 
          if (!commit_for_new_build_and_new_release())
             return 2;
@@ -1445,13 +1445,13 @@ namespace production
       if (string(psz).find(":\\") > 0)
       {
          str.Format("svn commit --force-log --encoding utf-8 --file %s %s",
-            System.dir().path(m_strBase, "app\\this_version_info.txt"),
+            m_strBase /  "app\\this_version_info.txt"),
             psz);
       }
       else
       {
          str.Format("svn commit --force-log --encoding utf-8 --file %s %s",
-            System.dir().path(m_strBase, "app\\this_version_info.txt"),
+            m_strBase /  "app\\this_version_info.txt"),
             System.dir().path(strBase, psz));
       }
       if (!::CreateProcess(NULL, (LPTSTR)(const char *)str, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
@@ -1546,8 +1546,8 @@ namespace production
 
       stringa straStageDir;
 
-      straStageDir.add(System.dir().path(m_strBase, "stage/x86"));
-      straStageDir.add(System.dir().path(m_strBase, "stage/x64"));
+      straStageDir.add(m_strBase /  "stage/x86"));
+      straStageDir.add(m_strBase /  "stage/x64"));
 
       string strRelative;
       string strBz;
@@ -1653,7 +1653,7 @@ namespace production
 
       stringa straRelative;
 
-      string strBase = System.dir().path(m_strBase, pszRoot, "appmatter");
+      string strBase = m_strBase /  pszRoot, "appmatter");
 
       Application.dir().ls_dir(strBase, NULL, &straRelative);
 
@@ -1676,7 +1676,7 @@ namespace production
 
       stringa straRelative;
 
-      string strBase = System.dir().path(m_strBase, pszRoot, "appmatter");
+      string strBase = m_strBase /  pszRoot, "appmatter");
 
       strBase = System.dir().path(strBase, pszRelative);
 
@@ -1700,7 +1700,7 @@ namespace production
    {
       stringa straRelative;
 
-      string strBase = System.dir().path(m_strBase, pszRoot, "appmatter");
+      string strBase = m_strBase /  pszRoot, "appmatter");
 
       strBase = System.dir().path(strBase, pszRelative);
 
@@ -1720,7 +1720,7 @@ namespace production
 
       stringa straRelative;
 
-      string strBase = System.dir().path(m_strBase, pszRoot, "appmatter");
+      string strBase = m_strBase /  pszRoot, "appmatter");
 
       strBase = System.dir().path(strBase, pszRelative);
 
@@ -1753,7 +1753,7 @@ namespace production
 
       stringa stra2;
 
-      Application.dir().rls(System.dir().path(m_strBase, System.dir().path(pszRoot, "appmatter", pszRelative)), &straFiles, NULL, &straRelative);
+      Application.dir().rls(m_strBase /  System.dir().path(pszRoot, "appmatter", pszRelative)), &straFiles, NULL, &straRelative);
 
       strsize iBaseLen = m_strBase.get_length();
 
@@ -1812,7 +1812,7 @@ namespace production
 
       strRelative = string(pszRoot) + +"\\appmatter\\" + string(pszRelative);
 
-      strFile = System.dir().path(m_strBase, "app\\stage\\metastage", strRelative + ".expand_fileset.spa");
+      strFile = m_strBase /  "app\\stage\\metastage", strRelative + ".expand_fileset.spa");
 
       m_straFiles.add(strFile);
 
@@ -1823,7 +1823,7 @@ namespace production
       Application.file().put_contents(strFile, strContents);
 
 
-      strFile = System.dir().path(m_strBase, strRelative + ".expand_fileset");
+      strFile = m_strBase /  strRelative + ".expand_fileset");
 
 
       System.file().dtf(strFile, stra1, stra2, get_app());
@@ -2049,7 +2049,7 @@ namespace production
       string strPlatform(pszPlatform);
 
       string strDir;
-      strDir = System.dir().path(m_strBase, "time/npca2/" + strPlatform);
+      strDir = m_strBase /  "time/npca2/" + strPlatform);
 
 
       string strNpca2Version;
@@ -2077,7 +2077,7 @@ namespace production
          strIconUrl = "chrome://npca2@ca2.cc/skin/ca2-5c-32.png";
       }
 
-      string strChromeManifest = Application.file().as_string(System.dir().path(m_strBase, "nodeapp/stage/matter/npca2/chrome.manifest"));
+      string strChromeManifest = Application.file().as_string(m_strBase /  "nodeapp/stage/matter/npca2/chrome.manifest"));
       strChromeManifest.replace("%BUILD%", strNpca2Version);
       strChromeManifest.replace("%PLATFORM%", "/" + m_strFormatBuild + "/stage/" + strPlatform);
       strChromeManifest.replace("%DOWNLOADSITE%", m_strDownloadSite);
@@ -2102,7 +2102,7 @@ namespace production
       }
       Application.file().copy(System.dir().path(strDir, "npca2/skin/classic", strIconName), strIcon);
 
-      string strInstall = Application.file().as_string(System.dir().path(m_strBase, "nodeapp/stage/matter/npca2/install.rdf"));
+      string strInstall = Application.file().as_string(m_strBase /  "nodeapp/stage/matter/npca2/install.rdf"));
       strInstall.replace("%BUILD%", strNpca2Version);
       strInstall.replace("%PLATFORM%", "/plugin/" + strPlatform);
       strInstall.replace("%DOWNLOADSITE%", "anycast.ca2.cc/ccvotagus");
@@ -2112,7 +2112,7 @@ namespace production
       Application.file().put_contents(System.dir().path(strDir, "npca2", "install.rdf"), strInstall);
 
 
-      string strWindows = Application.file().as_string(System.dir().path(m_strBase, "nodeapp/stage/matter/npca2/npca2_windows.rdf"));
+      string strWindows = Application.file().as_string(m_strBase /  "nodeapp/stage/matter/npca2/npca2_windows.rdf"));
       strWindows.replace("%BUILD%", strNpca2Version);
       strWindows.replace("%PLATFORM%", "/" + m_strFormatBuild + "/stage/" + strPlatform);
       strWindows.replace("%DOWNLOADSITE%", m_strDownloadSite + "/ccvotagus");
@@ -2212,7 +2212,7 @@ namespace production
       string strPlatform(pszPlatform);
 
       string strDir;
-      strDir = System.dir().path(m_strBase, "time/npca2/" + strPlatform);
+      strDir = m_strBase /  "time/npca2/" + strPlatform);
 
       Application.dir().rm(System.dir().path(strDir, "npca2/META-INF"));
 
@@ -2234,7 +2234,7 @@ namespace production
       string strPlatform(pszPlatform);
 
       string strDir;
-      strDir = System.dir().path(m_strBase, "time/npca2/" + strPlatform);
+      strDir = m_strBase /  "time/npca2/" + strPlatform);
 
       add_status("Signing extension ...");
 
@@ -2277,7 +2277,7 @@ namespace production
       string strPlatform(pszPlatform);
 
       string strDir;
-      strDir = System.dir().path(m_strBase, "time/npca2/" + strPlatform);
+      strDir = m_strBase /  "time/npca2/" + strPlatform);
 
       add_status("Creating uint32_t extension ...");
       string str;
@@ -2316,7 +2316,7 @@ namespace production
       string strPlatform(pszPlatform);
 
 
-      Application.dir().mk(System.dir().path(m_strBase, "time\\iexca2\\" + strPlatform));
+      Application.dir().mk(m_strBase /  "time\\iexca2\\" + strPlatform));
 
       string strNpca2Version;
 
@@ -2330,19 +2330,19 @@ namespace production
          atoi(m_strFormatBuild.Mid(17,2))
          );
 
-      string strChromeManifest = Application.file().as_string(System.dir().path(m_strBase,"nodeapp/stage/script/iexca2.inf"));
+      string strChromeManifest = Application.file().as_string(m_strBase / "nodeapp/stage/script/iexca2.inf"));
       strChromeManifest.replace("%VERSION%",strNpca2Version);
       //      strChromeManifest.replace("%PLATFORM%", "/" + m_strFormatBuild + "/stage/" + strPlatform);
       //    strChromeManifest.replace("%DOWNLOADSITE%", m_strDownloadSite);
       //      strChromeManifest.replace("%VERSION%", strVersionUrl);
-      Application.file().put_contents(System.dir().path(m_strBase,"time\\iexca2\\" + strPlatform + "\\iexca2.inf"),strChromeManifest);
+      Application.file().put_contents(m_strBase / "time\\iexca2\\" + strPlatform + "\\iexca2.inf"),strChromeManifest);
 
 
       uint32_t dwExitCode;
       string str;
       ::process::process_sp process(allocer());
       string strPath;
-      strPath = System.dir().path(m_strBase, "nodeapp\\stage\\script\\makecab" + string(pszPlatform) + "_" + m_strVersion + ".bat");
+      strPath = m_strBase /  "nodeapp\\stage\\script\\makecab" + string(pszPlatform) + "_" + m_strVersion + ".bat");
       if (!process->create_child_process(strPath, false, System.dir().name(strPath)))
       {
          uint32_t dw = GetLastError();
@@ -2367,7 +2367,7 @@ namespace production
          strVersion = "\\basis";
       }
 
-      Application.file().copy(System.dir().path(m_strVrel, "stage\\" + strPlatform + "\\iexca2.cab"), System.dir().path(m_strBase, "time\\iexca2\\" + strPlatform + "\\iexca2.cab"));
+      Application.file().copy(System.dir().path(m_strVrel, "stage\\" + strPlatform + "\\iexca2.cab"), m_strBase /  "time\\iexca2\\" + strPlatform + "\\iexca2.cab"));
 
       return true;
 
@@ -2379,7 +2379,7 @@ namespace production
       string strPlatform(pszPlatform);
 
       string strDir;
-      strDir = System.dir().path(m_strBase, "time/crxca2/" + strPlatform + "/crxca2");
+      strDir = m_strBase /  "time/crxca2/" + strPlatform + "/crxca2");
 
       string strCrxca2Version;
 
@@ -2414,7 +2414,7 @@ namespace production
       }
 
 
-      string strManifestJson = Application.file().as_string(System.dir().path(m_strBase, "nodeapp/stage/matter/crxca2/manifest.json"));
+      string strManifestJson = Application.file().as_string(m_strBase /  "nodeapp/stage/matter/crxca2/manifest.json"));
       strManifestJson.replace("%BUILD%", strCrxca2Version);
       strManifestJson.replace("%PLATFORM%", strPlatform);
       strManifestJson.replace("%DOWNLOADSITE%", m_strDownloadSite);
@@ -3045,11 +3045,11 @@ namespace production
       string strPath;
       if (Application.m_eversion == version_basis)
       {
-         strPath = System.dir().path(m_strBase,strApp,"stage\\script\\basis_build.bat");
+         strPath = m_strBase / strApp,"stage\\script\\basis_build.bat");
       }
       else
       {
-         strPath = System.dir().path(m_strBase, strApp, "stage\\script\\stage_build.bat");
+         strPath = m_strBase /  strApp, "stage\\script\\stage_build.bat");
       }
       if (!process->create_child_process(strPath, true))
       {

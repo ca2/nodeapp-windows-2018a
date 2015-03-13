@@ -103,10 +103,10 @@ namespace production
       string                  m_strTagPath;
                               
       string                  m_strStatus;
-      string                  m_strBase;
+      ::file::path            m_strBase;
       stringa                 m_straRoot;
       strsize                 m_iBaseLen;
-      stringa                 m_straFiles;
+      ::file::listing         m_straFiles;
       stringa                 m_straTitle;
       stringa                 m_straRelative;
       string                  m_strRemote;

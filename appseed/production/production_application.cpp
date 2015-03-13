@@ -142,7 +142,7 @@ namespace production
             L"open", 
             ::str::international::utf8_to_unicode(itema[0]->m_strPath),
             NULL,
-            ::str::international::utf8_to_unicode(System.dir().name(itema[0]->m_strPath)),
+            ::str::international::utf8_to_unicode(itema[0]->m_strPath.folder()),
             SW_SHOW);
       }
       

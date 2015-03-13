@@ -114,7 +114,7 @@ namespace production
       else if(m_pviewdata->m_id == PaneViewContextMenu)
       {
          sp(::filemanager::manager) pdoc =  (m_pviewdata->m_pdoc);
-         pdoc->FileManagerBrowse(Application.dir().userappdata("production\\menu"), ::action::source::system_default());
+         pdoc->FileManagerBrowse(Application.dir().userappdata()/ "production\\menu", ::action::source::system_default());
       }
       else
       {
@@ -150,7 +150,7 @@ namespace production
                pdoc->update_all_views(NULL, 1234);
                pdoc->update_all_views(NULL, 123458);
                sp(::aura::impact) pview = pdoc->get_view();
-               pdoc->FileManagerBrowse(Application.dir().userappdata("production\\menu"), ::action::source::system_default());
+               pdoc->FileManagerBrowse(Application.dir().userappdata()/ "production\\menu", ::action::source::system_default());
                if(pview != NULL)
                {
                   sp(::user::frame_window) pframe =  (pview->GetParentFrame());
@@ -219,7 +219,7 @@ namespace production
                pdoc->update_all_views(NULL, 1234);
                pdoc->update_all_views(NULL, 123458);
                sp(::aura::impact) pview = pdoc->get_view();
-               pdoc->FileManagerBrowse(Application.dir().userappdata("production\\3-action-launch"), ::action::source::system_default());
+               pdoc->FileManagerBrowse(Application.dir().userappdata()/ "production\\3-action-launch", ::action::source::system_default());
                if(pview != NULL)
                {
                   sp(::user::frame_window) pframe =  (pview->GetParentFrame());
@@ -304,7 +304,7 @@ namespace production
             NULL, 
             ::str::international::utf8_to_unicode("\"" + itema[0]->m_strPath + "\""),
             NULL,
-            ::str::international::utf8_to_unicode("\"" + System.dir().name(itema[0]->m_strPath) + "\""),
+            ::str::international::utf8_to_unicode("\"" + itema[0]->m_strPath.folder() + "\""),
             SW_SHOWNORMAL);
          string str;
          str.Format("%d", i);
