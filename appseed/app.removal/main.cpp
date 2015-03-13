@@ -49,7 +49,7 @@ public:
 
    virtual void system(const char * pszCmd);
 
-   virtual string get_known_folder_dir(const KNOWNFOLDERID & rfid,const char * lpcsz);
+   virtual ::file::path get_known_folder_dir(const KNOWNFOLDERID & rfid,const char * lpcsz);
 
 
    virtual void rmdir(const char * pszDir);
@@ -158,18 +158,18 @@ HRESULT CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc, 
 
 
 
-string removal::get_known_folder_dir(const KNOWNFOLDERID & rfid, const char * lpcsz)
+::file::path removal::get_known_folder_dir(const KNOWNFOLDERID & rfid,const char * lpcsz)
 {
 
    wchar_t * buf = NULL;
    
    SHGetKnownFolderPath(rfid, 0, NULL, &buf);
 
-   string str(buf);
+   ::file::path str(buf);
 
    CoTaskMemFree(buf);
 
-   return dir().path(str,lpcsz);
+   return str /lpcsz;
 
 }
 
@@ -255,11 +255,11 @@ int32_t removal::run()
 
    ::GetModuleFileName(NULL, szFile, sizeof(szFile));
 
-   string strTargetDir = get_known_folder_dir(FOLDERID_ProgramFilesX86, "ca2.app.removal");
+   ::file::path strTargetDir = get_known_folder_dir(FOLDERID_ProgramFilesX86,"ca2.app.removal");
 
    Application.dir().mk(strTargetDir.c_str());
 
-   string strTarget = dir().path(strTargetDir.c_str(),"app.removal.exe");
+   string strTarget = strTargetDir / "app.removal.exe";
 
    if(::CopyFile(szFile,strTarget.c_str(),TRUE))
    {
@@ -461,15 +461,15 @@ bool removal::is_user_using(const char * pszDll)
 bool removal::are_there_user_files_in_use()
 {
 #ifdef X86
-   if(is_user_using(dir().element("stage\\x86\\msvcp110d.dll")))
+   if(is_user_using(dir().element()/"stage\\x86\\msvcp110d.dll"))
       return true;
-   if(is_user_using(dir().element("stage\\x86\\msvcr110d.dll")))
+   if(is_user_using(dir().element()/"stage\\x86\\msvcr110d.dll"))
       return true;
-   if(is_user_using(dir().element("stage\\x86\\ca.dll")))
+   if(is_user_using(dir().element()/"stage\\x86\\ca.dll"))
       return true;
-   if(is_user_using(dir().element("stage\\x86\\ca2.dll")))
+   if(is_user_using(dir().element()/"stage\\x86\\ca2.dll"))
       return true;
-   if(is_user_using(dir().element("stage\\x86\\ca2.dll")))
+   if(is_user_using(dir().element()/"stage\\x86\\ca2.dll"))
       return true;
 #else
    if(is_user_using(dir().element("stage\\x64\\msvcp110d.dll").c_str()))
