@@ -921,20 +921,21 @@ int download_spaadmin_bin()
    else
    {
 
-      SHELLEXECUTEINFOW s ={};
+      SHELLEXECUTEINFOW sei ={};
 
       
 
-      s.cbSize =sizeof(SHELLEXECUTEINFOW);
-      s.lpFile = utf8_to_16(strTempSpa.c_str());
-      ::ShellExecuteExW(&s);
-      DWORD dwExit;
-      int iTry = 8;
-      while(::GetExitCodeProcess(s.hProcess,&dwExit) && dwExit == STILL_ACTIVE && iTry > 0)
-      {
-         Sleep(1984);
-         iTry--;
-      }
+      sei.cbSize =sizeof(SHELLEXECUTEINFOW);
+      sei.fMask = SEE_MASK_NOASYNC | SEE_MASK_NOCLOSEPROCESS;
+      sei.lpVerb = L"RunAs";
+      sei.lpFile = utf8_to_16(strTempSpa.c_str());
+      ::ShellExecuteExW(&sei);
+      DWORD dwGetLastError = GetLastError();
+      // Wait for the process to complete.
+      ::WaitForSingleObject(sei.hProcess,INFINITE);
+      DWORD code;
+      if(::GetExitCodeProcess(sei.hProcess,&code) == 0)
+         return 0;
 
    }
 

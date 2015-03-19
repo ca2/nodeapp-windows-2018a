@@ -42,8 +42,8 @@
     <_ProjectFileVersion>12.0.30501.0</_ProjectFileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">
-    <OutDir>$(SolutionDir)../../../stage/ccvotagus/$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)../../../time/ccvotagus/$(Configuration)/$(ProjectName)\</IntDir>
+    <OutDir>$(SolutionDir)..\..\..\stage\x86\</OutDir>
+    <IntDir>$(SolutionDir)..\..\..\time\intermediate\$(PlatformName)\$(Configuration)\$(ProjectName)\</IntDir>
     <LinkIncremental>true</LinkIncremental>
     <GenerateManifest>true</GenerateManifest>
     <EmbedManifest>false</EmbedManifest>
