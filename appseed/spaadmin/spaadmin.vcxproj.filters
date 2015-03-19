@@ -112,7 +112,4 @@
       <Filter>Resources</Filter>
     </Xml>
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
 </Project>
