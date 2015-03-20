@@ -3021,6 +3021,7 @@ namespace production
 
    void production::build(const char * psz)
    {
+      return ;
 
       string strApp(psz);
 
