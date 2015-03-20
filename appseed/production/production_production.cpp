@@ -166,21 +166,21 @@ namespace production
 
             add_status("Retried " + ::str::from(m_iGlobalRetry) + " times - \"giving up\" this command!");
 
-            if (m_eversion == version_basis)
-            {
-               set["post"]["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #882266; display: block; margin-bottom: 1.5em;\">Retried " + ::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!</span>";
-            }
-            else
-            {
-               set["post"]["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">Retried " + ::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!</span>";
-            }
+            //if (m_eversion == version_basis)
+            //{
+            //   set["post"]["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #882266; display: block; margin-bottom: 1.5em;\">Retried " + ::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!</span>";
+            //}
+            //else
+            //{
+            //   set["post"]["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">Retried " + ::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!</span>";
+            //}
 
-            Application.http().get("http://api.ca2.cc/status/insert", str, set);
+            //Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
 
-            string strTwit =  version_to_international_datetime(m_strStartTime) + " UTC Retried " + ::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!";
+            //string strTwit =  version_to_international_datetime(m_strStartTime) + " UTC Retried " + ::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!";
 
-            twitter_twit(strTwit);
+            //twitter_twit(strTwit);
 
             return -1;
 
@@ -189,54 +189,54 @@ namespace production
 
          add_status("General build failure. Restarting");
 
-         if (m_iGlobalRetry == 1)
-         {
-            m_strTry = "1st";
-         }
-         else if (m_iGlobalRetry == 2)
-         {
-            m_strTry = "2nd";
-         }
-         else if (m_iGlobalRetry == 3)
-         {
-            m_strTry = "3rd";
-         }
-         else
-         {
-            m_strTry = ::str::from(m_iGlobalRetry) + "th";
-         }
+      ///*   if (m_iGlobalRetry == 1)
+      //   {
+      //      m_strTry = "1st";
+      //   }
+      //   else if (m_iGlobalRetry == 2)
+      //   {
+      //      m_strTry = "2nd";
+      //   }
+      //   else if (m_iGlobalRetry == 3)
+      //   {
+      //      m_strTry = "3rd";
+      //   }
+      //   else
+      //   {
+      //      m_strTry = ::str::from(m_iGlobalRetry) + "th";
+      //   }
 
-         if (m_eversion == version_basis)
-         {
-            set["post"]["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #222218; display: block; margin-bottom: 1.5em;\">General build failure. Starting " + m_strTry + " retry of new <a href=\"http://code.ca2.cc/\" class=\"fluidbasis\" >basis</a> release.<br />";
-         }
-         else
-         {
-            set["post"]["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #222218; display: block; margin-bottom: 1.5em;\">General build failure. Starting " + m_strTry + " retry  of new <a href=\"http://ca2.cc/\">stage</a> release.<br />";
-         }
+      //   if (m_eversion == version_basis)
+      //   {
+      //      set["post"]["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #222218; display: block; margin-bottom: 1.5em;\">General build failure. Starting " + m_strTry + " retry of new <a href=\"http://code.ca2.cc/\" class=\"fluidbasis\" >basis</a> release.<br />";
+      //   }
+      //   else
+      //   {
+      //      set["post"]["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #222218; display: block; margin-bottom: 1.5em;\">General build failure. Starting " + m_strTry + " retry  of new <a href=\"http://ca2.cc/\">stage</a> release.<br />";
+      //   }
 
-         if (m_straStatus.get_count() > 1)
-         {
-            single_lock sl(&m_mutexStatus,TRUE);
-            set["post"]["new_status"] = set["post"]["new_status"] + "Last Stati:<br />";
-            for (::count i = MIN(5, m_straStatus.get_count() - 1); i >= 1; i--)
-            {
-               set["post"]["new_status"] = set["post"]["new_status"] + System.m_phtml->entities(m_straStatus.element_at(i));
-               set["post"]["new_status"] = set["post"]["new_status"] + "<br />";
-            }
-            set["post"]["new_status"] = set["post"]["new_status"] + "<br />";
-            set["post"]["new_status"] = set["post"]["new_status"] + "</span>";
+      //   if (m_straStatus.get_count() > 1)
+      //   {
+      //      single_lock sl(&m_mutexStatus,TRUE);
+      //      set["post"]["new_status"] = set["post"]["new_status"] + "Last Stati:<br />";
+      //      for (::count i = MIN(5, m_straStatus.get_count() - 1); i >= 1; i--)
+      //      {
+      //         set["post"]["new_status"] = set["post"]["new_status"] + System.m_phtml->entities(m_straStatus.element_at(i));
+      //         set["post"]["new_status"] = set["post"]["new_status"] + "<br />";
+      //      }
+      //      set["post"]["new_status"] = set["post"]["new_status"] + "<br />";
+      //      set["post"]["new_status"] = set["post"]["new_status"] + "</span>";
 
-         }
+      //   }
 
 
-         Application.http().get("http://api.ca2.cc/status/insert", str, set);
+      //   Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
-         ::datetime::time timeNow = ::datetime::time::get_current_time();
+      //   ::datetime::time timeNow = ::datetime::time::get_current_time();
 
-         string strTwit = "General failure of build " + version_to_international_datetime(m_strBuild) + ". Starting " + m_strTry + " retry of build " + m_strVersion + " - " + System.datetime().international().get_gmt_date_time(timeNow) + ". More details at http://status.ca2.cc/" + m_strStatusEmail;
+      //   string strTwit = "General failure of build " + version_to_international_datetime(m_strBuild) + ". Starting " + m_strTry + " retry of build " + m_strVersion + " - " + System.datetime().international().get_gmt_date_time(timeNow) + ". More details at http://status.ca2.cc/" + m_strStatusEmail;
 
-         twitter_twit(strTwit);
+      //   twitter_twit(strTwit);*/
 
       }
 
@@ -293,13 +293,13 @@ namespace production
          if (bMediumSizeStatusText)
          {
 
-            {
+            //{
 
-               property_set set(get_app());
+            //   property_set set(get_app());
 
-               Application.http().get("http://api.ca2.cc/status/insert", set);
+            //   Application.http().get("http://api.ca2.cc/status/insert", set);
 
-            }
+            //}
 
             string strEndTime;
 
@@ -307,24 +307,24 @@ namespace production
 
             m_strBuild = "\"This a long build version string text description that makes really trigger a size that is will end up making this status rquired and needed to be recorded and written to another set of records or table...\"";
 
-            string str;
+            //string str;
 
-            {
+            //{
 
-               property_set set(get_app());
+            //   property_set set(get_app());
 
-               if (m_eversion == version_basis)
-               {
-                  set["post"]["new_status"] = "<div style=\"display: block; background-color: #FFE0FF; \"><h2 style=\"margin-bottom:0px; color: #FF55CC;\">Medium Size Status Text" + version_to_international_datetime(m_strBuild) + "</h2><span style=\"color: #882255; display: block; margin-bottom: 1.5em;\">" + m_strBuildTook + " and finished at " + strEndTime + "<br>New release of <a href=\"http://code.ca2.cc/\" class=\"fluidbasis\" >basis</a> applications labeled " + m_strBuild + " is ready for download through compatible gateways.<br>Check <a href=\"http://laboratory.ca2.cc/\" class=\"fluidbasis\" >laboratory.ca2.cc</a> or <a href=\"http://warehouse.ca2.cc/\" class=\"fluidbasis\" >warehouse.ca2.cc</a> for simple gateway implementations.</span></div>";
-               }
-               else
-               {
-                  set["post"]["new_status"] = "<div style=\"display: block; background-color: #E0FFCC; \"><h2 style=\"margin-bottom:0px; color: #55CCAA;\">Medium Size Status Text" + version_to_international_datetime(m_strBuild) + "</h2><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">" + m_strBuildTook + " and finished at " + strEndTime + "<br>New release of <a href=\"http://ca2.cc/\">stage</a> applications labeled " + m_strBuild + " is ready for download through compatible gateways.<br>Check <a href=\"http://desktop.ca2.cc/\">desktop.ca2.cc</a> or <a href=\"http://store.ca2.cc/\">store.ca2.cc</a> for simple gateway implementations.</span></div";
-               }
+            //   if (m_eversion == version_basis)
+            //   {
+            //      set["post"]["new_status"] = "<div style=\"display: block; background-color: #FFE0FF; \"><h2 style=\"margin-bottom:0px; color: #FF55CC;\">Medium Size Status Text" + version_to_international_datetime(m_strBuild) + "</h2><span style=\"color: #882255; display: block; margin-bottom: 1.5em;\">" + m_strBuildTook + " and finished at " + strEndTime + "<br>New release of <a href=\"http://code.ca2.cc/\" class=\"fluidbasis\" >basis</a> applications labeled " + m_strBuild + " is ready for download through compatible gateways.<br>Check <a href=\"http://laboratory.ca2.cc/\" class=\"fluidbasis\" >laboratory.ca2.cc</a> or <a href=\"http://warehouse.ca2.cc/\" class=\"fluidbasis\" >warehouse.ca2.cc</a> for simple gateway implementations.</span></div>";
+            //   }
+            //   else
+            //   {
+            //      set["post"]["new_status"] = "<div style=\"display: block; background-color: #E0FFCC; \"><h2 style=\"margin-bottom:0px; color: #55CCAA;\">Medium Size Status Text" + version_to_international_datetime(m_strBuild) + "</h2><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">" + m_strBuildTook + " and finished at " + strEndTime + "<br>New release of <a href=\"http://ca2.cc/\">stage</a> applications labeled " + m_strBuild + " is ready for download through compatible gateways.<br>Check <a href=\"http://desktop.ca2.cc/\">desktop.ca2.cc</a> or <a href=\"http://store.ca2.cc/\">store.ca2.cc</a> for simple gateway implementations.</span></div";
+            //   }
 
-               Application.http().get("http://api.ca2.cc/status/insert", str, set);
+            //   Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
-            }
+            //}
 
             ExitProcess(true);
 
@@ -449,32 +449,32 @@ namespace production
             if(str::from(atoi(strRevision)) != strRevision)
             {
                // good pratice to initialize authentication of ca2status.com with account.ca2.cc auth information
-               string str;
+               //string str;
 
-               {
+               //{
 
-                  property_set set(get_app());
+               //   property_set set(get_app());
 
-                  Application.http().get("http://api.ca2.cc/status/insert",set);
+               //   Application.http().get("http://api.ca2.cc/status/insert",set);
 
-               }
+               //}
 
-            {
+            //{
 
-               property_set set(get_app());
+            //   property_set set(get_app());
 
-               if(m_eversion == version_basis)
-               {
-                  set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #552250;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #882266; display: block; margin-bottom: 1.5em;\">Check app working copy.</span>";
-               }
-               else
-               {
-                  set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #22552F;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">Check app working copy.</span>";
-               }
+            //   if(m_eversion == version_basis)
+            //   {
+            //      set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #552250;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #882266; display: block; margin-bottom: 1.5em;\">Check app working copy.</span>";
+            //   }
+            //   else
+            //   {
+            //      set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #22552F;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">Check app working copy.</span>";
+            //   }
 
-               Application.http().get("http://api.ca2.cc/status/insert",str,set);
+            //   Application.http().get("http://api.ca2.cc/status/insert",str,set);
 
-            }
+            //}
 
                return 4;
             }
@@ -537,33 +537,33 @@ namespace production
             m_timeStart.FormatGmt(m_strStartTime,"%Y-%m-%d %H-%M-%S");
             add_status("Build starting at " + version_to_international_datetime(m_strStartTime) + " - build version!");
 
-            {
-               // good pratice to initialize authentication of ca2status.com with account.ca2.cc auth information
+            //{
+            //   // good pratice to initialize authentication of ca2status.com with account.ca2.cc auth information
 
-               {
+            //   {
 
-                  property_set set(get_app());
+            //      property_set set(get_app());
 
-                  Application.http().get("http://api.ca2.cc/status/insert",set);
+            //      Application.http().get("http://api.ca2.cc/status/insert",set);
 
-               }
+            //   }
 
-            {
+            //{
 
-               property_set set(get_app());
+            //   property_set set(get_app());
 
-               if(m_eversion == version_basis)
-               {
-                  set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #552250;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #882266; display: block; margin-bottom: 1.5em;\">Starting production of new <a href=\"http://code.ca2.cc/\" class=\"fluidbasis\" >basis</a> release.</span>";
-               }
-               else
-               {
-                  set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #22552F;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">Starting production of new <a href=\"http://ca2.cc/\">stage</a> release.</span>";
-               }
+            //   if(m_eversion == version_basis)
+            //   {
+            //      set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #552250;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #882266; display: block; margin-bottom: 1.5em;\">Starting production of new <a href=\"http://code.ca2.cc/\" class=\"fluidbasis\" >basis</a> release.</span>";
+            //   }
+            //   else
+            //   {
+            //      set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #22552F;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">Starting production of new <a href=\"http://ca2.cc/\">stage</a> release.</span>";
+            //   }
 
-               Application.http().get("http://api.ca2.cc/status/insert",str,set);
+            //   Application.http().get("http://api.ca2.cc/status/insert",str,set);
 
-            }
+            //}
 
                //{
 
@@ -590,7 +590,7 @@ namespace production
                //}
 
 
-               string strTwit;
+     /*          string strTwit;
 
                if(m_iGlobalRetry <= 0)
                {
@@ -601,9 +601,9 @@ namespace production
                   strTwit = "ca2twit-lib : " + m_strTry + " automatic retry " + m_strVersion + " build starting " + version_to_international_datetime(m_strBuild) + " UTC. More details at http://status.ca2.cc/" + m_strStatusEmail;
                }
 
-               twitter_twit(strTwit);
+               twitter_twit(strTwit);*/
 
-            }
+            //}
 
             add_status(unitext("Thank you!!"));
             m_dwStartTick = ::GetTickCount();
@@ -646,17 +646,17 @@ namespace production
          if (m_bClean)
          {
             add_status("Cleaning ca2 fontopus ccvotagus ...");
-            {
-               string str;
+            //{
+            //   string str;
 
 
-               property_set set;
+            //   property_set set;
 
-               set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Cleaning...</span></div>";
+            //   set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Cleaning...</span></div>";
 
-               Application.http().get("http://api.ca2.cc/status/insert", str, set);
+            //   Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
-            }
+            //}
             ::process::process_sp process(allocer());
             string strPath;
             strPath = System.dir().element() / "nodeapp\\stage\\script\\stage_clean.bat";
@@ -700,17 +700,17 @@ namespace production
             build("nodeapp");
          }
 
-         {
-            string str;
+         //{
+         //   string str;
 
 
-            property_set set;
+         //   property_set set;
 
-            set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Cleaning...</span></div>";
+         //   set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Cleaning...</span></div>";
 
-            Application.http().get("http://api.ca2.cc/status/insert", str, set);
+         //   Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
-         }
+         //}
 
          add_status("Cleaning site...");
          ::file::path strPath = System.dir().element() / "time\\stage\\app\\matter\\job.bat";
@@ -773,45 +773,45 @@ namespace production
             TRACE("file(%05d)=%s\n", i, lpcsz);
          }
          m_pview->post_message(WM_USER, 2);
-         {
-            string str;
+         //{
+         //   string str;
 
 
-            property_set set;
+         //   property_set set;
 
-            set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Copying...</span></div>";
+         //   set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Copying...</span></div>";
 
-            Application.http().get("http://api.ca2.cc/status/insert", str, set);
+         //   Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
-         }
+         //}
       }
       else if (m_iStep == 2)
       {
          string m_strStartTime;
          m_timeStart.FormatGmt(m_strStartTime, "%Y-%m-%d %H-%M-%S");
-         {
-            string str;
+         //{
+         //   string str;
 
 
-            property_set set;
+         //   property_set set;
 
-            set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Compressing...</span></div>";
+         //   set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Compressing...</span></div>";
 
-            Application.http().get("http://api.ca2.cc/status/insert", str, set);
+         //   Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
-         }
-         compress();
-         {
-            string str;
+         //}
+         //compress();
+         //{
+         //   string str;
 
 
-            property_set set;
+         //   property_set set;
 
-            set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Resources...</span></div>";
+         //   set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Resources...</span></div>";
 
-            Application.http().get("http://api.ca2.cc/status/insert", str, set);
+         //   Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
-         }
+         //}
 
          release_production();
 
@@ -847,17 +847,17 @@ namespace production
 
          //commit_source("C:\\netnodenet\\net");
 
-         {
-            string str;
+         //{
+         //   string str;
 
 
-            property_set set;
+         //   property_set set;
 
-            set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Storing Symbols...</span></div>";
+         //   set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Storing Symbols...</span></div>";
 
-            Application.http().get("http://api.ca2.cc/status/insert", str, set);
+         //   Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
-         }
+         //}
 
 
 
@@ -938,18 +938,18 @@ namespace production
 
 
 
-         {
+         //{
 
-            string str;
+         //   string str;
 
 
-            property_set set;
+         //   property_set set;
 
-            set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Packaging...</span></div>";
+         //   set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Packaging...</span></div>";
 
-            Application.http().get("http://api.ca2.cc/status/insert", str, set);
+         //   Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
-         }
+         //}
 
 
 
@@ -1092,17 +1092,17 @@ namespace production
 
             }
 
-            {
+            //{
 
-               string str;
+            //   string str;
 
-               property_set set;
+            //   property_set set;
 
-               set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " " + strStatus + "</span></div>";
+            //   set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " " + strStatus + "</span></div>";
 
-               Application.http().get("http://api.ca2.cc/status/insert", str, set);
+            //   Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
-            }
+            //}
 
             Sleep(1984);
 
@@ -1110,17 +1110,17 @@ namespace production
 
 
 
-         {
-            string str;
+         //{
+         //   string str;
 
 
-            property_set set;
+         //   property_set set;
 
-            set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Releasing...</span></div>";
+         //   set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Releasing...</span></div>";
 
-            Application.http().get("http://api.ca2.cc/status/insert", str, set);
+         //   Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
-         }
+         //}
 
          m_bFinished = true;
 
@@ -3021,22 +3021,21 @@ namespace production
 
    void production::build(const char * psz)
    {
-      return ;
 
       string strApp(psz);
 
       add_status("Building ca2 fontopus ccvotagus " + strApp + "...");
-      {
-         string str;
+      //{
+      //   string str;
 
 
-         property_set set;
+      //   property_set set;
 
-         set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Building " + strApp + "...</span></div>";
+      //   set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Building " + strApp + "...</span></div>";
 
-         Application.http().get("http://api.ca2.cc/status/insert", str, set);
+      //   Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
-      }
+      //}
       ::process::process_sp process(allocer());
       string strPath;
       if (Application.m_eversion == version_basis)
