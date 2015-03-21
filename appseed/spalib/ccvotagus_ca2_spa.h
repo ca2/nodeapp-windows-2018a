@@ -73,7 +73,7 @@ extern "C"
 #include "keep_true.h"
 #include "md5.h"
 #include "str.h"
-#include "stra.h"
+#include "stringa.h"
 #include "inta.h"
 #include "doublea.h"
 #include "dir.h"
@@ -114,8 +114,8 @@ extern HWND g_hwnd;
 extern HINSTANCE hInst;								// current instance
 extern std::string g_strStart;
 extern std::string g_strInstallFilter;
-extern stra g_straTerminateProcesses;
-extern stra g_straRestartCommandLine;
+extern stringa g_straTerminateProcesses;
+extern stringa g_straRestartCommandLine;
 
 
 std::string url_query_param(int & iParam, const char * pszParam);
@@ -208,7 +208,7 @@ void wfree(wchar_t * push);
 
 SPALIB_API int bzuncompress(LPCTSTR lpcszUncompressed, LPCTSTR lpcszGzFileCompressed);
 
-int CopyFileList(stra & stra);
+int CopyFileList(stringa & stringa);
 
 std::string ca2_get_dir(LPCTSTR lpcszUrl);
 std::string ca2bz_get_dir(LPCTSTR lpcszUrl);
@@ -226,8 +226,8 @@ extern int g_iGzLen;
 extern int g_iStyle;
 
 extern HANDLE g_hmutexTrace;
-extern stra g_strSpa;
-extern stra g_straHost;
+extern stringa g_strSpa;
+extern stringa g_straHost;
 
 extern bool g_bOfflineInstall;
 extern bool g_bInternetInstall;
@@ -243,14 +243,18 @@ extern FILE * g_ftrace;
 extern bool Get(const std::string& url_in, std::string & doc);
 extern bool Get(const std::string& url_in, bool bExist, int iLength, const char * pszMd5, int iGzLen);
 extern bool DownloadFile(const std::string& url_in, bool bExist, int iLength, const char * pszMd5, int iGzLen);
-extern int GetFileList(stra & stra, LPCTSTR lpcszUrl, strintmap & mapLen, strintmap & mapGzLen, strstrmap & mapMd5);
-extern int GetLocalFileList(stra & stra, LPCTSTR lpcszUrl);
-extern int DownloadFileList(stra & stra, strintmap & mapLen, strstrmap & mapMd5, strintmap & mapGzLen);
+extern int GetFileList(stringa & stringa, LPCTSTR lpcszUrl, strintmap & mapLen, strintmap & mapGzLen, strstrmap & mapMd5);
+extern int GetLocalFileList(stringa & stringa, LPCTSTR lpcszUrl);
+extern int DownloadFileList(stringa & stringa, strintmap & mapLen, strstrmap & mapMd5, strintmap & mapGzLen);
 extern void ParseIndexFile(const char * psz, strintmap & mapLen, strstrmap & mapMd5, strintmap & mapGzLen);
-extern int UncompressFileList(stra & stra, strstrmap & strmapMd5);
+extern int UncompressFileList(stringa & stringa, strstrmap & strmapMd5);
 extern void ParseSpaIndex(XNode & node);
 extern void CommandLang(int iLang);
 extern std::string Login();
+
+
+stringa install_get_plugin_base_library_list(const string & strVersion);
+
 
 
 extern double g_dProgress;
@@ -287,9 +291,9 @@ SPALIB_API  int spalib_main(HINSTANCE hInstance,
 
 
 extern HANDLE g_hmutexTrace;
-extern stra g_straTrace;
-extern stra g_strSpa;
-extern stra g_straHost;
+extern stringa g_straTrace;
+extern stringa g_strSpa;
+extern stringa g_straHost;
 extern int g_iTrace;
 extern FILE * g_ftrace;
 extern bool g_bForceUpdatedBuild;

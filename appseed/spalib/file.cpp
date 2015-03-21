@@ -280,9 +280,9 @@ int bzuncompress(LPCTSTR lpcszUncompressed, LPCTSTR lpcszGzFileCompressed)
 
 /*   void file::dtf(const char * pszFile, const char * pszDir)
    {
-      stringa stra;
+      stringa stringa;
       stringa straRelative;
-      Application.dir().rls(pszDir, &stra, NULL, &straRelative);
+      Application.dir().rls(pszDir, &stringa, NULL, &straRelative);
       ex1::filesp spfile(get_app());
       if(!spfile->Open(pszFile, ::ex1::file::modeCreate | ::ex1::file::modeWrite  | ::ex1::file::typeBinary))
          throw "failed";
@@ -296,16 +296,16 @@ int bzuncompress(LPCTSTR lpcszUncompressed, LPCTSTR lpcszGzFileCompressed)
       unsigned char * buf = (unsigned char *)  malloc(iBufSize);
       string strMd5 = "01234567012345670123456701234567";
       int iPos;
-      for(int i = 0; i < stra.get_size(); i++)
+      for(int i = 0; i < stringa.get_size(); i++)
       {
-         if(Application.dir().is(stra[i]))
+         if(Application.dir().is(stringa[i]))
             continue;
          write_n_number(spfile, NULL, 1);
          iPos = spfile->GetPosition();
          write_ex1_string(spfile, NULL, strMd5);
          MD5_Init(&ctx);
          write_ex1_string(spfile, &ctx, straRelative[i]);
-         if(!file2->Open(stra[i], ::ex1::file::modeRead | ::ex1::file::typeBinary))
+         if(!file2->Open(stringa[i], ::ex1::file::modeRead | ::ex1::file::typeBinary))
             throw "failed";
          write_n_number(spfile, &ctx, file2->get_length());
          while((uiRead = file2->Read(buf, iBufSize)) > 0)
@@ -524,7 +524,7 @@ int bzuncompress(LPCTSTR lpcszUncompressed, LPCTSTR lpcszGzFileCompressed)
     return bFound;
 }
 
-void dll_processes(std::vector < DWORD > & dwa, stra & straProcesses, const char * pszDll)
+void dll_processes(std::vector < DWORD > & dwa, stringa & straProcesses, const char * pszDll)
 {
     // Get the list of process identifiers.
 

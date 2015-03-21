@@ -53,9 +53,6 @@
     <ClCompile Include="str.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="stra.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="XMLite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -110,6 +107,9 @@
     <ClCompile Include="window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="stringa.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ccvotagus_ca2_spa.h">
@@ -154,9 +154,6 @@
     <ClInclude Include="str.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="stra.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="XMLite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -170,6 +167,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="mutex_lock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stringa.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

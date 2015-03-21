@@ -1005,7 +1005,6 @@ std::string download_tmp_spa_bin()
 
 
 
-void get_plugin_base_library_list(stra & straFile,const string & strVersion);
 
 
 
@@ -1026,7 +1025,7 @@ bool is_file_ok(const char * path1,const char * pszTemplate,const char * pszForm
 
 }
 
-bool is_file_ok(const stra & straPath,const stra & straTemplate,stra & straMd5,const string & strFormatBuild,int iMd5Retry)
+bool is_file_ok(const stringa & straPath,const stringa & straTemplate,stringa & straMd5,const string & strFormatBuild,int iMd5Retry)
 {
 
    bool bOk = true;
@@ -1113,9 +1112,7 @@ int check_install_bin_set()
 #endif
 
 
-   stra straFile;
-
-   get_plugin_base_library_list(straFile,g_strVersion);
+   stringa straFile = install_get_plugin_base_library_list(g_strVersion);
 
    if(!::dir::exists(dir::name(strPath.c_str()).c_str()))
    {
@@ -1125,7 +1122,7 @@ int check_install_bin_set()
 
    }
 
-   stra straDownload;
+   stringa straDownload;
 
    for(int iFile = 0; iFile < straFile.size(); iFile++)
    {
@@ -1138,7 +1135,7 @@ int check_install_bin_set()
 
    }
 
-   stra straMd5;
+   stringa straMd5;
 
 
    string strFormatBuild = get_latest_build_number(g_strVersion.c_str());
@@ -1337,48 +1334,6 @@ md5retry:
 }
 
 
-
-
-
-void get_plugin_base_library_list(stra & straFile,const string & strVersion)
-{
-
-
-   straFile.push_back("app.install.exe");
-   straFile.push_back("aqua.dll");
-   straFile.push_back("aura.dll");
-   straFile.push_back("aurasqlite.dll");
-   straFile.push_back("axis.dll");
-   straFile.push_back("axisbzip2.dll");
-   straFile.push_back("axiscrypto.dll");
-   //straFile.push_back("axisfreeimage.dll");
-   //straFile.push_back("axisfreetype.dll");
-   straFile.push_back("axisidn.dll");
-   straFile.push_back("axisopenssl.dll");
-   straFile.push_back("axiszlib.dll");
-   straFile.push_back("axis.dll");
-   straFile.push_back("base.dll");
-   straFile.push_back("draw2d_gdiplus.dll");
-
-   if(strVersion == "stage")
-   {
-
-      straFile.push_back("msvcp120.dll");
-      straFile.push_back("msvcr120.dll");
-      straFile.push_back("vcomp120.dll");
-
-   }
-   else
-   {
-
-      straFile.push_back("msvcp120d.dll");
-      straFile.push_back("msvcr120d.dll");
-      straFile.push_back("vcomp120d.dll");
-
-   }
-
-
-}
 
 
 

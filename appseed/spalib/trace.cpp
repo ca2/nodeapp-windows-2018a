@@ -3,7 +3,7 @@
 void on_trace(std::string & str, std::string & str2);
 
 HANDLE g_hmutexTrace;
-stra g_straTrace;
+stringa g_straTrace;
 int g_iTrace = -1;
 FILE * g_ftrace = NULL;
 std::string g_strLastStatus;

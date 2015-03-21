@@ -23,9 +23,14 @@
 #include "small_bell.cpp"
 #include "spalib_dir.cpp"
 #include "str.cpp"
-#include "stra.cpp"
+#include "stringa.cpp"
 #include "trace.cpp"
 #include "XMLite.cpp"
 #include "window.cpp"
               //20 arquivo(s)        260.510 bytes
               // 0 pasta(s)   60.825.305.088 bytes dispon¡veis
+
+#include "axis/install_plugin_library_list.cpp"
+
+
+

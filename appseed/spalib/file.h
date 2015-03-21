@@ -35,4 +35,4 @@ SPALIB_API std::string get_temp_file_name(const char * pszName, const char * psz
 SPALIB_API int bzuncompress(LPCTSTR lpcszUncompressed, LPCTSTR lpcszGzFileCompressed);
 
 
-void dll_processes(std::vector < DWORD > & dwa, stra & straProcesses, const char * pszDll);
+void dll_processes(std::vector < DWORD > & dwa, stringa & straProcesses, const char * pszDll);

@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 
-void stra::trim()
+void stringa::trim()
 {
    for(unsigned int ui = 0; ui < size(); ui++)
    {
@@ -8,7 +8,7 @@ void stra::trim()
    }
 }
 
-void stra::remove_empty()
+void stringa::remove_empty()
 {
    for(unsigned int ui = 0; ui < size();)
    {
@@ -23,7 +23,7 @@ void stra::remove_empty()
    }
 }
 
-int  stra::remove(const char * psz)
+int  stringa::remove(const char * psz)
 {
    int iCount = 0;
    for(unsigned int ui = 0; ui < size();)
@@ -42,16 +42,16 @@ int  stra::remove(const char * psz)
 }
 
 
-void stra::add_stra(stra & stra)
+void stringa::add_stra(stringa & stringa)
 {
-   for(unsigned int ui = 0; ui < stra.size(); ui++)
+   for(unsigned int ui = 0; ui < stringa.size(); ui++)
    {
-      push_back(stra.at(ui));
+      push_back(stringa.at(ui));
    }
 }
 
 
-void stra::add_tokens(const char * psz, const char * pszSeparator)
+void stringa::add_tokens(const char * psz, const char * pszSeparator)
 {
 	const char * pszPosBeg = psz;
 	const char * pszPosEnd;
@@ -70,7 +70,7 @@ void stra::add_tokens(const char * psz, const char * pszSeparator)
 }
 
 
-std::string stra::encode_v16()
+std::string stringa::encode_v16()
 {
    std::string strEncode;
    for(unsigned int ui = 0; ui < size(); ui++)
@@ -88,7 +88,7 @@ std::string stra::encode_v16()
 }
 
 
-void stra::decode_v16(const char * psz)
+void stringa::decode_v16(const char * psz)
 {
    if(psz == NULL)
       return;
@@ -118,5 +118,21 @@ void stra::decode_v16(const char * psz)
       }
       psz++;
    }
+
+}
+
+
+void stringa::add(const char * psz)
+{
+
+   add(string(psz));
+
+}
+
+
+void stringa::add(const string & str)
+{
+   
+   push_back(str);
 
 }

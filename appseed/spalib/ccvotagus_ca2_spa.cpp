@@ -105,8 +105,8 @@ void wfree(wchar_t * push)
 
 #define MAX_LOADSTRING 100
 
-stra g_strSpa;
-stra g_straHost;
+stringa g_strSpa;
+stringa g_straHost;
 
 
 
@@ -115,11 +115,11 @@ stra g_straHost;
 bool Get(const std::string& url_in, std::string & doc);
 bool Get(const std::string& url_in, bool bExist, int iLength, const char * pszMd5, int iGzLen);
 bool DownloadFile(const std::string& url_in, bool bExist, int iLength, const char * pszMd5, int iGzLen);
-int GetFileList(stra & stra, LPCTSTR lpcszUrl, strintmap & mapLen, strintmap & mapGzLen, strstrmap & mapMd5);
-int GetLocalFileList(stra & stra, LPCTSTR lpcszUrl);
-int DownloadFileList(stra & stra, strintmap & mapLen, strstrmap & mapMd5, strintmap & mapGzLen);
+int GetFileList(stringa & stringa, LPCTSTR lpcszUrl, strintmap & mapLen, strintmap & mapGzLen, strstrmap & mapMd5);
+int GetLocalFileList(stringa & stringa, LPCTSTR lpcszUrl);
+int DownloadFileList(stringa & stringa, strintmap & mapLen, strstrmap & mapMd5, strintmap & mapGzLen);
 void ParseIndexFile(const char * psz, strintmap & mapLen, strstrmap & mapMd5, strintmap & mapGzLen);
-int UncompressFileList(stra & stra, strstrmap & strmapMd5);
+int UncompressFileList(stringa & stringa, strstrmap & strmapMd5);
 void ParseSpaIndex(XNode & node);
 void CommandLang(int iLang);
 //std::string Login();
@@ -1408,7 +1408,7 @@ bool ca2_fy_url(std::string & str, LPCTSTR lpcszPath, bool bExist, int iLength, 
 
 
 
-int GetFileList(stra & stra, LPCTSTR lpcszPath, strintmap & mapLen, strintmap & mapGzLen, strstrmap & mapMd5)
+int GetFileList(stringa & stringa, LPCTSTR lpcszPath, strintmap & mapLen, strintmap & mapGzLen, strstrmap & mapMd5)
 {
    std::string strPath(lpcszPath);
    strPath = str_replace(strPath.c_str(), "/", "\\");
@@ -1451,14 +1451,14 @@ int GetFileList(stra & stra, LPCTSTR lpcszPath, strintmap & mapLen, strintmap & 
       {
          strPathParam = "stage\\" + strPlatform + strPathParam.substr(11);
       }
-      iCurrent = GetFileList(stra, strPathParam.c_str(), mapLen, mapGzLen, mapMd5);
+      iCurrent = GetFileList(stringa, strPathParam.c_str(), mapLen, mapGzLen, mapMd5);
       if(iCurrent == -2)
       {
          return -2;
       }
       else if(iCurrent == -1)
       {
-         if(stra.spa_insert(strPathParam.c_str()))
+         if(stringa.spa_insert(strPathParam.c_str()))
          {
             g_iTotalGzLen += mapGzLen[strPathParam.c_str()];
          }
@@ -1472,7 +1472,7 @@ int GetFileList(stra & stra, LPCTSTR lpcszPath, strintmap & mapLen, strintmap & 
    return 1;
 }
 
-int GetLocalFileList(stra & stra, LPCTSTR lpcszUrl)
+int GetLocalFileList(stringa & stringa, LPCTSTR lpcszUrl)
 {
 
    std::string strUrl(lpcszUrl);
@@ -1516,10 +1516,10 @@ int GetLocalFileList(stra & stra, LPCTSTR lpcszUrl)
       }
       std::string strSpa;
       std::string str2;
-      iCurrent = GetLocalFileList(stra, buf);
+      iCurrent = GetLocalFileList(stringa, buf);
       if(iCurrent == -1)
       {
-         stra.spa_insert(buf);
+         stringa.spa_insert(buf);
       }
       else
       {
@@ -1539,7 +1539,7 @@ void MainWindowRedraw()
 }
 
 
-int DownloadFileList(stra & stra, strintmap & mapLen, strstrmap & mapMd5, strintmap & mapGzLen)
+int DownloadFileList(stringa & stringa, strintmap & mapLen, strstrmap & mapMd5, strintmap & mapGzLen)
 {
 restart_download:
    g_dwDownloadTick = ::GetTickCount();
@@ -1548,17 +1548,17 @@ restart_download:
    g_bShowPercentage = true;
    g_iGzLen = 0;
    
-   stra::iterator it;
+   stringa::iterator it;
    inta::iterator itLen;
-   stra::iterator itMd5;
+   stringa::iterator itMd5;
    std::string str;
    double d = 0.0;
    g_dProgress = 0.0;
    bool bDownload;
    
    for(
-      it = stra.begin();
-      it != stra.end();
+      it = stringa.begin();
+      it != stringa.end();
       it++)
    {
       if(g_iTotalGzLen > 0)
@@ -1568,9 +1568,9 @@ restart_download:
       }
       else
       {
-         g_dProgress1 = d / ((double) stra.size());
+         g_dProgress1 = d / ((double) stringa.size());
          d += 1.0;
-         g_dProgress2 = d / ((double) stra.size());
+         g_dProgress2 = d / ((double) stringa.size());
       }
       str = g_strInstall;
       str += *it;
@@ -1600,9 +1600,9 @@ restart_download:
          strExpand += ".spa";
          strExpand = str_replace(str_replace(strExpand.c_str(), "\\", "_").c_str(), "/", "_");
          strExpand = "app\\stage\\metastage\\" + strExpand;
-         if(GetFileList(stra, strExpand.c_str() , mapLen, mapGzLen, mapMd5) > 0)
+         if(GetFileList(stringa, strExpand.c_str() , mapLen, mapGzLen, mapMd5) > 0)
          {
-            stra.remove(strCurrent.c_str());
+            stringa.remove(strCurrent.c_str());
             g_iTotalGzLen -= mapGzLen[strCurrent];
             goto restart_download;
          }
@@ -1623,9 +1623,9 @@ restart_download:
             strExpand += ".spa";
             strExpand = str_replace(str_replace(strExpand.c_str(), "\\", "_").c_str(), "/", "_");
             strExpand = "app\\stage\\metastage\\" + strExpand;
-            if(GetFileList(stra, strExpand.c_str() , mapLen, mapGzLen, mapMd5) > 0)
+            if(GetFileList(stringa, strExpand.c_str() , mapLen, mapGzLen, mapMd5) > 0)
             {
-               stra.remove(strCurrent.c_str());
+               stringa.remove(strCurrent.c_str());
                g_iTotalGzLen -= mapGzLen[strCurrent];
                goto restart_download;
             }
@@ -1647,24 +1647,24 @@ restart_download:
 
    }
    MainWindowRedraw();
-   return stra.size();
+   return stringa.size();
 }
 
 
 
-int UncompressFileList(stra & stra, strstrmap & strmapMd5)
+int UncompressFileList(stringa & stringa, strstrmap & strmapMd5)
 {
    std::string strStage;
    std::string strStageGz;
-   stra::iterator it;
+   stringa::iterator it;
    std::string str;
    double d = 0.0;
    g_dProgress = 0.0;
-   for(it = stra.begin(); it != stra.end(); it++)
+   for(it = stringa.begin(); it != stringa.end(); it++)
    {
-      //g_dProgress1 = d / ((double) stra.size());
+      //g_dProgress1 = d / ((double) stringa.size());
       //d += 1.0;
-      //g_dProgress2 = d / ((double) stra.size());
+      //g_dProgress2 = d / ((double) stringa.size());
       str = *it;
       str += ".bz";
       trace(str.c_str());
@@ -1673,26 +1673,26 @@ int UncompressFileList(stra & stra, strstrmap & strmapMd5)
       dir::mk(dir::name(strStage.c_str()).c_str());
       bzuncompress(strStage.c_str(), strStageGz.c_str());
       d += 1.0;
-      g_dProgress = d / ((double) stra.size());
+      g_dProgress = d / ((double) stringa.size());
    }
    g_dProgress = 1.0;
    MainWindowRedraw();
-   return stra.size();
+   return stringa.size();
 }
 
-int CopyFileList(stra & stra)
+int CopyFileList(stringa & stringa)
 {
    std::string strStage;
    std::string strStageUnbz;
-   stra::iterator it;
+   stringa::iterator it;
    std::string str;
    double d = 0.0;
    g_dProgress = 0.0;
-   for(it = stra.begin(); it != stra.end(); it++)
+   for(it = stringa.begin(); it != stringa.end(); it++)
    {
-      //g_dProgress1 = d / ((double) stra.size());
+      //g_dProgress1 = d / ((double) stringa.size());
       //d += 1.0;
-      //g_dProgress2 = d / ((double) stra.size());
+      //g_dProgress2 = d / ((double) stringa.size());
       str = *it;
       str += ".bz";
       trace(str.c_str());
@@ -1710,11 +1710,11 @@ int CopyFileList(stra & stra)
          ::CopyFile(strStageUnbz.c_str(), strStage.c_str(), FALSE);
       }
       d += 1.0;
-      g_dProgress = d / ((double) stra.size());
+      g_dProgress = d / ((double) stringa.size());
    }
    g_dProgress = 1.0;
    MainWindowRedraw();
-   return stra.size();
+   return stringa.size();
 }
 
 
@@ -2506,7 +2506,7 @@ void remove_spa_start(const char * pszId)
    }
 }
 
-std::string stra::implode(const char * psz) const
+std::string stringa::implode(const char * psz) const
 {
 
    std::string str;
@@ -2525,7 +2525,7 @@ std::string stra::implode(const char * psz) const
 }
 
 
-bool stra::spa_insert(const char * psz)
+bool stringa::spa_insert(const char * psz)
 {
    if(psz == NULL)
       return false;

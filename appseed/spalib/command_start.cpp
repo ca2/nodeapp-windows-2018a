@@ -207,8 +207,8 @@ int run_file(const char * pszFile, int nCmdShow);
 
 HANDLE g_hmutexInstall = NULL;
 
-stra g_straTerminateProcesses;
-stra g_straRestartCommandLine;
+stringa g_straTerminateProcesses;
+stringa g_straRestartCommandLine;
 std::string g_strLastHost;
 std::string g_strCurrentHost;
 bool g_bStarterStart = false;
@@ -492,7 +492,7 @@ install_begin:;
 
 
 
-      stra straFileList;
+      stringa straFileList;
       strintmap mapLen;
       strstrmap mapMd5;
       strintmap mapGzLen;
@@ -617,10 +617,10 @@ install_begin:;
       }*/
       
 
-      /*if(stra.size() > 0)
+      /*if(stringa.size() > 0)
       {
          std::string strUrl;
-         strUrl = stra[0];
+         strUrl = stringa[0];
          std::string strStage;
          
          strStage = dir::path(dir::stage().c_str(), "ca2\\stage\\ca2\\fontopus\\app\\main\\front\\Release\\bergedgeapp.exe");
