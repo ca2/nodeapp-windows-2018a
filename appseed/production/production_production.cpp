@@ -384,7 +384,7 @@ namespace production
 
          m_straRoot.ls_dir(m_strBase);
 
-         m_straRoot.filter_begins_ci("app-");
+         m_straRoot.filter([](const ::file::path & p) {return ::str::begins_ci(p.name(),"app-"); });
 
          m_straRoot.insert_at(0, "app");
 
