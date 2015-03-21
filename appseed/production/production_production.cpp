@@ -3028,6 +3028,13 @@ namespace production
    void production::build(const char * psz)
    {
 
+      // Build before production!!
+      //
+      // When SSD (solid state drive) is back to build machine or some very faster Drive, you may reintroducde build inline
+      //
+
+      return;
+
       string strApp(psz);
 
       add_status("Building ca2 fontopus ccvotagus " + strApp + "...");
