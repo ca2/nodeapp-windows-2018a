@@ -577,10 +577,10 @@ namespace production
 
                //   string str;
 
-               //   m_timeEnd = m_timeStart;
-               //      string strEndTime;
+                  m_timeEnd = m_timeStart;
+                     string strEndTime;
 
-               //   m_timeEnd.FormatGmt(strEndTime, "%Y-%m-%d %H-%M-%S");
+                  m_timeEnd.FormatGmt(strEndTime, "%Y-%m-%d %H-%M-%S");
 
                //if (m_eversion == version_basis)
                //{
@@ -806,7 +806,7 @@ namespace production
          //   Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
          //}
-         //compress();
+         compress();
          //{
          //   string str;
 
