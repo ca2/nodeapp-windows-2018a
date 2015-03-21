@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 
+/*
 #ifndef CCVOTAGUS_CA2_SPA
 #define PATH_SEPARATOR "\\"
 void get_ca2_module_folder_dup(char * lpszModuleFolder)
@@ -44,8 +45,13 @@ string dir_beforeca2()
 }
 string dir_path(const char * path1, const char * path2)
 {
+   if(path1 == NULL)
+      return path2;
+   if(*path1 == '\0')
+      return path2;
+
    string str1(path1);
-   if(str1.Right(1) != PATH_SEPARATOR)
+   if(str1.substr(str1.length() - 2, 1) != PATH_SEPARATOR)
    {
       str1 = str1 + PATH_SEPARATOR;
    }
@@ -62,12 +68,14 @@ string dir_path(const char * path1, const char * path2)
 string dir_ca2(const char * path = NULL)
 {
    if(path == NULL)
-      return dir_path(dir_beforeca2(), "ca2");
+      return dir_path(dir_beforeca2().c_str(), "ca2");
    else
-      return dir_path(dir_ca2(), path);
+      return dir_path(dir_ca2().c_str(), path);
 }
 
 #endif
+*/
+
 
 machine_event::machine_event()
 {
@@ -123,11 +131,7 @@ bool machine_event::initialize()
 
 bool machine_event::read(machine_event_data * pdata)
 {
-#ifdef CCVOTAGUS_CA2_SPA
-   FILE * f = fopen((dir::ca2("machine\\event\\machine_event.bin")).c_str(), "rb");
-#else
-   FILE * f = fopen((dir_ca2("machine\\event\\machine_event.bin")), "rb");
-#endif
+   FILE * f = fopen(dir::ca2("machine\\event\\machine_event.bin").c_str(), "rb");
    if(f == NULL)
    {
       memset(pdata, 0, sizeof(machine_event_data));
@@ -144,15 +148,9 @@ bool machine_event::read(machine_event_data * pdata)
 
 bool machine_event::write(machine_event_data * pdata)
 {
-#ifdef CCVOTAGUS_CA2_SPA
    if(!dir::mk(dir::ca2("machine\\event\\").c_str()))
       return false;
-#endif
-#ifdef CCVOTAGUS_CA2_SPA
    FILE * f = fopen(dir::ca2("machine\\event\\machine_event.bin").c_str(), "wb+");
-#else
-   FILE * f = fopen(dir_ca2("machine\\event\\machine_event.bin"), "wb+");
-#endif
    if(f != NULL)
    {
       fseek(f, 0, SEEK_SET);

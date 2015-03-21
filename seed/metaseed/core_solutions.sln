@@ -1822,7 +1822,8 @@ Global
 		{AE18AC57-1A37-4D2E-9E73-258D36E35340}.profiler|x64.ActiveCfg = basis|Win32
 		{AE18AC57-1A37-4D2E-9E73-258D36E35340}.stage|Win32.ActiveCfg = stage|Win32
 		{AE18AC57-1A37-4D2E-9E73-258D36E35340}.stage|Win32.Build.0 = stage|Win32
-		{AE18AC57-1A37-4D2E-9E73-258D36E35340}.stage|x64.ActiveCfg = stage|Win32
+		{AE18AC57-1A37-4D2E-9E73-258D36E35340}.stage|x64.ActiveCfg = stage|x64
+		{AE18AC57-1A37-4D2E-9E73-258D36E35340}.stage|x64.Build.0 = stage|x64
 		{AE18AC57-1A37-4D2E-9E73-258D36E35340}.static_basis|Win32.ActiveCfg = basis|Win32
 		{AE18AC57-1A37-4D2E-9E73-258D36E35340}.static_basis|Win32.Build.0 = basis|Win32
 		{AE18AC57-1A37-4D2E-9E73-258D36E35340}.static_basis|x64.ActiveCfg = basis|Win32

@@ -1,4 +1,6 @@
- //O volume na unidade X ‚ sensitive
+#include "stdafx.h"
+
+//O volume na unidade X ‚ sensitive
  //O N£mero de S‚rie do Volume ‚ 7ABB-1604
 
  //Pasta de X:\core\nodeapp\appseed\spalib

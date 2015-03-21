@@ -20,6 +20,8 @@
 #include <tchar.h>
 
 
+#include "aura/version.config.h"
+
 
 #ifdef _DLL
 #if defined(SPALIB_DLL)
@@ -86,7 +88,7 @@ extern "C"
 #include "simple_mutex.h"
 #include "mutex_lock.h"
 
-
+using namespace std;
 
 
 SPALIB_API bool spa_get_admin();

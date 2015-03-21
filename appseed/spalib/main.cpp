@@ -1145,6 +1145,10 @@ int check_install_bin_set()
 
    int iMd5Retry = 0;
 
+   g_strBuild = strFormatBuild;
+
+   g_strBuild = str_replace(g_strBuild.c_str()," ","_");
+
 md5retry:
 
    if(!is_file_ok(straDownload,straFile,straMd5,strFormatBuild,iMd5Retry))
@@ -1447,6 +1451,7 @@ RetryBuildNumber:
    iRetry++;
 
    strBuildNumber = ms_get((strSpaIgnitionBaseUrl + "/query?node=build&version=" + strVersion).c_str());
+   //strBuildNumber = ms_get((strSpaIgnitionBaseUrl + "/ca2_build_number?authnon").c_str());
 
    trim(strBuildNumber);
 
