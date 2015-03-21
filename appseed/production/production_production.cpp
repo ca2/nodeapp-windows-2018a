@@ -1661,13 +1661,13 @@ namespace production
 
       for(int32_t i = 0; i < listing.get_count(); i++)
       {
-         if(::str::begins(listing[i].relative(),"_"))
+         if(::str::begins(listing[i].name(),"_"))
          {
-            generate_appmatter_spa_folder(pszRoot,listing[i].relative());
+            generate_appmatter_spa_folder(pszRoot,listing[i].name());
          }
          else
          {
-            generate_appmatter_spa_locale(pszRoot,listing[i].relative());
+            generate_appmatter_spa_locale(pszRoot,listing[i].name());
          }
       }
 
@@ -1712,7 +1712,7 @@ namespace production
       for (int32_t i = 0; i < listing.get_count(); i++)
       {
 
-         generate_appmatter_spa_style(pszRoot,pszRelative / listing[i].relative());
+         generate_appmatter_spa_style(pszRoot,pszRelative / listing[i].name());
 
       }
 
@@ -1732,7 +1732,7 @@ namespace production
       for(int32_t i = 0; i < listing.get_count(); i++)
       {
 
-         generate_appmatter_spa(pszRoot,pszRelative / listing[i].relative());
+         generate_appmatter_spa(pszRoot,pszRelative / listing[i].name());
 
       }
 
