@@ -1809,9 +1809,9 @@ namespace production
 
       }
 
-      strRelative = string(pszRoot) + +"\\appmatter\\" + string(pszRelative);
+      strRelative = string(pszRoot) + "\\appmatter\\" + string(pszRelative);
 
-      strFile = m_strBase /  "app\\stage\\metastage"/ strRelative / ".expand_fileset.spa";
+      strFile = m_strBase /  "app\\stage\\metastage"/ strRelative + ".expand_fileset.spa";
 
       m_straFiles.add(strFile);
 
