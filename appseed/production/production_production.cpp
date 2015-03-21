@@ -376,15 +376,21 @@ namespace production
          m_iLoop++;
          defer_quit();
 
+         {
 
+            ::file::listing listing(get_app());
 
-         m_straRoot.clear_results();
+            listing.ls_dir(m_strBase);
 
-         m_straRoot.m_pprovider = get_app();
+            listing.to_name();
 
-         m_straRoot.ls_dir(m_strBase);
+            listing.filter_begins_ci("app-");
 
-         m_straRoot.filter([](const ::file::path & p) {return ::str::begins_ci(p.name(),"app-"); });
+            ::lemon::array::copy(m_straRoot, listing);
+
+         }
+
+//         m_straRoot.filter([](const ::file::path & p) {return ::str::begins_ci(p.name(),"app-"); });
 
          m_straRoot.insert_at(0, "app");
 
