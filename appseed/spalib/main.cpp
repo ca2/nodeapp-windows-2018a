@@ -1,5 +1,30 @@
 #include "StdAfx.h"
 
+#define CLASS_DECL_AURA
+#define CLASS_DECL_AXIS
+#define WINDOWS
+#define WINDOWSEX
+typedef HWND oswindow;
+#define MAX(a, b) (((a) > (b)) ? (a) : (b))
+#define MIN(a, b) (((a) < (b)) ? (a) : (b))
+#define MSGFLT_ADD 1
+#define MSGFLT_REMOVE 2
+
+#include "aura/aura/aura_launcher.h"
+#include "aura/aura/aura_small_ipc_channel.h"
+#include "axis/install_launcher.h"
+
+typedef int
+(WINAPI * LPFN_ChangeWindowMessageFilter)(
+UINT message,
+DWORD dwFlag);
+
+
+CLASS_DECL_AURA LPFN_ChangeWindowMessageFilter g_pfnChangeWindowMessageFilter = NULL;
+
+bool app_install_send_short_message(const char * psz,bool bLaunch,const char * pszBuild);
+void app_install_call_sync(const char * szParameters,const char * pszBuild);
+
 #if defined(LINUX) || defined(WINDOWS)
 //#include <omp.h>
 #else
@@ -9,7 +34,41 @@ int omp_get_thread_num()
 }
 #endif
 
+int call_async(
+   const char * pszPath,
+   const char * pszParam,
+   const char * pszDir,
+   int iShow);
+
+
+#ifdef WINDOWSEX
+
+
+string get_module_path(HMODULE hmodule)
+{
+   
+   wstring wstrPath;
+
+   wchar_t * pwz = (wchar_t *) malloc(4906);
+
+   DWORD dwSize = ::GetModuleFileNameW(hmodule, pwz, 4096);
+
+   wstrPath = pwz;
+
+   free(pwz);
+
+   return ::utf16_to_8(wstrPath.c_str());
+
+}
+
+#endif
+
+
+bool app_install_send_short_message(const char * psz,bool bLaunch,const char * pszBuild);
+
 using namespace std;
+
+std::string get_app_id(std::wstring wstr);
 
 DWORD g_dwMain2;
 DWORD g_iRet;
@@ -171,7 +230,7 @@ retry_check_spa_installation:
 
    }
 
-   ::srand(::GetTickCount());
+   /*::srand(::GetTickCount());
    try
    {
       dir::mk(dir::ca2().c_str());
@@ -314,7 +373,7 @@ retry_check_spa_installation:
    }
 */
 
-   int iFind;
+   /*int iFind;
    if((iFind = str.find("uninstall")) != std::string::npos)
    {
       return run_uninstall_run(&str[iFind + 10],nCmdShow);
@@ -327,7 +386,64 @@ retry_check_spa_installation:
    {
       //g_strStart = "_set_windesk";  g_iStart = 4; return run_install(lpCmdLine, nCmdShow);
       return run_install(lpCmdLine,nCmdShow);
+   }*/
+
+std::wstring strId;
+
+std::wstring wstr = ::GetCommandLineW();
+
+int iFind1 = 0;
+
+if(wstr[0] == L'\"')
+{
+
+   iFind1= wstr.find('\"',1);
+
+}
+
+int iFind = wstr.find(L" : ",iFind1 + 1);
+
+if(iFind < 0)
+{
+
+   HMODULE hmoduleUser32 = ::LoadLibrary("User32");
+   g_pfnChangeWindowMessageFilter = (LPFN_ChangeWindowMessageFilter) ::GetProcAddress(hmoduleUser32,"ChangeWindowMessageFilter");
+
+
+      string strCommandLine;
+
+
+   strCommandLine = " app=session session_start=" + get_app_id(wstr.substr(iFind1 + 1));
+
+   strCommandLine += " install";
+   strCommandLine += " locale=_std";
+   strCommandLine += " schema=_std";
+   strCommandLine += " version=stage";
+
+   strCommandLine += " ";
+
+
+   string strCommand;
+
+   strCommand = "synch_spaadmin:";
+
+   strCommand += "starter_start:";
+
+   strCommand += strCommandLine;
+
+   bool bBackground = true;
+
+   if(bBackground)
+   {
+
+      strCommand += " background";
+
    }
+
+   app_install_call_sync(strCommand.c_str(),"");
+
+}
+   return 1;
 }
 
 int check_soon_file_launch(std::wstring wstr);
@@ -498,13 +614,13 @@ void trim(::std::string & wstr)
 
 }
 
-int check_soon_file_launch(std::wstring wstr)
+std::string get_app_id(std::wstring wstr)
 {
 
    if(wstr.length() <= 0)
    {
 
-      return 0;
+      return "";
 
    }
 
@@ -515,13 +631,13 @@ int check_soon_file_launch(std::wstring wstr)
       c = 0;
       c += trim(wstr,'\"');
       c += trim(wstr,' ');
-      
+
    }
 
    if(wstr.length() <= 0)
    {
 
-      return 0;
+      return "";
 
    }
 
@@ -533,8 +649,8 @@ int check_soon_file_launch(std::wstring wstr)
 
    if(!doc.Load(strContents.c_str()))
    {
-      
-      return 0;
+
+      return "";
 
    }
 
@@ -542,31 +658,39 @@ int check_soon_file_launch(std::wstring wstr)
 
    if(pnode == NULL)
    {
-    
-      return 0;
+
+      return "";
 
    }
 
-   if(pnode->GetChildCount() <= 0)
+   /*if(pnode->GetChildCount() <= 0)
    {
       if(pnode->name == "meta")
       {
-         return check_soon_app_id(utf8_to_16(file::name(strPath.c_str()).c_str()));
+         return file::name(strPath.c_str());
       }
 
-      return 0;
-   }
+      return "";
+   }*/
 
    const char * psz = pnode->GetChildAttrValue("launch","app");
 
    if(psz == NULL || *psz == '\0')
    {
 
-      return 0;
+      return "";
 
    }
 
-   return check_soon_app_id(utf8_to_16(psz));
+   return psz;
+
+}
+
+int check_soon_file_launch(std::wstring wstr)
+{
+
+
+   return check_soon_app_id(utf8_to_16(get_app_id(wstr.c_str()).c_str()));
 
 }
 
@@ -614,6 +738,9 @@ void get_program_files_x86(std::wstring &wstr)
 
 int check_soon_app_id(std::wstring strId)
 {
+
+   if(strId.length() <= 0)
+      return 0;
 
    std::wstring strName = spa_app_id_to_app_name(strId);
 
@@ -750,14 +877,64 @@ int check_soon_app_id(std::wstring strId)
       PROCESS_INFORMATION pi;
       memset(&pi,0,sizeof(pi));
 
-      if(!::CreateProcessW(NULL,(wchar_t *)wstr.c_str(),
+      if(::CreateProcessW(NULL,(wchar_t *)wstr.c_str(),
          NULL,NULL,FALSE,0,NULL,NULL,
          &si,&pi))
-         return FALSE;
+         return TRUE;
 
    }
 
-   return TRUE;
+      {
+
+         std::wstring wstr;
+
+         wstr = L"\\ca2\\";
+#ifdef _M_X64
+         wstr += L"stage\\x64\\";
+#else
+         wstr += L"stage\\x86\\";
+#endif
+
+         wstr += strName + L".dll";
+
+         get_program_files_x86(wstr);
+
+         std::wstring wstrApp;
+
+         wstrApp = L"\\ca2\\";
+#ifdef _M_X64
+         wstrApp += L"stage\\x64\\";
+#else
+         wstrApp += L"stage\\x86\\";
+#endif
+
+         wstrApp += L"app.exe";
+
+         get_program_files_x86(wstrApp);
+
+         if(file::exists(::utf16_to_8(wstr.c_str())))
+         {
+
+            STARTUPINFOW si;
+            memset(&si,0,sizeof(si));
+            si.cb = sizeof(si);
+            si.dwFlags = STARTF_USESHOWWINDOW;
+            si.wShowWindow = SW_SHOWNORMAL;
+            PROCESS_INFORMATION pi;
+            memset(&pi,0,sizeof(pi));
+
+            wstring wstrCmdLine = (L"\"" + wstrApp + L"\" : app=" + strId + L" build_number=installed").c_str();
+
+            if(::CreateProcessW((wchar_t *)wstrApp.c_str(),(wchar_t *)wstrCmdLine.c_str(),
+               NULL,NULL,FALSE,0,NULL,NULL,
+               &si,&pi))
+               return TRUE;
+
+         }
+
+      }
+
+   return FALSE;
 
 }
 
@@ -777,7 +954,7 @@ int check_spa_installation()
    if(!check_install_bin_set())
       return 0;
 
-   return 0;
+   return 1;
 
 }
 
@@ -1175,20 +1352,20 @@ md5retry:
 
          string str = get_module_path(hmodule);
 
-         if(str.has_char())
+         if(str.length() > 0)
          {
 
-            string strAuraDir = ::dir::name(str);
+            string strAuraDir = ::dir::name(str.c_str());
 
-            for(int iFile = 0; iFile < straFile.get_size(); iFile++)
+            for(int iFile = 0; iFile < straFile.size(); iFile++)
             {
 
-               string strFile = System.dir().path(strAuraDir,straFile[iFile]);
+               string strFile = ::dir::path(strAuraDir.c_str(),straFile[iFile].c_str());
 
-               if(!file::exists(straDownload[iFile]) && file::exists(strFile) && System.file().md5(strFile) == straMd5[iFile])
+               if(!file::exists(straDownload[iFile].c_str()) && file::exists(strFile.c_str()) && file::md5(strFile.c_str()) == straMd5[iFile].c_str())
                {
 
-                  ::file_copy_dup(straDownload[iFile],strFile,false);
+                  ::CopyFile(strFile.c_str(),straDownload[iFile].c_str(),false);
 
                }
 
@@ -1420,5 +1597,105 @@ RetryBuildNumber:
    }
 
    return strBuildNumber;
+
+}
+
+
+
+
+bool app_install_send_short_message(const char * psz,bool bLaunch,const char * pszBuild)
+{
+
+#ifdef METROWIN
+
+   throw "todo";
+
+#else
+
+   small_ipc_tx_channel txchannel;
+
+   install_launcher launcher("", "");
+
+   if(!txchannel.open("core/spaboot_install",bLaunch ? &launcher : NULL))
+      return false;
+
+   txchannel.send(psz,false);
+
+#endif
+
+   return true;
+
+}
+
+
+
+
+//#include "aura/aura/aura_launcher.cpp"
+#include "axis/install_launcher.cpp"
+#include "aura/aura/aura_small_ipc_channel.cpp"
+//#include "aura/aura/aura_small_ipc_channel.cpp"
+#include "aura/os/windows/windows_small_ipc_channel.cpp"
+
+
+
+bool launcher::start()
+{
+
+   if(!ensure_executable())
+      return false;
+
+   string strPath(get_executable_path());
+
+   string strDir(dir::name(strPath.c_str()));
+
+   string strParams = get_params();
+
+   call_async(strPath.c_str(),strParams.c_str(),strDir.c_str(),SW_HIDE);
+
+   return true;
+
+}
+
+
+int call_async(
+   const char * pszPath,
+   const char * pszParam,
+   const char * pszDir,
+   int iShow)
+{
+
+   SHELLEXECUTEINFOA infoa;
+
+   memset(&infoa,0,sizeof(infoa));
+
+   infoa.cbSize         = sizeof(infoa);
+   infoa.lpFile         = pszPath;
+   infoa.lpParameters   = pszParam;
+   infoa.lpDirectory    = pszDir;
+   infoa.nShow          = iShow;
+
+   int iOk = ::ShellExecuteExA(&infoa);
+
+   return iOk;
+
+}
+
+
+
+void app_install_call_sync(const char * szParameters,const char * pszBuild)
+{
+   bool bLaunch;
+
+   if(_stricmp(szParameters,"exit") == 0
+      || _stricmp(szParameters,"quit") == 0)
+   {
+      bLaunch = false;
+   }
+   else
+   {
+      bLaunch = true;
+   }
+
+   app_install_send_short_message(szParameters,bLaunch,pszBuild);
 
 }
