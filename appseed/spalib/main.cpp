@@ -151,6 +151,9 @@ SPALIB_API int spa_main()
 }
 
 
+void start_app_install_in_context();
+
+
 SPALIB_API int spa_admin()
 {
 
@@ -173,6 +176,8 @@ retry_check_spa_installation:
       return -3;
 
    }
+
+   start_app_install_in_context();
 
    return 0;
 
@@ -1697,5 +1702,39 @@ void app_install_call_sync(const char * szParameters,const char * pszBuild)
    }
 
    app_install_send_short_message(szParameters,bLaunch,pszBuild);
+
+}
+
+
+
+void start_app_install_in_context()
+{
+
+   install_launcher launcher("","");
+
+   launcher.start_in_context();
+
+}
+
+
+
+void install_launcher::start_in_context()
+{
+
+   string strDir = dir::name(m_strPath.c_str());
+
+   wstring wstrDir = utf8_to_16(strDir.c_str());
+
+   wstring wstr = utf8_to_16(m_strPath.c_str());
+
+   STARTUPINFOW si;
+   memset(&si,0,sizeof(si));
+   si.cb = sizeof(si);
+   si.dwFlags = 0;
+   si.wShowWindow = SW_HIDE;
+   PROCESS_INFORMATION pi;
+   memset(&pi,0,sizeof(pi));
+
+   ::CreateProcessW(NULL,(wchar_t *)wstr.c_str(), NULL,NULL,FALSE,0,NULL,wstrDir.c_str(), &si,&pi);
 
 }

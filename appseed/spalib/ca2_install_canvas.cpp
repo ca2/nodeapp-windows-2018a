@@ -137,7 +137,7 @@ void ca2_install_canvas_on_paint(HDC hdc, LPCRECT lpcrect, int iMode)
 
       size_t iRefresh = 884;
       size_t iEat = 8;
-      const char * psz = "development message so international english file \"C:\\ca2\\install.log\" excerpt  ::::::::";
+      const char * psz = "development message so international english file \"install.log\" excerpt  ::::::::";
       ::SetBkMode(hdc, TRANSPARENT);
       ::TextOutU(hdc, 10, 10 + size.cy * 2, psz, strlen(psz) - iEat + 1 + ((::GetTickCount() / (iRefresh - 277) % iEat)));
 
@@ -216,7 +216,7 @@ void ca2_install_canvas_on_paint(HDC hdc, LPCRECT lpcrect, int iMode)
 
       size_t iRefresh = 884;
       size_t iEat = 8;
-      const char * psz = "development message so international english last lines of file \"C:\\ca2\\install.log\" ::::::::";
+      const char * psz = "development message so international english last lines of file \"install.log\" ::::::::";
       ::SetBkMode(hdc, TRANSPARENT);
       ::TextOutU(hdc, 10, 10 + size.cy * 2, psz, strlen(psz) - iEat + 1 + ((::GetTickCount() / (iRefresh - 277) % iEat)));
       ::SelectObject(hdc, hfontBold);

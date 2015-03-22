@@ -21,10 +21,13 @@ void get_ca2_module_folder_dup(char * lpszModuleFolder)
    }
 }
 
+void get_program_files_x86(std::wstring &wstr);
 
 std::string dir::beforeca2()
 {
-   return "C:";
+   std::wstring wstr;
+   get_program_files_x86(wstr);
+   return utf16_to_8(wstr.c_str());
    /*char lpszModuleFolder[MAX_PATH * 8];
    get_ca2_module_folder_dup(lpszModuleFolder);
    char * psz = strrchr(lpszModuleFolder, '\\');
