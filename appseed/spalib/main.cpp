@@ -1721,6 +1721,9 @@ void start_app_install_in_context()
 void install_launcher::start_in_context()
 {
 
+   if(!ensure_executable())
+      return;
+
    string strDir = dir::name(m_strPath.c_str());
 
    wstring wstrDir = utf8_to_16(strDir.c_str());
