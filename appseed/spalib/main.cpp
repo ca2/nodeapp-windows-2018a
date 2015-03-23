@@ -1795,7 +1795,7 @@ int register_spa_file_type()
       printf("Could not create or open a registrty key\n");
       return 0;
    }
-   RegSetValueExW(hkey,L"",0,REG_SZ,(BYTE*)app.c_str(),app.length());
+   RegSetValueExW(hkey,L"",0,REG_SZ,(BYTE*)app.c_str(),app.length()*sizeof(wchar_t));
 
 
  
