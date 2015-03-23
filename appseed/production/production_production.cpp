@@ -1575,7 +1575,7 @@ namespace production
          }
          if (straStageDir.str_find_first_begins_ci(strFile) >= 0
             && !m_straStageDirAcceptedFileExtensions.contains(
-            strFile.ext()))
+            strFile.final_extension()))
          {
             continue;
          }
