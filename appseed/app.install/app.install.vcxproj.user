@@ -17,7 +17,7 @@
     <LocalDebuggerCommandArguments />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">
-    <LocalDebuggerCommand>$(OutDir)$(TargetName).exe</LocalDebuggerCommand>
+    <LocalDebuggerCommand>C:\Program Files (x86)\ca2\install\stage\x86\$(TargetName).exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
     <LocalDebuggerCommandArguments />
   </PropertyGroup>
