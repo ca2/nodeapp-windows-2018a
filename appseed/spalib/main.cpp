@@ -428,7 +428,7 @@ if(iFind < 0)
       string strCommandLine;
 
 
-   strCommandLine = " app=session session_start=" + get_app_id(wstr.substr(iFind1 + 1));
+   strCommandLine = " : app=" + get_app_id(wstr.substr(iFind1 + 1));
 
    strCommandLine += " install";
    strCommandLine += " locale=_std";
@@ -1760,7 +1760,8 @@ int register_spa_file_type()
    HKEY hkey;
 
    wstring extension=L".spa";                     // file extension
-   wstring desc=L"Simple Patch Applier Documentsp";          // file type description
+   wstring desc=L"spafile";          // file type description
+   wstring content_type = L"application/x-spa";
 
    std::wstring app;
 
@@ -1768,13 +1769,16 @@ int register_spa_file_type()
 
    get_program_files_x86(app);
 
+   std::wstring icon(app);
+
    app = L"\"" + app + L"\"" + L" %1";
+   icon = L"\"" + icon + L"\",107";
 
    wstring action=L"Open";
 
    wstring sub=L"\\shell\\";
 
-   wstring path=extension + sub + action + L"\\" L"command\\";
+   wstring path=L"spafile\\shell\\open\\command";
 
 
    // 1: Create subkey for extension -> HKEY_CLASSES_ROOT\.002
@@ -1783,7 +1787,8 @@ int register_spa_file_type()
       printf("Could not create or open a registrty key\n");
       return 0;
    }
-   RegSetValueExW(hkey,L"",0,REG_SZ,(BYTE*)desc.c_str(),sizeof(desc)); // default vlaue is description of file extension
+   RegSetValueExW(hkey,L"",0,REG_SZ,(BYTE*)desc.c_str(),desc.length()*sizeof(wchar_t)); // default vlaue is description of file extension
+   RegSetValueExW(hkey,L"ContentType",0,REG_SZ,(BYTE*)content_type.c_str(),content_type.length()*sizeof(wchar_t)); // default vlaue is description of file extension
    RegCloseKey(hkey);
 
 
@@ -1796,9 +1801,17 @@ int register_spa_file_type()
       return 0;
    }
    RegSetValueExW(hkey,L"",0,REG_SZ,(BYTE*)app.c_str(),app.length()*sizeof(wchar_t));
+   RegCloseKey(hkey);
 
 
- 
+   path=L"spafile\\DefaultIcon";
+
+   if(RegCreateKeyExW(HKEY_CLASSES_ROOT,path.c_str(),0,0,0,KEY_ALL_ACCESS,0,&hkey,0) != ERROR_SUCCESS)
+   {
+      printf("Could not create or open a registrty key\n");
+      return 0;
+   }
+   RegSetValueExW(hkey,L"",0,REG_SZ,(BYTE*)icon.c_str(),icon.length()*sizeof(wchar_t));
    RegCloseKey(hkey);
 
    return 1;
