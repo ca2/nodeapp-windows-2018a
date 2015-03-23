@@ -24,6 +24,7 @@ CLASS_DECL_AURA LPFN_ChangeWindowMessageFilter g_pfnChangeWindowMessageFilter = 
 
 bool app_install_send_short_message(const char * psz,bool bLaunch,const char * pszBuild);
 void app_install_call_sync(const char * szParameters,const char * pszBuild);
+int register_spa_file_type();
 
 #if defined(LINUX) || defined(WINDOWS)
 //#include <omp.h>
@@ -178,6 +179,8 @@ retry_check_spa_installation:
    }
 
    start_app_install_in_context();
+
+   register_spa_file_type();
 
    return 0;
 
@@ -410,6 +413,13 @@ int iFind = wstr.find(L" : ",iFind1 + 1);
 
 if(iFind < 0)
 {
+
+   string strAppId = get_app_id(wstr.substr(iFind1 + 1));
+
+   if(strAppId.length() <= 0)
+   {
+      return 1;
+   }
 
    HMODULE hmoduleUser32 = ::LoadLibrary("User32");
    g_pfnChangeWindowMessageFilter = (LPFN_ChangeWindowMessageFilter) ::GetProcAddress(hmoduleUser32,"ChangeWindowMessageFilter");
@@ -1739,5 +1749,58 @@ void install_launcher::start_in_context()
    memset(&pi,0,sizeof(pi));
 
    ::CreateProcessW(NULL,(wchar_t *)wstr.c_str(), NULL,NULL,FALSE,0,NULL,wstrDir.c_str(), &si,&pi);
+
+   Sleep(1984);
+
+}
+
+
+int register_spa_file_type()
+{
+   HKEY hkey;
+
+   wstring extension=L".spa";                     // file extension
+   wstring desc=L"Simple Patch Applier Documentsp";          // file type description
+
+   std::wstring app;
+
+   app = L"\\ca2.spa\\spa.exe";
+
+   get_program_files_x86(app);
+
+   app = L"\"" + app + L"\"" + L" %1";
+
+   wstring action=L"Open";
+
+   wstring sub=L"\\shell\\";
+
+   wstring path=extension + sub + action + L"\\" L"command\\";
+
+
+   // 1: Create subkey for extension -> HKEY_CLASSES_ROOT\.002
+   if(RegCreateKeyExW(HKEY_CLASSES_ROOT,extension.c_str(),0,0,0,KEY_ALL_ACCESS,0,&hkey,0) != ERROR_SUCCESS)
+   {
+      printf("Could not create or open a registrty key\n");
+      return 0;
+   }
+   RegSetValueExW(hkey,L"",0,REG_SZ,(BYTE*)desc.c_str(),sizeof(desc)); // default vlaue is description of file extension
+   RegCloseKey(hkey);
+
+
+
+   // 2: Create Subkeys for action ( "Open with my program" )
+   // HKEY_CLASSES_ROOT\.002\Shell\\open with my program\\command
+   if(RegCreateKeyExW(HKEY_CLASSES_ROOT,path.c_str(),0,0,0,KEY_ALL_ACCESS,0,&hkey,0) != ERROR_SUCCESS)
+   {
+      printf("Could not create or open a registrty key\n");
+      return 0;
+   }
+   RegSetValueExW(hkey,L"",0,REG_SZ,(BYTE*)app.c_str(),app.length());
+
+
+ 
+   RegCloseKey(hkey);
+
+   return 1;
 
 }
