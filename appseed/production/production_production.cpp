@@ -2674,13 +2674,13 @@ namespace production
          if(Application.m_eversion == version_basis)
          {
 
-            strTwit += " : http://basis.ca2.cc/ca2_demo";
+            strTwit += " : http://basis.ca2.cc/spa_demo";
 
          }
          else
          {
 
-            strTwit += " : http://ca2.cc/ca2_demo";
+            strTwit += " : http://ca2.cc/spa_demo";
 
          }
 
