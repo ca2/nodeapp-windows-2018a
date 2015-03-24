@@ -32,7 +32,7 @@ void ca2_install_canvas_on_paint(HDC hdc, LPCRECT lpcrect, int iMode)
    int cx = lpcrect->right - lpcrect->left;
    int cy = lpcrect->bottom - lpcrect->top;
    iMode = iMode % 5;
-   HFONT hfont = ::CreatePointFont(100, "Lucida Sans Unicode", hdc);
+   HFONT hfont = ::CreatePointFont(100, "Lucida Sans Unicode", hdc, false);
    LOGFONT lf;
    memset(&lf, 0, sizeof(LOGFONT));
    ::GetObjectA(hfont, sizeof(LOGFONT), &lf);
@@ -306,12 +306,14 @@ void ca2_install_canvas_on_paint(HDC hdc, LPCRECT lpcrect, int iMode)
    {
       const char * psz = "Thank you";
       ::SetBkMode(hdc, TRANSPARENT);
-      ::SelectObject(hdc, hfont);
-      ::SetTextColor(hdc, RGB(77, 77, 84));
+      HFONT hfontUnderline = ::CreatePointFont(100,"Lucida Sans Unicode",hdc,true);
+      ::SelectObject(hdc,hfontUnderline);
+      ::SetTextColor(hdc, RGB(77, 84, 184));
       ::TextOutU(hdc, 10, 10, psz, strlen(psz));
       ::SelectObject(hdc, hfontBold);
       //::TextOutU(hdc, 10, 10 + size.cy, g_strTitle.c_str(), g_strTitle.length());
       ::SelectObject(hdc, hfontOld);
+      ::DeleteObject(hfontUnderline);
    }
    ::DeleteObject(hfontBold);
    ::DeleteObject(hfont);
@@ -325,12 +327,13 @@ void ca2_install_canvas_on_paint(HDC hdc, LPCRECT lpcrect, int iMode)
 
 
 
-HFONT CreatePointFont(int nPointSize, const char * lpszFaceName, HDC hdc)
+HFONT CreatePointFont(int nPointSize, const char * lpszFaceName, HDC hdc, bool bUnderline)
 {
    LOGFONT logFont;
    memset(&logFont, 0, sizeof(LOGFONT));
    logFont.lfCharSet = DEFAULT_CHARSET;
    logFont.lfHeight = nPointSize;
+   logFont.lfUnderline = bUnderline ? TRUE : FALSE;
    strncpy(logFont.lfFaceName, lpszFaceName, sizeof(logFont.lfFaceName));
 
    return CreatePointFontIndirect(&logFont, hdc);
