@@ -26,6 +26,94 @@ public:
 
 void ca2_install_canvas_on_paint(HDC hdc, LPCRECT lpcrect, int iMode)
 {
+
+   bool bProgress = false;
+   double dProgress = 0.0;
+   std::string strHeader;
+   std::string strBold;
+   std::string strNormal;
+   std::string strProgress;
+
+   {
+      int iTrace = _sopen(dir::ca2("install.log").c_str(),_O_RDONLY | _O_BINARY,_SH_DENYNO,0);
+      if(iTrace >= 0)
+      {
+         int iTell = _lseek(iTrace,0,SEEK_END);
+         iTell--;
+         std::string strLine;
+         int iSkip = 0;
+         bool bNormal = false;
+         bool bHeader = false;
+         bool bBold = false;
+         bool bPreNormal = false;
+         bool bStart = false;
+         while(iTell > 0 && !bStart && !(bNormal && bBold && bProgress && bHeader))
+         {
+            _lseek(iTrace,iTell,SEEK_SET);
+            char ch;
+            _read(iTrace,&ch,1);
+            if(ch == '\r')
+            {
+               iSkip++;
+            }
+            else if(ch == '\n')
+            {
+               iSkip++;
+            }
+            else if(iSkip > 0)
+            {
+               iSkip = 0;
+               str_trim(strLine);
+               if(strLine == "--")
+               {
+                  bStart = true;
+               }
+               else if(str_begins_ci(strLine.c_str(),":::::") && !bHeader && strLine.length() > 0 && bBold && bNormal && bPreNormal)
+               {
+                  bHeader = true;
+                  strLine = strLine.substr(5);
+                  strHeader = strLine;
+               }
+               else if(str_begins_ci(strLine.c_str(),"***") && !bBold && strLine.length() > 0 && bNormal && bPreNormal)
+               {
+                  bBold = true;
+                  strLine = strLine.substr(3);
+                  strBold = strLine;
+               }
+               else if(str_begins_ci(strLine.c_str(),"|||") && !bProgress)
+               {
+                  bProgress = true;
+                  strLine = strLine.substr(3);
+                  long long int i = _atoi64(strLine.c_str());
+                  dProgress = (double)i / 10000000.0;
+                  char sz[128];
+                  sprintf(sz,"%0.1f%%",dProgress);
+                  strProgress = sz;
+                  dProgress /= 100.0;
+               }
+               else if(!str_begins_ci(strLine.c_str(),"/ ") && !str_begins_ci(strLine.c_str(),":::::") && !str_begins_ci(strLine.c_str(),"|||") && !str_begins_ci(strLine.c_str(),"***") && strLine.length() > 0 && !bNormal && !bBold && !bHeader && bPreNormal)
+               {
+                  bNormal = true;
+                  strNormal = strLine;
+               }
+               else if(strLine.length() > 0 && !bPreNormal && !bBold && !bNormal && !bHeader)
+               {
+                  bPreNormal = true;
+                  //::SelectObject(hdc, hfont);
+                  //::TextOutU(hdc, 10, 10 + size.cy * 4, strLine.c_str(), strLine.length());
+               }
+               strLine = ch;
+            }
+            else
+            {
+               strLine = ch + strLine;
+            }
+            iTell--;
+         }
+         _close(iTrace);
+      }
+   }
+
    static canvas_zero czero;
    static std::string s_strLastStatus;
    RECT rect = *lpcrect;
@@ -38,6 +126,7 @@ void ca2_install_canvas_on_paint(HDC hdc, LPCRECT lpcrect, int iMode)
    ::GetObjectA(hfont, sizeof(LOGFONT), &lf);
    lf.lfWeight = 800;
    HFONT hfontBold = ::CreateFontIndirectA(&lf);
+   HFONT hfontHeader = ::CreatePointFont(84 + 77,"Lucida Sans Unicode",hdc,false, FW_EXTRABOLD);
    HFONT hfontOld = (HFONT) ::SelectObject(hdc, (HGDIOBJ) hfont);
    if(iMode == 2 || iMode == 1 || iMode == 0)
    {
@@ -141,73 +230,28 @@ void ca2_install_canvas_on_paint(HDC hdc, LPCRECT lpcrect, int iMode)
       ::SetBkMode(hdc, TRANSPARENT);
       ::TextOutU(hdc, 10, 10 + size.cy * 2, psz, strlen(psz) - iEat + 1 + ((::GetTickCount() / (iRefresh - 277) % iEat)));
 
-      int iLineMin = 5;
-      int iLine = ((rect.bottom - 10) / size.cy) - 1;
-      if(rect.bottom - rect.top >= size.cy)
+      ::SetBkMode(hdc, TRANSPARENT);
+      if(strHeader.length() > 0)
       {
-         int iTrace = _sopen(dir::ca2("install.log").c_str(), _O_RDONLY|_O_BINARY, _SH_DENYNO, 0);
-         if(iTrace >= 0)
-         {
-            int iTell = _lseek(iTrace, 0, SEEK_END);
-            iTell--;
-            std::string strLine;
-            int iSkip = 0;
-            ::SetBkMode(hdc, TRANSPARENT);
-            bool bNormal = false;
-            bool bBold = false;
-            bool bPreNormal = false;
-            bool bStart = false;
-            while(iTell > 0 && !bStart && !(bNormal && bBold))
-            {
-               _lseek(iTrace, iTell, SEEK_SET);
-               char ch;
-               _read(iTrace, &ch, 1);
-               if(ch == '\r')
-               {
-                  iSkip++;
-               }
-               else if(ch == '\n')
-               {
-                  iSkip++;
-               }
-               else if(iSkip > 0)
-               {
-                  iSkip = 0;
-                  str_trim(strLine);
-                  if(strLine == "--")
-                  {
-                     bStart = true;
-                  }
-                  else if(str_begins_ci(strLine.c_str(), "***") && !bBold && strLine.length() > 0 && bNormal && bPreNormal)
-                  {
-                     bBold = true;
-                     strLine = strLine.substr(3);
-                     ::SelectObject(hdc, hfontBold);
-                     ::TextOutU(hdc, 10, 10 + size.cy * 3, strLine.c_str(), strLine.length());
-                  }
-                  else if(!str_begins_ci(strLine.c_str(), "***") && strLine.length() > 0 && !bNormal && !bBold && bPreNormal)
-                  {
-                     bNormal = true;
-                     ::SelectObject(hdc, hfont);
-                     ::TextOutU(hdc, 10, 10 + size.cy * 4, strLine.c_str(), strLine.length());
-                  }
-                  else if(strLine.length() > 0 && !bPreNormal && !bBold && !bNormal)
-                  {
-                     bPreNormal = true;
-                     //::SelectObject(hdc, hfont);
-                     //::TextOutU(hdc, 10, 10 + size.cy * 4, strLine.c_str(), strLine.length());
-                  }
-                  strLine = ch;
-               }
-               else
-               {
-                  strLine = ch + strLine;
-               }
-               iTell--;
-            }
-            _close(iTrace);
-         }
+         ::SelectObject(hdc,hfontHeader);
+         ::TextOutU(hdc,10,10 + size.cy * 3 + 4,strHeader.c_str(),strHeader.length());
       }
+      if(strBold.length() > 0)
+      {
+         ::SelectObject(hdc, hfontBold);
+         ::TextOutU(hdc,10,10 + size.cy * 5,strBold.c_str(),strBold.length());
+      }
+      if(strNormal.length() > 0)
+      {
+         ::SelectObject(hdc,hfont);
+         ::TextOutU(hdc,10,10 + size.cy * 6,strNormal.c_str(),strNormal.length());
+      }
+      if(strProgress.length() > 0)
+      {
+         ::SelectObject(hdc,hfont);
+         ::TextOutU(hdc,10,10 + size.cy * 7,strProgress.c_str(),strProgress.length());
+      }
+
    }
    else if(iMode == 2) // else // !m_bHealingSurface => "Surgery Internals"
    {
@@ -303,6 +347,44 @@ void ca2_install_canvas_on_paint(HDC hdc, LPCRECT lpcrect, int iMode)
    {
       czero.on_paint(hdc, lpcrect);
    }
+
+
+   {
+      HPEN hpenBorder = ::CreatePen(PS_SOLID,1,RGB(84 + 49,84 + 49,77 + 49));
+      HBRUSH hbrushBar = ::CreateSolidBrush(RGB(77,184,84));
+      ::SelectObject(hdc,::GetStockObject(NULL_BRUSH));
+      ::SelectObject(hdc,hpenBorder);
+      ::Rectangle(hdc,10,(lpcrect->top + lpcrect->bottom - size.cy) / 2,lpcrect->right - 10,(lpcrect->top + lpcrect->bottom + size.cy) / 2);
+      if(bProgress)
+      {
+         int iRight = ((lpcrect->right - 11 - 11) * dProgress) + 11;
+         ::SelectObject(hdc,::GetStockObject(NULL_PEN));
+         ::SelectObject(hdc,hbrushBar);
+         ::Rectangle(hdc,11,(lpcrect->top + lpcrect->bottom - size.cy) / 2 + 1,iRight,(lpcrect->top + lpcrect->bottom + size.cy) / 2);
+      }
+      else
+      {
+         double dPeriod = 2000.0;
+         dProgress = fmod((double)GetTickCount(),dPeriod) / dPeriod;
+         int iBarWidth = (lpcrect->right - 11 - 11) / 4;
+         int i = ((lpcrect->right - 11 - 11) * dProgress) + 11;
+         int iRight = i + iBarWidth;
+         ::SelectObject(hdc,::GetStockObject(NULL_PEN));
+         ::SelectObject(hdc,hbrushBar);
+         ::Rectangle(hdc,11 + i,(lpcrect->top + lpcrect->bottom - size.cy) / 2 + 1,min(lpcrect->right - 10, iRight),(lpcrect->top + lpcrect->bottom + size.cy) / 2);
+         if(iRight >= lpcrect->right - 10)
+         {
+            ::SelectObject(hdc,::GetStockObject(NULL_PEN));
+            ::SelectObject(hdc,hbrushBar);
+            ::Rectangle(hdc,11,(lpcrect->top + lpcrect->bottom - size.cy) / 2 + 1,iRight - lpcrect->right - 10,(lpcrect->top + lpcrect->bottom + size.cy) / 2);
+         }
+      }
+      ::DeleteObject(hbrushBar);
+      ::DeleteObject(hpenBorder);
+
+   }
+
+
    {
       const char * psz = "Thank you";
       ::SetBkMode(hdc, TRANSPARENT);
@@ -315,6 +397,7 @@ void ca2_install_canvas_on_paint(HDC hdc, LPCRECT lpcrect, int iMode)
       ::SelectObject(hdc, hfontOld);
       ::DeleteObject(hfontUnderline);
    }
+   ::DeleteObject(hfontHeader);
    ::DeleteObject(hfontBold);
    ::DeleteObject(hfont);
 }
@@ -327,11 +410,12 @@ void ca2_install_canvas_on_paint(HDC hdc, LPCRECT lpcrect, int iMode)
 
 
 
-HFONT CreatePointFont(int nPointSize, const char * lpszFaceName, HDC hdc, bool bUnderline)
+HFONT CreatePointFont(int nPointSize, const char * lpszFaceName, HDC hdc, bool bUnderline, int iWeight)
 {
    LOGFONT logFont;
    memset(&logFont, 0, sizeof(LOGFONT));
    logFont.lfCharSet = DEFAULT_CHARSET;
+   logFont.lfWeight = iWeight;
    logFont.lfHeight = nPointSize;
    logFont.lfUnderline = bUnderline ? TRUE : FALSE;
    strncpy(logFont.lfFaceName, lpszFaceName, sizeof(logFont.lfFaceName));
