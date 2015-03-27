@@ -50,7 +50,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "aqua", "..\..\..\app\appsee
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axiscrypto", "..\..\..\app\axis\crypto\axiscrypto.vcxproj", "{39807406-816F-4C0D-A632-4BB8AB13887B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_clockverse", "..\..\..\app-core\appseed\clockverse\clockverse.vcxproj", "{8BFB055E-C614-4A5D-BB61-197784151104}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_clockverse", "..\..\..\app-core\appseed\clockverse\clockverse.vcxproj", "{F4D1AE65-CEC3-48B4-8C88-5996BB0E1928}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_cidadedecuritiba_alphaclock", "..\..\..\app-cidadedecuritiba\appseed\alphaclock\alphaclock.vcxproj", "{E1CAB3A5-A22A-4E50-A12C-C2701740C60C}"
 EndProject
