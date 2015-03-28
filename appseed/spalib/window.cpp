@@ -5,8 +5,6 @@ TCHAR szWindowClass[MAX_LOADSTRING];			// the main window class name
 
 int create_spa_window();
 
-bool g_bDeferShow = false;
-
 ATOM spa_register_class();
 
 int show_spa_window(bool bShow)
@@ -27,30 +25,14 @@ int show_spa_window(bool bShow)
    if(bShow)
    {
 
-      std::wstring wstr;
+      ShowWindow(g_hwnd,SW_SHOW);
 
-      wstr = L"\\ca2.spa\\spa_register.txt";
-
-      get_program_files_x86(wstr);
-
-      if(!file::exists(utf16_to_8(wstr.c_str())))
-      {
-
-         g_bDeferShow = true;
-
-         ShowWindow(g_hwnd,SW_HIDE);
-
-      }
-      else
-      {
-
-         ShowWindow(g_hwnd,SW_SHOW);
-
-      }
    }
    else
    {
+
       ShowWindow(g_hwnd,SW_HIDE);
+
    }
 
    return TRUE;

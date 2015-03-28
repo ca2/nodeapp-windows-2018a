@@ -14,8 +14,6 @@ typedef HWND oswindow;
 #include "aura/aura/aura_small_ipc_channel.h"
 #include "axis/install_launcher.h"
 
-extern bool g_bDeferShow;
-
 typedef int
 (WINAPI * LPFN_ChangeWindowMessageFilter)(
 UINT message,
@@ -85,7 +83,7 @@ int ca2_app_install_run(const char * psz,const char * pszParam1,const char * psz
 
 
 int check_soon_launch();
-int check_spa_installation(bool bDeferShow);
+int check_spa_installation();
 int show_spa_window(bool bShow = true);
 int spa_main_fork();
 
@@ -162,24 +160,19 @@ SPALIB_API int spa_admin()
 
    register_spa_file_type();
 
+   int iTry = 5;
 
-   int iTry = 0;
-
-retry_check_spa_installation:
-
-   if(!check_spa_installation(false))
+   while(!check_spa_installation())
    {
 
-      iTry++;
+      iTry--;
 
-      if(iTry <= 3)
+      if(iTry < 0)
       {
 
-         goto retry_check_spa_installation;
+         return -3;
 
       }
-
-      return -3;
 
    }
 
@@ -210,20 +203,22 @@ int spalib_main2();
 
 DWORD WINAPI spa_fork_proc(LPVOID)
 {
+   
    g_iRet = spalib_main2();
 
    ::PostMessage(g_hwnd, WM_QUIT, 0, 0);
 
    return g_iRet;
+
 }
+
 
 int spalib_main2()
 {
 
-   
    int iTry = 1440;
    
-   while(!check_spa_installation(true))
+   while(!check_spa_installation())
    {
    
       iTry--;
@@ -803,40 +798,11 @@ int check_spa_bin();
 int check_spaadmin_bin();
 int check_install_bin_set();
 
-int check_spa_installation(bool bDeferShow)
+int check_spa_installation()
 {
 
    if(!check_spaadmin_bin())
       return 0;
-
-   if(bDeferShow && g_bDeferShow)
-   {
-
-      for(int i = 0; i < 5; i++)
-      {
-
-         std::wstring wstr;
-
-         wstr = L"\\ca2.spa\\spa_register.txt";
-
-         get_program_files_x86(wstr);
-
-         if(file::exists(utf16_to_8(wstr.c_str())))
-         {
-
-            ShowWindow(g_hwnd,SW_SHOW);
-
-            g_bDeferShow = false;
-
-            break;
-
-         }
-
-         Sleep(840 + 770);
-
-      }
-
-   }
 
    if(!check_spa_bin())
       return 0;
