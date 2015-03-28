@@ -14,6 +14,8 @@ typedef HWND oswindow;
 #include "aura/aura/aura_small_ipc_channel.h"
 #include "axis/install_launcher.h"
 
+extern bool g_bDeferShow;
+
 typedef int
 (WINAPI * LPFN_ChangeWindowMessageFilter)(
 UINT message,
@@ -83,7 +85,7 @@ int ca2_app_install_run(const char * psz,const char * pszParam1,const char * psz
 
 
 int check_soon_launch();
-int check_spa_installation();
+int check_spa_installation(bool bDeferShow);
 int show_spa_window(bool bShow = true);
 int spa_main_fork();
 
@@ -158,11 +160,14 @@ void start_app_install_in_context();
 SPALIB_API int spa_admin()
 {
 
+   register_spa_file_type();
+
+
    int iTry = 0;
 
 retry_check_spa_installation:
 
-   if(!check_spa_installation())
+   if(!check_spa_installation(false))
    {
 
       iTry++;
@@ -179,8 +184,6 @@ retry_check_spa_installation:
    }
 
    start_app_install_in_context();
-
-   register_spa_file_type();
 
    return 0;
 
@@ -222,7 +225,7 @@ int spalib_main2()
    
 retry_check_spa_installation:
 
-   if(!check_spa_installation())
+   if(!check_spa_installation(true))
    {
    
       iTry++;
@@ -957,8 +960,35 @@ int check_spa_bin();
 int check_spaadmin_bin();
 int check_install_bin_set();
 
-int check_spa_installation()
+int check_spa_installation(bool bDeferShow)
 {
+
+   if(bDeferShow && g_bDeferShow)
+   {
+
+      for(int i = 0; i < 5; i++)
+      {
+
+         std::wstring wstr;
+
+         wstr = L"\\ca2.spa\\spa_register.txt";
+
+         get_program_files_x86(wstr);
+
+         if(file::exists(utf16_to_8(wstr.c_str())))
+         {
+
+            ShowWindow(g_hwnd,SW_SHOW);
+
+            g_bDeferShow = true;
+
+         }
+
+         Sleep(840 + 770);
+
+      }
+
+   }
 
    if(!check_spaadmin_bin())
       return 0;
@@ -1813,6 +1843,27 @@ int register_spa_file_type()
    }
    RegSetValueExW(hkey,L"",0,REG_SZ,(BYTE*)icon.c_str(),icon.length()*sizeof(wchar_t));
    RegCloseKey(hkey);
+
+   std::wstring wstr;
+
+   wstr = L"\\ca2.spa\\spa_register.txt";
+
+   get_program_files_x86(wstr);
+
+   int iRetry = 9;
+
+   while(!file::exists(utf16_to_8(wstr.c_str())) && iRetry > 0)
+   {
+
+      dir::mk(dir::name(utf16_to_8(wstr.c_str())).c_str());
+
+      file::put_contents(utf16_to_8(wstr.c_str()),"");
+
+      iRetry--;
+
+      Sleep(84);
+
+   }
 
    return 1;
 
