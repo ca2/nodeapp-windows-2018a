@@ -221,247 +221,90 @@ int spalib_main2()
 {
 
    
-   int iTry = 0;
+   int iTry = 1440;
    
-retry_check_spa_installation:
-
-   if(!check_spa_installation(true))
+   while(!check_spa_installation(true))
    {
    
-      iTry++;
+      iTry--;
 
-      if(iTry <= 3)
+      if(iTry < 0)
       {
 
-         goto retry_check_spa_installation;
+         return 0;
 
       }
 
-      return 0;
+      Sleep(84 + 77);
 
    }
 
-   /*::srand(::GetTickCount());
-   try
-   {
-      dir::mk(dir::ca2().c_str());
-      g_ftrace = fopen(dir::ca2("install.log").c_str(),"ab");
-   }
-   catch(...)
-   {
-   }
 
-   g_hmutexTrace =  ::CreateMutex(NULL,FALSE,NULL);
+   std::wstring strId;
 
-   if(!g_machineevent.initialize())
+   std::wstring wstr = ::GetCommandLineW();
+
+   int iFind1 = 0;
+
+   if(wstr[0] == L'\"')
    {
-      return 5;
+
+      iFind1= wstr.find('\"',1);
+
    }
 
-   g_iStyle = 0;
+   int iFind = wstr.find(L" : ",iFind1 + 1);
 
-   g_bShowPercentage = false;
-
-   g_iStart = 0;
-
-   
-
-   std::string strCmdLine = utf16_to_8(::GetCommandLineW());
-
-   const char * lpCmdLine = strCmdLine.c_str();
-
-   std::string str =strCmdLine;
-
-   std::string strExe = file::name(file::module_path().c_str());
-
-
-
-   if(str.find(" background ") != std::string::npos
-      || str_ends(str.c_str()," background") || strExe.find(" in background ") != std::string::npos
-      || str_ends(strExe.c_str()," in background"))
+   if(iFind < 0)
    {
-      g_bShow = false;
-   }
 
+      string strAppId = get_app_id(wstr.substr(iFind1 + 1));
 
-   int nCmdShow = SW_SHOW;
-   
-
-   g_bLoginStartup = false;
-   size_t i = str.find("install_filter=");
-   if(i != std::string::npos)
-   {
-      int iStart = i + 15; // 15 = strlen("install_filter=")
-      i = str.find(" ",i);
-      if(i != std::string::npos)
+      if(strAppId.length() <= 0)
       {
-         g_strInstallFilter = str.substr(iStart,i - iStart);
+         return 1;
       }
-      else
+
+      HMODULE hmoduleUser32 = ::LoadLibrary("User32");
+      g_pfnChangeWindowMessageFilter = (LPFN_ChangeWindowMessageFilter) ::GetProcAddress(hmoduleUser32,"ChangeWindowMessageFilter");
+
+
+         string strCommandLine;
+
+
+      strCommandLine = " : app=" + get_app_id(wstr.substr(iFind1 + 1));
+
+      strCommandLine += " install";
+      strCommandLine += " locale=_std";
+      strCommandLine += " schema=_std";
+      strCommandLine += " version=stage";
+
+      strCommandLine += " ";
+
+
+      string strCommand;
+
+      strCommand = "synch_spaadmin:";
+
+      strCommand += "starter_start:";
+
+      strCommand += strCommandLine;
+
+      bool bBackground = true;
+
+      if(bBackground)
       {
-         g_strInstallFilter = str.substr(iStart);
+
+         strCommand += " background";
+
       }
-   }
-   //MessageBox(NULL, "xxx", "yyy", MB_OK);
-   i = str.find("install=");
-   if(i != std::string::npos)
-   {
-      int iStart = i + 8; // 8 = strlen("install=")
-      i = str.find(" ",i);
-      if(i != std::string::npos)
-      {
-         g_strStart = str.substr(iStart,i - iStart);
-      }
-      else
-      {
-         g_strStart = str.substr(iStart);
-      }
-      g_iStart = 4;
-      return run_install(lpCmdLine,nCmdShow);
 
-   }
-   if(str_begins_ci(strExe.c_str(),"Install "))
-   {
-      int iStart = strlen("Install ");
-      i = strExe.find(" ",iStart);
-      std::string strIdStart;
-      if(i != std::string::npos)
-      {
-         strIdStart = strExe.substr(iStart,i - iStart);
-      }
-      else
-      {
-         strIdStart = strExe.substr(iStart);
-      }
-      g_iStart = 4;
-      return starter_start(strIdStart.c_str());
-   }
-   std::string strFind("starter_start=");
-   i = str.find(strFind);
-   if(i != std::string::npos)
-   {
-      int iStart = i + strFind.length(); // 8 = strlen("install=")
-      i = str.find(" ",iStart);
-      std::string strIdStart;
-      if(i != std::string::npos)
-      {
-         strIdStart = str.substr(iStart,i - iStart);
-      }
-      else
-      {
-         strIdStart = str.substr(iStart);
-      }
-      g_iStart = 4;
-      return starter_start(strIdStart.c_str());
+      app_install_call_sync(strCommand.c_str(),"");
 
    }
 
-
-   /*wchar_t * lpwstr = ::GetCommandLineW();
-   int numargs;
-   int numchars;
-   wparse_cmdline(
-      lpwstr,
-      NULL,
-      NULL,
-      &numargs,
-      &numchars);
-
-   wchar_t * pszCmdLine = new WCHAR[numchars];
-   wchar_t ** argv = new WCHAR*[numargs];
-
-   wparse_cmdline(
-      lpwstr,
-      argv,
-      pszCmdLine,
-      &numargs,
-      &numchars);
-
-   if(numargs >= 2)
-   {
-      std::string str(utf16_to_8(argv[1]));
-      return run_file(str.c_str(),nCmdShow);
-   }
-*/
-
-   /*int iFind;
-   if((iFind = str.find("uninstall")) != std::string::npos)
-   {
-      return run_uninstall_run(&str[iFind + 10],nCmdShow);
-   }
-   else if(str.find("uninstall") != std::string::npos)
-   {
-      return run_uninstall(lpCmdLine,nCmdShow);
-   }
-   else
-   {
-      //g_strStart = "_set_windesk";  g_iStart = 4; return run_install(lpCmdLine, nCmdShow);
-      return run_install(lpCmdLine,nCmdShow);
-   }*/
-
-std::wstring strId;
-
-std::wstring wstr = ::GetCommandLineW();
-
-int iFind1 = 0;
-
-if(wstr[0] == L'\"')
-{
-
-   iFind1= wstr.find('\"',1);
-
-}
-
-int iFind = wstr.find(L" : ",iFind1 + 1);
-
-if(iFind < 0)
-{
-
-   string strAppId = get_app_id(wstr.substr(iFind1 + 1));
-
-   if(strAppId.length() <= 0)
-   {
-      return 1;
-   }
-
-   HMODULE hmoduleUser32 = ::LoadLibrary("User32");
-   g_pfnChangeWindowMessageFilter = (LPFN_ChangeWindowMessageFilter) ::GetProcAddress(hmoduleUser32,"ChangeWindowMessageFilter");
-
-
-      string strCommandLine;
-
-
-   strCommandLine = " : app=" + get_app_id(wstr.substr(iFind1 + 1));
-
-   strCommandLine += " install";
-   strCommandLine += " locale=_std";
-   strCommandLine += " schema=_std";
-   strCommandLine += " version=stage";
-
-   strCommandLine += " ";
-
-
-   string strCommand;
-
-   strCommand = "synch_spaadmin:";
-
-   strCommand += "starter_start:";
-
-   strCommand += strCommandLine;
-
-   bool bBackground = true;
-
-   if(bBackground)
-   {
-
-      strCommand += " background";
-
-   }
-
-   app_install_call_sync(strCommand.c_str(),"");
-
-}
    return 1;
+
 }
 
 int check_soon_file_launch(std::wstring wstr);
@@ -963,6 +806,9 @@ int check_install_bin_set();
 int check_spa_installation(bool bDeferShow)
 {
 
+   if(!check_spaadmin_bin())
+      return 0;
+
    if(bDeferShow && g_bDeferShow)
    {
 
@@ -980,7 +826,9 @@ int check_spa_installation(bool bDeferShow)
 
             ShowWindow(g_hwnd,SW_SHOW);
 
-            g_bDeferShow = true;
+            g_bDeferShow = false;
+
+            break;
 
          }
 
@@ -989,9 +837,6 @@ int check_spa_installation(bool bDeferShow)
       }
 
    }
-
-   if(!check_spaadmin_bin())
-      return 0;
 
    if(!check_spa_bin())
       return 0;
@@ -1030,7 +875,7 @@ int check_spa_bin()
       }
    }
 
-   return true;
+   return 1;
 
 }
 
@@ -1153,11 +998,28 @@ int download_spaadmin_bin()
       sei.lpFile = utf8_to_16(strTempSpa.c_str());
       ::ShellExecuteExW(&sei);
       DWORD dwGetLastError = GetLastError();
+
+      std::wstring wstr;
+
+      wstr = L"\\ca2.spa\\spaadmin.exe";
+
+      get_program_files_x86(wstr);
+
+      for(int i = 0; i < (19840 + 19770); i++)
+      {
+
+         if(file::exists(utf16_to_8(wstr.c_str())))
+            break;
+
+         Sleep(84 + 77);
+
+      }
+
       // Wait for the process to complete.
-      ::WaitForSingleObject(sei.hProcess,INFINITE);
-      DWORD code;
-      if(::GetExitCodeProcess(sei.hProcess,&code) == 0)
-         return 0;
+//      ::WaitForSingleObject(sei.hProcess,INFINITE);
+  //    DWORD code;
+    //  if(::GetExitCodeProcess(sei.hProcess,&code) == 0)
+      //   return 0;
 
    }
 
@@ -1372,6 +1234,11 @@ md5retry:
 
    if(!is_file_ok(straDownload,straFile,straMd5,strFormatBuild,iMd5Retry))
    {
+
+      if(!spa_get_admin())
+      {
+         return 0;
+      }
 
 
       if(straMd5.size() != straFile.size())
