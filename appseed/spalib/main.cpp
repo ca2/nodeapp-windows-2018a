@@ -936,7 +936,7 @@ int download_spa_bin()
 
       std::wstring wstr;
 
-      wstr = L"\\ca2.spa\\spa.exe";
+      wstr = L"\\ca2\\spa\\spa.exe";
 
       get_program_files_x86(wstr);
 
