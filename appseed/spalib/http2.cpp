@@ -57,7 +57,7 @@ bool ms_download_progress(const char * pszUrl, const char * pszFile, bool bProgr
    LPSTR pszOutBuffer;
    BOOL  bResults = FALSE;
 
-   WCHAR * pwzHost = utf8_to_16(strHost.c_str());
+   wstring pwzHost = u16(strHost.c_str());
 
    DWORD dwLast100k = 0;
 
@@ -103,7 +103,6 @@ Retry1:
             iRetry++;
             if(iRetry > 5)
             {
-               delete [] pwzHost;
                return false;
             }
             g_hSession = NULL;
@@ -265,7 +264,6 @@ Retry1:
       //sprintf(szBuf, "Error %d has occurred.\n",dw);
       //trace(szBuf);
    }
-   delete [] pwzHost;
    g_hPreviousRequest = hRequest;
    return bResults != FALSE;
 }

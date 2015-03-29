@@ -1,5 +1,12 @@
 #include "StdAfx.h"
 
+
+
+Gdiplus::GdiplusStartupInput *   g_pgdiplusStartupInput     = NULL;
+Gdiplus::GdiplusStartupOutput *  g_pgdiplusStartupOutput    = NULL;
+DWORD_PTR                        g_gdiplusToken             = NULL;
+DWORD_PTR                        g_gdiplusHookToken         = NULL;
+
 #define CLASS_DECL_AURA
 #define CLASS_DECL_AXIS
 #define WINDOWS
@@ -58,7 +65,7 @@ string get_module_path(HMODULE hmodule)
 
    free(pwz);
 
-   return ::utf16_to_8(wstrPath.c_str());
+   return ::u8(wstrPath.c_str());
 
 }
 
@@ -97,6 +104,38 @@ string get_latest_build_number(const char * pszVersion);
 SPALIB_API int spalib_main(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLine,int nCmdShow)
 {
 
+   g_pgdiplusStartupInput     = new Gdiplus::GdiplusStartupInput();
+   g_pgdiplusStartupOutput    = new Gdiplus::GdiplusStartupOutput();
+   g_gdiplusToken             = NULL;
+   g_gdiplusHookToken         = NULL;
+
+   g_pgdiplusStartupInput->SuppressBackgroundThread = TRUE;
+
+   Gdiplus::Status statusStartup = GdiplusStartup(&g_gdiplusToken,g_pgdiplusStartupInput,g_pgdiplusStartupOutput);
+
+   if(statusStartup != Gdiplus::Ok)
+   {
+
+
+      return 0;
+
+   }
+
+
+
+
+   statusStartup = g_pgdiplusStartupOutput->NotificationHook(&g_gdiplusHookToken);
+
+
+   if(statusStartup != Gdiplus::Ok)
+   {
+
+
+      return 0;
+
+   }
+
+
 #if CA2_PLATFORM_VERSION == CA2_BASIS
 
    g_strVersion = "basis";
@@ -122,6 +161,11 @@ SPALIB_API int spalib_main(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lp
 
    }
 
+
+   g_pgdiplusStartupOutput->NotificationUnhook(g_gdiplusHookToken);
+
+
+   ::Gdiplus::GdiplusShutdown(g_gdiplusToken);
 
    return g_iRet;
 
@@ -499,7 +543,7 @@ std::string get_app_id(std::wstring wstr)
 
    XDoc doc;
 
-   ::std::string strPath = utf16_to_8(wstr.c_str());
+   ::std::string strPath = u8(wstr.c_str());
 
    ::std::string strContents = file::get_contents(strPath.c_str());
 
@@ -546,7 +590,7 @@ int check_soon_file_launch(std::wstring wstr)
 {
 
 
-   return check_soon_app_id(utf8_to_16(get_app_id(wstr.c_str()).c_str()));
+   return check_soon_app_id(u16(get_app_id(wstr.c_str()).c_str()));
 
 }
 
@@ -602,113 +646,143 @@ int check_soon_app_id(std::wstring strId)
 
 
 
-   {
+   //{
 
-      wchar_t * lpszCurFolder = (wchar_t *)malloc(MAX_PATH * sizeof(wchar_t) * 8);
+   //   wchar_t * lpszCurFolder = (wchar_t *)malloc(MAX_PATH * sizeof(wchar_t) * 8);
 
-      _wgetcwd(lpszCurFolder,MAX_PATH * 8 - 1);
+   //   _wgetcwd(lpszCurFolder,MAX_PATH * 8 - 1);
 
-      if(lpszCurFolder[wcslen(lpszCurFolder) - 1] == '\\'
-         || lpszCurFolder[wcslen(lpszCurFolder) - 1] == '/')
-      {
-         lpszCurFolder[wcslen(lpszCurFolder) - 1] = '\0';
-      }
-      wcscat(lpszCurFolder,L"\\");
+   //   if(lpszCurFolder[wcslen(lpszCurFolder) - 1] == '\\'
+   //      || lpszCurFolder[wcslen(lpszCurFolder) - 1] == '/')
+   //   {
+   //      lpszCurFolder[wcslen(lpszCurFolder) - 1] = '\0';
+   //   }
+   //   wcscat(lpszCurFolder,L"\\");
 
-      std::wstring wstr;
+   //   std::wstring wstr;
 
-      wstr = lpszCurFolder;
+   //   wstr = lpszCurFolder;
 
-      wstr += strName;
+   //   wstr += strName;
 
-      wstr += L".exe";
+   //   wstr += L".exe";
 
-      STARTUPINFOW si;
-      memset(&si,0,sizeof(si));
-      si.cb = sizeof(si);
-      si.dwFlags = STARTF_USESHOWWINDOW;
-      si.wShowWindow = SW_SHOWNORMAL;
-      PROCESS_INFORMATION pi;
-      memset(&pi,0,sizeof(pi));
+   //   STARTUPINFOW si;
+   //   memset(&si,0,sizeof(si));
+   //   si.cb = sizeof(si);
+   //   si.dwFlags = STARTF_USESHOWWINDOW;
+   //   si.wShowWindow = SW_SHOWNORMAL;
+   //   PROCESS_INFORMATION pi;
+   //   memset(&pi,0,sizeof(pi));
 
-      if(::CreateProcessW(NULL,(wchar_t *)wstr.c_str(),
-         NULL,NULL,FALSE,0,NULL,NULL,
-         &si,&pi))
-         return TRUE;
-
-
-   }
+   //   if(::CreateProcessW(NULL,(wchar_t *)wstr.c_str(),
+   //      NULL,NULL,FALSE,0,NULL,NULL,
+   //      &si,&pi))
+   //      return TRUE;
 
 
-   {
-
-      int iCount = MAX_PATH * 8;
-
-      wchar_t * lpszModuleFolder = (wchar_t *)malloc(iCount * sizeof(wchar_t));
-
-      wchar_t * lpszModuleFilePath = (wchar_t *)malloc(iCount * sizeof(wchar_t));
-
-      HMODULE hmodule = ::GetModuleHandleA(NULL);
-
-      if(hmodule != NULL)
-      {
+   //}
 
 
-         if(GetModuleFileNameW(hmodule,lpszModuleFilePath,iCount))
-         {
+   //{
 
-            LPWSTR lpszModuleFileName;
+   //   int iCount = MAX_PATH * 8;
 
-            if(GetFullPathNameW(lpszModuleFilePath,iCount,lpszModuleFolder,&lpszModuleFileName))
-            {
+   //   wchar_t * lpszModuleFolder = (wchar_t *)malloc(iCount * sizeof(wchar_t));
 
-               lpszModuleFolder[lpszModuleFileName - lpszModuleFolder] = '\0';
+   //   wchar_t * lpszModuleFilePath = (wchar_t *)malloc(iCount * sizeof(wchar_t));
 
-               if(wcslen(lpszModuleFolder) > 0)
-               {
+   //   HMODULE hmodule = ::GetModuleHandleA(NULL);
 
-                  if(lpszModuleFolder[wcslen(lpszModuleFolder) - 1] == '\\' || lpszModuleFolder[wcslen(lpszModuleFolder) - 1] == '/')
-                  {
-
-                     lpszModuleFolder[wcslen(lpszModuleFolder) - 1] = '\0';
-
-                  }
-
-               }
+   //   if(hmodule != NULL)
+   //   {
 
 
+   //      if(GetModuleFileNameW(hmodule,lpszModuleFilePath,iCount))
+   //      {
+
+   //         LPWSTR lpszModuleFileName;
+
+   //         if(GetFullPathNameW(lpszModuleFilePath,iCount,lpszModuleFolder,&lpszModuleFileName))
+   //         {
+
+   //            lpszModuleFolder[lpszModuleFileName - lpszModuleFolder] = '\0';
+
+   //            if(wcslen(lpszModuleFolder) > 0)
+   //            {
+
+   //               if(lpszModuleFolder[wcslen(lpszModuleFolder) - 1] == '\\' || lpszModuleFolder[wcslen(lpszModuleFolder) - 1] == '/')
+   //               {
+
+   //                  lpszModuleFolder[wcslen(lpszModuleFolder) - 1] = '\0';
+
+   //               }
+
+   //            }
 
 
-               wcscat(lpszModuleFolder,L"\\");
 
-               std::wstring wstr;
 
-               wstr = lpszModuleFolder;
+   //            wcscat(lpszModuleFolder,L"\\");
 
-               wstr += strName;
+   //            std::wstring wstr;
 
-               wstr += L".exe";
+   //            wstr = lpszModuleFolder;
 
-               STARTUPINFOW si;
-               memset(&si,0,sizeof(si));
-               si.cb = sizeof(si);
-               si.dwFlags = STARTF_USESHOWWINDOW;
-               si.wShowWindow = SW_SHOWNORMAL;
-               PROCESS_INFORMATION pi;
-               memset(&pi,0,sizeof(pi));
+   //            wstr += strName;
 
-               if(::CreateProcessW(NULL,(wchar_t *)wstr.c_str(),
-                  NULL,NULL,FALSE,0,NULL,NULL,
-                  &si,&pi))
-                  return TRUE;
-            }
+   //            wstr += L".exe";
 
-         }
+   //            STARTUPINFOW si;
+   //            memset(&si,0,sizeof(si));
+   //            si.cb = sizeof(si);
+   //            si.dwFlags = STARTF_USESHOWWINDOW;
+   //            si.wShowWindow = SW_SHOWNORMAL;
+   //            PROCESS_INFORMATION pi;
+   //            memset(&pi,0,sizeof(pi));
 
-      }
+   //            if(::CreateProcessW(NULL,(wchar_t *)wstr.c_str(),
+   //               NULL,NULL,FALSE,0,NULL,NULL,
+   //               &si,&pi))
+   //               return TRUE;
+   //         }
 
-   }
+   //      }
 
+   //   }
+
+   //}
+
+
+//   {
+//
+//      std::wstring wstr;
+//
+//      wstr = L"\\ca2\\";
+//#ifdef _M_X64
+//      wstr += L"stage\\x64\\";
+//#else
+//      wstr += L"stage\\x86\\";
+//#endif
+//
+//      wstr += strName + L".exe";
+//
+//      get_program_files_x86(wstr);
+//
+//      STARTUPINFOW si;
+//      memset(&si,0,sizeof(si));
+//      si.cb = sizeof(si);
+//      si.dwFlags = STARTF_USESHOWWINDOW;
+//      si.wShowWindow = SW_SHOWNORMAL;
+//      PROCESS_INFORMATION pi;
+//      memset(&pi,0,sizeof(pi));
+//
+//      if(::CreateProcessW(NULL,(wchar_t *)wstr.c_str(),
+//         NULL,NULL,FALSE,0,NULL,NULL,
+//         &si,&pi))
+//         return TRUE;
+//
+//   }
 
    {
 
@@ -721,78 +795,49 @@ int check_soon_app_id(std::wstring strId)
       wstr += L"stage\\x86\\";
 #endif
 
-      wstr += strName + L".exe";
+      wstr += strName + L".dll";
 
       get_program_files_x86(wstr);
 
-      STARTUPINFOW si;
-      memset(&si,0,sizeof(si));
-      si.cb = sizeof(si);
-      si.dwFlags = STARTF_USESHOWWINDOW;
-      si.wShowWindow = SW_SHOWNORMAL;
-      PROCESS_INFORMATION pi;
-      memset(&pi,0,sizeof(pi));
+      std::wstring wstrApp;
 
-      if(::CreateProcessW(NULL,(wchar_t *)wstr.c_str(),
-         NULL,NULL,FALSE,0,NULL,NULL,
-         &si,&pi))
-         return TRUE;
+      wstrApp = L"\\ca2\\";
+#ifdef _M_X64
+      wstrApp += L"stage\\x64\\";
+#else
+      wstrApp += L"stage\\x86\\";
+#endif
 
-   }
+      wstrApp += L"app.exe";
 
+      get_program_files_x86(wstrApp);
+
+      if(file::exists(::u8(wstr).c_str()))
       {
 
-         std::wstring wstr;
+         STARTUPINFOW si;
+         memset(&si,0,sizeof(si));
+         si.cb = sizeof(si);
+         si.dwFlags = STARTF_USESHOWWINDOW;
+         si.wShowWindow = SW_SHOWNORMAL;
+         PROCESS_INFORMATION pi;
+         memset(&pi,0,sizeof(pi));
 
-         wstr = L"\\ca2\\";
-#ifdef _M_X64
-         wstr += L"stage\\x64\\";
-#else
-         wstr += L"stage\\x86\\";
-#endif
+         wstring wstrCmdLine = (L"\"" + wstrApp + L"\" : app=" + strId + L" build_number=installed").c_str();
 
-         wstr += strName + L".dll";
-
-         get_program_files_x86(wstr);
-
-         std::wstring wstrApp;
-
-         wstrApp = L"\\ca2\\";
-#ifdef _M_X64
-         wstrApp += L"stage\\x64\\";
-#else
-         wstrApp += L"stage\\x86\\";
-#endif
-
-         wstrApp += L"app.exe";
-
-         get_program_files_x86(wstrApp);
-
-         if(file::exists(::utf16_to_8(wstr.c_str())))
-         {
-
-            STARTUPINFOW si;
-            memset(&si,0,sizeof(si));
-            si.cb = sizeof(si);
-            si.dwFlags = STARTF_USESHOWWINDOW;
-            si.wShowWindow = SW_SHOWNORMAL;
-            PROCESS_INFORMATION pi;
-            memset(&pi,0,sizeof(pi));
-
-            wstring wstrCmdLine = (L"\"" + wstrApp + L"\" : app=" + strId + L" build_number=installed").c_str();
-
-            if(::CreateProcessW((wchar_t *)wstrApp.c_str(),(wchar_t *)wstrCmdLine.c_str(),
-               NULL,NULL,FALSE,0,NULL,NULL,
-               &si,&pi))
-               return TRUE;
-
-         }
+         if(::CreateProcessW((wchar_t *)wstrApp.c_str(),(wchar_t *)wstrCmdLine.c_str(),
+            NULL,NULL,FALSE,0,NULL,NULL,
+            &si,&pi))
+            return TRUE;
 
       }
+
+   }
 
    return FALSE;
 
 }
+
 
 int check_spa_bin();
 int check_spaadmin_bin();
@@ -825,7 +870,7 @@ int check_spa_bin()
 
    get_program_files_x86(wstr);
 
-   if(!file::exists(utf16_to_8(wstr.c_str())))
+   if(!file::exists(u8(wstr.c_str())))
    {
       
       if(!spa_get_admin())
@@ -835,7 +880,7 @@ int check_spa_bin()
       {
          return 0;
       }
-      if(!file::exists(utf16_to_8(wstr.c_str())))
+      if(!file::exists(u8(wstr.c_str())))
       {
          return 0;
       }
@@ -857,13 +902,13 @@ int check_spaadmin_bin()
 
    get_program_files_x86(wstr);
 
-   if(!file::exists(utf16_to_8(wstr.c_str())))
+   if(!file::exists(u8(wstr.c_str())))
    {
       if(!download_spaadmin_bin())
       {
          return 0;
       }
-      if(!file::exists(utf16_to_8(wstr.c_str())))
+      if(!file::exists(u8(wstr.c_str())))
       {
          return 0;
       }
@@ -895,10 +940,10 @@ int download_spa_bin()
 
       get_program_files_x86(wstr);
 
-      if(!::CopyFileW(utf8_to_16(strTempSpa.c_str()),wstr.c_str(),FALSE))
+      if(!::CopyFileW(u16(strTempSpa.c_str()).c_str(),wstr.c_str(),FALSE))
          return 0;
 
-      if(!file::exists(utf16_to_8(wstr.c_str())))
+      if(!file::exists(u8(wstr.c_str())))
          return 0;
 
    }
@@ -941,13 +986,13 @@ int download_spaadmin_bin()
 
       get_program_files_x86(wstr);
 
-      if(!dir::mk(dir::name(utf16_to_8(wstr.c_str())).c_str()))
+      if(!dir::mk(dir::name(u8(wstr.c_str())).c_str()))
          return 0;
 
-      if(!::CopyFileW(utf8_to_16(strTempSpa.c_str()),wstr.c_str(),FALSE))
+      if(!::CopyFileW(u16(strTempSpa.c_str()).c_str(),wstr.c_str(),FALSE))
          return 0;
 
-      if(!file::exists(utf16_to_8(wstr.c_str())))
+      if(!file::exists(u8(wstr.c_str())))
          return 0;
 
    }
@@ -956,12 +1001,12 @@ int download_spaadmin_bin()
 
       SHELLEXECUTEINFOW sei ={};
 
-      
+      wstring wstrFile = u16(strTempSpa.c_str());
 
       sei.cbSize =sizeof(SHELLEXECUTEINFOW);
       sei.fMask = SEE_MASK_NOASYNC | SEE_MASK_NOCLOSEPROCESS;
       sei.lpVerb = L"RunAs";
-      sei.lpFile = utf8_to_16(strTempSpa.c_str());
+      sei.lpFile = wstrFile.c_str();
       ::ShellExecuteExW(&sei);
       DWORD dwGetLastError = GetLastError();
 
@@ -974,7 +1019,7 @@ int download_spaadmin_bin()
       for(int i = 0; i < (19840 + 19770); i++)
       {
 
-         if(file::exists(utf16_to_8(wstr.c_str())))
+         if(file::exists(u8(wstr.c_str())))
             break;
 
          Sleep(84 + 77);
@@ -1148,11 +1193,11 @@ int check_install_bin_set()
 
    string strPlatform = "x86";
 
-   wstring wstrPath = utf8_to_16((string("\\ca2\\install\\stage\\") + strPlatform + "\\app.install.exe").c_str());
+   wstring wstrPath = u16((string("\\ca2\\install\\stage\\") + strPlatform + "\\app.install.exe").c_str());
 
    get_program_files_x86(wstrPath);
 
-   strPath = utf16_to_8(wstrPath.c_str());
+   strPath = u8(wstrPath.c_str());
 
 
 #else
@@ -1599,9 +1644,9 @@ void install_launcher::start_in_context()
 
    string strDir = dir::name(m_strPath.c_str());
 
-   wstring wstrDir = utf8_to_16(strDir.c_str());
+   wstring wstrDir = u16(strDir.c_str());
 
-   wstring wstr = utf8_to_16(m_strPath.c_str());
+   wstring wstr = u16(m_strPath.c_str());
 
    STARTUPINFOW si;
    memset(&si,0,sizeof(si));
@@ -1685,12 +1730,12 @@ int register_spa_file_type()
 
    int iRetry = 9;
 
-   while(!file::exists(utf16_to_8(wstr.c_str())) && iRetry > 0)
+   while(!file::exists(u8(wstr.c_str())) && iRetry > 0)
    {
 
-      dir::mk(dir::name(utf16_to_8(wstr.c_str())).c_str());
+      dir::mk(dir::name(u8(wstr.c_str())).c_str());
 
-      file::put_contents(utf16_to_8(wstr.c_str()),"");
+      file::put_contents(u8(wstr.c_str()).c_str(),"");
 
       iRetry--;
 

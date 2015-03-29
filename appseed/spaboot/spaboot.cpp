@@ -100,7 +100,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
    if(numargs >= 2)
    {
-      std::string str(utf16_to_8(argv[1]));
+      std::string str(u8(argv[1]));
       if(parse_spaboot_start(str.c_str()))
       {
          return start();
@@ -122,7 +122,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
    if(numargs >= 2)
    {
-      std::string str(utf16_to_8(argv[1]));
+      std::string str(u8(argv[1]));
       int i = str.find("starter_start=");
       if(i != std::string::npos)
       {
@@ -142,7 +142,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
       }
       else
       {
-         std::string str(utf16_to_8(argv[1]));
+         std::string str(u8(argv[1]));
          strParameters = "\""+ str + "\"";
          parse_spaboot(str.c_str());
       }

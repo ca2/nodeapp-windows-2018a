@@ -94,6 +94,9 @@ int create_spa_window()
    ::SelectObject(g_hdcAlpha,g_hbmAlpha);
 
 
+   g_cx = 800;
+
+   g_cy = 400;
 
    HWND hWnd = CreateWindow(szWindowClass,szTitle,WS_OVERLAPPED,CW_USEDEFAULT,0,CW_USEDEFAULT,0,NULL,NULL,g_hinstance,NULL);
 
@@ -106,10 +109,10 @@ int create_spa_window()
       return 0;
    }
 
-   if(g_iStyle == 0)
-   {
-   }
-   else
+   //if(g_iStyle == 0)
+   //{
+   //}
+   //else
    {
 
       ::SetWindowLong(hWnd,GWL_EXSTYLE,::GetWindowLong(hWnd,GWL_EXSTYLE) | WS_EX_LAYERED);
@@ -124,9 +127,6 @@ int create_spa_window()
 
    int cyScreen = ::GetSystemMetrics(SM_CYSCREEN);
 
-   g_cx = 800;
-
-   g_cy = 400;
 
    int x = (cxScreen - g_cx) / 2;
 
@@ -136,7 +136,11 @@ int create_spa_window()
 
    UpdateWindow(hWnd);
 
-   SetTimer(hWnd,184,25,NULL);
+   SetTimer(hWnd,1984,5,NULL);
+
+
+
+
 
    return 1;
 

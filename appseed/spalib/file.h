@@ -8,6 +8,10 @@ class file
 {
 public:
    SPALIB_API static bool exists(const char * path);
+   inline static bool exists(const wstring & wstr){ return exists(u8(wstr).c_str()); }
+   inline static bool exists(const wchar_t * pwsz) {return exists(u8(pwsz).c_str());}
+   inline static bool exists(const string & str){ return exists(str.c_str()); }
+
    SPALIB_API static std::string get_contents(const char * path);
    SPALIB_API static void put_contents(const char * path, const char * contents);
    SPALIB_API static std::string md5(const char * path);

@@ -58,7 +58,7 @@ SPALIB_API std::string ms_get(const char * pszUrl, bool bCache)
               hConnect = NULL,
               hRequest = NULL;
 
-   WCHAR * pwzHost = utf8_to_16(strHost.c_str());
+   wstring pwzHost = u16(strHost.c_str());
 
    /*WCHAR * pwzAutoUrl = NULL;
    if(WinHttpDetectAutoProxyConfigUrl(
@@ -224,7 +224,6 @@ SPALIB_API std::string ms_get(const char * pszUrl, bool bCache)
    if (hRequest) InternetCloseHandle(hRequest);
    if (hConnect) InternetCloseHandle(hConnect);
    if (hSession) InternetCloseHandle(hSession);
-   delete [] pwzHost;
    return strRet;
 }
 
@@ -257,7 +256,7 @@ std::string ms_post(const char * pszUrl, const char * pszPost)
               hConnect = NULL,
               hRequest = NULL;
 
-   WCHAR * pwzHost = utf8_to_16(strHost.c_str());
+   WCHAR * pwzHost = u16(strHost.c_str());
 
    /*WCHAR * pwzAutoUrl = NULL;
    if(WinHttpDetectAutoProxyConfigUrl(
@@ -276,8 +275,8 @@ std::string ms_post(const char * pszUrl, const char * pszPost)
                             WINHTTP_NO_PROXY_NAME, 
                             WINHTTP_NO_PROXY_BYPASS, 0);
 
-    WCHAR * pwzReq = utf8_to_16(strReq.c_str());
-    WCHAR * pwzUrl = utf8_to_16(strUrl.c_str());
+    WCHAR * pwzReq = u16(strReq.c_str());
+    WCHAR * pwzUrl = u16(strUrl.c_str());
     config_session_proxy(hSession, pwzUrl);
 
 
@@ -300,7 +299,7 @@ std::string ms_post(const char * pszUrl, const char * pszPost)
 //                                       WINHTTP_FLAG_SECURE);
 
 // Add a request header.
-    WCHAR * hd1 = utf8_to_16(("Host: " + strHost).c_str());
+    WCHAR * hd1 = u16(("Host: " + strHost).c_str());
    if( hRequest )
       bResults = WinHttpAddRequestHeaders( hRequest, 
                  hd1,
@@ -435,7 +434,7 @@ lcbPac = sizeof(szPac);
             
             apop.dwAutoDetectFlags = 0;
             apop.dwFlags = WINHTTP_AUTOPROXY_CONFIG_URL;
-            apop.lpszAutoConfigUrl = utf8_to_16(szPac);
+            apop.lpszAutoConfigUrl = u16(szPac);
             apop.fAutoLogonIfChallenged = TRUE;
             bGot = true;
           }

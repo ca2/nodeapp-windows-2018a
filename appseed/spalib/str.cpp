@@ -232,7 +232,7 @@ void __cdecl wparse_cmdline (
 
 
 
-WCHAR * utf8_to_16(const char * psz)
+wstring u16(const char * psz)
 {
    int iCount = MultiByteToWideChar(
 		CP_UTF8,
@@ -249,39 +249,36 @@ WCHAR * utf8_to_16(const char * psz)
 		-1,
 		pwz,
 		iCount);
-   return pwz;
+   wstring wstr(pwz);
+   delete pwz;
+   return wstr;
 }
 
-std::string std_gen_international_unicode_to_utf8(const wchar_t * psz)
-{
-	CHAR * pszNew = utf16_to_8(psz);
-	std::string str(pszNew);
-	delete pszNew;
-	return str;
-}
 
-CHAR * utf16_to_8(const wchar_t * psz)
+string u8(const wchar_t * pwz)
 {
    int iCount = WideCharToMultiByte(
 		CP_UTF8,
 		0,
-		psz,
+		pwz,
 		-1,
 		NULL,
 		0,
       NULL,
       NULL);
-   CHAR * pwz = new CHAR[iCount + 1];
+   CHAR * psz = new CHAR[iCount + 1];
    WideCharToMultiByte(
 		CP_UTF8,
 		0,
-		psz,
-		-1,
 		pwz,
+		-1,
+		psz,
 		iCount,
       NULL,
       NULL);
-   return pwz;
+   std::string str(psz);
+   delete psz;
+   return str;
 }
 
 

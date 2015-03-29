@@ -1,6 +1,38 @@
 ﻿#include "StdAfx.h"
 
 
+#include <gdiplus.h>
+
+using namespace Gdiplus;
+
+
+Font * g_pfont = NULL;
+Font * g_pfontBold = NULL;
+Font * g_pfontHeader = NULL;
+
+Pen *g_ppenBorder = NULL;
+Brush * g_ptextColor1 = NULL;
+Brush * g_pBar = NULL;
+Pen * g_pBarBorder = NULL;
+
+
+LONG width(LPCRECT lpcrect)
+{
+   return lpcrect->right - lpcrect->left;
+}
+
+
+LONG height(LPCRECT lpcrect)
+{
+   return lpcrect->bottom - lpcrect->top;
+}
+
+Rect make_rect(LPCRECT lpcrect)
+{
+   return Rect(lpcrect->left,lpcrect->top,width(lpcrect) - 1,height(lpcrect) - 1);
+}
+
+
 class canvas_zero
 {
 public:
@@ -12,6 +44,7 @@ public:
    inta m_ia;
    RECT m_rect;
    HBITMAP m_hbm;
+   HBITMAP m_hbmOld;
    HDC m_hdc;
    HBITMAP m_hbmZero;
    HBITMAP m_hbmZeroOld;
@@ -19,20 +52,36 @@ public:
    COLORREF * m_pdata;
    COLORREF * m_pdataZero;
    canvas_zero();
-   void prepare(HDC hdc, LPCRECT lpcrect);
-   void on_paint(HDC hdc, LPCRECT lpcrect);
-   virtual void zero(HDC hdc, POINT pt, int iSize, int iStep);
+   void prepare(Graphics * pdc,LPCRECT lpcrect);
+   void on_paint(Graphics * pdc,LPCRECT lpcrect);
+   virtual void zero(Graphics * pdc, POINT pt, int iSize, int iStep);
 };
 
-void ca2_install_canvas_on_paint(HDC hdc, LPCRECT lpcrect, int iMode)
+void ca2_install_canvas_init_draw()
 {
+   g_pfont = ::CreatePointFont(10.0,L"Lucida Sans Unicode",false, false);
+   g_pfontBold = ::CreatePointFont(10.0,L"Lucida Sans Unicode",false, true);
+   g_pfontHeader = ::CreatePointFont(8.4 + 7.7,L"Lucida Sans Unicode",false,true);
+   g_ppenBorder  = new Pen(Gdiplus::Color(255,84,84,77),1.0f);
+   g_ptextColor1 = new SolidBrush(Color(84 + 49,84 + 49,77 + 49));
+   g_pBarBorder = new Pen(RGB(184, 84 + 49,84 + 49,77 + 49), 1.0);
+   g_pBar = new SolidBrush(Color(184,77,184,84));
+}
+
+void ca2_install_canvas_on_paint(Graphics * pdc, LPCRECT lpcrect, int iMode)
+{
+
+
 
    bool bProgress = false;
    double dProgress = 0.0;
-   std::string strHeader;
-   std::string strBold;
-   std::string strNormal;
-   std::string strProgress;
+   wstring strHeader;
+   wstring strBold;
+   wstring strNormal;
+   wstring strProgress;
+
+   pdc->SetCompositingMode(CompositingModeSourceOver);
+   pdc->SetTextRenderingHint(TextRenderingHintAntiAliasGridFit);
 
    {
       int iTrace = _sopen(dir::ca2("install.log").c_str(),_O_RDONLY | _O_BINARY,_SH_DENYNO,0);
@@ -72,13 +121,13 @@ void ca2_install_canvas_on_paint(HDC hdc, LPCRECT lpcrect, int iMode)
                {
                   bHeader = true;
                   strLine = strLine.substr(5);
-                  strHeader = strLine;
+                  strHeader = u16(strLine);
                }
                else if(str_begins_ci(strLine.c_str(),"***") && !bBold && strLine.length() > 0 && bNormal && bPreNormal)
                {
                   bBold = true;
                   strLine = strLine.substr(3);
-                  strBold = strLine;
+                  strBold = u16(strLine);
                }
                else if(str_begins_ci(strLine.c_str(),"|||") && !bProgress)
                {
@@ -88,13 +137,13 @@ void ca2_install_canvas_on_paint(HDC hdc, LPCRECT lpcrect, int iMode)
                   dProgress = (double)i / 10000000.0;
                   char sz[128];
                   sprintf(sz,"%0.1f%%",dProgress);
-                  strProgress = sz;
+                  strProgress = u16(sz);
                   dProgress /= 100.0;
                }
                else if(!str_begins_ci(strLine.c_str(),"/ ") && !str_begins_ci(strLine.c_str(),":::::") && !str_begins_ci(strLine.c_str(),"|||") && !str_begins_ci(strLine.c_str(),"***") && strLine.length() > 0 && !bNormal && !bBold && !bHeader && bPreNormal)
                {
                   bNormal = true;
-                  strNormal = strLine;
+                  strNormal = u16(strLine);
                }
                else if(strLine.length() > 0 && !bPreNormal && !bBold && !bNormal && !bHeader)
                {
@@ -120,27 +169,22 @@ void ca2_install_canvas_on_paint(HDC hdc, LPCRECT lpcrect, int iMode)
    int cx = lpcrect->right - lpcrect->left;
    int cy = lpcrect->bottom - lpcrect->top;
    iMode = iMode % 5;
-   HFONT hfont = ::CreatePointFont(100, "Lucida Sans Unicode", hdc, false);
-   LOGFONT lf;
-   memset(&lf, 0, sizeof(LOGFONT));
-   ::GetObjectA(hfont, sizeof(LOGFONT), &lf);
-   lf.lfWeight = 800;
-   HFONT hfontBold = ::CreateFontIndirectA(&lf);
-   HFONT hfontHeader = ::CreatePointFont(84 + 77,"Lucida Sans Unicode",hdc,false, FW_EXTRABOLD);
-   HFONT hfontOld = (HFONT) ::SelectObject(hdc, (HGDIOBJ) hfont);
+
    if(iMode == 2 || iMode == 1 || iMode == 0)
    {
-      HPEN hpen = ::CreatePen(PS_SOLID, 1, RGB(84, 84, 77));
-      HBRUSH hbrush = (HBRUSH) ::GetStockObject(NULL_BRUSH);
-      ::SelectObject(hdc, hpen);
-      ::SelectObject(hdc, hbrush);
-      ::Rectangle(hdc, lpcrect->left, lpcrect->top, lpcrect->right, lpcrect->bottom);
-      ::DeleteObject(hbrush);
-      ::DeleteObject(hpen);
+
+      pdc->DrawRectangle(g_ppenBorder,make_rect(lpcrect));
+
    }
-   SIZE size;
-   ::GetTextExtentPointW(hdc, L"CCpp", 4, &size);
-   int iLineCount = (rect.bottom - 30) / size.cy;
+
+   RectF rSize;
+   
+   pdc->MeasureString(L"CCpp",4,g_pfont,PointF(0, 0), StringFormat::GenericTypographic(), &rSize);
+
+   double cyText = max(rSize.Height,5.0);
+
+   int iLineCount = (rect.bottom - 30) / cyText;
+
    if(iMode == 4) // if(m_bHealingSurface)
    {
       int iCount = max(1, cx / 25);
@@ -213,62 +257,51 @@ void ca2_install_canvas_on_paint(HDC hdc, LPCRECT lpcrect, int iMode)
             rect.right = cx * (i + 1) / iCount - 8 + iInflate;
             rect.top = cy * j / jCount + 8 - iInflate;
             rect.bottom = cy * (j + 1) / jCount - 8 + iInflate;
-
+            SolidBrush br(Color(184,iR,iG,iB));
             // ca2 colors: green and yellow and black and white
-            ::FillSolidRect(hdc, &rect, RGB(iR, iG, iB));
+            pdc->FillRectangle(&br, make_rect(&rect));
          }
       }
    }
    else if(iMode == 1) // else // !m_bHealingSurface => "Surgery Internals"
    {
 
-      ::SetTextColor(hdc, RGB(84 + 49, 84 + 49, 77 + 49));
-
       size_t iRefresh = 884;
       size_t iEat = 8;
-      const char * psz = "development message so international english file \"install.log\" excerpt  ::::::::";
-      ::SetBkMode(hdc, TRANSPARENT);
-      ::TextOutU(hdc, 10, 10 + size.cy * 2, psz, strlen(psz) - iEat + 1 + ((::GetTickCount() / (iRefresh - 277) % iEat)));
+      const wchar_t * psz = L"development message so international english file \"install.log\" excerpt  ::::::::";
+      pdc->DrawString(psz,wcslen(psz) - iEat + 1 + ((::GetTickCount() / (iRefresh - 277) % iEat)),g_pfont,PointF(10,10 + cyText * 2),StringFormat::GenericTypographic(),g_ptextColor1);
 
-      ::SetBkMode(hdc, TRANSPARENT);
       if(strHeader.length() > 0)
       {
-         ::SelectObject(hdc,hfontHeader);
-         ::TextOutU(hdc,10,10 + size.cy * 3 + 4,strHeader.c_str(),strHeader.length());
+         pdc->DrawString(strHeader.c_str(),-1,g_pfontHeader,PointF(10,10 + cyText * 3+4) ,StringFormat::GenericTypographic(),g_ptextColor1);
       }
       if(strBold.length() > 0)
       {
-         ::SelectObject(hdc, hfontBold);
-         ::TextOutU(hdc,10,10 + size.cy * 5,strBold.c_str(),strBold.length());
+         pdc->DrawString(strBold.c_str(),-1,g_pfontBold,PointF(10,10 + cyText * 5),StringFormat::GenericTypographic(),g_ptextColor1);
       }
       if(strNormal.length() > 0)
       {
-         ::SelectObject(hdc,hfont);
-         ::TextOutU(hdc,10,10 + size.cy * 6,strNormal.c_str(),strNormal.length());
+         pdc->DrawString(strNormal.c_str(),-1,g_pfont,PointF(10,10 + cyText * 6),StringFormat::GenericTypographic(),g_ptextColor1);
       }
       if(strProgress.length() > 0)
       {
-         ::SelectObject(hdc,hfont);
-         ::TextOutU(hdc,10,10 + size.cy * 7,strProgress.c_str(),strProgress.length());
+         pdc->DrawString(strProgress.c_str(),-1,g_pfont,PointF(10,10 + cyText * 7),StringFormat::GenericTypographic(),g_ptextColor1);
       }
 
    }
    else if(iMode == 2) // else // !m_bHealingSurface => "Surgery Internals"
    {
 
-      ::SetTextColor(hdc, RGB(84 + 49, 84 + 49, 77 + 49));
-
       size_t iRefresh = 884;
       size_t iEat = 8;
-      const char * psz = "development message so international english last lines of file \"install.log\" ::::::::";
-      ::SetBkMode(hdc, TRANSPARENT);
-      ::TextOutU(hdc, 10, 10 + size.cy * 2, psz, strlen(psz) - iEat + 1 + ((::GetTickCount() / (iRefresh - 277) % iEat)));
-      ::SelectObject(hdc, hfontBold);
-      ::TextOutU(hdc, 10, 10 + size.cy * 3, s_strLastStatus.c_str(), s_strLastStatus.length());
+      const wchar_t * psz = L"development message so international english last lines of file \"install.log\" ::::::::";
+      pdc->DrawString(psz,wcslen(psz) - iEat + 1 + ((::GetTickCount() / (iRefresh - 277) % iEat)),g_pfont,PointF(10,10 + cyText * 2),StringFormat::GenericTypographic(),g_ptextColor1);
+      pdc->DrawString(u16(s_strLastStatus).c_str(),-1,g_pfont,PointF(10,10 + cyText * 3),StringFormat::GenericTypographic(),g_ptextColor1);
 
       int iLineMin = 5;
-      int iLine = ((rect.bottom - 10) / size.cy) - 1;
-      if(rect.bottom - rect.top >= size.cy)
+      int iLine = ((rect.bottom - 10) / cyText) - 1;
+      Font * pfont = g_pfont;
+      if(rect.bottom - rect.top >= cyText)
       {
          int iTrace = _sopen(dir::ca2("install.log").c_str(), _O_RDONLY|_O_BINARY, _SH_DENYNO, 0);
          if(iTrace >= 0)
@@ -277,7 +310,6 @@ void ca2_install_canvas_on_paint(HDC hdc, LPCRECT lpcrect, int iMode)
             iTell--;
             std::string strLine;
             int iSkip = 0;
-            ::SetBkMode(hdc, TRANSPARENT);
             while(iTell > 0 && iLine >= iLineMin)
             {
                _lseek(iTrace, iTell, SEEK_SET);
@@ -312,7 +344,7 @@ void ca2_install_canvas_on_paint(HDC hdc, LPCRECT lpcrect, int iMode)
                         goto skip_text_out1;
                      }
                      s_strLastStatus = strLine;
-                     ::SelectObject(hdc, hfontBold);
+                     pfont = g_pfontBold;
                   }
                   else
                   {
@@ -321,10 +353,10 @@ void ca2_install_canvas_on_paint(HDC hdc, LPCRECT lpcrect, int iMode)
                      {
                         strLine = strLine.substr(iFind + 1);
                      }
-                     ::SelectObject(hdc, hfont);
+                     pfont = g_pfont;
                   }
                   iLine--;
-                  ::TextOutU(hdc, 10, 10 + iLine * size.cy, strLine.c_str(), strLine.length());
+                  pdc->DrawString(u16(strLine).c_str(),-1,pfont,PointF(10,10 + iLine * 3),StringFormat::GenericTypographic(),g_ptextColor1);
                   skip_text_out1:
                   strLine = ch;
                }
@@ -338,68 +370,59 @@ void ca2_install_canvas_on_paint(HDC hdc, LPCRECT lpcrect, int iMode)
             if(iLine >= iLineMin && strLine.length() > 0)
             {
                iLine--;
-               ::TextOutU(hdc, 10, 10 + iLine * size.cy, strLine.c_str(), strLine.length());
+               pdc->DrawString(u16(strLine).c_str(),-1,pfont,PointF(10,10 + iLine * 3),StringFormat::GenericTypographic(),g_ptextColor1);
             }
          }
       }
    }
    else if(iMode == 3) // if(m_bHealingSurface)
    {
-      czero.on_paint(hdc, lpcrect);
+      czero.on_paint(pdc, lpcrect);
    }
 
+   double cyBar = cyText * 1.2;
 
    {
-      HPEN hpenBorder = ::CreatePen(PS_SOLID,1,RGB(84 + 49,84 + 49,77 + 49));
-      HBRUSH hbrushBar = ::CreateSolidBrush(RGB(77,184,84));
-      ::SelectObject(hdc,::GetStockObject(NULL_BRUSH));
-      ::SelectObject(hdc,hpenBorder);
-      ::Rectangle(hdc,10,(lpcrect->top + lpcrect->bottom - size.cy) / 2,lpcrect->right - 10,(lpcrect->top + lpcrect->bottom + size.cy) / 2);
+
+      pdc->DrawRectangle(g_pBarBorder,Rect(10.0,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0,lpcrect->right - 10.0 - 10.0,cyBar));
       if(bProgress)
       {
-         int iRight = ((lpcrect->right - 11 - 11) * dProgress) + 11;
-         ::SelectObject(hdc,::GetStockObject(NULL_PEN));
-         ::SelectObject(hdc,hbrushBar);
-         ::Rectangle(hdc,11,(lpcrect->top + lpcrect->bottom - size.cy) / 2 + 1,iRight,(lpcrect->top + lpcrect->bottom + size.cy) / 2);
+         double iRight = (g_cy - 11 - 11) * dProgress;
+         pdc->FillRectangle(g_pBar,Rect(11.0,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1,iRight,cyBar - 2.0));
       }
       else
       {
          double dPeriod = 2000.0;
          dProgress = fmod((double)GetTickCount(),dPeriod) / dPeriod;
-         int iBarWidth = (lpcrect->right - 11 - 11) / 4;
-         int i = ((lpcrect->right - 11 - 11) * dProgress) + 11;
-         int iRight = i + iBarWidth;
-         ::SelectObject(hdc,::GetStockObject(NULL_PEN));
-         ::SelectObject(hdc,hbrushBar);
-         ::Rectangle(hdc,11 + i,(lpcrect->top + lpcrect->bottom - size.cy) / 2 + 1,min(lpcrect->right - 10, iRight),(lpcrect->top + lpcrect->bottom + size.cy) / 2);
+         double iBarWidth = (lpcrect->right - 11.0 - 11.0) / 4;
+         double i = ((lpcrect->right - 11.0 - 11.0) * dProgress) + 11.0;
+         double iRight = i + iBarWidth;
+         pdc->FillRectangle(g_pBar,Rect(11.0 + i,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0,min(lpcrect->right - 10.0,iRight) - 11,cyBar - 2.0));
          if(iRight >= lpcrect->right - 10)
          {
-            ::SelectObject(hdc,::GetStockObject(NULL_PEN));
-            ::SelectObject(hdc,hbrushBar);
-            ::Rectangle(hdc,11,(lpcrect->top + lpcrect->bottom - size.cy) / 2 + 1,iRight - lpcrect->right - 10,(lpcrect->top + lpcrect->bottom + size.cy) / 2);
+            pdc->FillRectangle(g_pBar,Rect(11.0,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0,iRight - lpcrect->right - 10.0 - 11.0,cyBar - 2.0));
          }
       }
-      ::DeleteObject(hbrushBar);
-      ::DeleteObject(hpenBorder);
 
    }
 
 
    {
-      const char * psz = "Thank you";
-      ::SetBkMode(hdc, TRANSPARENT);
-      HFONT hfontUnderline = ::CreatePointFont(100,"Lucida Sans Unicode",hdc,true);
-      ::SelectObject(hdc,hfontUnderline);
-      ::SetTextColor(hdc, RGB(77, 84, 184));
-      ::TextOutU(hdc, 10, 10, psz, strlen(psz));
-      ::SelectObject(hdc, hfontBold);
+      //const char * psz = "Thank you";
+      //::SetBkMode(hdc, TRANSPARENT);
+    //  HFONT hfontUnderline = ::CreatePointFont(100,"Lucida Sans Unicode",hdc,true);
+      //::SelectObject(hdc,hfontUnderline);
+      //::SetTextColor(hdc, RGB(77, 84, 184));
+      //::TextOutU(hdc, 10, 10, psz, strlen(psz));
+      //::SelectObject(hdc, hfontBold);
       //::TextOutU(hdc, 10, 10 + size.cy, g_strTitle.c_str(), g_strTitle.length());
-      ::SelectObject(hdc, hfontOld);
-      ::DeleteObject(hfontUnderline);
+      //::SelectObject(hdc, hfontOld);
+      //::DeleteObject(hfontUnderline);
+      pdc->DrawString(L"Thank you",-1,g_pfont,PointF(10.0,10.0),g_ptextColor1);
    }
-   ::DeleteObject(hfontHeader);
-   ::DeleteObject(hfontBold);
-   ::DeleteObject(hfont);
+   //::DeleteObject(hfontHeader);
+   //::DeleteObject(hfontBold);
+   //::DeleteObject(hfont);
 }
 
 
@@ -410,77 +433,45 @@ void ca2_install_canvas_on_paint(HDC hdc, LPCRECT lpcrect, int iMode)
 
 
 
-HFONT CreatePointFont(int nPointSize, const char * lpszFaceName, HDC hdc, bool bUnderline, int iWeight)
+
+Font * CreatePointFont(double dPointSize, const wchar_t * lpszFaceName, bool bUnderline, bool bBold)
 {
-   LOGFONT logFont;
-   memset(&logFont, 0, sizeof(LOGFONT));
-   logFont.lfCharSet = DEFAULT_CHARSET;
-   logFont.lfWeight = iWeight;
-   logFont.lfHeight = nPointSize;
-   logFont.lfUnderline = bUnderline ? TRUE : FALSE;
-   strncpy(logFont.lfFaceName, lpszFaceName, sizeof(logFont.lfFaceName));
+   
+   FontFamily fontFamily(lpszFaceName);
+   
+   return new Font(&fontFamily,dPointSize,(bBold ? FontStyleBold : 0) | (bUnderline ? FontStyleUnderline : 0),UnitPoint);
 
-   return CreatePointFontIndirect(&logFont, hdc);
-}
-
-// pLogFont->nHeight is interpreted as PointSize * 10
-HFONT CreatePointFontIndirect(const LOGFONT* lpLogFont, HDC hdcParam)
-{
-   HDC hDC;
-   if (hdcParam != NULL)
-   {
-      hDC = hdcParam;
-   }
-   else
-      hDC = ::GetDC(NULL);
-
-   // convert nPointSize to logical units based on pgraphics
-   LOGFONT logFont = *lpLogFont;
-   POINT pt;
-   // 72 points/inch, 10 decipoints/point
-   pt.y = ::MulDiv(::GetDeviceCaps(hDC, LOGPIXELSY), logFont.lfHeight, 720);
-   pt.x = 0;
-   ::DPtoLP(hDC, &pt, 1);
-   POINT ptOrg = { 0, 0 };
-   ::DPtoLP(hDC, &ptOrg, 1);
-   logFont.lfHeight = -abs(pt.y - ptOrg.y);
-
-   if(hdcParam == NULL)
-      ReleaseDC(NULL, hDC);
-
-   return ::CreateFontIndirect(&logFont);
 }
 
 
-
-BOOL TextOutU(HDC hdc, int x, int y, const char * pszUtf8, int iSize)
-{
-   std::string str;
-   str.assign(pszUtf8, iSize);
-
-   SIZE size;
-   size.cx = 0;
-   size.cy = 0;
-   if(str.find(_unitext("✓")) != std::string::npos)
-   {
-      str = str_replace(str.c_str(), _unitext("✓"), "");
-      ::GetTextExtentPointW(hdc, L"C", 1, &size);
-      size.cx = size.cy;
-      HBRUSH hbrush = ::CreateSolidBrush(RGB(0xaa, 0XCC, 0xaa));
-      HBRUSH hbrushOld = (HBRUSH) ::SelectObject(hdc, (HGDIOBJ) hbrush); 
-      HPEN hpen = (HPEN) ::GetStockObject(NULL_PEN);
-      HPEN hpenOld = (HPEN) ::SelectObject(hdc, (HGDIOBJ) hpen); 
-      ::Ellipse(hdc, x + 1, y + 1, x + size.cx - 2, y + size.cy - 2);
-      ::SelectObject(hdc, (HGDIOBJ)  hbrushOld);
-      ::SelectObject(hdc, (HGDIOBJ)  hpenOld);
-      ::DeleteObject((HGDIOBJ) hbrush);
-      size.cx += 4;
-   }
-   BSTR bstr = BSTRFromCStr(CP_UTF8, str.c_str());
-   BOOL b = TextOutW(hdc, size.cx + x, y, bstr, wcslen(bstr));
-   ::SysFreeString(bstr);
-   return b;
-}
+//BOOL TextOutU(HDC hdc, int x, int y, const char * pszUtf8, int iSize)
+//{
+//   std::string str;
+//   str.assign(pszUtf8, iSize);
+//
+//   SIZE size;
+//   size.cx = 0;
+//   size.cy = 0;
+//   if(str.find(_unitext("✓")) != std::string::npos)
+//   {
+//      str = str_replace(str.c_str(), _unitext("✓"), "");
+//      ::GetTextExtentPointW(hdc, L"C", 1, &size);
+//      size.cx = size.cy;
+//      HBRUSH hbrush = ::CreateSolidBrush(RGB(0xaa, 0XCC, 0xaa));
+//      HBRUSH hbrushOld = (HBRUSH) ::SelectObject(hdc, (HGDIOBJ) hbrush); 
+//      HPEN hpen = (HPEN) ::GetStockObject(NULL_PEN);
+//      HPEN hpenOld = (HPEN) ::SelectObject(hdc, (HGDIOBJ) hpen); 
+//      ::Ellipse(hdc, x + 1, y + 1, x + size.cx - 2, y + size.cy - 2);
+//      ::SelectObject(hdc, (HGDIOBJ)  hbrushOld);
+//      ::SelectObject(hdc, (HGDIOBJ)  hpenOld);
+//      ::DeleteObject((HGDIOBJ) hbrush);
+//      size.cx += 4;
+//   }
+//   BSTR bstr = BSTRFromCStr(CP_UTF8, str.c_str());
+//   BOOL b = TextOutW(hdc, size.cx + x, y, bstr, wcslen(bstr));
+//   ::SysFreeString(bstr);
+//   return b;
+//}
 void FillSolidRect(HDC hdc, LPCRECT lpRect, COLORREF clr)
 {
    ::SetBkColor(hdc, clr);
@@ -501,7 +492,7 @@ canvas_zero::canvas_zero()
    m_iLast = 0;
 }
 
-void canvas_zero::prepare(HDC hdc, LPCRECT lpcrect)
+void canvas_zero::prepare(Graphics * pdc, LPCRECT lpcrect)
 {
    m_rect.left    = lpcrect->left;
    m_rect.top     = lpcrect->top;
@@ -525,7 +516,7 @@ void canvas_zero::prepare(HDC hdc, LPCRECT lpcrect)
 	
 	m_hbm = CreateDIBSection ( NULL, &m_Info, DIB_RGB_COLORS, (void **)&m_pdata, NULL, NULL ); 
    m_hdc = ::CreateCompatibleDC(NULL);
-   ::SelectObject(m_hdc, m_hbm);
+   m_hbmOld = (HBITMAP) ::SelectObject(m_hdc, m_hbm);
    FillSolidRect(m_hdc, lpcrect, RGB(0, 0, 0));
 
    /*int iMid = (m_rect.bottom + m_rect.top) / 2;
@@ -540,7 +531,7 @@ void canvas_zero::prepare(HDC hdc, LPCRECT lpcrect)
 
 }
 
-void canvas_zero::on_paint(HDC hdcPaint, LPCRECT lpcrect)
+void canvas_zero::on_paint(Graphics * pdc, LPCRECT lpcrect)
 {
    HDC hdc = m_hdc;
 
@@ -549,7 +540,7 @@ void canvas_zero::on_paint(HDC hdcPaint, LPCRECT lpcrect)
    || m_rect.right != lpcrect->right
    || m_rect.bottom != lpcrect->bottom)
    {
-      prepare(hdc, lpcrect);
+      prepare(pdc, lpcrect);
    }
 
    int cx = m_rect.right - m_rect.left;
@@ -619,7 +610,7 @@ void canvas_zero::on_paint(HDC hdcPaint, LPCRECT lpcrect)
       iSize = m_ia[0];
       iCurStep = (::GetTickCount() - m_dwCurZero) * iTimeFactor / 1000;
       iCurStep = max(2, min(iCurStep, iSize));
-      zero(hdc, pt, iSize, iCurStep);
+      zero(pdc, pt, iSize, iCurStep);
       if(iCurStep == iSize)
       {
          if(m_iLast <= iCurStep)
@@ -637,18 +628,29 @@ void canvas_zero::on_paint(HDC hdcPaint, LPCRECT lpcrect)
    {
    }
 
-   ::BitBlt(hdcPaint, 0, 0, cx, cy, m_hdc, 0, 0, SRCCOPY);
+   {
+      ::SelectObject(m_hdc,m_hbmOld);
+      Bitmap b(m_hbm, NULL);
+      pdc->DrawImage(&b,Rect(0,0,cx,cy));
+         //::BitBlt(hdcPaint,0,0,cx,cy,m_hdc,0,0,SRCCOPY);
+      ::SelectObject(m_hdc,m_hbm);
+   }
 
    if(!bReady)
    {
-      ::AlphaBlend(hdcPaint, pt.x - iSize / 2, pt.y - iSize / 2, iSize * 2 + 1, iSize * 2 + 1, m_hdcZero, 0, 0, iSize * 2 + 1, iSize * 2 + 1, bf);
+      ::SelectObject(m_hdcZero,m_hbmZeroOld);
+      Bitmap b(m_hbmZero, NULL);
+//      pdc->DrawImage(&b,
+         pdc->DrawImage(&b,Rect(pt.x - iSize / 2,pt.y - iSize / 2,iSize * 2 + 1,iSize * 2 + 1));
+      ///::AlphaBlend(hdcPaint,pt.x - iSize / 2,pt.y - iSize / 2,iSize * 2 + 1,iSize * 2 + 1,m_hdcZero,0,0,iSize * 2 + 1,iSize * 2 + 1,bf);
       //::AlphaBlend(hdcPaint, 0, 0, iSize, iSize, m_hdcZero, 0, 0, iSize, iSize, bf);
+      ::SelectObject(m_hdcZero,m_hbmZero);
    }
 
 }
 
 
-void canvas_zero::zero(HDC hdc, POINT pt, int iSize, int iStep)
+void canvas_zero::zero(Graphics * pdc, POINT pt, int iSize, int iStep)
 {
 
    int cx = m_rect.right - m_rect.left;

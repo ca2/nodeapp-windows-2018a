@@ -198,7 +198,7 @@ std::string get_command_line(HANDLE handleProcess)
       return "";
    }
    commandLineContents[ustrCommandLine.Length / sizeof(WCHAR)] = L'\0';
-   std::string str = utf16_to_8(commandLineContents);
+   std::string str = u8(commandLineContents);
    free(commandLineContents);
    return str;
 }

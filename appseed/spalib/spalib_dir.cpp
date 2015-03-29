@@ -27,7 +27,7 @@ std::string dir::beforeca2()
 {
    std::wstring wstr;
    get_program_files_x86(wstr);
-   return utf16_to_8(wstr.c_str());
+   return u8(wstr.c_str());
    /*char lpszModuleFolder[MAX_PATH * 8];
    get_ca2_module_folder_dup(lpszModuleFolder);
    char * psz = strrchr(lpszModuleFolder, '\\');

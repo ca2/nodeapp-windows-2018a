@@ -1,7 +1,10 @@
 #pragma once
 
+#include <string>
 
-#define _unitext(text) (std_gen_international_unicode_to_utf8(L##text).c_str())
+using namespace std;
+
+#define _unitext(text) (u8(L##text).c_str())
 
 
 SPALIB_API void str_trim_left(std::string & str);
@@ -24,7 +27,8 @@ SPALIB_API BSTR BSTRFromCStr(UINT codePage, LPCSTR s);
 
 
 SPALIB_API void __cdecl wparse_cmdline (WCHAR *cmdstart, WCHAR **argv, WCHAR *args, int *numargs, int *numchars);
-SPALIB_API WCHAR * utf8_to_16(const char * psz);
-SPALIB_API std::string std_gen_international_unicode_to_utf8(const wchar_t * psz);
-SPALIB_API CHAR * utf16_to_8(const wchar_t * psz);
+SPALIB_API wstring u16(const char * psz);
+inline wstring u16(const string & str) { return u16(str.c_str()); }
+SPALIB_API string u8(const wchar_t * psz);
+inline string u8(const wstring & wstr) { return u8(wstr.c_str()); }
 SPALIB_API std::string read_resource_as_string(HINSTANCE hinst, UINT nID, LPCTSTR lpcszType);

@@ -126,7 +126,10 @@ std::string load_string(const char * pszId, const char * pszDefault);
 #ifdef WIN32
 void config_session_proxy(HINTERNET hSession, WCHAR * pwzUrl);
 BOOL AfxInternalPumpMessage();
-SPALIB_API WCHAR * utf8_to_16(const char * psz);
+wstring u16(const char * psz);
+string u8(const wchar_t * pwsz);
+wstring u16(const char * psz);
+string u8(const wchar_t * pwsz);
 #endif
 void CommandStart();
 
@@ -172,7 +175,6 @@ void config_session_proxy(HINTERNET hSession, WCHAR * pwzUrl);
 
 BOOL AfxInternalPumpMessage();
 
-SPALIB_API WCHAR * utf8_to_16(const char * psz);
 std::string ms_post(const char * pszUrl, const char * pszPost);
 #endif
 
