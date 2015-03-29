@@ -866,7 +866,7 @@ int check_spa_bin()
 
    std::wstring wstr;
 
-   wstr = L"\\ca2.spa\\spa.exe";
+   wstr = L"\\ca2\\spa\\spa.exe";
 
    get_program_files_x86(wstr);
 
@@ -898,7 +898,7 @@ int check_spaadmin_bin()
 
    std::wstring wstr;
 
-   wstr = L"\\ca2.spa\\spaadmin.exe";
+   wstr = L"\\ca2\\spa\\spaadmin.exe";
 
    get_program_files_x86(wstr);
 
@@ -982,7 +982,7 @@ int download_spaadmin_bin()
 
       std::wstring wstr;
 
-      wstr = L"\\ca2.spa\\spaadmin.exe";
+      wstr = L"\\ca2\\spa\\spaadmin.exe";
 
       get_program_files_x86(wstr);
 
@@ -1012,7 +1012,7 @@ int download_spaadmin_bin()
 
       std::wstring wstr;
 
-      wstr = L"\\ca2.spa\\spaadmin.exe";
+      wstr = L"\\ca2\\spa\\spaadmin.exe";
 
       get_program_files_x86(wstr);
 
@@ -1673,7 +1673,7 @@ int register_spa_file_type()
 
    std::wstring app;
 
-   app = L"\\ca2.spa\\spa.exe";
+   app = L"\\ca2\\spa\\spa.exe";
 
    get_program_files_x86(app);
 
@@ -1724,7 +1724,7 @@ int register_spa_file_type()
 
    std::wstring wstr;
 
-   wstr = L"\\ca2.spa\\spa_register.txt";
+   wstr = L"\\ca2\\spa\\spa_register.txt";
 
    get_program_files_x86(wstr);
 

@@ -7,6 +7,8 @@ int create_spa_window();
 
 ATOM spa_register_class();
 
+DWORD WINAPI thread_proc_draw(LPVOID lpParam);
+
 int show_spa_window(bool bShow)
 {
 
@@ -122,6 +124,10 @@ int create_spa_window()
    ::SetWindowLong(hWnd,GWL_STYLE,::GetWindowLong(hWnd,GWL_EXSTYLE) & ~(WS_BORDER | WS_CAPTION));
 
    g_hwnd = hWnd;
+
+   ::CreateThread(NULL,0,thread_proc_draw,NULL,0,0);
+
+
 
    int cxScreen = ::GetSystemMetrics(SM_CXSCREEN);
 

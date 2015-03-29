@@ -13,6 +13,7 @@ Font * g_pfontHeader = NULL;
 Pen *g_ppenBorder = NULL;
 Brush * g_ptextColor1 = NULL;
 Brush * g_pBar = NULL;
+Brush * g_pBarBk = NULL;
 Pen * g_pBarBorder = NULL;
 
 
@@ -27,9 +28,9 @@ LONG height(LPCRECT lpcrect)
    return lpcrect->bottom - lpcrect->top;
 }
 
-Rect make_rect(LPCRECT lpcrect)
+Rect make_rect(LPCRECT lpcrect, bool bMinusOne)
 {
-   return Rect(lpcrect->left,lpcrect->top,width(lpcrect) - 1,height(lpcrect) - 1);
+   return Rect(lpcrect->left,lpcrect->top,width(lpcrect) - (bMinusOne ? 1 : 0),height(lpcrect) - (bMinusOne ? 1 : 0));
 }
 
 
@@ -62,16 +63,17 @@ void ca2_install_canvas_init_draw()
    g_pfont = ::CreatePointFont(10.0,L"Lucida Sans Unicode",false, false);
    g_pfontBold = ::CreatePointFont(10.0,L"Lucida Sans Unicode",false, true);
    g_pfontHeader = ::CreatePointFont(8.4 + 7.7,L"Lucida Sans Unicode",false,true);
-   g_ppenBorder  = new Pen(Gdiplus::Color(255,84,84,77),1.0f);
-   g_ptextColor1 = new SolidBrush(Color(84 + 49,84 + 49,77 + 49));
-   g_pBarBorder = new Pen(RGB(184, 84 + 49,84 + 49,77 + 49), 1.0);
+   g_ppenBorder  = new Pen(Gdiplus::Color(84,84,84,77),1.0f);
+   g_ptextColor1 = new SolidBrush(Color(184, 84 + 49 + 49 + 49,84 + 49 + 49 + 49,77 + 49 + 49 + 49));
+   g_pBarBorder = new Pen(Color(84,84 + 49 + 49 + 49,84 + 49 + 49 + 49,77 + 49 + 49 + 49),1.0f);
    g_pBar = new SolidBrush(Color(184,77,184,84));
+   g_pBarBk = new SolidBrush(Color(49,184 + 23,184+ 23,184 + 23));
 }
 
 void ca2_install_canvas_on_paint(Graphics * pdc, LPCRECT lpcrect, int iMode)
 {
 
-
+   iMode = 1;
 
    bool bProgress = false;
    double dProgress = 0.0;
@@ -173,7 +175,7 @@ void ca2_install_canvas_on_paint(Graphics * pdc, LPCRECT lpcrect, int iMode)
    if(iMode == 2 || iMode == 1 || iMode == 0)
    {
 
-      pdc->DrawRectangle(g_ppenBorder,make_rect(lpcrect));
+      pdc->DrawRectangle(g_ppenBorder,make_rect(lpcrect, true));
 
    }
 
@@ -268,8 +270,8 @@ void ca2_install_canvas_on_paint(Graphics * pdc, LPCRECT lpcrect, int iMode)
 
       size_t iRefresh = 884;
       size_t iEat = 8;
-      const wchar_t * psz = L"development message so international english file \"install.log\" excerpt  ::::::::";
-      pdc->DrawString(psz,wcslen(psz) - iEat + 1 + ((::GetTickCount() / (iRefresh - 277) % iEat)),g_pfont,PointF(10,10 + cyText * 2),StringFormat::GenericTypographic(),g_ptextColor1);
+//      const wchar_t * psz = L"development message so international english file \"install.log\" excerpt  ::::::::";
+  //    pdc->DrawString(psz,wcslen(psz) - iEat + 1 + ((::GetTickCount() / (iRefresh - 277) % iEat)),g_pfont,PointF(10,10 + cyText * 2),StringFormat::GenericTypographic(),g_ptextColor1);
 
       if(strHeader.length() > 0)
       {
@@ -294,8 +296,8 @@ void ca2_install_canvas_on_paint(Graphics * pdc, LPCRECT lpcrect, int iMode)
 
       size_t iRefresh = 884;
       size_t iEat = 8;
-      const wchar_t * psz = L"development message so international english last lines of file \"install.log\" ::::::::";
-      pdc->DrawString(psz,wcslen(psz) - iEat + 1 + ((::GetTickCount() / (iRefresh - 277) % iEat)),g_pfont,PointF(10,10 + cyText * 2),StringFormat::GenericTypographic(),g_ptextColor1);
+      //const wchar_t * psz = L"development message so international english last lines of file \"install.log\" ::::::::";
+      //pdc->DrawString(psz,wcslen(psz) - iEat + 1 + ((::GetTickCount() / (iRefresh - 277) % iEat)),g_pfont,PointF(10,10 + cyText * 2),StringFormat::GenericTypographic(),g_ptextColor1);
       pdc->DrawString(u16(s_strLastStatus).c_str(),-1,g_pfont,PointF(10,10 + cyText * 3),StringFormat::GenericTypographic(),g_ptextColor1);
 
       int iLineMin = 5;
@@ -383,12 +385,12 @@ void ca2_install_canvas_on_paint(Graphics * pdc, LPCRECT lpcrect, int iMode)
    double cyBar = cyText * 1.2;
 
    {
+      pdc->FillRectangle(g_pBarBk,RectF(10.0,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0,lpcrect->right - 10.0 - 10.0,cyBar));
 
-      pdc->DrawRectangle(g_pBarBorder,Rect(10.0,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0,lpcrect->right - 10.0 - 10.0,cyBar));
       if(bProgress)
       {
-         double iRight = (g_cy - 11 - 11) * dProgress;
-         pdc->FillRectangle(g_pBar,Rect(11.0,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1,iRight,cyBar - 2.0));
+         double iRight = ((double) g_cx - 11.0 - 11.0) * dProgress;
+         pdc->FillRectangle(g_pBar,RectF(11.0,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0,iRight,cyBar - 2.0));
       }
       else
       {
@@ -397,12 +399,13 @@ void ca2_install_canvas_on_paint(Graphics * pdc, LPCRECT lpcrect, int iMode)
          double iBarWidth = (lpcrect->right - 11.0 - 11.0) / 4;
          double i = ((lpcrect->right - 11.0 - 11.0) * dProgress) + 11.0;
          double iRight = i + iBarWidth;
-         pdc->FillRectangle(g_pBar,Rect(11.0 + i,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0,min(lpcrect->right - 10.0,iRight) - 11,cyBar - 2.0));
+         pdc->FillRectangle(g_pBar,RectF(11.0 + i,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0,min(lpcrect->right - 10.0,iRight) - 11 - i,cyBar - 2.0));
          if(iRight >= lpcrect->right - 10)
          {
-            pdc->FillRectangle(g_pBar,Rect(11.0,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0,iRight - lpcrect->right - 10.0 - 11.0,cyBar - 2.0));
+            pdc->FillRectangle(g_pBar,RectF(11.0,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0,iRight - lpcrect->right - 10.0 - 11.0,cyBar - 2.0));
          }
       }
+      pdc->DrawRectangle(g_pBarBorder,RectF(10.0,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0,lpcrect->right - 10.0 - 10.0,cyBar));
 
    }
 

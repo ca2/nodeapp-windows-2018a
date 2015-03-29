@@ -461,7 +461,7 @@ void update_layered_window()
 
    g_pgraphics->SetCompositingMode(CompositingModeSourceCopy);
    {
-      SolidBrush sb(Color(184,84,84,84));
+      SolidBrush sb(Color(184 + 23, 23, 23, 23));
       g_pgraphics->FillRectangle(&sb,make_rect(&rect));
    }
 
@@ -546,10 +546,12 @@ void OnTimer(HWND hwnd, UINT nIDEvent)
       //OnPaint(hwnd, hdc, NULL);
       //::ReleaseDC(hwnd, hdc);
 
-      update_layered_window();
+      
 
    }
 }
+
+
 
 //
 //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
@@ -655,7 +657,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 
 
-
+DWORD WINAPI thread_proc_draw(LPVOID lpParam)
+{
+   while(g_hwnd != NULL)
+   {
+      update_layered_window();
+      Sleep(5);
+   }
+   return 0;
+}
 
 
 
@@ -2712,12 +2722,12 @@ void DragMainWindow()
       0, 
       0,
       SWP_NOSIZE | SWP_SHOWWINDOW);
-   if(g_iStyle == 0)
+/*   if(g_iStyle == 0)
    {
    }
    else
    {
       ::SetLayeredWindowAttributes(g_hwnd, 0, (255 * 100) / 100, LWA_ALPHA);
    }
-   ::RedrawWindow(g_hwnd, NULL, NULL, RDW_UPDATENOW | RDW_INVALIDATE);
+   ::RedrawWindow(g_hwnd, NULL, NULL, RDW_UPDATENOW | RDW_INVALIDATE);*/
 }

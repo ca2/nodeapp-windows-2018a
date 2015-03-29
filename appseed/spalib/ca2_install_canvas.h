@@ -16,4 +16,4 @@ SPALIB_API void ca2_install_canvas_on_paint(HDC hdc, LPCRECT lpcrect, int iMode)
 
 LONG width(LPCRECT lpcrect);
 LONG height(LPCRECT lpcrect);
-Rect make_rect(LPCRECT lpcrect);
+Rect make_rect(LPCRECT lpcrect, bool bMinusOne = false);
