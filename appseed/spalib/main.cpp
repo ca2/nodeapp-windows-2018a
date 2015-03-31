@@ -202,6 +202,11 @@ void start_app_install_in_context();
 SPALIB_API int spa_admin()
 {
 
+   trace("--\r\n");
+   trace(":::::Installing spa and installer\r\n");
+   trace("***Registering spa file handler\r\n");
+   trace("Registering\r\n");
+
    trace(0.0);
 
    register_spa_file_type();
@@ -852,9 +857,9 @@ int check_spa_installation()
 
    if(spa_get_admin())
    {
-      trace(":::::Installing spa and installer\n");
-      trace("***Installing spa\n");
-      trace("Downloading spaadmin\n");
+      trace(":::::Installing spa and installer\r\n");
+      trace("***Installing spa\r\n");
+      trace("Downloading spaadmin\r\n");
    }
 
 
@@ -864,7 +869,7 @@ int check_spa_installation()
    if(spa_get_admin())
    {
       trace(0.2);
-      trace("Downloading spa\n");
+      trace("Downloading spa\r\n");
    }
 
    if(!check_spa_bin())
@@ -873,7 +878,7 @@ int check_spa_installation()
    if(spa_get_admin())
    {
       trace(0.3);
-      trace("***Installing installer\n");
+      trace("***Installing installer\r\n");
    }
 
    if(!check_install_bin_set())
@@ -1353,7 +1358,7 @@ md5retry:
          {
             trace("Downloading ");
             trace(::file::title(strFile.c_str()));
-            trace("\n");
+            trace("\r\n");
 
          }
 
