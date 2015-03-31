@@ -96,7 +96,7 @@ void ca2_install_canvas_on_paint(Graphics * pdc, LPCRECT lpcrect, int iMode)
          bool bNormal = false;
          bool bHeader = false;
          bool bBold = false;
-         bool bPreNormal = false;
+         bool bPreNormal = true;
          bool bStart = false;
          while(iTell > 0 && !bStart && !(bNormal && bBold && bProgress && bHeader))
          {
@@ -119,40 +119,49 @@ void ca2_install_canvas_on_paint(Graphics * pdc, LPCRECT lpcrect, int iMode)
                {
                   bStart = true;
                }
-               else if(str_begins_ci(strLine.c_str(),":::::") && !bHeader && strLine.length() > 0 && bBold && bNormal && bPreNormal)
+               else if(str_begins_ci(strLine.c_str(),":::::"))
                {
-                  bHeader = true;
                   strLine = strLine.substr(5);
-                  strHeader = u16(strLine);
+                  if(!bHeader && strLine.length() > 0 && bBold && bNormal && bPreNormal)
+                  {
+                     bHeader = true;
+                     strHeader = u16(strLine);
+                  }
                }
-               else if(str_begins_ci(strLine.c_str(),"***") && !bBold && strLine.length() > 0 && bNormal && bPreNormal)
+               else if(str_begins_ci(strLine.c_str(),"***"))
                {
-                  bBold = true;
                   strLine = strLine.substr(3);
-                  strBold = u16(strLine);
+                  if(!bBold && strLine.length() > 0 && bNormal && bPreNormal)
+                  {
+                     bBold = true;
+                     strBold = u16(strLine);
+                  }
                }
-               else if(str_begins_ci(strLine.c_str(),"|||") && !bProgress)
+               else if(str_begins_ci(strLine.c_str(),"|||"))
                {
-                  bProgress = true;
                   strLine = strLine.substr(3);
-                  long long int i = _atoi64(strLine.c_str());
-                  dProgress = (double)i / 10000000.0;
-                  char sz[128];
-                  sprintf(sz,"%0.1f%%",dProgress);
-                  strProgress = u16(sz);
-                  dProgress /= 100.0;
+                  if(!bProgress && strLine.length() > 0)
+                  {
+                     bProgress = true;
+                     long long int i = _atoi64(strLine.c_str());
+                     dProgress = (double)i / 10000000.0;
+                     char sz[128];
+                     sprintf(sz,"%0.1f%%",dProgress);
+                     strProgress = u16(sz);
+                     dProgress /= 100.0;
+                  }
                }
-               else if(!str_begins_ci(strLine.c_str(),"/ ") && !str_begins_ci(strLine.c_str(),":::::") && !str_begins_ci(strLine.c_str(),"|||") && !str_begins_ci(strLine.c_str(),"***") && strLine.length() > 0 && !bNormal && !bBold && !bHeader && bPreNormal)
+               else if(!str_begins_ci(strLine.c_str(),"/ ") && strLine.length() > 0 && !bNormal && !bBold && !bHeader && bPreNormal)
                {
                   bNormal = true;
                   strNormal = u16(strLine);
                }
-               else if(strLine.length() > 0 && !bPreNormal && !bBold && !bNormal && !bHeader)
-               {
-                  bPreNormal = true;
-                  //::SelectObject(hdc, hfont);
-                  //::TextOutU(hdc, 10, 10 + size.cy * 4, strLine.c_str(), strLine.length());
-               }
+               //else if(strLine.length() > 0 && !bPreNormal && !bBold && !bNormal && !bHeader)
+               //{
+               //   bPreNormal = true;
+               //   //::SelectObject(hdc, hfont);
+               //   //::TextOutU(hdc, 10, 10 + size.cy * 4, strLine.c_str(), strLine.length());
+               //}
                strLine = ch;
             }
             else
