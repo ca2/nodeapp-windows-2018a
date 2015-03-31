@@ -242,17 +242,17 @@ extern bool g_bInstallSet;
 extern FILE * g_ftrace;
 
 
-extern bool Get(const std::string& url_in, std::string & doc);
-extern bool Get(const std::string& url_in, bool bExist, int iLength, const char * pszMd5, int iGzLen);
-extern bool DownloadFile(const std::string& url_in, bool bExist, int iLength, const char * pszMd5, int iGzLen);
-extern int GetFileList(stringa & stringa, LPCTSTR lpcszUrl, strintmap & mapLen, strintmap & mapGzLen, strstrmap & mapMd5);
-extern int GetLocalFileList(stringa & stringa, LPCTSTR lpcszUrl);
-extern int DownloadFileList(stringa & stringa, strintmap & mapLen, strstrmap & mapMd5, strintmap & mapGzLen);
-extern void ParseIndexFile(const char * psz, strintmap & mapLen, strstrmap & mapMd5, strintmap & mapGzLen);
-extern int UncompressFileList(stringa & stringa, strstrmap & strmapMd5);
-extern void ParseSpaIndex(XNode & node);
-extern void CommandLang(int iLang);
-extern std::string Login();
+//extern bool Get(const std::string& url_in, std::string & doc);
+//extern bool Get(const std::string& url_in, bool bExist, int iLength, const char * pszMd5, int iGzLen);
+//extern bool DownloadFile(const std::string& url_in, bool bExist, int iLength, const char * pszMd5, int iGzLen);
+//extern int GetFileList(stringa & stringa, LPCTSTR lpcszUrl, strintmap & mapLen, strintmap & mapGzLen, strstrmap & mapMd5);
+//extern int GetLocalFileList(stringa & stringa, LPCTSTR lpcszUrl);
+//extern int DownloadFileList(stringa & stringa, strintmap & mapLen, strstrmap & mapMd5, strintmap & mapGzLen);
+//extern void ParseIndexFile(const char * psz, strintmap & mapLen, strstrmap & mapMd5, strintmap & mapGzLen);
+//extern int UncompressFileList(stringa & stringa, strstrmap & strmapMd5);
+//extern void ParseSpaIndex(XNode & node);
+//extern void CommandLang(int iLang);
+//extern std::string Login();
 
 
 stringa install_get_plugin_base_library_list(const string & strVersion);
@@ -276,7 +276,8 @@ extern DWORD g_dwDownloadRemain;
 
 
 
-void trace(const char * psz);
+void trace(const string & psz);
+void trace(double dRate);
 
 
 
@@ -284,7 +285,7 @@ std::string install(const char * psz);
 
 SPALIB_API  std::string get_temp_file_name(const char * pszName, const char * pszExtension);
 
-void trace_add(const char * psz);
+//void trace_add(const char * psz);
 
 SPALIB_API  int spalib_main(HINSTANCE hInstance,
                      HINSTANCE hPrevInstance,

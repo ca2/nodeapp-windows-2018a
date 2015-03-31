@@ -125,17 +125,17 @@ stringa g_straHost;
 
 
 
-bool Get(const std::string& url_in, std::string & doc);
-bool Get(const std::string& url_in, bool bExist, int iLength, const char * pszMd5, int iGzLen);
-bool DownloadFile(const std::string& url_in, bool bExist, int iLength, const char * pszMd5, int iGzLen);
-int GetFileList(stringa & stringa, LPCTSTR lpcszUrl, strintmap & mapLen, strintmap & mapGzLen, strstrmap & mapMd5);
-int GetLocalFileList(stringa & stringa, LPCTSTR lpcszUrl);
-int DownloadFileList(stringa & stringa, strintmap & mapLen, strstrmap & mapMd5, strintmap & mapGzLen);
-void ParseIndexFile(const char * psz, strintmap & mapLen, strstrmap & mapMd5, strintmap & mapGzLen);
-int UncompressFileList(stringa & stringa, strstrmap & strmapMd5);
-void ParseSpaIndex(XNode & node);
-void CommandLang(int iLang);
-//std::string Login();
+//bool Get(const std::string& url_in, std::string & doc);
+//bool Get(const std::string& url_in, bool bExist, int iLength, const char * pszMd5, int iGzLen);
+//bool DownloadFile(const std::string& url_in, bool bExist, int iLength, const char * pszMd5, int iGzLen);
+//int GetFileList(stringa & stringa, LPCTSTR lpcszUrl, strintmap & mapLen, strintmap & mapGzLen, strstrmap & mapMd5);
+//int GetLocalFileList(stringa & stringa, LPCTSTR lpcszUrl);
+//int DownloadFileList(stringa & stringa, strintmap & mapLen, strstrmap & mapMd5, strintmap & mapGzLen);
+//void ParseIndexFile(const char * psz, strintmap & mapLen, strstrmap & mapMd5, strintmap & mapGzLen);
+//int UncompressFileList(stringa & stringa, strstrmap & strmapMd5);
+//void ParseSpaIndex(XNode & node);
+//void CommandLang(int iLang);
+////std::string Login();
 
 
 
@@ -199,8 +199,8 @@ void CommandRegister();
 //void CommandLogin();
 void CommandFinish();
 //DWORD WINAPI ThreadProcCommandLogin(LPVOID lpParam);
-DWORD WINAPI ThreadProcCommandStart(LPVOID lpParam);
-DWORD WINAPI ThreadProcAppListInitialize(LPVOID lpParam);
+//DWORD WINAPI ThreadProcCommandStart(LPVOID lpParam);
+//DWORD WINAPI ThreadProcAppListInitialize(LPVOID lpParam);
 
 double g_dAnime = 0.0;
 double g_dPi = asin(1.0) * 4;
@@ -298,64 +298,64 @@ int run_spa(int nCmdShow)
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
 
-   hInst = hInstance; // Store instance handle in our global variable
-   
+   //hInst = hInstance; // Store instance handle in our global variable
+   //
 
 
-   g_strInstallGz = dir::module_folder("ca2\\bz\\stage\\");
-   g_strInstall = dir::module_folder("ca2\\stage\\");
+   //g_strInstallGz = dir::module_folder("ca2\\bz\\stage\\");
+   //g_strInstall = dir::module_folder("ca2\\stage\\");
 
-   g_strIndexGz = dir::path(g_strInstallGz.c_str(), ("app\\stage\\metastage\\" + g_strStart + ".spa.bz").c_str());
-   g_strIndex = dir::path(g_strInstallGz.c_str(), ("app\\stage\\metastage\\" + g_strStart + ".spa").c_str());
+   //g_strIndexGz = dir::path(g_strInstallGz.c_str(), ("app\\stage\\metastage\\" + g_strStart + ".spa.bz").c_str());
+   //g_strIndex = dir::path(g_strInstallGz.c_str(), ("app\\stage\\metastage\\" + g_strStart + ".spa").c_str());
 
-   bool bOfflineInstall1 = dir::exists(dir::module_folder("ca2\\bz").c_str());
-   //bool bOfflineInstall2 = file::exists(g_strIndexGz.c_str());
-   //g_bOfflineInstall = bOfflineInstall1 && bOfflineInstall2;
-   g_bOfflineInstall = bOfflineInstall1;
+   //bool bOfflineInstall1 = dir::exists(dir::module_folder("ca2\\bz").c_str());
+   ////bool bOfflineInstall2 = file::exists(g_strIndexGz.c_str());
+   ////g_bOfflineInstall = bOfflineInstall1 && bOfflineInstall2;
+   //g_bOfflineInstall = bOfflineInstall1;
 
-   // Default stage.bz folder not present, would default to internet install
-   // since the spa.xml is not present and contains turning information.
-   if(!g_bOfflineInstall && (g_strStart.length() == 0 || (!g_bForceUpdatedBuild && g_strBuildResource.length() == 0)))
-   {
-      std::string str = file::get_contents(dir::module_folder("spa.xml").c_str());
-      XNode node;
-      node.Load(str.c_str());
-      ParseSpaIndex(node);
-   }
+   //// Default stage.bz folder not present, would default to internet install
+   //// since the spa.xml is not present and contains turning information.
+   //if(!g_bOfflineInstall && (g_strStart.length() == 0 || (!g_bForceUpdatedBuild && g_strBuildResource.length() == 0)))
+   //{
+   //   std::string str = file::get_contents(dir::module_folder("spa.xml").c_str());
+   //   XNode node;
+   //   node.Load(str.c_str());
+   //   ParseSpaIndex(node);
+   //}
 
-   // Default stage.bz folder not present, would default to internet install
-   // since the spa.xml is not present and contains turning information.
-   if(!g_bOfflineInstall && !g_bInstallSet && (g_strStart.length() == 0 || (!g_bForceUpdatedBuild && g_strBuildResource.length() == 0)))
-   {
-      std::string str = read_resource_as_string(NULL, 1984, "CA2SP");
-      XNode node;
-      node.Load(str.c_str());
-      ParseSpaIndex(node);
-   }
-
-
-   if(g_strStart == "***parse_file_name")
-   {
-
-   }
+   //// Default stage.bz folder not present, would default to internet install
+   //// since the spa.xml is not present and contains turning information.
+   //if(!g_bOfflineInstall && !g_bInstallSet && (g_strStart.length() == 0 || (!g_bForceUpdatedBuild && g_strBuildResource.length() == 0)))
+   //{
+   //   std::string str = read_resource_as_string(NULL, 1984, "CA2SP");
+   //   XNode node;
+   //   node.Load(str.c_str());
+   //   ParseSpaIndex(node);
+   //}
 
 
-   g_strIndexGz = dir::path(g_strInstallGz.c_str(),("app\\stage\\metastage\\" + g_strStart + ".spa.bz").c_str());
-   g_strIndex = dir::path(g_strInstallGz.c_str(),("app\\stage\\metastage\\" + g_strStart + ".spa").c_str());
+   //if(g_strStart == "***parse_file_name")
+   //{
 
-   g_bInternetInstall = !g_bOfflineInstall;
+   //}
 
-   if(g_iStart == 4)
-   {
-      CommandStart();
-   }
-   else if(g_strLocale.length() > 0)
-   {
-      if(g_strStart.length() > 0)
-      {
-         CommandStart();
-      }
-   }
+
+   //g_strIndexGz = dir::path(g_strInstallGz.c_str(),("app\\stage\\metastage\\" + g_strStart + ".spa.bz").c_str());
+   //g_strIndex = dir::path(g_strInstallGz.c_str(),("app\\stage\\metastage\\" + g_strStart + ".spa").c_str());
+
+   //g_bInternetInstall = !g_bOfflineInstall;
+
+   //if(g_iStart == 4)
+   //{
+   //   CommandStart();
+   //}
+   //else if(g_strLocale.length() > 0)
+   //{
+   //   if(g_strStart.length() > 0)
+   //   {
+   //      CommandStart();
+   //   }
+   //}
 
 
    return TRUE;
@@ -673,9 +673,9 @@ DWORD WINAPI thread_proc_draw(LPVOID lpParam)
 void CommandStart()
 {
    //if(spa_get_admin())
-   {
-      ::CreateThread(NULL, 0, ThreadProcCommandStart, NULL, 0, 0);
-   }
+   //{
+   //   ::CreateThread(NULL, 0, ThreadProcCommandStart, NULL, 0, 0);
+   //}
    /*else
    {
       std::string strFileAdmin = dir::path(dir::afterca2().c_str(), ("stage\\" + spa_get_platform() + "\\spa.exe").c_str());
@@ -906,310 +906,310 @@ bool Get(const std::string& url_in, bool bExist, int iLength, const char * pszMd
 }
 
 
-bool DownloadFile(const std::string& url_in, bool bExist, int iLength, const char * pszMd5, int iGzLen)
-{
-   if(g_bOfflineInstall)
-      return true;
-	std::string url = url_in;
-	std::string file;
-   std::string file2;
-   std::string dir;
-   std::string dir2;
-   std::string dir3;
-   dir = dir::beforeca2();
-   if(dir.substr(dir.size() - 2, 1) != "\\")
-   {
-      dir += "\\";
-   }
-   dir3 = dir + "ca2\\time\\patchwork\\";
-   dir2 = dir + "ca2\\time\\unbz\\";
-   dir += "ca2\\time\\bz\\";
-   int oldpos = -1;
-	{
-      int pos = url_in.find(g_strInstall);
-      if(pos == 0)
-      {
-         url = url_in.substr(g_strInstall.length());
-      }
-      int oldpos = -1;
-      pos = url.find("/");
-      std::string lastfile;
-		while (pos >=0)
-		{
-			file = url.substr(oldpos + 1, pos - oldpos -1);
-         if(lastfile.size() > 0)
-            dir +=  lastfile + "\\";
-         lastfile = file;
-         oldpos = pos;
-         pos = url.find("/", oldpos + 1);
-		}
-		file = url.substr(oldpos + 1);
-      if(lastfile.size() > 0)
-         dir +=  lastfile + "\\";
-	}
-   if(_stricmp(file.substr(file.length() - 3, 3).c_str(), ".bz") == 0)
-   {
-      file2 = file.substr(0, file.length() - 3);
-   }
-   else
-   {
-      file2 = file;
-   }
-   dir::mk(dir.c_str());
-   
-   // first check if the exiting (old file) is already up-to-date (the current one)
-   if(bExist)
-   {
-      DWORD dwFileAttributes = ::GetFileAttributes((dir2 + file2).c_str());
-      if(dwFileAttributes != INVALID_FILE_ATTRIBUTES &&
-      (dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == 0)
-      {
-         if(iLength != -1 && iLength == file::length((dir2 + file2).c_str()))
-         {
-            if(pszMd5 != NULL && strlen(pszMd5) > 0 && _stricmp(file::md5((dir2 + file2).c_str()).c_str(), pszMd5) == 0)
-            {
-               trace_add(_unitext(" up-to-date ✓"));
-               return true;
-            }
-         }
-      }
-   }
-#ifdef WIN32
-   bool bOk = false;
-   int iRetry = 0;
-   int iMaxRetry = 3;
-   char sz[1024];
-   int iStatus;
-   if(file::exists((dir2 + file2).c_str()))
-   {
-      // then first try to download and apply patch
-      std::string strOldMd5 = file::md5((dir2 + file2).c_str());
-      std::string strNewMd5 = pszMd5;
-      dir::mk(dir::name((dir + file).c_str()).c_str());
-      g_dwCurFileLen = iGzLen;
-      g_dwDownloadLen = 0;
-      keep_true keepDownloadTrue(g_bMsDownload);
-      int iBsLen = 0;
-      bool bPossible = false;
-      while(true)
-      {
-         std::string strUrl;
-         strUrl = "http://saintlouis.us.spa.api.veriterse.net/bspatch?file=";
-         strUrl += url_encode(file2.c_str());
-         strUrl += "&old_hash=";
-         strUrl += strOldMd5;
-         strUrl += "&new_hash=";
-         strUrl += strNewMd5;
-         std::string strBsPatch = dir + file + "." + strOldMd5 + "." + strNewMd5 + ".bspatch";
-         bOk = ms_download(strUrl.c_str(), strBsPatch.c_str(), false, &iStatus);
-         if(iStatus == 404)
-            break;
-         if(!bPossible)
-         {
-            bPossible = true;
-            ///trace_add(" patching may be possible");
-         }
-         if(bOk)
-         {
-            int iResult = 0;
-            if(iLength != -1)
-            {
-               dir::mk(dir::name((dir3 + file2).c_str()).c_str());
-               iResult = bspatch((dir2 + file2).c_str(), (dir3 + file2).c_str(), strBsPatch.c_str());
-               if(iResult != 0)
-               {
-               //   trace("");
-                 // trace("Patch failed : files may be corrupted):");
-/*                  trace("old   file : ");
-                  trace_add((dir2 + file2).c_str());
-                  trace("new   file :");
-                  trace_add((dir3 + file2).c_str());
-                  trace("patch file :");
-                  trace_add(strBsPatch.c_str());*/
-                  bOk = false;
-               }
-            }
-         }
-         if(bOk)
-         {
-            if(iLength == -1)
-            {
-             //  trace("Patch Length Check : There is no length information to check.");
-            }
-            else
-            {
-               int iActualLength = file::length((dir3 + file2).c_str());
-               bOk = iLength == iActualLength;
-               //trace("Patch Length Verification : ");
-               /*sprintf(sz, "correct length : %d bytes", iLength);
-               trace(sz);
-               sprintf(sz, "actual  length : %d bytes", iActualLength);
-               trace(sz);*/
-               if(bOk)
-               {
-               //   trace_add("Length match!");
-               }
-               else
-               {
-                 // trace_add(_unitext("Length mismatch ¡X!"));
-               }
-            }
-         }
-         if(bOk)
-         {
-            if(pszMd5 == NULL || strlen(pszMd5) == 0)
-            {
-               //trace("Patch MD5 Hash Verification : there is no MD5 Hash information to verify.");
-            }
-            else
-            {
-               std::string strMd5;
-               strMd5 = file::md5((dir3 + file2).c_str());
-               bOk = _stricmp(strMd5.c_str(), pszMd5) == 0;
-               //trace("Patch MD5 Hash Verification");
-               /*sprintf(sz, "correct MD5 Hash : %s", pszMd5);
-               trace(sz);
-               sprintf(sz, "actual  MD5 Hash : %s", strMd5.c_str());
-               trace(sz);*/
-               if(bOk)
-               {
-                 // trace_add("MD5 Hash match!");
-               }
-               else
-               {
-                  //trace_add(_unitext("MD5 Hash mismatch ¡X!"));
-               }
-            }
-         }
-         if(bOk)
-         {
-            if(!::CopyFile((dir3 + file2).c_str(), (dir2 + file2).c_str(), FALSE))
-            {
-               trace("Failed to copy patched file: Need Restart Because Of Reserved File");
-               g_NeedRestartBecauseOfReservedFile = true;
-            }
-            iBsLen = file::length(strBsPatch.c_str());
-            break;
-         }
-         iRetry++;
-         //sprintf(sz, "An error ocurred. Retrying... Attempt %d of %d.", iRetry, iMaxRetry);
-         //trace(sz);
-         //trace("Patch may fail due timeout if the patched file is large and it is the first");
-         //trace("time the patch is requested for the older-newer-pair patch combination.");
-         //trace("Other users later requesting the same older-newer-pair patch combination will");
-         //trace("benefit from the cached patch.");
-         Sleep((1984 + 1977) * 5);
-         if(iRetry >= iMaxRetry)
-            break;
-      }
-      if(bOk)
-      {
-         if(iRetry > 0)
-         {
-           // sprintf(sz, _unitext("Patch succeeded with %d retries %0.2fkbytes compressed ✓"), (iBsLen / 1000.0), iRetry);
-            trace_add(_unitext(" ✓"));
-         }
-         else
-         {
-            // this trace is added and signalized like that because it
-            // should be one of the most common cases and one of the most
-            // normal cases.
-            //sprintf(sz, _unitext(" patched %0.2fkbytes compressed ✓"), (iBsLen / 1000.0));
-            //trace_add(sz);
-            trace_add(_unitext(" ✓"));
-         }
-      }
-      else
-      {
-         //trace(_unitext("Patch failed ¡X!"));
-      }
-   }
-   // then finally try to download the entire file
-   if(!bOk)
-   {
-      dir::mk(dir::name((dir + file).c_str()).c_str());
-      g_dwCurFileLen = iGzLen;
-      g_dwDownloadLen = 0;
-      keep_true keepDownloadTrue(g_bMsDownload);
-      if(iRetry > 0)
-      {
-         //trace(("Going to download " + file::title(file2.c_str()) + " entirely").c_str());
-      }
-      trace(file2.c_str());
-      iRetry = 0;
-      while(true)
-      {
-         bOk = ms_download_progress((url_in + "." + pszMd5).c_str(), (dir + file + "." + pszMd5).c_str(), true, true, &iStatus);
-         if(iStatus == 404)
-            break;
-         if(bOk)
-         {
-            if(iLength != -1)
-            {
-               int iResult = bzuncompress((dir2 + file2).c_str(), (dir + file + "." + pszMd5).c_str());
-               if(iResult == -1)
-               {
-                  g_NeedRestartBecauseOfReservedFile = true;
-               }
-               else if(iResult == -2)
-               {
-                  g_NeedRestartFatalError = true;
-               }
-            }
-            bOk = iLength == -1 || iLength == file::length((dir2 + file2).c_str());
-            if(bOk)
-            {
-               bOk = pszMd5 == NULL || strlen(pszMd5) == 0 || _stricmp(file::md5((dir2 + file2).c_str()).c_str(), pszMd5) == 0;
-               if(bOk)
-               {
-                  break;
-               }
-            }
-         }
-         iRetry++;
-         //sprintf(sz, "An error ocurred. Retrying... Attempt %d of %d.", iRetry, iMaxRetry);
-         //trace(sz);
-         if(iRetry >= iMaxRetry)
-            break;
-      }
-      if(bOk)
-      {
-         sprintf(sz, _unitext("%0.2fkbytes compressed ✓"), (iGzLen / 1000.0));
-         trace(sz);
-      }
-      else
-      {
-         //trace((_unitext("Failed to download file ") + file2 + _unitext("¡X!")).c_str());
-      }
-   }
-   if(!bOk)
-   {
-      //sprintf(sz, _unitext("General failure to retrieve file \"%s\" ¡X!"), file2.c_str());
-      //trace(sz);
-   }
-   return bOk;
-#else
-	if (!strcasecmp(protocol.c_str(),"http") || !strcasecmp(protocol.c_str(),"https"))
-	{
-		SpaHttpGet s(h, url_in, "");
-//      s.SetLineProtocol(false);
-      s.SetFilename(dir + file);
-      dir::mk(dir::name((dir + file).c_str()).c_str());
-		h.Add(&s);
-		h.Select(31,0);
-		while (h.GetCount())
-		{
-			h.Select(31,0);
-		}
-		return s.Complete();
-	}
-	else
-	{
-		printf("Unknown protocol: '%s'\n",protocol.c_str());
-	}
-	return false;
-#endif
-}
+//bool DownloadFile(const std::string& url_in, bool bExist, int iLength, const char * pszMd5, int iGzLen)
+//{
+//   if(g_bOfflineInstall)
+//      return true;
+//	std::string url = url_in;
+//	std::string file;
+//   std::string file2;
+//   std::string dir;
+//   std::string dir2;
+//   std::string dir3;
+//   dir = dir::beforeca2();
+//   if(dir.substr(dir.size() - 2, 1) != "\\")
+//   {
+//      dir += "\\";
+//   }
+//   dir3 = dir + "ca2\\time\\patchwork\\";
+//   dir2 = dir + "ca2\\time\\unbz\\";
+//   dir += "ca2\\time\\bz\\";
+//   int oldpos = -1;
+//	{
+//      int pos = url_in.find(g_strInstall);
+//      if(pos == 0)
+//      {
+//         url = url_in.substr(g_strInstall.length());
+//      }
+//      int oldpos = -1;
+//      pos = url.find("/");
+//      std::string lastfile;
+//		while (pos >=0)
+//		{
+//			file = url.substr(oldpos + 1, pos - oldpos -1);
+//         if(lastfile.size() > 0)
+//            dir +=  lastfile + "\\";
+//         lastfile = file;
+//         oldpos = pos;
+//         pos = url.find("/", oldpos + 1);
+//		}
+//		file = url.substr(oldpos + 1);
+//      if(lastfile.size() > 0)
+//         dir +=  lastfile + "\\";
+//	}
+//   if(_stricmp(file.substr(file.length() - 3, 3).c_str(), ".bz") == 0)
+//   {
+//      file2 = file.substr(0, file.length() - 3);
+//   }
+//   else
+//   {
+//      file2 = file;
+//   }
+//   dir::mk(dir.c_str());
+//   
+//   // first check if the exiting (old file) is already up-to-date (the current one)
+//   if(bExist)
+//   {
+//      DWORD dwFileAttributes = ::GetFileAttributes((dir2 + file2).c_str());
+//      if(dwFileAttributes != INVALID_FILE_ATTRIBUTES &&
+//      (dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == 0)
+//      {
+//         if(iLength != -1 && iLength == file::length((dir2 + file2).c_str()))
+//         {
+//            if(pszMd5 != NULL && strlen(pszMd5) > 0 && _stricmp(file::md5((dir2 + file2).c_str()).c_str(), pszMd5) == 0)
+//            {
+//               trace_add(_unitext(" up-to-date ✓"));
+//               return true;
+//            }
+//         }
+//      }
+//   }
+//#ifdef WIN32
+//   bool bOk = false;
+//   int iRetry = 0;
+//   int iMaxRetry = 3;
+//   char sz[1024];
+//   int iStatus;
+//   if(file::exists((dir2 + file2).c_str()))
+//   {
+//      // then first try to download and apply patch
+//      std::string strOldMd5 = file::md5((dir2 + file2).c_str());
+//      std::string strNewMd5 = pszMd5;
+//      dir::mk(dir::name((dir + file).c_str()).c_str());
+//      g_dwCurFileLen = iGzLen;
+//      g_dwDownloadLen = 0;
+//      keep_true keepDownloadTrue(g_bMsDownload);
+//      int iBsLen = 0;
+//      bool bPossible = false;
+//      while(true)
+//      {
+//         std::string strUrl;
+//         strUrl = "http://saintlouis.us.spa.api.veriterse.net/bspatch?file=";
+//         strUrl += url_encode(file2.c_str());
+//         strUrl += "&old_hash=";
+//         strUrl += strOldMd5;
+//         strUrl += "&new_hash=";
+//         strUrl += strNewMd5;
+//         std::string strBsPatch = dir + file + "." + strOldMd5 + "." + strNewMd5 + ".bspatch";
+//         bOk = ms_download(strUrl.c_str(), strBsPatch.c_str(), false, &iStatus);
+//         if(iStatus == 404)
+//            break;
+//         if(!bPossible)
+//         {
+//            bPossible = true;
+//            ///trace_add(" patching may be possible");
+//         }
+//         if(bOk)
+//         {
+//            int iResult = 0;
+//            if(iLength != -1)
+//            {
+//               dir::mk(dir::name((dir3 + file2).c_str()).c_str());
+//               iResult = bspatch((dir2 + file2).c_str(), (dir3 + file2).c_str(), strBsPatch.c_str());
+//               if(iResult != 0)
+//               {
+//               //   trace("");
+//                 // trace("Patch failed : files may be corrupted):");
+///*                  trace("old   file : ");
+//                  trace_add((dir2 + file2).c_str());
+//                  trace("new   file :");
+//                  trace_add((dir3 + file2).c_str());
+//                  trace("patch file :");
+//                  trace_add(strBsPatch.c_str());*/
+//                  bOk = false;
+//               }
+//            }
+//         }
+//         if(bOk)
+//         {
+//            if(iLength == -1)
+//            {
+//             //  trace("Patch Length Check : There is no length information to check.");
+//            }
+//            else
+//            {
+//               int iActualLength = file::length((dir3 + file2).c_str());
+//               bOk = iLength == iActualLength;
+//               //trace("Patch Length Verification : ");
+//               /*sprintf(sz, "correct length : %d bytes", iLength);
+//               trace(sz);
+//               sprintf(sz, "actual  length : %d bytes", iActualLength);
+//               trace(sz);*/
+//               if(bOk)
+//               {
+//               //   trace_add("Length match!");
+//               }
+//               else
+//               {
+//                 // trace_add(_unitext("Length mismatch ¡X!"));
+//               }
+//            }
+//         }
+//         if(bOk)
+//         {
+//            if(pszMd5 == NULL || strlen(pszMd5) == 0)
+//            {
+//               //trace("Patch MD5 Hash Verification : there is no MD5 Hash information to verify.");
+//            }
+//            else
+//            {
+//               std::string strMd5;
+//               strMd5 = file::md5((dir3 + file2).c_str());
+//               bOk = _stricmp(strMd5.c_str(), pszMd5) == 0;
+//               //trace("Patch MD5 Hash Verification");
+//               /*sprintf(sz, "correct MD5 Hash : %s", pszMd5);
+//               trace(sz);
+//               sprintf(sz, "actual  MD5 Hash : %s", strMd5.c_str());
+//               trace(sz);*/
+//               if(bOk)
+//               {
+//                 // trace_add("MD5 Hash match!");
+//               }
+//               else
+//               {
+//                  //trace_add(_unitext("MD5 Hash mismatch ¡X!"));
+//               }
+//            }
+//         }
+//         if(bOk)
+//         {
+//            if(!::CopyFile((dir3 + file2).c_str(), (dir2 + file2).c_str(), FALSE))
+//            {
+//               trace("Failed to copy patched file: Need Restart Because Of Reserved File");
+//               g_NeedRestartBecauseOfReservedFile = true;
+//            }
+//            iBsLen = file::length(strBsPatch.c_str());
+//            break;
+//         }
+//         iRetry++;
+//         //sprintf(sz, "An error ocurred. Retrying... Attempt %d of %d.", iRetry, iMaxRetry);
+//         //trace(sz);
+//         //trace("Patch may fail due timeout if the patched file is large and it is the first");
+//         //trace("time the patch is requested for the older-newer-pair patch combination.");
+//         //trace("Other users later requesting the same older-newer-pair patch combination will");
+//         //trace("benefit from the cached patch.");
+//         Sleep((1984 + 1977) * 5);
+//         if(iRetry >= iMaxRetry)
+//            break;
+//      }
+//      if(bOk)
+//      {
+//         if(iRetry > 0)
+//         {
+//           // sprintf(sz, _unitext("Patch succeeded with %d retries %0.2fkbytes compressed ✓"), (iBsLen / 1000.0), iRetry);
+//            trace_add(_unitext(" ✓"));
+//         }
+//         else
+//         {
+//            // this trace is added and signalized like that because it
+//            // should be one of the most common cases and one of the most
+//            // normal cases.
+//            //sprintf(sz, _unitext(" patched %0.2fkbytes compressed ✓"), (iBsLen / 1000.0));
+//            //trace_add(sz);
+//            trace_add(_unitext(" ✓"));
+//         }
+//      }
+//      else
+//      {
+//         //trace(_unitext("Patch failed ¡X!"));
+//      }
+//   }
+//   // then finally try to download the entire file
+//   if(!bOk)
+//   {
+//      dir::mk(dir::name((dir + file).c_str()).c_str());
+//      g_dwCurFileLen = iGzLen;
+//      g_dwDownloadLen = 0;
+//      keep_true keepDownloadTrue(g_bMsDownload);
+//      if(iRetry > 0)
+//      {
+//         //trace(("Going to download " + file::title(file2.c_str()) + " entirely").c_str());
+//      }
+//      trace(file2.c_str());
+//      iRetry = 0;
+//      while(true)
+//      {
+//         bOk = ms_download_progress((url_in + "." + pszMd5).c_str(), (dir + file + "." + pszMd5).c_str(), true, true, &iStatus);
+//         if(iStatus == 404)
+//            break;
+//         if(bOk)
+//         {
+//            if(iLength != -1)
+//            {
+//               int iResult = bzuncompress((dir2 + file2).c_str(), (dir + file + "." + pszMd5).c_str());
+//               if(iResult == -1)
+//               {
+//                  g_NeedRestartBecauseOfReservedFile = true;
+//               }
+//               else if(iResult == -2)
+//               {
+//                  g_NeedRestartFatalError = true;
+//               }
+//            }
+//            bOk = iLength == -1 || iLength == file::length((dir2 + file2).c_str());
+//            if(bOk)
+//            {
+//               bOk = pszMd5 == NULL || strlen(pszMd5) == 0 || _stricmp(file::md5((dir2 + file2).c_str()).c_str(), pszMd5) == 0;
+//               if(bOk)
+//               {
+//                  break;
+//               }
+//            }
+//         }
+//         iRetry++;
+//         //sprintf(sz, "An error ocurred. Retrying... Attempt %d of %d.", iRetry, iMaxRetry);
+//         //trace(sz);
+//         if(iRetry >= iMaxRetry)
+//            break;
+//      }
+//      if(bOk)
+//      {
+//         sprintf(sz, _unitext("%0.2fkbytes compressed ✓"), (iGzLen / 1000.0));
+//         trace(sz);
+//      }
+//      else
+//      {
+//         //trace((_unitext("Failed to download file ") + file2 + _unitext("¡X!")).c_str());
+//      }
+//   }
+//   if(!bOk)
+//   {
+//      //sprintf(sz, _unitext("General failure to retrieve file \"%s\" ¡X!"), file2.c_str());
+//      //trace(sz);
+//   }
+//   return bOk;
+//#else
+//	if (!strcasecmp(protocol.c_str(),"http") || !strcasecmp(protocol.c_str(),"https"))
+//	{
+//		SpaHttpGet s(h, url_in, "");
+////      s.SetLineProtocol(false);
+//      s.SetFilename(dir + file);
+//      dir::mk(dir::name((dir + file).c_str()).c_str());
+//		h.Add(&s);
+//		h.Select(31,0);
+//		while (h.GetCount())
+//		{
+//			h.Select(31,0);
+//		}
+//		return s.Complete();
+//	}
+//	else
+//	{
+//		printf("Unknown protocol: '%s'\n",protocol.c_str());
+//	}
+//	return false;
+//#endif
+//}
 
 
 
@@ -1644,183 +1644,183 @@ void MainWindowRedraw()
 }
 
 
-int DownloadFileList(stringa & stringa, strintmap & mapLen, strstrmap & mapMd5, strintmap & mapGzLen)
-{
-restart_download:
-   g_dwDownloadTick = ::GetTickCount();
-   g_dwDownload = 0;
-   g_iDownloadRate = 0;
-   g_bShowPercentage = true;
-   g_iGzLen = 0;
-   
-   stringa::iterator it;
-   inta::iterator itLen;
-   stringa::iterator itMd5;
-   std::string str;
-   double d = 0.0;
-   g_dProgress = 0.0;
-   bool bDownload;
-   
-   for(
-      it = stringa.begin();
-      it != stringa.end();
-      it++)
-   {
-      if(g_iTotalGzLen > 0)
-      {
-         g_dProgress1 = (double) g_iGzLen / (double) g_iTotalGzLen;
-         g_dProgress2 = (double) (g_iGzLen + mapGzLen[*it]) / (double) g_iTotalGzLen;
-      }
-      else
-      {
-         g_dProgress1 = d / ((double) stringa.size());
-         d += 1.0;
-         g_dProgress2 = d / ((double) stringa.size());
-      }
-      str = g_strInstall;
-      str += *it;
-      std::string str1 = *it;
-      std::string str2 = dir::name(str.c_str());
-      if(str2.substr(0, g_strInstall.length()) == g_strInstall)
-      {
-         str2 = str2.substr(21);
-         str2 = str_replace(str2.c_str(), "\\", "/");
-      }
-      trace(str_replace(file::title((str2 + str).c_str()).c_str(), "\\", "/").c_str());
-      str += ".bz";
-      std::string str3 = str;
-      str += ".";
-      str += mapMd5[*it];
-      std::string strStageGz = ca2bz_get_dir(str1.c_str()) + ca2bz_get_file(str1.c_str(), mapMd5[*it].c_str());
-      std::string strStageUnbz = ca2unbz_get_dir(str1.c_str()) + ca2unbz_get_file(str1.c_str());
-      dir::mk(dir::name(strStageUnbz.c_str()).c_str());
-      // uncompress, may have downloaded .bz correctly in previous install
-      // and Get will later check if decompressed file is already the correct one
-      bzuncompress(strStageUnbz.c_str(), strStageGz.c_str());
-      bDownload = true;
-      if(str_ends_ci(strStageUnbz.c_str(), ".expand_fileset") && file::exists(strStageGz.c_str()) && file::length(strStageGz.c_str())>0)
-      {
-         std::string strExpand = *it;
-         std::string strCurrent = *it;
-         strExpand += ".spa";
-         strExpand = str_replace(str_replace(strExpand.c_str(), "\\", "_").c_str(), "/", "_");
-         strExpand = "app\\stage\\metastage\\" + strExpand;
-         if(GetFileList(stringa, strExpand.c_str() , mapLen, mapGzLen, mapMd5) > 0)
-         {
-            stringa.remove(strCurrent.c_str());
-            g_iTotalGzLen -= mapGzLen[strCurrent];
-            goto restart_download;
-         }
-      }
-      if(bDownload
-         && DownloadFile(str3, true, mapLen[*it], mapMd5[*it].c_str(), mapGzLen[*it]))
-      {
-         g_dProgress = g_dProgress2;
-         if(str_ends_ci(strStageUnbz.c_str(), ".expand_fileset"))
-         {
-            str = *it;
-            std::string strExpand = *it;
-            std::string strCurrent = *it;
-            std::string strRelative = dir::path(dir::name(str.c_str()).c_str(), file::name(str.c_str()).c_str());
-            std::string strStageUnbz1 = ca2unbz_get_dir(str.c_str()) + ca2unbz_get_file(str.c_str());
-            std::string strStageUnbz2 = ca2unbz_get_dir(strRelative.c_str()) + ca2unbz_get_file(strRelative.c_str());
-            file::ftd(strStageUnbz2.c_str(), strStageUnbz.c_str());
-            strExpand += ".spa";
-            strExpand = str_replace(str_replace(strExpand.c_str(), "\\", "_").c_str(), "/", "_");
-            strExpand = "app\\stage\\metastage\\" + strExpand;
-            if(GetFileList(stringa, strExpand.c_str() , mapLen, mapGzLen, mapMd5) > 0)
-            {
-               stringa.remove(strCurrent.c_str());
-               g_iTotalGzLen -= mapGzLen[strCurrent];
-               goto restart_download;
-            }
-         }
-      }
-      else
-      {
-         if(bDownload)
-         {
-            /*std::string strError;
-            strError = "could not get file ";
-            strError += str;
-            trace(strError.c_str());*/
-            //::MessageBox(g_hwnd, strError.c_str(), "ca2 votagus spa",  MB_ICONINFORMATION);
-         }
-      }
-      g_iGzLen += mapGzLen[*it];
-      dlr(g_iGzLen);
-
-   }
-   MainWindowRedraw();
-   return stringa.size();
-}
-
-
-
-int UncompressFileList(stringa & stringa, strstrmap & strmapMd5)
-{
-   std::string strStage;
-   std::string strStageGz;
-   stringa::iterator it;
-   std::string str;
-   double d = 0.0;
-   g_dProgress = 0.0;
-   for(it = stringa.begin(); it != stringa.end(); it++)
-   {
-      //g_dProgress1 = d / ((double) stringa.size());
-      //d += 1.0;
-      //g_dProgress2 = d / ((double) stringa.size());
-      str = *it;
-      str += ".bz";
-      trace(str.c_str());
-      strStageGz = dir::path(g_strInstallGz.c_str(), ca2bz_get_file(str.c_str(), strmapMd5[*it].c_str()).c_str());
-      strStage = ca2_get_dir(str.c_str()) + ca2_get_file(str.c_str());
-      dir::mk(dir::name(strStage.c_str()).c_str());
-      bzuncompress(strStage.c_str(), strStageGz.c_str());
-      d += 1.0;
-      g_dProgress = d / ((double) stringa.size());
-   }
-   g_dProgress = 1.0;
-   MainWindowRedraw();
-   return stringa.size();
-}
-
-int CopyFileList(stringa & stringa)
-{
-   std::string strStage;
-   std::string strStageUnbz;
-   stringa::iterator it;
-   std::string str;
-   double d = 0.0;
-   g_dProgress = 0.0;
-   for(it = stringa.begin(); it != stringa.end(); it++)
-   {
-      //g_dProgress1 = d / ((double) stringa.size());
-      //d += 1.0;
-      //g_dProgress2 = d / ((double) stringa.size());
-      str = *it;
-      str += ".bz";
-      trace(str.c_str());
-      strStageUnbz = ca2unbz_get_dir(str.c_str()) + ca2unbz_get_file(str.c_str());
-      strStage = ca2_get_dir(str.c_str()) + ca2_get_file(str.c_str());
-      if(strStage.length() > strlen(".expand_fileset")
-         && _stricmp(strStage.substr(strStage.length() - strlen(".expand_fileset"), strlen(".expand_fileset")).c_str(), ".expand_fileset") ==
-0)
-      {
-//         file::ftd(strStage.substr(0, strStage.length() - strlen(".expand_fileset")).c_str(), strStageUnbz.c_str());
-      }
-      else
-      {
-         dir::mk(dir::name(strStage.c_str()).c_str());
-         ::CopyFile(strStageUnbz.c_str(), strStage.c_str(), FALSE);
-      }
-      d += 1.0;
-      g_dProgress = d / ((double) stringa.size());
-   }
-   g_dProgress = 1.0;
-   MainWindowRedraw();
-   return stringa.size();
-}
+//int DownloadFileList(stringa & stringa, strintmap & mapLen, strstrmap & mapMd5, strintmap & mapGzLen)
+//{
+//restart_download:
+//   g_dwDownloadTick = ::GetTickCount();
+//   g_dwDownload = 0;
+//   g_iDownloadRate = 0;
+//   g_bShowPercentage = true;
+//   g_iGzLen = 0;
+//   
+//   stringa::iterator it;
+//   inta::iterator itLen;
+//   stringa::iterator itMd5;
+//   std::string str;
+//   double d = 0.0;
+//   g_dProgress = 0.0;
+//   bool bDownload;
+//   
+//   for(
+//      it = stringa.begin();
+//      it != stringa.end();
+//      it++)
+//   {
+//      if(g_iTotalGzLen > 0)
+//      {
+//         g_dProgress1 = (double) g_iGzLen / (double) g_iTotalGzLen;
+//         g_dProgress2 = (double) (g_iGzLen + mapGzLen[*it]) / (double) g_iTotalGzLen;
+//      }
+//      else
+//      {
+//         g_dProgress1 = d / ((double) stringa.size());
+//         d += 1.0;
+//         g_dProgress2 = d / ((double) stringa.size());
+//      }
+//      str = g_strInstall;
+//      str += *it;
+//      std::string str1 = *it;
+//      std::string str2 = dir::name(str.c_str());
+//      if(str2.substr(0, g_strInstall.length()) == g_strInstall)
+//      {
+//         str2 = str2.substr(21);
+//         str2 = str_replace(str2.c_str(), "\\", "/");
+//      }
+//      trace(str_replace(file::title((str2 + str).c_str()).c_str(), "\\", "/").c_str());
+//      str += ".bz";
+//      std::string str3 = str;
+//      str += ".";
+//      str += mapMd5[*it];
+//      std::string strStageGz = ca2bz_get_dir(str1.c_str()) + ca2bz_get_file(str1.c_str(), mapMd5[*it].c_str());
+//      std::string strStageUnbz = ca2unbz_get_dir(str1.c_str()) + ca2unbz_get_file(str1.c_str());
+//      dir::mk(dir::name(strStageUnbz.c_str()).c_str());
+//      // uncompress, may have downloaded .bz correctly in previous install
+//      // and Get will later check if decompressed file is already the correct one
+//      bzuncompress(strStageUnbz.c_str(), strStageGz.c_str());
+//      bDownload = true;
+//      if(str_ends_ci(strStageUnbz.c_str(), ".expand_fileset") && file::exists(strStageGz.c_str()) && file::length(strStageGz.c_str())>0)
+//      {
+//         std::string strExpand = *it;
+//         std::string strCurrent = *it;
+//         strExpand += ".spa";
+//         strExpand = str_replace(str_replace(strExpand.c_str(), "\\", "_").c_str(), "/", "_");
+//         strExpand = "app\\stage\\metastage\\" + strExpand;
+//         if(GetFileList(stringa, strExpand.c_str() , mapLen, mapGzLen, mapMd5) > 0)
+//         {
+//            stringa.remove(strCurrent.c_str());
+//            g_iTotalGzLen -= mapGzLen[strCurrent];
+//            goto restart_download;
+//         }
+//      }
+//      if(bDownload
+//         && DownloadFile(str3, true, mapLen[*it], mapMd5[*it].c_str(), mapGzLen[*it]))
+//      {
+//         g_dProgress = g_dProgress2;
+//         if(str_ends_ci(strStageUnbz.c_str(), ".expand_fileset"))
+//         {
+//            str = *it;
+//            std::string strExpand = *it;
+//            std::string strCurrent = *it;
+//            std::string strRelative = dir::path(dir::name(str.c_str()).c_str(), file::name(str.c_str()).c_str());
+//            std::string strStageUnbz1 = ca2unbz_get_dir(str.c_str()) + ca2unbz_get_file(str.c_str());
+//            std::string strStageUnbz2 = ca2unbz_get_dir(strRelative.c_str()) + ca2unbz_get_file(strRelative.c_str());
+//            file::ftd(strStageUnbz2.c_str(), strStageUnbz.c_str());
+//            strExpand += ".spa";
+//            strExpand = str_replace(str_replace(strExpand.c_str(), "\\", "_").c_str(), "/", "_");
+//            strExpand = "app\\stage\\metastage\\" + strExpand;
+//            if(GetFileList(stringa, strExpand.c_str() , mapLen, mapGzLen, mapMd5) > 0)
+//            {
+//               stringa.remove(strCurrent.c_str());
+//               g_iTotalGzLen -= mapGzLen[strCurrent];
+//               goto restart_download;
+//            }
+//         }
+//      }
+//      else
+//      {
+//         if(bDownload)
+//         {
+//            /*std::string strError;
+//            strError = "could not get file ";
+//            strError += str;
+//            trace(strError.c_str());*/
+//            //::MessageBox(g_hwnd, strError.c_str(), "ca2 votagus spa",  MB_ICONINFORMATION);
+//         }
+//      }
+//      g_iGzLen += mapGzLen[*it];
+//      dlr(g_iGzLen);
+//
+//   }
+//   MainWindowRedraw();
+//   return stringa.size();
+//}
+//
+//
+//
+//int UncompressFileList(stringa & stringa, strstrmap & strmapMd5)
+//{
+//   std::string strStage;
+//   std::string strStageGz;
+//   stringa::iterator it;
+//   std::string str;
+//   double d = 0.0;
+//   g_dProgress = 0.0;
+//   for(it = stringa.begin(); it != stringa.end(); it++)
+//   {
+//      //g_dProgress1 = d / ((double) stringa.size());
+//      //d += 1.0;
+//      //g_dProgress2 = d / ((double) stringa.size());
+//      str = *it;
+//      str += ".bz";
+//      trace(str.c_str());
+//      strStageGz = dir::path(g_strInstallGz.c_str(), ca2bz_get_file(str.c_str(), strmapMd5[*it].c_str()).c_str());
+//      strStage = ca2_get_dir(str.c_str()) + ca2_get_file(str.c_str());
+//      dir::mk(dir::name(strStage.c_str()).c_str());
+//      bzuncompress(strStage.c_str(), strStageGz.c_str());
+//      d += 1.0;
+//      g_dProgress = d / ((double) stringa.size());
+//   }
+//   g_dProgress = 1.0;
+//   MainWindowRedraw();
+//   return stringa.size();
+//}
+//
+//int CopyFileList(stringa & stringa)
+//{
+//   std::string strStage;
+//   std::string strStageUnbz;
+//   stringa::iterator it;
+//   std::string str;
+//   double d = 0.0;
+//   g_dProgress = 0.0;
+//   for(it = stringa.begin(); it != stringa.end(); it++)
+//   {
+//      //g_dProgress1 = d / ((double) stringa.size());
+//      //d += 1.0;
+//      //g_dProgress2 = d / ((double) stringa.size());
+//      str = *it;
+//      str += ".bz";
+//      trace(str.c_str());
+//      strStageUnbz = ca2unbz_get_dir(str.c_str()) + ca2unbz_get_file(str.c_str());
+//      strStage = ca2_get_dir(str.c_str()) + ca2_get_file(str.c_str());
+//      if(strStage.length() > strlen(".expand_fileset")
+//         && _stricmp(strStage.substr(strStage.length() - strlen(".expand_fileset"), strlen(".expand_fileset")).c_str(), ".expand_fileset") ==
+//0)
+//      {
+////         file::ftd(strStage.substr(0, strStage.length() - strlen(".expand_fileset")).c_str(), strStageUnbz.c_str());
+//      }
+//      else
+//      {
+//         dir::mk(dir::name(strStage.c_str()).c_str());
+//         ::CopyFile(strStageUnbz.c_str(), strStage.c_str(), FALSE);
+//      }
+//      d += 1.0;
+//      g_dProgress = d / ((double) stringa.size());
+//   }
+//   g_dProgress = 1.0;
+//   MainWindowRedraw();
+//   return stringa.size();
+//}
 
 
 std::string str_replace(const char * psz, const char * pszFind, const char * pszReplace)
@@ -2234,300 +2234,300 @@ bool is_installed(const char * psz)
    return false;
 }
 
-int ca2_app_install_run(const char * psz, const char * pszParam1, const char * pszParam2, DWORD & dwStartError, bool bSynch)
-{
-   std::string strStage;
-   std::string strApp;
-   std::string strUrl;
+//int ca2_app_install_run(const char * psz, const char * pszParam1, const char * pszParam2, DWORD & dwStartError, bool bSynch)
+//{
+//   std::string strStage;
+//   std::string strApp;
+//   std::string strUrl;
+//
+//   std::string strParam1;
+//   std::string strParam2;
+//   
+//   if(pszParam1 != NULL)
+//   {
+//      strParam1 = pszParam1;
+//      str_trim(strParam1);
+//   }
+//
+//   if(pszParam2 != NULL)
+//   {
+//      strParam2 = pszParam2;
+//      str_trim(strParam2);
+//   }
+//
+//   std::string strPlatform = spa_get_platform();
+//   if(std::string(psz) == "_set_windesk")
+//   {
+//      strStage = dir::path(dir::beforeca2().c_str(), ("ca2\\stage\\" + strPlatform + "\\cubeapp.exe").c_str());
+//      if(strParam1.length() > 0)
+//      {
+//         strStage += " " + strParam1;
+//      }
+//      strStage += " : app=winservice_1";
+//      strStage += psz;
+//      if(strParam2.length() > 0)
+//      {
+//         strStage += " ";
+//         strStage += strParam2;
+//      }
+//   }
+//   else
+//   {
+//
+//      strStage = dir::path(dir::beforeca2().c_str(), ("ca2\\stage\\" + strPlatform + "\\cubeapp.exe").c_str());
+//
+//      if(strParam1.length() > 0)
+//      {
+//         strStage += " " + strParam1;
+//      }
+//      strStage += " : app=bergedge bergedge_start=";
+//      strStage += psz;
+//      if(strParam2.length() > 0)
+//      {
+//         strStage += " " + strParam2;
+//      }
+//   }
+////   std::string strParam;
+////   strParam = "start=" + file::name(strUrl.c_str());
+//
+//   STARTUPINFO si;
+//   memset(&si, 0, sizeof(si));
+//   si.cb = sizeof(si);
+//   si.dwFlags = STARTF_USESHOWWINDOW;
+//   si.wShowWindow = SW_SHOWNORMAL;
+//   PROCESS_INFORMATION pi;
+//   memset(&pi, 0, sizeof(pi));
+////   DWORD dwError;
+//   LPSTR lpCommand = _strdup(strStage.c_str());
+//   
+//   if(!::CreateProcess(NULL, lpCommand, 
+//                      NULL, NULL, FALSE, 0, NULL, NULL,
+//                      &si, &pi))
+//                      return 1;
+//   dwStartError = ::GetLastError();
+//   free(lpCommand);
+//   if(bSynch)
+//   {
+//      trace(".");
+//      DWORD dwExitCode;
+//      int iRetry = 0;
+//      while(true)
+//      {
+//         if(!GetExitCodeProcess(pi.hProcess, &dwExitCode))
+//            break;
+//         if(dwExitCode != STILL_ACTIVE)
+//            break;
+//         iRetry++;
+//         Sleep(484);
+//         if((iRetry % 33) == 0)
+//         {
+//            trace(".");
+//         }
+//         else
+//         {
+//            trace_add(".");
+//         }
+//      }
+//   }
+//   return 0;
+//}
 
-   std::string strParam1;
-   std::string strParam2;
-   
-   if(pszParam1 != NULL)
-   {
-      strParam1 = pszParam1;
-      str_trim(strParam1);
-   }
+//bool ignit_phase2()
+//{
+//
+//   
+//
+//   char szFormat[256];
+//   std::string strUrl;
+//   strUrl = "http://spaignition.api.veriterse.net/query?node=install_application&id=";
+//   strUrl += g_strStart;
+//   strUrl += "&key=post_install_count";
+//   std::string strCount = ms_get(strUrl.c_str());
+//   int iCount = atoi(strCount.c_str());
+//   for(int i = 0; i < iCount; i++)
+//   {
+//      strUrl = "http://spaignition.api.veriterse.net/query?node=install_application&id=";
+//      strUrl += g_strStart;
+//      strUrl += "&key=post_install";
+//      sprintf(szFormat, "[%d]", i);
+//      strUrl += szFormat;
+//      std::string strExec = ms_get(strUrl.c_str());
+//      if(!spa_exec(strExec.c_str()))
+//      {
+//         ::MessageBox(g_hwnd, "Error", "Error", MB_OK);
+//      }
+//   }
+//
+//   DWORD dwStartError;
+//   trace("starting installer...");
+//   int i = ca2_app_install_run(g_strStart.c_str(), "", "install", dwStartError, true);
+//   if(g_strStart != "_set_windesk" && is_installed("_set_windesk"))
+//   {
+//      DWORD dwStartError2;
+//      trace("starting windeskPackage...");
+//      int i2 = ca2_app_install_run("_set_windesk", "", "", dwStartError2, false);
+//      trace("started windeskPackage");
+//   }
+//   trace(".");
+//   
+//   std::string strPlatform = spa_get_platform();
+//   if(i == 0)
+//   {
+//      file::put_contents((dir::ca2() + "\\appdata\\" + strPlatform + "\\build.txt").c_str(), g_strBuild.c_str());
+//      ::PostMessage(g_hwnd, WM_CLOSE, 0, 0);
+//      return true;
+//   }
+//   else
+//   {
+//      DWORD dwError = dwStartError;
+//      trace("");
+//      trace("");
+//      trace("");
+//      trace("");
+//      trace("");
+//      trace("Failed to install");
+//      trace("Manually contact mailto:support.veriwell@ca2mail.com");
+//      trace("or Manually go to http://votagus.com/");
+//      trace("");
+//      trace("In votagus.com you can try to");
+//      trace("download the most recent release version for installation");
+//      trace("(Automatic links not availabe by now)");
+//      trace("");
+//      trace("");
+//      trace("");
+//      trace("");
+//      trace("");
+//      return false;
+//   }
+//}
+//
+//
+//int run_uninstall(const char * lpCmdLine, int nCmdShow)
+//{
+//   return run_install(lpCmdLine, nCmdShow);
+//}
+//
+//int run_uninstall_run(const char * lpCmdLine, int nCmdShow)
+//{
+//   DWORD dwStartError = 0;
+//   return ca2_app_install_run(lpCmdLine, "", "uninstall", dwStartError, true);
+//}
+//
+//int run_install(const char * lpCmdLine, int nCmdShow)
+//{
+//   std::string str = lpCmdLine;
+//   std::string strFile = lpCmdLine;
+//
+//   int i1 = str.find("\"");
+//   if(i1 >= 0)
+//   {
+//      int i2 =str.find("\"", i1 +1);
+//      strFile = str.substr(i1 + 1, i2 - i1 - 1);
+//   }
+//   else
+//   {
+//      strFile = str;
+//   }
+//
+//   if(strFile.empty())
+//   {
+//      strFile = dir::path(dir::module_folder().c_str(), "spa.xml");
+//   }
+//
+//	return run_file(strFile.c_str(), nCmdShow);
+//}
+//
+//int run_file(const char * pszFile, int nCmdShow)
+//{
+//
+//   g_strFile = pszFile;
+//
+////	MSG msg;
+////	HACCEL hAccelTable;
+//  
+//
+//
+//   XNode node;
+//
+//   //MessageBox(NULL, "BegInstall", "Caption", MB_OK);
+//   if(g_iStart != 4)
+//   {
+//      std::string strCa2sp = file::get_contents(g_strFile.c_str());
+//      if(strCa2sp.length() == 0)
+//      {
+//         strCa2sp = read_resource_as_string(NULL, 1984, "CA2SP");
+//      }
+//      if(strCa2sp.length() > 0)
+//      {
+//         node.Load(strCa2sp.c_str());
+//         ParseSpaIndex(node);
+//      }
+//      else
+//      {
+//         g_strStart = "bergedge";
+//      }
+//   }
+//
+//
+//
+///*
+//   char * pszStart = strstr(lpCmdLine, "start=");
+//   char * pszEnd = NULL;
+//   if(pszStart != NULL)
+//   {
+//      pszStart += strlen("start=");
+//      pszEnd = pszStart;
+//      while(isdigit(*pszEnd) || isalpha(*pszEnd))
+//      {
+//         pszEnd++;
+//      }
+//      g_strStart = std::string(pszStart, pszEnd - pszStart);
+//   }
+//   else
+//   {
+//      g_strStart = "bergedge";
+//   }*/
+//
+////   char * pszStart;
+//   char * pszEnd = NULL;
+//   char * lpCmdLine = ::GetCommandLine();
+//   char * pszLocale = strstr((char *) lpCmdLine, "locale=");
+//   if(pszLocale != NULL)
+//   {
+//      pszLocale += strlen("locale=");
+//      pszEnd = pszLocale;
+//      while(isdigit(*pszEnd) || isalpha(*pszEnd))
+//      {
+//         pszEnd++;
+//      }
+//      g_strLocale = std::string(pszLocale, pszEnd - pszLocale);
+//   }
+//   else
+//   {
+//      g_strLocale = "";
+//   }
+//
+//   return run_spa(nCmdShow);
+//}
 
-   if(pszParam2 != NULL)
-   {
-      strParam2 = pszParam2;
-      str_trim(strParam2);
-   }
-
-   std::string strPlatform = spa_get_platform();
-   if(std::string(psz) == "_set_windesk")
-   {
-      strStage = dir::path(dir::beforeca2().c_str(), ("ca2\\stage\\" + strPlatform + "\\cubeapp.exe").c_str());
-      if(strParam1.length() > 0)
-      {
-         strStage += " " + strParam1;
-      }
-      strStage += " : app=winservice_1";
-      strStage += psz;
-      if(strParam2.length() > 0)
-      {
-         strStage += " ";
-         strStage += strParam2;
-      }
-   }
-   else
-   {
-
-      strStage = dir::path(dir::beforeca2().c_str(), ("ca2\\stage\\" + strPlatform + "\\cubeapp.exe").c_str());
-
-      if(strParam1.length() > 0)
-      {
-         strStage += " " + strParam1;
-      }
-      strStage += " : app=bergedge bergedge_start=";
-      strStage += psz;
-      if(strParam2.length() > 0)
-      {
-         strStage += " " + strParam2;
-      }
-   }
-//   std::string strParam;
-//   strParam = "start=" + file::name(strUrl.c_str());
-
-   STARTUPINFO si;
-   memset(&si, 0, sizeof(si));
-   si.cb = sizeof(si);
-   si.dwFlags = STARTF_USESHOWWINDOW;
-   si.wShowWindow = SW_SHOWNORMAL;
-   PROCESS_INFORMATION pi;
-   memset(&pi, 0, sizeof(pi));
-//   DWORD dwError;
-   LPSTR lpCommand = _strdup(strStage.c_str());
-   
-   if(!::CreateProcess(NULL, lpCommand, 
-                      NULL, NULL, FALSE, 0, NULL, NULL,
-                      &si, &pi))
-                      return 1;
-   dwStartError = ::GetLastError();
-   free(lpCommand);
-   if(bSynch)
-   {
-      trace(".");
-      DWORD dwExitCode;
-      int iRetry = 0;
-      while(true)
-      {
-         if(!GetExitCodeProcess(pi.hProcess, &dwExitCode))
-            break;
-         if(dwExitCode != STILL_ACTIVE)
-            break;
-         iRetry++;
-         Sleep(484);
-         if((iRetry % 33) == 0)
-         {
-            trace(".");
-         }
-         else
-         {
-            trace_add(".");
-         }
-      }
-   }
-   return 0;
-}
-
-bool ignit_phase2()
-{
-
-   
-
-   char szFormat[256];
-   std::string strUrl;
-   strUrl = "http://spaignition.api.veriterse.net/query?node=install_application&id=";
-   strUrl += g_strStart;
-   strUrl += "&key=post_install_count";
-   std::string strCount = ms_get(strUrl.c_str());
-   int iCount = atoi(strCount.c_str());
-   for(int i = 0; i < iCount; i++)
-   {
-      strUrl = "http://spaignition.api.veriterse.net/query?node=install_application&id=";
-      strUrl += g_strStart;
-      strUrl += "&key=post_install";
-      sprintf(szFormat, "[%d]", i);
-      strUrl += szFormat;
-      std::string strExec = ms_get(strUrl.c_str());
-      if(!spa_exec(strExec.c_str()))
-      {
-         ::MessageBox(g_hwnd, "Error", "Error", MB_OK);
-      }
-   }
-
-   DWORD dwStartError;
-   trace("starting installer...");
-   int i = ca2_app_install_run(g_strStart.c_str(), "", "install", dwStartError, true);
-   if(g_strStart != "_set_windesk" && is_installed("_set_windesk"))
-   {
-      DWORD dwStartError2;
-      trace("starting windeskPackage...");
-      int i2 = ca2_app_install_run("_set_windesk", "", "", dwStartError2, false);
-      trace("started windeskPackage");
-   }
-   trace(".");
-   
-   std::string strPlatform = spa_get_platform();
-   if(i == 0)
-   {
-      file::put_contents((dir::ca2() + "\\appdata\\" + strPlatform + "\\build.txt").c_str(), g_strBuild.c_str());
-      ::PostMessage(g_hwnd, WM_CLOSE, 0, 0);
-      return true;
-   }
-   else
-   {
-      DWORD dwError = dwStartError;
-      trace("");
-      trace("");
-      trace("");
-      trace("");
-      trace("");
-      trace("Failed to install");
-      trace("Manually contact mailto:support.veriwell@ca2mail.com");
-      trace("or Manually go to http://votagus.com/");
-      trace("");
-      trace("In votagus.com you can try to");
-      trace("download the most recent release version for installation");
-      trace("(Automatic links not availabe by now)");
-      trace("");
-      trace("");
-      trace("");
-      trace("");
-      trace("");
-      return false;
-   }
-}
-
-
-int run_uninstall(const char * lpCmdLine, int nCmdShow)
-{
-   return run_install(lpCmdLine, nCmdShow);
-}
-
-int run_uninstall_run(const char * lpCmdLine, int nCmdShow)
-{
-   DWORD dwStartError = 0;
-   return ca2_app_install_run(lpCmdLine, "", "uninstall", dwStartError, true);
-}
-
-int run_install(const char * lpCmdLine, int nCmdShow)
-{
-   std::string str = lpCmdLine;
-   std::string strFile = lpCmdLine;
-
-   int i1 = str.find("\"");
-   if(i1 >= 0)
-   {
-      int i2 =str.find("\"", i1 +1);
-      strFile = str.substr(i1 + 1, i2 - i1 - 1);
-   }
-   else
-   {
-      strFile = str;
-   }
-
-   if(strFile.empty())
-   {
-      strFile = dir::path(dir::module_folder().c_str(), "spa.xml");
-   }
-
-	return run_file(strFile.c_str(), nCmdShow);
-}
-
-int run_file(const char * pszFile, int nCmdShow)
-{
-
-   g_strFile = pszFile;
-
-//	MSG msg;
-//	HACCEL hAccelTable;
-  
-
-
-   XNode node;
-
-   //MessageBox(NULL, "BegInstall", "Caption", MB_OK);
-   if(g_iStart != 4)
-   {
-      std::string strCa2sp = file::get_contents(g_strFile.c_str());
-      if(strCa2sp.length() == 0)
-      {
-         strCa2sp = read_resource_as_string(NULL, 1984, "CA2SP");
-      }
-      if(strCa2sp.length() > 0)
-      {
-         node.Load(strCa2sp.c_str());
-         ParseSpaIndex(node);
-      }
-      else
-      {
-         g_strStart = "bergedge";
-      }
-   }
-
-
-
-/*
-   char * pszStart = strstr(lpCmdLine, "start=");
-   char * pszEnd = NULL;
-   if(pszStart != NULL)
-   {
-      pszStart += strlen("start=");
-      pszEnd = pszStart;
-      while(isdigit(*pszEnd) || isalpha(*pszEnd))
-      {
-         pszEnd++;
-      }
-      g_strStart = std::string(pszStart, pszEnd - pszStart);
-   }
-   else
-   {
-      g_strStart = "bergedge";
-   }*/
-
-//   char * pszStart;
-   char * pszEnd = NULL;
-   char * lpCmdLine = ::GetCommandLine();
-   char * pszLocale = strstr((char *) lpCmdLine, "locale=");
-   if(pszLocale != NULL)
-   {
-      pszLocale += strlen("locale=");
-      pszEnd = pszLocale;
-      while(isdigit(*pszEnd) || isalpha(*pszEnd))
-      {
-         pszEnd++;
-      }
-      g_strLocale = std::string(pszLocale, pszEnd - pszLocale);
-   }
-   else
-   {
-      g_strLocale = "";
-   }
-
-   return run_spa(nCmdShow);
-}
-
-int starter_start(const char * pszId)
-{
-
-   g_strStart  = pszId;
-
-   g_bOfflineInstall = false;
-
-   g_strInstallGz = "http://ccvotagus.net/stage/";
-
-   g_strInstall = "http://ccvotagus.net/stage/";
-
-   g_bForceUpdatedBuild = true;
-
-   g_bStarterStart = true;
-
-   return run_spa(SW_HIDE);
-
-}
+//int starter_start(const char * pszId)
+//{
+//
+//   g_strStart  = pszId;
+//
+//   g_bOfflineInstall = false;
+//
+//   g_strInstallGz = "http://ccvotagus.net/stage/";
+//
+//   g_strInstall = "http://ccvotagus.net/stage/";
+//
+//   g_bForceUpdatedBuild = true;
+//
+//   g_bStarterStart = true;
+//
+//   return run_spa(SW_HIDE);
+//
+//}
 
 std::string url_query_param(int & iParam, const char * pszParam)
 {

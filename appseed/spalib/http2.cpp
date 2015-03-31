@@ -231,13 +231,13 @@ Retry1:
                {
                   if(iCol >= 84)
                   {
-                     trace(".");
+                     //trace(".");
                      iCol = 1;
                   }
                   else
                   {
                      iCol++;
-                     trace_add(".");
+                     //trace_add(".");
                   }
                }
             }
@@ -255,7 +255,7 @@ Retry1:
    {
       while(bProgress && iCol < 84)
       {
-         trace_add(".");
+         //trace_add(".");
          iCol++;
       }
    }

@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 
-void trace(const char * psz);
+//void trace(const char * psz);
 
 HINTERNET  g_hSession = NULL;
 HINTERNET  g_hConnect = NULL;
@@ -208,7 +208,7 @@ SPALIB_API std::string ms_get(const char * pszUrl, bool bCache)
                    g_dwDownloadLen += dwSize;
             for(int i = 0; i < ((dwLen - dwLast100k) / (100 * 1024)); i++)
             {
-               trace_add(".");
+//               trace_add(".");
             }
             dwLast100k += ((dwLen - dwLast100k) / (100 * 1024) )*(100 / 1024);
                    strRet += pszOutBuffer;

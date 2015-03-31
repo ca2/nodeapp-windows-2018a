@@ -40,3 +40,9 @@ SPALIB_API int bzuncompress(LPCTSTR lpcszUncompressed, LPCTSTR lpcszGzFileCompre
 
 
 void dll_processes(std::vector < DWORD > & dwa, stringa & straProcesses, const char * pszDll);
+
+
+
+
+
+
