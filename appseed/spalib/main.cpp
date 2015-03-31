@@ -203,9 +203,9 @@ SPALIB_API int spa_admin()
 {
 
    trace("--\r\n");
-   trace("Registering\r\n");
-   trace("***Registering spa file handler\r\n");
    trace(":::::Installing spa and installer\r\n");
+   trace("***Registering spa file handler\r\n");
+   trace("Registering\r\n");
    trace(0.0);
 
    register_spa_file_type();
@@ -856,9 +856,8 @@ int check_spa_installation()
 
    if(spa_get_admin())
    {
-      trace("Downloading spaadmin\r\n");
       trace("***Installing spa\r\n");
-      trace(":::::Installing spa and installer\r\n");
+      trace("Downloading spaadmin\r\n");
    }
 
 
@@ -867,8 +866,8 @@ int check_spa_installation()
 
    if(spa_get_admin())
    {
-      trace(0.2);
       trace("Downloading spa\r\n");
+      trace(0.2);
    }
 
    if(!check_spa_bin())
@@ -876,9 +875,9 @@ int check_spa_installation()
 
    if(spa_get_admin())
    {
-      trace(0.3);
-      trace("Checking installer\r\n");
       trace("***Installing installer\r\n");
+      trace("Checking installer\r\n");
+      trace(0.3);
    }
 
    if(!check_install_bin_set())
@@ -1465,7 +1464,7 @@ md5retry:
 
          if(spa_get_admin())
          {
-            trace(0.3 + (((double) iFile * (0.84 - 0.3)) / ((double)straFile.size())));
+            trace(0.3 + ((((double)iFile + 1.0) * (0.84 - 0.3)) / ((double)straFile.size())));
          }
 
       }
