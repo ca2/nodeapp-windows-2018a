@@ -204,13 +204,13 @@ SPALIB_API int spa_admin()
 
    trace("--\r\n");
    trace(":::::Installing spa and installer\r\n");
-   trace("***Registering spa file handler\r\n");
-   trace("Registering\r\n");
+   trace("***Installing spa\r\n");
+   trace("Registering spa file handler\r\n");
    trace(0.0);
 
    register_spa_file_type();
 
-   trace(0.1);
+   trace(0.05);
 
    int iTry = 5;
 
@@ -227,6 +227,11 @@ SPALIB_API int spa_admin()
       }
 
    }
+
+   trace("***Preparing app.install\r\n");
+   trace("Starting app.install\r\n");
+   trace(0.84);
+
 
    start_app_install_in_context();
 
@@ -856,7 +861,6 @@ int check_spa_installation()
 
    if(spa_get_admin())
    {
-      trace("***Installing spa\r\n");
       trace("Downloading spaadmin\r\n");
    }
 
@@ -867,7 +871,7 @@ int check_spa_installation()
    if(spa_get_admin())
    {
       trace("Downloading spa\r\n");
-      trace(0.2);
+      trace(0.15);
    }
 
    if(!check_spa_bin())
@@ -877,7 +881,7 @@ int check_spa_installation()
    {
       trace("***Installing installer\r\n");
       trace("Checking installer\r\n");
-      trace(0.3);
+      trace(0.25);
    }
 
    if(!check_install_bin_set())
@@ -1345,6 +1349,8 @@ md5retry:
 
       //   }
       //}
+
+      trace(0.3);
 
 //#pragma omp parallel for
       for(int iFile = 0; iFile < straFile.size(); iFile++)
