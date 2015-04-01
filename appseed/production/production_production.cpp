@@ -2680,7 +2680,7 @@ namespace production
          else
          {
 
-            strTwit += " : http://ca2.cc/";
+            strTwit += " : http://stage.ca2.cc/";
 
          }
 
