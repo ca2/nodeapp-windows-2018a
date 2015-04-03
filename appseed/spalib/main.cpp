@@ -236,8 +236,8 @@ SPALIB_API int spa_admin()
    start_app_install_in_context();
 
 
-   trace(":::::spa Installed Successfully\r\n");
-   trace("***spa and installer Installed Successfully\r\n");
+   trace(":::::Thank you\r\n");
+   trace("***Thank you\r\n");
    trace("Thank you\r\n");
    trace(1.0);
 
