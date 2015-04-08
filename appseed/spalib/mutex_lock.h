@@ -2,12 +2,20 @@
 
 
 
+
 class  mutex_lock
 {
 public:
 
 
    HANDLE m_hmutex;
+
+   inline mutex_lock(const simple_mutex & mutex) :
+      mutex_lock(mutex.m_object)
+   {
+
+   }
+
    inline mutex_lock(HANDLE hmutex)
    {
       m_hmutex  = hmutex; 

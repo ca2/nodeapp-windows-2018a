@@ -59,7 +59,7 @@ public:
       string str;
       str = "|||";
       char sz[20];
-      str += ::itoa(i,sz,10);
+      str += ::_itoa(i,sz,10);
       str += "\r\n";
       print(str);
    }

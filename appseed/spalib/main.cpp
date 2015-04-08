@@ -32,6 +32,8 @@ CLASS_DECL_AURA LPFN_ChangeWindowMessageFilter g_pfnChangeWindowMessageFilter = 
 bool app_install_send_short_message(const char * psz,bool bLaunch,const char * pszBuild);
 void app_install_call_sync(const char * szParameters,const char * pszBuild);
 int register_spa_file_type();
+void start_program_files_spa_admin();
+void defer_start_program_files_spa_admin();
 
 #if defined(LINUX) || defined(WINDOWS)
 //#include <omp.h>
@@ -202,6 +204,22 @@ void start_app_install_in_context();
 SPALIB_API int spa_admin()
 {
 
+   simple_mutex smutex("Global\\::ca::fontopus::ca2_spa_admin::198411151951042219770204-11dd-ae16-0800200c7784");
+
+   if(!smutex.already_exists())
+   {
+
+      return 0;
+
+   }
+
+   if(!smutex.is_ok())
+   {
+
+      return 0;
+
+   }
+
    trace("--\r\n");
    trace(":::::Installing spa and installer\r\n");
    trace("***Installing spa\r\n");
@@ -284,7 +302,9 @@ int spalib_main2()
    
    while(!check_spa_installation())
    {
-   
+
+      defer_start_program_files_spa_admin();
+
       iTry--;
 
       if(iTry < 0)
@@ -1055,8 +1075,22 @@ int download_spaadmin_bin()
 
       get_program_files_x86(wstr);
 
+      DWORD dwExitCode = 0;
+
       for(int i = 0; i < (19840 + 19770); i++)
       {
+
+         if(::GetExitCodeProcess(sei.hProcess,&dwExitCode))
+         {
+            
+            if(dwExitCode != STILL_ACTIVE)
+            {
+
+               break;
+
+            }
+
+         }
 
          if(file::exists(u8(wstr.c_str())))
             break;
@@ -1064,6 +1098,8 @@ int download_spaadmin_bin()
          Sleep(84 + 77);
 
       }
+
+      ::CloseHandle(sei.hProcess);
 
       // Wait for the process to complete.
 //      ::WaitForSingleObject(sei.hProcess,INFINITE);
@@ -1287,7 +1323,9 @@ md5retry:
 
       if(!spa_get_admin())
       {
+         
          return 0;
+
       }
 
 
@@ -1810,3 +1848,47 @@ int register_spa_file_type()
 
 
 
+
+void start_program_files_spa_admin()
+{
+   SHELLEXECUTEINFOW sei ={};
+
+
+   std::wstring wstr;
+
+   wstr = L"\\ca2\\spa\\spaadmin.exe";
+
+   get_program_files_x86(wstr);
+
+   sei.cbSize =sizeof(SHELLEXECUTEINFOW);
+   sei.fMask = SEE_MASK_NOASYNC | SEE_MASK_NOCLOSEPROCESS;
+   sei.lpVerb = L"RunAs";
+   sei.lpFile = wstr.c_str();
+   ::ShellExecuteExW(&sei);
+   DWORD dwGetLastError = GetLastError();
+
+}
+
+
+
+
+void defer_start_program_files_spa_admin()
+{
+
+   {
+
+      simple_mutex smutex("Global\\::ca::fontopus::ca2_spa_admin::198411151951042219770204-11dd-ae16-0800200c7784");
+
+      if(smutex.already_exists())
+      {
+
+         return;
+
+      }
+
+   }
+
+
+   start_program_files_spa_admin();
+
+}
