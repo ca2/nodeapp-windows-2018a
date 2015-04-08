@@ -206,7 +206,7 @@ SPALIB_API int spa_admin()
 
    simple_mutex smutex("Global\\::ca::fontopus::ca2_spa_admin::198411151951042219770204-11dd-ae16-0800200c7784");
 
-   if(!smutex.already_exists())
+   if(smutex.already_exists())
    {
 
       return 0;
