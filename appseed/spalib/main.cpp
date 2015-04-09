@@ -1851,14 +1851,21 @@ int register_spa_file_type()
 
 void start_program_files_spa_admin()
 {
-   SHELLEXECUTEINFOW sei ={};
 
+   SHELLEXECUTEINFOW sei ={};
 
    std::wstring wstr;
 
    wstr = L"\\ca2\\spa\\spaadmin.exe";
 
    get_program_files_x86(wstr);
+
+   if(!::file::exists(u8(wstr)))
+   {
+
+      return;
+
+   }
 
    sei.cbSize =sizeof(SHELLEXECUTEINFOW);
    sei.fMask = SEE_MASK_NOASYNC | SEE_MASK_NOCLOSEPROCESS;
