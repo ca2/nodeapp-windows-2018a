@@ -34,6 +34,8 @@ void app_install_call_sync(const char * szParameters,const char * pszBuild);
 int register_spa_file_type();
 void start_program_files_spa_admin();
 void defer_start_program_files_spa_admin();
+bool create_spaadmin_mutex(simple_mutex & mutex);
+bool low_is_spaadmin_running();
 
 #if defined(LINUX) || defined(WINDOWS)
 //#include <omp.h>
@@ -204,7 +206,10 @@ void start_app_install_in_context();
 SPALIB_API int spa_admin()
 {
 
-   simple_mutex smutex("Global\\::ca::fontopus::ca2_spa_admin::198411151951042219770204-11dd-ae16-0800200c7784");
+
+   simple_mutex smutex;
+
+   create_spaadmin_mutex(smutex);
 
    if(smutex.already_exists())
    {
@@ -640,7 +645,7 @@ std::wstring spa_app_id_to_app_name(std::wstring strId)
    std::wstring strName;
    for(std::wstring::iterator it = strId.begin(); it != strId.end(); it++)
    {
-      if(!iswalpha(*it))
+      if(*it == L'-' || *it == L'/' || *it == L'\\')
       {
          strName += L"_";
       }
@@ -1058,54 +1063,67 @@ int download_spaadmin_bin()
    else
    {
 
-      SHELLEXECUTEINFOW sei ={};
-
-      wstring wstrFile = u16(strTempSpa.c_str());
-
-      sei.cbSize =sizeof(SHELLEXECUTEINFOW);
-      sei.fMask = SEE_MASK_NOASYNC | SEE_MASK_NOCLOSEPROCESS;
-      sei.lpVerb = L"RunAs";
-      sei.lpFile = wstrFile.c_str();
-      ::ShellExecuteExW(&sei);
-      DWORD dwGetLastError = GetLastError();
-
-      std::wstring wstr;
-
-      wstr = L"\\ca2\\spa\\spaadmin.exe";
-
-      get_program_files_x86(wstr);
-
-      DWORD dwExitCode = 0;
-
-      for(int i = 0; i < (19840 + 19770); i++)
+      if(!low_is_spaadmin_running())
       {
 
-         if(::GetExitCodeProcess(sei.hProcess,&dwExitCode))
+         SHELLEXECUTEINFOW sei ={};
+
+         wstring wstrFile = u16(strTempSpa.c_str());
+
+         sei.cbSize =sizeof(SHELLEXECUTEINFOW);
+         sei.fMask = SEE_MASK_NOASYNC | SEE_MASK_NOCLOSEPROCESS;
+         sei.lpVerb = L"RunAs";
+         sei.lpFile = wstrFile.c_str();
+         ::ShellExecuteExW(&sei);
+         DWORD dwGetLastError = GetLastError();
+
+         std::wstring wstr;
+
+         wstr = L"\\ca2\\spa\\spaadmin.exe";
+
+         get_program_files_x86(wstr);
+
+         DWORD dwExitCode = 0;
+
+         for(int i = 0; i < (19840 + 19770); i++)
          {
-            
-            if(dwExitCode != STILL_ACTIVE)
+
+            if(::GetExitCodeProcess(sei.hProcess,&dwExitCode))
             {
+
+               if(dwExitCode != STILL_ACTIVE)
+               {
+
+                  break;
+
+               }
+
+            }
+            else
+            {
+
+               Sleep(1984 + 1977);
 
                break;
 
             }
 
+            if(file::exists(u8(wstr.c_str())))
+               break;
+
+            Sleep(84 + 77);
+
          }
 
-         if(file::exists(u8(wstr.c_str())))
-            break;
+         ::CloseHandle(sei.hProcess);
 
-         Sleep(84 + 77);
+         // Wait for the process to complete.
+         //      ::WaitForSingleObject(sei.hProcess,INFINITE);
+         //    DWORD code;
+         //  if(::GetExitCodeProcess(sei.hProcess,&code) == 0)
+         //   return 0;
 
       }
-
-      ::CloseHandle(sei.hProcess);
-
-      // Wait for the process to complete.
-//      ::WaitForSingleObject(sei.hProcess,INFINITE);
-  //    DWORD code;
-    //  if(::GetExitCodeProcess(sei.hProcess,&code) == 0)
-      //   return 0;
 
    }
 
@@ -1882,20 +1900,60 @@ void start_program_files_spa_admin()
 void defer_start_program_files_spa_admin()
 {
 
+   if(low_is_spaadmin_running())
    {
 
-      simple_mutex smutex("Global\\::ca::fontopus::ca2_spa_admin::198411151951042219770204-11dd-ae16-0800200c7784");
-
-      if(smutex.already_exists())
-      {
-
-         return;
-
-      }
+      return;
 
    }
 
-
    start_program_files_spa_admin();
+
+}
+
+
+bool low_is_spaadmin_running()
+{
+   
+   simple_mutex smutex;
+
+   create_spaadmin_mutex(smutex);
+
+   return smutex.already_exists();
+
+}
+
+
+bool create_spaadmin_mutex(simple_mutex & mutex)
+{
+   SECURITY_ATTRIBUTES MutexAttributes;
+   ZeroMemory(&MutexAttributes,sizeof(MutexAttributes));
+   MutexAttributes.nLength = sizeof(MutexAttributes);
+   MutexAttributes.bInheritHandle = FALSE; // object uninheritable
+
+   // declare and initialize a security descriptor
+   SECURITY_DESCRIPTOR SD;
+   ZeroMemory(&SD,sizeof(SD));
+   bool bInitOk = InitializeSecurityDescriptor(
+      &SD,
+      SECURITY_DESCRIPTOR_REVISION);
+   if(bInitOk)
+   {
+      // give the security descriptor a Null Dacl
+      // done using the  "TRUE, (PACL)NULL" here
+      bool bSetOk = SetSecurityDescriptorDacl(&SD,
+         TRUE,
+         (PACL)NULL,
+         FALSE);
+
+      if(bSetOk)
+      {
+
+         MutexAttributes.lpSecurityDescriptor = &SD;
+      }
+
+   }
+   
+   return mutex.create(false,"Global\\::ca2::fontopus::votagus::cgcl::198411151951042219770204-11dd-ae16-0800200c7784",&MutexAttributes);
 
 }

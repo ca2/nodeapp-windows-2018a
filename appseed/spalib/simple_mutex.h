@@ -2,7 +2,7 @@
 
 
 class simple_mutex
-{   
+{
 public:
 
 
@@ -12,21 +12,51 @@ public:
    bool        m_bAlreadyExists;
 
 
-   simple_mutex(bool bInitiallyOwn = FALSE,const char * lpszName = NULL,LPSECURITY_ATTRIBUTES lpsaAttribute = NULL)
+   simple_mutex()
    {
-      
-      m_object = ::CreateMutex(lpsaAttribute,bInitiallyOwn,lpszName);
-      
-      m_bAlreadyExists = ::GetLastError() == ERROR_ALREADY_EXISTS;
+
+      m_object = INVALID_HANDLE_VALUE;
+
+      m_bAlreadyExists = false;
 
    }
 
    ~simple_mutex()
    {
 
-      ::CloseHandle(m_object);
+      if(m_object != INVALID_HANDLE_VALUE)
+      {
+
+         ::CloseHandle(m_object);
+
+      }
 
    }
+
+   bool create(bool bInitiallyOwn = FALSE,const char * lpszName = NULL,LPSECURITY_ATTRIBUTES lpsaAttribute = NULL)
+   {
+
+      m_object = INVALID_HANDLE_VALUE;
+
+      m_bAlreadyExists = false;
+
+      m_object = ::CreateMutex(lpsaAttribute,bInitiallyOwn,lpszName);
+
+      DWORD dwLastError = ::GetLastError();
+
+
+      //char sz[24];
+
+      //sprintf(sz,"%d",dwLastError);
+
+      //MessageBox(NULL,sz,"",0);
+
+      m_bAlreadyExists =  dwLastError == ERROR_ALREADY_EXISTS;
+
+      return true;
+
+   }
+
 
 
    bool already_exists()
