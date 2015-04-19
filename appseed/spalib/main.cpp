@@ -108,6 +108,31 @@ string get_latest_build_number(const char * pszVersion);
 SPALIB_API int spalib_main(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLine,int nCmdShow)
 {
 
+   if(::file::exists("C:\\ca2\\config\\spa\\beg_debug_box.txt"))
+   {
+
+      string str;
+
+      if(spa_get_admin())
+      {
+
+         str = "zzzAPPzzz spaadmin : ";
+
+      }
+      else
+      {
+         
+         str = "zzzAPPzzz spa : ";
+
+      }
+
+      str += lpCmdLine;
+
+      ::MessageBoxA(NULL,str.c_str(),"zzzAPPzzz spa",MB_ICONINFORMATION);
+
+   }
+
+
    g_pgdiplusStartupInput     = new Gdiplus::GdiplusStartupInput();
    g_pgdiplusStartupOutput    = new Gdiplus::GdiplusStartupOutput();
    g_gdiplusToken             = NULL;
@@ -339,12 +364,37 @@ int spalib_main2()
 
    int iFind = wstr.find(L" : ",iFind1 + 1);
 
-   if(iFind < 0)
+   if(iFind >= 0)
+   {
+      iFind = wstr.find(L"app=",iFind);
+      if(iFind >= 0)
+      {
+         int iEnd = wstr.find(L" ",iFind);
+         if(iEnd < 0)
+         {
+            strId = wstr.substr(iFind + 4);
+         }
+         else
+         {
+            strId = wstr.substr(iFind + 4,iEnd - iFind - 4);
+         }
+
+         // trim initial quote
+         if(strId[0] == '\"')
+            strId = strId.substr(1);
+
+         // trim final quote
+         if(strId[strId.length() - 1] == '\"')
+            strId = strId.substr(0,strId.length() - 1);
+
+      }
+   }
+   else
    {
 
-      string strAppId = get_app_id(wstr.substr(iFind1 + 1));
+      strId = u16(get_app_id(wstr.substr(iFind1 + 1)));
 
-      if(strAppId.length() <= 0)
+      if(strId.length() <= 0)
       {
          return 1;
       }
@@ -353,39 +403,39 @@ int spalib_main2()
       g_pfnChangeWindowMessageFilter = (LPFN_ChangeWindowMessageFilter) ::GetProcAddress(hmoduleUser32,"ChangeWindowMessageFilter");
 
 
-         string strCommandLine;
+   }
+
+   string strCommandLine;
 
 
-      strCommandLine = " : app=" + get_app_id(wstr.substr(iFind1 + 1));
+   strCommandLine = " : app=" + u8(strId);
 
-      strCommandLine += " install";
-      strCommandLine += " locale=_std";
-      strCommandLine += " schema=_std";
-      strCommandLine += " version=stage";
+   strCommandLine += " install";
+   strCommandLine += " locale=_std";
+   strCommandLine += " schema=_std";
+   strCommandLine += " version=stage";
 
-      strCommandLine += " ";
+   strCommandLine += " ";
 
 
-      string strCommand;
+   string strCommand;
 
-      strCommand = "synch_spaadmin:";
+   strCommand = "synch_spaadmin:";
 
-      strCommand += "starter_start:";
+   strCommand += "starter_start:";
 
-      strCommand += strCommandLine;
+   strCommand += strCommandLine;
 
-      bool bBackground = true;
+   bool bBackground = true;
 
-      if(bBackground)
-      {
+   if(bBackground)
+   {
 
-         strCommand += " background";
-
-      }
-
-      app_install_call_sync(strCommand.c_str(),"");
+      strCommand += " background";
 
    }
+
+   app_install_call_sync(strCommand.c_str(),"");
 
    return 1;
 
