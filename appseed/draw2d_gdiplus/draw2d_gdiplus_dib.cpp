@@ -69,16 +69,16 @@ namespace draw2d_gdiplus
    bool dib::create(int32_t width, int32_t height)
    {
 
+      if(width <= 0 || height <= 0)
+         return false;
+
       if(m_spbitmap.is_set()
       && m_spbitmap->get_os_data() != NULL 
       && width == m_size.cx
       && height == m_size.cy)
-         return TRUE;
+         return true;
 
       destroy();
-
-      if(width <= 0 || height <= 0)
-         return true;
 
       m_info ={};
 
