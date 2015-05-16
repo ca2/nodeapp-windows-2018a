@@ -9,7 +9,7 @@ namespace multimedia
    {
 
 
-      interaction::interaction(sp(::axis::application) papp) :
+      interaction::interaction(::aura::application * papp) :
          ::object(papp)
       {
          create_message_queue("");

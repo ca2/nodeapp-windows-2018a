@@ -9,7 +9,7 @@ namespace multimedia
    {
 
 
-      factory_exchange::factory_exchange(sp(::axis::application) papp) :
+      factory_exchange::factory_exchange(::aura::application * papp) :
          ::object(papp)
       {
 

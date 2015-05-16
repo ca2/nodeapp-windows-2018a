@@ -9,7 +9,7 @@ namespace multimedia
    {
 
 
-      thread::thread(sp(::axis::application) papp) :
+      thread::thread(::aura::application * papp) :
          ::object(papp),
          ::thread(papp)
       {

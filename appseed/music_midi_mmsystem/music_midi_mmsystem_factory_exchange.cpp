@@ -13,7 +13,7 @@ namespace music
       {
 
 
-         factory_exchange::factory_exchange(sp(::axis::application) papp) :
+         factory_exchange::factory_exchange(::aura::application * papp) :
             ::object(papp),
             ::multimedia::mmsystem::factory_exchange(papp)
          {

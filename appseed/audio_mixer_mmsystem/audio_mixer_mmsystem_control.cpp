@@ -9,7 +9,7 @@ namespace multimedia
    {
 
 
-      control::control(sp(::axis::application) papp) :
+      control::control(::aura::application * papp) :
          ::object(papp),
          ::multimedia::audio_mixer::control(papp)
       {

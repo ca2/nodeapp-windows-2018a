@@ -9,7 +9,7 @@ namespace multimedia
    {
 
 
-      line_info::line_info(sp(::axis::application) papp)
+      line_info::line_info(::aura::application * papp)
       {
 
       }

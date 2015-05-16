@@ -36,7 +36,7 @@ namespace music
             public:
 
 
-               player(sp(::axis::application) papp);
+               player(::aura::application * papp);
                virtual ~player();
 
 

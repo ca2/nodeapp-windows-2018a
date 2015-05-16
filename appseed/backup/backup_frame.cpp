@@ -9,7 +9,7 @@ namespace backup
       ::object(papp),
       production::frame(papp)
    {
-      m_iFrameData = 10;
+      
 
       m_dataid = "::ca2::backup::frame";
       

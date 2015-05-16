@@ -26,7 +26,7 @@ namespace multimedia
          };
 
 
-         departament(sp(::axis::application) papp);
+         departament(::aura::application * papp);
          virtual ~departament();
 
 

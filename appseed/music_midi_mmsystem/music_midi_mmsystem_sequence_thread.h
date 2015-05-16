@@ -20,7 +20,7 @@ namespace music
          public:
 
 
-            sequence_thread(sp(::axis::application) papp);
+            sequence_thread(::aura::application * papp);
             virtual ~sequence_thread();
 
 

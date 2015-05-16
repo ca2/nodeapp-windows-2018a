@@ -9,7 +9,7 @@ namespace multimedia
    {
 
 
-      device::device(sp(::axis::application) papp) :
+      device::device(::aura::application * papp) :
          ::object(papp),
          ::multimedia::audio_mixer::device(papp)
          //m_mixerdestinationa(papp)

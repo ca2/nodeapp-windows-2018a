@@ -21,7 +21,7 @@ namespace multimedia
          ::multimedia::audio_mixer::audio_mixer                    * m_pmixer;
 
 
-         interaction(sp(::axis::application) papp);
+         interaction(::aura::application * papp);
          virtual ~interaction();
 
 

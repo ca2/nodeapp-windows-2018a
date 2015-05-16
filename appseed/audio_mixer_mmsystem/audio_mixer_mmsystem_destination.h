@@ -16,7 +16,7 @@ namespace multimedia
       public:
 
 
-         destination(sp(::axis::application) papp);
+         destination(::aura::application * papp);
          destination(const destination & destination);
          virtual ~destination();
 

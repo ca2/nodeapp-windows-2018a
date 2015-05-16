@@ -18,7 +18,7 @@ namespace music
          {
 
 
-            player::player(sp(::axis::application) papp) :
+            player::player(::aura::application * papp) :
                ::object(papp),
                thread(papp),
                ::music::midi::player::player(papp)

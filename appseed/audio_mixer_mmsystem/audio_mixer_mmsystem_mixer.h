@@ -18,7 +18,7 @@ namespace multimedia
          ::multimedia::audio_mixer_mmsystem::interaction            m_window;
 
 
-         audio_mixer(sp(::axis::application) papp);
+         audio_mixer(::aura::application * papp);
          virtual ~audio_mixer();
 
 
