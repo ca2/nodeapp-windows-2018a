@@ -67,6 +67,13 @@ extern "C" int32_t WINAPI _tWinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,
 
    UNREFERENCED_PARAMETER(lpCmdLine);
 
+   if(!defer_aura_init())
+   {
+
+      return -1;
+
+   }
+
    int iRet = ::aura::simple_app_main < removal >(hInstance,hPrevInstance,lpCmdLine,nCmdShow);
 
    return iRet;
@@ -283,8 +290,14 @@ int32_t removal::run()
    system("taskkill /F /IM app.install.exe");
    system("taskkill /F /IM app.plugin.container.exe");
    system("taskkill /F /IM plugin-container.exe");
-   system("taskkill /F /IM iexplore.exe");
-   system("taskkill /F /IM firefox.exe");
+   if(file_exists_dup("C:\\ca2\\config\\app-removal\\kill_browsers.txt") || file_exists_dup("C:\\ca2\\config\\app-removal\\kill_ie.txt"))
+   {
+      system("taskkill /F /IM iexplore.exe");
+   }
+   if(file_exists_dup("C:\\ca2\\config\\app-removal\\kill_browsers.txt") || file_exists_dup("C:\\ca2\\config\\app-removal\\kill_firefox.txt"))
+   {
+      system("taskkill /F /IM firefox.exe");
+   }
 
    string strOnlyDrives = file_as_string_dup("C:\\ca2\\app-removal\\only_drives.txt");
    stringa straDrives;
