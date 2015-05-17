@@ -980,7 +980,7 @@ int check_spa_bin()
 
    std::wstring wstr;
 
-#ifdef X86
+#if defined(_M_IX86)
 
    wstr = L"\\ca2\\spa\\x86\\spa.exe";
 
@@ -1020,7 +1020,7 @@ int check_spaadmin_bin()
 
    std::wstring wstr;
 
-#ifdef X86
+#if defined(_M_IX86)
 
    wstr = L"\\ca2\\spa\\x86\\spaadmin.exe";
 
@@ -1066,7 +1066,7 @@ int download_spa_bin()
 
       std::wstring wstr;
 
-#ifdef X86
+#if defined(_M_IX86)
 
       wstr = L"\\ca2\\spa\\x86\\spa.exe";
 
@@ -1120,7 +1120,7 @@ int download_spaadmin_bin()
 
       std::wstring wstr;
 
-#ifdef X86
+#if defined(_M_IX86)
 
       wstr = L"\\ca2\\spa\\x86\\spaadmin.exe";
 
@@ -1161,7 +1161,7 @@ int download_spaadmin_bin()
 
          std::wstring wstr;
 
-#ifdef X86
+#if defined(_M_IX86)
 
          wstr = L"\\ca2\\spa\\x86\\spaadmin.exe";
 
@@ -1233,7 +1233,7 @@ std::string download_tmp_spaadmin_bin()
    while(iTry <= 3)
    {
 
-#ifdef X86
+#if defined(_M_IX86)
       if(ms_download("http://server.ca2.cc/x86/spaadmin.exe", strTempSpa.c_str())
 #else
       if(ms_download("http://server.ca2.cc/x64/spaadmin.exe",strTempSpa.c_str())
@@ -1267,7 +1267,7 @@ std::string download_tmp_spa_bin()
    while(iTry <= 3)
    {
 
-#ifdef X86
+#if defined(_M_IX86)
 
       if(ms_download("http://server.ca2.cc/x86/spa.exe",strTempSpa.c_str())
 
@@ -1888,7 +1888,7 @@ int register_spa_file_type()
 
    std::wstring app;
 
-#ifdef X86
+#if defined(_M_IX86)
 
    app = L"\\ca2\\spa\\x86\\spa.exe";
 
@@ -1985,7 +1985,7 @@ void start_program_files_spa_admin()
 
    std::wstring wstr;
 
-#ifdef X86
+#if defined(_M_IX86)
 
    wstr = L"\\ca2\\spa\\x86\\spaadmin.exe";
 

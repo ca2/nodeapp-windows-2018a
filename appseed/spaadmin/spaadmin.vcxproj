@@ -106,6 +106,8 @@
     <LibraryPath>$(VCInstallDir)lib\amd64;$(WindowsSDK_LibraryPath_x64)</LibraryPath>
     <SourcePath>$(VCInstallDir)crt\src;</SourcePath>
     <ExcludePath>$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);$(MSBuildToolsPath32);$(VCInstallDir)atlmfc\lib;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\include</ExcludePath>
+    <OutDir>$(SolutionDir)..\..\..\stage\x64\</OutDir>
+    <IntDir>$(SolutionDir)..\..\..\time\intermediate\$(PlatformName)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">
     <CustomBuildStep>
@@ -189,7 +191,7 @@
       <AdditionalOptions>-Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>winmm.lib;Psapi.lib;WinINet.lib;msimg32.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>gdiplus.lib;winmm.lib;Psapi.lib;WinINet.lib;msimg32.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(IntDir);$(SolutionDir)../../../time/library/$(PlatformName)/$(Configuration)/;$(SolutionDir)../../../nodeapp/thirdparty/library;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
@@ -257,7 +259,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)../../../include;$(SolutionDir)../../../app/include;.;$(ProjectDir)framework;$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/base/include;$(SolutionDir)../../../app/base/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../app/appseed/core;$(SolutionDir)../../../app/appseed/base;$(SolutionDir)../../../app/appseed/axis;$(SolutionDir)../../../app/appseed/aura;$(SolutionDir)../../../app/axis;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CUBE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -265,7 +267,7 @@
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
       <SDLCheck>
       </SDLCheck>
       <StringPooling>false</StringPooling>
@@ -273,13 +275,13 @@
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <OpenMPSupport>false</OpenMPSupport>
-      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
+      <EnableParallelCodeGeneration>false</EnableParallelCodeGeneration>
       <FloatingPointModel>Fast</FloatingPointModel>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <CreateHotpatchableImage>false</CreateHotpatchableImage>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>winmm.lib;Psapi.lib;WinINet.lib;msimg32.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>gdiplus.lib;winmm.lib;Psapi.lib;WinINet.lib;msimg32.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(SolutionDir)../source/library/static;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
