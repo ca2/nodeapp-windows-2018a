@@ -18,7 +18,7 @@ int_bool file_exists_raw(const char * path1)
 
 }
 
-void file_put_contents_raw(const char * path, const char * psz)
+void file_put_contents_raw(const char * path,const char * psz)
 {
 
    FILE * f = fopen(path,"wb");
@@ -52,7 +52,7 @@ void file_add_contents_raw(const char * path,const char * psz)
 
 void file_beg_contents_raw(const char * path,const char * psz)
 {
-   
+
    FILE * f = fopen(path,"rb+");
 
    ::count iLen = strlen(psz);
@@ -62,15 +62,15 @@ void file_beg_contents_raw(const char * path,const char * psz)
    long  iEnd = ftell(f);
 
    int iSize = 1024 * 1024;
-   char * buf = (char *) malloc(iSize);
+   char * buf = (char *)malloc(iSize);
    int iRemain = iEnd - iLen;
    while(iRemain > 0)
    {
-      fseek(f,iEnd-iRemain-iLen,SEEK_SET);
+      fseek(f,iEnd - iRemain - iLen,SEEK_SET);
       fread(buf,1,MIN(iRemain,iSize),f);
-      fseek(f,iEnd-iRemain,SEEK_SET);
+      fseek(f,iEnd - iRemain,SEEK_SET);
       fwrite(buf,1,MIN(iRemain,iSize),f);
-      iRemain -= MIN(iRemain, iSize);
+      iRemain -= MIN(iRemain,iSize);
    }
    free(buf);
    fseek(f,0,SEEK_SET);
@@ -92,9 +92,9 @@ uint64_t file_length_raw(const char * path)
 
 BEGIN_EXTERN_C
 
-int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
+int32_t WINAPI _tWinMain(HINSTANCE hinstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLine,int32_t nCmdShow)
 {
-   
+
    app_core appcore;
 
    appcore.m_dwStartTime = ::get_tick_count();
@@ -111,7 +111,7 @@ int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lp
 
    if(file_exists_dup("C:\\ca2\\config\\system\\wait_on_beg.txt"))
    {
-         
+
       Sleep(10000);
 
    }
@@ -121,7 +121,7 @@ int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lp
       debug_box("zzzAPPzzz app","zzzAPPzzz app",MB_ICONINFORMATION);
    }
 
-   int iRet = app_core_main(hinstance, hPrevInstance, (char *) (const char *)  ::str::international::unicode_to_utf8(::GetCommandLineW()), nCmdShow, appcore);
+   int iRet = app_core_main(hinstance,hPrevInstance,(char *)(const char *)  ::str::international::unicode_to_utf8(::GetCommandLineW()),nCmdShow,appcore);
 
    if(!defer_core_term())
    {
@@ -136,13 +136,26 @@ int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lp
 
    char szTimeMessage[2048];
 
+   ::time_t timet = ::time(NULL);
+
+   tm t;
+
+   errno_t err = _localtime64_s(&t,&timet);
+
+   char szTime[2048];
+
+   sprintf(szTime,"%04d-%02d-%02d %02d:%02d:%02d",t.tm_year + 1900,t.tm_mon + 1,t.tm_mday,t.tm_hour,t.tm_min,t.tm_sec);
+
    sprintf(szTimeMessage,"\n\n\n---------------------------------------------------------------------------------------------\n|\n|\n|  Just After First Application Request Completion %d",(uint32_t)appcore.m_dwAfterApplicationFirstRequest - appcore.m_dwStartTime);
    ::OutputDebugStringA(szTimeMessage);
+   printf(szTimeMessage);
 
-   sprintf(szTimeMessage,"\n|  Total Elapsed Time %d\n|\n|\n---------------------------------------------------------------------------------------------\n\n\n",(uint32_t)dwEnd - appcore.m_dwStartTime);
-
+   sprintf(szTimeMessage,"\n|  Total Elapsed Time %d\n",(uint32_t)dwEnd - appcore.m_dwStartTime);
    ::OutputDebugStringA(szTimeMessage);
+   printf(szTimeMessage);
 
+   sprintf(szTimeMessage,"\n|  %s\n|\n|\n-------------------------------------------------------------------------------------------- - \n\n\n",szTime);
+   ::OutputDebugStringA(szTimeMessage);
    printf(szTimeMessage);
 
    if(file_exists_raw("C:\\ca2\\config\\system\\show_elapsed.txt"))
@@ -175,7 +188,7 @@ int32_t WINAPI _tWinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lp
    }
 
    return iRet;
-   
+
 }
 
 END_EXTERN_C
