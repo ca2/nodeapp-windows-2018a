@@ -1834,7 +1834,7 @@ std::string str_replace(const char * psz, const char * pszFind, const char * psz
    while(true)
    {
       sPosNew = str.find(pszFind, sPosOld);
-      if(sPosNew == 0xffffffff)
+      if(sPosNew == size_t(-1))
          return str;
       str = str.substr(0, sPosNew) + pszReplace + str.substr(sPosNew + lenFind);
       sPosOld = sPosNew;

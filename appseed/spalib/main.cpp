@@ -714,11 +714,18 @@ void get_program_files_x86(std::wstring &wstr)
 
    wchar_t * lpszModuleFilePath = (wchar_t *)malloc(MAX_PATH * sizeof(wchar_t) * 8);
 
-   SHGetSpecialFolderPathW(
-      NULL,
-      lpszModuleFilePath,
-      CSIDL_PROGRAM_FILES,
-      FALSE);
+   wcscpy(lpszModuleFilePath,_wgetenv(L"PROGRAMFILES(X86)"));
+
+   if(wcslen(lpszModuleFilePath) == 0)
+   {
+
+      SHGetSpecialFolderPathW(
+         NULL,
+         lpszModuleFilePath,
+         CSIDL_PROGRAM_FILES,
+         FALSE);
+
+   }
    if(lpszModuleFilePath[wcslen(lpszModuleFilePath) - 1] == '\\'
       || lpszModuleFilePath[wcslen(lpszModuleFilePath) - 1] == '/')
    {
@@ -884,10 +891,10 @@ int check_soon_app_id(std::wstring strId)
       std::wstring wstr;
 
       wstr = L"\\ca2\\";
-#ifdef _M_X64
-      wstr += L"stage\\x64\\";
-#else
+#if defined(_M_IX86)
       wstr += L"stage\\x86\\";
+#else
+      wstr += L"stage\\x64\\";
 #endif
 
       wstr += strName + L".dll";
@@ -897,10 +904,10 @@ int check_soon_app_id(std::wstring strId)
       std::wstring wstrApp;
 
       wstrApp = L"\\ca2\\";
-#ifdef _M_X64
-      wstrApp += L"stage\\x64\\";
+#if defined(_M_IX86)
+      wstr += L"stage\\x86\\";
 #else
-      wstrApp += L"stage\\x86\\";
+      wstr += L"stage\\x64\\";
 #endif
 
       wstrApp += L"app.exe";
@@ -1352,6 +1359,12 @@ bool is_file_ok(const stringa & straPath,const stringa & straTemplate,stringa & 
       strUrl += straTemplate.implode(",");
       strUrl += "&build=";
       strUrl += strFormatBuild;
+      strUrl += "&platform=";
+#if defined(_M_IX86)
+      strUrl += "win32";
+#else
+      strUrl += "win64";
+#endif
 
       string strMd5List = ms_get(strUrl.c_str());
 
@@ -1385,23 +1398,21 @@ int check_install_bin_set()
 
    string strPath;
 
-#ifdef WIN32
+#if defined(_M_IX86)
 
    string strPlatform = "x86";
+
+#else
+
+   string strPlatform = "x64";
+
+#endif
 
    wstring wstrPath = u16((string("\\ca2\\install\\stage\\") + strPlatform + "\\app.install.exe").c_str());
 
    get_program_files_x86(wstrPath);
 
    strPath = u8(wstrPath.c_str());
-
-
-#else
-
-   throw "TODO";
-
-#endif
-
 
    stringa straFile = install_get_plugin_base_library_list(g_strVersion);
 
@@ -1547,7 +1558,8 @@ md5retry:
 
             //trace().rich_trace("***Downloading installer");
 
-            string strUrlPrefix = "http://server.ca2.cc/ccvotagus/" + g_strVersion + "/" + g_strBuild + "/install/x86/";
+
+            string strUrlPrefix = "http://server.ca2.cc/ccvotagus/" + g_strVersion + "/" + g_strBuild + "/install/" + strPlatform + "/";
 
             string strUrl;
 
