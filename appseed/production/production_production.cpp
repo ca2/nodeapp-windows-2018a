@@ -1048,26 +1048,32 @@ namespace production
          //straServer.add("east-api.ca2.cc");
 
 
-         //straStatus.add("033 releasing at netnode : américa latina");
-         //straServer.add("la-api.ca2.cc");
+         straStatus.add("025 releasing at netnode : América Latina (São Paulo seeded)");
+         straServer.add("la-api.ca2.cc");
 
 
-         straStatus.add("033 releasing at netnode : europe (sverige named-seed-sitted)");
+         straStatus.add("033 releasing at netnode : Sverive/EastUS (Canada seeded)");
          straServer.add("east-api.ca2.cc");
 
 
-         straStatus.add("023 releasing at netnode : india");
+         straStatus.add("023 releasing at netnode : India/WestUS (Canada seeded)");
          straServer.add("west-api.ca2.cc");
 
 
-         straStatus.add("022 releasing at netnode : license");
+         straStatus.add("022 releasing at netnode : License/US (Canada seeded)");
          straServer.add("license-api.ca2.cc");
+
 
          //straStatus.add("077 releasing at netnode : hong kong");
          //straServer.add("hk-api.ca2.cc");
 
-         //straStatus.add("077 releasing at netnode : asia (japan named-seeded-sitted)");
-         //straServer.add("asia-api.ca2.cc");
+
+         straStatus.add("084 releasing at netnode : Asia (Japan seeded)");
+         straServer.add("asia-api.ca2.cc");
+
+
+         straStatus.add("077 releasing at netnode : Oceania (Australia/NewZealand seeded)");
+         straServer.add("cyan-api.ca2.cc");
 
 
          string strObject = "/production/release_ca2?authnone=1&version=" + m_strVersion + "&build=" + m_strFormatBuild;
@@ -1550,8 +1556,8 @@ namespace production
 
       stringa straStageDir;
 
-      straStageDir.add(m_strBase /  "stage/x86");
-      straStageDir.add(m_strBase /  "stage/x64");
+      straStageDir.add(m_strBase / "stage/x86");
+      straStageDir.add(m_strBase / "stage/x64");
 
       string strRelative;
       string strBz;
