@@ -289,14 +289,26 @@ int32_t removal::run()
    system("taskkill /F /IM app.exe");
    system("taskkill /F /IM app.install.exe");
    system("taskkill /F /IM app.plugin.container.exe");
-   system("taskkill /F /IM plugin-container.exe");
+   
+   if(file_exists_dup("C:\\ca2\\config\\app-removal\\kill_browsers.txt") || file_exists_dup("C:\\ca2\\config\\app-removal\\kill_plugin_container.txt"))
+   {
+
+      system("taskkill /F /IM plugin-container.exe");
+
+   }
+
    if(file_exists_dup("C:\\ca2\\config\\app-removal\\kill_browsers.txt") || file_exists_dup("C:\\ca2\\config\\app-removal\\kill_ie.txt"))
    {
+
       system("taskkill /F /IM iexplore.exe");
+
    }
+
    if(file_exists_dup("C:\\ca2\\config\\app-removal\\kill_browsers.txt") || file_exists_dup("C:\\ca2\\config\\app-removal\\kill_firefox.txt"))
    {
+
       system("taskkill /F /IM firefox.exe");
+
    }
 
    string strOnlyDrives = file_as_string_dup("C:\\ca2\\app-removal\\only_drives.txt");
