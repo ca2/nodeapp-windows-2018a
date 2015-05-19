@@ -340,7 +340,7 @@ namespace ca2plugin_container
             m_bInstalling = true;
             // shouldn't do advanced operations using ca2
             // starter_start will only kick a default app.install.exe if one isn't already running, cleaning file lock if any
-            host_starter_start(": app=session session_start=session app_type=application install");
+            start_app_install(": app=session session_start=session app_type=application install");
          }
          return;
       }
@@ -359,7 +359,7 @@ namespace ca2plugin_container
       else
       {
 
-         host_starter_start(": app=session session_start=session app_type=application install");
+         start_app_install(": app=session session_start=session app_type=application install");
 
       }
 
