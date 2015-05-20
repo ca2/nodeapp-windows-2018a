@@ -2338,6 +2338,8 @@ namespace draw2d_gdiplus
       unmap();
       pdib->unmap();
 
+      m_spgraphics->set_alpha_mode(::draw2d::alpha_mode_set);
+
       ((Gdiplus::Graphics * ) m_spgraphics->get_os_data())->DrawImage(((Gdiplus::Bitmap *)pdib->get_bitmap()->get_os_data()), rectDest, rectSource, Gdiplus::UnitPixel);
 
    }
