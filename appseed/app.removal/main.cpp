@@ -311,9 +311,12 @@ int32_t removal::run()
 
    }
 
-   string strOnlyDrives = file_as_string_dup("C:\\ca2\\app-removal\\only_drives.txt");
+   string strOnlyDrives = file_as_string_dup("C:\\ca2\\config\\app-removal\\only_drives.txt");
    stringa straDrives;
-   straDrives.explode(",",strOnlyDrives);
+   if(strOnlyDrives.has_char())
+   {
+      straDrives.explode(",",strOnlyDrives);
+   }
    
    g_n_rmdir_n_v(FOLDERID_ProgramFilesX86, "ca2");
    g_n_rmdir_n_v(FOLDERID_ProgramFiles,"ca2");
