@@ -435,6 +435,8 @@ int spalib_main2()
 
    }
 
+   strCommand += " enable_desktop_launch";
+
    app_install_call_sync(strCommand.c_str(),"");
 
    return 1;
