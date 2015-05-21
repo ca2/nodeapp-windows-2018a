@@ -86,7 +86,17 @@ void ca2_install_canvas_on_paint(Graphics * pdc, LPCRECT lpcrect, int iMode)
    pdc->SetTextRenderingHint(TextRenderingHintAntiAliasGridFit);
 
    {
-      int iTrace = _sopen(dir::ca2("install.log").c_str(),_O_RDONLY | _O_BINARY,_SH_DENYNO,0);
+
+#if defined(_M_IX86)
+
+      int iTrace = _sopen(dir::ca2("install-x86.log").c_str(),_O_RDONLY | _O_BINARY,_SH_DENYNO,0);
+
+#else
+
+      int iTrace = _sopen(dir::ca2("install-x64.log").c_str(),_O_RDONLY | _O_BINARY,_SH_DENYNO,0);
+
+#endif
+
       if(iTrace >= 0)
       {
          int iTell = _lseek(iTrace,0,SEEK_END);
@@ -314,7 +324,17 @@ void ca2_install_canvas_on_paint(Graphics * pdc, LPCRECT lpcrect, int iMode)
       Font * pfont = g_pfont;
       if(rect.bottom - rect.top >= cyText)
       {
-         int iTrace = _sopen(dir::ca2("install.log").c_str(), _O_RDONLY|_O_BINARY, _SH_DENYNO, 0);
+
+#if defined(_M_IX86)
+
+         int iTrace = _sopen(dir::ca2("install-x86.log").c_str(), _O_RDONLY|_O_BINARY, _SH_DENYNO, 0);
+
+#else
+
+         int iTrace = _sopen(dir::ca2("install-x64.log").c_str(),_O_RDONLY | _O_BINARY,_SH_DENYNO,0);
+
+#endif
+
          if(iTrace >= 0)
          {
             int iTell = _lseek(iTrace, 0, SEEK_END);

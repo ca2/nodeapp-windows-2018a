@@ -19,7 +19,17 @@ public:
    trace_file()
    {
       dir::mk(dir::ca2().c_str());
-      m_hfile = ::CreateFileW(u16(dir::ca2("install.log")).c_str(),GENERIC_WRITE,FILE_SHARE_READ | FILE_SHARE_WRITE,NULL,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,NULL);
+
+#if defined(_M_IX86)
+
+      m_hfile = ::CreateFileW(u16(dir::ca2("install-x86.log")).c_str(),GENERIC_WRITE,FILE_SHARE_READ | FILE_SHARE_WRITE,NULL,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,NULL);
+
+#else
+
+      m_hfile = ::CreateFileW(u16(dir::ca2("install-x64.log")).c_str(),GENERIC_WRITE,FILE_SHARE_READ | FILE_SHARE_WRITE,NULL,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,NULL);
+
+#endif
+
       ::SetFilePointer(m_hfile,0,NULL,FILE_END);
    }
    ~trace_file()
