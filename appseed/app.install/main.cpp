@@ -198,13 +198,29 @@ int32_t installer::simple_app_pre_run()
 bool installer::intro()
 {
 
+   const char * pszMutex;
 
+   // "Global\\::ca2::fontopus::ca2_spaboot_install_x86::7807e510-5579-11dd-ae16-0800200c7784"
 
-   m_hmutexSpabootInstall = ::CreateMutex(NULL, FALSE, "Global\\::ca2::fontopus::ca2_spaboot_install::7807e510-5579-11dd-ae16-0800200c7784");
+#if defined(_M_IX86)
+
+   pszMutex = "Global\\::ca2::fontopus::ca2_spaboot_install_x86::7807e510-5579-11dd-ae16-0800200c7784";
+
+#else
+
+   pszMutex = "Global\\::ca2::fontopus::ca2_spaboot_install_x64::7807e510-5579-11dd-ae16-0800200c7784";
+
+#endif
+
+   m_hmutexSpabootInstall = ::CreateMutex(NULL, FALSE, pszMutex);
+
    if(::GetLastError() == ERROR_ALREADY_EXISTS)
    {
+
       m_iReturnCode = -202;
+
       return false;
+
    }
 
    m_modpath      = (char *) memory_alloc(MAX_PATH * 8);
@@ -232,7 +248,7 @@ bool installer::intro()
 
 #endif
 
-   if(!m_rxchannel.create(pszChannel, "app.install.exe"))
+   if(!m_rxchannel.create(pszChannel,"app.install.exe"))
    {
       m_iReturnCode = -1;
       return false;
