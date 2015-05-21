@@ -218,7 +218,21 @@ bool installer::intro()
 
    prepare_small_bell();
 
-   if(!m_rxchannel.create("core/spaboot_install", "app.install.exe"))
+   const char * pszChannel;
+
+   // "core/spaboot_install"
+
+#if defined(_M_IX86)
+
+   pszChannel = "::ca2::fontopus::ca2_spaboot_install_x86::7807e510-5579-11dd-ae16-0800200c7784";
+
+#else
+
+   pszChannel = "::ca2::fontopus::ca2_spaboot_install_x64::7807e510-5579-11dd-ae16-0800200c7784";
+
+#endif
+
+   if(!m_rxchannel.create(pszChannel, "app.install.exe"))
    {
       m_iReturnCode = -1;
       return false;

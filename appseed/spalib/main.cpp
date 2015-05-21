@@ -1768,7 +1768,21 @@ bool app_install_send_short_message(const char * psz,bool bLaunch,const char * p
 
    install_launcher launcher("", "");
 
-   if(!txchannel.open("core/spaboot_install",bLaunch ? &launcher : NULL))
+   const char * pszChannel;
+
+   // "core/spaboot_install"
+
+#if defined(_M_IX86)
+
+   pszChannel = "::ca2::fontopus::ca2_spaboot_install_x86::7807e510-5579-11dd-ae16-0800200c7784";
+
+#else
+
+   pszChannel = "::ca2::fontopus::ca2_spaboot_install_x64::7807e510-5579-11dd-ae16-0800200c7784";
+
+#endif
+
+   if(!txchannel.open(pszChannel,bLaunch ? &launcher : NULL))
       return false;
 
    txchannel.send(psz,false);
