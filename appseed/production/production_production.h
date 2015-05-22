@@ -28,6 +28,7 @@ namespace production
          release(production * pproduction);
 
          string m_strRelease;
+         string m_strServer;
 
          production * m_pproduction;
 
@@ -71,13 +72,15 @@ namespace production
       string                  m_strEmpPostColor;
       string                  m_strVersion;
       string                  m_strStatusEmail;
-      int32_t                     m_iGlobalRetry;
+      int32_t                 m_iGlobalRetry;
       string                  m_strTry;
       string                  m_strDownloadSite;
 
       string                  m_strTwitterConsumerKey;
       string                  m_strTwitterConsumerSecret;
 
+      mutex                   m_mutexRelease;
+      stringa                 m_straRelease;
       int32_t                 m_iRelease;
 
       e_version               m_eversion;

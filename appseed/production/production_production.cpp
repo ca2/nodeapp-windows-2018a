@@ -11,7 +11,8 @@ namespace production
       simple_thread(papp),
       m_mutexStatus(papp),
       m_mutexCompress(papp),
-      m_evFinish(papp)
+      m_evFinish(papp),
+      m_mutexRelease(papp)
    {
 
       m_bEndProduction = false;
@@ -1078,48 +1079,63 @@ namespace production
 
          string strObject = "/production/release_ca2?authnone=1&version=" + m_strVersion + "&build=" + m_strFormatBuild;
 
-         for (index i = 0; i < straStatus.get_count(); i++)
          {
 
-            string strStatus = straStatus[i];
+            synch_lock sl(&m_mutexRelease);
 
-            string strServer = straServer[i];
-            
-            add_status(strStatus);
+            m_straRelease = straServer;
 
-            class release * prelease = new class release(this);
-
-            prelease->m_strRelease = "http://" + strServer + strObject;
-
-            if(i == 0)
-            {
-               
-               prelease->raw_run();
-
-            }
-            else
+            for(index i = 0; i < straStatus.get_count(); i++)
             {
 
-               prelease->begin();
+               string strStatus = straStatus[i];
+
+               string strServer = straServer[i];
+
+               add_status(strStatus);
+
+               class release * prelease = new class release(this);
+
+               prelease->m_strServer = strServer;
+
+               prelease->m_strRelease = "http://" + strServer + strObject;
+
+               if(i == 0)
+               {
+                  
+                  sl.unlock();
+
+                  prelease->raw_run();
+
+                  sl.lock();
+
+                  m_straRelease.remove(strServer);
+
+               }
+               else
+               {
+
+                  prelease->begin();
+
+               }
+
+               //{
+
+               //   string str;
+
+               //   property_set set;
+
+               //   set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " " + strStatus + "</span></div>";
+
+               //   Application.http().get("http://api.ca2.cc/status/insert", str, set);
+
+               //}
+
+               Sleep(1984);
 
             }
-
-            //{
-
-            //   string str;
-
-            //   property_set set;
-
-            //   set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " " + strStatus + "</span></div>";
-
-            //   Application.http().get("http://api.ca2.cc/status/insert", str, set);
-
-            //}
-
-            Sleep(1984);
 
          }
-
 
 
          //{
@@ -2611,7 +2627,11 @@ namespace production
 
       Application.http().get(m_strRelease,str,set);
 
+      synch_lock sl(&m_pproduction->m_mutexRelease);
+
       m_pproduction->m_iRelease--;
+
+      m_pproduction->m_straRelease.remove(m_strServer);
 
       return 0;
 
@@ -2694,14 +2714,18 @@ namespace production
 
          m_bReleased = true;
 
+         Sleep(1984 + 1977);
+
          defer_quit();
 
       }
       else if (m_iRelease > 0)
       {
+         synch_lock sl(&m_mutexRelease);
          string strStatus;
-         strStatus.Format("There are %d releases in command list!!", m_iRelease);
+         strStatus.Format("There are %d releases in command list!! (%s)",m_iRelease,m_straRelease.implode(";"));
          add_status(strStatus);
+
       }
    }
 
