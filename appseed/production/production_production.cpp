@@ -1019,24 +1019,17 @@ namespace production
          stringa straStatus;
          stringa straServer;
          
-         if(m_strVersion == "stage")
+         straStatus.add(unitext("049 releasing at netnode : France (Gravelines, France)"));
+         straServer.add("fr-api.ca2.cc");
+
+         straStatus.add(unitext("051 releasing at netnode : Deutschland (Gravelines, France"));
+         straServer.add("de-api.ca2.cc");
+
+         if(m_strVersion == "basis")
          {
 
-            straStatus.add("049 releasing at netnode : france");
-            straServer.add("fr-api.ca2.cc");
-
-            straStatus.add("051 releasing at netnode : deutsch");
-            straServer.add("de-api.ca2.cc");
-
-         }
-         else
-         {
-
-            straStatus.add("051 releasing at netnode : deutsch");
-            straServer.add("de-api.ca2.cc");
-
-            straStatus.add("049 releasing at netnode : france");
-            straServer.add("fr-api.ca2.cc");
+            straStatus.swap(0,1);
+            straServer.swap(0,1);
 
          }
 
@@ -1049,19 +1042,19 @@ namespace production
          //straServer.add("east-api.ca2.cc");
 
 
-         straStatus.add("025 releasing at netnode : América Latina (São Paulo seeded)");
+         straStatus.add(unitext("025 releasing at netnode : América Latina (São Paulo, Brazil)"));
          straServer.add("la-api.ca2.cc");
 
 
-         straStatus.add("033 releasing at netnode : Sverive/EastUS (Canada seeded)");
+         straStatus.add(unitext("033 releasing at netnode : Sverige/East US (Beauharnois, Canada)"));
          straServer.add("east-api.ca2.cc");
 
 
-         straStatus.add("023 releasing at netnode : India/WestUS (Canada seeded)");
+         straStatus.add(unitext("023 releasing at netnode : India/West US (Beauharnois, Canada)"));
          straServer.add("west-api.ca2.cc");
 
 
-         straStatus.add("022 releasing at netnode : License/US (Canada seeded)");
+         straStatus.add(unitext("022 releasing at netnode : License/US (Beauharnois, Canada)"));
          straServer.add("license-api.ca2.cc");
 
 
@@ -1069,11 +1062,11 @@ namespace production
          //straServer.add("hk-api.ca2.cc");
 
 
-         straStatus.add("084 releasing at netnode : Asia (Japan seeded)");
+         straStatus.add(unitext("084 releasing at netnode : Asia (Tokyo, Japan)"));
          straServer.add("asia-api.ca2.cc");
 
 
-         straStatus.add("077 releasing at netnode : Oceania (Australia/NewZealand seeded)");
+         straStatus.add(unitext("077 releasing at netnode : Oceania/Australia/New Zealand (Sydney)"));
          straServer.add("cyan-api.ca2.cc");
 
 
