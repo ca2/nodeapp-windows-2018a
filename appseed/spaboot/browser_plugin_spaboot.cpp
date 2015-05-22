@@ -555,7 +555,7 @@ int install_spa()
       {
          ::CreateDirectory((get_ca2_folder_dup() + "\\ca2\\appdata\\" + strPlatform).c_str(), NULL);
       }
-      file::put_contents(dir::path(dir::ca2().c_str(), ("appdata\\" + strPlatform + "\\spa_build.txt").c_str()).c_str(), strBuild.c_str());
+      file::put_contents(dir::path(dir::ca2().c_str(),("appdata\\" + strPlatform + "\\spa_build_" +strPlatform + ".txt").c_str()).c_str(),strBuild.c_str());
    }
 
    return 0;
