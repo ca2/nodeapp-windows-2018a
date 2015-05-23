@@ -1074,10 +1074,6 @@ namespace production
 
          {
 
-            synch_lock sl(&m_mutexRelease);
-
-            m_straRelease = straServer;
-
             for(index i = 0; i < straStatus.get_count(); i++)
             {
 
@@ -1087,22 +1083,12 @@ namespace production
 
                add_status(strStatus);
 
-               class release * prelease = new class release(this);
-
-               prelease->m_strServer = strServer;
-
-               prelease->m_strRelease = "http://" + strServer + strObject;
+               class release * prelease = new class release(this,"http://" + strServer + strObject, strServer);
 
                if(i == 0)
                {
                   
-                  sl.unlock();
-
                   prelease->raw_run();
-
-                  sl.lock();
-
-                  m_straRelease.remove(strServer);
 
                }
                else
@@ -2590,13 +2576,25 @@ namespace production
 
 
 
-   production::release::release(production * pproduction) :
+   production::release::release(production * pproduction, const char * pszRelease, const char * pszServer) :
       ::object(pproduction->get_app()),
-      thread(pproduction->get_app())
+      thread(pproduction->get_app()),
+      m_strRelease(pszRelease),
+      m_strServer(pszServer)
    {
 
       m_pproduction = pproduction;
-      m_pproduction->m_iRelease++;
+
+      {
+
+         synch_lock sl(&m_pproduction->m_mutexRelease);
+
+         m_pproduction->m_iRelease++;
+
+         m_pproduction->m_straRelease.add(m_strServer);
+
+      }
+
       m_pproduction->OnUpdateRelease();
 
    }

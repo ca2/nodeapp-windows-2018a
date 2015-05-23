@@ -25,12 +25,13 @@ namespace production
       {
       public:
          
-         release(production * pproduction);
 
-         string m_strRelease;
-         string m_strServer;
+         production *   m_pproduction;
+         string         m_strRelease;
+         string         m_strServer;
 
-         production * m_pproduction;
+
+         release(production * pproduction,const char * pszRelease,const char * pszServer);
 
          virtual bool initialize_instance();
 
