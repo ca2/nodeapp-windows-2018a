@@ -10,7 +10,6 @@ namespace production
    view::view(::aura::application * papp) :
       ::object(papp),
       ::user::interaction(papp), 
-      ::user::scroll_view(papp),
       m_scrollbarVert(papp),
       m_scrollbarHorz(papp),
       m_dibV(allocer()),
@@ -100,9 +99,9 @@ namespace production
 	   return ::aura::impact::pre_create_window(cs);
    }
 
-   void view::_001OnInitialUpdate(::signal_details * pobj) 
+   void view::_001OnInitialUpdate() 
    {
-      ::aura::impact::_001OnInitialUpdate(pobj);
+      ::aura::impact::_001OnInitialUpdate();
    }
 
    void view::on_update(::aura::impact * pSender, LPARAM lHint, ::object * phint) 
