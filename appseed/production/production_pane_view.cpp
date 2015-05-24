@@ -137,7 +137,7 @@ namespace production
       {
       case PaneViewContextMenu:
          {
-            sp(::filemanager::manager) pdoc = Platform.filemanager().std().open_child_list(false, true);
+            sp(::filemanager::manager) pdoc = Session.filemanager().std().open_child_list(false, true);
             if(pdoc != NULL)
             {
                pdoc->get_filemanager_data()->m_iIconSize = 16;
@@ -207,7 +207,7 @@ namespace production
          break;*/
       case PaneViewThreeActionLaunch:
          {
-            sp(::filemanager::manager) pdoc = Platform.filemanager().std().open_child_list(false, true);
+            sp(::filemanager::manager) pdoc = Session.filemanager().std().open_child_list(false, true);
             if(pdoc != NULL)
             {
                pdoc->get_filemanager_data()->m_iIconSize = 48;
@@ -236,7 +236,7 @@ namespace production
          break;
       case PaneViewConfiguration:
       {
-         sp(::aura::document) pdoc = Platform.userex()->create_form(this, pcreatordata->m_pholder);
+         sp(::aura::document) pdoc = Session.userex()->create_form(this, pcreatordata->m_pholder);
          if(pdoc == NULL)
             return;
          sp(::aura::impact) pview = pdoc->get_view();
