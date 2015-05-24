@@ -112,7 +112,7 @@ namespace backup
          break;
       case pane_view_options:
       {
-         sp(::aura::document) pdoc = Plat(get_app()).userex()->create_form(this, this);
+         sp(::aura::document) pdoc = Sess(get_app()).userex()->create_form(this, this);
          if(pdoc == NULL)
             return;
          sp(::aura::impact) pview = pdoc->get_view();
