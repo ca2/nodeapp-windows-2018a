@@ -31,7 +31,7 @@ bool form_callback::BaseOnControlEvent(::user::form * pview, ::user::control_eve
          uh.m_actioncontext = ::action::source::system_default();
          uh.m_etype = ::user::form_update_hint::type_browse;
          uh.m_strForm = "filemanager_add_location_lfs.xhtml";
-         pview->get_document()->update_all_views(NULL, 0, &uh);
+         dynamic_cast < ::user::form_view * > (pview)->get_document()->update_all_views(NULL, 0, &uh);
          sp(::user::interaction) pui = pview->get_child_by_name("lfs");
          sp(::user::elemental) ptext =pui;
          string strPath;
@@ -43,7 +43,7 @@ bool form_callback::BaseOnControlEvent(::user::form * pview, ::user::control_eve
          uh.m_actioncontext = ::action::source::system_default();
          uh.m_etype = ::user::form_update_hint::type_browse;
          uh.m_strForm = "filemanager_add_location_ftp.xhtml";
-         pview->get_document()->update_all_views(NULL, 0, &uh);
+         dynamic_cast < ::user::form_view * > (pview)->get_document()->update_all_views(NULL,0,&uh);
       }
       else if(pevent->m_puie->m_id == "submit")
       {

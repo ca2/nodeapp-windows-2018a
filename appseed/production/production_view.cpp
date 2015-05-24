@@ -10,13 +10,12 @@ namespace production
    view::view(::aura::application * papp) :
       ::object(papp),
       ::user::interaction(papp), 
-      m_scrollbarVert(papp),
-      m_scrollbarHorz(papp),
       m_dibV(allocer()),
       m_dibVs(allocer()),
       m_brushBkActive(allocer()),
       m_brushBkInactive(allocer())
    {
+
       m_pproduction = NULL;
       
       //System.file().ftd("C:\\home2\\ca2os\\ca2_spa\\stage", "C:\\teste.fileset");
@@ -40,16 +39,14 @@ namespace production
       m_iVsH = 49;
       m_iVsW = 41;
 
-      
-
-         m_pscrollbarVert  = &m_scrollbarVert;
-         m_pscrollbarHorz  = &m_scrollbarHorz;
-
    }
+
 
    view::~view()
    {
+
    }
+
 
    void view::install_message_handling(::message::dispatch * pinterface)
    {

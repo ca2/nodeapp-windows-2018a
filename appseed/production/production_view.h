@@ -39,8 +39,6 @@ namespace production
       visual::dib_sp             m_dibVs;
       ::draw2d::brush_sp          m_brushBkActive;
       ::draw2d::brush_sp          m_brushBkInactive;
-      simple_scroll_bar         m_scrollbarVert;
-      simple_scroll_bar         m_scrollbarHorz;
 
 
 	   view(::aura::application * papp);

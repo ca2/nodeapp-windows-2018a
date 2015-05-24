@@ -133,7 +133,7 @@ namespace ca2plugin_container
 
       m_pplugin->m_pcoreapp                  = m_pcoreapp;
 
-      m_pplugin->m_pplatformcomposite        = m_pplatformcomposite;
+      m_pplugin->m_pcoresession        = m_pcoresession;
 
       m_pplugin->m_phost                     = this;
 
