@@ -1022,7 +1022,7 @@ namespace production
          straStatus.add(unitext("049 releasing at netnode : France (Gravelines, France)"));
          straServer.add("fr-api.ca2.cc");
 
-         straStatus.add(unitext("051 releasing at netnode : Deutschland (Gravelines, France"));
+         straStatus.add(unitext("051 releasing at netnode : Deutschland (Gravelines, France)"));
          straServer.add("de-api.ca2.cc");
 
          if(m_strVersion == "basis")
@@ -1062,7 +1062,7 @@ namespace production
          //straServer.add("hk-api.ca2.cc");
 
 
-         straStatus.add(unitext("084 releasing at netnode : Asia (Tokyo, Japan)"));
+         straStatus.add(unitext("084 releasing at netnode : Asia (日本、東京)"));
          straServer.add("asia-api.ca2.cc");
 
 
