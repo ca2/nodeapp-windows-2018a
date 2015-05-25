@@ -240,29 +240,29 @@ namespace production
       class rect rect;
       rect.null();
 
-	   if(!m_pscrollbarHorz->create_window(
-		   orientation_horizontal,
-		   WS_CHILD 
-		   | WS_VISIBLE,
-		   rect,
-		   this,
-		   1024))
-      {
-		   return;
-      }
+	   //if(!m_pscrollbarHorz->create_window(
+		  // orientation_horizontal,
+		  // WS_CHILD 
+		  // | WS_VISIBLE,
+		  // rect,
+		  // this,
+		  // 1024))
+    //  {
+		  // return;
+    //  }
 
-      rect.null();
+    //  rect.null();
 
-	   if(!m_pscrollbarVert->create_window(
-		   orientation_vertical,
-		   WS_CHILD 
-		   | WS_VISIBLE,
-		   rect,
-		   this,
-		   1025))
-      {
-		   return;
-      }
+	   //if(!m_pscrollbarVert->create_window(
+		  // orientation_vertical,
+		  // WS_CHILD 
+		  // | WS_VISIBLE,
+		  // rect,
+		  // this,
+		  // 1025))
+    //  {
+		  // return;
+    //  }
 
       SetTimer(31, 230, NULL);
       SetTimer(3003, 300, NULL);
