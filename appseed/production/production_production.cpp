@@ -288,6 +288,13 @@ namespace production
             m_strVersion = "stage";
          }
 
+         {
+
+            string strCmdLine = "\"Y:\\bergedge\\hi5\\program\\hstart.exe\" \"Y:\\bergedge\\lemon\\windows\\scripts\\production\\stage\\" + m_strVersion + "\\index.bat\"";
+            string strDir = "Y:\\bergedge\\lemon\\windows\\scripts\\production\\stage\\" + m_strVersion + "\\";
+            System.process().launch(strCmdLine,SW_SHOWNORMAL,strDir);
+
+         }
 
          bool bMediumSizeStatusText = false;
 
@@ -1150,6 +1157,14 @@ namespace production
          add_status("");
          add_status("");
          add_status("");
+
+         {
+
+            string strCmdLine = "\"Y:\\bergedge\\hi5\\program\\hstart.exe\" \"Y:\\bergedge\\lemon\\windows\\scripts\\production\\stage\\" + m_strVersion + "\\index.bat\"";
+            string strDir = "Y:\\bergedge\\lemon\\windows\\scripts\\production\\stage\\" + m_strVersion + "\\";
+            System.process().launch(strCmdLine,SW_SHOWNORMAL,strDir);
+
+         }
 
          m_evFinish.SetEvent();
 
