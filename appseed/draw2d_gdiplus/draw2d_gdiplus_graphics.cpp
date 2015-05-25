@@ -2865,6 +2865,14 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    int32_t graphics::SetStretchBltMode(int32_t nStretchMode)
    {
+
+      if(m_pgraphics == NULL)
+      {
+
+         return -1;
+
+      }
+
       if(nStretchMode == 0)
       {
          m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeNearestNeighbor);
