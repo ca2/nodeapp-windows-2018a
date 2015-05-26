@@ -647,6 +647,8 @@ namespace ca2plugin_container
 
                      }
 
+#if 0
+
                      string str;
 
                      str.Format("%0.1f fps",dLast);
@@ -654,6 +656,8 @@ namespace ca2plugin_container
                      pgraphics->set_text_color(ARGB(255,255,255,0));
 
                      pgraphics->TextOutA(300,20,str);
+
+#endif
 
                   }
 
