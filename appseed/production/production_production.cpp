@@ -288,14 +288,6 @@ namespace production
             m_strVersion = "stage";
          }
 
-         {
-
-            string strCmdLine = "\"Y:\\bergedge\\hi5\\program\\hstart.exe\" \"Y:\\bergedge\\lemon\\windows\\scripts\\production\\stage\\" + m_strVersion + "\\index.bat\"";
-            string strDir = "Y:\\bergedge\\lemon\\windows\\scripts\\production\\stage\\" + m_strVersion + "\\";
-            System.process().launch(strCmdLine,SW_SHOWNORMAL,strDir);
-
-         }
-
          bool bMediumSizeStatusText = false;
 
          if (bMediumSizeStatusText)
@@ -1158,13 +1150,22 @@ namespace production
          add_status("");
          add_status("");
 
+         add_status("Launching post build tasks :");
+         add_status("Making available debugging symbols");
          {
 
-            string strCmdLine = "\"Y:\\bergedge\\hi5\\program\\hstart.exe\" \"Y:\\bergedge\\lemon\\windows\\scripts\\production\\stage\\" + m_strVersion + "\\index.bat\"";
-            string strDir = "Y:\\bergedge\\lemon\\windows\\scripts\\production\\stage\\" + m_strVersion + "\\";
+            string strCmdLine = "\"Y:\\bergedge\\hi5\\program\\hstart.exe\" \"Y:\\bergedge\\lemon\\windows\\scripts\\production\\" + m_strVersion + "\\index.bat\"";
+            string strDir = "Y:\\bergedge\\lemon\\windows\\scripts\\production\\" + m_strVersion + "\\";
             System.process().launch(strCmdLine,SW_SHOWNORMAL,strDir);
 
          }
+
+
+         add_status("");
+         add_status("");
+         add_status("");
+         add_status("");
+         add_status("");
 
          m_evFinish.SetEvent();
 
