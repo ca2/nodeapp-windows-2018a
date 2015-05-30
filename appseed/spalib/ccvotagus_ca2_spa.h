@@ -227,7 +227,6 @@ extern int g_iTotalGzLen;
 extern int g_iGzLen;
 extern int g_iStyle;
 
-extern HANDLE g_hmutexTrace;
 extern stringa g_strSpa;
 extern stringa g_straHost;
 
@@ -293,7 +292,6 @@ SPALIB_API  int spalib_main(HINSTANCE hInstance,
                      int       nCmdShow);
 
 
-extern HANDLE g_hmutexTrace;
 extern stringa g_straTrace;
 extern stringa g_strSpa;
 extern stringa g_straHost;

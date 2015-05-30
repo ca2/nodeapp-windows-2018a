@@ -2,7 +2,7 @@
 
 void on_trace(std::string & str, std::string & str2);
 
-HANDLE g_hmutexTrace;
+simple_mutex g_mutexTrace;
 stringa g_straTrace;
 int g_iTrace = -1;
 FILE * g_ftrace = NULL;
@@ -18,6 +18,9 @@ public:
 
    trace_file()
    {
+
+      g_mutexTrace.lock();
+
       dir::mk(dir::ca2().c_str());
 
 #if defined(_M_IX86)
@@ -34,6 +37,7 @@ public:
    }
    ~trace_file()
    {
+      g_mutexTrace.unlock();
       CloseHandle(m_hfile);
    }
 

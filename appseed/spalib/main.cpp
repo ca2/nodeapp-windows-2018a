@@ -80,6 +80,8 @@ class install_bin_item
 {
 public:
 
+
+   string         m_strUrlPrefix;
    string         m_strPath;
    string         m_strFile;
    LONG *         m_plong;
@@ -89,7 +91,7 @@ public:
    LONG           m_lTotal;
 
 
-   install_bin_item(string strPath, string strFile,LONG * plong, string strMd5, string strPlatform, LONG lTotal) :
+   install_bin_item(string strUrlPrefix, string strPath, string strFile,LONG * plong, string strMd5, string strPlatform, LONG lTotal) :
       m_strPath(strPath),
       m_strFile(strFile),
       m_plong(plong),
@@ -1453,6 +1455,8 @@ bool is_file_ok(const stringa & straPath,const stringa & straTemplate,stringa & 
 void install_bin_item::run()
 {
 
+   string strUrlPrefix = m_strUrlPrefix;
+
    string strPath = m_strPath;
 
    string strFile = m_strFile;
@@ -1479,8 +1483,6 @@ void install_bin_item::run()
 
       //trace().rich_trace("***Downloading installer");
 
-
-      string strUrlPrefix = "http://server.ca2.cc/ccvotagus/" + g_strVersion + "/" + g_strBuild + "/install/" + strPlatform + "/";
 
       string strUrl;
 
@@ -1715,13 +1717,13 @@ md5retry:
 
       trace("Downloading install bin set\r\n");
 
-
+      string strUrlPrefix = "http://server.ca2.cc/ccvotagus/" + g_strVersion + "/" + g_strBuild + "/install/" + strPlatform + "/";
 
       //#pragma omp parallel for
       for(int iFile = 0; iFile < straFile.size(); iFile++)
       {
 
-         new install_bin_item(strPath,straFile[iFile],&lCount,straMd5[iFile], strPlatform, lTotal);
+         new install_bin_item(strUrlPrefix, strPath,straFile[iFile],&lCount,straMd5[iFile], strPlatform, lTotal);
 
       }
 
@@ -1732,6 +1734,8 @@ md5retry:
          Sleep(84);
          iRetry++;
       }
+
+      Sleep(284);
 
    }
 
@@ -2179,7 +2183,9 @@ bool create_spaadmin_mutex(simple_mutex & mutex)
 
    }
 
-   return mutex.create(false,"Global\\::ca2::fontopus::votagus::cgcl::198411151951042219770204-11dd-ae16-0800200c7784",&MutexAttributes);
+   ::CreateMutex(&MutexAttributes, FALSE,"Global\\::ca2::fontopus::votagus::cgcl::198411151951042219770204-11dd-ae16-0800200c7784");
+
+   return true;
 
 }
 

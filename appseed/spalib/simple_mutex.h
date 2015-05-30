@@ -12,28 +12,7 @@ public:
    bool        m_bAlreadyExists;
 
 
-   simple_mutex()
-   {
-
-      m_object = INVALID_HANDLE_VALUE;
-
-      m_bAlreadyExists = false;
-
-   }
-
-   ~simple_mutex()
-   {
-
-      if(m_object != INVALID_HANDLE_VALUE)
-      {
-
-         ::CloseHandle(m_object);
-
-      }
-
-   }
-
-   bool create(bool bInitiallyOwn = FALSE,const char * lpszName = NULL,LPSECURITY_ATTRIBUTES lpsaAttribute = NULL)
+   simple_mutex(bool bInitiallyOwn = FALSE,const char * lpszName = NULL,LPSECURITY_ATTRIBUTES lpsaAttribute = NULL)
    {
 
       m_object = INVALID_HANDLE_VALUE;
@@ -53,10 +32,22 @@ public:
 
       m_bAlreadyExists =  dwLastError == ERROR_ALREADY_EXISTS;
 
-      return true;
+   }
+
+
+   ~simple_mutex()
+   {
+
+      if(m_object != INVALID_HANDLE_VALUE)
+      {
+
+         ::CloseHandle(m_object);
+
+      }
 
    }
 
+   
 
 
    bool already_exists()
@@ -76,14 +67,13 @@ public:
    bool lock(DWORD dwTimeOut = INFINITE)
    {
       
-      ::WaitForSingleObject(m_object,dwTimeOut);
-
+      return ::WaitForSingleObject(m_object,dwTimeOut) == WAIT_OBJECT_0;
    }
 
    bool unlock()
    {
 
-      ::ReleaseMutex(m_object);
+      return ::ReleaseMutex(m_object) != FALSE;
 
    }
 
