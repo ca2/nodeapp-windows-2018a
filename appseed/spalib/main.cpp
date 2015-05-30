@@ -58,12 +58,12 @@ int call_async(
 
 string get_module_path(HMODULE hmodule)
 {
-   
+
    wstring wstrPath;
 
-   wchar_t * pwz = (wchar_t *) malloc(4906);
+   wchar_t * pwz = (wchar_t *)malloc(4906);
 
-   DWORD dwSize = ::GetModuleFileNameW(hmodule, pwz, 4096);
+   DWORD dwSize = ::GetModuleFileNameW(hmodule,pwz,4096);
 
    wstrPath = pwz;
 
@@ -74,6 +74,63 @@ string get_module_path(HMODULE hmodule)
 }
 
 #endif
+
+
+class install_bin_item
+{
+public:
+
+   string         m_strPath;
+   string         m_strFile;
+   LONG *         m_plong;
+   DWORD          m_dwThreadId;
+   string         m_strMd5;
+   string         m_strPlatform;
+   LONG           m_lTotal;
+
+
+   install_bin_item(string strPath, string strFile,LONG * plong, string strMd5, string strPlatform, LONG lTotal) :
+      m_strPath(strPath),
+      m_strFile(strFile),
+      m_plong(plong),
+      m_strMd5(strMd5),
+      m_strPlatform(strPlatform),
+      m_lTotal(lTotal)
+   {
+      
+      ::CreateThread(NULL,0,&install_bin_item::proc,this,0,&m_dwThreadId);
+
+   }
+
+
+   static DWORD CALLBACK proc(LPVOID lp)
+   {
+      install_bin_item * pitem = (install_bin_item *)lp;
+      try
+      {
+         pitem->run();
+      }
+      catch(...)
+      {
+         (*pitem->m_plong)--;
+      }
+      delete pitem;
+      return 0;
+   }
+
+
+   void run();
+
+   void progress(double dRate = 1.0)
+   {
+      if(spa_get_admin())
+      {
+         trace(0.3 + ((((double)m_lTotal - (double)(*m_plong)) * (0.84 - 0.3)) / ((double)m_lTotal)));
+      }
+
+   }
+   
+};
 
 
 bool app_install_send_short_message(const char * psz,bool bLaunch,const char * pszBuild);
@@ -121,7 +178,7 @@ SPALIB_API int spalib_main(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lp
       }
       else
       {
-         
+
          str = "zzzAPPzzz spa : ";
 
       }
@@ -302,7 +359,7 @@ int spa_main_fork()
 
    if(!::CreateThread(NULL,0,spa_fork_proc,NULL,0,&g_dwMain2))
    {
-      
+
       return 0;
 
    }
@@ -315,10 +372,10 @@ int spalib_main2();
 
 DWORD WINAPI spa_fork_proc(LPVOID)
 {
-   
+
    g_iRet = spalib_main2();
 
-   ::PostMessage(g_hwnd, WM_QUIT, 0, 0);
+   ::PostMessage(g_hwnd,WM_QUIT,0,0);
 
    return g_iRet;
 
@@ -329,7 +386,7 @@ int spalib_main2()
 {
 
    int iTry = 1440;
-   
+
    while(!check_spa_installation())
    {
 
@@ -451,7 +508,7 @@ int check_soon_launch()
 {
 
    std::wstring strId;
-   
+
    std::wstring wstr = ::GetCommandLineW();
 
    int iFind1 = 0;
@@ -463,11 +520,11 @@ int check_soon_launch()
 
    }
 
-   int iFind = wstr.find(L" : ", iFind1 + 1);
+   int iFind = wstr.find(L" : ",iFind1 + 1);
 
    if(iFind < 0)
    {
-      
+
       if(check_soon_file_launch(wstr.substr(iFind1 + 1)))
       {
 
@@ -662,12 +719,12 @@ std::string get_app_id(std::wstring wstr)
 
    /*if(pnode->GetChildCount() <= 0)
    {
-      if(pnode->name == "meta")
-      {
-         return file::name(strPath.c_str());
-      }
+   if(pnode->name == "meta")
+   {
+   return file::name(strPath.c_str());
+   }
 
-      return "";
+   return "";
    }*/
 
    const char * psz = pnode->GetChildAttrValue("launch","app");
@@ -858,35 +915,35 @@ int check_soon_app_id(std::wstring strId)
    //}
 
 
-//   {
-//
-//      std::wstring wstr;
-//
-//      wstr = L"\\ca2\\";
-//#ifdef _M_X64
-//      wstr += L"stage\\x64\\";
-//#else
-//      wstr += L"stage\\x86\\";
-//#endif
-//
-//      wstr += strName + L".exe";
-//
-//      get_program_files_x86(wstr);
-//
-//      STARTUPINFOW si;
-//      memset(&si,0,sizeof(si));
-//      si.cb = sizeof(si);
-//      si.dwFlags = STARTF_USESHOWWINDOW;
-//      si.wShowWindow = SW_SHOWNORMAL;
-//      PROCESS_INFORMATION pi;
-//      memset(&pi,0,sizeof(pi));
-//
-//      if(::CreateProcessW(NULL,(wchar_t *)wstr.c_str(),
-//         NULL,NULL,FALSE,0,NULL,NULL,
-//         &si,&pi))
-//         return TRUE;
-//
-//   }
+   //   {
+   //
+   //      std::wstring wstr;
+   //
+   //      wstr = L"\\ca2\\";
+   //#ifdef _M_X64
+   //      wstr += L"stage\\x64\\";
+   //#else
+   //      wstr += L"stage\\x86\\";
+   //#endif
+   //
+   //      wstr += strName + L".exe";
+   //
+   //      get_program_files_x86(wstr);
+   //
+   //      STARTUPINFOW si;
+   //      memset(&si,0,sizeof(si));
+   //      si.cb = sizeof(si);
+   //      si.dwFlags = STARTF_USESHOWWINDOW;
+   //      si.wShowWindow = SW_SHOWNORMAL;
+   //      PROCESS_INFORMATION pi;
+   //      memset(&pi,0,sizeof(pi));
+   //
+   //      if(::CreateProcessW(NULL,(wchar_t *)wstr.c_str(),
+   //         NULL,NULL,FALSE,0,NULL,NULL,
+   //         &si,&pi))
+   //         return TRUE;
+   //
+   //   }
 
    {
 
@@ -907,9 +964,9 @@ int check_soon_app_id(std::wstring strId)
 
       wstrApp = L"\\ca2\\";
 #if defined(_M_IX86)
-      wstr += L"stage\\x86\\";
+      wstrApp += L"stage\\x86\\";
 #else
-      wstr += L"stage\\x64\\";
+      wstrApp += L"stage\\x64\\";
 #endif
 
       wstrApp += L"app.exe";
@@ -1003,10 +1060,10 @@ int check_spa_bin()
 
    if(!file::exists(u8(wstr.c_str())))
    {
-      
+
       if(!spa_get_admin())
          return 0;
-      
+
       if(!download_spa_bin())
       {
          return 0;
@@ -1104,7 +1161,7 @@ int download_spa_bin()
 
    return 1;
 
-   
+
 
 }
 
@@ -1234,8 +1291,8 @@ int download_spaadmin_bin()
 
 std::string download_tmp_spaadmin_bin()
 {
-   
-   std::string strTempSpa = get_temp_file_name("spaadmin", "exe");
+
+   std::string strTempSpa = get_temp_file_name("spaadmin","exe");
 
    int iTry = 0;
 
@@ -1261,7 +1318,7 @@ std::string download_tmp_spaadmin_bin()
 
 
    return "";
-   
+
 }
 
 
@@ -1383,7 +1440,7 @@ bool is_file_ok(const stringa & straPath,const stringa & straTemplate,stringa & 
    for(int i = 0; i < straMd5.size(); i++)
    {
 
-      if(_stricmp(file::md5(straPath[i].c_str()).c_str(), straMd5[i].c_str()) != 0)
+      if(_stricmp(file::md5(straPath[i].c_str()).c_str(),straMd5[i].c_str()) != 0)
          return false;
 
    }
@@ -1393,10 +1450,132 @@ bool is_file_ok(const stringa & straPath,const stringa & straTemplate,stringa & 
 }
 
 
+void install_bin_item::run()
+{
+
+   string strPath = m_strPath;
+
+   string strFile = m_strFile;
+
+   string strMd5 = m_strMd5;
+
+   string strPlatform = m_strPlatform;
+
+   //if(spa_get_admin())
+   //{
+//   }
+
+   string strDownload = dir::path(dir::name(strPath.c_str()).c_str(),strFile.c_str());
+
+   //if(pinstaller != NULL)
+   //{
+   //   sl.lock();
+   //   pinstaller->m_daProgress.element_at_grow(omp_get_thread_num() + 1)  = 0.0;
+   //   sl.unlock();
+   //}
+
+   if(!file::exists(strDownload.c_str()) || _stricmp(file::md5(strDownload.c_str()).c_str(),strMd5.c_str()) != 0)
+   {
+
+      //trace().rich_trace("***Downloading installer");
+
+
+      string strUrlPrefix = "http://server.ca2.cc/ccvotagus/" + g_strVersion + "/" + g_strBuild + "/install/" + strPlatform + "/";
+
+      string strUrl;
+
+
+      //if(pinstaller != NULL)
+      //{
+
+      //   set["int_scalar_source_listener"] = pinstaller;
+
+      //}
+
+      int iRetry;
+
+      bool bFileNice;
+
+      iRetry = 0;
+
+      strUrl = strUrlPrefix + strFile + ".bz";
+
+      bFileNice = false;
+
+
+      //sl.lock();
+      //::sockets::http_session * & psession = m_httpsessionptra.element_at_grow(omp_get_thread_num() + 1);
+      //sl.unlock();
+
+
+      while(iRetry < 8 && !bFileNice)
+      {
+
+
+
+
+         if(ms_download(strUrl.c_str(),(strDownload + ".bz").c_str()))
+         {
+
+            bzuncompress((strDownload).c_str(),(strDownload + ".bz").c_str());
+
+            if(file::exists(strDownload.c_str()) && _stricmp(file::md5(strDownload.c_str()).c_str(),strMd5.c_str()) == 0)
+            {
+
+               bFileNice = true;
+
+            }
+
+
+         }
+
+         iRetry++;
+
+      }
+
+      if(!bFileNice)
+      {
+
+         // failed by too much retry in any number of the files already downloaded :
+         // so, return failure (no eligible app.install.exe file).
+         //return "";
+
+      }
+      else
+      {
+         //if(pinstaller != NULL)
+         //{
+         //   sl.lock();
+         //   pinstaller->m_daProgress.element_at_grow(omp_get_thread_num() + 1)  = 0.0;
+         //   pinstaller->m_dAppInstallProgressBase += 1.0;
+         //   sl.unlock();
+         //}
+
+      }
+
+
+   }
+   else
+   {
+      //if(pinstaller != NULL)
+      //{
+      //   sl.lock();
+      //   pinstaller->m_daProgress.element_at_grow(omp_get_thread_num() + 1)  = 0.0;
+      //   pinstaller->m_dAppInstallProgressBase += 1.0;
+      //   sl.unlock();
+      //}
+   }
+
+   InterlockedDecrement(m_plong);
+
+   progress();
+
+}
+
 int check_install_bin_set()
 {
 
-//   trace().rich_trace("***Verifying installer");
+   //   trace().rich_trace("***Verifying installer");
 
    string strPath;
 
@@ -1457,7 +1636,7 @@ md5retry:
 
       if(!spa_get_admin())
       {
-         
+
          return 0;
 
       }
@@ -1513,7 +1692,7 @@ md5retry:
 
 #endif
 
-//      single_lock sl(pinstaller != NULL ? &pinstaller->m_mutexOmp : NULL);
+      //      single_lock sl(pinstaller != NULL ? &pinstaller->m_mutexOmp : NULL);
 
 
       //{
@@ -1531,128 +1710,27 @@ md5retry:
 
       trace(0.3);
 
-//#pragma omp parallel for
+      LONG lTotal = straFile.size();
+      LONG lCount = lTotal;
+
+      trace("Downloading install bin set\r\n");
+
+
+
+      //#pragma omp parallel for
       for(int iFile = 0; iFile < straFile.size(); iFile++)
       {
 
-         string strFile = straFile[iFile];
+         new install_bin_item(strPath,straFile[iFile],&lCount,straMd5[iFile], strPlatform, lTotal);
 
+      }
 
-         if(spa_get_admin())
-         {
-            trace("Downloading ");
-            trace(::file::title(strFile.c_str()));
-            trace("\r\n");
+      int iRetry = 0;
 
-         }
-
-         string strDownload = dir::path(dir::name(strPath.c_str()).c_str(),strFile.c_str());
-
-         //if(pinstaller != NULL)
-         //{
-         //   sl.lock();
-         //   pinstaller->m_daProgress.element_at_grow(omp_get_thread_num() + 1)  = 0.0;
-         //   sl.unlock();
-         //}
-
-         if(!file::exists(strDownload.c_str()) || _stricmp(file::md5(strDownload.c_str()).c_str(), straMd5[iFile].c_str()) != 0)
-         {
-
-            //trace().rich_trace("***Downloading installer");
-
-
-            string strUrlPrefix = "http://server.ca2.cc/ccvotagus/" + g_strVersion + "/" + g_strBuild + "/install/" + strPlatform + "/";
-
-            string strUrl;
-
-
-            //if(pinstaller != NULL)
-            //{
-
-            //   set["int_scalar_source_listener"] = pinstaller;
-
-            //}
-
-            int iRetry;
-
-            bool bFileNice;
-
-            iRetry = 0;
-
-            strUrl = strUrlPrefix + strFile + ".bz";
-
-            bFileNice = false;
-
-
-            //sl.lock();
-            //::sockets::http_session * & psession = m_httpsessionptra.element_at_grow(omp_get_thread_num() + 1);
-            //sl.unlock();
-
-
-            while(iRetry < 8 && !bFileNice)
-            {
-
-
-
-
-               if(ms_download(strUrl.c_str(),(strDownload + ".bz").c_str()))
-               {
-
-                  bzuncompress((strDownload).c_str(),(strDownload + ".bz").c_str());
-
-                  if(file::exists(strDownload.c_str()) && _stricmp(file::md5(strDownload.c_str()).c_str(), straMd5[iFile].c_str()) == 0)
-                  {
-
-                     bFileNice = true;
-
-                  }
-
-
-               }
-
-               iRetry++;
-
-            }
-
-            if(!bFileNice)
-            {
-
-               // failed by too much retry in any number of the files already downloaded :
-               // so, return failure (no eligible app.install.exe file).
-               //return "";
-
-            }
-            else
-            {
-               //if(pinstaller != NULL)
-               //{
-               //   sl.lock();
-               //   pinstaller->m_daProgress.element_at_grow(omp_get_thread_num() + 1)  = 0.0;
-               //   pinstaller->m_dAppInstallProgressBase += 1.0;
-               //   sl.unlock();
-               //}
-
-            }
-
-
-         }
-         else
-         {
-            //if(pinstaller != NULL)
-            //{
-            //   sl.lock();
-            //   pinstaller->m_daProgress.element_at_grow(omp_get_thread_num() + 1)  = 0.0;
-            //   pinstaller->m_dAppInstallProgressBase += 1.0;
-            //   sl.unlock();
-            //}
-         }
-
-
-         if(spa_get_admin())
-         {
-            trace(0.3 + ((((double)iFile + 1.0) * (0.84 - 0.3)) / ((double)straFile.size())));
-         }
-
+      while(lCount > 0 && iRetry < ((84 + 77) * 10))
+      {
+         Sleep(84);
+         iRetry++;
       }
 
    }
@@ -1766,7 +1844,7 @@ bool app_install_send_short_message(const char * psz,bool bLaunch,const char * p
 
    small_ipc_tx_channel txchannel;
 
-   install_launcher launcher("", "");
+   install_launcher launcher("","");
 
    const char * pszChannel;
 
@@ -1899,7 +1977,7 @@ void install_launcher::start_in_context()
    PROCESS_INFORMATION pi;
    memset(&pi,0,sizeof(pi));
 
-   ::CreateProcessW(NULL,(wchar_t *)wstr.c_str(), NULL,NULL,FALSE,0,NULL,wstrDir.c_str(), &si,&pi);
+   ::CreateProcessW(NULL,(wchar_t *)wstr.c_str(),NULL,NULL,FALSE,0,NULL,wstrDir.c_str(),&si,&pi);
 
    Sleep(1984);
 
@@ -2061,7 +2139,7 @@ void defer_start_program_files_spa_admin()
 
 bool low_is_spaadmin_running()
 {
-   
+
    simple_mutex smutex;
 
    create_spaadmin_mutex(smutex);
@@ -2100,7 +2178,11 @@ bool create_spaadmin_mutex(simple_mutex & mutex)
       }
 
    }
-   
+
    return mutex.create(false,"Global\\::ca2::fontopus::votagus::cgcl::198411151951042219770204-11dd-ae16-0800200c7784",&MutexAttributes);
 
 }
+
+
+
+
