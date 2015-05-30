@@ -390,34 +390,28 @@ class spaadmin_mutex_attrs
 {
 public:
 
-   SECURITY_ATTRIBUTES MutexAttributes;
+   SECURITY_ATTRIBUTES m_mutexattributes;
+   SECURITY_DESCRIPTOR m_securitydescriptor;
 
    spaadmin_mutex_attrs()
    {
 
-      ZeroMemory(&MutexAttributes,sizeof(MutexAttributes));
-      MutexAttributes.nLength = sizeof(MutexAttributes);
-      MutexAttributes.bInheritHandle = FALSE; // object uninheritable
+      ZeroMemory(&m_mutexattributes,sizeof(m_mutexattributes));
+      m_mutexattributes.nLength = sizeof(m_mutexattributes);
+      m_mutexattributes.bInheritHandle = FALSE; // object uninheritable
 
       // declare and initialize a security descriptor
-      SECURITY_DESCRIPTOR SD;
-      ZeroMemory(&SD,sizeof(SD));
-      bool bInitOk = InitializeSecurityDescriptor(
-         &SD,
-         SECURITY_DESCRIPTOR_REVISION);
+      ZeroMemory(&m_securitydescriptor,sizeof(m_securitydescriptor));
+      bool bInitOk = InitializeSecurityDescriptor(&m_securitydescriptor, SECURITY_DESCRIPTOR_REVISION);
       if(bInitOk)
       {
          // give the security descriptor a Null Dacl
          // done using the  "TRUE, (PACL)NULL" here
-         bool bSetOk = SetSecurityDescriptorDacl(&SD,
-            TRUE,
-            (PACL)NULL,
-            FALSE);
+         bool bSetOk = SetSecurityDescriptorDacl(&m_securitydescriptor, TRUE, (PACL)NULL, FALSE);
 
          if(bSetOk)
          {
-
-            MutexAttributes.lpSecurityDescriptor = &SD;
+            m_mutexattributes.lpSecurityDescriptor = &m_securitydescriptor;
          }
 
       }
@@ -433,7 +427,7 @@ class spaadmin_mutex :
 public:
 
    spaadmin_mutex():
-      simple_mutex(false,"Global\\::ca2::fontopus::votagus::cgcl::198411151951042219770204-11dd-ae16-0800200c7784",&MutexAttributes)
+      simple_mutex(false,"Global\\::ca2::fontopus::votagus::cgcl::198411151951042219770204-11dd-ae16-0800200c7784",&m_mutexattributes)
    {
    }
 

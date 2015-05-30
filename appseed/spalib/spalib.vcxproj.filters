@@ -110,6 +110,9 @@
     <ClCompile Include="stringa.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="simple_mutex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ccvotagus_ca2_spa.h">
