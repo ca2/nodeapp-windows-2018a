@@ -34,7 +34,6 @@ void app_install_call_sync(const char * szParameters,const char * pszBuild);
 int register_spa_file_type();
 void start_program_files_spa_admin();
 void defer_start_program_files_spa_admin();
-bool create_spaadmin_mutex(simple_mutex & mutex);
 bool low_is_spaadmin_running();
 
 #if defined(LINUX) || defined(WINDOWS)
@@ -75,6 +74,10 @@ string get_module_path(HMODULE hmodule)
 
 #endif
 
+#define INSTALL_BIN_SPA -1977
+#define INSTALL_BIN_SPAADMIN -1984
+#define OP_INSTALL_SPA 1
+#define OP_INSTALL_SET 2
 
 class install_bin_item
 {
@@ -85,10 +88,22 @@ public:
    string         m_strPath;
    string         m_strFile;
    LONG *         m_plong;
+   LONG *         m_plongOk;
    DWORD          m_dwThreadId;
    string         m_strMd5;
    string         m_strPlatform;
    LONG           m_lTotal;
+   int            m_iOp;
+
+   install_bin_item(string strFile,LONG * plong,LONG lTotal,LONG * plongOk):
+      m_plong(plong),
+      m_lTotal(lTotal),
+      m_plongOk(plongOk)
+   {
+      m_iOp = OP_INSTALL_SPA;
+      m_plong = NULL;
+      ::CreateThread(NULL,0,&install_bin_item::proc,this,0,&m_dwThreadId);
+   }
 
 
    install_bin_item(string strUrlPrefix, string strPath, string strFile,LONG * plong, string strMd5, string strPlatform, LONG lTotal) :
@@ -99,7 +114,7 @@ public:
       m_strPlatform(strPlatform),
       m_lTotal(lTotal)
    {
-      
+      m_iOp = OP_INSTALL_SET;
       ::CreateThread(NULL,0,&install_bin_item::proc,this,0,&m_dwThreadId);
 
    }
@@ -125,12 +140,24 @@ public:
 
    void progress(double dRate = 1.0)
    {
+
       if(spa_get_admin())
       {
-         trace(0.3 + ((((double)m_lTotal - (double)(*m_plong)) * (0.84 - 0.3)) / ((double)m_lTotal)));
+         if(m_iOp == OP_INSTALL_SPA)
+         {
+            trace(0.3 + ((((double)m_lTotal - (double)(*m_plong)) * (0.25 - 0.05)) / ((double)m_lTotal)));
+         }
+         else if(m_iOp == OP_INSTALL_SET)
+         {
+            trace(0.3 + ((((double)m_lTotal - (double)(*m_plong)) * (0.84 - 0.3)) / ((double)m_lTotal)));
+         }
       }
 
    }
+
+   void op_spa();
+
+   void op_set();
    
 };
 
@@ -291,9 +318,7 @@ SPALIB_API int spa_admin()
 {
 
 
-   simple_mutex smutex;
-
-   create_spaadmin_mutex(smutex);
+   spaadmin_mutex smutex;
 
    if(smutex.already_exists())
    {
@@ -347,7 +372,6 @@ SPALIB_API int spa_admin()
    trace("***Thank you\r\n");
    trace("Thank you\r\n");
    trace(1.0);
-
 
    return 0;
 
@@ -1011,30 +1035,40 @@ int check_spa_installation()
 
    if(spa_get_admin())
    {
-      trace("Downloading spaadmin\r\n");
+
+      trace("Downloading\r\n");
+
    }
 
+   stringa straFile;
 
-   if(!check_spaadmin_bin())
-      return 0;
+   straFile.add("spaadmin");
+   straFile.add("spa");
+   straFile.add("install_bin_set");
 
-   if(spa_get_admin())
+   LONG lTotal = straFile.size();
+   LONG lCount = lTotal;
+   LONG lOk = 0;
+
+   for(int iFile = 0; iFile < straFile.size(); iFile++)
    {
-      trace("Downloading spa\r\n");
-      trace(0.15);
+
+      new install_bin_item(straFile[iFile],&lCount,lTotal, &lOk);
+
    }
 
-   if(!check_spa_bin())
-      return 0;
+   int iRetry = 0;
 
-   if(spa_get_admin())
+   while(lCount > 0 && iRetry < ((84 + 77) * 4))
    {
-      trace("***Installing installer\r\n");
-      trace("Checking installer\r\n");
-      trace(0.25);
+      Sleep(84);
+      iRetry++;
    }
 
-   if(!check_install_bin_set())
+   Sleep(84);
+
+
+   if(lOk != lTotal)
       return 0;
 
    return 1;
@@ -1432,10 +1466,18 @@ bool is_file_ok(const stringa & straPath,const stringa & straTemplate,stringa & 
       straMd5.add_tokens(strMd5List.c_str(),",");
 
       if(straMd5.size() != straPath.size())
+      {
+
          return false;
 
+      }
+
       if(!bOk)
+      {
+
          return false;
+
+      }
 
    }
 
@@ -1443,7 +1485,11 @@ bool is_file_ok(const stringa & straPath,const stringa & straTemplate,stringa & 
    {
 
       if(_stricmp(file::md5(straPath[i].c_str()).c_str(),straMd5[i].c_str()) != 0)
+      {
+
          return false;
+
+      }
 
    }
 
@@ -1452,7 +1498,49 @@ bool is_file_ok(const stringa & straPath,const stringa & straTemplate,stringa & 
 }
 
 
-void install_bin_item::run()
+void install_bin_item::op_spa()
+{
+   
+   if(m_strFile == "spaadmin")
+   {
+
+      if(check_spaadmin_bin())
+      {
+
+         InterlockedIncrement(m_plongOk);
+
+      }
+
+   }
+   else if(m_strFile == "spa")
+   {
+
+      if(check_spa_bin())
+      {
+
+         InterlockedIncrement(m_plongOk);
+
+      }
+
+   }
+   else if(m_strFile == "install_bin_set")
+   {
+
+      if(check_install_bin_set())
+      {
+
+         InterlockedIncrement(m_plongOk);
+
+      }
+
+   }
+
+
+
+}
+
+
+void install_bin_item::op_set()
 {
 
    string strUrlPrefix = m_strUrlPrefix;
@@ -1465,34 +1553,12 @@ void install_bin_item::run()
 
    string strPlatform = m_strPlatform;
 
-   //if(spa_get_admin())
-   //{
-//   }
-
    string strDownload = dir::path(dir::name(strPath.c_str()).c_str(),strFile.c_str());
-
-   //if(pinstaller != NULL)
-   //{
-   //   sl.lock();
-   //   pinstaller->m_daProgress.element_at_grow(omp_get_thread_num() + 1)  = 0.0;
-   //   sl.unlock();
-   //}
 
    if(!file::exists(strDownload.c_str()) || _stricmp(file::md5(strDownload.c_str()).c_str(),strMd5.c_str()) != 0)
    {
 
-      //trace().rich_trace("***Downloading installer");
-
-
       string strUrl;
-
-
-      //if(pinstaller != NULL)
-      //{
-
-      //   set["int_scalar_source_listener"] = pinstaller;
-
-      //}
 
       int iRetry;
 
@@ -1504,17 +1570,8 @@ void install_bin_item::run()
 
       bFileNice = false;
 
-
-      //sl.lock();
-      //::sockets::http_session * & psession = m_httpsessionptra.element_at_grow(omp_get_thread_num() + 1);
-      //sl.unlock();
-
-
       while(iRetry < 8 && !bFileNice)
       {
-
-
-
 
          if(ms_download(strUrl.c_str(),(strDownload + ".bz").c_str()))
          {
@@ -1543,30 +1600,27 @@ void install_bin_item::run()
          //return "";
 
       }
-      else
-      {
-         //if(pinstaller != NULL)
-         //{
-         //   sl.lock();
-         //   pinstaller->m_daProgress.element_at_grow(omp_get_thread_num() + 1)  = 0.0;
-         //   pinstaller->m_dAppInstallProgressBase += 1.0;
-         //   sl.unlock();
-         //}
-
-      }
-
 
    }
-   else
+
+}
+
+void install_bin_item::run()
+{
+   
+   if(m_iOp == OP_INSTALL_SPA)
    {
-      //if(pinstaller != NULL)
-      //{
-      //   sl.lock();
-      //   pinstaller->m_daProgress.element_at_grow(omp_get_thread_num() + 1)  = 0.0;
-      //   pinstaller->m_dAppInstallProgressBase += 1.0;
-      //   sl.unlock();
-      //}
+      
+      op_spa();
+
    }
+   else if(m_iOp == OP_INSTALL_SET)
+   {
+
+      op_set();
+
+   }
+
 
    InterlockedDecrement(m_plong);
 
@@ -1574,10 +1628,12 @@ void install_bin_item::run()
 
 }
 
+
+
+
+
 int check_install_bin_set()
 {
-
-   //   trace().rich_trace("***Verifying installer");
 
    string strPath;
 
@@ -1694,24 +1750,6 @@ md5retry:
 
 #endif
 
-      //      single_lock sl(pinstaller != NULL ? &pinstaller->m_mutexOmp : NULL);
-
-
-      //{
-
-      //   if(pinstaller != NULL)
-      //   {
-
-      //      pinstaller->m_daProgress.remove_all();
-      //      pinstaller->m_daProgress.add(0.0);
-      //      pinstaller->m_dAppInstallFileCount = straFile.get_size();
-      //      pinstaller->m_dAppInstallProgressBase = 0.0;
-
-      //   }
-      //}
-
-      trace(0.3);
-
       LONG lTotal = straFile.size();
       LONG lCount = lTotal;
 
@@ -1723,7 +1761,7 @@ md5retry:
       for(int iFile = 0; iFile < straFile.size(); iFile++)
       {
 
-         new install_bin_item(strUrlPrefix, strPath,straFile[iFile],&lCount,straMd5[iFile], strPlatform, lTotal);
+         new install_bin_item(strUrlPrefix,strPath,straFile[iFile],&lCount,straMd5[iFile],strPlatform,lTotal);
 
       }
 
@@ -1735,7 +1773,7 @@ md5retry:
          iRetry++;
       }
 
-      Sleep(284);
+      Sleep(84);
 
    }
 
@@ -1743,9 +1781,6 @@ md5retry:
    return 1;
 
 }
-
-
-
 
 
 
@@ -2144,51 +2179,10 @@ void defer_start_program_files_spa_admin()
 bool low_is_spaadmin_running()
 {
 
-   simple_mutex smutex;
-
-   create_spaadmin_mutex(smutex);
+   spaadmin_mutex smutex;
 
    return smutex.already_exists();
 
 }
-
-
-bool create_spaadmin_mutex(simple_mutex & mutex)
-{
-   SECURITY_ATTRIBUTES MutexAttributes;
-   ZeroMemory(&MutexAttributes,sizeof(MutexAttributes));
-   MutexAttributes.nLength = sizeof(MutexAttributes);
-   MutexAttributes.bInheritHandle = FALSE; // object uninheritable
-
-   // declare and initialize a security descriptor
-   SECURITY_DESCRIPTOR SD;
-   ZeroMemory(&SD,sizeof(SD));
-   bool bInitOk = InitializeSecurityDescriptor(
-      &SD,
-      SECURITY_DESCRIPTOR_REVISION);
-   if(bInitOk)
-   {
-      // give the security descriptor a Null Dacl
-      // done using the  "TRUE, (PACL)NULL" here
-      bool bSetOk = SetSecurityDescriptorDacl(&SD,
-         TRUE,
-         (PACL)NULL,
-         FALSE);
-
-      if(bSetOk)
-      {
-
-         MutexAttributes.lpSecurityDescriptor = &SD;
-      }
-
-   }
-
-   ::CreateMutex(&MutexAttributes, FALSE,"Global\\::ca2::fontopus::votagus::cgcl::198411151951042219770204-11dd-ae16-0800200c7784");
-
-   return true;
-
-}
-
-
 
 

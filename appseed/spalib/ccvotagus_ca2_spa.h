@@ -385,3 +385,56 @@ SPALIB_API void reg_delete_tree(HKEY hkey, const char * name);
 #include "str.h"
 #include "XMLite.h"
 #include <shellapi.h>
+
+class spaadmin_mutex_attrs
+{
+public:
+
+   SECURITY_ATTRIBUTES MutexAttributes;
+
+   spaadmin_mutex_attrs()
+   {
+
+      ZeroMemory(&MutexAttributes,sizeof(MutexAttributes));
+      MutexAttributes.nLength = sizeof(MutexAttributes);
+      MutexAttributes.bInheritHandle = FALSE; // object uninheritable
+
+      // declare and initialize a security descriptor
+      SECURITY_DESCRIPTOR SD;
+      ZeroMemory(&SD,sizeof(SD));
+      bool bInitOk = InitializeSecurityDescriptor(
+         &SD,
+         SECURITY_DESCRIPTOR_REVISION);
+      if(bInitOk)
+      {
+         // give the security descriptor a Null Dacl
+         // done using the  "TRUE, (PACL)NULL" here
+         bool bSetOk = SetSecurityDescriptorDacl(&SD,
+            TRUE,
+            (PACL)NULL,
+            FALSE);
+
+         if(bSetOk)
+         {
+
+            MutexAttributes.lpSecurityDescriptor = &SD;
+         }
+
+      }
+
+   }
+
+};
+
+class spaadmin_mutex :
+   public spaadmin_mutex_attrs,
+   public simple_mutex
+{
+public:
+
+   spaadmin_mutex():
+      simple_mutex(false,"Global\\::ca2::fontopus::votagus::cgcl::198411151951042219770204-11dd-ae16-0800200c7784",&MutexAttributes)
+   {
+   }
+
+};
