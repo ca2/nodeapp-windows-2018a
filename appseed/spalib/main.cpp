@@ -107,6 +107,7 @@ public:
 
 
    install_bin_item(string strUrlPrefix, string strPath, string strFile,LONG * plong, string strMd5, string strPlatform, LONG lTotal) :
+      m_strUrlPrefix(strUrlPrefix),
       m_strPath(strPath),
       m_strFile(strFile),
       m_plong(plong),
