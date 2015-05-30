@@ -96,12 +96,12 @@ public:
    int            m_iOp;
 
    install_bin_item(string strFile,LONG * plong,LONG lTotal,LONG * plongOk):
+      m_strFile(strFile),
       m_plong(plong),
       m_lTotal(lTotal),
       m_plongOk(plongOk)
    {
       m_iOp = OP_INSTALL_SPA;
-      m_plong = NULL;
       ::CreateThread(NULL,0,&install_bin_item::proc,this,0,&m_dwThreadId);
    }
 
@@ -145,7 +145,7 @@ public:
       {
          if(m_iOp == OP_INSTALL_SPA)
          {
-            trace(0.3 + ((((double)m_lTotal - (double)(*m_plong)) * (0.25 - 0.05)) / ((double)m_lTotal)));
+            trace(0.05 + ((((double)m_lTotal - (double)(*m_plong)) * (0.25 - 0.05)) / ((double)m_lTotal)));
          }
          else if(m_iOp == OP_INSTALL_SET)
          {

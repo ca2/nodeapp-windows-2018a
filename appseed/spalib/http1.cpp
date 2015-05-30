@@ -2,9 +2,9 @@
 
 //void trace(const char * psz);
 
-HINTERNET  g_hSession = NULL;
-HINTERNET  g_hConnect = NULL;
-DWORD g_dwDownloadLen;
+//HINTERNET  g_hSession = NULL;
+//HINTERNET  g_hConnect = NULL;
+//DWORD g_dwDownloadLen;
 
 
 std::string url_encode(const char * psz)
@@ -205,7 +205,7 @@ SPALIB_API std::string ms_get(const char * pszUrl, bool bCache)
                 else
                 {
                    dwLen += dwSize;
-                   g_dwDownloadLen += dwSize;
+//                   g_dwDownloadLen += dwSize;
             for(int i = 0; i < ((dwLen - dwLast100k) / (100 * 1024)); i++)
             {
 //               trace_add(".");

@@ -152,8 +152,8 @@ void remove_spa_start(const char * pszId);
 
 extern bool g_bInstalling;
 
-extern HINTERNET  g_hSession;
-extern std::string g_strHost;
+//extern HINTERNET  g_hSession;
+//extern std::string g_strHost;
 extern DWORD g_dwInstallStartTime;
 extern std::string g_strBuild;
 extern std::string g_strBuildResource;
@@ -188,8 +188,8 @@ extern bool g_NeedRestartFatalError;
 extern bool g_bLoginStartup;
 extern bool g_bMsDownload;
 extern std::string g_strTitle;
-extern DWORD g_dwDownloadLen;
-extern DWORD g_dwCurFileLen;
+//extern DWORD g_dwDownloadLen;
+//extern DWORD g_dwCurFileLen;
 bool m_reboot();
 bool ignit_phase2();
 int run_uninstall(const char * lpCmdLine, int nCmdShow);

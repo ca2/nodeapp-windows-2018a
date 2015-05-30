@@ -17,7 +17,7 @@ int run_file(const char * pszFile, int nCmdShow);
 
 bool g_bInstalling = false;
 int g_iHealingSurface = 0;
-std::string g_strHost;
+//std::string g_strHost;
 DWORD g_dwInstallStartTime;
 std::string g_strBuild;
 std::string g_strBuildResource;
@@ -80,7 +80,7 @@ bool g_NeedRestartFatalError;
 bool g_bLoginStartup;
 bool g_bMsDownload = false;
 std::string g_strTitle;
-DWORD g_dwCurFileLen;
+//DWORD g_dwCurFileLen;
 bool m_reboot();
 bool ignit_phase2();
 int run_uninstall(const char * lpCmdLine, int nCmdShow);
@@ -878,8 +878,8 @@ bool Get(const std::string& url_in, bool bExist, int iLength, const char * pszMd
    }
 #ifdef WIN32
    dir::mk(dir::name((dir + file).c_str()).c_str());
-   g_dwCurFileLen = iGzLen;
-   g_dwDownloadLen = 0;
+  // g_dwCurFileLen = iGzLen;
+//   g_dwDownloadLen = 0;
    keep_true keepDownloadTrue(g_bMsDownload);
    return ms_download(url_in.c_str(), (dir + file).c_str());
 #else

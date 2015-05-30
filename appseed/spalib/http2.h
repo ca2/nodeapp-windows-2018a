@@ -1,7 +1,7 @@
 #pragma once
 
 extern DWORD g_MsDownloadSize;
-extern char * g_MsDownloadBuffer;
+//extern char * g_MsDownloadBuffer;
 
 
 bool ms_download(const char * pszUrl, const char * pszFile, bool bUrlEncode = true, int * piStatus = NULL);

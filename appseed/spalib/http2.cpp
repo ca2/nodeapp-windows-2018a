@@ -1,10 +1,30 @@
 #include "StdAfx.h"
 
-extern HINTERNET  g_hSession;
-extern HINTERNET  g_hConnect;
-HINTERNET  g_hPreviousRequest;
+//extern HINTERNET  g_hSession;
+//extern HINTERNET  g_hConnect;
+//HINTERNET  g_hPreviousRequest;
 DWORD g_MsDownloadSize = 1024 * 128;
-char * g_MsDownloadBuffer = new char[g_MsDownloadSize];
+class download_buffer
+{
+public:
+
+   char * m_p;
+
+   download_buffer()
+   {
+      m_p = new char[g_MsDownloadSize];
+   }
+   ~download_buffer()
+   {
+      delete [] m_p;
+   }
+
+   operator char *()
+   {
+      return m_p;
+   }
+};
+
 
 bool ms_download(const char * pszUrl, const char * pszFile, bool bUrlEncode, int * piStatus)
 {
@@ -14,10 +34,10 @@ bool ms_download(const char * pszUrl, const char * pszFile, bool bUrlEncode, int
 
 bool ms_download_progress(const char * pszUrl, const char * pszFile, bool bProgress, bool bUrlEncode, int * piStatus)
 {
+   download_buffer buffer;
    if(piStatus != NULL)
       *piStatus = 0;
    std::string strUrl;
-   char szBuf[4096];
 
    if(file::exists(pszFile) && !::DeleteFile(pszFile))
    {
@@ -25,7 +45,7 @@ bool ms_download_progress(const char * pszUrl, const char * pszFile, bool bProgr
       return false;
    }
 
-   g_dwDownloadLen = 0;
+//   g_dwDownloadLen = 0;
 
    if(bProgress)
    {
@@ -61,11 +81,13 @@ bool ms_download_progress(const char * pszUrl, const char * pszFile, bool bProgr
 
    DWORD dwLast100k = 0;
 
+   HINTERNET hSession = NULL;
+
    int iRetry = 0;
 Retry1:
-   if(g_hSession == NULL)
+   if(hSession == NULL)
    {
-      g_hSession = InternetOpen(
+      hSession = InternetOpen(
          "ccvotagus_ca2_fontopus",  
          INTERNET_OPEN_TYPE_PRECONFIG,
          NULL, 
@@ -76,23 +98,25 @@ Retry1:
       vi.dwMajorVersion = 1;
       vi.dwMinorVersion = 1;
       InternetSetOption(
-         g_hSession,
+         hSession,
          INTERNET_OPTION_HTTP_VERSION,
          &vi,
          sizeof(vi));
    }
 
-   if(g_hSession != NULL)
+   HINTERNET hConnect = NULL;
+
+   if(hSession != NULL)
    {
-      if(strHost != g_strHost || g_hConnect == NULL)
+//      if(strHost != g_strHost || g_hConnect == NULL)
       {
-         if(g_hConnect != NULL)
-         {
-            ::InternetCloseHandle(g_hConnect);
-         }
+         //if(hConnect != NULL)
+         //{
+         //   ::InternetCloseHandle(g_hConnect);
+         //}
          try
          {
-            g_hConnect = InternetConnect( g_hSession, strHost.c_str(),
+            hConnect = InternetConnect( hSession, strHost.c_str(),
                80, NULL, NULL, INTERNET_SERVICE_HTTP, 
                INTERNET_FLAG_EXISTING_CONNECT 
                | INTERNET_FLAG_KEEP_CONNECTION, 
@@ -105,17 +129,17 @@ Retry1:
             {
                return false;
             }
-            g_hSession = NULL;
+            //g_hSession = NULL;
             goto Retry1;
          }
-         g_strHost = strHost;
+         //g_strHost = strHost;
       }
    }
 
 
    HINTERNET hRequest = NULL;
-   if (g_hConnect != NULL)
-      hRequest = HttpOpenRequest( g_hConnect, "GET", strReq.c_str(),
+   if (hConnect != NULL)
+      hRequest = HttpOpenRequest( hConnect, "GET", strReq.c_str(),
       NULL, "ca2 ccvotagus spa", 
       NULL, 
       INTERNET_FLAG_EXISTING_CONNECT 
@@ -128,10 +152,10 @@ Retry1:
          NULL, 0,
          NULL, 0);
 
-   if(hRequest != g_hPreviousRequest)
-   {
-      InternetCloseHandle(g_hPreviousRequest);
-   }
+//   if(hRequest != g_hPreviousRequest)
+  // {
+    //  InternetCloseHandle(g_hPreviousRequest);
+   //}
 
 
    DWORD dwStatusCode = 0;
@@ -204,7 +228,8 @@ Retry1:
          return false;
       }
       DWORD dwSize = g_MsDownloadSize;
-      pszOutBuffer = g_MsDownloadBuffer;
+      
+      pszOutBuffer = buffer;
       if (!pszOutBuffer)
       {
          printf("Out of primitive::memory\n");
@@ -214,35 +239,13 @@ Retry1:
       {
          ZeroMemory(pszOutBuffer, dwSize);
 
-         if (!InternetReadFile( hRequest, (LPVOID)pszOutBuffer, 
-            dwSize, &dwDownloaded))
+         if (!InternetReadFile( hRequest, (LPVOID)pszOutBuffer, dwSize, &dwDownloaded))
          {
-            //sprintf(szBuf, "Error %u in WinHttpReadData.\n", GetLastError());
-            //trace(szBuf);
          }
          else
          {
             ::WriteFile(hfile, pszOutBuffer, dwDownloaded, &dwWritten, NULL);
             dwLen += dwWritten;
-            g_dwDownloadLen = dwLen;
-            if(bProgress)
-            {
-               for(int i = 0; i < ((dwLen - dwLast100k) / (100 * 1024)); i++)
-               {
-                  if(iCol >= 84)
-                  {
-                     //trace(".");
-                     iCol = 1;
-                  }
-                  else
-                  {
-                     iCol++;
-                     //trace_add(".");
-                  }
-               }
-            }
-            dwLast100k += ((dwLen - dwLast100k) / (100 * 1024) )*(100 / 1024);
-            dlr(g_iGzLen + dwLen);
          }
          if(dwDownloaded == 0)
             break;
@@ -250,21 +253,6 @@ Retry1:
       ::CloseHandle(hfile);
    }
    DWORD dw = GetLastError();
-   // Report any errors.  
-   if(bResults)
-   {
-      while(bProgress && iCol < 84)
-      {
-         //trace_add(".");
-         iCol++;
-      }
-   }
-   else
-   {
-      //sprintf(szBuf, "Error %d has occurred.\n",dw);
-      //trace(szBuf);
-   }
-   g_hPreviousRequest = hRequest;
    return bResults != FALSE;
 }
 
