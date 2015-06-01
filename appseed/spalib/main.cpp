@@ -412,116 +412,130 @@ DWORD WINAPI spa_fork_proc(LPVOID)
 int spalib_main2()
 {
 
-   int iTry = 1440;
+   int iFullInstallationMaxTryCount = 3;
 
-   while(!check_spa_installation())
+   int iFullInstallationTryCount = 0;
+
+   while(iFullInstallationTryCount < iFullInstallationMaxTryCount)
    {
 
-      defer_start_program_files_spa_admin();
+      iFullInstallationTryCount++;
 
-      iTry--;
+      int iTry = 1440;
 
-      if(iTry < 0)
+      while(!check_spa_installation())
       {
 
-         return 0;
+         defer_start_program_files_spa_admin();
+
+         iTry--;
+
+         if(iTry < 0)
+         {
+
+            return 0;
+
+         }
+
+         Sleep(84 + 77);
 
       }
 
-      Sleep(84 + 77);
 
-   }
+      std::wstring strId;
 
+      std::wstring wstr = ::GetCommandLineW();
 
-   std::wstring strId;
+      int iFind1 = 0;
 
-   std::wstring wstr = ::GetCommandLineW();
+      if(wstr[0] == L'\"')
+      {
 
-   int iFind1 = 0;
+         iFind1= wstr.find('\"',1);
 
-   if(wstr[0] == L'\"')
-   {
+      }
 
-      iFind1= wstr.find('\"',1);
+      int iFind = wstr.find(L" : ",iFind1 + 1);
 
-   }
-
-   int iFind = wstr.find(L" : ",iFind1 + 1);
-
-   if(iFind >= 0)
-   {
-      iFind = wstr.find(L"app=",iFind);
       if(iFind >= 0)
       {
-         int iEnd = wstr.find(L" ",iFind);
-         if(iEnd < 0)
+         iFind = wstr.find(L"app=",iFind);
+         if(iFind >= 0)
          {
-            strId = wstr.substr(iFind + 4);
+            int iEnd = wstr.find(L" ",iFind);
+            if(iEnd < 0)
+            {
+               strId = wstr.substr(iFind + 4);
+            }
+            else
+            {
+               strId = wstr.substr(iFind + 4,iEnd - iFind - 4);
+            }
+
+            // trim initial quote
+            if(strId[0] == '\"')
+               strId = strId.substr(1);
+
+            // trim final quote
+            if(strId[strId.length() - 1] == '\"')
+               strId = strId.substr(0,strId.length() - 1);
+
          }
-         else
-         {
-            strId = wstr.substr(iFind + 4,iEnd - iFind - 4);
-         }
-
-         // trim initial quote
-         if(strId[0] == '\"')
-            strId = strId.substr(1);
-
-         // trim final quote
-         if(strId[strId.length() - 1] == '\"')
-            strId = strId.substr(0,strId.length() - 1);
-
       }
-   }
-   else
-   {
-
-      strId = u16(get_app_id(wstr.substr(iFind1 + 1)));
-
-      if(strId.length() <= 0)
+      else
       {
-         return 1;
+
+         strId = u16(get_app_id(wstr.substr(iFind1 + 1)));
+
+         if(strId.length() <= 0)
+         {
+            return 1;
+         }
+
+         HMODULE hmoduleUser32 = ::LoadLibrary("User32");
+         g_pfnChangeWindowMessageFilter = (LPFN_ChangeWindowMessageFilter) ::GetProcAddress(hmoduleUser32,"ChangeWindowMessageFilter");
+
+
       }
 
-      HMODULE hmoduleUser32 = ::LoadLibrary("User32");
-      g_pfnChangeWindowMessageFilter = (LPFN_ChangeWindowMessageFilter) ::GetProcAddress(hmoduleUser32,"ChangeWindowMessageFilter");
+      string strCommandLine;
 
+
+      strCommandLine = " : app=" + u8(strId);
+
+      strCommandLine += " install";
+      strCommandLine += " locale=_std";
+      strCommandLine += " schema=_std";
+      strCommandLine += " version=stage";
+
+      strCommandLine += " ";
+
+
+      string strCommand;
+
+      strCommand = "synch_spaadmin:";
+
+      strCommand += "starter_start:";
+
+      strCommand += strCommandLine;
+
+      bool bBackground = true;
+
+      if(bBackground)
+      {
+
+         strCommand += " background";
+
+      }
+
+      strCommand += " enable_desktop_launch";
+
+      app_install_call_sync(strCommand.c_str(),"");
+
+      if(check_soon_launch())
+         return 1;
 
    }
-
-   string strCommandLine;
-
-
-   strCommandLine = " : app=" + u8(strId);
-
-   strCommandLine += " install";
-   strCommandLine += " locale=_std";
-   strCommandLine += " schema=_std";
-   strCommandLine += " version=stage";
-
-   strCommandLine += " ";
-
-
-   string strCommand;
-
-   strCommand = "synch_spaadmin:";
-
-   strCommand += "starter_start:";
-
-   strCommand += strCommandLine;
-
-   bool bBackground = true;
-
-   if(bBackground)
-   {
-
-      strCommand += " background";
-
-   }
-
-   strCommand += " enable_desktop_launch";
-
-   app_install_call_sync(strCommand.c_str(),"");
 
    return 1;
 
