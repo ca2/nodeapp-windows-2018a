@@ -28,8 +28,9 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|x64'">
-    <LocalDebuggerCommandArguments>: app=app-gtech/sensible_service</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>: app=app-core/berghold build_number=installed</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerCommand>C:\Program Files (x86)\ca2\stage\x64\app.exe</LocalDebuggerCommand>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='codeanalysis|x64'">
     <LocalDebuggerCommand>C:\Program Files (x86)\ca2\stage\x86\app.exe</LocalDebuggerCommand>
