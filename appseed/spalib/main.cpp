@@ -289,8 +289,16 @@ SPALIB_API int spalib_main(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lp
 
 SPALIB_API int spa_main()
 {
-   if(check_soon_launch())
-      return 0;
+
+   std::wstring wstr = ::GetCommandLineW();
+
+   if(wstr.find(L" install ") == wstring::npos)
+   {
+
+      if(check_soon_launch())
+         return 0;
+
+   }
 
    if(!show_spa_window())
       return -1;
@@ -304,6 +312,18 @@ SPALIB_API int spa_main()
       TranslateMessage(&g_msg);
 
       DispatchMessage(&g_msg);
+
+   }
+
+   {
+
+      HWND hwnd = g_hwnd;
+
+      g_hwnd = NULL;
+
+      ::ShowWindow(hwnd,SW_HIDE);
+
+      ::DestroyWindow(hwnd);
 
    }
 
@@ -446,6 +466,8 @@ int spalib_main2()
 
       std::wstring wstr = ::GetCommandLineW();
 
+      std::string strParams;
+
       int iFind1 = 0;
 
       if(wstr[0] == L'\"')
@@ -459,6 +481,7 @@ int spalib_main2()
 
       if(iFind >= 0)
       {
+         strParams = u8(wstr.substr(iFind));
          iFind = wstr.find(L"app=",iFind);
          if(iFind >= 0)
          {
@@ -500,16 +523,26 @@ int spalib_main2()
 
       string strCommandLine;
 
+      if(strParams.length() > 0)
+      {
 
-      strCommandLine = " : app=" + u8(strId);
+         strCommandLine = strParams;
 
-      strCommandLine += " install";
-      strCommandLine += " locale=_std";
-      strCommandLine += " schema=_std";
-      strCommandLine += " version=stage";
+      }
+      else
+      {
+
+
+         strCommandLine = " : app=" + u8(strId);
+
+         strCommandLine += " install";
+         strCommandLine += " locale=_std";
+         strCommandLine += " schema=_std";
+         strCommandLine += " version=stage";
+
+      }
 
       strCommandLine += " ";
-
 
       string strCommand;
 
@@ -527,8 +560,6 @@ int spalib_main2()
          strCommand += " background";
 
       }
-
-      strCommand += " enable_desktop_launch";
 
       app_install_call_sync(strCommand.c_str(),"");
 
@@ -597,6 +628,34 @@ int check_soon_launch()
          if(strId[strId.length() - 1] == '\"')
             strId = strId.substr(0,strId.length() - 1);
 
+      }
+      else
+      {
+         iFind = wstr.find(L"enable_desktop_launch=",iFind);
+         if(iFind >= 0)
+         {
+            int iEnd = wstr.find(L" ",iFind);
+            if(iEnd < 0)
+            {
+               strId = wstr.substr(iFind + 22);
+            }
+            else
+            {
+               strId = wstr.substr(iFind + 22,iEnd - iFind - 22);
+            }
+
+            // trim initial quote
+            if(strId[0] == '\"')
+               strId = strId.substr(1);
+
+            // trim final quote
+            if(strId[strId.length() - 1] == '\"')
+               strId = strId.substr(0,strId.length() - 1);
+
+         }
+         else
+         {
+         }
       }
 
    }
