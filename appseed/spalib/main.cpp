@@ -576,6 +576,88 @@ int check_soon_file_launch(std::wstring wstr);
 
 int check_soon_app_id(std::wstring wstr);
 
+bool check_param(std::wstring & wstrValue, std::wstring wstr,std::wstring wstrParam)
+{
+   
+   auto iFind = wstr.find(wstrParam + L"=");
+
+   if(iFind == wstring::npos)
+   {
+
+      iFind = wstr.find(wstrParam + L" ");
+
+      if(iFind == wstring::npos)
+      {
+
+         iFind = wstr.find(wstrParam);
+
+         if(iFind == wstring::npos)
+         {
+
+            return false;
+
+         }
+         else if(iFind == wstr.length() - wstrParam.length())
+         {
+
+            wstrValue = L"";
+
+            return true;
+
+         }
+         else
+         {
+
+            return false;
+
+         }
+
+      }
+      else
+      {
+
+         wstrValue = L"";
+
+         return true;
+
+      }
+
+   }
+
+   auto iEnd = wstr.find(L" ",iFind);
+
+   if(iEnd == wstring::npos)
+   {
+         
+      wstrValue = wstr.substr(iFind + wstrParam.length());
+
+   }
+   else
+   {
+
+      wstrValue = wstr.substr(iFind + wstrParam.length(),iEnd - iFind - wstrParam.length());
+
+   }
+
+   if(wstrValue[0] == '\"')
+   {
+
+      wstrValue = wstrValue.substr(1);
+
+   }
+
+   if(wstrValue[wstrValue.length() - 1] == '\"')
+   {
+
+      wstrValue = wstrValue.substr(0,wstrValue.length() - 1);
+
+   }
+
+   return true;
+
+}
+
+
 int check_soon_launch()
 {
 
@@ -607,54 +689,37 @@ int check_soon_launch()
    }
    else
    {
-      iFind = wstr.find(L"app=",iFind);
-      if(iFind >= 0)
+      
+      wstring wstrRequest = wstr.substr(iFind + 3);
+
+      wstring wstrValue;
+
+      if(check_param(wstrValue,wstrRequest,L"install"))
       {
-         int iEnd = wstr.find(L" ",iFind);
-         if(iEnd < 0)
+
+         if(check_param(strId,wstrRequest,L"enable_desktop_launch") && strId.length() > 0)
          {
-            strId = wstr.substr(iFind + 4);
-         }
-         else
-         {
-            strId = wstr.substr(iFind + 4,iEnd - iFind - 4);
+
+            return check_soon_app_id(strId);
+
          }
 
-         // trim initial quote
-         if(strId[0] == '\"')
-            strId = strId.substr(1);
+         if(check_param(strId,wstrRequest,L"app") && strId.length() > 0)
+         {
 
-         // trim final quote
-         if(strId[strId.length() - 1] == '\"')
-            strId = strId.substr(0,strId.length() - 1);
+            return check_soon_app_id(strId);
+
+         }
 
       }
       else
       {
-         iFind = wstr.find(L"enable_desktop_launch=",iFind);
-         if(iFind >= 0)
+
+         if(check_param(strId,wstrRequest,L"app") && strId.length() > 0)
          {
-            int iEnd = wstr.find(L" ",iFind);
-            if(iEnd < 0)
-            {
-               strId = wstr.substr(iFind + 22);
-            }
-            else
-            {
-               strId = wstr.substr(iFind + 22,iEnd - iFind - 22);
-            }
 
-            // trim initial quote
-            if(strId[0] == '\"')
-               strId = strId.substr(1);
+            return check_soon_app_id(strId);
 
-            // trim final quote
-            if(strId[strId.length() - 1] == '\"')
-               strId = strId.substr(0,strId.length() - 1);
-
-         }
-         else
-         {
          }
       }
 
