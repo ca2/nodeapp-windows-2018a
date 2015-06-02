@@ -17,7 +17,7 @@ ATOM sentinel_RegisterClass(HINSTANCE hInstance);
 LRESULT CALLBACK sentinel_WndProc(oswindow oswindow, uint32_t message, WPARAM wParam, LPARAM lParam);
 
 
-void win_factory_exchange(sp(base_application) papp);
+void win_factory_exchange(::aura::application * papp);
 
 
 
@@ -98,7 +98,7 @@ int32_t APIENTRY ca2_cube_install(const char * pszId);
 
 
 class sentinel :
-   public simple_app,
+   public ::base::simple_app,
    public small_ipc_rx_channel::receiver
 {
 public:
@@ -185,14 +185,16 @@ __in LPTSTR lpCmdLine, int32_t nCmdShow)
    
    // call shared/exported WinMain
 
-   return simple_app::s_main < sentinel >();
+   return ::base::simple_app_main < sentinel >(hInstance,hPrevInstance,lpCmdLine,nCmdShow);
 
 }
 
 
 sentinel::sentinel() :
-element(this),
-base_system(NULL)
+::object(this),
+::aura::system(NULL),
+::axis::system(NULL),
+::base::system(NULL)
 {
    ////////////////////////////////////////////////////////////
    // configuration encryption system : with C:\\" hardware :-)
@@ -216,7 +218,7 @@ base_system(NULL)
    m_iSizeModule = 0;
    m_bInstallerInstalling = false;
 
-   construct();
+   construct("app.sentinel");
 }
 
 sentinel::~sentinel()
@@ -240,7 +242,7 @@ bool sentinel::intro()
 
    if (::GetLastError() == ERROR_ALREADY_EXISTS)
    {
-      m_iError = -202;
+      m_iReturnCode = -202;
       return false;
    }
 
