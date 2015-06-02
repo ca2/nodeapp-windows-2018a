@@ -363,8 +363,9 @@
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <FloatingPointExceptions>false</FloatingPointExceptions>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <FunctionLevelLinking>false</FunctionLevelLinking>
+      <CreateHotpatchableImage>false</CreateHotpatchableImage>
     </ClCompile>
     <Link>
       <AdditionalDependencies>Ws2_32.lib;OleAut32.lib;Shlwapi.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;msimg32.lib;gdi32.lib;psapi.lib;user32.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
@@ -427,6 +428,7 @@
       <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <FunctionLevelLinking>false</FunctionLevelLinking>
       <WholeProgramOptimization>true</WholeProgramOptimization>
+      <CreateHotpatchableImage>false</CreateHotpatchableImage>
     </ClCompile>
     <Link>
       <AdditionalDependencies>Ws2_32.lib;OleAut32.lib;Shlwapi.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;msimg32.lib;gdi32.lib;psapi.lib;user32.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
@@ -490,6 +492,7 @@
       <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <FunctionLevelLinking>false</FunctionLevelLinking>
       <WholeProgramOptimization>false</WholeProgramOptimization>
+      <CreateHotpatchableImage>false</CreateHotpatchableImage>
     </ClCompile>
     <Link>
       <AdditionalDependencies>Version.lib;Gdiplus.lib;;os.lib;Ws2_32.lib;OleAut32.lib;Shlwapi.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;msimg32.lib;gdi32.lib;psapi.lib;user32.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
@@ -549,8 +552,9 @@
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <FloatingPointExceptions>false</FloatingPointExceptions>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <FunctionLevelLinking>false</FunctionLevelLinking>
+      <CreateHotpatchableImage>false</CreateHotpatchableImage>
     </ClCompile>
     <Link>
       <AdditionalDependencies>Gdiplus.lib;msimg32.lib;gdi32.lib;psapi.lib;user32.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
@@ -609,8 +613,9 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>-Zm384 /bigobj</AdditionalOptions>
       <FloatingPointExceptions>false</FloatingPointExceptions>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <FunctionLevelLinking>false</FunctionLevelLinking>
+      <CreateHotpatchableImage>false</CreateHotpatchableImage>
     </ClCompile>
     <Link>
       <AdditionalDependencies>Gdiplus.lib;msimg32.lib;gdi32.lib;psapi.lib;user32.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
@@ -669,8 +674,9 @@
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
       <AdditionalOptions>-Zm384 /bigobj</AdditionalOptions>
       <FloatingPointExceptions>false</FloatingPointExceptions>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <FunctionLevelLinking>false</FunctionLevelLinking>
+      <CreateHotpatchableImage>false</CreateHotpatchableImage>
     </ClCompile>
     <Link>
       <AdditionalDependencies>Secur32.lib;Crypt32.lib;libeay32MTd.lib;Ole32.lib;Gdiplus.lib;msimg32.lib;gdi32.lib;psapi.lib;user32.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
@@ -727,9 +733,10 @@
       <SDLCheck>true</SDLCheck>
       <CompileAsWinRT>false</CompileAsWinRT>
       <FloatingPointExceptions>false</FloatingPointExceptions>
-      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <FunctionLevelLinking>false</FunctionLevelLinking>
+      <CreateHotpatchableImage>false</CreateHotpatchableImage>
     </ClCompile>
     <Link>
       <AdditionalDependencies>Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;msimg32.lib;gdi32.lib;psapi.lib;user32.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
@@ -762,8 +769,8 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Async</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -781,12 +788,13 @@
       <SDLCheck>true</SDLCheck>
       <CompileAsWinRT>false</CompileAsWinRT>
       <FloatingPointExceptions>false</FloatingPointExceptions>
-      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <FunctionLevelLinking>false</FunctionLevelLinking>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>false</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
+      <CreateHotpatchableImage>false</CreateHotpatchableImage>
     </ClCompile>
     <Link>
       <AdditionalDependencies>Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;msimg32.lib;gdi32.lib;psapi.lib;user32.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
@@ -839,9 +847,10 @@
       <SDLCheck>true</SDLCheck>
       <CompileAsWinRT>false</CompileAsWinRT>
       <FloatingPointExceptions>false</FloatingPointExceptions>
-      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <FunctionLevelLinking>false</FunctionLevelLinking>
+      <CreateHotpatchableImage>false</CreateHotpatchableImage>
     </ClCompile>
     <Link>
       <AdditionalDependencies>os.lib;Version.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;msimg32.lib;gdi32.lib;psapi.lib;user32.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
@@ -892,9 +901,10 @@
       <CompileAsWinRT>false</CompileAsWinRT>
       <AdditionalOptions>-Zm384 /bigobj</AdditionalOptions>
       <FloatingPointExceptions>false</FloatingPointExceptions>
-      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <FunctionLevelLinking>false</FunctionLevelLinking>
+      <CreateHotpatchableImage>false</CreateHotpatchableImage>
     </ClCompile>
     <Link>
       <AdditionalDependencies>Gdiplus.lib;msimg32.lib;gdi32.lib;psapi.lib;user32.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
@@ -941,9 +951,10 @@
       <CompileAsWinRT>false</CompileAsWinRT>
       <EnablePREfast>true</EnablePREfast>
       <FloatingPointExceptions>false</FloatingPointExceptions>
-      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <FunctionLevelLinking>false</FunctionLevelLinking>
+      <CreateHotpatchableImage>false</CreateHotpatchableImage>
     </ClCompile>
     <Link>
       <AdditionalDependencies>Gdiplus.lib;msimg32.lib;gdi32.lib;psapi.lib;user32.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
@@ -990,8 +1001,9 @@
       <CompileAsWinRT>false</CompileAsWinRT>
       <AdditionalOptions>-Zm384 /bigobj</AdditionalOptions>
       <FloatingPointExceptions>false</FloatingPointExceptions>
-      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <FunctionLevelLinking>false</FunctionLevelLinking>
+      <CreateHotpatchableImage>false</CreateHotpatchableImage>
     </ClCompile>
     <Link>
       <AdditionalDependencies>Gdiplus.lib;msimg32.lib;gdi32.lib;psapi.lib;user32.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
