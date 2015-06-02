@@ -435,8 +435,8 @@ Global
 		{46D3B606-0CF7-4F41-9BFB-2CF22FDCEC03}.profiler|x64.Build.0 = profiler|x64
 		{46D3B606-0CF7-4F41-9BFB-2CF22FDCEC03}.stage|Win32.ActiveCfg = static_basis|Win32
 		{46D3B606-0CF7-4F41-9BFB-2CF22FDCEC03}.stage|Win32.Build.0 = static_basis|Win32
-		{46D3B606-0CF7-4F41-9BFB-2CF22FDCEC03}.stage|x64.ActiveCfg = static_basis|x64
-		{46D3B606-0CF7-4F41-9BFB-2CF22FDCEC03}.stage|x64.Build.0 = static_basis|x64
+		{46D3B606-0CF7-4F41-9BFB-2CF22FDCEC03}.stage|x64.ActiveCfg = stage|x64
+		{46D3B606-0CF7-4F41-9BFB-2CF22FDCEC03}.stage|x64.Build.0 = stage|x64
 		{46D3B606-0CF7-4F41-9BFB-2CF22FDCEC03}.static_basis|Win32.ActiveCfg = static_basis|Win32
 		{46D3B606-0CF7-4F41-9BFB-2CF22FDCEC03}.static_basis|Win32.Build.0 = static_basis|Win32
 		{46D3B606-0CF7-4F41-9BFB-2CF22FDCEC03}.static_basis|x64.ActiveCfg = static_basis|x64
