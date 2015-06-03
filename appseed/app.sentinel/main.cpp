@@ -99,7 +99,7 @@ int32_t APIENTRY ca2_cube_install(const char * pszId);
 
 class sentinel :
    public ::base::simple_app,
-   public small_ipc_rx_channel::receiver
+   public ::aura::ipc::rx::receiver
 {
 public:
 
@@ -115,7 +115,7 @@ public:
 
    e_message                  m_emessage;
    HANDLE                     m_hmutexSpabootInstall;
-   small_ipc_rx_channel       m_rxchannel;
+   ::aura::ipc::rx       m_rxchannel;
 
    char *                     m_modpath;
    char *                     m_pszDllEnds;
@@ -146,7 +146,7 @@ public:
 
    bool is_user_using(uint32_t processid, const char * pszDll);
 
-   virtual void on_receive(small_ipc_rx_channel * prxchannel, const char * pszMessage);
+   virtual void on_receive(::aura::ipc::rx * prx, const char * pszMessage);
 
    virtual int32_t simple_app_pre_run();
 
@@ -400,7 +400,7 @@ bool sentinel::is_user_using(const char * pszDll)
 
 }
 
-void sentinel::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMessage)
+void sentinel::on_receive(::aura::ipc::rx * prx, const char * pszMessage)
 {
 }
 

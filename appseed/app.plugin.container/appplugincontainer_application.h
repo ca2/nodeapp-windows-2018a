@@ -25,9 +25,9 @@ namespace ca2plugin_container
       virtual ~application();
 
 
-      virtual void on_receive(small_ipc_rx_channel * prxchannel, const char * pszMessage);
+      virtual void on_receive(::aura::ipc::rx * prx, const char * pszMessage);
 
-      virtual void on_receive(small_ipc_rx_channel * prxchannel, int32_t message, void * pdata, int32_t len);
+      virtual void on_receive(::aura::ipc::rx * prx, int32_t message, void * pdata, int32_t len);
 
       virtual bool initialize_communication();
 

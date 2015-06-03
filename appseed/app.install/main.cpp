@@ -11,7 +11,7 @@
 
 class installer :
    public ::base::simple_app,
-   public small_ipc_rx_channel::receiver,
+   public ::aura::ipc::rx::receiver,
    public ::install::installer
 {
 public:
@@ -28,7 +28,7 @@ public:
 
    e_message                  m_emessage;
    HANDLE                     m_hmutexSpabootInstall;
-   small_ipc_rx_channel       m_rxchannel;
+   ::aura::ipc::rx       m_rxchannel;
    
    char *                     m_modpath;
    char *                     m_pszDllEnds;
@@ -61,7 +61,7 @@ public:
 
    bool is_user_using(uint32_t processid, const char * pszDll);
 
-   virtual void on_receive(small_ipc_rx_channel * prxchannel, const char * pszMessage);
+   virtual void on_receive(::aura::ipc::rx * prx, const char * pszMessage);
 
    virtual int32_t simple_app_pre_run();
 
@@ -344,7 +344,7 @@ bool installer::is_user_using(const char * pszDll)
 
 }
 
-void installer::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMessage)
+void installer::on_receive(::aura::ipc::rx * prx, const char * pszMessage)
 {
    string strMessage(pszMessage);
    int32_t iRet = 0;

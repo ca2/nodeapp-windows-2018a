@@ -225,11 +225,11 @@ void removal::rmdir_n_v(const char * pszDir)
 
    str.replace(":", "");
 
-   string str2 = dir::path(get_known_folder_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Temporary Internet Files\\Virtualized").c_str(), str.c_str());
+   string str2 = get_known_folder_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Temporary Internet Files\\Virtualized")/  str;
    rmdir(str2.c_str());
 
   
-   str2 = dir::path(get_known_folder_dir(FOLDERID_LocalAppData,"Microsoft\\Windows\\INetCache\\Virtualized").c_str(),str.c_str());
+   str2 = get_known_folder_dir(FOLDERID_LocalAppData,"Microsoft\\Windows\\INetCache\\Virtualized") / str;
    rmdir(str2.c_str());
 
 }

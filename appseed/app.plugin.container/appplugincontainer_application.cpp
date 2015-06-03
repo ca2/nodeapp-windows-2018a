@@ -33,7 +33,7 @@ namespace ca2plugin_container
 
       strChannel += m_strChannel;
 
-      m_phost->::small_ipc_channel::open_ba(strChannel, "app.plugin.container.exe");
+      m_phost->::aura::ipc::ipc::open_ba(strChannel, "app.plugin.container.exe");
 
    }
 
@@ -60,7 +60,7 @@ namespace ca2plugin_container
    }
 
 
-   void application::on_receive(small_ipc_rx_channel * prxchannel, const char * pszMessage)
+   void application::on_receive(::aura::ipc::rx * prx, const char * pszMessage)
    {
 
       UNREFERENCED_PARAMETER(pszMessage);
@@ -68,13 +68,13 @@ namespace ca2plugin_container
    }
 
 
-   void application::on_receive(small_ipc_rx_channel * prxchannel, int32_t message, void * pdata, int32_t len)
+   void application::on_receive(::aura::ipc::rx * prx, int32_t message, void * pdata, int32_t len)
    {
 
       if(m_phost != NULL)
       {
 
-         m_phost->on_receive(prxchannel, message, pdata, len);
+         m_phost->on_receive(prx, message, pdata, len);
 
       }
 
