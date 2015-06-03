@@ -300,9 +300,6 @@
     <ResourceCompile Include="..\spares\ccvotagus_ca2_spa.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\app\appseed\aura\acid.vcxproj">
       <Project>{a92c920f-c07d-481e-b523-565b56167cd1}</Project>
     </ProjectReference>
