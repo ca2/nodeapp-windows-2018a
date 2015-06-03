@@ -6,6 +6,13 @@ void gdiplus_start();
 void gdiplus_end();
 
 
+a_spa * g_paspa = NULL;
+
+SPALIB_API a_spa & aspa()
+{
+   return * g_paspa;
+}
+
 #define CLASS_DECL_AURA
 #define CLASS_DECL_AXIS
 typedef HWND oswindow;
@@ -150,7 +157,6 @@ string get_app_id(string wstr);
 
 DWORD g_dwMain2;
 DWORD g_iRet;
-string g_strVersion;
 //string g_strBuild;
 
 int starter_start(const char * pszId);
@@ -171,11 +177,12 @@ int spa_main();
 string get_latest_build_number(const char * pszVersion);
 
 
-SPALIB_API int spalib_main(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLine,int nCmdShow)
+
+int32_t a_spa::run()
 {
 
-   if(!defer_aura_init())
-      return -1;
+
+   g_paspa = this;
 
    if(::file_exists_dup("C:\\ca2\\config\\spa\\beg_debug_box.txt"))
    {
@@ -195,7 +202,7 @@ SPALIB_API int spalib_main(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lp
 
       }
 
-      str += lpCmdLine;
+      str += string(::GetCommandLineW());
 
       ::MessageBoxA(NULL,str.c_str(),"zzzAPPzzz spa",MB_ICONINFORMATION);
 
@@ -236,15 +243,15 @@ SPALIB_API int spalib_main(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lp
 
 #if CA2_PLATFORM_VERSION == CA2_BASIS
 
-   g_strVersion = "basis";
+   m_strVersion = "basis";
 
 #else
 
-   g_strVersion = "stage";
+   m_strVersion = "stage";
 
 #endif
 
-   g_hinstance = hInstance;
+//   g_hinstance = hInstance;
 
    if(spa_get_admin())
    {
@@ -264,8 +271,6 @@ SPALIB_API int spalib_main(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lp
 
 
    //::Gdiplus::GdiplusShutdown(g_gdiplusToken);
-
-   defer_aura_term();
 
    return g_iRet;
 
@@ -1304,7 +1309,7 @@ bool is_file_ok(const char * path1,const char * pszTemplate,const char * pszForm
 
    string strUrl;
 
-   strUrl = "http://" + g_strVersion + "-server.ca2.cc/api/spaignition/md5?authnone&version=" + g_strVersion + "&stage=";
+   strUrl = "http://" + aspa().m_strVersion + "-server.ca2.cc/api/spaignition/md5?authnone&version=" + aspa().m_strVersion + "&stage=";
    strUrl += pszTemplate;
    strUrl += "&build=";
    strUrl += strFormatBuild;
@@ -1345,7 +1350,7 @@ bool is_file_ok(const stringa & straPath,const stringa & straTemplate,stringa & 
 
       string strUrl;
 
-      strUrl = "http://" + g_strVersion + "-server.ca2.cc/api/spaignition/md5a?authnone&version=" + g_strVersion + "&stage=";
+      strUrl = "http://" + aspa().m_strVersion + "-server.ca2.cc/api/spaignition/md5a?authnone&version=" + aspa().m_strVersion + "&stage=";
       strUrl += straTemplate.implode(",");
       strUrl += "&build=";
       strUrl += strFormatBuild;
@@ -1526,9 +1531,9 @@ void install_bin_item::run()
 int check_install_bin_set()
 {
 
-   string strPath = dir::app_install() / "app.install.exe";
+   string strPath = path::app_install();
 
-   stringa straFile = install_get_plugin_base_library_list(g_strVersion);
+   stringa straFile = install_get_plugin_base_library_list(aspa().m_strVersion);
 
    if(!::dir::is(dir::name(strPath)))
    {
@@ -1554,13 +1559,13 @@ int check_install_bin_set()
    stringa straMd5;
 
 
-   string strFormatBuild = get_latest_build_number(g_strVersion.c_str());
+   string strFormatBuild = get_latest_build_number(aspa().m_strVersion);
 
    int iMd5Retry = 0;
 
-   g_strBuild = strFormatBuild;
+   string strBuild = strFormatBuild;
 
-   g_strBuild = str_replace(g_strBuild.c_str()," ","_");
+   strBuild = str_replace(strBuild.c_str()," ","_");
 
 md5retry:
 
@@ -1630,7 +1635,7 @@ md5retry:
 
       trace("Downloading install bin set\r\n");
 
-      string strUrlPrefix = "http://server.ca2.cc/ccvotagus/" + g_strVersion + "/" + g_strBuild + "/install/" + process_platform_dir_name() + "/";
+      string strUrlPrefix = "http://server.ca2.cc/ccvotagus/" + aspa().m_strVersion + "/" + strBuild + "/install/" + process_platform_dir_name() + "/";
 
       //#pragma omp parallel for
       for(int iFile = 0; iFile < straFile.size(); iFile++)
@@ -1662,9 +1667,11 @@ md5retry:
 string get_latest_build_number(const char * pszVersion)
 {
 
-   if(g_strBuild.length() > 0)
+   static string s_strBuild;
+
+   if(s_strBuild.length() > 0)
    {
-      return g_strBuild;
+      return s_strBuild;
    }
 
    string strBuildNumber;
@@ -1694,7 +1701,7 @@ string get_latest_build_number(const char * pszVersion)
    else
    {
 
-      if(g_strVersion == "basis")
+      if(aspa().m_strVersion == "basis")
       {
 
          strVersion = "basis";
@@ -2077,3 +2084,5 @@ void get_system_locale_schema(string & strLocale,string & strSchema)
       strSchema = "_std";
 
 }
+
+

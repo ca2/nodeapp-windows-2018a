@@ -15,3 +15,41 @@
 
 
 
+
+
+string spa_version(string strVersion)
+{
+   static string  s_strVersion;
+
+   if(strVersion.has_char())
+   {
+      s_strVersion = strVersion;
+   }
+
+   if(s_strVersion.is_empty())
+   {
+      if(_ca_is_basis())
+      {
+         s_strVersion = "basis";
+      }
+      else
+      {
+         s_strVersion = "stage";
+      }
+   }
+
+   return s_strVersion;
+}
+
+
+string spa_title(string strTitle)
+{
+   static string  s_strTitle;
+
+   if(strTitle.has_char())
+   {
+      s_strTitle = strTitle;
+   }
+
+   return s_strTitle;
+}

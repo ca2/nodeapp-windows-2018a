@@ -21,8 +21,8 @@ bool g_bInstalling = false;
 int g_iHealingSurface = 0;
 //string g_strHost;
 DWORD g_dwInstallStartTime;
-string g_strBuild;
-string g_strBuildResource;
+//string g_strBuild;
+//string g_strBuildResource;
 HINSTANCE g_hinstance;
 bool g_bShowPercentage;
 extern MSG g_msg;
@@ -48,7 +48,7 @@ void DragMainWindow();
 #endif
 
 
-machine_event g_machineevent;
+//machine_event g_machineevent;
 
 bool machine_unsignalize_close_application();
 bool machine_check_close_application(bool bDefault);
@@ -56,7 +56,7 @@ bool g_NeedRestartBecauseOfReservedFile;
 bool g_NeedRestartFatalError;
 bool g_bLoginStartup;
 bool g_bMsDownload = false;
-string g_strTitle;
+
 //DWORD g_dwCurFileLen;
 bool m_reboot();
 bool ignit_phase2();
@@ -111,15 +111,10 @@ int g_iProgressMode;
 int g_iTotalGzLen;
 int g_iGzLen;
 int g_iStyle;
-string g_strLogin;
-string g_strSessid;
-string g_strStart;
-string g_strInstallFilter;
-string g_strLocale;
-string g_strLoginFailed;
+
+
 HWND g_hwnd = NULL;
 
-string g_strFile;
 
 double g_dProgress = -1.0;
 double g_dProgress1 = -1.0;
@@ -128,10 +123,6 @@ int g_iStart;
 
 bool g_bOfflineInstall = false;
 bool g_bInternetInstall = true;
-string g_strIndex;
-string g_strIndexGz;
-string g_strInstall;
-string g_strInstallGz;
 
 bool g_bInstallSet = false;
 

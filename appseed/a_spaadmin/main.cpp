@@ -6,6 +6,16 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
                      LPTSTR    lpCmdLine,
                      int       nCmdShow)
 {
-   spa_set_admin(true);
-   return spalib_main(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+   
+   if(!defer_aura_init())
+   {
+
+      return -1;
+
+   }
+
+   spa_set_admin(false);
+
+   return ::aura::simple_app_main < a_spa >(hInstance,hPrevInstance,lpCmdLine,nCmdShow);
+
 }

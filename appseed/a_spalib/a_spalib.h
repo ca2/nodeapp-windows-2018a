@@ -1,7 +1,7 @@
 #pragma once
 
 #include "aura/aura/aura.h"
-
+#include "aura/node/windows/windows.h"
 
 #ifdef _DLL
 #if defined(SPALIB_DLL)
@@ -84,5 +84,52 @@ SPALIB_API  int spalib_main(HINSTANCE hInstance,   HINSTANCE hPrevInstance,   LP
 
 #include "../a_spares/resource.h"
 #include "http1.h"
+
+
+
+//SPALIB_API string spa_version(string strVersion= "");
+//SPALIB_API string spa_title(string strTitle= "");
+
+class SPALIB_API a_spa :
+   public ::aura::simple_app
+{
+public:
+
+   //string m_strLogin;
+   //string m_strSessid;
+   //string m_strStart;
+   //string m_strInstallFilter;
+   //string m_strLocale;
+   //string m_strLoginFailed;
+   //string m_strFile;
+   //string m_strIndex;
+   //string m_strIndexGz;
+   //string m_strInstall;
+   //string m_strInstallGz;
+   //string m_strLastHost;
+   //string m_strCurrentHost;
+   string m_strId;
+   //string m_strPlatform;
+   string m_strVersion;
+   mutex m_mutexTrace;
+
+
+   a_spa() :
+      ::aura::system(this)
+   {
+      m_hinstance             = ::GetModuleHandleA(NULL);
+   };
+   
+
+   virtual ~a_spa() {}
+
+   virtual int32_t run();
+
+} ;
+
+
+SPALIB_API a_spa & aspa();
+
+
 
 

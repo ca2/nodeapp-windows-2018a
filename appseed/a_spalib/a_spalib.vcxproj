@@ -251,7 +251,7 @@ $(SolutionDir)../../thirdparty/binary/bzip2 -c $(TargetPath) &gt; "$(SolutionDir
       <AdditionalOptions />
     </ClCompile>
     <Lib>
-      <AdditionalDependencies>Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <Link>
       <AdditionalDependencies>msimg32.lib;psapi.lib;Winmm.lib;WinINet.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>

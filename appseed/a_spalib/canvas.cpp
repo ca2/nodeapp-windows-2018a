@@ -1,5 +1,6 @@
 ﻿#include "a_spalib.h"
 
+#undef new
 #define min MIN
 #define max MAX
 #include <gdiplus.h>

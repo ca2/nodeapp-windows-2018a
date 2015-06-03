@@ -2,11 +2,10 @@
 
 void on_trace(string & str, string & str2);
 
-mutex g_mutexTrace;
 stringa g_straTrace;
 int g_iTrace = -1;
 FILE * g_ftrace = NULL;
-string g_strLastStatus;
+//string g_strLastStatus;
 int g_iLastStatus = 0;
 
 
@@ -19,7 +18,7 @@ public:
    trace_file()
    {
 
-      g_mutexTrace.lock();
+      aspa().m_mutexTrace.lock();
 
       dir::mk(dir::element().c_str());
 
@@ -30,7 +29,7 @@ public:
    }
    ~trace_file()
    {
-      g_mutexTrace.unlock();
+      aspa().m_mutexTrace.unlock();
       CloseHandle(m_hfile);
    }
 
