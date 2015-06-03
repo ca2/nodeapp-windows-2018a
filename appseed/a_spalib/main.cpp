@@ -1758,9 +1758,15 @@ bool app_install_send_short_message(const char * psz,bool bLaunch,const char * p
 
    small_ipc_tx_channel txchannel;
 
-   app_install_launcher launcher("","");
+   install_launcher launcher("","");
 
-   if(!txchannel.open(::small_ipc_channel::app_install(),bLaunch ? &launcher : NULL))
+   const char * pszChannel;
+
+   // "core/spaboot_install"
+
+   pszChannel = "::ca2::fontopus::ca2_spaboot_install_"+process_platform_dir_name()+"::7807e510-5579-11dd-ae16-0800200c7784";
+
+   if(!txchannel.open(pszChannel,bLaunch ? &launcher : NULL))
       return false;
 
    txchannel.send(psz,false);
@@ -1775,7 +1781,7 @@ bool app_install_send_short_message(const char * psz,bool bLaunch,const char * p
 
 
 //#include "aura/aura/aura_launcher.cpp"
-#include "axis/app_install_launcher.cpp"
+#include "axis/install_launcher.cpp"
 //#include "aura/aura/aura_small_ipc_channel.cpp"
 //#include "aura/aura/aura_small_ipc_channel.cpp"
 //#include "aura/os/windows/windows_small_ipc_channel.cpp"
@@ -1849,7 +1855,7 @@ void app_install_call_sync(const char * szParameters,const char * pszBuild)
 void start_app_install_in_context()
 {
 
-   app_install_launcher launcher("","");
+   install_launcher launcher("","");
 
    launcher.start_in_context();
 
@@ -1857,7 +1863,7 @@ void start_app_install_in_context()
 
 
 
-void app_install_launcher::start_in_context()
+void install_launcher::start_in_context()
 {
 
    if(!ensure_executable())
