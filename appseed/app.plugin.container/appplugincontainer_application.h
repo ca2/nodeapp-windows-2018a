@@ -37,7 +37,7 @@ namespace ca2plugin_container
 
       virtual int32_t run();
 
-      virtual void restart_small_ipc_channel();
+      virtual void restart_aura_ipc();
 
       virtual ::hotplugin::host * create_host();
 

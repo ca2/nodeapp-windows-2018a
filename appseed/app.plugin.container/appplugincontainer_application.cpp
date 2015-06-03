@@ -24,7 +24,7 @@ namespace ca2plugin_container
    }
 
 
-   void application::restart_small_ipc_channel()
+   void application::restart_aura_ipc()
    {
 
       m_phost->m_strBitmapChannel = m_strChannel;
@@ -40,7 +40,7 @@ namespace ca2plugin_container
    bool application::initialize_communication()
    {
 
-      restart_small_ipc_channel();
+      restart_aura_ipc();
 
       m_phost->start_ca2();
 

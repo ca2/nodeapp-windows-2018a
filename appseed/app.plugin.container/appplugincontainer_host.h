@@ -59,7 +59,7 @@ namespace ca2plugin_container
 
       virtual void start_ca2();
 
-      virtual void restart_small_ipc_channel();
+      virtual void restart_aura_ipc();
 
       DECL_GEN_SIGNAL(_001OnTimer);
 

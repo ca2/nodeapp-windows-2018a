@@ -186,10 +186,10 @@ namespace ca2plugin_container
    }
 
 
-   void host::restart_small_ipc_channel()
+   void host::restart_aura_ipc()
    {
 
-      m_pcontainerapp->restart_small_ipc_channel();
+      m_pcontainerapp->restart_aura_ipc();
 
    }
 
