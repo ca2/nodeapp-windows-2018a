@@ -1756,9 +1756,9 @@ bool app_install_send_short_message(const char * psz,bool bLaunch,const char * p
 
 #else
 
-   small_ipc_tx_channel txchannel;
+   ::aura::ipc::tx txchannel;
 
-   install_launcher launcher("","");
+   app_install_launcher launcher("","");
 
    const char * pszChannel;
 
@@ -1781,7 +1781,7 @@ bool app_install_send_short_message(const char * psz,bool bLaunch,const char * p
 
 
 //#include "aura/aura/aura_launcher.cpp"
-#include "axis/install_launcher.cpp"
+#include "axis/app_install_launcher.cpp"
 //#include "aura/aura/aura_small_ipc_channel.cpp"
 //#include "aura/aura/aura_small_ipc_channel.cpp"
 //#include "aura/os/windows/windows_small_ipc_channel.cpp"
@@ -1855,7 +1855,7 @@ void app_install_call_sync(const char * szParameters,const char * pszBuild)
 void start_app_install_in_context()
 {
 
-   install_launcher launcher("","");
+   app_install_launcher launcher("","");
 
    launcher.start_in_context();
 
@@ -1863,7 +1863,7 @@ void start_app_install_in_context()
 
 
 
-void install_launcher::start_in_context()
+void app_install_launcher::start_in_context()
 {
 
    if(!ensure_executable())
