@@ -121,7 +121,7 @@ typedef struct _PROCESS_BASIC_INFORMATION64 {
 typedef NTSTATUS (NTAPI *_NtQueryInformationProcess)(HANDLE ProcessHandle, DWORD ProcessInformationClass, PVOID ProcessInformation, DWORD ProcessInformationLength, PDWORD ReturnLength);
 
 
-std::string get_display_error(DWORD NTStatusMessage);
+string get_display_error(DWORD NTStatusMessage);
 
 PPEB GetPebAddress(HANDLE handleProcess)
 {
@@ -131,7 +131,7 @@ PPEB GetPebAddress(HANDLE handleProcess)
    DWORD dwInLen = sizeof(pbi);
    DWORD dwOutLen = 0xffffffff;
    DWORD dwStatus = NtQueryInformationProcess(handleProcess, ProcessBasicInformation, &pbi, dwInLen, &dwOutLen);
-   std::string strError = get_display_error(dwStatus);
+   string strError = get_display_error(dwStatus);
    if((dwStatus & 3) == 3)
    {
       return NULL;
@@ -140,7 +140,7 @@ PPEB GetPebAddress(HANDLE handleProcess)
 }
 
 
-std::string get_display_error(DWORD NTStatusMessage)
+string get_display_error(DWORD NTStatusMessage)
 {
    LPVOID lpMessageBuffer;
    HMODULE Hand = LoadLibrary("NTDLL.DLL");
@@ -158,7 +158,7 @@ std::string get_display_error(DWORD NTStatusMessage)
 
    // Now display the string.
 
-   std::string str = (LPTSTR) lpMessageBuffer;
+   string str = (LPTSTR) lpMessageBuffer;
 
    // Free the buffer allocated by the system.
    LocalFree( lpMessageBuffer ); 
@@ -167,7 +167,7 @@ std::string get_display_error(DWORD NTStatusMessage)
 }
 
 
-std::string get_command_line(HANDLE handleProcess)
+string get_command_line(HANDLE handleProcess)
 {
 
    PPEB ppeb = GetPebAddress(handleProcess);
@@ -198,7 +198,7 @@ std::string get_command_line(HANDLE handleProcess)
       return "";
    }
    commandLineContents[ustrCommandLine.Length / sizeof(WCHAR)] = L'\0';
-   std::string str = u8(commandLineContents);
+   string str = u8(commandLineContents);
    free(commandLineContents);
    return str;
 }
@@ -209,13 +209,13 @@ HANDLE g_hmutexInstall = NULL;
 
 stringa g_straTerminateProcesses;
 stringa g_straRestartCommandLine;
-std::string g_strLastHost;
-std::string g_strCurrentHost;
+string g_strLastHost;
+string g_strCurrentHost;
 bool g_bStarterStart = false;
 MSG g_msg;
 bool g_bAdmin = false;
-std::string g_strId = "";
-std::string g_strPlatform = "";
+string g_strId = "";
+string g_strPlatform = "";
 
 SPALIB_API bool spa_get_admin()
 {
@@ -227,7 +227,7 @@ SPALIB_API void spa_set_admin(bool bSet)
    g_bAdmin = bSet;
 }
 
-SPALIB_API std::string spa_get_id()
+SPALIB_API string spa_get_id()
 {
    return g_strId;
 }
@@ -237,7 +237,7 @@ SPALIB_API void spa_set_id(const char * psz)
    g_strId = psz;
 }
 
-SPALIB_API std::string spa_get_platform()
+SPALIB_API string spa_get_platform()
 {
 #ifdef _X86_
    return "x86";
@@ -304,13 +304,13 @@ SPALIB_API std::string spa_get_platform()
 //      g_NeedRestartFatalError = false;
 //      int iFileError = 0;
 //
-//      std::string strUrl;
+//      string strUrl;
 //      trace(("get application name from server http://spaignition.api.veriterse.net/ using id \"" + g_strStart + "\" ").c_str());
 //      strUrl = "http://spaignition.api.veriterse.net/query?node=install_application&id=";
 //      strUrl += g_strStart;
 //      strUrl += "&key=name";
 //
-//      std::string strName;
+//      string strName;
 //      int iRetry = 0;
 //      while(true)
 //      {
@@ -389,7 +389,7 @@ SPALIB_API std::string spa_get_platform()
 //      trace("***Guessing fastest mirror");
 //      int iGuessRetry = 0;
 //      trace(".");
-//      std::string strSpaHost;
+//      string strSpaHost;
 //      while(iGuessRetry < 30)
 //      {
 //         strSpaHost = ms_get(strUrl.c_str());
@@ -426,28 +426,28 @@ SPALIB_API std::string spa_get_platform()
 //      char path[1024 * 4];
 //      ::GetModuleFileNameA(NULL, path, sizeof(path));
 //      int iRetryDeleteSpa = 0;
-//      std::string strFile;
+//      string strFile;
 //
 //      HKEY hkey;
 //
 //      strUrl = "http://spaignition.api.veriterse.net/install_filter_list";
-//      std::string strInstallFilterList = ms_get(strUrl.c_str());
+//      string strInstallFilterList = ms_get(strUrl.c_str());
 //      XNode nodeInstallFilter;
 //      nodeInstallFilter.Load(strInstallFilterList.c_str());
 //      strUrl = "http://spaignition.api.veriterse.net/query?node=install_application&id=";
 //      strUrl += g_strStart;
 //      strUrl += "&key=install_filter";
-//      std::string strInstallFilter = ms_get(strUrl.c_str());
+//      string strInstallFilter = ms_get(strUrl.c_str());
 //      for(unsigned int ui = 0; ui < nodeInstallFilter.childs.size(); ui++)
 //      {
 //         LPXNode lpchild = nodeInstallFilter.childs[ui];
-//         std::string strId;
+//         string strId;
 //         strId = lpchild->GetAttrValue("id");
-//         std::string strFilter;
+//         string strFilter;
 //         strFilter = "|" + strId + "|"; // ex. "|multimedia|"
-//         if(strInstallFilter.find(strFilter) != std::string::npos)
+//         if(strInstallFilter.find(strFilter) != string::npos)
 //         {
-//            std::string strKey;
+//            string strKey;
 //            strKey = "Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\ca2_fontopus_votagus_" + strId;
 //            
 //            if(::RegCreateKey(HKEY_LOCAL_MACHINE,
@@ -461,7 +461,7 @@ SPALIB_API std::string spa_get_platform()
 //                  REG_SZ, 
 //                  (const BYTE *) strFile.c_str(),
 //                  strFile.length());
-//               std::string strDisplayName;
+//               string strDisplayName;
 //               strDisplayName = "ca2 fontopus votagus - ";
 //               strKey = "install_filter_title_" + strId;
 //               strDisplayName += load_string(strKey.c_str(), strId.c_str());
@@ -501,7 +501,7 @@ SPALIB_API std::string spa_get_platform()
 //
 //      XNode nodeInstall;
 //
-//      nodeInstall.Load(file::get_contents(dir::appdata("spa_install.xml").c_str()).c_str());
+//      nodeInstall.Load(file_as_string_dup(dir::appdata("spa_install.xml").c_str()).c_str());
 //
 //      LPXNode lpnodeInstalled = nodeInstall.GetChild("installed");
 //
@@ -509,10 +509,10 @@ SPALIB_API std::string spa_get_platform()
 //
 //      trace("***Downloading file list.");
 //      
-//      std::string strBuild;
+//      string strBuild;
 //      strBuild = str_replace(g_strBuild.c_str(), " ", "_");
 //      strBuild = str_replace(strBuild.c_str(), ":", "-");
-//      std::string strIndexPath;
+//      string strIndexPath;
 //      if(!ca2_fy_url(strIndexPath, ("app/stage/metastage/index-"+strBuild+".spa.bz").c_str(), false, -1, NULL, -1, true))
 //      {
 //         trace("Failed to download file list!");
@@ -521,9 +521,9 @@ SPALIB_API std::string spa_get_platform()
 //         goto RetryHost;
 //      }
 //      strUrl = "http://" + strSpaHost + "/stage/app/stage/metastage/index-"+strBuild+".md5";
-//      std::string strCgclIndexMd5 = ms_get(strUrl.c_str(), false);
+//      string strCgclIndexMd5 = ms_get(strUrl.c_str(), false);
 //      if(strCgclIndexMd5.length() != 32 
-//      || file::md5(strIndexPath.c_str()) != strCgclIndexMd5)
+//      || file_md5_dup(strIndexPath.c_str()) != strCgclIndexMd5)
 //      {
 //         trace("Invalid file list!");
 //         trace("Going to retry host...");
@@ -548,16 +548,16 @@ SPALIB_API std::string spa_get_platform()
 //      {
 //         for(unsigned int ui = 0; ui < lpnodeInstalled->childs.size(); ui++)
 //         {
-//            std::string strId = lpnodeInstalled->childs[ui]->GetAttrValue("id");
+//            string strId = lpnodeInstalled->childs[ui]->GetAttrValue("id");
 //            if(strcmp(strId.c_str(), g_strStart.c_str()) != 0)
 //            {
 //               GetFileList(straFileList, ("app/stage/metastage/" + strId + ".spa").c_str(), mapLen, mapGzLen, mapMd5);
 //            }
 //         }
 //      }
-//     std::string strStart;
+//     string strStart;
 //     XNode nodeSpaStart;
-//     nodeSpaStart.Load(file::get_contents(dir::appdata("spa_start.xml").c_str()).c_str());
+//     nodeSpaStart.Load(file_as_string_dup(dir::appdata("spa_start.xml").c_str()).c_str());
 //     for(unsigned int ui = 0; ui < nodeSpaStart.childs.size(); ui++)
 //     {
 //	     strStart = nodeSpaStart.childs[ui]->GetAttrValue("id");
@@ -566,7 +566,7 @@ SPALIB_API std::string spa_get_platform()
 //        {
 //           for(unsigned int ui = 0; ui < lpnodeInstalled->childs.size(); ui++)
 //           {
-//              std::string strId = lpnodeInstalled->childs[ui]->GetAttrValue("id");
+//              string strId = lpnodeInstalled->childs[ui]->GetAttrValue("id");
 //              if(strId == strStart)
 //              {
 //                 bGet = false;
@@ -580,7 +580,7 @@ SPALIB_API std::string spa_get_platform()
 //        }
 //		   if(bGet)
 //		   {
-//			   std::string strGet;
+//			   string strGet;
 //			   strGet = "app/stage/metastage/";
 //			   strGet += strStart;
 //			   strGet += ".spa";
@@ -619,12 +619,12 @@ SPALIB_API std::string spa_get_platform()
 //
 //      /*if(stringa.size() > 0)
 //      {
-//         std::string strUrl;
+//         string strUrl;
 //         strUrl = stringa[0];
-//         std::string strStage;
+//         string strStage;
 //         
 //         strStage = dir::path(dir::stage().c_str(), "ca2\\stage\\ca2\\fontopus\\app\\main\\front\\Release\\bergedgeapp.exe");
-//         std::string strParam;
+//         string strParam;
 //         strParam = "start=" + file::name(strUrl.c_str());
 //         int i = (int) ::ShellExecute(g_hwnd, "open", strStage.c_str(), strParam.c_str(), dir::name(strStage.c_str()).c_str(), SW_SHOWNORMAL);
 //         if(i >= 32)
@@ -636,18 +636,18 @@ SPALIB_API std::string spa_get_platform()
 //      
 //      std::vector < DWORD > dwa;
 //
-//      dll_processes(dwa, g_straTerminateProcesses, (dir::ca2("stage\\x86\\ca2.dll").c_str()));
+//      dll_processes(dwa, g_straTerminateProcesses, (dir::element("stage\\x86\\ca2.dll").c_str()));
 //
 //      if(g_straTerminateProcesses.size() > 0)
 //      {
-//         std::string strCommand;
+//         string strCommand;
 //         for(int i = 0; i < g_straTerminateProcesses.size(); i++)
 //         {
 //            if(i >= 1)
 //            {
 //               strCommand += ";";
 //            }
-//            std::string str;
+//            string str;
 //            str = "Should ca2 Terminate and try to restart process \"";
 //            str += g_straTerminateProcesses.at(i);
 //            str += "\"?";
@@ -677,7 +677,7 @@ SPALIB_API std::string spa_get_platform()
 //            }
 //
 //         }
-//         file::put_contents("C:\\ca2\\machine\\on_after_spaadmin.txt", strCommand.c_str());
+//         file_put_contents_dup("C:\\ca2\\machine\\on_after_spaadmin.txt", strCommand.c_str());
 //      }
 //
 //      if(g_straRestartCommandLine.size() > 0)
@@ -687,7 +687,7 @@ SPALIB_API std::string spa_get_platform()
 //
 //         if(hwndSpaBoot != NULL)
 //         {
-//            std::string str = g_straRestartCommandLine.encode_v16();
+//            string str = g_straRestartCommandLine.encode_v16();
 //            COPYDATASTRUCT cds;
 //            memset(&cds, 0, sizeof(cds));
 //            cds.dwData = 15111984;

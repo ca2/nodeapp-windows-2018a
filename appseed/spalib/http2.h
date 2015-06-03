@@ -6,4 +6,4 @@ extern DWORD g_MsDownloadSize;
 
 bool ms_download(const char * pszUrl, const char * pszFile, bool bUrlEncode = true, int * piStatus = NULL);
 bool ms_download_progress(const char * pszUrl, const char * pszFile, bool bProgress, bool bUrlEncode = true, int * piStatus = NULL);
-void dlr(DWORD dwDownload);
+//void dlr(DWORD dwDownload);

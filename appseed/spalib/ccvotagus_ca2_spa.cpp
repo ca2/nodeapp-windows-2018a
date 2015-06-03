@@ -1,8 +1,10 @@
 ﻿#include "stdafx.h"
 
-#include <gdiplus.h>
+//#include <gdiplus.h>
 
-using namespace Gdiplus;
+#include <math.h>
+
+///using namespace Gdiplus;
 
 #define ID_CONTROL_BOX_CLOSE 31000
 #define ID_CONTROL_BOX_MINIMIZE 31001
@@ -17,10 +19,10 @@ int run_file(const char * pszFile, int nCmdShow);
 
 bool g_bInstalling = false;
 int g_iHealingSurface = 0;
-//std::string g_strHost;
+//string g_strHost;
 DWORD g_dwInstallStartTime;
-std::string g_strBuild;
-std::string g_strBuildResource;
+string g_strBuild;
+string g_strBuildResource;
 HINSTANCE g_hinstance;
 bool g_bShowPercentage;
 extern MSG g_msg;
@@ -28,13 +30,11 @@ extern MSG g_msg;
 void config_session_proxy(HINTERNET hSession, WCHAR * pwzUrl);
 
 void ca2_install_canvas_init_draw();
-
+void update_layered_window();
 
 COLORREF * g_pcolorref = NULL;
-Bitmap * g_pbitmap = NULL;
 HBITMAP g_hbitmap = NULL;
 HDC g_hdc = NULL;
-Graphics * g_pgraphics = NULL;
 
 
 
@@ -79,7 +79,7 @@ bool g_NeedRestartBecauseOfReservedFile;
 bool g_NeedRestartFatalError;
 bool g_bLoginStartup;
 bool g_bMsDownload = false;
-std::string g_strTitle;
+string g_strTitle;
 //DWORD g_dwCurFileLen;
 bool m_reboot();
 bool ignit_phase2();
@@ -88,12 +88,12 @@ int run_uninstall_run(const char * lpCmdLine, int nCmdShow);
 int run_install(const char * lpCmdLine, int nCmdShow);
 int run_file(const char * lpFile, int nCmdShow);
 bool spa_exec(const char * psz);
-std::string load_string(const char * pszId, const char * pszDefault);
-std::string str_replace(const char * psz, const char * pszFind, const char * pszReplace);
+string load_string(const char * pszId, const char * pszDefault);
+string str_replace(const char * psz, const char * pszFind, const char * pszReplace);
 bool is_there_application_opened();
 bool is_application_opened(const char * psz);
 void machine_signalize_close_application();
-std::string read_resource_as_string(
+string read_resource_as_string(
    HINSTANCE hinst,
    UINT nID, 
    LPCTSTR lpcszType);
@@ -125,9 +125,9 @@ stringa g_straHost;
 
 
 
-//bool Get(const std::string& url_in, std::string & doc);
-//bool Get(const std::string& url_in, bool bExist, int iLength, const char * pszMd5, int iGzLen);
-//bool DownloadFile(const std::string& url_in, bool bExist, int iLength, const char * pszMd5, int iGzLen);
+//bool Get(const string& url_in, string & doc);
+//bool Get(const string& url_in, bool bExist, int iLength, const char * pszMd5, int iGzLen);
+//bool DownloadFile(const string& url_in, bool bExist, int iLength, const char * pszMd5, int iGzLen);
 //int GetFileList(stringa & stringa, LPCTSTR lpcszUrl, strintmap & mapLen, strintmap & mapGzLen, strstrmap & mapMd5);
 //int GetLocalFileList(stringa & stringa, LPCTSTR lpcszUrl);
 //int DownloadFileList(stringa & stringa, strintmap & mapLen, strstrmap & mapMd5, strintmap & mapGzLen);
@@ -135,7 +135,7 @@ stringa g_straHost;
 //int UncompressFileList(stringa & stringa, strstrmap & strmapMd5);
 //void ParseSpaIndex(XNode & node);
 //void CommandLang(int iLang);
-////std::string Login();
+////string Login();
 
 
 
@@ -143,11 +143,11 @@ stringa g_straHost;
 {
 public:
 
-	SpaHttpGet(ISocketHandler& handler,const std::string& url,const std::string& to_file = "")
+	SpaHttpGet(ISocketHandler& handler,const string& url,const string& to_file = "")
    : HttpGetSocket(handler, url, to_file)
    {
    };
-   SpaHttpGet(ISocketHandler& handler,const std::string& host,port_t port,const std::string& url,const std::string& to_file = "")
+   SpaHttpGet(ISocketHandler& handler,const string& host,port_t port,const string& url,const string& to_file = "")
       : HttpGetSocket(handler, host, port, url, to_file)
    {
 
@@ -157,7 +157,7 @@ public:
    virtual void OnDataArrived(const char *, size_t len);
 
 	/** Implement this to return your own User-agent string. */
-	/*virtual std::string MyUseragent()
+	/*virtual string MyUseragent()
    {
       return "ccvotagus_ca2_fontopus";
    }*/
@@ -168,7 +168,7 @@ public:
 {
 public:
 
-	SpaHttpPost(ISocketHandler& handler,const std::string& url)
+	SpaHttpPost(ISocketHandler& handler,const string& url)
    : HttpPostSocket(handler, url)
    {
    };
@@ -176,7 +176,7 @@ public:
    
 
 	/** Implement this to return your own User-agent string. */
-	/*virtual std::string MyUseragent()
+	/*virtual string MyUseragent()
    {
       return "ccvotagus_ca2_fontopus";
    }
@@ -215,38 +215,38 @@ int g_iProgressMode;
 int g_iTotalGzLen;
 int g_iGzLen;
 int g_iStyle;
-std::string g_strLogin;
-std::string g_strSessid;
-std::string g_strStart;
-std::string g_strInstallFilter;
-std::string g_strLocale;
-//std::string g_strStatus1;
-//std::string g_strStatus2;
-std::string g_strLoginFailed;
+string g_strLogin;
+string g_strSessid;
+string g_strStart;
+string g_strInstallFilter;
+string g_strLocale;
+//string g_strStatus1;
+//string g_strStatus2;
+string g_strLoginFailed;
 HWND g_hwnd = NULL;
 
-std::string g_strFile;
+string g_strFile;
 
 double g_dProgress = -1.0;
 double g_dProgress1 = -1.0;
 double g_dProgress2 = -1.0;
-XNode g_nodeStringTable;
+//XNode g_nodeStringTable;
 int g_iStart;
-doublea g_daDownloadRate;
-DWORD g_dwDownloadTick;
-DWORD g_dwDownload;
-int g_iDownloadRate;
-double g_dDownloadRate;
-DWORD g_dwDownloadZeroRateTick;
-DWORD g_dwDownloadZeroRateRemain;
-DWORD g_dwDownloadRemain;
+//doublea g_daDownloadRate;
+//DWORD g_dwDownloadTick;
+//DWORD g_dwDownload;
+//int g_iDownloadRate;
+//double g_dDownloadRate;
+//DWORD g_dwDownloadZeroRateTick;
+//DWORD g_dwDownloadZeroRateRemain;
+//DWORD g_dwDownloadRemain;
 
 bool g_bOfflineInstall = false;
 bool g_bInternetInstall = true;
-std::string g_strIndex;
-std::string g_strIndexGz;
-std::string g_strInstall;
-std::string g_strInstallGz;
+string g_strIndex;
+string g_strIndexGz;
+string g_strInstall;
+string g_strInstallGz;
 
 bool g_bInstallSet = false;
 
@@ -255,7 +255,7 @@ bool g_bInstallSet = false;
 int run_spa(int nCmdShow)
 {
 
-   std::string strName = "spa ignition";
+   string strName = "spa ignition";
 
    
 
@@ -308,8 +308,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    //g_strIndexGz = dir::path(g_strInstallGz.c_str(), ("app\\stage\\metastage\\" + g_strStart + ".spa.bz").c_str());
    //g_strIndex = dir::path(g_strInstallGz.c_str(), ("app\\stage\\metastage\\" + g_strStart + ".spa").c_str());
 
-   //bool bOfflineInstall1 = dir::exists(dir::module_folder("ca2\\bz").c_str());
-   ////bool bOfflineInstall2 = file::exists(g_strIndexGz.c_str());
+   //bool bOfflineInstall1 = dir::is(dir::module_folder("ca2\\bz").c_str());
+   ////bool bOfflineInstall2 = file_exists_dup(g_strIndexGz.c_str());
    ////g_bOfflineInstall = bOfflineInstall1 && bOfflineInstall2;
    //g_bOfflineInstall = bOfflineInstall1;
 
@@ -317,7 +317,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    //// since the spa.xml is not present and contains turning information.
    //if(!g_bOfflineInstall && (g_strStart.length() == 0 || (!g_bForceUpdatedBuild && g_strBuildResource.length() == 0)))
    //{
-   //   std::string str = file::get_contents(dir::module_folder("spa.xml").c_str());
+   //   string str = file_as_string_dup(dir::module_folder("spa.xml").c_str());
    //   XNode node;
    //   node.Load(str.c_str());
    //   ParseSpaIndex(node);
@@ -327,7 +327,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    //// since the spa.xml is not present and contains turning information.
    //if(!g_bOfflineInstall && !g_bInstallSet && (g_strStart.length() == 0 || (!g_bForceUpdatedBuild && g_strBuildResource.length() == 0)))
    //{
-   //   std::string str = read_resource_as_string(NULL, 1984, "CA2SP");
+   //   string str = read_resource_as_string(NULL, 1984, "CA2SP");
    //   XNode node;
    //   node.Load(str.c_str());
    //   ParseSpaIndex(node);
@@ -418,111 +418,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 }*/
 
 
-void update_layered_window()
-{
-   
-   //RECT rectWindow;
-   //::GetWindowRect(hwnd, &rectWindow);
-
-
-   //int cx = rectWindow.right - rectWindow.left;
-   //int cy = rectWindow.bottom - rectWindow.top;
-
-   //RECT rect;
-   //rect.left         = 0;
-   //rect.top          = 0;
-   //rect.right        = cx;
-   //rect.bottom       = cy;
-
-   //if(lprect == NULL)
-   //{
-      //lprect = &rect;
-   //}
-
-
-   //HBITMAP hbmp      = ::CreateCompatibleBitmap(hdcWindow, cx, cy);
-   //HDC hdc           = ::CreateCompatibleDC(NULL);
-   //HBITMAP hbmpOld   =  (HBITMAP) ::SelectObject(hdc, (HGDIOBJ) hbmp);
-   
-   //::BitBlt(hdc, 0, 0, cx, cy, hdcWindow, 0, 0, SRCCOPY);
-
-   //PaintBk(hdc);
-
-   //HFONT hfontOld = NULL;
-   //HFONT hfont = NULL;
-
-
-   RECT rect;
-
-   rect.left = 0;
-   rect.top = 0;
-   rect.right = g_cx;
-   rect.bottom = g_cy;
-
-   g_pgraphics->SetCompositingMode(CompositingModeSourceCopy);
-   {
-      SolidBrush sb(Color(184 + 23, 23, 23, 23));
-      g_pgraphics->FillRectangle(&sb,make_rect(&rect));
-   }
-
-   ca2_install_canvas_on_paint(g_pgraphics, &rect, g_iHealingSurface);
-
-
-   RECT rectWindow;
-
-   ::GetWindowRect(g_hwnd,&rectWindow);
-
-   POINT ptCursor;
-
-   ::GetCursorPos(&ptCursor);
-
-   if(!PtInRect(&rectWindow,ptCursor))
-   {
-      //SolidBrush sb(Color(84,250,250,255));
-      //g_pgraphics->FillRectangle(&sb,make_rect(&rect));
-   }
-
-   HDC hdcWindow = ::GetWindowDC(g_hwnd);
-
-   POINT pt;
-
-   pt.x = rectWindow.left;
-
-   pt.y = rectWindow.top;
-
-   SIZE sz;
-
-   sz.cx = width(&rectWindow);
-
-   sz.cy = height(&rectWindow);
-
-   POINT ptSrc ={0};
-
-   BLENDFUNCTION blendPixelFunction ={AC_SRC_OVER,0,255,AC_SRC_ALPHA};
-
-   UpdateLayeredWindow(g_hwnd,hdcWindow,&pt,&sz,g_hdc,&ptSrc,0,&blendPixelFunction,ULW_ALPHA);
-
-   ::ReleaseDC(g_hwnd, hdcWindow);
-
-/*   POINT pointViewport;
-   ::SetViewportOrgEx(hdc, 0, 0, &pointViewport);
-   ::BitBlt(hdcWindow, lprect->left, lprect->top, lprect->right - lprect->left, lprect->bottom - lprect->top, 
-            hdc,       lprect->left, lprect->top, SRCCOPY);
-   ::SelectObject(hdc, (HGDIOBJ) hbmpOld);
-   if(hfontOld != NULL)
-   {
-      ::SelectObject(hdc,(HGDIOBJ)  hfontOld);
-   }
-   if(hfont != NULL)
-   {
-      ::DeleteObject(hfont);
-   }
-   ::DeleteObject(hbmp);
-   ::DeleteDC(hdc);*/
-
-
-
-}
 
 
 //void OnPaint(HWND hwnd)
@@ -595,10 +490,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
          
 
          memset(g_pcolorref,0,g_cx*g_cy*sizeof(COLORREF));
-
-         g_pbitmap = new Bitmap(g_cx,g_cy,g_cx * sizeof(COLORREF),PixelFormat32bppARGB,(BYTE *)g_pcolorref);
-
-         g_pgraphics = new Graphics(g_pbitmap);
 
          ca2_install_canvas_init_draw();
 
@@ -678,8 +569,8 @@ void CommandStart()
    //}
    /*else
    {
-      std::string strFileAdmin = dir::path(dir::afterca2().c_str(), ("stage\\" + spa_get_platform() + "\\spa.exe").c_str());
-      if(!file::exists(strFileAdmin.c_str()))
+      string strFileAdmin = dir::path(dir::afterca2().c_str(), ("stage\\" + spa_get_platform() + "\\spa.exe").c_str());
+      if(!file_exists_dup(strFileAdmin.c_str()))
       {
          MessageBox(g_hwnd, 
             "Missing file (spaadmin.exe)!! Please run an spa installer from votagus.net.", 
@@ -687,7 +578,7 @@ void CommandStart()
          PostMessage(g_hwnd, WM_CLOSE, 0, 0);
          return;
       }
-      std::string strParam;
+      string strParam;
       strParam = "install=" + g_strStart + " locale=" + g_strLocale;
       int iResult = (int) ::ShellExecute(NULL, NULL, strFileAdmin.c_str(), strParam.c_str(), dir::name(strFileAdmin.c_str()).c_str(), SW_SHOW);
       if(iResult < 32)
@@ -704,7 +595,7 @@ void CommandStart()
 
 
 
-std::string CommandToLang(int iLang)
+string CommandToLang(int iLang)
 {
    for(int i = 0; g_langa[i].m_iCommand != -1; i++)
    {
@@ -724,23 +615,23 @@ int LangToCommand(const char * pszLocale)
    return ID_LANG_SV; // default "Sverige"
 }
 
-void CommandLang(int iLang)
+/*void CommandLang(int iLang)
 {
    g_strLocale = CommandToLang(iLang);
    g_nodeStringTable.Load(read_resource_as_string(NULL, iLang, "XML").c_str());
-}
+}*/
 
 
 /*
-std::string Login()
+string Login()
 {
    if(_stricmp(g_pedit->m_str.c_str(), "ca") == 0
       && _stricmp(g_pedit->m_pnext->m_str.c_str(), "ca") == 0)
    {
       return "OK";
    }
-   std::string document;
-   std::string strPost;
+   string document;
+   string strPost;
    strPost = "entered_login=";
    strPost += g_pedit->m_str;
    strPost += "&entered_password=";
@@ -754,17 +645,17 @@ std::string Login()
 
 
 
-/*bool Get(const std::string& url_in,std::string & document)
+/*bool Get(const string& url_in,string & document)
 {
    bool https = !strcasecmp(url.substr(0,8), "https://");
 	int port = https ? 443 : 80;
-	std::string url = url_in;
-	std::string file; // get filename at end of url
-	std::string dir; // get filename at end of url
+	string url = url_in;
+	string file; // get filename at end of url
+	string dir; // get filename at end of url
 	{
 		Parse pa(url,"/");
-		std::string tmp = pa.getword();
-      std::string lastfile;
+		string tmp = pa.getword();
+      string lastfile;
 		while (tmp.size())
 		{
 			file = tmp;
@@ -795,7 +686,7 @@ std::string Login()
 		complete = s.Complete();
 		if (complete)
 		{
-			document = static_cast<std::string>( (char *)s.GetDataPtr());
+			document = static_cast<string>( (char *)s.GetDataPtr());
 		}
 		delete[] s.GetDataPtr();
 	}
@@ -810,112 +701,112 @@ std::string Login()
 	return complete;
 }*/
 
-
-
-bool Get(const std::string& url_in, bool bExist, int iLength, const char * pszMd5, int iGzLen)
-{
-   if(g_bOfflineInstall)
-      return true;
-	std::string url = url_in;
-	std::string file;
-   std::string file2;
-   std::string dir;
-   std::string dir2;
-   dir = dir::beforeca2();
-   if(dir.substr(dir.size() - 2, 1) != "\\")
-   {
-      dir += "\\";
-   }
-   dir2 = dir + "ca2\\";
-   dir += "ca2\\time\\bz\\";
-   int oldpos = -1;
-	{
-      int pos = url_in.find(g_strInstall);
-      if(pos == 0)
-      {
-         url = url_in.substr(g_strInstall.length());
-      }
-      int oldpos = -1;
-      pos = url.find("/");
-      std::string lastfile;
-		while (pos >=0)
-		{
-			file = url.substr(oldpos + 1, pos - oldpos -1);
-         if(lastfile.size() > 0)
-            dir +=  lastfile + "\\";
-         lastfile = file;
-         oldpos = pos;
-         pos = url.find("/", oldpos + 1);
-		}
-		file = url.substr(oldpos + 1);
-      if(lastfile.size() > 0)
-         dir +=  lastfile + "\\";
-	}
-   if(_stricmp(file.substr(file.length() - 3, 3).c_str(), ".bz") == 0)
-   {
-      file2 = file.substr(0, file.length() - 3);
-   }
-   else
-   {
-      file2 = file;
-   }
-   dir::mk(dir.c_str());
-   
-   if(bExist)
-   {
-      DWORD dwFileAttributes = ::GetFileAttributes((dir2 + file2).c_str());
-      if(dwFileAttributes != INVALID_FILE_ATTRIBUTES &&
-      (dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == 0)
-      {
-         if(iLength != -1 && iLength == file::length((dir2 + file2).c_str()))
-         {
-            if(pszMd5 != NULL && strlen(pszMd5) > 0 && _stricmp(file::md5((dir2 + file2).c_str()).c_str(), pszMd5) == 0)
-            {
-               return true;
-            }
-         }
-      }
-   }
-#ifdef WIN32
-   dir::mk(dir::name((dir + file).c_str()).c_str());
-  // g_dwCurFileLen = iGzLen;
-//   g_dwDownloadLen = 0;
-   keep_true keepDownloadTrue(g_bMsDownload);
-   return ms_download(url_in.c_str(), (dir + file).c_str());
-#else
-	if (!strcasecmp(protocol.c_str(),"http") || !strcasecmp(protocol.c_str(),"https"))
-	{
-		SpaHttpGet s(h, url_in, "");
-//      s.SetLineProtocol(false);
-      s.SetFilename(dir + file);
-      dir::mk(dir::name((dir + file).c_str()).c_str());
-		h.Add(&s);
-		h.Select(31,0);
-		while (h.GetCount())
-		{
-			h.Select(31,0);
-		}
-		return s.Complete();
-	}
-	else
-	{
-		printf("Unknown protocol: '%s'\n",protocol.c_str());
-	}
-	return false;
-#endif
-}
-
-
-//bool DownloadFile(const std::string& url_in, bool bExist, int iLength, const char * pszMd5, int iGzLen)
+//
+//
+//bool Get(const string& url_in, bool bExist, int iLength, const char * pszMd5, int iGzLen)
 //{
 //   if(g_bOfflineInstall)
 //      return true;
-//	std::string url = url_in;
-//	std::string file;
-//   std::string file2;
-//   std::string dir;
-//   std::string dir2;
-//   std::string dir3;
+//	string url = url_in;
+//	string file;
+//   string file2;
+//   string dir;
+//   string dir2;
+//   dir = dir::element();
+//   if(dir.substr(dir.size() - 2, 1) != "\\")
+//   {
+//      dir += "\\";
+//   }
+//   dir2 = dir + "ca2\\";
+//   dir += "ca2\\time\\bz\\";
+//   int oldpos = -1;
+//	{
+//      int pos = url_in.find(g_strInstall);
+//      if(pos == 0)
+//      {
+//         url = url_in.substr(g_strInstall.length());
+//      }
+//      int oldpos = -1;
+//      pos = url.find("/");
+//      string lastfile;
+//		while (pos >=0)
+//		{
+//			file = url.substr(oldpos + 1, pos - oldpos -1);
+//         if(lastfile.size() > 0)
+//            dir +=  lastfile + "\\";
+//         lastfile = file;
+//         oldpos = pos;
+//         pos = url.find("/", oldpos + 1);
+//		}
+//		file = url.substr(oldpos + 1);
+//      if(lastfile.size() > 0)
+//         dir +=  lastfile + "\\";
+//	}
+//   if(_stricmp(file.substr(file.length() - 3, 3).c_str(), ".bz") == 0)
+//   {
+//      file2 = file.substr(0, file.length() - 3);
+//   }
+//   else
+//   {
+//      file2 = file;
+//   }
+//   dir::mk(dir.c_str());
+//   
+//   if(bExist)
+//   {
+//      DWORD dwFileAttributes = ::GetFileAttributes((dir2 + file2).c_str());
+//      if(dwFileAttributes != INVALID_FILE_ATTRIBUTES &&
+//      (dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == 0)
+//      {
+//         if(iLength != -1 && iLength == file_length_dup((dir2 + file2).c_str()))
+//         {
+//            if(pszMd5 != NULL && strlen(pszMd5) > 0 && _stricmp(file_md5_dup((dir2 + file2).c_str()).c_str(), pszMd5) == 0)
+//            {
+//               return true;
+//            }
+//         }
+//      }
+//   }
+//#ifdef WIN32
+//   dir::mk(dir::name((dir + file).c_str()).c_str());
+//  // g_dwCurFileLen = iGzLen;
+////   g_dwDownloadLen = 0;
+//   keep_true keepDownloadTrue(g_bMsDownload);
+//   return ms_download(url_in.c_str(), (dir + file).c_str());
+//#else
+//	if (!strcasecmp(protocol.c_str(),"http") || !strcasecmp(protocol.c_str(),"https"))
+//	{
+//		SpaHttpGet s(h, url_in, "");
+////      s.SetLineProtocol(false);
+//      s.SetFilename(dir + file);
+//      dir::mk(dir::name((dir + file).c_str()).c_str());
+//		h.Add(&s);
+//		h.Select(31,0);
+//		while (h.GetCount())
+//		{
+//			h.Select(31,0);
+//		}
+//		return s.Complete();
+//	}
+//	else
+//	{
+//		printf("Unknown protocol: '%s'\n",protocol.c_str());
+//	}
+//	return false;
+//#endif
+//}
+//
+
+//bool DownloadFile(const string& url_in, bool bExist, int iLength, const char * pszMd5, int iGzLen)
+//{
+//   if(g_bOfflineInstall)
+//      return true;
+//	string url = url_in;
+//	string file;
+//   string file2;
+//   string dir;
+//   string dir2;
+//   string dir3;
 //   dir = dir::beforeca2();
 //   if(dir.substr(dir.size() - 2, 1) != "\\")
 //   {
@@ -933,7 +824,7 @@ bool Get(const std::string& url_in, bool bExist, int iLength, const char * pszMd
 //      }
 //      int oldpos = -1;
 //      pos = url.find("/");
-//      std::string lastfile;
+//      string lastfile;
 //		while (pos >=0)
 //		{
 //			file = url.substr(oldpos + 1, pos - oldpos -1);
@@ -964,9 +855,9 @@ bool Get(const std::string& url_in, bool bExist, int iLength, const char * pszMd
 //      if(dwFileAttributes != INVALID_FILE_ATTRIBUTES &&
 //      (dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == 0)
 //      {
-//         if(iLength != -1 && iLength == file::length((dir2 + file2).c_str()))
+//         if(iLength != -1 && iLength == file_length_dup((dir2 + file2).c_str()))
 //         {
-//            if(pszMd5 != NULL && strlen(pszMd5) > 0 && _stricmp(file::md5((dir2 + file2).c_str()).c_str(), pszMd5) == 0)
+//            if(pszMd5 != NULL && strlen(pszMd5) > 0 && _stricmp(file_md5_dup((dir2 + file2).c_str()).c_str(), pszMd5) == 0)
 //            {
 //               trace_add(_unitext(" up-to-date ✓"));
 //               return true;
@@ -980,11 +871,11 @@ bool Get(const std::string& url_in, bool bExist, int iLength, const char * pszMd
 //   int iMaxRetry = 3;
 //   char sz[1024];
 //   int iStatus;
-//   if(file::exists((dir2 + file2).c_str()))
+//   if(file_exists_dup((dir2 + file2).c_str()))
 //   {
 //      // then first try to download and apply patch
-//      std::string strOldMd5 = file::md5((dir2 + file2).c_str());
-//      std::string strNewMd5 = pszMd5;
+//      string strOldMd5 = file_md5_dup((dir2 + file2).c_str());
+//      string strNewMd5 = pszMd5;
 //      dir::mk(dir::name((dir + file).c_str()).c_str());
 //      g_dwCurFileLen = iGzLen;
 //      g_dwDownloadLen = 0;
@@ -993,14 +884,14 @@ bool Get(const std::string& url_in, bool bExist, int iLength, const char * pszMd
 //      bool bPossible = false;
 //      while(true)
 //      {
-//         std::string strUrl;
+//         string strUrl;
 //         strUrl = "http://saintlouis.us.spa.api.veriterse.net/bspatch?file=";
 //         strUrl += url_encode(file2.c_str());
 //         strUrl += "&old_hash=";
 //         strUrl += strOldMd5;
 //         strUrl += "&new_hash=";
 //         strUrl += strNewMd5;
-//         std::string strBsPatch = dir + file + "." + strOldMd5 + "." + strNewMd5 + ".bspatch";
+//         string strBsPatch = dir + file + "." + strOldMd5 + "." + strNewMd5 + ".bspatch";
 //         bOk = ms_download(strUrl.c_str(), strBsPatch.c_str(), false, &iStatus);
 //         if(iStatus == 404)
 //            break;
@@ -1038,7 +929,7 @@ bool Get(const std::string& url_in, bool bExist, int iLength, const char * pszMd
 //            }
 //            else
 //            {
-//               int iActualLength = file::length((dir3 + file2).c_str());
+//               int iActualLength = file_length_dup((dir3 + file2).c_str());
 //               bOk = iLength == iActualLength;
 //               //trace("Patch Length Verification : ");
 //               /*sprintf(sz, "correct length : %d bytes", iLength);
@@ -1063,8 +954,8 @@ bool Get(const std::string& url_in, bool bExist, int iLength, const char * pszMd
 //            }
 //            else
 //            {
-//               std::string strMd5;
-//               strMd5 = file::md5((dir3 + file2).c_str());
+//               string strMd5;
+//               strMd5 = file_md5_dup((dir3 + file2).c_str());
 //               bOk = _stricmp(strMd5.c_str(), pszMd5) == 0;
 //               //trace("Patch MD5 Hash Verification");
 //               /*sprintf(sz, "correct MD5 Hash : %s", pszMd5);
@@ -1088,7 +979,7 @@ bool Get(const std::string& url_in, bool bExist, int iLength, const char * pszMd
 //               trace("Failed to copy patched file: Need Restart Because Of Reserved File");
 //               g_NeedRestartBecauseOfReservedFile = true;
 //            }
-//            iBsLen = file::length(strBsPatch.c_str());
+//            iBsLen = file_length_dup(strBsPatch.c_str());
 //            break;
 //         }
 //         iRetry++;
@@ -1156,10 +1047,10 @@ bool Get(const std::string& url_in, bool bExist, int iLength, const char * pszMd
 //                  g_NeedRestartFatalError = true;
 //               }
 //            }
-//            bOk = iLength == -1 || iLength == file::length((dir2 + file2).c_str());
+//            bOk = iLength == -1 || iLength == file_length_dup((dir2 + file2).c_str());
 //            if(bOk)
 //            {
-//               bOk = pszMd5 == NULL || strlen(pszMd5) == 0 || _stricmp(file::md5((dir2 + file2).c_str()).c_str(), pszMd5) == 0;
+//               bOk = pszMd5 == NULL || strlen(pszMd5) == 0 || _stricmp(file_md5_dup((dir2 + file2).c_str()).c_str(), pszMd5) == 0;
 //               if(bOk)
 //               {
 //                  break;
@@ -1212,428 +1103,428 @@ bool Get(const std::string& url_in, bool bExist, int iLength, const char * pszMd
 //}
 
 
+//
+//string ca2_get_dir(LPCTSTR lpcszUrl)
+//{
+//   string url_in(lpcszUrl);
+//   string dir;
+//   string url;
+//   string file;
+//   dir = dir::beforeca2();
+//   if(dir.substr(dir.size() - 2, 1) != "\\")
+//   {
+//      dir += "\\";
+//   }
+//   dir += "ca2\\";
+//   string strFind;
+//   int pos = url_in.find(g_strInstall);
+//   if(pos == 0)
+//   {
+//      url = url_in.substr(g_strInstall.length());
+//   }
+//   else
+//   {
+//      url = url_in;
+//   }
+//   int oldpos = -1;
+//   pos = url.find("/");
+//   string lastfile;
+//	while (pos >=0)
+//	{
+//		file = url.substr(oldpos + 1, pos - oldpos -1);
+//      if(lastfile.size() > 0)
+//         dir +=  lastfile + "\\";
+//      lastfile = file;
+//      oldpos = pos;
+//      pos = url.find("/", oldpos + 1);
+//	}
+//	file = url.substr(oldpos + 1);
+//   if(lastfile.size() > 0)
+//      dir +=  lastfile + "\\";
+//   return dir;
+//}
+//
+//string ca2bz_get_dir(LPCTSTR lpcszUrl)
+//{
+//   string url_in(lpcszUrl);
+//   string dir;
+//   string url;
+//   string file;
+//   if(g_bInternetInstall)
+//   {
+//      dir = dir::path(dir::afterca2().c_str(), "time\\bz\\");
+//   }
+//   else
+//   {
+//      dir = g_strInstallGz;
+//   }
+//   int pos = url_in.find(g_strInstall);
+//   if(pos == 0)
+//   {
+//      url = url_in.substr(g_strInstall.length());
+//   }
+//   else
+//   {
+//      url = url_in;
+//   }
+//   int oldpos = -1;
+//   pos = url.find("/");
+//   string lastfile;
+//	while (pos >=0)
+//	{
+//		file = url.substr(oldpos + 1, pos - oldpos -1);
+//      if(lastfile.size() > 0)
+//         dir +=  lastfile + "\\";
+//      lastfile = file;
+//      oldpos = pos;
+//      pos = url.find("/", oldpos + 1);
+//	}
+//	file = url.substr(oldpos + 1);
+//   if(lastfile.size() > 0)
+//      dir +=  lastfile + "\\";
+//   return dir;
+//}
+//string ca2unbz_get_dir(LPCTSTR lpcszUrl)
+//{
+//   string url_in(lpcszUrl);
+//   string dir;
+//   string url;
+//   string file;
+//   if(g_bInternetInstall)
+//   {
+//      dir = dir::path(dir::afterca2().c_str(), "time\\unbz\\");
+//   }
+//   else
+//   {
+//      dir = g_strInstallGz;
+//   }
+//   int pos = url_in.find(g_strInstall);
+//   if(pos == 0)
+//   {
+//      url = url_in.substr(g_strInstall.length());
+//   }
+//   else
+//   {
+//      url = url_in;
+//   }
+//   int oldpos = -1;
+//   pos = url.find("/");
+//   string lastfile;
+//	while (pos >=0)
+//	{
+//		file = url.substr(oldpos + 1, pos - oldpos -1);
+//      if(lastfile.size() > 0)
+//         dir +=  lastfile + "\\";
+//      lastfile = file;
+//      oldpos = pos;
+//      pos = url.find("/", oldpos + 1);
+//	}
+//	file = url.substr(oldpos + 1);
+//   if(lastfile.size() > 0)
+//      dir +=  lastfile + "\\";
+//   return dir;
+//}
+//string ca2_get_file(LPCTSTR lpcszUrl)
+//{
+//   string url_in(lpcszUrl);
+//   string dir;
+//   string url;
+//   string file;
+//   dir = dir::beforeca2();
+//   if(dir.substr(dir.size() - 2, 1) != "\\")
+//   {
+//      dir += "\\";
+//   }
+//   dir += "ca2\\";
+//   string strFind;
+//   int pos = url_in.find(g_strInstall);
+//   if(pos == 0)
+//   {
+//      url = url_in.substr(g_strInstall.length());
+//   }
+//   else
+//   {
+//      url = url_in;
+//   }
+//   int oldpos = -1;
+//   pos = url.find("/");
+//   string lastfile;
+//	while (pos >=0)
+//	{
+//		file = url.substr(oldpos + 1, pos - oldpos -1);
+//      if(lastfile.size() > 0)
+//         dir +=  lastfile + "\\";
+//      lastfile = file;
+//      oldpos = pos;
+//      pos = url.find("/", oldpos + 1);
+//	}
+//	file = url.substr(oldpos + 1);
+//   if(lastfile.size() > 0)
+//      dir +=  lastfile + "\\";
+//   if(file.substr(file.size() - 3, 3) == ".bz")
+//      return file.substr(0, file.size() - 3);
+//   else
+//      return file;
+//}
+//string ca2bz_get_file(LPCTSTR lpcszUrl, const char * pszMd5)
+//{
+//   string url_in(lpcszUrl);
+//   string dir;
+//   string url;
+//   string file;
+//   dir = dir::path(dir::afterca2().c_str(), "time\\bz\\");
+//   string strFind;
+//   int pos = url_in.find(g_strInstall);
+//   if(pos == 0)
+//   {
+//      url = url_in.substr(g_strInstall.length());
+//   }
+//   else
+//   {
+//      url = url_in;
+//   }
+//   int oldpos = -1;
+//   pos = url.find("/");
+//   string lastfile;
+//   while (pos >=0)
+//   {
+//	   file = url.substr(oldpos + 1, pos - oldpos -1);
+//      if(lastfile.size() > 0)
+//         dir +=  lastfile + "\\";
+//      lastfile = file;
+//      oldpos = pos;
+//      pos = url.find("/", oldpos + 1);
+//   }
+//   file = url.substr(oldpos + 1);
+//   if(lastfile.size() > 0)
+//      dir +=  lastfile + "\\";
+//   if(pszMd5 != NULL)
+//   {
+//      if(file.substr(file.size() - 3, 3) == ".bz")
+//         return file + "." + pszMd5;
+//      else
+//         return file + ".bz." + pszMd5;
+//   }
+//   else
+//   {
+//      if(file.substr(file.size() - 3, 3) == ".bz")
+//         return file;
+//      else
+//         return file + ".bz";
+//   }
+//}
+//
+//string ca2unbz_get_file(LPCTSTR lpcszUrl)
+//{
+//   string url_in(lpcszUrl);
+//   string dir;
+//   string url;
+//   string file;
+//   dir = dir::path(dir::afterca2().c_str(), "time\\unbz\\");
+//   string strFind;
+//   int pos = url_in.find(g_strInstall);
+//   if(pos == 0)
+//   {
+//      url = url_in.substr(g_strInstall.length());
+//   }
+//   else
+//   {
+//      url = url_in;
+//   }
+//   int oldpos = -1;
+//   pos = url.find("/");
+//   string lastfile;
+//   while (pos >=0)
+//   {
+//	   file = url.substr(oldpos + 1, pos - oldpos -1);
+//      if(lastfile.size() > 0)
+//         dir +=  lastfile + "\\";
+//      lastfile = file;
+//      oldpos = pos;
+//      pos = url.find("/", oldpos + 1);
+//   }
+//   file = url.substr(oldpos + 1);
+//   if(lastfile.size() > 0)
+//      dir +=  lastfile + "\\";
+//   if(file.substr(file.size() - 3, 3) == ".bz")
+//      return file.substr(0, file.size() - 3);
+//   else
+//      return file;
+//}
+//
+//bool ca2_fy_url(string & str, LPCTSTR lpcszPath, bool bExist, int iLength, const char * pszMd5, int iGzLen, bool bIndex)
+//{
+//   string strStage;
+//   string strStageGz;
+//   string strUrl;
+//   strUrl = lpcszPath;
+//   if(bIndex)
+//   {
+//	   if (!Get(g_strInstall + lpcszPath, bExist, iLength, pszMd5, iGzLen))
+//	   {
+//		   printf("Failed: %s\n",strUrl);
+//         return false;
+//	   }
+//      if(g_bOfflineInstall)
+//      {
+//         strStageGz = strUrl;
+//         strStageGz = ca2bz_get_dir(strUrl.c_str()) + ca2bz_get_file(strUrl.c_str(), NULL);
+//      }
+//      else
+//      {
+//         strStageGz = ca2bz_get_dir(strUrl.c_str()) + ca2bz_get_file(strUrl.c_str(), NULL);
+//      }
+//   }
+//   else
+//   {
+//	   if (!Get(g_strInstall + lpcszPath + "." + pszMd5, bExist, iLength, pszMd5, iGzLen))
+//	   {
+//		   printf("Failed: %s\n",strUrl);
+//         return false;
+//	   }
+//      if(g_bOfflineInstall)
+//      {
+//         strStageGz = strUrl;
+//         strStageGz = ca2bz_get_dir(strUrl.c_str()) + ca2bz_get_file(strUrl.c_str(), pszMd5);
+//      }
+//      else
+//      {
+//         strStageGz = ca2bz_get_dir(strUrl.c_str()) + ca2bz_get_file(strUrl.c_str(), pszMd5);
+//      }
+//   }
+//   strStage = ca2_get_dir(strUrl.c_str()) + ca2_get_file(strUrl.c_str());
+//   dir::mk(dir::name(strStage.c_str()).c_str());
+//   bzuncompress(strStage.c_str(), strStageGz.c_str());
+//   str = strStage;
+//   return true;
+//}
+//
+//
+//
+//
+//
 
-std::string ca2_get_dir(LPCTSTR lpcszUrl)
-{
-   std::string url_in(lpcszUrl);
-   std::string dir;
-   std::string url;
-   std::string file;
-   dir = dir::beforeca2();
-   if(dir.substr(dir.size() - 2, 1) != "\\")
-   {
-      dir += "\\";
-   }
-   dir += "ca2\\";
-   std::string strFind;
-   int pos = url_in.find(g_strInstall);
-   if(pos == 0)
-   {
-      url = url_in.substr(g_strInstall.length());
-   }
-   else
-   {
-      url = url_in;
-   }
-   int oldpos = -1;
-   pos = url.find("/");
-   std::string lastfile;
-	while (pos >=0)
-	{
-		file = url.substr(oldpos + 1, pos - oldpos -1);
-      if(lastfile.size() > 0)
-         dir +=  lastfile + "\\";
-      lastfile = file;
-      oldpos = pos;
-      pos = url.find("/", oldpos + 1);
-	}
-	file = url.substr(oldpos + 1);
-   if(lastfile.size() > 0)
-      dir +=  lastfile + "\\";
-   return dir;
-}
+//int GetFileList(stringa & stringa, LPCTSTR lpcszPath, strintmap & mapLen, strintmap & mapGzLen, strstrmap & mapMd5)
+//{
+//   string strPath(lpcszPath);
+//   strPath = str_replace(strPath.c_str(), "/", "\\");
+//   strPath = strPath;
+//   string strUrl(lpcszPath);
+//   if(strUrl.length() == 0)
+//      return -1;
+//   if(str_ends_ci(strUrl.c_str(), ".spa"))
+//   {
+//      if(!g_strSpa.spa_insert(strUrl.c_str()))
+//      {
+//         return -1;
+//      }
+//   }
+//   else
+//   {
+//      return -1;
+//   }
+//   trace(str_replace(strUrl.c_str(), "\\", "/").c_str());
+//   char buf[2048];
+//   int iCount = 0;
+//   int iCurrent;
+//   strUrl += ".bz";
+//   string str;
+//   string strMd5 = mapMd5[strPath];
+//   if(!ca2_fy_url(str, strUrl.c_str(), false, -1, strMd5.c_str(), -1))
+//      return -2;
+//   FILE * f = fopen(str.c_str(), "rb");
+//   string strPlatform = spa_get_platform();
+//   while(fgets(buf, sizeof(buf), f))
+//   {
+//      buf[sizeof(buf) - 1] = '\0';
+//      while(buf[strlen(buf) - 1] == '\r' || buf[strlen(buf) - 1] == '\n')
+//      {
+//         buf[strlen(buf) - 1] = '\0';
+//      }
+//      string str2;
+//      string strPathParam(buf);
+//      if(str_begins_ci(strPathParam.c_str(), "stage\\basis\\"))
+//      {
+//         strPathParam = "stage\\" + strPlatform + strPathParam.substr(11);
+//      }
+//      iCurrent = GetFileList(stringa, strPathParam.c_str(), mapLen, mapGzLen, mapMd5);
+//      if(iCurrent == -2)
+//      {
+//         return -2;
+//      }
+//      else if(iCurrent == -1)
+//      {
+//         if(stringa.spa_insert(strPathParam.c_str()))
+//         {
+//            g_iTotalGzLen += mapGzLen[strPathParam.c_str()];
+//         }
+//      }
+//      else 
+//      {
+//         iCount += iCurrent;
+//      }
+//   }
+//   fclose(f);
+//   return 1;
+//}
 
-std::string ca2bz_get_dir(LPCTSTR lpcszUrl)
-{
-   std::string url_in(lpcszUrl);
-   std::string dir;
-   std::string url;
-   std::string file;
-   if(g_bInternetInstall)
-   {
-      dir = dir::path(dir::afterca2().c_str(), "time\\bz\\");
-   }
-   else
-   {
-      dir = g_strInstallGz;
-   }
-   int pos = url_in.find(g_strInstall);
-   if(pos == 0)
-   {
-      url = url_in.substr(g_strInstall.length());
-   }
-   else
-   {
-      url = url_in;
-   }
-   int oldpos = -1;
-   pos = url.find("/");
-   std::string lastfile;
-	while (pos >=0)
-	{
-		file = url.substr(oldpos + 1, pos - oldpos -1);
-      if(lastfile.size() > 0)
-         dir +=  lastfile + "\\";
-      lastfile = file;
-      oldpos = pos;
-      pos = url.find("/", oldpos + 1);
-	}
-	file = url.substr(oldpos + 1);
-   if(lastfile.size() > 0)
-      dir +=  lastfile + "\\";
-   return dir;
-}
-std::string ca2unbz_get_dir(LPCTSTR lpcszUrl)
-{
-   std::string url_in(lpcszUrl);
-   std::string dir;
-   std::string url;
-   std::string file;
-   if(g_bInternetInstall)
-   {
-      dir = dir::path(dir::afterca2().c_str(), "time\\unbz\\");
-   }
-   else
-   {
-      dir = g_strInstallGz;
-   }
-   int pos = url_in.find(g_strInstall);
-   if(pos == 0)
-   {
-      url = url_in.substr(g_strInstall.length());
-   }
-   else
-   {
-      url = url_in;
-   }
-   int oldpos = -1;
-   pos = url.find("/");
-   std::string lastfile;
-	while (pos >=0)
-	{
-		file = url.substr(oldpos + 1, pos - oldpos -1);
-      if(lastfile.size() > 0)
-         dir +=  lastfile + "\\";
-      lastfile = file;
-      oldpos = pos;
-      pos = url.find("/", oldpos + 1);
-	}
-	file = url.substr(oldpos + 1);
-   if(lastfile.size() > 0)
-      dir +=  lastfile + "\\";
-   return dir;
-}
-std::string ca2_get_file(LPCTSTR lpcszUrl)
-{
-   std::string url_in(lpcszUrl);
-   std::string dir;
-   std::string url;
-   std::string file;
-   dir = dir::beforeca2();
-   if(dir.substr(dir.size() - 2, 1) != "\\")
-   {
-      dir += "\\";
-   }
-   dir += "ca2\\";
-   std::string strFind;
-   int pos = url_in.find(g_strInstall);
-   if(pos == 0)
-   {
-      url = url_in.substr(g_strInstall.length());
-   }
-   else
-   {
-      url = url_in;
-   }
-   int oldpos = -1;
-   pos = url.find("/");
-   std::string lastfile;
-	while (pos >=0)
-	{
-		file = url.substr(oldpos + 1, pos - oldpos -1);
-      if(lastfile.size() > 0)
-         dir +=  lastfile + "\\";
-      lastfile = file;
-      oldpos = pos;
-      pos = url.find("/", oldpos + 1);
-	}
-	file = url.substr(oldpos + 1);
-   if(lastfile.size() > 0)
-      dir +=  lastfile + "\\";
-   if(file.substr(file.size() - 3, 3) == ".bz")
-      return file.substr(0, file.size() - 3);
-   else
-      return file;
-}
-std::string ca2bz_get_file(LPCTSTR lpcszUrl, const char * pszMd5)
-{
-   std::string url_in(lpcszUrl);
-   std::string dir;
-   std::string url;
-   std::string file;
-   dir = dir::path(dir::afterca2().c_str(), "time\\bz\\");
-   std::string strFind;
-   int pos = url_in.find(g_strInstall);
-   if(pos == 0)
-   {
-      url = url_in.substr(g_strInstall.length());
-   }
-   else
-   {
-      url = url_in;
-   }
-   int oldpos = -1;
-   pos = url.find("/");
-   std::string lastfile;
-   while (pos >=0)
-   {
-	   file = url.substr(oldpos + 1, pos - oldpos -1);
-      if(lastfile.size() > 0)
-         dir +=  lastfile + "\\";
-      lastfile = file;
-      oldpos = pos;
-      pos = url.find("/", oldpos + 1);
-   }
-   file = url.substr(oldpos + 1);
-   if(lastfile.size() > 0)
-      dir +=  lastfile + "\\";
-   if(pszMd5 != NULL)
-   {
-      if(file.substr(file.size() - 3, 3) == ".bz")
-         return file + "." + pszMd5;
-      else
-         return file + ".bz." + pszMd5;
-   }
-   else
-   {
-      if(file.substr(file.size() - 3, 3) == ".bz")
-         return file;
-      else
-         return file + ".bz";
-   }
-}
-
-std::string ca2unbz_get_file(LPCTSTR lpcszUrl)
-{
-   std::string url_in(lpcszUrl);
-   std::string dir;
-   std::string url;
-   std::string file;
-   dir = dir::path(dir::afterca2().c_str(), "time\\unbz\\");
-   std::string strFind;
-   int pos = url_in.find(g_strInstall);
-   if(pos == 0)
-   {
-      url = url_in.substr(g_strInstall.length());
-   }
-   else
-   {
-      url = url_in;
-   }
-   int oldpos = -1;
-   pos = url.find("/");
-   std::string lastfile;
-   while (pos >=0)
-   {
-	   file = url.substr(oldpos + 1, pos - oldpos -1);
-      if(lastfile.size() > 0)
-         dir +=  lastfile + "\\";
-      lastfile = file;
-      oldpos = pos;
-      pos = url.find("/", oldpos + 1);
-   }
-   file = url.substr(oldpos + 1);
-   if(lastfile.size() > 0)
-      dir +=  lastfile + "\\";
-   if(file.substr(file.size() - 3, 3) == ".bz")
-      return file.substr(0, file.size() - 3);
-   else
-      return file;
-}
-
-bool ca2_fy_url(std::string & str, LPCTSTR lpcszPath, bool bExist, int iLength, const char * pszMd5, int iGzLen, bool bIndex)
-{
-   std::string strStage;
-   std::string strStageGz;
-   std::string strUrl;
-   strUrl = lpcszPath;
-   if(bIndex)
-   {
-	   if (!Get(g_strInstall + lpcszPath, bExist, iLength, pszMd5, iGzLen))
-	   {
-		   printf("Failed: %s\n",strUrl);
-         return false;
-	   }
-      if(g_bOfflineInstall)
-      {
-         strStageGz = strUrl;
-         strStageGz = ca2bz_get_dir(strUrl.c_str()) + ca2bz_get_file(strUrl.c_str(), NULL);
-      }
-      else
-      {
-         strStageGz = ca2bz_get_dir(strUrl.c_str()) + ca2bz_get_file(strUrl.c_str(), NULL);
-      }
-   }
-   else
-   {
-	   if (!Get(g_strInstall + lpcszPath + "." + pszMd5, bExist, iLength, pszMd5, iGzLen))
-	   {
-		   printf("Failed: %s\n",strUrl);
-         return false;
-	   }
-      if(g_bOfflineInstall)
-      {
-         strStageGz = strUrl;
-         strStageGz = ca2bz_get_dir(strUrl.c_str()) + ca2bz_get_file(strUrl.c_str(), pszMd5);
-      }
-      else
-      {
-         strStageGz = ca2bz_get_dir(strUrl.c_str()) + ca2bz_get_file(strUrl.c_str(), pszMd5);
-      }
-   }
-   strStage = ca2_get_dir(strUrl.c_str()) + ca2_get_file(strUrl.c_str());
-   dir::mk(dir::name(strStage.c_str()).c_str());
-   bzuncompress(strStage.c_str(), strStageGz.c_str());
-   str = strStage;
-   return true;
-}
-
-
-
-
-
-
-int GetFileList(stringa & stringa, LPCTSTR lpcszPath, strintmap & mapLen, strintmap & mapGzLen, strstrmap & mapMd5)
-{
-   std::string strPath(lpcszPath);
-   strPath = str_replace(strPath.c_str(), "/", "\\");
-   strPath = strPath;
-   std::string strUrl(lpcszPath);
-   if(strUrl.length() == 0)
-      return -1;
-   if(str_ends_ci(strUrl.c_str(), ".spa"))
-   {
-      if(!g_strSpa.spa_insert(strUrl.c_str()))
-      {
-         return -1;
-      }
-   }
-   else
-   {
-      return -1;
-   }
-   trace(str_replace(strUrl.c_str(), "\\", "/").c_str());
-   char buf[2048];
-   int iCount = 0;
-   int iCurrent;
-   strUrl += ".bz";
-   std::string str;
-   std::string strMd5 = mapMd5[strPath];
-   if(!ca2_fy_url(str, strUrl.c_str(), false, -1, strMd5.c_str(), -1))
-      return -2;
-   FILE * f = fopen(str.c_str(), "rb");
-   std::string strPlatform = spa_get_platform();
-   while(fgets(buf, sizeof(buf), f))
-   {
-      buf[sizeof(buf) - 1] = '\0';
-      while(buf[strlen(buf) - 1] == '\r' || buf[strlen(buf) - 1] == '\n')
-      {
-         buf[strlen(buf) - 1] = '\0';
-      }
-      std::string str2;
-      std::string strPathParam(buf);
-      if(str_begins_ci(strPathParam.c_str(), "stage\\basis\\"))
-      {
-         strPathParam = "stage\\" + strPlatform + strPathParam.substr(11);
-      }
-      iCurrent = GetFileList(stringa, strPathParam.c_str(), mapLen, mapGzLen, mapMd5);
-      if(iCurrent == -2)
-      {
-         return -2;
-      }
-      else if(iCurrent == -1)
-      {
-         if(stringa.spa_insert(strPathParam.c_str()))
-         {
-            g_iTotalGzLen += mapGzLen[strPathParam.c_str()];
-         }
-      }
-      else 
-      {
-         iCount += iCurrent;
-      }
-   }
-   fclose(f);
-   return 1;
-}
-
-int GetLocalFileList(stringa & stringa, LPCTSTR lpcszUrl)
-{
-
-   std::string strUrl(lpcszUrl);
-   trace(strUrl.c_str());
-   //MainWindowRedraw();
-   if(strUrl.substr(strUrl.size() - 4, 4) != ".spa")
-   {
-      return -1;
-   }
-   char buf[2048];
-   int iCount = 0;
-   int iCurrent;
-   strUrl += ".bz";
-   std::string str;
-   if(!ca2_fy_url(str, strUrl.c_str(), false, -1, NULL, -1))
-      return -2;
-   FILE * f = fopen(str.c_str(), "rb");
-   char * pszFind1;
-   char * pszFind2;
-   while(fgets(buf, sizeof(buf), f))
-   {
-      while(buf[strlen(buf) - 1] == '\r' || buf[strlen(buf) - 1] == '\n')
-      {
-         buf[strlen(buf) - 1] = '\0';
-      }
-      pszFind1 = strstr(buf, ",");
-      pszFind2 = NULL;
-      if(pszFind1 != NULL)
-      {
-         pszFind2 = strstr(pszFind2 + 1, ",");
-      }
-      if(pszFind1 != NULL)
-      {
-         *pszFind1 = '\0';
-         pszFind1++;
-      }
-      if(pszFind2 != NULL)
-      {
-         *pszFind2 = '\0';
-         pszFind2++;
-      }
-      std::string strSpa;
-      std::string str2;
-      iCurrent = GetLocalFileList(stringa, buf);
-      if(iCurrent == -1)
-      {
-         stringa.spa_insert(buf);
-      }
-      else
-      {
-         iCount += iCurrent;
-      }
-   }
-   fclose(f);
-   return iCount;
-}
+//int GetLocalFileList(stringa & stringa, LPCTSTR lpcszUrl)
+//{
+//
+//   string strUrl(lpcszUrl);
+//   trace(strUrl.c_str());
+//   //MainWindowRedraw();
+//   if(strUrl.substr(strUrl.size() - 4, 4) != ".spa")
+//   {
+//      return -1;
+//   }
+//   char buf[2048];
+//   int iCount = 0;
+//   int iCurrent;
+//   strUrl += ".bz";
+//   string str;
+//   if(!ca2_fy_url(str, strUrl.c_str(), false, -1, NULL, -1))
+//      return -2;
+//   FILE * f = fopen(str.c_str(), "rb");
+//   char * pszFind1;
+//   char * pszFind2;
+//   while(fgets(buf, sizeof(buf), f))
+//   {
+//      while(buf[strlen(buf) - 1] == '\r' || buf[strlen(buf) - 1] == '\n')
+//      {
+//         buf[strlen(buf) - 1] = '\0';
+//      }
+//      pszFind1 = strstr(buf, ",");
+//      pszFind2 = NULL;
+//      if(pszFind1 != NULL)
+//      {
+//         pszFind2 = strstr(pszFind2 + 1, ",");
+//      }
+//      if(pszFind1 != NULL)
+//      {
+//         *pszFind1 = '\0';
+//         pszFind1++;
+//      }
+//      if(pszFind2 != NULL)
+//      {
+//         *pszFind2 = '\0';
+//         pszFind2++;
+//      }
+//      string strSpa;
+//      string str2;
+//      iCurrent = GetLocalFileList(stringa, buf);
+//      if(iCurrent == -1)
+//      {
+//         stringa.spa_insert(buf);
+//      }
+//      else
+//      {
+//         iCount += iCurrent;
+//      }
+//   }
+//   fclose(f);
+//   return iCount;
+//}
 
 void MainWindowRedraw()
 {
@@ -1656,7 +1547,7 @@ void MainWindowRedraw()
 //   stringa::iterator it;
 //   inta::iterator itLen;
 //   stringa::iterator itMd5;
-//   std::string str;
+//   string str;
 //   double d = 0.0;
 //   g_dProgress = 0.0;
 //   bool bDownload;
@@ -1679,8 +1570,8 @@ void MainWindowRedraw()
 //      }
 //      str = g_strInstall;
 //      str += *it;
-//      std::string str1 = *it;
-//      std::string str2 = dir::name(str.c_str());
+//      string str1 = *it;
+//      string str2 = dir::name(str.c_str());
 //      if(str2.substr(0, g_strInstall.length()) == g_strInstall)
 //      {
 //         str2 = str2.substr(21);
@@ -1688,20 +1579,20 @@ void MainWindowRedraw()
 //      }
 //      trace(str_replace(file::title((str2 + str).c_str()).c_str(), "\\", "/").c_str());
 //      str += ".bz";
-//      std::string str3 = str;
+//      string str3 = str;
 //      str += ".";
 //      str += mapMd5[*it];
-//      std::string strStageGz = ca2bz_get_dir(str1.c_str()) + ca2bz_get_file(str1.c_str(), mapMd5[*it].c_str());
-//      std::string strStageUnbz = ca2unbz_get_dir(str1.c_str()) + ca2unbz_get_file(str1.c_str());
+//      string strStageGz = ca2bz_get_dir(str1.c_str()) + ca2bz_get_file(str1.c_str(), mapMd5[*it].c_str());
+//      string strStageUnbz = ca2unbz_get_dir(str1.c_str()) + ca2unbz_get_file(str1.c_str());
 //      dir::mk(dir::name(strStageUnbz.c_str()).c_str());
 //      // uncompress, may have downloaded .bz correctly in previous install
 //      // and Get will later check if decompressed file is already the correct one
 //      bzuncompress(strStageUnbz.c_str(), strStageGz.c_str());
 //      bDownload = true;
-//      if(str_ends_ci(strStageUnbz.c_str(), ".expand_fileset") && file::exists(strStageGz.c_str()) && file::length(strStageGz.c_str())>0)
+//      if(str_ends_ci(strStageUnbz.c_str(), ".expand_fileset") && file_exists_dup(strStageGz.c_str()) && file_length_dup(strStageGz.c_str())>0)
 //      {
-//         std::string strExpand = *it;
-//         std::string strCurrent = *it;
+//         string strExpand = *it;
+//         string strCurrent = *it;
 //         strExpand += ".spa";
 //         strExpand = str_replace(str_replace(strExpand.c_str(), "\\", "_").c_str(), "/", "_");
 //         strExpand = "app\\stage\\metastage\\" + strExpand;
@@ -1719,11 +1610,11 @@ void MainWindowRedraw()
 //         if(str_ends_ci(strStageUnbz.c_str(), ".expand_fileset"))
 //         {
 //            str = *it;
-//            std::string strExpand = *it;
-//            std::string strCurrent = *it;
-//            std::string strRelative = dir::path(dir::name(str.c_str()).c_str(), file::name(str.c_str()).c_str());
-//            std::string strStageUnbz1 = ca2unbz_get_dir(str.c_str()) + ca2unbz_get_file(str.c_str());
-//            std::string strStageUnbz2 = ca2unbz_get_dir(strRelative.c_str()) + ca2unbz_get_file(strRelative.c_str());
+//            string strExpand = *it;
+//            string strCurrent = *it;
+//            string strRelative = dir::path(dir::name(str.c_str()).c_str(), file::name(str.c_str()).c_str());
+//            string strStageUnbz1 = ca2unbz_get_dir(str.c_str()) + ca2unbz_get_file(str.c_str());
+//            string strStageUnbz2 = ca2unbz_get_dir(strRelative.c_str()) + ca2unbz_get_file(strRelative.c_str());
 //            file::ftd(strStageUnbz2.c_str(), strStageUnbz.c_str());
 //            strExpand += ".spa";
 //            strExpand = str_replace(str_replace(strExpand.c_str(), "\\", "_").c_str(), "/", "_");
@@ -1740,7 +1631,7 @@ void MainWindowRedraw()
 //      {
 //         if(bDownload)
 //         {
-//            /*std::string strError;
+//            /*string strError;
 //            strError = "could not get file ";
 //            strError += str;
 //            trace(strError.c_str());*/
@@ -1759,10 +1650,10 @@ void MainWindowRedraw()
 //
 //int UncompressFileList(stringa & stringa, strstrmap & strmapMd5)
 //{
-//   std::string strStage;
-//   std::string strStageGz;
+//   string strStage;
+//   string strStageGz;
 //   stringa::iterator it;
-//   std::string str;
+//   string str;
 //   double d = 0.0;
 //   g_dProgress = 0.0;
 //   for(it = stringa.begin(); it != stringa.end(); it++)
@@ -1787,10 +1678,10 @@ void MainWindowRedraw()
 //
 //int CopyFileList(stringa & stringa)
 //{
-//   std::string strStage;
-//   std::string strStageUnbz;
+//   string strStage;
+//   string strStageUnbz;
 //   stringa::iterator it;
-//   std::string str;
+//   string str;
 //   double d = 0.0;
 //   g_dProgress = 0.0;
 //   for(it = stringa.begin(); it != stringa.end(); it++)
@@ -1823,9 +1714,9 @@ void MainWindowRedraw()
 //}
 
 
-std::string str_replace(const char * psz, const char * pszFind, const char * pszReplace)
+string str_replace(const char * psz, const char * pszFind, const char * pszReplace)
 {
-   std::string str(psz);
+   string str(psz);
    size_t sPosNew;
    size_t sPosOld = 0;
    size_t lenFind = strlen(pszFind);
@@ -1842,406 +1733,406 @@ std::string str_replace(const char * psz, const char * pszFind, const char * psz
 }
 
 
-void ParseSpaIndex(XNode & node)
-{
-   if(node.name == "spa" && node.childs.size() > 0)
-   {
-      LPXNode lpnode = &node;
-      for(unsigned int ui = 0; ui < lpnode->childs.size(); ui++)
-      {
-         if(lpnode->childs[ui]->name == "index")
-         {
-            if(lpnode->childs[ui]->GetAttr("start") != NULL)
-            {
-               if(std::string(lpnode->childs[ui]->GetAttrValue("start")).length() > 0)
-               {
-                  g_iStart = 4;
-                  g_strStart = std::string(lpnode->childs[ui]->GetAttrValue("start"));
-               }
-            }
-            if(lpnode->childs[ui]->GetAttr("build") != NULL)
-            {
-               if(std::string(lpnode->childs[ui]->GetAttrValue("build")).length() > 0)
-               {
-                  g_iStart = 4;
-                  g_strBuildResource = std::string(lpnode->childs[ui]->GetAttrValue("build"));
-               }
-            }
-            if(lpnode->childs[ui]->GetAttr("type") != NULL)
-            {
-               if(std::string(lpnode->childs[ui]->GetAttrValue("type")) == "parse_file_name")
-               {
-                  g_iStart = 4;
-                  char buf[2048];
-                  ::GetModuleFileName(NULL, buf, sizeof(buf));
-                  const char * psz = strrchr(buf, '\\');
-                  std::string str;
-                  if(psz == NULL)
-                  {
-                     str = buf;
-                  }
-                  else
-                  {
-                     str = psz;
-                  }
-                  if(!_stricmp(str.substr(str.length()  - 4, 4).c_str(), ".exe"))
-                  {
-                     str = str.substr(str.length() - 4);
-                     if(str.length() > 19)
-                     {
-                        g_strStart = str.substr(0, str.length() - 19);
-                        g_strBuildResource = str.substr(str.length() - 19);
-                     }
-                  }
-               }
-               else if(std::string(lpnode->childs[ui]->GetAttrValue("type")) == "online_default")
-               {
-                  g_bOfflineInstall = false;
-                  g_strInstallGz = "http://ccvotagus.net/stage/";
-                  g_strInstall = "http://ccvotagus.net/stage/";
-               }
-               else if(std::string(lpnode->childs[ui]->GetAttrValue("type")) == "offline")
-               {
-                  g_bOfflineInstall = true;
-                  g_strInstallGz = dir::path(lpnode->childs[ui]->GetAttrValue("src"), "stage.bz\\");
-                  g_strInstall = dir::path(lpnode->childs[ui]->GetAttrValue("src"), "stage\\");
-               }
-               else if(std::string(lpnode->childs[ui]->GetAttrValue("type")) == "online")
-               {
-                  g_bOfflineInstall = false;
-                  g_bInstallSet = true;
-                  g_strInstallGz = lpnode->childs[ui]->GetAttrValue("src");
-                  g_strInstall = lpnode->childs[ui]->GetAttrValue("src");
-               }
-            }
-         }
-      }
-   }
-}
+//void ParseSpaIndex(XNode & node)
+//{
+//   if(node.name == "spa" && node.childs.size() > 0)
+//   {
+//      LPXNode lpnode = &node;
+//      for(unsigned int ui = 0; ui < lpnode->childs.size(); ui++)
+//      {
+//         if(lpnode->childs[ui]->name == "index")
+//         {
+//            if(lpnode->childs[ui]->GetAttr("start") != NULL)
+//            {
+//               if(string(lpnode->childs[ui]->GetAttrValue("start")).length() > 0)
+//               {
+//                  g_iStart = 4;
+//                  g_strStart = string(lpnode->childs[ui]->GetAttrValue("start"));
+//               }
+//            }
+//            if(lpnode->childs[ui]->GetAttr("build") != NULL)
+//            {
+//               if(string(lpnode->childs[ui]->GetAttrValue("build")).length() > 0)
+//               {
+//                  g_iStart = 4;
+//                  g_strBuildResource = string(lpnode->childs[ui]->GetAttrValue("build"));
+//               }
+//            }
+//            if(lpnode->childs[ui]->GetAttr("type") != NULL)
+//            {
+//               if(string(lpnode->childs[ui]->GetAttrValue("type")) == "parse_file_name")
+//               {
+//                  g_iStart = 4;
+//                  char buf[2048];
+//                  ::GetModuleFileName(NULL, buf, sizeof(buf));
+//                  const char * psz = strrchr(buf, '\\');
+//                  string str;
+//                  if(psz == NULL)
+//                  {
+//                     str = buf;
+//                  }
+//                  else
+//                  {
+//                     str = psz;
+//                  }
+//                  if(!_stricmp(str.substr(str.length()  - 4, 4).c_str(), ".exe"))
+//                  {
+//                     str = str.substr(str.length() - 4);
+//                     if(str.length() > 19)
+//                     {
+//                        g_strStart = str.substr(0, str.length() - 19);
+//                        g_strBuildResource = str.substr(str.length() - 19);
+//                     }
+//                  }
+//               }
+//               else if(string(lpnode->childs[ui]->GetAttrValue("type")) == "online_default")
+//               {
+//                  g_bOfflineInstall = false;
+//                  g_strInstallGz = "http://ccvotagus.net/stage/";
+//                  g_strInstall = "http://ccvotagus.net/stage/";
+//               }
+//               else if(string(lpnode->childs[ui]->GetAttrValue("type")) == "offline")
+//               {
+//                  g_bOfflineInstall = true;
+//                  g_strInstallGz = dir::path(lpnode->childs[ui]->GetAttrValue("src"), "stage.bz\\");
+//                  g_strInstall = dir::path(lpnode->childs[ui]->GetAttrValue("src"), "stage\\");
+//               }
+//               else if(string(lpnode->childs[ui]->GetAttrValue("type")) == "online")
+//               {
+//                  g_bOfflineInstall = false;
+//                  g_bInstallSet = true;
+//                  g_strInstallGz = lpnode->childs[ui]->GetAttrValue("src");
+//                  g_strInstall = lpnode->childs[ui]->GetAttrValue("src");
+//               }
+//            }
+//         }
+//      }
+//   }
+//}
 
 
 
-std::string load_string(const char * pszId, const char * pszDefault)
-{
-   LPXNode lpnode = &g_nodeStringTable;
-   for(unsigned int ui = 0; ui < lpnode->childs.size(); ui++)
-   {
-      if(std::string(lpnode->childs[ui]->GetAttrValue("id")) == pszId)
-      {
-         return lpnode->childs[ui]->value;
-      }
-   }
-   return pszDefault;
-}
-
-void ParseIndexFile(const char * psz, strintmap & mapLen, strstrmap & mapMd5, strintmap & mapGzLen)
-{
-   FILE * f = fopen(psz, "rb");
-   char * pszFind1;
-   char * pszFind2;
-   char * pszFind3;
-   char buf[16 * 1024];
-   while(fgets(buf, sizeof(buf), f))
-   {
-      while(buf[strlen(buf) - 1] == '\r' || buf[strlen(buf) - 1] == '\n')
-      {
-         buf[strlen(buf) - 1] = '\0';
-      }
-      pszFind1 = strstr(buf, ",");
-      pszFind2 = NULL;
-      pszFind3 = NULL;
-      if(pszFind1 != NULL)
-      {
-         pszFind2 = strstr(pszFind1 + 1, ",");
-         if(pszFind2 != NULL)
-         {
-            pszFind3 = strstr(pszFind2 + 1, ",");
-         }
-      }
-      if(pszFind1 != NULL)
-      {
-         *pszFind1 = '\0';
-         pszFind1++;
-      }
-      if(pszFind2 != NULL)
-      {
-         *pszFind2 = '\0';
-         pszFind2++;
-      }
-      if(pszFind3 != NULL)
-      {
-         *pszFind3 = '\0';
-         pszFind3++;
-      }
-      std::string strSpa;
-      std::string str2;
-      strSpa = g_strInstall;
-      strSpa += buf;
-      if(pszFind1 != NULL)
-      {
-         g_iProgressMode = 0;
-         mapLen[buf] = atoi(pszFind1);
-      }
-      else
-         mapLen[buf] = -1;
-      if(pszFind2 != NULL)
-      {
-         mapMd5[buf] = pszFind2;
-      }
-      else
-         mapMd5[buf] = "";
-      if(pszFind3 != NULL)
-      {
-         mapGzLen[buf] = atoi(pszFind3);
-      }
-      else
-         mapGzLen[buf] = -1;
-   }
-   fclose(f);
-}
-
-
-
-
-bool spa_exec(const char * psz)
-{
-   std::string strExec(psz);
-   if(strExec.substr(0, 15) == "install_service")
-   {
-      std::string strStage;
-      strStage = dir::path(dir::beforeca2().c_str(),strExec.substr(16).c_str());
-      ::ShellExecute(g_hwnd, "open", strStage.c_str(), " : remove usehostlogin", dir::name(strStage.c_str()).c_str(), SW_SHOWNORMAL);
-      ::ShellExecute(g_hwnd, "open", strStage.c_str(), " : install usehostlogin", dir::name(strStage.c_str()).c_str(), SW_SHOWNORMAL);
-   }
-   else if(strExec.substr(0, 10) == "install_ex")
-   {
-      std::string strStage;
-      std::string str2 = strExec.substr(11);
-      int iPos = str2.find(" ");
-      std::string str3 = str2.substr(iPos + 1);
-      strStage = dir::path(dir::beforeca2().c_str(), "ca2");
-      strStage = dir::path(strStage.c_str(), str3.c_str());
-      ::ShellExecute(g_hwnd, "open", strStage.c_str(), (" : " + str2.substr(0, iPos) + " usehostlogin").c_str(), dir::name(strStage.c_str()).c_str(), SW_SHOWNORMAL);
-   }
-   return true;
-}
+//string load_string(const char * pszId, const char * pszDefault)
+//{
+//   LPXNode lpnode = &g_nodeStringTable;
+//   for(unsigned int ui = 0; ui < lpnode->childs.size(); ui++)
+//   {
+//      if(string(lpnode->childs[ui]->GetAttrValue("id")) == pszId)
+//      {
+//         return lpnode->childs[ui]->value;
+//      }
+//   }
+//   return pszDefault;
+//}
+//
+//void ParseIndexFile(const char * psz, strintmap & mapLen, strstrmap & mapMd5, strintmap & mapGzLen)
+//{
+//   FILE * f = fopen(psz, "rb");
+//   char * pszFind1;
+//   char * pszFind2;
+//   char * pszFind3;
+//   char buf[16 * 1024];
+//   while(fgets(buf, sizeof(buf), f))
+//   {
+//      while(buf[strlen(buf) - 1] == '\r' || buf[strlen(buf) - 1] == '\n')
+//      {
+//         buf[strlen(buf) - 1] = '\0';
+//      }
+//      pszFind1 = strstr(buf, ",");
+//      pszFind2 = NULL;
+//      pszFind3 = NULL;
+//      if(pszFind1 != NULL)
+//      {
+//         pszFind2 = strstr(pszFind1 + 1, ",");
+//         if(pszFind2 != NULL)
+//         {
+//            pszFind3 = strstr(pszFind2 + 1, ",");
+//         }
+//      }
+//      if(pszFind1 != NULL)
+//      {
+//         *pszFind1 = '\0';
+//         pszFind1++;
+//      }
+//      if(pszFind2 != NULL)
+//      {
+//         *pszFind2 = '\0';
+//         pszFind2++;
+//      }
+//      if(pszFind3 != NULL)
+//      {
+//         *pszFind3 = '\0';
+//         pszFind3++;
+//      }
+//      string strSpa;
+//      string str2;
+//      strSpa = g_strInstall;
+//      strSpa += buf;
+//      if(pszFind1 != NULL)
+//      {
+//         g_iProgressMode = 0;
+//         mapLen[buf] = atoi(pszFind1);
+//      }
+//      else
+//         mapLen[buf] = -1;
+//      if(pszFind2 != NULL)
+//      {
+//         mapMd5[buf] = pszFind2;
+//      }
+//      else
+//         mapMd5[buf] = "";
+//      if(pszFind3 != NULL)
+//      {
+//         mapGzLen[buf] = atoi(pszFind3);
+//      }
+//      else
+//         mapGzLen[buf] = -1;
+//   }
+//   fclose(f);
+//}
 
 
 
 
-bool is_application_opened(const char * psz)
-{
+//bool spa_exec(const char * psz)
+//{
+//   string strExec(psz);
+//   if(strExec.substr(0, 15) == "install_service")
+//   {
+//      string strStage;
+//      strStage = dir::path(dir::beforeca2().c_str(),strExec.substr(16).c_str());
+//      ::ShellExecute(g_hwnd, "open", strStage.c_str(), " : remove usehostlogin", dir::name(strStage.c_str()).c_str(), SW_SHOWNORMAL);
+//      ::ShellExecute(g_hwnd, "open", strStage.c_str(), " : install usehostlogin", dir::name(strStage.c_str()).c_str(), SW_SHOWNORMAL);
+//   }
+//   else if(strExec.substr(0, 10) == "install_ex")
+//   {
+//      string strStage;
+//      string str2 = strExec.substr(11);
+//      int iPos = str2.find(" ");
+//      string str3 = str2.substr(iPos + 1);
+//      strStage = dir::path(dir::beforeca2().c_str(), "ca2");
+//      strStage = dir::path(strStage.c_str(), str3.c_str());
+//      ::ShellExecute(g_hwnd, "open", strStage.c_str(), (" : " + str2.substr(0, iPos) + " usehostlogin").c_str(), dir::name(strStage.c_str()).c_str(), SW_SHOWNORMAL);
+//   }
+//   return true;
+//}
+//
+//
+//
+//
+//bool is_application_opened(const char * psz)
+//{
+//
+//   SECURITY_ATTRIBUTES MutexAttributes;
+//   ZeroMemory( &MutexAttributes, sizeof(MutexAttributes) );
+//   MutexAttributes.nLength = sizeof( MutexAttributes );
+//   MutexAttributes.bInheritHandle = FALSE; // object uninheritable
+//   // declare and initialize a security descriptor
+//   SECURITY_DESCRIPTOR SD;
+//   BOOL bInitOk = InitializeSecurityDescriptor(
+//                     &SD,
+//                     SECURITY_DESCRIPTOR_REVISION );
+//   if ( bInitOk )
+//   {
+//      // give the security descriptor a Null Dacl
+//      // done using the  "TRUE, (PACL)NULL" here
+//      BOOL bSetOk = SetSecurityDescriptorDacl( &SD,
+//                                            TRUE,
+//                                            (PACL)NULL,
+//                                            FALSE );
+//      if ( bSetOk )
+//      {
+//         // Make the security attributes point
+//         // to the security descriptor
+//         MutexAttributes.lpSecurityDescriptor = &SD;
+//         string strMutex;
+//         strMutex = "Global\\ca2_fontopus_votagus_application_global_mutex:";
+//         strMutex += psz;
+//         HANDLE hmutex = ::CreateMutex(&MutexAttributes, FALSE, strMutex.c_str());
+//         bool bOpened = ::GetLastError() == ERROR_ALREADY_EXISTS;
+//         if(bOpened)
+//         {
+//            string strMessage;
+//            strMessage = psz;
+//            strMessage += "app.exe is still opened!";
+//            trace(strMessage.c_str());
+//            trace("You may finalize the process by:");
+//            trace("   1. Pressing CTRL+ALT+DEL;");
+//            trace("   2. Opening Task Manager, and;");
+//     strMessage = "   4. Closing the process ";
+//            strMessage += psz;
+//            strMessage += "app.exe.";
+//            trace(strMessage.c_str());
+//            trace(".");
+//         }
+//         ::CloseHandle(hmutex);
+//         return bOpened;
+//      }
+//      else
+//      {
+//         return false;
+//      }
+//   }
+//   else
+//   {
+//      return false;
+//   }
+//
+//}
 
-   SECURITY_ATTRIBUTES MutexAttributes;
-   ZeroMemory( &MutexAttributes, sizeof(MutexAttributes) );
-   MutexAttributes.nLength = sizeof( MutexAttributes );
-   MutexAttributes.bInheritHandle = FALSE; // object uninheritable
-   // declare and initialize a security descriptor
-   SECURITY_DESCRIPTOR SD;
-   BOOL bInitOk = InitializeSecurityDescriptor(
-                     &SD,
-                     SECURITY_DESCRIPTOR_REVISION );
-   if ( bInitOk )
-   {
-      // give the security descriptor a Null Dacl
-      // done using the  "TRUE, (PACL)NULL" here
-      BOOL bSetOk = SetSecurityDescriptorDacl( &SD,
-                                            TRUE,
-                                            (PACL)NULL,
-                                            FALSE );
-      if ( bSetOk )
-      {
-         // Make the security attributes point
-         // to the security descriptor
-         MutexAttributes.lpSecurityDescriptor = &SD;
-         std::string strMutex;
-         strMutex = "Global\\ca2_fontopus_votagus_application_global_mutex:";
-         strMutex += psz;
-         HANDLE hmutex = ::CreateMutex(&MutexAttributes, FALSE, strMutex.c_str());
-         bool bOpened = ::GetLastError() == ERROR_ALREADY_EXISTS;
-         if(bOpened)
-         {
-            std::string strMessage;
-            strMessage = psz;
-            strMessage += "app.exe is still opened!";
-            trace(strMessage.c_str());
-            trace("You may finalize the process by:");
-            trace("   1. Pressing CTRL+ALT+DEL;");
-            trace("   2. Opening Task Manager, and;");
-     strMessage = "   4. Closing the process ";
-            strMessage += psz;
-            strMessage += "app.exe.";
-            trace(strMessage.c_str());
-            trace(".");
-         }
-         ::CloseHandle(hmutex);
-         return bOpened;
-      }
-      else
-      {
-         return false;
-      }
-   }
-   else
-   {
-      return false;
-   }
-
-}
-
-bool is_there_application_opened()
-{
-   return 
-      is_application_opened("winactionarea")
-   || is_application_opened("winservice_1")
-   || is_application_opened("winutil")
-   || is_application_opened("winshelllink")
-   || is_application_opened("command")
-   || is_application_opened("winservice_filesystemsize")
-   || is_application_opened("filemanager")
-   || is_application_opened("mplite");
-}
-
-void machine_signalize_close_application()
-{
-   mutex_lock lockMachineEvent(g_machineevent.m_hmutex);
-   machine_event_data data;
-   g_machineevent.read(&data);
-   data.m_fixed.m_bRequestCloseApplication = true;
-   g_machineevent.write(&data);
-}
-
-bool machine_unsignalize_close_application()
-{
-   mutex_lock lockMachineEvent(g_machineevent.m_hmutex);
-   machine_event_data data;
-   g_machineevent.read(&data);
-   data.m_fixed.m_bRequestCloseApplication = false;
-   bool bOk = g_machineevent.write(&data);
-   return bOk;
-}
-
-bool machine_check_close_application(bool bDefault)
-{
-   mutex_lock lockMachineEvent(g_machineevent.m_hmutex);
-   machine_event_data data;
-   if(!g_machineevent.read(&data))
-      return false;
-   return data.m_fixed.m_bRequestCloseApplication;
-}
-
-int stop_service()
-{
-   SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_ALL_ACCESS);
-
-	if (hdlSCM == 0) return ::GetLastError();
- 
-   SC_HANDLE hdlServ = ::OpenService(
-		hdlSCM,                    // SCManager database 
-		"CGCLCSTvotagusCa2Fontopus_WinService_Spa_stage",               // name of service 
-		SC_MANAGER_ALL_ACCESS);                     // no password 
- 
-   DWORD Ret = 0;
-   if (!hdlServ) 
-   {
-      Ret = ::GetLastError();
-      return Ret;
-   }
-   SERVICE_STATUS ss;
-   memset(&ss, 0, sizeof(ss));
-   ::ControlService(hdlServ, SERVICE_CONTROL_STOP, &ss);
-
-   CloseServiceHandle(hdlServ);
-
-   return Ret;
-}
-
-
-int remove_service()
-{
-	SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_ALL_ACCESS);
-
-	if (hdlSCM == 0) return ::GetLastError();
- 
-   SC_HANDLE hdlServ = ::OpenService(
-		hdlSCM,                    // SCManager database 
-		"CGCLCSTvotagusCa2Fontopus_WinService_Spa_stage",               // name of service 
-		SC_MANAGER_ALL_ACCESS);                     // no password 
- 
-   DWORD Ret = 0;
-   if (!hdlServ)
-   {
-      Ret = ::GetLastError();
-      return Ret;
-   }
-
-   ::DeleteService(hdlServ);
-
-   CloseServiceHandle(hdlServ);
-
-/*   STARTUPINFO si;
-   PROCESS_INFORMATION pi;
-   LPSTR lpsz = _strdup(("sc delete CGCLCSTvotagusCa2Fontopus_WinService_Spa_" + g_strVersionShift).c_str());
-   if(!::CreateProcess(NULL, lpsz, 
-      NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi))
-      return 1;
-   free(lpsz);*/
-
-   return Ret;
-}
-
-
-
-
-bool m_reboot()
-{
-	HANDLE hToken;
-	TOKEN_PRIVILEGES tkp;
-	if (!OpenProcessToken(GetCurrentProcess(),
-		TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken))
-		return false;
-	LookupPrivilegeValue(NULL, SE_SHUTDOWN_NAME, &tkp.Privileges[0].Luid);
-	tkp.PrivilegeCount = 1;
-	tkp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
-	AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0);
-	if (ExitWindowsEx(EWX_REBOOT, 0) == 0)
-		return false;
-	//reset the previlages
-	tkp.Privileges[0].Attributes = 0;
-	AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0);
-   return true;
-}
-
-bool is_installed(const char * psz)
-{
-   XNode nodeInstall;
-
-   nodeInstall.Load(file::get_contents(dir::appdata("spa_install.xml").c_str()).c_str());
-
-   LPXNode lpnodeInstalled = nodeInstall.GetChild("installed");
-
-   if(lpnodeInstalled != NULL)
-   {
-      for(unsigned int ui = 0; ui < lpnodeInstalled->childs.size(); ui++)
-      {
-         std::string strId = lpnodeInstalled->childs[ui]->GetAttrValue("id");
-         if(strcmp(strId.c_str(), psz) == 0)
-         {
-            return true;
-         }
-      }
-   }
-   return false;
-}
+//bool is_there_application_opened()
+//{
+//   return 
+//      is_application_opened("winactionarea")
+//   || is_application_opened("winservice_1")
+//   || is_application_opened("winutil")
+//   || is_application_opened("winshelllink")
+//   || is_application_opened("command")
+//   || is_application_opened("winservice_filesystemsize")
+//   || is_application_opened("filemanager")
+//   || is_application_opened("mplite");
+//}
+//
+//void machine_signalize_close_application()
+//{
+//   mutex_lock lockMachineEvent(g_machineevent.m_hmutex);
+//   machine_event_data data;
+//   g_machineevent.read(&data);
+//   data.m_fixed.m_bRequestCloseApplication = true;
+//   g_machineevent.write(&data);
+//}
+//
+//bool machine_unsignalize_close_application()
+//{
+//   mutex_lock lockMachineEvent(g_machineevent.m_hmutex);
+//   machine_event_data data;
+//   g_machineevent.read(&data);
+//   data.m_fixed.m_bRequestCloseApplication = false;
+//   bool bOk = g_machineevent.write(&data);
+//   return bOk;
+//}
+//
+//bool machine_check_close_application(bool bDefault)
+//{
+//   mutex_lock lockMachineEvent(g_machineevent.m_hmutex);
+//   machine_event_data data;
+//   if(!g_machineevent.read(&data))
+//      return false;
+//   return data.m_fixed.m_bRequestCloseApplication;
+//}
+//
+//int stop_service()
+//{
+//   SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_ALL_ACCESS);
+//
+//	if (hdlSCM == 0) return ::GetLastError();
+// 
+//   SC_HANDLE hdlServ = ::OpenService(
+//		hdlSCM,                    // SCManager database 
+//		"CGCLCSTvotagusCa2Fontopus_WinService_Spa_stage",               // name of service 
+//		SC_MANAGER_ALL_ACCESS);                     // no password 
+// 
+//   DWORD Ret = 0;
+//   if (!hdlServ) 
+//   {
+//      Ret = ::GetLastError();
+//      return Ret;
+//   }
+//   SERVICE_STATUS ss;
+//   memset(&ss, 0, sizeof(ss));
+//   ::ControlService(hdlServ, SERVICE_CONTROL_STOP, &ss);
+//
+//   CloseServiceHandle(hdlServ);
+//
+//   return Ret;
+//}
+//
+//
+//int remove_service()
+//{
+//	SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_ALL_ACCESS);
+//
+//	if (hdlSCM == 0) return ::GetLastError();
+// 
+//   SC_HANDLE hdlServ = ::OpenService(
+//		hdlSCM,                    // SCManager database 
+//		"CGCLCSTvotagusCa2Fontopus_WinService_Spa_stage",               // name of service 
+//		SC_MANAGER_ALL_ACCESS);                     // no password 
+// 
+//   DWORD Ret = 0;
+//   if (!hdlServ)
+//   {
+//      Ret = ::GetLastError();
+//      return Ret;
+//   }
+//
+//   ::DeleteService(hdlServ);
+//
+//   CloseServiceHandle(hdlServ);
+//
+///*   STARTUPINFO si;
+//   PROCESS_INFORMATION pi;
+//   LPSTR lpsz = _strdup(("sc delete CGCLCSTvotagusCa2Fontopus_WinService_Spa_" + g_strVersionShift).c_str());
+//   if(!::CreateProcess(NULL, lpsz, 
+//      NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi))
+//      return 1;
+//   free(lpsz);*/
+//
+//   return Ret;
+//}
+//
+//
+//
+//
+//bool m_reboot()
+//{
+//	HANDLE hToken;
+//	TOKEN_PRIVILEGES tkp;
+//	if (!OpenProcessToken(GetCurrentProcess(),
+//		TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken))
+//		return false;
+//	LookupPrivilegeValue(NULL, SE_SHUTDOWN_NAME, &tkp.Privileges[0].Luid);
+//	tkp.PrivilegeCount = 1;
+//	tkp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
+//	AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0);
+//	if (ExitWindowsEx(EWX_REBOOT, 0) == 0)
+//		return false;
+//	//reset the previlages
+//	tkp.Privileges[0].Attributes = 0;
+//	AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0);
+//   return true;
+//}
+//
+//bool is_installed(const char * psz)
+//{
+//   XNode nodeInstall;
+//
+//   nodeInstall.Load(file_as_string_dup(dir::appdata("spa_install.xml").c_str()).c_str());
+//
+//   LPXNode lpnodeInstalled = nodeInstall.GetChild("installed");
+//
+//   if(lpnodeInstalled != NULL)
+//   {
+//      for(unsigned int ui = 0; ui < lpnodeInstalled->childs.size(); ui++)
+//      {
+//         string strId = lpnodeInstalled->childs[ui]->GetAttrValue("id");
+//         if(strcmp(strId.c_str(), psz) == 0)
+//         {
+//            return true;
+//         }
+//      }
+//   }
+//   return false;
+//}
 
 //int ca2_app_install_run(const char * psz, const char * pszParam1, const char * pszParam2, DWORD & dwStartError, bool bSynch)
 //{
-//   std::string strStage;
-//   std::string strApp;
-//   std::string strUrl;
+//   string strStage;
+//   string strApp;
+//   string strUrl;
 //
-//   std::string strParam1;
-//   std::string strParam2;
+//   string strParam1;
+//   string strParam2;
 //   
 //   if(pszParam1 != NULL)
 //   {
@@ -2255,8 +2146,8 @@ bool is_installed(const char * psz)
 //      str_trim(strParam2);
 //   }
 //
-//   std::string strPlatform = spa_get_platform();
-//   if(std::string(psz) == "_set_windesk")
+//   string strPlatform = spa_get_platform();
+//   if(string(psz) == "_set_windesk")
 //   {
 //      strStage = dir::path(dir::beforeca2().c_str(), ("ca2\\stage\\" + strPlatform + "\\cubeapp.exe").c_str());
 //      if(strParam1.length() > 0)
@@ -2287,7 +2178,7 @@ bool is_installed(const char * psz)
 //         strStage += " " + strParam2;
 //      }
 //   }
-////   std::string strParam;
+////   string strParam;
 ////   strParam = "start=" + file::name(strUrl.c_str());
 //
 //   STARTUPINFO si;
@@ -2338,11 +2229,11 @@ bool is_installed(const char * psz)
 //   
 //
 //   char szFormat[256];
-//   std::string strUrl;
+//   string strUrl;
 //   strUrl = "http://spaignition.api.veriterse.net/query?node=install_application&id=";
 //   strUrl += g_strStart;
 //   strUrl += "&key=post_install_count";
-//   std::string strCount = ms_get(strUrl.c_str());
+//   string strCount = ms_get(strUrl.c_str());
 //   int iCount = atoi(strCount.c_str());
 //   for(int i = 0; i < iCount; i++)
 //   {
@@ -2351,7 +2242,7 @@ bool is_installed(const char * psz)
 //      strUrl += "&key=post_install";
 //      sprintf(szFormat, "[%d]", i);
 //      strUrl += szFormat;
-//      std::string strExec = ms_get(strUrl.c_str());
+//      string strExec = ms_get(strUrl.c_str());
 //      if(!spa_exec(strExec.c_str()))
 //      {
 //         ::MessageBox(g_hwnd, "Error", "Error", MB_OK);
@@ -2370,10 +2261,10 @@ bool is_installed(const char * psz)
 //   }
 //   trace(".");
 //   
-//   std::string strPlatform = spa_get_platform();
+//   string strPlatform = spa_get_platform();
 //   if(i == 0)
 //   {
-//      file::put_contents((dir::ca2() + "\\appdata\\" + strPlatform + "\\build.txt").c_str(), g_strBuild.c_str());
+//      file_put_contents_dup((dir::element() + "\\appdata\\" + strPlatform + "\\build.txt").c_str(), g_strBuild.c_str());
 //      ::PostMessage(g_hwnd, WM_CLOSE, 0, 0);
 //      return true;
 //   }
@@ -2415,8 +2306,8 @@ bool is_installed(const char * psz)
 //
 //int run_install(const char * lpCmdLine, int nCmdShow)
 //{
-//   std::string str = lpCmdLine;
-//   std::string strFile = lpCmdLine;
+//   string str = lpCmdLine;
+//   string strFile = lpCmdLine;
 //
 //   int i1 = str.find("\"");
 //   if(i1 >= 0)
@@ -2452,7 +2343,7 @@ bool is_installed(const char * psz)
 //   //MessageBox(NULL, "BegInstall", "Caption", MB_OK);
 //   if(g_iStart != 4)
 //   {
-//      std::string strCa2sp = file::get_contents(g_strFile.c_str());
+//      string strCa2sp = file_as_string_dup(g_strFile.c_str());
 //      if(strCa2sp.length() == 0)
 //      {
 //         strCa2sp = read_resource_as_string(NULL, 1984, "CA2SP");
@@ -2481,7 +2372,7 @@ bool is_installed(const char * psz)
 //      {
 //         pszEnd++;
 //      }
-//      g_strStart = std::string(pszStart, pszEnd - pszStart);
+//      g_strStart = string(pszStart, pszEnd - pszStart);
 //   }
 //   else
 //   {
@@ -2500,7 +2391,7 @@ bool is_installed(const char * psz)
 //      {
 //         pszEnd++;
 //      }
-//      g_strLocale = std::string(pszLocale, pszEnd - pszLocale);
+//      g_strLocale = string(pszLocale, pszEnd - pszLocale);
 //   }
 //   else
 //   {
@@ -2529,9 +2420,9 @@ bool is_installed(const char * psz)
 //
 //}
 
-std::string url_query_param(int & iParam, const char * pszParam)
+string url_query_param(int & iParam, const char * pszParam)
 {
-   std::string str;
+   string str;
    if(iParam == 0)
    {
       iParam++;
@@ -2580,136 +2471,136 @@ int LangFromOS()
 
 
 
-void add_spa_start(const char * pszId)
-{
-	std::string strPath = dir::appdata("spa_start.xml");
-	std::string strContents = file::get_contents(strPath.c_str());
-   XNode node;
-   node.Load(strContents.c_str());
-   node.name = "spa";
-   LPXNode lpnode = node.GetChildByAttr("start", "id", pszId);
-   if(lpnode == NULL)
-   {
-	   lpnode = node.AppendChild("start");
-	   lpnode->AppendAttr("id", pszId);
-	   file::put_contents(strPath.c_str(), node.GetXML().c_str());
-   }
-}
-
-void remove_spa_start(const char * pszId)
-{
-	std::string strPath = dir::appdata("spa_start.xml");
-	std::string strContents = file::get_contents(strPath.c_str());
-   XNode node;
-   node.Load(strContents.c_str());
-   node.name = "spa";
-   LPXNode lpnode = node.GetChildByAttr("start", "id", pszId);
-   if(lpnode != NULL)
-   {
-	   node.RemoveChild(lpnode);
-	   file::put_contents(strPath.c_str(), node.GetXML().c_str());
-   }
-}
-
-std::string stringa::implode(const char * psz) const
-{
-
-   std::string str;
-
-   if(size() > 0)
-      str+= at(0);
-
-   for(int i = 1; i < size(); i++)
-   {
-      str+= psz;
-      str += at(i);
-   }
-
-
-   return str;
-}
-
-
-bool stringa::spa_insert(const char * psz)
-{
-   if(psz == NULL)
-      return false;
-   if(strlen(psz) == 0)
-      return false;
-   std::string str(psz);
-   str_trim(str);
-   if(str.length() == 0)
-      return false;
-   unsigned int iL = 0;
-   unsigned int iU = size();
-   unsigned int iM;
-   int iCmp;
-   while(true)
-   {
-      iM = (iL + iU) / 2;
-      if(iL >= iU)
-         break;
-      if(iM >= size())
-         break;
-      if(iM < 0)
-         break;
-      iCmp = strcmp(operator[](iM).c_str(), psz);
-      if(iCmp < 0)
-      {
-         iL = iM + 1;
-      }
-      else if(iCmp > 0)
-      {
-         iU = iM;
-      }
-      else
-      {
-         return false;
-      }
-   }
-   insert(begin() + iM, psz);
-   return true;
-}
-
-std::string install(const char * psz)
-{
-   return g_strInstall + psz;
-}
-
-
-
-
-
-SPALIB_API void reg_delete_tree(HKEY hkey, const char * name)
-{
-   HKEY hkeySub = NULL;
-   if(ERROR_SUCCESS == ::RegOpenKey(
-      hkey,
-      name,
-      &hkeySub))
-   {
-      DWORD dwAlloc = 1026 * 64;
-      char * szKey = new char[dwAlloc];
-      DWORD dwIndex = 0;
-      while(ERROR_SUCCESS == ::RegEnumKey(hkeySub, dwIndex, szKey, dwAlloc))
-      {
-         reg_delete_tree(hkeySub, szKey);
-         dwIndex++;
-      }
-      delete szKey;
-      ::RegCloseKey(hkeySub);
-   }
-   ::RegDeleteKey(hkey, name);
-}
-
-
-
-
-SPALIB_API std::string spalib_get_build()
-{
-   return read_resource_as_string(::GetModuleHandleA("spalib.dll"), ID_CGCL, "CA2SP");
-}
-
+//void add_spa_start(const char * pszId)
+//{
+//	string strPath = dir::appdata("spa_start.xml");
+//	string strContents = file_as_string_dup(strPath.c_str());
+//   XNode node;
+//   node.Load(strContents.c_str());
+//   node.name = "spa";
+//   LPXNode lpnode = node.GetChildByAttr("start", "id", pszId);
+//   if(lpnode == NULL)
+//   {
+//	   lpnode = node.AppendChild("start");
+//	   lpnode->AppendAttr("id", pszId);
+//	   file_put_contents_dup(strPath.c_str(), node.GetXML().c_str());
+//   }
+//}
+//
+//void remove_spa_start(const char * pszId)
+//{
+//	string strPath = dir::appdata("spa_start.xml");
+//	string strContents = file_as_string_dup(strPath.c_str());
+//   XNode node;
+//   node.Load(strContents.c_str());
+//   node.name = "spa";
+//   LPXNode lpnode = node.GetChildByAttr("start", "id", pszId);
+//   if(lpnode != NULL)
+//   {
+//	   node.RemoveChild(lpnode);
+//	   file_put_contents_dup(strPath.c_str(), node.GetXML().c_str());
+//   }
+//}
+//
+//string stringa::implode(const char * psz) const
+//{
+//
+//   string str;
+//
+//   if(size() > 0)
+//      str+= at(0);
+//
+//   for(int i = 1; i < size(); i++)
+//   {
+//      str+= psz;
+//      str += at(i);
+//   }
+//
+//
+//   return str;
+//}
+//
+//
+//bool stringa::spa_insert(const char * psz)
+//{
+//   if(psz == NULL)
+//      return false;
+//   if(strlen(psz) == 0)
+//      return false;
+//   string str(psz);
+//   str_trim(str);
+//   if(str.length() == 0)
+//      return false;
+//   unsigned int iL = 0;
+//   unsigned int iU = size();
+//   unsigned int iM;
+//   int iCmp;
+//   while(true)
+//   {
+//      iM = (iL + iU) / 2;
+//      if(iL >= iU)
+//         break;
+//      if(iM >= size())
+//         break;
+//      if(iM < 0)
+//         break;
+//      iCmp = strcmp(operator[](iM).c_str(), psz);
+//      if(iCmp < 0)
+//      {
+//         iL = iM + 1;
+//      }
+//      else if(iCmp > 0)
+//      {
+//         iU = iM;
+//      }
+//      else
+//      {
+//         return false;
+//      }
+//   }
+//   insert(begin() + iM, psz);
+//   return true;
+//}
+//
+//string install(const char * psz)
+//{
+//   return g_strInstall + psz;
+//}
+//
+//
+//
+//
+//
+//SPALIB_API void reg_delete_tree(HKEY hkey, const char * name)
+//{
+//   HKEY hkeySub = NULL;
+//   if(ERROR_SUCCESS == ::RegOpenKey(
+//      hkey,
+//      name,
+//      &hkeySub))
+//   {
+//      DWORD dwAlloc = 1026 * 64;
+//      char * szKey = new char[dwAlloc];
+//      DWORD dwIndex = 0;
+//      while(ERROR_SUCCESS == ::RegEnumKey(hkeySub, dwIndex, szKey, dwAlloc))
+//      {
+//         reg_delete_tree(hkeySub, szKey);
+//         dwIndex++;
+//      }
+//      delete szKey;
+//      ::RegCloseKey(hkeySub);
+//   }
+//   ::RegDeleteKey(hkey, name);
+//}
+//
+//
+//
+//
+//SPALIB_API string spalib_get_build()
+//{
+//   return read_resource_as_string(::GetModuleHandleA("spalib.dll"), ID_CGCL, "CA2SP");
+//}
+//
 
 
 void DragMainWindow()
@@ -2730,4 +2621,87 @@ void DragMainWindow()
       ::SetLayeredWindowAttributes(g_hwnd, 0, (255 * 100) / 100, LWA_ALPHA);
    }
    ::RedrawWindow(g_hwnd, NULL, NULL, RDW_UPDATENOW | RDW_INVALIDATE);*/
+}
+
+
+
+bool read_resource_as_file(
+   const char * pszFile,
+   HINSTANCE hinst,
+   UINT nID,
+   LPCTSTR lpcszType)
+{
+   HRSRC hrsrc = ::FindResource(
+      hinst,
+      MAKEINTRESOURCE(nID),
+      lpcszType);
+   if(hrsrc == NULL)
+      return false;
+   HGLOBAL hres = ::LoadResource(hinst,hrsrc);
+   if(hres == NULL)
+      return false;
+   DWORD dwResSize = ::SizeofResource(hinst,hrsrc);
+
+   if(hres != NULL)
+   {
+      bool bOk = false;
+      UINT FAR* lpnRes = (UINT FAR*)::LockResource(hres);
+      FILE * f  = fopen(pszFile,"wb");
+      if(f != NULL)
+      {
+         fwrite(lpnRes,1,dwResSize,f);
+         fclose(f);
+         bOk = true;
+      }
+#ifndef WIN32 //Unlock Resource is obsolete in the Win32 API
+      ::UnlockResource(hres);
+#endif
+      ::FreeResource(hres);
+      return bOk;
+   }
+   return false;
+
+}
+
+
+
+
+
+
+int bzuncompress(LPCTSTR lpcszUncompressed,LPCTSTR lpcszGzFileCompressed)
+{
+   const int iGzUncompressLen = 1024 * 1024;
+   char * pchGzUncompressBuffer = NULL;
+   if(pchGzUncompressBuffer == NULL)
+   {
+      pchGzUncompressBuffer = new char[iGzUncompressLen];
+   }
+   BZFILE * file = BZ2_bzopen(lpcszGzFileCompressed,"rb");
+   if(file == NULL)
+   {
+      fprintf(stderr,"bzopen error\n");
+      return -2;
+   }
+   string strUn(lpcszUncompressed);
+   //   strUn += ".tmp";
+   FILE * fileUn = fopen(strUn.c_str(),"wb+");
+   if(fileUn == NULL)
+   {
+      BZ2_bzclose(file);
+      int err;
+      _get_errno(&err);
+      fprintf(stderr,"fopen error\n %d",err);
+
+      return -1;
+   }
+   int uncomprLen;
+   while((uncomprLen = BZ2_bzread(file,pchGzUncompressBuffer,iGzUncompressLen)) > 0)
+   {
+      fwrite(pchGzUncompressBuffer,1,uncomprLen,fileUn);
+   }
+   fclose(fileUn);
+   BZ2_bzclose(file);
+   //   ::CopyFile(strUn.c_str(), lpcszUncompressed, FALSE);
+   //   ::DeleteFile(strUn.c_str());
+   return 0;
 }

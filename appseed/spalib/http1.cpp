@@ -7,9 +7,9 @@
 //DWORD g_dwDownloadLen;
 
 
-std::string url_encode(const char * psz)
+string url_encode(const char * psz)
 {
-      std::string str;
+      string str;
       char sz[256];
       while(*psz != '\0')
       {
@@ -38,12 +38,12 @@ std::string url_encode(const char * psz)
 
 
 
-SPALIB_API std::string ms_get(const char * pszUrl, bool bCache)
+SPALIB_API string ms_get(const char * pszUrl, bool bCache)
 {
-   std::string strRet;
-   std::string strUrl(pszUrl);
-   std::string strHost;
-   std::string strReq;
+   string strRet;
+   string strUrl(pszUrl);
+   string strHost;
+   string strReq;
    if(strUrl.substr(0, 7) == "http://")
    {
       size_t iPos = strUrl.find("/", 8);
@@ -228,11 +228,11 @@ SPALIB_API std::string ms_get(const char * pszUrl, bool bCache)
 }
 
 /*
-std::string ms_post(const char * pszUrl, const char * pszPost)
+string ms_post(const char * pszUrl, const char * pszPost)
 {
-   std::string strUrl(pszUrl);
-   std::string strHost;
-   std::string strReq;
+   string strUrl(pszUrl);
+   string strHost;
+   string strReq;
    int iPort;
    if(strUrl.substr(0, 7) == "http://")
    {
@@ -329,7 +329,7 @@ std::string ms_post(const char * pszUrl, const char * pszPost)
     if (bResults)
         bResults = WinHttpReceiveResponse( hRequest, NULL);
 
-    std::string strResult;
+    string strResult;
 
     // Keep checking for data until there is nothing left.
     if (bResults)

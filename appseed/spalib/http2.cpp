@@ -37,9 +37,9 @@ bool ms_download_progress(const char * pszUrl, const char * pszFile, bool bProgr
    download_buffer buffer;
    if(piStatus != NULL)
       *piStatus = 0;
-   std::string strUrl;
+   string strUrl;
 
-   if(file::exists(pszFile) && !::DeleteFile(pszFile))
+   if(file_exists_dup(pszFile) && !::DeleteFile(pszFile))
    {
       //trace("download failed: could not delete file prior to download.");
       return false;
@@ -64,8 +64,8 @@ bool ms_download_progress(const char * pszUrl, const char * pszFile, bool bProgr
       strUrl = str_replace(strUrl.c_str(), "%3A", ":");
       strUrl = str_replace(strUrl.c_str(), "%2F", "/");
    }
-   std::string strHost;
-   std::string strReq;
+   string strHost;
+   string strReq;
    if(strUrl.substr(0, 7) == "http://")
    {
       size_t iPos = strUrl.find("/", 8);
@@ -215,7 +215,7 @@ Retry1:
       
       DWORD dwWritten;
       DWORD dwError;
-      std::string strPath;
+      string strPath;
       strPath = pszFile;
       DWORD dwLen = 0;
       dir::mk(dir::name(strPath.c_str()).c_str());
@@ -258,41 +258,41 @@ Retry1:
 
 
 
-void dlr(DWORD dwDownload)
-{
-   if(!g_bShowPercentage)
-      return;
-   DWORD dw = ::GetTickCount();
-   DWORD dwDeltaTime = dw - g_dwDownloadTick;
-   if(dwDeltaTime < 184)
-      return;
-   g_dwDownloadTick = dw;
-   DWORD dwLen = dwDownload - g_dwDownload;
-   g_dwDownload = dwDownload;
-   if(g_daDownloadRate.size() < 100)
-   {
-      g_daDownloadRate.push_back(((double)dwLen / 1024.0) / ((double)(dwDeltaTime) / 1000.0));
-   }
-   else
-   {
-      if(g_iDownloadRate >= 100 || g_iDownloadRate < 0)
-         g_iDownloadRate = 0;
-      g_daDownloadRate[g_iDownloadRate] = ((double)dwLen / 1024.0) / ((double)(dwDeltaTime) / 1000.0);
-      g_iDownloadRate++;
-   }
-   if(g_daDownloadRate.average() == 0.0)
-   {
-      if(g_dDownloadRate != 0.0)
-      {
-         g_dDownloadRate = 0.0;
-         g_dwDownloadZeroRateTick = ::GetTickCount();
-         g_dwDownloadZeroRateRemain = g_dwDownloadRemain;
-      }
-      g_dwDownloadRemain = g_dwDownloadZeroRateRemain + ::GetTickCount() - g_dwDownloadZeroRateTick;
-   }
-   else
-   {
-      g_dDownloadRate = g_daDownloadRate.average();
-      g_dwDownloadRemain = (DWORD)(((g_iTotalGzLen - g_iGzLen) / 1024.0) / g_daDownloadRate.average());
-   }
-}
+//void dlr(DWORD dwDownload)
+//{
+//   if(!g_bShowPercentage)
+//      return;
+//   DWORD dw = ::GetTickCount();
+//   DWORD dwDeltaTime = dw - g_dwDownloadTick;
+//   if(dwDeltaTime < 184)
+//      return;
+//   g_dwDownloadTick = dw;
+//   DWORD dwLen = dwDownload - g_dwDownload;
+//   g_dwDownload = dwDownload;
+//   if(g_daDownloadRate.size() < 100)
+//   {
+//      g_daDownloadRate.push_back(((double)dwLen / 1024.0) / ((double)(dwDeltaTime) / 1000.0));
+//   }
+//   else
+//   {
+//      if(g_iDownloadRate >= 100 || g_iDownloadRate < 0)
+//         g_iDownloadRate = 0;
+//      g_daDownloadRate[g_iDownloadRate] = ((double)dwLen / 1024.0) / ((double)(dwDeltaTime) / 1000.0);
+//      g_iDownloadRate++;
+//   }
+//   if(g_daDownloadRate.average() == 0.0)
+//   {
+//      if(g_dDownloadRate != 0.0)
+//      {
+//         g_dDownloadRate = 0.0;
+//         g_dwDownloadZeroRateTick = ::GetTickCount();
+//         g_dwDownloadZeroRateRemain = g_dwDownloadRemain;
+//      }
+//      g_dwDownloadRemain = g_dwDownloadZeroRateRemain + ::GetTickCount() - g_dwDownloadZeroRateTick;
+//   }
+//   else
+//   {
+//      g_dDownloadRate = g_daDownloadRate.average();
+//      g_dwDownloadRemain = (DWORD)(((g_iTotalGzLen - g_iGzLen) / 1024.0) / g_daDownloadRate.average());
+//   }
+//}

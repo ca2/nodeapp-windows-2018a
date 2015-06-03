@@ -1,12 +1,12 @@
 #include "StdAfx.h"
 
-void on_trace(std::string & str, std::string & str2);
+void on_trace(string & str, string & str2);
 
-simple_mutex g_mutexTrace;
+mutex g_mutexTrace;
 stringa g_straTrace;
 int g_iTrace = -1;
 FILE * g_ftrace = NULL;
-std::string g_strLastStatus;
+string g_strLastStatus;
 int g_iLastStatus = 0;
 
 
@@ -21,15 +21,15 @@ public:
 
       g_mutexTrace.lock();
 
-      dir::mk(dir::ca2().c_str());
+      dir::mk(dir::element().c_str());
 
 #if defined(_M_IX86)
 
-      m_hfile = ::CreateFileW(u16(dir::ca2("install-x86.log")).c_str(),GENERIC_WRITE,FILE_SHARE_READ | FILE_SHARE_WRITE,NULL,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,NULL);
+      m_hfile = ::CreateFileW(u16(dir::element("install-x86.log")).c_str(),GENERIC_WRITE,FILE_SHARE_READ | FILE_SHARE_WRITE,NULL,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,NULL);
 
 #else
 
-      m_hfile = ::CreateFileW(u16(dir::ca2("install-x64.log")).c_str(),GENERIC_WRITE,FILE_SHARE_READ | FILE_SHARE_WRITE,NULL,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,NULL);
+      m_hfile = ::CreateFileW(u16(dir::element("install-x64.log")).c_str(),GENERIC_WRITE,FILE_SHARE_READ | FILE_SHARE_WRITE,NULL,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,NULL);
 
 #endif
 

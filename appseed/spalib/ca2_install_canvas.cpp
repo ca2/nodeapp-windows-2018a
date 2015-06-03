@@ -1,10 +1,24 @@
 ﻿#include "StdAfx.h"
 
-
+#define min MIN
+#define max MAX
 #include <gdiplus.h>
+#undef min
+#undef max
+
+#include <math.h>
 
 using namespace Gdiplus;
 
+extern HDC g_hdc;
+extern COLORREF * g_pcolorref;
+
+Bitmap * g_pbitmap = NULL;
+Graphics * g_pgraphics = NULL;
+
+
+SPALIB_API Font * CreatePointFont(double dPointSize,const wchar_t * lpszFaceName,bool bUnderline,bool bBold);
+Rect make_rect(LPCRECT lpcrect,bool bMinusOne = false);
 
 Font * g_pfont = NULL;
 Font * g_pfontBold = NULL;
@@ -17,16 +31,16 @@ Brush * g_pBarBk = NULL;
 Pen * g_pBarBorder = NULL;
 
 
-LONG width(LPCRECT lpcrect)
-{
-   return lpcrect->right - lpcrect->left;
-}
-
-
-LONG height(LPCRECT lpcrect)
-{
-   return lpcrect->bottom - lpcrect->top;
-}
+//LONG width(LPCRECT lpcrect)
+//{
+//   return lpcrect->right - lpcrect->left;
+//}
+//
+//
+//LONG height(LPCRECT lpcrect)
+//{
+//   return lpcrect->bottom - lpcrect->top;
+//}
 
 Rect make_rect(LPCRECT lpcrect, bool bMinusOne)
 {
@@ -42,7 +56,7 @@ public:
    int m_iMaxSize;
    int m_iLast;
    std::vector < POINT > m_pta;
-   inta m_ia;
+   int_array m_ia;
    RECT m_rect;
    HBITMAP m_hbm;
    HBITMAP m_hbmOld;
@@ -60,6 +74,8 @@ public:
 
 void ca2_install_canvas_init_draw()
 {
+   g_pbitmap = new Bitmap(g_cx,g_cy,g_cx * sizeof(COLORREF),PixelFormat32bppARGB,(BYTE *)g_pcolorref);
+   g_pgraphics = new Graphics(g_pbitmap);
    g_pfont = ::CreatePointFont(10.0,L"Lucida Sans Unicode",false, false);
    g_pfontBold = ::CreatePointFont(10.0,L"Lucida Sans Unicode",false, true);
    g_pfontHeader = ::CreatePointFont(8.4 + 7.7,L"Lucida Sans Unicode",false,true);
@@ -89,11 +105,11 @@ void ca2_install_canvas_on_paint(Graphics * pdc, LPCRECT lpcrect, int iMode)
 
 #if defined(_M_IX86)
 
-      int iTrace = _sopen(dir::ca2("install-x86.log").c_str(),_O_RDONLY | _O_BINARY,_SH_DENYNO,0);
+      int iTrace = _sopen(dir::element() / "install-x86.log",_O_RDONLY | _O_BINARY,_SH_DENYNO,0);
 
 #else
 
-      int iTrace = _sopen(dir::ca2("install-x64.log").c_str(),_O_RDONLY | _O_BINARY,_SH_DENYNO,0);
+      int iTrace = _sopen(dir::element() / "install-x64.log",_O_RDONLY | _O_BINARY,_SH_DENYNO,0);
 
 #endif
 
@@ -101,7 +117,7 @@ void ca2_install_canvas_on_paint(Graphics * pdc, LPCRECT lpcrect, int iMode)
       {
          int iTell = _lseek(iTrace,0,SEEK_END);
          iTell--;
-         std::string strLine;
+         string strLine;
          int iSkip = 0;
          bool bNormal = false;
          bool bHeader = false;
@@ -124,32 +140,38 @@ void ca2_install_canvas_on_paint(Graphics * pdc, LPCRECT lpcrect, int iMode)
             else if(iSkip > 0)
             {
                iSkip = 0;
-               str_trim(strLine);
+               strLine.trim();
                if(strLine == "--")
                {
                   bStart = true;
                }
-               else if(str_begins_ci(strLine.c_str(),":::::"))
+               else if(::str::begins_eat(strLine, "#----------"))
                {
-                  strLine = strLine.substr(5);
+                  strHeader = L"Thank you";
+                  bHeader = true;
+                  strBold = u16(strLine);
+                  bBold = true;
+                  dProgress = 0.0;
+                  bProgress = true;
+               }
+               else if(::str::begins_eat(strLine,":::::"))
+               {
                   if(!bHeader && strLine.length() > 0 && bBold && bNormal && bPreNormal)
                   {
                      bHeader = true;
                      strHeader = u16(strLine);
                   }
                }
-               else if(str_begins_ci(strLine.c_str(),"***"))
+               else if(::str::begins_eat(strLine,"***"))
                {
-                  strLine = strLine.substr(3);
                   if(!bBold && strLine.length() > 0 && bNormal && bPreNormal)
                   {
                      bBold = true;
                      strBold = u16(strLine);
                   }
                }
-               else if(str_begins_ci(strLine.c_str(),"|||"))
+               else if(::str::begins_eat(strLine,"|||"))
                {
-                  strLine = strLine.substr(3);
                   if(!bProgress && strLine.length() > 0)
                   {
                      bProgress = true;
@@ -161,7 +183,7 @@ void ca2_install_canvas_on_paint(Graphics * pdc, LPCRECT lpcrect, int iMode)
                      dProgress /= 100.0;
                   }
                }
-               else if(!str_begins_ci(strLine.c_str(),"/ ") && strLine.length() > 0 && !bNormal && !bBold && !bHeader && bPreNormal)
+               else if(!::str::begins_ci(strLine,"/ ") && strLine.length() > 0 && !bNormal && !bBold && !bHeader && bPreNormal)
                {
                   bNormal = true;
                   strNormal = u16(strLine);
@@ -185,7 +207,7 @@ void ca2_install_canvas_on_paint(Graphics * pdc, LPCRECT lpcrect, int iMode)
    }
 
    static canvas_zero czero;
-   static std::string s_strLastStatus;
+   static string s_strLastStatus;
    RECT rect = *lpcrect;
    int cx = lpcrect->right - lpcrect->left;
    int cy = lpcrect->bottom - lpcrect->top;
@@ -202,14 +224,14 @@ void ca2_install_canvas_on_paint(Graphics * pdc, LPCRECT lpcrect, int iMode)
    
    pdc->MeasureString(L"CCpp",4,g_pfont,PointF(0, 0), StringFormat::GenericTypographic(), &rSize);
 
-   double cyText = max(rSize.Height,5.0);
+   double cyText = MAX(rSize.Height,5.0);
 
    int iLineCount = (rect.bottom - 30) / cyText;
 
    if(iMode == 4) // if(m_bHealingSurface)
    {
-      int iCount = max(1, cx / 25);
-      int jCount = max(1, cy / 25);
+      int iCount = MAX(1, cx / 25);
+      int jCount = MAX(1,cy / 25);
 
       for(int i = 0; i < iCount; i++)
       {
@@ -327,11 +349,11 @@ void ca2_install_canvas_on_paint(Graphics * pdc, LPCRECT lpcrect, int iMode)
 
 #if defined(_M_IX86)
 
-         int iTrace = _sopen(dir::ca2("install-x86.log").c_str(), _O_RDONLY|_O_BINARY, _SH_DENYNO, 0);
+         int iTrace = _sopen(dir::element() / "install-x86.log", _O_RDONLY|_O_BINARY, _SH_DENYNO, 0);
 
 #else
 
-         int iTrace = _sopen(dir::ca2("install-x64.log").c_str(),_O_RDONLY | _O_BINARY,_SH_DENYNO,0);
+         int iTrace = _sopen(dir::element() / "install-x64.log",_O_RDONLY | _O_BINARY,_SH_DENYNO,0);
 
 #endif
 
@@ -339,7 +361,7 @@ void ca2_install_canvas_on_paint(Graphics * pdc, LPCRECT lpcrect, int iMode)
          {
             int iTell = _lseek(iTrace, 0, SEEK_END);
             iTell--;
-            std::string strLine;
+            string strLine;
             int iSkip = 0;
             while(iTell > 0 && iLine >= iLineMin)
             {
@@ -367,9 +389,8 @@ void ca2_install_canvas_on_paint(Graphics * pdc, LPCRECT lpcrect, int iMode)
                else if(iSkip > 0)
                {
                   iSkip = 0;
-                  if(str_begins_ci(strLine.c_str(), "***"))
+                  if(::str::begins_eat(strLine, "***"))
                   {
-                     strLine = strLine.substr(3);
                      if(strLine == s_strLastStatus)
                      {
                         goto skip_text_out1;
@@ -428,7 +449,7 @@ void ca2_install_canvas_on_paint(Graphics * pdc, LPCRECT lpcrect, int iMode)
          double iBarWidth = (lpcrect->right - 11.0 - 11.0) / 4;
          double i = ((lpcrect->right - 11.0 - 11.0) * dProgress) + 11.0;
          double iRight = i + iBarWidth;
-         pdc->FillRectangle(g_pBar,RectF(11.0 + i,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0,min(lpcrect->right - 10.0,iRight) - 11 - i,cyBar - 2.0));
+         pdc->FillRectangle(g_pBar,RectF(11.0 + i,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0,MAX(lpcrect->right - 10.0,iRight) - 11 - i,cyBar - 2.0));
          if(iRight >= lpcrect->right - 10)
          {
             pdc->FillRectangle(g_pBar,RectF(11.0,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0,iRight - lpcrect->right - 10.0 - 11.0,cyBar - 2.0));
@@ -478,13 +499,13 @@ Font * CreatePointFont(double dPointSize, const wchar_t * lpszFaceName, bool bUn
 
 //BOOL TextOutU(HDC hdc, int x, int y, const char * pszUtf8, int iSize)
 //{
-//   std::string str;
+//   string str;
 //   str.assign(pszUtf8, iSize);
 //
 //   SIZE size;
 //   size.cx = 0;
 //   size.cy = 0;
-//   if(str.find(_unitext("✓")) != std::string::npos)
+//   if(str.find(_unitext("✓")) != string::npos)
 //   {
 //      str = str_replace(str.c_str(), _unitext("✓"), "");
 //      ::GetTextExtentPointW(hdc, L"C", 1, &size);
@@ -586,8 +607,8 @@ void canvas_zero::on_paint(Graphics * pdc, LPCRECT lpcrect)
       POINT pt;
       pt.x = (rand() * cx / RAND_MAX) + lpcrect->left;
       pt.y = (rand() * cy / RAND_MAX) + lpcrect->top;
-      m_pta.insert(m_pta.begin(), pt);
-      m_ia.insert(m_ia.begin(), ((rand() * max(cx, cy) / 4 / RAND_MAX) + 23));
+      m_pta.insert_at(0, pt);
+      m_ia.insert_at(0, ((rand() * MAX(cx, cy) / 4 / RAND_MAX) + 23));
       m_dwCurZero = ::GetTickCount();
       m_dwNextZero = m_dwCurZero + m_ia[m_ia.size() - 1] * 1000 / iTimeFactor + 1984 + 1977;
       m_iLast = 0;
@@ -641,7 +662,7 @@ void canvas_zero::on_paint(Graphics * pdc, LPCRECT lpcrect)
       pt = m_pta[0];
       iSize = m_ia[0];
       iCurStep = (::GetTickCount() - m_dwCurZero) * iTimeFactor / 1000;
-      iCurStep = max(2, min(iCurStep, iSize));
+      iCurStep = MAX(2, MIN(iCurStep, iSize));
       zero(pdc, pt, iSize, iCurStep);
       if(iCurStep == iSize)
       {
@@ -716,3 +737,116 @@ void canvas_zero::zero(Graphics * pdc, POINT pt, int iSize, int iStep)
 
 
 }
+
+void update_layered_window()
+{
+
+   //RECT rectWindow;
+   //::GetWindowRect(hwnd, &rectWindow);
+
+
+   //int cx = rectWindow.right - rectWindow.left;
+   //int cy = rectWindow.bottom - rectWindow.top;
+
+   //RECT rect;
+   //rect.left         = 0;
+   //rect.top          = 0;
+   //rect.right        = cx;
+   //rect.bottom       = cy;
+
+   //if(lprect == NULL)
+   //{
+   //lprect = &rect;
+   //}
+
+
+   //HBITMAP hbmp      = ::CreateCompatibleBitmap(hdcWindow, cx, cy);
+   //HDC hdc           = ::CreateCompatibleDC(NULL);
+   //HBITMAP hbmpOld   =  (HBITMAP) ::SelectObject(hdc, (HGDIOBJ) hbmp);
+
+   //::BitBlt(hdc, 0, 0, cx, cy, hdcWindow, 0, 0, SRCCOPY);
+
+   //PaintBk(hdc);
+
+   //HFONT hfontOld = NULL;
+   //HFONT hfont = NULL;
+
+
+   RECT rect;
+
+   rect.left = 0;
+   rect.top = 0;
+   rect.right = g_cx;
+   rect.bottom = g_cy;
+
+   g_pgraphics->SetCompositingMode(CompositingModeSourceCopy);
+   {
+      SolidBrush sb(Color(184 + 23,23,23,23));
+      g_pgraphics->FillRectangle(&sb,make_rect(&rect));
+   }
+
+   ca2_install_canvas_on_paint(g_pgraphics,&rect,g_iHealingSurface);
+
+
+   RECT rectWindow;
+
+   ::GetWindowRect(g_hwnd,&rectWindow);
+
+   POINT ptCursor;
+
+   ::GetCursorPos(&ptCursor);
+
+   if(!PtInRect(&rectWindow,ptCursor))
+   {
+      //SolidBrush sb(Color(84,250,250,255));
+      //g_pgraphics->FillRectangle(&sb,make_rect(&rect));
+   }
+
+   HDC hdcWindow = ::GetWindowDC(g_hwnd);
+
+   POINT pt;
+
+   pt.x = rectWindow.left;
+
+   pt.y = rectWindow.top;
+
+   SIZE sz;
+
+   sz.cx = width(&rectWindow);
+
+   sz.cy = height(&rectWindow);
+
+   POINT ptSrc ={0};
+
+   BLENDFUNCTION blendPixelFunction ={AC_SRC_OVER,0,255,AC_SRC_ALPHA};
+
+   UpdateLayeredWindow(g_hwnd,hdcWindow,&pt,&sz,g_hdc,&ptSrc,0,&blendPixelFunction,ULW_ALPHA);
+
+   ::ReleaseDC(g_hwnd,hdcWindow);
+
+   /*   POINT pointViewport;
+   ::SetViewportOrgEx(hdc, 0, 0, &pointViewport);
+   ::BitBlt(hdcWindow, lprect->left, lprect->top, lprect->right - lprect->left, lprect->bottom - lprect->top,
+   hdc,       lprect->left, lprect->top, SRCCOPY);
+   ::SelectObject(hdc, (HGDIOBJ) hbmpOld);
+   if(hfontOld != NULL)
+   {
+   ::SelectObject(hdc,(HGDIOBJ)  hfontOld);
+   }
+   if(hfont != NULL)
+   {
+   ::DeleteObject(hfont);
+   }
+   ::DeleteObject(hbmp);
+   ::DeleteDC(hdc);*/
+
+
+
+}
+
+
+
+//Gdiplus::GdiplusStartupInput *   g_pgdiplusStartupInput     = NULL;
+//Gdiplus::GdiplusStartupOutput *  g_pgdiplusStartupOutput    = NULL;
+//DWORD_PTR                        g_gdiplusToken             = NULL;
+//DWORD_PTR                        g_gdiplusHookToken         = NULL;

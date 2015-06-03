@@ -234,190 +234,190 @@ bool file_exists(const char * path1)
 
 
 
-void parse_spaboot(XNode & node)
-{
-   if(node.name == "spa" && node.childs.size() > 0)
-   {
-      LPXNode lpnode = &node;
-      for(unsigned int ui = 0; ui < lpnode->childs.size(); ui++)
-      {
-         if(lpnode->childs[ui]->name == "index")
-         {
-            if(lpnode->childs[ui]->GetAttr("start") != NULL)
-            {
-               if(std::string(lpnode->childs[ui]->GetAttrValue("start")).length() > 0)
-               {
-                  g_strId= std::string(lpnode->childs[ui]->GetAttrValue("start"));
-               }
-            }
-         }
-      }
-   }
-}
-
-void parse_spaboot(const char * psz)
-{
-   XNode node;
-   node.Load(file::get_contents(psz).c_str());
-   parse_spaboot(node);
-}
-
-bool parse_spaboot_start(XNode & node)
-{
-   int iOkCount = 0;
-   std::string strInstalledBuild;
-   std::string strRequestedBuild;
-   if(node.name == "spa" && node.childs.size() > 0)
-   {
-      LPXNode lpnode = &node;
-      for(unsigned int ui = 0; ui < lpnode->childs.size(); ui++)
-      {
-         if(lpnode->childs[ui]->name == "index")
-         {
-            if(lpnode->childs[ui]->GetAttr("start") != NULL)
-            {
-               if(std::string(lpnode->childs[ui]->GetAttrValue("start")).length() > 0)
-               {
-                  g_strId = std::string(lpnode->childs[ui]->GetAttrValue("start"));
-                  iOkCount++;
-               }
-               else
-               {
-                  return false;
-               }
-            }
-            else
-            {
-               return false;
-            }
-         }
-         else
-         {
-            return false;
-         }
-         if(lpnode->childs[ui]->GetAttr("build") != NULL)
-         {
-            if(std::string(lpnode->childs[ui]->GetAttrValue("build")).length() > 0)
-            {
-               strInstalledBuild = file::get_contents("C:\\ca2\\stage\\app\\build.txt");
-               if(strInstalledBuild.length() <= 0)
-                  return false;
-               strRequestedBuild = std::string(lpnode->childs[ui]->GetAttrValue("build")).c_str();
-               if(strRequestedBuild.length() <= 0)
-                  return false;
-               iOkCount++;
-            }
-            else
-            {
-               return false;
-            }
-         }
-         else
-         {
-            return false;
-         }
-      }
-   }
-   if(iOkCount < 3)
-      return false;
-   if(strRequestedBuild != strInstalledBuild)
-      return false;
-   if(!is_installed(g_strId.c_str()))
-      return false;
-   return true;
-}
-
-
-
-bool parse_spaboot_start(const char * psz)
-{
-   XNode node;
-   node.Load(file::get_contents(psz).c_str());
-   return parse_spaboot_start(node);
-}
-
+//void parse_spaboot(XNode & node)
+//{
+//   if(node.name == "spa" && node.childs.size() > 0)
+//   {
+//      LPXNode lpnode = &node;
+//      for(unsigned int ui = 0; ui < lpnode->childs.size(); ui++)
+//      {
+//         if(lpnode->childs[ui]->name == "index")
+//         {
+//            if(lpnode->childs[ui]->GetAttr("start") != NULL)
+//            {
+//               if(std::string(lpnode->childs[ui]->GetAttrValue("start")).length() > 0)
+//               {
+//                  g_strId= std::string(lpnode->childs[ui]->GetAttrValue("start"));
+//               }
+//            }
+//         }
+//      }
+//   }
+//}
+//
+//void parse_spaboot(const char * psz)
+//{
+//   XNode node;
+//   node.Load(file::get_contents(psz).c_str());
+//   parse_spaboot(node);
+//}
+//
+//bool parse_spaboot_start(XNode & node)
+//{
+//   int iOkCount = 0;
+//   std::string strInstalledBuild;
+//   std::string strRequestedBuild;
+//   if(node.name == "spa" && node.childs.size() > 0)
+//   {
+//      LPXNode lpnode = &node;
+//      for(unsigned int ui = 0; ui < lpnode->childs.size(); ui++)
+//      {
+//         if(lpnode->childs[ui]->name == "index")
+//         {
+//            if(lpnode->childs[ui]->GetAttr("start") != NULL)
+//            {
+//               if(std::string(lpnode->childs[ui]->GetAttrValue("start")).length() > 0)
+//               {
+//                  g_strId = std::string(lpnode->childs[ui]->GetAttrValue("start"));
+//                  iOkCount++;
+//               }
+//               else
+//               {
+//                  return false;
+//               }
+//            }
+//            else
+//            {
+//               return false;
+//            }
+//         }
+//         else
+//         {
+//            return false;
+//         }
+//         if(lpnode->childs[ui]->GetAttr("build") != NULL)
+//         {
+//            if(std::string(lpnode->childs[ui]->GetAttrValue("build")).length() > 0)
+//            {
+//               strInstalledBuild = file::get_contents("C:\\ca2\\stage\\app\\build.txt");
+//               if(strInstalledBuild.length() <= 0)
+//                  return false;
+//               strRequestedBuild = std::string(lpnode->childs[ui]->GetAttrValue("build")).c_str();
+//               if(strRequestedBuild.length() <= 0)
+//                  return false;
+//               iOkCount++;
+//            }
+//            else
+//            {
+//               return false;
+//            }
+//         }
+//         else
+//         {
+//            return false;
+//         }
+//      }
+//   }
+//   if(iOkCount < 3)
+//      return false;
+//   if(strRequestedBuild != strInstalledBuild)
+//      return false;
+//   if(!is_installed(g_strId.c_str()))
+//      return false;
+//   return true;
+//}
+//
+//
+//
+//bool parse_spaboot_start(const char * psz)
+//{
+//   XNode node;
+//   node.Load(file::get_contents(psz).c_str());
+//   return parse_spaboot_start(node);
+//}
+//
 //void trace(const char * psz)
 //{
 //   printf("%s", psz);
 //}
 
-int start()
-{
-   STARTUPINFO si;
-   PROCESS_INFORMATION pi;
-//   SHELLEXECUTEINFO sei;
-   std::string strInstall;
-   std::string strCommand = file::get_contents("C:\\ca2\\machine\\on_after_spaadmin.txt");
-
-   if(strCommand.length() > 0)
-   {
-      ::DeleteFileA("C:\\ca2\\machine\\on_after_spaadmin.txt");
-      int iStart = 0;
-      while(true)
-      {
-         int iFind = strCommand.find(';', iStart);
-         if(iFind < 0)
-            strInstall = strCommand.substr(iStart);
-         else
-            strInstall = strCommand.substr(iStart, iFind - iStart);
-         memset(&si, 0, sizeof(si));
-         memset(&pi, 0, sizeof(pi));
-         if(!::CreateProcess(NULL, (LPSTR)  strInstall.c_str(),
-            NULL, NULL, FALSE, 0, NULL, NULL,
-            &si, &pi))
-         {
-         }
-         if(iFind < 0)
-            break;
-         iStart = iFind + 1;
-      }
-   }
-   else if(g_strId == "_set_windesk")
-   {
-      strInstall = "C:\\ca2\\" + g_strVersion + "\\stage\\basis\\";
-      strInstall += "winservice_1app.exe";
-      memset(&si, 0, sizeof(si));
-      memset(&pi, 0, sizeof(pi));
-      if(!::CreateProcess(NULL, (LPSTR)  strInstall.c_str(),
-         NULL, NULL, FALSE, 0, NULL, NULL,
-         &si, &pi))
-      {
-         return 1;
-      }
-   }
-   else
-   {
-      strInstall = "C:\\ca2\\" + g_strVersion + "\\stage\\basis\\";
-      strInstall += "bergedgeapp.exe";
-      strInstall += " : ";
-      strInstall += "app=";
-      strInstall += g_strId;
-      memset(&si, 0, sizeof(si));
-      memset(&pi, 0, sizeof(pi));
-      if(!::CreateProcess(NULL, (LPSTR)  strInstall.c_str(),
-         NULL, NULL, FALSE, 0, NULL, NULL,
-         &si, &pi))
-      {
-         return 1;
-      }
-   }
-   for(unsigned int ui = 0; ui < g_straRestartCommandLine.size(); ui++)
-   {
-      std::string & str = g_straRestartCommandLine.at(ui);
-      memset(&si, 0, sizeof(si));
-      memset(&pi, 0, sizeof(pi));
-      if(!::CreateProcess(NULL,(LPSTR)str.c_str(),NULL,NULL,FALSE,0,NULL,NULL,&si,&pi))
-      {
-         trace(("failed to create process " + str).c_str());
-      }
-      else
-      {
-         trace(("successfully created process " + str).c_str());
-      }
-   }
-   defer_play_small_bell();
-   return 0;
-}
+//int start()
+//{
+//   STARTUPINFO si;
+//   PROCESS_INFORMATION pi;
+////   SHELLEXECUTEINFO sei;
+//   std::string strInstall;
+//   std::string strCommand = file_as_string_dup("C:\\ca2\\machine\\on_after_spaadmin.txt");
+//
+//   if(strCommand.length() > 0)
+//   {
+//      ::DeleteFileA("C:\\ca2\\machine\\on_after_spaadmin.txt");
+//      int iStart = 0;
+//      while(true)
+//      {
+//         int iFind = strCommand.find(';', iStart);
+//         if(iFind < 0)
+//            strInstall = strCommand.substr(iStart);
+//         else
+//            strInstall = strCommand.substr(iStart, iFind - iStart);
+//         memset(&si, 0, sizeof(si));
+//         memset(&pi, 0, sizeof(pi));
+//         if(!::CreateProcess(NULL, (LPSTR)  strInstall.c_str(),
+//            NULL, NULL, FALSE, 0, NULL, NULL,
+//            &si, &pi))
+//         {
+//         }
+//         if(iFind < 0)
+//            break;
+//         iStart = iFind + 1;
+//      }
+//   }
+//   else if(g_strId == "_set_windesk")
+//   {
+//      strInstall = "C:\\ca2\\" + g_strVersion + "\\stage\\basis\\";
+//      strInstall += "winservice_1app.exe";
+//      memset(&si, 0, sizeof(si));
+//      memset(&pi, 0, sizeof(pi));
+//      if(!::CreateProcess(NULL, (LPSTR)  strInstall.c_str(),
+//         NULL, NULL, FALSE, 0, NULL, NULL,
+//         &si, &pi))
+//      {
+//         return 1;
+//      }
+//   }
+//   else
+//   {
+//      strInstall = "C:\\ca2\\" + g_strVersion + "\\stage\\basis\\";
+//      strInstall += "bergedgeapp.exe";
+//      strInstall += " : ";
+//      strInstall += "app=";
+//      strInstall += g_strId;
+//      memset(&si, 0, sizeof(si));
+//      memset(&pi, 0, sizeof(pi));
+//      if(!::CreateProcess(NULL, (LPSTR)  strInstall.c_str(),
+//         NULL, NULL, FALSE, 0, NULL, NULL,
+//         &si, &pi))
+//      {
+//         return 1;
+//      }
+//   }
+//   for(unsigned int ui = 0; ui < g_straRestartCommandLine.size(); ui++)
+//   {
+//      std::string & str = g_straRestartCommandLine.at(ui);
+//      memset(&si, 0, sizeof(si));
+//      memset(&pi, 0, sizeof(pi));
+//      if(!::CreateProcess(NULL,(LPSTR)str.c_str(),NULL,NULL,FALSE,0,NULL,NULL,&si,&pi))
+//      {
+//         trace(("failed to create process " + str).c_str());
+//      }
+//      else
+//      {
+//         trace(("successfully created process " + str).c_str());
+//      }
+//   }
+//   defer_play_small_bell();
+//   return 0;
+//}
 
 
 

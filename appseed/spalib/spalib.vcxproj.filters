@@ -23,12 +23,6 @@
     <ClCompile Include="command_start.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="dir2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="file.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="focus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -38,22 +32,7 @@
     <ClCompile Include="http2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="machine_event.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="machine_event_data.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="md5.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="str.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="XMLite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="trace.cpp">
@@ -107,24 +86,36 @@
     <ClCompile Include="window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="stringa.cpp">
+    <ClCompile Include="aaa_want_to_remove_dir2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="simple_mutex.cpp">
+    <ClCompile Include="aaa_want_to_remove_file.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="aaa_want_to_remove_simple_mutex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="aaa_want_to_remove_str.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="aaa_want_to_remove_stringa.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="aaa_want_to_remove_machine_event.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="aaa_want_to_remove_machine_event_data.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="aaa_want_to_remove_XMLite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="aaa_want_to_remove_md5.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ccvotagus_ca2_spa.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="dir.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="doublea.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="file.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="focus.h">
@@ -136,28 +127,7 @@
     <ClInclude Include="http2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inta.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="keep_true.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="machine_event.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="machine_event_data.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="md5.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="str.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="XMLite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="spalib.h">
@@ -169,10 +139,43 @@
     <ClInclude Include="..\spares\Resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mutex_lock.h">
+    <ClInclude Include="aaa_want_to_remove_dir.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="stringa.h">
+    <ClInclude Include="aaa_want_to_remove_doublea.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="aaa_want_to_remove_file.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="aaa_want_to_remove_inta.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="aaa_want_to_remove_keep_true.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="aaa_want_to_remove_machine_event.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="aaa_want_to_remove_machine_event_data.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="aaa_want_to_remove_mutex_lock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="aaa_want_to_remove_XMLite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="aaa_want_to_remove_stringa.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="aaa_want_to_remove_str.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="aaa_want_to_remove_simple_mutex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="aaa_want_to_remove_md5.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
