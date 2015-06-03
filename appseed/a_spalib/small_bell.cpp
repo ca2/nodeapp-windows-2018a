@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "a_spalib.h"
 
 DWORD g_dwPrepareSmallBell = 0;
 

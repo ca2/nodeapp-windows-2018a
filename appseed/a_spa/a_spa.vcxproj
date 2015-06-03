@@ -297,15 +297,15 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\spares\ccvotagus_ca2_spa.rc" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\app\appseed\aura\acid.vcxproj">
       <Project>{a92c920f-c07d-481e-b523-565b56167cd1}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\spalib\spalib.vcxproj">
+    <ProjectReference Include="..\a_spalib\a_spalib.vcxproj">
       <Project>{fa039458-2e43-45de-9fa9-66dfa7e11e64}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\a_spares\ccvotagus_ca2_spa.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

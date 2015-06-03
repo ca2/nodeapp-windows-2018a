@@ -12,7 +12,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\spares\ccvotagus_ca2_spa.rc">
+    <ResourceCompile Include="..\a_spares\ccvotagus_ca2_spa.rc">
       <Filter>Source Files</Filter>
     </ResourceCompile>
   </ItemGroup>

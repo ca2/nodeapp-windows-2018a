@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "a_spalib.h"
 #include <shellapi.h>
 #include <shlobj.h>
 

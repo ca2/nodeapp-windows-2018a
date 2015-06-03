@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "a_spalib.h"
 
 void on_trace(string & str, string & str2);
 

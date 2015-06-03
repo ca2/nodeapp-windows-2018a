@@ -17,23 +17,12 @@
     <ClCompile Include="ccvotagus_ca2_spa.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="..\spares\ccvotagus_ca2_spa.rc">
-      <Filter>Source Files</Filter>
-    </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ccvotagus_ca2_spa.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\spares\Resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -111,5 +100,10 @@
     <Xml Include="..\spares\res\stringtable_sv.xml">
       <Filter>Resources</Filter>
     </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\a_spares\ccvotagus_ca2_spa.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

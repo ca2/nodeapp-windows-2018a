@@ -1,4 +1,4 @@
-#include "../spalib/spalib.h"
+#include "../a_spalib/a_spalib.h"
 
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,

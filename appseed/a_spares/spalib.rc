@@ -1,4 +1,4 @@
-#include "../spares/resource.h"
+#include "../a_spares/resource.h"
 
 ID_CGCL                       CA2SP                 "../../../app/build.txt"
 ID_MP3_SMALL_BELL             MP3                   "res\\small_bell.mp3"

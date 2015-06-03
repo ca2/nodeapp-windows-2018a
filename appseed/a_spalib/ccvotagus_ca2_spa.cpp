@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+﻿#include "a_spalib.h"
 
 //#include <gdiplus.h>
 

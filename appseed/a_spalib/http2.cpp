@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "a_spalib.h"
 
 //extern HINTERNET  g_hSession;
 //extern HINTERNET  g_hConnect;

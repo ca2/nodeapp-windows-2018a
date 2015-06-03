@@ -64,7 +64,7 @@ extern "C"
 //#include <shlobj.h>
 //#include <process.h>
 
-#include "../spares/resource.h"
+#include "../a_spares/resource.h"
 #include <shellapi.h>
 //#include "machine_event_data.h"
 //#include <math.h>
@@ -307,12 +307,12 @@ SPALIB_API void reg_delete_tree(HKEY hkey, const char * name);
 
 
 //#include <string>
-#include "../spares/resource.h"
+#include "../a_spares/resource.h"
 #include <shellapi.h>
 #include <psapi.h>
 //#include <string>
-#include "../spares/resource.h"
-#include "spalib.h"
+//#include "../spares/resource.h"
+//#include "spalib.h"
 //#include "dir.h"
 //#include "file.h"
 #include "http1.h"
@@ -321,68 +321,9 @@ SPALIB_API void reg_delete_tree(HKEY hkey, const char * name);
 //#include "XMLite.h"
 #include <shellapi.h>
 
-//#include <string>
-#include "../spares/resource.h"
-#include "spalib.h"
-//#include "dir.h"
-//#include "file.h"
-#include "http1.h"
-//#include "md5.h"
-//#include "str.h"
-//#include "XMLite.h"
-#include <shellapi.h>
-#include "StdAfx.h"
-//#include <string>
-#include "../spares/resource.h"
-#include "spalib.h"
-//#include "dir.h"
-//#include "file.h"
-#include "http1.h"
-//#include "md5.h"
-//#include "str.h"
-//#include "XMLite.h"
-#include <shellapi.h>
-//#include <string>
-#include "../spares/resource.h"
-#include "spalib.h"
-//#include "dir.h"
-//#include "file.h"
-#include "http1.h"
-//#include "md5.h"
-//#include "str.h"
-#include <shellapi.h>
-//#include <io.h>
-//#include <fcntl.h>
-//#include <share.h>
-//#include <sys/stat.h>
-//#include <sys/types.h>
-//#include <string>
-#include "../spares/resource.h"
-#include "spalib.h"
-//#include "dir.h"
-//#include "file.h"
-#include "http1.h"
-//#include "md5.h"
-//#include "str.h"
-//#include "XMLite.h"
-#include <shellapi.h>
+
 #include <Mmsystem.h>
-//#include <assert.h>
-//#include <memory.h>
-//#include <stdio.h>
-//#include <string.h>
-//#include "md5.h"
-//#include "StdAfx.h"
-//#include <string>
-#include "../spares/resource.h"
-#include "spalib.h"
-//#include "dir.h"
-//#include "file.h"
-#include "http1.h"
-//#include "md5.h"
-//#include "str.h"
-//#include "XMLite.h"
-#include <shellapi.h>
+
 
 class spaadmin_mutex_attrs
 {

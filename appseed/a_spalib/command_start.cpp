@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "a_spalib.h"
 
 #include <Winternl.h>
 

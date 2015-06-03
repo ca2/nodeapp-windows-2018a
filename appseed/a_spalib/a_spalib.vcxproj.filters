@@ -77,40 +77,13 @@
     <ClCompile Include="..\..\..\app\axis\bzip2\bsdiff\libbsdiff.c">
       <Filter>Source Files\bzip2\bsdiff</Filter>
     </ClCompile>
-    <ClCompile Include="_spalib.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="_spalib_c.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="aaa_want_to_remove_dir2.cpp">
+    <ClCompile Include="a_spalib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="aaa_want_to_remove_file.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="aaa_want_to_remove_simple_mutex.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="aaa_want_to_remove_str.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="aaa_want_to_remove_stringa.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="aaa_want_to_remove_machine_event.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="aaa_want_to_remove_machine_event_data.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="aaa_want_to_remove_XMLite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="aaa_want_to_remove_md5.cpp">
+    <ClCompile Include="a_spalib_c.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -127,55 +100,13 @@
     <ClInclude Include="http2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="spalib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ca2_install_canvas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\spares\Resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="aaa_want_to_remove_dir.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="aaa_want_to_remove_doublea.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="aaa_want_to_remove_file.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="aaa_want_to_remove_inta.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="aaa_want_to_remove_keep_true.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="aaa_want_to_remove_machine_event.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="aaa_want_to_remove_machine_event_data.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="aaa_want_to_remove_mutex_lock.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="aaa_want_to_remove_XMLite.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="aaa_want_to_remove_stringa.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="aaa_want_to_remove_str.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="aaa_want_to_remove_simple_mutex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="aaa_want_to_remove_md5.h">
+    <ClInclude Include="a_spalib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -185,7 +116,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\spares\spalib.rc">
+    <ResourceCompile Include="..\a_spares\spalib.rc">
       <Filter>Source Files</Filter>
     </ResourceCompile>
   </ItemGroup>

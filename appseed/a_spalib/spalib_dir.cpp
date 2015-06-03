@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "a_spalib.h"
 
 
 void get_ca2_module_folder_dup(char * lpszModuleFolder)

@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "ccvotagus_ca2_spa.h"
 
 //bool g_bAdmin = true;
 int APIENTRY _tWinMain(HINSTANCE hInstance,
