@@ -107,8 +107,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
       }
    }
 
-   std::string strDir = dir::beforeca2() + "\\ca2\\stage\\" + spa_get_platform();
-   std::string strSp = dir::beforeca2() + "\\ca2\\stage\\" + spa_get_platform() + "\\spaadmin.exe";
+   std::string strDir = ::dir::a_spa();
+   std::string strSp = ::path::a_spaadmin();
    std::string strSpDest;
 
 //   STARTUPINFO si;

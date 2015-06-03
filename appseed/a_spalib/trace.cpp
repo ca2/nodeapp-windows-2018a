@@ -23,17 +23,10 @@ public:
 
       dir::mk(dir::element().c_str());
 
-#if defined(_M_IX86)
-
-      m_hfile = ::CreateFileW(u16(dir::element("install-x86.log")).c_str(),GENERIC_WRITE,FILE_SHARE_READ | FILE_SHARE_WRITE,NULL,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,NULL);
-
-#else
-
-      m_hfile = ::CreateFileW(u16(dir::element("install-x64.log")).c_str(),GENERIC_WRITE,FILE_SHARE_READ | FILE_SHARE_WRITE,NULL,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,NULL);
-
-#endif
+      m_hfile = ::CreateFileW(u16(dir::element() / ("install-" +process_platform_dir_name()+ ".log")),GENERIC_WRITE,FILE_SHARE_READ | FILE_SHARE_WRITE,NULL,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,NULL);
 
       ::SetFilePointer(m_hfile,0,NULL,FILE_END);
+
    }
    ~trace_file()
    {

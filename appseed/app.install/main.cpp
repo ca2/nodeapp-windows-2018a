@@ -200,17 +200,7 @@ bool installer::intro()
 
    const char * pszMutex;
 
-   // "Global\\::ca2::fontopus::ca2_spaboot_install_x86::7807e510-5579-11dd-ae16-0800200c7784"
-
-#if defined(_M_IX86)
-
-   pszMutex = "Global\\::ca2::fontopus::ca2_spaboot_install_x86::7807e510-5579-11dd-ae16-0800200c7784";
-
-#else
-
-   pszMutex = "Global\\::ca2::fontopus::ca2_spaboot_install_x64::7807e510-5579-11dd-ae16-0800200c7784";
-
-#endif
+   pszMutex = "Global\\::ca2::fontopus::ca2_spaboot_install_"+process_platform_dir_name()+"::7807e510-5579-11dd-ae16-0800200c7784";
 
    m_hmutexSpabootInstall = ::CreateMutex(NULL, FALSE, pszMutex);
 
@@ -238,15 +228,7 @@ bool installer::intro()
 
    // "core/spaboot_install"
 
-#if defined(_M_IX86)
-
-   pszChannel = "::ca2::fontopus::ca2_spaboot_install_x86::7807e510-5579-11dd-ae16-0800200c7784";
-
-#else
-
-   pszChannel = "::ca2::fontopus::ca2_spaboot_install_x64::7807e510-5579-11dd-ae16-0800200c7784";
-
-#endif
+   pszChannel = "::ca2::fontopus::ca2_spaboot_install_"+process_platform_dir_name()+"::7807e510-5579-11dd-ae16-0800200c7784";
 
    if(!m_rxchannel.create(pszChannel,"app.install.exe"))
    {

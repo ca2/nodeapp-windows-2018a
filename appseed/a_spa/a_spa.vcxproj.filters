@@ -7,12 +7,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ccvotagus_ca2_spa.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\a_spares\ccvotagus_ca2_spa.rc">
+    <ResourceCompile Include="..\a_spares\a_spa.rc">
       <Filter>Source Files</Filter>
     </ResourceCompile>
   </ItemGroup>

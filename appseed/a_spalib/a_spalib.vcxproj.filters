@@ -23,9 +23,6 @@
     <ClCompile Include="command_start.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="focus.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="http1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -36,15 +33,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="trace.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="small_bell.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="spalib_dir.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ca2_install_canvas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\app\axis\bzip2\blocksort.c">
@@ -86,21 +74,15 @@
     <ClCompile Include="a_spalib_c.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="canvas.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ccvotagus_ca2_spa.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="focus.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="http1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="http2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ca2_install_canvas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\spares\Resource.h">
@@ -109,15 +91,8 @@
     <ClInclude Include="a_spalib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="spalib.def">
-      <Filter>Source Files</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="..\a_spares\spalib.rc">
-      <Filter>Source Files</Filter>
-    </ResourceCompile>
+    <ClInclude Include="canvas.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

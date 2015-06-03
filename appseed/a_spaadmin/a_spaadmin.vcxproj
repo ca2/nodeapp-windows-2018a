@@ -143,7 +143,8 @@
       <CompileAsWinRT>false</CompileAsWinRT>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <OpenMPSupport>false</OpenMPSupport>
-      <AdditionalOptions>-Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>
+      </AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;winmm.lib;Psapi.lib;WinINet.lib;msimg32.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -190,7 +191,8 @@
       <CompileAsWinRT>false</CompileAsWinRT>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <OpenMPSupport>false</OpenMPSupport>
-      <AdditionalOptions>-Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>
+      </AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;winmm.lib;Psapi.lib;WinINet.lib;msimg32.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -220,7 +222,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
@@ -235,6 +237,9 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <CreateHotpatchableImage>false</CreateHotpatchableImage>
+      <AdditionalOptions>
+      </AdditionalOptions>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <AdditionalDependencies>Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;winmm.lib;Psapi.lib;WinINet.lib;msimg32.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -247,6 +252,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='stage|x64'">
@@ -266,7 +272,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
@@ -281,6 +287,9 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <CreateHotpatchableImage>false</CreateHotpatchableImage>
+      <AdditionalOptions>
+      </AdditionalOptions>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <AdditionalDependencies>Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;winmm.lib;Psapi.lib;WinINet.lib;msimg32.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -292,43 +301,11 @@
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ccvotagus_ca2_spa.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\spares\Resource.h" />
-    <ClInclude Include="ccvotagus_ca2_spa.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\spares\res\1977.ca2sp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\spares\res\ccvotagus_ca2_spa.ico" />
-    <Image Include="..\spares\res\ccvotagus_ca2_spa_veriwell.ico" />
-    <Image Include="..\spares\res\controlbox.bmp" />
-    <Image Include="..\spares\res\controlbox_basis.bmp" />
-    <Image Include="..\spares\res\login24_2.bmp" />
-    <Image Include="..\spares\res\login24_hover.bmp" />
-    <Image Include="..\spares\res\login24_press.bmp" />
-    <Image Include="..\spares\res\login48_1.bmp" />
-    <Image Include="..\spares\res\login48_2.bmp" />
-    <Image Include="..\spares\res\login48_hover.bmp" />
-    <Image Include="..\spares\res\register24_2.bmp" />
-    <Image Include="..\spares\res\register24_hover.bmp" />
-    <Image Include="..\spares\res\register24_press.bmp" />
-    <Image Include="..\spares\res\register48_1.bmp" />
-    <Image Include="..\spares\res\register48_2.bmp" />
-    <Image Include="..\spares\res\register48_hover.bmp" />
-    <Image Include="..\spares\res\votaguslogo-300.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Xml Include="..\spares\res\spa.xml" />
-    <Xml Include="..\spares\res\stringtable_en-intl.xml" />
-    <Xml Include="..\spares\res\stringtable_ja.xml" />
-    <Xml Include="..\spares\res\stringtable_pt-br.xml" />
-    <Xml Include="..\spares\res\stringtable_sv.xml" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\app\appseed\aura\acid.vcxproj">
@@ -339,7 +316,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\a_spares\ccvotagus_ca2_spa.rc" />
+    <ResourceCompile Include="..\a_spares\a_spa.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -77,7 +77,7 @@ bool ms_download_progress(const char * pszUrl, const char * pszFile, bool bProgr
    LPSTR pszOutBuffer;
    BOOL  bResults = FALSE;
 
-   wstring pwzHost = u16(strHost.c_str());
+   string pwzHost = u16(strHost.c_str());
 
    DWORD dwLast100k = 0;
 

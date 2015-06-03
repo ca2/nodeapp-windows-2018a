@@ -6,8 +6,8 @@
 #include "app\axis\bzip2\decompress.c"
 #include "app\axis\bzip2\huffman.c"
 #include "app\axis\bzip2\randtable.c"
-#include "app\axis\bzip2\bsdiff\libbsdiff.c"
-#include "app\axis\bzip2\bsdiff\bsdiff_bsdiff.c"
-#include "app\axis\bzip2\bsdiff\bsdiff_bspatch.c"
+//#include "app\axis\bzip2\bsdiff\libbsdiff.c"
+//#include "app\axis\bzip2\bsdiff\bsdiff_bsdiff.c"
+//#include "app\axis\bzip2\bsdiff\bsdiff_bspatch.c"
 
 

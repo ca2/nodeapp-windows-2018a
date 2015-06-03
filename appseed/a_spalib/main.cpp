@@ -8,25 +8,12 @@ void gdiplus_end();
 
 #define CLASS_DECL_AURA
 #define CLASS_DECL_AXIS
-#define WINDOWS
-#define WINDOWSEX
 typedef HWND oswindow;
-#define MAX(a, b) (((a) > (b)) ? (a) : (b))
-#define MIN(a, b) (((a) < (b)) ? (a) : (b))
-#define MSGFLT_ADD 1
-#define MSGFLT_REMOVE 2
 
 //#include "aura/aura/aura_launcher.h"
 //#include "aura/aura/aura_small_ipc_channel.h"
-#include "axis/install_launcher.h"
+#include "axis/app_install_launcher.h"
 
-typedef int
-(WINAPI * LPFN_ChangeWindowMessageFilter)(
-UINT message,
-DWORD dwFlag);
-
-
-//CLASS_DECL_AURA LPFN_ChangeWindowMessageFilter g_pfnChangeWindowMessageFilter = NULL;
 
 bool app_install_send_short_message(const char * psz,bool bLaunch,const char * pszBuild);
 void app_install_call_sync(const char * szParameters,const char * pszBuild);
@@ -36,14 +23,6 @@ void defer_start_program_files_spa_admin();
 bool low_is_spaadmin_running();
 void get_system_locale_schema(string & strLocale,string & strSchema);
 
-#if defined(LINUX) || defined(WINDOWS)
-//#include <omp.h>
-#else
-int omp_get_thread_num()
-{
-   return 0;
-}
-#endif
 
 int call_async(
    const char * pszPath,
@@ -58,7 +37,7 @@ int call_async(
 string get_module_path(HMODULE hmodule)
 {
 
-   wstring wstrPath;
+   string wstrPath;
 
    wchar_t * pwz = (wchar_t *)malloc(4906);
 
@@ -68,7 +47,7 @@ string get_module_path(HMODULE hmodule)
 
    free(pwz);
 
-   return ::u8(wstrPath.c_str());
+   return wstrPath.c_str();
 
 }
 
@@ -167,7 +146,7 @@ bool app_install_send_short_message(const char * psz,bool bLaunch,const char * p
 
 //using namespace std;
 
-string get_app_id(std::wstring wstr);
+string get_app_id(string wstr);
 
 DWORD g_dwMain2;
 DWORD g_iRet;
@@ -460,9 +439,9 @@ int spalib_main2()
       }
 
 
-      std::wstring strId;
+      string strId;
 
-      wstring wstr(::GetCommandLineW());
+      string wstr(::GetCommandLineW());
 
       string strParams;
 
@@ -475,15 +454,15 @@ int spalib_main2()
 
       }
 
-      int iFind = wstr.find(L" : ",iFind1 + 1);
+      int iFind = wstr.find(" : ",iFind1 + 1);
 
       if(iFind >= 0)
       {
-         strParams = u8(wstr.substr(iFind));
-         iFind = wstr.find(L"app=",iFind);
+         strParams = wstr.substr(iFind);
+         iFind = wstr.find("app=",iFind);
          if(iFind >= 0)
          {
-            int iEnd = wstr.find(L" ",iFind);
+            int iEnd = wstr.find(" ",iFind);
             if(iEnd < 0)
             {
                strId = wstr.substr(iFind + 4);
@@ -506,7 +485,7 @@ int spalib_main2()
       else
       {
 
-         strId = u16(get_app_id(wstr.substr(iFind1 + 1)));
+         strId = get_app_id(wstr.substr(iFind1 + 1));
 
          if(strId.length() <= 0)
          {
@@ -535,7 +514,7 @@ int spalib_main2()
 
          get_system_locale_schema(strLocale,strSchema);
 
-         strCommandLine = " : app=" + u8(strId);
+         strCommandLine = " : app=" + strId;
 
          strCommandLine += " install";
          strCommandLine += " locale=" + strLocale;
@@ -574,109 +553,109 @@ int spalib_main2()
 
 }
 
-int check_soon_file_launch(std::wstring wstr);
+int check_soon_file_launch(string wstr);
 
-int check_soon_app_id(std::wstring wstr);
+int check_soon_app_id(string wstr);
 
-bool check_param(std::wstring & wstrValue, std::wstring wstr,std::wstring wstrParam)
-{
-   
-   auto iFind = wstr.find(wstrParam + L"=");
-
-   if(iFind == wstring::npos)
-   {
-
-      iFind = wstr.find(wstrParam + L" ");
-
-      if(iFind == wstring::npos)
-      {
-
-         iFind = wstr.find(wstrParam);
-
-         if(iFind == wstring::npos)
-         {
-
-            return false;
-
-         }
-         else if(iFind == wstr.length() - wstrParam.length())
-         {
-
-            wstrValue = L"";
-
-            return true;
-
-         }
-         else
-         {
-
-            return false;
-
-         }
-
-      }
-      else
-      {
-
-         wstrValue = L"";
-
-         return true;
-
-      }
-
-   }
-
-   auto iEnd = wstr.find(L" ",iFind);
-
-   if(iEnd == wstring::npos)
-   {
-         
-      wstrValue = wstr.substr(iFind + wstrParam.length() + 1);
-
-   }
-   else
-   {
-
-      wstrValue = wstr.substr(iFind + wstrParam.length() + 1,iEnd - iFind - wstrParam.length());
-
-   }
-
-   if(wstrValue[0] == '\"')
-   {
-
-      wstrValue = wstrValue.substr(1);
-
-   }
-
-   if(wstrValue[wstrValue.length() - 1] == '\"')
-   {
-
-      wstrValue = wstrValue.substr(0,wstrValue.length() - 1);
-
-   }
-
-   return true;
-
-}
+//bool get_command_line_param(string & wstrValue, string wstr,string wstrParam)
+//{
+//   
+//   auto iFind = wstr.find(wstrParam + "=");
+//
+//   if(iFind == string::npos)
+//   {
+//
+//      iFind = wstr.find(wstrParam + " ");
+//
+//      if(iFind == string::npos)
+//      {
+//
+//         iFind = wstr.find(wstrParam);
+//
+//         if(iFind == string::npos)
+//         {
+//
+//            return false;
+//
+//         }
+//         else if(iFind == wstr.length() - wstrParam.length())
+//         {
+//
+//            wstrValue = L"";
+//
+//            return true;
+//
+//         }
+//         else
+//         {
+//
+//            return false;
+//
+//         }
+//
+//      }
+//      else
+//      {
+//
+//         wstrValue = L"";
+//
+//         return true;
+//
+//      }
+//
+//   }
+//
+//   auto iEnd = wstr.find(L" ",iFind);
+//
+//   if(iEnd == string::npos)
+//   {
+//         
+//      wstrValue = wstr.substr(iFind + wstrParam.length() + 1);
+//
+//   }
+//   else
+//   {
+//
+//      wstrValue = wstr.substr(iFind + wstrParam.length() + 1,iEnd - iFind - wstrParam.length());
+//
+//   }
+//
+//   if(wstrValue[0] == '\"')
+//   {
+//
+//      wstrValue = wstrValue.substr(1);
+//
+//   }
+//
+//   if(wstrValue[wstrValue.length() - 1] == '\"')
+//   {
+//
+//      wstrValue = wstrValue.substr(0,wstrValue.length() - 1);
+//
+//   }
+//
+//   return true;
+//
+//}
 
 
 int check_soon_launch()
 {
 
-   std::wstring strId;
+   string strId;
 
-   std::wstring wstr = ::GetCommandLineW();
+   string wstr = ::GetCommandLineW();
 
    int iFind1 = 0;
 
-   if(wstr[0] == L'\"')
+   if(wstr[0] == '\"')
    {
 
       iFind1= wstr.find('\"',1);
 
    }
 
-   int iFind = wstr.find(L" : ",iFind1 + 1);
+   int iFind = wstr.find(" : ",iFind1 + 1);
 
    if(iFind < 0)
    {
@@ -692,21 +671,21 @@ int check_soon_launch()
    else
    {
       
-      wstring wstrRequest = wstr.substr(iFind + 3);
+      string wstrRequest = wstr.substr(iFind + 3);
 
-      wstring wstrValue;
+      string wstrValue;
 
-      if(check_param(wstrValue,wstrRequest,L"install"))
+      if(get_command_line_param(wstrValue,wstrRequest,"install"))
       {
 
-         if(check_param(strId,wstrRequest,L"enable_desktop_launch") && strId.length() > 0)
+         if(get_command_line_param(strId,wstrRequest,"enable_desktop_launch") && strId.length() > 0)
          {
 
             return check_soon_app_id(strId);
 
          }
 
-         if(check_param(strId,wstrRequest,L"app") && strId.length() > 0)
+         if(get_command_line_param(strId,wstrRequest,"app") && strId.length() > 0)
          {
 
             return check_soon_app_id(strId);
@@ -717,7 +696,7 @@ int check_soon_launch()
       else
       {
 
-         if(check_param(strId,wstrRequest,L"app") && strId.length() > 0)
+         if(get_command_line_param(strId,wstrRequest,"app") && strId.length() > 0)
          {
 
             return check_soon_app_id(strId);
@@ -736,7 +715,7 @@ int check_soon_launch()
 
 
 // trim initial quote
-int trim(::std::wstring & wstr,wchar_t wch)
+int trim(::string & wstr,wchar_t wch)
 {
 
    if(wstr.length() <= 0)
@@ -835,7 +814,7 @@ void trim(::string & wstr)
 
 }
 
-string get_app_id(std::wstring wstr)
+string get_app_id(string wstr)
 {
 
    if(wstr.length() <= 0)
@@ -864,7 +843,7 @@ string get_app_id(std::wstring wstr)
 
    ::xml::document doc;
 
-   ::string strPath = u8(wstr.c_str());
+   ::string strPath = wstr.c_str();
 
    ::string strContents = file_as_string_dup(strPath.c_str());
 
@@ -907,7 +886,7 @@ string get_app_id(std::wstring wstr)
 
 }
 
-int check_soon_file_launch(wstring wstr)
+int check_soon_file_launch(string wstr)
 {
 
 
@@ -916,9 +895,9 @@ int check_soon_file_launch(wstring wstr)
 }
 
 
-wstring spa_app_id_to_app_name(wstring strId)
+string spa_app_id_to_app_name(string strId)
 {
-   wstring strName;
+   string strName;
    for(index i = 0; i < strId.length(); i++)
    {
       if(strId[i] == L'-' || strId[i] == L'/' || strId[i] == L'\\')
@@ -933,214 +912,22 @@ wstring spa_app_id_to_app_name(wstring strId)
    return strName;
 }
 
-void get_program_files_x86(std::wstring &wstr)
-{
 
-   wchar_t * lpszModuleFolder = (wchar_t *)malloc(MAX_PATH * sizeof(wchar_t) * 8);
-
-   wchar_t * lpszModuleFilePath = (wchar_t *)malloc(MAX_PATH * sizeof(wchar_t) * 8);
-
-   wcscpy(lpszModuleFilePath,_wgetenv(L"PROGRAMFILES(X86)"));
-
-   if(wcslen(lpszModuleFilePath) == 0)
-   {
-
-      SHGetSpecialFolderPathW(
-         NULL,
-         lpszModuleFilePath,
-         CSIDL_PROGRAM_FILES,
-         FALSE);
-
-   }
-   if(lpszModuleFilePath[wcslen(lpszModuleFilePath) - 1] == '\\'
-      || lpszModuleFilePath[wcslen(lpszModuleFilePath) - 1] == '/')
-   {
-      lpszModuleFilePath[wcslen(lpszModuleFilePath) - 1] = '\0';
-   }
-
-   wcscpy(lpszModuleFolder,lpszModuleFilePath);
-
-   wstr = lpszModuleFolder + wstr;
-
-}
-
-int check_soon_app_id(std::wstring strId)
+int check_soon_app_id(string strId)
 {
 
    if(strId.length() <= 0)
       return 0;
 
-   std::wstring strName = spa_app_id_to_app_name(strId);
-
-
-
-   //{
-
-   //   wchar_t * lpszCurFolder = (wchar_t *)malloc(MAX_PATH * sizeof(wchar_t) * 8);
-
-   //   _wgetcwd(lpszCurFolder,MAX_PATH * 8 - 1);
-
-   //   if(lpszCurFolder[wcslen(lpszCurFolder) - 1] == '\\'
-   //      || lpszCurFolder[wcslen(lpszCurFolder) - 1] == '/')
-   //   {
-   //      lpszCurFolder[wcslen(lpszCurFolder) - 1] = '\0';
-   //   }
-   //   wcscat(lpszCurFolder,L"\\");
-
-   //   std::wstring wstr;
-
-   //   wstr = lpszCurFolder;
-
-   //   wstr += strName;
-
-   //   wstr += L".exe";
-
-   //   STARTUPINFOW si;
-   //   memset(&si,0,sizeof(si));
-   //   si.cb = sizeof(si);
-   //   si.dwFlags = STARTF_USESHOWWINDOW;
-   //   si.wShowWindow = SW_SHOWNORMAL;
-   //   PROCESS_INFORMATION pi;
-   //   memset(&pi,0,sizeof(pi));
-
-   //   if(::CreateProcessW(NULL,(wchar_t *)wstr.c_str(),
-   //      NULL,NULL,FALSE,0,NULL,NULL,
-   //      &si,&pi))
-   //      return TRUE;
-
-
-   //}
-
-
-   //{
-
-   //   int iCount = MAX_PATH * 8;
-
-   //   wchar_t * lpszModuleFolder = (wchar_t *)malloc(iCount * sizeof(wchar_t));
-
-   //   wchar_t * lpszModuleFilePath = (wchar_t *)malloc(iCount * sizeof(wchar_t));
-
-   //   HMODULE hmodule = ::GetModuleHandleA(NULL);
-
-   //   if(hmodule != NULL)
-   //   {
-
-
-   //      if(GetModuleFileNameW(hmodule,lpszModuleFilePath,iCount))
-   //      {
-
-   //         LPWSTR lpszModuleFileName;
-
-   //         if(GetFullPathNameW(lpszModuleFilePath,iCount,lpszModuleFolder,&lpszModuleFileName))
-   //         {
-
-   //            lpszModuleFolder[lpszModuleFileName - lpszModuleFolder] = '\0';
-
-   //            if(wcslen(lpszModuleFolder) > 0)
-   //            {
-
-   //               if(lpszModuleFolder[wcslen(lpszModuleFolder) - 1] == '\\' || lpszModuleFolder[wcslen(lpszModuleFolder) - 1] == '/')
-   //               {
-
-   //                  lpszModuleFolder[wcslen(lpszModuleFolder) - 1] = '\0';
-
-   //               }
-
-   //            }
-
-
-
-
-   //            wcscat(lpszModuleFolder,L"\\");
-
-   //            std::wstring wstr;
-
-   //            wstr = lpszModuleFolder;
-
-   //            wstr += strName;
-
-   //            wstr += L".exe";
-
-   //            STARTUPINFOW si;
-   //            memset(&si,0,sizeof(si));
-   //            si.cb = sizeof(si);
-   //            si.dwFlags = STARTF_USESHOWWINDOW;
-   //            si.wShowWindow = SW_SHOWNORMAL;
-   //            PROCESS_INFORMATION pi;
-   //            memset(&pi,0,sizeof(pi));
-
-   //            if(::CreateProcessW(NULL,(wchar_t *)wstr.c_str(),
-   //               NULL,NULL,FALSE,0,NULL,NULL,
-   //               &si,&pi))
-   //               return TRUE;
-   //         }
-
-   //      }
-
-   //   }
-
-   //}
-
-
-   //   {
-   //
-   //      std::wstring wstr;
-   //
-   //      wstr = L"\\ca2\\";
-   //#ifdef _M_X64
-   //      wstr += L"stage\\x64\\";
-   //#else
-   //      wstr += L"stage\\x86\\";
-   //#endif
-   //
-   //      wstr += strName + L".exe";
-   //
-   //      get_program_files_x86(wstr);
-   //
-   //      STARTUPINFOW si;
-   //      memset(&si,0,sizeof(si));
-   //      si.cb = sizeof(si);
-   //      si.dwFlags = STARTF_USESHOWWINDOW;
-   //      si.wShowWindow = SW_SHOWNORMAL;
-   //      PROCESS_INFORMATION pi;
-   //      memset(&pi,0,sizeof(pi));
-   //
-   //      if(::CreateProcessW(NULL,(wchar_t *)wstr.c_str(),
-   //         NULL,NULL,FALSE,0,NULL,NULL,
-   //         &si,&pi))
-   //         return TRUE;
-   //
-   //   }
+   string strName = spa_app_id_to_app_name(strId);
 
    {
 
-      std::wstring wstr;
+      string strDll = dir::stage() / strName + ".dll";
 
-      wstr = L"\\ca2\\";
-#if defined(_M_IX86)
-      wstr += L"stage\\x86\\";
-#else
-      wstr += L"stage\\x64\\";
-#endif
+      string strApp = dir::stage() / "app.exe";
 
-      wstr += strName + L".dll";
-
-      get_program_files_x86(wstr);
-
-      std::wstring wstrApp;
-
-      wstrApp = L"\\ca2\\";
-#if defined(_M_IX86)
-      wstrApp += L"stage\\x86\\";
-#else
-      wstrApp += L"stage\\x64\\";
-#endif
-
-      wstrApp += L"app.exe";
-
-      get_program_files_x86(wstrApp);
-
-      if(file_exists_dup(::u8(wstr).c_str()))
+      if(file_exists_dup(strDll))
       {
 
          STARTUPINFOW si;
@@ -1151,7 +938,9 @@ int check_soon_app_id(std::wstring strId)
          PROCESS_INFORMATION pi;
          memset(&pi,0,sizeof(pi));
 
-         wstring wstrCmdLine = (L"\"" + wstrApp + L"\" : app=" + strId + L" build_number=installed").c_str();
+         wstring wstrCmdLine = u16("\"" + string(strApp) + "\" : app=" + strId + " build_number=installed enable_desktop_launch=" + strId);
+
+         wstring wstrApp(strApp);
 
          if(::CreateProcessW((wchar_t *)wstrApp.c_str(),(wchar_t *)wstrCmdLine.c_str(),
             NULL,NULL,FALSE,0,NULL,NULL,
@@ -1221,34 +1010,32 @@ int download_spa_bin();
 int check_spa_bin()
 {
 
-   std::wstring wstr;
+   string str = ::path::a_spa();
 
-#if defined(_M_IX86)
-
-   wstr = L"\\ca2\\spa\\x86\\spa.exe";
-
-#else
-
-   wstr = L"\\ca2\\spa\\x64\\spa.exe";
-
-#endif
-
-   get_program_files_x86(wstr);
-
-   if(!file_exists_dup(u8(wstr.c_str())))
+   if(!file_exists_dup(str))
    {
 
       if(!spa_get_admin())
+      {
+
          return 0;
+
+      }
 
       if(!download_spa_bin())
       {
+
          return 0;
+
       }
-      if(!file_exists_dup(u8(wstr.c_str())))
+
+      if(!file_exists_dup(str))
       {
+
          return 0;
+
       }
+
    }
 
    return 1;
@@ -1261,30 +1048,25 @@ int download_spaadmin_bin();
 int check_spaadmin_bin()
 {
 
-   std::wstring wstr;
+   string str = ::path::a_spaadmin();
 
-#if defined(_M_IX86)
-
-   wstr = L"\\ca2\\spa\\x86\\spaadmin.exe";
-
-#else
-
-   wstr = L"\\ca2\\spa\\x64\\spaadmin.exe";
-
-#endif
-
-   get_program_files_x86(wstr);
-
-   if(!file_exists_dup(u8(wstr.c_str())))
+   if(!file_exists_dup(str))
    {
+      
       if(!download_spaadmin_bin())
       {
+
          return 0;
+
       }
-      if(!file_exists_dup(u8(wstr.c_str())))
+
+      if(!file_exists_dup(str))
       {
+
          return 0;
+
       }
+
    }
 
    return true;
@@ -1295,6 +1077,7 @@ string download_tmp_spa_bin();
 
 int download_spa_bin()
 {
+
    string strTempSpa = download_tmp_spa_bin();
 
    if(!file_exists_dup(strTempSpa.c_str()))
@@ -1307,25 +1090,21 @@ int download_spa_bin()
    if(spa_get_admin())
    {
 
-      std::wstring wstr;
+      string str = ::path::a_spa();
 
-#if defined(_M_IX86)
+      if(!::CopyFileW(u16(strTempSpa.c_str()).c_str(),u16(str),FALSE))
+      {
 
-      wstr = L"\\ca2\\spa\\x86\\spa.exe";
-
-#else
-
-      wstr = L"\\ca2\\spa\\x64\\spa.exe";
-
-#endif
-
-      get_program_files_x86(wstr);
-
-      if(!::CopyFileW(u16(strTempSpa.c_str()).c_str(),wstr.c_str(),FALSE))
          return 0;
 
-      if(!file_exists_dup(u8(wstr.c_str())))
+      }
+
+      if(!file_exists_dup(str))
+      {
+
          return 0;
+
+      }
 
    }
    else
@@ -1361,28 +1140,28 @@ int download_spaadmin_bin()
    if(spa_get_admin())
    {
 
-      std::wstring wstr;
+      string str = ::path::a_spaadmin();
 
-#if defined(_M_IX86)
-
-      wstr = L"\\ca2\\spa\\x86\\spaadmin.exe";
-
-#else
-
-      wstr = L"\\ca2\\spa\\x64\\spaadmin.exe";
-
-#endif
-
-      get_program_files_x86(wstr);
-
-      if(!dir::mk(dir::name(u8(wstr.c_str())).c_str()))
+      if(!dir::mk(dir::name(str)))
+      {
+       
          return 0;
 
-      if(!::CopyFileW(u16(strTempSpa.c_str()).c_str(),wstr.c_str(),FALSE))
+      }
+
+      if(!::CopyFileW(u16(strTempSpa).c_str(),u16(str),FALSE))
+      {
+
          return 0;
 
-      if(!file_exists_dup(u8(wstr.c_str())))
+      }
+
+      if(!file_exists_dup(str))
+      {
+
          return 0;
+
+      }
 
    }
    else
@@ -1402,19 +1181,7 @@ int download_spaadmin_bin()
          ::ShellExecuteExW(&sei);
          DWORD dwGetLastError = GetLastError();
 
-         std::wstring wstr;
-
-#if defined(_M_IX86)
-
-         wstr = L"\\ca2\\spa\\x86\\spaadmin.exe";
-
-#else
-
-         wstr = L"\\ca2\\spa\\x64\\spaadmin.exe";
-
-#endif
-
-         get_program_files_x86(wstr);
+         string str = ::path::a_spaadmin();
 
          DWORD dwExitCode = 0;
 
@@ -1441,7 +1208,7 @@ int download_spaadmin_bin()
 
             }
 
-            if(file_exists_dup(u8(wstr.c_str())))
+            if(file_exists_dup(str))
                break;
 
             Sleep(84 + 77);
@@ -1476,11 +1243,7 @@ string download_tmp_spaadmin_bin()
    while(iTry <= 3)
    {
 
-#if defined(_M_IX86)
-      if(ms_download("http://server.ca2.cc/x86/spaadmin.exe", strTempSpa.c_str())
-#else
-      if(ms_download("http://server.ca2.cc/x64/spaadmin.exe",strTempSpa.c_str())
-#endif
+      if(ms_download("http://server.ca2.cc/"+process_platform_dir_name() +"/spaadmin.exe", strTempSpa.c_str())
          && file_exists_dup(strTempSpa.c_str())
          && file_length_dup(strTempSpa.c_str()) > 0)
       {
@@ -1510,16 +1273,7 @@ string download_tmp_spa_bin()
    while(iTry <= 3)
    {
 
-#if defined(_M_IX86)
-
-      if(ms_download("http://server.ca2.cc/x86/spa.exe",strTempSpa.c_str())
-
-#else
-
-      if(ms_download("http://server.ca2.cc/x64/spa.exe",strTempSpa.c_str())
-
-#endif
-
+      if(ms_download("http://server.ca2.cc/" + process_platform_dir_name() + "/a_spa.exe",strTempSpa.c_str())
          && file_exists_dup(strTempSpa.c_str())
          && file_length_dup(strTempSpa.c_str()) > 0)
       {
@@ -1596,11 +1350,7 @@ bool is_file_ok(const stringa & straPath,const stringa & straTemplate,stringa & 
       strUrl += "&build=";
       strUrl += strFormatBuild;
       strUrl += "&platform=";
-#if defined(_M_IX86)
-      strUrl += "win32";
-#else
-      strUrl += "win64";
-#endif
+      strUrl += process_platform_dir_name();
 
       string strMd5List = ms_get(strUrl.c_str());
 
@@ -1694,9 +1444,9 @@ void install_bin_item::op_set()
 
    string strPlatform = m_strPlatform;
 
-   string strDownload = dir::path(dir::name(strPath.c_str()).c_str(),strFile.c_str());
+   string strDownload =dir::name(strPath) / strFile;
 
-   if(!file_exists_dup(strDownload.c_str()) || _stricmp(file_md5_dup(strDownload.c_str()).c_str(),strMd5.c_str()) != 0)
+   if(!file_exists_dup(strDownload) || _stricmp(file_md5_dup(strDownload).c_str(),strMd5) != 0)
    {
 
       string strUrl;
@@ -1776,30 +1526,14 @@ void install_bin_item::run()
 int check_install_bin_set()
 {
 
-   string strPath;
-
-#if defined(_M_IX86)
-
-   string strPlatform = "x86";
-
-#else
-
-   string strPlatform = "x64";
-
-#endif
-
-   wstring wstrPath = u16((string("\\ca2\\install\\stage\\") + strPlatform + "\\app.install.exe").c_str());
-
-   get_program_files_x86(wstrPath);
-
-   strPath = u8(wstrPath.c_str());
+   string strPath = dir::app_install() / "app.install.exe";
 
    stringa straFile = install_get_plugin_base_library_list(g_strVersion);
 
-   if(!::dir::is(dir::name(strPath.c_str()).c_str()))
+   if(!::dir::is(dir::name(strPath)))
    {
 
-      if(!::dir::mk(dir::name(strPath.c_str()).c_str()))
+      if(!::dir::mk(dir::name(strPath)))
          return 0;
 
    }
@@ -1811,7 +1545,7 @@ int check_install_bin_set()
 
       string strFile = straFile[iFile];
 
-      string strDownload = dir::path(dir::name(strPath.c_str()).c_str(),strFile.c_str());
+      string strDownload = dir::name(strPath.c_str()) / strFile.c_str();
 
       straDownload.push_back(strDownload);
 
@@ -1872,7 +1606,7 @@ md5retry:
             for(int iFile = 0; iFile < straFile.size(); iFile++)
             {
 
-               string strFile = ::dir::path(strAuraDir.c_str(),straFile[iFile].c_str());
+               string strFile = strAuraDir / straFile[iFile];
 
                if(!file_exists_dup(straDownload[iFile].c_str()) && file_exists_dup(strFile.c_str()) && file_md5_dup(strFile.c_str()) == straMd5[iFile].c_str())
                {
@@ -1896,13 +1630,13 @@ md5retry:
 
       trace("Downloading install bin set\r\n");
 
-      string strUrlPrefix = "http://server.ca2.cc/ccvotagus/" + g_strVersion + "/" + g_strBuild + "/install/" + strPlatform + "/";
+      string strUrlPrefix = "http://server.ca2.cc/ccvotagus/" + g_strVersion + "/" + g_strBuild + "/install/" + process_platform_dir_name() + "/";
 
       //#pragma omp parallel for
       for(int iFile = 0; iFile < straFile.size(); iFile++)
       {
 
-         new install_bin_item(strUrlPrefix,strPath,straFile[iFile],&lCount,straMd5[iFile],strPlatform,lTotal);
+         new install_bin_item(strUrlPrefix,strPath,straFile[iFile],&lCount,straMd5[iFile],process_platform_dir_name(),lTotal);
 
       }
 
@@ -2024,23 +1758,9 @@ bool app_install_send_short_message(const char * psz,bool bLaunch,const char * p
 
    small_ipc_tx_channel txchannel;
 
-   install_launcher launcher("","");
+   app_install_launcher launcher("","");
 
-   const char * pszChannel;
-
-   // "core/spaboot_install"
-
-#if defined(_M_IX86)
-
-   pszChannel = "::ca2::fontopus::ca2_spaboot_install_x86::7807e510-5579-11dd-ae16-0800200c7784";
-
-#else
-
-   pszChannel = "::ca2::fontopus::ca2_spaboot_install_x64::7807e510-5579-11dd-ae16-0800200c7784";
-
-#endif
-
-   if(!txchannel.open(pszChannel,bLaunch ? &launcher : NULL))
+   if(!txchannel.open(::small_ipc_channel::app_install(),bLaunch ? &launcher : NULL))
       return false;
 
    txchannel.send(psz,false);
@@ -2055,7 +1775,7 @@ bool app_install_send_short_message(const char * psz,bool bLaunch,const char * p
 
 
 //#include "aura/aura/aura_launcher.cpp"
-#include "axis/install_launcher.cpp"
+#include "axis/app_install_launcher.cpp"
 //#include "aura/aura/aura_small_ipc_channel.cpp"
 //#include "aura/aura/aura_small_ipc_channel.cpp"
 //#include "aura/os/windows/windows_small_ipc_channel.cpp"
@@ -2129,7 +1849,7 @@ void app_install_call_sync(const char * szParameters,const char * pszBuild)
 void start_app_install_in_context()
 {
 
-   install_launcher launcher("","");
+   app_install_launcher launcher("","");
 
    launcher.start_in_context();
 
@@ -2137,7 +1857,7 @@ void start_app_install_in_context()
 
 
 
-void install_launcher::start_in_context()
+void app_install_launcher::start_in_context()
 {
 
    if(!ensure_executable())
@@ -2172,21 +1892,9 @@ int register_spa_file_type()
    wstring desc=L"spafile";          // file type description
    wstring content_type = L"application/x-spa";
 
-   std::wstring app;
+   wstring app(::path::a_spa());
 
-#if defined(_M_IX86)
-
-   app = L"\\ca2\\spa\\x86\\spa.exe";
-
-#else
-
-   app = L"\\ca2\\spa\\x64\\spa.exe";
-
-#endif
-
-   get_program_files_x86(app);
-
-   std::wstring icon(app);
+   wstring icon(app);
 
    app = L"\"" + app + L"\"" + L" %1";
    icon = L"\"" + icon + L"\",107";
@@ -2231,11 +1939,7 @@ int register_spa_file_type()
    RegSetValueExW(hkey,L"",0,REG_SZ,(BYTE*)icon.c_str(),icon.length()*sizeof(wchar_t));
    RegCloseKey(hkey);
 
-   std::wstring wstr;
-
-   wstr = L"\\ca2\\spa\\spa_register.txt";
-
-   get_program_files_x86(wstr);
+   wstring wstr(dir::a_spa() / "spa_register.txt");
 
    int iRetry = 9;
 
@@ -2269,26 +1973,16 @@ void start_program_files_spa_admin()
 
    SHELLEXECUTEINFOW sei ={};
 
-   std::wstring wstr;
+   string str = ::path::a_spaadmin();
 
-#if defined(_M_IX86)
-
-   wstr = L"\\ca2\\spa\\x86\\spaadmin.exe";
-
-#else
-
-   wstr = L"\\ca2\\spa\\x64\\spaadmin.exe";
-
-#endif
-
-   get_program_files_x86(wstr);
-
-   if(!::file_exists_dup(u8(wstr)))
+   if(!::file_exists_dup(str))
    {
 
       return;
 
    }
+
+   wstring wstr(str);
 
    sei.cbSize =sizeof(SHELLEXECUTEINFOW);
    sei.fMask = SEE_MASK_NOASYNC | SEE_MASK_NOCLOSEPROCESS;
