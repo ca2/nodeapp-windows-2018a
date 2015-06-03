@@ -369,7 +369,7 @@ namespace ca2plugin_container
    void host::on_receive(::aura::ipc::rx * prx, int32_t message, void * pdata, int32_t len)
    {
 
-      if(prx == &m_rxchannel)
+      if(prx == &m_rx)
       {
 
          //if(message == ::hotplugin::message_init)
