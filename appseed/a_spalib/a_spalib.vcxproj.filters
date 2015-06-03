@@ -85,9 +85,6 @@
     <ClInclude Include="http2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\spares\Resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="a_spalib.h">
       <Filter>Header Files</Filter>
     </ClInclude>

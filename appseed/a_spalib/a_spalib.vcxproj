@@ -433,7 +433,6 @@ $(SolutionDir)../../thirdparty/binary/bzip2 -c $(TargetPath) &gt; "$(SolutionDir
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\spares\Resource.h" />
     <ClInclude Include="a_spalib.h" />
     <ClInclude Include="canvas.h" />
     <ClInclude Include="http1.h" />
