@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "a_spalib.h"
 
 //O volume na unidade X ‚ sensitive
  //O N£mero de S‚rie do Volume ‚ 7ABB-1604
