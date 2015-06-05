@@ -192,19 +192,19 @@ int32_t a_spa::run()
       if(spa_get_admin())
       {
 
-         str = "zzzAPPzzz spaadmin : ";
+         str = "zzzAPPzzz a_spaadmin : ";
 
       }
       else
       {
 
-         str = "zzzAPPzzz spa : ";
+         str = "zzzAPPzzz a_spa : ";
 
       }
 
       str += string(::GetCommandLineW());
 
-      ::MessageBoxA(NULL,str.c_str(),"zzzAPPzzz spa",MB_ICONINFORMATION);
+      ::MessageBoxA(NULL,str.c_str(),"zzzAPPzzz a_spa",MB_ICONINFORMATION);
 
    }
 
@@ -1241,14 +1241,14 @@ int download_spaadmin_bin()
 string download_tmp_spaadmin_bin()
 {
 
-   string strTempSpa = get_temp_file_name_dup("spaadmin","exe");
+   string strTempSpa = get_temp_file_name_dup(::path::a_spaadmin().title(),::path::a_spaadmin().extension());
 
    int iTry = 0;
 
    while(iTry <= 3)
    {
 
-      if(ms_download("http://server.ca2.cc/"+process_platform_dir_name() +"/spaadmin.exe", strTempSpa.c_str())
+      if(ms_download("http://server.ca2.cc/"+process_platform_dir_name() +"/" + ::path::a_spaadmin().name(), strTempSpa.c_str())
          && file_exists_dup(strTempSpa.c_str())
          && file_length_dup(strTempSpa.c_str()) > 0)
       {
@@ -1271,14 +1271,14 @@ string download_tmp_spaadmin_bin()
 string download_tmp_spa_bin()
 {
 
-   string strTempSpa = get_temp_file_name_dup("spa","exe");
+   string strTempSpa = get_temp_file_name_dup(::path::a_spa().title(),::path::a_spa().extension());
 
    int iTry = 0;
 
    while(iTry <= 3)
    {
 
-      if(ms_download("http://server.ca2.cc/" + process_platform_dir_name() + "/a_spa.exe",strTempSpa.c_str())
+      if(ms_download("http://server.ca2.cc/" + process_platform_dir_name() + "/" + ::path::a_spa().name(),strTempSpa.c_str())
          && file_exists_dup(strTempSpa.c_str())
          && file_length_dup(strTempSpa.c_str()) > 0)
       {

@@ -240,7 +240,7 @@ void ca2_install_canvas_on_paint(Graphics * pdc, LPCRECT lpcrect, int iMode)
          double iBarWidth = (lpcrect->right - 11.0 - 11.0) / 4;
          double i = ((lpcrect->right - 11.0 - 11.0) * dProgress) + 11.0;
          double iRight = i + iBarWidth;
-         pdc->FillRectangle(g_pBar,RectF(11.0 + i,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0,MAX(lpcrect->right - 10.0,iRight) - 11 - i,cyBar - 2.0));
+         pdc->FillRectangle(g_pBar,RectF(11.0 + i,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0,MIN(lpcrect->right - 10.0,iRight) - 11 - i,cyBar - 2.0));
          if(iRight >= lpcrect->right - 10)
          {
             pdc->FillRectangle(g_pBar,RectF(11.0,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0,iRight - lpcrect->right - 10.0 - 11.0,cyBar - 2.0));
