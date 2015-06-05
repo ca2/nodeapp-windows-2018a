@@ -490,6 +490,8 @@ namespace draw2d_gdiplus
 
       virtual void set_alpha_mode(::draw2d::e_alpha_mode ealphamode);
 
+      virtual void set_smooth_mode(::draw2d::e_smooth_mode esmoothmode);
+
       virtual void set_text_rendering(::draw2d::e_text_rendering etextrendering);
 
       virtual void * get_os_data() const;

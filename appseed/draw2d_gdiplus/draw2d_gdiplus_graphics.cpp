@@ -4389,6 +4389,44 @@ namespace draw2d_gdiplus
 
    }
 
+   void graphics::set_smooth_mode(::draw2d::e_smooth_mode esmoothmode)
+   {
+
+      ::draw2d::graphics::set_smooth_mode(esmoothmode);
+
+      try
+      {
+
+         if(m_pgraphics == NULL)
+            return;
+
+         if(m_esmoothmode == ::draw2d::smooth_mode_none)
+         {
+
+            m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeNone);
+
+         }
+         else if(m_esmoothmode == ::draw2d::smooth_mode_antialias)
+         {
+
+            m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighSpeed);
+
+         }
+         else if(m_esmoothmode == ::draw2d::smooth_mode_high)
+         {
+
+            m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
+
+         }
+
+      }
+      catch(...)
+      {
+         return;
+      }
+
+   }
+
 
    void graphics::set_alpha_mode(::draw2d::e_alpha_mode ealphamode)
    {
