@@ -6,12 +6,6 @@ void gdiplus_start();
 void gdiplus_end();
 
 
-a_spa * g_paspa = NULL;
-
-SPALIB_API a_spa & aspa()
-{
-   return * g_paspa;
-}
 
 #define CLASS_DECL_AURA
 #define CLASS_DECL_AXIS
@@ -65,11 +59,12 @@ string get_module_path(HMODULE hmodule)
 #define OP_INSTALL_SPA 1
 #define OP_INSTALL_SET 2
 
-class install_bin_item
+class install_bin_item :
+   virtual public object
 {
 public:
 
-
+   a_spa *        m_paspa;
    string         m_strUrlPrefix;
    string         m_strPath;
    string         m_strFile;
@@ -81,7 +76,9 @@ public:
    LONG           m_lTotal;
    int            m_iOp;
 
-   install_bin_item(string strFile,LONG * plong,LONG lTotal,LONG * plongOk):
+   install_bin_item(a_spa * paspa, string strFile,LONG * plong,LONG lTotal,LONG * plongOk):
+      object(paspa),
+      m_paspa(paspa),
       m_strFile(strFile),
       m_plong(plong),
       m_lTotal(lTotal),
@@ -92,7 +89,9 @@ public:
    }
 
 
-   install_bin_item(string strUrlPrefix, string strPath, string strFile,LONG * plong, string strMd5, string strPlatform, LONG lTotal) :
+   install_bin_item(a_spa * paspa,string strUrlPrefix,string strPath,string strFile,LONG * plong,string strMd5,string strPlatform,LONG lTotal):
+      object(paspa),
+      m_paspa(paspa),
       m_strUrlPrefix(strUrlPrefix),
       m_strPath(strPath),
       m_strFile(strFile),
@@ -132,11 +131,11 @@ public:
       {
          if(m_iOp == OP_INSTALL_SPA)
          {
-            trace(0.05 + ((((double)m_lTotal - (double)(*m_plong)) * (0.25 - 0.05)) / ((double)m_lTotal)));
+            m_paspa->trace(0.05 + ((((double)m_lTotal - (double)(*m_plong)) * (0.25 - 0.05)) / ((double)m_lTotal)));
          }
          else if(m_iOp == OP_INSTALL_SET)
          {
-            trace(0.3 + ((((double)m_lTotal - (double)(*m_plong)) * (0.84 - 0.3)) / ((double)m_lTotal)));
+            m_paspa->trace(0.3 + ((((double)m_lTotal - (double)(*m_plong)) * (0.84 - 0.3)) / ((double)m_lTotal)));
          }
       }
 
@@ -153,36 +152,24 @@ bool app_install_send_short_message(const char * psz,bool bLaunch,const char * p
 
 //using namespace std;
 
-string get_app_id(string wstr);
+
 
 DWORD g_dwMain2;
 DWORD g_iRet;
 //string g_strBuild;
 
-int starter_start(const char * pszId);
-int run_file(const char * pszFile,int nCmdShow);
-int run_uninstall_run(const char * lpCmdLine,int nCmdShow);
-int ca2_app_install_run(const char * psz,const char * pszParam1,const char * pszParam2,DWORD & dwStartError,bool bSynch);
+//int starter_start(const char * pszId);
+//int run_file(const char * pszFile,int nCmdShow);
+//int run_uninstall_run(const char * lpCmdLine,int nCmdShow);
+//int ca2_app_install_run(const char * psz,const char * pszParam1,const char * pszParam2,DWORD & dwStartError,bool bSynch);
 
 
-int check_soon_launch();
-int check_spa_installation();
-int show_spa_window(bool bShow = true);
-int spa_main_fork();
-
-
-int spa_admin();
-int spa_main();
-
-string get_latest_build_number(const char * pszVersion);
 
 
 
 int32_t a_spa::run()
 {
 
-
-   g_paspa = this;
 
    if(::file_exists_dup("C:\\ca2\\config\\spa\\beg_debug_box.txt"))
    {
@@ -256,7 +243,7 @@ int32_t a_spa::run()
    if(spa_get_admin())
    {
 
-      g_iRet = spa_admin();
+      g_iRet = spaadmin_main();
 
    }
    else
@@ -276,7 +263,7 @@ int32_t a_spa::run()
 
 }
 
-SPALIB_API int spa_main()
+int a_spa::spa_main()
 {
 
    string str(::GetCommandLineW());
@@ -290,10 +277,18 @@ SPALIB_API int spa_main()
    }
 
    if(!show_spa_window())
+   {
+
       return -1;
 
-   if(!spa_main_fork())
+   }
+
+   if(!spa_main_start())
+   {
+
       return -2;
+
+   }
 
    while(GetMessage(&g_msg,NULL,0,0))
    {
@@ -321,10 +316,10 @@ SPALIB_API int spa_main()
 }
 
 
-void start_app_install_in_context();
 
 
-SPALIB_API int spa_admin()
+
+int a_spa::spaadmin_main()
 {
 
 
@@ -381,12 +376,12 @@ SPALIB_API int spa_admin()
 }
 
 
-DWORD WINAPI spa_fork_proc(LPVOID);
 
-int spa_main_fork()
+
+int a_spa::spa_main_start()
 {
 
-   if(!::CreateThread(NULL,0,spa_fork_proc,NULL,0,&g_dwMain2))
+   if(!::CreateThread(NULL,0,&::a_spa::spa_main_proc,this,0,&g_dwMain2))
    {
 
       return 0;
@@ -397,12 +392,14 @@ int spa_main_fork()
 
 }
 
-int spalib_main2();
 
-DWORD WINAPI spa_fork_proc(LPVOID)
+
+DWORD WINAPI a_spa::spa_main_proc(LPVOID lpvoid)
 {
 
-   g_iRet = spalib_main2();
+   a_spa * paspa = (a_spa *) lpvoid;
+
+   g_iRet = paspa->spalib_main2();
 
    ::PostMessage(g_hwnd,WM_QUIT,0,0);
 
@@ -411,7 +408,7 @@ DWORD WINAPI spa_fork_proc(LPVOID)
 }
 
 
-int spalib_main2()
+int a_spa::spalib_main2()
 {
 
    int iFullInstallationMaxTryCount = 3;
@@ -490,7 +487,7 @@ int spalib_main2()
       else
       {
 
-         strId = get_app_id(wstr.substr(iFind1 + 1));
+         strId = get_app_id(directrix()->m_varTopicFile);
 
          if(strId.length() <= 0)
          {
@@ -558,93 +555,8 @@ int spalib_main2()
 
 }
 
-int check_soon_file_launch(string wstr);
 
-int check_soon_app_id(string wstr);
-
-//bool get_command_line_param(string & wstrValue, string wstr,string wstrParam)
-//{
-//   
-//   auto iFind = wstr.find(wstrParam + "=");
-//
-//   if(iFind == string::npos)
-//   {
-//
-//      iFind = wstr.find(wstrParam + " ");
-//
-//      if(iFind == string::npos)
-//      {
-//
-//         iFind = wstr.find(wstrParam);
-//
-//         if(iFind == string::npos)
-//         {
-//
-//            return false;
-//
-//         }
-//         else if(iFind == wstr.length() - wstrParam.length())
-//         {
-//
-//            wstrValue = L"";
-//
-//            return true;
-//
-//         }
-//         else
-//         {
-//
-//            return false;
-//
-//         }
-//
-//      }
-//      else
-//      {
-//
-//         wstrValue = L"";
-//
-//         return true;
-//
-//      }
-//
-//   }
-//
-//   auto iEnd = wstr.find(L" ",iFind);
-//
-//   if(iEnd == string::npos)
-//   {
-//         
-//      wstrValue = wstr.substr(iFind + wstrParam.length() + 1);
-//
-//   }
-//   else
-//   {
-//
-//      wstrValue = wstr.substr(iFind + wstrParam.length() + 1,iEnd - iFind - wstrParam.length());
-//
-//   }
-//
-//   if(wstrValue[0] == '\"')
-//   {
-//
-//      wstrValue = wstrValue.substr(1);
-//
-//   }
-//
-//   if(wstrValue[wstrValue.length() - 1] == '\"')
-//   {
-//
-//      wstrValue = wstrValue.substr(0,wstrValue.length() - 1);
-//
-//   }
-//
-//   return true;
-//
-//}
-
-
-int check_soon_launch()
+int a_spa::check_soon_launch()
 {
 
    string strId;
@@ -719,107 +631,8 @@ int check_soon_launch()
 }
 
 
-// trim initial quote
-int trim(::string & wstr,wchar_t wch)
-{
 
-   if(wstr.length() <= 0)
-   {
-
-      return 0;
-
-   }
-
-   int c = 0;
-
-   while(wstr[0] == wch)
-   {
-
-      wstr = wstr.substr(1);
-
-      if(wstr.length() <= 0)
-         return c;
-
-      c++;
-
-   }
-
-   // trim final quote
-   while(wstr[wstr.length() - 1] == wch)
-   {
-
-      wstr = wstr.substr(0,wstr.length() - 1);
-
-      if(wstr.length() <= 0)
-         return c;
-
-      c++;
-
-   }
-
-   return c;
-
-}
-
-
-int trim(::string & wstr,char wch)
-{
-
-   if(wstr.length() <= 0)
-   {
-
-      return 0;
-
-   }
-
-   int c = 0;
-
-   while(wstr[0] == wch)
-   {
-
-      wstr = wstr.substr(1);
-
-      if(wstr.length() <= 0)
-         return c;
-
-      c++;
-
-   }
-
-   // trim final quote
-   while(wstr[wstr.length() - 1] == wch)
-   {
-
-      wstr = wstr.substr(0,wstr.length() - 1);
-
-      if(wstr.length() <= 0)
-         return c;
-
-      c++;
-
-   }
-
-   return c;
-
-}
-
-void trim(::string & wstr)
-{
-   int c = 1;
-
-   while(c > 0)
-   {
-      c = 0;
-      c += trim(wstr,' ');
-      c += trim(wstr,'\t');
-      c += trim(wstr,'\n');
-      c += trim(wstr,'\r');
-
-   }
-
-}
-
-string get_app_id(string wstr)
+string a_spa::get_app_id(string wstr)
 {
 
    if(wstr.length() <= 0)
@@ -829,15 +642,8 @@ string get_app_id(string wstr)
 
    }
 
-   int c = 1;
-
-   while(c > 0)
-   {
-      c = 0;
-      c += trim(wstr,'\"');
-      c += trim(wstr,' ');
-
-   }
+  
+   ::str::trim_any_quotes(wstr);
 
    if(wstr.length() <= 0)
    {
@@ -846,7 +652,7 @@ string get_app_id(string wstr)
 
    }
 
-   ::xml::document doc;
+   ::xml::document doc(get_app());
 
    ::string strPath = wstr.c_str();
 
@@ -891,7 +697,7 @@ string get_app_id(string wstr)
 
 }
 
-int check_soon_file_launch(string wstr)
+int a_spa::check_soon_file_launch(string wstr)
 {
 
 
@@ -900,7 +706,7 @@ int check_soon_file_launch(string wstr)
 }
 
 
-string spa_app_id_to_app_name(string strId)
+string a_spa::spa_app_id_to_app_name(string strId)
 {
    string strName;
    for(index i = 0; i < strId.length(); i++)
@@ -918,7 +724,7 @@ string spa_app_id_to_app_name(string strId)
 }
 
 
-int check_soon_app_id(string strId)
+int a_spa::check_soon_app_id(string strId)
 {
 
    if(strId.length() <= 0)
@@ -961,11 +767,7 @@ int check_soon_app_id(string strId)
 }
 
 
-int check_spa_bin();
-int check_spaadmin_bin();
-int check_install_bin_set();
-
-int check_spa_installation()
+int a_spa::check_spa_installation()
 {
 
    if(spa_get_admin())
@@ -988,7 +790,7 @@ int check_spa_installation()
    for(int iFile = 0; iFile < straFile.size(); iFile++)
    {
 
-      new install_bin_item(straFile[iFile],&lCount,lTotal, &lOk);
+      new install_bin_item(this,straFile[iFile],&lCount,lTotal, &lOk);
 
    }
 
@@ -1010,9 +812,7 @@ int check_spa_installation()
 
 }
 
-int download_spa_bin();
-
-int check_spa_bin()
+int a_spa::check_spa_bin()
 {
 
    string str = ::path::a_spa();
@@ -1047,10 +847,7 @@ int check_spa_bin()
 
 }
 
-int download_spaadmin_bin();
-
-
-int check_spaadmin_bin()
+int a_spa::check_spaadmin_bin()
 {
 
    string str = ::path::a_spaadmin();
@@ -1078,9 +875,7 @@ int check_spaadmin_bin()
 
 }
 
-string download_tmp_spa_bin();
-
-int download_spa_bin()
+int a_spa::download_spa_bin()
 {
 
    string strTempSpa = download_tmp_spa_bin();
@@ -1126,11 +921,7 @@ int download_spa_bin()
 
 }
 
-string download_tmp_spaadmin_bin();
-
-
-
-int download_spaadmin_bin()
+int a_spa::download_spaadmin_bin()
 {
 
    string strTempSpa = download_tmp_spaadmin_bin();
@@ -1238,7 +1029,7 @@ int download_spaadmin_bin()
 
 
 
-string download_tmp_spaadmin_bin()
+string a_spa::download_tmp_spaadmin_bin()
 {
 
    string strTempSpa = get_temp_file_name_dup(::path::a_spaadmin().title(),::path::a_spaadmin().extension());
@@ -1268,7 +1059,7 @@ string download_tmp_spaadmin_bin()
 
 
 
-string download_tmp_spa_bin()
+string a_spa::download_tmp_spa_bin()
 {
 
    string strTempSpa = get_temp_file_name_dup(::path::a_spa().title(),::path::a_spa().extension());
@@ -1302,14 +1093,14 @@ string download_tmp_spa_bin()
 
 
 
-bool is_file_ok(const char * path1,const char * pszTemplate,const char * pszFormatBuild)
+bool a_spa::is_file_ok(const char * path1,const char * pszTemplate,const char * pszFormatBuild)
 {
 
    string strFormatBuild(pszFormatBuild);
 
    string strUrl;
 
-   strUrl = "http://" + aspa().m_strVersion + "-server.ca2.cc/api/spaignition/md5?authnone&version=" + aspa().m_strVersion + "&stage=";
+   strUrl = "http://" + m_strVersion + "-server.ca2.cc/api/spaignition/md5?authnone&version=" + m_strVersion + "&stage=";
    strUrl += pszTemplate;
    strUrl += "&build=";
    strUrl += strFormatBuild;
@@ -1318,7 +1109,7 @@ bool is_file_ok(const char * path1,const char * pszTemplate,const char * pszForm
 
 }
 
-bool is_file_ok(const stringa & straPath,const stringa & straTemplate,stringa & straMd5,const string & strFormatBuild,int iMd5Retry)
+bool a_spa::is_file_ok(const stringa & straPath,const stringa & straTemplate,stringa & straMd5,const string & strFormatBuild,int iMd5Retry)
 {
 
    bool bOk = true;
@@ -1350,7 +1141,7 @@ bool is_file_ok(const stringa & straPath,const stringa & straTemplate,stringa & 
 
       string strUrl;
 
-      strUrl = "http://" + aspa().m_strVersion + "-server.ca2.cc/api/spaignition/md5a?authnone&version=" + aspa().m_strVersion + "&stage=";
+      strUrl = "http://" + m_strVersion + "-server.ca2.cc/api/spaignition/md5a?authnone&version=" + m_strVersion + "&stage=";
       strUrl += straTemplate.implode(",");
       strUrl += "&build=";
       strUrl += strFormatBuild;
@@ -1400,7 +1191,7 @@ void install_bin_item::op_spa()
    if(m_strFile == "spaadmin")
    {
 
-      if(check_spaadmin_bin())
+      if(m_paspa->check_spaadmin_bin())
       {
 
          InterlockedIncrement(m_plongOk);
@@ -1411,7 +1202,7 @@ void install_bin_item::op_spa()
    else if(m_strFile == "spa")
    {
 
-      if(check_spa_bin())
+      if(m_paspa->check_spa_bin())
       {
 
          InterlockedIncrement(m_plongOk);
@@ -1422,7 +1213,7 @@ void install_bin_item::op_spa()
    else if(m_strFile == "install_bin_set")
    {
 
-      if(check_install_bin_set())
+      if(m_paspa->check_install_bin_set())
       {
 
          InterlockedIncrement(m_plongOk);
@@ -1469,7 +1260,7 @@ void install_bin_item::op_set()
       while(iRetry < 8 && !bFileNice)
       {
 
-         if(ms_download(strUrl.c_str(),(strDownload + ".bz").c_str()))
+         if(m_paspa->ms_download(strUrl.c_str(),(strDownload + ".bz").c_str()))
          {
 
             bzuncompress((strDownload).c_str(),(strDownload + ".bz").c_str());
@@ -1528,12 +1319,12 @@ void install_bin_item::run()
 
 
 
-int check_install_bin_set()
+int a_spa::check_install_bin_set()
 {
 
    string strPath = path::app_install();
 
-   stringa straFile = install_get_plugin_base_library_list(aspa().m_strVersion);
+   stringa straFile = install_get_plugin_base_library_list(m_strVersion);
 
    if(!::dir::is(dir::name(strPath)))
    {
@@ -1559,7 +1350,7 @@ int check_install_bin_set()
    stringa straMd5;
 
 
-   string strFormatBuild = get_latest_build_number(aspa().m_strVersion);
+   string strFormatBuild = get_latest_build_number(m_strVersion);
 
    int iMd5Retry = 0;
 
@@ -1635,13 +1426,13 @@ md5retry:
 
       trace("Downloading install bin set\r\n");
 
-      string strUrlPrefix = "http://server.ca2.cc/ccvotagus/" + aspa().m_strVersion + "/" + strBuild + "/install/" + process_platform_dir_name() + "/";
+      string strUrlPrefix = "http://server.ca2.cc/ccvotagus/" + m_strVersion + "/" + strBuild + "/install/" + process_platform_dir_name() + "/";
 
       //#pragma omp parallel for
       for(int iFile = 0; iFile < straFile.size(); iFile++)
       {
 
-         new install_bin_item(strUrlPrefix,strPath,straFile[iFile],&lCount,straMd5[iFile],process_platform_dir_name(),lTotal);
+         new install_bin_item(this, strUrlPrefix,strPath,straFile[iFile],&lCount,straMd5[iFile],process_platform_dir_name(),lTotal);
 
       }
 
@@ -1664,7 +1455,7 @@ md5retry:
 
 
 
-string get_latest_build_number(const char * pszVersion)
+string a_spa::get_latest_build_number(const char * pszVersion)
 {
 
    static string s_strBuild;
@@ -1701,7 +1492,7 @@ string get_latest_build_number(const char * pszVersion)
    else
    {
 
-      if(aspa().m_strVersion == "basis")
+      if(m_strVersion == "basis")
       {
 
          strVersion = "basis";
@@ -1736,7 +1527,7 @@ RetryBuildNumber:
    strBuildNumber = ms_get((strSpaIgnitionBaseUrl + "/query?node=build&version=" + strVersion).c_str());
    //strBuildNumber = ms_get((strSpaIgnitionBaseUrl + "/ca2_build_number?authnon").c_str());
 
-   trim(strBuildNumber);
+   ::str::_008Trim(strBuildNumber);
 
    if(strBuildNumber.length() != 19)
    {
@@ -1859,7 +1650,7 @@ void app_install_call_sync(const char * szParameters,const char * pszBuild)
 
 
 
-void start_app_install_in_context()
+void a_spa::start_app_install_in_context()
 {
 
    app_install_launcher launcher("","");

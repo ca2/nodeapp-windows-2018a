@@ -9,7 +9,7 @@ ATOM spa_register_class();
 
 DWORD WINAPI thread_proc_draw(LPVOID lpParam);
 
-int show_spa_window(bool bShow)
+int a_spa::show_spa_window(bool bShow)
 {
 
    if(g_hwnd == NULL)

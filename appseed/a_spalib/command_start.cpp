@@ -18,16 +18,6 @@ SPALIB_API void spa_set_admin(bool bSet)
    g_bAdmin = bSet;
 }
 
-SPALIB_API string spa_get_id()
-{
-   return aspa().m_strId;
-}
-
-SPALIB_API void spa_set_id(const char * psz)
-{
-   aspa().m_strId = psz;
-}
-
 
 //SPALIB_API string spa_get_platform()
 //{

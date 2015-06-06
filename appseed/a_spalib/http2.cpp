@@ -26,13 +26,13 @@ public:
 };
 
 
-bool ms_download(const char * pszUrl, const char * pszFile, bool bUrlEncode, int * piStatus)
+bool a_spa::ms_download(const char * pszUrl, const char * pszFile, bool bUrlEncode, int * piStatus)
 {
    return ms_download_progress(pszUrl, pszFile, false, bUrlEncode, piStatus);
 }
 
 
-bool ms_download_progress(const char * pszUrl, const char * pszFile, bool bProgress, bool bUrlEncode, int * piStatus)
+bool a_spa::ms_download_progress(const char * pszUrl,const char * pszFile,bool bProgress,bool bUrlEncode,int * piStatus)
 {
    download_buffer buffer;
    if(piStatus != NULL)

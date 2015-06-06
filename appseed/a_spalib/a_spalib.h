@@ -73,8 +73,6 @@ stringa install_get_plugin_base_library_list(const string & strVersion);
 
 
 
-void trace(const string & psz);
-void trace(double dRate);
 
 
 
@@ -123,12 +121,65 @@ public:
 
    virtual ~a_spa() {}
 
+
+   string spa_get_id()
+   {
+      return m_strId;
+   }
+
+   void spa_set_id(const char * psz)
+   {
+      m_strId = psz;
+   }
+
+
+
    virtual int32_t run();
+
+
+   static DWORD WINAPI spa_main_proc(LPVOID);
+
+   virtual int spa_main();
+   virtual int spa_main_start();
+   virtual int spalib_main2();
+
+
+   virtual int spaadmin_main();
+
+
+   virtual string get_app_id(string wstr);
+   virtual int check_soon_launch();
+   virtual int check_spa_installation();
+   virtual int show_spa_window(bool bShow = true);
+   virtual int check_soon_file_launch(string wstr);
+   virtual int check_soon_app_id(string wstr);
+   virtual string spa_app_id_to_app_name(string strId);
+
+   virtual void start_app_install_in_context();
+   virtual string get_latest_build_number(const char * pszVersion);
+
+   virtual int check_spa_bin();
+   virtual int download_spa_bin();
+   virtual string download_tmp_spa_bin();
+   virtual int check_spaadmin_bin();
+   virtual int download_spaadmin_bin();
+   virtual string download_tmp_spaadmin_bin();
+   virtual int check_install_bin_set();
+
+   virtual bool is_file_ok(const char * path1,const char * pszTemplate,const char * pszFormatBuild);
+   virtual bool is_file_ok(const stringa & straPath,const stringa & straTemplate,stringa & straMd5,const string & strFormatBuild,int iMd5Retry);
+
+   void trace(const string & str);
+   void trace(double dRate);
+
+   bool ms_download(const char * pszUrl,const char * pszFile,bool bUrlEncode = true,int * piStatus = NULL);
+   bool ms_download_progress(const char * pszUrl,const char * pszFile,bool bProgress,bool bUrlEncode = true,int * piStatus = NULL);
+
+   string ms_get(const char * pszUrl,bool bCache = false);
 
 } ;
 
 
-SPALIB_API a_spa & aspa();
 
 
 

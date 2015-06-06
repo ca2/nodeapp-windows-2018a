@@ -13,12 +13,15 @@ class trace_file
 {
 public:
 
+   a_spa * m_paspa;
+
    HANDLE m_hfile;
 
-   trace_file()
+   trace_file(a_spa * paspa):
+      m_paspa(paspa)
    {
 
-      aspa().m_mutexTrace.lock();
+      m_paspa->m_mutexTrace.lock();
 
       dir::mk(dir::element().c_str());
 
@@ -29,7 +32,7 @@ public:
    }
    ~trace_file()
    {
-      aspa().m_mutexTrace.unlock();
+      m_paspa->m_mutexTrace.unlock();
       CloseHandle(m_hfile);
    }
 
@@ -78,17 +81,17 @@ public:
 
 
 
-void trace(const string & str)
+void a_spa::trace(const string & str)
 {
 
-   trace_file().print(str);
+   trace_file(this).print(str);
 
 }
 
 
-void trace(double dRate)
+void a_spa::trace(double dRate)
 {
 
-   trace_file().print(dRate);
+   trace_file(this).print(dRate);
 
 }

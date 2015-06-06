@@ -17,6 +17,7 @@
 
 
 
+
 string spa_version(string strVersion)
 {
    static string  s_strVersion;
