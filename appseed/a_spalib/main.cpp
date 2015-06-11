@@ -1558,13 +1558,13 @@ bool app_install_send_short_message(const char * psz,bool bLaunch,const char * p
 
    app_install_launcher launcher("","");
 
-   const char * pszChannel;
+   string strChannel;
 
    // "core/spaboot_install"
 
-   pszChannel = "::ca2::fontopus::ca2_spaboot_install_"+process_platform_dir_name()+"::7807e510-5579-11dd-ae16-0800200c7784";
+   strChannel = "::ca2::fontopus::ca2_spaboot_install_"+process_platform_dir_name()+"::7807e510-5579-11dd-ae16-0800200c7784";
 
-   if(!txchannel.open(pszChannel,bLaunch ? &launcher : NULL))
+   if(!txchannel.open(strChannel,bLaunch ? &launcher : NULL))
       return false;
 
    txchannel.send(psz,false);
