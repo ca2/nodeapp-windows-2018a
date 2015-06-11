@@ -198,11 +198,11 @@ int32_t installer::simple_app_pre_run()
 bool installer::intro()
 {
 
-   const char * pszMutex;
+   string strMutex;
 
-   pszMutex = "Global\\::ca2::fontopus::ca2_spaboot_install_"+process_platform_dir_name()+"::7807e510-5579-11dd-ae16-0800200c7784";
+   strMutex = "Global\\::ca2::fontopus::ca2_spaboot_install_"+process_platform_dir_name()+"::7807e510-5579-11dd-ae16-0800200c7784";
 
-   m_hmutexSpabootInstall = ::CreateMutex(NULL, FALSE, pszMutex);
+   m_hmutexSpabootInstall = ::CreateMutex(NULL, FALSE, strMutex);
 
    if(::GetLastError() == ERROR_ALREADY_EXISTS)
    {
@@ -224,13 +224,13 @@ bool installer::intro()
 
    prepare_small_bell();
 
-   const char * pszChannel;
+   string strChannel;
 
    // "core/spaboot_install"
 
-   pszChannel = "::ca2::fontopus::ca2_spaboot_install_"+process_platform_dir_name()+"::7807e510-5579-11dd-ae16-0800200c7784";
+   strChannel = "::ca2::fontopus::ca2_spaboot_install_" + process_platform_dir_name() + "::7807e510-5579-11dd-ae16-0800200c7784";
 
-   if(!m_rxchannel.create(pszChannel,"app.install.exe"))
+   if(!m_rxchannel.create(strChannel,"app.install.exe"))
    {
       m_iReturnCode = -1;
       return false;
