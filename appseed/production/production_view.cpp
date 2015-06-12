@@ -81,27 +81,27 @@ namespace production
    #ifdef DEBUG
    void view::assert_valid() const
    {
-	   ::aura::impact::assert_valid();
+	   ::user::impact::assert_valid();
    }
 
    void view::dump(dump_context & dumpcontext) const
    {
-	   ::aura::impact::dump(dumpcontext);
+	   ::user::impact::dump(dumpcontext);
    }
    #endif //DEBUG
 
    bool view::pre_create_window(::user::create_struct& cs)
    {
       cs.style &= ~WS_EX_CLIENTEDGE;
-	   return ::aura::impact::pre_create_window(cs);
+	   return ::user::impact::pre_create_window(cs);
    }
 
    void view::_001OnInitialUpdate() 
    {
-      ::aura::impact::_001OnInitialUpdate();
+      ::user::impact::_001OnInitialUpdate();
    }
 
-   void view::on_update(::aura::impact * pSender, LPARAM lHint, ::object * phint) 
+   void view::on_update(::user::impact * pSender, LPARAM lHint, ::object * phint) 
    {
       UNREFERENCED_PARAMETER(pSender);
       if(lHint == 5432108)
@@ -128,7 +128,7 @@ namespace production
 
    void view::_001OnDestroy(::signal_details * pobj) 
    {
-	   ::aura::impact::_001OnDestroy(pobj);
+	   ::user::impact::_001OnDestroy(pobj);
    }
 
    void view::_001OnSize(::signal_details * pobj) 
@@ -321,10 +321,10 @@ namespace production
    }
 
 
-   ::aura::document * view::get_document()
+   ::user::document * view::get_document()
    {
 
-      return ::aura::impact::get_document();
+      return ::user::impact::get_document();
 
    }
 

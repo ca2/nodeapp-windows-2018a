@@ -102,7 +102,7 @@ namespace production
 
       }
       
-      sp(::aura::document) pdoc = m_pdoctemplateMain->open_document_file(pcreatecontext);
+      sp(::user::document) pdoc = m_pdoctemplateMain->open_document_file(pcreatecontext);
 
       if(pdoc.is_null())
          return;

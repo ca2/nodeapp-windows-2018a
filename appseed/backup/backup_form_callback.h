@@ -12,7 +12,7 @@ namespace backup
       form_callback();
       virtual ~form_callback();
 
-      void on_update(::user::form * pview, sp(::aura::impact) pSender, LPARAM lHint, ::object* phint);
+      void on_update(::user::form * pview, sp(::user::impact) pSender, LPARAM lHint, ::object* phint);
       virtual bool BaseOnControlEvent(::user::form * pview, ::user::control_event * pevent);
    };
 

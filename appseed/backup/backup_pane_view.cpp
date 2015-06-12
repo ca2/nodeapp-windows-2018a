@@ -25,12 +25,12 @@ namespace backup
    #ifdef DEBUG
    void pane_view::assert_valid() const
    {
-	   ::aura::impact::assert_valid();
+	   ::user::impact::assert_valid();
    }
 
    void pane_view::dump(dump_context & dumpcontext) const
    {
-	   ::aura::impact::dump(dumpcontext);
+	   ::user::impact::dump(dumpcontext);
    }
    #endif //DEBUG
 
@@ -48,7 +48,7 @@ namespace backup
       
    }
 
-   void pane_view::on_update(::aura::impact * pSender, LPARAM lHint, ::object* pHint) 
+   void pane_view::on_update(::user::impact * pSender, LPARAM lHint, ::object* pHint) 
    {
       ::user::tab_view::on_update(pSender, lHint, pHint);
       if(lHint == 543218)
@@ -112,10 +112,10 @@ namespace backup
          break;
       case pane_view_options:
       {
-         sp(::aura::document) pdoc = Sess(get_app()).userex()->create_form(this, this);
+         sp(::user::document) pdoc = Sess(get_app()).userex()->create_form(this, this);
          if(pdoc == NULL)
             return;
-         sp(::aura::impact) pview = pdoc->get_view();
+         sp(::user::impact) pview = pdoc->get_view();
          ::user::form_update_hint uh;
          uh.m_actioncontext = ::action::source::system_default();
          uh.m_etype = ::user::form_update_hint::type_browse;

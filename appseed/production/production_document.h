@@ -6,7 +6,7 @@ namespace production
 
 
    class CLASS_DECL_CA2_PRODUCTION document :
-      public ::aura::document
+      public ::user::document
    {
    public:
 

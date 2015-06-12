@@ -93,7 +93,7 @@ namespace production
 
       int32_t                     m_iStep;
                               
-      sp(::aura::impact)                m_pview;
+      sp(::user::impact)                m_pview;
       bool                    m_bFinished;
       uint32_t                   m_dwStartTick;
       uint32_t                   m_dwEndTick;

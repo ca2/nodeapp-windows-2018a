@@ -80,9 +80,9 @@ namespace production
       virtual void _001OnTabClick(int32_t iTab);
       virtual void install_message_handling(::message::dispatch * pinterface);
       virtual bool pre_create_window(::user::create_struct& cs);
-      virtual void on_update(::aura::impact * pSender, LPARAM lHint, ::object * pHint);
+      virtual void on_update(::user::impact * pSender, LPARAM lHint, ::object * pHint);
 
-      ::aura::document * get_document();
+      ::user::document * get_document();
 
       virtual void _001OnInitialUpdate();
       DECL_GEN_SIGNAL(_001OnLButtonDown);
