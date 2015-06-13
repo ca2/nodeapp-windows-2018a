@@ -183,9 +183,11 @@ namespace production
 
       rect rcItem;
 
-      int32_t iStart = m_scrollinfo.m_ptScroll.y / m_iLineHeight;
-      int32_t y = m_iLineHeight - m_scrollinfo.m_ptScroll.y % m_iLineHeight;
-      if(m_scrollinfo.m_ptScroll.y > m_iLineHeight)
+      point ptOffset = get_viewport_offset();
+
+      int32_t iStart = ptOffset.y / m_iLineHeight;
+      int32_t y = m_iLineHeight - ptOffset.y % m_iLineHeight;
+      if(ptOffset.y > m_iLineHeight)
       {
          iStart--;
          y -= m_iLineHeight;
@@ -483,16 +485,17 @@ namespace production
             single_lock sl(&m_pproduction->m_mutexStatus,TRUE);
             if(m_pproduction->m_straStatus.get_size() > 0)
             {
-               m_scrollinfo.m_sizeTotal.cx = 80;
-               m_scrollinfo.m_sizeTotal.cy = (LONG)(m_pproduction->m_straStatus.get_size() * iLineHeight + 84);
-               m_scrollinfo.m_ptScroll.y = MAX(0,m_scrollinfo.m_sizeTotal.cy - m_scrollinfo.m_sizePage.cy + iLineHeight);
+               size sizePage = get_page_size();
+               m_sizeTotal.cx = 80;
+               m_sizeTotal.cy = (LONG)(m_pproduction->m_straStatus.get_size() * iLineHeight + 84);
+               set_viewport_offset_y(MAX(0,m_sizeTotal.cy - sizePage.cy + iLineHeight));
                sl.unlock();
-               _001LayoutScrollBars();
+               on_change_view_size();
             }
             else
             {
-               m_scrollinfo.m_sizeTotal.cx = 80;
-               m_scrollinfo.m_sizeTotal.cy = 80;
+               m_sizeTotal.cx = 80;
+               m_sizeTotal.cy = 80;
             }
          }
          _001RedrawWindow();
@@ -542,6 +545,14 @@ namespace production
       production * pclass = new production(get_app());
       pclass->m_eversion = Application.m_eversion;
       return pclass;
+   }
+
+
+   size view::get_total_size()
+   {
+
+      return m_sizeTotal;
+
    }
 
 

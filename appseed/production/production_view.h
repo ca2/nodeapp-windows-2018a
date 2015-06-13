@@ -13,6 +13,8 @@ namespace production
    {
    public:
 
+
+      size                          m_sizeTotal;
       int32_t                     m_iStep;
       bool                    m_bLayout;
 
@@ -96,6 +98,9 @@ namespace production
 	   DECL_GEN_SIGNAL(_001OnSetCursor);
       DECL_GEN_SIGNAL(_001OnShowWindow);
       DECL_GEN_SIGNAL(_001OnUser);
+
+
+      virtual size get_total_size();
 
 
    };
