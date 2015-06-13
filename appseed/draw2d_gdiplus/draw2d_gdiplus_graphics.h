@@ -198,7 +198,7 @@ namespace draw2d_gdiplus
             int32_t SelectClipRgn(::draw2d::region* pRgn);
             int32_t ExcludeClipRect(int32_t x1, int32_t y1, int32_t x2, int32_t y2);
             int32_t ExcludeClipRect(const RECT &  lpRect);
-            int32_t ExcludeUpdateRgn(::user::elemental * pwindow);
+            int32_t ExcludeUpdateRgn(::user::primitive * pwindow);
             int32_t IntersectClipRect(int32_t x1, int32_t y1, int32_t x2, int32_t y2);
             int32_t IntersectClipRect(const RECT &  lpRect);
             int32_t OffsetClipRgn(int32_t x, int32_t y);

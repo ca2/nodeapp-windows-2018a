@@ -1514,8 +1514,8 @@ seq_Preroll_Cleanup:
 
             midiOutReset((HMIDIOUT)m_hstream);
 
-            while (m_iBuffersInMMSYSTEM > 0)
-               Sleep(100);
+            //while (m_iBuffersInMMSYSTEM > 0)
+              // Sleep(100);
             
             if ((mmrc = m_buffera.midiOutUnprepareHeader((HMIDIOUT)m_hstream)) != ::multimedia::result_success)
             {

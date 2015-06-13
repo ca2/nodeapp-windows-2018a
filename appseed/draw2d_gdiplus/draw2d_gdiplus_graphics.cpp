@@ -169,7 +169,7 @@ namespace draw2d_gdiplus
    }
 
 
-   int32_t graphics::ExcludeUpdateRgn(::user::elemental * pwindow)
+   int32_t graphics::ExcludeUpdateRgn(::user::primitive * pwindow)
    { 
       ASSERT(get_handle1() != NULL); 
       ::exception::throw_not_implemented(get_app());

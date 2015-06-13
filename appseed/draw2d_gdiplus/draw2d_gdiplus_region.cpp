@@ -7,7 +7,15 @@
 namespace draw2d_gdiplus
 {
 
-   
+   region::region(const region & r) :
+      ::object(r.get_app()),
+      ::draw2d::region(r)
+   {
+      m_pregion = NULL;
+      m_bUpdated = false;
+   }
+
+
    region::region(::aura::application * papp) :
       ::object(papp)
    { 
