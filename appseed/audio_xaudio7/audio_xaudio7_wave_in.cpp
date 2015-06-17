@@ -10,7 +10,7 @@ namespace multimedia
 
 
       wave_in::wave_in(sp(::axis::application) papp) :
-         element(papp),
+         object(papp),
          ::thread(papp),
          wave_base(papp),
          ::multimedia::audio::wave_in(papp)
