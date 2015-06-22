@@ -3402,6 +3402,12 @@ VOID Example_EnumerateMetafile9(HDC hdc)
             m_pgraphics->SetClip((Gdiplus::Region *) pregion->get_os_data(),Gdiplus::CombineModeReplace);
 
          }
+         else if(nMode == RGN_DIFF)
+         {
+
+            m_pgraphics->SetClip((Gdiplus::Region *) pregion->get_os_data(),Gdiplus::CombineModeExclude);
+
+         }
 
       }
 
