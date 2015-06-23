@@ -1171,7 +1171,13 @@ bool a_spa::is_file_ok(const stringa & straPath,const stringa & straTemplate,str
    for(int i = 0; i < straMd5.size(); i++)
    {
 
-      if(_stricmp(file_md5_dup(straPath[i].c_str()).c_str(),straMd5[i].c_str()) != 0)
+      string strPath = straPath[i];
+
+      string strFileMd5 = file_md5_dup(strPath);
+
+      string strMd5 = straMd5[i];
+
+      if(strFileMd5.CompareNoCase(strMd5) != 0)
       {
 
          return false;
