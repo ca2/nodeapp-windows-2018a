@@ -1018,11 +1018,17 @@ namespace production
          stringa straStatus;
          stringa straServer;
          
-         straStatus.add(unitext("049 releasing at netnode : France (Gravelines, France)"));
-         straServer.add("fr-api.ca2.cc");
+         //straStatus.add(unitext("049 releasing at netnode : France (Gravelines, France)"));
+         //straServer.add("fr-api.ca2.cc");
 
-         straStatus.add(unitext("051 releasing at netnode : Deutschland (Gravelines, France)"));
-         straServer.add("de-api.ca2.cc");
+         //straStatus.add(unitext("051 releasing at netnode : Deutschland (Gravelines, France)"));
+         //straServer.add("de-api.ca2.cc");
+
+         straStatus.add(unitext("049 releasing at netnode : Sverige/East US (Beauharnois, Canada)"));
+         straServer.add("east-api.ca2.cc");
+
+         straStatus.add(unitext("051 releasing at netnode : India/West US (Beauharnois, Canada)"));
+         straServer.add("west-api.ca2.cc");
 
          if(m_strVersion == "basis")
          {
@@ -1041,16 +1047,16 @@ namespace production
          //straServer.add("east-api.ca2.cc");
 
 
-         straStatus.add(unitext("025 releasing at netnode : América Latina (São Paulo, Brazil)"));
-         straServer.add("la-api.ca2.cc");
+         //straStatus.add(unitext("025 releasing at netnode : América Latina (São Paulo, Brazil)"));
+         //straServer.add("la-api.ca2.cc");
 
 
-         straStatus.add(unitext("033 releasing at netnode : Sverige/East US (Beauharnois, Canada)"));
-         straServer.add("east-api.ca2.cc");
+         //straStatus.add(unitext("033 releasing at netnode : Sverige/East US (Beauharnois, Canada)"));
+         //straServer.add("east-api.ca2.cc");
 
 
-         straStatus.add(unitext("023 releasing at netnode : India/West US (Beauharnois, Canada)"));
-         straServer.add("west-api.ca2.cc");
+         //straStatus.add(unitext("023 releasing at netnode : India/West US (Beauharnois, Canada)"));
+         //straServer.add("west-api.ca2.cc");
 
 
          straStatus.add(unitext("022 releasing at netnode : License/US (Beauharnois, Canada)"));
@@ -1061,12 +1067,12 @@ namespace production
          //straServer.add("hk-api.ca2.cc");
 
 
-         straStatus.add(unitext("084 releasing at netnode : Asia (日本、東京)"));
-         straServer.add("asia-api.ca2.cc");
+         //straStatus.add(unitext("084 releasing at netnode : Asia (日本、東京)"));
+         //straServer.add("asia-api.ca2.cc");
 
 
-         straStatus.add(unitext("077 releasing at netnode : Oceania/Australia/New Zealand (Sydney)"));
-         straServer.add("cyan-api.ca2.cc");
+         //straStatus.add(unitext("077 releasing at netnode : Oceania/Australia/New Zealand (Sydney)"));
+         //straServer.add("cyan-api.ca2.cc");
 
 
          string strObject = "/production/release_ca2?authnone=1&version=" + m_strVersion + "&build=" + m_strFormatBuild;
