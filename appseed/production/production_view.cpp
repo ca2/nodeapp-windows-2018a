@@ -162,6 +162,12 @@ namespace production
    }
 
 
+   void view::on_viewport_offset(::draw2d::graphics * pgraphics)
+   {
+
+   }
+
+
    void view:: _001OnDraw(::draw2d::graphics * pdc)
    {
       
