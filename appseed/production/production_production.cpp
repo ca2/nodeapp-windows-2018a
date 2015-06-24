@@ -396,6 +396,8 @@ namespace production
 
          m_straRoot.add("design");
 
+         m_straRoot.add("game");
+
          m_straRoot.add("nodeapp");
 
          //   goto skipCompress;
