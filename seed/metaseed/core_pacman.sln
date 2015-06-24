@@ -90,7 +90,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axiscrypto", "..\..\..\app\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "html_lite", "..\..\..\app\axis\html_lite\html_lite.vcxproj", "{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_pacman", "..\..\..\app-core\appseed\pacman\pacman.vcxproj", "{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_pacman", "..\..\..\app-core\appseed\pacman\pacman.vcxproj", "{00C3D7E9-A87D-4B6C-95A0-1202C4703642}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
