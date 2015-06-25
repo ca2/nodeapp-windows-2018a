@@ -72,6 +72,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axispng", "..\..\..\app\axis\png\axispng.vcxproj", "{84517714-2000-419D-A87F-4338C9DDE3FA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "html", "..\..\..\app\appseed\html\html.vcxproj", "{6C7004D3-FF6C-4872-8DDC-5D7F44B0BC57}"
+	ProjectSection(ProjectDependencies) = postProject
+		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6} = {845177E8-8B1E-4AE0-9B96-1ABC24B797A6}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axispixman", "..\..\..\app\axis\pixman\axispixman.vcxproj", "{0A298E22-839B-4D11-B5A7-456EAD013C11}"
 EndProject
