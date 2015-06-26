@@ -210,6 +210,7 @@ namespace draw2d_gdiplus
 //      point MoveTo(int32_t x, int32_t y);
   //    point MoveTo(POINT point);
       bool LineTo(double x, double y);
+      bool LineTo(int x,int y);
     //  bool LineTo(POINT point);
       bool Polyline(const POINT* lpPoints,int32_t nCount);
 

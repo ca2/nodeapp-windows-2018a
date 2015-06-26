@@ -4359,6 +4359,22 @@ namespace draw2d_gdiplus
 
    }
 
+   bool graphics::LineTo(int x,int y)
+   {
+
+      synch_lock sl(m_spmutex);
+
+      gdiplus_pen()->SetAlignment(Gdiplus::PenAlignment::PenAlignmentCenter);
+
+      m_pgraphics->DrawLine(gdiplus_pen(),Gdiplus::Point((Gdiplus::REAL) m_x,(Gdiplus::REAL)  m_y),Gdiplus::Point((Gdiplus::REAL) x,(Gdiplus::REAL) y));
+
+      m_x = x;
+
+      m_y = y;
+
+      return TRUE;
+
+   }
 
    bool graphics::DrawLine(float x1, float y1, float x2, float y2, ::draw2d::pen * ppen)
    {
