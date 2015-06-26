@@ -4184,12 +4184,12 @@ namespace draw2d_gdiplus
          }
          else
          {
-            TRACE("optimized smoothing mode");
+            //TRACE("optimized smoothing mode");
          }
 
          ::draw2d::brush_sp brushCurrent;
 
-         if(m_spbrush->m_etype != ::draw2d::brush::type_solid || m_spbrush->m_cr != clr)
+         if(m_spbrush.is_null() || m_spbrush->m_etype != ::draw2d::brush::type_solid || m_spbrush->m_cr != clr)
          {
 
             brushCurrent = m_spbrush;
@@ -4202,7 +4202,7 @@ namespace draw2d_gdiplus
          else
          {
             
-            TRACE("optimized brush");
+            //TRACE("optimized brush");
 
          }
 
