@@ -11,7 +11,7 @@ namespace draw2d_gdiplus
    pen::pen(::aura::application * papp) :
       ::object(papp)
    { 
-
+      m_egdiplusalign = (Gdiplus::PenAlignment) -1;
       m_ppen = NULL;
 
    }

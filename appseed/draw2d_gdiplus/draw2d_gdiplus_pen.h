@@ -19,6 +19,8 @@ namespace draw2d_gdiplus
    public:
 
 
+      Gdiplus::PenAlignment m_egdiplusalign;
+
       ::Gdiplus::Pen *  m_ppen;
 
       pen(::aura::application * papp);

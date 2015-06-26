@@ -249,7 +249,7 @@ namespace draw2d_gdiplus
 
       set_text_rendering(::draw2d::text_rendering_anti_alias_grid_fit);
 
-      m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
+      set_smooth_mode(::draw2d::smooth_mode_high);
 
       m_spbitmap = pBitmap;
 
@@ -612,13 +612,9 @@ namespace draw2d_gdiplus
    
       Gdiplus::Rect rect(rectParam.left,rectParam.top,width(rectParam),height(rectParam));
 
-      m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeNone);
-
-      Gdiplus::SmoothingMode emode = m_pgraphics->GetSmoothingMode();
+      set_smooth_mode(::draw2d::smooth_mode_none);
 
       m_pgraphics->FillRectangle((::Gdiplus::Brush *) pbrush->get_os_data(),rect);
-
-      m_pgraphics->SetSmoothingMode(emode);
 
    }
 
@@ -821,7 +817,7 @@ namespace draw2d_gdiplus
    bool graphics::DrawEllipse(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    {
       
-      m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
+      set_smooth_mode(::draw2d::smooth_mode_high);
 
       return (m_pgraphics->DrawEllipse(gdiplus_pen(), x1, y1, x2 - x1, y2 - y1)) == Gdiplus::Status::Ok;
 
@@ -831,7 +827,7 @@ namespace draw2d_gdiplus
    bool graphics::DrawEllipse(const RECT &  rectParam)
    { 
    
-      m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
+      set_smooth_mode(::draw2d::smooth_mode_high);
 
       return (m_pgraphics->DrawEllipse(gdiplus_pen(),rectParam.left,rectParam.top,rectParam.right - rectParam.left,rectParam.bottom - rectParam.top)) == Gdiplus::Status::Ok;
    
@@ -841,7 +837,7 @@ namespace draw2d_gdiplus
    bool graphics::FillEllipse(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    {
 
-      m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
+      set_smooth_mode(::draw2d::smooth_mode_high);
 
       return (m_pgraphics->FillEllipse(gdiplus_brush(), x1, y1, x2 - x1, y2 - y1)) == Gdiplus::Status::Ok;
 
@@ -850,7 +846,7 @@ namespace draw2d_gdiplus
    bool graphics::FillEllipse(const RECT &  rectParam)
    { 
    
-      m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
+      set_smooth_mode(::draw2d::smooth_mode_high);
 
       return (m_pgraphics->FillEllipse(gdiplus_brush(), rectParam.left, rectParam.top, rectParam.right - rectParam.left, rectParam.bottom - rectParam.top)) == Gdiplus::Status::Ok;
    
@@ -861,7 +857,7 @@ namespace draw2d_gdiplus
    bool graphics::DrawEllipse(double x1,double y1,double x2,double y2)
    {
 
-      m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
+      set_smooth_mode(::draw2d::smooth_mode_high);
 
       return (m_pgraphics->DrawEllipse(gdiplus_pen(),(Gdiplus::REAL)x1,(Gdiplus::REAL)y1,(Gdiplus::REAL)(x2 - x1),(Gdiplus::REAL)(y2 - y1))) == Gdiplus::Status::Ok;
 
@@ -871,7 +867,7 @@ namespace draw2d_gdiplus
    bool graphics::DrawEllipse(const RECTD & rectParam)
    {
 
-      m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
+      set_smooth_mode(::draw2d::smooth_mode_high);
 
       return (m_pgraphics->DrawEllipse(gdiplus_pen(),(Gdiplus::REAL)rectParam.left,(Gdiplus::REAL)rectParam.top,
          (Gdiplus::REAL)(rectParam.right - rectParam.left),
@@ -883,7 +879,7 @@ namespace draw2d_gdiplus
    bool graphics::FillEllipse(double x1,double y1,double x2,double y2)
    {
 
-      m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
+      set_smooth_mode(::draw2d::smooth_mode_high);
 
       return (m_pgraphics->FillEllipse(gdiplus_brush(),(Gdiplus::REAL)x1,(Gdiplus::REAL)y1,(Gdiplus::REAL)(x2 - x1),(Gdiplus::REAL)(y2 - y1))) == Gdiplus::Status::Ok;
 
@@ -892,7 +888,7 @@ namespace draw2d_gdiplus
    bool graphics::FillEllipse(const RECTD & rectParam)
    {
 
-      m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
+      set_smooth_mode(::draw2d::smooth_mode_high);
 
       return (m_pgraphics->FillEllipse(gdiplus_brush(),(Gdiplus::REAL)rectParam.left,(Gdiplus::REAL)rectParam.top,
          (Gdiplus::REAL)(rectParam.right - rectParam.left),
@@ -929,7 +925,7 @@ namespace draw2d_gdiplus
 
          m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
 
-         m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
+         set_smooth_mode(::draw2d::smooth_mode_high);
 
    
          bOk1 = m_pgraphics->FillPolygon(gdiplus_brush(), ppoints, nCount, gdiplus_get_fill_mode()) == Gdiplus::Status::Ok;
@@ -1012,7 +1008,7 @@ namespace draw2d_gdiplus
 
          m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
 
-         m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
+         set_smooth_mode(::draw2d::smooth_mode_high);
 
          bOk1 = m_pgraphics->DrawPolygon(gdiplus_pen(), ppoints, nCount) == Gdiplus::Status::Ok;
 
@@ -1095,7 +1091,7 @@ namespace draw2d_gdiplus
          }
 
 
-         m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
+         set_smooth_mode(::draw2d::smooth_mode_high);
 
          m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
 
@@ -1163,13 +1159,13 @@ namespace draw2d_gdiplus
          if(m_ealphamode == ::draw2d::alpha_mode_set)
          {
 
-            m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeNone);
+            set_smooth_mode(::draw2d::smooth_mode_none);
 
          }
          else
          {
 
-            m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
+            set_smooth_mode(::draw2d::smooth_mode_high);
 
          }
 
@@ -4180,21 +4176,38 @@ namespace draw2d_gdiplus
          if(m_pgraphics == NULL)
             return;
 
-         Gdiplus::SmoothingMode emode = m_pgraphics->GetSmoothingMode();
+         if(m_esmoothmode != ::draw2d::smooth_mode_none)
+         {
 
-         m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeNone);
+            set_smooth_mode(::draw2d::smooth_mode_none);
 
-         ::draw2d::brush_sp brushCurrent(m_spbrush);
+         }
+         else
+         {
+            TRACE("optimized smoothing mode");
+         }
 
-         ::draw2d::brush_sp brush(allocer(), clr);
+         ::draw2d::brush_sp brushCurrent;
 
-         SelectObject(brush);
+         if(m_spbrush->m_etype != ::draw2d::brush::type_solid || m_spbrush->m_cr != clr)
+         {
+
+            brushCurrent = m_spbrush;
+
+            ::draw2d::brush_sp brush(allocer(),clr);
+
+            SelectObject(brush);
+
+         }
+         else
+         {
+            
+            TRACE("optimized brush");
+
+         }
 
          m_pgraphics->FillRectangle(gdiplus_brush(), x, y, cx, cy);
 
-         m_pgraphics->SetSmoothingMode(emode);
-
-         m_spbrush = brushCurrent;
 
       }
       catch(...)
@@ -4347,7 +4360,14 @@ namespace draw2d_gdiplus
 
       synch_lock sl(m_spmutex);
 
-      gdiplus_pen()->SetAlignment(Gdiplus::PenAlignment::PenAlignmentCenter);
+      if(m_sppen.cast < ::draw2d_gdiplus::pen >()->m_egdiplusalign != Gdiplus::PenAlignment::PenAlignmentCenter)
+      {
+
+         gdiplus_pen()->SetAlignment(Gdiplus::PenAlignment::PenAlignmentCenter);
+
+         m_sppen.cast < ::draw2d_gdiplus::pen >()->m_egdiplusalign = Gdiplus::PenAlignment::PenAlignmentCenter;
+
+      }
 
       m_pgraphics->DrawLine(gdiplus_pen(), Gdiplus::PointF((Gdiplus::REAL) m_x, (Gdiplus::REAL)  m_y), Gdiplus::PointF((Gdiplus::REAL) x, (Gdiplus::REAL) y));
 
@@ -4364,9 +4384,16 @@ namespace draw2d_gdiplus
 
       synch_lock sl(m_spmutex);
 
-      gdiplus_pen()->SetAlignment(Gdiplus::PenAlignment::PenAlignmentCenter);
+      if(m_sppen.cast < ::draw2d_gdiplus::pen >()->m_egdiplusalign != Gdiplus::PenAlignment::PenAlignmentCenter)
+      {
 
-      m_pgraphics->DrawLine(gdiplus_pen(),Gdiplus::Point((Gdiplus::REAL) m_x,(Gdiplus::REAL)  m_y),Gdiplus::Point((Gdiplus::REAL) x,(Gdiplus::REAL) y));
+         gdiplus_pen()->SetAlignment(Gdiplus::PenAlignment::PenAlignmentCenter);
+
+         m_sppen.cast < ::draw2d_gdiplus::pen >()->m_egdiplusalign = Gdiplus::PenAlignment::PenAlignmentCenter;
+
+      }
+
+      m_pgraphics->DrawLine(gdiplus_pen(),Gdiplus::Point((INT) m_x,(INT) m_y),Gdiplus::Point((INT) x,(INT) y));
 
       m_x = x;
 
@@ -4413,6 +4440,9 @@ namespace draw2d_gdiplus
 
    void graphics::set_smooth_mode(::draw2d::e_smooth_mode esmoothmode)
    {
+
+      if(m_esmoothmode == esmoothmode)
+         return;
 
       ::draw2d::graphics::set_smooth_mode(esmoothmode);
 
