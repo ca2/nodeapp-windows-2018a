@@ -4328,7 +4328,7 @@ namespace draw2d_gdiplus
          double d2 = fontfamily.GetEmHeight(gdiplus_font()->GetStyle());
          double d3 = d1 * d2;
 
-         status = path.AddString(::str::international::utf8_to_unicode(str), -1, &fontfamily, gdiplus_font()->GetStyle(), (Gdiplus::REAL) d1, origin, &format);
+         status = path.AddString(wstr,wstr.get_length(),&fontfamily,gdiplus_font()->GetStyle(),(Gdiplus::REAL) d1,origin,&format);
 
          path.Transform(pmNew);
 
@@ -4341,7 +4341,7 @@ namespace draw2d_gdiplus
 
          m_pgraphics->SetTransform(pmNew);
 
-         status = m_pgraphics->DrawString(::str::international::utf8_to_unicode(str), -1, gdiplus_font(), origin, &format, gdiplus_brush());
+         status = m_pgraphics->DrawString(wstr, wstr.get_length(), gdiplus_font(), origin, &format, gdiplus_brush());
 
          m_pgraphics->SetTransform(&m);
 
