@@ -1817,7 +1817,7 @@ namespace draw2d_gdi
    }
 
 
-   class size graphics::GetTabbedTextExtent(const char * lpszString, int nCount, int nTabPositions, LPINT lpnTabStopPositions) const
+   class size graphics::GetTabbedTextExtent(const char * lpszString,strsize nCount,int nTabPositions,LPINT lpnTabStopPositions) const
    {
 
       ASSERT(get_handle2() != NULL);
@@ -1837,7 +1837,7 @@ namespace draw2d_gdi
    }
 
 
-   class size graphics::GetOutputTabbedTextExtent(const char * lpszString, int nCount, int nTabPositions, LPINT lpnTabStopPositions) const
+   class size graphics::GetOutputTabbedTextExtent(const char * lpszString,strsize nCount,int nTabPositions,LPINT lpnTabStopPositions) const
    {
 
       ASSERT(get_handle1() != NULL);
@@ -4723,7 +4723,7 @@ namespace draw2d_gdi
 
 
 
-   size graphics::GetTextExtent(const char * lpszString, int nCount) const
+   size graphics::GetTextExtent(const char * lpszString, strsize nCount) const
    {
 
       if(get_handle2() == NULL)
@@ -4770,7 +4770,7 @@ namespace draw2d_gdi
    }
 
 
-   size graphics::GetOutputTextExtent(const char * lpszString, int nCount) const
+   size graphics::GetOutputTextExtent(const char * lpszString,strsize nCount) const
    {
       ASSERT(get_handle1() != NULL);
       SIZE size;

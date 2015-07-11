@@ -377,16 +377,13 @@ namespace draw2d_gdi
          UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
             int draw_text_ex(const string & str,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams);
 
-      size GetTextExtent(const char * lpszString, int nCount) const;
+      size GetTextExtent(const char * lpszString, strsize nCount) const;
       size GetTextExtent(const string & str) const;
-      size GetOutputTextExtent(const char * lpszString, int nCount) const;
+      size GetOutputTextExtent(const char * lpszString,strsize nCount) const;
       size GetOutputTextExtent(const string & str) const;
-      size GetTabbedTextExtent(const char * lpszString, int nCount,
-         int nTabPositions, LPINT lpnTabStopPositions) const;
-      size GetTabbedTextExtent(const string & str,
-         int nTabPositions, LPINT lpnTabStopPositions) const;
-      size GetOutputTabbedTextExtent(const char * lpszString, int nCount,
-         int nTabPositions, LPINT lpnTabStopPositions) const;
+      size GetTabbedTextExtent(const char * lpszString,strsize nCount, int nTabPositions, LPINT lpnTabStopPositions) const;
+      size GetTabbedTextExtent(const string & str,        int nTabPositions, LPINT lpnTabStopPositions) const;
+      size GetOutputTabbedTextExtent(const char * lpszString,strsize nCount,         int nTabPositions, LPINT lpnTabStopPositions) const;
       size GetOutputTabbedTextExtent(const string & str,
          int nTabPositions, LPINT lpnTabStopPositions) const;
       virtual bool GrayString(::draw2d::brush* pBrush,
