@@ -424,7 +424,7 @@ namespace production
 
 
 
-   void view::::_001OnTimer(::timer * ptimer) 
+   void view::_001OnTimer(::timer * ptimer) 
    {
       BASE::_001OnTimer(ptimer);
       if(ptimer->m_nIDEvent == 543218)
