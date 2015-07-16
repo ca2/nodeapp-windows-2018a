@@ -426,7 +426,7 @@ namespace production
 
    void view::_001OnTimer(::timer * ptimer) 
    {
-      BASE::_001OnTimer(ptimer);
+      ::user::scroll_view::_001OnTimer(ptimer);
       if(ptimer->m_nIDEvent == 543218)
       {
          if(IsWindowVisible())
