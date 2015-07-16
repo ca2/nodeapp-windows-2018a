@@ -60,15 +60,15 @@ namespace ca2plugin_container
 
       ::hotplugin::host::install_message_handling(pinterface);
 
-      IGUI_WIN_MSG_LINK(WM_TIMER,pinterface,this,&host::_001OnTimer);
+      ////IGUI_WIN_MSG_LINK(WM_TIMER,pinterface,this,&host::_001OnTimer);
 
    }
 
 
-   void host::_001OnTimer(signal_details * pobj)
+   void host::_001OnTimer(::timer * ptimer)
    {
 
-      SCAST_PTR(::message::timer,ptimer,pobj);
+      ::hotplugin::host::_001OnTimer(ptimer);
 
       if(ptimer->m_nIDEvent == 1984 + 77 + 3)
       {
