@@ -18,3 +18,5 @@
 //#include <string.h>
 
 
+typedef wchar_t         unichar;
+typedef unsigned int    unichar32;
