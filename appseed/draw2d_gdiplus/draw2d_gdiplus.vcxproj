@@ -356,7 +356,6 @@
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='codeanalysis|x64'">$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='no_precompiled_header|x64'">$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='static_basis|x64'">$(VCInstallDir)include;$(WindowsSDK_IncludePath);</IncludePath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='memdleak|x64'">$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='profiler|x64'">$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='static_profiler|x64'">$(VCInstallDir)include;$(WindowsSDK_IncludePath);</IncludePath>
     <ReferencePath Condition="'$(Configuration)|$(Platform)'=='no_precompiled_header|Win32'">$(VC_ReferencesPath_x86);</ReferencePath>
@@ -365,7 +364,6 @@
     <ReferencePath Condition="'$(Configuration)|$(Platform)'=='codeanalysis|x64'">$(VC_ReferencesPath_x64);</ReferencePath>
     <ReferencePath Condition="'$(Configuration)|$(Platform)'=='no_precompiled_header|x64'">$(VC_ReferencesPath_x64);</ReferencePath>
     <ReferencePath Condition="'$(Configuration)|$(Platform)'=='static_basis|x64'">$(VCInstallDir)lib\amd64</ReferencePath>
-    <ReferencePath Condition="'$(Configuration)|$(Platform)'=='memdleak|x64'">$(VC_ReferencesPath_x64);</ReferencePath>
     <ReferencePath Condition="'$(Configuration)|$(Platform)'=='profiler|x64'">$(VC_ReferencesPath_x64);</ReferencePath>
     <ReferencePath Condition="'$(Configuration)|$(Platform)'=='static_profiler|x64'">$(VCInstallDir)lib\amd64</ReferencePath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='no_precompiled_header|Win32'">$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
@@ -374,7 +372,6 @@
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='codeanalysis|x64'">$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='no_precompiled_header|x64'">$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='static_basis|x64'">$(VCInstallDir)lib\amd64;$(WindowsSDK_LibraryPath_x64)</LibraryPath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='memdleak|x64'">$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='profiler|x64'">$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='static_profiler|x64'">$(VCInstallDir)lib\amd64;$(WindowsSDK_LibraryPath_x64)</LibraryPath>
     <SourcePath Condition="'$(Configuration)|$(Platform)'=='no_precompiled_header|Win32'">$(VC_SourcePath);</SourcePath>
@@ -383,7 +380,6 @@
     <SourcePath Condition="'$(Configuration)|$(Platform)'=='codeanalysis|x64'">$(VC_SourcePath);</SourcePath>
     <SourcePath Condition="'$(Configuration)|$(Platform)'=='no_precompiled_header|x64'">$(VC_SourcePath);</SourcePath>
     <SourcePath Condition="'$(Configuration)|$(Platform)'=='static_basis|x64'">$(VCInstallDir)crt\src;</SourcePath>
-    <SourcePath Condition="'$(Configuration)|$(Platform)'=='memdleak|x64'">$(VC_SourcePath);</SourcePath>
     <SourcePath Condition="'$(Configuration)|$(Platform)'=='profiler|x64'">$(VC_SourcePath);</SourcePath>
     <SourcePath Condition="'$(Configuration)|$(Platform)'=='static_profiler|x64'">$(VCInstallDir)crt\src;</SourcePath>
   </PropertyGroup>
@@ -408,9 +404,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='static_basis|x64'">
     <ExcludePath>$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);$(MSBuildToolsPath32);$(VCInstallDir)atlmfc\lib;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\include</ExcludePath>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='memdleak|x64'">
-    <ExcludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(MSBuild_ExecutablePath);$(VC_LibraryPath_x64);</ExcludePath>
-  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='memdleak|x64'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='profiler|x64'">
     <ExcludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(MSBuild_ExecutablePath);$(VC_LibraryPath_x64);</ExcludePath>
   </PropertyGroup>
