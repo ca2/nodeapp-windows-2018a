@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_wave", "..\..\..\app-core\appseed\audio_decode_wave\audio_decode_wave.vcxproj", "{D620EED4-10A9-4C54-8DEE-A52B9D178A4D}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -144,6 +144,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axiscrypto", "..\..\..\app\axis\crypto\axiscrypto.vcxproj", "{39807406-816F-4C0D-A632-4BB8AB13887B}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "html_lite", "..\..\..\app\axis\html_lite\html_lite.vcxproj", "{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_veriwell_waven", "..\..\..\app-veriwell\appseed\waven\waven.vcxproj", "{5262FA60-FE91-4A5E-AC0D-89479B8A7670}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1477,6 +1479,37 @@ Global
 		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.static_profiler|Win32.Build.0 = profiler|Win32
 		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.static_profiler|x64.ActiveCfg = profiler|x64
 		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.static_profiler|x64.Build.0 = profiler|x64
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.basis|Win32.ActiveCfg = basis|Win32
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.basis|Win32.Build.0 = basis|Win32
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.basis|x64.ActiveCfg = basis|x64
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.basis|x64.Build.0 = basis|x64
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.codeanalysis|x64.Build.0 = codeanalysis|x64
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.memdleak|Win32.ActiveCfg = memdleak|Win32
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.memdleak|Win32.Build.0 = memdleak|Win32
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.memdleak|x64.ActiveCfg = memdleak|x64
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.memdleak|x64.Build.0 = memdleak|x64
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.no_precompiled_header|Win32.ActiveCfg = no_precompiled_header|Win32
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.no_precompiled_header|Win32.Build.0 = no_precompiled_header|Win32
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.no_precompiled_header|x64.ActiveCfg = no_precompiled_header|Win32
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.profiler|Win32.ActiveCfg = profiler|Win32
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.profiler|Win32.Build.0 = profiler|Win32
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.profiler|x64.ActiveCfg = profiler|x64
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.profiler|x64.Build.0 = profiler|x64
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.stage|Win32.ActiveCfg = stage|Win32
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.stage|Win32.Build.0 = stage|Win32
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.stage|x64.ActiveCfg = stage|x64
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.stage|x64.Build.0 = stage|x64
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.static_basis|Win32.ActiveCfg = static_basis|Win32
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.static_basis|Win32.Build.0 = static_basis|Win32
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.static_basis|x64.ActiveCfg = static_basis|x64
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.static_basis|x64.Build.0 = static_basis|x64
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.static_profiler|Win32.ActiveCfg = profiler|Win32
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.static_profiler|Win32.Build.0 = profiler|Win32
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.static_profiler|x64.ActiveCfg = profiler|x64
+		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.static_profiler|x64.Build.0 = profiler|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
