@@ -576,8 +576,12 @@ int a_spa::check_soon_launch()
 
    if(iFind < 0)
    {
+      
+      string strFile = wstr.substr(iFind1 + 1);
 
-      if(check_soon_file_launch(wstr.substr(iFind1 + 1)))
+      strFile.trim();
+
+      if(check_soon_file_launch(strFile))
       {
 
          return 1;
@@ -642,8 +646,11 @@ string a_spa::get_app_id(string wstr)
 
    }
 
+   wstr.trim();
   
    ::str::trim_any_quotes(wstr);
+
+   wstr.trim();
 
    if(wstr.length() <= 0)
    {
