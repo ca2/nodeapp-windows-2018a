@@ -779,6 +779,7 @@ namespace production
          {
             const char * lpcsz = m_straFiles[i];
             TRACE("file(%05d)=%s\n", i, lpcsz);
+            output_debug_string(string(lpcsz) + "\n");
          }
          m_pview->post_message(WM_USER, 2);
          //{
