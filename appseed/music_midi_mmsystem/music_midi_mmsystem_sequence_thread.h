@@ -49,7 +49,7 @@ namespace music
             virtual bool initialize_instance();
             virtual int32_t exit_instance();
 
-            DECL_GEN_SIGNAL(OnCommand);
+            //DECL_GEN_SIGNAL(OnCommand);
             DECL_GEN_SIGNAL(OnMidiSequenceEvent);
             DECL_GEN_SIGNAL(OnDone);
             DECL_GEN_SIGNAL(OnPositionCB);

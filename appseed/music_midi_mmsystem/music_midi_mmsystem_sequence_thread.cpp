@@ -37,7 +37,8 @@ namespace music
 
          void sequence_thread::install_message_handling(::message::dispatch * pinterface)
          {
-            IGUI_WIN_MSG_LINK(::music::midi::player::message_command, pinterface, this, &sequence_thread::OnCommand);
+            ::music::midi::sequence_thread::install_message_handling(pinterface);
+            //IGUI_WIN_MSG_LINK(::music::midi::player::message_command, pinterface, this, &sequence_thread::OnCommand);
             IGUI_WIN_MSG_LINK(::music::midi::sequence::message_event, pinterface, this, &sequence_thread::OnMidiSequenceEvent);
             IGUI_WIN_MSG_LINK(MM_MOM_DONE, pinterface, this, &sequence_thread::OnDone);
             IGUI_WIN_MSG_LINK(MM_MOM_POSITIONCB, pinterface, this, &sequence_thread::OnPositionCB);
@@ -317,29 +318,29 @@ namespace music
          }
 
 
-         void sequence_thread::OnCommand(::signal_details * pobj)
-         {
-            SCAST_PTR(::message::base, pbase, pobj);
-            smart_pointer < ::music::midi::player::command > spcommand;
-            spcommand = (::music::midi::player::command *) pbase->m_lparam.m_lparam;
-            spcommand->m_eresult = ::multimedia::result_success;
-            try
-            {
-               _ExecuteCommand(spcommand);
-            }
-            catch(exception * pe)
-            {
-               pe->Delete();
-               spcommand->m_eresult = ::multimedia::result_error;
-            }
-            catch(...)
-            {
-               spcommand->m_eresult = ::multimedia::result_error;
-            }
-            
-            spcommand->OnFinish();
+         //void sequence_thread::OnCommand(::signal_details * pobj)
+         //{
+         //   SCAST_PTR(::message::base, pbase, pobj);
+         //   smart_pointer < ::music::midi::player::command > spcommand;
+         //   spcommand = (::music::midi::player::command *) pbase->m_lparam.m_lparam;
+         //   spcommand->m_eresult = ::multimedia::result_success;
+         //   try
+         //   {
+         //      _ExecuteCommand(spcommand);
+         //   }
+         //   catch(exception * pe)
+         //   {
+         //      pe->Delete();
+         //      spcommand->m_eresult = ::multimedia::result_error;
+         //   }
+         //   catch(...)
+         //   {
+         //      spcommand->m_eresult = ::multimedia::result_error;
+         //   }
+         //   
+         //   spcommand->OnFinish();
 
-         }
+         //}
 
 
          void sequence_thread::_ExecuteCommand(smart_pointer < ::music::midi::player::command > spcommand)
