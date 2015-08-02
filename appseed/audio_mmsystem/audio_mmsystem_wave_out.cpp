@@ -655,8 +655,6 @@ Opened:
       void wave_out::wave_out_free(int iBuffer)
       {
 
-         //wave_out_free(wave_hdr(iBuffer));
-
          ::multimedia::audio::wave_out::wave_out_free(iBuffer);
 
       }
