@@ -1,4 +1,5 @@
 ﻿#include "framework.h"
+#include "core/user/hi5/hi5.h"
 
 
 namespace production
