@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_flag", "..\..\..\app-core\appseed\flag\flag.vcxproj", "{4467CF99-AD0F-403B-8E30-3CBA23756713}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -82,8 +82,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "aura", "..\..\..\app\appseed\aura\aura.vcxproj", "{03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axisidn", "..\..\..\app\axis\idn\axisidn.vcxproj", "{E8AC3EF0-11C5-4E12-A944-5F7EFED6E0C4}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A999F465-33D2-4D91-8FD0-97C54E056E12}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "auracharguess", "..\..\..\app\aura\charguess\auracharguess.vcxproj", "{AC6A52B4-C049-439C-88FF-5A262D968C8F}"
 EndProject
