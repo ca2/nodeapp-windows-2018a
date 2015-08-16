@@ -14,6 +14,7 @@ namespace draw2d_gdiplus
 
       m_pbitmap   = NULL;
       m_pdata     = NULL;
+      m_iStride   = 0;
 
    }
 
@@ -68,10 +69,12 @@ namespace draw2d_gdiplus
          m_pdata = NULL;
       }
 
+      m_iStride = ((4 * lpbmi->bmiHeader.biWidth + 15) / 16) * 16;
+
       try
       {
 
-         m_pdata = memory_alloc(abs(4 * lpbmi->bmiHeader.biWidth * lpbmi->bmiHeader.biHeight));
+         m_pdata = aligned_memory_alloc(abs(m_iStride * lpbmi->bmiHeader.biHeight));
 
       }
       catch(...)
@@ -84,7 +87,7 @@ namespace draw2d_gdiplus
       if(m_pdata == NULL)
          return false;
 
-      m_pbitmap = new Gdiplus::Bitmap(abs(lpbmi->bmiHeader.biWidth), abs(lpbmi->bmiHeader.biHeight), abs(lpbmi->bmiHeader.biWidth) * 4, PixelFormat32bppARGB, (BYTE *) m_pdata);
+      m_pbitmap = new Gdiplus::Bitmap(abs(lpbmi->bmiHeader.biWidth), abs(lpbmi->bmiHeader.biHeight),m_iStride, PixelFormat32bppARGB, (BYTE *) m_pdata);
 
       if(m_pbitmap == NULL)
       {

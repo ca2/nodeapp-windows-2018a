@@ -136,6 +136,8 @@ namespace draw2d_gdiplus
 
       m_size.cy       = height;
 
+      m_iScan         = m_spbitmap->m_iStride;
+
       return true;
 
    }
