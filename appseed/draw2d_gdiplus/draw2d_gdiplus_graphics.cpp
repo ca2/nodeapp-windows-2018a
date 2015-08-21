@@ -1338,7 +1338,9 @@ gdi_fallback:
    COLORREF graphics::GetPixel(POINT point) const
    { ASSERT(get_handle1() != NULL); return ::GetPixel(get_handle1(), point.x, point.y); }
    COLORREF graphics::SetPixel(int32_t x, int32_t y, COLORREF crColor)
-   { ASSERT(get_handle1() != NULL); return ::SetPixel(get_handle1(), x, y, crColor); }
+   { 
+      return 0;
+   }
    COLORREF graphics::SetPixel(POINT point, COLORREF crColor)
    { ASSERT(get_handle1() != NULL); return ::SetPixel(get_handle1(), point.x, point.y, crColor); }
    bool graphics::FloodFill(int32_t x, int32_t y, COLORREF crColor)
