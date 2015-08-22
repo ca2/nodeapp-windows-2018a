@@ -1397,7 +1397,7 @@ stop_run:
       if (m_puiMain != NULL)
          return m_puiMain;
 
-      return System.get_active_guie();
+      return System.get_active_ui();
    }
 
    /////////////////////////////////////////////////////////////////////////////
@@ -2584,7 +2584,7 @@ return m_pActiveWnd;    // probably in-place active
 if (GetMainWnd() != NULL)
 return GetMainWnd();
 
-return System.get_active_guie();
+return System.get_active_ui();
 }
 
 /////////////////////////////////////////////////////////////////////////////

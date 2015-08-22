@@ -369,7 +369,7 @@ namespace win
       else
       {
          string strName = "ca2::fontopus::message_wnd::winservice_1";
-         if(!create(NULL, pszName, 0, rect(0, 0, 0, 0), System.window_from_os_data(HWND_MESSAGE), NULL))
+         if(!create(NULL, pszName, 0, rect(0, 0, 0, 0), System.ui_from_handle(HWND_MESSAGE), NULL))
          {
             return false;
          }
