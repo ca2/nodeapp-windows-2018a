@@ -527,7 +527,7 @@ namespace ca2plugin_container
             else if(pmsg->message == WM_SETFOCUS)
             {
                
-               Session.m_puiFocus = this;
+               Session.set_keyboard_focus(this);
 
                return;
 
@@ -535,7 +535,7 @@ namespace ca2plugin_container
             else if(pmsg->message == WM_KILLFOCUS)
             {
                
-               Session.m_puiFocus = NULL;
+               Session.set_keyboard_focus(NULL);
 
                return;
 
