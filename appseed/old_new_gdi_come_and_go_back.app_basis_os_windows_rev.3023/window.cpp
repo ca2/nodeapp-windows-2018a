@@ -3892,7 +3892,7 @@ ExitModal:
       return get_handle();
    }
 
-   bool window::SetWindowPos(int z, int x, int y, int cx, int cy, UINT nFlags)
+   bool window::SetWindowPos(int_ptr z, int x, int y, int cx, int cy, UINT nFlags)
    {
       /*bool b;
       bool * pb = &b;
