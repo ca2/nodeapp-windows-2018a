@@ -20,7 +20,7 @@ _PNH CLASS_DECL_VMSWIN AfxSetNewHandler(_PNH pfnNewHandler)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// stop on a specific primitive::memory request
+// stop on a specific memory request
 
 // Obsolete API
 /*
@@ -30,7 +30,7 @@ void CLASS_DECL_VMSWIN AfxSetAllocStop(LONG lRequestNumber)
 }
 */
 BOOL CLASS_DECL_VMSWIN AfxCheckMemory()
-  // check all of primitive::memory (look for primitive::memory tromps)
+  // check all of memory (look for memory tromps)
 {
    return _CrtCheckMemory();
 }

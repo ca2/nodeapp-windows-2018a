@@ -369,7 +369,7 @@ BOOL __cdecl AfxIsIdleMessage(MSG* pMsg)
 }*/
 void CLASS_DECL_VMSWIN AfxEndThread(::radix::application * papp, UINT nExitCode, BOOL bDelete)
 {
-   // remove current thread object from primitive::memory
+   // remove current thread object from memory
    AFX_MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
    ::win::thread* pThread = pState->m_pCurrentWinThread;
    if (pThread != NULL)
@@ -1697,7 +1697,7 @@ stop_run:
                pThreadState->m_pSafetyPoolBuffer = malloc(papp->m_nSafetyPoolSize);
                if (pThreadState->m_pSafetyPoolBuffer == NULL)
                {
-//                  TRACE(::radix::trace::category_AppMsg, 0, "Warning: failed to reclaim %d bytes for primitive::memory safety pool.\n",
+//                  TRACE(::radix::trace::category_AppMsg, 0, "Warning: failed to reclaim %d bytes for memory safety pool.\n",
   //                   pApp->m_nSafetyPoolSize);
                   // at least get the old buffer back
                   if (nOldSize != 0)
@@ -2104,7 +2104,7 @@ void CLASS_DECL_VMSWIN AfxEndThread(UINT nExitCode, BOOL bDelete)
 nExitCode;
 bDelete;
 #else
-// remove current thread object from primitive::memory
+// remove current thread object from memory
 AFX_MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
 // thread* pThread = pState->m_pCurrentWinThread;
 if (pThread != NULL)

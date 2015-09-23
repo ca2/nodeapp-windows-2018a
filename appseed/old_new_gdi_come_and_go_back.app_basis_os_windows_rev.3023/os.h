@@ -29,15 +29,15 @@ string get_error_message(DWORD dwError);
 CLASS_DECL_VMSWIN BOOL AfxInitialize(BOOL bDLL = FALSE, DWORD dwVersion = _MFC_VER);
 
 /////////////////////////////////////////////////////////////////////////////
-// stop on a specific primitive::memory request
+// stop on a specific memory request
 
 // Debugger hook on specified allocation request - Obsolete
 CLASS_DECL_VMSWIN void AfxSetAllocStop(LONG lRequestNumber);
 
-// Return TRUE if primitive::memory is sane or print out what is wrong
+// Return TRUE if memory is sane or print out what is wrong
 CLASS_DECL_VMSWIN BOOL AfxCheckMemory();
 
-// Return TRUE if valid primitive::memory block of nBytes
+// Return TRUE if valid memory block of nBytes
 CLASS_DECL_VMSWIN BOOL AfxIsMemoryBlock(const void * p, UINT nBytes,
    LONG* plRequestNumber = NULL);
 

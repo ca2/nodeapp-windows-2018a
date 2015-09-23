@@ -191,7 +191,7 @@ namespace production
 
       void OnUpdateRelease();
 
-      string xpi_digest(primitive::memory & mem);
+      string xpi_digest(memory & mem);
 
       void xpi_sign_dir(const ::file::path & pszDir);
       void xpi_section(const char * pszManifest, const char * pszSignature);

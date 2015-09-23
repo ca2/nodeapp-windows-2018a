@@ -259,7 +259,7 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (::ca::app
    }
 
    // This handle wasn't created by us, so we must create a temporary
-   // C++ object to wrap it.  We don't want the ::fontopus::user to see this primitive::memory
+   // C++ object to wrap it.  We don't want the ::fontopus::user to see this memory
    // allocation, so we turn tracing off.
 
    //BOOL bEnable = AfxEnableMemoryTracking(FALSE);
@@ -278,7 +278,7 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (::ca::app
       }
       else
       {
-         // get primitive::memory for the object from the fixed allocator
+         // get memory for the object from the fixed allocator
    //      ASSERT((UINT)m_pClass->m_nObjectSize == m_alloc.GetAllocSize());
          pTemp = (CT*)m_alloc.Alloc();
          if (pTemp == NULL)
@@ -316,7 +316,7 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (::ca::app
    return pTemp;
 }
 
-#ifdef _DEBUG   // out-of-line version for primitive::memory tracking
+#ifdef _DEBUG   // out-of-line version for memory tracking
 template < class HT, class CT >
 void handle_map < HT, CT >::set_permanent(HANDLE h, CT * permOb)
 {
@@ -395,7 +395,7 @@ void handle_map < HT, CT >::delete_temp()
    }
 
    m_temporaryMap.remove_all();       // free up dictionary links etc
-   m_alloc.FreeAll();   // free all the primitive::memory used for these temp objects
+   m_alloc.FreeAll();   // free all the memory used for these temp objects
 }
 
 

@@ -17,7 +17,7 @@ namespace gen
 
 
    bool Resource::ReadResource(
-      primitive::memory & storage, 
+      memory & storage, 
       UINT nID, 
       const char * lpcszType)
    {
@@ -30,7 +30,7 @@ namespace gen
 
    bool Resource::ReadResource(
       HINSTANCE hinst,
-      primitive::memory & storage, 
+      memory & storage, 
       UINT nID, 
       const char * lpcszType)
    {

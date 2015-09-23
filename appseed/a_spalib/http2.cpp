@@ -232,7 +232,7 @@ Retry1:
       pszOutBuffer = buffer;
       if (!pszOutBuffer)
       {
-         printf("Out of primitive::memory\n");
+         printf("Out of memory\n");
          return false;
       }
       while(true)

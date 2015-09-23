@@ -88,7 +88,7 @@ namespace music
             }
             catch(memory_exception * pe)
             {
-               TRACE( "smfOpenFile: No primitive::memory for image! [%08lX]", cbImage);
+               TRACE( "smfOpenFile: No memory for image! [%08lX]", cbImage);
                smfrc = ENoMemory;
                delete pe;
                goto smf_Open_File_Cleanup;
@@ -118,7 +118,7 @@ smf_Open_File_Cleanup:
             return smfrc;
          }
 
-         e_result buffer::OpenFile(primitive::memory * pmemorystorage, int32_t openMode, e_storage estorage)
+         e_result buffer::OpenFile(memory * pmemorystorage, int32_t openMode, e_storage estorage)
          {
             ASSERT(pmemorystorage != NULL);
 
@@ -181,7 +181,7 @@ smf_Open_File_Cleanup:
          }
 
 
-         e_result buffer::OpenFile(primitive::memory * pmemorystorage, file::e_open eopenmode, e_storage estorage)
+         e_result buffer::OpenFile(memory * pmemorystorage, file::e_open eopenmode, e_storage estorage)
          {
 
             return OpenFile(pmemorystorage, (int32_t) eopenmode, estorage);
@@ -207,7 +207,7 @@ smf_Open_File_Cleanup:
          *
          *   EInvalidFile The specified file was corrupt or not a MIDI file.
          *
-         *   ENoMemory There was insufficient primitive::memory to open the file.
+         *   ENoMemory There was insufficient memory to open the file.
          *
          *   SMF_INVALID_PARM The given flags or time division in the
          *     SMFOPENFILESTRUCT were invalid.
@@ -1603,7 +1603,7 @@ smf_Open_File_Cleanup:
          *   SMF_END_OF_TRACK | The pointer was moved to end of track and no state
          *     information was returned.
          *   SMF_INVALID_PARM | The given handle or buffer was invalid.
-         *   ENoMemory | There was insufficient primitive::memory in the given buffer to
+         *   ENoMemory | There was insufficient memory in the given buffer to
          *     contain all of the state data.
          *
          * The state information in the buffer includes patch changes, tempo changes,

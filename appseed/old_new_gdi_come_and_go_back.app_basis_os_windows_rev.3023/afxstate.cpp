@@ -135,8 +135,8 @@ AFX_MODULE_STATE::AFX_MODULE_STATE(BOOL bDLL)
 //   BOOL bEnable = TRUE;
    try
    {
-      //Preallocate the registered classes string, but CRT primitive::memory leak report is
-      //called before the string frees primitive::memory, so need to disable tracking.
+      //Preallocate the registered classes string, but CRT memory leak report is
+      //called before the string frees memory, so need to disable tracking.
       //bEnable = AfxEnableMemoryTracking(FALSE);
       //m_pstrUnregisterList->Preallocate(4096);
       //AfxEnableMemoryTracking(bEnable);   

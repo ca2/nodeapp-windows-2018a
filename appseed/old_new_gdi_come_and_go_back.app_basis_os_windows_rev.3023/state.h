@@ -346,7 +346,7 @@ public:
 
 
 
-   // primitive::memory safety pool for temp maps
+   // memory safety pool for temp maps
    void * m_pSafetyPoolBuffer;    // current buffer
 
    // thread local exception context

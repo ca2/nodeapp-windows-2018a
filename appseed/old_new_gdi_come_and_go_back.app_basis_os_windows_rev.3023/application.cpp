@@ -565,11 +565,11 @@ namespace win
 
       // Note: there are a number of _tcsdup (aka _strdup) calls that are
       // made here for the exe path, help file path, etc.  In previous
-      // versions of ca2 API, this primitive::memory was never freed.  In this and future
-      // versions this primitive::memory is automatically freed during application's
-      // destructor.  If you are freeing the primitive::memory yourself, you should
+      // versions of ca2 API, this memory was never freed.  In this and future
+      // versions this memory is automatically freed during application's
+      // destructor.  If you are freeing the memory yourself, you should
       // either remove the code or set the pointers to NULL after freeing
-      // the primitive::memory.
+      // the memory.
 
       // get path of executable
    /*   char szBuff[_MAX_PATH];

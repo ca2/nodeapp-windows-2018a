@@ -171,7 +171,7 @@ SPALIB_API string a_spa::ms_get(const char * pszUrl, bool bCache)
         {
             if (!pszOutBuffer)
             {
-                printf("Out of primitive::memory\n");
+                printf("Out of memory\n");
                 dwSize=0;
             }
             else
@@ -196,7 +196,7 @@ SPALIB_API string a_spa::ms_get(const char * pszUrl, bool bCache)
                  //   printf("%s", pszOutBuffer);
                 }
             }
-            // Free the primitive::memory allocated to the buffer.
+            // Free the memory allocated to the buffer.
       }
       while (dwDownloaded>0);
    }

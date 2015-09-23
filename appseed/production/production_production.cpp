@@ -1952,10 +1952,10 @@ namespace production
    return 'Digest-Algorithms: MD5 SHA1\nMD5-Digest: %s\nSHA1-Digest: %s\n' % \
    (base64.b64encode(md5.digest()), base64.b64encode(sha1.digest()))
    */
-   string production::xpi_digest(primitive::memory & mem)
+   string production::xpi_digest(memory & mem)
    {
-      primitive::memory memMd5;
-      primitive::memory memSha1;
+      memory memMd5;
+      memory memSha1;
       memMd5.from_hex(System.crypto().md5(mem));
       memSha1.from_hex(System.crypto().sha1(mem));
       return string("Digest-Algorithms: MD5 SHA1\n") +
@@ -1968,7 +1968,7 @@ namespace production
    void production::xpi_section(const char * pszManifest, const char * pszSignature)
    {
       m_straManifest.add(pszManifest);
-      primitive::memory memManifest(pszManifest);
+      memory memManifest(pszManifest);
       m_straSignature.add(string(pszSignature) + xpi_digest(memManifest));
    }
 
@@ -2042,7 +2042,7 @@ namespace production
 
       xpi_section("Manifest-Version: 1.0\n" + strComment, "Signature-Version: 1.0\n" + strComment);
 
-      primitive::memory mem;
+      memory mem;
 
       for (int32_t i = 0; i < m_straPath.get_count(); i++)
       {

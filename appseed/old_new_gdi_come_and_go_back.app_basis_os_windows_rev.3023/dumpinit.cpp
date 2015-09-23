@@ -14,7 +14,7 @@ void __cdecl _AfxCrtDumpClient(void * pvData, size_t nBytes)
    try
    {
       
-      if(_CrtReportBlockType(pvData) != _AFX_CLIENT_BLOCK)
+      if(_memory_type(pvData) != _AFX_CLIENT_BLOCK)
          return;
 
 //      ::radix::object * pca = (::radix::object * ) pvData;

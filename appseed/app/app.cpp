@@ -161,7 +161,7 @@ int32_t WINAPI _tWinMain(HINSTANCE hinstance,HINSTANCE hPrevInstance,LPTSTR lpCm
    if(file_exists_raw("C:\\ca2\\config\\system\\show_elapsed.txt"))
    {
       char szUTCTime[2048];
-      char szLocalTime[2048];
+//      char szLocalTime[2048];
       time_t rawtime;
       struct tm * l;
       struct tm * g;

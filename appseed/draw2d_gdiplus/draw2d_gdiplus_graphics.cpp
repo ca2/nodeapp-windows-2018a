@@ -2748,7 +2748,9 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    bool graphics::RestoreDC(int32_t nSavedDC)
    {
-      return m_pgraphics->Restore(nSavedDC);
+
+      return m_pgraphics->Restore(nSavedDC) != FALSE;
+
    }
 
 //   ::draw2d::object* graphics::SelectGdiObject(::aura::application * papp, HDC hDC, HGDIOBJ h)

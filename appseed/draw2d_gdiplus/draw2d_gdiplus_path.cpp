@@ -113,9 +113,9 @@ namespace draw2d_gdiplus
    bool path::internal_add_rect(int32_t x,int32_t y,int32_t cx,int32_t cy)
    {
 
-      Gdiplus::RectF rectf(x,y,cx,cy);
+      Gdiplus::Rect rect(x,y,cx,cy);
 
-      bool bOk2 = m_ppath->AddRectangle(rectf) == Gdiplus::Status::Ok;
+      bool bOk2 = m_ppath->AddRectangle(rect) == Gdiplus::Status::Ok;
 
 
       return bOk2;
@@ -168,6 +168,35 @@ namespace draw2d_gdiplus
 
    }
 
+   bool path::internal_add_rect(double x,double y,double cx,double cy)
+   {
+
+      Gdiplus::RectF rectf((Gdiplus::REAL)x,(Gdiplus::REAL)y,(Gdiplus::REAL)cx,(Gdiplus::REAL)cy);
+
+      bool bOk2 = m_ppath->AddRectangle(rectf) == Gdiplus::Status::Ok;
+
+
+      return bOk2;
+
+   }
+
+
+   bool path::internal_add_move(double x,double y)
+   {
+
+      if(!m_bHasPointInternal)
+      {
+         internal_begin_figure(m_bFill,m_efillmode);
+      }
+
+      m_ptInternal.X   = (Gdiplus::REAL) x;
+      m_ptInternal.Y   = (Gdiplus::REAL) y;
+      m_bHasPointInternal     = true;
+
+
+      return true;
+
+   }
 
 
    bool path::create(Gdiplus::Graphics * pgraphics)
