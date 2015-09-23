@@ -2368,12 +2368,12 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::PolyBezier(const POINT* lpPoints, int nCount)
+   bool graphics::PolyBezier(const POINT* lpPoints, count nCount)
    { 
 
       ASSERT(get_handle1() != NULL); 
 
-      return ::PolyBezier(get_handle1(), lpPoints, nCount) != FALSE; 
+      return ::PolyBezier(get_handle1(), lpPoints, (DWORD) nCount) != FALSE; 
 
    }
 
@@ -2594,7 +2594,7 @@ namespace draw2d_gdi
 
       BeginPath();
 
-      ::Polygon(m_hdc, pitem->lpPoints, pitem->nCount);
+      ::Polygon(m_hdc, pitem->lpPoints, (int) pitem->nCount);
 
       EndPath();
 
@@ -2607,7 +2607,7 @@ namespace draw2d_gdi
 
       BeginPath();
 
-      ::PolyPolygon(m_hdc, pitem->lpPoints, pitem->lpPolyCounts, pitem->nCount);
+      ::PolyPolygon(m_hdc, pitem->lpPoints, pitem->lpPolyCounts, (int) pitem->nCount);
 
       EndPath();
 
@@ -2704,12 +2704,12 @@ namespace draw2d_gdi
    }
 
 
-   int graphics::GetPath(LPPOINT lpPoints, LPBYTE lpTypes, int nCount) const
+   int graphics::GetPath(LPPOINT lpPoints, LPBYTE lpTypes, count nCount) const
    {
 
       ASSERT(get_handle1() != NULL);
 
-      return ::GetPath(get_handle1(), lpPoints, lpTypes, nCount);
+      return ::GetPath(get_handle1(), lpPoints, lpTypes, (int) nCount);
 
    }
 
@@ -3305,7 +3305,7 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::GetTextExtent(sized & size, const char * lpszString, strsize nCount, int32_t iIndex) const
+   bool graphics::GetTextExtent(sized & size, const char * lpszString, strsize nCount, strsize iIndex) const
    {
 
       ::size sz = GetTextExtent(string(lpszString), iIndex);
@@ -4447,12 +4447,12 @@ namespace draw2d_gdi
       return nResult;
    }
 
-   bool graphics::PolyDraw(const POINT* lpPoints, const BYTE* lpTypes, int nCount)
+   bool graphics::PolyDraw(const POINT* lpPoints, const BYTE* lpTypes, count nCount)
    {
 
       ASSERT(get_handle1() != NULL);
 
-      bool bResult = ::PolyDraw(get_handle1(), lpPoints, lpTypes, nCount) != FALSE;
+      bool bResult = ::PolyDraw(get_handle1(), lpPoints, lpTypes, (int) nCount) != FALSE;
 
       if (get_handle1() != get_handle2())
       {
@@ -4472,12 +4472,12 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::PolylineTo(const POINT* lpPoints, int nCount)
+   bool graphics::PolylineTo(const POINT* lpPoints, count nCount)
    {
 
       ASSERT(get_handle1() != NULL);
 
-      bool bResult = ::PolylineTo(get_handle1(), lpPoints, nCount) != FALSE;
+      bool bResult = ::PolylineTo(get_handle1(), lpPoints, (int) nCount) != FALSE;
 
       if (get_handle1() != get_handle2())
       {
@@ -4505,10 +4505,13 @@ namespace draw2d_gdi
       return bResult;
    }
 
-   bool graphics::PolyBezierTo(const POINT* lpPoints, int nCount)
+   bool graphics::PolyBezierTo(const POINT* lpPoints, strsize nCount)
    {
+
       ASSERT(get_handle1() != NULL);
-      bool bResult = ::PolyBezierTo(get_handle1(), lpPoints, nCount) != FALSE;
+
+      bool bResult = ::PolyBezierTo(get_handle1(), lpPoints, (int) nCount) != FALSE;
+
       if (get_handle1() != get_handle2())
       {
          point pt;
@@ -4854,7 +4857,7 @@ namespace draw2d_gdi
 
       ::SetBkMode(m_hdc, TRANSPARENT);
 
-      if(!TextOutW(m_hdc,(int) path.m_x,(int) path.m_y,wstr,wstr.length()))
+      if(!TextOutW(m_hdc,(int) path.m_x,(int) path.m_y,wstr,(int) wstr.length()))
          return false;
 
 

@@ -350,7 +350,7 @@ namespace draw2d_gdiplus
       format.SetLineAlignment(Gdiplus::StringAlignmentNear);
 
 
-      m_ppath->AddString(wstr,wstr.get_length(),&fontFamily,iStyle,dSize,Gdiplus::Point(x,y),&format);
+      m_ppath->AddString(wstr, (INT) wstr.get_length(),&fontFamily,iStyle,dSize,Gdiplus::Point(x,y),&format);
 
       return true;
 

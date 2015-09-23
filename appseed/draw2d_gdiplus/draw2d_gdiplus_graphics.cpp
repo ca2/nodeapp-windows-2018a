@@ -3408,10 +3408,10 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return bResult;
    }
 
-   bool graphics::PolylineTo(const POINT* lpPoints, int32_t nCount)
+   bool graphics::PolylineTo(const POINT* lpPoints, count nCount)
    {
       ASSERT(get_handle1() != NULL);
-      bool bResult = ::PolylineTo(get_handle1(), lpPoints, nCount) != FALSE;
+      bool bResult = ::PolylineTo(get_handle1(), lpPoints, (DWORD) nCount) != FALSE;
       if (get_handle1() != get_handle2())
       {
          point pt;
@@ -3432,10 +3432,10 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return bResult;
    }
 
-   bool graphics::PolyBezierTo(const POINT* lpPoints, int32_t nCount)
+   bool graphics::PolyBezierTo(const POINT* lpPoints, count nCount)
    {
       ASSERT(get_handle1() != NULL);
-      bool bResult = ::PolyBezierTo(get_handle1(), lpPoints, nCount) != FALSE;
+      bool bResult = ::PolyBezierTo(get_handle1(), lpPoints, (DWORD) nCount) != FALSE;
       if (get_handle1() != get_handle2())
       {
          point pt;
@@ -3662,45 +3662,38 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       lpSize->cy = MulDiv(lpSize->cy, abs(sizeWinExt.cy), abs(sizeVpExt.cy));
    }
 
-   int32_t graphics::draw_text(const char * lpszString,int32_t nCount,const RECT & lpRect,UINT nFormat)
+
+   int32_t graphics::draw_text(const char * lpszString,strsize nCount,const RECT & lpRect,UINT nFormat)
    {
+
       return draw_text(string(lpszString,nCount),lpRect,nFormat);
 
    }
 
+
    int32_t graphics::draw_text(const string & str,const RECT & rectParam,UINT nFormat)
    {
+
       ::rectd rect;
+
       ::copy(rect,&rectParam);
+
       return draw_text(str,rect,nFormat);
+
    }
 
 
-   int32_t graphics::draw_text(const char * lpszString, int32_t nCount, const RECTD & rectParam, UINT nFormat)
+   int32_t graphics::draw_text(const char * lpszString, strsize nCount, const RECTD & rectParam, UINT nFormat)
    { 
-      /*if(get_handle1() == NULL)
-         return -1;
-      // these flags would modify the string
-      ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
-      ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
-      wstring wstr = ::str::international::utf8_to_unicode(string(lpszString, nCount));
-      return ::DrawTextW(get_handle1(), wstr, (int32_t) wcslen(wstr), lpRect, nFormat); */
 
       return draw_text(string(lpszString,nCount),rectParam,nFormat);
 
    }
 
+
    int32_t graphics::draw_text(const string & str, const RECTD & rectParam, UINT nFormat)
    { 
       
-      /*if(get_handle1() == NULL)
-         return -1;
-      // these flags would modify the string
-      ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
-      ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
-      wstring wstr = ::str::international::utf8_to_unicode(str);
-      return ::DrawTextW(get_handle1(), (const wchar_t *)wstr, (int32_t)wcslen(wstr), lpRect, nFormat); */
-
       try
       {
 
@@ -3816,16 +3809,21 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   int32_t graphics::draw_text_ex(LPTSTR lpszString,int32_t nCount,const RECT & rectParam,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
+
+   int32_t graphics::draw_text_ex(LPTSTR lpszString,strsize nCount,const RECT & rectParam,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
    { 
+
       if(get_handle1() == NULL)
          return -1;
+
       // these flags would modify the string
       ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
       ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
       wstring wstr = ::str::international::utf8_to_unicode(string(lpszString, nCount));
       return ::DrawTextExW(get_handle1(),const_cast<wchar_t *>((const wchar_t *)wstr),(int32_t)wcslen(wstr),(LPRECT) &rectParam,nFormat,lpDTParams);
+
    }
+
 
    int32_t graphics::draw_text_ex(const string & str,const RECT & rectParam,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
    { 
@@ -3838,7 +3836,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    }
 
 
-   int32_t graphics::draw_text_ex(LPTSTR lpszString,int32_t nCount,const RECTD & rectParam,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
+   int32_t graphics::draw_text_ex(LPTSTR lpszString,strsize nCount,const RECTD & rectParam,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
    {
 
       return ::draw2d::graphics::draw_text_ex(lpszString,nCount,rectParam,nFormat,lpDTParams);
@@ -3854,7 +3852,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    }
 
 
-   size graphics::GetTextExtent(const char * lpszString, strsize nCount, int32_t iIndex) const
+   size graphics::GetTextExtent(const char * lpszString, strsize nCount, strsize iIndex) const
    {
 
       if(lpszString == NULL || *lpszString == '\0')
@@ -4036,18 +4034,27 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       wstring wstr = ::str::international::utf8_to_unicode(str);
       VERIFY(::GetTextExtentPoint32W(get_handle1(), wstr, (int32_t)wstr.get_length(), &size));
       return size;
+
    }
+
 
    size graphics::GetOutputTextExtent(const string & str) const
    {
+      
       ASSERT(get_handle1() != NULL);
+      
       SIZE size;
+
       wstring wstr = ::str::international::utf8_to_unicode(str);
+
       VERIFY(::GetTextExtentPoint32W(get_handle1(), wstr, (int32_t)wstr.get_length(), &size));
+
       return size;
+
    }
 
-   bool graphics::GetTextExtent(sized & size, const char * lpszString, strsize nCount, int32_t iIndex) const
+
+   bool graphics::GetTextExtent(sized & size, const char * lpszString, strsize nCount, strsize iIndex) const
    {
 
       //retry_single_lock slGdiplus(&System.s_mutexGdiplus, millis(1), millis(1));
@@ -4325,7 +4332,7 @@ namespace draw2d_gdiplus
    }
 
 
-   bool graphics::TextOut(int32_t x, int32_t y, const char * lpszString, int32_t nCount)
+   bool graphics::TextOut(int32_t x, int32_t y, const char * lpszString, strsize nCount)
    {
 
       return TextOut((double)x, (double)y, lpszString, nCount);
@@ -4333,7 +4340,7 @@ namespace draw2d_gdiplus
    }
 
 
-   bool graphics::TextOut(double x, double y, const char * lpszString, int32_t nCount)
+   bool graphics::TextOut(double x, double y, const char * lpszString, strsize nCount)
    {
 
       if(m_spfont.is_null())
@@ -4435,7 +4442,7 @@ namespace draw2d_gdiplus
          double d2 = fontfamily.GetEmHeight(gdiplus_font()->GetStyle());
          double d3 = d1 * d2;
 
-         status = path.AddString(wstr,wstr.get_length(),&fontfamily,gdiplus_font()->GetStyle(),(Gdiplus::REAL) d1,origin,&format);
+         status = path.AddString(wstr,(INT) wstr.get_length(),&fontfamily,gdiplus_font()->GetStyle(),(Gdiplus::REAL) d1,origin,&format);
 
          path.Transform(pmNew);
 
@@ -4448,7 +4455,7 @@ namespace draw2d_gdiplus
 
          m_pgraphics->SetTransform(pmNew);
 
-         status = m_pgraphics->DrawString(wstr, wstr.get_length(), gdiplus_font(), origin, &format, gdiplus_brush());
+         status = m_pgraphics->DrawString(wstr, (INT) wstr.get_length(), gdiplus_font(), origin, &format, gdiplus_brush());
 
          m_pgraphics->SetTransform(&m);
 
