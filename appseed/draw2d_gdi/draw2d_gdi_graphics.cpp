@@ -491,10 +491,10 @@ namespace draw2d_gdi
 
 
 
-   void graphics::DPtoLP(LPPOINT lpPoints, int nCount) const
+   void graphics::DPtoLP(LPPOINT lpPoints, count nCount) const
    { 
 
-      ::DPtoLP(get_handle2(), lpPoints, nCount);
+      ::DPtoLP(get_handle2(), lpPoints, (int) nCount);
 
    }
 
@@ -511,10 +511,10 @@ namespace draw2d_gdi
 
 
 
-   void graphics::LPtoDP(LPPOINT lpPoints, int nCount) const
+   void graphics::LPtoDP(LPPOINT lpPoints, count nCount) const
    {
 
-      ::LPtoDP(get_handle2(), lpPoints, nCount);
+      ::LPtoDP(get_handle2(), lpPoints, (int) nCount);
 
    }
 
@@ -651,12 +651,12 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::Polyline(const POINT* lpPoints, int nCount)
+   bool graphics::Polyline(const POINT* lpPoints, count nCount)
    {
 
       ASSERT(get_handle1() != NULL); 
 
-      return ::Polyline(get_handle1(), lpPoints, nCount) != FALSE; 
+      return ::Polyline(get_handle1(), lpPoints, (int) nCount) != FALSE; 
 
    }
 
@@ -1046,7 +1046,7 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::Polygon(const POINTD * lpPoints,int nCount)
+   bool graphics::Polygon(const POINTD * lpPoints,count nCount)
    {
 
       point_array pa(lpPoints, nCount);
@@ -1057,7 +1057,7 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::Polygon(const POINT * lpPoints, int nCount)
+   bool graphics::Polygon(const POINT * lpPoints, count nCount)
    {
 
       rect rect;
@@ -1082,7 +1082,7 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::DrawPolygon(const POINT * lpPoints, int nCount)
+   bool graphics::DrawPolygon(const POINT * lpPoints, count nCount)
    {
 
       rect rect;
@@ -1107,7 +1107,7 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::DrawPolygon(const POINTD * lpPoints,int nCount)
+   bool graphics::DrawPolygon(const POINTD * lpPoints,count nCount)
    {
 
       point_array pa(lpPoints,nCount);
@@ -1118,7 +1118,7 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::FillPolygon(const POINT * lpPoints,int nCount)
+   bool graphics::FillPolygon(const POINT * lpPoints,count nCount)
    {
 
       rect rect;
@@ -1143,18 +1143,17 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::FillPolygon(const POINTD * lpPoints,int nCount)
+   bool graphics::FillPolygon(const POINTD * lpPoints,count nCount)
    {
 
       point_array pa(lpPoints,nCount);
 
       return FillPolygon(pa,pa);
 
-
    }
 
 
-   bool graphics::PolyPolygon(const POINT * lpPoints,const INT * lpPolyCounts,int nCount)
+   bool graphics::PolyPolygon(const POINT * lpPoints,const INT * lpPolyCounts,count nCount)
    {
 
       rect rect;
@@ -1181,7 +1180,7 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::DrawPolyPolygon(const POINT * lpPoints, const INT * lpPolyCounts, int nCount)
+   bool graphics::DrawPolyPolygon(const POINT * lpPoints, const INT * lpPolyCounts, count nCount)
    {
 
       rect rect;
@@ -1208,7 +1207,7 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::FillPolyPolygon(const POINT * lpPoints, const INT * lpPolyCounts, int nCount)
+   bool graphics::FillPolyPolygon(const POINT * lpPoints, const INT * lpPolyCounts, count nCount)
    {
 
       rect rect;
@@ -1619,7 +1618,7 @@ namespace draw2d_gdi
 
 
 
-   bool graphics::TextOut(double x, double y, const char * lpszString, int nCount)
+   bool graphics::TextOut(double x, double y, const char * lpszString, strsize nCount)
    {
 
       synch_lock ml(m_spmutex);
@@ -1732,61 +1731,50 @@ namespace draw2d_gdi
 
    // call virtual
 
-   bool graphics::ExtTextOut(int x, int y, UINT nOptions, const RECT & lpRect, const char * lpszString, UINT nCount, LPINT lpDxWidths)
+   bool graphics::ExtTextOut(int x, int y, UINT nOptions, const RECT & lpRect, const char * lpszString, strsize nCount, LPINT lpDxWidths)
    { 
+
       ASSERT(get_handle1() != NULL); 
-      return ::ExtTextOut(get_handle1(), x, y, nOptions, &lpRect, lpszString, nCount, lpDxWidths) != FALSE;
+
+      return ::ExtTextOut(get_handle1(), x, y, nOptions, &lpRect, lpszString, (UINT) nCount, lpDxWidths) != FALSE;
 
    }
 
 
-
-   bool graphics::ExtTextOut(int x, int y, UINT nOptions, const RECT & lpRect,
-      const string & str, LPINT lpDxWidths)
+   bool graphics::ExtTextOut(int x, int y, UINT nOptions, const RECT & lpRect, const string & str, LPINT lpDxWidths)
    {
 
       ASSERT(get_handle1() != NULL);
 
-      return ::ExtTextOut(get_handle1(), x, y, nOptions, &lpRect,
-         str, (UINT)str.get_length(), lpDxWidths) != FALSE;
+      return ::ExtTextOut(get_handle1(), x, y, nOptions, &lpRect, str, (UINT)str.get_length(), lpDxWidths) != FALSE;
 
    }
 
 
-   size graphics::TabbedTextOut(int x, int y, const char * lpszString, int nCount,
-      int nTabPositions, LPINT lpnTabStopPositions, int nTabOrigin)
+   size graphics::TabbedTextOut(int x, int y, const char * lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions, int32_t nTabOrigin)
    {
 
       ASSERT(get_handle1() != NULL);
 
-      return ::TabbedTextOut(get_handle1(), x, y, lpszString, nCount,
-         nTabPositions, lpnTabStopPositions, nTabOrigin);
+      return ::TabbedTextOut(get_handle1(), x, y, lpszString, (int) nCount, (int) nTabPositions, lpnTabStopPositions, nTabOrigin);
 
    }
 
 
-   size graphics::TabbedTextOut(int x, int y, const string & str,
-      int nTabPositions, LPINT lpnTabStopPositions, int nTabOrigin)
+   size graphics::TabbedTextOut(int x, int y, const string & str, count nTabPositions, LPINT lpnTabStopPositions, int32_t nTabOrigin)
    {
 
       ASSERT(get_handle1() != NULL);
 
-      return ::TabbedTextOut(get_handle1(), x, y, str, (int)str.get_length(),
-         nTabPositions, lpnTabStopPositions, nTabOrigin);
+      return ::TabbedTextOut(get_handle1(), x, y, str, (int)str.get_length(), (int) nTabPositions, lpnTabStopPositions, nTabOrigin);
 
    }
 
 
-   int graphics::draw_text(const char * lpszString, int nCount, const RECT & lpRect, UINT nFormat)
+   int graphics::draw_text(const char * lpszString, strsize nCount, const RECT & lpRect, UINT nFormat)
    { 
 
       return _DrawText(lpszString, nCount, lpRect, nFormat);
-
-      //wstring wstr(string(lpszString, nCount));
-
-      //return ::DrawTextW(get_handle(), wstr, wstr.get_length(), lpRect, nFormat);
-
-      //System.visual().
 
    }
 
@@ -1799,7 +1787,7 @@ namespace draw2d_gdi
    }
 
 
-   int graphics::draw_text_ex(LPTSTR lpszString,int nCount,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
+   int graphics::draw_text_ex(const char * lpszString,strsize nCount,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
    { 
 
       wstring wstr(string(lpszString, nCount));
@@ -1817,42 +1805,42 @@ namespace draw2d_gdi
    }
 
 
-   class size graphics::GetTabbedTextExtent(const char * lpszString,strsize nCount,int nTabPositions,LPINT lpnTabStopPositions) const
+   class size graphics::GetTabbedTextExtent(const char * lpszString,strsize nCount,count  nTabPositions,LPINT lpnTabStopPositions) const
    {
 
       ASSERT(get_handle2() != NULL);
 
-      return ::GetTabbedTextExtent(get_handle2(), lpszString, nCount, nTabPositions, lpnTabStopPositions);
+      return ::GetTabbedTextExtent(get_handle2(), lpszString, (int) nCount, (int) nTabPositions, lpnTabStopPositions);
 
    }
 
 
-   class size graphics::GetTabbedTextExtent(const string & str, int nTabPositions, LPINT lpnTabStopPositions) const
+   class size graphics::GetTabbedTextExtent(const string & str, count nTabPositions, LPINT lpnTabStopPositions) const
    { 
 
       ASSERT(get_handle2() != NULL);
 
-      return ::GetTabbedTextExtent(get_handle2(), str, (int)str.get_length(), nTabPositions, lpnTabStopPositions);
+      return ::GetTabbedTextExtent(get_handle2(), str, (int)str.get_length(), (int) nTabPositions, lpnTabStopPositions);
 
    }
 
 
-   class size graphics::GetOutputTabbedTextExtent(const char * lpszString,strsize nCount,int nTabPositions,LPINT lpnTabStopPositions) const
+   class size graphics::GetOutputTabbedTextExtent(const char * lpszString,strsize nCount, count nTabPositions,LPINT lpnTabStopPositions) const
    {
 
       ASSERT(get_handle1() != NULL);
 
-      return ::GetTabbedTextExtent(get_handle1(), lpszString, nCount, nTabPositions, lpnTabStopPositions);
+      return ::GetTabbedTextExtent(get_handle1(), lpszString, (int) nCount, (int) nTabPositions, lpnTabStopPositions);
 
    }
 
 
-   class size graphics::GetOutputTabbedTextExtent(const string & str, int nTabPositions, LPINT lpnTabStopPositions) const
+   class size graphics::GetOutputTabbedTextExtent(const string & str, count nTabPositions, LPINT lpnTabStopPositions) const
    {
 
       ASSERT(get_handle1() != NULL);
 
-      return ::GetTabbedTextExtent(get_handle1(), str, (int)str.get_length(), nTabPositions, lpnTabStopPositions);
+      return ::GetTabbedTextExtent(get_handle1(), str, (int)str.get_length(), (int) nTabPositions, lpnTabStopPositions);
 
    }
 
@@ -1877,12 +1865,12 @@ namespace draw2d_gdi
    }
 
 
-   int graphics::GetTextFace(int nCount, __out_ecount_part_z(nCount, return + 1) LPTSTR lpszFacename) const
+   int graphics::GetTextFace(count nCount, LPTSTR lpszFacename) const
    { 
 
       ASSERT(get_handle2() != NULL);
 
-      return ::GetTextFace(get_handle2(), nCount, lpszFacename);
+      return ::GetTextFace(get_handle2(), (int) nCount, lpszFacename);
 
    }
 
@@ -2008,22 +1996,22 @@ namespace draw2d_gdi
 
 
 
-   uint32_t graphics::GetCharacterPlacement(const char * lpString, int nCount, int nMaxExtent, LPGCP_RESULTS lpResults, uint32_t dwFlags) const
+   uint32_t graphics::GetCharacterPlacement(const char * lpString, strsize nCount, strsize nMaxExtent, LPGCP_RESULTS lpResults, uint32_t dwFlags) const
    {
 
       ASSERT(get_handle1() != NULL);
 
-      return ::GetCharacterPlacement(get_handle1(), lpString, nCount, nMaxExtent, lpResults, dwFlags);
+      return ::GetCharacterPlacement(get_handle1(), lpString, (int) nCount, (int) nMaxExtent, lpResults, dwFlags);
 
    }
 
 
-   uint32_t graphics::GetCharacterPlacement(string & str, int nMaxExtent, LPGCP_RESULTS lpResults, uint32_t dwFlags) const
+   uint32_t graphics::GetCharacterPlacement(string & str, strsize nMaxExtent, LPGCP_RESULTS lpResults, uint32_t dwFlags) const
    {
 
       ASSERT(get_handle1() != NULL);
 
-      return ::GetCharacterPlacement(get_handle1(), (const char *)str, (int) str.get_length(), nMaxExtent, lpResults, dwFlags);
+      return ::GetCharacterPlacement(get_handle1(), (const char *)str, (int) str.get_length(), (int) nMaxExtent, lpResults, dwFlags);
 
    }
 
@@ -2251,12 +2239,12 @@ namespace draw2d_gdi
 
 
 
-   bool graphics::PolyPolyline(const POINT* lpPoints, const uint32_t* lpPolyPoints, int nCount)
+   bool graphics::PolyPolyline(const POINT* lpPoints, const INT * lpPolyPoints, count nCount)
    { 
 
       ASSERT(get_handle1() != NULL);
 
-      return ::PolyPolyline(get_handle1(), lpPoints, (const DWORD *) lpPolyPoints, nCount) != FALSE;
+      return ::PolyPolyline(get_handle1(), lpPoints, (const DWORD *) lpPolyPoints, (int) nCount) != FALSE;
 
    }
 

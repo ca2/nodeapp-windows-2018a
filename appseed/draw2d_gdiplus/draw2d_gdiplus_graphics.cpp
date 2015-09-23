@@ -425,9 +425,9 @@ namespace draw2d_gdiplus
       return SetWindowExt(size.cx, size.cy); 
    }
 
-   void graphics::DPtoLP(LPPOINT lpPoints, int32_t nCount) const
+   void graphics::DPtoLP(LPPOINT lpPoints, count nCount) const
    { 
-      ::DPtoLP(get_handle2(), lpPoints, nCount); 
+      ::DPtoLP(get_handle2(), lpPoints, (int) nCount); 
    }
 
    void graphics::DPtoLP(LPRECT lpRect) const
@@ -435,9 +435,9 @@ namespace draw2d_gdiplus
       ::DPtoLP(get_handle2(), (LPPOINT)lpRect, 2); 
    }
 
-   void graphics::LPtoDP(LPPOINT lpPoints, int32_t nCount) const
+   void graphics::LPtoDP(LPPOINT lpPoints,count nCount) const
    {
-      ::LPtoDP(get_handle2(), lpPoints, nCount); 
+      ::LPtoDP(get_handle2(), lpPoints, (int)  nCount); 
    }
 
    void graphics::LPtoDP(LPRECT lpRect) const
@@ -506,7 +506,7 @@ namespace draw2d_gdiplus
       return point;
    }
 
-   bool graphics::Polyline(const POINT* lpPoints, int32_t nCount)
+   bool graphics::Polyline(const POINT* lpPoints,count nCount)
    {
    
       if(nCount <= 0)
@@ -525,7 +525,7 @@ namespace draw2d_gdiplus
             ppoints[i].Y = lpPoints[i].y;
          }
 
-         bOk1 = m_pgraphics->DrawLines(gdiplus_pen(),ppoints,nCount) == Gdiplus::Status::Ok;
+         bOk1 = m_pgraphics->DrawLines(gdiplus_pen(),ppoints,(INT) nCount) == Gdiplus::Status::Ok;
 
       }
       catch(...)
@@ -904,7 +904,7 @@ namespace draw2d_gdiplus
    rectParam.right, rectParam.bottom, ptStart.x, ptStart.y,
    ptEnd.x, ptEnd.y) != FALSE; }
 
-   bool graphics::fill_polygon(const POINTD * lpPoints, int32_t nCount)
+   bool graphics::fill_polygon(const POINTD * lpPoints,count nCount)
    {
 
       if(nCount <= 0)
@@ -928,7 +928,7 @@ namespace draw2d_gdiplus
          set_smooth_mode(::draw2d::smooth_mode_high);
 
    
-         bOk1 = m_pgraphics->FillPolygon(gdiplus_brush(), ppoints, nCount, gdiplus_get_fill_mode()) == Gdiplus::Status::Ok;
+         bOk1 = m_pgraphics->FillPolygon(gdiplus_brush(), ppoints, (INT) nCount, gdiplus_get_fill_mode()) == Gdiplus::Status::Ok;
 
       }
       catch(...)
@@ -947,7 +947,7 @@ namespace draw2d_gdiplus
       return bOk1;
    }
 
-   bool graphics::fill_polygon(const POINT* lpPoints, int32_t nCount)
+   bool graphics::fill_polygon(const POINT* lpPoints,count nCount)
    {
 
       if(nCount <= 0)
@@ -968,7 +968,7 @@ namespace draw2d_gdiplus
 
          m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
    
-         bOk1 = m_pgraphics->FillPolygon(gdiplus_brush(), ppoints, nCount, gdiplus_get_fill_mode()) == Gdiplus::Status::Ok;
+         bOk1 = m_pgraphics->FillPolygon(gdiplus_brush(), ppoints, (INT)  nCount, gdiplus_get_fill_mode()) == Gdiplus::Status::Ok;
 
       }
       catch(...)
@@ -987,7 +987,7 @@ namespace draw2d_gdiplus
       return bOk1;
    }
 
-   bool graphics::draw_polygon(const POINT* lpPoints, int32_t nCount)
+   bool graphics::draw_polygon(const POINT* lpPoints,count nCount)
    {
 
       if (nCount <= 0)
@@ -1010,7 +1010,7 @@ namespace draw2d_gdiplus
 
          set_smooth_mode(::draw2d::smooth_mode_high);
 
-         bOk1 = m_pgraphics->DrawPolygon(gdiplus_pen(), ppoints, nCount) == Gdiplus::Status::Ok;
+         bOk1 = m_pgraphics->DrawPolygon(gdiplus_pen(), ppoints, (INT) nCount) == Gdiplus::Status::Ok;
 
       }
       catch (...)
@@ -1029,7 +1029,7 @@ namespace draw2d_gdiplus
       return bOk1;
    }
 
-   bool graphics::draw_polygon(const POINTD* lpPoints,int32_t nCount)
+   bool graphics::draw_polygon(const POINTD* lpPoints,count nCount)
    {
 
       if(nCount <= 0)
@@ -1050,7 +1050,7 @@ namespace draw2d_gdiplus
 
          m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
 
-         bOk1 = m_pgraphics->DrawPolygon(gdiplus_pen(),ppoints,nCount) == Gdiplus::Status::Ok;
+         bOk1 = m_pgraphics->DrawPolygon(gdiplus_pen(),ppoints,(INT) nCount) == Gdiplus::Status::Ok;
 
       }
       catch(...)
@@ -1069,7 +1069,7 @@ namespace draw2d_gdiplus
       return bOk1;
    }
 
-   bool graphics::Polygon(const POINT* lpPoints, int32_t nCount)
+   bool graphics::Polygon(const POINT* lpPoints,count nCount)
    {
 
       if(nCount <= 0)
@@ -1096,9 +1096,9 @@ namespace draw2d_gdiplus
          m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
 
    
-         bOk1 = m_pgraphics->FillPolygon(gdiplus_brush(), ppoints, nCount, gdiplus_get_fill_mode()) == Gdiplus::Status::Ok;
+         bOk1 = m_pgraphics->FillPolygon(gdiplus_brush(), ppoints, (INT) nCount, gdiplus_get_fill_mode()) == Gdiplus::Status::Ok;
 
-         bOk2 = m_pgraphics->DrawPolygon(gdiplus_pen(), ppoints, nCount) == Gdiplus::Status::Ok;
+         bOk2 = m_pgraphics->DrawPolygon(gdiplus_pen(), ppoints, (INT) nCount) == Gdiplus::Status::Ok;
 
       }
       catch(...)
@@ -1117,8 +1117,18 @@ namespace draw2d_gdiplus
       return bOk1 && bOk2;
    
    }
-   bool graphics::PolyPolygon(const POINT* lpPoints, const INT* lpPolyCounts, int32_t nCount)
-   { ASSERT(get_handle1() != NULL); return ::PolyPolygon(get_handle1(), lpPoints, lpPolyCounts, nCount) != FALSE; }
+   
+   
+   bool graphics::PolyPolygon(const POINT* lpPoints, const INT* lpPolyCounts,count nCount)
+   { 
+      
+      ASSERT(get_handle1() != NULL); 
+
+      
+      return ::PolyPolygon(get_handle1(), lpPoints, (const INT *) lpPolyCounts, (int) nCount) != FALSE;
+   
+   }
+
    
    bool graphics::Rectangle(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    { 
@@ -1133,7 +1143,7 @@ namespace draw2d_gdiplus
 
    }
 
-   bool graphics::Polygon(const POINTD* lpPoints,int32_t nCount)
+   bool graphics::Polygon(const POINTD* lpPoints,count nCount)
    {
 
       if(nCount <= 0)
@@ -1170,9 +1180,9 @@ namespace draw2d_gdiplus
          }
 
 
-         bOk1 = m_pgraphics->FillPolygon(gdiplus_brush(),ppoints,nCount,gdiplus_get_fill_mode()) == Gdiplus::Status::Ok;
+         bOk1 = m_pgraphics->FillPolygon(gdiplus_brush(),ppoints,(INT) nCount,gdiplus_get_fill_mode()) == Gdiplus::Status::Ok;
 
-         bOk2 = m_pgraphics->DrawPolygon(gdiplus_pen(),ppoints,nCount) == Gdiplus::Status::Ok;
+         bOk2 = m_pgraphics->DrawPolygon(gdiplus_pen(),ppoints,(INT) nCount) == Gdiplus::Status::Ok;
 
       }
       catch(...)
@@ -1371,65 +1381,126 @@ gdi_fallback:
    } 
 
 
-   bool graphics::ExtTextOut(int32_t x,int32_t y,UINT nOptions,const RECT &  rectParam,const char * lpszString,UINT nCount,LPINT lpDxWidths)
+   bool graphics::ExtTextOut(int32_t x,int32_t y,UINT nOptions,const RECT &  rectParam,const char * lpszString,strsize nCount,LPINT lpDxWidths)
    { 
+
       ASSERT(get_handle1() != NULL); 
-      return ::ExtTextOut(get_handle1(),x,y,nOptions,&rectParam,lpszString,nCount,lpDxWidths) != FALSE;
+
+      return ::ExtTextOut(get_handle1(),x,y,nOptions,&rectParam,lpszString,(UINT) nCount,lpDxWidths) != FALSE;
+
    }
 
-   bool graphics::ExtTextOut(int32_t x,int32_t y,UINT nOptions,const RECT &  rectParam,
-      const string & str, LPINT lpDxWidths)
+
+   bool graphics::ExtTextOut(int32_t x,int32_t y,UINT nOptions,const RECT &  rectParam, const string & str, LPINT lpDxWidths)
    {
-      ASSERT(get_handle1() != NULL); return ::ExtTextOut(get_handle1(),x,y,nOptions,&rectParam,
-   str, (UINT)str.get_length(), lpDxWidths) != FALSE; }
-   size graphics::TabbedTextOut(int32_t x, int32_t y, const char * lpszString, int32_t nCount,
-      int32_t nTabPositions, LPINT lpnTabStopPositions, int32_t nTabOrigin)
-   { ASSERT(get_handle1() != NULL); return ::TabbedTextOut(get_handle1(), x, y, lpszString, nCount,
-   nTabPositions, lpnTabStopPositions, nTabOrigin); }
-   size graphics::TabbedTextOut(int32_t x, int32_t y, const string & str,
-      int32_t nTabPositions, LPINT lpnTabStopPositions, int32_t nTabOrigin)
-   { ASSERT(get_handle1() != NULL); return ::TabbedTextOut(get_handle1(), x, y, str, (int32_t)str.get_length(),
-   nTabPositions, lpnTabStopPositions, nTabOrigin); }
+   
+      ASSERT(get_handle1() != NULL); 
+      
+      return ::ExtTextOut(get_handle1(),x,y,nOptions,&rectParam, str, (UINT)str.get_length(), lpDxWidths) != FALSE; 
+   
+   }
+   
+
+   size graphics::TabbedTextOut(int32_t x, int32_t y, const char * lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions, int32_t nTabOrigin)
+   {
+      
+      ASSERT(get_handle1() != NULL);
+      
+      return ::TabbedTextOut(get_handle1(), x, y, lpszString, (int) nCount, (int) nTabPositions, lpnTabStopPositions, nTabOrigin); 
+   
+   }
 
 
-   size graphics::GetTabbedTextExtent(const char * lpszString, strsize nCount, int32_t nTabPositions, LPINT lpnTabStopPositions) const
+   size graphics::TabbedTextOut(int32_t x, int32_t y, const string & str, count nTabPositions, LPINT lpnTabStopPositions, int32_t nTabOrigin)
    { 
+      
+      ASSERT(get_handle1() != NULL); 
+      
+      return ::TabbedTextOut(get_handle1(), x, y, str, (int32_t)str.get_length(), (int) nTabPositions, lpnTabStopPositions, nTabOrigin); 
+   
+   }
+
+
+   size graphics::GetTabbedTextExtent(const char * lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions) const
+   { 
+      
       ASSERT(get_handle2() != NULL); 
-      return ::GetTabbedTextExtent(get_handle2(), lpszString, (int32_t) nCount, nTabPositions, lpnTabStopPositions);
+
+      return ::GetTabbedTextExtent(get_handle2(), lpszString, (int32_t) nCount, (int) nTabPositions, lpnTabStopPositions);
+
    }
 
-   size graphics::GetTabbedTextExtent(const string & str, int32_t nTabPositions, LPINT lpnTabStopPositions) const
+
+   size graphics::GetTabbedTextExtent(const string & str, count nTabPositions, LPINT lpnTabStopPositions) const
    {
+
       ASSERT(get_handle2() != NULL); 
-      return ::GetTabbedTextExtent(get_handle2(), str, (int32_t) str.get_length(), nTabPositions, lpnTabStopPositions);
+
+      return ::GetTabbedTextExtent(get_handle2(), str, (int32_t) str.get_length(), (int) nTabPositions, lpnTabStopPositions);
+
    }
 
-   size graphics::GetOutputTabbedTextExtent(const char * lpszString, strsize nCount, int32_t nTabPositions, LPINT lpnTabStopPositions) const
+
+   size graphics::GetOutputTabbedTextExtent(const char * lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions) const
    {
+
       ASSERT(get_handle1() != NULL);
-      return ::GetTabbedTextExtent(get_handle1(), lpszString, (int32_t) nCount, nTabPositions, lpnTabStopPositions);
+
+      return ::GetTabbedTextExtent(get_handle1(), lpszString, (int32_t) nCount, (int) nTabPositions, lpnTabStopPositions);
+
    }
 
-   size graphics::GetOutputTabbedTextExtent(const string & str, int32_t nTabPositions, LPINT lpnTabStopPositions) const
+
+   size graphics::GetOutputTabbedTextExtent(const string & str, count nTabPositions, LPINT lpnTabStopPositions) const
    {
+
       ASSERT(get_handle1() != NULL);
-      return ::GetTabbedTextExtent(get_handle1(), str, (int32_t) str.get_length(), nTabPositions, lpnTabStopPositions);
+
+      return ::GetTabbedTextExtent(get_handle1(), str, (int32_t) str.get_length(), (int) nTabPositions, lpnTabStopPositions);
+
    }
+
 
    bool graphics::GrayString(::draw2d::brush* pBrush, bool (CALLBACK* lpfnOutput)(HDC, LPARAM, int32_t), LPARAM lpData, int32_t nCount,int32_t x, int32_t y, int32_t nWidth, int32_t nHeight)
    {
+
       ASSERT(get_handle1() != NULL); 
+
       return ::GrayString(get_handle1(), (HBRUSH)pBrush->get_os_data(),(GRAYSTRINGPROC)lpfnOutput, lpData, nCount, x, y, nWidth, nHeight) != FALSE;
+
    }
 
+
    UINT graphics::GetTextAlign() const
-   { ASSERT(get_handle2() != NULL); return ::GetTextAlign(get_handle2()); }
-   int32_t graphics::GetTextFace(__in int32_t nCount, __out_ecount_part_z(nCount, return + 1) LPTSTR lpszFacename) const
-   { ASSERT(get_handle2() != NULL); return ::GetTextFace(get_handle2(), nCount, lpszFacename); }
+   {
+      
+      ASSERT(get_handle2() != NULL);
+      
+      return ::GetTextAlign(get_handle2()); 
+   
+   }
+
+   
+   int32_t graphics::GetTextFace(count nCount, LPTSTR lpszFacename) const
+   { 
+      
+      ASSERT(get_handle2() != NULL); 
+      
+      return ::GetTextFace(get_handle2(), (int) nCount, lpszFacename); 
+   
+   }
+
+
    int32_t graphics::GetTextFace(string & rString) const
-   { ASSERT(get_handle2() != NULL); int32_t nResult = ::GetTextFace(get_handle2(),
-   256, rString.GetBuffer(256)); rString.ReleaseBuffer();
-   return nResult; }
+   {
+      
+      ASSERT(get_handle2() != NULL); 
+      
+      int32_t nResult = ::GetTextFace(get_handle2(), 256, rString.GetBuffer(256)); rString.ReleaseBuffer();
+   
+      return nResult; 
+   
+   }
 
    bool graphics::get_text_metrics(::draw2d::text_metric * lpMetrics) const
    { 
@@ -1510,15 +1581,23 @@ gdi_fallback:
    uint32_t graphics::GetFontLanguageInfo() const
    { ASSERT(get_handle1() != NULL); return ::GetFontLanguageInfo(get_handle1()); }
 
-   uint32_t graphics::GetCharacterPlacement(const char * lpString, int32_t nCount, int32_t nMaxExtent, LPGCP_RESULTS lpResults, uint32_t dwFlags) const
-   { ASSERT(get_handle1() != NULL); return ::GetCharacterPlacement(get_handle1(), lpString, nCount, nMaxExtent, lpResults, dwFlags); }
    
-   uint32_t graphics::GetCharacterPlacement(string & str, int32_t nMaxExtent, LPGCP_RESULTS lpResults, uint32_t dwFlags) const
+   uint32_t graphics::GetCharacterPlacement(const char * lpString, strsize nCount, strsize nMaxExtent, LPGCP_RESULTS lpResults, uint32_t dwFlags) const
    { 
       
       ASSERT(get_handle1() != NULL); 
       
-      return ::GetCharacterPlacement(get_handle1(), (const char *)str, (int32_t) str.get_length(), nMaxExtent, lpResults, dwFlags);
+      return ::GetCharacterPlacement(get_handle1(), lpString, (int) nCount, (int) nMaxExtent, lpResults, dwFlags); 
+   
+   }
+   
+
+   uint32_t graphics::GetCharacterPlacement(string & str, strsize nMaxExtent, LPGCP_RESULTS lpResults, uint32_t dwFlags) const
+   { 
+      
+      ASSERT(get_handle1() != NULL); 
+      
+      return ::GetCharacterPlacement(get_handle1(), (const char *)str, (int32_t) str.get_length(), (int) nMaxExtent, lpResults, dwFlags);
    
    }
 
@@ -1693,10 +1772,18 @@ gdi_fallback:
    int32_t graphics::GetArcDirection() const
    { ASSERT(get_handle2() != NULL);
    return ::GetArcDirection(get_handle2()); }
-   bool graphics::PolyPolyline(const POINT* lpPoints, const uint32_t* lpPolyPoints,
-      int32_t nCount)
-   { ASSERT(get_handle1() != NULL); 
-   return ::PolyPolyline(get_handle1(), lpPoints, (LPDWORD) lpPolyPoints, nCount) != FALSE; }
+
+
+   bool graphics::PolyPolyline(const POINT* lpPoints, const INT * lpPolyPoints, count nCount)
+   { 
+      
+      ASSERT(get_handle1() != NULL); 
+
+      return ::PolyPolyline(get_handle1(), lpPoints, (LPDWORD) lpPolyPoints, (DWORD) nCount) != FALSE; 
+   
+   }
+
+
    bool graphics::GetColorAdjustment(LPCOLORADJUSTMENT lpColorAdjust) const
    { ASSERT(get_handle2() != NULL); 
    return ::GetColorAdjustment(get_handle2(), lpColorAdjust) != FALSE; }
@@ -1736,16 +1823,24 @@ gdi_fallback:
 
    }
 
-   bool graphics::PolyBezier(const POINT* lpPoints, int32_t nCount)
+   
+   bool graphics::PolyBezier(const POINT* lpPoints, count nCount)
    {
+
       ASSERT(get_handle1() != NULL); 
-      return ::PolyBezier(get_handle1(), lpPoints, nCount) != FALSE; 
+
+      return ::PolyBezier(get_handle1(), lpPoints, (DWORD) nCount) != FALSE; 
+
    }
+
 
    int32_t graphics::DrawEscape(int32_t nEscape, int32_t nInputSize, const char * lpszInputData)
    {
+
       ASSERT(get_handle1() != NULL); 
+
       return ::DrawEscape(get_handle1(), nEscape, nInputSize, lpszInputData); 
+
    }
    
    int32_t graphics::Escape(__in int32_t nEscape, __in int32_t nInputSize, __in_bcount(nInputSize) const char * lpszInputData,  __in int32_t nOutputSize, __out_bcount(nOutputSize) char * lpszOutputData)
@@ -1827,11 +1922,16 @@ gdi_fallback:
       return fMiterLimit; 
    }
 
-   int32_t graphics::GetPath(LPPOINT lpPoints, LPBYTE lpTypes, int32_t nCount) const
+   
+   int32_t graphics::GetPath(LPPOINT lpPoints, LPBYTE lpTypes, count nCount) const
    { 
+
       ASSERT(get_handle1() != NULL); 
-      return ::GetPath(get_handle1(), lpPoints, lpTypes, nCount); 
+
+      return ::GetPath(get_handle1(), lpPoints, lpTypes, (int) nCount); 
+
    }
+
    bool graphics::SetMiterLimit(float fMiterLimit)
    {
       ASSERT(get_handle1() != NULL); 
@@ -3292,10 +3392,13 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return nResult;
    }
 
-   bool graphics::PolyDraw(const POINT* lpPoints, const BYTE* lpTypes, int32_t nCount)
+   bool graphics::PolyDraw(const POINT* lpPoints, const BYTE* lpTypes, count nCount)
    {
+
       ASSERT(get_handle1() != NULL);
-      bool bResult = ::PolyDraw(get_handle1(), lpPoints, lpTypes, nCount) != FALSE;
+
+      bool bResult = ::PolyDraw(get_handle1(), lpPoints, lpTypes, (int) nCount) != FALSE;
+
       if (get_handle1() != get_handle2())
       {
          point pt;

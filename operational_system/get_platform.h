@@ -11,8 +11,8 @@
 
 
 
-#include "_inttypes.h"
-#include "_meminttypes.h"
+#include "_stdint.h"
+
 
 
 

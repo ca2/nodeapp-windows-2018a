@@ -25,9 +25,9 @@ namespace draw2d_gdiplus
       bool LoadBitmap(const char * lpszResourceName);
       bool LoadBitmap(UINT nIDResource);
       bool LoadOEMBitmap(UINT nIDBitmap); // for OBM_/OCR_/OIC_
-   #ifndef ___NO_AFXCMN_SUPPORT
-      bool LoadMappedBitmap(UINT nIDBitmap, UINT nFlags = 0, LPCOLORMAP lpColorMap = NULL, int32_t nMapSize = 0);
-   #endif
+   //#ifndef ___NO_AFXCMN_SUPPORT
+   //   bool LoadMappedBitmap(UINT nIDBitmap, UINT nFlags = 0, LPCOLORMAP lpColorMap = NULL, int32_t nMapSize = 0);
+   //#endif
       bool CreateBitmap(::draw2d::graphics * pdc, int32_t nWidth, int32_t nHeight, UINT nPlanes, UINT nBitcount, const void * lpBits, int32_t stride);
       bool CreateBitmapIndirect(::draw2d::graphics * pdc, LPBITMAP lpBitmap);
       bool CreateCompatibleBitmap(::draw2d::graphics * pgraphics, int32_t nWidth, int32_t nHeight);
