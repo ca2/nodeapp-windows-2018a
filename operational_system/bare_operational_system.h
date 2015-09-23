@@ -4,60 +4,8 @@
 #define WINDOWS
 
 
-/////////////////////////////////////////////////////////////////////////////
-// Master version numbers
-
-#define _AFX     1      // Microsoft Application Framework Classes
-#ifndef _MFC_VER
-#define _MFC_VER 0x0800 // Microsoft Foundation Classes version 8.00
-#endif
-
 #define DECL_SPEC_ANY __declspec(selectany)
 
-/////////////////////////////////////////////////////////////////////////////
-// turn off reference tracking for certain often used symbols
-
-#ifndef ___PORTABLE
-#pragma component(browser, off, references, "ASSERT")
-#pragma component(browser, off, references, "__assert_failed_line")
-#pragma component(browser, off, references, "bool")
-#pragma component(browser, off, references, "BYTE")
-#pragma component(browser, off, references, "DECLSPEC_IMPORT")
-#pragma component(browser, off, references, "DWORD")
-#pragma component(browser, off, references, "FALSE")
-#pragma component(browser, off, references, "FAR")
-#pragma component(browser, off, references, "LPSTR")
-#pragma component(browser, off, references, "LPTSTR")
-#pragma component(browser, off, references, "LPCSTR")
-#pragma component(browser, off, references, "LPCTSTR")
-#pragma component(browser, off, references, "NULL")
-#pragma component(browser, off, references, "THIS_FILE")
-#pragma component(browser, off, references, "TRUE")
-#pragma component(browser, off, references, "UINT")
-#pragma component(browser, off, references, "WINAPI")
-#pragma component(browser, off, references, "WORD")
-#endif  //!___PORTABLE
-
-
-#ifndef DEBUG
-#ifndef ___DISABLE_INLINES
-//	#define ___ENABLE_INLINES
-#endif
-#endif
-
-#define ___NO_NESTED_DERIVATION
-
-
-/////////////////////////////////////////////////////////////////////////////
-// special include files
-
-#ifndef __INLINE
-#ifdef __cplusplus
-	#define __INLINE inline /*__forceinline*/
-#else
-	#define __INLINE 
-#endif
-#endif
 
 #include "version_windows.h"
 
@@ -292,11 +240,6 @@
 
 #define DECLSPEC_NO_RETURN __declspec(noreturn)
 
-
-
-typedef INT_PTR         int_ptr     , * pint_ptr;
-typedef UINT_PTR        uint_ptr    , * puint_ptr;
-typedef int_ptr         ssize_t;
 
 
 #include "cross/cross.h"
