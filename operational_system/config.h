@@ -90,7 +90,9 @@
 #define static_inline __forceinline
 
 
-
+#ifndef _DEBUG
+#pragma warning(disable: 4101)  // unreferenced local function has been removed
+#endif
 
 
 /////////////////////////////////////////////////////////////////////////////
