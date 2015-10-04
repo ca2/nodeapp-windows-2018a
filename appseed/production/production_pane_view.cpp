@@ -44,7 +44,7 @@ namespace production
 
    void pane_view::_001OnCreate(::signal_details * pobj) 
    {
-//      SCAST_PTR(::message::create, pcreate, pobj)
+//      SCAST_PTR(::message::create, pcreate, pobj);
       if(pobj->previous())
          return;
 
@@ -350,7 +350,7 @@ namespace production
 
      void pane_view::_001OnUserMessage(::signal_details * pobj)
      {
-        SCAST_PTR(::message::base, pbase, pobj)
+        SCAST_PTR(::message::base, pbase, pobj);
            if(pbase->m_wparam == 1)
            {
                set_cur_tab_by_id("tabbed_file_manager");

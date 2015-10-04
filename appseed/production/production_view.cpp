@@ -134,7 +134,7 @@ namespace production
    void view::_001OnSize(::signal_details * pobj) 
    {
       UNREFERENCED_PARAMETER(pobj);
-//      SCAST_PTR(::message::size, psize, pobj)
+//      SCAST_PTR(::message::size, psize, pobj);
 
       rect rectDesktop;
       best_monitor(rectDesktop);
@@ -304,7 +304,7 @@ namespace production
 
    void view::_001OnContextMenu(::signal_details * pobj) 
    {
-      SCAST_PTR(::message::context_menu, pcontextmenu, pobj)
+      SCAST_PTR(::message::context_menu, pcontextmenu, pobj);
       point point = pcontextmenu->GetPoint();
    }
 
@@ -379,7 +379,7 @@ namespace production
    void view::_001OnLButtonDown(::signal_details * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
-  //    SCAST_PTR(::message::mouse, pmouse, pobj)
+  //    SCAST_PTR(::message::mouse, pmouse, pobj);
 
 //      int32_t iHitArea = hit_test(pmouse->m_pt);
 
@@ -387,7 +387,7 @@ namespace production
 
    void view::_001OnLButtonUp(::signal_details * pobj)
    {
-      SCAST_PTR(::message::mouse, pmouse, pobj)
+      SCAST_PTR(::message::mouse, pmouse, pobj);
 
       class point point = pmouse->m_pt;
       ScreenToClient(&point);
@@ -407,7 +407,7 @@ namespace production
    void view::_001OnRButtonUp(::signal_details * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
-  //    SCAST_PTR(::message::mouse, pmouse, pobj)
+  //    SCAST_PTR(::message::mouse, pmouse, pobj);
 
 //      int32_t iHitArea = hit_test(pmouse->m_pt);
    /*   {
@@ -463,7 +463,7 @@ namespace production
    void view::_001OnShowWindow(::signal_details * pobj) 
    {
       UNREFERENCED_PARAMETER(pobj);
-//      SCAST_PTR(::message::show_window, pshowwindow, pobj)
+//      SCAST_PTR(::message::show_window, pshowwindow, pobj);
    }
 
    void view::make_production()
