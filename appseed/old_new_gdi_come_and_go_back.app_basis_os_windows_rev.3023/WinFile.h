@@ -62,8 +62,8 @@ public:
    virtual void set_length(file_size dwNewLen);
    virtual file_size get_length() const;
 
-   virtual ::primitive::memory_size read(void * lpBuf, ::primitive::memory_size nCount);
-   virtual void write(const void * lpBuf, ::primitive::memory_size nCount);
+   virtual memory_size_t read(void * lpBuf, memory_size_t nCount);
+   virtual void write(const void * lpBuf, memory_size_t nCount);
 
    virtual void LockRange(file_position dwPos, file_size dwCount);
    virtual void UnlockRange(file_position dwPos, file_size dwCount);

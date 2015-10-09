@@ -30,8 +30,8 @@ public:
 #endif
    virtual file_position get_position() const;
    virtual BOOL open(const char * lpszFileName, UINT nOpenFlags, ex1::file_exception_sp * pError = NULL);
-   virtual ::primitive::memory_size read(void * lpBuf, ::primitive::memory_size nCount);
-   virtual void write(const void * lpBuf, ::primitive::memory_size nCount);
+   virtual memory_size_t read(void * lpBuf, memory_size_t nCount);
+   virtual void write(const void * lpBuf, memory_size_t nCount);
    virtual file_position seek(file_offset lOff, ::ex1::e_seek nFrom);
    virtual void Abort();
    virtual void Flush();

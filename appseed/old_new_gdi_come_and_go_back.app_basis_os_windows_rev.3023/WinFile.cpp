@@ -183,7 +183,7 @@ BOOL WinFile::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_excepti
    return TRUE;
 }
 
-::primitive::memory_size WinFile::read(void * lpBuf, ::primitive::memory_size nCount)
+memory_size_t WinFile::read(void * lpBuf, memory_size_t nCount)
 {
    ASSERT_VALID(this);
    ASSERT(m_hFile != (UINT)hFileNull);
@@ -201,7 +201,7 @@ BOOL WinFile::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_excepti
    return (UINT)dwRead;
 }
 
-void WinFile::write(const void * lpBuf, ::primitive::memory_size nCount)
+void WinFile::write(const void * lpBuf, memory_size_t nCount)
 {
    ASSERT_VALID(this);
    ASSERT(m_hFile != (UINT)hFileNull);

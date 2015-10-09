@@ -99,7 +99,7 @@ BOOL WinStdioFile::open(const char * lpszFileName, UINT nOpenFlags,
    return TRUE;
 }
 
-::primitive::memory_size WinStdioFile::read(void * lpBuf, ::primitive::memory_size nCount)
+memory_size_t WinStdioFile::read(void * lpBuf, memory_size_t nCount)
 {
    ASSERT_VALID(this);
    ASSERT(m_pStream != NULL);
@@ -121,7 +121,7 @@ BOOL WinStdioFile::open(const char * lpszFileName, UINT nOpenFlags,
    return nRead;
 }
 
-void WinStdioFile::write(const void * lpBuf, ::primitive::memory_size nCount)
+void WinStdioFile::write(const void * lpBuf, memory_size_t nCount)
 {
    ASSERT_VALID(this);
    ASSERT(m_pStream != NULL);
