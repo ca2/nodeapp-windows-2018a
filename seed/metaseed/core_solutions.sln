@@ -297,11 +297,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tesseract", "..\..\..\app-c
 		{73A245F9-C92F-4487-AEF7-CB0531F665BD} = {73A245F9-C92F-4487-AEF7-CB0531F665BD}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6B43BBE2-904F-4CEF-9C18-18AEDC895567}"
-	ProjectSection(SolutionItems) = preProject
-		Performance3.psess = Performance3.psess
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "html_lite", "..\..\..\app\axis\html_lite\html_lite.vcxproj", "{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}"
 	ProjectSection(ProjectDependencies) = postProject
 		{51778453-C0AA-419D-A87F-4338C9DDE3FA} = {51778453-C0AA-419D-A87F-4338C9DDE3FA}
@@ -486,6 +481,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_visualclick", "..\
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wndfrm_rootkiller", "..\..\..\app-core\appseed\wndfrm_rootkiller\wndfrm_rootkiller.vcxproj", "{EBB7FB48-31AA-4282-999B-D52C9B3B887B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_xmpp_client", "..\..\..\app-core\appseed\xmpp_client\xmpp_client.vcxproj", "{C168400B-31B1-48C5-AC34-838E5EE6DF08}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xmpp", "..\..\..\app-core\appseed\xmpp\xmpp.vcxproj", "{19845177-6A40-4458-848A-849220E88C80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1111,6 +1110,22 @@ Global
 		{EBB7FB48-31AA-4282-999B-D52C9B3B887B}.stage|Win32.Build.0 = stage|Win32
 		{EBB7FB48-31AA-4282-999B-D52C9B3B887B}.stage|x64.ActiveCfg = stage|x64
 		{EBB7FB48-31AA-4282-999B-D52C9B3B887B}.stage|x64.Build.0 = stage|x64
+		{C168400B-31B1-48C5-AC34-838E5EE6DF08}.basis|Win32.ActiveCfg = basis|Win32
+		{C168400B-31B1-48C5-AC34-838E5EE6DF08}.basis|Win32.Build.0 = basis|Win32
+		{C168400B-31B1-48C5-AC34-838E5EE6DF08}.basis|x64.ActiveCfg = basis|x64
+		{C168400B-31B1-48C5-AC34-838E5EE6DF08}.basis|x64.Build.0 = basis|x64
+		{C168400B-31B1-48C5-AC34-838E5EE6DF08}.stage|Win32.ActiveCfg = stage|Win32
+		{C168400B-31B1-48C5-AC34-838E5EE6DF08}.stage|Win32.Build.0 = stage|Win32
+		{C168400B-31B1-48C5-AC34-838E5EE6DF08}.stage|x64.ActiveCfg = stage|x64
+		{C168400B-31B1-48C5-AC34-838E5EE6DF08}.stage|x64.Build.0 = stage|x64
+		{19845177-6A40-4458-848A-849220E88C80}.basis|Win32.ActiveCfg = basis|Win32
+		{19845177-6A40-4458-848A-849220E88C80}.basis|Win32.Build.0 = basis|Win32
+		{19845177-6A40-4458-848A-849220E88C80}.basis|x64.ActiveCfg = basis|x64
+		{19845177-6A40-4458-848A-849220E88C80}.basis|x64.Build.0 = basis|x64
+		{19845177-6A40-4458-848A-849220E88C80}.stage|Win32.ActiveCfg = stage|Win32
+		{19845177-6A40-4458-848A-849220E88C80}.stage|Win32.Build.0 = stage|Win32
+		{19845177-6A40-4458-848A-849220E88C80}.stage|x64.ActiveCfg = stage|x64
+		{19845177-6A40-4458-848A-849220E88C80}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
