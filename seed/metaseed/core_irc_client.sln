@@ -52,6 +52,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axis_image_png", "..\..\..\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axisfreeimage", "..\..\..\app\axis\freeimage\axisfreeimage.vcxproj", "{B39ED2B3-D53A-4077-B957-930979A3577D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "irc", "..\..\..\app-core\appseed\irc\irc.vcxproj", "{19845177-6A40-4458-848A-019220E88C80}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_irc_client", "..\..\..\app-core\appseed\irc_client\irc_client.vcxproj", "{19845177-6A40-4458-848A-059220E88C80}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19845177-6A40-4458-848A-019220E88C80} = {19845177-6A40-4458-848A-019220E88C80}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
@@ -400,6 +407,38 @@ Global
 		{B39ED2B3-D53A-4077-B957-930979A3577D}.stage|Win32.Build.0 = stage|Win32
 		{B39ED2B3-D53A-4077-B957-930979A3577D}.stage|x64.ActiveCfg = stage|x64
 		{B39ED2B3-D53A-4077-B957-930979A3577D}.stage|x64.Build.0 = stage|x64
+		{19845177-6A40-4458-848A-019220E88C80}.basis|Win32.ActiveCfg = basis|Win32
+		{19845177-6A40-4458-848A-019220E88C80}.basis|Win32.Build.0 = basis|Win32
+		{19845177-6A40-4458-848A-019220E88C80}.basis|x64.ActiveCfg = basis|x64
+		{19845177-6A40-4458-848A-019220E88C80}.basis|x64.Build.0 = basis|x64
+		{19845177-6A40-4458-848A-019220E88C80}.Debug|Win32.ActiveCfg = basis|Win32
+		{19845177-6A40-4458-848A-019220E88C80}.Debug|Win32.Build.0 = basis|Win32
+		{19845177-6A40-4458-848A-019220E88C80}.Debug|x64.ActiveCfg = basis|x64
+		{19845177-6A40-4458-848A-019220E88C80}.Debug|x64.Build.0 = basis|x64
+		{19845177-6A40-4458-848A-019220E88C80}.Release|Win32.ActiveCfg = basis|Win32
+		{19845177-6A40-4458-848A-019220E88C80}.Release|Win32.Build.0 = basis|Win32
+		{19845177-6A40-4458-848A-019220E88C80}.Release|x64.ActiveCfg = basis|x64
+		{19845177-6A40-4458-848A-019220E88C80}.Release|x64.Build.0 = basis|x64
+		{19845177-6A40-4458-848A-019220E88C80}.stage|Win32.ActiveCfg = stage|Win32
+		{19845177-6A40-4458-848A-019220E88C80}.stage|Win32.Build.0 = stage|Win32
+		{19845177-6A40-4458-848A-019220E88C80}.stage|x64.ActiveCfg = stage|x64
+		{19845177-6A40-4458-848A-019220E88C80}.stage|x64.Build.0 = stage|x64
+		{19845177-6A40-4458-848A-059220E88C80}.basis|Win32.ActiveCfg = basis|Win32
+		{19845177-6A40-4458-848A-059220E88C80}.basis|Win32.Build.0 = basis|Win32
+		{19845177-6A40-4458-848A-059220E88C80}.basis|x64.ActiveCfg = basis|x64
+		{19845177-6A40-4458-848A-059220E88C80}.basis|x64.Build.0 = basis|x64
+		{19845177-6A40-4458-848A-059220E88C80}.Debug|Win32.ActiveCfg = basis|Win32
+		{19845177-6A40-4458-848A-059220E88C80}.Debug|Win32.Build.0 = basis|Win32
+		{19845177-6A40-4458-848A-059220E88C80}.Debug|x64.ActiveCfg = basis|x64
+		{19845177-6A40-4458-848A-059220E88C80}.Debug|x64.Build.0 = basis|x64
+		{19845177-6A40-4458-848A-059220E88C80}.Release|Win32.ActiveCfg = basis|Win32
+		{19845177-6A40-4458-848A-059220E88C80}.Release|Win32.Build.0 = basis|Win32
+		{19845177-6A40-4458-848A-059220E88C80}.Release|x64.ActiveCfg = basis|x64
+		{19845177-6A40-4458-848A-059220E88C80}.Release|x64.Build.0 = basis|x64
+		{19845177-6A40-4458-848A-059220E88C80}.stage|Win32.ActiveCfg = stage|Win32
+		{19845177-6A40-4458-848A-059220E88C80}.stage|Win32.Build.0 = stage|Win32
+		{19845177-6A40-4458-848A-059220E88C80}.stage|x64.ActiveCfg = stage|x64
+		{19845177-6A40-4458-848A-059220E88C80}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
