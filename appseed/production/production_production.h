@@ -111,10 +111,9 @@ namespace production
       ::file::listing         m_straRoot;
       strsize                 m_iBaseLen;
       ::file::listing         m_straFiles;
-      //stringa                 m_straTitle;
-      //stringa                 m_straRelative;
-      string                  m_strRemote;
-                              
+
+
+
       stringa                 m_straManifest;
       stringa                 m_straSignature;
       ::file::listing         m_straPath;
@@ -156,7 +155,7 @@ namespace production
 
       virtual int32_t produce();
 
-      bool get_file_list(const char * pszBase, const char * pszDir,string &  strRemote, ::file::listing & stra, bool bFileSet = false);
+      bool get_file_list(const char * pszBase, const char * pszDir, ::file::listing & stra, bool bFileSet = false);
       // bool ftp_put_dir(CFtpConnection & ftpconn, const char * pszBase, const char * pszDir, int32_t iMode);
 
       virtual void compress();
@@ -203,6 +202,8 @@ namespace production
       void build(const char * psz);
 
       virtual void update_rc_file_version(const char * pszUrl);
+
+      virtual string stage_platform(string strPlatform);
 
    };
 

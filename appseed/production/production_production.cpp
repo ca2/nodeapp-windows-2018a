@@ -755,9 +755,9 @@ namespace production
          m_straFiles.remove_all();
 
 
-         get_file_list(m_strBase, "stage/x86", m_strRemote, m_straFiles);
-         get_file_list(m_strBase, "stage/x64", m_strRemote, m_straFiles);
-         get_file_list(m_strBase, "app/stage/metastage", m_strRemote, m_straFiles);
+         get_file_list(m_strBase, "time/Win32/" + m_strVersion, m_straFiles);
+         get_file_list(m_strBase, "time/x64/" + m_strVersion, m_straFiles);
+         get_file_list(m_strBase, "app/stage/metastage", m_straFiles);
 
 
          generate_appmatter_spa();
@@ -782,7 +782,7 @@ namespace production
             TRACE("file(%05d)=%s\n", i, lpcsz);
             output_debug_string(string(lpcsz) + "\n");
          }
-         m_pview->post_message(WM_USER, 2);
+         //m_pview->post_message(WM_USER, 2);
          //{
          //   string str;
 
@@ -1022,17 +1022,11 @@ namespace production
          stringa straStatus;
          stringa straServer;
          
-         //straStatus.add(unitext("049 releasing at netnode : France (Gravelines, France)"));
-         //straServer.add("fr-api.ca2.cc");
+         straStatus.add(unitext("330 releasing at netnode : France (Gravelines, France)"));
+         straServer.add("fr-api.ca2.cc");
 
-         //straStatus.add(unitext("051 releasing at netnode : Deutschland (Gravelines, France)"));
-         //straServer.add("de-api.ca2.cc");
-
-         straStatus.add(unitext("049 releasing at netnode : Sverige/East US (Beauharnois, Canada)"));
-         straServer.add("east-api.ca2.cc");
-
-         straStatus.add(unitext("051 releasing at netnode : India/West US (Beauharnois, Canada)"));
-         straServer.add("west-api.ca2.cc");
+         straStatus.add(unitext("230 releasing at netnode : Deutschland (Gravelines, France)"));
+         straServer.add("de-api.ca2.cc");
 
          if(m_strVersion == "basis")
          {
@@ -1041,6 +1035,13 @@ namespace production
             straServer.swap(0,1);
 
          }
+
+
+         straStatus.add(unitext("500 releasing at netnode : Sverige/East US (Beauharnois, Canada)"));
+         straServer.add("west-api.ca2.cc");
+
+         straStatus.add(unitext("800 releasing at netnode : India/West US (Beauharnois, Canada)"));
+         straServer.add("east-api.ca2.cc");
 
 
          //straStatus.add("230 releasing at netnode : west us");
@@ -1063,8 +1064,8 @@ namespace production
          //straServer.add("west-api.ca2.cc");
 
 
-         straStatus.add(unitext("022 releasing at netnode : License/US (Beauharnois, Canada)"));
-         straServer.add("license-api.ca2.cc");
+         //straStatus.add(unitext("022 releasing at netnode : License/US (Beauharnois, Canada)"));
+         //straServer.add("license-api.ca2.cc");
 
 
          //straStatus.add("077 releasing at netnode : hong kong");
@@ -1511,7 +1512,7 @@ namespace production
       return true;
    }
 
-   bool production::get_file_list(const char * pszBase, const char * pszDir, string & strRemote, ::file::listing & stra, bool bFileSet)
+   bool production::get_file_list(const char * pszBase, const char * pszDir,  ::file::listing & stra, bool bFileSet)
    {
       ::file::path strBase(pszBase);
       ::file::path strRelease;
@@ -1519,10 +1520,6 @@ namespace production
       string strLocal(strDirParam);
       strLocal.replace("/", "\\");
       if (strLocal.Right(1) != "\\") strLocal += "\\";
-      strRemote = strDirParam;
-      strRemote.replace("\\", "/");
-      if (strRemote.Right(1) != "/") strRemote += "/";
-      if (strRemote.Left(1) != "/") strRemote = "/" + strRemote;
       strRelease = strBase / strLocal;
       if (bFileSet)
       {
@@ -1539,7 +1536,9 @@ namespace production
          strRelative.replace("/", "\\");
 
          ::file::listing stra1(get_app());
-         stra1.rls(strRelease);
+
+         stra1.rls_file(strRelease);
+
          for (int32_t i = 0; i < stra1.get_size();)
          {
             if (stra1[i].find("\\.svn\\") >= 0 || (stra1[i].get_length() < 5 || stra1[i].Right(5) == "\\.svn"))
@@ -1556,10 +1555,12 @@ namespace production
       }
       else
       {
+         
          stra.m_pprovider = get_app();
-         stra.rls(strRelease);
+         
+         stra.rls_file(strRelease);
+
       }
-      strRemote = strRemote + "/stage/" + m_strFormatBuild + "/";
       return true;
    }
 
@@ -1577,8 +1578,10 @@ namespace production
 
       stringa straStageDir;
 
-      straStageDir.add(m_strBase / "stage/x86");
-      straStageDir.add(m_strBase / "stage/x64");
+      straStageDir.add(m_strBase / "time/Win32" / + m_strVersion);
+      straStageDir.add(m_strBase / "time/x64" / + m_strVersion);
+
+      string strStatus;
 
       string strRelative;
       string strBz;
@@ -1609,14 +1612,19 @@ namespace production
          //strStatus.Format("compressing %s", strFile);
          //add_status(strStatus);
          strRelative = strFile.Mid(iBaseLen);
+         
          strBz = m_strCCAuth / strRelative + ".bz";
          strUn = m_strVrel / strRelative;
+
          strMd5 = System.file().md5(strUn);
+
          varUnSize = Application.file().length(strUn);
          varBzSize = Application.file().length(strBz);
+         
          strRelease = m_strCCVrel / strRelative;
          strRelease += ".bz.";
          strRelease += strMd5;
+         
          strReleaseNew = m_strCCVrelNew / strRelative;
          strReleaseNew += ".bz.";
          strReleaseNew += strMd5;
@@ -1628,11 +1636,37 @@ namespace production
          strContents += ",";
          strContents += varBzSize.get_string();
          strContents += "\n";
+
+         strStatus.Empty();
+
          if (!Application.file().exists(strRelease))
          {
-            Application.file().copy(strRelease, strBz, false);
+         
+            if(Application.file().copy(strRelease,strBz,false).failed())
+            {
+
+               strStatus += "<1>";
+
+            }
+
          }
-         Application.file().copy(strReleaseNew, strBz, false);
+
+         if(Application.file().copy(strReleaseNew,strBz,false).failed())
+         {
+
+            strStatus += "<2>";
+
+         }
+
+         if(strStatus.is_empty())
+         {
+
+            strStatus = "ok";
+
+         }
+
+         TRACE(strStatus + " " + strRelative);
+
       }
 
       strRelative = "app\\stage\\metastage\\index-" + m_strFormatBuild + ".spa";
@@ -2179,7 +2213,7 @@ namespace production
 
          strFile = strDir /  "npca2/plugins" / strLibrary;
 
-         Application.file().copy(strFile, m_strVrel / "stage" / strPlatform / strLibrary);
+         Application.file().copy(strFile, m_strVrel / "time" / stage_platform(strPlatform) / m_strVersion / strLibrary);
 
          strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
 
@@ -2225,7 +2259,7 @@ namespace production
 
       create_xpi(pszPlatform, false);
 
-      Application.file().copy(m_strVrel / "stage" / strPlatform / "npca2.xpi", strDir /  "npca2.xpi");
+      Application.file().copy(m_strVrel / "time" / stage_platform(strPlatform) / m_strVersion / "npca2.xpi", strDir /  "npca2.xpi");
       Application.file().copy(m_strCCVrel / "plugin" / strPlatform / "npca2_windows.rdf", strDir /  "npca2_windows.rdf");
 
       return true;
@@ -2394,7 +2428,7 @@ namespace production
          strVersion = "\\basis";
       }
 
-      Application.file().copy(m_strVrel / "stage" / strPlatform / "iexca2.cab", m_strBase /  "time\\iexca2" / strPlatform / "iexca2.cab");
+      Application.file().copy(m_strVrel / "time" / stage_platform(strPlatform) / m_strVersion / "iexca2.cab", m_strBase /  "time\\iexca2" / strPlatform / "iexca2.cab");
 
       return true;
 
@@ -2485,7 +2519,7 @@ namespace production
 
          strFile = strDir / "npca2/plugins" / strLibrary;
 
-         Application.file().copy(strFile,m_strVrel / "stage" / strPlatform / strLibrary);
+         Application.file().copy(strFile,m_strVrel / "time" / stage_platform(strPlatform) / m_strVersion / strLibrary);
 
          strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
 
@@ -2568,7 +2602,7 @@ namespace production
       }
 
 
-      Application.file().copy(m_strVrel / "stage" / strPlatform / "crxca2.crx",strDir.folder() / "crxca2.crx");
+      Application.file().copy(m_strVrel / "time" / stage_platform(strPlatform) / m_strVersion / "crxca2.crx",strDir.folder() / "crxca2.crx");
 
       return true;
    }
@@ -3217,6 +3251,29 @@ namespace production
 
    }
 
+
+   string production::stage_platform(string strPlatform)
+   {
+
+      if(strPlatform.CompareNoCase("x86") == 0
+      || strPlatform.CompareNoCase("Win32") == 0)
+      {
+
+         return "Win32";
+
+      }
+
+      if(strPlatform.CompareNoCase("x64") == 0
+      || strPlatform.CompareNoCase("amd64") == 0)
+      {
+
+         return "x64";
+
+      }
+
+      return strPlatform;
+
+   }
 
 } // namespace production
 
