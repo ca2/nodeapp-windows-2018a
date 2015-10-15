@@ -776,12 +776,98 @@ namespace production
             }
          }
          TRACE("\n");
+         string strStatus;
+         
+         ::file::path pathTarget;
+
+         ::count cDirMkErrorCount = 0;
+         ::count cFileCopyErrorCount = 0;
+
+         int iBaseLen = m_strBase.length();
+
+         if(m_strBase.ends_ci("\\") || m_strBase.ends_ci("/"))
+         {
+            
+            iBaseLen ++;
+
+         }
+
+         ::file::path pathLastFolder;
+
+         ::file::path pathFolder;
+
          for (int32_t i = 0; i < m_straFiles.get_size(); i++)
          {
-            const char * lpcsz = m_straFiles[i];
-            TRACE("file(%05d)=%s\n", i, lpcsz);
-            output_debug_string(string(lpcsz) + "\n");
+            //const char * lpcsz = m_straFiles[i];
+
+            strStatus.Empty();
+
+            pathTarget = m_strVrel / m_straFiles[i].Mid(iBaseLen);
+
+            pathFolder = pathTarget.folder();
+
+            if(pathFolder != pathLastFolder)
+            {
+
+               if(!::dir::is(pathTarget.folder()))
+               {
+
+                  if(!::dir::mk(pathTarget.folder()))
+                  {
+
+                     strStatus+="<1>";
+
+                     cDirMkErrorCount++;
+
+                  }
+                  else
+                  {
+
+                     pathLastFolder = pathFolder;
+
+                  }
+
+               }
+               else
+               {
+
+                  pathLastFolder = pathFolder;
+
+               }
+
+            }
+
+            if(!::file_copy_dup(pathTarget,m_straFiles[i],true))
+            {
+               strStatus+="<2>";
+               cFileCopyErrorCount++;
+
+            }
+
+            if(strStatus.is_empty())
+            {
+
+               strStatus = "ok";
+            }
+
+            output_debug_string(strStatus + " " + m_straFiles[i] + "\n");
          }
+
+         if(cDirMkErrorCount == 0 && cFileCopyErrorCount == 0)
+         {
+            
+            output_debug_string("100% Successfull file copy batch to \""+m_strVrel+"\"\n");
+
+         }
+         else
+         {
+
+            output_debug_string(::str::from(cDirMkErrorCount) + " errors attempting to create directory and " + ::str::from(cFileCopyErrorCount) + " errors attempting to do file copy batch at \"" + m_strVrel + "\"\n");
+
+         }
+
+         m_iStep = 2;
+
          //m_pview->post_message(WM_USER, 2);
          //{
          //   string str;
@@ -794,9 +880,9 @@ namespace production
          //   Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
          //}
-      }
-      else if (m_iStep == 2)
-      {
+      //}
+      //else if (m_iStep == 2)
+      //{
          string m_strStartTime;
          m_timeStart.FormatGmt(m_strStartTime, "%Y-%m-%d %H-%M-%S");
          //{
@@ -1259,10 +1345,10 @@ namespace production
       add_status(strStatus);
 
       string strVrel;
-      strVrel = "C:\\ca2\\vrel\\" + m_strVersion + "\\" + m_strFormatBuild;
+      strVrel = m_strVrel;
 
       string strCCAuth;
-      strCCAuth = "C:\\home\\ccvotagus\\ca2_spa\\" + m_strVersion + "\\" + m_strFormatBuild;
+      strCCAuth = m_strCCAuth;
 
       string strRelative;
       string strBz;

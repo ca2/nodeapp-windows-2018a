@@ -9,7 +9,7 @@ IDI_CA2_SPA   ICON                    "stage.ico"
 #endif
 
 1 VERSIONINFO
-   FILEVERSION 2015,727,1126,38
+   FILEVERSION 2015,1015,2015,36
    PRODUCTVERSION 0,0,0,0
    FILEFLAGSMASK 0x0L
    FILEFLAGS 0x1L
@@ -22,7 +22,7 @@ IDI_CA2_SPA   ICON                    "stage.ico"
          BLOCK "040904E4"
          BEGIN
             VALUE "CompanyName", "ca2 Desenvolvimento de Software Ltda."
-            VALUE "FileVersion", "2015.727.1126.38"
+            VALUE "FileVersion", "2015.1015.2015.36"
             VALUE "FileDescription", "app.install Executable"
             VALUE "LegalCopyright", "2014 ca2 Desenvolvimento de Software Ltda."
         END
