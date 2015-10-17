@@ -348,7 +348,7 @@ void app_t::win_sync_out(string strLocal,string strReposParam)
 }
 
 
-int APIENTRY main()
+int main()
 {
 
    if(!defer_aura_init())
