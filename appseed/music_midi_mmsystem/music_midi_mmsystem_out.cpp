@@ -40,7 +40,7 @@ namespace music
 
             MMRESULT mmrc;
 
-            uint32_t uDeviceID = 1;
+            uint32_t uDeviceID = 3;
 
             m_hmidiout = NULL;
 
