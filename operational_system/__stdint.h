@@ -21,6 +21,9 @@
 #define uint32_t unsigned int       
 #define uint64_t unsigned long long 
 
+#define ulong32 unsigned long
+#define ulong64 unsigned long long
+
 typedef signed char        int_least8_t;
 typedef short              int_least16_t;
 typedef int                int_least32_t;
