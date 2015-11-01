@@ -464,7 +464,7 @@ smf_Open_File_Cleanup:
          * the tick value will be rounded down.
          *
          *****************************************************************************/
-         imedia::position buffer::MillisecsToTicks(imedia::time msOffset)
+         imedia::position buffer::MillisecsToTicks(imedia_time msOffset)
          {
 
             cslock sl(&m_cs);
@@ -527,14 +527,14 @@ smf_Open_File_Cleanup:
             return tkOffset;
          }
 
-         imedia::time  buffer::PositionToTime(
+         imedia_time  buffer::PositionToTime(
             imedia::position position)
          {
             return TicksToMillisecs(position);
          }
 
          imedia::position  buffer::TimeToPosition(
-            imedia::time time)
+            imedia_time time)
          {
             return MillisecsToTicks(time);
          }
@@ -613,7 +613,7 @@ smf_Open_File_Cleanup:
                      tkResult = 0;
 
                   pMillisArray->add(
-                     (imedia::time)
+                     (imedia_time)
                      TicksToMillisecs(
                      tkResult));
                }
@@ -627,7 +627,7 @@ smf_Open_File_Cleanup:
                   if(tkResult < tk)
                      tkResult = 0xFFFFFFFF;
                   pMillisArray->add(
-                     (imedia::time)
+                     (imedia_time)
                      TicksToMillisecs(
                      tkResult));
                }
@@ -638,14 +638,14 @@ smf_Open_File_Cleanup:
          void  buffer::MillisecsToTicks(
             imedia::position_array *pTickArray,
             imedia::time_array *pMillisArray,
-            imedia::time msOffset)
+            imedia_time msOffset)
          {
             if(msOffset < 0)
             {
                for(int32_t i = 0; i < pMillisArray->get_size(); i++)
                {
-                  imedia::time ms = pMillisArray->operator [](i);
-                  imedia::time msResult = ms + msOffset;
+                  imedia_time ms = pMillisArray->operator [](i);
+                  imedia_time msResult = ms + msOffset;
                   if(msResult > ms)
                      msResult = 0;
                   pTickArray->add(
@@ -658,8 +658,8 @@ smf_Open_File_Cleanup:
             {
                for(int32_t i = 0; i < pMillisArray->get_size(); i++)
                {
-                  imedia::time ms = pMillisArray->operator [](i);
-                  imedia::time msResult = ms + msOffset;
+                  imedia_time ms = pMillisArray->operator [](i);
+                  imedia_time msResult = ms + msOffset;
                   if(msResult < ms)
                      msResult = 0xffffffff;
                   pTickArray->add(
@@ -674,14 +674,14 @@ smf_Open_File_Cleanup:
          void  buffer::TimeToPosition(
             imedia::position_array & positiona,
             imedia::time_array  & timea,
-            imedia::time msOffset)
+            imedia_time msOffset)
          {
             if(msOffset < 0)
             {
                for(int32_t i = 0; i < timea.get_size(); i++)
                {
-                  imedia::time ms = timea[i];
-                  imedia::time msResult = ms + msOffset;
+                  imedia_time ms = timea[i];
+                  imedia_time msResult = ms + msOffset;
                   if(msResult < 0)
                      msResult = 0;
                   positiona.add(
@@ -693,8 +693,8 @@ smf_Open_File_Cleanup:
             {
                for(int32_t i = 0; i < timea.get_size(); i++)
                {
-                  imedia::time ms = timea[i];
-                  imedia::time msResult = ms + msOffset;
+                  imedia_time ms = timea[i];
+                  imedia_time msResult = ms + msOffset;
                   if(msResult < ms)
                      msResult = 0xffffffff;
                   positiona.add(

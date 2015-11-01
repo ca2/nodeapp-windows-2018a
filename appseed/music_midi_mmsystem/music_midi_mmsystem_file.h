@@ -147,15 +147,15 @@ namespace music
 
             void PositionToTime(imedia::time_array  & timea, imedia::position_array  & positiona, int_ptr tkOffset);
 
-            imedia::position MillisecsToTicks(imedia::time msOffset);
+            imedia::position MillisecsToTicks(imedia_time msOffset);
 
-            imedia::time PositionToTime(imedia::position msOffset);
+            imedia_time PositionToTime(imedia::position msOffset);
 
-            imedia::position TimeToPosition(imedia::time msOffset);
+            imedia::position TimeToPosition(imedia_time msOffset);
 
-            void MillisecsToTicks(imedia::position_array * pTickArray, imedia::time_array *pMillisArray, imedia::time msOffset);
+            void MillisecsToTicks(imedia::position_array * pTickArray, imedia::time_array *pMillisArray, imedia_time msOffset);
 
-            void TimeToPosition(imedia::position_array & positiona, imedia::time_array & timea, imedia::time msOffset);
+            void TimeToPosition(imedia::position_array & positiona, imedia::time_array & timea, imedia_time msOffset);
 
             e_result StreamRender(LPMIDIHDR lpmh, imedia::position tkMax, uint32_t cbPrerollNomimalMax);
 

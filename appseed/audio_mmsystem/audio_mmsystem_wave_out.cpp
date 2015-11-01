@@ -530,7 +530,7 @@ Opened:
       }
 
 
-      /*imedia::time wave_out::GetPositionMillisForSynch()
+      /*imedia_time wave_out::GetPositionMillisForSynch()
       {
          int64_t dwMillis = GetPositionMillis();
          int64_t dwPosition = m_pprebuffer->m_position * 8;
@@ -543,7 +543,7 @@ Opened:
             return dwMillis + dwPosition - ((m_dwLostSampleCount) * 1000 / m_pwaveformat->nSamplesPerSec);
       }*/
 
-      imedia::time wave_out::wave_out_get_position_millis()
+      imedia_time wave_out::wave_out_get_position_millis()
       {
 
          single_lock sLock(&m_mutex, TRUE);

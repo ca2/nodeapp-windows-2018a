@@ -44,7 +44,7 @@ namespace music
             IGUI_WIN_MSG_LINK(MM_MOM_POSITIONCB, pinterface, this, &sequence_thread::OnPositionCB);
          }
 
-         void sequence_thread::Stop(imedia::time msEllapse)
+         void sequence_thread::Stop(imedia_time msEllapse)
          {
             get_sequence()->Stop();
             m_eventStop.wait(millis(msEllapse));

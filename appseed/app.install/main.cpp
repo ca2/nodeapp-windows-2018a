@@ -97,7 +97,8 @@ installer::installer() :
    ::aura::system(NULL),
    ::axis::system(NULL),
    ::base::system(NULL),
-   ::install::installer(this)
+   ::install::installer(this),
+   m_rxchannel(this)
 {
    ////////////////////////////////////////////////////////////
    // configuration encryption system : with C:\\" hardware :-)
@@ -230,7 +231,7 @@ bool installer::intro()
 
    strChannel = "::ca2::fontopus::ca2_spaboot_install_" + process_platform_dir_name() + "::7807e510-5579-11dd-ae16-0800200c7784";
 
-   if(!m_rxchannel.create(strChannel,"app.install.exe"))
+   if(!m_rxchannel.create(strChannel))
    {
       m_iReturnCode = -1;
       return false;
