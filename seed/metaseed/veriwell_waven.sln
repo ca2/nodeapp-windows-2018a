@@ -104,6 +104,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_veriwell_waven", "..\..
 		{AC6A52B4-C049-439C-88FF-5A262D968C8F} = {AC6A52B4-C049-439C-88FF-5A262D968C8F}
 		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B} = {78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}
 		{6C7004D3-FF6C-4872-8DDC-5D7F44B0BC57} = {6C7004D3-FF6C-4872-8DDC-5D7F44B0BC57}
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D} = {845177D4-10A9-4C54-8DEE-A52B9D178A4D}
 		{D620EED4-10A9-4C54-8DEE-A52B9D178A4D} = {D620EED4-10A9-4C54-8DEE-A52B9D178A4D}
 		{424F72D6-053A-41C5-BE03-3B0BD535F1EB} = {424F72D6-053A-41C5-BE03-3B0BD535F1EB}
 		{54850FD8-653A-43B6-AA90-E59AC030559C} = {54850FD8-653A-43B6-AA90-E59AC030559C}
@@ -175,6 +176,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axisfreeimage", "..\..\..\a
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axis_image_png", "..\..\..\app\axis\image_png\axis_image_png.vcxproj", "{84517714-2000-419D-A87F-4338C9DDE3FA}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_spotify", "..\..\..\app-core\appseed\audio_decode_spotify\audio_decode_spotify.vcxproj", "{845177D4-10A9-4C54-8DEE-A52B9D178A4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1764,6 +1767,38 @@ Global
 		{84517714-2000-419D-A87F-4338C9DDE3FA}.static_profiler|Win32.Build.0 = stage|Win32
 		{84517714-2000-419D-A87F-4338C9DDE3FA}.static_profiler|x64.ActiveCfg = stage|x64
 		{84517714-2000-419D-A87F-4338C9DDE3FA}.static_profiler|x64.Build.0 = stage|x64
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.basis|Win32.ActiveCfg = basis|Win32
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.basis|Win32.Build.0 = basis|Win32
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.basis|x64.ActiveCfg = basis|x64
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.basis|x64.Build.0 = basis|x64
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.codeanalysis|Win32.ActiveCfg = basis|Win32
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.codeanalysis|Win32.Build.0 = basis|Win32
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.codeanalysis|x64.ActiveCfg = basis|x64
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.codeanalysis|x64.Build.0 = basis|x64
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.memdleak|Win32.ActiveCfg = basis|Win32
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.memdleak|Win32.Build.0 = basis|Win32
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.memdleak|x64.ActiveCfg = basis|x64
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.memdleak|x64.Build.0 = basis|x64
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.no_precompiled_header|Win32.ActiveCfg = basis|Win32
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.no_precompiled_header|Win32.Build.0 = basis|Win32
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.no_precompiled_header|x64.ActiveCfg = basis|x64
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.no_precompiled_header|x64.Build.0 = basis|x64
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.profiler|Win32.ActiveCfg = basis|Win32
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.profiler|Win32.Build.0 = basis|Win32
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.profiler|x64.ActiveCfg = basis|x64
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.profiler|x64.Build.0 = basis|x64
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.stage|Win32.ActiveCfg = stage|Win32
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.stage|Win32.Build.0 = stage|Win32
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.stage|x64.ActiveCfg = stage|x64
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.stage|x64.Build.0 = stage|x64
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.static_basis|Win32.ActiveCfg = basis|Win32
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.static_basis|Win32.Build.0 = basis|Win32
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.static_basis|x64.ActiveCfg = basis|x64
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.static_basis|x64.Build.0 = basis|x64
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.static_profiler|Win32.ActiveCfg = stage|Win32
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.static_profiler|Win32.Build.0 = stage|Win32
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.static_profiler|x64.ActiveCfg = stage|x64
+		{845177D4-10A9-4C54-8DEE-A52B9D178A4D}.static_profiler|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
