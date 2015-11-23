@@ -701,8 +701,73 @@ namespace draw2d_gdiplus
 
          HBITMAP hbitmapOld = (HBITMAP) ::SelectObject(hdc, hbitmap);
 
-         if(::DrawIconEx(hdc, 0, 0, (HICON) picon->m_picon, cx, cy, istepIfAniCur, NULL, DI_IMAGE | DI_MASK))
+         ICONINFO ii;
+         BITMAPINFO biC;
+         BITMAPINFO biM;
+
+         ZERO(biC);
+         ZERO(biM);
+
+
+
+         if(::GetIconInfo((HICON)picon->m_picon,&ii))
          {
+
+            ::GetObject(ii.hbmColor,sizeof(biC),(LPVOID)&biC);
+
+            ::GetObject(ii.hbmMask,sizeof(biM),(LPVOID)&biM);
+
+         }
+
+
+
+         if(!::DrawIconEx(hdc,0,0,(HICON)picon->m_picon,cx,cy,istepIfAniCur,NULL,DI_IMAGE | DI_MASK))
+         {
+
+            output_debug_string("nok");
+         }
+         else
+         {
+
+            bool bAllZeroAlpha = true;
+            bool bTheresUint32 = false;
+
+            int area = cx * cy;
+
+            COLORREF * pc = pcolorref;
+            BYTE * pA = &((BYTE *) pcolorref)[3];
+
+            for(int i = 0; i < area; i++)
+            {
+               if(*pc != 0)
+               {
+                  bTheresUint32 = true;
+               }
+               if(*pA != 0)
+               {
+                  bAllZeroAlpha = false;
+                  break;
+               }
+               pc++;
+               pA +=4;
+            }
+
+            if(bAllZeroAlpha && bTheresUint32)
+            {
+
+               pc = pcolorref;
+               pA = &((BYTE *)pcolorref)[3];
+
+               for(int i = 0; i < area; i++)
+               {
+                  if(*pc != 0)
+                  {
+                     *pA = 255;
+                  }
+                  pc++;
+                  pA +=4;
+               }
+            }
 
             ::SelectObject(hdc, hbitmapOld);
 
