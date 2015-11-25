@@ -5,6 +5,27 @@
 #undef new
 
 
+BOOL CALLBACK draw2d_gdiplus_EnumFamCallBack(LPLOGFONT lplf,LPNEWTEXTMETRIC lpntm,DWORD FontType,LPVOID p);
+
+
+class draw2d_gdiplus_enum_fonts
+{
+public:
+
+   
+   stringa &      m_stra;
+
+   
+   draw2d_gdiplus_enum_fonts(stringa & stra):
+      m_stra(stra)
+   {
+
+   }
+
+
+};
+
+
 namespace draw2d_gdiplus
 {
 
@@ -4964,11 +4985,49 @@ namespace draw2d_gdiplus
 
    }
 
+   
+   void graphics::enum_fonts(stringa & stra)
+   {
 
+      synch_lock sl(m_spmutex);
 
+      draw2d_gdiplus_enum_fonts fonts(stra);
+
+      HDC hdc = ::CreateCompatibleDC(NULL);
+
+      ::EnumFontFamilies(hdc,(LPCTSTR)NULL,(FONTENUMPROC)draw2d_gdiplus_EnumFamCallBack,(LPARAM)&fonts);
+
+      ::DeleteDC(hdc);
+
+   }
    
 } // namespace draw2d_gdiplus
 
 
 
+
+
+BOOL CALLBACK draw2d_gdiplus_EnumFamCallBack(LPLOGFONT lplf,LPNEWTEXTMETRIC lpntm,DWORD FontType,LPVOID p)
+{
+
+   draw2d_gdiplus_enum_fonts * pfonts = (draw2d_gdiplus_enum_fonts *) p;
+
+   if(FontType & RASTER_FONTTYPE)
+   {
+
+   }
+   else if(FontType & TRUETYPE_FONTTYPE)
+   {
+
+      pfonts->m_stra.add_unique(lplf->lfFaceName);
+
+   }
+   else
+   {
+
+   }
+
+   return TRUE;
+
+}
 
