@@ -134,3 +134,6 @@
 #pragma warning(disable: 4263 4264)  // base class method is hidden
 
 
+#define FONT_SANS "Lucida Sans Unicode"
+
+
