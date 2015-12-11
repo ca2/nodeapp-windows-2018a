@@ -4986,7 +4986,7 @@ namespace draw2d_gdiplus
    }
 
    
-   void graphics::enum_fonts(stringa & stra)
+   void graphics::enum_fonts(stringa & straPath, stringa & stra)
    {
 
       synch_lock sl(m_spmutex);
@@ -4998,6 +4998,8 @@ namespace draw2d_gdiplus
       ::EnumFontFamilies(hdc,(LPCTSTR)NULL,(FONTENUMPROC)draw2d_gdiplus_EnumFamCallBack,(LPARAM)&fonts);
 
       ::DeleteDC(hdc);
+
+	  strPath = stra;
 
    }
    
