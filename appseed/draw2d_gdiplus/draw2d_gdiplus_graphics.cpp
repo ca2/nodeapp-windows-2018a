@@ -4999,7 +4999,7 @@ namespace draw2d_gdiplus
 
       ::DeleteDC(hdc);
 
-	  strPath = stra;
+	  straPath = stra;
 
    }
    
