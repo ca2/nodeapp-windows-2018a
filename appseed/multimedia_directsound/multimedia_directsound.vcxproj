@@ -96,7 +96,6 @@
     <EmbedManifest Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">false</EmbedManifest>
     <EmbedManifest Condition="'$(Configuration)|$(Platform)'=='basis|x64'">false</EmbedManifest>
     <EmbedManifest Condition="'$(Configuration)|$(Platform)'=='stage|x64'">false</EmbedManifest>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">$(VCInstallDir)include;$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|Win32'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='stage|Win32'" />
