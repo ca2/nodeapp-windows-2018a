@@ -135,5 +135,9 @@
 
 
 #define FONT_SANS "Lucida Sans Unicode"
-
+#define FONT_SERIF "Times New Roman"
+#define FONT_SANS_EX "Geneva"
+#define FONT_SERIF_EX "Palatino Linotype"
+#define FONT_SANS_FX "Tahoma"
+#define FONT_SERIF_FX "Georgia"
 
