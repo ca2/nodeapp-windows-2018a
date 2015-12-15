@@ -194,7 +194,8 @@ sentinel::sentinel() :
 ::object(this),
 ::aura::system(NULL),
 ::axis::system(NULL),
-::base::system(NULL)
+::base::system(NULL),
+m_rxchannel(this)
 {
    ////////////////////////////////////////////////////////////
    // configuration encryption system : with C:\\" hardware :-)
