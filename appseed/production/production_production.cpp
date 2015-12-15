@@ -1062,7 +1062,7 @@ namespace production
 
          straRoot = m_straRoot;
 
-         straRoot.add("stage");
+         straRoot.add("time");
 
          add_status("***Preparing to release to mirrors in two phases with " + ::str::from(straRoot.get_count()) +  " steps each...");
 
@@ -1124,10 +1124,10 @@ namespace production
 
 
          straStatus.add(unitext("500 releasing at netnode : Sverige/East US (Beauharnois, Canada)"));
-         straServer.add("west-api.ca2.cc");
+         straServer.add("east-api.ca2.cc");
 
          straStatus.add(unitext("800 releasing at netnode : India/West US (Beauharnois, Canada)"));
-         straServer.add("east-api.ca2.cc");
+         straServer.add("west-api.ca2.cc");
 
 
          //straStatus.add("230 releasing at netnode : west us");
@@ -2506,12 +2506,6 @@ namespace production
          str.Format("%d Creating iexca2.cab  " + string(pszPlatform) + "...", i);
          add_status(str);
          i++;
-      }
-
-      string strVersion;
-      if (m_eversion == version_basis)
-      {
-         strVersion = "\\basis";
       }
 
       Application.file().copy(m_strVrel / "time" / stage_platform(strPlatform) / m_strVersion / "iexca2.cab", m_strBase /  "time\\iexca2" / strPlatform / "iexca2.cab");

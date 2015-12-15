@@ -494,8 +494,8 @@ namespace production
                size sizePage = get_page_size();
                m_sizeTotal.cx = 80;
                m_sizeTotal.cy = (LONG)(m_pproduction->m_straStatus.get_size() * iLineHeight + 84);
-               set_viewport_offset_y(MAX(0,m_sizeTotal.cy - sizePage.cy + iLineHeight));
                sl.unlock();
+               set_viewport_offset_y(MAX(0,m_sizeTotal.cy - sizePage.cy + iLineHeight));
                on_change_view_size();
             }
             else
