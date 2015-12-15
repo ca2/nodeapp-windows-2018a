@@ -1567,7 +1567,7 @@ bool app_install_send_short_message(const char * psz,bool bLaunch,const char * p
 
 #else
 
-   ::aura::ipc::tx txchannel;
+   ::aura::ipc::tx txchannel(::get_thread_app());
 
    app_install_launcher launcher("","");
 
