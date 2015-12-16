@@ -1166,6 +1166,8 @@ namespace production
          //straServer.add("cyan-api.ca2.cc");
 
 
+         string strObject1 = "/production/release_ca2_self?authnone=1&version=" + m_strVersion + "&build=" + m_strFormatBuild;
+
          string strObject = "/production/release_ca2?authnone=1&version=" + m_strVersion + "&build=" + m_strFormatBuild;
 
          {
@@ -1179,16 +1181,18 @@ namespace production
 
                add_status(strStatus);
 
-               class release * prelease = new class release(this,"http://" + strServer + strObject, strServer);
-
                if(i == 0)
                {
                   
+                  class release * prelease = new class release(this,"http://" + strServer + strObject1,strServer);
+
                   prelease->raw_run();
 
                }
                else
                {
+
+                  class release * prelease = new class release(this,"http://" + strServer + strObject,strServer);
 
                   prelease->begin();
 
