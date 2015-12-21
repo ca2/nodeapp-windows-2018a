@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\app.vcxproj", "{19841115-1984-0411-1977-021977151984}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -524,7 +524,15 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_berdge", "..\..\..
 		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB} = {1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{94931726-7390-49B6-BEFD-3A4BBB4E2620}"
+	ProjectSection(SolutionItems) = preProject
+		Performance1.psess = Performance1.psess
+	EndProjectSection
+EndProject
 Global
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
 		basis|x64 = basis|x64
