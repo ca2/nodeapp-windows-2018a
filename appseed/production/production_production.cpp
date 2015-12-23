@@ -1107,12 +1107,25 @@ namespace production
 
          stringa straStatus;
          stringa straServer;
+
+
+
+
+//         178.33.157.33 fr - api.ca2.cc
+  //          178.33.157.34 de - api.ca2.cc
+    //        158.69.159.130 west - api.ca2.cc
+      //      158.69.159.129 east - api.ca2.cc
+
+
+
          
          straStatus.add(unitext("330 releasing at netnode : France (Gravelines, France)"));
-         straServer.add("fr-api.ca2.cc");
+         //straServer.add("fr-api.ca2.cc");
+         straServer.add("a.ca2.fr");
 
          straStatus.add(unitext("230 releasing at netnode : Deutschland (Gravelines, France)"));
-         straServer.add("de-api.ca2.cc");
+         //straServer.add("de-api.ca2.cc");
+         straServer.add("a.ca2.com.de");
 
          if(m_strVersion == "basis")
          {
@@ -1124,10 +1137,13 @@ namespace production
 
 
          straStatus.add(unitext("500 releasing at netnode : Sverige/East US (Beauharnois, Canada)"));
-         straServer.add("east-api.ca2.cc");
+         //straServer.add("east-api.ca2.cc");
+         straServer.add("blue.ca2.cc");
 
          straStatus.add(unitext("800 releasing at netnode : India/West US (Beauharnois, Canada)"));
-         straServer.add("west-api.ca2.cc");
+         //straServer.add("west-api.ca2.cc");
+         straServer.add("gold.ca2.cc");
+         
 
 
          //straStatus.add("230 releasing at netnode : west us");
@@ -1166,9 +1182,9 @@ namespace production
          //straServer.add("cyan-api.ca2.cc");
 
 
-         string strObject1 = "/production/release_ca2_self?authnone=1&version=" + m_strVersion + "&build=" + m_strFormatBuild;
+         string strObject1 = "/api/production/main/release_ca2?authnone=1&version=" + m_strVersion + "&build=" + m_strFormatBuild;
 
-         string strObject = "/production/release_ca2?authnone=1&version=" + m_strVersion + "&build=" + m_strFormatBuild;
+         string strObject = "/api/production/mirror/release_ca2?authnone=1&version=" + m_strVersion + "&build=" + m_strFormatBuild;
 
          {
 
