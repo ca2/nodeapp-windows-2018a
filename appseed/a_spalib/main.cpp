@@ -788,7 +788,13 @@ int a_spa::check_spa_installation()
 
    straFile.add("spaadmin");
    straFile.add("spa");
-   straFile.add("install_bin_set");
+
+   if(!file_exists_dup("C:\\ca2\\config\\spa\\no_install_bin_set.txt"))
+   {
+
+      straFile.add("install_bin_set");
+
+   }
 
    LONG lTotal = straFile.size();
    LONG lCount = lTotal;
