@@ -12,7 +12,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">
     <LocalDebuggerCommandArguments>: app=app-veriwell/waven locale=_std schema=_std version=stage</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommand>C:\Program Files %28x86%29\ca2\time\Win32\stage\app.exe</LocalDebuggerCommand>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|x64'">
     <LocalDebuggerCommandArguments>: app=game/pacman install</LocalDebuggerCommandArguments>

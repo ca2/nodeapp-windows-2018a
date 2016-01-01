@@ -1438,7 +1438,13 @@ gdi_fallback:
       return 0;
    }
    COLORREF graphics::SetPixel(POINT point, COLORREF crColor)
-   { ASSERT(get_handle1() != NULL); return ::SetPixel(get_handle1(), point.x, point.y, crColor); }
+   { 
+      
+      FillSolidRect(point.x,point.y,1,1,crColor);
+
+      return crColor;
+
+   }
    bool graphics::FloodFill(int32_t x, int32_t y, COLORREF crColor)
    { ASSERT(get_handle1() != NULL); return ::FloodFill(get_handle1(), x, y, crColor) != FALSE; }
    bool graphics::ExtFloodFill(int32_t x, int32_t y, COLORREF crColor, UINT nFillType)
