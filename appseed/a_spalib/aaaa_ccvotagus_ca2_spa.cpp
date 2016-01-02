@@ -1979,7 +1979,7 @@ string str_replace(const char * psz, const char * pszFind, const char * pszRepla
 // 
 //   SC_HANDLE hdlServ = ::OpenService(
 //		hdlSCM,                    // SCManager database 
-//		"CGCLCSTvotagusCa2Fontopus_WinService_Spa_stage",               // name of service 
+//		"core_WinService_Spa_stage",               // name of service 
 //		SC_MANAGER_ALL_ACCESS);                     // no password 
 // 
 //   DWORD Ret = 0;
@@ -2006,7 +2006,7 @@ string str_replace(const char * psz, const char * pszFind, const char * pszRepla
 // 
 //   SC_HANDLE hdlServ = ::OpenService(
 //		hdlSCM,                    // SCManager database 
-//		"CGCLCSTvotagusCa2Fontopus_WinService_Spa_stage",               // name of service 
+//		"core_WinService_Spa_stage",               // name of service 
 //		SC_MANAGER_ALL_ACCESS);                     // no password 
 // 
 //   DWORD Ret = 0;
@@ -2022,7 +2022,7 @@ string str_replace(const char * psz, const char * pszFind, const char * pszRepla
 //
 ///*   STARTUPINFO si;
 //   PROCESS_INFORMATION pi;
-//   LPSTR lpsz = _strdup(("sc delete CGCLCSTvotagusCa2Fontopus_WinService_Spa_" + g_strVersionShift).c_str());
+//   LPSTR lpsz = _strdup(("sc delete core_WinService_Spa_" + g_strVersionShift).c_str());
 //   if(!::CreateProcess(NULL, lpsz, 
 //      NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi))
 //      return 1;
@@ -2548,7 +2548,7 @@ int LangFromOS()
 //
 //SPALIB_API string spalib_get_build()
 //{
-//   return read_resource_as_string(::GetModuleHandleA("spalib.dll"), ID_CGCL, "CA2SP");
+//   return read_resource_as_string(::GetModuleHandleA("spalib.dll"), ID_APPLICATION, "CA2SP");
 //}
 //
 

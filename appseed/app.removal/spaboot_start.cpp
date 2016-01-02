@@ -121,7 +121,7 @@ const char * calc_id()
 
    char szModulePath[MAX_PATH * 3];
    ::GetModuleFileNameA((HINSTANCE) NULL, szModulePath, sizeof(szModulePath));
-   return read_resource_as_string_dup(::GetModuleHandleA(szModulePath), 1984, "CGCL");
+   return read_resource_as_string_dup(::GetModuleHandleA(szModulePath), 1984, "application_id");
 
 }
 

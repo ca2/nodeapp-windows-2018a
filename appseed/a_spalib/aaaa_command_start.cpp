@@ -408,9 +408,9 @@ SPALIB_API string spa_get_platform()
 //         goto RetryHost;
 //      }
 //      strUrl = "http://" + strSpaHost + "/stage/app/stage/metastage/index-"+strBuild+".md5";
-//      string strCgclIndexMd5 = ms_get(strUrl.c_str(), false);
-//      if(strCgclIndexMd5.length() != 32 
-//      || file_md5_dup(strIndexPath.c_str()) != strCgclIndexMd5)
+//      string strIndexMd5 = ms_get(strUrl.c_str(), false);
+//      if(strIndexMd5.length() != 32 
+//      || file_md5_dup(strIndexPath.c_str()) != strIndexMd5)
 //      {
 //         trace("Invalid file list!");
 //         trace("Going to retry host...");

@@ -17,9 +17,9 @@
 #define IDR_XML_SPA			1000
 #define ID_CST			1977
 #define ID_CSTBOOT			1976
-#define ID_CGCL			1984
-#define ID_CGCLBOOT			1985
-#define ID_CGCL_INDEX_MD5			2010
+#define ID_APPLICATION			1984
+#define ID_BOOT			1985
+#define ID_INDEX_MD5			2010
 #define ID_STARTACCA        2011
 #define ID_LANG_SV         10001
 #define ID_LANG_PTBR         10002
