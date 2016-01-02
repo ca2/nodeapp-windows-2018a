@@ -504,6 +504,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_resident", "..\..\..\app-core\appseed\resident\resident.vcxproj", "{C61BE1EB-B0DF-412F-8CD8-68B4B86CC514}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19845177-6A40-4458-848A-019220E88C80} = {19845177-6A40-4458-848A-019220E88C80}
+		{19845177-6A40-4458-848A-059220E88C80} = {19845177-6A40-4458-848A-059220E88C80}
+		{19845177-2551-5184-7805-849220E88C80} = {19845177-2551-5184-7805-849220E88C80}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_irc_bot", "..\..\..\app-core\appseed\irc_bot\irc_bot.vcxproj", "{19845177-6A40-4458-848A-089220E88C80}"
 EndProject
@@ -516,10 +521,19 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xmpp", "..\..\..\app-core\appseed\xmpp\xmpp.vcxproj", "{19845177-2551-5184-7805-849220E88C80}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_xmpp_bot", "..\..\..\app-core\appseed\xmpp_bot\xmpp_bot.vcxproj", "{19845177-2551-5184-7808-849220E88C80}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19845177-2551-5184-7805-849220E88C80} = {19845177-2551-5184-7805-849220E88C80}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_xmpp_client", "..\..\..\app-core\appseed\xmpp_client\xmpp_client.vcxproj", "{19845177-2551-5184-7807-849220E88C80}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19845177-2551-5184-7805-849220E88C80} = {19845177-2551-5184-7805-849220E88C80}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_xmpp_resident", "..\..\..\app-core\appseed\xmpp_resident\xmpp_resident.vcxproj", "{AF2B9BE7-BF46-4F94-A6D8-2535AEBC199E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19845177-2551-5184-7805-849220E88C80} = {19845177-2551-5184-7805-849220E88C80}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
