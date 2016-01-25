@@ -4564,7 +4564,7 @@ namespace draw2d_gdiplus
    bool graphics::LineTo(double x, double y)
    {
 
-      synch_lock sl(m_spmutex);
+      synch_lock sl(m_pmutex);
 
       if(m_sppen.cast < ::draw2d_gdiplus::pen >()->m_egdiplusalign != Gdiplus::PenAlignment::PenAlignmentCenter)
       {
@@ -4588,7 +4588,7 @@ namespace draw2d_gdiplus
    bool graphics::LineTo(int x,int y)
    {
 
-      synch_lock sl(m_spmutex);
+      synch_lock sl(m_pmutex);
 
       if(m_sppen.cast < ::draw2d_gdiplus::pen >()->m_egdiplusalign != Gdiplus::PenAlignment::PenAlignmentCenter)
       {
@@ -4612,7 +4612,7 @@ namespace draw2d_gdiplus
    bool graphics::DrawLine(float x1, float y1, float x2, float y2, ::draw2d::pen * ppen)
    {
 
-      synch_lock sl(m_spmutex);
+      synch_lock sl(m_pmutex);
 
       ((Gdiplus::Pen *) ppen->get_os_data())->SetAlignment(Gdiplus::PenAlignment::PenAlignmentCenter);
 
@@ -4630,7 +4630,7 @@ namespace draw2d_gdiplus
    bool graphics::DrawLine(int32_t x1, int32_t y1, int32_t x2, int32_t y2, ::draw2d::pen * ppen)
    {
 
-      synch_lock sl(m_spmutex);
+      synch_lock sl(m_pmutex);
 
       ((Gdiplus::Pen *) ppen->get_os_data())->SetAlignment(Gdiplus::PenAlignment::PenAlignmentCenter);
 
@@ -4853,7 +4853,7 @@ namespace draw2d_gdiplus
    Gdiplus::Pen * graphics::gdiplus_pen()
    {
 
-      synch_lock sl(m_spmutex);
+      synch_lock sl(m_pmutex);
 
       if(m_sppen.is_null())
       {
@@ -4948,7 +4948,7 @@ namespace draw2d_gdiplus
    bool graphics::flush()
    {
 
-      synch_lock sl(m_spmutex);
+      synch_lock sl(m_pmutex);
       
       m_pgraphics->Flush();
 
@@ -4960,7 +4960,7 @@ namespace draw2d_gdiplus
    bool graphics::sync_flush()
    {
 
-      synch_lock sl(m_spmutex);
+      synch_lock sl(m_pmutex);
 
       m_pgraphics->Flush(Gdiplus::FlushIntentionSync);
 
@@ -4995,7 +4995,7 @@ namespace draw2d_gdiplus
    void graphics::enum_fonts(stringa & straPath, stringa & stra)
    {
 
-      synch_lock sl(m_spmutex);
+      synch_lock sl(m_pmutex);
 
       draw2d_gdiplus_enum_fonts fonts(stra);
 
