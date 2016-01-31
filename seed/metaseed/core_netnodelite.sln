@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "netnode_dynamic_source_script", "..\..\..\app-core\appseed\netnode_dynamic_source_script\netnode_dynamic_source_script.vcxproj", "{7F80EE33-BA33-4F1D-9EF7-73EB4AC73DCD}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -164,8 +164,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "userdatetime", "..\..\..\app-core\appseed\userdatetime\userdatetime.vcxproj", "{51042284-1115-7704-027F-4338C9DDE3FA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "html", "..\..\..\app\appseed\html\html.vcxproj", "{6C7004D3-FF6C-4872-8DDC-5D7F44B0BC57}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C353D248-E09A-41D0-A749-2FEFE8579B5F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "auraexpat", "..\..\..\app\aura\expat\auraexpat.vcxproj", "{2F3AE856-C0BB-413E-A451-0F867A07EBEC}"
 EndProject
@@ -425,58 +423,18 @@ Global
 		{A92C920F-C07D-481E-B523-565B56167CD1}.basis|Win32.Build.0 = basis|Win32
 		{A92C920F-C07D-481E-B523-565B56167CD1}.basis|x64.ActiveCfg = basis|x64
 		{A92C920F-C07D-481E-B523-565B56167CD1}.basis|x64.Build.0 = basis|x64
-		{A92C920F-C07D-481E-B523-565B56167CD1}.Debug|Win32.ActiveCfg = basis|Win32
-		{A92C920F-C07D-481E-B523-565B56167CD1}.Debug|Win32.Build.0 = basis|Win32
-		{A92C920F-C07D-481E-B523-565B56167CD1}.Debug|x64.ActiveCfg = basis|x64
-		{A92C920F-C07D-481E-B523-565B56167CD1}.Debug|x64.Build.0 = basis|x64
-		{A92C920F-C07D-481E-B523-565B56167CD1}.Debug9x|Win32.ActiveCfg = basis|Win32
-		{A92C920F-C07D-481E-B523-565B56167CD1}.Debug9x|Win32.Build.0 = basis|Win32
-		{A92C920F-C07D-481E-B523-565B56167CD1}.Debug9x|x64.ActiveCfg = basis|x64
-		{A92C920F-C07D-481E-B523-565B56167CD1}.Debug9x|x64.Build.0 = basis|x64
-		{A92C920F-C07D-481E-B523-565B56167CD1}.Release|Win32.ActiveCfg = basis|Win32
-		{A92C920F-C07D-481E-B523-565B56167CD1}.Release|Win32.Build.0 = basis|Win32
-		{A92C920F-C07D-481E-B523-565B56167CD1}.Release|x64.ActiveCfg = basis|x64
-		{A92C920F-C07D-481E-B523-565B56167CD1}.Release|x64.Build.0 = basis|x64
-		{A92C920F-C07D-481E-B523-565B56167CD1}.Release9x|Win32.ActiveCfg = basis|Win32
-		{A92C920F-C07D-481E-B523-565B56167CD1}.Release9x|Win32.Build.0 = basis|Win32
-		{A92C920F-C07D-481E-B523-565B56167CD1}.Release9x|x64.ActiveCfg = basis|x64
-		{A92C920F-C07D-481E-B523-565B56167CD1}.Release9x|x64.Build.0 = basis|x64
 		{A92C920F-C07D-481E-B523-565B56167CD1}.stage|Win32.ActiveCfg = stage|Win32
 		{A92C920F-C07D-481E-B523-565B56167CD1}.stage|Win32.Build.0 = stage|Win32
 		{A92C920F-C07D-481E-B523-565B56167CD1}.stage|x64.ActiveCfg = stage|x64
 		{A92C920F-C07D-481E-B523-565B56167CD1}.stage|x64.Build.0 = stage|x64
-		{A92C920F-C07D-481E-B523-565B56167CD1}.Template|Win32.ActiveCfg = basis|Win32
-		{A92C920F-C07D-481E-B523-565B56167CD1}.Template|Win32.Build.0 = basis|Win32
-		{A92C920F-C07D-481E-B523-565B56167CD1}.Template|x64.ActiveCfg = basis|x64
-		{A92C920F-C07D-481E-B523-565B56167CD1}.Template|x64.Build.0 = basis|x64
 		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.basis|Win32.ActiveCfg = basis|Win32
 		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.basis|Win32.Build.0 = basis|Win32
 		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.basis|x64.ActiveCfg = basis|x64
 		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.basis|x64.Build.0 = basis|x64
-		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.Debug|Win32.ActiveCfg = basis|Win32
-		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.Debug|Win32.Build.0 = basis|Win32
-		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.Debug|x64.ActiveCfg = basis|x64
-		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.Debug|x64.Build.0 = basis|x64
-		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.Debug9x|Win32.ActiveCfg = basis|Win32
-		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.Debug9x|Win32.Build.0 = basis|Win32
-		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.Debug9x|x64.ActiveCfg = basis|x64
-		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.Debug9x|x64.Build.0 = basis|x64
-		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.Release|Win32.ActiveCfg = basis|Win32
-		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.Release|Win32.Build.0 = basis|Win32
-		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.Release|x64.ActiveCfg = basis|x64
-		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.Release|x64.Build.0 = basis|x64
-		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.Release9x|Win32.ActiveCfg = basis|Win32
-		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.Release9x|Win32.Build.0 = basis|Win32
-		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.Release9x|x64.ActiveCfg = basis|x64
-		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.Release9x|x64.Build.0 = basis|x64
 		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.stage|Win32.ActiveCfg = stage|Win32
 		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.stage|Win32.Build.0 = stage|Win32
 		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.stage|x64.ActiveCfg = stage|x64
 		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.stage|x64.Build.0 = stage|x64
-		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.Template|Win32.ActiveCfg = basis|Win32
-		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.Template|Win32.Build.0 = basis|Win32
-		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.Template|x64.ActiveCfg = basis|x64
-		{8451773B-CC87-4BB6-A130-C68DB95FAA7C}.Template|x64.Build.0 = basis|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
