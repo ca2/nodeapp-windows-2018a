@@ -161,7 +161,7 @@ Opened:
             uiSkippedSamplesCount = 1;
          }
          
-         wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, uiBufferCount, m_pwaveformat, m_pwaveformat);
+         wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, uiBufferCount,128, m_pwaveformat, m_pwaveformat);
 
          m_pprebuffer->open(
             this, // callback thread (thread)
@@ -293,7 +293,7 @@ Opened:
             uiSkippedSamplesCount = 1;
          }
 
-         wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, uiBufferCount, m_pwaveformat, m_pwaveformat);
+         wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, uiBufferCount,128, m_pwaveformat, m_pwaveformat);
 
          m_pprebuffer->open(this, m_pwaveformat->nChannels, uiBufferCount, iBufferSampleCount); 
 

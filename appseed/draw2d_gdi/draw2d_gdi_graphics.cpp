@@ -43,7 +43,7 @@ namespace draw2d_gdi
    graphics::~graphics()
    {
 
-      synch_lock ml(m_spmutex);
+      synch_lock ml(m_pmutex);
 
       for(int i = 0; i < m_ptraObject.get_count(); i++)
       {
@@ -260,7 +260,7 @@ namespace draw2d_gdi
       if(pbitmap == NULL)
          return NULL;
 
-      synch_lock ml(m_spmutex);
+      synch_lock ml(m_pmutex);
 
       pbitmap->m_bUpdated = true;
 
@@ -278,7 +278,7 @@ namespace draw2d_gdi
    void graphics::on_select_object(::draw2d::object * pobjectParam)
    {
 
-      synch_lock ml(m_spmutex);
+      synch_lock ml(m_pmutex);
 
       ::draw2d_gdi::object * pobject = dynamic_cast <::draw2d_gdi::object *> (pobjectParam);
 
@@ -1291,7 +1291,7 @@ namespace draw2d_gdi
    bool graphics::BitBlt(int x, int y, int nWidth, int nHeight, ::draw2d::graphics * pgraphicsSrc, int xSrc, int ySrc, uint32_t dwRop)
    { 
 
-      synch_lock ml(m_spmutex);
+      synch_lock ml(m_pmutex);
 
       if(get_handle1() == NULL)
          return false;
@@ -1512,7 +1512,7 @@ namespace draw2d_gdi
    bool graphics::StretchBlt(int x, int y, int nWidth, int nHeight, ::draw2d::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, uint32_t dwRop)
    {
 
-      synch_lock ml(m_spmutex);
+      synch_lock ml(m_pmutex);
 
       if (get_handle1() == NULL)
          return false;
@@ -1621,7 +1621,7 @@ namespace draw2d_gdi
    bool graphics::TextOut(double x, double y, const char * lpszString, strsize nCount)
    {
 
-      synch_lock ml(m_spmutex);
+      synch_lock ml(m_pmutex);
 
       if (::draw2d::graphics::TextOut(x, y, lpszString, nCount))
          return true;
@@ -2616,7 +2616,7 @@ namespace draw2d_gdi
    bool graphics::internal_fill_path(void(::draw2d_gdi::graphics::* pfnInternalSetPath)(void *),void * pparam,const RECT & lpcrect,::draw2d::brush * pbrush)
    { 
 
-      synch_lock ml(m_spmutex);
+      synch_lock ml(m_pmutex);
 
       ASSERT(get_handle1() != NULL); 
 
@@ -2771,7 +2771,7 @@ namespace draw2d_gdi
    bool graphics::internal_stroke_path(void(::draw2d_gdi::graphics::* pfnInternalSetPath)(void *),void * pparam,const RECT & lpcrect,::draw2d::pen * ppen)
    {
 
-      synch_lock ml(m_spmutex);
+      synch_lock ml(m_pmutex);
 
       ASSERT(get_handle1() != NULL); 
 
@@ -2845,7 +2845,7 @@ namespace draw2d_gdi
    bool graphics::internal_fill_and_stroke_path(void(::draw2d_gdi::graphics::* pfnInternalSetPath)(void *),void * pparam,const RECT & lpcrect,::draw2d::brush * pbrush,::draw2d::pen * ppen)
    {
 
-      synch_lock ml(m_spmutex);
+      synch_lock ml(m_pmutex);
 
       ASSERT(get_handle1() != NULL); 
 
@@ -3656,7 +3656,7 @@ namespace draw2d_gdi
    void graphics::FillSolidRect(int x, int y, int cx, int cy, COLORREF clr)
    {
 
-      synch_lock ml(m_spmutex);
+      synch_lock ml(m_pmutex);
 
       if(m_pdib == NULL)
       {
@@ -3872,7 +3872,7 @@ namespace draw2d_gdi
       if(ppen == NULL)
          return NULL;
 
-      synch_lock ml(m_spmutex);
+      synch_lock ml(m_pmutex);
 
       SelectObject(ppen->get_os_data());
 
@@ -3896,7 +3896,7 @@ namespace draw2d_gdi
       if(pbrush == NULL)
          return NULL;
 
-      synch_lock ml(m_spmutex);
+      synch_lock ml(m_pmutex);
 
       SelectObject(pbrush->get_os_data());
 
@@ -3919,7 +3919,7 @@ namespace draw2d_gdi
       if(pfont == NULL)
          return NULL;
 
-      synch_lock ml(m_spmutex);
+      synch_lock ml(m_pmutex);
 
       SelectObject(pfont->get_os_data());
 
@@ -3944,7 +3944,7 @@ namespace draw2d_gdi
       if(pregion == NULL)
          return nRetVal;
 
-      synch_lock ml(m_spmutex);
+      synch_lock ml(m_pmutex);
 
       SelectObject(pregion->get_os_data());
 
