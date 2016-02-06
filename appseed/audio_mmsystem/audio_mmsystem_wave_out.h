@@ -27,7 +27,7 @@ namespace multimedia
 
          virtual imedia_time wave_out_get_position_millis();
          imedia::position wave_out_get_position();
-         virtual void wave_out_buffer_ready(int iBuffer);
+         virtual void wave_out_buffer_ready(int iBuffer) override;
          virtual void wave_out_buffer_ready(LPWAVEHDR lpwavehdr);
 
          virtual ::multimedia::e_result wave_out_open(::thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount) override;
