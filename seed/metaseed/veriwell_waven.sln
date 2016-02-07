@@ -187,6 +187,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_xaudio", "..\..\..\ap
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multimedia_xaudio", "..\..\..\app\appseed\multimedia_xaudio\multimedia_xaudio.vcxproj", "{8451778C-2015-40A4-BF5B-FF62B9778451}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_veriwell_asciimedia", "..\..\..\app-veriwell\appseed\asciimedia\asciimedia.vcxproj", "{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
@@ -1871,6 +1873,38 @@ Global
 		{8451778C-2015-40A4-BF5B-FF62B9778451}.static_profiler|Win32.Build.0 = stage|Win32
 		{8451778C-2015-40A4-BF5B-FF62B9778451}.static_profiler|x64.ActiveCfg = stage|x64
 		{8451778C-2015-40A4-BF5B-FF62B9778451}.static_profiler|x64.Build.0 = stage|x64
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.basis|Win32.ActiveCfg = basis|Win32
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.basis|Win32.Build.0 = basis|Win32
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.basis|x64.ActiveCfg = basis|x64
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.basis|x64.Build.0 = basis|x64
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.codeanalysis|Win32.ActiveCfg = basis|Win32
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.codeanalysis|Win32.Build.0 = basis|Win32
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.codeanalysis|x64.ActiveCfg = basis|x64
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.codeanalysis|x64.Build.0 = basis|x64
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.memdleak|Win32.ActiveCfg = basis|Win32
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.memdleak|Win32.Build.0 = basis|Win32
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.memdleak|x64.ActiveCfg = basis|x64
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.memdleak|x64.Build.0 = basis|x64
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.no_precompiled_header|Win32.ActiveCfg = basis|Win32
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.no_precompiled_header|Win32.Build.0 = basis|Win32
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.no_precompiled_header|x64.ActiveCfg = basis|x64
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.no_precompiled_header|x64.Build.0 = basis|x64
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.profiler|Win32.ActiveCfg = basis|Win32
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.profiler|Win32.Build.0 = basis|Win32
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.profiler|x64.ActiveCfg = basis|x64
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.profiler|x64.Build.0 = basis|x64
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.stage|Win32.ActiveCfg = stage|Win32
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.stage|Win32.Build.0 = stage|Win32
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.stage|x64.ActiveCfg = stage|x64
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.stage|x64.Build.0 = stage|x64
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.static_basis|Win32.ActiveCfg = basis|Win32
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.static_basis|Win32.Build.0 = basis|Win32
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.static_basis|x64.ActiveCfg = basis|x64
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.static_basis|x64.Build.0 = basis|x64
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.static_profiler|Win32.ActiveCfg = stage|Win32
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.static_profiler|Win32.Build.0 = stage|Win32
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.static_profiler|x64.ActiveCfg = stage|x64
+		{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}.static_profiler|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
