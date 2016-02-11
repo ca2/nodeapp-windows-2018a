@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_flag", "..\..\..\app-core\appseed\flag\flag.vcxproj", "{4467CF99-AD0F-403B-8E30-3CBA23756713}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -221,6 +221,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wndfrm_rootkiller", "..\..\..\app-core\appseed\wndfrm_rootkiller\wndfrm_rootkiller.vcxproj", "{EBB7FB48-31AA-4282-999B-D52C9B3B887B}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "math", "..\..\..\app\appseed\math\math.vcxproj", "{5B03FC53-C0AA-419D-A87F-4338C9DDE3FA}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pcre", "..\..\..\app\appseed\pcre\pcre.vcxproj", "{F850CC85-1FC5-4B19-BED8-64959B8ACD71}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -462,6 +464,14 @@ Global
 		{5B03FC53-C0AA-419D-A87F-4338C9DDE3FA}.stage|Win32.Build.0 = stage|Win32
 		{5B03FC53-C0AA-419D-A87F-4338C9DDE3FA}.stage|x64.ActiveCfg = stage|x64
 		{5B03FC53-C0AA-419D-A87F-4338C9DDE3FA}.stage|x64.Build.0 = stage|x64
+		{F850CC85-1FC5-4B19-BED8-64959B8ACD71}.basis|Win32.ActiveCfg = basis|Win32
+		{F850CC85-1FC5-4B19-BED8-64959B8ACD71}.basis|Win32.Build.0 = basis|Win32
+		{F850CC85-1FC5-4B19-BED8-64959B8ACD71}.basis|x64.ActiveCfg = basis|x64
+		{F850CC85-1FC5-4B19-BED8-64959B8ACD71}.basis|x64.Build.0 = basis|x64
+		{F850CC85-1FC5-4B19-BED8-64959B8ACD71}.stage|Win32.ActiveCfg = stage|Win32
+		{F850CC85-1FC5-4B19-BED8-64959B8ACD71}.stage|Win32.Build.0 = stage|Win32
+		{F850CC85-1FC5-4B19-BED8-64959B8ACD71}.stage|x64.ActiveCfg = stage|x64
+		{F850CC85-1FC5-4B19-BED8-64959B8ACD71}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
