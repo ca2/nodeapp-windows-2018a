@@ -41,7 +41,7 @@ namespace multimedia
 
          virtual bool initialize_instance();
          virtual int32_t exit_instance();
-         virtual bool on_idle(LONG lCount);
+         // virtual bool on_idle(LONG lCount);
          virtual void pre_translate_message(::signal_details * pobj);
 
 

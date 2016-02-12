@@ -132,11 +132,11 @@ namespace multimedia
 
 
 
-      bool thread::on_idle(LONG lCount)
-      {
-         // TODO: add your specialized code here and/or call the base class
-         return ::thread::on_idle(lCount);
-      }
+      //bool thread::on_idle(LONG lCount)
+      //{
+      //   // TODO: add your specialized code here and/or call the base class
+      //   return ::thread::on_idle(lCount);
+      //}
 
       void thread::OnVmsmException(::signal_details * pobj)
       {
