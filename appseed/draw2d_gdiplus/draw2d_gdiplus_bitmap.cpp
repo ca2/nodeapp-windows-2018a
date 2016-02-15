@@ -12,8 +12,9 @@ namespace draw2d_gdiplus
       ::object(papp)
    { 
 
+      m_mem.m_bAligned = true;
+
       m_pbitmap   = NULL;
-      m_pdata     = NULL;
       m_iStride   = 0;
 
    }
@@ -22,7 +23,6 @@ namespace draw2d_gdiplus
    { 
 
       ::aura::del(m_pbitmap);
-      ::aura::del(m_pdata);
 
    }
 
@@ -31,12 +31,6 @@ namespace draw2d_gdiplus
 
       UNREFERENCED_PARAMETER(pgraphics);
 
-      if(m_pdata != NULL)
-      {
-         memory_free(m_pdata);
-         m_pdata = NULL;
-      }
-      
       m_pbitmap = new ::Gdiplus::Bitmap(nWidth, nHeight, Gdiplus::PixelOffsetModeHighQuality);
 
       return TRUE;
@@ -63,42 +57,23 @@ namespace draw2d_gdiplus
          m_pbitmap = NULL;
       }
 
-      if(m_pdata != NULL)
-      {
-         memory_free(m_pdata);
-         m_pdata = NULL;
-      }
-
       m_iStride = ((4 * lpbmi->bmiHeader.biWidth + 15) / 16) * 16;
 
-      try
-      {
+      m_mem.allocate(abs(m_iStride * lpbmi->bmiHeader.biHeight));
 
-         m_pdata = aligned_memory_alloc(abs(m_iStride * lpbmi->bmiHeader.biHeight));
-
-      }
-      catch(...)
-      {
-         
+      if(m_mem.get_data() == NULL)
          return false;
 
-      }
-
-      if(m_pdata == NULL)
-         return false;
-
-      m_pbitmap = new Gdiplus::Bitmap(abs(lpbmi->bmiHeader.biWidth), abs(lpbmi->bmiHeader.biHeight),m_iStride, PixelFormat32bppARGB, (BYTE *) m_pdata);
+      m_pbitmap = new Gdiplus::Bitmap(abs(lpbmi->bmiHeader.biWidth), abs(lpbmi->bmiHeader.biHeight),m_iStride, PixelFormat32bppARGB, (BYTE *)m_mem.get_data());
 
       if(m_pbitmap == NULL)
       {
-         memory_free(m_pdata);
-         m_pdata = NULL;
          return FALSE;
       }
 
       if(ppvBits != NULL)
       {
-         *ppvBits = m_pdata; 
+         *ppvBits = m_mem.get_data();
       }
 
       if(stride != NULL)
@@ -173,12 +148,6 @@ namespace draw2d_gdiplus
    bool bitmap::CreateCompatibleBitmap(::draw2d::graphics * pgraphics, int32_t nWidth, int32_t nHeight)
    {
 
-      if(m_pdata != NULL)
-      {
-         memory_free(m_pdata);
-         m_pdata = NULL;
-      }
-
       if(m_pbitmap != NULL)
       {
          delete m_pbitmap;
@@ -192,12 +161,6 @@ namespace draw2d_gdiplus
    }
    bool bitmap::CreateDiscardableBitmap(::draw2d::graphics * pgraphics, int32_t nWidth, int32_t nHeight)
    { 
-
-      if(m_pdata != NULL)
-      {
-         memory_free(m_pdata);
-         m_pdata = NULL;
-      }
 
       if(m_pbitmap != NULL)
       {

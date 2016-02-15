@@ -1,5 +1,15 @@
 #pragma once
 
+#define __VLD
+
+#ifdef __VLD
+#define _CRT_SECURE_NO_WARNINGS
+#include "vld.h"
+#define memory_alloc malloc
+#define memory_realloc realloc
+#define memory_free free
+#endif
+
 #if !defined(_DLL)
 #define CUBE
 #endif

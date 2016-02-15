@@ -12,7 +12,7 @@ namespace draw2d_gdiplus
 
 
       ::Gdiplus::Bitmap *  m_pbitmap;
-      void *               m_pdata;
+      memory               m_mem;
 
 
       bitmap(::aura::application * papp);
