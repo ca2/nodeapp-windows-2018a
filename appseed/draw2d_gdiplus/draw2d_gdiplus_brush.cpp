@@ -16,11 +16,7 @@ namespace draw2d_gdiplus
 
    brush::~brush()
    { 
-      if(m_pbrush != NULL)
-      {
-         delete m_pbrush;
-         m_pbrush = NULL;
-      }
+      ::aura::del(m_pbrush);
    }
 
    //bool brush::create_solid(COLORREF crColor)
@@ -127,16 +123,7 @@ namespace draw2d_gdiplus
       
       if(m_pbrush == NULL || !m_bUpdated)
       {
-         if(m_pbrush != NULL)
-         {
-            try
-            {
-               delete m_pbrush;
-            }
-            catch(...)
-            {
-            }
-         }
+         ::aura::del(((brush *) this)->m_pbrush);
          if(m_etype == type_solid)
          {
             try

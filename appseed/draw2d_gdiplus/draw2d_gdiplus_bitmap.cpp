@@ -31,6 +31,8 @@ namespace draw2d_gdiplus
 
       UNREFERENCED_PARAMETER(pgraphics);
 
+      ::aura::del(m_pbitmap);
+
       m_pbitmap = new ::Gdiplus::Bitmap(nWidth, nHeight, Gdiplus::PixelOffsetModeHighQuality);
 
       return TRUE;
@@ -51,11 +53,7 @@ namespace draw2d_gdiplus
 
       UNREFERENCED_PARAMETER(pgraphics);
 
-      if(m_pbitmap != NULL)
-      {
-         delete m_pbitmap;
-         m_pbitmap = NULL;
-      }
+      ::aura::del(m_pbitmap);
 
       m_iStride = ((4 * lpbmi->bmiHeader.biWidth + 15) / 16) * 16;
 
@@ -148,11 +146,7 @@ namespace draw2d_gdiplus
    bool bitmap::CreateCompatibleBitmap(::draw2d::graphics * pgraphics, int32_t nWidth, int32_t nHeight)
    {
 
-      if(m_pbitmap != NULL)
-      {
-         delete m_pbitmap;
-         m_pbitmap = NULL;
-      }
+      ::aura::del(m_pbitmap);
 
       m_pbitmap = new ::Gdiplus::Bitmap(nWidth, nHeight, Gdiplus::PixelOffsetModeHighQuality);
 
@@ -162,11 +156,7 @@ namespace draw2d_gdiplus
    bool bitmap::CreateDiscardableBitmap(::draw2d::graphics * pgraphics, int32_t nWidth, int32_t nHeight)
    { 
 
-      if(m_pbitmap != NULL)
-      {
-         delete m_pbitmap;
-         m_pbitmap = NULL;
-      }
+      ::aura::del(m_pbitmap);
 
       m_pbitmap = new ::Gdiplus::Bitmap(nWidth, nHeight, Gdiplus::PixelOffsetModeHighQuality);
 
@@ -223,11 +213,7 @@ namespace draw2d_gdiplus
 
    bool bitmap::attach(void * posdata)
    {
-      if(m_pbitmap != NULL)
-      {
-         delete m_pbitmap;
-         m_pbitmap = NULL;
-      }
+      ::aura::del(m_pbitmap);
       
       m_pbitmap = (Gdiplus::Bitmap *) posdata;
 
