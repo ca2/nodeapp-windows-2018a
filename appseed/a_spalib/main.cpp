@@ -254,11 +254,6 @@ int32_t a_spa::run()
    }
 
 
-   //g_pgdiplusStartupOutput->NotificationUnhook(g_gdiplusHookToken);
-
-
-   //::Gdiplus::GdiplusShutdown(g_gdiplusToken);
-
    return g_iRet;
 
 }

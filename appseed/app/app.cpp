@@ -5,6 +5,9 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
+#ifdef __MCRTDBG
+#include <crtdbg.h>
+#endif
 
 int_bool file_exists_raw(const char * path1)
 {
@@ -186,7 +189,9 @@ int32_t WINAPI _tWinMain(HINSTANCE hinstance,HINSTANCE hPrevInstance,LPTSTR lpCm
       file_add_contents_raw("C:\\ca2\\config\\system\\show_elapsed.txt",szTimeMessage2);
 
    }
-
+#ifdef __MCRTDBG
+   _CrtDumpMemoryLeaks();
+#endif
    return iRet;
 
 }
