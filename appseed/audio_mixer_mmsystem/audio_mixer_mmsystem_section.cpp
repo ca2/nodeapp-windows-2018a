@@ -9,21 +9,21 @@ namespace multimedia
    {
 
 
-      departament::departament(::aura::application * papp) :
+      department::department(::aura::application * papp) :
          ::object(papp),
-         ::aura::departament(papp)
+         ::aura::department(papp)
       {
 
       }
 
 
-      departament::~departament()
+      department::~department()
       {
 
       }
 
 
-      bool departament::initialize1()
+      bool department::initialize1()
       {
 
          return true;
@@ -31,7 +31,7 @@ namespace multimedia
       }
 
 
-      bool departament::finalize() 
+      bool department::finalize() 
       {
 
          DestroyWindow();
@@ -43,7 +43,7 @@ namespace multimedia
 
 
 
-      /*::multimedia::e_result departament::CreateNewDevice(uint32_t uiMixerID)
+      /*::multimedia::e_result department::CreateNewDevice(uint32_t uiMixerID)
       {
       ::multimedia::e_result mmrc;
       if(MMSYSERR_NOERROR != (mmrc = m_pmixer->set_new_device(
@@ -60,7 +60,7 @@ namespace multimedia
       return mmrc;
       }
 
-      ::multimedia::e_result departament::CreateNewDestination(uint32_t dwComponentType)
+      ::multimedia::e_result department::CreateNewDestination(uint32_t dwComponentType)
       {
       ::multimedia::e_result mmrc;
       ::multimedia::audio_mixer::destination * pdestination = NULL;
@@ -89,7 +89,7 @@ namespace multimedia
       }*/
 
 
-      bool departament::initialize()
+      bool department::initialize()
       {
          //   m_pmixerthread = (::multimedia::audio_mixer::thread *) __begin_thread(System.type_info < ::multimedia::audio_mixer::thread > ());
          //   if(m_pmixerthread == NULL)

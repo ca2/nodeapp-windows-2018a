@@ -2030,12 +2030,12 @@ namespace production
    sha1.update(data)
    return 'Digest-Algorithms: MD5 SHA1\nMD5-Digest: %s\nSHA1-Digest: %s\n' % \
    (base64.b64encode(md5.digest()), base64.b64encode(sha1.digest()))
-   def departament(manifest, signature):
+   def department(manifest, signature):
    manifest_sections.append(manifest)
    signature_sections.append(signature + digest(manifest))
-   departament('Manifest-Version: 1.0\n', 'Signature-Version: 1.0\n')
+   department('Manifest-Version: 1.0\n', 'Signature-Version: 1.0\n')
    for filepath, relpath, data in filelist:
-   departament('Name: %s\n%s' % (relpath, digest(data)), 'Name: %s\n' % relpath)
+   department('Name: %s\n%s' % (relpath, digest(data)), 'Name: %s\n' % relpath)
    manifest = '\n'.join(manifest_sections)
    signature = '\n'.join(signature_sections)
 

@@ -23,7 +23,7 @@ namespace multimedia
 
          bool                                m_bPendingShowCommand;
 
-         sp(::multimedia::audio_mixer::departament) m_psection;
+         sp(::multimedia::audio_mixer::department) m_psection;
 
 
          thread(::aura::application * papp);

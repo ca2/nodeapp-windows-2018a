@@ -131,6 +131,20 @@ namespace music
             sequence(::aura::application * papp);
             virtual ~sequence();
 
+            virtual int64_t add_ref()
+            {
+
+               return ::object::add_ref();
+
+            }
+
+            virtual int64_t dec_ref()
+            {
+
+               return ::object::dec_ref();
+
+            }
+
 
             inline uint32_t GetState();
             inline uint32_t GetPreviousState();

@@ -79,7 +79,7 @@ namespace music
             SCAST_PTR(::message::base, pbase, pobj);
 
             ::music::midi::sequence::event * pevent = (::music::midi::sequence::event *) pbase->m_lparam.m_lparam;
-            ::music::midi::mmsystem::sequence * pseq = pevent->m_psequence.cast < ::music::midi::mmsystem::sequence > ();
+            ::music::midi::mmsystem::sequence * pseq = dynamic_cast < ::music::midi::mmsystem::sequence * > (pevent->m_psequence);
 
             pseq->OnEvent(pevent);
 

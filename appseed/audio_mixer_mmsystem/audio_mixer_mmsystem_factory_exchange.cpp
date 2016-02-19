@@ -21,7 +21,7 @@ namespace multimedia
          System.factory().creatable_small < device                      >  (System.type_info < ::multimedia::audio_mixer::device                   > ());
          System.factory().creatable_small < line_info                   >  (System.type_info < ::multimedia::audio_mixer::line_info                > ());
          System.factory().cloneable_large < audio_mixer                     >  (System.type_info < ::multimedia::audio_mixer::audio_mixer                   > ());
-         //System.factory().cloneable_large < departament                   >  (System.type_info < ::multimedia::audio_mixer::font                     > ());
+         //System.factory().cloneable_large < department                   >  (System.type_info < ::multimedia::audio_mixer::font                     > ());
          System.factory().creatable_small < source                      >  (System.type_info < ::multimedia::audio_mixer::source                   > ());
          System.factory().creatable_small < thread                      >  (System.type_info < ::multimedia::audio_mixer::thread                   > ());
          /*System.factory().creatable_small < user::label                 >  (System.type_info < ::multimedia::audio_mixer::user::label              > ());

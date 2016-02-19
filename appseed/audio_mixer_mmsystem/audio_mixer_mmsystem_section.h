@@ -9,8 +9,8 @@ namespace multimedia
    {
 
 
-      class CLASS_DECL_AUDIO_MIXER_MMSYSTEM departament :
-         virtual public ::aura::departament,
+      class CLASS_DECL_AUDIO_MIXER_MMSYSTEM department :
+         virtual public ::aura::department,
          virtual public ::user::interaction
       {
       public:
@@ -26,8 +26,8 @@ namespace multimedia
          };
 
 
-         departament(::aura::application * papp);
-         virtual ~departament();
+         department(::aura::application * papp);
+         virtual ~department();
 
 
          virtual bool initialize1();
