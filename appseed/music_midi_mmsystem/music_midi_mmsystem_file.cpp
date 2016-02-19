@@ -49,12 +49,6 @@ namespace music
 
             CloseFile();
 
-            if(m_ptracks != NULL)
-            {
-               delete m_ptracks;
-               m_ptracks = NULL;
-            }
-
             if(m_estorage == ::music::storage_attach)
             {
                detach();
