@@ -53,26 +53,22 @@ namespace multimedia
 
       }
 
+
       int32_t wave_out::run()
       {
-         m_durationRunLock = millis(1);
+
          while(m_bRun)
          {
+
             ::thread::run();
+
          }
 
-
-
          return 0;
+
       }
+
       
-      bool wave_out::on_run_step()
-      {
-
-         return ::thread::on_run_step();
-
-      }
-
       int32_t wave_out::exit_instance()
       {
 
