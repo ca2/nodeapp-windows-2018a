@@ -610,7 +610,7 @@ namespace ca2plugin_container
    }
 
    
-   void host::_001Print(::draw2d::graphics * pgraphics)
+   void host::_001Print(::draw2d::dib * pdib)
    {
 
       if(m_pcontainerapp != NULL)

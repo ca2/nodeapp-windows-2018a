@@ -21,7 +21,7 @@ namespace draw2d_gdi
 
 
       bool CreatePalette(LPLOGPALETTE lpLogPalette);
-      bool CreateHalftonePalette(::draw2d::graphics * pgraphics);
+      bool CreateHalftonePalette(::draw2d::dib * pdib);
 
 
       UINT GetPaletteEntries(UINT nStartIndex, UINT nNumEntries, LPPALETTEENTRY lpPaletteColors) const;

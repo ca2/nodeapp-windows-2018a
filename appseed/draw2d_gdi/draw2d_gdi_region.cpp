@@ -98,7 +98,7 @@ namespace draw2d_gdi
    { 
       
       return Attach(::CreateRoundRectRgn(x1, y1, x2, y2, x3, y3)); }
-   bool region::CreateFromPath(::draw2d::graphics * pgraphics)
+   bool region::CreateFromPath(::draw2d::dib * pdib)
    { 
       
       ASSERT(pgraphics != NULL); return Attach(::PathToRegion((dynamic_cast<::draw2d_gdi::graphics * >(pgraphics))->get_handle1())); }

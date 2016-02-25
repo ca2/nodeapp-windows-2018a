@@ -77,7 +77,7 @@ namespace production
 
 
 
-      virtual void _001OnDraw(::draw2d::graphics * pdc);
+      virtual void _001OnDraw(::draw2d::dib * pdib);
 
       virtual void _001OnTabClick(int32_t iTab);
       virtual void install_message_handling(::message::dispatch * pinterface);
@@ -103,7 +103,7 @@ namespace production
       virtual size get_total_size();
 
 
-      virtual void on_viewport_offset(::draw2d::graphics * pgraphics);
+      virtual void on_viewport_offset(::draw2d::dib * pdib);
 
 
    };

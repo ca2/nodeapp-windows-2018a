@@ -24,7 +24,7 @@ namespace draw2d_gdi
       bool create_polygon(LPPOINT lpPoints, int32_t nCount, ::draw2d::e_fill_mode efillmode);
       bool create_poly_polygon(LPPOINT lpPoints, LPINT lpPolyCounts, int32_t nCount, ::draw2d::e_fill_mode efillmode);
       bool CreateRoundRectRgn(int x1, int y1, int x2, int y2, int x3, int y3);
-      bool CreateFromPath(::draw2d::graphics * pgraphics);
+      bool CreateFromPath(::draw2d::dib * pdib);
       bool CreateFromData(const XFORM* lpXForm, int nCount,
          const RGNDATA* pRgnData);
 

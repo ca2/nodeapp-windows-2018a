@@ -23,7 +23,7 @@ namespace draw2d_gdiplus
       //return attach(::CreatePalette(lpLogPalette)); 
       return FALSE;
    }
-   bool palette::CreateHalftonePalette(::draw2d::graphics * pgraphics)
+   bool palette::CreateHalftonePalette(::draw2d::dib * pdib)
    {
       //ASSERT(pgraphics != NULL && (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->get_handle1() != NULL); 
       //return attach(::CreateHalftonePalette((dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->get_handle1())); 

@@ -153,13 +153,16 @@ namespace draw2d_gdiplus
       {
          return m_spgraphics->SelectObject(m_hbitmapOriginal) != NULL;
       }*/
+
       return true;
+
    }
 
-   bool dib::create(::draw2d::graphics * pdc)
+
+   bool dib::create(::draw2d::graphics * pgraphics)
    {
 
-      ::draw2d::bitmap * pbitmap = (dynamic_cast<::draw2d_gdiplus::graphics * >(pdc))->get_current_bitmap();
+      ::draw2d::bitmap * pbitmap = (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->get_current_bitmap();
 
       if(pbitmap == NULL)
          return FALSE;
@@ -169,7 +172,7 @@ namespace draw2d_gdiplus
          return FALSE;
       }
 
-      from(pdc);
+      from(pgraphics);
 
       return TRUE;
 
@@ -207,21 +210,37 @@ namespace draw2d_gdiplus
 
    }
 
-   bool dib::from(::draw2d::graphics * pdc)
+
+   bool dib::from(::draw2d::graphics * pgraphics)
    {
+
       ::draw2d::bitmap_sp bitmap(get_app());
-      bitmap->CreateCompatibleBitmap(pdc, 1, 1);
-      ::draw2d::bitmap * pbitmap = GDIPLUS_GRAPHICS(pdc)->SelectObject(bitmap);
-      if(pbitmap == NULL)
+
+      bitmap->CreateCompatibleBitmap(pgraphics, 1, 1);
+
+      ::draw2d::bitmap * pbitmap = GDIPLUS_GRAPHICS(pgraphics)->SelectObject(bitmap);
+
+      if (pbitmap == NULL)
+      {
+
          return false;
+
+      }
+
       class size size = pbitmap->get_size();
+
       if(!create(size))
       {
-         GDIPLUS_GRAPHICS(pdc)->SelectObject(pbitmap);
+
+         GDIPLUS_GRAPHICS(pgraphics)->SelectObject(pbitmap);
+
          return false;
+
       }
-      bool bOk = GetDIBits(GDIPLUS_HDC(pdc), (HBITMAP) pbitmap->get_os_data(), 0, m_size.cy, m_pcolorref, &(m_info), DIB_RGB_COLORS) != FALSE; 
-      GDIPLUS_GRAPHICS(pdc)->SelectObject(pbitmap);
+
+      bool bOk = GetDIBits(GDIPLUS_HDC(pgraphics), (HBITMAP) pbitmap->get_os_data(), 0, m_size.cy, m_pcolorref, &(m_info), DIB_RGB_COLORS) != FALSE;
+
+      GDIPLUS_GRAPHICS(pgraphics)->SelectObject(pbitmap);
 
       return bOk;
 
@@ -2582,10 +2601,10 @@ namespace draw2d_gdiplus
          rectPaint = rectWindow;
          rectPaint.offset(-rectPaint.top_left());
          m_spgraphics->SelectClipRgn(NULL);
-         pwnd->_001OnDeferPaintLayeredWindowBackground(pdc);
+         pwnd->_001OnDeferPaintLayeredWindowBackground(dib);
          m_spgraphics->SelectClipRgn(NULL);
          m_spgraphics-> SetViewportOrg(point(0, 0));
-         pwnd->_000OnDraw(pdc);
+         pwnd->_000OnDraw(dib);
          m_spgraphics->SetViewportOrg(point(0, 0));
          //(dynamic_cast<::win::graphics * >(pdc))->FillSolidRect(rectUpdate.left, rectUpdate.top, 100, 100, 255);
          m_spgraphics->SelectClipRgn(NULL);

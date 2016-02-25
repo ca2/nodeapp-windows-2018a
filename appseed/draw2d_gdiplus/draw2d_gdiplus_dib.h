@@ -47,12 +47,12 @@ namespace draw2d_gdiplus
 
       bool create(class size size);
       bool create(int32_t iWidth, int32_t iHeight);
-      bool create(::draw2d::graphics * pdc);
+      bool create(::draw2d::graphics * pgraphics);
       bool destroy();
 
 
 
-      bool from(::draw2d::graphics * pdc);
+      bool from(::draw2d::graphics * pgraphics);
       bool from(point ptDest, ::draw2d::graphics * pdc, point pt, class size sz);
 
       bool to(::draw2d::graphics * pgraphics, point pt, class size size, point ptSrc);

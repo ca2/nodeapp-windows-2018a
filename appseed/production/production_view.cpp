@@ -162,13 +162,13 @@ namespace production
    }
 
 
-   void view::on_viewport_offset(::draw2d::graphics * pgraphics)
+   void view::on_viewport_offset(::draw2d::dib * pdib)
    {
 
    }
 
 
-   void view:: _001OnDraw(::draw2d::graphics * pdc)
+   void view:: _001OnDraw(::draw2d::dib * pdib)
    {
       
       single_lock sl(&m_pproduction->m_mutexStatus,TRUE);

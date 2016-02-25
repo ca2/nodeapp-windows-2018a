@@ -159,7 +159,7 @@ namespace draw2d_gdi
       }
    }
 
-   bool dib::create(::draw2d::graphics * pdc)
+   bool dib::create(::draw2d::dib * pdib)
    {
       ::draw2d_gdi::bitmap * pbitmap = dynamic_cast<::draw2d_gdi::bitmap * >(dynamic_cast<::draw2d_gdi::graphics * >(pdc)->get_current_bitmap().m_p);
       if(pbitmap == NULL)
@@ -207,7 +207,7 @@ namespace draw2d_gdi
             != FALSE; 
    }
 
-   bool dib::from(::draw2d::graphics * pdc)
+   bool dib::from(::draw2d::dib * pdib)
    {
 
       ::draw2d::bitmap_sp bitmap(get_app());
