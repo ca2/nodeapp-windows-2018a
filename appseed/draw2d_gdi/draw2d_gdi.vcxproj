@@ -125,7 +125,7 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(SolutionDir)../../../include;$(SolutionDir)../../../app/include;.;$(ProjectDir)framework;$(IntDir);$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/base/include;$(SolutionDir)../../../app/base/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../app/appseed/core;$(SolutionDir)../../../app/appseed/base;$(SolutionDir)../../../app/appseed/axis;$(SolutionDir)../../../app/appseed/aura;$(SolutionDir)../../../app/axis;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DRAW2D_GDI_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>false</MinimalRebuild>
+      <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>Async</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -136,7 +136,6 @@
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
-      <BrowseInformation>false</BrowseInformation>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -314,7 +313,7 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(SolutionDir)../../../include;$(SolutionDir)../../../app/include;.;$(ProjectDir)framework;$(IntDir);$(SolutionDir)../../../;$(SolutionDir)../../../app;$(SolutionDir)../../../app/base/include;$(SolutionDir)../../../app/base/appseed;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../../app/appseed/core;$(SolutionDir)../../../app/appseed/base;$(SolutionDir)../../../app/appseed/axis;$(SolutionDir)../../../app/appseed/aura;$(SolutionDir)../../../app/axis;$(SolutionDir)../../../nodeapp/thirdparty/appseed;$(SolutionDir)../../;$(ProjectDir)../../appseed;$(ProjectDir)../../;$(ProjectDir)../;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DRAW2D_GDI_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>false</MinimalRebuild>
+      <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>Async</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -325,7 +324,6 @@
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
-      <BrowseInformation>false</BrowseInformation>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
