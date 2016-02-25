@@ -161,7 +161,7 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::CreateCompatibleDC(::draw2d::dib * pdib)
+   bool graphics::CreateCompatibleDC(::draw2d::graphics * pgraphics)
    { 
 
       if(pgraphics == NULL)

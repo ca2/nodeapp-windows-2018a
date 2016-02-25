@@ -35,7 +35,7 @@ namespace draw2d_gdi
    }
 
 
-   bool palette::CreateHalftonePalette(::draw2d::dib * pdib)
+   bool palette::CreateHalftonePalette(::draw2d::graphics * pgraphics)
    {
       
       ASSERT(pgraphics != NULL && (dynamic_cast<::draw2d_gdi::graphics * >(pgraphics))->get_handle1() != NULL); 

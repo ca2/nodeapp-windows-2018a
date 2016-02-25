@@ -159,9 +159,9 @@ namespace draw2d_gdi
       }
    }
 
-   bool dib::create(::draw2d::dib * pdib)
+   bool dib::create(::draw2d::graphics * pgraphics)
    {
-      ::draw2d_gdi::bitmap * pbitmap = dynamic_cast<::draw2d_gdi::bitmap * >(dynamic_cast<::draw2d_gdi::graphics * >(pdc)->get_current_bitmap().m_p);
+      ::draw2d_gdi::bitmap * pbitmap = dynamic_cast<::draw2d_gdi::bitmap * >(dynamic_cast<::draw2d_gdi::graphics * >(pgraphics)->get_current_bitmap().m_p);
       if(pbitmap == NULL)
          return FALSE;
       BITMAP bm;
@@ -170,7 +170,7 @@ namespace draw2d_gdi
       {
          return FALSE;
       }
-      from(pdc);
+      from(pgraphics);
       return TRUE;
    }
 
@@ -207,14 +207,14 @@ namespace draw2d_gdi
             != FALSE; 
    }
 
-   bool dib::from(::draw2d::dib * pdib)
+   bool dib::from(::draw2d::graphics * pgraphics)
    {
 
       ::draw2d::bitmap_sp bitmap(get_app());
 
-      bitmap->CreateCompatibleBitmap(pdc, 1, 1);
+      bitmap->CreateCompatibleBitmap(pgraphics, 1, 1);
 
-      ::draw2d_gdi::bitmap * pbitmap = dynamic_cast < ::draw2d_gdi::bitmap * > (pdc->SelectObject(bitmap));
+      ::draw2d_gdi::bitmap * pbitmap = dynamic_cast < ::draw2d_gdi::bitmap * > (pgraphics->SelectObject(bitmap));
 
       if(pbitmap == NULL)
          return false;
@@ -225,19 +225,19 @@ namespace draw2d_gdi
 
       if(!pbitmap->GetBitmap(&bm))
       {
-         pdc->SelectObject(pbitmap);
+         pgraphics->SelectObject(pbitmap);
          return false;
       }
 
       if(!create(bm.bmWidth, bm.bmHeight))
       {
-         pdc->SelectObject(pbitmap);
+         pgraphics->SelectObject(pbitmap);
          return false;
       }
 
-      bool bOk = GetDIBits(GDI_HDC(pdc), (HBITMAP) pbitmap->get_os_data(), 0, this->m_size.cy, m_pcolorref, &(m_info), DIB_RGB_COLORS) != FALSE; 
+      bool bOk = GetDIBits(GDI_HDC(pgraphics), (HBITMAP) pbitmap->get_os_data(), 0, this->m_size.cy, m_pcolorref, &(m_info), DIB_RGB_COLORS) != FALSE;
 
-      pdc->SelectObject(pbitmap);
+      pgraphics->SelectObject(pbitmap);
 
       return bOk;
    }
@@ -2594,10 +2594,10 @@ namespace draw2d_gdi
          rectPaint = rectWindow;
          rectPaint.offset(-rectPaint.top_left());
          m_spgraphics->SelectClipRgn(NULL);
-         pwnd->_001OnDeferPaintLayeredWindowBackground(pdc);
+         pwnd->_001OnDeferPaintLayeredWindowBackground(dib);
          m_spgraphics->SelectClipRgn(NULL);
          m_spgraphics-> SetViewportOrg(point(0, 0));
-         pwnd->_000OnDraw(pdc);
+         pwnd->_000OnDraw(dib);
          m_spgraphics->SetViewportOrg(point(0, 0));
          //(dynamic_cast<::win::graphics * >(pdc))->FillSolidRect(rectUpdate.left, rectUpdate.top, 100, 100, 255);
          m_spgraphics->SelectClipRgn(NULL);

@@ -97,11 +97,21 @@ namespace draw2d_gdi
    bool region::CreateRoundRectRgn(int x1, int y1, int x2, int y2, int x3, int y3)
    { 
       
-      return Attach(::CreateRoundRectRgn(x1, y1, x2, y2, x3, y3)); }
-   bool region::CreateFromPath(::draw2d::dib * pdib)
+      return Attach(::CreateRoundRectRgn(x1, y1, x2, y2, x3, y3)); 
+   
+   }
+
+
+   bool region::CreateFromPath(::draw2d::graphics * pgraphics)
    { 
       
-      ASSERT(pgraphics != NULL); return Attach(::PathToRegion((dynamic_cast<::draw2d_gdi::graphics * >(pgraphics))->get_handle1())); }
+      ASSERT(pgraphics != NULL);
+      
+      return Attach(::PathToRegion((dynamic_cast<::draw2d_gdi::graphics * >(pgraphics))->get_handle1())); 
+   
+   }
+
+
    bool region::CreateFromData(const XFORM* lpXForm, int nCount, const RGNDATA* pRgnData)
    { 
       
