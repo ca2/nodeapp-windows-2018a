@@ -62,7 +62,7 @@ namespace draw2d_gdiplus
       if(m_mem.get_data() == NULL)
          return false;
 
-      m_pbitmap = new Gdiplus::Bitmap(abs(lpbmi->bmiHeader.biWidth), abs(lpbmi->bmiHeader.biHeight),m_iStride, PixelFormat32bppARGB, (BYTE *)m_mem.get_data());
+      m_pbitmap = new Gdiplus::Bitmap(abs(lpbmi->bmiHeader.biWidth), abs(lpbmi->bmiHeader.biHeight),m_iStride, PixelFormat32bppPARGB, (BYTE *)m_mem.get_data());
 
       if(m_pbitmap == NULL)
       {
