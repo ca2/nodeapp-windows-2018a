@@ -894,7 +894,6 @@ seq_Preroll_Cleanup:
                ::music::midi::sequence::status_stopping != GetState())
                || m_hstream == NULL)
             {
-               //TRACE( "seqTime(): State wrong! [is %u]", GetState());
                return ::multimedia::result_unsupported_function;
             }
 
