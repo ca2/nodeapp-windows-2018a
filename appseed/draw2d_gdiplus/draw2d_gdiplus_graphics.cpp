@@ -3188,6 +3188,8 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       }
 
+      m_pm->Reset();
+
       m_pm->Translate((Gdiplus::REAL) x, (Gdiplus::REAL) y);
 
       m_pgraphics->SetTransform(m_pm);
