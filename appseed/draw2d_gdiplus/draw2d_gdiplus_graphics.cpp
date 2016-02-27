@@ -45,6 +45,8 @@ namespace draw2d_gdiplus
       m_etextrendering  = ::draw2d::text_rendering_anti_alias_grid_fit;
       m_dFontFactor     = 1.0;
 
+      m_pm = new Gdiplus::Matrix();
+
    }
 
 
@@ -70,6 +72,7 @@ namespace draw2d_gdiplus
 
    graphics::~graphics()
    {
+      ::aura::del(m_pm);
    
       DeleteDC();
    
@@ -383,13 +386,13 @@ namespace draw2d_gdiplus
    bool graphics::GetWorldTransform(XFORM* pXform) const
    { 
 
-      Gdiplus::Matrix m;
+      
 
-      m_pgraphics->GetTransform(&m);
+      m_pgraphics->GetTransform(((graphics *)this)->m_pm);
 
       Gdiplus::REAL r[6];
 
-      m.GetElements(r);
+      m_pm->GetElements(r);
 
       pXform->eM11 = r[0];
       pXform->eM12 = r[1];
@@ -428,7 +431,9 @@ namespace draw2d_gdiplus
    // non-virtual helpers calling virtual mapping functions
    point graphics::SetViewportOrg(POINT point)
    { 
+      
       return SetViewportOrg(point.x, point.y); 
+
    }
 
    size graphics::SetViewportExt(SIZE size)
@@ -3153,40 +3158,57 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       //::GetViewportOrgEx(get_handle2(), &point);
 
       if (m_pgraphics == NULL)
+      {
+       
          return null_point();
 
-      Gdiplus::Matrix m;
+      }
 
-      m_pgraphics->GetTransform(&m);
+      Gdiplus::Point origin(0, 0);
 
-      Gdiplus::PointF origin(0, 0);
-
-      m.TransformPoints(&origin);
+      m_pgraphics->TransformPoints(
+         Gdiplus::CoordinateSpacePage,
+         Gdiplus::CoordinateSpaceWorld,
+         &origin,
+         1);
 
       return point((int64_t) origin.X, (int64_t) origin.Y);
+
    }
 
 
 
    point graphics::SetViewportOrg(int32_t x, int32_t y)
    {
-      /*point point(0, 0);
-      if(get_handle1() != NULL && get_handle1() != get_handle2())
-         ::SetViewportOrgEx(get_handle1(), x, y, &point);
-      if(get_handle2() != NULL)
-         ::SetViewportOrgEx(get_handle2(), x, y, &point);*/
-      Gdiplus::Matrix m;
-      m.Translate((Gdiplus::REAL) x, (Gdiplus::REAL) y);
-      g().SetTransform(&m);
-      //return point;
+
+      if (m_pgraphics == NULL)
+      {
+       
+         return null_point();
+
+      }
+
+      m_pm->Translate((Gdiplus::REAL) x, (Gdiplus::REAL) y);
+
+      m_pgraphics->SetTransform(m_pm);
+
       return point(x, y);
+
    }
+
 
    point graphics::OffsetViewportOrg(int32_t nWidth, int32_t nHeight)
    {
-      
+
       point point = GetViewportOrg();
 
+      if (nWidth == 0 && nHeight == 0)
+      {
+
+         return point;
+
+      }
+      
       point.offset(nWidth, nHeight);
 
       return SetViewportOrg(point.x, point.y);

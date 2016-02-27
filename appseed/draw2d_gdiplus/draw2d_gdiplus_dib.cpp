@@ -2486,7 +2486,7 @@ namespace draw2d_gdiplus
 
          map();
 
-         pre_multiply_alpha((unsigned int *) get_data(),m_size.cx,m_size.cy,m_size.cx * 4);
+         //pre_multiply_alpha((unsigned int *) get_data(),m_size.cx,m_size.cy,m_size.cx * 4);
 
          BYTE *dstR=(BYTE*)get_data();
          BYTE *dstG=dstR + 1;
