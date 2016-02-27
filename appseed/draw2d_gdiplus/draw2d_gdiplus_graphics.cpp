@@ -3152,6 +3152,9 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       //POINT point;
       //::GetViewportOrgEx(get_handle2(), &point);
 
+      if (m_pgraphics == NULL)
+         return null_point();
+
       Gdiplus::Matrix m;
 
       m_pgraphics->GetTransform(&m);
@@ -5008,6 +5011,15 @@ namespace draw2d_gdiplus
 	  straPath = stra;
 
    }
+
+
+   bool graphics::prefer_mapped_dib_on_mix()
+   {
+
+      return true;
+
+   }
+
    
 } // namespace draw2d_gdiplus
 

@@ -98,11 +98,6 @@ BEGIN_EXTERN_C
 int32_t WINAPI _tWinMain(HINSTANCE hinstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLine,int32_t nCmdShow)
 {
 
-   app_core appcore;
-
-   appcore.m_dwStartTime = ::get_tick_count();
-   appcore.m_dwAfterApplicationFirstRequest = appcore.m_dwStartTime;
-
    if(!defer_core_init())
    {
 
@@ -111,6 +106,14 @@ int32_t WINAPI _tWinMain(HINSTANCE hinstance,HINSTANCE hPrevInstance,LPTSTR lpCm
       return -4;
 
    }
+
+
+
+   app_core appcore;
+
+   appcore.m_dwStartTime = ::get_first_tick();
+   appcore.m_dwAfterApplicationFirstRequest = appcore.m_dwStartTime;
+
 
    if(file_exists_dup("C:\\ca2\\config\\system\\wait_on_beg.txt"))
    {

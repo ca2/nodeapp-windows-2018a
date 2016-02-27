@@ -148,8 +148,8 @@ namespace draw2d_gdiplus
       //double pi();
 
 
-      virtual void map(bool bApplyTransform = true);
-      virtual void unmap();
+      virtual void map(bool bApplyTransform = true) const override;
+      virtual void unmap() const override;
 
 
    };

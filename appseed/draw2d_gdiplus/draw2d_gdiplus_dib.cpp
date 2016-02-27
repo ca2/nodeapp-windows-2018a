@@ -2368,7 +2368,9 @@ namespace draw2d_gdiplus
 
    ::draw2d::graphics * dib::get_graphics() const
    {
+      ((dib *) this)->unmap();
 
+ 
       return m_spgraphics;
 
    }
@@ -2632,10 +2634,16 @@ namespace draw2d_gdiplus
 
 #define new AURA_NEW
 
-   void dib::map(bool bApplyTransform)
+   void dib::map(bool bApplyTransform) const
    {
-      
       UNREFERENCED_PARAMETER(bApplyTransform);
+
+      if (!m_bMapped)
+      {
+
+         ((dib*)this)->m_bMapped = true;
+
+      }
 
 //      if (m_spgraphics.is_null())
   //       return;
@@ -2645,9 +2653,19 @@ namespace draw2d_gdiplus
    }
 
 
-   void dib::unmap()
+   void dib::unmap() const
    {
+      if (m_bMapped)
+      {
+         if (m_spgraphics.is_set())
+         {
+            ((dib*)this)->m_pt = m_spgraphics->GetViewportOrg();
 
+         }
+
+         ((dib*)this)->m_bMapped = false;
+
+      }
 //      if (m_spgraphics.is_null())
   //       return;
 

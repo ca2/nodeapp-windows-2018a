@@ -509,6 +509,7 @@ namespace draw2d_gdiplus
 
       virtual void enum_fonts(stringa & straPath, stringa & stra) override;
 
+      virtual bool prefer_mapped_dib_on_mix();
 
    };
 
