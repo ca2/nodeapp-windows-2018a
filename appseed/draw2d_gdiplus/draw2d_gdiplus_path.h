@@ -5,12 +5,12 @@ namespace draw2d_gdiplus
 {
 
 
-   class CLASS_DECL_DRAW2D_GDIPLUS path : 
+   class CLASS_DECL_DRAW2D_GDIPLUS path :
       virtual public ::draw2d::path
    {
    public:
 
-      
+
       Gdiplus::GraphicsPath *    m_ppath;
       Gdiplus::PointF            m_ptInternal;
       bool                       m_bHasPointInternal;
@@ -23,7 +23,7 @@ namespace draw2d_gdiplus
 
       virtual Gdiplus::GraphicsPath * get_os_path(Gdiplus::Graphics * pgraphics);
 
-      virtual bool internal_add_arc(const RECT & rect, int iStart, int iAngle);
+      virtual bool internal_add_arc(const RECT & rect, double iStart, double iAngle);
 
       virtual pointd internal_last_point();
 
@@ -40,14 +40,14 @@ namespace draw2d_gdiplus
 
       virtual bool internal_add_rect(double x,double y,double cx,double cy);
       virtual bool internal_add_move(double x,double y);
-      
+
       virtual bool internal_add_string(Gdiplus::Graphics * pgraphics, int32_t x,int32_t y,const string & strText,::draw2d::font_sp spfont);
 
       virtual bool create(Gdiplus::Graphics * pgraphics);
       virtual bool destroy();
 
       virtual bool set(Gdiplus::Graphics * pgraphics, const ::draw2d::path::element & e);
-   
+
       virtual bool set(const ::draw2d::path::arc & a);
 
       virtual bool set(const ::draw2d::path::rect & r);

@@ -26,7 +26,7 @@ namespace draw2d_gdiplus
    }
 
 
-   Gdiplus::GraphicsPath * path::get_os_path(Gdiplus::Graphics * pgraphics) 
+   Gdiplus::GraphicsPath * path::get_os_path(Gdiplus::Graphics * pgraphics)
    {
 
       if(m_bUpdated)
@@ -53,7 +53,7 @@ namespace draw2d_gdiplus
       else
       {
 
-        throw simple_exception(get_app(), "path does not have last point");
+         throw simple_exception(get_app(), "path does not have last point");
 
       }
 
@@ -288,7 +288,7 @@ namespace draw2d_gdiplus
 
    }
 
-   bool path::internal_add_arc(const RECT & rect, int iStart, int iAngle)
+   bool path::internal_add_arc(const RECT & rect, double iStart, double iAngle)
    {
 
       ::Gdiplus::RectF rectf((Gdiplus::REAL) rect.left, (Gdiplus::REAL) rect.top, (Gdiplus::REAL) width(rect), (Gdiplus::REAL) height(rect));
@@ -296,7 +296,7 @@ namespace draw2d_gdiplus
 
       m_ppath->AddArc(rectf, (Gdiplus::REAL) iStart, (Gdiplus::REAL) iAngle);
 
-      
+
 
       return true;
 
@@ -305,9 +305,9 @@ namespace draw2d_gdiplus
 
    bool path::internal_add_string(Gdiplus::Graphics * pgraphics,int32_t x,int32_t y,const string & strText,::draw2d::font_sp spfont)
    {
-      
+
       Gdiplus::FontFamily fontFamily;
-      
+
       Gdiplus::StringFormat format(Gdiplus::StringFormat::GenericTypographic());
 
       wstring wstr(strText);
@@ -342,9 +342,9 @@ namespace draw2d_gdiplus
       //Gdiplus::StringFormat format();
 
       format.SetFormatFlags(format.GetFormatFlags()
-         | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
-         | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap
-         | Gdiplus::StringFormatFlagsNoFitBlackBox);
+                            | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
+                            | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap
+                            | Gdiplus::StringFormatFlagsNoFitBlackBox);
 
 
       format.SetLineAlignment(Gdiplus::StringAlignmentNear);
@@ -366,15 +366,15 @@ namespace draw2d_gdiplus
       rect.right = (LONG)(arc.m_xCenter + arc.m_dRadiusX);
       rect.top = (LONG)(arc.m_yCenter - arc.m_dRadiusY);
       rect.bottom = (LONG)(arc.m_yCenter + arc.m_dRadiusY);
+      //if(!m_bHasPointInternal)
+      //{
+
+      //   internal_add_move(arc.m_ptEnd.x,arc.m_ptEnd.y);
+
+      //}
 
       bool bOk = internal_add_arc(rect,(int)(arc.m_dAngle1 * 180.0 / 3.1415),(int)(arc.m_dAngle* 180.0 / 3.1415));
 
-      if(bOk)
-      {
-
-         internal_add_move(arc.m_ptEnd.x,arc.m_ptEnd.y);
-
-      }
 
       return bOk;
 
@@ -410,7 +410,7 @@ namespace draw2d_gdiplus
 
    bool path::set(Gdiplus::Graphics * pgraphics, const ::draw2d::path::string_path & s)
    {
-      
+
       internal_add_string(pgraphics,(int32_t)s.m_x,(int32_t)s.m_y,s.m_strText,s.m_spfont);
 
       return true;
