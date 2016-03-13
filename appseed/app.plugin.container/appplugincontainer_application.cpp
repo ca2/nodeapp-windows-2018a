@@ -13,7 +13,7 @@ namespace ca2plugin_container
 
       m_strChannel = pszChannel;
 
-      m_durationRunLock = millis(884);
+//      m_durationRunLock = millis(884);
 
    }
 
@@ -124,12 +124,12 @@ namespace ca2plugin_container
    bool application::on_run_step()
    {
 
-      if(!::core::application::on_run_step())
-      {
-       
-         return false;
+      //if(!::core::application::on_run_step())
+      //{
+      // 
+      //   return false;
 
-      }
+      //}
 
       if(System.install().is_installing_ca2())
       {

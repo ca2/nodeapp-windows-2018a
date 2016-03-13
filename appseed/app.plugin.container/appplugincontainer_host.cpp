@@ -76,7 +76,7 @@ namespace ca2plugin_container
       if(ptimer->m_nIDEvent == 1984 + 77 + 3)
       {
 
-         _001UpdateBuffer();
+         _001UpdateWindow();
 
          on_paint(NULL,m_rectClient);
 
@@ -431,7 +431,7 @@ namespace ca2plugin_container
             try
             {
 
-               _001UpdateBuffer();
+               _001UpdateWindow();
 
                //::draw2d::graphics_sp g(allocer());
 
@@ -625,7 +625,7 @@ namespace ca2plugin_container
                if(m_pcontainerapp->m_psystem->m_pplugin->m_puiHost != NULL)
                {
 
-                  m_pcontainerapp->m_psystem->m_pplugin->m_puiHost->_001Print(pgraphics);
+                  m_pcontainerapp->m_psystem->m_pplugin->m_puiHost->_001Print(pdib);
 
                   {
 

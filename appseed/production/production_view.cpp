@@ -170,6 +170,8 @@ namespace production
 
    void view:: _001OnDraw(::draw2d::dib * pdib)
    {
+
+      ::draw2d::graphics * pdc = pdib->get_graphics();
       
       single_lock sl(&m_pproduction->m_mutexStatus,TRUE);
 
