@@ -10,17 +10,17 @@ BOOL CALLBACK draw2d_gdiplus_EnumFamCallBack(LPLOGFONT lplf,LPNEWTEXTMETRIC lpnt
 
 class draw2d_gdiplus_enum_fonts
 {
-   public:
+public:
 
 
-      stringa &      m_stra;
+   stringa &      m_stra;
 
 
-      draw2d_gdiplus_enum_fonts(stringa & stra):
-         m_stra(stra)
-      {
+   draw2d_gdiplus_enum_fonts(stringa & stra):
+      m_stra(stra)
+   {
 
-      }
+   }
 
 
 };
@@ -5156,6 +5156,7 @@ namespace draw2d_gdiplus
       return true;
 
    }
+
 
 
 } // namespace draw2d_gdiplus
