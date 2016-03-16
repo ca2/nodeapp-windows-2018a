@@ -421,15 +421,15 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axis_image_png", "..\..\..\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "aurapcre", "..\..\..\app\aura\pcre\aurapcre.vcxproj", "{19AA8BB5-51FA-46E7-B346-2A89828F3000}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WelsDecPlus", "..\..\..\app\axis\openh264\codec\build\win32\dec\WelsDecPlus.vcxproj", "{1131558A-9986-4F4B-A13F-8B7F4C8438BF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "welsdecplus", "..\..\..\app\axis\openh264\codec\build\win32\dec\WelsDecPlus.vcxproj", "{1131558A-9986-4F4B-A13F-8B7F4C8438BF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WelsDecCore", "..\..\..\app\axis\openh264\codec\build\win32\dec\WelsDecCore.vcxproj", "{01B4AE41-6AD6-4CAF-AEB3-C42F7F9121D5}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_welsdeccore", "..\..\..\app\axis\openh264\codec\build\win32\dec\WelsDecCore.vcxproj", "{01B4AE41-6AD6-4CAF-AEB3-C42F7F9121D5}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WelsEncCore", "..\..\..\app\axis\openh264\codec\build\win32\enc\WelsEncCore.vcxproj", "{59208004-1774-4816-AC24-31FF44C324B4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_welsenccore", "..\..\..\app\axis\openh264\codec\build\win32\enc\WelsEncCore.vcxproj", "{59208004-1774-4816-AC24-31FF44C324B4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WelsEncPlus", "..\..\..\app\axis\openh264\codec\build\win32\enc\WelsEncPlus.vcxproj", "{1E7B4E9A-986E-4167-8C70-6E4F60EAEE7F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "welsencplus", "..\..\..\app\axis\openh264\codec\build\win32\enc\WelsEncPlus.vcxproj", "{1E7B4E9A-986E-4167-8C70-6E4F60EAEE7F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WelsVP", "..\..\..\app\axis\openh264\codec\processing\build\win32\WelsVP.vcxproj", "{E8DFAFA1-8DAC-4127-8D27-FBD5819EE562}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "welsvp", "..\..\..\app\axis\openh264\codec\processing\build\win32\WelsVP.vcxproj", "{E8DFAFA1-8DAC-4127-8D27-FBD5819EE562}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_visualclick", "..\..\..\app-core\appseed\visualclick\visualclick.vcxproj", "{15220288-6553-4B08-B7FD-198419511977}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -2703,30 +2703,30 @@ Global
 		{19845177-2551-5184-7808-849220E88C80}.basis|Win32.Build.0 = basis|Win32
 		{19845177-2551-5184-7808-849220E88C80}.basis|x64.ActiveCfg = basis|x64
 		{19845177-2551-5184-7808-849220E88C80}.basis|x64.Build.0 = basis|x64
-		{19845177-2551-5184-7808-849220E88C80}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
-		{19845177-2551-5184-7808-849220E88C80}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
-		{19845177-2551-5184-7808-849220E88C80}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
-		{19845177-2551-5184-7808-849220E88C80}.codeanalysis|x64.Build.0 = codeanalysis|x64
-		{19845177-2551-5184-7808-849220E88C80}.memdleak|Win32.ActiveCfg = memdleak|Win32
-		{19845177-2551-5184-7808-849220E88C80}.memdleak|Win32.Build.0 = memdleak|Win32
-		{19845177-2551-5184-7808-849220E88C80}.memdleak|x64.ActiveCfg = memdleak|x64
-		{19845177-2551-5184-7808-849220E88C80}.memdleak|x64.Build.0 = memdleak|x64
-		{19845177-2551-5184-7808-849220E88C80}.no_precompiled_header|Win32.ActiveCfg = no_precompiled_header|Win32
-		{19845177-2551-5184-7808-849220E88C80}.no_precompiled_header|Win32.Build.0 = no_precompiled_header|Win32
-		{19845177-2551-5184-7808-849220E88C80}.no_precompiled_header|x64.ActiveCfg = no_precompiled_header|x64
-		{19845177-2551-5184-7808-849220E88C80}.no_precompiled_header|x64.Build.0 = no_precompiled_header|x64
-		{19845177-2551-5184-7808-849220E88C80}.profiler|Win32.ActiveCfg = profiler|Win32
-		{19845177-2551-5184-7808-849220E88C80}.profiler|Win32.Build.0 = profiler|Win32
-		{19845177-2551-5184-7808-849220E88C80}.profiler|x64.ActiveCfg = profiler|x64
-		{19845177-2551-5184-7808-849220E88C80}.profiler|x64.Build.0 = profiler|x64
+		{19845177-2551-5184-7808-849220E88C80}.codeanalysis|Win32.ActiveCfg = stage|Win32
+		{19845177-2551-5184-7808-849220E88C80}.codeanalysis|Win32.Build.0 = stage|Win32
+		{19845177-2551-5184-7808-849220E88C80}.codeanalysis|x64.ActiveCfg = stage|x64
+		{19845177-2551-5184-7808-849220E88C80}.codeanalysis|x64.Build.0 = stage|x64
+		{19845177-2551-5184-7808-849220E88C80}.memdleak|Win32.ActiveCfg = stage|Win32
+		{19845177-2551-5184-7808-849220E88C80}.memdleak|Win32.Build.0 = stage|Win32
+		{19845177-2551-5184-7808-849220E88C80}.memdleak|x64.ActiveCfg = stage|x64
+		{19845177-2551-5184-7808-849220E88C80}.memdleak|x64.Build.0 = stage|x64
+		{19845177-2551-5184-7808-849220E88C80}.no_precompiled_header|Win32.ActiveCfg = stage|Win32
+		{19845177-2551-5184-7808-849220E88C80}.no_precompiled_header|Win32.Build.0 = stage|Win32
+		{19845177-2551-5184-7808-849220E88C80}.no_precompiled_header|x64.ActiveCfg = stage|x64
+		{19845177-2551-5184-7808-849220E88C80}.no_precompiled_header|x64.Build.0 = stage|x64
+		{19845177-2551-5184-7808-849220E88C80}.profiler|Win32.ActiveCfg = stage|Win32
+		{19845177-2551-5184-7808-849220E88C80}.profiler|Win32.Build.0 = stage|Win32
+		{19845177-2551-5184-7808-849220E88C80}.profiler|x64.ActiveCfg = stage|x64
+		{19845177-2551-5184-7808-849220E88C80}.profiler|x64.Build.0 = stage|x64
 		{19845177-2551-5184-7808-849220E88C80}.stage|Win32.ActiveCfg = stage|Win32
 		{19845177-2551-5184-7808-849220E88C80}.stage|Win32.Build.0 = stage|Win32
 		{19845177-2551-5184-7808-849220E88C80}.stage|x64.ActiveCfg = stage|x64
 		{19845177-2551-5184-7808-849220E88C80}.stage|x64.Build.0 = stage|x64
-		{19845177-2551-5184-7808-849220E88C80}.static_basis|Win32.ActiveCfg = static_basis|Win32
-		{19845177-2551-5184-7808-849220E88C80}.static_basis|Win32.Build.0 = static_basis|Win32
-		{19845177-2551-5184-7808-849220E88C80}.static_basis|x64.ActiveCfg = static_basis|x64
-		{19845177-2551-5184-7808-849220E88C80}.static_basis|x64.Build.0 = static_basis|x64
+		{19845177-2551-5184-7808-849220E88C80}.static_basis|Win32.ActiveCfg = basis|Win32
+		{19845177-2551-5184-7808-849220E88C80}.static_basis|Win32.Build.0 = basis|Win32
+		{19845177-2551-5184-7808-849220E88C80}.static_basis|x64.ActiveCfg = basis|x64
+		{19845177-2551-5184-7808-849220E88C80}.static_basis|x64.Build.0 = basis|x64
 		{19845177-2551-5184-7807-849220E88C80}.basis|Win32.ActiveCfg = basis|Win32
 		{19845177-2551-5184-7807-849220E88C80}.basis|Win32.Build.0 = basis|Win32
 		{19845177-2551-5184-7807-849220E88C80}.basis|x64.ActiveCfg = basis|x64
