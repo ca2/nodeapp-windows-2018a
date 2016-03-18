@@ -1,40 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_wave", "..\..\..\app-core\appseed\audio_decode_wave\audio_decode_wave.vcxproj", "{D620EED4-10A9-4C54-8DEE-A52B9D178A4D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_libmpg123", "..\..\..\app-veriwell\appseed\audio_decode_libmpg123\audio_decode_libmpg123.vcxproj", "{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}"
-	ProjectSection(ProjectDependencies) = postProject
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_vorbis", "..\..\..\app-veriwell\appseed\audio_decode_vorbis\audio_decode_vorbis.vcxproj", "{FCEBB077-A523-4949-B958-9F7879E56067}"
-	ProjectSection(ProjectDependencies) = postProject
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_windows_media", "..\..\..\app-veriwell\appseed\audio_decode_windows_media\audio_decode_windows_media.vcxproj", "{2453409D-7D51-4E7E-A739-86234FFF3509}"
-	ProjectSection(ProjectDependencies) = postProject
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multimedia", "..\..\..\app-core\appseed\multimedia\multimedia.vcxproj", "{20FD0446-AA14-4013-84E0-B5CB63FA354F}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "math", "..\..\..\app\appseed\math\math.vcxproj", "{5B03FC53-C0AA-419D-A87F-4338C9DDE3FA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\app.vcxproj", "{19841115-1984-0411-1977-021977151984}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86} = {E2D7833B-9B59-4826-BBDF-C270A2115E86}
-		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0} = {DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}
 		{20FD0446-AA14-4013-84E0-B5CB63FA354F} = {20FD0446-AA14-4013-84E0-B5CB63FA354F}
-		{5B03FC53-C0AA-419D-A87F-4338C9DDE3FA} = {5B03FC53-C0AA-419D-A87F-4338C9DDE3FA}
-		{FCEBB077-A523-4949-B958-9F7879E56067} = {FCEBB077-A523-4949-B958-9F7879E56067}
-		{2453409D-7D51-4E7E-A739-86234FFF3509} = {2453409D-7D51-4E7E-A739-86234FFF3509}
 		{E000FFAF-392F-4E32-BF51-FD7ED638991F} = {E000FFAF-392F-4E32-BF51-FD7ED638991F}
 		{D620EED4-10A9-4C54-8DEE-A52B9D178A4D} = {D620EED4-10A9-4C54-8DEE-A52B9D178A4D}
 	EndProjectSection
@@ -91,8 +70,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_mmsystem", "..\..\app
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multimedia_mmsystem", "..\..\appseed\multimedia_mmsystem\multimedia_mmsystem.vcxproj", "{21DA4A8C-5A05-40A4-BF5B-FF62B9DDD150}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "html", "..\..\..\app\appseed\html\html.vcxproj", "{6C7004D3-FF6C-4872-8DDC-5D7F44B0BC57}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_xaudio", "..\..\..\app\appseed\audio_xaudio\audio_xaudio.vcxproj", "{00845177-0000-0000-0000-000000000000}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multimedia_xaudio", "..\..\..\app\appseed\multimedia_xaudio\multimedia_xaudio.vcxproj", "{8451778C-2015-40A4-BF5B-FF62B9778451}"
@@ -104,8 +81,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axisfreeimage", "..\..\..\app\axis\freeimage\axisfreeimage.vcxproj", "{B39ED2B3-D53A-4077-B957-930979A3577D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axiscrypto", "..\..\..\app\axis\crypto\axiscrypto.vcxproj", "{39807406-816F-4C0D-A632-4BB8AB13887B}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "html_lite", "..\..\..\app\axis\html_lite\html_lite.vcxproj", "{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A50A4CBA-1DA5-4613-999C-26DF802F4336}"
 EndProject
@@ -127,30 +102,6 @@ Global
 		{D620EED4-10A9-4C54-8DEE-A52B9D178A4D}.stage|Win32.Build.0 = stage|Win32
 		{D620EED4-10A9-4C54-8DEE-A52B9D178A4D}.stage|x64.ActiveCfg = stage|x64
 		{D620EED4-10A9-4C54-8DEE-A52B9D178A4D}.stage|x64.Build.0 = stage|x64
-		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.basis|Win32.ActiveCfg = basis|Win32
-		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.basis|Win32.Build.0 = basis|Win32
-		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.basis|x64.ActiveCfg = basis|x64
-		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.basis|x64.Build.0 = basis|x64
-		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.stage|Win32.ActiveCfg = stage|Win32
-		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.stage|Win32.Build.0 = stage|Win32
-		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.stage|x64.ActiveCfg = stage|x64
-		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.stage|x64.Build.0 = stage|x64
-		{FCEBB077-A523-4949-B958-9F7879E56067}.basis|Win32.ActiveCfg = basis|Win32
-		{FCEBB077-A523-4949-B958-9F7879E56067}.basis|Win32.Build.0 = basis|Win32
-		{FCEBB077-A523-4949-B958-9F7879E56067}.basis|x64.ActiveCfg = basis|x64
-		{FCEBB077-A523-4949-B958-9F7879E56067}.basis|x64.Build.0 = basis|x64
-		{FCEBB077-A523-4949-B958-9F7879E56067}.stage|Win32.ActiveCfg = stage|Win32
-		{FCEBB077-A523-4949-B958-9F7879E56067}.stage|Win32.Build.0 = stage|Win32
-		{FCEBB077-A523-4949-B958-9F7879E56067}.stage|x64.ActiveCfg = stage|x64
-		{FCEBB077-A523-4949-B958-9F7879E56067}.stage|x64.Build.0 = stage|x64
-		{2453409D-7D51-4E7E-A739-86234FFF3509}.basis|Win32.ActiveCfg = basis|Win32
-		{2453409D-7D51-4E7E-A739-86234FFF3509}.basis|Win32.Build.0 = basis|Win32
-		{2453409D-7D51-4E7E-A739-86234FFF3509}.basis|x64.ActiveCfg = basis|x64
-		{2453409D-7D51-4E7E-A739-86234FFF3509}.basis|x64.Build.0 = basis|x64
-		{2453409D-7D51-4E7E-A739-86234FFF3509}.stage|Win32.ActiveCfg = stage|Win32
-		{2453409D-7D51-4E7E-A739-86234FFF3509}.stage|Win32.Build.0 = stage|Win32
-		{2453409D-7D51-4E7E-A739-86234FFF3509}.stage|x64.ActiveCfg = stage|x64
-		{2453409D-7D51-4E7E-A739-86234FFF3509}.stage|x64.Build.0 = stage|x64
 		{20FD0446-AA14-4013-84E0-B5CB63FA354F}.basis|Win32.ActiveCfg = basis|Win32
 		{20FD0446-AA14-4013-84E0-B5CB63FA354F}.basis|Win32.Build.0 = basis|Win32
 		{20FD0446-AA14-4013-84E0-B5CB63FA354F}.basis|x64.ActiveCfg = basis|x64
@@ -159,14 +110,6 @@ Global
 		{20FD0446-AA14-4013-84E0-B5CB63FA354F}.stage|Win32.Build.0 = stage|Win32
 		{20FD0446-AA14-4013-84E0-B5CB63FA354F}.stage|x64.ActiveCfg = stage|x64
 		{20FD0446-AA14-4013-84E0-B5CB63FA354F}.stage|x64.Build.0 = stage|x64
-		{5B03FC53-C0AA-419D-A87F-4338C9DDE3FA}.basis|Win32.ActiveCfg = basis|Win32
-		{5B03FC53-C0AA-419D-A87F-4338C9DDE3FA}.basis|Win32.Build.0 = basis|Win32
-		{5B03FC53-C0AA-419D-A87F-4338C9DDE3FA}.basis|x64.ActiveCfg = basis|x64
-		{5B03FC53-C0AA-419D-A87F-4338C9DDE3FA}.basis|x64.Build.0 = basis|x64
-		{5B03FC53-C0AA-419D-A87F-4338C9DDE3FA}.stage|Win32.ActiveCfg = stage|Win32
-		{5B03FC53-C0AA-419D-A87F-4338C9DDE3FA}.stage|Win32.Build.0 = stage|Win32
-		{5B03FC53-C0AA-419D-A87F-4338C9DDE3FA}.stage|x64.ActiveCfg = stage|x64
-		{5B03FC53-C0AA-419D-A87F-4338C9DDE3FA}.stage|x64.Build.0 = stage|x64
 		{19841115-1984-0411-1977-021977151984}.basis|Win32.ActiveCfg = basis|Win32
 		{19841115-1984-0411-1977-021977151984}.basis|Win32.Build.0 = basis|Win32
 		{19841115-1984-0411-1977-021977151984}.basis|x64.ActiveCfg = basis|x64
@@ -360,14 +303,6 @@ Global
 		{21DA4A8C-5A05-40A4-BF5B-FF62B9DDD150}.stage|Win32.Build.0 = stage|Win32
 		{21DA4A8C-5A05-40A4-BF5B-FF62B9DDD150}.stage|x64.ActiveCfg = stage|x64
 		{21DA4A8C-5A05-40A4-BF5B-FF62B9DDD150}.stage|x64.Build.0 = stage|x64
-		{6C7004D3-FF6C-4872-8DDC-5D7F44B0BC57}.basis|Win32.ActiveCfg = basis|Win32
-		{6C7004D3-FF6C-4872-8DDC-5D7F44B0BC57}.basis|Win32.Build.0 = basis|Win32
-		{6C7004D3-FF6C-4872-8DDC-5D7F44B0BC57}.basis|x64.ActiveCfg = basis|x64
-		{6C7004D3-FF6C-4872-8DDC-5D7F44B0BC57}.basis|x64.Build.0 = basis|x64
-		{6C7004D3-FF6C-4872-8DDC-5D7F44B0BC57}.stage|Win32.ActiveCfg = stage|Win32
-		{6C7004D3-FF6C-4872-8DDC-5D7F44B0BC57}.stage|Win32.Build.0 = stage|Win32
-		{6C7004D3-FF6C-4872-8DDC-5D7F44B0BC57}.stage|x64.ActiveCfg = stage|x64
-		{6C7004D3-FF6C-4872-8DDC-5D7F44B0BC57}.stage|x64.Build.0 = stage|x64
 		{00845177-0000-0000-0000-000000000000}.basis|Win32.ActiveCfg = basis|Win32
 		{00845177-0000-0000-0000-000000000000}.basis|Win32.Build.0 = basis|Win32
 		{00845177-0000-0000-0000-000000000000}.basis|x64.ActiveCfg = basis|x64
@@ -416,14 +351,6 @@ Global
 		{39807406-816F-4C0D-A632-4BB8AB13887B}.stage|Win32.Build.0 = stage|Win32
 		{39807406-816F-4C0D-A632-4BB8AB13887B}.stage|x64.ActiveCfg = stage|x64
 		{39807406-816F-4C0D-A632-4BB8AB13887B}.stage|x64.Build.0 = stage|x64
-		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.basis|Win32.ActiveCfg = basis|Win32
-		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.basis|Win32.Build.0 = basis|Win32
-		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.basis|x64.ActiveCfg = basis|x64
-		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.basis|x64.Build.0 = basis|x64
-		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.stage|Win32.ActiveCfg = stage|Win32
-		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.stage|Win32.Build.0 = stage|Win32
-		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.stage|x64.ActiveCfg = stage|x64
-		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.stage|x64.Build.0 = stage|x64
 		{EB9E5D88-6553-4B08-B7FD-198419511977}.basis|Win32.ActiveCfg = basis|Win32
 		{EB9E5D88-6553-4B08-B7FD-198419511977}.basis|Win32.Build.0 = basis|Win32
 		{EB9E5D88-6553-4B08-B7FD-198419511977}.basis|x64.ActiveCfg = basis|x64
