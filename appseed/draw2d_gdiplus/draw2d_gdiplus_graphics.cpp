@@ -4316,7 +4316,7 @@ gdi_fallback:
       {
          try
          {
-            iLen = ::str::get_utf8_char(psz).length();
+            iLen = ::str::get_utf8_char_length(psz);
          }
          catch(...)
          {
@@ -4328,7 +4328,7 @@ gdi_fallback:
             break;
          try
          {
-            psz = ::str::utf8_inc(psz);
+            psz += iLen;
          }
          catch(...)
          {
