@@ -4322,6 +4322,8 @@ gdi_fallback:
          {
             break;
          }
+         if (iLen < 0)
+            break;
          iRange++;
          i += iLen;
          if(i >= iIndex)
