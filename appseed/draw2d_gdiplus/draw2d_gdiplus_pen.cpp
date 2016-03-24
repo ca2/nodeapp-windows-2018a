@@ -362,11 +362,21 @@ namespace draw2d_gdiplus
          {
             delete m_ppen;
          }
-         ((pen *) this)->m_ppen = new Gdiplus::Pen(Gdiplus::Color(
-            argb_get_a_value(m_cr),
-            argb_get_r_value(m_cr),
-            argb_get_g_value(m_cr),
-            argb_get_b_value(m_cr)), (Gdiplus::REAL) m_dWidth);
+         if (m_etype == type_brush)
+         {
+            
+            ((pen *) this)->m_ppen = new Gdiplus::Pen((Gdiplus::Brush *) m_br.cast < brush >()->get_os_data(), (Gdiplus::REAL) m_dWidth);
+
+         }
+         else
+         {
+            ((pen *) this)->m_ppen = new Gdiplus::Pen(Gdiplus::Color(
+               argb_get_a_value(m_cr),
+               argb_get_r_value(m_cr),
+               argb_get_g_value(m_cr),
+               argb_get_b_value(m_cr)), (Gdiplus::REAL) m_dWidth);
+
+         }
          switch(m_elinejoin)
          {
          case line_join_miter:
