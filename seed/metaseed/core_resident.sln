@@ -60,8 +60,14 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xmpp", "..\..\..\app-core\appseed\xmpp\xmpp.vcxproj", "{19845177-2551-5184-7805-849220E88C80}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_xmpp_client", "..\..\..\app-core\appseed\xmpp_client\xmpp_client.vcxproj", "{19845177-2551-5184-7807-849220E88C80}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19845177-2551-5184-7805-849220E88C80} = {19845177-2551-5184-7805-849220E88C80}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_xmpp_bot", "..\..\..\app-core\appseed\xmpp_bot\xmpp_bot.vcxproj", "{19845177-2551-5184-7808-849220E88C80}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19845177-2551-5184-7805-849220E88C80} = {19845177-2551-5184-7805-849220E88C80}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_irc_bot", "..\..\..\app-core\appseed\irc_bot\irc_bot.vcxproj", "{19845177-6A40-4458-848A-089220E88C80}"
 EndProject
@@ -102,6 +108,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_resident", "..\..\
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_xmpp_resident", "..\..\..\app-core\appseed\xmpp_resident\xmpp_resident.vcxproj", "{AF2B9BE7-BF46-4F94-A6D8-2535AEBC199E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19845177-2551-5184-7805-849220E88C80} = {19845177-2551-5184-7805-849220E88C80}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "programming", "..\..\..\app\appseed\programming\programming.vcxproj", "{149AA9B9-9E1A-4612-AD64-A71EE357BCAA}"
 EndProject
@@ -124,11 +133,15 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5F3E90E1-CFE4-4639-BE2F-382E90F6C685}"
 	ProjectSection(SolutionItems) = preProject
 		Performance1.psess = Performance1.psess
+		Performance2.psess = Performance2.psess
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "strophe", "..\..\..\app-core\appseed\strophe\strophe.vcxproj", "{3F8D41B1-CA9D-4171-B17E-D5A1265C8447}"
 EndProject
 Global
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
 		basis|x64 = basis|x64
