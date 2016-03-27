@@ -76,6 +76,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_irc_resident", "..\..\..\app-core\appseed\irc_resident\irc_resident.vcxproj", "{E9066C48-AB6A-4AA5-B9B5-786EAA64E454}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vericard", "..\..\..\app-core\appseed\vericard\vericard.vcxproj", "{47A65BC0-A450-4E41-B31B-061DE0F5A7A3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0} = {DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "irc", "..\..\..\app-core\appseed\irc\irc.vcxproj", "{19845177-6A40-4458-848A-019220E88C80}"
 EndProject
@@ -137,6 +140,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "strophe", "..\..\..\app-core\appseed\strophe\strophe.vcxproj", "{3F8D41B1-CA9D-4171-B17E-D5A1265C8447}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_libmpg123", "..\..\..\app-veriwell\appseed\audio_decode_libmpg123\audio_decode_libmpg123.vcxproj", "{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{67CAA87B-7CF1-4F93-BB67-21C513F40803} = {67CAA87B-7CF1-4F93-BB67-21C513F40803}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basempg123", "..\..\..\app-veriwell\appseed\libmpg123\libmpg123.vcxproj", "{67CAA87B-7CF1-4F93-BB67-21C513F40803}"
 EndProject
 Global
 	GlobalSection(Performance) = preSolution
@@ -487,6 +497,22 @@ Global
 		{3F8D41B1-CA9D-4171-B17E-D5A1265C8447}.stage|Win32.Build.0 = stage|Win32
 		{3F8D41B1-CA9D-4171-B17E-D5A1265C8447}.stage|x64.ActiveCfg = stage|x64
 		{3F8D41B1-CA9D-4171-B17E-D5A1265C8447}.stage|x64.Build.0 = stage|x64
+		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.basis|Win32.ActiveCfg = basis|Win32
+		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.basis|Win32.Build.0 = basis|Win32
+		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.basis|x64.ActiveCfg = basis|x64
+		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.basis|x64.Build.0 = basis|x64
+		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.stage|Win32.ActiveCfg = stage|Win32
+		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.stage|Win32.Build.0 = stage|Win32
+		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.stage|x64.ActiveCfg = stage|x64
+		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.stage|x64.Build.0 = stage|x64
+		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.basis|Win32.ActiveCfg = basis|Win32
+		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.basis|Win32.Build.0 = basis|Win32
+		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.basis|x64.ActiveCfg = basis|x64
+		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.basis|x64.Build.0 = basis|x64
+		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.stage|Win32.ActiveCfg = stage|Win32
+		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.stage|Win32.Build.0 = stage|Win32
+		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.stage|x64.ActiveCfg = stage|x64
+		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
