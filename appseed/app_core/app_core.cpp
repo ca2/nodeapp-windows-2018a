@@ -5,7 +5,6 @@
 CLASS_DECL_AURA int32_t __win_main(sp(::aura::system) psystem,::windows::main_init_data * pmaininitdata);
 
 
-
 extern "C" int32_t app_core_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow, app_core & appcore)
 {
 
