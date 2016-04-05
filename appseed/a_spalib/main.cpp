@@ -1494,13 +1494,13 @@ string a_spa::get_latest_build_number(const char * pszVersion)
    else if(pszVersion != NULL && !strcmp(pszVersion,"basis"))
    {
 
-      strSpaIgnitionBaseUrl = "http://basis-server.ca2.cc/api/spaignition";
+      strSpaIgnitionBaseUrl = "http://server.ca2.cc/api/spaignition";
 
    }
    else if(pszVersion != NULL && !strcmp(pszVersion,"stage"))
    {
 
-      strSpaIgnitionBaseUrl = "http://stage-server.ca2.cc/api/spaignition";
+      strSpaIgnitionBaseUrl = "http://server.ca2.cc/api/spaignition";
 
    }
    else
@@ -1511,7 +1511,7 @@ string a_spa::get_latest_build_number(const char * pszVersion)
 
          strVersion = "basis";
 
-         strSpaIgnitionBaseUrl = "http://basis-server.ca2.cc/api/spaignition";
+         strSpaIgnitionBaseUrl = "http://server.ca2.cc/api/spaignition";
 
       }
       else
@@ -1519,7 +1519,7 @@ string a_spa::get_latest_build_number(const char * pszVersion)
 
          strVersion = "stage";
 
-         strSpaIgnitionBaseUrl = "http://stage-server.ca2.cc/api/spaignition";
+         strSpaIgnitionBaseUrl = "http://server.ca2.cc/api/spaignition";
 
       }
 
