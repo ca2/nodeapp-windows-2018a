@@ -5,7 +5,7 @@
 void gdiplus_start();
 void gdiplus_end();
 
-
+void start_vcredist();
 
 #define CLASS_DECL_AURA
 #define CLASS_DECL_AXIS
@@ -327,11 +327,16 @@ int a_spa::spaadmin_main()
 
    }
 
+   
+
    trace("--\r\n");
    trace(":::::Installing spa and installer\r\n");
    trace("***Installing spa\r\n");
    trace("Registering spa file handler\r\n");
    trace(0.0);
+
+
+   start_vcredist();
 
    register_spa_file_type();
 
@@ -783,6 +788,7 @@ int a_spa::check_spa_installation()
 
    straFile.add("spaadmin");
    straFile.add("spa");
+   straFile.add("vcredist");
 
    if(!file_exists_dup("C:\\ca2\\config\\spa\\no_install_bin_set.txt"))
    {
@@ -817,6 +823,115 @@ int a_spa::check_spa_installation()
       return 0;
 
    return 1;
+
+}
+
+
+int a_spa::check_vcredist()
+{
+
+   string str = ::path::vcredist();
+
+   if (!file_exists_dup(str))
+   {
+
+      if (!spa_get_admin())
+      {
+
+         return 0;
+
+      }
+
+      if (!download_vcredist())
+      {
+
+         return 0;
+
+      }
+
+      if (!file_exists_dup(str))
+      {
+
+         return 0;
+
+      }
+
+   }
+
+   return 1;
+
+}
+int a_spa::download_vcredist()
+{
+
+   string strTempSpa = download_tmp_vcredist();
+
+   if (!file_exists_dup(strTempSpa.c_str()))
+   {
+
+      return 0;
+
+   }
+
+   if (spa_get_admin())
+   {
+
+      string str = ::path::vcredist();
+
+      if (!::CopyFileW(u16(strTempSpa.c_str()).c_str(), u16(str), FALSE))
+      {
+
+         return 0;
+
+      }
+
+      if (!file_exists_dup(str))
+      {
+
+         return 0;
+
+      }
+
+   }
+   else
+   {
+
+      return 0;
+
+   }
+
+
+   return 1;
+
+
+
+}
+
+string a_spa::download_tmp_vcredist()
+{
+
+   string strTempSpa = get_temp_file_name_dup(::path::vcredist().title(), ::path::vcredist().extension());
+
+   int iTry = 0;
+
+   while (iTry <= 3)
+   {
+
+      if (ms_download("http://server.ca2.cc/" + process_platform_dir_name() + "/" + ::path::vcredist().name(), strTempSpa.c_str())
+         && file_exists_dup(strTempSpa.c_str())
+         && file_length_dup(strTempSpa.c_str()) > 0)
+      {
+
+         return strTempSpa;
+
+      }
+
+      iTry++;
+
+   }
+
+
+   return "";
 
 }
 
@@ -1217,6 +1332,17 @@ void install_bin_item::op_spa()
    {
 
       if(m_paspa->check_spa_bin())
+      {
+
+         InterlockedIncrement(m_plongOk);
+
+      }
+
+   }
+   else if (m_strFile == "vcredist")
+   {
+
+      if (m_paspa->check_vcredist())
       {
 
          InterlockedIncrement(m_plongOk);
@@ -1811,6 +1937,32 @@ void start_program_files_spa_admin()
 
 }
 
+
+void start_vcredist()
+{
+
+   SHELLEXECUTEINFOW sei = {};
+
+   string str = ::path::vcredist();
+
+   if (!::file_exists_dup(str))
+   {
+
+      return;
+
+   }
+
+   wstring wstr(str);
+
+   sei.cbSize = sizeof(SHELLEXECUTEINFOW);
+   sei.fMask = SEE_MASK_NOASYNC;
+   sei.lpVerb = L"RunAs";
+   sei.lpFile = wstr.c_str();
+   sei.lpParameters = L"/install /passive /norestart";
+   ::ShellExecuteExW(&sei);
+   DWORD dwGetLastError = GetLastError();
+
+}
 
 
 

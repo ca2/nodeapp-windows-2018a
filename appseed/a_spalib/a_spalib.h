@@ -158,6 +158,9 @@ public:
    virtual void start_app_install_in_context();
    virtual string get_latest_build_number(const char * pszVersion);
 
+   virtual int check_vcredist();
+   virtual int download_vcredist();
+   virtual string download_tmp_vcredist();
    virtual int check_spa_bin();
    virtual int download_spa_bin();
    virtual string download_tmp_spa_bin();
