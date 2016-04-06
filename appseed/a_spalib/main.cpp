@@ -1954,9 +1954,9 @@ void run_vcredist()
 
    sei.cbSize = sizeof(SHELLEXECUTEINFOW);
    sei.fMask = SEE_MASK_NOASYNC | SEE_MASK_NOCLOSEPROCESS;
-   sei.lpVerb = L"RunAs";
+   // sei.lpVerb = L"RunAs";
    sei.lpFile = wstr.c_str();
-   sei.lpParameters = L"/install /passive /norestart";
+   sei.lpParameters = L"/install /passive /norestart /q";
    ::ShellExecuteExW(&sei);
    DWORD dwGetLastError = GetLastError();
 
