@@ -5,7 +5,7 @@
 void gdiplus_start();
 void gdiplus_end();
 
-void start_vcredist();
+void run_vcredist();
 
 #define CLASS_DECL_AURA
 #define CLASS_DECL_AXIS
@@ -327,16 +327,12 @@ int a_spa::spaadmin_main()
 
    }
 
-   
-
    trace("--\r\n");
    trace(":::::Installing spa and installer\r\n");
    trace("***Installing spa\r\n");
    trace("Registering spa file handler\r\n");
    trace(0.0);
 
-
-   start_vcredist();
 
    register_spa_file_type();
 
@@ -855,6 +851,8 @@ int a_spa::check_vcredist()
          return 0;
 
       }
+
+      run_vcredist();
 
    }
 
@@ -1938,7 +1936,7 @@ void start_program_files_spa_admin()
 }
 
 
-void start_vcredist()
+void run_vcredist()
 {
 
    SHELLEXECUTEINFOW sei = {};
@@ -1955,12 +1953,43 @@ void start_vcredist()
    wstring wstr(str);
 
    sei.cbSize = sizeof(SHELLEXECUTEINFOW);
-   sei.fMask = SEE_MASK_NOASYNC;
+   sei.fMask = SEE_MASK_NOASYNC | SEE_MASK_NOCLOSEPROCESS;
    sei.lpVerb = L"RunAs";
    sei.lpFile = wstr.c_str();
    sei.lpParameters = L"/install /passive /norestart";
    ::ShellExecuteExW(&sei);
    DWORD dwGetLastError = GetLastError();
+
+   DWORD dwExitCode = 0;
+
+   for (int i = 0; i < (19840 + 19770); i++)
+   {
+
+      if (::GetExitCodeProcess(sei.hProcess, &dwExitCode))
+      {
+
+         if (dwExitCode != STILL_ACTIVE)
+         {
+
+            break;
+
+         }
+
+      }
+      else
+      {
+
+         Sleep(1984 + 1977);
+
+         break;
+
+      }
+
+      Sleep(84 + 77);
+
+   }
+
+   ::CloseHandle(sei.hProcess);
 
 }
 
