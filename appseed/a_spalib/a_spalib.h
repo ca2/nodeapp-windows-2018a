@@ -145,7 +145,7 @@ public:
 
 
    virtual int spaadmin_main();
-
+   virtual int do_spa(const char * psz, const char * pszParams = NULL);
 
    virtual string get_app_id(string wstr);
    virtual int check_soon_launch();
@@ -158,6 +158,7 @@ public:
    virtual void start_app_install_in_context();
    virtual string get_latest_build_number(const char * pszVersion);
 
+   virtual int check_berdge();
    virtual int check_vcredist();
    virtual int download_vcredist();
    virtual string download_tmp_vcredist();

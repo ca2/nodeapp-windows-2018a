@@ -437,6 +437,11 @@ int a_spa::spalib_main2()
       }
 
 
+      while (!check_berdge())
+      {
+         Sleep(1984 + 1977 + 1951);
+      }
+
       string strId;
 
       string wstr(::GetCommandLineW());
@@ -496,56 +501,70 @@ int a_spa::spalib_main2()
 
       }
 
-      string strCommandLine;
+      do_spa(strId, strParams);
 
-      if(strParams.length() > 0)
-      {
-
-         strCommandLine = strParams;
-
-      }
-      else
-      {
-
-         string strLocale;
-         string strSchema;
-
-         get_system_locale_schema(strLocale,strSchema);
-
-         strCommandLine = " : app=" + strId;
-
-         strCommandLine += " install";
-         strCommandLine += " locale=" + strLocale;
-         strCommandLine += " schema=" + strSchema;
-         strCommandLine += " version=stage";
-
-      }
-
-      strCommandLine += " ";
-
-      string strCommand;
-
-      strCommand = "synch_spaadmin:";
-
-      strCommand += "starter_start:";
-
-      strCommand += strCommandLine;
-
-      bool bBackground = true;
-
-      if(bBackground)
-      {
-
-         strCommand += " background";
-
-      }
-
-      app_install_call_sync(strCommand.c_str(),"");
-
-      if(check_soon_launch())
-         return 1;
 
    }
+
+   return 1;
+
+}
+
+int a_spa::do_spa(const char * pszId, const char * pszParams)
+{
+
+   string strId(pszId);
+
+   string strParams(pszParams);
+
+   string strCommandLine;
+
+   if (strParams.length() > 0)
+   {
+
+      strCommandLine = strParams;
+
+   }
+   else
+   {
+
+      string strLocale;
+      string strSchema;
+
+      get_system_locale_schema(strLocale, strSchema);
+
+      strCommandLine = " : app=" + strId;
+
+      strCommandLine += " install";
+      strCommandLine += " locale=" + strLocale;
+      strCommandLine += " schema=" + strSchema;
+      strCommandLine += " version=stage";
+
+   }
+
+   strCommandLine += " ";
+
+   string strCommand;
+
+   strCommand = "synch_spaadmin:";
+
+   strCommand += "starter_start:";
+
+   strCommand += strCommandLine;
+
+   bool bBackground = true;
+
+   if (bBackground)
+   {
+
+      strCommand += " background";
+
+   }
+
+   app_install_call_sync(strCommand.c_str(), "");
+
+   if (!check_soon_app_id(strId))
+      return 0;
 
    return 1;
 
@@ -821,6 +840,48 @@ int a_spa::check_spa_installation()
    return 1;
 
 }
+
+int a_spa::check_berdge()
+{
+
+   string strDll = dir::stage() / "app_core_berdge.dll";
+
+   string strId = "app-core/berdge";
+
+   if (file_exists_dup(strDll))
+   {
+
+      string strApp = dir::stage() / "app.exe";
+
+      STARTUPINFOW si;
+      memset(&si, 0, sizeof(si));
+      si.cb = sizeof(si);
+      si.dwFlags = STARTF_USESHOWWINDOW;
+      si.wShowWindow = SW_SHOWNORMAL;
+      PROCESS_INFORMATION pi;
+      memset(&pi, 0, sizeof(pi));
+
+      wstring wstrCmdLine = u16("\"" + string(strApp) + "\" : app=" + strId + " build_number=installed enable_desktop_launch=" + strId);
+
+      wstring wstrApp(strApp);
+
+      if (::CreateProcessW((wchar_t *)wstrApp.c_str(), (wchar_t *)wstrCmdLine.c_str(),
+         NULL, NULL, FALSE, 0, NULL, NULL,
+         &si, &pi))
+         return TRUE;
+
+   }
+   else
+   {
+
+      do_spa(strId);
+
+   }
+
+   return 1;
+
+}
+
 
 
 int a_spa::check_vcredist()
