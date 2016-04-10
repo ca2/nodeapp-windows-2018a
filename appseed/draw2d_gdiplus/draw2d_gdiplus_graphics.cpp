@@ -700,7 +700,7 @@ namespace draw2d_gdiplus
 
    bool graphics::DrawIcon(int32_t x, int32_t y, ::visual::icon * picon, int32_t cx, int32_t cy, UINT istepIfAniCur, HBRUSH hbrFlickerFreeDraw, UINT diFlags)
    {
-
+      
       try
       {
 
@@ -710,122 +710,19 @@ namespace draw2d_gdiplus
          if(m_pgraphics == NULL)
             return FALSE;
 
-         bool bOk = FALSE;
 
-         BITMAPINFO info;
-         COLORREF * pcolorref;
+         ::draw2d::dib_sp dib = picon->get_dib(cx, cy);
 
-         ZeroMemory(&info, sizeof (BITMAPINFO));
-
-         info.bmiHeader.biSize          = sizeof (BITMAPINFOHEADER);
-         info.bmiHeader.biWidth         = cx;
-         info.bmiHeader.biHeight        = - cy;
-         info.bmiHeader.biPlanes        = 1;
-         info.bmiHeader.biBitCount      = 32;
-         info.bmiHeader.biCompression   = BI_RGB;
-         info.bmiHeader.biSizeImage     = cx * cy * 4;
-
-         HBITMAP hbitmap = ::CreateDIBSection(NULL, &info, DIB_RGB_COLORS, (void **) &pcolorref, NULL, 0);
-
-         HDC hdc = ::CreateCompatibleDC(NULL);
-
-         HBITMAP hbitmapOld = (HBITMAP) ::SelectObject(hdc, hbitmap);
-
-         ICONINFO ii;
-         BITMAPINFO biC;
-         BITMAPINFO biM;
-
-         ZERO(biC);
-         ZERO(biM);
-
-
-
-         if(::GetIconInfo((HICON)picon->m_picon,&ii))
-         {
-
-            ::GetObject(ii.hbmColor,sizeof(biC),(LPVOID)&biC);
-
-            ::GetObject(ii.hbmMask,sizeof(biM),(LPVOID)&biM);
-
-         }
-
-
-
-         if(!::DrawIconEx(hdc,0,0,(HICON)picon->m_picon,cx,cy,istepIfAniCur,NULL,DI_IMAGE | DI_MASK))
-         {
-
-            output_debug_string("nok");
-         }
-         else
-         {
-
-            bool bAllZeroAlpha = true;
-            bool bTheresUint32 = false;
-
-            int area = cx * cy;
-
-            COLORREF * pc = pcolorref;
-            BYTE * pA = &((BYTE *) pcolorref)[3];
-
-            for(int i = 0; i < area; i++)
-            {
-               if(*pc != 0)
-               {
-                  bTheresUint32 = true;
-               }
-               if(*pA != 0)
-               {
-                  bAllZeroAlpha = false;
-                  break;
-               }
-               pc++;
-               pA +=4;
-            }
-
-            if(bAllZeroAlpha && bTheresUint32)
-            {
-
-               pc = pcolorref;
-               pA = &((BYTE *)pcolorref)[3];
-
-               for(int i = 0; i < area; i++)
-               {
-                  if(*pc != 0)
-                  {
-                     *pA = 255;
-                  }
-                  pc++;
-                  pA +=4;
-               }
-            }
-
-            ::SelectObject(hdc, hbitmapOld);
-
-            try
-            {
-
-               Gdiplus::Bitmap b(cx, cy, cx * 4 , PixelFormat32bppARGB, (BYTE *) pcolorref);
-
-               bOk = m_pgraphics->DrawImage(&b, x, y, 0, 0, cx, cy, Gdiplus::UnitPixel) == Gdiplus::Ok;
-
-            }
-            catch(...)
-            {
-            }
-
-         }
-
-         ::DeleteDC(hdc);
-
-         ::DeleteObject(hbitmap);
-
-         return bOk;
+          return BitBlt(x, y, cx, cy, dib->get_graphics(), 0, 0, SRCCOPY);
 
       }
       catch(...)
       {
-         return FALSE;
+         
       }
+
+
+      return false;
 
       //return ::DrawIconEx(get_handle1(), x, y, picon->m_hicon, cx, cy, istepIfAniCur, hbrFlickerFreeDraw, diFlags);
 
