@@ -78,6 +78,7 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vericard", "..\..\..\app-core\appseed\vericard\vericard.vcxproj", "{47A65BC0-A450-4E41-B31B-061DE0F5A7A3}"
 	ProjectSection(ProjectDependencies) = postProject
 		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0} = {DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}
+		{D620EED4-10A9-4C54-8DEE-A52B9D178A4D} = {D620EED4-10A9-4C54-8DEE-A52B9D178A4D}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "irc", "..\..\..\app-core\appseed\irc\irc.vcxproj", "{19845177-6A40-4458-848A-019220E88C80}"
@@ -147,6 +148,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_libmpg123", ".
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basempg123", "..\..\..\app-veriwell\appseed\libmpg123\libmpg123.vcxproj", "{67CAA87B-7CF1-4F93-BB67-21C513F40803}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_wave", "..\..\..\app-core\appseed\audio_decode_wave\audio_decode_wave.vcxproj", "{D620EED4-10A9-4C54-8DEE-A52B9D178A4D}"
 EndProject
 Global
 	GlobalSection(Performance) = preSolution
@@ -513,6 +516,14 @@ Global
 		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.stage|Win32.Build.0 = stage|Win32
 		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.stage|x64.ActiveCfg = stage|x64
 		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.stage|x64.Build.0 = stage|x64
+		{D620EED4-10A9-4C54-8DEE-A52B9D178A4D}.basis|Win32.ActiveCfg = basis|Win32
+		{D620EED4-10A9-4C54-8DEE-A52B9D178A4D}.basis|Win32.Build.0 = basis|Win32
+		{D620EED4-10A9-4C54-8DEE-A52B9D178A4D}.basis|x64.ActiveCfg = basis|x64
+		{D620EED4-10A9-4C54-8DEE-A52B9D178A4D}.basis|x64.Build.0 = basis|x64
+		{D620EED4-10A9-4C54-8DEE-A52B9D178A4D}.stage|Win32.ActiveCfg = stage|Win32
+		{D620EED4-10A9-4C54-8DEE-A52B9D178A4D}.stage|Win32.Build.0 = stage|Win32
+		{D620EED4-10A9-4C54-8DEE-A52B9D178A4D}.stage|x64.ActiveCfg = stage|x64
+		{D620EED4-10A9-4C54-8DEE-A52B9D178A4D}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
