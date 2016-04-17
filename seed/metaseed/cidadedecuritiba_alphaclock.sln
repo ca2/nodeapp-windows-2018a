@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_flag", "..\..\..\app-core\appseed\flag\flag.vcxproj", "{4467CF99-AD0F-403B-8E30-3CBA23756713}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -29,7 +29,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_cidadedecuritiba_alphac
 	ProjectSection(ProjectDependencies) = postProject
 		{39807406-816F-4C0D-A632-4BB8AB13887B} = {39807406-816F-4C0D-A632-4BB8AB13887B}
 		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
-		{0A298E22-839B-4D11-B5A7-456EAD013C11} = {0A298E22-839B-4D11-B5A7-456EAD013C11}
 		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86} = {E2D7833B-9B59-4826-BBDF-C270A2115E86}
 		{29676444-4D0F-4DD0-9104-0499D94DA2C9} = {29676444-4D0F-4DD0-9104-0499D94DA2C9}
@@ -80,8 +79,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axiszlib", "..\..\..\app\axis\zlib\axiszlib.vcxproj", "{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axisbzip2", "..\..\..\app\axis\bzip2\axisbzip2.vcxproj", "{A5A649E1-D516-4F29-A627-DA6884DD421C}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axispixman", "..\..\..\app\axis\pixman\axispixman.vcxproj", "{0A298E22-839B-4D11-B5A7-456EAD013C11}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axisopenssl", "..\..\..\app\axis\openssl\axisopenssl.vcxproj", "{29676444-4D0F-4DD0-9104-0499D94DA2C9}"
 EndProject
@@ -243,14 +240,6 @@ Global
 		{A5A649E1-D516-4F29-A627-DA6884DD421C}.stage|Win32.Build.0 = basis|Win32
 		{A5A649E1-D516-4F29-A627-DA6884DD421C}.stage|x64.ActiveCfg = basis|x64
 		{A5A649E1-D516-4F29-A627-DA6884DD421C}.stage|x64.Build.0 = basis|x64
-		{0A298E22-839B-4D11-B5A7-456EAD013C11}.basis|Win32.ActiveCfg = basis|Win32
-		{0A298E22-839B-4D11-B5A7-456EAD013C11}.basis|Win32.Build.0 = basis|Win32
-		{0A298E22-839B-4D11-B5A7-456EAD013C11}.basis|x64.ActiveCfg = basis|x64
-		{0A298E22-839B-4D11-B5A7-456EAD013C11}.basis|x64.Build.0 = basis|x64
-		{0A298E22-839B-4D11-B5A7-456EAD013C11}.stage|Win32.ActiveCfg = basis|Win32
-		{0A298E22-839B-4D11-B5A7-456EAD013C11}.stage|Win32.Build.0 = basis|Win32
-		{0A298E22-839B-4D11-B5A7-456EAD013C11}.stage|x64.ActiveCfg = basis|x64
-		{0A298E22-839B-4D11-B5A7-456EAD013C11}.stage|x64.Build.0 = basis|x64
 		{29676444-4D0F-4DD0-9104-0499D94DA2C9}.basis|Win32.ActiveCfg = basis|Win32
 		{29676444-4D0F-4DD0-9104-0499D94DA2C9}.basis|Win32.Build.0 = basis|Win32
 		{29676444-4D0F-4DD0-9104-0499D94DA2C9}.basis|x64.ActiveCfg = basis|x64
