@@ -76,6 +76,8 @@ public:
 				m_bMainRepos = false;
 			}
 
+         string strUser = file_as_string_dup("X:\\sensitive\\sensitive\\seed\\user.txt");
+
 			string strPass = file_as_string_dup("X:\\sensitive\\sensitive\\seed\\pass.txt");
 
 			if(m_bMainRepos)
@@ -90,7 +92,7 @@ public:
 					if(str.has_char())
 					{
 
-						::system("hstart /NOCONSOLE \"svnsync --non-interactive --source-username qamilox@uol.com.br --source-password " + strPass + " sync https://" + str + "-repos.ca2.cc/sync-" + strRepos + "\"");
+						::system("hstart /NOCONSOLE \"svnsync --non-interactive --source-username " + strUser + " --source-password " + strPass + " sync https://" + str + "-repos.ca2.cc/sync-" + strRepos + "\"");
 					}
 				}
 
@@ -234,6 +236,8 @@ void app_t::win_sync_out(string strLocal,string strReposParam)
 	try
 	{
 
+      string strUser = file_as_string_dup("X:\\sensitive\\sensitive\\seed\\user.txt");
+
 		string strPass = file_as_string_dup("X:\\sensitive\\sensitive\\seed\\pass.txt");
 
 		if(m_bMainRepos)
@@ -286,7 +290,7 @@ void app_t::win_sync_out(string strLocal,string strReposParam)
 
 			strLog += "\r\n";
 
-			strLog += call("svnsync sync " + strAlt + " --source-username qamilox@uol.com.br --source-password " + strPass);
+			strLog += call("svnsync sync " + strAlt + " --source-username " + strUser + " --source-password " + strPass);
 
 			strLog += "\r\n";
 
@@ -316,7 +320,7 @@ void app_t::win_sync_out(string strLocal,string strReposParam)
 
 			strLog += "\r\n";
 			
-			strLog += call("svn update --username qamilox@uol.com.br --password " + strPass + " C:\\netnodenet\\" + strReposParam);
+			strLog += call("svn update --username " + strUser + " --password " + strPass + " C:\\netnodenet\\" + strReposParam);
 
 			strLog += "\r\n";
 
