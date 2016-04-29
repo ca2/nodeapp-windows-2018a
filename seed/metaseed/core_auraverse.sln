@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_wave", "..\..\..\app-core\appseed\audio_decode_wave\audio_decode_wave.vcxproj", "{D620EED4-10A9-4C54-8DEE-A52B9D178A4D}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -76,8 +76,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "aurasqlite", "..\..\..\app\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "baseid3lib", "..\..\..\app-core\appseed\id3lib\id3lib.vcxproj", "{E2D7833B-9B59-4826-BBDF-C27019771984}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gcom", "..\..\..\app-core\appseed\gcom\gcom.vcxproj", "{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "aqua", "..\..\..\app\appseed\aqua\aqua.vcxproj", "{51778453-C0AA-419D-A87F-4338C9DDE3FA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multimedia_directsound", "..\..\appseed\multimedia_directsound\multimedia_directsound.vcxproj", "{21DA4A8C-5A05-40A4-BF5B-FF62B9778451}"
@@ -112,7 +110,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_auraverse", "..\..
 		{A5A649E1-D516-4F29-A627-DA6884DD421C} = {A5A649E1-D516-4F29-A627-DA6884DD421C}
 		{E8AC3EF0-11C5-4E12-A944-5F7EFED6E0C4} = {E8AC3EF0-11C5-4E12-A944-5F7EFED6E0C4}
 		{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2} = {34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}
-		{441F5CF8-7CE3-4F6F-A2E4-35351F0DE150} = {441F5CF8-7CE3-4F6F-A2E4-35351F0DE150}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_mmsystem", "..\..\appseed\audio_mmsystem\audio_mmsystem.vcxproj", "{54850FD8-653A-43B6-AA90-E59AC030559C}"
@@ -125,9 +122,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multimedia_xaudio", "..\..\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "draw2d_direct2d", "..\..\..\app\appseed\draw2d_direct2d\draw2d_direct2d.vcxproj", "{7A9BFF50-1888-4722-8DEE-73A3B5B32BCB}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sphere", "..\..\..\app\appseed\sphere\sphere.vcxproj", "{441F5CF8-7CE3-4F6F-A2E4-35351F0DE150}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axisfreeimage", "..\..\..\app\axis\freeimage\axisfreeimage.vcxproj", "{B39ED2B3-D53A-4077-B957-930979A3577D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5} = {03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axiscrypto", "..\..\..\app\axis\crypto\axiscrypto.vcxproj", "{39807406-816F-4C0D-A632-4BB8AB13887B}"
 EndProject
@@ -323,14 +321,6 @@ Global
 		{E2D7833B-9B59-4826-BBDF-C27019771984}.stage|Win32.Build.0 = stage|Win32
 		{E2D7833B-9B59-4826-BBDF-C27019771984}.stage|x64.ActiveCfg = stage|x64
 		{E2D7833B-9B59-4826-BBDF-C27019771984}.stage|x64.Build.0 = stage|x64
-		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.basis|Win32.ActiveCfg = basis|Win32
-		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.basis|Win32.Build.0 = basis|Win32
-		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.basis|x64.ActiveCfg = basis|x64
-		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.basis|x64.Build.0 = basis|x64
-		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.stage|Win32.ActiveCfg = stage|Win32
-		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.stage|Win32.Build.0 = stage|Win32
-		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.stage|x64.ActiveCfg = stage|x64
-		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.stage|x64.Build.0 = stage|x64
 		{51778453-C0AA-419D-A87F-4338C9DDE3FA}.basis|Win32.ActiveCfg = basis|Win32
 		{51778453-C0AA-419D-A87F-4338C9DDE3FA}.basis|Win32.Build.0 = basis|Win32
 		{51778453-C0AA-419D-A87F-4338C9DDE3FA}.basis|x64.ActiveCfg = basis|x64
@@ -403,14 +393,6 @@ Global
 		{7A9BFF50-1888-4722-8DEE-73A3B5B32BCB}.stage|Win32.Build.0 = stage|Win32
 		{7A9BFF50-1888-4722-8DEE-73A3B5B32BCB}.stage|x64.ActiveCfg = stage|x64
 		{7A9BFF50-1888-4722-8DEE-73A3B5B32BCB}.stage|x64.Build.0 = stage|x64
-		{441F5CF8-7CE3-4F6F-A2E4-35351F0DE150}.basis|Win32.ActiveCfg = basis|Win32
-		{441F5CF8-7CE3-4F6F-A2E4-35351F0DE150}.basis|Win32.Build.0 = basis|Win32
-		{441F5CF8-7CE3-4F6F-A2E4-35351F0DE150}.basis|x64.ActiveCfg = basis|x64
-		{441F5CF8-7CE3-4F6F-A2E4-35351F0DE150}.basis|x64.Build.0 = basis|x64
-		{441F5CF8-7CE3-4F6F-A2E4-35351F0DE150}.stage|Win32.ActiveCfg = stage|Win32
-		{441F5CF8-7CE3-4F6F-A2E4-35351F0DE150}.stage|Win32.Build.0 = stage|Win32
-		{441F5CF8-7CE3-4F6F-A2E4-35351F0DE150}.stage|x64.ActiveCfg = stage|x64
-		{441F5CF8-7CE3-4F6F-A2E4-35351F0DE150}.stage|x64.Build.0 = stage|x64
 		{B39ED2B3-D53A-4077-B957-930979A3577D}.basis|Win32.ActiveCfg = basis|Win32
 		{B39ED2B3-D53A-4077-B957-930979A3577D}.basis|Win32.Build.0 = basis|Win32
 		{B39ED2B3-D53A-4077-B957-930979A3577D}.basis|x64.ActiveCfg = basis|x64
