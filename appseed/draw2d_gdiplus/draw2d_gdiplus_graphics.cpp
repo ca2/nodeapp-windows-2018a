@@ -4191,6 +4191,9 @@ gdi_fallback:
       if (m_pgraphics == NULL)
          return false;
 
+      if (m_spfont.is_null())
+         return false;
+
       if(lpszString == NULL || *lpszString == '\0')
          return false;
 
