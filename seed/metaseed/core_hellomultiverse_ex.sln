@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_hellomultiverse", "..\..\..\app-core\appseed\hellomultiverse\hellomultiverse.vcxproj", "{C7AFCEFA-3079-4B23-8F97-4543BB980265}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -165,6 +165,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "aurapcre", "..\..\..\app\aura\pcre\aurapcre.vcxproj", "{19AA8BB5-51FA-46E7-B346-2A89828F3000}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pcre", "..\..\..\app\appseed\pcre\pcre.vcxproj", "{F850CC85-1FC5-4B19-BED8-64959B8ACD71}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gcom", "..\..\..\app-core\appseed\gcom\gcom.vcxproj", "{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -414,6 +416,14 @@ Global
 		{F850CC85-1FC5-4B19-BED8-64959B8ACD71}.stage|Win32.Build.0 = stage|Win32
 		{F850CC85-1FC5-4B19-BED8-64959B8ACD71}.stage|x64.ActiveCfg = stage|x64
 		{F850CC85-1FC5-4B19-BED8-64959B8ACD71}.stage|x64.Build.0 = stage|x64
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.basis|Win32.ActiveCfg = basis|Win32
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.basis|Win32.Build.0 = basis|Win32
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.basis|x64.ActiveCfg = basis|x64
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.basis|x64.Build.0 = basis|x64
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.stage|Win32.ActiveCfg = stage|Win32
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.stage|Win32.Build.0 = stage|Win32
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.stage|x64.ActiveCfg = stage|x64
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
