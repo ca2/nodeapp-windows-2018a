@@ -54,6 +54,7 @@
 #if !defined(__cplusplus) || defined(__STDC_FORMAT_MACROS) // [   See footnote 185 at page 198
 
 // The fprintf macros for signed integers are:
+#ifndef PRId8
 #define PRId8       "d"
 #define PRIi8       "i"
 #define PRIdLEAST8  "d"
@@ -260,6 +261,9 @@
 #  define SCNxPTR     "lx"
 #  define SCNXPTR     "lX"
 #endif  // _WIN64 ]
+
+
+#endif
 
 #endif // __STDC_FORMAT_MACROS ]
 
