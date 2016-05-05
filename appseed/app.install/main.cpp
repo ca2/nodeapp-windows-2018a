@@ -94,7 +94,7 @@ _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, __in LPTSTR lpCmdLine, i
 
 installer::installer() :
    ::object(this),
-   ::aura::system(NULL),
+   ::aura::system(NULL, NULL),
    ::axis::system(NULL),
    ::base::system(NULL),
    ::install::installer(this),
