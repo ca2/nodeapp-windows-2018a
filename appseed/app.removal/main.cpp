@@ -85,7 +85,7 @@ extern "C" int32_t WINAPI _tWinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,
 
 
 removal::removal() :
-::aura::system(this)
+   ::aura::system(this, NULL)
 {
    m_hinstance             = ::GetModuleHandleA(NULL);
    m_hmutex_app_removal  = NULL;

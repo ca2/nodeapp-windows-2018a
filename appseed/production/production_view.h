@@ -14,7 +14,7 @@ namespace production
    public:
 
 
-      size                          m_sizeTotal;
+      //size                          m_sizeTotal;
       int32_t                     m_iStep;
       bool                    m_bLayout;
 

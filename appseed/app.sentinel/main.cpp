@@ -192,7 +192,7 @@ __in LPTSTR lpCmdLine, int32_t nCmdShow)
 
 sentinel::sentinel() :
 ::object(this),
-::aura::system(NULL),
+::aura::system(NULL, NULL),
 ::axis::system(NULL),
 ::base::system(NULL),
 m_rxchannel(this)
