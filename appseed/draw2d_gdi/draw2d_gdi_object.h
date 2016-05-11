@@ -15,7 +15,7 @@ namespace draw2d_gdi
 
 
       HGDIOBJ                                            m_hgdiobj;
-      ptr_array < ::draw2d_gdi::graphics >      m_ptraGraphics;
+      ref_array < ::draw2d_gdi::graphics >      m_ptraGraphics;
 
 
       object();
