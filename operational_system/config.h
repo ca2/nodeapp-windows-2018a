@@ -21,6 +21,9 @@
 #endif
 
 
+#define __PLATFORM   "windows"
+
+
 
 #define SECURITY_WIN32
 
