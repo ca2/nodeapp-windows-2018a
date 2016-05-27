@@ -1546,12 +1546,12 @@ gdi_fallback:
       if (m_pgraphics == NULL)
          return false;
 
-      graphics * pdc = ((graphics *)this);
+      graphics * pgraphics = ((graphics *)this);
 
-      if(pdc->gdiplus_font() == NULL)
+      if(pgraphics->gdiplus_font() == NULL)
          return false;
 
-      Gdiplus::Font * pfont = pdc->gdiplus_font();
+      Gdiplus::Font * pfont = pgraphics->gdiplus_font();
 
       Gdiplus::FontFamily family;
 
@@ -1563,7 +1563,7 @@ gdi_fallback:
 
       double dSize = pfont->GetSize();
 
-      double dFontHeight = pfont->GetHeight((Gdiplus::REAL) pdc->get_dpiy());
+      double dFontHeight = pfont->GetHeight((Gdiplus::REAL) pgraphics->get_dpiy());
 
       lpMetrics->tmAscent              = (LONG) (dSize * family.GetCellAscent(iStyle) / dHeight);
       lpMetrics->tmDescent             = (LONG) (dSize * family.GetCellDescent(iStyle) / dHeight);

@@ -63,7 +63,7 @@ namespace ca2plugin_container
 
       virtual void _001OnTimer(::timer * ptimer);
 
-      void _001Print(::draw2d::dib * pdib);
+      void _001Print(::draw2d::graphics * pgraphics);
 
 
    };

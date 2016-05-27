@@ -64,7 +64,7 @@ void ca2_install_canvas_init_draw()
    g_pBarBk = new SolidBrush(Color(49,184 + 23,184+ 23,184 + 23));
 }
 
-void ca2_install_canvas_on_paint(Graphics * pdc, LPCRECT lpcrect, int iMode)
+void ca2_install_canvas_on_paint(Graphics * pgraphics, LPCRECT lpcrect, int iMode)
 {
 
    iMode = 1;
@@ -76,8 +76,8 @@ void ca2_install_canvas_on_paint(Graphics * pdc, LPCRECT lpcrect, int iMode)
    string strNormal;
    string strProgress;
 
-   pdc->SetCompositingMode(CompositingModeSourceOver);
-   pdc->SetTextRenderingHint(TextRenderingHintAntiAliasGridFit);
+   pgraphics->SetCompositingMode(CompositingModeSourceOver);
+   pgraphics->SetTextRenderingHint(TextRenderingHintAntiAliasGridFit);
 
    {
 
@@ -185,13 +185,13 @@ void ca2_install_canvas_on_paint(Graphics * pdc, LPCRECT lpcrect, int iMode)
    if(iMode == 2 || iMode == 1 || iMode == 0)
    {
 
-      pdc->DrawRectangle(g_ppenBorder,make_rect(lpcrect, true));
+      pgraphics->DrawRectangle(g_ppenBorder,make_rect(lpcrect, true));
 
    }
 
    RectF rSize;
    
-   pdc->MeasureString(L"CCpp",4,g_pfont,PointF(0, 0), StringFormat::GenericTypographic(), &rSize);
+   pgraphics->MeasureString(L"CCpp",4,g_pfont,PointF(0, 0), StringFormat::GenericTypographic(), &rSize);
 
    double cyText = MAX(rSize.Height,5.0);
 
@@ -203,35 +203,35 @@ void ca2_install_canvas_on_paint(Graphics * pdc, LPCRECT lpcrect, int iMode)
       size_t iRefresh = 884;
       size_t iEat = 8;
 //      const wchar_t * psz = L"development message so international english file \"install.log\" excerpt  ::::::::";
-  //    pdc->DrawString(psz,wcslen(psz) - iEat + 1 + ((::GetTickCount() / (iRefresh - 277) % iEat)),g_pfont,PointF(10,10 + cyText * 2),StringFormat::GenericTypographic(),g_ptextColor1);
+  //    pgraphics->DrawString(psz,wcslen(psz) - iEat + 1 + ((::GetTickCount() / (iRefresh - 277) % iEat)),g_pfont,PointF(10,10 + cyText * 2),StringFormat::GenericTypographic(),g_ptextColor1);
 
       if(strHeader.length() > 0)
       {
-         pdc->DrawString(u16(strHeader),-1,g_pfontHeader,PointF(10,10 + cyText * 3+4) ,StringFormat::GenericTypographic(),g_ptextColor1);
+         pgraphics->DrawString(u16(strHeader),-1,g_pfontHeader,PointF(10,10 + cyText * 3+4) ,StringFormat::GenericTypographic(),g_ptextColor1);
       }
       if(strBold.length() > 0)
       {
-         pdc->DrawString(u16(strBold),-1,g_pfontBold,PointF(10,10 + cyText * 5),StringFormat::GenericTypographic(),g_ptextColor1);
+         pgraphics->DrawString(u16(strBold),-1,g_pfontBold,PointF(10,10 + cyText * 5),StringFormat::GenericTypographic(),g_ptextColor1);
       }
       if(strNormal.length() > 0)
       {
-         pdc->DrawString(u16(strNormal),-1,g_pfont,PointF(10,10 + cyText * 6),StringFormat::GenericTypographic(),g_ptextColor1);
+         pgraphics->DrawString(u16(strNormal),-1,g_pfont,PointF(10,10 + cyText * 6),StringFormat::GenericTypographic(),g_ptextColor1);
       }
       if(strProgress.length() > 0)
       {
-         pdc->DrawString(u16(strProgress),-1,g_pfont,PointF(10,10 + cyText * 7),StringFormat::GenericTypographic(),g_ptextColor1);
+         pgraphics->DrawString(u16(strProgress),-1,g_pfont,PointF(10,10 + cyText * 7),StringFormat::GenericTypographic(),g_ptextColor1);
       }
 
    }
    double cyBar = cyText * 1.2;
 
    {
-      pdc->FillRectangle(g_pBarBk,RectF(10.0,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0,lpcrect->right - 10.0 - 10.0,cyBar));
+      pgraphics->FillRectangle(g_pBarBk,RectF(10.0,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0,lpcrect->right - 10.0 - 10.0,cyBar));
 
       if(bProgress)
       {
          double iRight = ((double) g_cx - 11.0 - 11.0) * dProgress;
-         pdc->FillRectangle(g_pBar,RectF(11.0,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0,iRight,cyBar - 2.0));
+         pgraphics->FillRectangle(g_pBar,RectF(11.0,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0,iRight,cyBar - 2.0));
       }
       else
       {
@@ -240,20 +240,20 @@ void ca2_install_canvas_on_paint(Graphics * pdc, LPCRECT lpcrect, int iMode)
          double iBarWidth = (lpcrect->right - 11.0 - 11.0) / 4;
          double i = ((lpcrect->right - 11.0 - 11.0) * dProgress) + 11.0;
          double iRight = i + iBarWidth;
-         pdc->FillRectangle(g_pBar,RectF(11.0 + i,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0,MIN(lpcrect->right - 10.0,iRight) - 11 - i,cyBar - 2.0));
+         pgraphics->FillRectangle(g_pBar,RectF(11.0 + i,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0,MIN(lpcrect->right - 10.0,iRight) - 11 - i,cyBar - 2.0));
          if(iRight >= lpcrect->right - 10)
          {
-            pdc->FillRectangle(g_pBar,RectF(11.0,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0,iRight - lpcrect->right - 10.0 - 11.0,cyBar - 2.0));
+            pgraphics->FillRectangle(g_pBar,RectF(11.0,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0 + 1.0,iRight - lpcrect->right - 10.0 - 11.0,cyBar - 2.0));
          }
       }
-      pdc->DrawRectangle(g_pBarBorder,RectF(10.0,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0,lpcrect->right - 10.0 - 10.0,cyBar));
+      pgraphics->DrawRectangle(g_pBarBorder,RectF(10.0,(lpcrect->top + lpcrect->bottom - cyBar) / 2.0,lpcrect->right - 10.0 - 10.0,cyBar));
 
    }
 
 
    {
    
-      pdc->DrawString(L"Thank you",-1,g_pfont,PointF(10.0,10.0),g_ptextColor1);
+      pgraphics->DrawString(L"Thank you",-1,g_pfont,PointF(10.0,10.0),g_ptextColor1);
 
    }
 

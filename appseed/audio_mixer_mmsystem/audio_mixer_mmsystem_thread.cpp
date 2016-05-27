@@ -81,8 +81,8 @@ namespace multimedia
          else if(pbase->m_wparam == 19)
          {
             ASSERT(FALSE);
-            //        CDBCentral * pdc = (CDBCentral *) lParam;
-            //      pdc->SongsCreateBuildAlbumThread(
+            //        CDBCentral * pgraphics = (CDBCentral *) lParam;
+            //      pgraphics->SongsCreateBuildAlbumThread(
             //        (CDataCentral::EBuildSongsAlbumOperation)
             //      (CDataCentral::eBuildSongsAlbumDeleteNotFound |
             //    CDataCentral::eBuildSongsAlbumAddNew |
@@ -92,8 +92,8 @@ namespace multimedia
          else if(pbase->m_wparam == 20)
          {
             ASSERT(FALSE);
-            //        CDBCentral * pdc = (CDBCentral *) lParam;
-            //      pdc->SongsCreateBuildAlbumThread(
+            //        CDBCentral * pgraphics = (CDBCentral *) lParam;
+            //      pgraphics->SongsCreateBuildAlbumThread(
             //        (CDataCentral::EBuildSongsAlbumOperation)
             //      (CDataCentral::eBuildSongsAlbumAddNew |
             //    CDataCentral::eBuildSongsAlbumCreateSearchReferences),
@@ -102,8 +102,8 @@ namespace multimedia
          else if(pbase->m_wparam == 810)
          {
             ASSERT(FALSE);
-            //        CDBCentral * pdc = (CDBCentral *) lParam;
-            //      pdc->SongsCreateBuildAlbumThread(
+            //        CDBCentral * pgraphics = (CDBCentral *) lParam;
+            //      pgraphics->SongsCreateBuildAlbumThread(
             //        (CDataCentral::EBuildSongsAlbumOperation)
             //      CDataCentral::eBuildSongsAlbumDeleteNotFound,
             //    false, this, this);

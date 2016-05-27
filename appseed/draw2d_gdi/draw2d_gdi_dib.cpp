@@ -242,9 +242,9 @@ namespace draw2d_gdi
       return bOk;
    }
 
-   bool dib::from(point ptDest, ::draw2d::graphics * pdc, point pt, class size sz)
+   bool dib::from(point ptDest, ::draw2d::graphics * pgraphics, point pt, class size sz)
    {
-      return m_spgraphics->BitBlt(ptDest.x, ptDest.y, sz.cx, sz.cy, pdc, pt.x, pt.y, SRCCOPY) != FALSE;
+      return m_spgraphics->BitBlt(ptDest.x, ptDest.y, sz.cx, sz.cy, pgraphics, pt.x, pt.y, SRCCOPY) != FALSE;
    }
 
    //void dib::Fill ( int R, int G, int B )
@@ -2583,9 +2583,9 @@ namespace draw2d_gdi
          if(!dib->create(rectWindow.bottom_right()))
             return false;
 
-         ::draw2d::graphics * pdc = dib->get_graphics();
+         ::draw2d::graphics * pgraphics = dib->get_graphics();
 
-         if(pdc->get_os_data() == NULL)
+         if(pgraphics->get_os_data() == NULL)
             return false;
 
          rect rectPaint;
@@ -2599,14 +2599,14 @@ namespace draw2d_gdi
          m_spgraphics-> SetViewportOrg(point(0, 0));
          pwnd->_000OnDraw(dib);
          m_spgraphics->SetViewportOrg(point(0, 0));
-         //(dynamic_cast<::win::graphics * >(pdc))->FillSolidRect(rectUpdate.left, rectUpdate.top, 100, 100, 255);
+         //(dynamic_cast<::win::graphics * >(pgraphics))->FillSolidRect(rectUpdate.left, rectUpdate.top, 100, 100, 255);
          m_spgraphics->SelectClipRgn(NULL);
          m_spgraphics->SetViewportOrg(point(0, 0));
 
          m_spgraphics->SelectClipRgn( NULL);
          m_spgraphics->BitBlt(rectPaint.left, rectPaint.top, 
             rectPaint.width(), rectPaint.height(),
-            pdc, rectUpdate.left, rectUpdate.top,
+            pgraphics, rectUpdate.left, rectUpdate.top,
             SRCCOPY);
 
       }

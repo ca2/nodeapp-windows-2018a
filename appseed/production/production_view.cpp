@@ -162,28 +162,28 @@ namespace production
    }
 
 
-   void view::on_viewport_offset(::draw2d::dib * pdib)
+   void view::on_viewport_offset(::draw2d::graphics * pgraphics)
    {
 
    }
 
 
-   void view:: _001OnDraw(::draw2d::dib * pdib)
+   void view:: _001OnDraw(::draw2d::graphics * pgraphics)
    {
 
-      ::draw2d::graphics * pdc = pdib->get_graphics();
+      
       
       single_lock sl(&m_pproduction->m_mutexStatus,TRUE);
 
       rect rectClient;
       GetClientRect(rectClient);
 
-      pdc->SelectObject(System.visual().font_central().GetListCtrlFont());
+      pgraphics->SelectObject(System.visual().font_central().GetListCtrlFont());
 
-      size sz = pdc->GetTextExtent("ÁÍqg");
+      size sz = pgraphics->GetTextExtent("ÁÍqg");
       m_iLineHeight = MAX(1, sz.cy);
 
-      pdc->FillSolidRect(rectClient, ARGB(255, 255, 255, 255));
+      pgraphics->FillSolidRect(rectClient, ARGB(255, 255, 255, 255));
 
       rect rectText(rectClient);
 
@@ -204,32 +204,32 @@ namespace production
       //ClientToScreen(rectClip);
       ::draw2d::region_sp rgnClip(allocer());
       rgnClip->create_rect(rectClip);
-      //pdc->Draw3dRect(rectText, RGB(200, 200, 200), RGB(200, 200, 200));
-      pdc->SelectClipRgn(rgnClip);
+      //pgraphics->Draw3dRect(rectText, RGB(200, 200, 200), RGB(200, 200, 200));
+      pgraphics->SelectClipRgn(rgnClip);
       //single_lock sl(&m_pproduction->m_mutexStatus, TRUE);
-      //pdc->set_color(ARGB(0xcc, 84, 84, 84));
+      //pgraphics->set_color(ARGB(0xcc, 84, 84, 84));
       ::draw2d::brush_sp brush(allocer());
       brush->create_solid(ARGB(0xcc, 84, 84, 84));
-      pdc->SelectObject(brush);
+      pgraphics->SelectObject(brush);
       for(int32_t i = iStart; i < m_pproduction->m_straStatus.get_size() && y < rectText.bottom; i++)
       {
          rcItem = rectText;
          rcItem.bottom = y + m_iLineHeight;
          rcItem.top = y ;
-         pdc->draw_text(m_pproduction->m_straStatus[i], rcItem, DT_BOTTOM | DT_LEFT);
+         pgraphics->draw_text(m_pproduction->m_straStatus[i], rcItem, DT_BOTTOM | DT_LEFT);
          y = rcItem.bottom;
       }
-      pdc->SelectClipRgn(NULL);
+      pgraphics->SelectClipRgn(NULL);
 
 
 
       rect rectArea;
 
       GetAreaThumbRect(rectArea, m_iV);
-      m_dibV->to(pdc, rectArea);
+      m_dibV->to(pgraphics, rectArea);
 
       GetAreaThumbRect(rectArea, m_iVs);
-      m_dibVs->to(pdc, rectArea);
+      m_dibVs->to(pgraphics, rectArea);
 
       if(!m_pproduction->m_bFinished)
       {
@@ -237,7 +237,7 @@ namespace production
          uint32_t dwMin = (m_pproduction->m_dwEndTick - m_pproduction->m_dwStartTick) / 1000 / 60;
          uint32_t dwSeg = ((m_pproduction->m_dwEndTick - m_pproduction->m_dwStartTick) / 1000) % 60;
          strTime.Format("%dm %ds", dwMin, dwSeg);
-         pdc->TextOut(rectArea.right + 23, rectArea.top, strTime);
+         pgraphics->TextOut(rectArea.right + 23, rectArea.top, strTime);
       }
 
    }

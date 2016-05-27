@@ -158,9 +158,9 @@ namespace win
       }
    }
 
-   BOOL dib::create(::ca::graphics * pdc)
+   BOOL dib::create(::ca::graphics * pgraphics)
    {
-      ::ca::bitmap * pbitmap = (dynamic_cast<::win::graphics * >(pdc))->GetCurrentBitmap();
+      ::ca::bitmap * pbitmap = (dynamic_cast<::win::graphics * >(pgraphics))->GetCurrentBitmap();
       if(pbitmap == NULL)
          return FALSE;
       BITMAP bm;
@@ -169,7 +169,7 @@ namespace win
       {
          return FALSE;
       }
-      from(pdc);
+      from(pgraphics);
       return TRUE;
    }
 
@@ -202,33 +202,33 @@ namespace win
             != FALSE; 
    }
 
-   bool dib::from(::ca::graphics * pdc)
+   bool dib::from(::ca::graphics * pgraphics)
    {
       ::ca::bitmap_sp bitmap(get_app());
-      bitmap->CreateCompatibleBitmap(pdc, 1, 1);
-      ::ca::bitmap * pbitmap = WIN_DC(pdc)->SelectObject(bitmap);
+      bitmap->CreateCompatibleBitmap(pgraphics, 1, 1);
+      ::ca::bitmap * pbitmap = WIN_DC(pgraphics)->SelectObject(bitmap);
       if(pbitmap == NULL)
          return false;
       BITMAP bm;
       memset(&bm, 0, sizeof(bm));
       if(!pbitmap->GetBitmap(&bm))
       {
-         WIN_DC(pdc)->SelectObject(pbitmap);
+         WIN_DC(pgraphics)->SelectObject(pbitmap);
          return false;
       }
       if(!create(bm.bmWidth, bm.bmHeight))
       {
-         WIN_DC(pdc)->SelectObject(pbitmap);
+         WIN_DC(pgraphics)->SelectObject(pbitmap);
          return false;
       }
-      bool bOk = GetDIBits(WIN_HDC(pdc), (HBITMAP) pbitmap->get_os_data(), 0, m_size.cy, m_pcolorref, &(m_info), DIB_RGB_COLORS) != FALSE; 
-      WIN_DC(pdc)->SelectObject(pbitmap);
+      bool bOk = GetDIBits(WIN_HDC(pgraphics), (HBITMAP) pbitmap->get_os_data(), 0, m_size.cy, m_pcolorref, &(m_info), DIB_RGB_COLORS) != FALSE; 
+      WIN_DC(pgraphics)->SelectObject(pbitmap);
       return bOk;
    }
 
-   bool dib::from(point ptDest, ::ca::graphics * pdc, point pt, class size sz)
+   bool dib::from(point ptDest, ::ca::graphics * pgraphics, point pt, class size sz)
    {
-      return m_spgraphics->BitBlt(ptDest.x, ptDest.y, sz.cx, sz.cy, pdc, pt.x, pt.y, SRCCOPY) != FALSE;
+      return m_spgraphics->BitBlt(ptDest.x, ptDest.y, sz.cx, sz.cy, pgraphics, pt.x, pt.y, SRCCOPY) != FALSE;
    }
 
    void dib::Fill ( int R, int G, int B )

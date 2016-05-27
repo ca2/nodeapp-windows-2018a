@@ -42,10 +42,10 @@ namespace win
       return b;
    }
       
-   BOOL draw_dib::Begin (::ca::graphics * pdc, int dxDest, int dyDest,
+   BOOL draw_dib::Begin (::ca::graphics * pgraphics, int dxDest, int dyDest,
       LPBITMAPINFOHEADER lpbi, int dxSrc, int dySrc, UINT wFlags )
    {
-      return DrawDibBegin ( m_hdrawdib, (HDC)pdc->get_os_data(), dxDest, dyDest, lpbi, 
+      return DrawDibBegin ( m_hdrawdib, (HDC)pgraphics->get_os_data(), dxDest, dyDest, lpbi, 
          dxSrc, dySrc, wFlags );
    }
 
@@ -54,24 +54,24 @@ namespace win
       return DrawDibEnd ( m_hdrawdib );
    }
 
-   BOOL draw_dib::draw (::ca::graphics * pdc, int xDst, int yDst,
+   BOOL draw_dib::draw (::ca::graphics * pgraphics, int xDst, int yDst,
       int dxDst, int dyDst, LPBITMAPINFOHEADER lpbi, LPVOID lpBits,
       int xSrc, int ySrc, int dxSrc, int dySrc, UINT wFlags )
    {
-      return ::DrawDibDraw ( m_hdrawdib, (HDC)pdc->get_os_data(), xDst, yDst, dxDst, dyDst, 
+      return ::DrawDibDraw ( m_hdrawdib, (HDC)pgraphics->get_os_data(), xDst, yDst, dxDst, dyDst, 
          lpbi, lpBits, xSrc, ySrc, dxSrc, dySrc, wFlags );
    }
 
-   BOOL draw_dib::draw (::ca::dib *dib, ::ca::graphics * pdc, int xDst, int yDst,
+   BOOL draw_dib::draw (::ca::dib *dib, ::ca::graphics * pgraphics, int xDst, int yDst,
       int dxDst, int dyDst, UINT wFlags)
    {
-      return ::DrawDibDraw( m_hdrawdib, (HDC)pdc->get_os_data(), xDst, yDst, dxDst, dyDst, 
+      return ::DrawDibDraw( m_hdrawdib, (HDC)pgraphics->get_os_data(), xDst, yDst, dxDst, dyDst, 
          &((dynamic_cast < ::win::dib * > (dib))->m_info.bmiHeader), dib->get_data(), 0, 0, dib->width(),
          dib->height(), wFlags );
    }
 
    BOOL draw_dib::draw (
-      ::ca::graphics * pdc, 
+      ::ca::graphics * pgraphics, 
       int      xDst,
       int      yDst,
       int      dxDst,
@@ -85,7 +85,7 @@ namespace win
    {
       UNREFERENCED_PARAMETER(wFlags);
       return ::StretchDIBits(
-         (HDC)pdc->get_os_data(), 
+         (HDC)pgraphics->get_os_data(), 
          xDst, yDst, dxDst, dyDst, 
          xSrc, ySrc, dxSrc, dySrc, 
          pdib->get_data(), &(dynamic_cast < ::win::dib * > (pdib))->m_info, 
@@ -120,9 +120,9 @@ namespace win
       return DrawDibChangePalette ( m_hdrawdib, iStart, iLen, lppe );
    }
 
-   UINT draw_dib::Realize ( ::ca::graphics * pdc, BOOL fBackground )
+   UINT draw_dib::Realize ( ::ca::graphics * pgraphics, BOOL fBackground )
    {
-      return DrawDibRealize ( m_hdrawdib,  (HDC) pdc->get_os_data(),  fBackground );
+      return DrawDibRealize ( m_hdrawdib,  (HDC) pgraphics->get_os_data(),  fBackground );
    }
       
    BOOL draw_dib::Start ( LONG rate )

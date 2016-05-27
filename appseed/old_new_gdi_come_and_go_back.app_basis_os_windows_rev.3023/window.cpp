@@ -1105,10 +1105,10 @@ namespace win
       return false;
    }
 
-   void window::_002OnDraw(::ca::graphics * pdc)
+   void window::_002OnDraw(::ca::graphics * pgraphics)
    {
 
-      ::CallWindowProc(*GetSuperWndProcAddr(), get_handle(), WM_PRINT, (WPARAM)((dynamic_cast<::win::graphics * >(pdc))->get_os_data()), (LPARAM)(PRF_CHILDREN | PRF_CLIENT));
+      ::CallWindowProc(*GetSuperWndProcAddr(), get_handle(), WM_PRINT, (WPARAM)((dynamic_cast<::win::graphics * >(pgraphics))->get_os_data()), (LPARAM)(PRF_CHILDREN | PRF_CLIENT));
 
    }
 
@@ -2866,9 +2866,9 @@ namespace win
       EnumWindows(GetAppsEnumWindowsProc, (LPARAM) &wnda);
    }
 
-   void window::_001OnDeferPaintLayeredWindowBackground(::ca::graphics * pdc)
+   void window::_001OnDeferPaintLayeredWindowBackground(::ca::graphics * pgraphics)
    {
-      _001DeferPaintLayeredWindowBackground(pdc);
+      _001DeferPaintLayeredWindowBackground(pgraphics);
    }
 
 
@@ -2913,11 +2913,11 @@ namespace win
       }
    };
 
-   void window::_001DeferPaintLayeredWindowBackground(::ca::graphics * pdc)
+   void window::_001DeferPaintLayeredWindowBackground(::ca::graphics * pgraphics)
    {
       rect rectUpdate;
       GetDesktopWindow()->GetWindowRect(rectUpdate);
-      pdc->SetViewportOrg(point(0, 0));
+      pgraphics->SetViewportOrg(point(0, 0));
       rect rectPaint;
       rectPaint = rectUpdate;
       ScreenToClient(rectPaint);
@@ -3018,7 +3018,7 @@ namespace win
                }
                if(pwnd != NULL)
                {
-                  pwnd->_001Print(pdc);
+                  pwnd->_001Print(pgraphics);
                }
                else if(::GetWindowLong(wndaApp[j], GWL_EXSTYLE) & WS_EX_LAYERED)
                {
@@ -3032,7 +3032,7 @@ namespace win
                   HGDIOBJ hOld = SelectObject(hDCMem, hBmp);
                   print_window printwindow(get_app(), hWnd, hDCMem, 284);
                   ::BitBlt(
-                     (HDC) pdc->get_os_data(), 
+                     (HDC) pgraphics->get_os_data(), 
                      rect5.left,
                      rect5.top,
                      rect5.width(), rect5.height(),
@@ -3045,14 +3045,14 @@ namespace win
                }
                else
                {
-                  pdc->SetViewportOrg(point(0, 0));
+                  pgraphics->SetViewportOrg(point(0, 0));
                   HDC hdcWindow = ::GetDCEx(wndaApp[j], NULL, DCX_WINDOW);
                   if(hdcWindow == NULL)
                      hdcWindow = ::GetDCEx(wndaApp[j], NULL, DCX_WINDOW | DCX_CACHE);
                   if(hdcWindow != NULL)
                   {
                      ::BitBlt(
-                        (HDC) pdc->get_os_data(),
+                        (HDC) pgraphics->get_os_data(),
                         rect5.left,
                         rect5.top,
                         rect5.width(), rect5.height(),
@@ -3102,10 +3102,10 @@ namespace win
          if(!dib->create(rectWindow.bottom_right()))
             return;
 
-         ::ca::graphics * pdc = dib->get_graphics();
+         ::ca::graphics * pgraphics = dib->get_graphics();
 
-         if((dynamic_cast<::win::graphics * >(pdc))->get_os_data() == NULL 
-         || (dynamic_cast<::win::graphics * >(pdc))->get_handle2() == NULL)
+         if((dynamic_cast<::win::graphics * >(pgraphics))->get_os_data() == NULL 
+         || (dynamic_cast<::win::graphics * >(pgraphics))->get_handle2() == NULL)
             return;
 
          rect rectPaint;
@@ -3122,25 +3122,25 @@ namespace win
             rectUpdate = rectPaint;
             ClientToScreen(rectUpdate);
          }
-         (dynamic_cast<::win::graphics * >(pdc))->SelectClipRgn(NULL);
+         (dynamic_cast<::win::graphics * >(pgraphics))->SelectClipRgn(NULL);
          if(m_pguie != NULL && m_pguie != this)
          {
-            m_pguie->_001OnDeferPaintLayeredWindowBackground(pdc);
+            m_pguie->_001OnDeferPaintLayeredWindowBackground(pgraphics);
          }
          else
          {
-            _001OnDeferPaintLayeredWindowBackground(pdc);
+            _001OnDeferPaintLayeredWindowBackground(pgraphics);
          }
-         (dynamic_cast<::win::graphics * >(pdc))->SelectClipRgn(NULL);
-         (dynamic_cast<::win::graphics * >(pdc))->SetViewportOrg(point(0, 0));
-         _000OnDraw(pdc);
-         (dynamic_cast<::win::graphics * >(pdc))->SetViewportOrg(point(0, 0));
-         //(dynamic_cast<::win::graphics * >(pdc))->FillSolidRect(rectUpdate.left, rectUpdate.top, 100, 100, 255);
-         (dynamic_cast<::win::graphics * >(pdc))->SelectClipRgn(NULL);
-         (dynamic_cast<::win::graphics * >(pdc))->SetViewportOrg(point(0, 0));
+         (dynamic_cast<::win::graphics * >(pgraphics))->SelectClipRgn(NULL);
+         (dynamic_cast<::win::graphics * >(pgraphics))->SetViewportOrg(point(0, 0));
+         _000OnDraw(pgraphics);
+         (dynamic_cast<::win::graphics * >(pgraphics))->SetViewportOrg(point(0, 0));
+         //(dynamic_cast<::win::graphics * >(pgraphics))->FillSolidRect(rectUpdate.left, rectUpdate.top, 100, 100, 255);
+         (dynamic_cast<::win::graphics * >(pgraphics))->SelectClipRgn(NULL);
+         (dynamic_cast<::win::graphics * >(pgraphics))->SetViewportOrg(point(0, 0));
          BitBlt(hdc, rectPaint.left, rectPaint.top, 
             rectPaint.width(), rectPaint.height(),
-            (HDC) pdc->get_os_data(), rectUpdate.left, rectUpdate.top,
+            (HDC) pgraphics->get_os_data(), rectUpdate.left, rectUpdate.top,
             SRCCOPY);
 
       }
@@ -3182,9 +3182,9 @@ namespace win
          if(!dib->create(rectWindow.bottom_right()))
             return;
 
-         ::ca::graphics * pdc = dib->get_graphics();
+         ::ca::graphics * pgraphics = dib->get_graphics();
 
-         if(pdc->get_os_data() == NULL)
+         if(pgraphics->get_os_data() == NULL)
             return;
 
          rect rectPaint;
@@ -3192,27 +3192,27 @@ namespace win
          rectUpdate = rectWindow;
          rectPaint = rectWindow;
          rectPaint.offset(-rectPaint.top_left());
-         (dynamic_cast<::win::graphics * >(pdc))->SelectClipRgn(NULL);
+         (dynamic_cast<::win::graphics * >(pgraphics))->SelectClipRgn(NULL);
          if(m_pguie != NULL && m_pguie != this)
          {
-            m_pguie->_001OnDeferPaintLayeredWindowBackground(pdc);
+            m_pguie->_001OnDeferPaintLayeredWindowBackground(pgraphics);
          }
          else
          {
-            _001OnDeferPaintLayeredWindowBackground(pdc);
+            _001OnDeferPaintLayeredWindowBackground(pgraphics);
          }
-         (dynamic_cast<::win::graphics * >(pdc))->SelectClipRgn(NULL);
-         (dynamic_cast<::win::graphics * >(pdc))->SetViewportOrg(point(0, 0));
-         _000OnDraw(pdc);
-         (dynamic_cast<::win::graphics * >(pdc))->SetViewportOrg(point(0, 0));
-         //(dynamic_cast<::win::graphics * >(pdc))->FillSolidRect(rectUpdate.left, rectUpdate.top, 100, 100, 255);
-         (dynamic_cast<::win::graphics * >(pdc))->SelectClipRgn(NULL);
-         (dynamic_cast<::win::graphics * >(pdc))->SetViewportOrg(point(0, 0));
+         (dynamic_cast<::win::graphics * >(pgraphics))->SelectClipRgn(NULL);
+         (dynamic_cast<::win::graphics * >(pgraphics))->SetViewportOrg(point(0, 0));
+         _000OnDraw(pgraphics);
+         (dynamic_cast<::win::graphics * >(pgraphics))->SetViewportOrg(point(0, 0));
+         //(dynamic_cast<::win::graphics * >(pgraphics))->FillSolidRect(rectUpdate.left, rectUpdate.top, 100, 100, 255);
+         (dynamic_cast<::win::graphics * >(pgraphics))->SelectClipRgn(NULL);
+         (dynamic_cast<::win::graphics * >(pgraphics))->SetViewportOrg(point(0, 0));
 
          graphics->SelectClipRgn( NULL);
          graphics->BitBlt(rectPaint.left, rectPaint.top, 
             rectPaint.width(), rectPaint.height(),
-            pdc, rectUpdate.left, rectUpdate.top,
+            pgraphics, rectUpdate.left, rectUpdate.top,
             SRCCOPY);
 
          graphics->TextOut(0, 0, "Te Amo Carlinhos!!", 11);

@@ -41,11 +41,11 @@ namespace draw2d_gdi
 
    }
 
-   bool bitmap::CreateDIBSection(::draw2d::graphics * pdc,const BITMAPINFO * lpbmi,UINT usage,void **ppvBits,int32_t * stride,HANDLE hSection,uint32_t offset)
+   bool bitmap::CreateDIBSection(::draw2d::graphics * pgraphics,const BITMAPINFO * lpbmi,UINT usage,void **ppvBits,int32_t * stride,HANDLE hSection,uint32_t offset)
    {
 
 
-      if(!Attach(::CreateDIBSection(pdc == NULL ? NULL : GDI_HDC(pdc),lpbmi,usage,ppvBits,hSection,offset)))
+      if(!Attach(::CreateDIBSection(pgraphics == NULL ? NULL : GDI_HDC(pgraphics),lpbmi,usage,ppvBits,hSection,offset)))
          return false;
 
       if(stride != NULL)
@@ -62,10 +62,10 @@ namespace draw2d_gdi
    }
 
 
-   bool bitmap::CreateDIBitmap(::draw2d::graphics * pdc,const BITMAPINFOHEADER *pbmih,uint32_t flInit,const void *pjBits,const BITMAPINFO *pbmi,UINT iUsage)
+   bool bitmap::CreateDIBitmap(::draw2d::graphics * pgraphics,const BITMAPINFOHEADER *pbmih,uint32_t flInit,const void *pjBits,const BITMAPINFO *pbmi,UINT iUsage)
    {
 
-      return Attach(::CreateDIBitmap(GDI_HDC(pdc),pbmih,flInit,pjBits,pbmi,iUsage));
+      return Attach(::CreateDIBitmap(GDI_HDC(pgraphics),pbmih,flInit,pjBits,pbmi,iUsage));
 
    }
 

@@ -22,10 +22,10 @@ namespace win
    { return Attach(::CreateBitmap(nWidth, nHeight, nPlanes, nBitcount, lpBits)); }
    BOOL bitmap::CreateBitmapIndirect(LPBITMAP lpBitmap)
    { return Attach(::CreateBitmapIndirect(lpBitmap)); }
-   BOOL bitmap::CreateDIBSection(::ca::graphics * pdc, const BITMAPINFO * lpbmi, UINT usage, void **ppvBits, HANDLE hSection, DWORD offset)
-   { return Attach(::CreateDIBSection(*WIN_DC(pdc), lpbmi, usage, ppvBits, hSection, offset)); }
-   BOOL bitmap::CreateDIBitmap(::ca::graphics * pdc, const BITMAPINFOHEADER *pbmih, DWORD flInit, const void *pjBits, const BITMAPINFO *pbmi, UINT iUsage)
-   { return Attach(::CreateDIBitmap(*WIN_DC(pdc), pbmih, flInit, pjBits, pbmi, iUsage)); }
+   BOOL bitmap::CreateDIBSection(::ca::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void **ppvBits, HANDLE hSection, DWORD offset)
+   { return Attach(::CreateDIBSection(*WIN_DC(pgraphics), lpbmi, usage, ppvBits, hSection, offset)); }
+   BOOL bitmap::CreateDIBitmap(::ca::graphics * pgraphics, const BITMAPINFOHEADER *pbmih, DWORD flInit, const void *pjBits, const BITMAPINFO *pbmi, UINT iUsage)
+   { return Attach(::CreateDIBitmap(*WIN_DC(pgraphics), pbmih, flInit, pjBits, pbmi, iUsage)); }
 
 
    DWORD bitmap::SetBitmapBits(DWORD dwCount, const void * lpBits)
