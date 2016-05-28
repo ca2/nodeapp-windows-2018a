@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\app.vcxproj", "{19841115-1984-0411-1977-021977151984}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -138,13 +138,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axis_image_jpeg", "..\..\..
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "aurapcre", "..\..\..\app\aura\pcre\aurapcre.vcxproj", "{19AA8BB5-51FA-46E7-B346-2A89828F3000}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "html", "..\..\..\app\appseed\html\html.vcxproj", "{6C7004D3-FF6C-4872-8DDC-5D7F44B0BC57}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "html_lite", "..\..\..\app\axis\html_lite\html_lite.vcxproj", "{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_calculator", "..\..\..\app-core\appseed\calculator\calculator.vcxproj", "{C7AFCEFA-3079-8451-7797-4543BB980265}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "math", "..\..\..\app\appseed\math\math.vcxproj", "{5B03FC53-C0AA-419D-A87F-4338C9DDE3FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -370,22 +364,6 @@ Global
 		{19AA8BB5-51FA-46E7-B346-2A89828F3000}.stage|Win32.Build.0 = basis|Win32
 		{19AA8BB5-51FA-46E7-B346-2A89828F3000}.stage|x64.ActiveCfg = basis|x64
 		{19AA8BB5-51FA-46E7-B346-2A89828F3000}.stage|x64.Build.0 = basis|x64
-		{6C7004D3-FF6C-4872-8DDC-5D7F44B0BC57}.basis|Win32.ActiveCfg = basis|Win32
-		{6C7004D3-FF6C-4872-8DDC-5D7F44B0BC57}.basis|Win32.Build.0 = basis|Win32
-		{6C7004D3-FF6C-4872-8DDC-5D7F44B0BC57}.basis|x64.ActiveCfg = basis|x64
-		{6C7004D3-FF6C-4872-8DDC-5D7F44B0BC57}.basis|x64.Build.0 = basis|x64
-		{6C7004D3-FF6C-4872-8DDC-5D7F44B0BC57}.stage|Win32.ActiveCfg = basis|Win32
-		{6C7004D3-FF6C-4872-8DDC-5D7F44B0BC57}.stage|Win32.Build.0 = basis|Win32
-		{6C7004D3-FF6C-4872-8DDC-5D7F44B0BC57}.stage|x64.ActiveCfg = basis|x64
-		{6C7004D3-FF6C-4872-8DDC-5D7F44B0BC57}.stage|x64.Build.0 = basis|x64
-		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.basis|Win32.ActiveCfg = basis|Win32
-		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.basis|Win32.Build.0 = basis|Win32
-		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.basis|x64.ActiveCfg = basis|x64
-		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.basis|x64.Build.0 = basis|x64
-		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.stage|Win32.ActiveCfg = basis|Win32
-		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.stage|Win32.Build.0 = basis|Win32
-		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.stage|x64.ActiveCfg = basis|x64
-		{845177E8-8B1E-4AE0-9B96-1ABC24B797A6}.stage|x64.Build.0 = basis|x64
 		{C7AFCEFA-3079-8451-7797-4543BB980265}.basis|Win32.ActiveCfg = basis|Win32
 		{C7AFCEFA-3079-8451-7797-4543BB980265}.basis|Win32.Build.0 = basis|Win32
 		{C7AFCEFA-3079-8451-7797-4543BB980265}.basis|x64.ActiveCfg = basis|x64
@@ -394,14 +372,6 @@ Global
 		{C7AFCEFA-3079-8451-7797-4543BB980265}.stage|Win32.Build.0 = basis|Win32
 		{C7AFCEFA-3079-8451-7797-4543BB980265}.stage|x64.ActiveCfg = stage|x64
 		{C7AFCEFA-3079-8451-7797-4543BB980265}.stage|x64.Build.0 = stage|x64
-		{5B03FC53-C0AA-419D-A87F-4338C9DDE3FA}.basis|Win32.ActiveCfg = basis|Win32
-		{5B03FC53-C0AA-419D-A87F-4338C9DDE3FA}.basis|Win32.Build.0 = basis|Win32
-		{5B03FC53-C0AA-419D-A87F-4338C9DDE3FA}.basis|x64.ActiveCfg = basis|x64
-		{5B03FC53-C0AA-419D-A87F-4338C9DDE3FA}.basis|x64.Build.0 = basis|x64
-		{5B03FC53-C0AA-419D-A87F-4338C9DDE3FA}.stage|Win32.ActiveCfg = basis|Win32
-		{5B03FC53-C0AA-419D-A87F-4338C9DDE3FA}.stage|Win32.Build.0 = basis|Win32
-		{5B03FC53-C0AA-419D-A87F-4338C9DDE3FA}.stage|x64.ActiveCfg = basis|x64
-		{5B03FC53-C0AA-419D-A87F-4338C9DDE3FA}.stage|x64.Build.0 = basis|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
