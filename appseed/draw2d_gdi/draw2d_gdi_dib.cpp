@@ -2460,7 +2460,7 @@ namespace draw2d_gdi
 
       rect rect(rectWindow);
 
-      Application.window_graphics_update_window(pwnd->get_window_graphics(),pwnd->get_handle(),m_pcolorref,rect,m_size.cx,m_size.cy,m_iScan, bTransferBuffer);
+      //Application.window_graphics_update_window(pwnd->get_window_graphics(),pwnd->get_handle(),m_pcolorref,rect,m_size.cx,m_size.cy,m_iScan, bTransferBuffer);
 
       return true;
 
@@ -2594,10 +2594,10 @@ namespace draw2d_gdi
          rectPaint = rectWindow;
          rectPaint.offset(-rectPaint.top_left());
          m_spgraphics->SelectClipRgn(NULL);
-         pwnd->_001OnDeferPaintLayeredWindowBackground(dib);
+         pwnd->_001OnDeferPaintLayeredWindowBackground(dib->get_graphics());
          m_spgraphics->SelectClipRgn(NULL);
          m_spgraphics-> SetViewportOrg(point(0, 0));
-         pwnd->_000OnDraw(dib);
+         pwnd->_000OnDraw(dib->get_graphics());
          m_spgraphics->SetViewportOrg(point(0, 0));
          //(dynamic_cast<::win::graphics * >(pgraphics))->FillSolidRect(rectUpdate.left, rectUpdate.top, 100, 100, 255);
          m_spgraphics->SelectClipRgn(NULL);
