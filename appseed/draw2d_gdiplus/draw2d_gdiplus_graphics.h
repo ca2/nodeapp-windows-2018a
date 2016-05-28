@@ -512,6 +512,9 @@ namespace draw2d_gdiplus
       virtual bool prefer_mapped_dib_on_mix();
 
 
+      
+
+
    };
 
 

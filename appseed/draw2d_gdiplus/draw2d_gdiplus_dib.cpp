@@ -2466,171 +2466,171 @@ namespace draw2d_gdiplus
    */
 #undef new
 
-#define NO_SCREEN_PRE_MULTIPLY_ALPHA 0
-
-   bool dib::update_window(::aura::draw_interface * pwnd,signal_details * pobj,bool bTransferBuffer)
-   {
-
-
-      rect64 rectWindow;
-
-      pwnd->GetWindowRect(rectWindow);
-
-#if !NO_SCREEN_PRE_MULTIPLY_ALPHA
-      if(bTransferBuffer && pwnd->is_composite() && !m_bReduced)
-      {
-
-         m_bReduced = true;
-
-         m_spgraphics->SetViewportOrg(0,0);
-
-         map();
-
-         //pre_multiply_alpha((unsigned int *) get_data(),m_size.cx,m_size.cy,m_size.cx * 4);
-
-         BYTE *dstR=(BYTE*)get_data();
-         BYTE *dstG=dstR + 1;
-         BYTE *dstB=dstR + 2;
-         BYTE *dstA=dstR + 3;
-         int64_t size = area() * 4;
-
-
-         // >> 8 instead of / 255 subsequent alpha_blend operations say thanks on true_blend because (255) * (1/254) + (255) * (254/255) > 255
-//#if defined(_OPENMP)
-//         #pragma omp parallel num_threads(3)
-//                  {
-//         
-//                     BYTE *dst = dstR + omp_get_thread_num();
-//      #pragma omp parallel for
-//                     for(index i = 0; i < size; i+=4)
-//                     {
-//                           dst[i] = LOBYTE(((int32_t)dst[i] * (int32_t)dstA[i]) >> 8);
-//                     }
-//                  }
+//#define NO_SCREEN_PRE_MULTIPLY_ALPHA 0
 //
-////#pragma omp parallel num_threads(4)
-////         {
+//   bool dib::update_window(::aura::draw_interface * pwnd,signal_details * pobj,bool bTransferBuffer)
+//   {
+//
+//
+//      rect64 rectWindow;
+//
+//      pwnd->GetWindowRect(rectWindow);
+//
+//#if !NO_SCREEN_PRE_MULTIPLY_ALPHA
+//      if(bTransferBuffer && pwnd->is_composite() && !m_bReduced)
+//      {
+//
+//         m_bReduced = true;
+//
+//         m_spgraphics->SetViewportOrg(0,0);
+//
+//         map();
+//
+//         //pre_multiply_alpha((unsigned int *) get_data(),m_size.cx,m_size.cy,m_size.cx * 4);
+//
+//         BYTE *dstR=(BYTE*)get_data();
+//         BYTE *dstG=dstR + 1;
+//         BYTE *dstB=dstR + 2;
+//         BYTE *dstA=dstR + 3;
+//         int64_t size = area() * 4;
+//
+//
+//         // >> 8 instead of / 255 subsequent alpha_blend operations say thanks on true_blend because (255) * (1/254) + (255) * (254/255) > 255
+////#if defined(_OPENMP)
+////         #pragma omp parallel num_threads(3)
+////                  {
+////         
+////                     BYTE *dst = dstR + omp_get_thread_num();
+////      #pragma omp parallel for
+////                     for(index i = 0; i < size; i+=4)
+////                     {
+////                           dst[i] = LOBYTE(((int32_t)dst[i] * (int32_t)dstA[i]) >> 8);
+////                     }
+////                  }
 ////
-////            if(omp_get_thread_num() == 3)
-////            {
-////               COLORREF *dst = get_data();
-////#pragma omp parallel for
-////               for(index i = 0; i < size; i+=4)
-////               {
-////                  if(dstA[i] <= 3)
-////                  {
-////                     dst[i>>2] = 0;
-////                  }
-////               }
-////            }
-////            else
-////            {
-////               BYTE *dst = dstR + omp_get_thread_num();
-////#pragma omp parallel for
-////               for(index i = 0; i < size; i+=4)
-////               {
-////                  if(dstA[i] > 3)
-////                  {
-////                     dst[i] = LOBYTE(((int32_t)dst[i] * (int32_t)dstA[i]) >> 8);
-////                  }
-////               }
-////            }
+//////#pragma omp parallel num_threads(4)
+//////         {
+//////
+//////            if(omp_get_thread_num() == 3)
+//////            {
+//////               COLORREF *dst = get_data();
+//////#pragma omp parallel for
+//////               for(index i = 0; i < size; i+=4)
+//////               {
+//////                  if(dstA[i] <= 3)
+//////                  {
+//////                     dst[i>>2] = 0;
+//////                  }
+//////               }
+//////            }
+//////            else
+//////            {
+//////               BYTE *dst = dstR + omp_get_thread_num();
+//////#pragma omp parallel for
+//////               for(index i = 0; i < size; i+=4)
+//////               {
+//////                  if(dstA[i] > 3)
+//////                  {
+//////                     dst[i] = LOBYTE(((int32_t)dst[i] * (int32_t)dstA[i]) >> 8);
+//////                  }
+//////               }
+//////            }
+//////         }
+////#else
+////         for(index i = 0; i < size; i+=4)
+////         {
+////            dstR[i] = LOBYTE(((int32_t)dstR[i] * (int32_t)dstA[i]) >> 8);
+////            dstG[i] = LOBYTE(((int32_t)dstG[i] * (int32_t)dstA[i]) >> 8);
+////            dstB[i] = LOBYTE(((int32_t)dstB[i] * (int32_t)dstA[i]) >> 8);
 ////         }
-//#else
-//         for(index i = 0; i < size; i+=4)
-//         {
-//            dstR[i] = LOBYTE(((int32_t)dstR[i] * (int32_t)dstA[i]) >> 8);
-//            dstG[i] = LOBYTE(((int32_t)dstG[i] * (int32_t)dstA[i]) >> 8);
-//            dstB[i] = LOBYTE(((int32_t)dstB[i] * (int32_t)dstA[i]) >> 8);
-//         }
-//#endif
+////#endif
+////         
+//      }
+//#endif 
+//      rect rect(rectWindow);
+//
+//      pwnd->get_window_graphics()->update_window(pwnd->get_handle(),m_pcolorref,rect,m_size.cx,m_size.cy,m_iScan,bTransferBuffer);
+//
+//      return true;
+//
+//   }
+//
+//
+//   bool dib::print_window(::aura::draw_interface * pwnd,signal_details * pobj)
+//   {
+//
+//      SCAST_PTR(::message::base, pbase, pobj);
+//
+//      if(pbase->m_wparam == NULL)
+//         return false;
+//
+//      m_spgraphics->attach((HDC) pbase->m_wparam);
+//
+//      rect rectx;
+//
+//      ::draw2d::bitmap * pbitmap = m_spgraphics->get_current_bitmap();
+//
+//      ::GetCurrentObject((HDC) pbase->m_wparam, OBJ_BITMAP);
+//
+//      //      uint32_t dw = ::GetLastError();
+//      class size size = pbitmap->get_size();
+//
+//      rectx.left = 0;
+//      rectx.top = 0;
+//      rectx.right = size.cx;
+//      rectx.bottom = size.cy;
+//
+//      try
+//      {
 //         
-      }
-#endif 
-      rect rect(rectWindow);
-
-      pwnd->get_window_graphics()->update_window(pwnd->get_handle(),m_pcolorref,rect,m_size.cx,m_size.cy,m_iScan,bTransferBuffer);
-
-      return true;
-
-   }
-
-
-   bool dib::print_window(::aura::draw_interface * pwnd,signal_details * pobj)
-   {
-
-      SCAST_PTR(::message::base, pbase, pobj);
-
-      if(pbase->m_wparam == NULL)
-         return false;
-
-      m_spgraphics->attach((HDC) pbase->m_wparam);
-
-      rect rectx;
-
-      ::draw2d::bitmap * pbitmap = m_spgraphics->get_current_bitmap();
-
-      ::GetCurrentObject((HDC) pbase->m_wparam, OBJ_BITMAP);
-
-      //      uint32_t dw = ::GetLastError();
-      class size size = pbitmap->get_size();
-
-      rectx.left = 0;
-      rectx.top = 0;
-      rectx.right = size.cx;
-      rectx.bottom = size.cy;
-
-      try
-      {
-         
-         rect rectWindow;
-         
-         pwnd->GetWindowRect(rectWindow);
-
-         ::draw2d::dib_sp dib(allocer());
-
-         if(!dib->create(rectWindow.bottom_right()))
-            return false;
-
-         ::draw2d::graphics * pgraphics = dib->get_graphics();
-
-         if(pgraphics->get_os_data() == NULL)
-            return false;
-
-         rect rectPaint;
-         rect rectUpdate;
-         rectUpdate = rectWindow;
-         rectPaint = rectWindow;
-         rectPaint.offset(-rectPaint.top_left());
-         m_spgraphics->SelectClipRgn(NULL);
-         pwnd->_001OnDeferPaintLayeredWindowBackground(dib->get_graphics());
-         m_spgraphics->SelectClipRgn(NULL);
-         m_spgraphics-> SetViewportOrg(point(0, 0));
-         pwnd->_000OnDraw(dib->get_graphics());
-         m_spgraphics->SetViewportOrg(point(0, 0));
-         //(dynamic_cast<::win::graphics * >(pgraphics))->FillSolidRect(rectUpdate.left, rectUpdate.top, 100, 100, 255);
-         m_spgraphics->SelectClipRgn(NULL);
-         m_spgraphics->SetViewportOrg(point(0, 0));
-
-         m_spgraphics->SelectClipRgn( NULL);
-         m_spgraphics->BitBlt(rectPaint.left, rectPaint.top, 
-            rectPaint.width(), rectPaint.height(),
-            pgraphics, rectUpdate.left, rectUpdate.top,
-            SRCCOPY);
-
-      }
-      catch(...)
-      {
-      }
-      m_spgraphics->FillSolidRect(rectx, RGB(255, 255, 255));
-      pobj->m_bRet = true;
-      pbase->set_lresult(0);
-
-      return true;
-
-   }
-
-
+//         rect rectWindow;
+//         
+//         pwnd->GetWindowRect(rectWindow);
+//
+//         ::draw2d::dib_sp dib(allocer());
+//
+//         if(!dib->create(rectWindow.bottom_right()))
+//            return false;
+//
+//         ::draw2d::graphics * pgraphics = dib->get_graphics();
+//
+//         if(pgraphics->get_os_data() == NULL)
+//            return false;
+//
+//         rect rectPaint;
+//         rect rectUpdate;
+//         rectUpdate = rectWindow;
+//         rectPaint = rectWindow;
+//         rectPaint.offset(-rectPaint.top_left());
+//         m_spgraphics->SelectClipRgn(NULL);
+//         pwnd->_001OnDeferPaintLayeredWindowBackground(dib->get_graphics());
+//         m_spgraphics->SelectClipRgn(NULL);
+//         m_spgraphics-> SetViewportOrg(point(0, 0));
+//         pwnd->_000OnDraw(dib->get_graphics());
+//         m_spgraphics->SetViewportOrg(point(0, 0));
+//         //(dynamic_cast<::win::graphics * >(pgraphics))->FillSolidRect(rectUpdate.left, rectUpdate.top, 100, 100, 255);
+//         m_spgraphics->SelectClipRgn(NULL);
+//         m_spgraphics->SetViewportOrg(point(0, 0));
+//
+//         m_spgraphics->SelectClipRgn( NULL);
+//         m_spgraphics->BitBlt(rectPaint.left, rectPaint.top, 
+//            rectPaint.width(), rectPaint.height(),
+//            pgraphics, rectUpdate.left, rectUpdate.top,
+//            SRCCOPY);
+//
+//      }
+//      catch(...)
+//      {
+//      }
+//      m_spgraphics->FillSolidRect(rectx, RGB(255, 255, 255));
+//      pobj->m_bRet = true;
+//      pbase->set_lresult(0);
+//
+//      return true;
+//
+//   }
+//
+//
 
 #define new AURA_NEW
 
