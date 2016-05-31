@@ -613,16 +613,16 @@ Opened:
 
       }
 
-      /*imedia::position wave_out::get_position_for_synch()
+      /*imedia_position wave_out::get_position_for_synch()
       {
-         imedia::position position = get_position();
+         imedia_position position = get_position();
          if(m_pprebuffer != NULL && m_pprebuffer->m_pdecoder != NULL)
             return m_pprebuffer->m_position + position - m_pprebuffer->m_pdecoder->DecoderGetLostPositionOffset(position) - m_dwLostSampleCount * m_pwaveformat->wBitsPerSample * m_pwaveformat->nChannels / 8;
          else
             return m_pprebuffer->m_position + position - m_dwLostSampleCount * m_pwaveformat->wBitsPerSample * m_pwaveformat->nChannels / 8;
       }*/
 
-      imedia::position wave_out::wave_out_get_position()
+      imedia_position wave_out::wave_out_get_position()
       {
          
          single_lock sLock(&m_mutex, TRUE);
@@ -657,7 +657,7 @@ Opened:
             }
             if(mmt.wType == TIME_MS)
             {
-               imedia::position position = (uint32_t) mmt.u.ms;
+               imedia_position position = (uint32_t) mmt.u.ms;
                position *= m_pwaveformat->wBitsPerSample * m_pwaveformat->nChannels * m_pwaveformat->nSamplesPerSec;
                position /= 8 * 1000;
                return position;

@@ -158,12 +158,12 @@ namespace multimedia
          virtual ~wave_out();
 
          
-         ::multimedia::e_result wave_out_start(const imedia::position & position);
+         ::multimedia::e_result wave_out_start(const imedia_position & position);
          virtual bool  on_run_step();
          void install_message_handling(::message::dispatch * pinterface);
 
          virtual imedia_time wave_out_get_position_millis();
-         imedia::position wave_out_get_position();
+         imedia_position wave_out_get_position();
          virtual void wave_out_buffer_ready(int iBuffer);
          //virtual void wave_out_buffer_ready(LPWAVEHDR lpwavehdr);
 
