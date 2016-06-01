@@ -45,10 +45,10 @@ namespace music
             //virtual bool veriwell_multimedia_music_midi_factory_exchange();
 
 
-            void mmsystem_LogMidiInCaps(UINT i, MIDIINCAPSW caps);
-            void mmsystem_GetMidiInDeviceInterface(UINT i);
-            void mmsystem_LogMidiOutCaps(UINT i, MIDIOUTCAPSW caps);
-            void mmsystem_GetMidiOutDeviceInterface(UINT i);
+            void mmsystem_LogMidiInCaps(UINT_PTR i, MIDIINCAPSW caps);
+            void mmsystem_GetMidiInDeviceInterface(UINT_PTR i);
+            void mmsystem_LogMidiOutCaps(UINT_PTR i, MIDIOUTCAPSW caps);
+            void mmsystem_GetMidiOutDeviceInterface(UINT_PTR i);
 
             using ::music::midi::midi::translate_os_result;
             virtual ::multimedia::e_result translate_os_result(string & strMessage, string & strOsMessage, ::music::midi::object * pobject, int64_t iOsResult, const string & strContext, const string & strText);

@@ -201,6 +201,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multimedia_playlist_spotify
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "aura", "..\..\..\app\appseed\aura\aura.vcxproj", "{03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ace", "..\..\..\app\appseed\ace\ace.vcxproj", "{21DCC811-4BCE-4F16-B674-C0941F847127}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
@@ -1423,6 +1425,34 @@ Global
 		{03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.static_basis|Win32.Build.0 = basis|Win32
 		{03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.static_basis|x64.ActiveCfg = basis|x64
 		{03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.static_basis|x64.Build.0 = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.basis|Win32.ActiveCfg = basis|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.basis|Win32.Build.0 = basis|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.basis|x64.ActiveCfg = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.basis|x64.Build.0 = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.codeanalysis|Win32.ActiveCfg = basis|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.codeanalysis|Win32.Build.0 = basis|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.codeanalysis|x64.ActiveCfg = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.codeanalysis|x64.Build.0 = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.memdleak|Win32.ActiveCfg = basis|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.memdleak|Win32.Build.0 = basis|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.memdleak|x64.ActiveCfg = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.memdleak|x64.Build.0 = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.no_precompiled_header|Win32.ActiveCfg = basis|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.no_precompiled_header|Win32.Build.0 = basis|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.no_precompiled_header|x64.ActiveCfg = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.no_precompiled_header|x64.Build.0 = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.profiler|Win32.ActiveCfg = basis|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.profiler|Win32.Build.0 = basis|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.profiler|x64.ActiveCfg = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.profiler|x64.Build.0 = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.stage|Win32.ActiveCfg = stage|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.stage|Win32.Build.0 = stage|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.stage|x64.ActiveCfg = stage|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.stage|x64.Build.0 = stage|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.static_basis|Win32.ActiveCfg = basis|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.static_basis|Win32.Build.0 = basis|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.static_basis|x64.ActiveCfg = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.static_basis|x64.Build.0 = basis|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

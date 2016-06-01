@@ -582,6 +582,9 @@
     <None Include="draw2d_gdi.def" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\app\appseed\ace\ace.vcxproj">
+      <Project>{21dcc811-4bce-4f16-b674-c0941f847127}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\app\appseed\aura\aura.vcxproj">
       <Project>{03e5b8e7-9e3b-44dd-9ede-e0a74d52c1c5}</Project>
     </ProjectReference>
