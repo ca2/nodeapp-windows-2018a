@@ -2829,7 +2829,7 @@ smf_Open_File_Cleanup:
 
             _SyncSeek(tkPosition);
 
-            set_maximum(m_positionLastWorkRender);
+            ::lemon::set_maximum(m_positionLastWorkRender);
 
             memset(&m_keyframe, 0xFF, sizeof(m_keyframe));
             memset(&m_keyframe.rbProgram, 0x00, sizeof(m_keyframe.rbProgram));
@@ -3048,7 +3048,7 @@ smf_Open_File_Cleanup:
             m_ptracks->WorkSeekBegin();
             GetFlags().unsignalize(file::EndOfFile);
             m_tkLastDelta = 0;
-            set_maximum(m_positionLastWorkRender);
+            ::lemon::set_maximum(m_positionLastWorkRender);
             return ::music::success;
          }
 
