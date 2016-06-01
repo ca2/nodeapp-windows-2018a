@@ -1766,7 +1766,7 @@ smf_Open_File_Cleanup:
                         ((uint32_t)::music::midi::ControlChange)       |
                         ((uint32_t)idxChannel)               |
                         (((uint32_t)idxController) << 8)     |
-                        (((uint32_t)m_keyframe.rbControl[idx]) << 16));
+                        (((uint32_t)m_keyframe.rbControl[idxChannel][idxController]) << 16));
 
 
                      lpmh->dwBytesRecorded += 3*sizeof(uint32_t);
@@ -2932,7 +2932,7 @@ smf_Open_File_Cleanup:
                         ((uint32_t)ControlChange)       |
                         ((uint32_t)idxChannel)               |
                         (((uint32_t)idxController) << 8)     |
-                        (((uint32_t)m_keyframe.rbControl[idx]) << 16));
+                        (((uint32_t)m_keyframe.rbControl[idxChannel][idxController]) << 16));
 
 
                      lpmh->dwBytesRecorded += 3*sizeof(uint32_t);

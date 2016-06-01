@@ -102,7 +102,7 @@ namespace multimedia
 
          ::multimedia::e_result mmrc;
 
-         mmrc = mmsystem::translate(mixerGetDevCaps((uint32_t) m_hMixer, &m_mixercaps, sizeof(MIXERCAPS)));
+         mmrc = mmsystem::translate(mixerGetDevCaps((UINT_PTR) m_hMixer, &m_mixercaps, sizeof(MIXERCAPS)));
 
          if(::multimedia::result_success != mmrc)
          {

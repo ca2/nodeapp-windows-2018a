@@ -49,7 +49,7 @@ namespace multimedia
 
          ::multimedia::e_result            mmrc;
 
-         if(MMSYSERR_NOERROR != (mmrc = m_pdevice->open(uiMixerId, (uint32_t) m_window.get_handle(), 0,  CALLBACK_WINDOW)))
+         if(MMSYSERR_NOERROR != (mmrc = m_pdevice->open(uiMixerId, (UINT_PTR) m_window.get_handle(), 0,  CALLBACK_WINDOW)))
          {
             return mmrc;
          }
