@@ -625,7 +625,7 @@ namespace ca2plugin_container
                if(m_pcontainerapp->m_psystem->m_pplugin->m_puiHost != NULL)
                {
 
-                  m_pcontainerapp->m_psystem->m_pplugin->m_puiHost->_001Print(pdib);
+                  m_pcontainerapp->m_psystem->m_pplugin->m_puiHost->_001Print(pgraphics);
 
                   {
 
