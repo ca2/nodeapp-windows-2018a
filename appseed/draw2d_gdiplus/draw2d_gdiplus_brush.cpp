@@ -173,6 +173,25 @@ namespace draw2d_gdiplus
             {
             }
          }
+         else if (m_etype == type_pattern)
+         {
+            
+            try
+            {
+
+               Gdiplus::Image * pimage = m_dib->get_bitmap().cast < bitmap >()->m_pbitmap;
+
+               Gdiplus::TextureBrush * ptb = new Gdiplus::TextureBrush(pimage);
+
+               ((brush *) this)->m_pbrush = ptb;
+
+            }
+            catch (...)
+            {
+
+            }
+
+         }
          else
          {
             try
