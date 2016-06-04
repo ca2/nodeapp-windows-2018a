@@ -251,32 +251,38 @@ bool sentinel::intro()
    g_pstraRestartCommandLine = NULL;;
 
    if (!sentinel_RegisterClass(::GetModuleHandleA(NULL)))
-      return -1;
+   {
+
+      return false;
+
+   }
 
 
    g_oswindowMessage = ::CreateWindowExA(0, "::ca2::spaboot:callback_window", "::ca2::spaboot:callback_window", 0, 0, 0, 0, 0, HWND_MESSAGE, NULL, NULL, NULL);
 
    if (g_oswindowMessage == NULL)
    {
+      
       uint32_t dw = GetLastError();
-      return -1;
-   }
+      
+      return false;
 
+   }
 
    int32_t iRet = spaboot_start();
 
-
    SetTimer(g_oswindowMessage, 1245, (1977 + 1984) * 8, NULL);
-
 
    while (true)
    {
+
       GetMessage(&g_msgSentinel, NULL, 0, 0xffffffffu);
+
       TranslateMessage(&g_msgSentinel);
+
       DispatchMessage(&g_msgSentinel);
+
    }
-
-
 
 /*   m_modpath = (char *)memory_alloc(MAX_PATH * 8);
    m_pszDllEnds = (char *)memory_alloc(MAX_PATH * 8);
@@ -298,6 +304,7 @@ bool sentinel::intro()
    return true;
 
 }
+
 
 void sentinel::install_defer_file_transfer()
 {
