@@ -299,15 +299,15 @@ namespace production
       UNREFERENCED_PARAMETER(pdata);
       if(itema.get_size() > 0)
       {
-         int32_t i = (int32_t) ::ShellExecuteW(
+         int_ptr i = (int_ptr) ::ShellExecuteW(
             NULL, 
             NULL, 
             ::str::international::utf8_to_unicode("\"" + itema[0]->m_strPath + "\""),
             NULL,
             ::str::international::utf8_to_unicode("\"" + itema[0]->m_strPath.folder() + "\""),
             SW_SHOWNORMAL);
-         string str;
-         str.Format("%d", i);
+         //string str;
+         //str.Format("%d", i);
          //Application.simple_message_box(str);
          if(i == ERROR_FILE_NOT_FOUND)
          {
