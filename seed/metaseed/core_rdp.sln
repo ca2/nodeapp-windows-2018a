@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\app.vcxproj", "{19841115-1984-0411-1977-021977151984}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -118,15 +118,17 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axisclientchannels", "..\..
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axisopenssl", "..\..\..\app\axis\openssl\axisopenssl.vcxproj", "{29676444-4D0F-4DD0-9104-0499D94DA2C9}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WelsDecCore", "..\..\..\app\axis\openh264\codec\build\win32\dec\WelsDecCore.vcxproj", "{01B4AE41-6AD6-4CAF-AEB3-C42F7F9121D5}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_welsdeccore", "..\..\..\app\axis\openh264\codec\build\win32\dec\WelsDecCore.vcxproj", "{01B4AE41-6AD6-4CAF-AEB3-C42F7F9121D5}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WelsDecPlus", "..\..\..\app\axis\openh264\codec\build\win32\dec\WelsDecPlus.vcxproj", "{1131558A-9986-4F4B-A13F-8B7F4C8438BF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basewelsdecplus", "..\..\..\app\axis\openh264\codec\build\win32\dec\WelsDecPlus.vcxproj", "{1131558A-9986-4F4B-A13F-8B7F4C8438BF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WelsEncCore", "..\..\..\app\axis\openh264\codec\build\win32\enc\WelsEncCore.vcxproj", "{59208004-1774-4816-AC24-31FF44C324B4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_welsenccore", "..\..\..\app\axis\openh264\codec\build\win32\enc\WelsEncCore.vcxproj", "{59208004-1774-4816-AC24-31FF44C324B4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WelsEncPlus", "..\..\..\app\axis\openh264\codec\build\win32\enc\WelsEncPlus.vcxproj", "{1E7B4E9A-986E-4167-8C70-6E4F60EAEE7F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basewelsencplus", "..\..\..\app\axis\openh264\codec\build\win32\enc\WelsEncPlus.vcxproj", "{1E7B4E9A-986E-4167-8C70-6E4F60EAEE7F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WelsVP", "..\..\..\app\axis\openh264\codec\processing\build\win32\WelsVP.vcxproj", "{E8DFAFA1-8DAC-4127-8D27-FBD5819EE562}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basewelsvp", "..\..\..\app\axis\openh264\codec\processing\build\win32\WelsVP.vcxproj", "{E8DFAFA1-8DAC-4127-8D27-FBD5819EE562}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ace", "..\..\..\app\appseed\ace\ace.vcxproj", "{21DCC811-4BCE-4F16-B674-C0941F847127}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -390,6 +392,14 @@ Global
 		{E8DFAFA1-8DAC-4127-8D27-FBD5819EE562}.stage|Win32.Build.0 = basis|Win32
 		{E8DFAFA1-8DAC-4127-8D27-FBD5819EE562}.stage|x64.ActiveCfg = basis|x64
 		{E8DFAFA1-8DAC-4127-8D27-FBD5819EE562}.stage|x64.Build.0 = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.basis|Win32.ActiveCfg = basis|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.basis|Win32.Build.0 = basis|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.basis|x64.ActiveCfg = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.basis|x64.Build.0 = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.stage|Win32.ActiveCfg = stage|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.stage|Win32.Build.0 = stage|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.stage|x64.ActiveCfg = stage|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

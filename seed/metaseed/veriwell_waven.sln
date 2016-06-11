@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tesseract", "..\..\..\app-core\appseed\tesseract\tesseract.vcxproj", "{437699AD-7464-4E5F-ACF3-7167487A9E3D}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -187,6 +187,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basempg123", "..\..\..\app-veriwell\appseed\libmpg123\libmpg123.vcxproj", "{67CAA87B-7CF1-4F93-BB67-21C513F40803}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multimedia_playlist_spotify", "..\..\..\app-core\appseed\multimedia_playlist_spotify\multimedia_playlist_spotify.vcxproj", "{16422A53-47AC-40A0-B3BA-0EF2CFF83CBF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ace", "..\..\..\app\appseed\ace\ace.vcxproj", "{21DCC811-4BCE-4F16-B674-C0941F847127}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1840,6 +1842,38 @@ Global
 		{16422A53-47AC-40A0-B3BA-0EF2CFF83CBF}.static_profiler|Win32.Build.0 = stage|Win32
 		{16422A53-47AC-40A0-B3BA-0EF2CFF83CBF}.static_profiler|x64.ActiveCfg = stage|x64
 		{16422A53-47AC-40A0-B3BA-0EF2CFF83CBF}.static_profiler|x64.Build.0 = stage|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.basis|Win32.ActiveCfg = basis|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.basis|Win32.Build.0 = basis|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.basis|x64.ActiveCfg = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.basis|x64.Build.0 = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.codeanalysis|Win32.ActiveCfg = basis|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.codeanalysis|Win32.Build.0 = basis|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.codeanalysis|x64.ActiveCfg = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.codeanalysis|x64.Build.0 = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.memdleak|Win32.ActiveCfg = basis|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.memdleak|Win32.Build.0 = basis|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.memdleak|x64.ActiveCfg = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.memdleak|x64.Build.0 = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.no_precompiled_header|Win32.ActiveCfg = basis|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.no_precompiled_header|Win32.Build.0 = basis|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.no_precompiled_header|x64.ActiveCfg = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.no_precompiled_header|x64.Build.0 = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.profiler|Win32.ActiveCfg = basis|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.profiler|Win32.Build.0 = basis|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.profiler|x64.ActiveCfg = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.profiler|x64.Build.0 = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.stage|Win32.ActiveCfg = stage|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.stage|Win32.Build.0 = stage|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.stage|x64.ActiveCfg = stage|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.stage|x64.Build.0 = stage|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.static_basis|Win32.ActiveCfg = basis|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.static_basis|Win32.Build.0 = basis|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.static_basis|x64.ActiveCfg = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.static_basis|x64.Build.0 = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.static_profiler|Win32.ActiveCfg = stage|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.static_profiler|Win32.Build.0 = stage|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.static_profiler|x64.ActiveCfg = stage|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.static_profiler|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
