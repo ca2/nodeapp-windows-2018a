@@ -16,7 +16,7 @@ public:
 
 
 	app_t():
-		::aura::system(this)
+		::aura::system(this ,NULL)
 	{
 		m_hinstance             = ::GetModuleHandleA(NULL);
 		m_argc = 0;
