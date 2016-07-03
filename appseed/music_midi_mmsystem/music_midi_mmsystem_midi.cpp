@@ -146,7 +146,9 @@ namespace music
                return;
             }
 
-            LOG("    Device interface: \"%S\"", wstr);
+            string str(wstr);
+
+            LOG("    Device interface: \"%S\"", str);
          }
 
          void midi::mmsystem_GetMidiOutDeviceInterface(UINT_PTR i)
@@ -189,7 +191,9 @@ namespace music
                return;
             }
 
-            LOG("    Device interface: \"%S\"", wstr);
+            string str(wstr);
+
+            LOG("    Device interface: \"%S\"", str);
          }
 
          void midi::mmsystem_LogMidiInCaps(UINT_PTR i, MIDIINCAPSW caps) {
