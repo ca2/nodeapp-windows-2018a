@@ -5,7 +5,7 @@
 #define CUBE
 #endif
 
-
+#define VARIADIC_TEMPLATE_FORMAT2
 
 
 #define BSD_STYLE_SOCKETS
