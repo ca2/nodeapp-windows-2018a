@@ -182,6 +182,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axispng", "..\..\..\app\axi
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "acid", "..\..\..\app\appseed\aura\acid.vcxproj", "{A92C920F-C07D-481E-B523-565B56167CD1}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "aced", "..\..\..\app\appseed\ace\aced.vcxproj", "{180186EC-0AC3-4964-90E6-B801BAE38C48}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|ARM = basis|ARM
@@ -990,6 +992,28 @@ Global
 		{A92C920F-C07D-481E-B523-565B56167CD1}.stage|Win32.Build.0 = stage|Win32
 		{A92C920F-C07D-481E-B523-565B56167CD1}.stage|x64.ActiveCfg = stage|x64
 		{A92C920F-C07D-481E-B523-565B56167CD1}.stage|x64.Build.0 = stage|x64
+		{180186EC-0AC3-4964-90E6-B801BAE38C48}.basis|ARM.ActiveCfg = basis|Win32
+		{180186EC-0AC3-4964-90E6-B801BAE38C48}.basis|Win32.ActiveCfg = basis|Win32
+		{180186EC-0AC3-4964-90E6-B801BAE38C48}.basis|Win32.Build.0 = basis|Win32
+		{180186EC-0AC3-4964-90E6-B801BAE38C48}.basis|x64.ActiveCfg = basis|x64
+		{180186EC-0AC3-4964-90E6-B801BAE38C48}.basis|x64.Build.0 = basis|x64
+		{180186EC-0AC3-4964-90E6-B801BAE38C48}.Debug|ARM.ActiveCfg = basis|x64
+		{180186EC-0AC3-4964-90E6-B801BAE38C48}.Debug|ARM.Build.0 = basis|x64
+		{180186EC-0AC3-4964-90E6-B801BAE38C48}.Debug|Win32.ActiveCfg = basis|Win32
+		{180186EC-0AC3-4964-90E6-B801BAE38C48}.Debug|Win32.Build.0 = basis|Win32
+		{180186EC-0AC3-4964-90E6-B801BAE38C48}.Debug|x64.ActiveCfg = basis|x64
+		{180186EC-0AC3-4964-90E6-B801BAE38C48}.Debug|x64.Build.0 = basis|x64
+		{180186EC-0AC3-4964-90E6-B801BAE38C48}.Release|ARM.ActiveCfg = basis|x64
+		{180186EC-0AC3-4964-90E6-B801BAE38C48}.Release|ARM.Build.0 = basis|x64
+		{180186EC-0AC3-4964-90E6-B801BAE38C48}.Release|Win32.ActiveCfg = basis|Win32
+		{180186EC-0AC3-4964-90E6-B801BAE38C48}.Release|Win32.Build.0 = basis|Win32
+		{180186EC-0AC3-4964-90E6-B801BAE38C48}.Release|x64.ActiveCfg = basis|x64
+		{180186EC-0AC3-4964-90E6-B801BAE38C48}.Release|x64.Build.0 = basis|x64
+		{180186EC-0AC3-4964-90E6-B801BAE38C48}.stage|ARM.ActiveCfg = stage|Win32
+		{180186EC-0AC3-4964-90E6-B801BAE38C48}.stage|Win32.ActiveCfg = stage|Win32
+		{180186EC-0AC3-4964-90E6-B801BAE38C48}.stage|Win32.Build.0 = stage|Win32
+		{180186EC-0AC3-4964-90E6-B801BAE38C48}.stage|x64.ActiveCfg = stage|x64
+		{180186EC-0AC3-4964-90E6-B801BAE38C48}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

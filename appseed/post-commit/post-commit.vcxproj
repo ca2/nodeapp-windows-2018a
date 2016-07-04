@@ -286,6 +286,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\app\appseed\ace\aced.vcxproj">
+      <Project>{180186ec-0ac3-4964-90e6-b801bae38c48}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\app\appseed\aura\acid.vcxproj">
       <Project>{a92c920f-c07d-481e-b523-565b56167cd1}</Project>
     </ProjectReference>

@@ -18,6 +18,8 @@ public:
 	app_t():
 		::aura::system(this ,NULL)
 	{
+
+      Sleep(15000);
 		m_hinstance             = ::GetModuleHandleA(NULL);
 		m_argc = 0;
 		LPWSTR* pwa = CommandLineToArgvW(
