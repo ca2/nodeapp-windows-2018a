@@ -78,9 +78,9 @@ public:
 				m_bMainRepos = false;
 			}
 
-         string strUser = file_as_string_dup("X:\\sensitive\\sensitive\\seed\\user.txt");
+         string strUser = file_as_string_dup("C:\\sensitive\\sensitive\\seed\\user.txt");
 
-			string strPass = file_as_string_dup("X:\\sensitive\\sensitive\\seed\\pass.txt");
+			string strPass = file_as_string_dup("C:\\sensitive\\sensitive\\seed\\pass.txt");
 
 			if(m_bMainRepos)
 			{
@@ -238,9 +238,9 @@ void app_t::win_sync_out(string strLocal,string strReposParam)
 	try
 	{
 
-      string strUser = file_as_string_dup("X:\\sensitive\\sensitive\\seed\\user.txt");
+      string strUser = file_as_string_dup("C:\\sensitive\\sensitive\\seed\\user.txt");
 
-		string strPass = file_as_string_dup("X:\\sensitive\\sensitive\\seed\\pass.txt");
+		string strPass = file_as_string_dup("C:\\sensitive\\sensitive\\seed\\pass.txt");
 
 		if(m_bMainRepos)
 		{
@@ -349,7 +349,7 @@ void app_t::win_sync_out(string strLocal,string strReposParam)
 	file_put_contents_dup(pathLog,strLog);
 
 
-	//::system("hstart /NOCONSOLE \"cmd.exe /D /S /c call X:\\sensitive\\sensitive\\ca2\\fontopus\\script\\win-sync-out.bat " + str + " " + strRepos + "\"");
+	//::system("hstart /NOCONSOLE \"cmd.exe /D /S /c call C:\\sensitive\\sensitive\\ca2\\fontopus\\script\\win-sync-out.bat " + str + " " + strRepos + "\"");
 
 }
 

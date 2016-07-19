@@ -371,8 +371,8 @@ namespace production
 
 
          m_strSignTool = System.dir().element()/ "nodeapp/thirdparty/binary/signtool.exe";
-         m_strSpc = "X:\\sensitive\\sensitive\\certificate\\ca2.p12";
-         m_strSignPass = Application.file().as_string("X:\\sensitive\\sensitive\\certificate\\2011-05-ca2.pass");
+         m_strSpc = "C:\\sensitive\\sensitive\\certificate\\ca2.p12";
+         m_strSignPass = Application.file().as_string("C:\\sensitive\\sensitive\\certificate\\2011-05-ca2.pass");
 
          m_iLoop++;
          defer_quit();
@@ -2167,9 +2167,9 @@ namespace production
       add_path(pszDir, "META-INF\\manifest.mf");
       add_path(pszDir, "META-INF\\zigbert.sf");
 
-      string strSignerPath = "X:\\sensitive\\sensitive\\certificate\\npca2signer.pem";
-      string strKeyPath = "X:\\sensitive\\sensitive\\certificate\\npca2key.pem";
-      string strOthersPath = "X:\\sensitive\\sensitive\\certificate\\npca2others.pem";
+      string strSignerPath = "C:\\sensitive\\sensitive\\certificate\\npca2signer.pem";
+      string strKeyPath = "C:\\sensitive\\sensitive\\certificate\\npca2key.pem";
+      string strOthersPath = "C:\\sensitive\\sensitive\\certificate\\npca2others.pem";
 
 
       // Generate manifest.mf and zigbert.sf data
@@ -2690,7 +2690,7 @@ namespace production
 
       CoTaskMemFree(pwsz);
 
-      strCmd += "\\Google\\Chrome\\Application\\chrome.exe\" --no-message-box --pack-extension=\"" + strDir + "\" --pack-extension-key=\"X:\\sensitive\\sensitive\\certificate\\npca2pk.pem\"";
+      strCmd += "\\Google\\Chrome\\Application\\chrome.exe\" --no-message-box --pack-extension=\"" + strDir + "\" --pack-extension-key=\"C:\\sensitive\\sensitive\\certificate\\npca2pk.pem\"";
 
       System.process().synch(strCmd);
 
