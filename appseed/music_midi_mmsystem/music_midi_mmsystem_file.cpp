@@ -722,7 +722,7 @@ smf_Open_File_Cleanup:
             {
                pevent = eventptra[i];
                ASSERT(pevent->GetFlags() & 1);
-               iSize += (int32_t) pevent->GetParamSize();
+               iSize += (int32_t) pevent->GetDataSize();
                iSize += sizeof(midi_stream_event_header);
             }
 
@@ -737,10 +737,10 @@ smf_Open_File_Cleanup:
             for(i = 0; i < eventptra.get_size(); i++)
             {
                pevent = eventptra[i];
-               lpbParam = pevent->GetParam();
+               lpbParam = pevent->GetData();
                lpdwType = (LPDWORD) lpbParam;
                pheader = (midi_stream_event_header *) &m_memstorageF1.get_data()[iSize];
-               pheader->m_dwLength = (uint32_t) pevent->GetParamSize();
+               pheader->m_dwLength = (uint32_t) pevent->GetDataSize();
                pheader->m_dwType = *lpdwType;
                memcpy(
                   &m_memstorageF1.get_data()[iSize + sizeof(midi_stream_event_header)],
@@ -840,7 +840,7 @@ smf_Open_File_Cleanup:
             else if (::music::midi::Meta == pEvent->GetFullType() && ::music::midi::MetaTempo == pEvent->GetMetaType())
             {
 
-               if (pEvent->GetParamSize() != 3)
+               if (pEvent->GetDataSize() != 3)
                {
 
                   TRACE( "smfReadEvents: Corrupt tempo event");
@@ -849,9 +849,9 @@ smf_Open_File_Cleanup:
 
                }
 
-               dwTempo = (((uint32_t)pEvent->GetParam()[0])<<16)|
-                  (((uint32_t)pEvent->GetParam()[1])<<8)|
-                  ((uint32_t)pEvent->GetParam()[2]);
+               dwTempo = (((uint32_t)pEvent->GetData()[0])<<16)|
+                  (((uint32_t)pEvent->GetData()[1])<<8)|
+                  ((uint32_t)pEvent->GetData()[2]);
                dwTempo = (uint32_t) ((double) dwTempo / GetTempoShiftRate());
                uint32_t dw = (((uint32_t)MEVT_TEMPO)<<24)| dwTempo;
 
@@ -919,8 +919,8 @@ smf_Open_File_Cleanup:
                ** that we didn't recognize
                */
 
-               m_cbPendingUserEvent = (uint32_t) pEvent->GetParamSize();
-               m_hpbPendingUserEvent = pEvent->GetParam();
+               m_cbPendingUserEvent = (uint32_t) pEvent->GetDataSize();
+               m_hpbPendingUserEvent = pEvent->GetData();
                GetFlags().unsignalize(file::InsertSysEx);
 
                if(pEvent->GetFullType() == ::music::midi::SysExEnd)
@@ -1658,10 +1658,10 @@ smf_Open_File_Cleanup:
                {
                   if (pevent->GetMetaType() == ::music::midi::MetaTempo)
                   {
-                     if (pevent->GetParamSize() != sizeof(m_keyframe.rbTempo))
+                     if (pevent->GetDataSize() != sizeof(m_keyframe.rbTempo))
                         return EInvalidFile;
 
-                     memcpy((byte *)m_keyframe.rbTempo, pevent->GetParam(), pevent->GetParamSize());
+                     memcpy((byte *)m_keyframe.rbTempo, pevent->GetData(), pevent->GetDataSize());
                   }
                }
                if((bEvent & 0xF0) == ::music::midi::ProgramChange)
@@ -1933,11 +1933,11 @@ smf_Open_File_Cleanup:
             ASSERT(pSmf != NULL);
             ASSERT(pEvent != NULL);
 
-            len = pEvent->m_iParamSize;
+            len = pEvent->GetDataSize();
 
             *pData = (uchar *) LocalAlloc(LPTR,len);
 
-            hpbImage = (byte *) pEvent->m_pParam;
+            hpbImage = (byte *) pEvent->GetData();
 
             for(index = 0; len; index++)
             {
@@ -2150,7 +2150,7 @@ smf_Open_File_Cleanup:
 
             while(::music::success == (smfrc = GetNextEvent(pevent, pEvent->GetPosition(), TRUE)))
             {
-               if(pevent->GetImage() == pEvent->GetImage())
+               if(pevent->m_pImage == pEvent->m_pImage)
                {
                   pEvent->operator =(*peventPrevious);
                   return ::music::success;
@@ -2391,7 +2391,7 @@ smf_Open_File_Cleanup:
 
                event.SetFullType(::music::midi::Meta);
                event.SetMetaType(::music::midi::MetaTempo);
-               event.SetParam(&uB.dw, 3);
+               event.SetData(&uB.dw, 3);
             }
             return ::music::success;
 
@@ -2846,10 +2846,10 @@ smf_Open_File_Cleanup:
                {
                   if (pevent->GetMetaType() == ::music::midi::MetaTempo)
                   {
-                     if (pevent->GetParamSize() != sizeof(m_keyframe.rbTempo))
+                     if (pevent->GetDataSize() != sizeof(m_keyframe.rbTempo))
                         return EInvalidFile;
 
-                     memcpy((byte *)m_keyframe.rbTempo, pevent->GetParam(), pevent->GetParamSize());
+                     memcpy((byte *)m_keyframe.rbTempo, pevent->GetData(), pevent->GetDataSize());
                   }
                }
                if((bEvent & 0xF0) == ::music::midi::ProgramChange)
@@ -3213,7 +3213,7 @@ smf_Open_File_Cleanup:
                eventV008.SetPosition(0);
                eventV008.SetFullType(::music::midi::Meta);
                eventV008.SetMetaType(::music::midi::MetaSeqSpecific);
-               eventV008.SetParam(XFVERSIONID, sizeof(XFVERSIONID));
+               eventV008.SetData(XFVERSIONID, sizeof(XFVERSIONID));
                track.GetWorkTrack().insert_at(0, eventV008);
             }
 
@@ -3227,7 +3227,7 @@ smf_Open_File_Cleanup:
                NULL);
             pmiditrack->GetEvent().SetFullType(::music::midi::Meta);
             pmiditrack->GetEvent().SetMetaType(::music::midi::MetaEOT);
-            pmiditrack->GetEvent().SetParam(NULL, 0);
+            pmiditrack->GetEvent().SetData(NULL, 0);
             pmiditrack->GetEvent().SetDelta(0);
             pmiditrack->WorkWriteEvent();
 

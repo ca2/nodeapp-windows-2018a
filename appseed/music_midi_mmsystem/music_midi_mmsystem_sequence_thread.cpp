@@ -314,7 +314,7 @@ namespace music
             post_thread_message(
                ::music::midi::player::message_command,
                0,
-               (LPARAM) (::music::midi::player::command *) spcommand);
+               spcommand);
          }
 
 
