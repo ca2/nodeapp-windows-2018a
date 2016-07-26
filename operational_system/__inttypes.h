@@ -270,7 +270,7 @@
 // 7.8.2 Functions for greatest-width integer types
 
 // 7.8.2.1 The imaxabs function
-#define imaxabs _abs64
+//#define imaxabs _abs64
 
 // 7.8.2.2 The imaxdiv function
 
