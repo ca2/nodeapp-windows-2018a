@@ -56,7 +56,11 @@ namespace multimedia
             if(::multimedia::result_success != mmrct)
             {
 
-               System.simple_message_box(NULL, MB_OK | MB_ICONEXCLAMATION, "mixerClose() failed on hmx=%.04Xh, mmr=%u!", m_hMixer, mmrct);
+               string strMessage;
+
+               strMessage.Format("mixerClose() failed on hmx=%.04Xh, mmr=%u!", m_hMixer, mmrct);
+               System.simple_message_box(NULL, strMessage, MB_OK | MB_ICONEXCLAMATION
+               );
 
             }
 
@@ -67,7 +71,11 @@ namespace multimedia
          if(::multimedia::result_success != mmrc)
          {
 
-            System.simple_message_box(NULL, MB_OK | MB_ICONEXCLAMATION, "mixerGetDevCaps() failed on uMxId=%u, mmr=%u!", uiMixerId, mmrc);
+            string strMessage;
+
+            strMessage.Format("mixerGetDevCaps() failed on uMxId=%u, mmr=%u!", uiMixerId, mmrc);
+            System.simple_message_box(NULL, strMessage, MB_OK | MB_ICONEXCLAMATION
+            );
 
             return mmrc;
 
@@ -78,7 +86,12 @@ namespace multimedia
          if(::multimedia::result_success != mmrc)
          {
 
-            System.simple_message_box(NULL, MB_OK | MB_ICONEXCLAMATION, "mixerOpen() failed on uMxId=%u, mmr=%u!", uiMixerId, mmrc);
+            //System.simple_message_box(NULL, MB_OK | MB_ICONEXCLAMATION, );
+            string strMessage;
+
+            strMessage.Format("mixerOpen() failed on uMxId=%u, mmr=%u!", uiMixerId, mmrc);
+            System.simple_message_box(NULL, strMessage, MB_OK | MB_ICONEXCLAMATION
+            );
 
             return mmrc;
 
@@ -107,7 +120,12 @@ namespace multimedia
          if(::multimedia::result_success != mmrc)
          {
 
-            System.simple_message_box(NULL, MB_OK | MB_ICONEXCLAMATION, "mixerGetDevCaps() failed on uMxId=%u, mmr=%u!", m_uiMixerID, mmrc);
+            string strMessage;
+
+            strMessage.Format("mixerGetDevCaps() failed on uMxId=%u, mmr=%u!", m_uiMixerID, mmrc);
+            System.simple_message_box(NULL, strMessage, MB_OK | MB_ICONEXCLAMATION
+            );
+
 
             return mmrc;
 

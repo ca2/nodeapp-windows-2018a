@@ -66,9 +66,14 @@ namespace multimedia
 
          if (::multimedia::result_success != mmrc)
          {
-            System.simple_message_box(NULL, MB_OK | MB_ICONEXCLAMATION,
-               "mixerGetLineControls(ctrlid=%.08lXh) failed on hmx=%.04Xh, mmr=%u!",
+
+            string strMessage;
+
+            strMessage.Format("mixerGetLineControls(ctrlid=%.08lXh) failed on hmx=%.04Xh, mmr=%u!",
                m_mixerline.dwLineID, device->m_hMixer, mmrc);
+
+
+            System.simple_message_box(NULL, strMessage, MB_OK | MB_ICONEXCLAMATION);
          }
          else
          {
@@ -228,9 +233,13 @@ namespace multimedia
 
          if (::multimedia::result_success != mmrc)
          {
-            System.simple_message_box(NULL, MB_OK | MB_ICONEXCLAMATION,
-               "mixerGetLineInfo(src=%u) failed on hmx=%.04Xh, mmr=%u!",
+            string strMessage;
+
+            strMessage.Format("mixerGetLineInfo(src=%u) failed on hmx=%.04Xh, mmr=%u!",
                dwSource, device->m_hMixer, mmrc);
+            System.simple_message_box(NULL, strMessage, MB_OK | MB_ICONEXCLAMATION
+            );
+
          }
 
          return mmrc;

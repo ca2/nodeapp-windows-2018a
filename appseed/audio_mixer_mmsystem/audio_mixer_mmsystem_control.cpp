@@ -773,9 +773,11 @@ namespace multimedia
                            }
                            else
                            {
-                              System.simple_message_box(NULL, MB_OK | MB_ICONEXCLAMATION,
-                                 "mixerGetControlDetails(ctrlid=%.08lXh) failed on hmx=%.04Xh, mmr=%u!",
+                              string strMessage;
+                              strMessage.Format("mixerGetControlDetails(ctrlid=%.08lXh) failed on hmx=%.04Xh, mmr=%u!",
                                  m_mixercontrol.dwControlID, device->m_hMixer, mmrc);
+                              System.simple_message_box(NULL, strMessage, MB_OK | MB_ICONEXCLAMATION
+                                 );
                            }
                         }
                         return ;
@@ -838,9 +840,13 @@ namespace multimedia
                      }
                      else
                      {
-                        System.simple_message_box(NULL, MB_OK | MB_ICONEXCLAMATION,
-                           "mixerGetControlDetails(ctrlid=%.08lXh) failed on hmx=%.04Xh, mmr=%u!",
+
+                        string strMessage;
+
+                        strMessage.Format("mixerGetControlDetails(ctrlid=%.08lXh) failed on hmx=%.04Xh, mmr=%u!",
                            m_mixercontrol.dwControlID, device->m_hMixer, mmrc);
+                        System.simple_message_box(NULL, strMessage, MB_OK | MB_ICONEXCLAMATION
+                           );
                      }
                      return TRUE;
                   }

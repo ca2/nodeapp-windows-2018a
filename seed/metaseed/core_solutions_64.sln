@@ -556,8 +556,14 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "beampro", "..\..\..\app-core\appseed\beampro\beampro.vcxproj", "{BE190D93-5993-4152-A7EC-8BD783992BD2}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_beampro_bot", "..\..\..\app-core\appseed\beampro_bot\beampro_bot.vcxproj", "{97C013A5-76A8-4492-91E4-F4A658767919}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BE190D93-5993-4152-A7EC-8BD783992BD2} = {BE190D93-5993-4152-A7EC-8BD783992BD2}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_beampro_client", "..\..\..\app-core\appseed\beampro_client\beampro_client.vcxproj", "{05EA9E72-BBB8-409D-9B40-2BE39ED6BB7C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BE190D93-5993-4152-A7EC-8BD783992BD2} = {BE190D93-5993-4152-A7EC-8BD783992BD2}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_beampro_resident", "..\..\..\app-core\appseed\beampro_resident\beampro_resident.vcxproj", "{3104F537-F876-4D96-A90C-8B76BA83F0B5}"
 EndProject
