@@ -296,7 +296,12 @@ namespace draw2d_gdiplus
 
       m_ppath->AddArc(rectf, (Gdiplus::REAL) iStart, (Gdiplus::REAL) iAngle);
 
+      ::Gdiplus::PointF p;
+      
+      m_ppath->GetLastPoint(&p);
 
+      m_ptInternal.X = p.X;
+      m_ptInternal.Y = p.Y;
 
       return true;
 
