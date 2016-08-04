@@ -27,7 +27,7 @@ BOOL WINAPI DllMain(HINSTANCE hInstance,DWORD dwReason,LPVOID lpReserved)
    else if(dwReason == DLL_PROCESS_DETACH)
    {
 
-
+      output_debug_string("draw2d_gdiplus DLL_PROCESS_DETACH.\n");
 
    }
 
