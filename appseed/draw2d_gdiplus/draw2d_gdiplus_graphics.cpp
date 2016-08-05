@@ -2053,7 +2053,7 @@ gdi_fallback:
    bool graphics::draw_path(::draw2d::path * ppath)
    {
 
-      //m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
+      m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
       m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
 
 
