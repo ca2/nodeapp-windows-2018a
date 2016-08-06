@@ -256,7 +256,7 @@ Opened:
          else if(epurpose == ::multimedia::audio::purpose_playground)
          {
          
-            iBufferCount = 2;
+            iBufferCount = 4;
 
          }
          else
