@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_hellomultiverse", "..\..\..\app-core\appseed\hellomultiverse\hellomultiverse.vcxproj", "{C7AFCEFA-3079-4B23-8F97-4543BB980265}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -137,6 +137,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axisjpeg", "..\..\..\app\axis\jpeg\axisjpeg.vcxproj", "{C346CF46-71E6-42D6-9DED-C869F6306368}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axispng", "..\..\..\app\axis\png\axispng.vcxproj", "{85A1566B-6043-4334-A599-B8A5B338EFF5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_ace", "..\..\..\app\appseed\ace\_ace.vcxproj", "{699D6807-4F43-40E9-86AB-2A8B856707A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -418,6 +420,16 @@ Global
 		{85A1566B-6043-4334-A599-B8A5B338EFF5}.stage|Win32.Build.0 = stage|Win32
 		{85A1566B-6043-4334-A599-B8A5B338EFF5}.stage|x64.ActiveCfg = stage|x64
 		{85A1566B-6043-4334-A599-B8A5B338EFF5}.stage|x64.Build.0 = stage|x64
+		{699D6807-4F43-40E9-86AB-2A8B856707A9}.basis|ARM.ActiveCfg = basis|Win32
+		{699D6807-4F43-40E9-86AB-2A8B856707A9}.basis|Win32.ActiveCfg = basis|Win32
+		{699D6807-4F43-40E9-86AB-2A8B856707A9}.basis|Win32.Build.0 = basis|Win32
+		{699D6807-4F43-40E9-86AB-2A8B856707A9}.basis|x64.ActiveCfg = basis|x64
+		{699D6807-4F43-40E9-86AB-2A8B856707A9}.basis|x64.Build.0 = basis|x64
+		{699D6807-4F43-40E9-86AB-2A8B856707A9}.stage|ARM.ActiveCfg = stage|Win32
+		{699D6807-4F43-40E9-86AB-2A8B856707A9}.stage|Win32.ActiveCfg = stage|Win32
+		{699D6807-4F43-40E9-86AB-2A8B856707A9}.stage|Win32.Build.0 = stage|Win32
+		{699D6807-4F43-40E9-86AB-2A8B856707A9}.stage|x64.ActiveCfg = stage|x64
+		{699D6807-4F43-40E9-86AB-2A8B856707A9}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
