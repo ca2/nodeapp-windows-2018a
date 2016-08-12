@@ -53,7 +53,7 @@ typedef long glong;
 # include <stddef.h>		/* glong */
 //////# include <idn-int.h>		/* uint32_t */
 
-#include "_stdint.h"
+#include <stdint.h>
 
 
 

@@ -74,7 +74,7 @@ uint8_t, UCHAR_MAX, etc are defined. */
 
 #include <limits.h>
 #include <stdlib.h>
-#include "_stdint.h"
+#include <stdint.h>
 
 /* Allow for C++ users compiling this directly. */
 

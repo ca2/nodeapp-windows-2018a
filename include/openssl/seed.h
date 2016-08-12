@@ -1,1 +1,1 @@
-#include "app/axis/crypto/crypto/seed/seed.h"
+#include "third/appseed/crypto/crypto/seed/seed.h"
