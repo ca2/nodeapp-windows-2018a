@@ -51,6 +51,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "winpr", "..\..\..\third\app
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlib", "..\..\..\third\appseed\zlib\axiszlib.vcxproj", "{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "strophe", "..\..\..\third\appseed\strophe\strophe.vcxproj", "{3F8D41B1-CA9D-4171-B17E-D5A1265C8447}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
@@ -235,6 +237,14 @@ Global
 		{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.stage|Win32.Build.0 = stage|Win32
 		{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.stage|x64.ActiveCfg = stage|x64
 		{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.stage|x64.Build.0 = stage|x64
+		{3F8D41B1-CA9D-4171-B17E-D5A1265C8447}.basis|Win32.ActiveCfg = basis|Win32
+		{3F8D41B1-CA9D-4171-B17E-D5A1265C8447}.basis|Win32.Build.0 = basis|Win32
+		{3F8D41B1-CA9D-4171-B17E-D5A1265C8447}.basis|x64.ActiveCfg = basis|x64
+		{3F8D41B1-CA9D-4171-B17E-D5A1265C8447}.basis|x64.Build.0 = basis|x64
+		{3F8D41B1-CA9D-4171-B17E-D5A1265C8447}.stage|Win32.ActiveCfg = stage|Win32
+		{3F8D41B1-CA9D-4171-B17E-D5A1265C8447}.stage|Win32.Build.0 = stage|Win32
+		{3F8D41B1-CA9D-4171-B17E-D5A1265C8447}.stage|x64.ActiveCfg = stage|x64
+		{3F8D41B1-CA9D-4171-B17E-D5A1265C8447}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
