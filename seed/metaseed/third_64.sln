@@ -20,6 +20,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "expat", "..\..\..\third\appseed\expat\auraexpat.vcxproj", "{2F3AE856-C0BB-413E-A451-0F867A07EBEC}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "freerdp", "..\..\..\third\appseed\freerdp\axisfreerdp.vcxproj", "{E0D54AEC-E0A5-475B-8A02-8758BDD686E1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{39807406-816F-4C0D-A632-4BB8AB13887B} = {39807406-816F-4C0D-A632-4BB8AB13887B}
+		{29676444-4D0F-4DD0-9104-0499D94DA2C9} = {29676444-4D0F-4DD0-9104-0499D94DA2C9}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "freetype", "..\..\..\third\appseed\freetype\axisfreetype.vcxproj", "{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}"
 EndProject
@@ -46,6 +50,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sqlite", "..\..\..\third\appseed\sqlite\aurasqlite.vcxproj", "{424F72D6-053A-41C5-BE03-3B0BD535F1EB}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "winpr", "..\..\..\third\appseed\winpr\axiswinpr.vcxproj", "{E4841F02-7CCA-4144-89A2-149302677B3F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{39807406-816F-4C0D-A632-4BB8AB13887B} = {39807406-816F-4C0D-A632-4BB8AB13887B}
+		{29676444-4D0F-4DD0-9104-0499D94DA2C9} = {29676444-4D0F-4DD0-9104-0499D94DA2C9}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlib", "..\..\..\third\appseed\zlib\axiszlib.vcxproj", "{34FCFBF1-E922-4FDC-BC83-B3C04623E8C2}"
 EndProject
