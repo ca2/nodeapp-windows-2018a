@@ -141,6 +141,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "baseid3lib", "..\..\..\app-core\appseed\id3lib\id3lib.vcxproj", "{E2D7833B-9B59-4826-BBDF-C27019771984}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axisfreeimage", "..\..\..\app\appseed\freeimage\axisfreeimage.vcxproj", "{B39ED2B3-D53A-4077-B957-930979A3577D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5} = {03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "image_decode_jpeg", "..\..\..\app\appseed\image_jpeg\axis_image_jpeg.vcxproj", "{84517713-2000-419D-A87F-4338C9DDE3FA}"
 EndProject

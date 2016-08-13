@@ -426,6 +426,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_ace", "..\..\..\app\appseed\ace\_ace.vcxproj", "{699D6807-4F43-40E9-86AB-2A8B856707A9}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axisfreeimage", "..\..\..\app\appseed\freeimage\axisfreeimage.vcxproj", "{B39ED2B3-D53A-4077-B957-930979A3577D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5} = {03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "image_decode_png", "..\..\..\app\appseed\image_png\axis_image_png.vcxproj", "{84517714-2000-419D-A87F-4338C9DDE3FA}"
 EndProject
