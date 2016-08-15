@@ -850,4 +850,13 @@ _cairo_gl_glyph_cache_unlock (cairo_gl_glyph_cache_t *cache)
 slim_hidden_proto (cairo_gl_surface_create);
 slim_hidden_proto (cairo_gl_surface_create_for_texture);
 
+#ifdef _WIN32
+extern PFNGLACTIVETEXTUREPROC glActiveTexture;
+typedef FNGLBLENDFUNCSEPARATE (GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha);
+typedef FNGLBLENDFUNCSEPARATE * PFNGLBLENDFUNCSEPARATE;
+extern PFNGLBLENDFUNCSEPARATE glBlendFuncSeparate;
+
+#endif
+
 #endif /* CAIRO_GL_PRIVATE_H */
+
