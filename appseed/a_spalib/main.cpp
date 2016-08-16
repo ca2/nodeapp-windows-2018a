@@ -1305,7 +1305,9 @@ bool a_spa::is_file_ok(const stringa & straPath,const stringa & straTemplate,str
       for(int i = 0; i < straPath.size(); i++)
       {
 
-         if(!file_exists_dup(straPath[i].c_str()))
+         string strPath = straPath[i];
+
+         if(!file_exists_dup(strPath.c_str()))
          {
 
             bOk = false;
@@ -1657,22 +1659,6 @@ md5retry:
 
          if (!file_exists_dup(strDownload) || _stricmp(file_md5_dup(strDownload).c_str(), straMd5[iFile]) != 0)
          {
-
-			   if (::str::ends_ci(strDownload, ".exe"))
-				{
-
-               if (straFile[iFile].CompareNoCase("app.install.exe") != 0)
-               {
-
-                  ::file::path pathImage = strDownload;
-
-                  string strImage = pathImage.name();
-
-                  ::system("TASKKILL /F /IM " + strImage);
-
-               }
-
-				}
 
             new install_bin_item(this, strUrlPrefix, strPath, straFile[iFile], &lCount, straMd5[iFile], process_platform_dir_name(), lTotal);
 
