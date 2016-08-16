@@ -17,6 +17,10 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
    
    spa_set_admin(false);
    
-   return ::aura::simple_app_main < a_spa >(hInstance,hPrevInstance,lpCmdLine,nCmdShow);
+   int iRet = ::aura::simple_app_main < a_spa >(hInstance,hPrevInstance,lpCmdLine,nCmdShow);
+
+   defer_aura_term();
+
+   return iRet;
 
 }

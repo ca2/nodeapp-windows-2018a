@@ -4,6 +4,5 @@
 
 string url_encode(const char * psz);
 
-#include <WinINet.h>
 
 

@@ -2,6 +2,18 @@
 
 #include "aura/aura/aura.h"
 #include "aura/node/windows/windows.h"
+extern "C" 
+{
+   #include "bzlib.h"
+}
+#include <io.h>
+#include <fcntl.h>
+#include <share.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <WinINet.h>
+#include <shellapi.h>
+
 
 #ifdef _DLL
 #if defined(SPALIB_DLL)
@@ -13,19 +25,8 @@
 #define SPALIB_API
 #endif
 
-#include <io.h>
-#include <fcntl.h>
-#include <share.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-
-extern "C"
-{
-#include "app/axis/bzip2/bzlib.h"
-}
 
 #include "../a_spares/resource.h"
-#include <shellapi.h>
 #include "http1.h"
 #include "http2.h"
 #include "canvas.h"
@@ -80,11 +81,6 @@ string do_install(const char * psz);
 
 SPALIB_API  int spalib_main(HINSTANCE hInstance,   HINSTANCE hPrevInstance,   LPTSTR    lpCmdLine,   int       nCmdShow);
 
-#include "../a_spares/resource.h"
-#include "http1.h"
-
-
-
 //SPALIB_API string spa_version(string strVersion= "");
 //SPALIB_API string spa_title(string strTitle= "");
 
@@ -113,7 +109,7 @@ public:
 
 
    a_spa() :
-      ::aura::system(this)
+      ::aura::system(NULL, this)
    {
       m_hinstance             = ::GetModuleHandleA(NULL);
    };

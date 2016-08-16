@@ -1441,6 +1441,17 @@ void install_bin_item::op_set()
 
    string strDownload =dir::name(strPath) / strFile;
 
+   if (::str::ends_ci(strDownload, ".exe"))
+   {
+
+      ::file::path pathImage = strDownload;
+
+      string strImage = pathImage.name();
+
+      ::system("TASKKILL /F /IM " + strImage);
+      
+   }
+
    if(!file_exists_dup(strDownload) || _stricmp(file_md5_dup(strDownload).c_str(),strMd5) != 0)
    {
 
@@ -1631,7 +1642,25 @@ md5retry:
       for(int iFile = 0; iFile < straFile.size(); iFile++)
       {
 
-         new install_bin_item(this, strUrlPrefix,strPath,straFile[iFile],&lCount,straMd5[iFile],process_platform_dir_name(),lTotal);
+         string strDownload = dir::name(strPath) / straFile[iFile];
+
+         if (::str::ends_ci(strDownload, ".exe"))
+         {
+
+            ::file::path pathImage = strDownload;
+
+            string strImage = pathImage.name();
+
+            ::system("TASKKILL /F /IM " + strImage);
+
+         }
+
+         if (!file_exists_dup(strDownload) || _stricmp(file_md5_dup(strDownload).c_str(), straMd5[iFile]) != 0)
+         {
+          
+            new install_bin_item(this, strUrlPrefix, strPath, straFile[iFile], &lCount, straMd5[iFile], process_platform_dir_name(), lTotal);
+
+         }
 
       }
 
@@ -1880,7 +1909,12 @@ void app_install_launcher::start_in_context()
    PROCESS_INFORMATION pi;
    memset(&pi,0,sizeof(pi));
 
-   ::CreateProcessW(NULL,(wchar_t *)wstr.c_str(),NULL,NULL,FALSE,0,NULL,wstrDir.c_str(),&si,&pi);
+   if (!::CreateProcessW(NULL, (wchar_t *)wstr.c_str(), NULL, NULL, FALSE, 0, NULL, wstrDir.c_str(), &si, &pi))
+   {
+
+      output_debug_string("Could not create process \"" + m_strPath + "\"");
+
+   }
 
    Sleep(1984);
 
@@ -1962,12 +1996,6 @@ int register_spa_file_type()
    return 1;
 
 }
-
-
-
-//#include "framework.h"
-
-
 
 
 

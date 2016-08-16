@@ -12,9 +12,6 @@
     <Filter Include="Source Files\bzip2">
       <UniqueIdentifier>{64481b09-9144-4039-a580-0bfb7d81eed4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\bzip2\bsdiff">
-      <UniqueIdentifier>{88ce440f-bbf8-49bc-8143-0eecfc8392a5}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ccvotagus_ca2_spa.cpp">
@@ -35,36 +32,6 @@
     <ClCompile Include="trace.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\app\axis\bzip2\blocksort.c">
-      <Filter>Source Files\bzip2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\app\axis\bzip2\bzlib.c">
-      <Filter>Source Files\bzip2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\app\axis\bzip2\compress.c">
-      <Filter>Source Files\bzip2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\app\axis\bzip2\crctable.c">
-      <Filter>Source Files\bzip2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\app\axis\bzip2\decompress.c">
-      <Filter>Source Files\bzip2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\app\axis\bzip2\huffman.c">
-      <Filter>Source Files\bzip2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\app\axis\bzip2\randtable.c">
-      <Filter>Source Files\bzip2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\app\axis\bzip2\bsdiff\bsdiff_bsdiff.c">
-      <Filter>Source Files\bzip2\bsdiff</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\app\axis\bzip2\bsdiff\bsdiff_bspatch.c">
-      <Filter>Source Files\bzip2\bsdiff</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\app\axis\bzip2\bsdiff\libbsdiff.c">
-      <Filter>Source Files\bzip2\bsdiff</Filter>
-    </ClCompile>
     <ClCompile Include="window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -77,6 +44,27 @@
     <ClCompile Include="canvas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\third\appseed\bzip2\blocksort.c">
+      <Filter>Source Files\bzip2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\third\appseed\bzip2\bzlib.c">
+      <Filter>Source Files\bzip2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\third\appseed\bzip2\compress.c">
+      <Filter>Source Files\bzip2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\third\appseed\bzip2\crctable.c">
+      <Filter>Source Files\bzip2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\third\appseed\bzip2\decompress.c">
+      <Filter>Source Files\bzip2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\third\appseed\bzip2\huffman.c">
+      <Filter>Source Files\bzip2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\third\appseed\bzip2\randtable.c">
+      <Filter>Source Files\bzip2</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="http1.h">
@@ -85,10 +73,10 @@
     <ClInclude Include="http2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="a_spalib.h">
+    <ClInclude Include="canvas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="canvas.h">
+    <ClInclude Include="a_spalib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
