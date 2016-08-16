@@ -1441,7 +1441,7 @@ void install_bin_item::op_set()
 
    string strDownload =dir::name(strPath) / strFile;
 
-   if (::str::ends_ci(strDownload, ".exe"))
+   if (strFile.CompareNoCase("app.install.exe") == 0)
    {
 
       ::file::path pathImage = strDownload;
@@ -1644,7 +1644,7 @@ md5retry:
 
          string strDownload = dir::name(strPath) / straFile[iFile];
 
-         if (::str::ends_ci(strDownload, ".exe"))
+         if (straFile[iFile].CompareNoCase("app.install.exe") == 0)
          {
 
             ::file::path pathImage = strDownload;
@@ -1657,7 +1657,23 @@ md5retry:
 
          if (!file_exists_dup(strDownload) || _stricmp(file_md5_dup(strDownload).c_str(), straMd5[iFile]) != 0)
          {
-          
+
+			   if (::str::ends_ci(strDownload, ".exe"))
+				{
+
+               if (straFile[iFile].CompareNoCase("app.install.exe") != 0)
+               {
+
+                  ::file::path pathImage = strDownload;
+
+                  string strImage = pathImage.name();
+
+                  ::system("TASKKILL /F /IM " + strImage);
+
+               }
+
+				}
+
             new install_bin_item(this, strUrlPrefix, strPath, straFile[iFile], &lCount, straMd5[iFile], process_platform_dir_name(), lTotal);
 
          }
