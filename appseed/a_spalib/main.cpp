@@ -299,9 +299,7 @@ int a_spa::spa_main()
 
    {
 
-      HWND hwnd = g_hwnd;
-
-      g_hwnd = NULL;
+      HWND hwnd = m_hwnd;
 
       ::ShowWindow(hwnd,SW_HIDE);
 
@@ -400,7 +398,7 @@ DWORD WINAPI a_spa::spa_main_proc(LPVOID lpvoid)
 
    g_iRet = paspa->spalib_main2();
 
-   ::PostMessage(g_hwnd,WM_QUIT,0,0);
+   ::PostMessage(paspa->m_hwnd,WM_QUIT,0,0);
 
    return g_iRet;
 
@@ -1683,11 +1681,11 @@ md5retry:
 string a_spa::get_latest_build_number(const char * pszVersion)
 {
 
-   static string s_strBuild;
-
-   if(s_strBuild.length() > 0)
+   if(m_strBuild.length() > 0)
    {
-      return s_strBuild;
+      
+      return m_strBuild;
+
    }
 
    string strBuildNumber;

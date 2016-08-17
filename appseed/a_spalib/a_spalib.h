@@ -1,11 +1,17 @@
 #pragma once
 
+
 #include "aura/aura/aura.h"
 #include "aura/node/windows/windows.h"
+
+
 extern "C" 
 {
+
    #include "bzlib.h"
+
 }
+
 #include <io.h>
 #include <fcntl.h>
 #include <share.h>
@@ -38,17 +44,7 @@ SPALIB_API void spa_set_admin(bool bSet);
 SPALIB_API string spa_get_id();
 SPALIB_API void spa_set_id(const char * pszVersion);
 
-//SPALIB_API ::file::path spa_path();
-//SPALIB_API ::file::path spa_admin_path();
-
 SPALIB_API string spalib_get_build();
-
-
-
-extern int g_cx;
-extern int g_cy;
-extern HWND g_hwnd;
-
 
 
 #define TIMER_CARET 123454
@@ -56,67 +52,43 @@ extern HWND g_hwnd;
 #define CARET_TIME 1000
 
 
-
-
-
-
-
-
-
 SPALIB_API string str_replace(const char * psz,const char * pszFind,const char * pszReplace);
 
-SPALIB_API int bzuncompress(LPCTSTR lpcszUncompressed,LPCTSTR lpcszGzFileCompressed);
 
+SPALIB_API int bzuncompress(LPCTSTR lpcszUncompressed,LPCTSTR lpcszGzFileCompressed);
 
 
 stringa install_get_plugin_base_library_list(const string & strVersion);
 
 
-
-
-
-
-
 string do_install(const char * psz);
 
-SPALIB_API  int spalib_main(HINSTANCE hInstance,   HINSTANCE hPrevInstance,   LPTSTR    lpCmdLine,   int       nCmdShow);
 
-//SPALIB_API string spa_version(string strVersion= "");
-//SPALIB_API string spa_title(string strTitle= "");
+SPALIB_API int spalib_main(HINSTANCE hInstance,   HINSTANCE hPrevInstance,   LPTSTR    lpCmdLine,   int       nCmdShow);
+
 
 class SPALIB_API a_spa :
    public ::aura::simple_app
 {
 public:
 
-   //string m_strLogin;
-   //string m_strSessid;
-   //string m_strStart;
-   //string m_strInstallFilter;
-   //string m_strLocale;
-   //string m_strLoginFailed;
-   //string m_strFile;
-   //string m_strIndex;
-   //string m_strIndexGz;
-   //string m_strInstall;
-   //string m_strInstallGz;
-   //string m_strLastHost;
-   //string m_strCurrentHost;
-   string m_strId;
-   //string m_strPlatform;
-   string m_strVersion;
-   mutex m_mutexTrace;
+
+   string            m_strId;
+   string            m_strVersion;
+   mutex             m_mutexTrace;
+   string            m_strBuild;
+   spa_canvas *      m_pcanvas;
+   HWND              m_hwnd;
 
 
-   a_spa() :
-      ::aura::system(NULL, this)
-   {
-      m_hinstance             = ::GetModuleHandleA(NULL);
-   };
-   
+   static a_spa *    s_pspa;
 
-   virtual ~a_spa() {}
 
+   a_spa();
+   virtual ~a_spa();
+
+
+   void DragMainWindow();
 
    string spa_get_id()
    {
@@ -128,10 +100,7 @@ public:
       m_strId = psz;
    }
 
-
-
    virtual int32_t run();
-
 
    static DWORD WINAPI spa_main_proc(LPVOID);
 
@@ -177,7 +146,13 @@ public:
 
    string ms_get(const char * pszUrl,bool bCache = false);
 
-} ;
+   static a_spa * get();
+
+   LRESULT window_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+
+   int create_spa_window();
+
+};
 
 
 

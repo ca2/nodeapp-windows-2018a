@@ -54,3 +54,25 @@ string spa_title(string strTitle)
 
    return s_strTitle;
 }
+
+
+a_spa * a_spa::s_pspa = NULL;
+
+a_spa::a_spa() :
+   ::aura::system(NULL, this)
+{
+
+   m_hwnd = NULL;
+   m_pcanvas = NULL;
+   s_pspa = this;
+
+   m_hinstance = ::GetModuleHandleA(NULL);
+
+}
+
+
+a_spa::~a_spa()
+{
+
+
+}

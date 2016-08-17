@@ -12,8 +12,6 @@
 
 bool g_bForceUpdatedBuild = false;
 
-int g_cx;
-int g_cy;
 
 int run_file(const char * pszFile, int nCmdShow);
 
@@ -28,24 +26,19 @@ bool g_bShowPercentage;
 extern MSG g_msg;
 #ifdef WIN32
 
-void ca2_install_canvas_init_draw();
-void update_layered_window();
 
-COLORREF * g_pcolorref = NULL;
-HBITMAP g_hbitmap = NULL;
-HDC g_hdc = NULL;
-
-
-
-HBRUSH g_hbrushBk = NULL;
-HBITMAP g_hbmAlpha;
-HDC g_hdcAlpha;
 
 void DragMainWindow();
 
 
 
 #endif
+
+
+
+
+
+
 
 
 //machine_event g_machineevent;
@@ -113,7 +106,6 @@ int g_iGzLen;
 int g_iStyle;
 
 
-HWND g_hwnd = NULL;
 
 
 double g_dProgress = -1.0;
@@ -125,6 +117,7 @@ bool g_bOfflineInstall = false;
 bool g_bInternetInstall = true;
 
 bool g_bInstallSet = false;
+
 
 
 
@@ -157,38 +150,24 @@ void OnTimer(HWND hwnd, UINT nIDEvent)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+
+   return a_spa::get()->window_proc(hWnd, message, wParam, lParam);
+
+}
+
+
+LRESULT a_spa::window_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
 	switch (message)
 	{
+
    case WM_CREATE:
       {
-         
-         BITMAPINFO info={};
 
-         info.bmiHeader.biSize=sizeof(BITMAPINFOHEADER);
-         info.bmiHeader.biWidth=g_cx;
-         info.bmiHeader.biHeight=-g_cy;
-         info.bmiHeader.biPlanes=1;
-         info.bmiHeader.biBitCount=32;
-         info.bmiHeader.biCompression=BI_RGB;
-         //info.bmiHeader.biSizeImage=g_cx*g_cy * 4;
+         m_hwnd = hWnd;
 
-         LPDWORD lpdata;
-
-         //g_pcolorref = new COLORREF[g_cx * g_cy * sizeof(COLORREF)];
-
-         int iScan;
-
-         g_hbitmap = CreateDIBSection(NULL,&info,DIB_RGB_COLORS,(void **)&g_pcolorref, NULL,NULL);
-
-         g_hdc = ::CreateCompatibleDC(NULL);
-
-         ::SelectObject(g_hdc,g_hbitmap);
-
-         
-
-         memset(g_pcolorref,0,g_cx*g_cy*sizeof(COLORREF));
-
-         ca2_install_canvas_init_draw();
+         m_pcanvas = new spa_canvas(this, 800, 400);
 
          ::SetTimer(hWnd, TIMER_CARET, 100, NULL);
 
@@ -196,29 +175,49 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
       }
       break;
+
 	case WM_PAINT:
-//      OnPaint(hWnd);
-		break;
-	case WM_ERASEBKGND:
-      return TRUE;
-	case WM_MBUTTONDOWN:
-	case WM_RBUTTONDOWN:
-      g_iHealingSurface++;
-      return TRUE;
-   case WM_LBUTTONDOWN:
-      {
-         g_iHealingSurface++;
-         g_bDrag = true;
-         ::GetCursorPos(&g_ptDragStart);
-         ::GetWindowRect(g_hwnd, &g_rectWindowDragStart);
-      };
+
       break;
+
+	case WM_ERASEBKGND:
+      
+      return TRUE;
+
+	case WM_MBUTTONDOWN:
+
+	case WM_RBUTTONDOWN:
+      
+      g_iHealingSurface++;
+      
+      return TRUE;
+
+   case WM_LBUTTONDOWN:
+      
+      {
+         
+         g_iHealingSurface++;
+         
+         g_bDrag = true;
+         
+         ::GetCursorPos(&g_ptDragStart);
+         
+         ::GetWindowRect(hWnd, &g_rectWindowDragStart);
+
+      }
+
+      break;
+
    case WM_MOUSEMOVE:
       {
+
          if(g_bDrag)
          {
+
             DragMainWindow();
+
          }
+
       };
       break;
    case WM_LBUTTONUP:
@@ -226,58 +225,88 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
          if(g_bDrag)
          {
             DragMainWindow();
+
             g_bDrag = false;
+
          }
+
       };
+
       break;
 
 	case WM_DESTROY:
-		PostQuitMessage(0);
-		break;
-   case WM_TIMER:
-      OnTimer(hWnd, wParam);
-      break;
-	default:
-		return DefWindowProc(hWnd, message, wParam, lParam);
-	}
-	return 0;
-}
 
+      m_pcanvas->m_bDraw = false;
+
+      Sleep(1984);
+
+      delete m_pcanvas;
+
+		PostQuitMessage(0);
+
+		break;
+
+   case WM_TIMER:
+
+      OnTimer(hWnd, wParam);
+
+      break;
+
+	default:
+
+		return DefWindowProc(hWnd, message, wParam, lParam);
+
+	}
+
+   return 0;
+
+}
 
 
 DWORD WINAPI thread_proc_draw(LPVOID lpParam)
 {
-   while(g_hwnd != NULL)
+
+   while(a_spa::get() != NULL && a_spa::get()->m_pcanvas != NULL && a_spa::get()->m_pcanvas->m_bDraw)
    {
-      update_layered_window();
+
+      if (!a_spa::get()->m_pcanvas->update_layered_window())
+      {
+
+         break;
+
+      }
+
       Sleep(5);
+
    }
+
    return 0;
+
 }
-
-
-
-
 
 
 string str_replace(const char * psz,const char * pszFind,const char * pszReplace)
 {
+
    return ::str::replace(pszFind,pszReplace,psz);
+
 }
 
 
-
-
-void DragMainWindow()
+void a_spa::DragMainWindow()
 {
+
    POINT ptCursor;
+
    ::GetCursorPos(&ptCursor);
-   ::SetWindowPos(g_hwnd, NULL, 
+
+   ::SetWindowPos(m_hwnd, NULL, 
       ptCursor.x - g_ptDragStart.x + g_rectWindowDragStart.left,
       ptCursor.y - g_ptDragStart.y + g_rectWindowDragStart.top,
       0, 
       0,
       SWP_NOSIZE | SWP_SHOWWINDOW);
+
 /*   if(g_iStyle == 0)
    {
    }
@@ -286,47 +315,82 @@ void DragMainWindow()
       ::SetLayeredWindowAttributes(g_hwnd, 0, (255 * 100) / 100, LWA_ALPHA);
    }
    ::RedrawWindow(g_hwnd, NULL, NULL, RDW_UPDATENOW | RDW_INVALIDATE);*/
+
 }
-
-
-
-
 
 
 int bzuncompress(LPCTSTR lpcszUncompressed,LPCTSTR lpcszGzFileCompressed)
 {
+
    const int iGzUncompressLen = 1024 * 1024;
+
    char * pchGzUncompressBuffer = NULL;
+
    if(pchGzUncompressBuffer == NULL)
    {
+
       pchGzUncompressBuffer = new char[iGzUncompressLen];
+
    }
+
    BZFILE * file = BZ2_bzopen(lpcszGzFileCompressed,"rb");
+
    if(file == NULL)
    {
+
       fprintf(stderr,"bzopen error\n");
+
       return -2;
+
    }
+
    string strUn(lpcszUncompressed);
+
    //   strUn += ".tmp";
+
    FILE * fileUn = fopen(strUn.c_str(),"wb+");
+
    if(fileUn == NULL)
    {
+
       BZ2_bzclose(file);
+
       int err;
+
       _get_errno(&err);
+
       fprintf(stderr,"fopen error\n %d",err);
 
       return -1;
    }
+
    int uncomprLen;
+
    while((uncomprLen = BZ2_bzread(file,pchGzUncompressBuffer,iGzUncompressLen)) > 0)
    {
+
       fwrite(pchGzUncompressBuffer,1,uncomprLen,fileUn);
+
    }
+
    fclose(fileUn);
+
    BZ2_bzclose(file);
-   //   ::CopyFile(strUn.c_str(), lpcszUncompressed, FALSE);
-   //   ::DeleteFile(strUn.c_str());
+
    return 0;
+
 }
+
+
+
+
+a_spa * a_spa::get()
+{
+
+   return s_pspa;
+
+}
+
+
+
+

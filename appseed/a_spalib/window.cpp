@@ -12,7 +12,7 @@ DWORD WINAPI thread_proc_draw(LPVOID lpParam);
 int a_spa::show_spa_window(bool bShow)
 {
 
-   if(g_hwnd == NULL)
+   if(m_hwnd == NULL)
    {
 
       if(!create_spa_window())
@@ -27,13 +27,13 @@ int a_spa::show_spa_window(bool bShow)
    if(bShow)
    {
 
-      ShowWindow(g_hwnd,SW_SHOW);
+      ShowWindow(m_hwnd,SW_SHOW);
 
    }
    else
    {
 
-      ShowWindow(g_hwnd,SW_HIDE);
+      ShowWindow(m_hwnd,SW_HIDE);
 
    }
 
@@ -43,7 +43,7 @@ int a_spa::show_spa_window(bool bShow)
 
 
 
-int create_spa_window()
+int a_spa::create_spa_window()
 {
 
    // Initialize global strings
@@ -72,39 +72,35 @@ int create_spa_window()
 
    LPDWORD lpdata;
 
-   g_hbmAlpha=CreateDIBSection(NULL,&m_Info,DIB_RGB_COLORS,(void **)&lpdata,NULL,NULL);
-   for(int y = 0; y < 584; y++)
-   {
-      for(int x = 0; x < 800; x++)
-      {
-         lpdata++;
-         /*         if(x < 23 || x > 777 || y < 23 || y > 561)
-         {
-         //*lpdata = (*lpdata & 0xffffff) | 0x7f888888;
-         *lpdata = (*lpdata & 0xffffff) | 0x1fffffff;
-         *lpdata = 0xCA888888;
-         }
-         else*/
-         {
-            *lpdata = 0x88888888;
-         }
-      }
-   }
+   //g_hbmAlpha=CreateDIBSection(NULL,&m_Info,DIB_RGB_COLORS,(void **)&lpdata,NULL,NULL);
+   //for(int y = 0; y < 584; y++)
+   //{
+   //   for(int x = 0; x < 800; x++)
+   //   {
+   //      lpdata++;
+   //      /*         if(x < 23 || x > 777 || y < 23 || y > 561)
+   //      {
+   //      //*lpdata = (*lpdata & 0xffffff) | 0x7f888888;
+   //      *lpdata = (*lpdata & 0xffffff) | 0x1fffffff;
+   //      *lpdata = 0xCA888888;
+   //      }
+   //      else*/
+   //      {
+   //         *lpdata = 0x88888888;
+   //      }
+   //   }
+   //}
 
-
+/*
    g_hdcAlpha = ::CreateCompatibleDC(NULL);
    ::SelectObject(g_hdcAlpha,g_hbmAlpha);
-
-
-   g_cx = 800;
-
-   g_cy = 400;
+*/
 
    HWND hWnd = CreateWindow(szWindowClass,szTitle,WS_OVERLAPPED,CW_USEDEFAULT,0,CW_USEDEFAULT,0,NULL,NULL,g_hinstance,NULL);
 
    g_iStyle = 0;
 
-   g_hbrushBk = ::CreateSolidBrush(RGB(255,255,255));
+   //g_hbrushBk = ::CreateSolidBrush(RGB(255,255,255));
 
    if(!hWnd)
    {
@@ -123,7 +119,7 @@ int create_spa_window()
    
    ::SetWindowLong(hWnd,GWL_STYLE,::GetWindowLong(hWnd,GWL_EXSTYLE) & ~(WS_BORDER | WS_CAPTION));
 
-   g_hwnd = hWnd;
+   //g_hwnd = hWnd;
 
    ::CreateThread(NULL,0,thread_proc_draw,NULL,0,0);
 
@@ -134,11 +130,11 @@ int create_spa_window()
    int cyScreen = ::GetSystemMetrics(SM_CYSCREEN);
 
 
-   int x = (cxScreen - g_cx) / 2;
+   int x = (cxScreen - m_pcanvas->m_cx) / 2;
 
-   int y = (cyScreen - g_cy) / 2;
+   int y = (cyScreen - m_pcanvas->m_cy) / 2;
 
-   SetWindowPos(hWnd,NULL,x,y,g_cx,g_cy,SWP_NOCOPYBITS);
+   SetWindowPos(hWnd,NULL,x,y, m_pcanvas->m_cx, m_pcanvas->m_cy,SWP_NOCOPYBITS);
 
    UpdateWindow(hWnd);
 
