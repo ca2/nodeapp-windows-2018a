@@ -357,7 +357,7 @@ int a_spa::spaadmin_main()
 
    trace("***Preparing app.install\r\n");
    trace("Starting app.install\r\n");
-   trace(0.84);
+   //trace(0.84);
 
 
    start_app_install_in_context();
@@ -806,7 +806,7 @@ int a_spa::check_spa_installation()
    straFile.add("spa");
    straFile.add("vcredist");
 
-   if(!file_exists_dup("C:\\ca2\\config\\spa\\no_install_bin_set.txt"))
+   if(!file_exists_dup(dir::a_spa() / "no_install_bin_set.txt"))
    {
 
       straFile.add("install_bin_set");
@@ -1153,11 +1153,18 @@ int a_spa::download_spaadmin_bin()
 
          wstring wstrFile = u16(strTempSpa.c_str());
 
-         sei.cbSize =sizeof(SHELLEXECUTEINFOW);
-         sei.fMask = SEE_MASK_NOASYNC | SEE_MASK_NOCLOSEPROCESS;
-         sei.lpVerb = L"RunAs";
-         sei.lpFile = wstrFile.c_str();
-         ::ShellExecuteExW(&sei);
+         {
+
+            spaadmin_mutex mutexStartup("-startup");
+
+            sei.cbSize = sizeof(SHELLEXECUTEINFOW);
+            sei.fMask = SEE_MASK_NOASYNC | SEE_MASK_NOCLOSEPROCESS;
+            sei.lpVerb = L"RunAs";
+            sei.lpFile = wstrFile.c_str();
+            ::ShellExecuteExW(&sei);
+
+         }
+
          DWORD dwGetLastError = GetLastError();
 
          string str = ::path::a_spaadmin();
@@ -1444,15 +1451,15 @@ void install_bin_item::op_set()
 
    string strDownload =dir::name(strPath) / strFile;
 
-   if (strFile.CompareNoCase("app.install.exe") == 0)
-   {
-
-	   kill_process(strFile);
-
-   }
-
    if(!file_exists_dup(strDownload) || _stricmp(file_md5_dup(strDownload).c_str(),strMd5) != 0)
    {
+
+      if (strFile.CompareNoCase("app.install.exe") == 0)
+      {
+
+         kill_process(strFile);
+
+      }
 
       string strUrl;
 
@@ -1643,15 +1650,15 @@ md5retry:
 
          string strDownload = dir::name(strPath) / straFile[iFile];
 
-         if (straFile[iFile].CompareNoCase("app.install.exe") == 0)
-         {
-
-            kill_process("app.install.exe");
-
-         }
-
          if (!file_exists_dup(strDownload) || _stricmp(file_md5_dup(strDownload).c_str(), straMd5[iFile]) != 0)
          {
+
+            if (straFile[iFile].CompareNoCase("app.install.exe") == 0)
+            {
+
+               kill_process("app.install.exe");
+
+            }
 
             new install_bin_item(this, strUrlPrefix, strPath, straFile[iFile], &lCount, straMd5[iFile], process_platform_dir_name(), lTotal);
 
@@ -1790,7 +1797,7 @@ bool app_install_send_short_message(const char * psz,bool bLaunch,const char * p
    if(!txchannel.open(strChannel,bLaunch ? &launcher : NULL))
       return false;
 
-   txchannel.send(psz,false);
+   txchannel.send(psz,INFINITE);
 
 #endif
 
@@ -2007,6 +2014,8 @@ void start_program_files_spa_admin()
       return;
 
    }
+
+   spaadmin_mutex mutexStartup("-startup");
 
    wstring wstr(str);
 
