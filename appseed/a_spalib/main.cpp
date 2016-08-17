@@ -2,6 +2,9 @@
 #include <shellapi.h>
 #include <shlobj.h>
 
+
+void kill_process(string strImageName);
+
 void gdiplus_start();
 void gdiplus_end();
 
@@ -538,7 +541,7 @@ int a_spa::do_spa(const char * pszId, const char * pszParams)
       strCommandLine += " install";
       strCommandLine += " locale=" + strLocale;
       strCommandLine += " schema=" + strSchema;
-      strCommandLine += " version=stage";
+      strCommandLine += " version=" + m_strVersion;
 
    }
 
@@ -1221,7 +1224,7 @@ string a_spa::download_tmp_spaadmin_bin()
    while(iTry <= 3)
    {
 
-      if(ms_download("http://server.ca2.cc/"+process_platform_dir_name() +"/" + ::path::a_spaadmin().name(), strTempSpa.c_str())
+      if(ms_download("http://server.ca2.cc/"+process_platform_dir_name() + "/" + m_strVersion + "/" + ::path::a_spaadmin().name(), strTempSpa.c_str())
          && file_exists_dup(strTempSpa.c_str())
          && file_length_dup(strTempSpa.c_str()) > 0)
       {
@@ -1251,7 +1254,7 @@ string a_spa::download_tmp_spa_bin()
    while(iTry <= 3)
    {
 
-      if(ms_download("http://server.ca2.cc/" + process_platform_dir_name() + "/" + ::path::a_spa().name(),strTempSpa.c_str())
+      if(ms_download("http://server.ca2.cc/" + process_platform_dir_name() + "/" + m_strVersion + "/" + ::path::a_spa().name(),strTempSpa.c_str())
          && file_exists_dup(strTempSpa.c_str())
          && file_length_dup(strTempSpa.c_str()) > 0)
       {
@@ -1446,12 +1449,8 @@ void install_bin_item::op_set()
    if (strFile.CompareNoCase("app.install.exe") == 0)
    {
 
-      ::file::path pathImage = strDownload;
+	   kill_process(strFile);
 
-      string strImage = pathImage.name();
-
-      ::system("TASKKILL /F /IM " + strImage);
-      
    }
 
    if(!file_exists_dup(strDownload) || _stricmp(file_md5_dup(strDownload).c_str(),strMd5) != 0)
@@ -1649,11 +1648,7 @@ md5retry:
          if (straFile[iFile].CompareNoCase("app.install.exe") == 0)
          {
 
-            ::file::path pathImage = strDownload;
-
-            string strImage = pathImage.name();
-
-            ::system("TASKKILL /F /IM " + strImage);
+            kill_process("app.install.exe");
 
          }
 
@@ -2163,3 +2158,44 @@ void get_system_locale_schema(string & strLocale,string & strSchema)
 }
 
 
+
+// http://stackoverflow.com/questions/7956519/how-to-kill-processes-by-name-win32-api
+// http://stackoverflow.com/users/1055018/jeremy-whitcher
+void kill_process(string strImageName)
+{
+
+	const int maxProcIds = 1024;
+	DWORD procList[maxProcIds];
+	DWORD procCount;
+	char* exeName = "ExeName.exe";
+	char processName[MAX_PATH];
+
+	// get the process by name
+	if (!EnumProcesses(procList, sizeof(procList), &procCount))
+		return;
+
+	// convert from bytes to processes
+	procCount = procCount / sizeof(DWORD);
+
+	// loop through all processes
+	for (DWORD procIdx = 0; procIdx<procCount; procIdx++)
+	{
+		// get a handle to the process
+		HANDLE procHandle = OpenProcess(PROCESS_ALL_ACCESS, FALSE, procList[procIdx]);
+		// get the process name
+		GetProcessImageFileName(procHandle, processName, sizeof(processName));
+		
+		// terminate all pocesses that contain the name
+	
+		if (strImageName.CompareNoCase(processName) == 0)
+		{
+		
+			TerminateProcess(procHandle, 0);
+
+		}
+
+		CloseHandle(procHandle);
+
+	}
+
+}
