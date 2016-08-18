@@ -511,7 +511,13 @@ int a_spa::spalib_main2()
 
       }
 
-      do_spa(strId, strParams);
+      if (do_spa(strId, strParams))
+      {
+
+         break;
+
+      }
+
 
 
    }

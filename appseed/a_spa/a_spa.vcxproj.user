@@ -9,11 +9,11 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='stage|x64'">
-    <LocalDebuggerCommandArguments>C:\Users\camilo\AppData\Local\Temp\app_core_auraclick.spa</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>C:\archive\game_pacman.spa</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|x64'">
-    <LocalDebuggerCommandArguments>C:\Users\camilo\AppData\Local\Temp\app_core_auraclick.spa</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>C:\archive\game_pacman.spa</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>
