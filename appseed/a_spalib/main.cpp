@@ -264,6 +264,15 @@ int32_t a_spa::run()
 int a_spa::spa_main()
 {
 
+   spa_mutex mutex;
+
+   if (mutex.already_exists())
+   {
+
+      return -34;
+
+   }
+
    string str(::GetCommandLineW());
 
    if(str.find(" install ") < 0)
