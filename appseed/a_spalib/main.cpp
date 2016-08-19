@@ -167,19 +167,15 @@ DWORD g_iRet;
 //int ca2_app_install_run(const char * psz,const char * pszParam1,const char * pszParam2,DWORD & dwStartError,bool bSynch);
 
 
-
-
-
-int32_t a_spa::run()
+void a_spa::defer_show_debug_box()
 {
 
-
-   if(::file_exists_dup("C:\\ca2\\config\\spa\\beg_debug_box.txt"))
+   if (::file_exists_dup("C:\\ca2\\config\\spa\\beg_debug_box.txt"))
    {
 
       string str;
 
-      if(spa_get_admin())
+      if (spa_get_admin())
       {
 
          str = "zzzAPPzzz a_spaadmin : ";
@@ -194,9 +190,18 @@ int32_t a_spa::run()
 
       str += string(::GetCommandLineW());
 
-      ::MessageBoxA(NULL,str.c_str(),"zzzAPPzzz a_spa",MB_ICONINFORMATION);
+      ::MessageBoxA(NULL, str.c_str(), "zzzAPPzzz a_spa", MB_ICONINFORMATION);
 
    }
+
+
+}
+
+
+int32_t a_spa::run()
+{
+
+
 
 
    //g_pgdiplusStartupInput     = new Gdiplus::GdiplusStartupInput();
@@ -273,6 +278,8 @@ int a_spa::spa_main()
 
    }
 
+   defer_show_debug_box();
+
    string str(::GetCommandLineW());
 
    if(str.find(" install ") < 0)
@@ -336,6 +343,8 @@ int a_spa::spaadmin_main()
       return 0;
 
    }
+
+   defer_show_debug_box();
 
    trace("--\r\n");
    trace(":::::Installing spa and installer\r\n");
@@ -992,7 +1001,7 @@ string a_spa::download_tmp_vcredist()
    while (iTry <= 3)
    {
 
-      if (ms_download("http://server.ca2.cc/" + process_platform_dir_name() + "/" + ::path::vcredist().name(), strTempSpa.c_str())
+      if (ms_download("https://server.ca2.cc/" + process_platform_dir_name() + "/" + ::path::vcredist().name(), strTempSpa.c_str())
          && file_exists_dup(strTempSpa.c_str())
          && file_length_dup(strTempSpa.c_str()) > 0)
       {
@@ -1244,7 +1253,7 @@ string a_spa::download_tmp_spaadmin_bin()
    while(iTry <= 3)
    {
 
-      if(ms_download("http://server.ca2.cc/"+process_platform_dir_name() + "/" + m_strVersion + "/" + ::path::a_spaadmin().name(), strTempSpa.c_str())
+      if(ms_download("https://server.ca2.cc/"+process_platform_dir_name() + "/" + m_strVersion + "/" + ::path::a_spaadmin().name(), strTempSpa.c_str())
          && file_exists_dup(strTempSpa.c_str())
          && file_length_dup(strTempSpa.c_str()) > 0)
       {
@@ -1274,7 +1283,7 @@ string a_spa::download_tmp_spa_bin()
    while(iTry <= 3)
    {
 
-      if(ms_download("http://server.ca2.cc/" + process_platform_dir_name() + "/" + m_strVersion + "/" + ::path::a_spa().name(),strTempSpa.c_str())
+      if(ms_download("https://server.ca2.cc/" + process_platform_dir_name() + "/" + m_strVersion + "/" + ::path::a_spa().name(),strTempSpa.c_str())
          && file_exists_dup(strTempSpa.c_str())
          && file_length_dup(strTempSpa.c_str()) > 0)
       {
@@ -1305,7 +1314,7 @@ bool a_spa::is_file_ok(const char * path1,const char * pszTemplate,const char * 
 
    string strUrl;
 
-   strUrl = "http://" + m_strVersion + "-server.ca2.cc/api/spaignition/md5?authnone&version=" + m_strVersion + "&stage=";
+   strUrl = "https://" + m_strVersion + "-server.ca2.cc/api/spaignition/md5?authnone&version=" + m_strVersion + "&stage=";
    strUrl += pszTemplate;
    strUrl += "&build=";
    strUrl += strFormatBuild;
@@ -1348,7 +1357,7 @@ bool a_spa::is_file_ok(const stringa & straPath,const stringa & straTemplate,str
 
       string strUrl;
 
-      strUrl = "http://" + m_strVersion + "-server.ca2.cc/api/spaignition/md5a?authnone&version=" + m_strVersion + "&stage=";
+      strUrl = "https://" + m_strVersion + "-server.ca2.cc/api/spaignition/md5a?authnone&version=" + m_strVersion + "&stage=";
       strUrl += straTemplate.implode(",");
       strUrl += "&build=";
       strUrl += strFormatBuild;
@@ -1657,7 +1666,7 @@ md5retry:
 
       trace("Downloading install bin set\r\n");
 
-      string strUrlPrefix = "http://server.ca2.cc/ccvotagus/" + m_strVersion + "/" + strBuild + "/install/" + process_platform_dir_name() + "/";
+      string strUrlPrefix = "https://server.ca2.cc/ccvotagus/" + m_strVersion + "/" + strBuild + "/install/" + process_platform_dir_name() + "/";
 
       //#pragma omp parallel for
       for(int iFile = 0; iFile < straFile.size(); iFile++)
@@ -1725,13 +1734,13 @@ string a_spa::get_latest_build_number(const char * pszVersion)
    else if(pszVersion != NULL && !strcmp(pszVersion,"basis"))
    {
 
-      strSpaIgnitionBaseUrl = "http://server.ca2.cc/api/spaignition";
+      strSpaIgnitionBaseUrl = "https://server.ca2.cc/api/spaignition";
 
    }
    else if(pszVersion != NULL && !strcmp(pszVersion,"stage"))
    {
 
-      strSpaIgnitionBaseUrl = "http://server.ca2.cc/api/spaignition";
+      strSpaIgnitionBaseUrl = "https://server.ca2.cc/api/spaignition";
 
    }
    else
@@ -1742,7 +1751,7 @@ string a_spa::get_latest_build_number(const char * pszVersion)
 
          strVersion = "basis";
 
-         strSpaIgnitionBaseUrl = "http://server.ca2.cc/api/spaignition";
+         strSpaIgnitionBaseUrl = "https://server.ca2.cc/api/spaignition";
 
       }
       else
@@ -1750,7 +1759,7 @@ string a_spa::get_latest_build_number(const char * pszVersion)
 
          strVersion = "stage";
 
-         strSpaIgnitionBaseUrl = "http://server.ca2.cc/api/spaignition";
+         strSpaIgnitionBaseUrl = "https://server.ca2.cc/api/spaignition";
 
       }
 

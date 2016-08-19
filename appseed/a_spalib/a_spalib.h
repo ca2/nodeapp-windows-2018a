@@ -109,6 +109,8 @@ public:
    virtual int spalib_main2();
 
 
+   virtual void defer_show_debug_box();
+
    virtual int spaadmin_main();
    virtual int do_spa(const char * psz, const char * pszParams = NULL);
 

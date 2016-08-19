@@ -37,11 +37,25 @@ SPALIB_API string a_spa::ms_get(const char * pszUrl, bool bCache)
    string strUrl(pszUrl);
    string strHost;
    string strReq;
+   bool bSsl;
    if(strUrl.substr(0, 7) == "http://")
    {
+      bSsl = false;
       size_t iPos = strUrl.find("/", 8);
       strHost = strUrl.substr(7, iPos - 7);
       strReq = strUrl.substr(iPos);
+   }
+   else if (strUrl.substr(0, 8) == "https://")
+   {
+      bSsl = true;
+      size_t iPos = strUrl.find("/", 9);
+      strHost = strUrl.substr(8, iPos - 8);
+      strReq = strUrl.substr(iPos);
+   }
+   else
+   {
+      output_debug_string("Neither http or https!!!\n\n");
+      return "";
    }
    DWORD dwSize = 0;
    DWORD dwDownloaded = 0;
@@ -66,7 +80,7 @@ SPALIB_API string a_spa::ms_get(const char * pszUrl, bool bCache)
          InternetConnect( 
             hSession,
             strHost.c_str(),
-            80, 
+            bSsl ? 443 : 80, 
             NULL,
             NULL,
             INTERNET_SERVICE_HTTP,
@@ -80,6 +94,12 @@ SPALIB_API string a_spa::ms_get(const char * pszUrl, bool bCache)
       dwFlags |= INTERNET_FLAG_NO_CACHE_WRITE;
       dwFlags |= INTERNET_FLAG_PRAGMA_NOCACHE;
       dwFlags |= INTERNET_FLAG_RELOAD;
+      if (bSsl)
+      {
+         dwFlags |= INTERNET_FLAG_SECURE;
+         dwFlags |= INTERNET_FLAG_IGNORE_CERT_CN_INVALID;
+         dwFlags |= INTERNET_FLAG_IGNORE_CERT_DATE_INVALID;
+      }
    }
     
    if(hConnect)
