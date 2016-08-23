@@ -88,21 +88,14 @@ namespace production
             else if(puh->is_type_of(pane_view_update_hint::TypeOnShowView))
             {
                
-//               int32_t iTab;
-   //            if(puh->m_eview == PaneViewContextMenu)
-     //          {
-       //           m_tab._001AddSel(0);
-         //      }
-   //            else
-               {
-               }
-               
             }
+
          }
+
       }
 
-
    }
+
 
    void pane_view::on_show_view()
    {
@@ -357,4 +350,9 @@ namespace production
            }
      }
 
+
 } // namespace production
+
+
+
+
