@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\app.vcxproj", "{19841115-1984-0411-1977-021977151984}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -148,11 +148,21 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_libmpg123", ".
 		{67CAA87B-7CF1-4F93-BB67-21C513F40803} = {67CAA87B-7CF1-4F93-BB67-21C513F40803}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basempg123", "..\..\..\app-veriwell\appseed\libmpg123\libmpg123.vcxproj", "{67CAA87B-7CF1-4F93-BB67-21C513F40803}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mpg123", "..\..\..\app-veriwell\appseed\libmpg123\libmpg123.vcxproj", "{67CAA87B-7CF1-4F93-BB67-21C513F40803}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_wave", "..\..\..\app-core\appseed\audio_decode_wave\audio_decode_wave.vcxproj", "{D620EED4-10A9-4C54-8DEE-A52B9D178A4D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ace", "..\..\..\app\appseed\ace\ace.vcxproj", "{21DCC811-4BCE-4F16-B674-C0941F847127}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_ace", "..\..\..\app\appseed\ace\_ace.vcxproj", "{699D6807-4F43-40E9-86AB-2A8B856707A9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "beampro", "..\..\..\app-core\appseed\beampro\beampro.vcxproj", "{BE190D93-5993-4152-A7EC-8BD783992BD2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_beampro_bot", "..\..\..\app-core\appseed\beampro_bot\beampro_bot.vcxproj", "{97C013A5-76A8-4492-91E4-F4A658767919}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_beampro_client", "..\..\..\app-core\appseed\beampro_client\beampro_client.vcxproj", "{05EA9E72-BBB8-409D-9B40-2BE39ED6BB7C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_beampro_resident", "..\..\..\app-core\appseed\beampro_resident\beampro_resident.vcxproj", "{3104F537-F876-4D96-A90C-8B76BA83F0B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -532,6 +542,46 @@ Global
 		{21DCC811-4BCE-4F16-B674-C0941F847127}.stage|Win32.Build.0 = stage|Win32
 		{21DCC811-4BCE-4F16-B674-C0941F847127}.stage|x64.ActiveCfg = stage|x64
 		{21DCC811-4BCE-4F16-B674-C0941F847127}.stage|x64.Build.0 = stage|x64
+		{699D6807-4F43-40E9-86AB-2A8B856707A9}.basis|Win32.ActiveCfg = basis|Win32
+		{699D6807-4F43-40E9-86AB-2A8B856707A9}.basis|Win32.Build.0 = basis|Win32
+		{699D6807-4F43-40E9-86AB-2A8B856707A9}.basis|x64.ActiveCfg = basis|x64
+		{699D6807-4F43-40E9-86AB-2A8B856707A9}.basis|x64.Build.0 = basis|x64
+		{699D6807-4F43-40E9-86AB-2A8B856707A9}.stage|Win32.ActiveCfg = stage|Win32
+		{699D6807-4F43-40E9-86AB-2A8B856707A9}.stage|Win32.Build.0 = stage|Win32
+		{699D6807-4F43-40E9-86AB-2A8B856707A9}.stage|x64.ActiveCfg = stage|x64
+		{699D6807-4F43-40E9-86AB-2A8B856707A9}.stage|x64.Build.0 = stage|x64
+		{BE190D93-5993-4152-A7EC-8BD783992BD2}.basis|Win32.ActiveCfg = basis|Win32
+		{BE190D93-5993-4152-A7EC-8BD783992BD2}.basis|Win32.Build.0 = basis|Win32
+		{BE190D93-5993-4152-A7EC-8BD783992BD2}.basis|x64.ActiveCfg = basis|x64
+		{BE190D93-5993-4152-A7EC-8BD783992BD2}.basis|x64.Build.0 = basis|x64
+		{BE190D93-5993-4152-A7EC-8BD783992BD2}.stage|Win32.ActiveCfg = stage|Win32
+		{BE190D93-5993-4152-A7EC-8BD783992BD2}.stage|Win32.Build.0 = stage|Win32
+		{BE190D93-5993-4152-A7EC-8BD783992BD2}.stage|x64.ActiveCfg = stage|x64
+		{BE190D93-5993-4152-A7EC-8BD783992BD2}.stage|x64.Build.0 = stage|x64
+		{97C013A5-76A8-4492-91E4-F4A658767919}.basis|Win32.ActiveCfg = basis|Win32
+		{97C013A5-76A8-4492-91E4-F4A658767919}.basis|Win32.Build.0 = basis|Win32
+		{97C013A5-76A8-4492-91E4-F4A658767919}.basis|x64.ActiveCfg = basis|x64
+		{97C013A5-76A8-4492-91E4-F4A658767919}.basis|x64.Build.0 = basis|x64
+		{97C013A5-76A8-4492-91E4-F4A658767919}.stage|Win32.ActiveCfg = stage|Win32
+		{97C013A5-76A8-4492-91E4-F4A658767919}.stage|Win32.Build.0 = stage|Win32
+		{97C013A5-76A8-4492-91E4-F4A658767919}.stage|x64.ActiveCfg = stage|x64
+		{97C013A5-76A8-4492-91E4-F4A658767919}.stage|x64.Build.0 = stage|x64
+		{05EA9E72-BBB8-409D-9B40-2BE39ED6BB7C}.basis|Win32.ActiveCfg = basis|Win32
+		{05EA9E72-BBB8-409D-9B40-2BE39ED6BB7C}.basis|Win32.Build.0 = basis|Win32
+		{05EA9E72-BBB8-409D-9B40-2BE39ED6BB7C}.basis|x64.ActiveCfg = basis|x64
+		{05EA9E72-BBB8-409D-9B40-2BE39ED6BB7C}.basis|x64.Build.0 = basis|x64
+		{05EA9E72-BBB8-409D-9B40-2BE39ED6BB7C}.stage|Win32.ActiveCfg = stage|Win32
+		{05EA9E72-BBB8-409D-9B40-2BE39ED6BB7C}.stage|Win32.Build.0 = stage|Win32
+		{05EA9E72-BBB8-409D-9B40-2BE39ED6BB7C}.stage|x64.ActiveCfg = stage|x64
+		{05EA9E72-BBB8-409D-9B40-2BE39ED6BB7C}.stage|x64.Build.0 = stage|x64
+		{3104F537-F876-4D96-A90C-8B76BA83F0B5}.basis|Win32.ActiveCfg = basis|Win32
+		{3104F537-F876-4D96-A90C-8B76BA83F0B5}.basis|Win32.Build.0 = basis|Win32
+		{3104F537-F876-4D96-A90C-8B76BA83F0B5}.basis|x64.ActiveCfg = basis|x64
+		{3104F537-F876-4D96-A90C-8B76BA83F0B5}.basis|x64.Build.0 = basis|x64
+		{3104F537-F876-4D96-A90C-8B76BA83F0B5}.stage|Win32.ActiveCfg = stage|Win32
+		{3104F537-F876-4D96-A90C-8B76BA83F0B5}.stage|Win32.Build.0 = stage|Win32
+		{3104F537-F876-4D96-A90C-8B76BA83F0B5}.stage|x64.ActiveCfg = stage|x64
+		{3104F537-F876-4D96-A90C-8B76BA83F0B5}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
