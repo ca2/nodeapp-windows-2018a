@@ -83,8 +83,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app._", "..\..\..\app-core\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axis", "..\..\..\app\appseed\axis\axis.vcxproj", "{73A245F9-C92F-4487-AEF7-CB0531F665BD}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mpg123", "..\..\..\app-veriwell\appseed\libmpg123\libmpg123.vcxproj", "{67CAA87B-7CF1-4F93-BB67-21C513F40803}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wndfrm_core", "..\..\..\app-core\appseed\wndfrm_core\wndfrm_core.vcxproj", "{E2D7833B-9B59-4826-BBDF-C270A2115E86}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "aura", "..\..\..\app\appseed\aura\aura.vcxproj", "{03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}"
@@ -116,7 +114,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_veriwell_verisimplevide
 		{C12F946A-2A59-4566-B650-D6A84408B165} = {C12F946A-2A59-4566-B650-D6A84408B165}
 		{00845177-0000-0000-0000-000000000000} = {00845177-0000-0000-0000-000000000000}
 		{FCEBB077-A523-4949-B958-9F7879E56067} = {FCEBB077-A523-4949-B958-9F7879E56067}
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803} = {67CAA87B-7CF1-4F93-BB67-21C513F40803}
 		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB} = {1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}
 		{21DA4A8C-5A05-40A4-BF5B-FF62B9778451} = {21DA4A8C-5A05-40A4-BF5B-FF62B9778451}
 		{21DA4A8C-5A05-40A4-BF5B-FF62B9DDD150} = {21DA4A8C-5A05-40A4-BF5B-FF62B9DDD150}
@@ -145,6 +142,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_ace", "..\..\..\app\appseed\ace\_ace.vcxproj", "{699D6807-4F43-40E9-86AB-2A8B856707A9}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axisfreeimage", "..\..\..\app\appseed\freeimage\axisfreeimage.vcxproj", "{B39ED2B3-D53A-4077-B957-930979A3577D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5} = {03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "image_decode_jpeg", "..\..\..\app\appseed\image_jpeg\axis_image_jpeg.vcxproj", "{84517713-2000-419D-A87F-4338C9DDE3FA}"
 EndProject
@@ -756,34 +756,6 @@ Global
 		{73A245F9-C92F-4487-AEF7-CB0531F665BD}.static_basis|Win32.Build.0 = basis|Win32
 		{73A245F9-C92F-4487-AEF7-CB0531F665BD}.static_basis|x64.ActiveCfg = basis|x64
 		{73A245F9-C92F-4487-AEF7-CB0531F665BD}.static_basis|x64.Build.0 = basis|x64
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.basis|Win32.ActiveCfg = basis|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.basis|Win32.Build.0 = basis|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.basis|x64.ActiveCfg = basis|x64
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.basis|x64.Build.0 = basis|x64
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.codeanalysis|Win32.ActiveCfg = stage|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.codeanalysis|Win32.Build.0 = stage|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.codeanalysis|x64.ActiveCfg = stage|x64
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.codeanalysis|x64.Build.0 = stage|x64
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.memdleak|Win32.ActiveCfg = stage|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.memdleak|Win32.Build.0 = stage|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.memdleak|x64.ActiveCfg = stage|x64
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.memdleak|x64.Build.0 = stage|x64
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.no_precompiled_header|Win32.ActiveCfg = stage|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.no_precompiled_header|Win32.Build.0 = stage|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.no_precompiled_header|x64.ActiveCfg = stage|x64
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.no_precompiled_header|x64.Build.0 = stage|x64
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.profiler|Win32.ActiveCfg = stage|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.profiler|Win32.Build.0 = stage|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.profiler|x64.ActiveCfg = stage|x64
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.profiler|x64.Build.0 = stage|x64
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.stage|Win32.ActiveCfg = stage|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.stage|Win32.Build.0 = stage|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.stage|x64.ActiveCfg = stage|x64
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.stage|x64.Build.0 = stage|x64
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.static_basis|Win32.ActiveCfg = basis|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.static_basis|Win32.Build.0 = basis|Win32
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.static_basis|x64.ActiveCfg = basis|x64
-		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.static_basis|x64.Build.0 = basis|x64
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.basis|Win32.ActiveCfg = basis|Win32
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.basis|Win32.Build.0 = basis|Win32
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.basis|x64.ActiveCfg = basis|x64
