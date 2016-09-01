@@ -2352,9 +2352,7 @@ namespace draw2d_gdiplus
       if (area() <= 0 || pdib->area() <= 0)
          return;
 
-      Gdiplus::RectF rectDest(0, 0, (Gdiplus::REAL) m_size.cx, (Gdiplus::REAL) m_size.cy);
-
-      Gdiplus::RectF rectSource(0, 0, (Gdiplus::REAL) pdib->m_size.cx, (Gdiplus::REAL) pdib->m_size.cy);
+      Gdiplus::Rect rectDest(0, 0, m_size.cx,  m_size.cy);
 
       unmap();
       pdib->unmap();
@@ -2363,7 +2361,7 @@ namespace draw2d_gdiplus
 
       m_spgraphics->SetStretchBltMode(HALFTONE);
 
-      ((Gdiplus::Graphics * ) m_spgraphics->get_os_data())->DrawImage(((Gdiplus::Bitmap *)pdib->get_bitmap()->get_os_data()), rectDest, rectSource, Gdiplus::UnitPixel);
+      ((Gdiplus::Graphics * ) m_spgraphics->get_os_data())->DrawImage(((Gdiplus::Bitmap *)pdib->get_bitmap()->get_os_data()), rectDest, 0, 0, pdib->m_size.cx, pdib->m_size.cy, Gdiplus::UnitPixel);
 
    }
 

@@ -1339,16 +1339,16 @@ gdi_fallback:
       if(pgraphicsSrc == NULL)
          return FALSE;
 
-      Gdiplus::RectF dstRect((Gdiplus::REAL) xDst, (Gdiplus::REAL) yDst, (Gdiplus::REAL) nDstWidth, (Gdiplus::REAL) nDstHeight);
+      Gdiplus::Rect dstRect( xDst,  yDst, nDstWidth, nDstHeight);
 
-      Gdiplus::RectF srcRect((Gdiplus::REAL) xSrc, (Gdiplus::REAL) ySrc, (Gdiplus::REAL) nSrcWidth, (Gdiplus::REAL) nSrcHeight);
+//      Gdiplus::Rect srcRect( xSrc, ySrc,  nSrcWidth, nSrcHeight);
 
       if(pgraphicsSrc == NULL || pgraphicsSrc->get_current_bitmap() == NULL)
          return false;
 
       try
       {
-         return m_pgraphics->DrawImage((Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data(),  dstRect, srcRect, Gdiplus::UnitPixel) == Gdiplus::Status::Ok;
+         return m_pgraphics->DrawImage((Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data(),  dstRect, xSrc, ySrc, nSrcWidth, nSrcHeight, Gdiplus::UnitPixel) == Gdiplus::Status::Ok;
       }
       catch(...)
       {
