@@ -90,8 +90,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_clockverse", "..\.
 		{54850FD8-653A-43B6-AA90-E59AC030559C} = {54850FD8-653A-43B6-AA90-E59AC030559C}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4E526DEE-F4AB-4254-B3EB-C36AEEA6264A}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axisfreeimage", "..\..\..\app\appseed\freeimage\axisfreeimage.vcxproj", "{B39ED2B3-D53A-4077-B957-930979A3577D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5} = {03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}
