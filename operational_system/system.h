@@ -21,6 +21,10 @@ typedef unsigned int    unichar32;
 
 
 
+#define WINBOOL BOOL
+
+
+
 
 
 
