@@ -80,6 +80,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_verifile", "..\..\
 		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB} = {1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gcom", "..\..\..\app-core\appseed\gcom\gcom.vcxproj", "{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
@@ -658,6 +660,34 @@ Global
 		{736FAF53-E163-4D5F-94FA-E3DCF2EC43AB}.static_basis|Win32.Build.0 = basis|Win32
 		{736FAF53-E163-4D5F-94FA-E3DCF2EC43AB}.static_basis|x64.ActiveCfg = basis|x64
 		{736FAF53-E163-4D5F-94FA-E3DCF2EC43AB}.static_basis|x64.Build.0 = basis|x64
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.basis|Win32.ActiveCfg = basis|Win32
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.basis|Win32.Build.0 = basis|Win32
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.basis|x64.ActiveCfg = basis|x64
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.basis|x64.Build.0 = basis|x64
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.codeanalysis|Win32.ActiveCfg = basis|Win32
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.codeanalysis|Win32.Build.0 = basis|Win32
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.codeanalysis|x64.ActiveCfg = basis|x64
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.codeanalysis|x64.Build.0 = basis|x64
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.memdleak|Win32.ActiveCfg = basis|Win32
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.memdleak|Win32.Build.0 = basis|Win32
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.memdleak|x64.ActiveCfg = basis|x64
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.memdleak|x64.Build.0 = basis|x64
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.no_precompiled_header|Win32.ActiveCfg = basis|Win32
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.no_precompiled_header|Win32.Build.0 = basis|Win32
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.no_precompiled_header|x64.ActiveCfg = basis|x64
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.no_precompiled_header|x64.Build.0 = basis|x64
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.profiler|Win32.ActiveCfg = basis|Win32
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.profiler|Win32.Build.0 = basis|Win32
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.profiler|x64.ActiveCfg = basis|x64
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.profiler|x64.Build.0 = basis|x64
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.stage|Win32.ActiveCfg = stage|Win32
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.stage|Win32.Build.0 = stage|Win32
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.stage|x64.ActiveCfg = stage|x64
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.stage|x64.Build.0 = stage|x64
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.static_basis|Win32.ActiveCfg = basis|Win32
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.static_basis|Win32.Build.0 = basis|Win32
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.static_basis|x64.ActiveCfg = basis|x64
+		{F30BD15A-0EB5-4FA6-88D3-3B4604A41B4E}.static_basis|x64.Build.0 = basis|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
