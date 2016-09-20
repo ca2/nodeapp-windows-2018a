@@ -4501,19 +4501,19 @@ namespace draw2d_gdiplus
          switch(m_etextrendering)
          {
          case ::draw2d::text_rendering_anti_alias:
-            //m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
+            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
             m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
             break;
          case ::draw2d::text_rendering_anti_alias_grid_fit:
-            //m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
+            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
             m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
             break;
          case ::draw2d::text_rendering_single_bit_per_pixel:
-            //m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
+            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
             m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintSingleBitPerPixel);
             break;
          case ::draw2d::text_rendering_clear_type_grid_fit:
-            //m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
+            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
             m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintClearTypeGridFit);
             break;
          }
