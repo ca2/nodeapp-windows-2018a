@@ -1,8 +1,6 @@
 #pragma once
 
 
-#define MEMDLEAK 0
-
 //#define __VLD
 
 //#define __MCRTDBG

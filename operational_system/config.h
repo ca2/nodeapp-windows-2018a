@@ -1,6 +1,9 @@
 #pragma once
 
 
+#include "config_memdleak.h"
+
+
 #if !defined(_DLL)
 #define CUBE
 #endif
