@@ -22,7 +22,13 @@ typedef unsigned int    unichar32;
 
 
 #define WINBOOL BOOL
+#define WINUCHAR UCHAR
 #define WINULONG ULONG
+#define PWINUCHAR PUCHAR
+#define PWINULONG PULONG
+#define WINUSHORT USHORT
+
+
 
 
 
