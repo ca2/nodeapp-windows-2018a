@@ -24,8 +24,6 @@ namespace music
          namespace player
          {
 
-            class player_callback;
-            class player_interface;
 
 
 
