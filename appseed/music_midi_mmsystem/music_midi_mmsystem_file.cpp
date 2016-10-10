@@ -261,41 +261,48 @@ smf_Open_File_Cleanup:
          *****************************************************************************/
          e_result buffer::CloseFile()
          {
-            cslock sl(&m_cs);
+            
+            synch_lock sl(m_pmutex);
+
             SetOpened(false);
+
             delete_contents();
+
             return ::music::success;
+
          }
 
 
          void buffer::delete_contents()
          {
-            cslock sl(&m_cs);
-            SetOpened(false);
+            
+            synch_lock sl(m_pmutex);
 
+            SetOpened(false);
 
             m_ptracks->clear();
 
-
             m_tempomap.remove_all();
-
 
             m_bPendingLyric = false;
 
-
             for(int32_t i = 0; i < m_mepaOnQuarterNote.get_size(); i++)
             {
-               delete m_mepaOnQuarterNote.element_at(i);
-            }
-            m_mepaOnQuarterNote.remove_all();
 
+               delete m_mepaOnQuarterNote.element_at(i);
+
+            }
+
+            m_mepaOnQuarterNote.remove_all();
 
             for(int32_t i = 0; i < m_mepaImmediate.get_size(); i++)
             {
-               delete m_mepaImmediate.element_at(i);
-            }
-            m_mepaImmediate.remove_all();
 
+               delete m_mepaImmediate.element_at(i);
+
+            }
+
+            m_mepaImmediate.remove_all();
 
             m_tkLength              = 0;
             m_dwFormat              = 0;
@@ -306,15 +313,12 @@ smf_Open_File_Cleanup:
             m_cbPendingUserEvent    = 0;
             m_hpbPendingUserEvent   = 0;
 
-
             m_iKeyShift             = 0;
             m_dTempoShift           = 0.0;
 
             m_pFileHeader           = NULL;
 
          }
-
-
 
 
          /******************************************************************************
@@ -372,9 +376,15 @@ smf_Open_File_Cleanup:
          *****************************************************************************/
          int_ptr buffer::TicksToMillisecs(imedia_position tkOffset)
          {
-            cslock sl(&m_cs);
-            if(!IsOpened())
-               return 0xffffffff;
+
+            synch_lock sl(m_pmutex);
+
+            if (!IsOpened())
+            {
+             
+               return ::numeric_info < int_ptr >::allset_value();
+
+            }
 
             ::music::midi::tempo_map_entry *  ptempo;
             int32_t                  idx;
@@ -461,13 +471,21 @@ smf_Open_File_Cleanup:
          imedia_position buffer::MillisecsToTicks(imedia_time msOffset)
          {
 
-            cslock sl(&m_cs);
+            synch_lock sl(m_pmutex);
 
-            if(!IsOpened())
-               return 0xffffffff;
+            if (!IsOpened())
+            {
 
-            if(m_tempomap.get_size() <= 0)
-               return 0x80000000;
+               return ::numeric_info < imedia_position >::allset_value();
+
+            }
+
+            if (m_tempomap.get_size() <= 0)
+            {
+
+               return ::numeric_info < imedia_position >::minimum_value();
+
+            }
 
             ::music::midi::tempo_map_entry *    ptempo;
             int32_t                      idx;
