@@ -124,6 +124,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_mmsystem", "..\..\app
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_commander", "..\..\..\app-core\appseed\commander\commander.vcxproj", "{73544CBD-8909-40D1-89C3-D5F33894313A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_timer", "..\..\..\app-core\appseed\timer\timer.vcxproj", "{19845177-C614-4A5D-BB61-197885151104}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "userdatetime", "..\..\..\app-core\appseed\userdatetime\userdatetime.vcxproj", "{51042284-1115-7704-027F-4338C9DDE3FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
@@ -396,6 +400,22 @@ Global
 		{73544CBD-8909-40D1-89C3-D5F33894313A}.stage|Win32.Build.0 = stage|Win32
 		{73544CBD-8909-40D1-89C3-D5F33894313A}.stage|x64.ActiveCfg = stage|x64
 		{73544CBD-8909-40D1-89C3-D5F33894313A}.stage|x64.Build.0 = stage|x64
+		{19845177-C614-4A5D-BB61-197885151104}.basis|Win32.ActiveCfg = basis|Win32
+		{19845177-C614-4A5D-BB61-197885151104}.basis|Win32.Build.0 = basis|Win32
+		{19845177-C614-4A5D-BB61-197885151104}.basis|x64.ActiveCfg = basis|x64
+		{19845177-C614-4A5D-BB61-197885151104}.basis|x64.Build.0 = basis|x64
+		{19845177-C614-4A5D-BB61-197885151104}.stage|Win32.ActiveCfg = stage|Win32
+		{19845177-C614-4A5D-BB61-197885151104}.stage|Win32.Build.0 = stage|Win32
+		{19845177-C614-4A5D-BB61-197885151104}.stage|x64.ActiveCfg = stage|x64
+		{19845177-C614-4A5D-BB61-197885151104}.stage|x64.Build.0 = stage|x64
+		{51042284-1115-7704-027F-4338C9DDE3FA}.basis|Win32.ActiveCfg = basis|Win32
+		{51042284-1115-7704-027F-4338C9DDE3FA}.basis|Win32.Build.0 = basis|Win32
+		{51042284-1115-7704-027F-4338C9DDE3FA}.basis|x64.ActiveCfg = basis|x64
+		{51042284-1115-7704-027F-4338C9DDE3FA}.basis|x64.Build.0 = basis|x64
+		{51042284-1115-7704-027F-4338C9DDE3FA}.stage|Win32.ActiveCfg = stage|Win32
+		{51042284-1115-7704-027F-4338C9DDE3FA}.stage|Win32.Build.0 = stage|Win32
+		{51042284-1115-7704-027F-4338C9DDE3FA}.stage|x64.ActiveCfg = stage|x64
+		{51042284-1115-7704-027F-4338C9DDE3FA}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
