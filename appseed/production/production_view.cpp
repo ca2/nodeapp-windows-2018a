@@ -452,7 +452,7 @@ namespace production
          if(!m_pproduction->m_bFinished)
          {
             m_pproduction->m_dwEndTick = ::GetTickCount();
-            _001RedrawWindow();
+            RedrawWindow();
          }
 
       }
@@ -506,7 +506,7 @@ namespace production
                m_sizeTotal.cy = 80;
             }
          }
-         _001RedrawWindow();
+         RedrawWindow();
       }
       else if(pbase->m_wparam == 2)
       {

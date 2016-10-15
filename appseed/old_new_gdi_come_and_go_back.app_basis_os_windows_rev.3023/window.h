@@ -234,7 +234,7 @@ namespace win
       virtual void UnlockWindowUpdate();
       virtual BOOL RedrawWindow(LPCRECT lpRectUpdate = NULL,
          ::ca::rgn* prgnUpdate = NULL,
-         UINT flags = RDW_INVALIDATE | RDW_UPDATENOW | RDW_ERASE);
+         UINT flags = RDW_INVALIDATE | RDW_ERASE);
       virtual BOOL EnableScrollBar(int nSBFlags, UINT nArrowFlags = ESB_ENABLE_BOTH);
 
       virtual BOOL DrawAnimatedRects(int idAni, CONST RECT *lprcFrom, CONST RECT *lprcTo);
@@ -431,7 +431,7 @@ namespace win
       //virtual void HtmlHelp(DWORD_PTR dwData, UINT nCmd = 0x000F);
       virtual void WinHelpInternal(DWORD_PTR dwData, UINT nCmd = HELP_CONTEXT);
 
-   // layout and other functions
+   // on_layout and other functions
    /*   void RepositionBars(const char * pszPrefix, const char * pszIdLeftOver,
          UINT nFlag = reposDefault, LPRECT lpRectParam = NULL,
          LPCRECT lpRectClient = NULL, BOOL bStretch = TRUE);*/

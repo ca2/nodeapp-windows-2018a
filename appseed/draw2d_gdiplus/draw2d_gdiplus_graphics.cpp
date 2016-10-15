@@ -4262,7 +4262,7 @@ gdi_fallback:
       Gdiplus::PointF origin(0, 0);
 
 
-      // Generate a layout rect for the text
+      // Generate a on_layout rect for the text
 
       Gdiplus::RectF layoutRect(0, 0, 10000, 10000);
       Gdiplus::Status status = ((graphics *)this)->m_pgraphics->MeasureString( wstr, (INT) nCount, ((graphics *)this)->gdiplus_font(), origin, &layoutRect );

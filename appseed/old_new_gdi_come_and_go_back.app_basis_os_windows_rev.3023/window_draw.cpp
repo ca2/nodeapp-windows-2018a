@@ -289,7 +289,7 @@ namespace win
                (bWin4 ? WM_PRINT : WM_PAINT),
                (WPARAM)((dynamic_cast<::win::graphics * >(pgraphics))->get_os_data()),
                (LPARAM)(bWin4 ? PRF_CHILDREN | PRF_CLIENT : 0));
-            //::RedrawWindow(hwndParam, NULL, rgnClient, RDW_INVALIDATE | RDW_UPDATENOW | RDW_NOCHILDREN);
+            //::RedrawWindow(hwndParam, NULL, rgnClient, RDW_INVALIDATE | RDW_NOCHILDREN);
          }
       }
 

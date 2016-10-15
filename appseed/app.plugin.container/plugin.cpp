@@ -233,7 +233,7 @@ install:
 
       App(pplugin->m_papp).GetThread()->SetMainWnd(pplugin->m_pframe);
       pplugin->m_pframe->m_bCustomFrame = false;
-      pplugin->m_pframe->GetParent()->layout();*/
+      pplugin->m_pframe->GetParent()->on_layout();*/
 
 
 
