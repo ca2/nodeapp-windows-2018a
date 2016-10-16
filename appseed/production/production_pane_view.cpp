@@ -229,7 +229,7 @@ namespace production
          break;
       case PaneViewConfiguration:
       {
-         sp(::user::document) pdoc = Session.userex()->create_form(this, pcreatordata->m_pholder);
+         sp(::user::document) pdoc = Application.create_form(this, pcreatordata->m_pholder);
          if(pdoc == NULL)
             return;
          sp(::user::impact) pview = pdoc->get_view();
