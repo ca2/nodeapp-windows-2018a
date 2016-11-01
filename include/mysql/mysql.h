@@ -1,4 +1,4 @@
-/* Copyright (c) 2000, 2013, Oracle and/or its affiliates. All rights reserved.
+/* Copyright (c) 2000, 2014, Oracle and/or its affiliates. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -26,12 +26,6 @@
 #ifndef _mysql_h
 #define _mysql_h
 
-#ifdef _WIN32
-#ifndef _WINSOCKAPI_
-#define _WINSOCKAPI_
-#endif
-#endif
-
 #ifdef	__cplusplus
 extern "C" {
 #endif
@@ -49,6 +43,10 @@ typedef char my_bool;
 
 #ifndef my_socket_defined
 #ifdef _WIN32
+#include <windows.h>
+#ifdef WIN32_LEAN_AND_MEAN
+#include <winsock2.h>
+#endif
 #define my_socket SOCKET
 #else
 typedef int my_socket;
@@ -61,6 +59,9 @@ typedef int my_socket;
 #include "mysql_time.h"
 
 #include "my_list.h" /* for LISTs used in 'MYSQL' and 'MYSQL_STMT' */
+
+/* Include declarations of plug-in API */
+#include "mysql/client_plugin.h"
 
 extern unsigned int mysql_port;
 extern char *mysql_unix_port;
@@ -161,7 +162,8 @@ enum mysql_option
   MYSQL_OPT_CONNECT_ATTR_DELETE,
   MYSQL_SERVER_PUBLIC_KEY,
   MYSQL_ENABLE_CLEARTEXT_PLUGIN,
-  MYSQL_OPT_CAN_HANDLE_EXPIRED_PASSWORDS
+  MYSQL_OPT_CAN_HANDLE_EXPIRED_PASSWORDS,
+  MYSQL_OPT_SSL_ENFORCE
 };
 
 /**
@@ -205,8 +207,7 @@ struct st_mysql_options {
     */
     char *bind_address;
   } ci;
-  /* Refuse client connecting to server if it uses old (pre-4.1.1) protocol */
-  my_bool secure_auth;
+  my_bool unused5;
   /* 0 - never report, 1 - always report (default) */
   my_bool report_data_truncation;
 
@@ -239,8 +240,8 @@ typedef struct character_set
   const char        *name;      /* character set name                */
   const char        *comment;   /* comment                           */
   const char        *dir;       /* character set directory           */
-  unsigned int      mbminlen;   /* MIN. length for multibyte strings */
-  unsigned int      mbmaxlen;   /* MAX. length for multibyte strings */
+  unsigned int      mbminlen;   /* min. length for multibyte strings */
+  unsigned int      mbmaxlen;   /* max. length for multibyte strings */
 } MY_CHARSET_INFO;
 
 struct st_mysql_methods;
@@ -410,6 +411,14 @@ MYSQL_RES *     STDCALL mysql_use_result(MYSQL *mysql);
 void        STDCALL mysql_get_character_set_info(MYSQL *mysql,
                            MY_CHARSET_INFO *charset);
 
+int STDCALL mysql_session_track_get_first(MYSQL *mysql,
+                                          enum enum_session_state_type type,
+                                          const char **data,
+                                          size_t *length);
+int STDCALL mysql_session_track_get_next(MYSQL *mysql,
+                                         enum enum_session_state_type type,
+                                         const char **data,
+                                         size_t *length);
 /* local infile support */
 
 #define LOCAL_INFILE_ERROR_LEN 512
@@ -453,6 +462,8 @@ int		STDCALL mysql_options(MYSQL *mysql,enum mysql_option option,
 				      const void *arg);
 int		STDCALL mysql_options4(MYSQL *mysql,enum mysql_option option,
                                        const void *arg1, const void *arg2);
+int             STDCALL mysql_get_option(MYSQL *mysql, enum mysql_option option,
+                                         const void *arg);
 void		STDCALL mysql_free_result(MYSQL_RES *result);
 void		STDCALL mysql_data_seek(MYSQL_RES *result,
 					my_ulonglong offset);
@@ -477,7 +488,7 @@ void 		STDCALL myodbc_remove_escape(MYSQL *mysql,char *name);
 unsigned int	STDCALL mysql_thread_safe(void);
 my_bool		STDCALL mysql_embedded(void);
 my_bool         STDCALL mysql_read_query_result(MYSQL *mysql);
-
+int             STDCALL mysql_reset_connection(MYSQL *mysql);
 
 /*
   The following definitions are added for the enhanced 
@@ -571,7 +582,7 @@ typedef struct st_mysql_bind
   /* output buffer length, must be set when fetching str/binary */
   unsigned long buffer_length;
   unsigned long offset;           /* offset position for char/binary fetch */
-  unsigned long	length_value;     /* Used if length is 0 */
+  unsigned long length_value;     /* Used if length is 0 */
   unsigned int	param_number;	  /* For null count and error messages */
   unsigned int  pack_length;	  /* Internal length for packed data */
   enum enum_field_types buffer_type;	/* buffer type */

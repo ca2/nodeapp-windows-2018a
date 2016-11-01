@@ -12,6 +12,7 @@
  * ECDH support in OpenSSL originally developed by
  * SUN MICROSYSTEMS, INC., and contributed to the OpenSSL project.
  */
+#pragma once
 
 #ifndef HEADER_X509_H
 # define HEADER_X509_H
@@ -72,11 +73,17 @@ typedef struct X509_name_entry_st X509_NAME_ENTRY;
 
 DEFINE_STACK_OF(X509_NAME_ENTRY)
 
+#undef X509_NAME
+
 DEFINE_STACK_OF(X509_NAME)
 
 # define X509_EX_V_NETSCAPE_HACK         0x8000
 # define X509_EX_V_INIT                  0x0001
 typedef struct X509_extension_st X509_EXTENSION;
+
+#undef X509_EXTENSION
+
+#undef X509_EXTENSIONS
 
 typedef STACK_OF(X509_EXTENSION) X509_EXTENSIONS;
 

@@ -1,4 +1,4 @@
-/* Copyright (c) 2000, 2013, Oracle and/or its affiliates. All rights reserved.
+/* Copyright (c) 2000, 2014, Oracle and/or its affiliates. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -42,6 +42,14 @@
 #define TABLE_PARTITION_COMMENT_MAXLEN 1024
 
 /*
+  Maximum length of protocol packet.
+  OK packet length limit also restricted to this value as any length greater
+  than this value will have first byte of OK packet to be 254 thus does not
+  provide a means to identify if this is OK or EOF packet.
+*/
+#define MAX_PACKET_LENGTH (256L*256L*256L-1)
+
+/*
   USER_HOST_BUFF_SIZE -- length of string buffer, that is enough to contain
   username and hostname parts of the user identifier with trailing zero in
   MySQL standard format:
@@ -72,7 +80,7 @@ enum enum_server_command
   COM_TABLE_DUMP, COM_CONNECT_OUT, COM_REGISTER_SLAVE,
   COM_STMT_PREPARE, COM_STMT_EXECUTE, COM_STMT_SEND_LONG_DATA, COM_STMT_CLOSE,
   COM_STMT_RESET, COM_SET_OPTION, COM_STMT_FETCH, COM_DAEMON,
-  COM_BINLOG_DUMP_GTID,
+  COM_BINLOG_DUMP_GTID, COM_RESET_CONNECTION,
   /* don't forget to update const char *command_name[] in sql_parse.cc */
 
   /* Must be last */
@@ -85,10 +93,9 @@ enum enum_server_command
   obfuscated password, recieved from client
 */
 #define SCRAMBLE_LENGTH 20
-#define SCRAMBLE_LENGTH_323 8
+#define AUTH_PLUGIN_DATA_PART_1_LENGTH 8
 /* length of password stored in the db: new passwords are preceeded with '*' */
 #define SCRAMBLED_PASSWORD_CHAR_LENGTH (SCRAMBLE_LENGTH*2+1)
-#define SCRAMBLED_PASSWORD_CHAR_LENGTH_323 (SCRAMBLE_LENGTH_323*2)
 
 
 #define NOT_NULL_FLAG	1		/* Field can't be NULL */
@@ -125,6 +132,8 @@ enum enum_server_command
 #define FIELD_FLAGS_COLUMN_FORMAT 24    /* Field column format, bit 24-25 */
 #define FIELD_FLAGS_COLUMN_FORMAT_MASK (3 << FIELD_FLAGS_COLUMN_FORMAT)
 #define FIELD_IS_DROPPED (1<< 26)       /* Intern: Field is being dropped */
+#define EXPLICIT_NULL_FLAG (1<< 27)     /* Field is explicitly specified as
+                                           NULL by the user */
 
 #define REFRESH_GRANT		1	/* Refresh grant tables */
 #define REFRESH_LOG		2	/* Start on new log file */
@@ -153,6 +162,7 @@ enum enum_server_command
 #define REFRESH_DES_KEY_FILE	0x40000L
 #define REFRESH_USER_RESOURCES	0x80000L
 #define REFRESH_FOR_EXPORT      0x100000L /* FLUSH TABLES ... FOR EXPORT */
+#define REFRESH_OPTIMIZER_COSTS 0x200000L /* FLUSH OPTIMIZER_COSTS */
 
 #define CLIENT_LONG_PASSWORD	1	/* new more secure passwords */
 #define CLIENT_FOUND_ROWS	2	/* Found instead of affected rows */
@@ -169,7 +179,7 @@ enum enum_server_command
 #define CLIENT_IGNORE_SIGPIPE   4096    /* IGNORE sigpipes */
 #define CLIENT_TRANSACTIONS	8192	/* Client knows about transactions */
 #define CLIENT_RESERVED         16384   /* Old flag for 4.1 protocol  */
-#define CLIENT_SECURE_CONNECTION 32768  /* New 4.1 authentication */
+#define CLIENT_RESERVED2        32768   /* Old flag for 4.1 authentication */
 #define CLIENT_MULTI_STATEMENTS (1UL << 16) /* Enable/disable multi-stmt support */
 #define CLIENT_MULTI_RESULTS    (1UL << 17) /* Enable/disable multi-results */
 #define CLIENT_PS_MULTI_RESULTS (1UL << 18) /* Multi-results in PS-protocol */
@@ -182,6 +192,14 @@ enum enum_server_command
 
 /* Don't close the connection for a connection with expired password. */
 #define CLIENT_CAN_HANDLE_EXPIRED_PASSWORDS (1UL << 22)
+
+/**
+  Capable of handling server state change information. Its a hint to the
+  server to include the state change information in Ok packet.
+*/
+#define CLIENT_SESSION_TRACK (1UL << 23)
+/* Client no longer needs EOF packet */
+#define CLIENT_DEPRECATE_EOF (1UL << 24)
 
 #define CLIENT_SSL_VERIFY_SERVER_CERT (1UL << 30)
 #define CLIENT_REMEMBER_OPTIONS (1UL << 31)
@@ -208,7 +226,7 @@ enum enum_server_command
                            | CLIENT_IGNORE_SIGPIPE \
                            | CLIENT_TRANSACTIONS \
                            | CLIENT_RESERVED \
-                           | CLIENT_SECURE_CONNECTION \
+                           | CLIENT_RESERVED2 \
                            | CLIENT_MULTI_STATEMENTS \
                            | CLIENT_MULTI_RESULTS \
                            | CLIENT_PS_MULTI_RESULTS \
@@ -218,6 +236,8 @@ enum enum_server_command
                            | CLIENT_CONNECT_ATTRS \
                            | CLIENT_PLUGIN_AUTH_LENENC_CLIENT_DATA \
                            | CLIENT_CAN_HANDLE_EXPIRED_PASSWORDS \
+                           | CLIENT_SESSION_TRACK \
+                           | CLIENT_DEPRECATE_EOF \
 )
 
 /*
@@ -276,6 +296,11 @@ enum enum_server_command
 */
 #define SERVER_STATUS_IN_TRANS_READONLY 8192
 
+/**
+  This status flag, when on, implies that one of the state information has
+  changed on the server because of the execution of the last statement.
+*/
+#define SERVER_SESSION_STATE_CHANGED (1UL << 14)
 
 /**
   Server status flags that must be cleared when starting
@@ -292,7 +317,8 @@ enum enum_server_command
                                  SERVER_QUERY_WAS_SLOW |\
                                  SERVER_STATUS_DB_DROPPED |\
                                  SERVER_STATUS_CURSOR_EXISTS|\
-                                 SERVER_STATUS_LAST_ROW_SENT)
+                                 SERVER_STATUS_LAST_ROW_SENT|\
+                                 SERVER_SESSION_STATE_CHANGED)
 
 #define MYSQL_ERRMSG_SIZE	512
 #define NET_READ_TIMEOUT	30		/* Timeout on read */
@@ -470,6 +496,27 @@ enum enum_mysql_set_option
   MYSQL_OPTION_MULTI_STATEMENTS_OFF
 };
 
+/*
+  Type of state change information that the server can include in the Ok
+  packet.
+  Note : 1) session_state_type shouldn't go past 255 (i.e. 1-byte boundary).
+         2) Modify the definition of SESSION_TRACK_END when a new member is
+	    added.
+*/
+enum enum_session_state_type
+{
+  SESSION_TRACK_SYSTEM_VARIABLES,                       /* Session system variables */
+  SESSION_TRACK_SCHEMA,                          /* Current schema */
+  SESSION_TRACK_STATE_CHANGE                  /* track session state changes */
+};
+
+#define SESSION_TRACK_BEGIN SESSION_TRACK_SYSTEM_VARIABLES
+
+#define SESSION_TRACK_END SESSION_TRACK_STATE_CHANGE
+
+#define IS_SESSION_STATE_TYPE(T) \
+  (((int)(T) >= SESSION_TRACK_BEGIN) && ((T) <= SESSION_TRACK_END))
+
 #define net_new_transaction(net) ((net)->pkt_nr=0)
 
 #ifdef __cplusplus
@@ -586,6 +633,7 @@ void my_thread_end(void);
 ulong STDCALL net_field_length(uchar **packet);
 my_ulonglong net_field_length_ll(uchar **packet);
 uchar *net_store_length(uchar *pkg, ulonglong length);
+unsigned int net_length_size(ulonglong num);
 #endif
 
 #ifdef __cplusplus

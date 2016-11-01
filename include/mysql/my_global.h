@@ -1,5 +1,5 @@
 /*
-   Copyright (c) 2001, 2013, Oracle and/or its affiliates. All rights reserved.
+   Copyright (c) 2001, 2014, Oracle and/or its affiliates. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,6 +19,56 @@
 
 /* This is the include file that should be included 'first' in every C file. */
 
+#include "my_config.h"
+
+#define __STDC_LIMIT_MACROS	/* Enable C99 limit macros */
+#define __STDC_FORMAT_MACROS	/* Enable C99 printf format macros */
+#define _USE_MATH_DEFINES       /* Get access to M_PI, M_E, etc. in math.h */
+
+#ifdef _WIN32
+/* Include common headers.*/
+# include <winsock2.h>
+# include <ws2tcpip.h> /* SOCKET */
+# include <io.h>       /* access(), chmod() */
+#endif
+
+#include <stdio.h>
+#include <stdarg.h>
+#include <stdlib.h>
+#include <stddef.h>
+#include <math.h>
+#include <limits.h>
+#include <float.h>
+#include <fcntl.h>
+#include <time.h>
+#include <errno.h>				/* Recommended by debian */
+#include <sys/types.h>
+
+#ifdef HAVE_SYS_SOCKET_H
+#include <sys/socket.h>
+#endif
+#if !defined(_WIN32)
+#include <netdb.h>
+#endif
+#ifdef MY_MSCRT_DEBUG
+#include <crtdbg.h>
+#endif
+
+/*
+  A lot of our programs uses asserts, so better to always include it
+  This also fixes a problem when people uses DBUG_ASSERT without including
+  assert.h
+*/
+#include <assert.h>
+
+/* Include standard definitions of operator new and delete. */
+#ifdef __cplusplus
+# include <new>
+#endif
+
+#include "my_compiler.h"
+
+
 /*
   InnoDB depends on some MySQL internals which other plugins should not
   need.  This is because of InnoDB's foreign key support, "safe" binlog
@@ -30,10 +80,6 @@
 */
 #define INNODB_COMPATIBILITY_HOOKS
 
-#if defined(i386) && !defined(__i386__)
-#define __i386__
-#endif
-
 /* Macros to make switching between C and C++ mode easier */
 #ifdef __cplusplus
 #define C_MODE_START    extern "C" {
@@ -42,13 +88,6 @@
 #define C_MODE_START
 #define C_MODE_END
 #endif
-
-#ifdef __cplusplus
-#define CPP_UNNAMED_NS_START  namespace {
-#define CPP_UNNAMED_NS_END    }
-#endif
-
-#include <my_config.h>
 
 #ifdef WITH_PERFSCHEMA_STORAGE_ENGINE
 #define HAVE_PSI_INTERFACE
@@ -61,18 +100,7 @@
 #define IF_WIN(A,B) B
 #endif
 
-#ifdef HAVE_purify
-#define IF_PURIFY(A,B) A
-#else
-#define IF_PURIFY(A,B) B
-#endif
-
 #if defined (_WIN32)
-
-#ifndef _CRT_SECURE_NO_WARNINGS
-#define _CRT_SECURE_NO_WARNINGS
-#endif
-
 /*
  off_t is 32 bit long. We do not use C runtime functions
  with off_t but native Win32 file IO APIs, that work with
@@ -80,21 +108,6 @@
 */
 #undef SIZEOF_OFF_T
 #define SIZEOF_OFF_T 8
-
-/*
- Prevent inclusion of  Windows GDI headers - they define symbol
- ERROR that conflicts with mysql headers.
-*/
-#ifndef NOGDI
-#define NOGDI
-#endif
-
-/* Include common headers.*/
-
-#include <winsock2.h>
-#include <ws2tcpip.h> /* SOCKET */
-#include <io.h>       /* access(), chmod() */
-#include <process.h>  /* getpid() */
 
 #define sleep(a) Sleep((a)*1000)
 
@@ -109,141 +122,29 @@
 #define F_UNLCK 3
 #define F_TO_EOF 0x3FFFFFFF
 
+#define O_NONBLOCK 1    /* For emulation of fcntl() */
+
+/*
+  SHUT_RDWR is called SD_BOTH in windows and
+  is defined to 2 in winsock2.h
+  #define SD_BOTH 0x02
+*/
+#define SHUT_RDWR 0x02
+
 /* Shared memory and named pipe connections are supported. */
 #define shared_memory_buffer_length 16000
 #define default_shared_memory_base_name "MYSQL"
 #endif /* _WIN32*/
 
-/*
-  The macros below are borrowed from include/linux/compiler.h in the
-  Linux kernel. Use them to indicate the likelyhood of the truthfulness
-  of a condition. This serves two purposes - newer versions of gcc will be
-  able to optimize for branch predication, which could yield siginficant
-  performance gains in frequently executed sections of the code, and the
-  other reason to use them is for documentation
+/**
+  Cast a member of a structure to the structure that contains it.
+
+  @param  ptr     Pointer to the member.
+  @param  type    Type of the structure that contains the member.
+  @param  member  Name of the member within the structure.
 */
-
-#if !defined(__GNUC__) || (__GNUC__ == 2 && __GNUC_MINOR__ < 96)
-#define __builtin_expect(x, expected_value) (x)
-#endif
-
-#define likely(x)	__builtin_expect((x),1)
-#define unlikely(x)	__builtin_expect((x),0)
-
-/* Fix problem with S_ISLNK() on Linux */
-#if defined(TARGET_OS_LINUX) || defined(__GLIBC__)
-#undef  _GNU_SOURCE
-#define _GNU_SOURCE 1
-#endif
-
-/*
-  Temporary solution to solve bug#7156. Include "sys/types.h" before
-  the thread headers, else the function madvise() will not be defined
-*/
-#if defined(HAVE_SYS_TYPES_H) && ( defined(sun) || defined(__sun) )
-#include <sys/types.h>
-#endif
-
-#define __EXTENSIONS__ 1	/* We want some extension */
-
-/*
-  Solaris 9 include file <sys/feature_tests.h> refers to X/Open document
-
-    System Interfaces and Headers, Issue 5
-
-  saying we should define _XOPEN_SOURCE=500 to get POSIX.1c prototypes,
-  but apparently other systems (namely FreeBSD) don't agree.
-
-  On a newer Solaris 10, the above file recognizes also _XOPEN_SOURCE=600.
-  Furthermore, it tests that if a program requires older standard
-  (_XOPEN_SOURCE<600 or _POSIX_C_SOURCE<200112L) it cannot be
-  run on a new compiler (that defines _STDC_C99) and issues an #error.
-  It's also an #error if a program requires new standard (_XOPEN_SOURCE=600
-  or _POSIX_C_SOURCE=200112L) and a compiler does not define _STDC_C99.
-
-  To add more to this mess, Sun Studio C compiler defines _STDC_C99 while
-  C++ compiler does not!
-
-  So, in a desperate attempt to get correct prototypes for both
-  C and C++ code, we define either _XOPEN_SOURCE=600 or _XOPEN_SOURCE=500
-  depending on the compiler's announced C standard support.
-
-  Cleaner solutions are welcome.
-*/
-#ifdef __sun
-#if __STDC_VERSION__ - 0 >= 199901L
-#define _XOPEN_SOURCE 600
-#else
-#define _XOPEN_SOURCE 500
-#endif
-#endif
-
-#if !defined(_WIN32)
-#ifndef _POSIX_PTHREAD_SEMANTICS
-#define _POSIX_PTHREAD_SEMANTICS /* We want posix threads */
-#endif
-
-#define _REENTRANT	1	/* Some thread libraries require this */
-
-#if !defined(_THREAD_SAFE)
-#define _THREAD_SAFE            /* Required for OSF1 */
-#endif
-#include <pthread.h>
-#endif /* !defined(_WIN32) */
-
-#if defined(_lint) && !defined(lint)
-#define lint
-#endif
-
-#ifndef stdin
-#include <stdio.h>
-#endif
-#include <stdarg.h>
-#include <stdlib.h>
-#include <stddef.h>
-
-#include <math.h>
-#include <limits.h>
-#include <float.h>
-#ifdef HAVE_FENV_H
-#include <fenv.h> /* For fesetround() */
-#endif
-
-#ifdef HAVE_SYS_TYPES_H
-#include <sys/types.h>
-#endif
-#ifdef HAVE_FCNTL_H
-#include <fcntl.h>
-#endif
-#if TIME_WITH_SYS_TIME
-# include <sys/time.h>
-# include <time.h>
-#else
-# if HAVE_SYS_TIME_H
-#  include <sys/time.h>
-# else
-#  include <time.h>
-# endif
-#endif /* TIME_WITH_SYS_TIME */
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-#ifdef HAVE_ALLOCA_H
-#include <alloca.h>
-#endif
-
-#include <errno.h>				/* Recommended by debian */
-/* We need the following to go around a problem with openssl on solaris */
-#if defined(HAVE_CRYPT_H)
-#include <crypt.h>
-#endif
-
-/*
-  A lot of our programs uses asserts, so better to always include it
-  This also fixes a problem when people uses DBUG_ASSERT without including
-  assert.h
-*/
-#include <assert.h>
+#define my_container_of(ptr, type, member)              \
+  ((type *)((char *)ptr - offsetof(type, member)))
 
 /* an assert that works at compile-time. only for constant expression */
 #define compile_time_assert(X)                                              \
@@ -252,33 +153,9 @@
     typedef char compile_time_assert[(X) ? 1 : -1] __attribute__((unused)); \
   } while(0)
 
-/* Declare madvise where it is not declared for C++, like Solaris */
-#if HAVE_MADVISE && !HAVE_DECL_MADVISE && defined(__cplusplus)
-extern "C" int madvise(void *addr, size_t len, int behav);
-#endif
-
 #define QUOTE_ARG(x)		#x	/* Quote argument (before cpp) */
 #define STRINGIFY_ARG(x) QUOTE_ARG(x)	/* Quote argument, after cpp */
 
-/* Does the system remember a signal handler after a signal ? */
-#if !defined(HAVE_BSD_SIGNALS) && !defined(HAVE_SIGACTION)
-#define SIGNAL_HANDLER_RESET_ON_DELIVERY
-#endif
-
-/*
-  Deprecated workaround for false-positive uninitialized variables
-  warnings. Those should be silenced using tool-specific heuristics.
-
-  Enabled by default for g++ due to the bug referenced below.
-*/
-#if defined(_lint) || defined(FORCE_INIT_OF_VARS) || \
-    (defined(__GNUC__) && defined(__cplusplus))
-#define LINT_INIT(var) var= 0
-#else
-#define LINT_INIT(var)
-#endif
-
-#ifndef SO_EXT
 #ifdef _WIN32
 #define SO_EXT ".dll"
 #elif defined(__APPLE__)
@@ -286,31 +163,14 @@ extern "C" int madvise(void *addr, size_t len, int behav);
 #else
 #define SO_EXT ".so"
 #endif
-#endif
-
-/*
-   Suppress uninitialized variable warning without generating code.
-
-   The _cplusplus is a temporary workaround for C++ code pending a fix
-   for a g++ bug (http://gcc.gnu.org/bugzilla/show_bug.cgi?id=34772).
-*/
-#if defined(_lint) || defined(FORCE_INIT_OF_VARS) || \
-    defined(__cplusplus) || !defined(__GNUC__)
-#define UNINIT_VAR(x) x= 0
-#else
-/* GCC specific self-initialization which inhibits the warning. */
-#define UNINIT_VAR(x) x= x
-#endif
 
 #if !defined(HAVE_UINT)
-#undef HAVE_UINT
-#define HAVE_UINT
 typedef unsigned int uint;
 typedef unsigned short ushort;
 #endif
 
 #define swap_variables(t, a, b) { t dummy; dummy= a; a= b; b= dummy; }
-#define test(a)		((a) ? 1 : 0)
+#define MY_TEST(a)		((a) ? 1 : 0)
 #define set_if_bigger(a,b)  do { if ((a) < (b)) (a)=(b); } while(0)
 #define set_if_smaller(a,b) do { if ((a) > (b)) (a)=(b); } while(0)
 #define test_all_bits(a,b) (((a) & (b)) == (b))
@@ -322,21 +182,6 @@ typedef unsigned short ushort;
 #define FALSE		(0)	/* Logical false */
 #endif
 
-#include <my_compiler.h>
-
-/* The DBUG_ON flag always takes precedence over default DBUG_OFF */
-#if defined(DBUG_ON) && defined(DBUG_OFF)
-#undef DBUG_OFF
-#endif
-
-/* We might be forced to turn debug off, if not turned off already */
-#if (defined(FORCE_DBUG_OFF) || defined(_lint)) && !defined(DBUG_OFF)
-#  define DBUG_OFF
-#  ifdef DBUG_ON
-#    undef DBUG_ON
-#  endif
-#endif
-
 /* Some types that is different between systems */
 
 typedef int	File;		/* File descriptor */
@@ -346,37 +191,29 @@ typedef SOCKET my_socket;
 typedef int	my_socket;	/* File descriptor for sockets */
 #define INVALID_SOCKET -1
 #endif
-/* Type for fuctions that handles signals */
-#define sig_handler RETSIGTYPE
 C_MODE_START
 typedef void	(*sig_return)();/* Returns type from signal */
 C_MODE_END
-#if defined(__GNUC__) && !defined(_lint)
+#if defined(__GNUC__)
 typedef char	pchar;		/* Mixed prototypes can take char */
-typedef char	puchar;		/* Mixed prototypes can take char */
 typedef char	pbool;		/* Mixed prototypes can take char */
-typedef short	pshort;		/* Mixed prototypes can take short int */
-typedef float	pfloat;		/* Mixed prototypes can take float */
 #else
 typedef int	pchar;		/* Mixed prototypes can't take char */
-typedef uint	puchar;		/* Mixed prototypes can't take char */
 typedef int	pbool;		/* Mixed prototypes can't take char */
-typedef int	pshort;		/* Mixed prototypes can't take short int */
-typedef double	pfloat;		/* Mixed prototypes can't take float */
 #endif
 C_MODE_START
 typedef int	(*qsort_cmp)(const void *,const void *);
 typedef int	(*qsort_cmp2)(const void*, const void *,const void *);
 C_MODE_END
-#define qsort_t RETQSORTTYPE	/* Broken GCC cant handle typedef !!!! */
-#ifdef HAVE_SYS_SOCKET_H
-#include <sys/socket.h>
+#ifdef _WIN32
+typedef int       socket_len_t;
+typedef int       sigset_t;
+typedef int       mode_t;
+typedef SSIZE_T   ssize_t;
+#else
+typedef socklen_t socket_len_t;
 #endif
-typedef SOCKET_SIZE_TYPE size_socket;
-
-#ifndef SOCKOPT_OPTLEN_TYPE
-#define SOCKOPT_OPTLEN_TYPE size_socket
-#endif
+typedef socket_len_t SOCKET_SIZE_TYPE; /* Used by NDB */
 
 /* file create flags */
 
@@ -432,7 +269,6 @@ typedef SOCKET_SIZE_TYPE size_socket;
 #define FN_ROOTDIR	"\\"
 #define FN_DEVCHAR	':'
 #define FN_NETWORK_DRIVES	/* Uses \\ to indicate network drives */
-#define FN_NO_CASE_SENCE	/* Files are not case-sensitive */
 #else
 #define FN_LIBCHAR	'/'
 #define FN_LIBCHAR2	'/'
@@ -442,7 +278,7 @@ typedef SOCKET_SIZE_TYPE size_socket;
 #define FN_ROOTDIR	"/"
 #endif
 
-/*
+/* 
   MY_FILE_MIN is  Windows speciality and is used to quickly detect
   the mismatch of CRT and mysys file IO usage on Windows at runtime.
   CRT file descriptors can be in the range 0-2047, whereas descriptors returned
@@ -460,25 +296,23 @@ typedef SOCKET_SIZE_TYPE size_socket;
 #define MY_FILE_MIN  0
 #endif
 
-/*
+/* 
   MY_NFILE is the default size of my_file_info array.
 
   It is larger on Windows, because it all file handles are stored in my_file_info
-  Default size is 16384 and this should be enough for most cases.If it is not
-  enough, --MAX-open-files with larger value can be used.
+  Default size is 16384 and this should be enough for most cases.If it is not 
+  enough, --max-open-files with larger value can be used.
 
   For Posix , my_file_info array is only used to store filenames for
   error reporting and its size is not a limitation for number of open files.
-*/
+*/ 
 #ifdef _WIN32
 #define MY_NFILE (16384 + MY_FILE_MIN)
 #else
 #define MY_NFILE 64
 #endif
 
-#ifndef OS_FILE_LIMIT
 #define OS_FILE_LIMIT	UINT_MAX
-#endif
 
 /*
   Io buffer size; Must be a power of 2 and a multiple of 512. May be
@@ -504,12 +338,7 @@ typedef SOCKET_SIZE_TYPE size_socket;
 
 /* Some defines of functions for portability */
 
-#ifndef _WIN32
-#undef closesocket
-#define closesocket(A)	close(A)
-#endif
-
-#if (_MSC_VER)
+#if (_WIN32)
 #if !defined(_WIN64)
 inline double my_ulonglong2double(unsigned long long value)
 {
@@ -530,7 +359,7 @@ inline unsigned long long my_double2ulonglong(double d)
   return (unsigned long long) d;
 }
 #define double2ulonglong my_double2ulonglong
-#endif
+#endif /* _WIN32 */
 
 #ifndef ulonglong2double
 #define ulonglong2double(A) ((double) (ulonglong) (A))
@@ -539,41 +368,6 @@ inline unsigned long long my_double2ulonglong(double d)
 #ifndef double2ulonglong
 #define double2ulonglong(A) ((ulonglong) (double) (A))
 #endif
-
-#define ulong_to_double(X) ((double) (ulong) (X))
-
-#ifndef STACK_DIRECTION
-#error "please add -DSTACK_DIRECTION=1 or -1 to your CPPFLAGS"
-#endif
-
-#if !defined(HAVE_STRTOK_R)
-#define strtok_r(A,B,C) strtok((A),(B))
-#endif
-
-/* This is from the old m-machine.h file */
-
-#if SIZEOF_LONG_LONG > 4
-#define HAVE_LONG_LONG 1
-#endif
-
-/*
-  Some pre-ANSI-C99 systems like AIX 5.1 and Linux/GCC 2.95 define
-  ULONGLONG_MAX, LONGLONG_MIN, LONGLONG_MAX; we use them if they're defined.
-*/
-
-#if defined(HAVE_LONG_LONG) && !defined(LONGLONG_MIN)
-#define LONGLONG_MIN	((long long) 0x8000000000000000LL)
-#define LONGLONG_MAX	((long long) 0x7FFFFFFFFFFFFFFFLL)
-#endif
-
-#if defined(HAVE_LONG_LONG) && !defined(ULONGLONG_MAX)
-/* First check for ANSI C99 definition: */
-#ifdef ULLONG_MAX
-#define ULONGLONG_MAX  ULLONG_MAX
-#else
-#define ULONGLONG_MAX ((unsigned long long)(~0ULL))
-#endif
-#endif /* defined (HAVE_LONG_LONG) && !defined(ULONGLONG_MAX)*/
 
 #define INT_MIN64       (~0x7FFFFFFFFFFFFFFFLL)
 #define INT_MAX64       0x7FFFFFFFFFFFFFFFLL
@@ -590,49 +384,32 @@ inline unsigned long long my_double2ulonglong(double d)
 #define INT_MAX8        0x7F
 #define UINT_MAX8       0xFF
 
-/* From limits.h instead */
-#ifndef DBL_MIN
-#define DBL_MIN		4.94065645841246544e-324
-#define FLT_MIN		((float)1.40129846432481707e-45)
-#endif
-#ifndef DBL_MAX
-#define DBL_MAX		1.79769313486231470e+308
-#define FLT_MAX		((float)3.40282346638528860e+38)
-#endif
 #ifndef SIZE_T_MAX
 #define SIZE_T_MAX      (~((size_t) 0))
 #endif
 
-#ifndef isfinite
-#ifdef HAVE_FINITE
-#define isfinite(x) finite(x)
+#if (__cplusplus >= 201103L)
+  /* For C++11 use the new std functions rather than C99 macros. */
+  #include <cmath>
+  #define my_isfinite(X) std::isfinite(X)
+  #define my_isnan(X) std::isnan(X)
+  #define my_isinf(X) std::isinf(X)
 #else
-#define finite(x) (1.0 / fabs(x) > 0.0)
-#endif /* HAVE_FINITE */
-#endif /* isfinite */
-
-#include <math.h>
-C_MODE_START
-extern double my_double_isnan(double x);
-C_MODE_END
-
-#ifdef HAVE_ISINF
-/* System-provided isinf() is available and safe to use */
-#define my_isinf(X) isinf(X)
-#else /* !HAVE_ISINF */
-#define my_isinf(X) (!finite(X) && !isnan(X))
-#endif
-
-/* Define missing math constants. */
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
-#ifndef M_E
-#define M_E 2.7182818284590452354
-#endif
-#ifndef M_LN2
-#define M_LN2 0.69314718055994530942
-#endif
+  #ifdef HAVE_LLVM_LIBCPP /* finite is deprecated in libc++ */
+    #define my_isfinite(X) isfinite(X)
+  #elif defined _WIN32
+    #define my_isfinite(X) _finite(X)
+  #else
+    #define my_isfinite(X) finite(X)
+  #endif
+  #define my_isnan(X) isnan(X)
+  #ifdef HAVE_ISINF
+    /* System-provided isinf() is available and safe to use */
+    #define my_isinf(X) isinf(X)
+  #else /* !HAVE_ISINF */
+    #define my_isinf(X) (!my_isfinite(X) && !my_isnan(X))
+  #endif
+#endif /* __cplusplus >= 201103L */
 
 /*
   Max size that must be added to a so that we know Size to make
@@ -667,10 +444,6 @@ typedef long long	my_ptrdiff_t;
 
 #define NullS		(char *) 0
 
-#ifdef STDCALL
-#undef STDCALL
-#endif
-
 #ifdef _WIN32
 #define STDCALL __stdcall
 #else
@@ -679,7 +452,7 @@ typedef long long	my_ptrdiff_t;
 
 /* Typdefs for easyier portability */
 
-//typedef unsigned char	uchar;	/* Short for unsigned char */
+typedef unsigned char	uchar;	/* Short for unsigned char */
 typedef signed char int8;       /* Signed integer >= 8  bits */
 typedef unsigned char uint8;    /* Unsigned integer >= 8  bits */
 typedef short int16;
@@ -694,23 +467,16 @@ typedef unsigned long uint32;
 #error Neither int or long is of 4 bytes width
 #endif
 
-#if !defined(HAVE_ULONG) && !defined(__USE_MISC)
+#if !defined(HAVE_ULONG)
 typedef unsigned long	ulong;		  /* Short for unsigned long */
 #endif
-#ifndef longlong_defined
-/*
-  Using [unsigned] long long is preferable as [u]longlong because we use
-  [unsigned] long long unconditionally in many places,
+/* 
+  Using [unsigned] long long is preferable as [u]longlong because we use 
+  [unsigned] long long unconditionally in many places, 
   for example in constants with [U]LL suffix.
 */
-#if defined(HAVE_LONG_LONG) && SIZEOF_LONG_LONG == 8
 typedef unsigned long long int ulonglong; /* ulong or unsigned long long */
 typedef long long int	longlong;
-#else
-typedef unsigned long	ulonglong;	  /* ulong or unsigned long long */
-typedef long		longlong;
-#endif
-#endif
 typedef longlong int64;
 typedef ulonglong uint64;
 
@@ -780,27 +546,9 @@ typedef char		my_bool; /* Small bool */
 /* Macros for converting *constants* to the right type */
 #define MYF(v)		(myf) (v)
 
-#ifndef LL
-#ifdef HAVE_LONG_LONG
-#define LL(A) A ## LL
-#else
-#define LL(A) A ## L
-#endif
-#endif
-
-#ifndef ULL
-#ifdef HAVE_LONG_LONG
-#define ULL(A) A ## ULL
-#else
-#define ULL(A) A ## UL
-#endif
-#endif
-
-
 /* Some helper macros */
 #define YESNO(X) ((X) ? "yes" : "no")
 
-#define MY_HOW_OFTEN_TO_ALARM	2	/* How often we want info on screen */
 #define MY_HOW_OFTEN_TO_WRITE	1000	/* How often we want info on screen */
 
 #include <my_byteorder.h>
@@ -811,10 +559,6 @@ typedef char		my_bool; /* Small bool */
 #define MYSQL_UNIVERSAL_CLIENT_CHARSET MYSQL_DEFAULT_CHARSET_NAME
 #endif
 
-#if defined(EMBEDDED_LIBRARY)
-#define NO_EMBEDDED_ACCESS_CHECKS
-#endif
-
 #if defined(_WIN32)
 #define dlsym(lib, name) (void*)GetProcAddress((HMODULE)lib, name)
 #define dlopen(libname, unused) LoadLibraryEx(libname, NULL, 0)
@@ -822,16 +566,6 @@ typedef char		my_bool; /* Small bool */
 #ifndef HAVE_DLOPEN
 #define HAVE_DLOPEN
 #endif
-#endif
-
-#ifdef HAVE_DLOPEN
-#if defined(HAVE_DLFCN_H)
-#include <dlfcn.h>
-#endif
-#endif
-
-#ifndef HAVE_DLERROR
-#ifdef _WIN32
 #define DLERROR_GENERATE(errmsg, error_number) \
   char win_errormsg[2048]; \
   if(FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, \
@@ -848,23 +582,11 @@ typedef char		my_bool; /* Small bool */
     errmsg= ""
 #define dlerror() ""
 #define dlopen_errno GetLastError()
+
 #else /* _WIN32 */
-#define dlerror() "No support for dynamic loading (static build?)"
 #define DLERROR_GENERATE(errmsg, error_number) errmsg= dlerror()
 #define dlopen_errno errno
 #endif /* _WIN32 */
-#else /* HAVE_DLERROR */
-#define DLERROR_GENERATE(errmsg, error_number) errmsg= dlerror()
-#define dlopen_errno errno
-#endif /* HAVE_DLERROR */
-
-
-/*
- *  Include standard definitions of operator new and delete.
- */
-#ifdef __cplusplus
-//#include <new>
-#endif
 
 /* Length of decimal number represented by INT32. */
 #define MY_INT32_NUM_DECIMAL_DIGITS 11U
@@ -876,62 +598,27 @@ typedef char		my_bool; /* Small bool */
 #define MY_MAX(a, b)	((a) > (b) ? (a) : (b))
 #define MY_MIN(a, b)	((a) < (b) ? (a) : (b))
 
-/*
-  Only Linux is known to need an explicit sync of the directory to make sure a
-  file creation/deletion/renaming in(from,to) this directory durable.
-*/
-#ifdef TARGET_OS_LINUX
-#define NEED_EXPLICIT_SYNC_DIR 1
-#endif
-
 #if !defined(__cplusplus) && !defined(bool)
 #define bool In_C_you_should_use_my_bool_instead()
 #endif
 
-#undef __func__
-
-/* Provide __func__ macro definition for platforms that miss it. */
-#if __STDC_VERSION__ < 199901L
-#  if __GNUC__ >= 2
-#    define __func__ __FUNCTION__
-#  else
-#    define __func__ "<unknown>"
-#  endif
-#elif defined(_MSC_VER)
-#  if _MSC_VER < 1300
-#    define __func__ "<unknown>"
-#  else
-#    define __func__ __FUNCTION__
-#  endif
-#else
-#  define __func__ "<unknown>"
-#endif
-
-
-/*
+/* 
   MYSQL_PLUGIN_IMPORT macro is used to export mysqld data
   (i.e variables) for usage in storage engine loadable plugins.
   Outside of Windows, it is dummy.
 */
-#ifndef MYSQL_PLUGIN_IMPORT
 #if (defined(_WIN32) && defined(MYSQL_DYNAMIC_PLUGIN))
 #define MYSQL_PLUGIN_IMPORT __declspec(dllimport)
 #else
 #define MYSQL_PLUGIN_IMPORT
 #endif
-#endif
 
 #include <my_dbug.h>
 
-/* Defines that are unique to the embedded version of MySQL */
-
 #ifdef EMBEDDED_LIBRARY
-
+#define NO_EMBEDDED_ACCESS_CHECKS
 /* Things we don't need in the embedded version of MySQL */
-/* TODO HF add #undef HAVE_VIO if we don't want client in embedded library */
-
 #undef HAVE_OPENSSL
-
 #endif /* EMBEDDED_LIBRARY */
 
 
@@ -942,16 +629,112 @@ enum loglevel {
 };
 
 
-/*
-  Visual Studio before the version 2010 did not have lldiv_t.
-  In Visual Studio 2010, _MSC_VER is defined as 1600.
-*/
-#if defined(_MSC_VER) && (_MSC_VER < 1600)
-typedef struct
+#ifdef _WIN32
+/****************************************************************************
+** Replacements for localtime_r and gmtime_r
+****************************************************************************/
+
+static inline struct tm *localtime_r(const time_t *timep, struct tm *tmp)
 {
-  long long int quot;   /* Quotient.  */
-  long long int rem;    /* Remainder.  */
-} lldiv_t;
-#endif
+  localtime_s(tmp, timep);
+  return tmp;
+}
+
+static inline struct tm *gmtime_r(const time_t *clock, struct tm *res)
+{
+  gmtime_s(res, clock);
+  return res;
+}
+
+
+/*
+  Declare a union to make sure FILETIME is properly aligned
+  so it can be used directly as a 64 bit value. The value
+  stored is in 100ns units.
+*/
+union ft64 {
+  FILETIME ft;
+  __int64 i64;
+ };
+
+//struct timespec {
+//  union ft64 tv;
+//  /* The max timeout value in millisecond for native_cond_timedwait */
+//  long max_timeout_msec;
+//};
+
+#endif /* _WIN32 */
+
+C_MODE_START
+extern ulonglong my_getsystime(void);
+C_MODE_END
+
+static inline void set_timespec_nsec(struct timespec *abstime, ulonglong nsec)
+{
+//#ifndef _WIN32
+  ulonglong now= my_getsystime() + (nsec / 100);
+  abstime->tv_sec=   now / 10000000ULL;
+  abstime->tv_nsec= (now % 10000000ULL) * 100 + (nsec % 100);
+//#else
+//  union ft64 tv;
+//  GetSystemTimeAsFileTime(&tv.ft);
+//  abstime->tv.i64= tv.i64 + (__int64)(nsec / 100);
+//  abstime->max_timeout_msec= (long)(nsec / 1000000);
+//#endif
+}
+
+static inline void set_timespec(struct timespec *abstime, ulonglong sec)
+{
+  set_timespec_nsec(abstime, sec * 1000000000ULL);
+}
+
+/**
+   Compare two timespec structs.
+
+   @retval  1 If ts1 ends after ts2.
+   @retval -1 If ts1 ends before ts2.
+   @retval  0 If ts1 is equal to ts2.
+*/
+static inline int cmp_timespec(struct timespec *ts1, struct timespec *ts2)
+{
+//#ifndef _WIN32
+  if (ts1->tv_sec > ts2->tv_sec ||
+      (ts1->tv_sec == ts2->tv_sec && ts1->tv_nsec > ts2->tv_nsec))
+    return 1;
+  if (ts1->tv_sec < ts2->tv_sec ||
+      (ts1->tv_sec == ts2->tv_sec && ts1->tv_nsec < ts2->tv_nsec))
+    return -1;
+//#else
+//  if (ts1->tv.i64 > ts2->tv.i64)
+//    return 1;
+//  if (ts1->tv.i64 < ts2->tv.i64)
+//    return -1;
+//#endif
+  return 0;
+}
+
+static inline ulonglong diff_timespec(struct timespec *ts1, struct timespec *ts2)
+{
+//#ifndef _WIN32
+  return (ts1->tv_sec - ts2->tv_sec) * 1000000000ULL +
+    ts1->tv_nsec - ts2->tv_nsec;
+//#else
+//  return (ts1->tv.i64 - ts2->tv.i64) * 100;
+//#endif
+}
+
+/* File permissions */
+#define USER_READ       (1L << 0)
+#define USER_WRITE      (1L << 1)
+#define USER_EXECUTE    (1L << 2)
+#define GROUP_READ      (1L << 3)
+#define GROUP_WRITE     (1L << 4)
+#define GROUP_EXECUTE   (1L << 5)
+#define OTHERS_READ     (1L << 6)
+#define OTHERS_WRITE    (1L << 7)
+#define OTHERS_EXECUTE  (1L << 8)
+#define USER_RWX        USER_READ | USER_WRITE | USER_EXECUTE
+#define GROUP_RWX       GROUP_READ | GROUP_WRITE | GROUP_EXECUTE
+#define OTHERS_RWX      OTHERS_READ | OTHERS_WRITE | OTHERS_EXECUTE
 
 #endif  // MY_GLOBAL_INCLUDED

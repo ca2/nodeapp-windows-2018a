@@ -21,15 +21,15 @@
   A wrapper to use OpenSSL/YaSSL PRNGs.
 */
 
-#include <my_global_cc.h>
+#include <my_global.h>
 #include <mysql_com.h>
-#include <limits.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 double my_rnd_ssl(struct rand_struct *rand_st);
+int my_rand_buffer(unsigned char *buffer, size_t buffer_size);
 
 #ifdef __cplusplus
 }

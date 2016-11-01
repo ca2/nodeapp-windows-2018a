@@ -667,11 +667,11 @@ int BIO_sock_init(void);
 # endif
 int BIO_set_tcp_ndelay(int sock, int turn_on);
 
-//DEPRECATEDIN_1_1_0(struct hostent *BIO_gethostbyname(const char *name))
-//DEPRECATEDIN_1_1_0(int BIO_get_port(const char *str, unsigned short *port_ptr))
-//DEPRECATEDIN_1_1_0(int BIO_get_host_ip(const char *str, unsigned char *ip))
-//DEPRECATEDIN_1_1_0(int BIO_get_accept_socket(char *host_port, int mode))
-//DEPRECATEDIN_1_1_0(int BIO_accept(int sock, char **ip_port))
+DEPRECATEDIN_1_1_0(struct hostent *BIO_gethostbyname(const char *name))
+DEPRECATEDIN_1_1_0(int BIO_get_port(const char *str, unsigned short *port_ptr))
+DEPRECATEDIN_1_1_0(int BIO_get_host_ip(const char *str, unsigned char *ip))
+DEPRECATEDIN_1_1_0(int BIO_get_accept_socket(char *host_port, int mode))
+DEPRECATEDIN_1_1_0(int BIO_accept(int sock, char **ip_port))
 
 union BIO_sock_info_u {
     BIO_ADDR *addr;

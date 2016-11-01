@@ -1,4 +1,4 @@
-/* Copyright (c) 2000, 2013, Oracle and/or its affiliates. All rights reserved.
+/* Copyright (c) 2000, 2014, Oracle and/or its affiliates. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,20 +19,7 @@
 #ifndef _my_base_h
 #define _my_base_h
 
-#ifndef stdin				/* Included first in handler */
-#define CHSIZE_USED
-#include <my_global.h>
-#include <my_dir.h>			/* This includes types */
-#include <my_sys.h>
-#include <m_string.h>
-#include <errno.h>
-
-#ifndef EOVERFLOW
-#define EOVERFLOW 84
-#endif
-
-#endif	/* stdin */
-#include <my_list.h>
+#include "my_global.h"
 
 /* The following is bits in the flag parameter to ha_open() */
 
@@ -204,7 +191,9 @@ enum ha_extra_function {
     Prepare table for export
     (e.g. quiesce the table and write table metadata).
   */
-  HA_EXTRA_EXPORT
+  HA_EXTRA_EXPORT,
+  /** Do secondary sort by handler::ref (rowid) after key sort. */
+  HA_EXTRA_SECONDARY_SORT_ROWID
 };
 
 /* Compatible option, to be deleted in 6.0 */
@@ -429,7 +418,7 @@ is the global server default. */
 #define HA_ERR_INDEX_FILE_FULL	136	/* No more room in file */
 #define HA_ERR_END_OF_FILE	137	/* end in next/prev/first/last */
 #define HA_ERR_UNSUPPORTED	138	/* unsupported extension used */
-#define HA_ERR_TO_BIG_ROW	139	/* Too big row */
+#define HA_ERR_TOO_BIG_ROW	139	/* Too big row */
 #define HA_WRONG_CREATE_OPTION	140	/* Wrong create option */
 #define HA_ERR_FOUND_DUPP_UNIQUE 141	/* Dupplicate unique on write */
 #define HA_ERR_UNKNOWN_CHARSET	 142	/* Can't open charset */
@@ -493,8 +482,15 @@ is the global server default. */
 #define HA_ERR_ROW_IN_WRONG_PARTITION 186 /* Row in wrong partition */
 #define HA_ERR_INNODB_READ_ONLY   187    /* InnoDB is in read only mode. */
 #define HA_ERR_FTS_EXCEED_RESULT_CACHE_LIMIT  188 /* FTS query exceeds result cache limit */
-#define HA_ERR_FK_DEPTH_EXCEEDED  189    /* FK cascade depth exceeded */
-#define HA_ERR_LAST               189    /* Copy of last error nr */
+#define HA_ERR_TEMP_FILE_WRITE_FAILURE	189	/* Temporary file write failure */
+#define HA_ERR_INNODB_FORCED_RECOVERY 190	/* Innodb is in force recovery mode */
+#define HA_ERR_FTS_TOO_MANY_WORDS_IN_PHRASE	191 /* Too many words in a phrase */
+#define HA_ERR_FK_DEPTH_EXCEEDED  192    /* FK cascade depth exceeded */
+#define HA_MISSING_CREATE_OPTION  193    /* Option Missing during Create */
+#define HA_ERR_SE_OUT_OF_MEMORY   194    /* Out of memory in storage engine */
+#define HA_ERR_TABLE_CORRUPT      195    /* Table/Clustered index is corrupted. */
+#define HA_ERR_QUERY_INTERRUPTED  196
+#define HA_ERR_LAST               196    /* Copy of last error nr */
 
 /* Number of different errors */
 #define HA_ERR_ERRORS            (HA_ERR_LAST - HA_ERR_FIRST + 1)
@@ -549,7 +545,6 @@ typedef ulong key_part_map;
 #define HA_STATE_BUFF_SAVED	512	/* If current keybuff is info->buff */
 #define HA_STATE_ROW_CHANGED	1024	/* To invalide ROW cache */
 #define HA_STATE_EXTEND_BLOCK	2048
-#define HA_STATE_RNEXT_SAME	4096	/* rnext_same occupied lastkey2 */
 
 /* myisampack expects no more than 32 field types. */
 enum en_fieldtype {
@@ -627,7 +622,7 @@ typedef my_off_t	ha_rows;
 #if SYSTEM_SIZEOF_OFF_T == 4
 #define MAX_FILE_SIZE	INT_MAX32
 #else
-#define MAX_FILE_SIZE	LONGLONG_MAX
+#define MAX_FILE_SIZE	LLONG_MAX
 #endif
 
 #define HA_VARCHAR_PACKLENGTH(field_length) ((field_length) < 256 ? 1 :2)
