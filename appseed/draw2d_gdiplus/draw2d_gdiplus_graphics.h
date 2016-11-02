@@ -334,6 +334,8 @@ namespace draw2d_gdiplus
       virtual size TabbedTextOut(int32_t x, int32_t y, const char * lpszString, strsize nCount,count nTabPositions, LPINT lpnTabStopPositions, int32_t nTabOrigin);
       virtual size TabbedTextOut(int32_t x, int32_t y, const string & str,count nTabPositions, LPINT lpnTabStopPositions, int32_t nTabOrigin);
 
+      
+
       virtual int32_t draw_text(const char * lpszString,strsize nCount,const RECT & lpRect,UINT nFormat);
       virtual int32_t draw_text(const string & str,const RECT & lpRect,UINT nFormat);
 

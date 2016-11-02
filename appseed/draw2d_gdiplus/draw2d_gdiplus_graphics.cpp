@@ -4477,11 +4477,19 @@ namespace draw2d_gdiplus
    bool graphics::TextOut(double x, double y, const char * lpszString, strsize nCount)
    {
 
-      if(m_spfont.is_null())
+      if (m_spfont.is_null())
+      {
+
          return false;
 
-      if (::draw2d::graphics::TextOut(x, y, lpszString, nCount))
+      }
+
+      if (TextOutAlphaBlend(x, y, lpszString, nCount))
+      {
+
          return true;
+
+      }
 
       ::Gdiplus::PointF origin(0, 0);
 
@@ -4492,11 +4500,12 @@ namespace draw2d_gdiplus
       try
       {
 
-         if(m_pgraphics == NULL)
-            return FALSE;
+         if (m_pgraphics == NULL)
+         {
 
-//         m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-//         m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
+            return false;
+
+         }
 
          switch(m_etextrendering)
          {
@@ -4524,31 +4533,29 @@ namespace draw2d_gdiplus
       }
 
 
-      //
-      //m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-      //m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
-      //m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintClearTypeGridFit);
-      //m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
-
-
-
       FLOAT fDpiX = m_pgraphics->GetDpiX();
 
       Gdiplus::Matrix m;
+
       m_pgraphics->GetTransform(&m);
 
-      Gdiplus::Matrix * pmNew;
+      pointer < Gdiplus::Matrix > pmNew;
 
       if(m_ppath != NULL)
       {
+
          pmNew = new Gdiplus::Matrix();
+
       }
       else
       {
+
          pmNew = m.Clone();
+
       }
 
       pmNew->Translate((Gdiplus::REAL)  (x / m_spfont->m_dFontWidth), (Gdiplus::REAL) y);
+
       pmNew->Scale((Gdiplus::REAL) m_spfont->m_dFontWidth, (Gdiplus::REAL) 1.0, Gdiplus::MatrixOrderAppend);
 
       Gdiplus::Status status;
@@ -4559,7 +4566,6 @@ namespace draw2d_gdiplus
                             | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
                             | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap
                             | Gdiplus::StringFormatFlagsNoFitBlackBox);
-
 
       format.SetLineAlignment(Gdiplus::StringAlignmentNear);
 
@@ -4573,13 +4579,14 @@ namespace draw2d_gdiplus
          gdiplus_font()->GetFamily(&fontfamily);
 
          double d1 = gdiplus_font()->GetSize() * m_pgraphics->GetDpiX() / 72.0;
+
          double d2 = fontfamily.GetEmHeight(gdiplus_font()->GetStyle());
+
          double d3 = d1 * d2;
 
          status = path.AddString(wstr,(INT) wstr.get_length(),&fontfamily,gdiplus_font()->GetStyle(),(Gdiplus::REAL) d1,origin,&format);
 
          path.Transform(pmNew);
-
 
          m_ppath->AddPath(&path, FALSE);
 
@@ -4595,12 +4602,9 @@ namespace draw2d_gdiplus
 
       }
 
-      delete pmNew;
-
       return status  == Gdiplus::Status::Ok;
 
    }
-
 
 
    bool graphics::LineTo(double x, double y)
