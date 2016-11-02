@@ -295,7 +295,7 @@ namespace draw2d_gdiplus
 
       // Bitmap Functions
       bool PatBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, uint32_t dwRop);
-      bool BitBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc,
+      bool BitBltRaw(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc,
                   int32_t xSrc, int32_t ySrc, uint32_t dwRop);
       bool StretchBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc,
                       int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, uint32_t dwRop);
@@ -318,17 +318,14 @@ namespace draw2d_gdiplus
                           ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight,
                           UINT clrTransparent);
 
-      virtual bool alpha_blend(int32_t xDest, int32_t yDest, int32_t nDestWidth, int32_t nDestHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, double dOpacity);
+      virtual bool alpha_blendRaw(int32_t xDest, int32_t yDest, int32_t nDestWidth, int32_t nDestHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, double dOpacity);
 
       /*bool alpha_blend(int32_t xDest, int32_t yDest, int32_t nDestWidth, int32_t nDestHeight,
         ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight,
         BLENDFUNCTION blend);*/
 
       // Text Functions
-      virtual bool TextOut(int32_t x, int32_t y, const char * lpszString, strsize nCount);
-      virtual bool TextOut(int32_t x, int32_t y, const string & str);
-      virtual bool TextOut(double x, double y, const char * lpszString, strsize nCount);
-      virtual bool TextOut(double x, double y, const string & str);
+      virtual bool TextOutRaw(double x, double y, const char * lpszString, strsize nCount);
       virtual bool ExtTextOut(int32_t x, int32_t y, UINT nOptions, const RECT &  lpRect, const char * lpszString,strsize nCount, LPINT lpDxWidths);
       virtual bool ExtTextOut(int32_t x, int32_t y, UINT nOptions, const RECT &  lpRect, const string & str, LPINT lpDxWidths);
       virtual size TabbedTextOut(int32_t x, int32_t y, const char * lpszString, strsize nCount,count nTabPositions, LPINT lpnTabStopPositions, int32_t nTabOrigin);

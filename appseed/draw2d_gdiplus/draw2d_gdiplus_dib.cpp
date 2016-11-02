@@ -2665,6 +2665,8 @@ namespace draw2d_gdiplus
 
          ((dib*)this)->m_bMapped = false;
 
+         m_spgraphics->m_spbitmap = m_spbitmap;
+         
       }
 //      if (m_spgraphics.is_null())
   //       return;

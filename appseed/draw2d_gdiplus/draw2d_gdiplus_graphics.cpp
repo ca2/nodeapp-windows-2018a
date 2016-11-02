@@ -36,7 +36,6 @@ namespace draw2d_gdiplus
    {
 
       m_bPrinting       = FALSE;
-      m_pdibAlphaBlend  = NULL;
       m_pgraphics       = NULL;
       m_hdc             = NULL;
       m_hdcGraphics     = NULL;
@@ -1271,38 +1270,63 @@ namespace draw2d_gdiplus
    }
 
 
-   bool graphics::BitBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, uint32_t dwRop)
+   bool graphics::BitBltRaw(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, uint32_t dwRop)
    {
+      
       if (m_pgraphics == NULL)
-         return FALSE;
+      {
+       
+         return false;
 
-      if (::draw2d::graphics::BitBlt(x, y, nWidth, nHeight, pgraphicsSrc, xSrc, ySrc, dwRop))
-         return true;
+      }
+
+      Gdiplus::Status ret = Gdiplus::Status::GenericError;
 
       try
       {
 
-         if(pgraphicsSrc == NULL)
-            return FALSE;
+         if (pgraphicsSrc == NULL)
+         {
 
-         if(pgraphicsSrc->get_current_bitmap() == NULL)
+            return false;
+
+         }
+
+         if (pgraphicsSrc->get_current_bitmap() == NULL)
+         {
+
             goto gdi_fallback;
 
-         if(pgraphicsSrc->get_current_bitmap()->get_os_data() == NULL)
+         }
+
+         if (pgraphicsSrc->get_current_bitmap()->get_os_data() == NULL)
+         {
+
             goto gdi_fallback;
 
+         }
 
-         return m_pgraphics->DrawImage(
+
+         ret = m_pgraphics->DrawImage(
                    (Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data(),
-                   x, y, xSrc + pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y, nWidth, nHeight, Gdiplus::UnitPixel) == Gdiplus::Status::Ok;
+                   x, y, xSrc + pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y, nWidth, nHeight, Gdiplus::UnitPixel);
+
+         if(ret != Gdiplus::Status::Ok)
+         {
+
+            return false;
+
+         }
 
       }
       catch(...)
       {
-         return FALSE;
+
+         return false;
+
       }
 
-      //return ::BitBlt(get_handle1(), x, y, nWidth, nHeight, GDIPLUS_HDC(pgraphicsSrc), xSrc, ySrc, dwRop);
+      return true;
 
 gdi_fallback:
 
@@ -1346,18 +1370,29 @@ gdi_fallback:
       if(pgraphicsSrc == NULL || pgraphicsSrc->get_current_bitmap() == NULL)
          return false;
 
+      Gdiplus::Status ret = Gdiplus::Status::GenericError;
+
       try
       {
-         return m_pgraphics->DrawImage((Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data(),  dstRect, xSrc, ySrc, nSrcWidth, nSrcHeight, Gdiplus::UnitPixel) == Gdiplus::Status::Ok;
+         
+         ret = m_pgraphics->DrawImage((Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data(), dstRect, xSrc, ySrc, nSrcWidth, nSrcHeight, Gdiplus::UnitPixel);
+
+         if(ret != Gdiplus::Status::Ok)
+         {
+
+            return false;
+
+         }
+
       }
       catch(...)
       {
 
+         return false;
+
       }
 
-      return FALSE;
-
-      //return ::StretchBlt(get_handle1(), x, y, nWidth, nHeight, GDIPLUS_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth, nSrcHeight, dwRop);
+      return true;
 
    }
 
@@ -1401,21 +1436,6 @@ gdi_fallback:
 
    // double blend
    //// COLOR_DEST = SRC_ALPHA * BLEND_ALPHA * COLOR_SRC  + (1 - SRC_ALPHA * BLEND_ALPHA) * COLOR_DST
-
-   bool graphics::TextOut(int32_t x, int32_t y, const string & str)
-   {
-
-      return TextOut((double) x, (double) y, str, (int32_t) str.get_length());
-
-   }
-
-
-   bool graphics::TextOut(double x, double y, const string & str)
-   {
-
-      return TextOut(x, y, str, (int32_t) str.get_length());
-
-   }
 
 
    bool graphics::ExtTextOut(int32_t x,int32_t y,UINT nOptions,const RECT &  rectParam,const char * lpszString,strsize nCount,LPINT lpDxWidths)
@@ -1798,6 +1818,8 @@ gdi_fallback:
                          int32_t nWidth, int32_t nHeight, ::draw2d::bitmap& maskBitmap, int32_t xMask, int32_t yMask)
    {
 
+      Gdiplus::Status ret = Gdiplus::Status::GenericError;
+
       try
       {
 
@@ -1819,12 +1841,21 @@ gdi_fallback:
          p[2].X = lpPoint[2].x;
          p[2].Y = lpPoint[2].y;
 
-         return m_pgraphics->DrawImage((Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data(), p, 3) == Gdiplus::Status::Ok;
+         ret = m_pgraphics->DrawImage((Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data(), p, 3);
+
+         if (ret != Gdiplus::Status::Ok)
+         {
+
+            return false;
+
+         }
 
       }
       catch(...)
       {
-         return FALSE;
+
+         return false;
+
       }
 
       return true;
@@ -2082,65 +2113,36 @@ gdi_fallback:
 
    }
 
+
    bool graphics::AddMetaFileComment(UINT nDataSize, const BYTE* pCommentData)
    {
+      
       ASSERT(get_handle1() != NULL);
+
       return ::GdiComment(get_handle1(), nDataSize, pCommentData) != FALSE;
+
    }
 
 
-   /*bool CALLBACK metaCallback(
-      EmfPlusRecordType recordType,
-      uint32_t flags,
-      uint32_t dataSize,
-      const uchar* pStr,
-      void* callbackData)
-   {
-      // Play only EmfPlusRecordTypeFillEllipse records.
-      if (recordType == EmfPlusRecordTypeFillEllipse)
-      {
-      // Explicitly cast callbackData as a metafile pointer, and use it to call
-      // the PlayRecord method.
-      static_cast < Metafile* > (callbackData)->PlayRecord(recordType, flags, dataSize, pStr);
-      }
-      return TRUE;
-   }
-
-   VOID Example_EnumerateMetafile9(HDC hdc)
-   {
-      Graphics graphics(hdc);
-      // Create a Metafile object from an existing disk metafile.
-      Metafile* pMeta = new Metafile(L"SampleMetafile.emf", hdc);
-      {
-         // Fill a rectangle and an ellipse in pMeta.
-         Graphics metaGraphics(pMeta);
-         metaGraphics.FillRectangle(&SolidBrush(Color(255, 0, 0, 0)), 0, 0, 100, 100);
-     metaGraphics.FillEllipse(&SolidBrush(Color(255, 255, 0, 0)), 100, 0, 200, 100);
-      }
-      // Enumerate pMeta to the destination rectangle, passing pMeta as the callback data.
-      graphics.EnumerateMetafile(
-      pMeta,
-      Rect(0, 0, 300, 50),
-      metaCallback,
-      pMeta);
-      // Draw pMeta as an image.
-      graphics.DrawImage(pMeta, Point(0, 150));
-      delete pMeta;;
-   }*/
    bool graphics::PlayMetaFile(HENHMETAFILE hEnhMF, const RECT &  rectBounds)
    {
 
       Gdiplus::RectF rect((Gdiplus::REAL) rectBounds.left,(Gdiplus::REAL) rectBounds.top,(Gdiplus::REAL) width(rectBounds),(Gdiplus::REAL) height(rectBounds));
 
-      Gdiplus::Metafile* pMeta = new Gdiplus::Metafile(hEnhMF, false);
+      pointer < Gdiplus::Metafile > pMeta = new Gdiplus::Metafile(hEnhMF, false);
 
       //m_pgraphcis->EnumerateMetafile(pMeta, rect, metaCallback, PMETAHEADER);
 
-      bool bOk = m_pgraphics->DrawImage(pMeta, rect) == Gdiplus::Status::Ok;
+      Gdiplus::Status ret = m_pgraphics->DrawImage(pMeta, rect);
 
-      delete pMeta;
+      if (ret != Gdiplus::Status::Ok)
+      {
 
-      return bOk ? TRUE : FALSE;
+         return false;
+
+      }
+
+      return true;
       //return ::PlayEnhMetaFile(get_handle1(), hEnhMF, lpBounds);
 
    }
@@ -2157,83 +2159,18 @@ gdi_fallback:
 // India India
 // Member
 
-   bool graphics::alpha_blend(int32_t xDest, int32_t yDest, int32_t nDestWidth, int32_t nDestHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, double dRate)
+
+
+
+   bool graphics::alpha_blendRaw(int32_t xDest, int32_t yDest, int32_t nDestWidth, int32_t nDestHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, double dRate)
    {
 
       if (m_pgraphics == NULL)
-         return false;
-
-      if(m_pdibAlphaBlend != NULL)
       {
 
-
-         rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
-
-
-         ::draw2d::dib * pdibWork = NULL;
-         ::draw2d::dib * pdibWork2 = NULL;
-//         ::draw2d::dib * pdibWork3 = NULL;
-         ::draw2d::dib * pdibWork4 = NULL;
-
-
-         class point ptSrc(xSrc, ySrc);
-         class point ptDest(xDest, yDest);
-         class size size(nDestWidth, nDestHeight);
-
-
-
-         ::draw2d::dib_sp spdib;
-         if(pdibWork == NULL)
-         {
-            spdib.alloc(allocer());
-            pdibWork = spdib;
-         }
-         if(pdibWork == NULL)
-            return false;
-         if(!pdibWork->create(size))
-            return false;
-         if(!pdibWork->from(null_point(), pgraphicsSrc, ptSrc, size))
-            return false;
-
-
-
-
-         ::draw2d::dib_sp spdib2;
-         if(pdibWork2 == NULL)
-         {
-            spdib2.alloc(allocer());
-            pdibWork2 = spdib2;
-         }
-
-
-         ::draw2d::dib_sp spdib4;
-         if(pdibWork4 == NULL)
-         {
-            spdib4.alloc(allocer());
-            pdibWork4 = spdib4;
-         }
-         if(pdibWork4 == NULL)
-            return false;
-         if(!pdibWork4->create(size))
-            return false;
-
-
-         pdibWork4->Fill(255, 0, 0, 0);
-
-         pdibWork4->from(point(MAX(0, m_ptAlphaBlend.x - xDest), MAX(0, m_ptAlphaBlend.y - yDest)),
-                         m_pdibAlphaBlend->get_graphics(), point(MAX(0, xDest - m_ptAlphaBlend.x), MAX(0, yDest - m_ptAlphaBlend.y)), size);
-
-         pdibWork->channel_multiply(visual::rgba::channel_alpha, pdibWork4);
-
-
-         keep < ::draw2d::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
-
-
-         return BitBlt(ptDest.x, ptDest.y, size.cx, size.cy, pdibWork->get_graphics(), ptSrc.x, ptSrc.y, SRCCOPY);
-
+         return false;
 
       }
-
 
       float fA = (float) dRate;
 
@@ -2251,11 +2188,19 @@ gdi_fallback:
 
       Gdiplus::RectF dstRect((Gdiplus::REAL) xDest, (Gdiplus::REAL) yDest, (Gdiplus::REAL) nDestWidth, (Gdiplus::REAL) nDestHeight);
 
-      if(pgraphicsSrc == NULL)
+      if (pgraphicsSrc == NULL)
+      {
+
          return false;
 
-      if(pgraphicsSrc->get_current_bitmap() == NULL)
+      }
+
+      if (pgraphicsSrc->get_current_bitmap() == NULL)
+      {
+
          return false;
+
+      }
 
       Gdiplus::Bitmap * pbitmap = NULL;
 
@@ -2267,12 +2212,22 @@ gdi_fallback:
       }
       catch(...)
       {
+
       }
+
+      Gdiplus::Status ret = Gdiplus::Status::GenericError;
 
       if(pbitmap != NULL)
       {
 
-         m_pgraphics->DrawImage(pbitmap,dstRect,(Gdiplus::REAL) xSrc,(Gdiplus::REAL) ySrc,(Gdiplus::REAL) nSrcWidth,(Gdiplus::REAL) nSrcHeight,Gdiplus::UnitPixel,&attributes);
+         ret =  m_pgraphics->DrawImage(pbitmap,dstRect,(Gdiplus::REAL) xSrc,(Gdiplus::REAL) ySrc,(Gdiplus::REAL) nSrcWidth,(Gdiplus::REAL) nSrcHeight,Gdiplus::UnitPixel,&attributes);
+
+         if (ret != Gdiplus::Status::Ok)
+         {
+
+            return false;
+
+         }
 
       }
 
@@ -2280,91 +2235,6 @@ gdi_fallback:
 
    }
 
-
-   /*bool graphics::alpha_blend(int32_t xDest, int32_t yDest, int32_t nDestWidth, int32_t nDestHeight,
-      ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, BLENDFUNCTION blend)
-   {
-
-      ::exception::throw_not_implemented(get_app());
-      //if(get_handle1() == NULL)
-        // return false;
-
-
-      if(m_pdibAlphaBlend != NULL)
-      {
-
-
-         rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
-
-
-         ::draw2d::dib * pdibWork = NULL;
-         ::draw2d::dib * pdibWork2 = NULL;
-   //         ::draw2d::dib * pdibWork3 = NULL;
-         ::draw2d::dib * pdibWork4 = NULL;
-
-
-         class point ptSrc(xSrc, ySrc);
-         class point ptDest(xDest, yDest);
-         class size size(nDestWidth, nDestHeight);
-
-
-
-         ::draw2d::dib_sp spdib;
-         if(pdibWork == NULL)
-         {
-            spdib.alloc(allocer());
-            pdibWork = spdib;
-         }
-         if(pdibWork == NULL)
-            return false;
-         if(!pdibWork->create(size))
-            return false;
-         if(!pdibWork->from(null_point(), pgraphicsSrc, ptSrc, size))
-            return false;
-
-
-
-
-         ::draw2d::dib_sp spdib2;
-         if(pdibWork2 == NULL)
-         {
-            spdib2.alloc(allocer());
-            pdibWork2 = spdib2;
-         }
-
-
-         ::draw2d::dib_sp spdib4;
-         if(pdibWork4 == NULL)
-         {
-            spdib4.alloc(allocer());
-            pdibWork4 = spdib4;
-         }
-         if(pdibWork4 == NULL)
-            return false;
-         if(!pdibWork4->create(size))
-            return false;
-
-
-         pdibWork4->Fill(255, 0, 0, 0);
-
-         pdibWork4->from(point(MAX(0, m_ptAlphaBlend.x - xDest), MAX(0, m_ptAlphaBlend.y - yDest)),
-            m_pdibAlphaBlend->get_graphics(), point(MAX(0, xDest - m_ptAlphaBlend.x), MAX(0, yDest - m_ptAlphaBlend.y)), size);
-
-         pdibWork->channel_multiply(visual::rgba::channel_alpha, pdibWork4);
-
-
-         keep < ::draw2d::dib * > keep(&m_pdibAlphaBlend, NULL, m_pdibAlphaBlend, true);
-
-
-         return System.visual().imaging().true_blend(this, ptDest, size, pdibWork->get_graphics(), ptSrc);
-
-
-      }
-
-      return ::AlphaBlend(get_handle1(), xDest, yDest,
-         nDestWidth, nDestHeight, GDIPLUS_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth,
-         nSrcHeight, blend) != FALSE;
-   }*/
 
 
    bool graphics::TransparentBlt(int32_t xDest, int32_t yDest, int32_t nDestWidth, int32_t nDestHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, UINT crTransparent)
@@ -3303,27 +3173,27 @@ gdi_fallback:
 
    }
 
+
    int32_t graphics::SelectClipRgn(::draw2d::region * pregion)
    {
 
       if(pregion == NULL)
       {
+
          m_pgraphics->ResetClip();
+
       }
       else
       {
+
          m_pgraphics->SetClip((Gdiplus::Region *) pregion->get_os_data());
+
       }
 
       return 0;
 
-      /*      int32_t nRetVal = ERROR;
-            if(get_handle1() != NULL && get_handle1() != get_handle2())
-               nRetVal = ::SelectClipRgn(get_handle1(), pRgn == NULL ? NULL : (HRGN) pRgn->get_os_data());
-            if(get_handle2() != NULL)
-               nRetVal = ::SelectClipRgn(get_handle2(), pRgn == NULL ? NULL : (HRGN) pRgn->get_os_data());
-            return nRetVal;*/
    }
+
 
    int32_t graphics::ExcludeClipRect(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    {
@@ -4466,28 +4336,13 @@ namespace draw2d_gdiplus
    }
 
 
-   bool graphics::TextOut(int32_t x, int32_t y, const char * lpszString, strsize nCount)
-   {
-
-      return TextOut((double)x, (double)y, lpszString, nCount);
-
-   }
-
-
-   bool graphics::TextOut(double x, double y, const char * lpszString, strsize nCount)
+   bool graphics::TextOutRaw(double x, double y, const char * lpszString, strsize nCount)
    {
 
       if (m_spfont.is_null())
       {
 
          return false;
-
-      }
-
-      if (TextOutAlphaBlend(x, y, lpszString, nCount))
-      {
-
-         return true;
 
       }
 
