@@ -68,6 +68,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "storage_akrip", "..\..\..\t
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mpg123", "..\..\..\third\appseed\libmpg123\libmpg123.vcxproj", "{67CAA87B-7CF1-4F93-BB67-21C513F40803}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "protobuf", "..\..\..\third\appseed\protobuf\protobuf.vcxproj", "{357038F7-2578-421F-B23D-E3250CA6738B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Android = basis|Android
@@ -1452,6 +1454,58 @@ Global
 		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.static_basis|Win32.Build.0 = basis|Win32
 		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.static_basis|x64.ActiveCfg = basis|x64
 		{67CAA87B-7CF1-4F93-BB67-21C513F40803}.static_basis|x64.Build.0 = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.basis|Android.ActiveCfg = basis|Win32
+		{357038F7-2578-421F-B23D-E3250CA6738B}.basis|ARM.ActiveCfg = basis|Win32
+		{357038F7-2578-421F-B23D-E3250CA6738B}.basis|Win32.ActiveCfg = basis|Win32
+		{357038F7-2578-421F-B23D-E3250CA6738B}.basis|Win32.Build.0 = basis|Win32
+		{357038F7-2578-421F-B23D-E3250CA6738B}.basis|x64.ActiveCfg = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.basis|x64.Build.0 = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.codeanalysis|Android.ActiveCfg = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.codeanalysis|Android.Build.0 = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.codeanalysis|ARM.ActiveCfg = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.codeanalysis|ARM.Build.0 = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.codeanalysis|Win32.ActiveCfg = basis|Win32
+		{357038F7-2578-421F-B23D-E3250CA6738B}.codeanalysis|Win32.Build.0 = basis|Win32
+		{357038F7-2578-421F-B23D-E3250CA6738B}.codeanalysis|x64.ActiveCfg = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.codeanalysis|x64.Build.0 = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.memdleak|Android.ActiveCfg = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.memdleak|Android.Build.0 = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.memdleak|ARM.ActiveCfg = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.memdleak|ARM.Build.0 = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.memdleak|Win32.ActiveCfg = basis|Win32
+		{357038F7-2578-421F-B23D-E3250CA6738B}.memdleak|Win32.Build.0 = basis|Win32
+		{357038F7-2578-421F-B23D-E3250CA6738B}.memdleak|x64.ActiveCfg = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.memdleak|x64.Build.0 = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.no_precompiled_header|Android.ActiveCfg = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.no_precompiled_header|Android.Build.0 = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.no_precompiled_header|ARM.ActiveCfg = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.no_precompiled_header|ARM.Build.0 = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.no_precompiled_header|Win32.ActiveCfg = basis|Win32
+		{357038F7-2578-421F-B23D-E3250CA6738B}.no_precompiled_header|Win32.Build.0 = basis|Win32
+		{357038F7-2578-421F-B23D-E3250CA6738B}.no_precompiled_header|x64.ActiveCfg = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.no_precompiled_header|x64.Build.0 = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.profiler|Android.ActiveCfg = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.profiler|Android.Build.0 = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.profiler|ARM.ActiveCfg = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.profiler|ARM.Build.0 = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.profiler|Win32.ActiveCfg = basis|Win32
+		{357038F7-2578-421F-B23D-E3250CA6738B}.profiler|Win32.Build.0 = basis|Win32
+		{357038F7-2578-421F-B23D-E3250CA6738B}.profiler|x64.ActiveCfg = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.profiler|x64.Build.0 = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.stage|Android.ActiveCfg = stage|Win32
+		{357038F7-2578-421F-B23D-E3250CA6738B}.stage|ARM.ActiveCfg = stage|Win32
+		{357038F7-2578-421F-B23D-E3250CA6738B}.stage|Win32.ActiveCfg = stage|Win32
+		{357038F7-2578-421F-B23D-E3250CA6738B}.stage|Win32.Build.0 = stage|Win32
+		{357038F7-2578-421F-B23D-E3250CA6738B}.stage|x64.ActiveCfg = stage|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.stage|x64.Build.0 = stage|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.static_basis|Android.ActiveCfg = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.static_basis|Android.Build.0 = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.static_basis|ARM.ActiveCfg = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.static_basis|ARM.Build.0 = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.static_basis|Win32.ActiveCfg = basis|Win32
+		{357038F7-2578-421F-B23D-E3250CA6738B}.static_basis|Win32.Build.0 = basis|Win32
+		{357038F7-2578-421F-B23D-E3250CA6738B}.static_basis|x64.ActiveCfg = basis|x64
+		{357038F7-2578-421F-B23D-E3250CA6738B}.static_basis|x64.Build.0 = basis|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
