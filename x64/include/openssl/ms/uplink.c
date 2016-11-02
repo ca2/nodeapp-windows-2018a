@@ -65,7 +65,7 @@ void OPENSSL_Uplink(volatile void **table, int index)
                 _tcscpy(msg + len, _T("no host application"));
                 break;
             }
-            apphandle = h;
+            apphandle = (HMODULE) h;
         }
         if ((h = apphandle) == (HMODULE) - 1) /* revalidate */
             break;

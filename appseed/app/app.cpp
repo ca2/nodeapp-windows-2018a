@@ -9,6 +9,14 @@
 #include <crtdbg.h>
 #endif
 
+#ifdef _WIN32
+extern "C"
+{
+#undef APPMACROS_ONLY
+#include <openssl/ms/applink.c>
+}
+#endif
+
 int_bool file_exists_raw(const char * path1)
 {
 
