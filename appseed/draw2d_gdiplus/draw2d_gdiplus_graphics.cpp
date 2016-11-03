@@ -4906,7 +4906,10 @@ namespace draw2d_gdiplus
 
       ::DeleteDC(hdc);
 
+      stra.quick_sort();
+
       straPath = stra;
+
 
    }
 

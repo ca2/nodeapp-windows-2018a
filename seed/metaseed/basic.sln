@@ -106,8 +106,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axisfreeimage", "..\..\..\a
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_ace", "..\..\..\app\appseed\ace\_ace.vcxproj", "{699D6807-4F43-40E9-86AB-2A8B856707A9}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rdpclient", "..\..\..\app\appseed\rdpclient\axisrdpclient.vcxproj", "{B5687C65-F34F-461C-ABE6-5B344977BECF}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multimedia", "..\..\..\app-core\appseed\multimedia\multimedia.vcxproj", "{20FD0446-AA14-4013-84E0-B5CB63FA354F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "baseid3lib", "..\..\..\app-core\appseed\id3lib\id3lib.vcxproj", "{E2D7833B-9B59-4826-BBDF-C27019771984}"
@@ -328,14 +326,6 @@ Global
 		{699D6807-4F43-40E9-86AB-2A8B856707A9}.stage|Win32.Build.0 = stage|Win32
 		{699D6807-4F43-40E9-86AB-2A8B856707A9}.stage|x64.ActiveCfg = stage|x64
 		{699D6807-4F43-40E9-86AB-2A8B856707A9}.stage|x64.Build.0 = stage|x64
-		{B5687C65-F34F-461C-ABE6-5B344977BECF}.basis|Win32.ActiveCfg = basis|Win32
-		{B5687C65-F34F-461C-ABE6-5B344977BECF}.basis|Win32.Build.0 = basis|Win32
-		{B5687C65-F34F-461C-ABE6-5B344977BECF}.basis|x64.ActiveCfg = basis|x64
-		{B5687C65-F34F-461C-ABE6-5B344977BECF}.basis|x64.Build.0 = basis|x64
-		{B5687C65-F34F-461C-ABE6-5B344977BECF}.stage|Win32.ActiveCfg = stage|Win32
-		{B5687C65-F34F-461C-ABE6-5B344977BECF}.stage|Win32.Build.0 = stage|Win32
-		{B5687C65-F34F-461C-ABE6-5B344977BECF}.stage|x64.ActiveCfg = stage|x64
-		{B5687C65-F34F-461C-ABE6-5B344977BECF}.stage|x64.Build.0 = stage|x64
 		{20FD0446-AA14-4013-84E0-B5CB63FA354F}.basis|Win32.ActiveCfg = basis|Win32
 		{20FD0446-AA14-4013-84E0-B5CB63FA354F}.basis|Win32.Build.0 = basis|Win32
 		{20FD0446-AA14-4013-84E0-B5CB63FA354F}.basis|x64.ActiveCfg = basis|x64

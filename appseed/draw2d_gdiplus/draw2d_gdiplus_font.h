@@ -28,7 +28,7 @@ namespace draw2d_gdiplus
       virtual void dump(dump_context & dumpcontext) const;
 
 
-
+      virtual e_cs get_cs(::draw2d::graphics * pgraphics);
 
 
    };
