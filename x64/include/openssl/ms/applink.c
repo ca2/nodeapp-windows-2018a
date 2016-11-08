@@ -34,6 +34,7 @@
 #define APPLINK_MAX     22      /* always same as last macro */
 
 #ifndef APPMACROS_ONLY
+
 # include <stdio.h>
 # include <io.h>
 # include <fcntl.h>

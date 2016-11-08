@@ -93,7 +93,6 @@ namespace music
                      link.ModifyFlag(::music::midi::sequence::FlagNull, ::music::midi::sequence::FlagStop);
                      link.OnFinishCommand(::music::midi::player::command_stop);
                      PostNotifyEvent(::music::midi::player::notify_event_playback_stop);
-
                   }
                   else if(link.TestFlag(::music::midi::sequence::FlagTempoChange))
                   {
@@ -423,6 +422,9 @@ namespace music
          {
 
             SCAST_PTR(::message::base, pbase, pobj);
+
+            if (get_sequence() == NULL)
+               return;
 
             sp(sequence) pseq = get_sequence();
 

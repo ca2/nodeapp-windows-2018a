@@ -34,10 +34,7 @@ namespace draw2d_gdiplus
       virtual ::draw2d::bitmap_sp get_bitmap() const;
       virtual ::draw2d::bitmap_sp detach_bitmap();
 
-
-      /*virtual COLORREF * get_data() const;
-
-      */void stretch_dib(::draw2d::dib * pdib);
+      void stretch_dib(::draw2d::dib * pdib);
 
       bool dc_select(bool bSelect = true);
 

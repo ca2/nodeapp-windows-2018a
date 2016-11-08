@@ -44,19 +44,18 @@ namespace music
             class buffer_array;
 
 
-            class buffer :
-               virtual public ::music::midi::object
+            class buffer
             {
             public:
 
 
-               LPMIDIHDR            m_lpmidihdr;
-               memory    m_storage;
+               MIDIHDR              m_midihdr;
+               memory               m_storage;
                bool                 m_bPrepared;
                buffer_array *       m_pbuffera;
 
 
-               buffer(::aura::application * papp);
+               buffer();
                virtual ~buffer();
 
                bool IsPrepared();
@@ -68,7 +67,7 @@ namespace music
                ::multimedia::e_result midiOutUnprepareHeader(HMIDIOUT hmidiout);
 
 
-               inline LPMIDIHDR GetMidiHdr() { return m_lpmidihdr; }
+               inline LPMIDIHDR GetMidiHdr() { return &m_midihdr; }
 
                //void SetNextMidiHdr(LPMIDIHDR lpNext);
 
@@ -82,7 +81,8 @@ namespace music
 
 
             class buffer_array :
-               virtual public spa(buffer)
+               virtual public array < buffer >,
+               virtual public ::music::midi::object
             {
             public:
 

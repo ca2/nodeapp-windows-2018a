@@ -461,8 +461,8 @@ Seq_Open_File_Cleanup:
                      0x06, 0x00, 0x00, MEVT_LONGMSG,
                      0xf0, 0x7e, 0x7f, 0x09,
                      0x01, 0xf7, 0x00, 0x00 };
-                  char * lpch = m_buffera[0]->m_lpmidihdr->lpData + m_buffera[0]->m_lpmidihdr->dwBytesRecorded;
-                  m_buffera[0]->m_lpmidihdr->dwBytesRecorded += sizeof(gmModeOn);
+                  char * lpch = m_buffera[0].m_midihdr.lpData + m_buffera[0].m_midihdr.dwBytesRecorded;
+                  m_buffera[0].m_midihdr.dwBytesRecorded += sizeof(gmModeOn);
                   memcpy(lpch, gmModeOn, sizeof(gmModeOn));
                   SetSpecialModeV001Flag(false);
                }
@@ -595,7 +595,7 @@ Seq_Open_File_Cleanup:
 
             m_buffera.Reset();
 
-            smfrc = file()->WorkSeek(m_tkBase, m_buffera[0]->m_lpmidihdr);
+            smfrc = file()->WorkSeek(m_tkBase, &m_buffera[0].m_midihdr);
 
             m_tkPrerollBase = get_file()->GetPosition();
 
@@ -606,7 +606,7 @@ Seq_Open_File_Cleanup:
             for (i = 1; i < m_buffera.get_size(); i++)
             {
                
-               LPMIDIHDR lpmh = m_buffera[i]->GetMidiHdr();
+               LPMIDIHDR lpmh = m_buffera[i].GetMidiHdr();
 
                smfrc = file()->WorkStreamRender(lpmh, m_tkEnd, m_cbPrerollNominalMax);
 
@@ -1525,6 +1525,8 @@ seq_Preroll_Cleanup:
    
             m_hstream = NULL;
 
+
+
             SetState(::music::midi::sequence::status_opened);
    
             return ::music::success;
@@ -1562,6 +1564,7 @@ seq_Preroll_Cleanup:
                m_flags.unsignalize(FlagWaiting);
 
                m_evMmsgDone.SetEvent();
+
             }
          }
 
@@ -2298,6 +2301,8 @@ seq_Preroll_Cleanup:
          void sequence::buffer::Initialize(int32_t iSize, buffer_array * pbuffera)
          {
 
+            m_storage.set_app(pbuffera->get_app());
+
             m_pbuffera = pbuffera;
 
             m_storage.allocate(iSize);
@@ -2314,14 +2319,14 @@ seq_Preroll_Cleanup:
 
             m_pcallbackdata = pcallbackdata;
 
-            set_size_create(iCount);
+            set_size(iCount);
 
             int32_t i;
 
             for(i = 0; i < this->get_size(); i++)
             {
 
-               this->element_at(i)->Initialize(iSize, this);
+               this->element_at(i).Initialize(iSize, this);
 
             }
 
@@ -2334,7 +2339,7 @@ seq_Preroll_Cleanup:
             for(int32_t i = 0; i < this->get_size(); i++)
             {
 
-               this->element_at(i)->Reset();
+               this->element_at(i).Reset();
 
             }
 
@@ -2343,28 +2348,20 @@ seq_Preroll_Cleanup:
          void sequence::buffer::Reset()
          {
             
-            ZEROP(m_lpmidihdr);
+            ZERO(m_midihdr);
 
-            m_lpmidihdr->lpData                 = (char *)m_storage.get_data();
-            m_lpmidihdr->dwBufferLength         = (uint32_t)m_storage.get_size();
-            m_lpmidihdr->dwUser                 = (DWORD_PTR) this;
-            //m_lpmidihdr->dwBytesRecorded        = 0;
-            //m_lpmidihdr->dwFlags                = 0;
+            m_midihdr.lpData                 = (char *)m_storage.get_data();
+            m_midihdr.dwBufferLength         = (uint32_t)m_storage.get_size();
+            m_midihdr.dwUser                 = (DWORD_PTR) this;
             
-            memset(m_lpmidihdr->lpData, 0, m_lpmidihdr->dwBufferLength);
+            zero(m_midihdr.lpData, m_midihdr.dwBufferLength);
 
-         
-         
          }
 
-         sequence::buffer::buffer(::aura::application * papp) :
-            ::object(papp),
-            ::music::midi::object(papp),
-            m_storage(papp, true)
+         sequence::buffer::buffer()
          {
             
             m_pbuffera = NULL;
-            m_lpmidihdr = (LPMIDIHDR) aligned_memory_alloc(sizeof(MIDIHDR));
 
          }
 
@@ -2372,12 +2369,12 @@ seq_Preroll_Cleanup:
          sequence::buffer::~buffer()
          {
 
-            memory_free(m_lpmidihdr);
 
          }
 
          sequence::buffer_array::buffer_array(::aura::application * papp) :
-            ::object(papp)
+            ::object(papp),
+            ::music::midi::object(papp)
          {
 
             m_pcallbackdata = NULL;
@@ -2408,12 +2405,18 @@ seq_Preroll_Cleanup:
             if(m_bPrepared)
                return mmr;
 
-            mmr = translate_os_result(::midiOutPrepareHeader(hmidiout, m_lpmidihdr, sizeof(*m_lpmidihdr)));
+            mmr = m_pbuffera->translate_os_result(::midiOutPrepareHeader(hmidiout, &m_midihdr, sizeof(m_midihdr)));
 
             if(mmr == ::multimedia::result_success)
             {
 
                m_bPrepared = true;
+
+            }
+            else
+            {
+
+               throw "failed to prepare midi Out Header";
 
             }
 
@@ -2460,12 +2463,13 @@ seq_Preroll_Cleanup:
             if(!m_bPrepared)
                return mmr;
 
-            mmr = translate_os_result(::midiOutUnprepareHeader(hmidiout, m_lpmidihdr, sizeof(*m_lpmidihdr)));
+            mmr = m_pbuffera->translate_os_result(::midiOutUnprepareHeader(hmidiout, &m_midihdr, sizeof(m_midihdr)));
 
             if(mmr == ::multimedia::result_success)
             {
 
                m_bPrepared = false;
+
 
             }
 
@@ -2482,7 +2486,7 @@ seq_Preroll_Cleanup:
             for (int32_t i = 0; i < this->get_size(); i++)
             {
 
-               ::multimedia::e_result mmrBuffer = this->element_at(i)->midiOutUnprepareHeader(hmidiout);
+               ::multimedia::e_result mmrBuffer = this->element_at(i).midiOutUnprepareHeader(hmidiout);
 
                if(mmrBuffer != ::multimedia::result_success)
                {
@@ -2506,7 +2510,7 @@ seq_Preroll_Cleanup:
             for(int32_t i = 0; i < this->get_size(); i++)
             {
 
-               mmrc = this->element_at(i)->midiOutPrepareHeader(hmidiout);
+               mmrc = this->element_at(i).midiOutPrepareHeader(hmidiout);
 
                if(mmrc != ::multimedia::result_success)
                {
@@ -2514,7 +2518,7 @@ seq_Preroll_Cleanup:
                   for(; i >= 0; i--)
                   {
 
-                     this->element_at(i)->midiOutUnprepareHeader(hmidiout);
+                     this->element_at(i).midiOutUnprepareHeader(hmidiout);
 
                   }
 
@@ -2534,14 +2538,14 @@ seq_Preroll_Cleanup:
 
             ASSERT(hmidiout != NULL);
 
-            if (m_lpmidihdr->dwBytesRecorded == 0)
+            if (m_midihdr.dwBytesRecorded == 0)
             {
 
                return ::multimedia::result_error;
 
             }
 
-            return translate_os_result(::midiStreamOut(hmidiout, m_lpmidihdr, sizeof(*m_lpmidihdr)));
+            return m_pbuffera->translate_os_result(::midiStreamOut(hmidiout, &m_midihdr, sizeof(m_midihdr)));
 
          }
 
@@ -2554,7 +2558,7 @@ seq_Preroll_Cleanup:
             for(int32_t i = 0; i < this->get_size(); i++)
             {
 
-               mmrc = this->element_at(i)->midiStreamOut(hmidiout);
+               mmrc = this->element_at(i).midiStreamOut(hmidiout);
                
                if (mmrc == ::multimedia::result_success)
                {

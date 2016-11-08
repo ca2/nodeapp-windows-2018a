@@ -316,6 +316,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_berdge", "..\..\..
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_resident", "..\..\..\app-core\appseed\resident\resident.vcxproj", "{C61BE1EB-B0DF-412F-8CD8-68B4B86CC514}"
 	ProjectSection(ProjectDependencies) = postProject
+		{84517713-2000-419D-A87F-4338C9DDE3FA} = {84517713-2000-419D-A87F-4338C9DDE3FA}
+		{84517714-2000-419D-A87F-4338C9DDE3FA} = {84517714-2000-419D-A87F-4338C9DDE3FA}
 		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
 		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
 		{E2D7833B-9B59-4826-BBDF-C27019771984} = {E2D7833B-9B59-4826-BBDF-C27019771984}
@@ -326,6 +328,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_resident", "..\..\
 		{19845177-2551-5184-7805-849220E88C80} = {19845177-2551-5184-7805-849220E88C80}
 		{51042284-1115-7704-027F-4338C9DDE3FA} = {51042284-1115-7704-027F-4338C9DDE3FA}
 		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB} = {1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}
+		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF} = {9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}
 		{D620EED4-10A9-4C54-8DEE-A52B9D178A4D} = {D620EED4-10A9-4C54-8DEE-A52B9D178A4D}
 		{54850FD8-653A-43B6-AA90-E59AC030559C} = {54850FD8-653A-43B6-AA90-E59AC030559C}
 	EndProjectSection
@@ -420,14 +423,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_beampro_client", "
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_beampro_resident", "..\..\..\app-core\appseed\beampro_resident\beampro_resident.vcxproj", "{3104F537-F876-4D96-A90C-8B76BA83F0B5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{099CB7BB-63B8-457D-A8D0-FC83ECE521C9}"
-	ProjectSection(SolutionItems) = preProject
-		Performance2.psess = Performance2.psess
-		Performance3.psess = Performance3.psess
-		Performance4.psess = Performance4.psess
-		Performance5.psess = Performance5.psess
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_ace", "..\..\..\app\appseed\ace\_ace.vcxproj", "{699D6807-4F43-40E9-86AB-2A8B856707A9}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axisfreeimage", "..\..\..\app\appseed\freeimage\axisfreeimage.vcxproj", "{B39ED2B3-D53A-4077-B957-930979A3577D}"
@@ -444,9 +439,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_todo", "..\..\..\app-core\appseed\todo\todo.vcxproj", "{D977B1FA-A448-4187-AD30-BD7585912F00}"
 EndProject
 Global
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
 		basis|x64 = basis|x64

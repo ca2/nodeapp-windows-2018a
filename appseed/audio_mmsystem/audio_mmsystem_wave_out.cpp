@@ -195,6 +195,8 @@ Opened:
          if(m_hwaveout != NULL && m_estate != state_initial)
             return ::multimedia::result_success;
 
+         MMRESULT mmresult = MMSYSERR_NOERROR;
+
          m_pthreadCallback = pthreadCallback;
          ::multimedia::e_result mmr;
          ASSERT(m_hwaveout == NULL);
@@ -213,14 +215,29 @@ Opened:
          try
          {
 
-            if(MMSYSERR_NOERROR == (mmr = mmsystem::translate(waveOutOpen(
-               &m_hwaveout,
-               audiowave->m_uiWaveInDevice,
-               wave_format(),
-               get_os_int(),
-               (uint32_t) 0,
-               CALLBACK_THREAD))))
+            mmresult = waveOutOpen(&m_hwaveout, audiowave->m_uiWaveInDevice, wave_format(), get_os_int(), (uint32_t)0, CALLBACK_THREAD);
+
+            if (mmresult == MMSYSERR_NOERROR)
+            {
+
+               TRACE("multimedia::audio_mmsystem::wave_out::wave_out_open_ex waveOutOpen: Success!!");
+
+            }
+            else
+            {
+
+               TRACE("multimedia::audio_mmsystem::wave_out::wave_out_open_ex waveOutOpen: ERROR %d!!", mmresult);
+
+            }
+
+            mmr = mmsystem::translate(mmresult);
+
+            if (mmr == ::multimedia::result_success)
+            {
+
                goto Opened;
+
+            }
 
          }
          catch(const ::exception::exception &)
@@ -323,16 +340,80 @@ Opened:
          for(i = 0; i < iSize; i++)
          {
 
-            if(MMSYSERR_NOERROR != (mmr = mmsystem::translate(waveOutPrepareHeader(m_hwaveout, mmsystem::create_new_WAVEHDR(wave_out_get_buffer(), i), sizeof(WAVEHDR)))))
+            mmresult = waveOutPrepareHeader(m_hwaveout, mmsystem::create_new_WAVEHDR(wave_out_get_buffer(), i), sizeof(WAVEHDR));
+
+            if (mmresult == MMSYSERR_NOERROR)
             {
 
-               TRACE("ERROR OPENING Preparing INPUT DEVICE buffer");
+               TRACE("multimedia::audio_mmsystem::wave_out::wave_out_open_ex waveOutPrepareHeader: Success!!");
+
+            }
+            else
+            {
+
+               TRACE("multimedia::audio_mmsystem::wave_out::wave_out_open_ex waveOutPrepareHeader: ERROR %d!!", mmresult);
+
+            }
+
+            mmr = mmsystem::translate(mmresult);
+
+            if (mmr != ::multimedia::result_success)
+            {
+
+               MMRESULT mmresult2;
+
+               while (i >= 1)
+               {
+                  
+                  i--;
+
+                  mmresult2 = waveOutUnprepareHeader(m_hwaveout, wave_hdr(i), sizeof(WAVEHDR));
+
+                  if (mmresult2 == MMSYSERR_NOERROR)
+                  {
+
+                     TRACE("multimedia::audio_mmsystem::wave_out::wave_out_open_ex waveOutUnprepareHeader: Cascade Success");
+
+                  }
+                  else
+                  {
+
+                     TRACE("multimedia::audio_mmsystem::wave_out::wave_out_open_ex waveOutUnprepareHeader: Cascade ERROR %d!!", mmresult);
+
+                  }
+
+               }
+
+               MMRESULT mmresult3;
+
+               while (i >= 1)
+               {
+
+                  i--;
+
+                  mmresult3 = waveOutClose(m_hwaveout);
+
+                  if (mmresult3 == MMSYSERR_NOERROR)
+                  {
+
+                     TRACE("multimedia::audio_mmsystem::wave_out::wave_out_open_ex waveOutClose: Cascade Success");
+
+                  }
+                  else
+                  {
+
+                     TRACE("multimedia::audio_mmsystem::wave_out::wave_out_open_ex waveOutClose: Cascade ERROR %d!!", mmresult);
+
+                  }
+
+               }
+
+
+               TRACE("ERROR !! Failed to prepare output device buffers");
 
                return mmr;
 
             }
-
-            //wave_out_add_buffer(i);
 
          }
 
