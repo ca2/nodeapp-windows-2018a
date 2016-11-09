@@ -104,6 +104,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_veriwell_waven", "..\..
 		{21DA4A8C-5A05-40A4-BF5B-FF62B9DDD150} = {21DA4A8C-5A05-40A4-BF5B-FF62B9DDD150}
 		{8451778C-2015-40A4-BF5B-FF62B9778451} = {8451778C-2015-40A4-BF5B-FF62B9778451}
 		{B46A198F-4171-4DEE-8CFD-164D99B42057} = {B46A198F-4171-4DEE-8CFD-164D99B42057}
+		{2453409D-7D51-4E7E-A739-86234FFF3509} = {2453409D-7D51-4E7E-A739-86234FFF3509}
 		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF} = {9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}
 		{B39ED2B3-D53A-4077-B957-930979A3577D} = {B39ED2B3-D53A-4077-B957-930979A3577D}
 		{845177D4-10A9-4C54-8DEE-A52B9D178A4D} = {845177D4-10A9-4C54-8DEE-A52B9D178A4D}
@@ -148,6 +149,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "image_decode_jpeg", "..\..\..\app\appseed\image_jpeg\axis_image_jpeg.vcxproj", "{84517713-2000-419D-A87F-4338C9DDE3FA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "image_decode_png", "..\..\..\app\appseed\image_png\axis_image_png.vcxproj", "{84517714-2000-419D-A87F-4338C9DDE3FA}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_windows_media", "..\..\..\app-veriwell\appseed\audio_decode_windows_media\audio_decode_windows_media.vcxproj", "{2453409D-7D51-4E7E-A739-86234FFF3509}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1147,6 +1150,34 @@ Global
 		{84517714-2000-419D-A87F-4338C9DDE3FA}.static_basis|Win32.Build.0 = basis|Win32
 		{84517714-2000-419D-A87F-4338C9DDE3FA}.static_basis|x64.ActiveCfg = basis|x64
 		{84517714-2000-419D-A87F-4338C9DDE3FA}.static_basis|x64.Build.0 = basis|x64
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.basis|Win32.ActiveCfg = basis|Win32
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.basis|Win32.Build.0 = basis|Win32
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.basis|x64.ActiveCfg = basis|x64
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.basis|x64.Build.0 = basis|x64
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.codeanalysis|Win32.ActiveCfg = basis|Win32
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.codeanalysis|Win32.Build.0 = basis|Win32
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.codeanalysis|x64.ActiveCfg = basis|x64
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.codeanalysis|x64.Build.0 = basis|x64
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.memdleak|Win32.ActiveCfg = basis|Win32
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.memdleak|Win32.Build.0 = basis|Win32
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.memdleak|x64.ActiveCfg = basis|x64
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.memdleak|x64.Build.0 = basis|x64
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.no_precompiled_header|Win32.ActiveCfg = basis|Win32
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.no_precompiled_header|Win32.Build.0 = basis|Win32
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.no_precompiled_header|x64.ActiveCfg = basis|x64
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.no_precompiled_header|x64.Build.0 = basis|x64
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.profiler|Win32.ActiveCfg = basis|Win32
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.profiler|Win32.Build.0 = basis|Win32
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.profiler|x64.ActiveCfg = basis|x64
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.profiler|x64.Build.0 = basis|x64
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.stage|Win32.ActiveCfg = stage|Win32
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.stage|Win32.Build.0 = stage|Win32
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.stage|x64.ActiveCfg = stage|x64
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.stage|x64.Build.0 = stage|x64
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.static_basis|Win32.ActiveCfg = basis|Win32
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.static_basis|Win32.Build.0 = basis|Win32
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.static_basis|x64.ActiveCfg = basis|x64
+		{2453409D-7D51-4E7E-A739-86234FFF3509}.static_basis|x64.Build.0 = basis|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

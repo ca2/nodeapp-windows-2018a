@@ -106,6 +106,8 @@ BEGIN_EXTERN_C
 int32_t WINAPI _tWinMain(HINSTANCE hinstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLine,int32_t nCmdShow)
 {
 
+
+
    if(!defer_core_init())
    {
 
