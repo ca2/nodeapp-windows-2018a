@@ -38,11 +38,13 @@ class draw2d_gdiplus_enum_fonts
 public:
 
 
-   stringa &      m_stra;
+   stringa &               m_stra;
+   ::draw2d::font::csa &   m_csa;
 
 
-   draw2d_gdiplus_enum_fonts(stringa & stra):
-      m_stra(stra)
+   draw2d_gdiplus_enum_fonts(stringa & stra, ::draw2d::font::csa & csa):
+      m_stra(stra),
+      m_csa(csa)
    {
 
    }
@@ -4962,12 +4964,12 @@ namespace draw2d_gdiplus
    }
 
 
-   void graphics::enum_fonts(stringa & straPath, stringa & stra)
+   void graphics::enum_fonts(stringa & straPath, stringa & stra, ::draw2d::font::csa & csa)
    {
 
       synch_lock sl(m_pmutex);
 
-      draw2d_gdiplus_enum_fonts fonts(stra);
+      draw2d_gdiplus_enum_fonts fonts(stra, csa);
 
       HDC hdc = ::CreateCompatibleDC(NULL);
 
@@ -5013,7 +5015,8 @@ BOOL CALLBACK draw2d_gdiplus_EnumFamCallBack(LPLOGFONT lplf,LPNEWTEXTMETRIC lpnt
    else if(FontType & TRUETYPE_FONTTYPE)
    {
 
-      pfonts->m_stra.add_unique(lplf->lfFaceName);
+      pfonts->m_stra.add(lplf->lfFaceName);
+      pfonts->m_csa.add(::draw2d::wingdi_get_cs(lplf->lfCharSet));
 
    }
    else
