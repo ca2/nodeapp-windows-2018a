@@ -2,10 +2,6 @@
 
 
 
-#undef new
-#define min MIN
-#define max MAX
-#include <GdiPlus.h>
 
 
 namespace draw2d_gdiplus

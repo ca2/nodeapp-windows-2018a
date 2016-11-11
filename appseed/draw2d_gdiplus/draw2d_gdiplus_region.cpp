@@ -1,11 +1,9 @@
-#include "framework.h"
-
-
-#undef new
+//#include "framework.h"
 
 
 namespace draw2d_gdiplus
 {
+
 
    region::region(const region & r) :
       ::object(r.get_app()),
@@ -136,13 +134,15 @@ namespace draw2d_gdiplus
 
    void region::defer_update()
    {
-      
+
       if(m_pregion == NULL || !m_bUpdated)
       {
 
          if(m_pregion != NULL)
          {
-            delete m_pregion;
+            
+            ::aura::del(m_pregion);
+
          }
 
          m_pregion = get();
@@ -210,6 +210,7 @@ namespace draw2d_gdiplus
       return new Gdiplus::Region(&path);
          
    }
+
 
    Gdiplus::Region * region::get_oval()
    {

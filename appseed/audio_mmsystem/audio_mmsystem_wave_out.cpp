@@ -8,6 +8,45 @@ namespace multimedia
    namespace audio_mmsystem
    {
 
+      wave_out::helper_thread::helper_thread(::aura::application * papp) :
+         object(papp),
+         ::thread(papp)
+      {
+
+            }
+
+      wave_out::helper_thread::~helper_thread()
+      {
+
+      }
+      
+      
+      void wave_out::helper_thread::install_message_handling(::message::dispatch * pinterface)
+      {
+
+         IGUI_WIN_MSG_LINK(MM_WOM_OPEN, pinterface, this, &wave_out::helper_thread::OnMultimediaOpen);
+         IGUI_WIN_MSG_LINK(MM_WOM_DONE, pinterface, this, &wave_out::helper_thread::OnMultimediaDone);
+         IGUI_WIN_MSG_LINK(MM_WOM_CLOSE, pinterface, this, &wave_out::helper_thread::OnMultimediaClose);
+
+      }
+
+      void wave_out::helper_thread::OnMultimediaOpen(::signal_details * pobj)
+      {
+
+         m_pwaveout->OnMultimediaOpen(pobj);
+
+      }
+
+
+      void wave_out::helper_thread::OnMultimediaDone(::signal_details * pobj)
+      {
+         m_pwaveout->OnMultimediaDone(pobj);
+      }
+
+      void wave_out::helper_thread::OnMultimediaClose(::signal_details * pobj)
+      {
+         m_pwaveout->OnMultimediaDone(pobj);
+      }
 
       wave_out::wave_out(::aura::application * papp) :
          ::object(papp),
@@ -15,6 +54,10 @@ namespace multimedia
          wave_base(papp),
          ::multimedia::audio::wave_out(papp)
       {
+         
+         m_phelperthread = new helper_thread(papp);
+         m_phelperthread->m_pwaveout = this;
+         m_phelperthread->begin_synch();
 
          m_estate             = state_initial;
          m_pthreadCallback    = NULL;
@@ -24,6 +67,9 @@ namespace multimedia
          m_dwLostSampleCount  = 0;
 
       }
+
+
+
 
       wave_out::~wave_out()
       {
@@ -35,18 +81,19 @@ namespace multimedia
 
          ::multimedia::audio::wave_out::install_message_handling(pinterface);
 
-         IGUI_WIN_MSG_LINK(MM_WOM_OPEN, pinterface, this, &wave_out::OnMultimediaOpen);
-         IGUI_WIN_MSG_LINK(MM_WOM_DONE, pinterface, this, &wave_out::OnMultimediaDone);
-         IGUI_WIN_MSG_LINK(MM_WOM_CLOSE, pinterface, this, &wave_out::OnMultimediaClose);
-
       }
 
 
       bool wave_out::initialize_instance()
       {
 
+         register_dependent_thread(m_phelperthread);
+
+
          if(!::multimedia::audio::wave_out::initialize_instance())
             return false;
+
+
 
          return true;
 
@@ -57,14 +104,14 @@ namespace multimedia
 
          ::multimedia::audio::wave_out::exit_instance();
 
-         return thread::exit_instance();
+         return ::thread::exit_instance();
 
       }
 
       ::multimedia::e_result wave_out::wave_out_open(thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount)
       {
          
-         single_lock sLock(&m_mutex, TRUE);
+         synch_lock sl(m_pmutex);
 
          if(m_hwaveout != NULL && m_estate != state_initial)
             return ::multimedia::result_success;
@@ -87,7 +134,7 @@ namespace multimedia
             &m_hwaveout,
             audiowave->m_uiWaveInDevice,
             wave_format(),
-            get_os_int(),
+            m_phelperthread->get_os_int(),
             (uint32_t) 0,
             CALLBACK_THREAD))))
             goto Opened;
@@ -97,7 +144,7 @@ namespace multimedia
             &m_hwaveout,
             WAVE_MAPPER,
             wave_format(),
-            (uint32_t) get_os_int(),
+            (uint32_t)m_phelperthread->get_os_int(),
             (uint32_t) 0,
             CALLBACK_THREAD))))
             goto Opened;
@@ -107,7 +154,7 @@ namespace multimedia
             &m_hwaveout,
             WAVE_MAPPER,
             wave_format(),
-            (uint32_t) get_os_int(),
+            (uint32_t)m_phelperthread->get_os_int(),
             (uint32_t) 0,
             CALLBACK_THREAD))))
             goto Opened;
@@ -190,10 +237,12 @@ Opened:
       ::multimedia::e_result wave_out::wave_out_open_ex(thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample,::multimedia::audio::e_purpose epurpose)
       {
 
-         single_lock sLock(&m_mutex, TRUE);
+         synch_lock sl(m_pmutex);
 
          if(m_hwaveout != NULL && m_estate != state_initial)
             return ::multimedia::result_success;
+
+         m_imediatime = 0;
 
          MMRESULT mmresult = MMSYSERR_NOERROR;
 
@@ -215,7 +264,7 @@ Opened:
          try
          {
 
-            mmresult = waveOutOpen(&m_hwaveout, audiowave->m_uiWaveInDevice, wave_format(), get_os_int(), (uint32_t)0, CALLBACK_THREAD);
+            mmresult = waveOutOpen(&m_hwaveout, audiowave->m_uiWaveInDevice, wave_format(), m_phelperthread->get_os_int(), (uint32_t)0, CALLBACK_THREAD);
 
             if (mmresult == MMSYSERR_NOERROR)
             {
@@ -432,7 +481,7 @@ Opened:
       ::multimedia::e_result wave_out::wave_out_close()
       {
 
-         single_lock sLock(&m_mutex, TRUE);
+         synch_lock sl(m_pmutex);
 
          if(m_estate == state_playing)
          {
@@ -482,15 +531,36 @@ Opened:
       void wave_out::OnMultimediaDone(::signal_details * pobj)
       {
          
-         SCAST_PTR(::message::base, pbase, pobj);
-         
-         m_iBufferedCount--;
+         synch_lock sl(m_pmutex);
 
-         LPWAVEHDR lpwavehdr = (LPWAVEHDR) pbase->m_lparam.m_lparam;
+         try
+         {
 
-         wave_out_out_buffer_done((int32_t) lpwavehdr->dwUser);
+            m_imediatime = device_wave_out_get_position_millis();
+
+            m_imediaposition = device_wave_out_get_position();
+
+            SCAST_PTR(::message::base, pbase, pobj);
+
+            m_iBufferedCount--;
+
+            LPWAVEHDR lpwavehdr = (LPWAVEHDR)pbase->m_lparam.m_lparam;
+
+            if (lpwavehdr != NULL)
+            {
+
+               wave_out_out_buffer_done((int32_t)lpwavehdr->dwUser);
+
+            }
+
+         }
+         catch (...)
+         {
+
+         }
 
       }
+
 
       void wave_out::OnMultimediaClose(::signal_details * pobj)
       {
@@ -511,6 +581,8 @@ Opened:
       void wave_out::wave_out_buffer_ready(LPWAVEHDR lpwavehdr)
       {
 
+         synch_lock sl(m_pmutex);
+
          if(wave_out_get_state() != state_playing)
          {
             TRACE("ERROR wave_out::BufferReady while wave_out_get_state() != state_playing");
@@ -523,8 +595,6 @@ Opened:
             m_peffect->Process16bits((int16_t *) lpwavehdr->lpData, lpwavehdr->dwBytesRecorded / 2);
          }
 
-         single_lock sLock(&m_mutex, TRUE);
-         
          mmr = mmsystem::translate(waveOutWrite(m_hwaveout, lpwavehdr, sizeof(WAVEHDR)));
          
          VERIFY(::multimedia::result_success == mmr);
@@ -541,7 +611,7 @@ Opened:
       ::multimedia::e_result wave_out::wave_out_stop()
       {
 
-         single_lock sLock(&m_mutex, TRUE);
+         synch_lock sl(m_pmutex);
 
          if(m_estate != state_playing && m_estate != state_paused)
             return ::multimedia::result_error;
@@ -574,7 +644,7 @@ Opened:
       ::multimedia::e_result wave_out::wave_out_pause()
       {
 
-         single_lock sLock(&m_mutex, TRUE);
+         single_lock sLock(m_pmutex, TRUE);
 
          ASSERT(m_estate == state_playing);
 
@@ -603,7 +673,7 @@ Opened:
       ::multimedia::e_result wave_out::wave_out_restart()
       {
 
-         single_lock sLock(&m_mutex, TRUE);
+         synch_lock sl(m_pmutex);
 
          ASSERT(m_estate == state_paused);
 
@@ -647,7 +717,14 @@ Opened:
       imedia_time wave_out::wave_out_get_position_millis()
       {
 
-         single_lock sLock(&m_mutex, TRUE);
+         return m_imediatime;
+
+      }
+
+      imedia_time wave_out::device_wave_out_get_position_millis()
+      {
+
+         synch_lock sl(m_pmutex);
 
          ::multimedia::e_result                mmr;
 
@@ -703,10 +780,19 @@ Opened:
             return m_pprebuffer->m_position + position - m_dwLostSampleCount * m_pwaveformat->wBitsPerSample * m_pwaveformat->nChannels / 8;
       }*/
 
+      
       imedia_position wave_out::wave_out_get_position()
       {
          
-         single_lock sLock(&m_mutex, TRUE);
+         return m_imediaposition;
+
+      }
+
+
+      imedia_position wave_out::device_wave_out_get_position()
+      {
+         
+         synch_lock sl(m_pmutex);
 
          ::multimedia::e_result                mmr;
          

@@ -14,6 +14,11 @@
     #define CLASS_DECL_DRAW2D_GDIPLUS  CLASS_DECL_IMPORT
 #endif
 
+#undef new
+#define min MIN
+#define max MAX
+#include <GdiPlus.h>
+
 
 #include "draw2d_gdiplus_factory_exchange.h"
 

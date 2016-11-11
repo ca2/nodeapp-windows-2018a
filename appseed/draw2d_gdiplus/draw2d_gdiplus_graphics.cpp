@@ -1,11 +1,7 @@
-#include "framework.h"
-#include <math.h>
-
-
-#undef new
 
 
 BOOL CALLBACK draw2d_gdiplus_EnumFamCallBack(LPLOGFONT lplf,LPNEWTEXTMETRIC lpntm,DWORD FontType,LPVOID p);
+
 
 class g_keep
 {
@@ -1777,6 +1773,7 @@ gdi_fallback:
 
    }
 
+
    int32_t graphics::StartPage()
    {
 
@@ -2016,6 +2013,7 @@ gdi_fallback:
       return true;
    }
 
+
    bool graphics::BeginPath()
    {
 
@@ -2027,6 +2025,7 @@ gdi_fallback:
       return m_ppath != NULL;
 
    }
+
 
    bool graphics::CloseFigure()
    {

@@ -1,8 +1,3 @@
-#include "framework.h"
-
-#include "omp.h"
-
-#include "aqua/aqua.h"
 
 
 namespace draw2d_gdiplus

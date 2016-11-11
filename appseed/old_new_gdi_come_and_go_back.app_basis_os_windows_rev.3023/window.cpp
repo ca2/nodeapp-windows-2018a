@@ -32,16 +32,6 @@ const char _afxWnd[] = AFX_WND;
 namespace win
 {
 
-   void window::mouse_hover_add(::user::interaction* pinterface)
-   {
-      m_guieptraMouseHover.add_unique(pinterface);
-   }
-
-   void window::mouse_hover_remove(::user::interaction* pinterface)
-   {
-      m_guieptraMouseHover.remove(pinterface); 
-   }
-
    window::window()
    {
       m_pcallback = NULL;
@@ -412,7 +402,6 @@ namespace win
       {
          m_pguie->install_message_handling(pinterface);
       }
-      IGUI_WIN_MSG_LINK(WM_CAPTURECHANGED    , pinterface, this, &window::_001OnCaptureChanged);
       IGUI_WIN_MSG_LINK(WM_CREATE            , pinterface, this, &window::_001OnCreate);
       IGUI_WIN_MSG_LINK(WM_SETCURSOR         , pinterface, this, &window::_001OnSetCursor);
       IGUI_WIN_MSG_LINK(WM_ERASEBKGND        , pinterface, this, &window::_001OnEraseBkgnd);
@@ -468,11 +457,7 @@ namespace win
       }
    }
 
-   void window::_001OnCaptureChanged(gen::signal_object * pobj)
-   {
-      UNREFERENCED_PARAMETER(pobj);
-      m_pguieCapture = NULL;
-   }
+   
 
    // WM_NCDESTROY is the absolute LAST message sent.
    void window::_001OnNcDestroy(gen::signal_object * pobj)

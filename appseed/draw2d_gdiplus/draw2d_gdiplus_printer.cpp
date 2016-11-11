@@ -1,4 +1,4 @@
-#include "framework.h"
+
 #include <WinSpool.h>
 
 
@@ -19,8 +19,10 @@ namespace draw2d_gdiplus
 
    bool printer::open(const char * pszDeviceName)
    {
+      
       if (is_opened())
          close();
+
       if(!OpenPrinter((LPSTR)(LPCSTR)pszDeviceName,&m_hPrinter,NULL))
          return false;
          

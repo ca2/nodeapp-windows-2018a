@@ -520,6 +520,3 @@ namespace draw2d_gdiplus
 } // namespace draw2d_gdiplus
 
 
-#define new AURA_NEW
-
-

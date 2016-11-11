@@ -1,10 +1,9 @@
-#include "framework.h"
-#include "base/base/os/windows/windows_window_gdi.h"
 
 
 namespace draw2d_gdiplus
 {
 
+#define new AURA_NEW
 
    factory_exchange::factory_exchange(::aura::application * papp) :
       object(papp)
@@ -21,6 +20,12 @@ namespace draw2d_gdiplus
       System.factory().cloneable_large < path                  >  (System.type_info < ::draw2d::path                 > ());
       System.factory().cloneable_large < printer               >  (System.type_info < ::aura::printer                > ());
       System.factory().cloneable_large < window_gdi            >  (System.type_info < window_graphics                > ());
+
+#undef new
+
+      Gdiplus::Region * pregion = new Gdiplus::Region();
+
+      output_debug_string("teshtchee!!");
 
    }
 

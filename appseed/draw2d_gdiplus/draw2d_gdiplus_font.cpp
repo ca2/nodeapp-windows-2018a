@@ -1,6 +1,4 @@
-#include "framework.h"
 
-#undef new
 
 namespace draw2d_gdiplus
 {

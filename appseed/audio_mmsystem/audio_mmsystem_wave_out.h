@@ -14,10 +14,30 @@ namespace multimedia
       {
       public:
 
+         class  CLASS_DECL_AUDIO_MMSYSTEM helper_thread :
+            virtual public ::thread
+         {
+         public:
+
+            wave_out * m_pwaveout;
+
+
+            helper_thread(::aura::application * papp);
+            virtual ~helper_thread();
+            void install_message_handling(::message::dispatch * pinterface);
+            DECL_GEN_SIGNAL(OnMultimediaOpen);
+            DECL_GEN_SIGNAL(OnMultimediaDone);
+            DECL_GEN_SIGNAL(OnMultimediaClose);
+
+
+         };
+
 
          HWAVEOUT                         m_hwaveout;
          WAVEFORMATEX                     m_waveformatex;
-
+         imedia_time                      m_imediatime;
+         imedia_time                      m_imediaposition;
+         helper_thread *                         m_phelperthread;
 
          wave_out(::aura::application * papp);
          virtual ~wave_out();
@@ -25,8 +45,10 @@ namespace multimedia
 
          void install_message_handling(::message::dispatch * pinterface);
 
+         virtual imedia_time device_wave_out_get_position_millis();
          virtual imedia_time wave_out_get_position_millis();
-         imedia_position wave_out_get_position();
+         virtual imedia_position device_wave_out_get_position();
+         virtual imedia_position wave_out_get_position();
          virtual void wave_out_buffer_ready(int iBuffer) override;
          virtual void wave_out_buffer_ready(LPWAVEHDR lpwavehdr);
 

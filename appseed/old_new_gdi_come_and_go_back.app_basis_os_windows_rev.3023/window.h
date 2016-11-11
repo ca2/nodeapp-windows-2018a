@@ -480,7 +480,6 @@ namespace win
       void OnMove(int x, int y);
       DECL_GEN_SIGNAL(_001OnPaint)
       DECL_GEN_SIGNAL(_001OnPrint)
-      DECL_GEN_SIGNAL(_001OnCaptureChanged)
       void OnParentNotify(UINT message, LPARAM lParam);
       HCURSOR OnQueryDragIcon();
       BOOL OnQueryEndSession();

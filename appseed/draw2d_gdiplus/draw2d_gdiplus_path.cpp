@@ -1,7 +1,4 @@
-#include "framework.h"
 
-
-#undef new
 
 
 namespace draw2d_gdiplus
@@ -63,7 +60,27 @@ namespace draw2d_gdiplus
    bool path::internal_begin_figure(bool bFill, ::draw2d::e_fill_mode efillmode)
    {
 
-      return m_ppath->StartFigure() == Gdiplus::Status::Ok;
+      if (m_ppath == NULL)
+      {
+
+         return false;
+
+      }
+
+      try
+      {
+
+         return m_ppath->StartFigure() == Gdiplus::Status::Ok;
+
+      }
+      catch (...)
+      {
+
+
+      }
+
+
+      return false;
 
    }
 
@@ -73,8 +90,29 @@ namespace draw2d_gdiplus
       if(bClose)
       {
 
-         m_bHasPointInternal = false;
-         return m_ppath->CloseFigure() == Gdiplus::Status::Ok;
+         if (m_ppath == NULL)
+         {
+
+            return false;
+
+         }
+
+         try
+         {
+
+            m_bHasPointInternal = false;
+
+            return m_ppath->CloseFigure() == Gdiplus::Status::Ok;
+
+         }
+         catch (...)
+         {
+
+
+         }
+
+         return false;
+
 
       }
       else
@@ -89,21 +127,47 @@ namespace draw2d_gdiplus
    bool path::internal_add_line(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    {
 
-      bool bOk1 = true;
 
-      if(m_bHasPointInternal)
+      if (m_ppath == NULL)
       {
 
-         bOk1 = m_ppath->AddLine(m_ptInternal.X, m_ptInternal.Y, (FLOAT) x1, (FLOAT) y1) == Gdiplus::Status::Ok;
+         return false;
 
       }
 
-      bool bOk2 = m_ppath->AddLine(x1, y1, x2, y2) == Gdiplus::Status::Ok;
+      bool bOk1 = false;
 
-      m_ptInternal.X = (Gdiplus::REAL) x2;
-      m_ptInternal.Y = (Gdiplus::REAL) y2;
+      bool bOk2 = false;
 
-      m_bHasPointInternal = true;
+      try
+      {
+
+         bOk1 = true;
+
+         if (m_bHasPointInternal)
+         {
+
+            bOk1 = m_ppath->AddLine(m_ptInternal.X, m_ptInternal.Y, (FLOAT)x1, (FLOAT)y1) == Gdiplus::Status::Ok;
+
+         }
+
+         if (bOk1)
+         {
+
+            bOk2 = m_ppath->AddLine(x1, y1, x2, y2) == Gdiplus::Status::Ok;
+
+         }
+
+         m_ptInternal.X = (Gdiplus::REAL) x2;
+         m_ptInternal.Y = (Gdiplus::REAL) y2;
+
+         m_bHasPointInternal = true;
+
+      }
+      catch (...)
+      {
+
+      }
 
       return bOk1 && bOk2;
 
@@ -113,10 +177,28 @@ namespace draw2d_gdiplus
    bool path::internal_add_rect(int32_t x,int32_t y,int32_t cx,int32_t cy)
    {
 
+      if (m_ppath == NULL)
+      {
+
+         return false;
+
+      }
+
       Gdiplus::Rect rect(x,y,cx,cy);
 
-      bool bOk2 = m_ppath->AddRectangle(rect) == Gdiplus::Status::Ok;
+      bool bOk2 = false;
 
+      try
+      {
+
+         bOk2 = m_ppath->AddRectangle(rect) == Gdiplus::Status::Ok;
+
+      }
+      catch (...)
+      {
+
+
+      }
 
       return bOk2;
 
@@ -171,10 +253,28 @@ namespace draw2d_gdiplus
    bool path::internal_add_rect(double x,double y,double cx,double cy)
    {
 
-      Gdiplus::RectF rectf((Gdiplus::REAL)x,(Gdiplus::REAL)y,(Gdiplus::REAL)cx,(Gdiplus::REAL)cy);
+      if (m_ppath == NULL)
+      {
 
-      bool bOk2 = m_ppath->AddRectangle(rectf) == Gdiplus::Status::Ok;
+         return false;
 
+      }
+
+      bool bOk2 = false;
+
+      try
+      {
+
+         Gdiplus::RectF rectf((Gdiplus::REAL)x, (Gdiplus::REAL)y, (Gdiplus::REAL)cx, (Gdiplus::REAL)cy);
+
+         bOk2 = m_ppath->AddRectangle(rectf) == Gdiplus::Status::Ok;
+
+      }
+      catch (...)
+      {
+
+
+      }
 
       return bOk2;
 
@@ -201,6 +301,8 @@ namespace draw2d_gdiplus
 
    bool path::create(Gdiplus::Graphics * pgraphics)
    {
+
+      destroy();
 
       if(m_efillmode == ::draw2d::fill_mode_winding)
       {
@@ -243,14 +345,7 @@ namespace draw2d_gdiplus
    bool path::destroy()
    {
 
-      if(m_ppath != NULL)
-      {
-
-         delete m_ppath;
-
-         m_ppath = NULL;
-
-      }
+      ::aura::del(m_ppath);
 
       return true;
 
@@ -291,17 +386,34 @@ namespace draw2d_gdiplus
    bool path::internal_add_arc(const RECT & rect, double iStart, double iAngle)
    {
 
-      ::Gdiplus::RectF rectf((Gdiplus::REAL) rect.left, (Gdiplus::REAL) rect.top, (Gdiplus::REAL) width(rect), (Gdiplus::REAL) height(rect));
+      if (m_ppath == NULL)
+      {
+
+         return false;
+
+      }
+
+      try
+      {
 
 
-      m_ppath->AddArc(rectf, (Gdiplus::REAL) iStart, (Gdiplus::REAL) iAngle);
+         ::Gdiplus::RectF rectf((Gdiplus::REAL) rect.left, (Gdiplus::REAL) rect.top, (Gdiplus::REAL) width(rect), (Gdiplus::REAL) height(rect));
 
-      ::Gdiplus::PointF p;
-      
-      m_ppath->GetLastPoint(&p);
 
-      m_ptInternal.X = p.X;
-      m_ptInternal.Y = p.Y;
+         m_ppath->AddArc(rectf, (Gdiplus::REAL) iStart, (Gdiplus::REAL) iAngle);
+
+         ::Gdiplus::PointF p;
+
+         m_ppath->GetLastPoint(&p);
+
+         m_ptInternal.X = p.X;
+         m_ptInternal.Y = p.Y;
+
+      }
+      catch (...)
+      {
+
+      }
 
       return true;
 
@@ -311,51 +423,66 @@ namespace draw2d_gdiplus
    bool path::internal_add_string(Gdiplus::Graphics * pgraphics,int32_t x,int32_t y,const string & strText,::draw2d::font_sp spfont)
    {
 
-      Gdiplus::FontFamily fontFamily;
-
-      Gdiplus::StringFormat format(Gdiplus::StringFormat::GenericTypographic());
-
-      wstring wstr(strText);
-
-      Gdiplus::REAL dSize = (Gdiplus::REAL) spfont->m_dFontSize;
-
-      Gdiplus::Unit unit = pgraphics->GetPageUnit();
-
-      switch(unit)
-
+      if (m_ppath == NULL)
       {
 
-      case Gdiplus::UnitMillimeter:
-         dSize = dSize * 25.4f / pgraphics->GetDpiY();
-         break;
-
-      case Gdiplus::UnitInch:
-
-         dSize = dSize / pgraphics->GetDpiY();
-         break;
-      case Gdiplus::UnitPoint:
-
-         dSize = dSize * 72.0f / pgraphics->GetDpiY();
-         break;
+         return false;
 
       }
 
-      INT iStyle = ((Gdiplus::Font *) spfont->get_os_data())->GetStyle();
-      ((Gdiplus::Font *) spfont->get_os_data())->GetFamily(&fontFamily);
-//      Gdiplus::Status status;
+      try
+      {
 
-      //Gdiplus::StringFormat format();
+         Gdiplus::FontFamily fontFamily;
 
-      format.SetFormatFlags(format.GetFormatFlags()
-                            | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
-                            | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap
-                            | Gdiplus::StringFormatFlagsNoFitBlackBox);
+         Gdiplus::StringFormat format(Gdiplus::StringFormat::GenericTypographic());
+
+         wstring wstr(strText);
+
+         Gdiplus::REAL dSize = (Gdiplus::REAL) spfont->m_dFontSize;
+
+         Gdiplus::Unit unit = pgraphics->GetPageUnit();
+
+         switch (unit)
+         {
+
+         case Gdiplus::UnitMillimeter:
+            dSize = dSize * 25.4f / pgraphics->GetDpiY();
+            break;
+
+         case Gdiplus::UnitInch:
+
+            dSize = dSize / pgraphics->GetDpiY();
+            break;
+         case Gdiplus::UnitPoint:
+
+            dSize = dSize * 72.0f / pgraphics->GetDpiY();
+            break;
+
+         }
+
+         INT iStyle = ((Gdiplus::Font *) spfont->get_os_data())->GetStyle();
+         ((Gdiplus::Font *) spfont->get_os_data())->GetFamily(&fontFamily);
+         //      Gdiplus::Status status;
+
+               //Gdiplus::StringFormat format();
+
+         format.SetFormatFlags(format.GetFormatFlags()
+            | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
+            | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap
+            | Gdiplus::StringFormatFlagsNoFitBlackBox);
 
 
-      format.SetLineAlignment(Gdiplus::StringAlignmentNear);
+         format.SetLineAlignment(Gdiplus::StringAlignmentNear);
 
 
-      m_ppath->AddString(wstr, (INT) wstr.get_length(),&fontFamily,iStyle,dSize,Gdiplus::Point(x,y),&format);
+         m_ppath->AddString(wstr, (INT)wstr.get_length(), &fontFamily, iStyle, dSize, Gdiplus::Point(x, y), &format);
+
+      }
+      catch (...)
+      {
+
+      }
 
       return true;
 
@@ -426,4 +553,3 @@ namespace draw2d_gdiplus
 } // namespace draw2d_gdiplus
 
 
-#define new AURA_NEW

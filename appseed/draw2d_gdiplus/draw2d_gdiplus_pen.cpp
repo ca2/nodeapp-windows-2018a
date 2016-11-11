@@ -1,7 +1,4 @@
-#include "framework.h"
 
-
-#undef new
 
 
 namespace draw2d_gdiplus
@@ -25,48 +22,6 @@ namespace draw2d_gdiplus
       }
    }
 
-   /*bool pen::CreatePen(int32_t nPenStyle, int32_t nWidth, COLORREF crColor)
-   { return attach(::CreatePen(nPenStyle, nWidth, crColor)); }
-   bool pen::CreatePenIndirect(LPLOGPEN lpLogPen)
-   { return attach(::CreatePenIndirect(lpLogPen)); }
-   bool pen::CreatePen(int32_t nPenStyle, int32_t nWidth, const LOGBRUSH* pLogBrush,
-      int32_t nStyleCount, const DWORD* lpStyle)
-   { return attach(::ExtCreatePen(nPenStyle, nWidth, pLogBrush, nStyleCount,
-   lpStyle)); }
-   int32_t pen::GetExtLogPen(EXTLOGPEN* pLogPen)
-   { ASSERT(get_handle() != NULL);
-   return ::GetObject(get_handle(), sizeof(EXTLOGPEN), pLogPen); }
-   
-   int32_t pen::GetLogPen(LOGPEN* pLogPen)
-   { 
-      if(get_handle() == NULL)
-         return 0;
-      return ::GetObject(get_handle(), sizeof(LOGPEN), pLogPen); 
-   }
-
-
-   void pen::construct(int32_t nPenStyle, double dWidth, COLORREF crColor)
-   {
-      
-      if(m_ppen == NULL)
-         delete m_ppen;
-
-      m_nPenStyle    = nPenStyle;
-      m_dWidth       = dWidth;
-      m_crColor      = crColor;
-      m_ppen         = new Gdiplus::Pen(Gdiplus::Color(crColor), dWidth);
-
-   }
-
-   void pen::construct(int32_t nPenStyle, int32_t nWidth, const LOGBRUSH* pLogBrush,
-      int32_t nStyleCount, const DWORD* lpStyle)
-   {
-      if (!attach(::ExtCreatePen(nPenStyle, nWidth, pLogBrush, nStyleCount,
-         lpStyle)))
-         throw resource_exception();
-   }*/
-
-   /////////////////////////////////////////////////////////////////////////////
 
 
    void pen::dump(dump_context & dumpcontext) const
