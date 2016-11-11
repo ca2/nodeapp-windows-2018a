@@ -13,6 +13,7 @@ namespace draw2d_gdiplus
 
    }
 
+
    font::font(const font & font):
       ::object(font.get_app())
    {
@@ -139,7 +140,7 @@ namespace draw2d_gdiplus
    }
 
 
-   ::draw2d::font::e_cs font::get_cs(::draw2d::graphics * pgraphics)
+   ::draw2d::font::e_cs font::calc_cs(::draw2d::graphics * pgraphics)
    {
 
       Gdiplus::Font * pfont = (Gdiplus::Font *) get_os_data();
@@ -150,44 +151,7 @@ namespace draw2d_gdiplus
 
       pfont->GetLogFontA((::Gdiplus::Graphics *) pgraphics->get_os_data(), &lf);
 
-      if (lf.lfCharSet == CHINESEBIG5_CHARSET)
-      {
-
-         return cs_CHINESEBIG5;
-
-      }
-      else if (lf.lfCharSet == GB2312_CHARSET)
-      {
-
-         return cs_GB2312;
-
-      }
-      else if (lf.lfCharSet == SHIFTJIS_CHARSET)
-      {
-
-         return cs_SHIFTJIS;
-
-      }
-      else if (lf.lfCharSet == ANSI_CHARSET)
-      {
-
-         return cs_ANSI;
-
-      }
-      else if (lf.lfCharSet == SYMBOL_CHARSET)
-      {
-
-         return cs_SYMBOL;
-
-      }
-      else
-      {
-
-         output_debug_string("OTHER CHAR SET");
-
-      }
-
-      return cs_DEFAULT;
+      return ::draw2d::wingdi_get_cs(lf.lfCharSet);
 
    }
 

@@ -441,7 +441,7 @@ smf_Open_File_Cleanup:
             /* ptempo is the tempo map entry preceding the requested tick offset.
             */
 
-            return ptempo->mcBase / 1000 + muldiv32((int32_t)(tkOffset - ptempo->tkTempo), ptempo->dwTempo * 1000, 1000L * m_dwTimeDivision);
+            return ptempo->mcBase / 1000 + muldiv32((int32_t)(tkOffset - ptempo->tkTempo), ptempo->dwTempo , 1000L * m_dwTimeDivision);
 
          }
 
@@ -528,7 +528,7 @@ smf_Open_File_Cleanup:
             /* ptempo is the tempo map entry preceding the requested tick offset.
             */
 
-            tkOffset = ptempo->tkTempo + muldiv32((int32_t) msOffset-ptempo->mcBase, 1000L * m_dwTimeDivision, ptempo->dwTempo * 1000);
+            tkOffset = ptempo->tkTempo + muldiv32((int32_t) msOffset-ptempo->mcBase / 1000, 1000L * m_dwTimeDivision, ptempo->dwTempo);
 
             if (tkOffset > m_tkLength)
             {

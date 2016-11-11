@@ -29,24 +29,6 @@ public:
 
 };
 
-class draw2d_gdiplus_enum_fonts
-{
-public:
-
-
-   stringa &               m_stra;
-   ::draw2d::font::csa &   m_csa;
-
-
-   draw2d_gdiplus_enum_fonts(stringa & stra, ::draw2d::font::csa & csa):
-      m_stra(stra),
-      m_csa(csa)
-   {
-
-   }
-
-
-};
 
 
 namespace draw2d_gdiplus
@@ -64,7 +46,7 @@ namespace draw2d_gdiplus
       m_hdcGraphics     = NULL;
       m_ppath           = NULL;
       m_ppathPaint      = NULL;
-      m_etextrendering  = ::draw2d::text_rendering_anti_alias_grid_fit;
+      m_etextrendering  = ::draw2d::text_rendering_none;
       m_dFontFactor     = 1.0;
 
       m_pm = new Gdiplus::Matrix();
@@ -3725,68 +3707,21 @@ gdi_fallback:
       if (m_pgraphics == NULL)
          return FALSE;
 
-      g_keep k(m_pgraphics);
-
       Gdiplus::Status status = Gdiplus::Status::GenericError;
 
-      try
+      if (m_ealphamode != ::draw2d::alpha_mode_blend)
       {
 
-
-
-         /*
-
-         switch(m_etextrendering)
-         {
-         case ::draw2d::text_rendering_anti_alias:
-            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
-            break;
-         case ::draw2d::text_rendering_anti_alias_grid_fit:
-            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
-            break;
-         case ::draw2d::text_rendering_single_bit_per_pixel:
-            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintSingleBitPerPixel);
-            break;
-         case ::draw2d::text_rendering_clear_type_grid_fit:
-            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintClearTypeGridFit);
-            break;
-         }
-
-         */
-
-         switch (m_etextrendering)
-         {
-         case ::draw2d::text_rendering_anti_alias:
-            status = m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-            status = m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
-            break;
-         case ::draw2d::text_rendering_anti_alias_grid_fit:
-            status = m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-            status = m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
-            break;
-         case ::draw2d::text_rendering_single_bit_per_pixel:
-            status = m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-            status = m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintSingleBitPerPixel);
-            break;
-         case ::draw2d::text_rendering_clear_type_grid_fit:
-            status = m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-            status = m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintClearTypeGridFit);
-            break;
-         }
-         //m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-         //m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
-
+         set_alpha_mode(::draw2d::alpha_mode_blend);
 
       }
-      catch(...)
+
+      if (m_etextrendering == ::draw2d::text_rendering_none)
       {
+
+         set_text_rendering(::draw2d::text_rendering_anti_alias_grid_fit);
+
       }
-
-
 
       Gdiplus::StringFormat format(Gdiplus::StringFormat::GenericTypographic());
 
@@ -3842,32 +3777,56 @@ gdi_fallback:
       try
       {
 
-         Gdiplus::Matrix m;
+         if (m_spfont->m_dFontWidth == 1.0)
+         {
 
-         status = m_pgraphics->GetTransform(&m);
+            Gdiplus::RectF rectf(rectParam.left, rectParam.top, (Gdiplus::REAL) (width(rectParam) * m_spfont->m_dFontWidth), (Gdiplus::REAL) (height(rectParam)));
 
-         pointer< Gdiplus::Matrix > pmNew = m.Clone();
+            wstring wstr = ::str::international::utf8_to_unicode(str);
 
-         status = pmNew->Translate((Gdiplus::REAL) rectParam.left,(Gdiplus::REAL) rectParam.top);
+            Gdiplus::Font * pfont = gdiplus_font();
 
-         status = pmNew->Scale((Gdiplus::REAL) m_spfont->m_dFontWidth,(Gdiplus::REAL) 1.0,Gdiplus::MatrixOrderAppend);
+            Gdiplus::Brush * pbrush = gdiplus_brush();
 
-         Gdiplus::RectF rectf(0,0,(Gdiplus::REAL) (width(rectParam) * m_spfont->m_dFontWidth),(Gdiplus::REAL) (height(rectParam)));
+            strsize iSize = wstr.get_length();
 
-         status = m_pgraphics->SetTransform(pmNew);
+            status = m_pgraphics->DrawString(wstr, (INT)iSize, pfont, rectf, &format, pbrush);
 
-         wstring wstr = ::str::international::utf8_to_unicode(str);
+         }
+         else
+         {
 
-         Gdiplus::Font * pfont = gdiplus_font();
+            g_keep k(m_pgraphics);
 
-         Gdiplus::Brush * pbrush = gdiplus_brush();
+            Gdiplus::Matrix m;
 
-         strsize iSize = wstr.get_length();
+            status = m_pgraphics->GetTransform(&m);
 
-         status = m_pgraphics->DrawString(wstr, (INT) iSize,pfont,rectf,&format,pbrush);
+            pointer< Gdiplus::Matrix > pmNew = m.Clone();
+
+            status = pmNew->Translate((Gdiplus::REAL) rectParam.left, (Gdiplus::REAL) rectParam.top);
+
+            status = pmNew->Scale((Gdiplus::REAL) m_spfont->m_dFontWidth, (Gdiplus::REAL) 1.0, Gdiplus::MatrixOrderAppend);
+
+            Gdiplus::RectF rectf(0, 0, (Gdiplus::REAL) (width(rectParam) * m_spfont->m_dFontWidth), (Gdiplus::REAL) (height(rectParam)));
+
+            status = m_pgraphics->SetTransform(pmNew);
+
+            wstring wstr = ::str::international::utf8_to_unicode(str);
+
+            Gdiplus::Font * pfont = gdiplus_font();
+
+            Gdiplus::Brush * pbrush = gdiplus_brush();
+
+            strsize iSize = wstr.get_length();
+
+            status = m_pgraphics->DrawString(wstr, (INT)iSize, pfont, rectf, &format, pbrush);
+
+         }
+
 
       }
-      catch(...)
+      catch (...)
       {
 
       }
@@ -4414,117 +4373,141 @@ namespace draw2d_gdiplus
 
       }
 
-      g_keep k(m_pgraphics);
-
-      ::Gdiplus::PointF origin(0, 0);
-
       string str(lpszString, nCount);
 
       wstring wstr = ::str::international::utf8_to_unicode(str);
 
-      try
+      if (m_pgraphics == NULL)
       {
 
-         if (m_pgraphics == NULL)
-         {
-
-            return false;
-
-         }
-
-         switch(m_etextrendering)
-         {
-         case ::draw2d::text_rendering_anti_alias:
-            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
-            break;
-         case ::draw2d::text_rendering_anti_alias_grid_fit:
-            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
-            break;
-         case ::draw2d::text_rendering_single_bit_per_pixel:
-            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintSingleBitPerPixel);
-            break;
-         case ::draw2d::text_rendering_clear_type_grid_fit:
-            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintClearTypeGridFit);
-            break;
-         }
-
-      }
-      catch(...)
-      {
-      }
-
-
-      FLOAT fDpiX = m_pgraphics->GetDpiX();
-
-      Gdiplus::Matrix m;
-
-      m_pgraphics->GetTransform(&m);
-
-      pointer < Gdiplus::Matrix > pmNew;
-
-      if(m_ppath != NULL)
-      {
-
-         pmNew = new Gdiplus::Matrix();
-
-      }
-      else
-      {
-
-         pmNew = m.Clone();
+         return false;
 
       }
 
-      pmNew->Translate((Gdiplus::REAL)  (x / m_spfont->m_dFontWidth), (Gdiplus::REAL) y);
+      if (m_ealphamode != ::draw2d::alpha_mode_blend)
+      {
 
-      pmNew->Scale((Gdiplus::REAL) m_spfont->m_dFontWidth, (Gdiplus::REAL) 1.0, Gdiplus::MatrixOrderAppend);
+         set_alpha_mode(::draw2d::alpha_mode_blend);
+
+      }
+
+      if (m_etextrendering == ::draw2d::text_rendering_none)
+      {
+
+         set_text_rendering(::draw2d::text_rendering_anti_alias_grid_fit);
+
+      }
 
       Gdiplus::Status status;
 
       Gdiplus::StringFormat format(Gdiplus::StringFormat::GenericTypographic());
 
       format.SetFormatFlags(format.GetFormatFlags()
-                            | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
-                            | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap
-                            | Gdiplus::StringFormatFlagsNoFitBlackBox);
+         | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
+         | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap
+         | Gdiplus::StringFormatFlagsNoFitBlackBox);
 
       format.SetLineAlignment(Gdiplus::StringAlignmentNear);
 
-      if(m_ppath != NULL)
+      if (m_spfont->m_dFontWidth == 1.0)
       {
 
-         Gdiplus::GraphicsPath path;
+         ::Gdiplus::PointF origin(x, y);
 
-         Gdiplus::FontFamily fontfamily;
+         if (m_ppath != NULL)
+         {
 
-         gdiplus_font()->GetFamily(&fontfamily);
+            FLOAT fDpiX = m_pgraphics->GetDpiX();
 
-         double d1 = gdiplus_font()->GetSize() * m_pgraphics->GetDpiX() / 72.0;
+            Gdiplus::GraphicsPath path;
 
-         double d2 = fontfamily.GetEmHeight(gdiplus_font()->GetStyle());
+            Gdiplus::FontFamily fontfamily;
 
-         double d3 = d1 * d2;
+            gdiplus_font()->GetFamily(&fontfamily);
 
-         status = path.AddString(wstr,(INT) wstr.get_length(),&fontfamily,gdiplus_font()->GetStyle(),(Gdiplus::REAL) d1,origin,&format);
+            double d1 = gdiplus_font()->GetSize() * m_pgraphics->GetDpiX() / 72.0;
 
-         path.Transform(pmNew);
+            double d2 = fontfamily.GetEmHeight(gdiplus_font()->GetStyle());
 
-         m_ppath->AddPath(&path, FALSE);
+            double d3 = d1 * d2;
+
+            status = path.AddString(wstr, (INT)wstr.get_length(), &fontfamily, gdiplus_font()->GetStyle(), (Gdiplus::REAL) d1, origin, &format);
+
+            m_ppath->AddPath(&path, FALSE);
+
+         }
+         else
+         {
+
+            status = m_pgraphics->DrawString(wstr, (INT)wstr.get_length(), gdiplus_font(), origin, &format, gdiplus_brush());
+
+         }
 
       }
       else
       {
 
-         m_pgraphics->SetTransform(pmNew);
+         g_keep k(m_pgraphics);
 
-         status = m_pgraphics->DrawString(wstr, (INT) wstr.get_length(), gdiplus_font(), origin, &format, gdiplus_brush());
+         ::Gdiplus::PointF origin(0, 0);
 
-         m_pgraphics->SetTransform(&m);
+         FLOAT fDpiX = m_pgraphics->GetDpiX();
 
+         Gdiplus::Matrix m;
+
+         m_pgraphics->GetTransform(&m);
+
+         pointer < Gdiplus::Matrix > pmNew;
+
+         if (m_ppath != NULL)
+         {
+
+            pmNew = new Gdiplus::Matrix();
+
+         }
+         else
+         {
+
+            pmNew = m.Clone();
+
+         }
+
+         pmNew->Translate((Gdiplus::REAL)  (x / m_spfont->m_dFontWidth), (Gdiplus::REAL) y);
+
+         pmNew->Scale((Gdiplus::REAL) m_spfont->m_dFontWidth, (Gdiplus::REAL) 1.0, Gdiplus::MatrixOrderAppend);
+
+         if (m_ppath != NULL)
+         {
+
+            Gdiplus::GraphicsPath path;
+
+            Gdiplus::FontFamily fontfamily;
+
+            gdiplus_font()->GetFamily(&fontfamily);
+
+            double d1 = gdiplus_font()->GetSize() * m_pgraphics->GetDpiX() / 72.0;
+
+            double d2 = fontfamily.GetEmHeight(gdiplus_font()->GetStyle());
+
+            double d3 = d1 * d2;
+
+            status = path.AddString(wstr, (INT)wstr.get_length(), &fontfamily, gdiplus_font()->GetStyle(), (Gdiplus::REAL) d1, origin, &format);
+
+            path.Transform(pmNew);
+
+            m_ppath->AddPath(&path, FALSE);
+
+         }
+         else
+         {
+
+            m_pgraphics->SetTransform(pmNew);
+
+            status = m_pgraphics->DrawString(wstr, (INT)wstr.get_length(), gdiplus_font(), origin, &format, gdiplus_brush());
+
+            m_pgraphics->SetTransform(&m);
+
+         }
       }
 
       return status  == Gdiplus::Status::Ok;
@@ -4687,7 +4670,30 @@ namespace draw2d_gdiplus
 
    void graphics::set_text_rendering(::draw2d::e_text_rendering etextrendering)
    {
-      m_etextrendering = etextrendering;
+      
+      if (etextrendering != m_etextrendering)
+      {
+
+         m_etextrendering = etextrendering;
+
+         switch (m_etextrendering)
+         {
+         case ::draw2d::text_rendering_anti_alias:
+            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
+            break;
+         case ::draw2d::text_rendering_anti_alias_grid_fit:
+            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
+            break;
+         case ::draw2d::text_rendering_single_bit_per_pixel:
+            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintSingleBitPerPixel);
+            break;
+         case ::draw2d::text_rendering_clear_type_grid_fit:
+            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintClearTypeGridFit);
+            break;
+         }
+
+      }
+
 
    }
 
@@ -4966,20 +4972,9 @@ namespace draw2d_gdiplus
    void graphics::enum_fonts(stringa & straPath, stringa & stra, ::draw2d::font::csa & csa)
    {
 
-      synch_lock sl(m_pmutex);
-
-      draw2d_gdiplus_enum_fonts fonts(stra, csa);
-
-      HDC hdc = ::CreateCompatibleDC(NULL);
-
-      ::EnumFontFamilies(hdc,(LPCTSTR)NULL,(FONTENUMPROC)draw2d_gdiplus_EnumFamCallBack,(LPARAM)&fonts);
-
-      ::DeleteDC(hdc);
-
-      stra.quick_sort();
+      ::draw2d::wingdi_enum_fonts(stra, csa, false, true, false);
 
       straPath = stra;
-
 
    }
 
@@ -5001,29 +4996,4 @@ namespace draw2d_gdiplus
 
 
 
-
-BOOL CALLBACK draw2d_gdiplus_EnumFamCallBack(LPLOGFONT lplf,LPNEWTEXTMETRIC lpntm,DWORD FontType,LPVOID p)
-{
-
-   draw2d_gdiplus_enum_fonts * pfonts = (draw2d_gdiplus_enum_fonts *) p;
-
-   if(FontType & RASTER_FONTTYPE)
-   {
-
-   }
-   else if(FontType & TRUETYPE_FONTTYPE)
-   {
-
-      pfonts->m_stra.add(lplf->lfFaceName);
-      pfonts->m_csa.add(::draw2d::wingdi_get_cs(lplf->lfCharSet));
-
-   }
-   else
-   {
-
-   }
-
-   return TRUE;
-
-}
 
