@@ -546,7 +546,7 @@ namespace ca2plugin_container
             else if(pmsg->message == WM_CLOSE)
             {
 
-               m_pcontainerapp->set_end_thread();
+               m_pcontainerapp->post_quit();
 
                return;
 

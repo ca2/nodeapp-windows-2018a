@@ -129,7 +129,7 @@ public:
 
 			while(iCount > 0)
 			{
-				Sleep(584);
+				Sleep(500);
 			}
 
 		}

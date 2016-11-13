@@ -90,7 +90,7 @@ namespace win
       virtual void set_auto_delete(bool bAutoDelete = true);
       virtual void set_run(bool bRun = true);
       virtual event & get_finish_event();
-      virtual bool get_run();
+      virtual bool get_run_thread();
       virtual ::ca::thread * get_app_thread();
       virtual ::user::interaction * get_active_ui();
       virtual ::user::interaction * set_active_ui(::user::interaction * pui);
@@ -114,7 +114,7 @@ namespace win
    // Operations
       DWORD SuspendThread();
       DWORD ResumeThread();
-      BOOL PostThreadMessage(UINT message, WPARAM wParam, LPARAM lParam);
+      BOOL postthreadmessage(UINT message, WPARAM wParam, LPARAM lParam);
       bool post_message(::user::interaction * pguie, UINT message, WPARAM wParam, LPARAM lParam);
 
       virtual bool PreInitInstance();

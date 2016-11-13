@@ -241,7 +241,7 @@ SPALIB_API string spa_get_platform()
 //         str_trim(g_strBuild);
 //         if(g_strBuild.length() != 19)
 //         {
-//            Sleep(1984);
+//            Sleep(2000);
 //            goto RetryBuildNumber;
 //         }
 //      }
@@ -404,7 +404,7 @@ SPALIB_API string spa_get_platform()
 //      {
 //         trace("Failed to download file list!");
 //         trace("Going to retry host...");
-//         Sleep(584);
+//         Sleep(500);
 //         goto RetryHost;
 //      }
 //      strUrl = "http://" + strSpaHost + "/stage/app/stage/metastage/index-"+strBuild+".md5";
@@ -414,12 +414,12 @@ SPALIB_API string spa_get_platform()
 //      {
 //         trace("Invalid file list!");
 //         trace("Going to retry host...");
-//         Sleep(584);
+//         Sleep(500);
 //         goto RetryHost;
 //      }
 //      else
 //      {
-//         Sleep(584);
+//         Sleep(500);
 //      }
 //      ParseIndexFile(strIndexPath.c_str(), mapLen, mapMd5, mapGzLen);
 //
@@ -428,7 +428,7 @@ SPALIB_API string spa_get_platform()
 //      {
 //            trace("Failed to download file list!");
 //            trace("Going to retry host...");
-//            Sleep(584);
+//            Sleep(500);
 //            goto RetryHost;
 //      }
 //      if(lpnodeInstalled != NULL)
@@ -500,7 +500,7 @@ SPALIB_API string spa_get_platform()
 //         }
 //         trace(".");
 //         iRetry++;
-//         Sleep(1984);
+//         Sleep(2000);
 //      }*/
 //      
 //
@@ -624,7 +624,7 @@ SPALIB_API string spa_get_platform()
 //         if(!ignit_phase2())
 //         {
 //            trace("***Going to ebing!!");
-//            Sleep(1984);
+//            Sleep(2000);
 //            goto install_begin;
 //         }
 //      }

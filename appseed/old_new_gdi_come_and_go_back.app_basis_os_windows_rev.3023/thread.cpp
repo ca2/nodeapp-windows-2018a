@@ -497,7 +497,7 @@ namespace win
       _AFX_THREAD_STATE* pState = AfxGetThreadState();
       // initialize message pump
       m_nDisablePumpCount = 0;
-      pState->m_nMsgLast = WM_NULL;
+      pState->m_nMsgLast = wm_null;
       System.get_cursor_pos(&(pState->m_ptCursorLast));
 
       // most threads are deleted when not needed
@@ -750,7 +750,7 @@ namespace win
       return m_evFinish;
    }
 
-   bool thread::get_run()
+   bool thread::get_run_thread()
    {
       return m_bRun;
    }
@@ -1524,7 +1524,7 @@ stop_run:
       pmessage->m_uiMessage   = uiMessage;
       pmessage->m_wparam      = wparam;
       pmessage->m_lparam      = lparam;
-      return PostThreadMessage(WM_APP + 1984, 77, (LPARAM) pmessage) != FALSE;
+      return postthreadmessage(WM_APP + 1984, 77, (LPARAM) pmessage) != FALSE;
    }
 
 
@@ -1621,8 +1621,8 @@ stop_run:
    { ASSERT(m_hThread != NULL); return ::ResumeThread(m_hThread); }
    DWORD thread::SuspendThread()
    { ASSERT(m_hThread != NULL); return ::SuspendThread(m_hThread); }
-   BOOL thread::PostThreadMessage(UINT message, WPARAM wParam, LPARAM lParam)
-   { ASSERT(m_hThread != NULL); return ::PostThreadMessage(m_nThreadID, message, wParam, lParam); }
+   BOOL thread::postthreadmessage(UINT message, WPARAM wParam, LPARAM lParam)
+   { ASSERT(m_hThread != NULL); return ::postthreadmessage(m_nThreadID, message, wParam, lParam); }
 
    void thread::set_os_data(void * pvoidOsData)
    {
@@ -2655,7 +2655,7 @@ pmessage->m_pguie       = pguie;
 pmessage->m_uiMessage   = uiMessage;
 pmessage->m_wparam      = wparam;
 pmessage->m_lparam      = lparam;
-return PostThreadMessage(WM_APP + 1984, 77, (LPARAM) pmessage);
+return postthreadmessage(WM_APP + 1984, 77, (LPARAM) pmessage);
 }
 
 

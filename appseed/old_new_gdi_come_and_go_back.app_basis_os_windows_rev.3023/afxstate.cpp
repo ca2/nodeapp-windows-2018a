@@ -74,8 +74,8 @@ _AFX_THREAD_STATE::_AFX_THREAD_STATE()
 #ifdef _DEBUG
    m_nDisablePumpCount = 0;
 #endif
-   m_msgCur.message = WM_NULL;
-   m_nMsgLast = WM_NULL;
+   m_msgCur.message = wm_null;
+   m_nMsgLast = wm_null;
    //System.get_cursor_pos(&(m_ptCursorLast));
    m_ptCursorLast = point(0,0);
 }

@@ -3737,10 +3737,10 @@ ExitModal:
          m_iModalCount--;
          for(index i = 0; i < m_iaModalThread.get_count(); i++)
          {
-            ::PostThreadMessage(m_iaModalThread[i], WM_NULL, 0, 0);
+            ::postthreadmessage(m_iaModalThread[i], wm_null, 0, 0);
          }
-         PostMessage(WM_NULL);
-         System.GetThread()->PostThreadMessage(WM_NULL, 0, 0);
+         PostMessage(wm_null);
+         System.GetThread()->postthreadmessage(wm_null, 0, 0);
       }
    }
 
@@ -3756,14 +3756,14 @@ ExitModal:
       {
          int iLevel = m_iModalCount - 1;
          m_iModalCount = 0;
-         PostMessage(WM_NULL);
-         System.GetThread()->PostThreadMessage(WM_NULL, 0, 0);
+         PostMessage(wm_null);
+         System.GetThread()->postthreadmessage(wm_null, 0, 0);
          for(int i = iLevel; i >= 0; i--)
          {
             ::ca::thread * pthread = oprop(string("RunModalLoop.thread(") + gen::str::itoa(i) + ")").ca2 < ::ca::thread > ();
             try
             {
-               pthread->PostThreadMessage(WM_NULL, 0, 0);
+               pthread->postthreadmessage(wm_null, 0, 0);
             }
             catch(...)
             {
@@ -5116,8 +5116,8 @@ int window::GetCheckedRadioButton(int nIDFirstButton, int nIDLastButton)
       { ASSERT(m_hThread != NULL); return ::ResumeThread(m_hThread); }
     DWORD thread::SuspendThread()
       { ASSERT(m_hThread != NULL); return ::SuspendThread(m_hThread); }
-    BOOL thread::PostThreadMessage(UINT message, WPARAM wParam, LPARAM lParam)
-      { ASSERT(m_hThread != NULL); return ::PostThreadMessage(m_nThreadID, message, wParam, lParam); }*/
+    BOOL thread::postthreadmessage(UINT message, WPARAM wParam, LPARAM lParam)
+      { ASSERT(m_hThread != NULL); return ::postthreadmessage(m_nThreadID, message, wParam, lParam); }*/
 
 
 

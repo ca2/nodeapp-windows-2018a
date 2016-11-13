@@ -342,10 +342,6 @@ namespace win
    {
       return ::win::thread::ResumeThread();
    }
-   BOOL application::PostThreadMessage(UINT message, WPARAM wParam, LPARAM lParam)
-   {
-      return ::win::thread::PostThreadMessage(message, wParam, lParam);
-   }
    bool application::post_message(::user::interaction * pguie, UINT message, WPARAM wParam, LPARAM lParam)
    {
       return ::win::thread::post_message(pguie, message, wParam, lParam);

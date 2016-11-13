@@ -1942,7 +1942,7 @@ void app_install_launcher::start_in_context()
 
    }
 
-   Sleep(1984);
+   Sleep(2000);
 
 }
 

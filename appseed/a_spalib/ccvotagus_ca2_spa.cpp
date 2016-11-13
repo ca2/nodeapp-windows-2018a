@@ -238,7 +238,7 @@ LRESULT a_spa::window_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 
       m_pcanvas->m_bDraw = false;
 
-      Sleep(1984);
+      Sleep(2000);
 
       delete m_pcanvas;
 

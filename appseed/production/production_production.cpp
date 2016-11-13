@@ -983,7 +983,7 @@ namespace production
 
             while (!process->has_exited(&dwExitCode))
             {
-               Sleep(584);
+               Sleep(500);
                str.Format("%d Storing Symbols x86 ...", i);
                add_status(str);
                i++;
@@ -1021,7 +1021,7 @@ namespace production
 
             while (!process->has_exited(&dwExitCode))
             {
-               Sleep(584);
+               Sleep(500);
                str.Format("%d Storing Symbols x86 ...", i);
                add_status(str);
                i++;
@@ -1226,7 +1226,7 @@ namespace production
 
                //}
 
-               Sleep(1984);
+               Sleep(2000);
 
             }
 
@@ -1425,7 +1425,7 @@ namespace production
          multi_lock ml(ptra);
          ml.lock();
          add_status("finished multi-threaded compression task");
-         Sleep(584);
+         Sleep(500);
       }
       /*while(threada.get_size() > 0)
       {
