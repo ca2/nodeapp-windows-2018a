@@ -125,7 +125,7 @@ namespace win
 
    // Overridables
       // thread initialization
-      virtual bool initialize_instance();
+      virtual bool initialize_thread() override;
 
       virtual ::user::win::message::e_prototype thread::GetMessagePrototype(UINT uiMessage, UINT uiCode); 
 

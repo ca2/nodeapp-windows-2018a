@@ -74,12 +74,12 @@ namespace multimedia
 
       }
 
-      int32_t wave_out::exit_instance()
+      int32_t wave_out::exit_thread()
       {
 
-         ::multimedia::audio::wave_out::exit_instance();
+         ::multimedia::audio::wave_out::exit_thread();
 
-         return ::thread::exit_instance();
+         return ::thread::exit_thread();
 
       }
 

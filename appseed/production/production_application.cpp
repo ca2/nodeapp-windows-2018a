@@ -28,7 +28,7 @@ namespace production
    }
 
 
-   bool application::initialize_instance()
+   bool application::initialize_application()
    {
       
       System.factory().creatable_small < document >();
@@ -37,7 +37,7 @@ namespace production
       System.factory().creatable_small < pane_view >();
 
 
-      if(!::core::application::initialize_instance())
+      if(!::core::application::initialize_application())
          return false;
 
 //      Session.filemanager().std().m_strLevelUp = "levelup";
@@ -57,7 +57,7 @@ namespace production
    }
 
 
-   int32_t application::exit_instance()
+   int32_t application::exit_application()
    {
 
       int32_t iExitCode = 0;
@@ -65,7 +65,7 @@ namespace production
       try
       {
 
-         iExitCode = ::core::application::exit_instance();
+         iExitCode = ::core::application::exit_application();
 
       }
       catch(...)

@@ -33,7 +33,7 @@ namespace production
 
          release(production * pproduction,const char * pszRelease,const char * pszServer);
 
-         virtual bool initialize_instance();
+         virtual bool initialize_thread() override;
 
          virtual int32_t run();
 

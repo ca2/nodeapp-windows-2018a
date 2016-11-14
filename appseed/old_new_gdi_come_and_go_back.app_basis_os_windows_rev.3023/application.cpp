@@ -361,9 +361,9 @@ namespace win
 
    // Overridables
    // thread initialization
-   bool application::initialize_instance()
+   bool application::initialize_application()
    {
-      return ::win::thread::initialize_instance();
+      return ::win::thread::initialize_thread();
    }
 
    ::user::win::message::e_prototype application::GetMessagePrototype(UINT uiMessage, UINT uiCode)
@@ -442,7 +442,7 @@ namespace win
    }
 
    // thread termination
-   int application::exit_instance() // default will 'delete this'
+   int application::exit_application() // default will 'delete this'
    {
 
       // avoid calling CloseHandle() on our own thread handle
@@ -452,7 +452,7 @@ namespace win
       WIN_THREAD(::ca::thread_sp::m_p)->m_bRun = false;
       WIN_THREAD(::ca::smart_pointer<::ex2::application>::m_p->::ca::thread_sp::m_p)->m_bRun = false;
 
-      int iRet = ::gen::application::exit_instance();
+      int iRet = ::gen::application::exit_application();
 
       //::ca::smart_pointer<::ex2::application>::destroy();
 

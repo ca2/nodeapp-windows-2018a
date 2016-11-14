@@ -15,10 +15,10 @@ namespace backup
    {
    }
 
-   bool application::initialize_instance()
+   bool application::initialize_application()
    {
 
-      if(!::core::application::initialize_instance())
+      if(!::core::application::initialize_application())
          return false;
 
 
@@ -43,7 +43,7 @@ namespace backup
       return true;
    }
 
-   int32_t application::exit_instance()
+   int32_t application::exit_application()
    {
       
       int32_t iExitCode = 0;
@@ -51,7 +51,7 @@ namespace backup
       try
       {
 
-         iExitCode = production::application::exit_instance();
+         iExitCode = production::application::exit_application();
 
       }
       catch(...)

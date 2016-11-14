@@ -26,7 +26,7 @@ namespace multimedia
       }
 
 
-      bool thread::initialize_instance()
+      bool thread::initialize_thread()
       {
 
          set_auto_delete(false);
@@ -36,7 +36,7 @@ namespace multimedia
       }
 
 
-      int32_t thread::exit_instance()
+      int32_t thread::exit_thread()
       {
          // TODO:  perform any per-thread cleanup here
          //    CVMSApp * pApp = (CVMSApp *) &System;
@@ -45,7 +45,7 @@ namespace multimedia
          //pmfmh->MessageFilterUnhook();
 
          CoUninitialize();
-         return ::thread::exit_instance();
+         return ::thread::exit_thread();
       }
 
       void thread::install_message_handling(::message::dispatch * pinterface)

@@ -40,7 +40,7 @@ namespace multimedia
 
          virtual void translate_wave_in_message(::signal_details * pobj);
 
-         virtual bool initialize_instance();
+         virtual bool initialize_thread() override;
          virtual int32_t exit_instance();
          virtual void pre_translate_message(::signal_details * pobj);
 

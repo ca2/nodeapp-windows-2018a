@@ -37,10 +37,10 @@ namespace multimedia
          return true;
       }
 
-      int32_t wave_in::exit_instance()
+      int32_t wave_in::exit_thread()
       {
          m_eventExitInstance.SetEvent();
-         return thread::exit_instance();
+         return thread::exit_thread();
       }
 
       void wave_in::pre_translate_message(::signal_details * pobj)

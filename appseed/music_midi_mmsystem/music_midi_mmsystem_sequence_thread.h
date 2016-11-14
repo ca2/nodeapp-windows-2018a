@@ -46,7 +46,7 @@ namespace music
             void ExecuteCommand(smart_pointer < ::music::midi::player::command > pcommand);
             void _ExecuteCommand(smart_pointer < ::music::midi::player::command > pcommand);
 
-            virtual bool initialize_instance();
+            virtual bool initialize_thread() override;
             virtual int32_t exit_instance();
 
             //DECL_GEN_SIGNAL(OnCommand);

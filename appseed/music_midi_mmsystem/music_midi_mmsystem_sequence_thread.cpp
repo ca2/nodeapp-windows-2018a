@@ -24,15 +24,15 @@ namespace music
          {
          }
 
-         bool sequence_thread::initialize_instance()
+         bool sequence_thread::initialize_thread()
          {
             set_thread_priority(::multithreading::priority_highest);
             return true;
          }
 
-         int32_t sequence_thread::exit_instance()
+         int32_t sequence_thread::exit_thread()
          {
-            return thread::exit_instance();
+            return thread::exit_thread();
          }
 
          void sequence_thread::install_message_handling(::message::dispatch * pinterface)

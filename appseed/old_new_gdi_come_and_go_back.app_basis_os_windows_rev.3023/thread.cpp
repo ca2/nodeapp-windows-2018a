@@ -937,7 +937,7 @@ void thread::Delete()
    return true;
 }
 
-   bool thread::initialize_instance()
+   bool thread::initialize_thread()
    {
       ASSERT_VALID(this);
 
@@ -1053,7 +1053,7 @@ stop_run:
    }
 
 
-   int thread::exit_instance()
+   int thread::exit_thread()
     {
       ASSERT_VALID(this);
 
@@ -1412,7 +1412,7 @@ stop_run:
          {
             TRACE(::radix::trace::category_AppMsg, 1, "thread::pump_message - Received WM_QUIT.\n");
             m_nDisablePumpCount++; // application must die
-            // Note: prevents calling message loop things in 'exit_instance'
+            // Note: prevents calling message loop things in 'exit_thread'
             // will never be decremented
             return FALSE;
          }
@@ -1933,7 +1933,7 @@ if (!::GetMessage(&(pState->m_msgCur), NULL, NULL, NULL))
 TRACE(::radix::trace::category_AppMsg, 1, "thread::pump_message - Received WM_QUIT.\n");
 pState->m_nDisablePumpCount++; // application must die
 #endif
-// Note: prevents calling message loop things in 'exit_instance'
+// Note: prevents calling message loop things in 'exit_thread'
 // will never be decremented
 return FALSE;
 }
@@ -2245,7 +2245,7 @@ bool thread::PreInitInstance()
 return true;
 }
 
-bool thread::initialize_instance()
+bool thread::initialize_thread()
 {
 ASSERT_VALID(this);
 
@@ -2279,7 +2279,7 @@ do
 {
 // pump message, but quit on WM_QUIT
 if (!pump_message())
-return exit_instance();
+return exit_thread();
 
 // reset "no idle" state after pumping "normal" message
 //if (is_idle_message(&m_msgCur))
@@ -2301,7 +2301,7 @@ BOOL thread::is_idle_message(MSG* pMsg)
 return AfxInternalIsIdleMessage(pMsg);
 }
 
-int thread::exit_instance()
+int thread::exit_thread()
 {
 ASSERT_VALID(this);
 ASSERT(&System != this);
