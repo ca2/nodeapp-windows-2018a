@@ -40,7 +40,7 @@ namespace multimedia
          void install_message_handling(::message::dispatch * pinterface);
 
          virtual bool initialize_thread() override;
-         virtual int32_t exit_instance();
+         virtual int32_t exit_thread() override;
          // virtual bool on_idle(LONG lCount);
          virtual void pre_translate_message(::signal_details * pobj);
 

@@ -84,20 +84,18 @@ namespace multimedia
       }
 
 
-      bool wave_out::initialize_instance()
+      bool wave_out::initialize_thread()
       {
 
          register_dependent_thread(m_phelperthread);
 
-
-         if(!::multimedia::audio::wave_out::initialize_instance())
+         if(!::multimedia::audio::wave_out::initialize_thread())
             return false;
-
-
 
          return true;
 
       }
+
 
       int32_t wave_out::exit_thread()
       {

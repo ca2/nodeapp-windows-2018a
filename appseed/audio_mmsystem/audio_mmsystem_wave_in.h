@@ -41,7 +41,7 @@ namespace multimedia
          virtual void translate_wave_in_message(::signal_details * pobj);
 
          virtual bool initialize_thread() override;
-         virtual int32_t exit_instance();
+         virtual int32_t exit_thread() override;
          virtual void pre_translate_message(::signal_details * pobj);
 
          static void CALLBACK wave_in_proc(HWAVEIN hwi, UINT uMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2);

@@ -66,7 +66,7 @@ namespace multimedia
          virtual void wave_out_free(LPWAVEHDR lpwavehdr);
 
          virtual bool initialize_thread() override;
-         virtual int32_t exit_instance();
+         virtual int32_t exit_thread() override;
 
          DECL_GEN_SIGNAL(OnMultimediaOpen);
          DECL_GEN_SIGNAL(OnMultimediaDone);

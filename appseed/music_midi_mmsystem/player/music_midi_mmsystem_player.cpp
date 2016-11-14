@@ -35,7 +35,8 @@ namespace music
 
             }
 
-            bool player::initialize_instance()
+            
+            bool player::initialize_thread()
             {
 
                m_psequencethread->ResumeThread();
