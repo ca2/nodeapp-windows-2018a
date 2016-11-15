@@ -404,13 +404,13 @@ namespace music
                if(m_puie != NULL)
                {
 
-                  ::music::midi::player::notify_event * pdata = new ::music::midi::player::notify_event;
+                  sp(::music::midi::player::notify_event) pdata(canew(::music::midi::player::notify_event));
 
                   pdata->m_pplayer = this;
 
                   pdata->m_enotifyevent = eevent;
 
-                  m_puie->post_message(::music::midi::player::message_notify_event, 0 , (LPARAM) pdata);      
+                  m_puie->post_message(::music::midi::player::message_notify_event, 0 , pdata);      
 
                }
 
