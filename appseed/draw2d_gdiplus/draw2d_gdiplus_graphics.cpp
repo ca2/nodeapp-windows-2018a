@@ -4601,9 +4601,6 @@ namespace draw2d_gdiplus
    void graphics::set_smooth_mode(::draw2d::e_smooth_mode esmoothmode)
    {
 
-      if(m_esmoothmode == esmoothmode)
-         return;
-
       ::draw2d::graphics::set_smooth_mode(esmoothmode);
 
       try
