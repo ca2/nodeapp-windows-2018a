@@ -43,10 +43,10 @@ namespace multimedia
       }
 
 
-      bool wave_out::initialize_instance()
+      bool wave_out::initialize_thread()
       {
 
-         if(!::multimedia::audio::wave_out::initialize_instance())
+         if(!::multimedia::audio::wave_out::initialize_thread())
             return false;
 
          return true;
@@ -57,7 +57,7 @@ namespace multimedia
       int32_t wave_out::run()
       {
 
-         while(m_bRun)
+         while(get_run_thread())
          {
 
             ::thread::run();
@@ -78,14 +78,18 @@ namespace multimedia
 
       }
 
+      
       ::multimedia::e_result wave_out::wave_out_open(thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount)
       {
          
-         single_lock sLock(&m_mutex, TRUE);
+         synch_lock sl(m_pmutex);
 
+         if (m_pdirectsound != NULL && m_psoundbuffer != NULL && m_estate != state_initial)
+         {
 
-         if(m_pdirectsound != NULL && m_psoundbuffer != NULL && m_estate != state_initial)
             return ::multimedia::result_success;
+
+         }
 
 
          m_pthreadCallback = pthreadCallback;
@@ -276,7 +280,7 @@ Opened:
       ::multimedia::e_result wave_out::wave_out_open_ex(thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample)
       {
 
-         single_lock sLock(&m_mutex, TRUE);
+         synch_lock sl(m_pmutex);
 
          if(m_pdirectsound != NULL && m_psoundbuffer != NULL && m_estate != state_initial)
             return ::multimedia::result_success;
@@ -424,7 +428,7 @@ Opened:
       ::multimedia::e_result wave_out::wave_out_close()
       {
 
-         single_lock sLock(&m_mutex, TRUE);
+         synch_lock sl(m_pmutex);
 
          if(m_estate == state_playing)
          {
@@ -478,7 +482,7 @@ Opened:
 
       void wave_out::on_free(int i)
       {
-         single_lock sLock(&m_mutex,TRUE);
+         synch_lock sl(m_pmutex);
          LPVOID lpvAudio1 = NULL,lpvAudio2 = NULL;
          DWORD dwBytesAudio1 = 0,dwBytesAudio2 = 0;
          DWORD dwRetSamples = 0,dwRetBytes = 0;
@@ -518,7 +522,7 @@ Opened:
       ::multimedia::e_result wave_out::wave_out_stop()
       {
 
-         single_lock sLock(&m_mutex, TRUE);
+         synch_lock sl(m_pmutex);
 
          if(m_estate != state_playing && m_estate != state_paused)
             return ::multimedia::result_error;
@@ -551,7 +555,7 @@ Opened:
       ::multimedia::e_result wave_out::wave_out_pause()
       {
 
-         single_lock sLock(&m_mutex, TRUE);
+         synch_lock sl(m_pmutex);
 
          ASSERT(m_estate == state_playing);
 
@@ -580,7 +584,7 @@ Opened:
       ::multimedia::e_result wave_out::wave_out_start(const imedia_position & position)
       {
 
-         single_lock sLock(&m_mutex,TRUE);
+         synch_lock sl(m_pmutex);
 
          if(m_estate == state_playing)
             return result_success;
@@ -609,7 +613,7 @@ Opened:
       ::multimedia::e_result wave_out::wave_out_restart()
       {
 
-         single_lock sLock(&m_mutex, TRUE);
+         synch_lock sl(m_pmutex);
 
          ASSERT(m_estate == state_paused);
 
@@ -653,7 +657,7 @@ Opened:
       imedia_time wave_out::wave_out_get_position_millis()
       {
 
-         single_lock sLock(&m_mutex, TRUE);
+         synch_lock sl(m_pmutex);
 
          ::multimedia::e_result                mmr;
 
@@ -714,7 +718,7 @@ Opened:
       imedia_position wave_out::wave_out_get_position()
       {
          
-         single_lock sLock(&m_mutex, TRUE);
+         synch_lock sl(m_pmutex);
 
          ::multimedia::e_result                mmr;
          
@@ -878,16 +882,19 @@ Opened:
          begin();
       }
 
+
       int32_t wave_out::run_step_thread::run()
       {
 
-         while(m_bRun && m_pout->m_estate == wave_out::state_playing)
+         while(get_run_thread() && m_pout->m_estate == wave_out::state_playing)
          {
+
             m_pout->wave_out_run_step();
+
          }
 
-
          return 0;
+
       }
 
 

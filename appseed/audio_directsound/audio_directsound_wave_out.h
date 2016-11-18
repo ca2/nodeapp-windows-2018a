@@ -160,7 +160,7 @@ namespace multimedia
          //virtual void wave_out_free(LPWAVEHDR lpwavehdr);
 
          virtual bool initialize_thread() override;
-         virtual int32_t exit_instance();
+         virtual int32_t exit_thread() override;
 
          virtual int32_t run();
 

@@ -529,7 +529,7 @@ Opened:
       void wave_out::OnMultimediaDone(::signal_details * pobj)
       {
          
-         synch_lock sl(m_pmutex);
+         //synch_lock sl(m_pmutex);
 
          try
          {
@@ -539,8 +539,6 @@ Opened:
             m_imediaposition = device_wave_out_get_position();
 
             SCAST_PTR(::message::base, pbase, pobj);
-
-            m_iBufferedCount--;
 
             LPWAVEHDR lpwavehdr = (LPWAVEHDR)pbase->m_lparam.m_lparam;
 
@@ -600,7 +598,7 @@ Opened:
          if(mmr == ::multimedia::result_success)
          {
 
-            m_iBufferedCount++;
+            // m_iBufferedCount++;
 
          }
 

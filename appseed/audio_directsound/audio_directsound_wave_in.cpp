@@ -25,9 +25,11 @@ namespace multimedia
 
       wave_in::~wave_in()
       {
+
       }
 
-      bool wave_in::initialize_instance()
+
+      bool wave_in::initialize_thread()
       {
          TRACE("wave_in::initialize_instance %X\n", get_os_int());
          //SetMainWnd(NULL);
@@ -219,7 +221,7 @@ namespace multimedia
       ::multimedia::e_result wave_in::wave_in_close()
       {
 
-         single_lock sLock(&m_mutex, TRUE);
+         synch_lock sl(m_pmutex);
 
          //::multimedia::e_result mmr;
 
@@ -258,7 +260,7 @@ namespace multimedia
       ::multimedia::e_result wave_in::wave_in_start()
       {
          
-         single_lock sLock(&m_mutex, TRUE);
+         synch_lock sl(m_pmutex);
          
          if(m_estate == state_recording)
             return ::multimedia::result_success;
@@ -285,7 +287,7 @@ namespace multimedia
       ::multimedia::e_result wave_in::wave_in_stop()
       {
 
-         single_lock sLock(&m_mutex, TRUE);
+         synch_lock sl(m_pmutex);
 
          if(m_estate != state_recording)
             return ::multimedia::result_error;
@@ -355,7 +357,7 @@ namespace multimedia
       ::multimedia::e_result wave_in::wave_in_reset()
       {
 
-         single_lock sLock(&m_mutex, TRUE);
+         synch_lock sl(m_pmutex);
 
          m_bResetting = true;
 
