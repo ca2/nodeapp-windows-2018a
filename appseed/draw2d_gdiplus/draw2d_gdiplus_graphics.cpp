@@ -4384,19 +4384,11 @@ namespace draw2d_gdiplus
 
       }
 
-      if (m_ealphamode != ::draw2d::alpha_mode_blend)
-      {
+      ::draw2d::keep(this);
 
-         set_alpha_mode(::draw2d::alpha_mode_blend);
+      set_alpha_mode(::draw2d::alpha_mode_blend);
 
-      }
-
-      if (m_etextrendering == ::draw2d::text_rendering_none)
-      {
-
-         set_text_rendering(::draw2d::text_rendering_anti_alias_grid_fit);
-
-      }
+      set_text_rendering(::draw2d::text_rendering_anti_alias_grid_fit);
 
       Gdiplus::Status status;
 
