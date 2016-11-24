@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_berdge_tb", "..\..\..\app-core\appseed\berdge_tb\berdge_tb.vcxproj", "{19518477-1511-2204-0204-5872E30F2300}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "acid", "..\..\..\app\appseed\aura\acid.vcxproj", "{A92C920F-C07D-481E-B523-565B56167CD1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
@@ -21,6 +23,14 @@ Global
 		{19518477-1511-2204-0204-5872E30F2300}.stage|Win32.Build.0 = stage|Win32
 		{19518477-1511-2204-0204-5872E30F2300}.stage|x64.ActiveCfg = stage|x64
 		{19518477-1511-2204-0204-5872E30F2300}.stage|x64.Build.0 = stage|x64
+		{A92C920F-C07D-481E-B523-565B56167CD1}.basis|Win32.ActiveCfg = basis|Win32
+		{A92C920F-C07D-481E-B523-565B56167CD1}.basis|Win32.Build.0 = basis|Win32
+		{A92C920F-C07D-481E-B523-565B56167CD1}.basis|x64.ActiveCfg = basis|x64
+		{A92C920F-C07D-481E-B523-565B56167CD1}.basis|x64.Build.0 = basis|x64
+		{A92C920F-C07D-481E-B523-565B56167CD1}.stage|Win32.ActiveCfg = stage|Win32
+		{A92C920F-C07D-481E-B523-565B56167CD1}.stage|Win32.Build.0 = stage|Win32
+		{A92C920F-C07D-481E-B523-565B56167CD1}.stage|x64.ActiveCfg = stage|x64
+		{A92C920F-C07D-481E-B523-565B56167CD1}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
