@@ -295,9 +295,9 @@ namespace production
          int_ptr i = (int_ptr) ::ShellExecuteW(
             NULL, 
             NULL, 
-            ::str::international::utf8_to_unicode("\"" + itema[0]->m_strPath + "\""),
+            ::str::international::utf8_to_unicode("\"" + itema[0]->m_filepath + "\""),
             NULL,
-            ::str::international::utf8_to_unicode("\"" + itema[0]->m_strPath.folder() + "\""),
+            ::str::international::utf8_to_unicode("\"" + itema[0]->m_filepath.folder() + "\""),
             SW_SHOWNORMAL);
          //string str;
          //str.Format("%d", i);

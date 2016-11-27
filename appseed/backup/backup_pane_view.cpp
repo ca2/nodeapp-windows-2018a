@@ -104,7 +104,7 @@ namespace backup
          break;
       case pane_view_options:
       {
-         sp(::user::document) pdoc = Sess(get_app()).userex()->create_form(this, this);
+         sp(::user::document) pdoc = Application.create_form(this, this);
          if(pdoc == NULL)
             return;
          sp(::user::impact) pview = pdoc->get_view();

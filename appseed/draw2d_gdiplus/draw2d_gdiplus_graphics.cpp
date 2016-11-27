@@ -3241,11 +3241,16 @@ gdi_fallback:
    int32_t graphics::IntersectClipRect(const RECT &  rectBounds)
    {
       int32_t nRetVal = ERROR;
+
+      Gdiplus::Rect r(rectBounds.left, rectBounds.top, width(rectBounds),  height(rectBounds));
+
+      m_pgraphics->IntersectClip(r);
+
       //if(get_handle1() != NULL && get_handle1() != get_handle2())
       //   nRetVal = ::IntersectClipRect(get_handle1(),rectBounds.left,rectBounds.top,rectBounds.right,rectBounds.bottom);
       //if(get_handle2() != NULL)
       //   nRetVal = ::IntersectClipRect(get_handle2(),rectBounds.left,rectBounds.top,rectBounds.right,rectBounds.bottom);
-      return nRetVal;
+      return SIMPLEREGION;
    }
 
    int32_t graphics::OffsetClipRgn(int32_t x, int32_t y)

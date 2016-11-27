@@ -2759,7 +2759,7 @@ namespace production
 
    }
 
-   bool production::release::initialize_instance()
+   bool production::release::initialize_thread()
    {
 
       return true;
