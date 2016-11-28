@@ -337,6 +337,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_irc_resident", "..
 	ProjectSection(ProjectDependencies) = postProject
 		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
 		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
+		{19845177-6A40-4458-848A-059220E88C80} = {19845177-6A40-4458-848A-059220E88C80}
 		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB} = {1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}
 	EndProjectSection
 EndProject
@@ -431,6 +432,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_windows_media", "..\..\..\app-veriwell\appseed\audio_decode_windows_media\audio_decode_windows_media.vcxproj", "{2453409D-7D51-4E7E-A739-86234FFF3509}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_resident", "..\..\..\app-core\appseed\resident\resident.vcxproj", "{C61BE1EB-B0DF-412F-8CD8-68B4B86CC514}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19845177-6A40-4458-848A-059220E88C80} = {19845177-6A40-4458-848A-059220E88C80}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
