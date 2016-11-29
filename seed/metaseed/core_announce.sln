@@ -61,6 +61,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_announce", "..\..\
 		{B39ED2B3-D53A-4077-B957-930979A3577D} = {B39ED2B3-D53A-4077-B957-930979A3577D}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "announcecomcom", "..\..\..\app-core\appseed\announcecom\announcecom.vcxproj", "{5ED15647-DACE-4333-A520-C943C1FFA4B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
@@ -205,6 +207,14 @@ Global
 		{C7AFCEFA-3079-4B23-8F97-4543BB980265}.stage|Win32.Build.0 = stage|Win32
 		{C7AFCEFA-3079-4B23-8F97-4543BB980265}.stage|x64.ActiveCfg = stage|x64
 		{C7AFCEFA-3079-4B23-8F97-4543BB980265}.stage|x64.Build.0 = stage|x64
+		{5ED15647-DACE-4333-A520-C943C1FFA4B2}.basis|Win32.ActiveCfg = basis|Win32
+		{5ED15647-DACE-4333-A520-C943C1FFA4B2}.basis|Win32.Build.0 = basis|Win32
+		{5ED15647-DACE-4333-A520-C943C1FFA4B2}.basis|x64.ActiveCfg = basis|x64
+		{5ED15647-DACE-4333-A520-C943C1FFA4B2}.basis|x64.Build.0 = basis|x64
+		{5ED15647-DACE-4333-A520-C943C1FFA4B2}.stage|Win32.ActiveCfg = stage|Win32
+		{5ED15647-DACE-4333-A520-C943C1FFA4B2}.stage|Win32.Build.0 = stage|Win32
+		{5ED15647-DACE-4333-A520-C943C1FFA4B2}.stage|x64.ActiveCfg = stage|x64
+		{5ED15647-DACE-4333-A520-C943C1FFA4B2}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
