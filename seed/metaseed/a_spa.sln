@@ -3,11 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6B43BBE2-904F-4CEF-9C18-18AEDC895567}"
-	ProjectSection(SolutionItems) = preProject
-		Performance3.psess = Performance3.psess
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "a_spa", "..\..\appseed\a_spa\a_spa.vcxproj", "{A4A61B3B-CC87-4BB6-A130-C68DB95FAA7C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "a_spaadmin", "..\..\appseed\a_spaadmin\a_spaadmin.vcxproj", "{AE18AC57-1A37-4D2E-9E73-258D36E35340}"
