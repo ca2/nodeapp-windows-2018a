@@ -1248,12 +1248,16 @@ string a_spa::download_tmp_spaadmin_bin()
 
    string strTempSpa = get_temp_file_name_dup(::path::a_spaadmin().title(),::path::a_spaadmin().extension());
 
+   string strUrl;
+
+   strUrl = "https://server.ca2.cc/" + process_platform_dir_name() + "/" + m_strVersion + "/" + ::path::a_spaadmin().name();
+
    int iTry = 0;
 
    while(iTry <= 3)
    {
 
-      if(ms_download("https://server.ca2.cc/"+process_platform_dir_name() + "/" + m_strVersion + "/" + ::path::a_spaadmin().name(), strTempSpa.c_str())
+      if(ms_download(strUrl, strTempSpa.c_str())
          && file_exists_dup(strTempSpa.c_str())
          && file_length_dup(strTempSpa.c_str()) > 0)
       {
