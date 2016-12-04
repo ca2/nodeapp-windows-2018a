@@ -360,7 +360,7 @@ int a_spa::spa_main()
 int a_spa::spaadmin_main()
 {
 
-   ::MessageBoxA(NULL, "Test1", "Test1", MB_OK);
+   //::MessageBoxA(NULL, "Test1", "Test1", MB_OK);
 
    spaadmin_mutex smutex;
 
@@ -843,9 +843,9 @@ int a_spa::check_spa_installation()
 
    stringa straFile;
 
-   //straFile.add("spaadmin");
-   //straFile.add("spa");
-   //straFile.add("vcredist");
+   straFile.add("spaadmin");
+   straFile.add("spa");
+   straFile.add("vcredist");
 
    if(!file_exists_dup(dir::a_spa() / "no_install_bin_set.txt"))
    {

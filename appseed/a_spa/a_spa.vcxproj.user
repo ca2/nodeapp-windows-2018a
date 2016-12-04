@@ -3,7 +3,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">
     <LocalDebuggerCommandArguments>
     </LocalDebuggerCommandArguments>
-    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <DebuggerFlavor>WindowsRemoteDebugger</DebuggerFlavor>
     <RemoteDebuggerCommand>C:\Users\camil_000\Downloads\a_spa.exe</RemoteDebuggerCommand>
     <RemoteDebuggerConnection>RemoteWithoutAuthentication</RemoteDebuggerConnection>
     <RemoteDebuggerWorkingDirectory>C:\Users\camil_000\Downloads\</RemoteDebuggerWorkingDirectory>
