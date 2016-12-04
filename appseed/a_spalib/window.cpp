@@ -7,7 +7,7 @@ int create_spa_window();
 
 ATOM spa_register_class();
 
-DWORD WINAPI thread_proc_draw(LPVOID lpParam);
+UINT c_cdecl thread_proc_draw(LPVOID lpParam);
 
 int a_spa::show_spa_window(bool bShow)
 {
@@ -121,7 +121,7 @@ int a_spa::create_spa_window()
 
    //g_hwnd = hWnd;
 
-   ::CreateThread(NULL,0,thread_proc_draw,NULL,0,0);
+   ::__begin_thread(this, &thread_proc_draw,NULL, 50, 0, 0, NULL,NULL);
 
 
 

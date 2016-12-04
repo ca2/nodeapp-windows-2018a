@@ -102,7 +102,7 @@ public:
 
    virtual int32_t run();
 
-   static DWORD WINAPI spa_main_proc(LPVOID);
+   static UINT c_cdecl spa_main_proc(LPVOID);
 
    virtual int spa_main();
    virtual int spa_main_start();

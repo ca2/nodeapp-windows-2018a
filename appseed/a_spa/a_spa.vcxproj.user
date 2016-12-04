@@ -1,8 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">
-    <LocalDebuggerCommandArguments>C:\Users\camilo\AppData\Local\Temp\app_core_auraclick.spa</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>
+    </LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <RemoteDebuggerCommand>C:\Users\camil_000\Downloads\a_spa.exe</RemoteDebuggerCommand>
+    <RemoteDebuggerConnection>RemoteWithoutAuthentication</RemoteDebuggerConnection>
+    <RemoteDebuggerWorkingDirectory>C:\Users\camil_000\Downloads\</RemoteDebuggerWorkingDirectory>
+    <RemoteDebuggerServerName>192.168.0.36</RemoteDebuggerServerName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">
     <LocalDebuggerCommandArguments>C:\Users\camilo\AppData\Local\Temp\app_core_auraclick.spa</LocalDebuggerCommandArguments>

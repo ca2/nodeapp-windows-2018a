@@ -263,7 +263,7 @@ LRESULT a_spa::window_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 }
 
 
-DWORD WINAPI thread_proc_draw(LPVOID lpParam)
+UINT c_cdecl thread_proc_draw(LPVOID lpParam)
 {
 
    while(a_spa::get() != NULL && a_spa::get()->m_pcanvas != NULL && a_spa::get()->m_pcanvas->m_bDraw)

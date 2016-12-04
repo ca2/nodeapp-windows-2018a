@@ -55,17 +55,21 @@ string get_module_path(HMODULE hmodule)
 
 }
 
+
 #endif
+
 
 #define INSTALL_BIN_SPA -1977
 #define INSTALL_BIN_SPAADMIN -1984
 #define OP_INSTALL_SPA 1
 #define OP_INSTALL_SET 2
 
+
 class install_bin_item :
    virtual public object
 {
 public:
+
 
    a_spa *        m_paspa;
    string         m_strUrlPrefix;
@@ -73,11 +77,12 @@ public:
    string         m_strFile;
    LONG *         m_plong;
    LONG *         m_plongOk;
-   DWORD          m_dwThreadId;
+   IDTHREAD       m_dwThreadId;
    string         m_strMd5;
    string         m_strPlatform;
    LONG           m_lTotal;
    int            m_iOp;
+
 
    install_bin_item(a_spa * paspa, string strFile,LONG * plong,LONG lTotal,LONG * plongOk):
       object(paspa),
@@ -87,8 +92,11 @@ public:
       m_lTotal(lTotal),
       m_plongOk(plongOk)
    {
+      
       m_iOp = OP_INSTALL_SPA;
-      ::CreateThread(NULL,0,&install_bin_item::proc,this,0,&m_dwThreadId);
+      
+      __begin_thread(paspa,&install_bin_item::proc,this,50,0, 0, NULL, &m_dwThreadId);
+
    }
 
 
@@ -103,43 +111,61 @@ public:
       m_strPlatform(strPlatform),
       m_lTotal(lTotal)
    {
+
       m_iOp = OP_INSTALL_SET;
-      ::CreateThread(NULL,0,&install_bin_item::proc,this,0,&m_dwThreadId);
+
+      __begin_thread(paspa, &install_bin_item::proc, this, 50, 0, 0, NULL, &m_dwThreadId);
 
    }
 
 
-   static DWORD CALLBACK proc(LPVOID lp)
+   static UINT c_cdecl proc(LPVOID lp)
    {
+
       install_bin_item * pitem = (install_bin_item *)lp;
+
       try
       {
+
          pitem->run();
+
       }
       catch(...)
       {
+
          (*pitem->m_plong)--;
+
       }
+
       delete pitem;
+
       return 0;
+
    }
 
 
    void run();
 
+   
    void progress(double dRate = 1.0)
    {
 
       if(spa_get_admin())
       {
+         
          if(m_iOp == OP_INSTALL_SPA)
          {
+         
             m_paspa->trace(0.05 + ((((double)m_lTotal - (double)(*m_plong)) * (0.25 - 0.05)) / ((double)m_lTotal)));
+
          }
          else if(m_iOp == OP_INSTALL_SET)
          {
+            
             m_paspa->trace(0.3 + ((((double)m_lTotal - (double)(*m_plong)) * (0.84 - 0.3)) / ((double)m_lTotal)));
+
          }
+
       }
 
    }
@@ -157,7 +183,7 @@ bool app_install_send_short_message(const char * psz,bool bLaunch,const char * p
 
 
 
-DWORD g_dwMain2;
+IDTHREAD g_dwMain2;
 DWORD g_iRet;
 //string g_strBuild;
 
@@ -334,6 +360,7 @@ int a_spa::spa_main()
 int a_spa::spaadmin_main()
 {
 
+   ::MessageBoxA(NULL, "Test1", "Test1", MB_OK);
 
    spaadmin_mutex smutex;
 
@@ -357,19 +384,9 @@ int a_spa::spaadmin_main()
 
    trace(0.05);
 
-   int iTry = 5;
-
-   while(!check_spa_installation())
+   while(!check_spa_installation() && ::get_thread_run())
    {
 
-      iTry--;
-
-      if(iTry < 0)
-      {
-
-         return -3;
-
-      }
 
    }
 
@@ -396,7 +413,7 @@ int a_spa::spaadmin_main()
 int a_spa::spa_main_start()
 {
 
-   if(!::CreateThread(NULL,0,&::a_spa::spa_main_proc,this,0,&g_dwMain2))
+   if(!__begin_thread(this, &::a_spa::spa_main_proc,this, 50, 0, 0, NULL, &g_dwMain2))
    {
 
       return 0;
@@ -409,7 +426,7 @@ int a_spa::spa_main_start()
 
 
 
-DWORD WINAPI a_spa::spa_main_proc(LPVOID lpvoid)
+UINT c_cdecl a_spa::spa_main_proc(LPVOID lpvoid)
 {
 
    a_spa * paspa = (a_spa *) lpvoid;
@@ -826,9 +843,9 @@ int a_spa::check_spa_installation()
 
    stringa straFile;
 
-   straFile.add("spaadmin");
-   straFile.add("spa");
-   straFile.add("vcredist");
+   //straFile.add("spaadmin");
+   //straFile.add("spa");
+   //straFile.add("vcredist");
 
    if(!file_exists_dup(dir::a_spa() / "no_install_bin_set.txt"))
    {
@@ -850,7 +867,7 @@ int a_spa::check_spa_installation()
 
    int iRetry = 0;
 
-   while(lCount > 0 && iRetry < ((84 + 77) * 4))
+   while(lCount > 0 && ::get_thread_run())
    {
       Sleep(84);
       iRetry++;
@@ -914,7 +931,7 @@ int a_spa::check_vcredist()
 
    string str = ::path::vcredist();
 
-   if (!file_exists_dup(str))
+   if (!file_exists_dup(str) || !file_exists_dup(str + ".installed.txt"))
    {
 
       if (!spa_get_admin())
@@ -939,6 +956,8 @@ int a_spa::check_vcredist()
       }
 
       run_vcredist();
+
+      file_put_contents_dup(str + ".installed.txt", "");
 
    }
 
