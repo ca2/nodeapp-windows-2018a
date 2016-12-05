@@ -1117,8 +1117,11 @@ namespace production
       //      158.69.159.129 east - api.ca2.cc
 
 
+		 straStatus.add(unitext("100 releasing at North America netnode, Beauharnois, Canada"));
+		 straServer.add("ca2.cc");
 
-         
+
+         /*
          straStatus.add(unitext("330 releasing at netnode : France (Gravelines, France)"));
          //straServer.add("fr-api.ca2.cc");
          straServer.add("a.ca2.fr");
@@ -1143,7 +1146,7 @@ namespace production
          straStatus.add(unitext("800 releasing at netnode : India/West US (Beauharnois, Canada)"));
          //straServer.add("west-api.ca2.cc");
          straServer.add("gold.ca2.cc");
-         
+         */
 
 
          //straStatus.add("230 releasing at netnode : west us");
@@ -1271,8 +1274,8 @@ namespace production
          add_status("Making available debugging symbols");
          {
 
-            string strCmdLine = "\"Y:\\bergedge\\hi5\\program\\hstart.exe\" \"Y:\\bergedge\\lemon\\windows\\scripts\\production\\" + m_strVersion + "\\index.bat\"";
-            string strDir = "Y:\\bergedge\\lemon\\windows\\scripts\\production\\" + m_strVersion + "\\";
+            string strCmdLine = "\"C:\\bergedge\\hi5\\program\\hstart.exe\" \"C:\\bergedge\\lemon\\windows\\scripts\\production\\" + m_strVersion + "\\index.bat\"";
+            string strDir = "C:\\bergedge\\lemon\\windows\\scripts\\production\\" + m_strVersion + "\\";
             System.process().launch(strCmdLine,SW_SHOWNORMAL,strDir);
 
          }

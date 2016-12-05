@@ -130,7 +130,7 @@ void spa_canvas_toolbox::paint_install(LPCRECT lpcrect, int iMode)
    string strHeader;
    string strBold;
    string strNormal;
-   string strProgress;
+   //string strProgress;
 
    Graphics * pgraphics = m_pgraphics;
 
@@ -139,7 +139,9 @@ void spa_canvas_toolbox::paint_install(LPCRECT lpcrect, int iMode)
 
    {
 
-      int iTrace = _sopen(dir::element() / ("install-"+process_platform_dir_name()+".log"),_O_RDONLY | _O_BINARY,_SH_DENYNO,0);
+      string strFile = dir::element() / ("install-" + process_platform_dir_name() + ".log");
+
+      int iTrace = _sopen(strFile,_O_RDONLY | _O_BINARY,_SH_DENYNO,0);
 
       if(iTrace >= 0)
       {
@@ -205,9 +207,9 @@ void spa_canvas_toolbox::paint_install(LPCRECT lpcrect, int iMode)
                      bProgress = true;
                      long long int i = _atoi64(strLine.c_str());
                      dProgress = (double)i / 10000000.0;
-                     char sz[128];
-                     sprintf(sz,"%0.1f%%",dProgress);
-                     strProgress = u16(sz);
+                     //char sz[128];
+                     //sprintf(sz,"%0.1f%%",dProgress);
+                     //strProgress = u16(sz);
                      dProgress /= 100.0;
                   }
                }
@@ -274,10 +276,10 @@ void spa_canvas_toolbox::paint_install(LPCRECT lpcrect, int iMode)
       {
          pgraphics->DrawString(u16(strNormal),-1,m_pfont,PointF(10,10 + cyText * 6),StringFormat::GenericTypographic(),m_ptextColor1);
       }
-      if(strProgress.length() > 0)
-      {
-         pgraphics->DrawString(u16(strProgress),-1,m_pfont,PointF(10,10 + cyText * 7),StringFormat::GenericTypographic(),m_ptextColor1);
-      }
+      //if(strProgress.length() > 0)
+      //{
+      //   pgraphics->DrawString(u16(strProgress),-1,m_pfont,PointF(10,10 + cyText * 7),StringFormat::GenericTypographic(),m_ptextColor1);
+      //}
 
    }
    double cyBar = cyText * 1.2;
