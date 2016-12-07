@@ -14,14 +14,16 @@ class trace_file
 public:
 
    a_spa * m_paspa;
+   mutex m_mutex;
+   synch_lock m_sl;
 
    HANDLE m_hfile;
 
    trace_file(a_spa * paspa):
-      m_paspa(paspa)
+      m_paspa(paspa),
+      m_mutex(paspa, false, "Global\\ca2-spa-install-" + process_platform_dir_name()),
+      m_sl(&m_mutex)
    {
-
-      m_paspa->m_mutexTrace.lock();
 
       dir::mk(dir::element().c_str());
 
@@ -30,12 +32,13 @@ public:
       ::SetFilePointer(m_hfile,0,NULL,FILE_END);
 
    }
+
    ~trace_file()
    {
-      m_paspa->m_mutexTrace.unlock();
-      CloseHandle(m_hfile);
-   }
 
+      CloseHandle(m_hfile);
+
+   }
 
 
    void print(const string & str)

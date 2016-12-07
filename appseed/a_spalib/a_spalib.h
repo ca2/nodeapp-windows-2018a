@@ -75,7 +75,6 @@ public:
 
    string            m_strId;
    string            m_strVersion;
-   mutex             m_mutexTrace;
    string            m_strBuild;
    spa_canvas *      m_pcanvas;
    HWND              m_hwnd;

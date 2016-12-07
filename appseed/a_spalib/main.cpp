@@ -77,6 +77,7 @@ public:
    string         m_strFile;
    LONG *         m_plong;
    LONG *         m_plongOk;
+   LONG *         m_plongBad;
    IDTHREAD       m_dwThreadId;
    string         m_strMd5;
    string         m_strPlatform;
@@ -84,13 +85,14 @@ public:
    int            m_iOp;
 
 
-   install_bin_item(a_spa * paspa, string strFile,LONG * plong,LONG lTotal,LONG * plongOk):
+   install_bin_item(a_spa * paspa, string strFile,LONG * plong,LONG lTotal,LONG * plongOk, LONG * plongBad):
       object(paspa),
       m_paspa(paspa),
       m_strFile(strFile),
       m_plong(plong),
       m_lTotal(lTotal),
-      m_plongOk(plongOk)
+      m_plongOk(plongOk),
+      m_plongBad(plongBad)
    {
       
       m_iOp = OP_INSTALL_SPA;
@@ -173,7 +175,7 @@ public:
    void op_spa();
 
    void op_set();
-   
+
 };
 
 
@@ -857,17 +859,18 @@ int a_spa::check_spa_installation()
    LONG lTotal = straFile.size();
    LONG lCount = lTotal;
    LONG lOk = 0;
+   LONG lBad = 0;
 
    for(int iFile = 0; iFile < straFile.size(); iFile++)
    {
 
-      new install_bin_item(this,straFile[iFile],&lCount,lTotal, &lOk);
+      new install_bin_item(this,straFile[iFile],&lCount,lTotal, &lOk, &lBad);
 
    }
 
    int iRetry = 0;
 
-   while(lCount > 0 && ::get_thread_run())
+   while(lCount > 0 && ::get_thread_run() && (lBad <= 0 || spa_get_admin()))
    {
       Sleep(84);
       iRetry++;
@@ -876,7 +879,7 @@ int a_spa::check_spa_installation()
    Sleep(84);
 
 
-   if(lOk != lTotal)
+   if(lOk != lTotal || lBad > 0)
       return 0;
 
    return 1;
@@ -1436,10 +1439,16 @@ void install_bin_item::op_spa()
    if(m_strFile == "spaadmin")
    {
 
-      if(m_paspa->check_spaadmin_bin())
+      if (m_paspa->check_spaadmin_bin())
       {
 
          InterlockedIncrement(m_plongOk);
+
+      }
+      else
+      {
+
+         InterlockedIncrement(m_plongBad);
 
       }
 
@@ -1453,6 +1462,12 @@ void install_bin_item::op_spa()
          InterlockedIncrement(m_plongOk);
 
       }
+      else
+      {
+
+         InterlockedIncrement(m_plongBad);
+
+      }
 
    }
    else if (m_strFile == "vcredist")
@@ -1464,6 +1479,12 @@ void install_bin_item::op_spa()
          InterlockedIncrement(m_plongOk);
 
       }
+      else
+      {
+
+         InterlockedIncrement(m_plongBad);
+
+      }
 
    }
    else if(m_strFile == "install_bin_set")
@@ -1473,6 +1494,12 @@ void install_bin_item::op_spa()
       {
 
          InterlockedIncrement(m_plongOk);
+
+      }
+      else
+      {
+
+         InterlockedIncrement(m_plongBad);
 
       }
 

@@ -139,6 +139,10 @@ void spa_canvas_toolbox::paint_install(LPCRECT lpcrect, int iMode)
 
    {
 
+      ::mutex m(NULL, false, "Global\\ca2-spa-install-" + process_platform_dir_name());
+
+      synch_lock sl(&m);
+
       string strFile = dir::element() / ("install-" + process_platform_dir_name() + ".log");
 
       int iTrace = _sopen(strFile,_O_RDONLY | _O_BINARY,_SH_DENYNO,0);
