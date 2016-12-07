@@ -3785,7 +3785,7 @@ gdi_fallback:
          if (m_spfont->m_dFontWidth == 1.0)
          {
 
-            Gdiplus::RectF rectf(rectParam.left, rectParam.top, (Gdiplus::REAL) (width(rectParam) * m_spfont->m_dFontWidth), (Gdiplus::REAL) (height(rectParam)));
+            Gdiplus::RectF rectf((Gdiplus::REAL) rectParam.left, (Gdiplus::REAL) rectParam.top, (Gdiplus::REAL) (width(rectParam) * m_spfont->m_dFontWidth), (Gdiplus::REAL) (height(rectParam)));
 
             wstring wstr = ::str::international::utf8_to_unicode(str);
 
@@ -4409,7 +4409,7 @@ namespace draw2d_gdiplus
       if (m_spfont->m_dFontWidth == 1.0)
       {
 
-         ::Gdiplus::PointF origin(x, y);
+         ::Gdiplus::PointF origin((Gdiplus::REAL)x, (Gdiplus::REAL)y);
 
          if (m_ppath != NULL)
          {

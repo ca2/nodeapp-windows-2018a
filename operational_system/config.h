@@ -62,10 +62,10 @@
 #define CLASS_DECL_EXPORT
 #define CLASS_DECL_IMPORT
 #else
-#define CLASS_DECL_EXPORT _declspec(dllexport)
-#define CLASS_DECL_IMPORT _declspec(dllimport)
+#define CLASS_DECL_EXPORT __declspec(dllexport)
+#define CLASS_DECL_IMPORT __declspec(dllimport)
 #endif
-#define CLASS_DECL_THREAD _declspec(thread)
+#define CLASS_DECL_THREAD __declspec(thread)
 
 #define SECURITY_WIN32
 
