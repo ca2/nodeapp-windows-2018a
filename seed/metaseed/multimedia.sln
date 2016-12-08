@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.25928.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_cd", "..\..\..\app-core\appseed\audio_decode_cd\audio_decode_cd.vcxproj", "{C12F946A-2A59-4566-B650-D6A84408B165}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -1065,6 +1065,7 @@ Global
 		{7F00B13B-B55A-446A-8F6E-3D8A212004D0}.basis|Win32.Build.0 = basis|Win32
 		{7F00B13B-B55A-446A-8F6E-3D8A212004D0}.basis|x64.ActiveCfg = basis|x64
 		{7F00B13B-B55A-446A-8F6E-3D8A212004D0}.basis|x64.Build.0 = basis|x64
+		{7F00B13B-B55A-446A-8F6E-3D8A212004D0}.basis|x64.Deploy.0 = basis|x64
 		{7F00B13B-B55A-446A-8F6E-3D8A212004D0}.codeanalysis|Win32.ActiveCfg = basis|Win32
 		{7F00B13B-B55A-446A-8F6E-3D8A212004D0}.codeanalysis|Win32.Build.0 = basis|Win32
 		{7F00B13B-B55A-446A-8F6E-3D8A212004D0}.codeanalysis|x64.ActiveCfg = basis|x64
