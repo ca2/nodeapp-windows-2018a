@@ -58,7 +58,7 @@ SPALIB_API string str_replace(const char * psz,const char * pszFind,const char *
 SPALIB_API int bzuncompress(LPCTSTR lpcszUncompressed,LPCTSTR lpcszGzFileCompressed);
 
 
-stringa install_get_plugin_base_library_list(const string & strVersion);
+stringa install_get_plugin_base_library_list(const string & strPlatform, const string & strVersion);
 
 
 string do_install(const char * psz);

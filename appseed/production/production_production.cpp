@@ -2134,7 +2134,7 @@ namespace production
 
       ::file::listing straBase;
 
-      ::lemon::array::copy(straBase, ::install_get_plugin_base_library_list(m_strVersion));
+      ::lemon::array::copy(straBase, ::install_get_plugin_base_library_list(m_strPlatorm, m_strVersion));
 
       for(index i = 0; i < straBase.get_count(); i++)
       {
@@ -2305,7 +2305,7 @@ namespace production
 
       ::file::listing straBase;
 
-      ::lemon::array::copy(straBase,::install_get_plugin_base_library_list(m_strVersion));
+      ::lemon::array::copy(straBase,::install_get_plugin_base_library_list(m_strPlatform, m_strVersion));
 
       straBase.add("npca2.dll");
 
@@ -2605,7 +2605,7 @@ namespace production
 
       ::file::listing straBase;
 
-      ::lemon::array::copy(straBase,::install_get_plugin_base_library_list(m_strVersion));
+      ::lemon::array::copy(straBase,::install_get_plugin_base_library_list(m_strPlatform, m_strVersion));
 
       straBase.add("npca2.dll");
 

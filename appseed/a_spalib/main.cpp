@@ -1614,7 +1614,7 @@ int a_spa::check_install_bin_set()
 
    string strPath = path::app_install();
 
-   stringa straFile = install_get_plugin_base_library_list(m_strVersion);
+   stringa straFile = install_get_plugin_base_library_list(process_platform_dir_name(), m_strVersion);
 
    if(!::dir::is(dir::name(strPath)))
    {
