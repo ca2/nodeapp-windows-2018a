@@ -2121,7 +2121,7 @@ namespace production
       m_straPath.last().m_iRelative = strlen(pszDir) + 1;
    }
 
-   void production::xpi_sign_dir(const ::file::path & pszDir)
+   void production::xpi_sign_dir(const char * pszPlatform, const ::file::path & pszDir)
    {
 
       m_straPath.remove_all();
@@ -2134,7 +2134,7 @@ namespace production
 
       ::file::listing straBase;
 
-      ::lemon::array::copy(straBase, ::install_get_plugin_base_library_list(m_strPlatorm, m_strVersion));
+      ::lemon::array::copy(straBase, ::install_get_plugin_base_library_list(pszPlatform, m_strVersion));
 
       for(index i = 0; i < straBase.get_count(); i++)
       {
@@ -2305,7 +2305,7 @@ namespace production
 
       ::file::listing straBase;
 
-      ::lemon::array::copy(straBase,::install_get_plugin_base_library_list(m_strPlatform, m_strVersion));
+      ::lemon::array::copy(straBase,::install_get_plugin_base_library_list(strPlatform, m_strVersion));
 
       straBase.add("npca2.dll");
 
@@ -2408,7 +2408,7 @@ namespace production
 
       add_status("Signing extension ...");
 
-      xpi_sign_dir(strDir /  "npca2");
+      xpi_sign_dir(pszPlatform, strDir /  "npca2");
 
       string str;
 
@@ -2605,7 +2605,7 @@ namespace production
 
       ::file::listing straBase;
 
-      ::lemon::array::copy(straBase,::install_get_plugin_base_library_list(m_strPlatform, m_strVersion));
+      ::lemon::array::copy(straBase,::install_get_plugin_base_library_list(strPlatform, m_strVersion));
 
       straBase.add("npca2.dll");
 

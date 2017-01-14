@@ -192,7 +192,7 @@ namespace production
 
       string xpi_digest(memory & mem);
 
-      void xpi_sign_dir(const ::file::path & pszDir);
+      void xpi_sign_dir(const char * pszPlatform, const ::file::path & pszDir);
       void xpi_section(const char * pszManifest, const char * pszSignature);
 
       bool create_xpi(const char * pszPlatform, bool bSigned = true);
