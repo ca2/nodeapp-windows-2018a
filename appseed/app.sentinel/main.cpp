@@ -416,15 +416,15 @@ void sentinel::on_receive(::aura::ipc::rx * prx, const char * pszMessage)
 
 bool sentinel::are_there_user_files_in_use()
 {
-   if (is_user_using(dir::stage() / "msvcp110d.dll"))
+   if (is_user_using(dir::stage(process_platform_dir_name2()) / "msvcp110d.dll"))
       return true;
-   if(is_user_using(dir::stage() / "msvcr110d.dll"))
+   if(is_user_using(dir::stage(process_platform_dir_name2()) / "msvcr110d.dll"))
       return true;
-   if(is_user_using(dir::stage() / "ca.dll"))
+   if(is_user_using(dir::stage(process_platform_dir_name2()) / "ca.dll"))
       return true;
-   if(is_user_using(dir::stage() / "ca2.dll"))
+   if(is_user_using(dir::stage(process_platform_dir_name2()) / "ca2.dll"))
       return true;
-   if(is_user_using(dir::stage() / "ca2.dll"))
+   if(is_user_using(dir::stage(process_platform_dir_name2()) / "ca2.dll"))
       return true;
    return false;
 }

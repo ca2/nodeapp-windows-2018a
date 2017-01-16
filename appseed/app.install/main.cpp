@@ -201,7 +201,7 @@ bool installer::intro()
 
    string strMutex;
 
-   strMutex = "Global\\::ca2::fontopus::ca2_spaboot_install_"+process_platform_dir_name()+"::7807e510-5579-11dd-ae16-0800200c7784";
+   strMutex = "Global\\::ca2::fontopus::ca2_spaboot_install_"+process_platform_dir_name2()+"::7807e510-5579-11dd-ae16-0800200c7784";
 
    m_hmutexSpabootInstall = ::CreateMutex(NULL, FALSE, strMutex);
 
@@ -229,7 +229,7 @@ bool installer::intro()
 
    // "core/spaboot_install"
 
-   strChannel = "::ca2::fontopus::ca2_spaboot_install_" + process_platform_dir_name() + "::7807e510-5579-11dd-ae16-0800200c7784";
+   strChannel = "::ca2::fontopus::ca2_spaboot_install_" + process_platform_dir_name2() + "::7807e510-5579-11dd-ae16-0800200c7784";
 
    if(!m_rxchannel.create(strChannel))
    {
@@ -406,15 +406,15 @@ void installer::on_receive(::aura::ipc::rx * prx, const char * pszMessage)
 
 bool installer::are_there_user_files_in_use()
 {
-   if(is_user_using(dir::stage() / "msvcp110d.dll"))
+   if(is_user_using(dir::stage(process_platform_dir_name2()) / "msvcp110d.dll"))
       return true;
-   if(is_user_using(dir::stage() / "msvcr110d.dll"))
+   if(is_user_using(dir::stage(process_platform_dir_name2()) / "msvcr110d.dll"))
       return true;
-   if(is_user_using(dir::stage() / "ca.dll"))
+   if(is_user_using(dir::stage(process_platform_dir_name2()) / "ca.dll"))
       return true;
-   if(is_user_using(dir::stage() / "ca2.dll"))
+   if(is_user_using(dir::stage(process_platform_dir_name2()) / "ca2.dll"))
       return true;
-   if(is_user_using(dir::stage() / "ca2.dll"))
+   if(is_user_using(dir::stage(process_platform_dir_name2()) / "ca2.dll"))
       return true;
    return false;
 }
