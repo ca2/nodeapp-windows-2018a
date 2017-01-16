@@ -126,11 +126,12 @@ void spa_canvas_toolbox::paint_install(LPCRECT lpcrect, int iMode)
    iMode = 1;
 
    bool bProgress = false;
+   double dProgressTotal = 0.0;
    double dProgress = 0.0;
    string strHeader;
    string strBold;
    string strNormal;
-   //string strProgress;
+   string strProgress;
 
    Graphics * pgraphics = m_pgraphics;
 
@@ -139,11 +140,13 @@ void spa_canvas_toolbox::paint_install(LPCRECT lpcrect, int iMode)
 
    {
 
-      ::mutex m(NULL, false, "Global\\ca2-spa-install-" + process_platform_dir_name());
+      string strPlatform = "x86";
+
+      ::mutex m(NULL, false, "Global\\ca2-spa-install-" + strPlatform);
 
       synch_lock sl(&m);
 
-      string strFile = dir::element() / ("install-" + process_platform_dir_name() + ".log");
+      string strFile = dir::element() / ("install-" + strPlatform + ".log");
 
       int iTrace = _sopen(strFile,_O_RDONLY | _O_BINARY,_SH_DENYNO,0);
 
@@ -239,6 +242,130 @@ void spa_canvas_toolbox::paint_install(LPCRECT lpcrect, int iMode)
          _close(iTrace);
       }
    }
+
+   dProgressTotal += dProgress / 2.0;
+
+   dProgress = 0.0;
+   
+   strHeader.Empty();
+   strBold.Empty();
+   strNormal.Empty();
+   strProgress.Empty();
+
+   {
+
+      string strPlatform = "x64";
+
+      ::mutex m(NULL, false, "Global\\ca2-spa-install-" + strPlatform);
+
+      synch_lock sl(&m);
+
+      string strFile = dir::element() / ("install-" + strPlatform + ".log");
+
+      int iTrace = _sopen(strFile, _O_RDONLY | _O_BINARY, _SH_DENYNO, 0);
+
+      if (iTrace >= 0)
+      {
+         int iTell = _lseek(iTrace, 0, SEEK_END);
+         iTell--;
+         string strLine;
+         int iSkip = 0;
+         bool bNormal = false;
+         bool bHeader = false;
+         bool bBold = false;
+         bool bPreNormal = true;
+         bool bStart = false;
+         while (iTell > 0 && !bStart && !(bNormal && bBold && bProgress && bHeader))
+         {
+            _lseek(iTrace, iTell, SEEK_SET);
+            char ch;
+            _read(iTrace, &ch, 1);
+            if (ch == '\r')
+            {
+               iSkip++;
+            }
+            else if (ch == '\n')
+            {
+               iSkip++;
+            }
+            else if (iSkip > 0)
+            {
+               iSkip = 0;
+               strLine.trim();
+               if (strLine == "--")
+               {
+                  bStart = true;
+               }
+               else if (::str::begins_eat(strLine, "#----------"))
+               {
+                  strHeader = L"Thank you";
+                  bHeader = true;
+                  strBold = u16(strLine);
+                  bBold = true;
+                  dProgress = 0.0;
+                  bProgress = true;
+               }
+               else if (::str::begins_eat(strLine, ":::::"))
+               {
+                  if (!bHeader && strLine.length() > 0 && bBold && bNormal && bPreNormal)
+                  {
+                     bHeader = true;
+                     strHeader = u16(strLine);
+                  }
+               }
+               else if (::str::begins_eat(strLine, "***"))
+               {
+                  if (!bBold && strLine.length() > 0 && bNormal && bPreNormal)
+                  {
+                     bBold = true;
+                     strBold = u16(strLine);
+                  }
+               }
+               else if (::str::begins_eat(strLine, "|||"))
+               {
+                  if (!bProgress && strLine.length() > 0)
+                  {
+                     bProgress = true;
+                     long long int i = _atoi64(strLine.c_str());
+                     dProgress = (double)i / 10000000.0;
+                     //char sz[128];
+                     //sprintf(sz,"%0.1f%%",dProgress);
+                     //strProgress = u16(sz);
+                     dProgress /= 100.0;
+                  }
+               }
+               else if (!::str::begins_ci(strLine, "/ ") && strLine.length() > 0 && !bNormal && !bBold && !bHeader && bPreNormal)
+               {
+                  bNormal = true;
+                  strNormal = u16(strLine);
+               }
+               //else if(strLine.length() > 0 && !bPreNormal && !bBold && !bNormal && !bHeader)
+               //{
+               //   bPreNormal = true;
+               //   //::SelectObject(hdc, hfont);
+               //   //::TextOutU(hdc, 10, 10 + size.cy * 4, strLine.c_str(), strLine.length());
+               //}
+               strLine = ch;
+            }
+            else
+            {
+               strLine = ch + strLine;
+            }
+            iTell--;
+         }
+         _close(iTrace);
+      }
+   }
+
+   dProgressTotal += dProgress / 2.0;
+
+   dProgress = dProgressTotal;
+
+   strHeader.Empty();
+   strBold.Empty();
+   strNormal.Empty();
+   strProgress.Empty();
+
 
    RECT rect = *lpcrect;
    int cx = lpcrect->right - lpcrect->left;

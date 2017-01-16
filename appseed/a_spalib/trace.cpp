@@ -21,13 +21,13 @@ public:
 
    trace_file(a_spa * paspa):
       m_paspa(paspa),
-      m_mutex(paspa, false, "Global\\ca2-spa-install-" + process_platform_dir_name()),
+      m_mutex(paspa, false, "Global\\ca2-spa-install-" + paspa->m_strPlatform),
       m_sl(&m_mutex)
    {
 
       dir::mk(dir::element().c_str());
 
-      m_hfile = ::CreateFileW(u16(dir::element() / ("install-" +process_platform_dir_name()+ ".log")),GENERIC_WRITE,FILE_SHARE_READ | FILE_SHARE_WRITE,NULL,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,NULL);
+      m_hfile = ::CreateFileW(u16(dir::element() / ("install-" + m_paspa->m_strPlatform+ ".log")),GENERIC_WRITE,FILE_SHARE_READ | FILE_SHARE_WRITE,NULL,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,NULL);
 
       ::SetFilePointer(m_hfile,0,NULL,FILE_END);
 

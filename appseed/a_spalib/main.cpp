@@ -4,11 +4,12 @@
 
 
 void kill_process(string strImageName);
+int is_downloading_spaadmin();
 
 void gdiplus_start();
 void gdiplus_end();
 
-void run_vcredist();
+void run_vcredist(string strPlatform);
 
 #define CLASS_DECL_AURA
 #define CLASS_DECL_AXIS
@@ -19,12 +20,12 @@ typedef HWND oswindow;
 #include "axis/app_install_launcher.h"
 
 
-bool app_install_send_short_message(const char * psz,bool bLaunch,const char * pszBuild);
-void app_install_call_sync(const char * szParameters,const char * pszBuild);
+bool app_install_send_short_message(const char * pszPlatform, const char * psz,bool bLaunch,const char * pszBuild);
+void app_install_call_sync(const char * pszPlatform, const char * szParameters,const char * pszBuild);
 int register_spa_file_type();
-void start_program_files_spa_admin();
-void defer_start_program_files_spa_admin();
-bool low_is_spaadmin_running();
+void start_program_files_spa_admin(string strPlatform);
+void defer_start_program_files_spa_admin(string strPlatform);
+bool low_is_spaadmin_running(string strPlatform);
 void get_system_locale_schema(string & strLocale,string & strSchema);
 
 
@@ -85,16 +86,17 @@ public:
    int            m_iOp;
 
 
-   install_bin_item(a_spa * paspa, string strFile,LONG * plong,LONG lTotal,LONG * plongOk, LONG * plongBad):
+   install_bin_item(a_spa * paspa, string strFile, string strPlatform, LONG * plong,LONG lTotal,LONG * plongOk, LONG * plongBad):
       object(paspa),
       m_paspa(paspa),
       m_strFile(strFile),
+      m_strPlatform(strPlatform),
       m_plong(plong),
       m_lTotal(lTotal),
       m_plongOk(plongOk),
       m_plongBad(plongBad)
    {
-      
+
       m_iOp = OP_INSTALL_SPA;
       
       __begin_thread(paspa,&install_bin_item::proc,this,50,0, 0, NULL, &m_dwThreadId);
@@ -135,7 +137,7 @@ public:
       catch(...)
       {
 
-         (*pitem->m_plong)--;
+         InterlockedDecrement(pitem->m_plong);
 
       }
 
@@ -297,7 +299,7 @@ int32_t a_spa::run()
 int a_spa::spa_main()
 {
 
-   spa_mutex mutex;
+   spa_mutex mutex(process_platform_dir_name2());
 
    if (mutex.already_exists())
    {
@@ -325,7 +327,7 @@ int a_spa::spa_main()
 
    }
 
-   if(!spa_main_start())
+   if(!spa_main_start("x86"))
    {
 
       return -2;
@@ -364,7 +366,20 @@ int a_spa::spaadmin_main()
 
    //::MessageBoxA(NULL, "Test1", "Test1", MB_OK);
 
-   spaadmin_mutex smutex;
+   if (process_platform_dir_name2() == "x86")
+   {
+
+      spa_main_start("x64");
+
+   }
+   else
+   {
+
+      m_bFinished = true;
+
+   }
+
+   spaadmin_mutex smutex(process_platform_dir_name2());
 
    if(smutex.already_exists())
    {
@@ -386,9 +401,10 @@ int a_spa::spaadmin_main()
 
    trace(0.05);
 
-   while(!check_spa_installation() && ::get_thread_run())
+   while ((!check_spa_installation(process_platform_dir_name2()) || !m_bFinished) && ::get_thread_run())
    {
 
+      Sleep(500);
 
    }
 
@@ -397,7 +413,7 @@ int a_spa::spaadmin_main()
    //trace(0.84);
 
 
-   start_app_install_in_context();
+   start_app_install_in_context(process_platform_dir_name2());
 
 
    trace(":::::Thank you\r\n");
@@ -412,8 +428,12 @@ int a_spa::spaadmin_main()
 
 
 
-int a_spa::spa_main_start()
+int a_spa::spa_main_start(string strPlatform)
 {
+
+   m_bFinished = false;
+
+   m_strPlatform = strPlatform;
 
    if(!__begin_thread(this, &::a_spa::spa_main_proc,this, 50, 0, 0, NULL, &g_dwMain2))
    {
@@ -433,9 +453,18 @@ UINT c_cdecl a_spa::spa_main_proc(LPVOID lpvoid)
 
    a_spa * paspa = (a_spa *) lpvoid;
 
-   g_iRet = paspa->spalib_main2();
+   try
+   {
 
-   ::PostMessage(paspa->m_hwnd,WM_QUIT,0,0);
+      g_iRet = paspa->spalib_main2();
+
+   }
+   catch (...)
+   {
+
+   }
+
+   paspa->m_bFinished = true;
 
    return g_iRet;
 
@@ -445,39 +474,79 @@ UINT c_cdecl a_spa::spa_main_proc(LPVOID lpvoid)
 int a_spa::spalib_main2()
 {
 
+   int iTry;
+
+   iTry = 1440;
+
+   string strPlatform = m_strPlatform;
+
+   while (!::file_exists_dup(::path::a_spaadmin(strPlatform)))
+   {
+
+      if (!is_downloading_spaadmin())
+      {
+
+         check_spaadmin_bin(strPlatform);
+
+      }
+
+      iTry--;
+
+      if (iTry < 0)
+      {
+
+         return 0;
+
+      }
+
+      Sleep(1000);
+
+   }
+
+
    int iFullInstallationMaxTryCount = 3;
 
    int iFullInstallationTryCount = 0;
 
-   while(iFullInstallationTryCount < iFullInstallationMaxTryCount)
+   while (iFullInstallationTryCount < iFullInstallationMaxTryCount)
    {
 
       iFullInstallationTryCount++;
 
-      int iTry = 1440;
+      int iTry;
 
-      while(!check_spa_installation())
+
+      iTry = 1440;
+
+      while (!check_spa_installation(strPlatform))
       {
 
-         defer_start_program_files_spa_admin();
+         if (!is_downloading_spaadmin() && ::file_exists_dup(::path::a_spaadmin(strPlatform)))
+         {
+
+            defer_start_program_files_spa_admin(strPlatform);
+
+         }
 
          iTry--;
 
-         if(iTry < 0)
+         if (iTry < 0)
          {
 
             return 0;
 
          }
 
-         Sleep(84 + 77);
+         Sleep(1000);
 
       }
 
 
-      while (!check_berdge())
+      while (!check_berdge(strPlatform))
       {
-         Sleep(1984 + 1977 + 1951);
+
+         Sleep(5000);
+
       }
 
       string strId;
@@ -488,38 +557,38 @@ int a_spa::spalib_main2()
 
       int iFind1 = 0;
 
-      if(wstr[0] == '\"')
+      if (wstr[0] == '\"')
       {
 
-         iFind1= wstr.find('\"',1);
+         iFind1 = wstr.find('\"', 1);
 
       }
 
-      int iFind = wstr.find(" : ",iFind1 + 1);
+      int iFind = wstr.find(" : ", iFind1 + 1);
 
-      if(iFind >= 0)
+      if (iFind >= 0)
       {
          strParams = wstr.substr(iFind);
-         iFind = wstr.find("app=",iFind);
-         if(iFind >= 0)
+         iFind = wstr.find("app=", iFind);
+         if (iFind >= 0)
          {
-            int iEnd = wstr.find(" ",iFind);
-            if(iEnd < 0)
+            int iEnd = wstr.find(" ", iFind);
+            if (iEnd < 0)
             {
                strId = wstr.substr(iFind + 4);
             }
             else
             {
-               strId = wstr.substr(iFind + 4,iEnd - iFind - 4);
+               strId = wstr.substr(iFind + 4, iEnd - iFind - 4);
             }
 
             // trim initial quote
-            if(strId[0] == '\"')
+            if (strId[0] == '\"')
                strId = strId.substr(1);
 
             // trim final quote
-            if(strId[strId.length() - 1] == '\"')
-               strId = strId.substr(0,strId.length() - 1);
+            if (strId[strId.length() - 1] == '\"')
+               strId = strId.substr(0, strId.length() - 1);
 
          }
       }
@@ -528,13 +597,13 @@ int a_spa::spalib_main2()
 
          strId = get_app_id(directrix()->m_varTopicFile);
 
-         if(strId.length() <= 0)
+         if (strId.length() <= 0)
          {
             return 1;
          }
 
          HMODULE hmoduleUser32 = ::LoadLibrary("User32");
-//         g_pfnChangeWindowMessageFilter = (LPFN_ChangeWindowMessageFilter) ::GetProcAddress(hmoduleUser32,"ChangeWindowMessageFilter");
+         //         g_pfnChangeWindowMessageFilter = (LPFN_ChangeWindowMessageFilter) ::GetProcAddress(hmoduleUser32,"ChangeWindowMessageFilter");
 
 
       }
@@ -605,7 +674,7 @@ int a_spa::do_spa(const char * pszId, const char * pszParams)
 
    }
 
-   app_install_call_sync(strCommand.c_str(), "");
+   app_install_call_sync(process_platform_dir_name2(), strCommand.c_str(), "");
 
    if (!check_soon_app_id(strId))
       return 0;
@@ -800,9 +869,9 @@ int a_spa::check_soon_app_id(string strId)
 
    {
 
-      string strDll = dir::stage() / strName + ".dll";
+      string strDll = dir::stage(process_platform_dir_name2()) / strName + ".dll";
 
-      string strApp = dir::stage() / "app.exe";
+      string strApp = dir::stage(process_platform_dir_name2()) / "app.exe";
 
       if(file_exists_dup(strDll))
       {
@@ -833,7 +902,7 @@ int a_spa::check_soon_app_id(string strId)
 }
 
 
-int a_spa::check_spa_installation()
+int a_spa::check_spa_installation(string strPlatform)
 {
 
    if(spa_get_admin())
@@ -849,7 +918,7 @@ int a_spa::check_spa_installation()
    straFile.add("spa");
    straFile.add("vcredist");
 
-   if(!file_exists_dup(dir::a_spa() / "no_install_bin_set.txt"))
+   if(!file_exists_dup(dir::a_spa(strPlatform) / "no_install_bin_set.txt"))
    {
 
       straFile.add("install_bin_set");
@@ -864,7 +933,7 @@ int a_spa::check_spa_installation()
    for(int iFile = 0; iFile < straFile.size(); iFile++)
    {
 
-      new install_bin_item(this,straFile[iFile],&lCount,lTotal, &lOk, &lBad);
+      new install_bin_item(this,straFile[iFile],strPlatform, &lCount,lTotal, &lOk, &lBad);
 
    }
 
@@ -872,8 +941,11 @@ int a_spa::check_spa_installation()
 
    while(lCount > 0 && ::get_thread_run() && (lBad <= 0 || spa_get_admin()))
    {
-      Sleep(84);
+
+      Sleep(500);
+
       iRetry++;
+
    }
 
    Sleep(84);
@@ -886,17 +958,17 @@ int a_spa::check_spa_installation()
 
 }
 
-int a_spa::check_berdge()
+int a_spa::check_berdge(string strPlatform)
 {
 
-   string strDll = dir::stage() / "app_core_berdge.dll";
+   string strDll = dir::stage(strPlatform) / "app_core_berdge.dll";
 
    string strId = "app-core/berdge";
 
    if (file_exists_dup(strDll))
    {
 
-      string strApp = dir::stage() / "app.exe";
+      string strApp = dir::stage(strPlatform) / "app.exe";
 
       STARTUPINFOW si;
       memset(&si, 0, sizeof(si));
@@ -929,10 +1001,10 @@ int a_spa::check_berdge()
 
 
 
-int a_spa::check_vcredist()
+int a_spa::check_vcredist(string strPlatform)
 {
 
-   string str = ::path::vcredist();
+   string str = ::path::vcredist(strPlatform);
 
    if (!file_exists_dup(str) || !file_exists_dup(str + ".installed.txt"))
    {
@@ -944,7 +1016,7 @@ int a_spa::check_vcredist()
 
       }
 
-      if (!download_vcredist())
+      if (!download_vcredist(strPlatform))
       {
 
          return 0;
@@ -958,7 +1030,7 @@ int a_spa::check_vcredist()
 
       }
 
-      run_vcredist();
+      run_vcredist(strPlatform);
 
       file_put_contents_dup(str + ".installed.txt", "");
 
@@ -967,10 +1039,10 @@ int a_spa::check_vcredist()
    return 1;
 
 }
-int a_spa::download_vcredist()
+int a_spa::download_vcredist(string strPlatform)
 {
 
-   string strTempSpa = download_tmp_vcredist();
+   string strTempSpa = download_tmp_vcredist(strPlatform);
 
    if (!file_exists_dup(strTempSpa.c_str()))
    {
@@ -982,7 +1054,7 @@ int a_spa::download_vcredist()
    if (spa_get_admin())
    {
 
-      string str = ::path::vcredist();
+      string str = ::path::vcredist(strPlatform);
 
       if (!::CopyFileW(u16(strTempSpa.c_str()).c_str(), u16(str), FALSE))
       {
@@ -1013,17 +1085,17 @@ int a_spa::download_vcredist()
 
 }
 
-string a_spa::download_tmp_vcredist()
+string a_spa::download_tmp_vcredist(string strPlatform)
 {
 
-   string strTempSpa = get_temp_file_name_dup(::path::vcredist().title(), ::path::vcredist().extension());
+   string strTempSpa = get_temp_file_name_dup(::path::vcredist(strPlatform).title(), ::path::vcredist(strPlatform).extension());
 
    int iTry = 0;
 
    while (iTry <= 3)
    {
 
-      if (ms_download("https://server.ca2.cc/" + process_platform_dir_name() + "/" + ::path::vcredist().name(), strTempSpa.c_str())
+      if (ms_download("https://server.ca2.cc/" + strPlatform + "/" + ::path::vcredist(strPlatform).name(), strTempSpa.c_str())
          && file_exists_dup(strTempSpa.c_str())
          && file_length_dup(strTempSpa.c_str()) > 0)
       {
@@ -1041,10 +1113,10 @@ string a_spa::download_tmp_vcredist()
 
 }
 
-int a_spa::check_spa_bin()
+int a_spa::check_spa_bin(string strPlatform)
 {
 
-   string str = ::path::a_spa();
+   string str = ::path::a_spa(strPlatform);
 
    if(!file_exists_dup(str))
    {
@@ -1056,7 +1128,7 @@ int a_spa::check_spa_bin()
 
       }
 
-      if(!download_spa_bin())
+      if(!download_spa_bin(strPlatform))
       {
 
          return 0;
@@ -1076,27 +1148,47 @@ int a_spa::check_spa_bin()
 
 }
 
-int a_spa::check_spaadmin_bin()
+int g_iDownloadingSpaadmin;
+
+int is_downloading_spaadmin()
 {
 
-   string str = ::path::a_spaadmin();
+   return g_iDownloadingSpaadmin;
+
+}
+
+int a_spa::check_spaadmin_bin(string strPlatform)
+{
+
+   string str = ::path::a_spaadmin(strPlatform);
+
+   if (file_exists_dup(str))
+   {
+
+      return true;
+
+   }
+
+   if (is_downloading_spaadmin())
+   {
+
+      return false;
+
+   }
+
+   keep < int > keepDownloadingSpaadmin(&g_iDownloadingSpaadmin, 1, 0, true);
+
+   if(!download_spaadmin_bin(strPlatform))
+   {
+
+      return 0;
+
+   }
 
    if(!file_exists_dup(str))
    {
-      
-      if(!download_spaadmin_bin())
-      {
 
-         return 0;
-
-      }
-
-      if(!file_exists_dup(str))
-      {
-
-         return 0;
-
-      }
+      return 0;
 
    }
 
@@ -1104,10 +1196,11 @@ int a_spa::check_spaadmin_bin()
 
 }
 
-int a_spa::download_spa_bin()
+
+int a_spa::download_spa_bin(string strPlatform)
 {
 
-   string strTempSpa = download_tmp_spa_bin();
+   string strTempSpa = download_tmp_spa_bin(strPlatform);
 
    if(!file_exists_dup(strTempSpa.c_str()))
    {
@@ -1119,7 +1212,7 @@ int a_spa::download_spa_bin()
    if(spa_get_admin())
    {
 
-      string str = ::path::a_spa();
+      string str = ::path::a_spa(strPlatform);
 
       if(!::CopyFileW(u16(strTempSpa.c_str()).c_str(),u16(str),FALSE))
       {
@@ -1150,10 +1243,10 @@ int a_spa::download_spa_bin()
 
 }
 
-int a_spa::download_spaadmin_bin()
+int a_spa::download_spaadmin_bin(string strPlatform)
 {
 
-   string strTempSpa = download_tmp_spaadmin_bin();
+   string strTempSpa = download_tmp_spaadmin_bin(strPlatform);
 
    if(!file_exists_dup(strTempSpa.c_str()))
    {
@@ -1165,7 +1258,7 @@ int a_spa::download_spaadmin_bin()
    if(spa_get_admin())
    {
 
-      string str = ::path::a_spaadmin();
+      string str = ::path::a_spaadmin(strPlatform);
 
       if(!dir::mk(dir::name(str)))
       {
@@ -1192,7 +1285,7 @@ int a_spa::download_spaadmin_bin()
    else
    {
 
-      if(!low_is_spaadmin_running())
+      if(!low_is_spaadmin_running(strPlatform))
       {
 
          SHELLEXECUTEINFOW sei ={};
@@ -1213,7 +1306,7 @@ int a_spa::download_spaadmin_bin()
 
          DWORD dwGetLastError = GetLastError();
 
-         string str = ::path::a_spaadmin();
+         string str = ::path::a_spaadmin(strPlatform);
 
          DWORD dwExitCode = 0;
 
@@ -1223,7 +1316,7 @@ int a_spa::download_spaadmin_bin()
             if(::GetExitCodeProcess(sei.hProcess,&dwExitCode))
             {
 
-               if(dwExitCode != STILL_ACTIVE)
+               if(dwExitCode != STILL_ACTIVE && !low_is_spaadmin_running(strPlatform))
                {
 
                   break;
@@ -1265,14 +1358,14 @@ int a_spa::download_spaadmin_bin()
 
 
 
-string a_spa::download_tmp_spaadmin_bin()
+string a_spa::download_tmp_spaadmin_bin(string strPlatform)
 {
 
-   string strTempSpa = get_temp_file_name_dup(::path::a_spaadmin().title(),::path::a_spaadmin().extension());
+   string strTempSpa = get_temp_file_name_dup(::path::a_spaadmin(strPlatform).title() + "-" + strPlatform,::path::a_spaadmin(strPlatform).extension());
 
    string strUrl;
 
-   strUrl = "https://server.ca2.cc/" + process_platform_dir_name() + "/" + m_strVersion + "/" + ::path::a_spaadmin().name();
+   strUrl = "https://server.ca2.cc/" + strPlatform + "/" + m_strVersion + "/" + ::path::a_spaadmin(strPlatform).name();
 
    int iTry = 0;
 
@@ -1299,17 +1392,17 @@ string a_spa::download_tmp_spaadmin_bin()
 
 
 
-string a_spa::download_tmp_spa_bin()
+string a_spa::download_tmp_spa_bin(string strPlatform)
 {
 
-   string strTempSpa = get_temp_file_name_dup(::path::a_spa().title(),::path::a_spa().extension());
+   string strTempSpa = get_temp_file_name_dup(::path::a_spa(strPlatform).title(),::path::a_spa(strPlatform).extension());
 
    int iTry = 0;
 
    while(iTry <= 3)
    {
 
-      if(ms_download("https://server.ca2.cc/" + process_platform_dir_name() + "/" + m_strVersion + "/" + ::path::a_spa().name(),strTempSpa.c_str())
+      if(ms_download("https://server.ca2.cc/" + strPlatform + "/" + m_strVersion + "/" + ::path::a_spa(strPlatform).name(),strTempSpa.c_str())
          && file_exists_dup(strTempSpa.c_str())
          && file_length_dup(strTempSpa.c_str()) > 0)
       {
@@ -1349,7 +1442,7 @@ bool a_spa::is_file_ok(const char * path1,const char * pszTemplate,const char * 
 
 }
 
-bool a_spa::is_file_ok(const stringa & straPath,const stringa & straTemplate,stringa & straMd5,const string & strFormatBuild,int iMd5Retry)
+bool a_spa::is_file_ok(const stringa & straPath,const stringa & straTemplate,stringa & straMd5,const string & strFormatBuild,int iMd5Retry, string strPlatform)
 {
 
    bool bOk = true;
@@ -1388,7 +1481,7 @@ bool a_spa::is_file_ok(const stringa & straPath,const stringa & straTemplate,str
       strUrl += "&build=";
       strUrl += strFormatBuild;
       strUrl += "&platform=";
-      strUrl += process_platform_dir_name();
+      strUrl += strPlatform;
 
       string strMd5List = ms_get(strUrl.c_str());
 
@@ -1435,11 +1528,13 @@ bool a_spa::is_file_ok(const stringa & straPath,const stringa & straTemplate,str
 
 void install_bin_item::op_spa()
 {
+
+   string strPlatform = m_strPlatform;
    
    if(m_strFile == "spaadmin")
    {
 
-      if (m_paspa->check_spaadmin_bin())
+      if (m_paspa->check_spaadmin_bin(strPlatform))
       {
 
          InterlockedIncrement(m_plongOk);
@@ -1456,7 +1551,7 @@ void install_bin_item::op_spa()
    else if(m_strFile == "spa")
    {
 
-      if(m_paspa->check_spa_bin())
+      if(m_paspa->check_spa_bin(strPlatform))
       {
 
          InterlockedIncrement(m_plongOk);
@@ -1473,7 +1568,7 @@ void install_bin_item::op_spa()
    else if (m_strFile == "vcredist")
    {
 
-      if (m_paspa->check_vcredist())
+      if (m_paspa->check_vcredist(strPlatform))
       {
 
          InterlockedIncrement(m_plongOk);
@@ -1490,7 +1585,7 @@ void install_bin_item::op_spa()
    else if(m_strFile == "install_bin_set")
    {
 
-      if(m_paspa->check_install_bin_set())
+      if(m_paspa->check_install_bin_set(strPlatform))
       {
 
          InterlockedIncrement(m_plongOk);
@@ -1609,12 +1704,12 @@ void install_bin_item::run()
 
 
 
-int a_spa::check_install_bin_set()
+int a_spa::check_install_bin_set(string strPlatform)
 {
 
-   string strPath = path::app_install();
+   string strPath = path::app_install(strPlatform);
 
-   stringa straFile = install_get_plugin_base_library_list(process_platform_dir_name(), m_strVersion);
+   stringa straFile = install_get_plugin_base_library_list(strPlatform, m_strVersion);
 
    if(!::dir::is(dir::name(strPath)))
    {
@@ -1650,7 +1745,7 @@ int a_spa::check_install_bin_set()
 
 md5retry:
 
-   if(!is_file_ok(straDownload,straFile,straMd5,strFormatBuild,iMd5Retry))
+   if(!is_file_ok(straDownload,straFile,straMd5,strFormatBuild,iMd5Retry, strPlatform))
    {
 
       if(!spa_get_admin())
@@ -1716,7 +1811,7 @@ md5retry:
 
       trace("Downloading install bin set\r\n");
 
-      string strUrlPrefix = "https://server.ca2.cc/ccvotagus/" + m_strVersion + "/" + strBuild + "/install/" + process_platform_dir_name() + "/";
+      string strUrlPrefix = "https://server.ca2.cc/ccvotagus/" + m_strVersion + "/" + strBuild + "/install/" + strPlatform + "/";
 
       //#pragma omp parallel for
       for(int iFile = 0; iFile < straFile.size(); iFile++)
@@ -1734,7 +1829,7 @@ md5retry:
 
             }
 
-            new install_bin_item(this, strUrlPrefix, strPath, straFile[iFile], &lCount, straMd5[iFile], process_platform_dir_name(), lTotal);
+            new install_bin_item(this, strUrlPrefix, strPath, straFile[iFile], &lCount, straMd5[iFile], strPlatform, lTotal);
 
          }
 
@@ -1849,7 +1944,7 @@ RetryBuildNumber:
 
 
 
-bool app_install_send_short_message(const char * psz,bool bLaunch,const char * pszBuild)
+bool app_install_send_short_message(const char * pszPlatform, const char * psz,bool bLaunch,const char * pszBuild)
 {
 
 #ifdef METROWIN
@@ -1858,15 +1953,15 @@ bool app_install_send_short_message(const char * psz,bool bLaunch,const char * p
 
 #else
 
-   ::aura::ipc::tx txchannel(::get_thread_app());
+   ::aura::ipc::tx txchannel(::get_thread_app());  
 
-   app_install_launcher launcher("","");
+   app_install_launcher launcher(pszPlatform, "","");
 
    string strChannel;
 
    // "core/spaboot_install"
 
-   strChannel = "::ca2::fontopus::ca2_spaboot_install_"+process_platform_dir_name()+"::7807e510-5579-11dd-ae16-0800200c7784";
+   strChannel = "::ca2::fontopus::ca2_spaboot_install_"+string(pszPlatform)+"::7807e510-5579-11dd-ae16-0800200c7784";
 
    if(!txchannel.open(strChannel,bLaunch ? &launcher : NULL))
       return false;
@@ -1934,7 +2029,7 @@ bool app_install_send_short_message(const char * psz,bool bLaunch,const char * p
 //
 //
 
-void app_install_call_sync(const char * szParameters,const char * pszBuild)
+void app_install_call_sync(const char * pszPlatform, const char * szParameters,const char * pszBuild)
 {
    bool bLaunch;
 
@@ -1948,16 +2043,16 @@ void app_install_call_sync(const char * szParameters,const char * pszBuild)
       bLaunch = true;
    }
 
-   app_install_send_short_message(szParameters,bLaunch,pszBuild);
+   app_install_send_short_message(pszPlatform, szParameters,bLaunch,pszBuild);
 
 }
 
 
 
-void a_spa::start_app_install_in_context()
+void a_spa::start_app_install_in_context(string strPlatform)
 {
 
-   app_install_launcher launcher("","");
+   app_install_launcher launcher(strPlatform, "","");
 
    launcher.start_in_context();
 
@@ -1999,13 +2094,14 @@ void app_install_launcher::start_in_context()
 
 int register_spa_file_type()
 {
+
    HKEY hkey;
 
    wstring extension=L".spa";                     // file extension
    wstring desc=L"spafile";          // file type description
    wstring content_type = L"application/x-spa";
 
-   wstring app(::path::a_spa());
+   wstring app(::path::a_spa("x86"));
 
    wstring icon(app);
 
@@ -2052,7 +2148,7 @@ int register_spa_file_type()
    RegSetValueExW(hkey,L"",0,REG_SZ,(BYTE*)icon.c_str(),icon.length()*sizeof(wchar_t));
    RegCloseKey(hkey);
 
-   wstring wstr(dir::a_spa() / "spa_register.txt");
+   wstring wstr(dir::a_spa("x86") / "spa_register.txt");
 
    int iRetry = 9;
 
@@ -2075,12 +2171,12 @@ int register_spa_file_type()
 
 
 
-void start_program_files_spa_admin()
+void start_program_files_spa_admin(string strPlatform)
 {
 
    SHELLEXECUTEINFOW sei ={};
 
-   string str = ::path::a_spaadmin();
+   string str = ::path::a_spaadmin(strPlatform);
 
    if(!::file_exists_dup(str))
    {
@@ -2103,12 +2199,12 @@ void start_program_files_spa_admin()
 }
 
 
-void run_vcredist()
+void run_vcredist(string strPlatform)
 {
 
    SHELLEXECUTEINFOW sei = {};
 
-   string str = ::path::vcredist();
+   string str = ::path::vcredist(strPlatform);
 
    if (!::file_exists_dup(str))
    {
@@ -2162,25 +2258,25 @@ void run_vcredist()
 
 
 
-void defer_start_program_files_spa_admin()
+void defer_start_program_files_spa_admin(string strPlatform)
 {
 
-   if(low_is_spaadmin_running())
+   if(!low_is_spaadmin_running(strPlatform))
    {
 
       return;
 
    }
 
-   start_program_files_spa_admin();
+   start_program_files_spa_admin(strPlatform);
 
 }
 
 
-bool low_is_spaadmin_running()
+bool low_is_spaadmin_running(string strPlatform)
 {
 
-   spaadmin_mutex smutex;
+   spaadmin_mutex smutex(strPlatform);
 
    return smutex.already_exists();
 
