@@ -1395,7 +1395,7 @@ string a_spa::download_tmp_spaadmin_bin(string strPlatform)
 string a_spa::download_tmp_spa_bin(string strPlatform)
 {
 
-   string strTempSpa = get_temp_file_name_dup(::path::a_spa(strPlatform).title(),::path::a_spa(strPlatform).extension());
+   string strTempSpa = get_temp_file_name_dup(::path::a_spa(strPlatform).title() + "-" + strPlatform,::path::a_spa(strPlatform).extension());
 
    int iTry = 0;
 
