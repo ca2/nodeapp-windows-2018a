@@ -400,7 +400,15 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "resident_twitchtv", "..\..\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "resident_beampro", "..\..\..\app-core\appseed\resident_beampro\resident_beampro.vcxproj", "{B6291FD9-450A-443C-9878-2BE58E47C1F4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5F4F5C5C-DCD9-4DA9-8823-94B93AA6F01D}"
+	ProjectSection(SolutionItems) = preProject
+		Performance10.psess = Performance10.psess
+	EndProjectSection
+EndProject
 Global
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
 		basis|x64 = basis|x64
