@@ -88,6 +88,7 @@ namespace production
 
       m_bLoop = false;
 
+
       if (m_iRelease > 0)
       {
          add_status("There are pending releases!!");
@@ -141,6 +142,36 @@ namespace production
       int32_t iProduce;
 
       string strBackPostColor = "background-color: #CCCCC2;";
+
+
+      {
+
+         ::file::path pathMirror = dir::system() / "config/production/mirror.txt";
+
+         ::file::path pathMirrorStatus = dir::system() / "config/production/mirror_status.txt";
+
+         if (!file_exists_dup(pathMirror)
+            || !file_exists_dup(pathMirrorStatus))
+         {
+
+            MessageBox(NULL, "both " + pathMirror + " and " + pathMirrorStatus + " files must exist and maybe empty...","The h***!!", MB_ICONEXCLAMATION);
+            return -1;
+
+         }
+
+         m_straMirror.add_lines(::file_as_string_dup(pathMirror));
+         m_straMirrorStatus.add_lines(::file_as_string_dup(pathMirrorStatus));
+
+         m_straMirror.remove_empty();
+         m_straMirrorStatus.remove_empty();
+
+         m_straMirror.set_size(MIN(m_straMirror.get_size(), m_straMirrorStatus.get_size()));
+         m_straMirrorStatus.set_size(m_straMirror.get_size());
+
+
+      }
+
+
 
       while (true)
       {
@@ -269,7 +300,6 @@ namespace production
 
       if (m_iStep == 1)
       {
-
          m_strStatusEmail = ApplicationUser.m_strLogin;
 
          m_strDownloadSite = "server.ca2.cc";
@@ -318,7 +348,7 @@ namespace production
             //   {
             //      set["post"]["new_status"] = "<div style=\"display: block; background-color: #FFE0FF; \"><h2 style=\"margin-bottom:0px; color: #FF55CC;\">Medium Size Status Text" + version_to_international_datetime(m_strBuild) + "</h2><span style=\"color: #882255; display: block; margin-bottom: 1.5em;\">" + m_strBuildTook + " and finished at " + strEndTime + "<br>New release of <a href=\"http://code.ca2.cc/\" class=\"fluidbasis\" >basis</a> applications labeled " + m_strBuild + " is ready for download through compatible gateways.<br>Check <a href=\"http://laboratory.ca2.cc/\" class=\"fluidbasis\" >laboratory.ca2.cc</a> or <a href=\"http://warehouse.ca2.cc/\" class=\"fluidbasis\" >warehouse.ca2.cc</a> for simple gateway implementations.</span></div>";
             //   }
-            //   else
+            //   else  
             //   {
             //      set["post"]["new_status"] = "<div style=\"display: block; background-color: #E0FFCC; \"><h2 style=\"margin-bottom:0px; color: #55CCAA;\">Medium Size Status Text" + version_to_international_datetime(m_strBuild) + "</h2><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">" + m_strBuildTook + " and finished at " + strEndTime + "<br>New release of <a href=\"http://ca2.cc/\">stage</a> applications labeled " + m_strBuild + " is ready for download through compatible gateways.<br>Check <a href=\"http://desktop.ca2.cc/\">desktop.ca2.cc</a> or <a href=\"http://store.ca2.cc/\">store.ca2.cc</a> for simple gateway implementations.</span></div";
             //   }
@@ -1055,48 +1085,53 @@ namespace production
          add_status("");
          add_status("");
 
-         
-         add_status("");
-
-         ::file::listing straRoot;
-
-         straRoot = m_straRoot;
-
-         straRoot.add("time");
-
-         add_status("***Preparing to release to mirrors in two phases with " + ::str::from(straRoot.get_count()) +  " steps each...");
-
-         add_status("1st phase : archiving files and directories into one archive...");
-
-         for (index i = 0; i < straRoot.get_count(); i++)
+         if (m_straMirror.has_elements())
          {
 
-            string strRoot = straRoot[i];
+            add_status("");
 
-            string strSpa = "ca2_spa_" + ::str::replace("-", "_", strRoot);
+            ::file::listing straRoot;
 
-            add_status(::str::from(i + 1) + ". dtf - fileset - file from directory " + strRoot);
+            straRoot = m_straRoot;
 
-            System.file().dtf(m_strCCVrelNew + "\\" + strSpa + ".fileset", m_strCCVrelNew + "\\" + strRoot, get_app());
+            straRoot.add("time");
 
-         }
+            add_status("***Preparing to release to mirrors in two phases with " + ::str::from(straRoot.get_count()) + " steps each...");
+
+            add_status("1st phase : archiving files and directories into one archive...");
+
+            for (index i = 0; i < straRoot.get_count(); i++)
+            {
+
+               string strRoot = straRoot[i];
+
+               string strSpa = "ca2_spa_" + ::str::replace("-", "_", strRoot);
+
+               add_status(::str::from(i + 1) + ". dtf - fileset - file from directory " + strRoot);
+
+               System.file().dtf(m_strCCVrelNew + "\\" + strSpa + ".fileset", m_strCCVrelNew + "\\" + strRoot, get_app());
+
+            }
 
 
-         add_status("");
-         add_status("");
+            add_status("");
+            add_status("");
 
-         add_status("2st phase : compressing archives...");
+            add_status("2st phase : compressing archives...");
 
-         for (index i = 0; i < straRoot.get_count(); i++)
-         {
+            for (index i = 0; i < straRoot.get_count(); i++)
+            {
 
-            string strRoot = straRoot[i];
+               string strRoot = straRoot[i];
 
-            string strSpa = "ca2_spa_" + ::str::replace("-", "_", strRoot);
+               string strSpa = "ca2_spa_" + ::str::replace("-", "_", strRoot);
 
-            add_status(::str::from(i + 1) + ". bz - bzip - compressing " + strRoot);
+               add_status(::str::from(i + 1) + ". bz - bzip - compressing " + strRoot);
 
-            System.compress().bz(get_app(), m_strCCVrelNew + "\\" + strSpa + ".fileset.bz", m_strCCVrelNew + "\\" + strSpa + ".fileset");
+               System.compress().bz(get_app(), m_strCCVrelNew + "\\" + strSpa + ".fileset.bz", m_strCCVrelNew + "\\" + strSpa + ".fileset");
+
+            }
+
 
          }
          
@@ -1120,7 +1155,8 @@ namespace production
 		 straStatus.add(unitext("100 releasing at North America netnode, Beauharnois, Canada"));
 		 straServer.add("ca2.cc");
 
-
+       straStatus.add(m_straMirrorStatus);
+       straServer.add(m_straMirror);
          /*
          straStatus.add(unitext("330 releasing at netnode : France (Gravelines, France)"));
          //straServer.add("fr-api.ca2.cc");
@@ -1203,7 +1239,7 @@ namespace production
                if(i == 0)
                {
                   
-                  class release * prelease = new class release(this,"http://" + strServer + strObject1,strServer);
+                  class release * prelease = new class release(this,"https://" + strServer + strObject1,strServer);
 
                   prelease->raw_run();
 
@@ -1211,7 +1247,7 @@ namespace production
                else
                {
 
-                  class release * prelease = new class release(this,"http://" + strServer + strObject,strServer);
+                  class release * prelease = new class release(this,"https://" + strServer + strObject,strServer);
 
                   prelease->begin();
 

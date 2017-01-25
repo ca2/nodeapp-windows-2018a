@@ -53,7 +53,8 @@ namespace production
          int32_t run();
       };
 
-
+      stringa                 m_straMirror;
+      stringa                 m_straMirrorStatus;
       mutex                   m_mutexStatus;
       stringa                 m_straStatus;
       bool                    m_bLoop;
