@@ -160,6 +160,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wndfrm_3dprint", "..\..\..\app-core\appseed\wndfrm_3dprint\wndfrm_3dprint.vcxproj", "{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_user_service", "..\..\..\app-core\appseed\user_service\user_service.vcxproj", "{2F713E16-07D5-40C4-A85B-41E97286FA6C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
@@ -456,6 +458,14 @@ Global
 		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.stage|Win32.Build.0 = stage|Win32
 		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.stage|x64.ActiveCfg = stage|x64
 		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.stage|x64.Build.0 = stage|x64
+		{2F713E16-07D5-40C4-A85B-41E97286FA6C}.basis|Win32.ActiveCfg = basis|Win32
+		{2F713E16-07D5-40C4-A85B-41E97286FA6C}.basis|Win32.Build.0 = basis|Win32
+		{2F713E16-07D5-40C4-A85B-41E97286FA6C}.basis|x64.ActiveCfg = basis|x64
+		{2F713E16-07D5-40C4-A85B-41E97286FA6C}.basis|x64.Build.0 = basis|x64
+		{2F713E16-07D5-40C4-A85B-41E97286FA6C}.stage|Win32.ActiveCfg = stage|Win32
+		{2F713E16-07D5-40C4-A85B-41E97286FA6C}.stage|Win32.Build.0 = stage|Win32
+		{2F713E16-07D5-40C4-A85B-41E97286FA6C}.stage|x64.ActiveCfg = stage|x64
+		{2F713E16-07D5-40C4-A85B-41E97286FA6C}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
