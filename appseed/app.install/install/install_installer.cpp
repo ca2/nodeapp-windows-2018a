@@ -1340,196 +1340,207 @@ install_begin:;
 
       int32_t iMaxRetry = 3;
 
+
+      
+      
 //      char sz[1024];
 
 //      int32_t iStatus;
 
-      if(file_exists_dup(inplace))
-      {
+//      if(file_exists_dup(inplace))
+//      {
 
-         // then first try to download and apply patch
+         // if file already exists, tries to patch it (bspatch)
+//
+//         // then first try to download and apply patch
+//
+//         string strOldMd5 = System.file().md5(inplace);
+//
+//         string strNewMd5 = pszMd5;
+//
+//         dir::mk(dir::name((dir + file)));
+//
+//         m_dwCurFileLen = iGzLen;
+//
+//         m_dwDownloadLen = 0;
+//
+//         keep_true keepDownloadTrue(m_bMsDownload);
+//
+//         uint64_t iBsLen = 0;
+//
+//         bool bPossible = false;
+//
+//         while(true)
+//         {
+//
+//            string strUrl;
+//
+//            strUrl = "http://spa.api.server.ca2.cc/bspatch?file=";
+//
+//            strUrl += url_encode_dup(file2);
+//
+//            strUrl += "&old_hash=";
+//
+//            strUrl += strOldMd5;
+//
+//            strUrl += "&new_hash=";
+//
+//            strUrl += strNewMd5;
+//
+//            string strBsPatch = dir + file + "." + strOldMd5 + "." + strNewMd5 + ".bspatch";
+//
+//            property_set set;
+//
+//            set["int_scalar_source_listener"] = this;
+//
+//            set["disable_ca2_sessid"] = true;
+//
+//            set["raw_http"] = true;
+//
+//            sl.lock();
+//            sp(::sockets::http_session) & psession = m_httpsessionptra.element_at_grow(0);
+//            sl.unlock();
+//
+//            System.install().trace().trace_add("\ndownloading " + strUrl + "\n");
+//
+//            bOk = Application.http().download(*m_psockethandler, psession,strUrl,strBsPatch,set);
+//
+////            if(iStatus == 404)
+//  //             break;
+//
+//            if (!bOk)
+//               break;
+//
+//            if(!bPossible)
+//            {
+//
+//               bPossible = true;
+//
+//               ///System.install().trace().trace_add(" patching may be possible");
+//
+//            }
+//            if(bOk)
+//            {
+//               int32_t iResult = -1;
+//               if(iLength != -1)
+//               {
+//                  dir::mk(dir::name(inplace));
+////                  iResult = bspatch(inplace, (dir3 + file2), strBsPatch);
+//                  if(iResult != 0)
+//                  {
+//                     //   System.install().trace().rich_trace("");
+//                     // System.install().trace().rich_trace("Patch failed : files may be corrupted):");
+//                     /*                  System.install().trace().rich_trace("old   file : ");
+//                     System.install().trace().trace_add((dir2 + file2));
+//                     System.install().trace().rich_trace("new   file :");
+//                     System.install().trace().trace_add((dir3 + file2));
+//                     System.install().trace().rich_trace("patch file :");
+//                     System.install().trace().trace_add(strBsPatch);*/
+//                     bOk = false;
+//                     break;
+//                  }
+//               }
+//            }
+//            if(bOk)
+//            {
+//               if(iLength == -1)
+//               {
+//                  //  System.install().trace().rich_trace("Patch Length Check : There is no length information to check.");
+//               }
+//               else
+//               {
+//                  uint64_t iActualLength = file_length_dup((dir3 + file2));
+//                  bOk = iLength == iActualLength;
+//                  //System.install().trace().rich_trace("Patch Length Verification : ");
+//                  /*sprintf(sz, "correct length : %d bytes", iLength);
+//                  System.install().trace().rich_trace(sz);
+//                  sprintf(sz, "actual  length : %d bytes", iActualLength);
+//                  System.install().trace().rich_trace(sz);*/
+//                  if(bOk)
+//                  {
+//                     //   System.install().trace().trace_add("Length match!");
+//                  }
+//                  else
+//                  {
+//                     // System.install().trace().trace_add(unitext("Length mismatch ¡X!"));
+//                  }
+//               }
+//            }
+//            if(bOk)
+//            {
+//               if(pszMd5 == NULL || strlen_dup(pszMd5) == 0)
+//               {
+//                  //System.install().trace().rich_trace("Patch MD5 Hash Verification : there is no MD5 Hash information to verify.");
+//               }
+//               else
+//               {
+//                  string strMd5;
+//                  strMd5 = System.file().md5((dir3 + file2));
+//                  bOk = stricmp_dup(strMd5, pszMd5) == 0;
+//                  //System.install().trace().rich_trace("Patch MD5 Hash Verification");
+//                  /*sprintf(sz, "correct MD5 Hash : %s", pszMd5);
+//                  System.install().trace().rich_trace(sz);
+//                  sprintf(sz, "actual  MD5 Hash : %str", strMd5);
+//                  System.install().trace().rich_trace(sz);*/
+//                  if(bOk)
+//                  {
+//                     // System.install().trace().trace_add("MD5 Hash match!");
+//                  }
+//                  else
+//                  {
+//                     //System.install().trace().trace_add(unitext("MD5 Hash mismatch ¡X!"));
+//                  }
+//               }
+//            }
+//            if(bOk)
+//            {
+//               if(!file_copy_dup(inplace, dir3 + file2, true))
+//               {
+//                  System.install().trace().rich_trace("Failed to copy patched file: Need Restart Because Of Reserved File");
+//                  m_NeedRestartBecauseOfReservedFile = true;
+//               }
+//               iBsLen = file_length_dup(strBsPatch);
+//               break;
+//            }
+//            iRetry++;
+//            //sprintf(sz, "An error ocurred. Retrying... Attempt %d of %d.", iRetry, iMaxRetry);
+//            //System.install().trace().rich_trace(sz);
+//            //System.install().trace().rich_trace("Patch may fail due timeout if the patched file is large and it is the first");
+//            //System.install().trace().rich_trace("time the patch is requested for the older-newer-pair patch combination.");
+//            //System.install().trace().rich_trace("Other users later requesting the same older-newer-pair patch combination will");
+//            //System.install().trace().rich_trace("benefit from the cached patch.");
+//            Sleep((5000) * 5);
+//            if(iRetry >= iMaxRetry)
+//               break;
+//         }
+//         if(bOk)
+//         {
+//            if(iRetry > 0)
+//            {
+//               // sprintf(sz, unitext("Patch succeeded with %d retries %0.2fkbytes compressed ✓"), (iBsLen / 1000.0), iRetry);
+//               //System.install().trace().trace_add(unitext(" c"));
+//            }
+//            else
+//            {
+//               // this System.install().rich_trace is added and signalized like that because it
+//               // should be one of the most common cases and one of the most
+//               // normal cases.
+//               //sprintf(sz, unitext(" patched %0.2fkbytes compressed ✓"), (iBsLen / 1000.0));
+//               //System.install().trace().trace_add(sz);
+//               //System.install().trace().trace_add(unitext(" c"));
+//            }
+//         }
+//         else
+//         {
+//            //System.install().trace().rich_trace(unitext("Patch failed ¡X!"));
+//         }
+//      }
 
-         string strOldMd5 = System.file().md5(inplace);
 
-         string strNewMd5 = pszMd5;
 
-         dir::mk(dir::name((dir + file)));
 
-         m_dwCurFileLen = iGzLen;
 
-         m_dwDownloadLen = 0;
 
-         keep_true keepDownloadTrue(m_bMsDownload);
-
-         uint64_t iBsLen = 0;
-
-         bool bPossible = false;
-
-         while(true)
-         {
-
-            string strUrl;
-
-            strUrl = "http://spa.api.server.ca2.cc/bspatch?file=";
-
-            strUrl += url_encode_dup(file2);
-
-            strUrl += "&old_hash=";
-
-            strUrl += strOldMd5;
-
-            strUrl += "&new_hash=";
-
-            strUrl += strNewMd5;
-
-            string strBsPatch = dir + file + "." + strOldMd5 + "." + strNewMd5 + ".bspatch";
-
-            property_set set;
-
-            set["int_scalar_source_listener"] = this;
-
-            set["disable_ca2_sessid"] = true;
-
-            set["raw_http"] = true;
-
-            sl.lock();
-            sp(::sockets::http_session) & psession = m_httpsessionptra.element_at_grow(0);
-            sl.unlock();
-
-            System.install().trace().trace_add("\ndownloading " + strUrl + "\n");
-
-            bOk = Application.http().download(*m_psockethandler, psession,strUrl,strBsPatch,set);
-
-//            if(iStatus == 404)
-  //             break;
-
-            if (!bOk)
-               break;
-
-            if(!bPossible)
-            {
-
-               bPossible = true;
-
-               ///System.install().trace().trace_add(" patching may be possible");
-
-            }
-            if(bOk)
-            {
-               int32_t iResult = -1;
-               if(iLength != -1)
-               {
-                  dir::mk(dir::name(inplace));
-//                  iResult = bspatch(inplace, (dir3 + file2), strBsPatch);
-                  if(iResult != 0)
-                  {
-                     //   System.install().trace().rich_trace("");
-                     // System.install().trace().rich_trace("Patch failed : files may be corrupted):");
-                     /*                  System.install().trace().rich_trace("old   file : ");
-                     System.install().trace().trace_add((dir2 + file2));
-                     System.install().trace().rich_trace("new   file :");
-                     System.install().trace().trace_add((dir3 + file2));
-                     System.install().trace().rich_trace("patch file :");
-                     System.install().trace().trace_add(strBsPatch);*/
-                     bOk = false;
-                     break;
-                  }
-               }
-            }
-            if(bOk)
-            {
-               if(iLength == -1)
-               {
-                  //  System.install().trace().rich_trace("Patch Length Check : There is no length information to check.");
-               }
-               else
-               {
-                  uint64_t iActualLength = file_length_dup((dir3 + file2));
-                  bOk = iLength == iActualLength;
-                  //System.install().trace().rich_trace("Patch Length Verification : ");
-                  /*sprintf(sz, "correct length : %d bytes", iLength);
-                  System.install().trace().rich_trace(sz);
-                  sprintf(sz, "actual  length : %d bytes", iActualLength);
-                  System.install().trace().rich_trace(sz);*/
-                  if(bOk)
-                  {
-                     //   System.install().trace().trace_add("Length match!");
-                  }
-                  else
-                  {
-                     // System.install().trace().trace_add(unitext("Length mismatch ¡X!"));
-                  }
-               }
-            }
-            if(bOk)
-            {
-               if(pszMd5 == NULL || strlen_dup(pszMd5) == 0)
-               {
-                  //System.install().trace().rich_trace("Patch MD5 Hash Verification : there is no MD5 Hash information to verify.");
-               }
-               else
-               {
-                  string strMd5;
-                  strMd5 = System.file().md5((dir3 + file2));
-                  bOk = stricmp_dup(strMd5, pszMd5) == 0;
-                  //System.install().trace().rich_trace("Patch MD5 Hash Verification");
-                  /*sprintf(sz, "correct MD5 Hash : %s", pszMd5);
-                  System.install().trace().rich_trace(sz);
-                  sprintf(sz, "actual  MD5 Hash : %str", strMd5);
-                  System.install().trace().rich_trace(sz);*/
-                  if(bOk)
-                  {
-                     // System.install().trace().trace_add("MD5 Hash match!");
-                  }
-                  else
-                  {
-                     //System.install().trace().trace_add(unitext("MD5 Hash mismatch ¡X!"));
-                  }
-               }
-            }
-            if(bOk)
-            {
-               if(!file_copy_dup(inplace, dir3 + file2, true))
-               {
-                  System.install().trace().rich_trace("Failed to copy patched file: Need Restart Because Of Reserved File");
-                  m_NeedRestartBecauseOfReservedFile = true;
-               }
-               iBsLen = file_length_dup(strBsPatch);
-               break;
-            }
-            iRetry++;
-            //sprintf(sz, "An error ocurred. Retrying... Attempt %d of %d.", iRetry, iMaxRetry);
-            //System.install().trace().rich_trace(sz);
-            //System.install().trace().rich_trace("Patch may fail due timeout if the patched file is large and it is the first");
-            //System.install().trace().rich_trace("time the patch is requested for the older-newer-pair patch combination.");
-            //System.install().trace().rich_trace("Other users later requesting the same older-newer-pair patch combination will");
-            //System.install().trace().rich_trace("benefit from the cached patch.");
-            Sleep((5000) * 5);
-            if(iRetry >= iMaxRetry)
-               break;
-         }
-         if(bOk)
-         {
-            if(iRetry > 0)
-            {
-               // sprintf(sz, unitext("Patch succeeded with %d retries %0.2fkbytes compressed ✓"), (iBsLen / 1000.0), iRetry);
-               //System.install().trace().trace_add(unitext(" c"));
-            }
-            else
-            {
-               // this System.install().rich_trace is added and signalized like that because it
-               // should be one of the most common cases and one of the most
-               // normal cases.
-               //sprintf(sz, unitext(" patched %0.2fkbytes compressed ✓"), (iBsLen / 1000.0));
-               //System.install().trace().trace_add(sz);
-               //System.install().trace().trace_add(unitext(" c"));
-            }
-         }
-         else
-         {
-            //System.install().trace().rich_trace(unitext("Patch failed ¡X!"));
-         }
-      }
       // then finally try to download the entire file
       sl.lock();
       sp(::sockets::http_session) & psession = m_httpsessionptra.element_at_grow(0);

@@ -401,8 +401,12 @@ int a_spa::spaadmin_main()
    trace("Registering spa file handler\r\n");
    trace(0.0);
 
+   if (process_platform_dir_name2() == "x86")
+   {
 
-   register_spa_file_type();
+      register_spa_file_type();
+
+   }
 
    trace(0.05);
 
