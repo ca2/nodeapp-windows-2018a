@@ -127,7 +127,7 @@ public:
    virtual void start_app_install_in_context(string strPlatform);
    virtual string get_latest_build_number(const char * pszVersion);
 
-   virtual int check_berdge(string strPlatform);
+   virtual int check_user_service(string strPlatform);
    virtual int check_vcredist(string strPlatform);
    virtual int download_vcredist(string strPlatform);
    virtual string download_tmp_vcredist(string strPlatform);

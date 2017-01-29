@@ -542,7 +542,7 @@ int a_spa::spalib_main2()
       }
 
 
-      while (!check_berdge(strPlatform))
+      while (!check_user_service("x86"))
       {
 
          Sleep(5000);
@@ -674,7 +674,19 @@ int a_spa::do_spa(const char * pszId, const char * pszParams)
 
    }
 
-   app_install_call_sync(process_platform_dir_name2(), strCommand.c_str(), "");
+   if (strId == "app-core/user_service")
+   {
+
+      app_install_call_sync("x86", strCommand.c_str(), "");
+
+   }
+   else
+   {
+
+      app_install_call_sync(process_platform_dir_name2(), strCommand.c_str(), "");
+
+   }
+
 
    if (!check_soon_app_id(strId))
       return 0;
@@ -958,17 +970,13 @@ int a_spa::check_spa_installation(string strPlatform)
 
 }
 
-int a_spa::check_berdge(string strPlatform)
+int a_spa::check_user_service(string strPlatform)
 {
 
-   string strDll = dir::stage(strPlatform) / "app_core_berdge.dll";
+   string strApp = dir::stage(strPlatform) / "app_core_user_service.exe";
 
-   string strId = "app-core/berdge";
-
-   if (file_exists_dup(strDll))
+   if (file_exists_dup(strApp))
    {
-
-      string strApp = dir::stage(strPlatform) / "app.exe";
 
       STARTUPINFOW si;
       memset(&si, 0, sizeof(si));
@@ -978,7 +986,7 @@ int a_spa::check_berdge(string strPlatform)
       PROCESS_INFORMATION pi;
       memset(&pi, 0, sizeof(pi));
 
-      wstring wstrCmdLine = u16("\"" + string(strApp) + "\" : app=" + strId + " build_number=installed enable_desktop_launch=" + strId);
+      wstring wstrCmdLine = u16("\"" + string(strApp) + "\"");
 
       wstring wstrApp(strApp);
 
@@ -991,7 +999,7 @@ int a_spa::check_berdge(string strPlatform)
    else
    {
 
-      do_spa(strId);
+      do_spa("app-core/user_service");
 
    }
 
