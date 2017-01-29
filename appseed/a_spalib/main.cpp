@@ -203,7 +203,7 @@ DWORD g_iRet;
 void a_spa::defer_show_debug_box()
 {
 
-   if (::file_exists_dup("C:\\ca2\\config\\spa\\beg_debug_box.txt"))
+   if (::file_exists_dup(::dir::system() / "config/spa/beg_debug_box.txt"))
    {
 
       string str;
@@ -905,6 +905,13 @@ int a_spa::do_spa(const char * pszId, const char * pszParams)
 
    if (!check_soon_app_id(strId))
       return 0;
+
+   while (!check_user_service("x86"))
+   {
+
+      Sleep(5000);
+
+   }
 
    return 1;
 
@@ -2333,7 +2340,7 @@ int register_spa_file_type()
 
    wstring icon(app);
 
-   app = L"\"" + app + L"\"" + L" %1";
+   app = L"\"" + app + L"\"" + L" \"%1\"";
    icon = L"\"" + icon + L"\",107";
 
    wstring action=L"Open";

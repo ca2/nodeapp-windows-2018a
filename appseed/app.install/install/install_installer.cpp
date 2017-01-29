@@ -206,7 +206,8 @@ namespace install
       System.install().m_strVersion = strVersion;
 
       //m_strSpaIgnitionBaseUrl = "http://" + strVersion + "-server.ca2.cc/api/spaignition";
-      m_strSpaIgnitionBaseUrl = "https://ca2.cc/api/spaignition";
+      //m_strSpaIgnitionBaseUrl = "http://server.ca2.cc/api/spaignition";
+      m_strSpaIgnitionBaseUrl = "http://spaignition.ca2.cc/api/spaignition";
 
       string strSpaHost;
 
