@@ -2,6 +2,9 @@
 #include <shellapi.h>
 #include <shlobj.h>
 
+bool g_bRunMainLoop = true;
+
+void end_spa(::aura::application * papp);
 
 void kill_process(string strImageName);
 int is_downloading_spaadmin();
@@ -334,7 +337,7 @@ int a_spa::spa_main()
 
    }
 
-   while(GetMessage(&g_msg,NULL,0,0))
+   while(GetMessage(&g_msg,NULL,0,0) && g_bRunMainLoop && !m_bFinished)
    {
 
       TranslateMessage(&g_msg);
@@ -384,6 +387,8 @@ int a_spa::spaadmin_main()
    if(smutex.already_exists())
    {
 
+      System.post_quit();
+
       return 0;
 
    }
@@ -420,6 +425,8 @@ int a_spa::spaadmin_main()
    trace("***Thank you\r\n");
    trace("Thank you\r\n");
    trace(1.0);
+
+   end_spa(this);
 
    return 0;
 
@@ -464,6 +471,8 @@ UINT c_cdecl a_spa::spa_main_proc(LPVOID lpvoid)
 
    }
 
+   end_spa(paspa);
+
    paspa->m_bFinished = true;
 
    return g_iRet;
@@ -474,7 +483,7 @@ UINT c_cdecl a_spa::spa_main_proc(LPVOID lpvoid)
 int a_spa::spalib_main2()
 {
 
-   if (m_strPlatform == "x86")
+   if (m_strPlatform == "x86" || m_strPlatform.is_empty())
    {
 
       return spalib_main32();
@@ -2589,5 +2598,15 @@ void kill_process(string strImageName)
 		CloseHandle(procHandle);
 
 	}
+
+}
+
+void end_spa(::aura::application * papp)
+{
+
+   g_bRunMainLoop = false;
+
+   Sys(papp).post_quit();
+
 
 }
