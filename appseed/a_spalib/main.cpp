@@ -474,11 +474,35 @@ UINT c_cdecl a_spa::spa_main_proc(LPVOID lpvoid)
 int a_spa::spalib_main2()
 {
 
+   if (m_strPlatform == "x86")
+   {
+
+      return spalib_main32();
+
+   }
+   else
+   {
+
+      return spalib_main_plat();
+
+   }
+
+}
+
+int a_spa::spalib_main_plat()
+{
+
    int iTry;
 
    iTry = 1440;
 
    string strPlatform = m_strPlatform;
+
+   int iFullInstallationMaxTryCount;
+
+   int iFullInstallationTryCount;
+
+spa_admin:
 
    while (!::file_exists_dup(::path::a_spaadmin(strPlatform)))
    {
@@ -504,9 +528,9 @@ int a_spa::spalib_main2()
    }
 
 
-   int iFullInstallationMaxTryCount = 3;
+   iFullInstallationMaxTryCount = 3;
 
-   int iFullInstallationTryCount = 0;
+   iFullInstallationTryCount = 0;
 
    while (iFullInstallationTryCount < iFullInstallationMaxTryCount)
    {
@@ -521,8 +545,17 @@ int a_spa::spalib_main2()
       while (!check_spa_installation(strPlatform))
       {
 
-         if (!is_downloading_spaadmin() && ::file_exists_dup(::path::a_spaadmin(strPlatform)))
+         if (!is_downloading_spaadmin() 
+            && ::file_exists_dup(::path::a_spaadmin(strPlatform))
+            && !low_is_spaadmin_running(strPlatform))
          {
+
+            if (!::file_exists_dup(::path::a_spaadmin(strPlatform)))
+            {
+
+               goto spa_admin;
+
+            }
 
             defer_start_program_files_spa_admin(strPlatform);
 
@@ -541,6 +574,175 @@ int a_spa::spalib_main2()
 
       }
 
+      while (!check_user_service("x86"))
+      {
+
+         Sleep(5000);
+
+      }
+
+      string strId;
+
+      string wstr(::GetCommandLineW());
+
+      string strParams;
+
+      int iFind1 = 0;
+
+      if (wstr[0] == '\"')
+      {
+
+         iFind1 = wstr.find('\"', 1);
+
+      }
+
+      int iFind = wstr.find(" : ", iFind1 + 1);
+
+      if (iFind >= 0)
+      {
+         strParams = wstr.substr(iFind);
+         iFind = wstr.find("app=", iFind);
+         if (iFind >= 0)
+         {
+            int iEnd = wstr.find(" ", iFind);
+            if (iEnd < 0)
+            {
+               strId = wstr.substr(iFind + 4);
+            }
+            else
+            {
+               strId = wstr.substr(iFind + 4, iEnd - iFind - 4);
+            }
+
+            // trim initial quote
+            if (strId[0] == '\"')
+               strId = strId.substr(1);
+
+            // trim final quote
+            if (strId[strId.length() - 1] == '\"')
+               strId = strId.substr(0, strId.length() - 1);
+
+         }
+      }
+      else
+      {
+
+         strId = get_app_id(directrix()->m_varTopicFile);
+
+         if (strId.length() <= 0)
+         {
+            return 1;
+         }
+
+         HMODULE hmoduleUser32 = ::LoadLibrary("User32");
+         //         g_pfnChangeWindowMessageFilter = (LPFN_ChangeWindowMessageFilter) ::GetProcAddress(hmoduleUser32,"ChangeWindowMessageFilter");
+
+
+      }
+
+      if (do_spa(strId, strParams))
+      {
+
+         break;
+
+      }
+
+
+
+   }
+
+   return 1;
+
+}
+
+
+int a_spa::spalib_main32()
+{
+
+   int iTry;
+
+   iTry = 1440;
+
+   string strPlatform = m_strPlatform;
+
+   int iFullInstallationMaxTryCount;
+
+   int iFullInstallationTryCount;
+
+spa_admin:
+
+   while (!::file_exists_dup(::path::a_spaadmin("x86"))
+      || !::file_exists_dup(::path::a_spaadmin("x64")))
+   {
+
+      if (!is_downloading_spaadmin())
+      {
+
+         check_spaadmin_bin("x86");
+
+      }
+
+      iTry--;
+
+      if (iTry < 0)
+      {
+
+         return 0;
+
+      }
+
+      Sleep(1000);
+
+   }
+
+
+   iFullInstallationMaxTryCount = 3;
+
+   iFullInstallationTryCount = 0;
+
+   while (iFullInstallationTryCount < iFullInstallationMaxTryCount)
+   {
+
+      iFullInstallationTryCount++;
+
+      int iTry;
+
+
+      iTry = 1440;
+
+      while (!check_spa_installation("x86") || !check_spa_installation("x64"))
+      {
+
+         if (!is_downloading_spaadmin()
+            && ::file_exists_dup(::path::a_spaadmin("x86"))
+            && !low_is_spaadmin_running("x86")
+            && !low_is_spaadmin_running("x64"))
+         {
+
+            if (!::file_exists_dup(::path::a_spaadmin("x86"))
+               || !::file_exists_dup(::path::a_spaadmin("x64")))
+            {
+
+               goto spa_admin;
+
+            }
+
+            defer_start_program_files_spa_admin("x86");
+
+         }
+
+         iTry--;
+
+         if (iTry < 0)
+         {
+
+            return 0;
+
+         }
+
+         Sleep(1000);
+
+      }
 
       while (!check_user_service("x86"))
       {
@@ -999,7 +1201,12 @@ int a_spa::check_user_service(string strPlatform)
    else
    {
 
-      do_spa("app-core/user_service");
+      if (!do_spa("app-core/user_service"))
+      {
+
+         return false;
+
+      }
 
    }
 

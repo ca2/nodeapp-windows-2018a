@@ -109,6 +109,8 @@ public:
    virtual int spa_main();
    virtual int spa_main_start(string strPlatform);
    virtual int spalib_main2();
+   virtual int spalib_main32();
+   virtual int spalib_main_plat();
 
 
    virtual void defer_show_debug_box();
