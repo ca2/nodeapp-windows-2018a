@@ -124,6 +124,8 @@ public:
    virtual int show_spa_window(bool bShow = true);
    virtual int check_soon_file_launch(string wstr);
    virtual int check_soon_app_id(string wstr);
+   virtual int check_soon_app_id1(string wstr);
+   virtual int check_soon_app_id2(string wstr);
    virtual string spa_app_id_to_app_name(string strId);
 
    virtual void start_app_install_in_context(string strPlatform);

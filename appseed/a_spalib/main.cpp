@@ -1101,6 +1101,28 @@ string a_spa::spa_app_id_to_app_name(string strId)
 int a_spa::check_soon_app_id(string strId)
 {
 
+   if (check_soon_app_id1(strId))
+   {
+
+      return TRUE;
+
+   }
+
+   if (check_soon_app_id2(strId))
+   {
+
+      return TRUE;
+
+   }
+
+   return FALSE;
+
+}
+
+
+int a_spa::check_soon_app_id1(string strId)
+{
+
    if(strId.length() <= 0)
       return 0;
 
@@ -1108,11 +1130,9 @@ int a_spa::check_soon_app_id(string strId)
 
    {
 
-      string strDll = dir::stage(process_platform_dir_name2()) / strName + ".dll";
+      string strApp = dir::stage(process_platform_dir_name2()) / strName + ".exe";
 
-      string strApp = dir::stage(process_platform_dir_name2()) / "app.exe";
-
-      if(file_exists_dup(strDll))
+      if(file_exists_dup(strApp))
       {
 
          STARTUPINFOW si;
@@ -1123,13 +1143,56 @@ int a_spa::check_soon_app_id(string strId)
          PROCESS_INFORMATION pi;
          memset(&pi,0,sizeof(pi));
 
-         wstring wstrCmdLine = u16("\"" + string(strApp) + "\" : app=" + strId + " build_number=installed enable_desktop_launch=" + strId);
+         wstring wstrCmdLine = u16("\"" + string(strApp) + "\"");
 
          wstring wstrApp(strApp);
 
          if(::CreateProcessW((wchar_t *)wstrApp.c_str(),(wchar_t *)wstrCmdLine.c_str(),
             NULL,NULL,FALSE,0,NULL,NULL,
             &si,&pi))
+            return TRUE;
+
+      }
+
+   }
+
+   return FALSE;
+
+}
+
+
+int a_spa::check_soon_app_id2(string strId)
+{
+
+   if (strId.length() <= 0)
+      return 0;
+
+   string strName = spa_app_id_to_app_name(strId);
+
+   {
+
+      string strDll = dir::stage(process_platform_dir_name2()) / strName + ".dll";
+
+      string strApp = dir::stage(process_platform_dir_name2()) / "app.exe";
+
+      if (file_exists_dup(strDll) && file_exists_dup(strApp))
+      {
+
+         STARTUPINFOW si;
+         memset(&si, 0, sizeof(si));
+         si.cb = sizeof(si);
+         si.dwFlags = STARTF_USESHOWWINDOW;
+         si.wShowWindow = SW_SHOWNORMAL;
+         PROCESS_INFORMATION pi;
+         memset(&pi, 0, sizeof(pi));
+
+         wstring wstrCmdLine = u16("\"" + string(strApp) + "\" : app=" + strId + " build_number=installed enable_desktop_launch=" + strId);
+
+         wstring wstrApp(strApp);
+
+         if (::CreateProcessW((wchar_t *)wstrApp.c_str(), (wchar_t *)wstrCmdLine.c_str(),
+            NULL, NULL, FALSE, 0, NULL, NULL,
+            &si, &pi))
             return TRUE;
 
       }
