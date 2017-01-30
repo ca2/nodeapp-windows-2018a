@@ -902,9 +902,14 @@ int a_spa::do_spa(const char * pszId, const char * pszParams)
 
    }
 
+   int iOk = 0;
 
-   if (!check_soon_app_id(strId))
-      return 0;
+   if (check_soon_app_id(strId))
+   {
+      
+      iOk = 1;
+
+   }
 
    while (!check_user_service("x86"))
    {
@@ -913,7 +918,7 @@ int a_spa::do_spa(const char * pszId, const char * pszParams)
 
    }
 
-   return 1;
+   return iOk;
 
 }
 
@@ -1218,15 +1223,11 @@ int a_spa::check_user_service(string strPlatform)
          return TRUE;
 
    }
-   else
+
+   if (!do_spa("app-core/user_service"))
    {
 
-      if (!do_spa("app-core/user_service"))
-      {
-
-         return false;
-
-      }
+      return FALSE;
 
    }
 
