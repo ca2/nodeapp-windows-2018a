@@ -106,6 +106,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Performance1.psess = Performance1.psess
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "qr", "..\..\..\app-core\appseed\qr\qr.vcxproj", "{19845177-6A40-4458-848A-019220E88C80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|ARM = basis|ARM
@@ -672,6 +674,28 @@ Global
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.stage|Win32.Build.0 = stage|Win32
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.stage|x64.ActiveCfg = stage|x64
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.stage|x64.Build.0 = stage|x64
+		{19845177-6A40-4458-848A-019220E88C80}.basis|ARM.ActiveCfg = basis|Win32
+		{19845177-6A40-4458-848A-019220E88C80}.basis|Win32.ActiveCfg = basis|Win32
+		{19845177-6A40-4458-848A-019220E88C80}.basis|Win32.Build.0 = basis|Win32
+		{19845177-6A40-4458-848A-019220E88C80}.basis|x64.ActiveCfg = basis|x64
+		{19845177-6A40-4458-848A-019220E88C80}.basis|x64.Build.0 = basis|x64
+		{19845177-6A40-4458-848A-019220E88C80}.Debug|ARM.ActiveCfg = basis|x64
+		{19845177-6A40-4458-848A-019220E88C80}.Debug|ARM.Build.0 = basis|x64
+		{19845177-6A40-4458-848A-019220E88C80}.Debug|Win32.ActiveCfg = basis|Win32
+		{19845177-6A40-4458-848A-019220E88C80}.Debug|Win32.Build.0 = basis|Win32
+		{19845177-6A40-4458-848A-019220E88C80}.Debug|x64.ActiveCfg = basis|x64
+		{19845177-6A40-4458-848A-019220E88C80}.Debug|x64.Build.0 = basis|x64
+		{19845177-6A40-4458-848A-019220E88C80}.Release|ARM.ActiveCfg = basis|x64
+		{19845177-6A40-4458-848A-019220E88C80}.Release|ARM.Build.0 = basis|x64
+		{19845177-6A40-4458-848A-019220E88C80}.Release|Win32.ActiveCfg = basis|Win32
+		{19845177-6A40-4458-848A-019220E88C80}.Release|Win32.Build.0 = basis|Win32
+		{19845177-6A40-4458-848A-019220E88C80}.Release|x64.ActiveCfg = basis|x64
+		{19845177-6A40-4458-848A-019220E88C80}.Release|x64.Build.0 = basis|x64
+		{19845177-6A40-4458-848A-019220E88C80}.stage|ARM.ActiveCfg = stage|Win32
+		{19845177-6A40-4458-848A-019220E88C80}.stage|Win32.ActiveCfg = stage|Win32
+		{19845177-6A40-4458-848A-019220E88C80}.stage|Win32.Build.0 = stage|Win32
+		{19845177-6A40-4458-848A-019220E88C80}.stage|x64.ActiveCfg = stage|x64
+		{19845177-6A40-4458-848A-019220E88C80}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
