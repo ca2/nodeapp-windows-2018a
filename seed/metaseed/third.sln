@@ -58,6 +58,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "protobuf", "..\..\..\third\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "protoc", "..\..\..\third\appseed\protobuf\protoc.vcxproj", "{E6916F42-7503-4229-A7C1-225CF86FC4B2}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "qrencode", "..\..\..\third\appseed\qrencode\qrencode.vcxproj", "{37FCFBF1-E922-4FDC-BC83-B3C04623E8C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
@@ -274,6 +276,14 @@ Global
 		{E6916F42-7503-4229-A7C1-225CF86FC4B2}.stage|Win32.Build.0 = stage|Win32
 		{E6916F42-7503-4229-A7C1-225CF86FC4B2}.stage|x64.ActiveCfg = stage|x64
 		{E6916F42-7503-4229-A7C1-225CF86FC4B2}.stage|x64.Build.0 = stage|x64
+		{37FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.basis|Win32.ActiveCfg = basis|Win32
+		{37FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.basis|Win32.Build.0 = basis|Win32
+		{37FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.basis|x64.ActiveCfg = basis|x64
+		{37FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.basis|x64.Build.0 = basis|x64
+		{37FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.stage|Win32.ActiveCfg = stage|Win32
+		{37FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.stage|Win32.Build.0 = stage|Win32
+		{37FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.stage|x64.ActiveCfg = stage|x64
+		{37FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
