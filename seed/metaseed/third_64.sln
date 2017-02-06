@@ -60,6 +60,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mpg123", "..\..\..\third\ap
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "protobuf", "..\..\..\third\appseed\protobuf\protobuf.vcxproj", "{357038F7-2578-421F-B23D-E3250CA6738B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "qrencode", "..\..\..\third\appseed\qrencode\qrencode.vcxproj", "{37FCFBF1-E922-4FDC-BC83-B3C04623E8C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
@@ -268,6 +270,14 @@ Global
 		{357038F7-2578-421F-B23D-E3250CA6738B}.stage|Win32.Build.0 = stage|Win32
 		{357038F7-2578-421F-B23D-E3250CA6738B}.stage|x64.ActiveCfg = stage|x64
 		{357038F7-2578-421F-B23D-E3250CA6738B}.stage|x64.Build.0 = stage|x64
+		{37FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.basis|Win32.ActiveCfg = basis|Win32
+		{37FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.basis|Win32.Build.0 = basis|Win32
+		{37FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.basis|x64.ActiveCfg = basis|x64
+		{37FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.basis|x64.Build.0 = basis|x64
+		{37FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.stage|Win32.ActiveCfg = stage|Win32
+		{37FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.stage|Win32.Build.0 = stage|Win32
+		{37FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.stage|x64.ActiveCfg = stage|x64
+		{37FCFBF1-E922-4FDC-BC83-B3C04623E8C2}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
