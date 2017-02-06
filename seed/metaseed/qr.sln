@@ -98,6 +98,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_hellomultiverse", 
 		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF} = {9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "qr", "..\..\..\app-core\appseed\qr\qr.vcxproj", "{19845177-6A40-4458-848A-019220E88C80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
@@ -346,6 +348,14 @@ Global
 		{C7AFCEFA-3079-4B23-8F97-4543BB980265}.stage|Win32.Build.0 = stage|Win32
 		{C7AFCEFA-3079-4B23-8F97-4543BB980265}.stage|x64.ActiveCfg = stage|x64
 		{C7AFCEFA-3079-4B23-8F97-4543BB980265}.stage|x64.Build.0 = stage|x64
+		{19845177-6A40-4458-848A-019220E88C80}.basis|Win32.ActiveCfg = basis|Win32
+		{19845177-6A40-4458-848A-019220E88C80}.basis|Win32.Build.0 = basis|Win32
+		{19845177-6A40-4458-848A-019220E88C80}.basis|x64.ActiveCfg = basis|x64
+		{19845177-6A40-4458-848A-019220E88C80}.basis|x64.Build.0 = basis|x64
+		{19845177-6A40-4458-848A-019220E88C80}.stage|Win32.ActiveCfg = stage|Win32
+		{19845177-6A40-4458-848A-019220E88C80}.stage|Win32.Build.0 = stage|Win32
+		{19845177-6A40-4458-848A-019220E88C80}.stage|x64.ActiveCfg = stage|x64
+		{19845177-6A40-4458-848A-019220E88C80}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
