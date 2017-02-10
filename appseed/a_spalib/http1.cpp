@@ -223,8 +223,12 @@ SPALIB_API string a_spa::ms_get(const char * pszUrl, bool bCache)
    delete [] pszOutBuffer;
 
    if (hRequest) InternetCloseHandle(hRequest);
+   
    if (hConnect) InternetCloseHandle(hConnect);
+   
    if (hSession) InternetCloseHandle(hSession);
+   
    return strRet;
+
 }
 
