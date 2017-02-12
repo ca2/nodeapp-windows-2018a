@@ -1457,7 +1457,7 @@ namespace production
             compress_thread * pthread = new compress_thread(this, eventa[ui]);
             threada.add(pthread);
             pthread->m_dwThreadAffinityMask = 1 << ui;
-            pthread->m_bAutoDelete = false;
+            //pthread->m_bAutoDelete = false;
             pthread->begin();
             ptra.add(eventa[ui]);
          }
