@@ -29,7 +29,7 @@ namespace multimedia
       bool thread::initialize_thread()
       {
 
-         set_auto_delete(false);
+//         set_auto_delete(false);
 
          return true;
 
