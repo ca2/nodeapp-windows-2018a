@@ -593,12 +593,14 @@ Opened:
 
          mmr = mmsystem::translate(waveOutWrite(m_hwaveout, lpwavehdr, sizeof(WAVEHDR)));
          
-         VERIFY(::multimedia::result_success == mmr);
+         //VERIFY(::multimedia::result_success == mmr);
 
-         if(mmr == ::multimedia::result_success)
+         if(mmr != ::multimedia::result_success)
          {
 
-            // m_iBufferedCount++;
+            m_iBufferedCount--;
+
+            throw resource_exception(get_app());
 
          }
 
