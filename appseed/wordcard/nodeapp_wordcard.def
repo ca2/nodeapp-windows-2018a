@@ -1,0 +1,7 @@
+; nodeapp_wordcard.def : Declares the module parameters for the DLL.
+
+LIBRARY      "nodeapp_wordcard"
+; DESCRIPTION  'wordcard Windows Dynamic Link Library'
+
+EXPORTS
+get_new_library
