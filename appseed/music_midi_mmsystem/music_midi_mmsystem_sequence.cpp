@@ -181,7 +181,7 @@ Seq_Open_File_Cleanup:
          e_result sequence::OpenFile(const char * lpFileName, int32_t openMode)
          {
 
-            ::file::buffer_sp file;
+            ::file::file_sp file;
 
             try
             {
@@ -246,7 +246,7 @@ Seq_Open_File_Cleanup:
 
          }
 
-         e_result sequence::OpenFile(::file::stream_buffer & ar, int32_t openMode)
+         e_result sequence::OpenFile(::file::file & ar, int32_t openMode)
          {
 
             SMFFILEINFO                sfi;
@@ -1308,7 +1308,7 @@ seq_Preroll_Cleanup:
          }
 
 
-         e_result sequence::SaveFile(::file::buffer_sp &ar)
+         e_result sequence::SaveFile(::file::file_sp &ar)
          {
 
             return file()->SaveFile(*ar);

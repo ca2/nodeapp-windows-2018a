@@ -210,14 +210,14 @@ namespace music
 
             //::multimedia::e_result OpenFile(const char * lpFileName, int32_t openMode);
             e_result OpenFile(::music::midi::sequence & sequence, int32_t iOpenMode);
-            e_result OpenFile(::file::stream_buffer & ar, int32_t openMode);
+            e_result OpenFile(::file::file & ar, int32_t openMode);
             e_result OpenFile(const char * lpFileName, int32_t openMode);
             e_result OpenFile(memory * pmemorystorage, int32_t openMode, ::music::e_storage estorage);
 
             e_result CloseFile();
             e_result SaveFile(const char * lpFileName);
             e_result SaveFile();
-            e_result SaveFile(::file::buffer_sp &ar);
+            e_result SaveFile(::file::file_sp &ar);
 
             ::multimedia::e_result Preroll(::thread * pthread, ::music::midi::LPPREROLL lpPreroll, bool bThrow);
             ::multimedia::e_result Start();

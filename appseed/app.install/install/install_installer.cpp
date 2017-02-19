@@ -3313,7 +3313,7 @@ RetryBuildNumber:
 
             {
 
-               ::file::buffer_sp file2 = Application.file().get_file(strIndexPath,::file::mode_create | ::file::type_binary | ::file::mode_write | ::file::defer_create_directory);
+               ::file::file_sp file2 = Application.file().get_file(strIndexPath,::file::mode_create | ::file::type_binary | ::file::mode_write | ::file::defer_create_directory);
 
                mem.allocate(1024 * 1024);
 
