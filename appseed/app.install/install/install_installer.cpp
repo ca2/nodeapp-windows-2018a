@@ -3089,7 +3089,7 @@ RetryBuildNumber:
 
       string strUrl;
 
-      ::file::memory_buffer file(get_app());
+      ::memory_file file(get_app());
 
       string strAppMatterList;
 

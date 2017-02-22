@@ -1217,7 +1217,7 @@ seq_Preroll_Cleanup:
                            {
                               plyriceventa = new array <::ikaraoke::lyric_event_v1, ::ikaraoke::lyric_event_v1 &>;
                            }
-                           ::file::memory_buffer memFile(get_app(), (LPBYTE) &lpdwParam[1], pheader->m_dwLength - sizeof(uint32_t));
+                           ::memory_file memFile(get_app(), (LPBYTE) &lpdwParam[1], pheader->m_dwLength - sizeof(uint32_t));
                            /* x2x                  CArchive ar(&memFile, CArchive::load);
                            lyriceventa.Serialize(ar);
                            plyriceventa->append(lyriceventa); */
