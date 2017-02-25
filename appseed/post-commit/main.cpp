@@ -3,7 +3,7 @@
 #include "aura/aura/aura.h"
 #include "aura/node/windows/windows.h"
 
-
+#include <stdio.h>
 //SPALIB_API string spa_version(string strVersion= "");
 //SPALIB_API string spa_title(string strTitle= "");
 
