@@ -47,15 +47,15 @@ typedef std::type_info std_type_info;
 
 
 
-#include <vadefs.h>
+//#include <vadefs.h>
 
 
 
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <limits.h>
-#include <stddef.h>
-#include <stdarg.h>
-#include <errno.h>
+//#include <string.h>
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <time.h>
+//#include <limits.h>
+//#include <stddef.h>
+//#include <stdarg.h>
+//#include <errno.h>
