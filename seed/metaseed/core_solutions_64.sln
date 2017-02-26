@@ -400,6 +400,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "resident_twitchtv", "..\..\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "resident_beampro", "..\..\..\app-core\appseed\resident_beampro\resident_beampro.vcxproj", "{B6291FD9-450A-443C-9878-2BE58E47C1F4}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_verisync", "..\..\..\app-core\appseed\verisync\verisync.vcxproj", "{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
@@ -2434,6 +2436,34 @@ Global
 		{B6291FD9-450A-443C-9878-2BE58E47C1F4}.static_basis|Win32.Build.0 = basis|Win32
 		{B6291FD9-450A-443C-9878-2BE58E47C1F4}.static_basis|x64.ActiveCfg = basis|x64
 		{B6291FD9-450A-443C-9878-2BE58E47C1F4}.static_basis|x64.Build.0 = basis|x64
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.basis|Win32.ActiveCfg = basis|Win32
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.basis|Win32.Build.0 = basis|Win32
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.basis|x64.ActiveCfg = basis|x64
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.basis|x64.Build.0 = basis|x64
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.codeanalysis|Win32.ActiveCfg = basis|Win32
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.codeanalysis|Win32.Build.0 = basis|Win32
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.codeanalysis|x64.ActiveCfg = basis|x64
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.codeanalysis|x64.Build.0 = basis|x64
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.memdleak|Win32.ActiveCfg = basis|Win32
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.memdleak|Win32.Build.0 = basis|Win32
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.memdleak|x64.ActiveCfg = basis|x64
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.memdleak|x64.Build.0 = basis|x64
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.no_precompiled_header|Win32.ActiveCfg = basis|Win32
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.no_precompiled_header|Win32.Build.0 = basis|Win32
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.no_precompiled_header|x64.ActiveCfg = basis|x64
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.no_precompiled_header|x64.Build.0 = basis|x64
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.profiler|Win32.ActiveCfg = basis|Win32
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.profiler|Win32.Build.0 = basis|Win32
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.profiler|x64.ActiveCfg = basis|x64
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.profiler|x64.Build.0 = basis|x64
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.stage|Win32.ActiveCfg = stage|Win32
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.stage|Win32.Build.0 = stage|Win32
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.stage|x64.ActiveCfg = stage|x64
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.stage|x64.Build.0 = stage|x64
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.static_basis|Win32.ActiveCfg = basis|Win32
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.static_basis|Win32.Build.0 = basis|Win32
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.static_basis|x64.ActiveCfg = basis|x64
+		{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}.static_basis|x64.Build.0 = basis|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
