@@ -402,7 +402,16 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "resident_beampro", "..\..\.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_verisync", "..\..\..\app-core\appseed\verisync\verisync.vcxproj", "{AFE1AAFE-0B4C-4E1B-B5E4-C04375F30E4F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B4B257EB-C27B-437A-88CB-9B22E050F4C4}"
+	ProjectSection(SolutionItems) = preProject
+		Performance11.psess = Performance11.psess
+		Performance12.psess = Performance12.psess
+	EndProjectSection
+EndProject
 Global
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
 		basis|x64 = basis|x64
