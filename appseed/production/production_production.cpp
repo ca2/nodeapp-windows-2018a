@@ -1439,7 +1439,7 @@ namespace production
       sl.unlock();
 
       uint32_t uiProcessorCount = get_current_process_affinity_order();
-
+	  //uiProcessorCount = 0;
       array < compress_thread * > threada;
       if (uiProcessorCount == 0)
       {
