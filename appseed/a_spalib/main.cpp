@@ -284,7 +284,53 @@ int32_t a_spa::run()
    if(spa_get_admin())
    {
 
-      g_iRet = spaadmin_main();
+      manual_reset_event ev86(this);
+
+      ev86.ResetEvent();
+
+      manual_reset_event ev64(this);
+
+      ev64.ResetEvent();
+
+      ::fork(this, [&]()
+      {
+
+         try
+         {
+
+            spaadmin_main("x86");
+
+         }
+         catch (...)
+         {
+
+         }
+
+         ev86.SetEvent();
+
+      });
+
+      ::fork(this, [&]()
+      {
+
+         try
+         {
+
+            spaadmin_main("x64");
+
+         }
+         catch (...)
+         {
+
+         }
+
+         ev64.SetEvent();
+
+      });
+
+      ev86.wait();
+
+      ev64.wait();
 
    }
    else
@@ -364,25 +410,25 @@ int a_spa::spa_main()
 
 
 
-int a_spa::spaadmin_main()
+int a_spa::spaadmin_main(string strPlatform)
 {
 
    //::MessageBoxA(NULL, "Test1", "Test1", MB_OK);
 
-   if (process_platform_dir_name2() == "x86")
-   {
+   //if (process_platform_dir_name2() == "x86")
+   //{
 
-      spa_main_start("x64");
+     // spa_main_start("x64");
 
-   }
-   else
-   {
+   //}
+   //else
+   //{
 
-      m_bFinished = true;
+     // m_bFinished = true;
 
-   }
+   //}
 
-   spaadmin_mutex smutex(process_platform_dir_name2());
+   spaadmin_mutex smutex(strPlatform);
 
    if(smutex.already_exists())
    {
@@ -401,7 +447,7 @@ int a_spa::spaadmin_main()
    trace("Registering spa file handler\r\n");
    trace(0.0);
 
-   if (process_platform_dir_name2() == "x86")
+   if (strPlatform == "x86")
    {
 
       register_spa_file_type();
@@ -410,7 +456,7 @@ int a_spa::spaadmin_main()
 
    trace(0.05);
 
-   while ((!check_spa_installation(process_platform_dir_name2()) || !m_bFinished) && ::get_thread_run())
+   while (!check_spa_installation(strPlatform))
    {
 
       Sleep(500);
@@ -421,16 +467,26 @@ int a_spa::spaadmin_main()
    trace("Starting app.install\r\n");
    //trace(0.84);
 
+   start_app_install_in_context(strPlatform);
 
-   start_app_install_in_context(process_platform_dir_name2());
+   if (strPlatform == "x86")
+   {
 
+      while(!check_user_service(strPlatform))
+      {
+
+         Sleep(500);
+
+      }
+
+   }
 
    trace(":::::Thank you\r\n");
    trace("***Thank you\r\n");
    trace("Thank you\r\n");
    trace(1.0);
 
-   end_spa(this);
+   //end_spa(this);
 
    return 0;
 
@@ -482,6 +538,7 @@ UINT c_cdecl a_spa::spa_main_proc(LPVOID lpvoid)
    return g_iRet;
 
 }
+
 
 
 int a_spa::spalib_main2()
@@ -1698,24 +1755,24 @@ string a_spa::download_tmp_spa_bin(string strPlatform)
 
    int iTry = 0;
 
-   while(iTry <= 3)
+while (iTry <= 3)
+{
+
+   if (ms_download("https://server.ca2.cc/" + strPlatform + "/" + m_strVersion + "/" + ::path::a_spa(strPlatform).name(), strTempSpa.c_str())
+      && file_exists_dup(strTempSpa.c_str())
+      && file_length_dup(strTempSpa.c_str()) > 0)
    {
 
-      if(ms_download("https://server.ca2.cc/" + strPlatform + "/" + m_strVersion + "/" + ::path::a_spa(strPlatform).name(),strTempSpa.c_str())
-         && file_exists_dup(strTempSpa.c_str())
-         && file_length_dup(strTempSpa.c_str()) > 0)
-      {
-
-         return strTempSpa;
-
-      }
-
-      iTry++;
+      return strTempSpa;
 
    }
 
+   iTry++;
 
-   return "";
+}
+
+
+return "";
 
 }
 
@@ -1725,7 +1782,7 @@ string a_spa::download_tmp_spa_bin(string strPlatform)
 
 
 
-bool a_spa::is_file_ok(const char * path1,const char * pszTemplate,const char * pszFormatBuild)
+bool a_spa::is_file_ok(const char * path1, const char * pszTemplate, const char * pszFormatBuild)
 {
 
    string strFormatBuild(pszFormatBuild);
@@ -1737,27 +1794,27 @@ bool a_spa::is_file_ok(const char * path1,const char * pszTemplate,const char * 
    strUrl += "&build=";
    strUrl += strFormatBuild;
 
-   return file_exists_dup(path1) && !_stricmp(file_md5_dup(path1).c_str(),ms_get(strUrl.c_str()).c_str());
+   return file_exists_dup(path1) && !_stricmp(file_md5_dup(path1).c_str(), ms_get(strUrl.c_str()).c_str());
 
 }
 
-bool a_spa::is_file_ok(const stringa & straPath,const stringa & straTemplate,stringa & straMd5,const string & strFormatBuild,int iMd5Retry, string strPlatform)
+bool a_spa::is_file_ok(const stringa & straPath, const stringa & straTemplate, stringa & straMd5, const string & strFormatBuild, int iMd5Retry, string strPlatform)
 {
 
    bool bOk = true;
 
-   if(straPath.size() != straTemplate.size())
+   if (straPath.size() != straTemplate.size())
       return false;
 
-   if(bOk)
+   if (bOk)
    {
 
-      for(int i = 0; i < straPath.size(); i++)
+      for (int i = 0; i < straPath.size(); i++)
       {
 
          string strPath = straPath[i];
 
-         if(!file_exists_dup(strPath.c_str()))
+         if (!file_exists_dup(strPath.c_str()))
          {
 
             bOk = false;
@@ -1770,7 +1827,7 @@ bool a_spa::is_file_ok(const stringa & straPath,const stringa & straTemplate,str
 
    }
 
-   if(iMd5Retry > 0 || straMd5.size() != straPath.size())
+   if (iMd5Retry > 0 || straMd5.size() != straPath.size())
    {
 
       string strUrl;
@@ -1784,10 +1841,41 @@ bool a_spa::is_file_ok(const stringa & straPath,const stringa & straTemplate,str
 
       string strMd5List = ms_get(strUrl.c_str());
 
-      straMd5.add_tokens(strMd5List.c_str(),",");
+      straMd5.add_tokens(strMd5List.c_str(), ",");
 
-      if(straMd5.size() != straPath.size())
+      if (straMd5.size() != straPath.size())
       {
+
+         OutputDebugString("Error: Fetched " + str::from(straMd5.size()));
+         OutputDebugString(" from " + str::from(straPath.size()));
+         OutputDebugString("\r\n");
+
+         int iMax = MAX(straMd5.size(), straPath.size());
+         for (index i = 0; i < iMax; i++)
+         {
+
+            OutputDebugString("File: ");
+            if (i < straPath.size())
+            {
+               OutputDebugString(straPath[i]);
+            }
+            else
+            {
+               OutputDebugString("(missing)");
+            }
+            OutputDebugString("\r\n");
+            OutputDebugString("MD5: ");
+            if (i < straPath.size())
+            {
+               OutputDebugString(straMd5[i]);
+            }
+            else
+            {
+               OutputDebugString("(missing)");
+            }
+            OutputDebugString("\r\n");
+
+         }
 
          return false;
 
@@ -1814,6 +1902,9 @@ bool a_spa::is_file_ok(const stringa & straPath,const stringa & straTemplate,str
       if(strFileMd5.CompareNoCase(strMd5) != 0)
       {
 
+         OutputDebugString("MD5 failed: " + strPath + " file MD5=" + strFileMd5 + " ref MD5=" + strMd5);
+         OutputDebugString("\r\n");
+
          return false;
 
       }
@@ -1836,12 +1927,14 @@ void install_bin_item::op_spa()
       if (m_paspa->check_spaadmin_bin(strPlatform))
       {
 
+         OutputDebugString("op_spa spaadmin Success\r\n");
          InterlockedIncrement(m_plongOk);
 
       }
       else
       {
 
+         OutputDebugString("op_spa spaadmin Failed\r\n");
          InterlockedIncrement(m_plongBad);
 
       }
@@ -1853,12 +1946,13 @@ void install_bin_item::op_spa()
       if(m_paspa->check_spa_bin(strPlatform))
       {
 
+         OutputDebugString("op_spa spa Success\r\n");
          InterlockedIncrement(m_plongOk);
 
       }
       else
       {
-
+         OutputDebugString("op_spa spa Failed\r\n");
          InterlockedIncrement(m_plongBad);
 
       }
@@ -1870,12 +1964,13 @@ void install_bin_item::op_spa()
       if (m_paspa->check_vcredist(strPlatform))
       {
 
+         OutputDebugString("op_spa vcredist Success\r\n");
          InterlockedIncrement(m_plongOk);
 
       }
       else
       {
-
+         OutputDebugString("op_spa vcredist Failed\r\n");
          InterlockedIncrement(m_plongBad);
 
       }
@@ -1887,12 +1982,13 @@ void install_bin_item::op_spa()
       if(m_paspa->check_install_bin_set(strPlatform))
       {
 
+         OutputDebugString("op_spa install_bin_set Success\r\n");
          InterlockedIncrement(m_plongOk);
 
       }
       else
       {
-
+         OutputDebugString("op_spa install_bin_set Failed\r\n");
          InterlockedIncrement(m_plongBad);
 
       }

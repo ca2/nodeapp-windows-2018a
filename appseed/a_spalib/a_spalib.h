@@ -115,7 +115,7 @@ public:
 
    virtual void defer_show_debug_box();
 
-   virtual int spaadmin_main();
+   virtual int spaadmin_main(string strPlatform);
    virtual int do_spa(const char * psz, const char * pszParams = NULL);
 
    virtual string get_app_id(string wstr);
