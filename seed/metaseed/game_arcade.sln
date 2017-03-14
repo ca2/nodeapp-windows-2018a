@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\app.vcxproj", "{19841115-1984-0411-1977-021977151984}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -96,6 +96,15 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "image_decode_png", "..\..\..\app\appseed\image_png\axis_image_png.vcxproj", "{84517714-2000-419D-A87F-4338C9DDE3FA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "estamira", "..\..\..\app\appseed\estamira\estamira.vcxproj", "{2A6E9644-E659-4F8B-B8A4-DB77461DC071}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "game_arkanoid", "..\..\..\game\appseed\arkanoid\arkanoid.vcxproj", "{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86} = {E2D7833B-9B59-4826-BBDF-C270A2115E86}
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB} = {1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}
+		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF} = {9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1045,6 +1054,38 @@ Global
 		{2A6E9644-E659-4F8B-B8A4-DB77461DC071}.static_profiler|Win32.Build.0 = stage|Win32
 		{2A6E9644-E659-4F8B-B8A4-DB77461DC071}.static_profiler|x64.ActiveCfg = stage|x64
 		{2A6E9644-E659-4F8B-B8A4-DB77461DC071}.static_profiler|x64.Build.0 = stage|x64
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.basis|Win32.ActiveCfg = basis|Win32
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.basis|Win32.Build.0 = basis|Win32
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.basis|x64.ActiveCfg = basis|x64
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.basis|x64.Build.0 = basis|x64
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.codeanalysis|Win32.ActiveCfg = basis|Win32
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.codeanalysis|Win32.Build.0 = basis|Win32
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.codeanalysis|x64.ActiveCfg = basis|x64
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.codeanalysis|x64.Build.0 = basis|x64
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.memdleak|Win32.ActiveCfg = basis|Win32
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.memdleak|Win32.Build.0 = basis|Win32
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.memdleak|x64.ActiveCfg = basis|x64
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.memdleak|x64.Build.0 = basis|x64
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.no_precompiled_header|Win32.ActiveCfg = basis|Win32
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.no_precompiled_header|Win32.Build.0 = basis|Win32
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.no_precompiled_header|x64.ActiveCfg = basis|x64
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.no_precompiled_header|x64.Build.0 = basis|x64
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.profiler|Win32.ActiveCfg = basis|Win32
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.profiler|Win32.Build.0 = basis|Win32
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.profiler|x64.ActiveCfg = basis|x64
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.profiler|x64.Build.0 = basis|x64
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.stage|Win32.ActiveCfg = stage|Win32
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.stage|Win32.Build.0 = stage|Win32
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.stage|x64.ActiveCfg = stage|x64
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.stage|x64.Build.0 = stage|x64
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.static_basis|Win32.ActiveCfg = basis|Win32
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.static_basis|Win32.Build.0 = basis|Win32
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.static_basis|x64.ActiveCfg = basis|x64
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.static_basis|x64.Build.0 = basis|x64
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.static_profiler|Win32.ActiveCfg = stage|Win32
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.static_profiler|Win32.Build.0 = stage|Win32
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.static_profiler|x64.ActiveCfg = stage|x64
+		{7DCCE620-4E26-4EE3-B6EA-FFB2A92A2FA7}.static_profiler|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
