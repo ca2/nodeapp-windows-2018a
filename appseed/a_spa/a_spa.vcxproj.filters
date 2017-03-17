@@ -5,9 +5,15 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{fed67213-78b4-43de-a2fe-3ce0eac0d9c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\NewFilter1">
+      <UniqueIdentifier>{b756b3de-3407-48ee-953e-d01c0670a423}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="a_spa.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -15,5 +21,16 @@
     <ResourceCompile Include="..\a_spares\a_spa.rc">
       <Filter>Source Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\a_spares\res\ca2sp1.bin" />
+    <None Include="..\a_spares\res\1977.ca2sp" />
+    <None Include="..\a_spares\res\ca2sp2.bin" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\a_spares\res\ca2v_2010_07_01.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\a_spares\resource.h" />
   </ItemGroup>
 </Project>

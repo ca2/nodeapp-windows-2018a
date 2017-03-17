@@ -16,6 +16,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
    spa_set_admin(true);
 
-   return ::aura::simple_app_main < a_spa >(hInstance,hPrevInstance,lpCmdLine,nCmdShow);
+ 
+   return ::aura::simple_app_main < ::a_spa::simple_app >(hInstance,hPrevInstance,lpCmdLine,nCmdShow);
+
 
 }

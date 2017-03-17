@@ -1,4 +1,5 @@
-#include "a_spalib.h"
+#include "framework.h"
+
 
 int run_file(const char * pszFile, int nCmdShow);
 

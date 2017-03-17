@@ -1,4 +1,4 @@
-﻿#include "a_spalib.h"
+﻿#include "framework.h"
 
 //#include <gdiplus.h>
 
@@ -151,18 +151,22 @@ void OnTimer(HWND hwnd, UINT nIDEvent)
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
-   return a_spa::get()->window_proc(hWnd, message, wParam, lParam);
+   return ::a_spa::simple_app::get()->window_proc(hWnd, message, wParam, lParam);
 
 }
 
 
-LRESULT a_spa::window_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+namespace a_spa
 {
 
-	switch (message)
-	{
 
-   case WM_CREATE:
+   LRESULT simple_app::window_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+   {
+
+      switch (message)
+      {
+
+      case WM_CREATE:
       {
 
          m_hwnd = hWnd;
@@ -176,42 +180,42 @@ LRESULT a_spa::window_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
       }
       break;
 
-	case WM_PAINT:
+      case WM_PAINT:
 
-      break;
+         break;
 
-	case WM_ERASEBKGND:
-      
-      return TRUE;
+      case WM_ERASEBKGND:
 
-	case WM_MBUTTONDOWN:
+         return TRUE;
 
-	case WM_RBUTTONDOWN:
-      
-      g_iHealingSurface++;
-      
-      return TRUE;
+      case WM_MBUTTONDOWN:
 
-   case WM_LBUTTONDOWN:
-      
-      {
-         
+      case WM_RBUTTONDOWN:
+
          g_iHealingSurface++;
-         
+
+         return TRUE;
+
+      case WM_LBUTTONDOWN:
+
+      {
+
+         g_iHealingSurface++;
+
          g_bDrag = true;
-         
+
          ::GetCursorPos(&g_ptDragStart);
-         
+
          ::GetWindowRect(hWnd, &g_rectWindowDragStart);
 
       }
 
       break;
 
-   case WM_MOUSEMOVE:
+      case WM_MOUSEMOVE:
       {
 
-         if(g_bDrag)
+         if (g_bDrag)
          {
 
             DragMainWindow();
@@ -220,9 +224,9 @@ LRESULT a_spa::window_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 
       };
       break;
-   case WM_LBUTTONUP:
+      case WM_LBUTTONUP:
       {
-         if(g_bDrag)
+         if (g_bDrag)
          {
             DragMainWindow();
 
@@ -234,42 +238,168 @@ LRESULT a_spa::window_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 
       break;
 
-	case WM_DESTROY:
+      case WM_DESTROY:
 
-      m_pcanvas->m_bDraw = false;
+         m_pcanvas->m_bDraw = false;
 
-      Sleep(2000);
+         Sleep(2000);
 
-      delete m_pcanvas;
+         delete m_pcanvas;
 
-		PostQuitMessage(0);
+         PostQuitMessage(0);
 
-		break;
+         break;
 
-   case WM_TIMER:
+      case WM_TIMER:
 
-      OnTimer(hWnd, wParam);
+         OnTimer(hWnd, wParam);
 
-      break;
+         break;
 
-	default:
+      default:
 
-		return DefWindowProc(hWnd, message, wParam, lParam);
+         return DefWindowProc(hWnd, message, wParam, lParam);
 
-	}
+      }
 
-   return 0;
+      return 0;
 
-}
+   }
+
+
+
+
+   
+
+   void simple_app::DragMainWindow()
+   {
+
+      POINT ptCursor;
+
+      ::GetCursorPos(&ptCursor);
+
+      ::SetWindowPos(m_hwnd, NULL,
+         ptCursor.x - g_ptDragStart.x + g_rectWindowDragStart.left,
+         ptCursor.y - g_ptDragStart.y + g_rectWindowDragStart.top,
+         0,
+         0,
+         SWP_NOSIZE | SWP_SHOWWINDOW);
+
+      /*   if(g_iStyle == 0)
+         {
+         }
+         else
+         {
+            ::SetLayeredWindowAttributes(g_hwnd, 0, (255 * 100) / 100, LWA_ALPHA);
+         }
+         ::RedrawWindow(g_hwnd, NULL, NULL, RDW_INVALIDATE);*/
+
+   }
+
+
+
+
+
+
+
+   simple_app * simple_app::get()
+   {
+
+      return s_papp;
+
+   }
+
+
+} // namespace a_spa
+
+
+
+
+
+
+//int bzuncompress(LPCTSTR lpcszUncompressed, LPCTSTR lpcszGzFileCompressed)
+//{
+//
+//   const int iGzUncompressLen = 1024 * 1024;
+//
+//   char * pchGzUncompressBuffer = NULL;
+//
+//   if (pchGzUncompressBuffer == NULL)
+//   {
+//
+//      pchGzUncompressBuffer = new char[iGzUncompressLen];
+//
+//   }
+//
+//   BZFILE * file = BZ2_bzopen(lpcszGzFileCompressed, "rb");
+//
+//   if (file == NULL)
+//   {
+//
+//      fprintf(stderr, "bzopen error\n");
+//
+//      return -2;
+//
+//   }
+//
+//   string strUn(lpcszUncompressed);
+//
+//   //   strUn += ".tmp";
+//
+//   FILE * fileUn = fopen(strUn.c_str(), "wb+");
+//
+//   if (fileUn == NULL)
+//   {
+//
+//      BZ2_bzclose(file);
+//
+//      int err;
+//
+//      _get_errno(&err);
+//
+//      fprintf(stderr, "fopen error\n %d", err);
+//
+//      return -1;
+//   }
+//
+//   int uncomprLen;
+//
+//   while ((uncomprLen = BZ2_bzread(file, pchGzUncompressBuffer, iGzUncompressLen)) > 0)
+//   {
+//
+//      fwrite(pchGzUncompressBuffer, 1, uncomprLen, fileUn);
+//
+//   }
+//
+//   fclose(fileUn);
+//
+//   BZ2_bzclose(file);
+//
+//   return 0;
+//
+//}
+
+
+
+//string str_replace(const char * psz, const char * pszFind, const char * pszReplace)
+//{
+//
+//   return ::str::replace(pszFind, pszReplace, psz);
+//
+//}
+
 
 
 UINT c_cdecl thread_proc_draw(LPVOID lpParam)
 {
 
-   while(a_spa::get() != NULL && a_spa::get()->m_pcanvas != NULL && a_spa::get()->m_pcanvas->m_bDraw)
+   while (
+      a_spa::simple_app::get() != NULL && 
+      a_spa::simple_app::get()->m_pcanvas != NULL &&
+      a_spa::simple_app::get()->m_pcanvas->m_bDraw)
    {
 
-      if (!a_spa::get()->m_pcanvas->update_layered_window())
+      if (!a_spa::simple_app::get()->m_pcanvas->update_layered_window())
       {
 
          break;
@@ -283,114 +413,3 @@ UINT c_cdecl thread_proc_draw(LPVOID lpParam)
    return 0;
 
 }
-
-
-string str_replace(const char * psz,const char * pszFind,const char * pszReplace)
-{
-
-   return ::str::replace(pszFind,pszReplace,psz);
-
-}
-
-
-void a_spa::DragMainWindow()
-{
-
-   POINT ptCursor;
-
-   ::GetCursorPos(&ptCursor);
-
-   ::SetWindowPos(m_hwnd, NULL, 
-      ptCursor.x - g_ptDragStart.x + g_rectWindowDragStart.left,
-      ptCursor.y - g_ptDragStart.y + g_rectWindowDragStart.top,
-      0, 
-      0,
-      SWP_NOSIZE | SWP_SHOWWINDOW);
-
-/*   if(g_iStyle == 0)
-   {
-   }
-   else
-   {
-      ::SetLayeredWindowAttributes(g_hwnd, 0, (255 * 100) / 100, LWA_ALPHA);
-   }
-   ::RedrawWindow(g_hwnd, NULL, NULL, RDW_INVALIDATE);*/
-
-}
-
-
-int bzuncompress(LPCTSTR lpcszUncompressed,LPCTSTR lpcszGzFileCompressed)
-{
-
-   const int iGzUncompressLen = 1024 * 1024;
-
-   char * pchGzUncompressBuffer = NULL;
-
-   if(pchGzUncompressBuffer == NULL)
-   {
-
-      pchGzUncompressBuffer = new char[iGzUncompressLen];
-
-   }
-
-   BZFILE * file = BZ2_bzopen(lpcszGzFileCompressed,"rb");
-
-   if(file == NULL)
-   {
-
-      fprintf(stderr,"bzopen error\n");
-
-      return -2;
-
-   }
-
-   string strUn(lpcszUncompressed);
-
-   //   strUn += ".tmp";
-
-   FILE * fileUn = fopen(strUn.c_str(),"wb+");
-
-   if(fileUn == NULL)
-   {
-
-      BZ2_bzclose(file);
-
-      int err;
-
-      _get_errno(&err);
-
-      fprintf(stderr,"fopen error\n %d",err);
-
-      return -1;
-   }
-
-   int uncomprLen;
-
-   while((uncomprLen = BZ2_bzread(file,pchGzUncompressBuffer,iGzUncompressLen)) > 0)
-   {
-
-      fwrite(pchGzUncompressBuffer,1,uncomprLen,fileUn);
-
-   }
-
-   fclose(fileUn);
-
-   BZ2_bzclose(file);
-
-   return 0;
-
-}
-
-
-
-
-a_spa * a_spa::get()
-{
-
-   return s_pspa;
-
-}
-
-
-
-

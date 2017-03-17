@@ -9,74 +9,74 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Source Files\bzip2">
-      <UniqueIdentifier>{64481b09-9144-4039-a580-0bfb7d81eed4}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ccvotagus_ca2_spa.cpp">
+    <ClCompile Include="a_spa_socket.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="command_start.cpp">
+    <ClCompile Include="a_spa_socket_handler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="http1.cpp">
+    <ClCompile Include="a_spa_canvas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="http2.cpp">
+    <ClCompile Include="a_spa_ca2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="a_spa_start.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="trace.cpp">
+    <ClCompile Include="a_spa_main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="window.cpp">
+    <ClCompile Include="a_spa_trace.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="a_spalib.cpp">
+    <ClCompile Include="a_spa_window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="a_spalib_c.c">
+    <ClCompile Include="a_spa_socket_thread.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="canvas.cpp">
+    <ClCompile Include="a_spa.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\third\appseed\bzip2\blocksort.c">
-      <Filter>Source Files\bzip2</Filter>
+    <ClCompile Include="framework.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\third\appseed\bzip2\bzlib.c">
-      <Filter>Source Files\bzip2</Filter>
+    <ClCompile Include="a_spa_simple_app.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\third\appseed\bzip2\compress.c">
-      <Filter>Source Files\bzip2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\third\appseed\bzip2\crctable.c">
-      <Filter>Source Files\bzip2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\third\appseed\bzip2\decompress.c">
-      <Filter>Source Files\bzip2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\third\appseed\bzip2\huffman.c">
-      <Filter>Source Files\bzip2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\third\appseed\bzip2\randtable.c">
-      <Filter>Source Files\bzip2</Filter>
+    <ClCompile Include="a_spa_install_item.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="http1.h">
+    <ClInclude Include="a_spa_socket.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="http2.h">
+    <ClInclude Include="a_spa_socket_handler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="canvas.h">
+    <ClInclude Include="a_spa_canvas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="a_spalib.h">
+    <ClInclude Include="a_spa_socket_thread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="a_spa.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="a_spa_simple_app.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="a_spa_install_item.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="a_spa_trace.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
