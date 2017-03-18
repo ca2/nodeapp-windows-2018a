@@ -121,6 +121,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_rdpclient", "..\..
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_clockverse", "..\..\..\app-core\appseed\clockverse\clockverse.vcxproj", "{8477055E-C614-4A5D-BB61-197784151104}"
 	ProjectSection(ProjectDependencies) = postProject
+		{B46A198F-4171-4DEE-8CFD-164D99B42057} = {B46A198F-4171-4DEE-8CFD-164D99B42057}
 		{D620EED4-10A9-4C54-8DEE-A52B9D178A4D} = {D620EED4-10A9-4C54-8DEE-A52B9D178A4D}
 		{54850FD8-653A-43B6-AA90-E59AC030559C} = {54850FD8-653A-43B6-AA90-E59AC030559C}
 	EndProjectSection
@@ -155,6 +156,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "draw2d_cairo", "..\..\..\app\appseed\draw2d_cairo\draw2d_cairo.vcxproj", "{B5B26A30-A18D-4DC2-BACE-48C2DE33CD75}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wndfrm_3dprint", "..\..\..\app-core\appseed\wndfrm_3dprint\wndfrm_3dprint.vcxproj", "{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_mixer_mmsystem", "..\..\appseed\audio_mixer_mmsystem\audio_mixer_mmsystem.vcxproj", "{B46A198F-4171-4DEE-8CFD-164D99B42057}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -452,6 +455,14 @@ Global
 		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.stage|Win32.Build.0 = stage|Win32
 		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.stage|x64.ActiveCfg = stage|x64
 		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.stage|x64.Build.0 = stage|x64
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.basis|Win32.ActiveCfg = basis|Win32
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.basis|Win32.Build.0 = basis|Win32
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.basis|x64.ActiveCfg = basis|x64
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.basis|x64.Build.0 = basis|x64
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.stage|Win32.ActiveCfg = stage|Win32
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.stage|Win32.Build.0 = stage|Win32
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.stage|x64.ActiveCfg = stage|x64
+		{B46A198F-4171-4DEE-8CFD-164D99B42057}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
