@@ -178,7 +178,7 @@ namespace production
       rect rectClient;
       GetClientRect(rectClient);
 
-      pgraphics->SelectObject(System.visual().font_central().GetListCtrlFont());
+      pgraphics->SelectObject(System.visual().fonts().GetListCtrlFont());
 
       size sz = pgraphics->GetTextExtent("¡Õqg");
       m_iLineHeight = MAX(1, sz.cy);
