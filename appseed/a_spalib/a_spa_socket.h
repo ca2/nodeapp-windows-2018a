@@ -11,7 +11,7 @@ namespace a_spa
 
 
    class SPALIB_API socket :
-      virtual public ::sockets::httpd_socket
+      virtual public ::netnode::socket
    {
    public:
 

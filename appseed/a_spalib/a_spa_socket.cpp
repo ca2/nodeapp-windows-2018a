@@ -221,7 +221,9 @@ namespace a_spa
          }
 //         response().file().write("<html><head><meta http-equiv=\"refresh\" content=\"1\"><title>a_spa.exe</title></head><body><h1>"+strH1+"</h1>a_spa.exe is running.<br><br><h2>Current Install Activity:</h2>"+ ::a_spa::simple_app::s_papp->m_strHtmlLog+"</html>");
 
-         response().file().write("<html><head><meta http-equiv=\"refresh\" content=\"1\"><title>a_spa.exe</title></head><body><h1>" + strH1 + "</h1>a_spa.exe is running.</html>");
+         //response().file().write("<html><head><meta http-equiv=\"refresh\" content=\"1\"><title>a_spa.exe</title></head><body><h1>" + strH1 + "</h1>a_spa.exe is running.</html>");
+
+         response().file().write("<html><head><meta http-equiv=\"refresh\" content=\"1\"><title>a_spa.exe</title></head><body><h1>" + strH1 + "</h1>a_spa.exe is running. yOUR req:"+ m_request.m_strRequestUri +"</html>");
 
       }
 
