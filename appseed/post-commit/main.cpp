@@ -19,7 +19,7 @@ public:
 		::aura::system(this ,NULL)
 	{
 
-      Sleep(15000);
+      //Sleep(15000);
 		m_hinstance             = ::GetModuleHandleA(NULL);
 		m_argc = 0;
 		LPWSTR* pwa = CommandLineToArgvW(
@@ -94,7 +94,7 @@ public:
 					if(str.has_char())
 					{
 
-						::system("hstart /NOCONSOLE \"svnsync --non-interactive --source-username " + strUser + " --source-password " + strPass + " sync https://" + str + "-repos.ca2.cc/sync-" + strRepos + "\"");
+						::system("C:\\bergedge\\hi5\\program\\hstart /NOCONSOLE \"svnsync --non-interactive --sync-username " + strUser + " --sync-password " + strPass + " --source-username " + strUser + " --source-password " + strPass + " sync https://" + str + "-repos.ca2.cc:8443/" + strRepos + "\"");
 					}
 				}
 
@@ -203,153 +203,153 @@ public:
 
 } ;
 
-void app_t::win_sync_out(string strLocal,string strReposParam)
+void app_t::win_sync_out(string strLocal,string strRepos)
 {
 
-	::datetime::time timeNow = ::datetime::time::get_current_time();
+	//::datetime::time timeNow = ::datetime::time::get_current_time();
 
-	string strTimeNow;
+	//string strTimeNow;
 
-	strTimeNow = datetime().international().get_gmt_date_time(timeNow);
+	//strTimeNow = datetime().international().get_gmt_date_time(timeNow);
 
-	::file::path pathRepos = strLocal;
+	//::file::path pathRepos = strLocal;
 
-	pathRepos /= strReposParam;
+	//pathRepos /= strReposParam;
 
-	string strRepos = pathRepos;
+	//string strRepos = pathRepos;
 
-	string strAlt = strRepos;
+	//string strAlt = strRepos;
 
-	strAlt.replace("\\","/");
+	//strAlt.replace("\\","/");
 
-	strAlt = "file:///" + strAlt;
+	//strAlt = "file:///" + strAlt;
 
 
 
 
-	string strLog;
+	//string strLog;
 
-	strLog += "syncing Repository " + strRepos + " " + strTimeNow;
+	//strLog += "syncing Repository " + strRepos + " " + strTimeNow;
 
-	string str;
+	//string str;
 
-	stringa stra;
+	//stringa stra;
 
-	try
-	{
+	//try
+	//{
 
-      string strUser = file_as_string_dup("C:\\sensitive\\sensitive\\seed\\user.txt");
+ //     string strUser = file_as_string_dup("C:\\sensitive\\sensitive\\seed\\user.txt");
 
-		string strPass = file_as_string_dup("C:\\sensitive\\sensitive\\seed\\pass.txt");
+	//	string strPass = file_as_string_dup("C:\\sensitive\\sensitive\\seed\\pass.txt");
 
-		if(m_bMainRepos)
-		{
+	//	if(m_bMainRepos)
+	//	{
 
-			strLog += "\r\n";
+	//		strLog += "\r\n";
 
-			strLog += "\r\n";
+	//		strLog += "\r\n";
 
-			str = call("svnadmin lstxns " + strRepos);
+	//		str = call("svnadmin lstxns " + strRepos);
 
-			str.trim();
+	//		str.trim();
 
-			if(str.has_char())
-			{
+	//		if(str.has_char())
+	//		{
 
-				strLog += "Found spurious transactions";
+	//			strLog += "Found spurious transactions";
 
-				strLog += "\r\n";
+	//			strLog += "\r\n";
 
-				strLog += "\r\n";
+	//			strLog += "\r\n";
 
-				strLog += str;
+	//			strLog += str;
 
-				strLog += "\r\n";
+	//			strLog += "\r\n";
 
-				strLog += "\r\n";
+	//			strLog += "\r\n";
 
-				stra.add_lines(str);
+	//			stra.add_lines(str);
 
-				str = stra.implode(" ");
+	//			str = stra.implode(" ");
 
-				strLog += "Removing spurious transactions";
+	//			strLog += "Removing spurious transactions";
 
-				str = call("svnadmin rmtxns " + strRepos + " " + str);
+	//			str = call("svnadmin rmtxns " + strRepos + " " + str);
 
-				strLog += str;
+	//			strLog += str;
 
-				strLog += "\r\n";
+	//			strLog += "\r\n";
 
-				strLog += "\r\n";
+	//			strLog += "\r\n";
 
-			}
+	//		}
 
-			strLog += "Removing locks...\r\n";
-			strLog += "UNLOCKING! ATTENTION!\r\n";
-			strLog += "Only one script like this should run at the same time!\r\n";
-			strLog += call("svn pdel --revprop -r 0 svn:sync-lock " + strAlt);
-			strLog += "\r\n";
+	//		strLog += "Removing locks...\r\n";
+	//		strLog += "UNLOCKING! ATTENTION!\r\n";
+	//		strLog += "Only one script like this should run at the same time!\r\n";
+	//		strLog += call("svn pdel --revprop -r 0 svn:sync-lock " + strAlt);
+	//		strLog += "\r\n";
 
-			strLog += "\r\n";
+	//		strLog += "\r\n";
 
-			strLog += call("svnsync sync " + strAlt + " --source-username " + strUser + " --source-password " + strPass);
+	//		strLog += call("svnsync --non-interactive --sync-username " + strUser + " --sync-password " + strPass + " --source-username " + strUser + " --source-password " + strPass + " sync " + strAlt);
 
-			strLog += "\r\n";
+	//		strLog += "\r\n";
 
-			strLog += "\r\n";
+	//		strLog += "\r\n";
 
-			string strUni = unitext("");
+	//		string strUni = unitext("");
 
-			const char * textoBunitin = strUni;
+	//		const char * textoBunitin = strUni;
 
-			char ch0 = *(textoBunitin + 0);
+	//		char ch0 = *(textoBunitin + 0);
 
-			char ch0b = textoBunitin[0];
+	//		char ch0b = textoBunitin[0];
 
-			char ch4 = *(textoBunitin + 4);
+	//		char ch4 = *(textoBunitin + 4);
 
-			char ch4b = textoBunitin[4];
+	//		char ch4b = textoBunitin[4];
 
-		}
+	//	}
 
 
-		if(strReposParam == "net" || ::str::begins(strReposParam,"net"))
-		{
+		//if(strReposParam == "net" || ::str::begins(strReposParam,"net"))
+		//{
 
-			strLog += call("svn cleanup C:\\netnodenet\\" + strReposParam);
+		//	strLog += call("svn cleanup C:\\netnodenet\\" + strReposParam);
 
-			strLog += "\r\n";
+		//	strLog += "\r\n";
 
-			strLog += "\r\n";
-			
-			strLog += call("svn update --username " + strUser + " --password " + strPass + " C:\\netnodenet\\" + strReposParam);
+		//	strLog += "\r\n";
+		//	
+		//	strLog += call("svn update --username " + strUser + " --password " + strPass + " C:\\netnodenet\\" + strReposParam);
 
-			strLog += "\r\n";
+		//	strLog += "\r\n";
 
-			strLog += "\r\n";
+		//	strLog += "\r\n";
 
-		}
+		//}
 
 
 
-	}
-	catch(...)
-	{
+	//}
+	//catch(...)
+	//{
 
-		strLog += "some error occured (exception... cautcht) (2)";
+	//	strLog += "some error occured (exception... cautcht) (2)";
 
-	}
+	//}
 
-	string strFileTime = strTimeNow;
+	//string strFileTime = strTimeNow;
 
-	strFileTime.replace(":","-");
+	//strFileTime.replace(":","-");
 
-	file::path pathLog = pathRepos / "sync-log" / strFileTime + ".txt";
+	//file::path pathLog = pathRepos / "sync-log" / strFileTime + ".txt";
 
-	file_put_contents_dup(pathLog,strLog);
+	//file_put_contents_dup(pathLog,strLog);
 
 
-	//::system("hstart /NOCONSOLE \"cmd.exe /D /S /c call C:\\sensitive\\sensitive\\ca2\\fontopus\\script\\win-sync-out.bat " + str + " " + strRepos + "\"");
+	::system("C:\\bergedge\\hi5\\program\\hstart /NOCONSOLE \"cmd.exe /D /S /c call C:\\sensitive\\sensitive\\ca2\\fontopus\\script\\repossyncitem.bat " + strLocal + " " + strRepos + "\"");
 
 }
 

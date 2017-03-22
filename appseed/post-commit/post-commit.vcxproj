@@ -228,8 +228,9 @@
       <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy $(TargetPath) C:\sensitive\sensitive\ca2\fontopus\script\post-commit.exe
+cd C:\sensitive\sensitive\ca2\fontopus\script\
+C_reposupdatepostcommitexe</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='stage|x64'">
