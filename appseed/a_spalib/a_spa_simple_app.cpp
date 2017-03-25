@@ -742,6 +742,9 @@ namespace a_spa
 
       }
 
+      ::file::path pathSpaAdmin = ::path::a_spaadmin("x86");
+
+      ::file::path pathSpaAdminName = pathSpaAdmin.name();
 
       iFullInstallationMaxTryCount = 3;
 
@@ -769,7 +772,7 @@ namespace a_spa
 
                }
 
-               if (!is_file_ok(::path::a_spaadmin("x86"), ::path::a_spaadmin("x86").name(), NULL, "x86"))
+               if (!is_file_ok(pathSpaAdmin, pathSpaAdminName, NULL, "x86"))
                {
 
                   goto spa_admin;
