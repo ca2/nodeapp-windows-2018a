@@ -10,6 +10,14 @@ namespace a_spa
    {
    public:
 
+      class md5_item
+      {
+      public:
+
+         DWORD       m_dwStart;
+         string      m_strMd5;
+
+      };
 
       ::a_spa::socket_thread *   m_pthreadSsl;
 
@@ -26,6 +34,9 @@ namespace a_spa
       bool                       m_bFinished;
       string                     m_strSpaBootName;
       string                     m_strHtmlLog;
+
+      string_map < string_map < string_map < md5_item > > > m_mapMd5;
+
 
       simple_app();
       virtual ~simple_app();
@@ -81,27 +92,32 @@ namespace a_spa
       virtual int check_spa_bin(string strPlatform);
       virtual int download_spa_bin(string strPlatform);
       virtual string download_tmp_spa_bin(string strPlatform);
-      virtual int check_spaadmin_bin(string strPlatform);
+      virtual int check_spaadmin_bin(string strPlatform, bool bStartNok = false);
       virtual int download_spaadmin_bin(string strPlatform);
       virtual string download_tmp_spaadmin_bin(string strPlatform);
       virtual int check_install_bin_set(string strPlatofm);
 
-      virtual bool is_file_ok(const char * path1, const char * pszTemplate, const char * pszFormatBuild);
+      virtual bool is_file_ok(const char * path1, const char * pszTemplate, const char * pszFormatBuild, string pszPlatform);
       virtual bool is_file_ok(const stringa & straPath, const stringa & straTemplate, stringa & straMd5, const string & strFormatBuild, int iMd5Retry, string strPlatform);
 
       void trace(const string & str);
       void trace(double dRate);
 
-      bool ms_download(const char * pszUrl, const char * pszFile, bool bUrlEncode = true, int * piStatus = NULL);
-      bool ms_download_progress(const char * pszUrl, const char * pszFile, bool bProgress, bool bUrlEncode = true, int * piStatus = NULL);
+      bool http_download(const char * pszUrl, const char * pszFile, bool bUrlEncode = true, int * piStatus = NULL);
+      bool http_download_progress(const char * pszUrl, const char * pszFile, bool bProgress, bool bUrlEncode = true, int * piStatus = NULL);
 
-      string ms_get(const char * pszUrl, bool bCache = false);
+      void http_get_md5(stringa straTemplate, const char * pszFormatBuild, string strPlatform);
+      stringa get_reference_md5(stringa straTemplate, const char * pszFormatBuild, string strPlatform);
+
+      string http_get(const char * pszUrl, bool bCache = false);
 
       static simple_app * get();
 
       LRESULT window_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
       int create_spa_window();
+
+      virtual void start_a_spa_web_server();
 
    };
 

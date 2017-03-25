@@ -3,7 +3,7 @@
 
 #include "aura/aura/aura.h"
 #include "aura/node/windows/windows.h"
-#include "aura/net.h"
+//#include "aura/net.h"
 
 //extern "C" 
 //{

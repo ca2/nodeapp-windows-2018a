@@ -213,12 +213,12 @@ namespace a_spa
          while (iRetry < 8 && !bFileNice)
          {
 
-            if (m_papp->ms_download(strUrl.c_str(), (strDownload + ".bz").c_str()))
+            if (m_papp->http_download(strUrl, strDownload + ".bz"))
             {
 
-               bzuncompress((strDownload).c_str(), (strDownload + ".bz").c_str());
+               App(m_papp).compress().unbz(m_papp, strDownload, strDownload + ".bz");
 
-               if (file_exists_dup(strDownload.c_str()) && _stricmp(file_md5_dup(strDownload.c_str()).c_str(), strMd5.c_str()) == 0)
+               if (file_exists_dup(strDownload) && _stricmp(file_md5_dup(strDownload), strMd5) == 0)
                {
 
                   bFileNice = true;

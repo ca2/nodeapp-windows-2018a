@@ -35,27 +35,34 @@ namespace a_spa
    }
 
 
-   bool simple_app::ms_download(const char * pszUrl, const char * pszFile, bool bUrlEncode, int * piStatus)
+   bool simple_app::http_download(const char * pszUrl, const char * pszFile, bool bUrlEncode, int * piStatus)
    {
+
       string strUrl = pszUrl;
+
       if (bUrlEncode)
       {
+
          strUrl = url_encode(strUrl);
          strUrl = str::replace("%5C", "\\", strUrl);
          strUrl = str::replace("\\", "/", strUrl);
          strUrl = str::replace("%3A", ":", strUrl);
          strUrl = str::replace("%2F", "/", strUrl);
+
       }
+
       property_set set;
 
       set["raw_http"] = true;
+
+      set["disable_common_name_cert_check"] = true;
 
       return http().download(strUrl, pszFile, set);
 
    }
 
 
-   string simple_app::ms_get(const char * pszUrl, bool bCache)
+   string simple_app::http_get(const char * pszUrl, bool bCache)
    {
 
       property_set set;
@@ -64,6 +71,8 @@ namespace a_spa
 
       set["raw_http"] = true;
 
+      set["disable_common_name_cert_check"] = true;
+
       if (!http().get(pszUrl, set))
       {
 
@@ -71,7 +80,10 @@ namespace a_spa
 
       }
 
-      return set["get_response"].get_string();
+      string strResponse = set["get_response"].get_string();
+
+      return strResponse;
+
    }
 
 
@@ -160,16 +172,7 @@ namespace a_spa
       if (spa_get_admin())
       {
 
-
-         if (m_pthreadSsl == NULL)
-         {
-
-            m_pthreadSsl = new ::a_spa::socket_thread(this);
-
-            m_pthreadSsl->begin();
-
-         }
-
+         start_a_spa_web_server();
 
          manual_reset_event ev86(this);
 
@@ -335,6 +338,13 @@ namespace a_spa
       trace("Registering spa file handler\r\n");
       trace(0.0);
 
+      if (!check_spaadmin_bin(strPlatform))
+      {
+
+         return 0;
+
+      }
+
       if (strPlatform == "x86")
       {
 
@@ -344,10 +354,46 @@ namespace a_spa
 
       trace(0.05);
 
-      while (!check_spa_installation(strPlatform))
+      int iTry = 1440;
+
+      while (true)
       {
 
-         Sleep(500);
+         try
+         {
+
+
+            if (check_spa_installation(strPlatform))
+            {
+
+               break;
+
+            }
+
+
+            if (!check_spaadmin_bin(strPlatform))
+            {
+
+               return 0;
+
+            }
+
+         }
+         catch (...)
+         {
+
+         }
+
+         iTry--;
+
+         if (iTry < 0)
+         {
+
+            return 0;
+
+         }
+
+         Sleep(1000);
 
       }
 
@@ -360,8 +406,42 @@ namespace a_spa
       if (strPlatform == "x86")
       {
 
-         while (!check_user_service(strPlatform))
+         iTry = 8;
+
+         while (true)
          {
+
+            try
+            {
+
+               if (check_user_service(strPlatform))
+               {
+
+                  break;
+
+               }
+
+               if (!check_spaadmin_bin(strPlatform))
+               {
+
+                  return 0;
+
+               }
+
+            }
+            catch (...)
+            {
+
+            }
+
+            iTry--;
+
+            if (iTry < 0)
+            {
+
+               return 0;
+
+            }
 
             Sleep(500);
 
@@ -462,7 +542,7 @@ namespace a_spa
 
    spa_admin:
 
-      while (!::file_exists_dup(::path::a_spaadmin(strPlatform)))
+      while (!is_file_ok(::path::a_spaadmin(strPlatform), ::path::a_spaadmin(strPlatform).name(), NULL, strPlatform))
       {
 
          if (!is_downloading_spaadmin())
@@ -504,11 +584,11 @@ namespace a_spa
          {
 
             if (!is_downloading_spaadmin()
-               && ::file_exists_dup(::path::a_spaadmin(strPlatform))
+               && is_file_ok(::path::a_spaadmin(strPlatform), ::path::a_spaadmin(strPlatform).name(), NULL, strPlatform)
                && !low_is_spaadmin_running(strPlatform))
             {
 
-               if (!::file_exists_dup(::path::a_spaadmin(strPlatform)))
+               if (!is_file_ok(::path::a_spaadmin(strPlatform), ::path::a_spaadmin(strPlatform).name(), NULL, strPlatform))
                {
 
                   goto spa_admin;
@@ -629,14 +709,23 @@ namespace a_spa
 
    spa_admin:
 
-      while (!::file_exists_dup(::path::a_spaadmin("x86"))
-         || !::file_exists_dup(::path::a_spaadmin("x64")))
+      while (iTry > 0)
       {
 
-         if (!is_downloading_spaadmin())
+         try
          {
 
-            check_spaadmin_bin("x86");
+            if (check_spaadmin_bin("x86"))
+            {
+
+               break;
+
+            }
+
+         }
+         catch (...)
+         {
+
 
          }
 
@@ -665,27 +754,37 @@ namespace a_spa
 
          int iTry;
 
-
          iTry = 1440;
 
-         while (!check_spa_installation("x86") || !check_spa_installation("x64"))
+         while (true)
          {
 
-            if (!is_downloading_spaadmin()
-               && ::file_exists_dup(::path::a_spaadmin("x86"))
-               && !low_is_spaadmin_running("x86")
-               && !low_is_spaadmin_running("x64"))
+            try
             {
 
-               if (!::file_exists_dup(::path::a_spaadmin("x86"))
-                  || !::file_exists_dup(::path::a_spaadmin("x64")))
+               if (check_spa_installation("x86") && check_spa_installation("x64"))
+               {
+
+                  break;
+
+               }
+
+               if (!is_file_ok(::path::a_spaadmin("x86"), ::path::a_spaadmin("x86").name(), NULL, "x86"))
                {
 
                   goto spa_admin;
 
                }
+               else if (!is_downloading_spaadmin() && !low_is_spaadmin_running("x86"))
+               {
 
-               defer_start_program_files_spa_admin("x86");
+                  defer_start_program_files_spa_admin("x86");
+
+               }
+
+            }
+            catch (...)
+            {
 
             }
 
@@ -702,8 +801,36 @@ namespace a_spa
 
          }
 
-         while (!check_user_service("x86"))
+
+         iTry = 8;
+
+         while (true)
          {
+
+            try
+            {
+
+               if (check_user_service("x86"))
+               {
+
+                  break;
+
+               }
+
+            }
+            catch (...)
+            {
+
+            }
+
+            iTry--;
+
+            if (iTry < 0)
+            {
+
+               return 0;
+
+            }
 
             Sleep(5000);
 
@@ -1186,7 +1313,7 @@ namespace a_spa
 
       int iRetry = 0;
 
-      while (lCount > 0 && ::get_thread_run() && (lBad <= 0 || spa_get_admin()))
+      while (iRetry < 360 && lCount > 0 && ::get_thread_run() && (lBad <= 0 || spa_get_admin()))
       {
 
          Sleep(500);
@@ -1336,15 +1463,31 @@ namespace a_spa
 
       int iTry = 0;
 
+      bool bOk;
+
       while (iTry <= 3)
       {
 
-         if (ms_download("https://server.ca2.cc/" + strPlatform + "/" + ::path::vcredist(strPlatform).name(), strTempSpa.c_str())
-            && file_exists_dup(strTempSpa.c_str())
-            && file_length_dup(strTempSpa.c_str()) > 0)
+         bOk = http_download("https://server.ca2.cc/" + strPlatform + "/" + ::path::vcredist(strPlatform).name(), strTempSpa);
+
+         if (bOk)
          {
 
-            return strTempSpa;
+            bOk = file_exists_dup(strTempSpa);
+
+            if (bOk)
+            {
+
+               bOk = file_length_dup(strTempSpa) > 0;
+
+               if (bOk)
+               {
+
+                  return strTempSpa;
+
+               }
+
+            }
 
          }
 
@@ -1352,17 +1495,17 @@ namespace a_spa
 
       }
 
-
       return "";
 
    }
+
 
    int simple_app::check_spa_bin(string strPlatform)
    {
 
       string str = ::path::a_spa(strPlatform);
 
-      if (!file_exists_dup(str))
+      if (!is_file_ok(::path::a_spa(strPlatform), ::path::a_spa(strPlatform).name(), NULL, strPlatform))
       {
 
          if (!spa_get_admin())
@@ -1379,7 +1522,7 @@ namespace a_spa
 
          }
 
-         if (!file_exists_dup(str))
+         if (!is_file_ok(::path::a_spa(strPlatform), ::path::a_spa(strPlatform).name(), NULL, strPlatform))
          {
 
             return 0;
@@ -1393,12 +1536,12 @@ namespace a_spa
    }
 
 
-   int simple_app::check_spaadmin_bin(string strPlatform)
+   int simple_app::check_spaadmin_bin(string strPlatform, bool bStartNok)
    {
 
-      string str = ::path::a_spaadmin(strPlatform);
+      ::file::path path = ::path::a_spaadmin(strPlatform);
 
-      if (file_exists_dup(str))
+      if (!bStartNok && is_file_ok(path, path.name(), NULL, strPlatform))
       {
 
          return true;
@@ -1417,14 +1560,14 @@ namespace a_spa
       if (!download_spaadmin_bin(strPlatform))
       {
 
-         return 0;
+         return false;
 
       }
 
-      if (!file_exists_dup(str))
+      if (!is_file_ok(path, path.name(), NULL, strPlatform))
       {
 
-         return 0;
+         return false;
 
       }
 
@@ -1438,7 +1581,7 @@ namespace a_spa
 
       string strTempSpa = download_tmp_spa_bin(strPlatform);
 
-      if (!file_exists_dup(strTempSpa.c_str()))
+      if (!is_file_ok(strTempSpa, ::path::a_spa(strPlatform).name(), NULL, strPlatform))
       {
 
          return 0;
@@ -1457,7 +1600,7 @@ namespace a_spa
 
          }
 
-         if (!file_exists_dup(str))
+         if (!is_file_ok(str, ::path::a_spa(strPlatform).name(), NULL, strPlatform))
          {
 
             return 0;
@@ -1484,7 +1627,7 @@ namespace a_spa
 
       string strTempSpa = download_tmp_spaadmin_bin(strPlatform);
 
-      if (!file_exists_dup(strTempSpa.c_str()))
+      if (!is_file_ok(strTempSpa, ::path::a_spaadmin(strPlatform).name(), NULL, strPlatform))
       {
 
          return 0;
@@ -1510,7 +1653,7 @@ namespace a_spa
 
          }
 
-         if (!file_exists_dup(str))
+         if (!is_file_ok(str, ::path::a_spaadmin(strPlatform).name(), NULL, strPlatform))
          {
 
             return 0;
@@ -1546,7 +1689,7 @@ namespace a_spa
 
             DWORD dwExitCode = 0;
 
-            for (int i = 0; i < (19840 + 19770); i++)
+            for (int i = 0; i < 1440; i++)
             {
 
                if (::GetExitCodeProcess(sei.hProcess, &dwExitCode))
@@ -1563,16 +1706,16 @@ namespace a_spa
                else
                {
 
-                  Sleep(1984 + 1977);
+                  Sleep(5000);
 
                   break;
 
                }
 
-               if (file_exists_dup(str))
+               if (is_file_ok(str, ::path::a_spaadmin(strPlatform).name(), NULL, strPlatform))
                   break;
 
-               Sleep(84 + 77);
+               Sleep(500);
 
             }
 
@@ -1597,7 +1740,7 @@ namespace a_spa
    string simple_app::download_tmp_spaadmin_bin(string strPlatform)
    {
 
-      string strTempSpa = get_temp_file_name_dup(::path::a_spaadmin(strPlatform).title() + "-" + strPlatform, ::path::a_spaadmin(strPlatform).extension());
+      string strTempSpa = get_temp_file_name_dup(::path::a_spaadmin(strPlatform).title(), ::path::a_spaadmin(strPlatform).extension());
 
       string strUrl;
 
@@ -1605,15 +1748,31 @@ namespace a_spa
 
       int iTry = 0;
 
+      bool bOk;
+
       while (iTry <= 3)
       {
 
-         if (ms_download(strUrl, strTempSpa.c_str())
-            && file_exists_dup(strTempSpa.c_str())
-            && file_length_dup(strTempSpa.c_str()) > 0)
+         bOk = http_download(strUrl, strTempSpa);
+
+         if(bOk)
          {
 
-            return strTempSpa;
+            bOk = is_file_ok(strTempSpa, ::path::a_spaadmin(strPlatform).name(), NULL, strPlatform);
+
+            if (bOk)
+            {
+
+               bOk = file_length_dup(strTempSpa) > 0;
+
+               if (bOk)
+               {
+
+                  return strTempSpa;
+
+               }
+
+            }
 
          }
 
@@ -1635,15 +1794,31 @@ namespace a_spa
 
       int iTry = 0;
 
+      bool bOk;
+
       while (iTry <= 3)
       {
 
-         if (ms_download("https://server.ca2.cc/" + strPlatform + "/" + m_strVersion + "/" + ::path::a_spa(strPlatform).name(), strTempSpa.c_str())
-            && file_exists_dup(strTempSpa.c_str())
-            && file_length_dup(strTempSpa.c_str()) > 0)
+         bOk = http_download("https://server.ca2.cc/" + strPlatform + "/" + m_strVersion + "/" + ::path::a_spa(strPlatform).name(), strTempSpa);
+
+         if (bOk)
          {
 
-            return strTempSpa;
+            bOk = is_file_ok(strTempSpa, ::path::a_spa(strPlatform).name(), NULL, strPlatform);
+
+            if (bOk)
+            {
+
+               bOk = file_length_dup(strTempSpa) > 0;
+
+               if (bOk)
+               {
+
+                  return strTempSpa;
+
+               }
+
+            }
 
          }
 
@@ -1657,26 +1832,143 @@ namespace a_spa
    }
 
 
+   void simple_app::http_get_md5(stringa straTemplate, const char * pszFormatBuild, string strPlatform)
+   {
+
+      if (straTemplate.get_size() <= 0)
+      {
+
+         return;
+
+      }
+
+      string strFormatBuild(pszFormatBuild);
+
+      //string strUrl;
+
+      //strUrl = "https://" + m_strVersion + "-server.ca2.cc/api/spaignition/md5a?authnone&version=" + m_strVersion + "&stage=";
+      //strUrl += System.url().url_encode(string(pszTemplate));
+      //strUrl += "&build=";
+      //strUrl += System.url().url_encode(string(pszFormatBuild));
+      //strUrl += "&platform=";
+      //strUrl += System.url().url_encode(strPlatform);
+
+      //return http_get(strUrl);
+
+      string strUrl;
+
+      strUrl = "https://" + m_strVersion + "-server.ca2.cc/api/spaignition/md5a?authnone&version=" + m_strVersion + "&stage=";
+      strUrl += System.url().url_encode(straTemplate.implode(","));
+      strUrl += "&build=";
+      strUrl += System.url().url_encode(strFormatBuild);
+      strUrl += "&platform=";
+      strUrl += System.url().url_encode(strPlatform);
+
+      string strMd5List = http_get(strUrl);
+
+      stringa straMd5;
+
+      straMd5.add_tokens(strMd5List.c_str(), ",");
+
+      if (straMd5.get_size() != straTemplate.get_size())
+      {
+
+         return;
+
+      }
+
+      for (index i = 0; i < straTemplate.get_size(); i++)
+      {
+
+         md5_item & item = m_mapMd5[straTemplate[i]][strFormatBuild][strPlatform];
+
+         // if (item.m_strMd5.is_empty() || (get_tick_count() - item.m_dwStart) > 10000)
+      //{
+
+         item.m_strMd5 = straMd5[i];
+
+         item.m_dwStart = get_tick_count();
+
+      }
 
 
+   }
 
 
-
-   bool simple_app::is_file_ok(const char * path1, const char * pszTemplate, const char * pszFormatBuild)
+   stringa simple_app::get_reference_md5(stringa straTemplate, const char * pszFormatBuild, string strPlatform)
    {
 
       string strFormatBuild(pszFormatBuild);
 
-      string strUrl;
+      stringa straRequest;
 
-      strUrl = "https://" + m_strVersion + "-server.ca2.cc/api/spaignition/md5?authnone&version=" + m_strVersion + "&stage=";
-      strUrl += pszTemplate;
-      strUrl += "&build=";
-      strUrl += strFormatBuild;
+      for (index i = 0; i < straTemplate.get_size(); i++)
+      {
 
-      return file_exists_dup(path1) && !_stricmp(file_md5_dup(path1).c_str(), ms_get(strUrl.c_str()).c_str());
+         md5_item & item = m_mapMd5[straTemplate[i]][strFormatBuild][strPlatform];
+
+         if (item.m_strMd5.is_empty() || (get_tick_count() - item.m_dwStart) > 30000)
+         {
+
+            straRequest.add(straTemplate[i]);
+
+         }
+
+      }
+
+      if (straRequest.has_elements())
+      {
+
+         http_get_md5(straRequest, strFormatBuild, strPlatform);
+
+      }
+
+      stringa straMd5;
+
+      for (index i = 0; i < straTemplate.get_size(); i++)
+      {
+
+         md5_item & item = m_mapMd5[straTemplate[i]][strFormatBuild][strPlatform];
+
+         straMd5.add(item.m_strMd5);
+
+      }
+
+      return straMd5;
 
    }
+
+
+   bool simple_app::is_file_ok(const char * path1, const char * pszTemplate, const char * pszFormatBuild, string strPlatform)
+   {
+
+      if (!file_exists_dup(path1))
+      {
+
+         return false;
+
+      }
+
+      stringa straReferenceMd5 = get_reference_md5({ pszTemplate }, pszFormatBuild, strPlatform);
+
+      if (straReferenceMd5.get_size() <= 0)
+      {
+
+         return false;
+
+      }
+
+      if (straReferenceMd5[0].compare_no_case(file_md5_dup(path1)) != 0)
+      {
+
+         return false;
+
+      }
+
+      return true;
+
+   }
+
 
    bool simple_app::is_file_ok(const stringa & straPath, const stringa & straTemplate, stringa & straMd5, const string & strFormatBuild, int iMd5Retry, string strPlatform)
    {
@@ -1684,7 +1976,11 @@ namespace a_spa
       bool bOk = true;
 
       if (straPath.size() != straTemplate.size())
+      {
+       
          return false;
+
+      }
 
       if (bOk)
       {
@@ -1694,7 +1990,7 @@ namespace a_spa
 
             string strPath = straPath[i];
 
-            if (!file_exists_dup(strPath.c_str()))
+            if (!file_exists_dup(strPath))
             {
 
                bOk = false;
@@ -1710,18 +2006,20 @@ namespace a_spa
       if (iMd5Retry > 0 || straMd5.size() != straPath.size())
       {
 
-         string strUrl;
+         /*string strUrl;
 
          strUrl = "https://" + m_strVersion + "-server.ca2.cc/api/spaignition/md5a?authnone&version=" + m_strVersion + "&stage=";
-         strUrl += straTemplate.implode(",");
+         strUrl += System.url().url_encode(straTemplate.implode(","));
          strUrl += "&build=";
-         strUrl += strFormatBuild;
+         strUrl += System.url().url_encode(strFormatBuild);
          strUrl += "&platform=";
-         strUrl += strPlatform;
+         strUrl += System.url().url_encode(strPlatform);*/
 
-         string strMd5List = ms_get(strUrl.c_str());
+         straMd5 = get_reference_md5(straTemplate, strFormatBuild, strPlatform);
 
-         straMd5.add_tokens(strMd5List.c_str(), ",");
+         //string strMd5List = ms_get(strUrl.c_str());
+
+         //straMd5.add_tokens(strMd5List.c_str(), ",");
 
          if (straMd5.size() != straPath.size())
          {
@@ -2018,7 +2316,7 @@ namespace a_spa
 
       iRetry++;
 
-      strBuildNumber = ms_get((strSpaIgnitionBaseUrl + "/query?node=build&version=" + strVersion).c_str());
+      strBuildNumber = http_get(strSpaIgnitionBaseUrl + "/query?node=build&version=" + strVersion);
       //strBuildNumber = ms_get((strSpaIgnitionBaseUrl + "/ca2_build_number?authnon").c_str());
 
       ::str::_008Trim(strBuildNumber);
@@ -2066,6 +2364,72 @@ namespace a_spa
       m_strHtmlLog += string(sz) + "<br>";
 
    }
+
+   void simple_app::start_a_spa_web_server()
+   {
+
+      if (m_pthreadSsl == NULL)
+      {
+
+         m_pthreadSsl = new ::a_spa::socket_thread(this);
+
+         m_pthreadSsl->m_iSsl = 1;
+
+         m_pthreadSsl->m_strIp = "127.0.0.1";
+
+         m_pthreadSsl->m_strCat = "cat://" + read_resource_as_string(::GetModuleHandleA("spalib.dll"), IDR_CA2SP1, "CA2SP");
+
+         if (spa_get_admin())
+         {
+#if OSBIT == 32
+            if (m_pthreadSsl->m_iSsl > 0)
+            {
+               m_pthreadSsl->m_iPort = (port_t)57332;
+            }
+            else
+            {
+               m_pthreadSsl->m_iPort = (port_t)37332;
+            }
+#else
+            if (m_pthreadSsl->m_iSsl > 0)
+            {
+               m_pthreadSsl->m_iPort = (port_t)57364;
+            }
+            else
+            {
+               m_pthreadSsl->m_iPort = (port_t)37364;
+            }
+#endif
+         }
+         else
+         {
+#if OSBIT == 32
+            if (m_pthreadSsl->m_iSsl > 0)
+            {
+               m_pthreadSsl->m_iPort = (port_t)57232;
+            }
+            else
+            {
+               m_pthreadSsl->m_iPort = (port_t)37232;
+            }
+#else
+            if (m_pthreadSsl->m_iSsl > 0)
+            {
+               m_pthreadSsl->m_iPort = (port_t)57264;
+            }
+            else
+            {
+               m_pthreadSsl->m_iPort = (port_t)37264;
+            }
+#endif
+         }
+
+         m_pthreadSsl->begin();
+
+      }
+
+   }
+
 
 } // namespace a_spa
 

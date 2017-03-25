@@ -34,15 +34,7 @@ namespace a_spa
 
          ShowWindow(m_hwnd, SW_SHOW);
 
-         if (m_pthreadSsl == NULL)
-         {
-
-            m_pthreadSsl = new ::a_spa::socket_thread(this);
-
-            m_pthreadSsl->begin();
-
-         }
-
+         start_a_spa_web_server();
 
       }
       else
@@ -55,7 +47,6 @@ namespace a_spa
       return TRUE;
 
    }
-
 
 
    int simple_app::create_spa_window()

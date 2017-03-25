@@ -7,7 +7,8 @@ namespace a_spa
 
    socket_handler::socket_handler(::aura::application * papp) :
       ::object(papp),
-      ::sockets::socket_handler(papp)
+      ::sockets::socket_handler(papp),
+      ::netserver::socket_handler(papp)
    {
 
    }

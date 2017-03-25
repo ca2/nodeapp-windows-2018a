@@ -279,7 +279,7 @@ void run_vcredist(string strPlatform)
 void defer_start_program_files_spa_admin(string strPlatform)
 {
 
-   if (!low_is_spaadmin_running(strPlatform))
+   if (low_is_spaadmin_running(strPlatform))
    {
 
       return;

@@ -46,7 +46,6 @@ namespace install
 
    installer::installer(::aura::application * papp) :
       ::object(papp),
-
       m_mutex(papp),
       m_xmldocStringTable(papp),
       m_mutexOmp(papp)
@@ -928,7 +927,7 @@ install_begin:;
 
                dir::mk(dir::name(strStageInplace));
 
-               bzuncompress(strStageInplace,strStageGz);
+               System.compress().unbz(get_app(), strStageInplace,strStageGz);
 
                if(file_exists_dup(strStageInplace)
                   && (iLen != -1) && file_length_dup(strStageInplace) == iLen
@@ -1062,7 +1061,7 @@ install_begin:;
 
                dir::mk(dir::name(strStageInplace));
 
-               bzuncompress(strStageInplace,strStageGz);
+               System.compress().unbz(get_app(), strStageInplace,strStageGz);
 
                if(file_exists_dup(strStageInplace)
                   && (iLen != -1) && file_length_dup(strStageInplace) == iLen
@@ -1582,7 +1581,7 @@ install_begin:;
                if(iLength != -1)
                {
                   dir::mk(dir::name(inplace));
-                  int32_t iResult = bzuncompress(inplace, (dir + file + "." + pszMd5));
+                  int32_t iResult = System.compress().unbz(get_app(), inplace, (dir + file + "." + pszMd5));
                   if(iResult == -1)
                   {
                      m_NeedRestartBecauseOfReservedFile = true;
@@ -2020,15 +2019,22 @@ install_begin:;
          }
          else
          {
-            strStageGz = ca2bz_get_dir(strUrl) / ca2bz_get_file(strUrl, pszMd5);
-         }
-      }
-      dir::mk(dir::name(strStage));
-      bzuncompress(strStage, strStageGz);
-      str = strStage;
-      return true;
-   }
 
+            strStageGz = ca2bz_get_dir(strUrl) / ca2bz_get_file(strUrl, pszMd5);
+
+         }
+
+      }
+
+      dir::mk(dir::name(strStage));
+      
+      System.compress().unbz(get_app(), strStage, strStageGz);
+
+      str = strStage;
+
+      return true;
+
+   }
 
 
    int32_t installer::GetFileListEx(::file::patha & stringa, ::file::patha  & patha, string_to_intptr & mapLen, string_to_intptr & mapGzLen, string_to_string & mapMd5, string_to_intptr & mapFlag)
@@ -2255,7 +2261,9 @@ install_begin:;
          strStageGz = m_strInstallGz / ca2bz_get_file(str, strmapMd5[stringa[i]]);
          strStage = ca2_get_dir(str) / ca2_get_file(str);
          dir::mk(dir::name(strStage));
-         bzuncompress(strStage, strStageGz);
+         
+         System.compress().unbz(get_app(), strStage, strStageGz);
+
          d += 1.0;
          m_dProgress = d / ((double) stringa.get_count());
       }
