@@ -64,7 +64,7 @@ namespace multimedia
          m_hwaveout           = NULL;
          m_iBufferedCount     = 0;
          m_peffect            = NULL;
-         m_dwLostSampleCount  = 0;
+         //         m_dwLostSampleCount = 0;
 
       }
 
@@ -827,9 +827,9 @@ Opened:
                position /= 8 * 1000;
                return position;
             }
-            else
+            else if (mmt.wType == TIME_BYTES)
             {
-               return (uint32_t) mmt.u.cb;
+               return (uint32_t)mmt.u.cb;
             }
          }
          else
