@@ -5,6 +5,20 @@ namespace a_spa
 {
 
 
+   struct install
+   {
+      LONG     m_lTotal;
+      LONG     m_lProcessing;
+      LONG     m_lOk;
+      LONG     m_lBad;
+
+
+      install() { ZEROP(this); }
+
+   };
+
+
+
    class SPALIB_API install_item :
       virtual public object
    {
@@ -15,18 +29,15 @@ namespace a_spa
       string                  m_strUrlPrefix;
       string                  m_strPath;
       string                  m_strFile;
-      LONG *                  m_plong;
-      LONG *                  m_plongOk;
-      LONG *                  m_plongBad;
+      install *               m_pinstall;
       IDTHREAD                m_dwThreadId;
       string                  m_strMd5;
       string                  m_strPlatform;
-      LONG                    m_lTotal;
       e_item_type             m_eitemtype;
 
 
-      install_item(simple_app * paspa, string strFile, string strPlatform, LONG * plong, LONG lTotal, LONG * plongOk, LONG * plongBad);
-      install_item(simple_app * paspa, string strUrlPrefix, string strPath, string strFile, LONG * plong, string strMd5, string strPlatform, LONG lTotal);
+      install_item(simple_app * paspa, string strFile, string strPlatform, install * pinstall);
+      install_item(simple_app * paspa, string strUrlPrefix, string strPath, string strFile, install * pinstall, string strMd5, string strPlatform);
 
 
       static UINT c_cdecl proc(LPVOID lp);

@@ -783,6 +783,8 @@ namespace a_spa
 
                   defer_start_program_files_spa_admin("x86");
 
+                  Sleep(5000);
+
                }
 
             }
@@ -1282,10 +1284,19 @@ namespace a_spa
    int simple_app::check_spa_installation(string strPlatform)
    {
 
+      install & install = m_mapInstall[strPlatform];
+
       if (spa_get_admin())
       {
 
          trace("Downloading\r\n");
+
+      }
+
+      if (install.m_lProcessing > 0)
+      {
+
+         return 0;
 
       }
 
@@ -1302,21 +1313,22 @@ namespace a_spa
 
       }
 
-      LONG lTotal = straFile.size();
-      LONG lCount = lTotal;
-      LONG lOk = 0;
-      LONG lBad = 0;
+      install.m_lTotal = straFile.size();
+      install.m_lProcessing = install.m_lTotal;
+      install.m_lOk = 0;
+      install.m_lBad = 0;
+
 
       for (int iFile = 0; iFile < straFile.size(); iFile++)
       {
 
-         new install_item(this, straFile[iFile], strPlatform, &lCount, lTotal, &lOk, &lBad);
+         new install_item(this, straFile[iFile], strPlatform, &install);
 
       }
 
       int iRetry = 0;
 
-      while (iRetry < 360 && lCount > 0 && ::get_thread_run() && (lBad <= 0 || spa_get_admin()))
+      while (iRetry < 360 && install.m_lProcessing > 0 && ::get_thread_run() && (install.m_lBad <= 0 || spa_get_admin()))
       {
 
          Sleep(500);
@@ -1328,7 +1340,7 @@ namespace a_spa
       Sleep(84);
 
 
-      if (lOk != lTotal || lBad > 0)
+      if (install.m_lProcessing < install.m_lTotal || install.m_lBad > 0)
          return 0;
 
       return 1;
@@ -2201,13 +2213,14 @@ namespace a_spa
          }
 
 #endif
-
-         LONG lTotal = straFile.size();
-         LONG lCount = lTotal;
+         install install;
+         install.m_lTotal = straFile.size();
+         install.m_lProcessing = install.m_lTotal;
 
          trace("Downloading install bin set\r\n");
 
          string strUrlPrefix = "https://server.ca2.cc/ccvotagus/" + m_strVersion + "/" + strBuild + "/install/" + strPlatform + "/";
+         
 
          //#pragma omp parallel for
          for (int iFile = 0; iFile < straFile.size(); iFile++)
@@ -2225,7 +2238,7 @@ namespace a_spa
 
                }
 
-               new install_item(this, strUrlPrefix, strPath, straFile[iFile], &lCount, straMd5[iFile], strPlatform, lTotal);
+               new install_item(this, strUrlPrefix, strPath, straFile[iFile], &install, straMd5[iFile], strPlatform);
 
             }
 
@@ -2233,7 +2246,7 @@ namespace a_spa
 
          int iRetry = 0;
 
-         while (lCount > 0 && iRetry < ((84 + 77) * 10))
+         while (install.m_lProcessing > 0 && iRetry < ((84 + 77) * 10))
          {
             Sleep(84);
             iRetry++;

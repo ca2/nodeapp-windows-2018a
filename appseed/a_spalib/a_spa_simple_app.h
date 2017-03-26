@@ -37,6 +37,8 @@ namespace a_spa
 
       string_map < string_map < string_map < md5_item > > > m_mapMd5;
 
+      string_map < install >  m_mapInstall;
+
 
       simple_app();
       virtual ~simple_app();

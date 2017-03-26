@@ -5,15 +5,12 @@ namespace a_spa
 {
 
 
-   install_item::install_item(simple_app * papp, string strFile, string strPlatform, LONG * plong, LONG lTotal, LONG * plongOk, LONG * plongBad) :
+   install_item::install_item(simple_app * papp, string strFile, string strPlatform, install * pinstall) :
       object(papp),
       m_papp(papp),
       m_strFile(strFile),
       m_strPlatform(strPlatform),
-      m_plong(plong),
-      m_lTotal(lTotal),
-      m_plongOk(plongOk),
-      m_plongBad(plongBad)
+      m_pinstall(pinstall)
    {
 
       m_eitemtype = item_type_spa;
@@ -23,16 +20,15 @@ namespace a_spa
    }
 
 
-   install_item::install_item(simple_app * papp, string strUrlPrefix, string strPath, string strFile, LONG * plong, string strMd5, string strPlatform, LONG lTotal) :
+   install_item::install_item(simple_app * papp, string strUrlPrefix, string strPath, string strFile, install * pinstall, string strMd5, string strPlatform) :
       object(papp),
       m_papp(papp),
       m_strUrlPrefix(strUrlPrefix),
       m_strPath(strPath),
       m_strFile(strFile),
-      m_plong(plong),
+      m_pinstall(pinstall),
       m_strMd5(strMd5),
-      m_strPlatform(strPlatform),
-      m_lTotal(lTotal)
+      m_strPlatform(strPlatform)
    {
 
       m_eitemtype = item_type_set;
@@ -56,7 +52,7 @@ namespace a_spa
       catch (...)
       {
 
-         InterlockedDecrement(pitem->m_plong);
+         InterlockedDecrement(&pitem->m_pinstall->m_lProcessing);
 
       }
 
@@ -76,13 +72,13 @@ namespace a_spa
          if (m_eitemtype == item_type_spa)
          {
 
-            m_papp->trace(0.05 + ((((double)m_lTotal - (double)(*m_plong)) * (0.25 - 0.05)) / ((double)m_lTotal)));
+            m_papp->trace(0.05 + ((((double)m_pinstall->m_lTotal - (double)(m_pinstall->m_lProcessing)) * (0.25 - 0.05)) / ((double)m_pinstall->m_lTotal)));
 
          }
          else if (m_eitemtype == item_type_set)
          {
 
-            m_papp->trace(0.3 + ((((double)m_lTotal - (double)(*m_plong)) * (0.84 - 0.3)) / ((double)m_lTotal)));
+            m_papp->trace(0.3 + ((((double)m_pinstall->m_lTotal - (double)(m_pinstall->m_lProcessing)) * (0.84 - 0.3)) / ((double)m_pinstall->m_lTotal)));
 
          }
 
@@ -101,14 +97,14 @@ namespace a_spa
          {
 
             OutputDebugString("op_spa spaadmin Success\r\n");
-            InterlockedIncrement(m_plongOk);
+            InterlockedIncrement(&m_pinstall->m_lOk);
 
          }
          else
          {
 
             OutputDebugString("op_spa spaadmin Failed\r\n");
-            InterlockedIncrement(m_plongBad);
+            InterlockedIncrement(&m_pinstall->m_lBad);
 
          }
 
@@ -120,13 +116,13 @@ namespace a_spa
          {
 
             OutputDebugString("op_spa spa Success\r\n");
-            InterlockedIncrement(m_plongOk);
+            InterlockedIncrement(&m_pinstall->m_lOk);
 
          }
          else
          {
             OutputDebugString("op_spa spa Failed\r\n");
-            InterlockedIncrement(m_plongBad);
+            InterlockedIncrement(&m_pinstall->m_lBad);
 
          }
 
@@ -138,13 +134,13 @@ namespace a_spa
          {
 
             OutputDebugString("op_spa vcredist Success\r\n");
-            InterlockedIncrement(m_plongOk);
+            InterlockedIncrement(&m_pinstall->m_lOk);
 
          }
          else
          {
             OutputDebugString("op_spa vcredist Failed\r\n");
-            InterlockedIncrement(m_plongBad);
+            InterlockedIncrement(&m_pinstall->m_lBad);
 
          }
 
@@ -156,13 +152,13 @@ namespace a_spa
          {
 
             OutputDebugString("op_spa install_bin_set Success\r\n");
-            InterlockedIncrement(m_plongOk);
+            InterlockedIncrement(&m_pinstall->m_lOk);
 
          }
          else
          {
             OutputDebugString("op_spa install_bin_set Failed\r\n");
-            InterlockedIncrement(m_plongBad);
+            InterlockedIncrement(&m_pinstall->m_lBad);
 
          }
 
@@ -262,7 +258,7 @@ namespace a_spa
       }
 
 
-      InterlockedDecrement(m_plong);
+      InterlockedDecrement(&m_pinstall->m_lProcessing);
 
       progress();
 

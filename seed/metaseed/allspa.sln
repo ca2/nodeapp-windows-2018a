@@ -26,9 +26,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "a_spa", "..\..\appseed\a_sp
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "a_spaadmin", "..\..\appseed\a_spaadmin\a_spaadmin.vcxproj", "{AE18AC57-1A37-4D2E-9E73-258D36E35340}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "a_spalib", "..\..\appseed\a_spalib\a_spalib.vcxproj", "{FA039458-2E43-45DE-9FA9-66DFA7E11E64}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_a_spalib", "..\..\appseed\a_spalib\a_spalib.vcxproj", "{FA039458-2E43-45DE-9FA9-66DFA7E11E64}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "acid", "..\..\..\app\appseed\aura\acid.vcxproj", "{A92C920F-C07D-481E-B523-565B56167CD1}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_acid", "..\..\..\app\appseed\aura\acid.vcxproj", "{A92C920F-C07D-481E-B523-565B56167CD1}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app.install", "..\..\appseed\app.install\app.install.vcxproj", "{71BAB50B-DC41-4570-B676-30380CDA3A17}"
 EndProject
