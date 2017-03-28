@@ -57,7 +57,7 @@ namespace multimedia
          
          m_phelperthread = new helper_thread(papp);
          m_phelperthread->m_pwaveout = this;
-         m_phelperthread->begin_synch();
+         m_phelperthread->begin_synch(NULL, ::multithreading::priority_time_critical);
 
          m_estate             = state_initial;
          m_pthreadCallback    = NULL;
@@ -311,28 +311,40 @@ Opened:
 
       Opened:
 
+         uint32_t uiBufferSizeLog2;
+
          if(epurpose == ::multimedia::audio::purpose_playback)
          {
 
-            iBufferCount = 16;
+            uiBufferSizeLog2 = 16;
+
+            iBufferSampleCount = (1 << 10) * 4;
+
+            iBufferCount = 4;
 
          }
          else if(epurpose == ::multimedia::audio::purpose_playground)
          {
          
+            iBufferSampleCount = (1 << 10);
+
+            uiBufferSizeLog2 = 16;
+
             iBufferCount = 4;
 
          }
          else
          {
 
+            iBufferSampleCount = (1 << 10);
+
+            uiBufferSizeLog2 = 16;
+
             iBufferCount = 4;
 
          }
 
          //iBufferSampleCount = (1 << 12);
-         iBufferSampleCount = (1 << 10);
-         uint32_t uiBufferSizeLog2;
          uint32_t uiBufferSize;
          uint32_t uiAnalysisSize;
          uint32_t uiAllocationSize;
@@ -343,7 +355,6 @@ Opened:
          //   if(m_pwaveformat->nSamplesPerSec == 44100)
          if(true)
          {
-            uiBufferSizeLog2 = 16;
             uiBufferSize = m_pwaveformat->nChannels * 2 * iBufferSampleCount; // 512 kbytes
             uiAnalysisSize = 4 * 1 << uiBufferSizeLog2;
             if(iBufferCount > 0)
