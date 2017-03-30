@@ -26,7 +26,7 @@ namespace multimedia
          m_psoundbuffer       = NULL;
          m_iBufferedCount     = 0;
          m_peffect            = NULL;
-         m_dwLostSampleCount  = 0;
+//         m_dwLostSampleCount  = 0;
 
       }
 

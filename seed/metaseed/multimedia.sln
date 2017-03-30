@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.25928.0
+VisualStudioVersion = 15.0.26228.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_cd", "..\..\..\app-core\appseed\audio_decode_cd\audio_decode_cd.vcxproj", "{C12F946A-2A59-4566-B650-D6A84408B165}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -202,6 +202,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "draw2d_cairo", "..\..\..\app\appseed\draw2d_cairo\draw2d_cairo.vcxproj", "{B5B26A30-A18D-4DC2-BACE-48C2DE33CD75}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_auraverse", "..\..\..\app-core\appseed\auraverse\auraverse.vcxproj", "{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1426,6 +1428,34 @@ Global
 		{B5B26A30-A18D-4DC2-BACE-48C2DE33CD75}.static_basis|Win32.Build.0 = basis|Win32
 		{B5B26A30-A18D-4DC2-BACE-48C2DE33CD75}.static_basis|x64.ActiveCfg = basis|x64
 		{B5B26A30-A18D-4DC2-BACE-48C2DE33CD75}.static_basis|x64.Build.0 = basis|x64
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.basis|Win32.ActiveCfg = basis|Win32
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.basis|Win32.Build.0 = basis|Win32
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.basis|x64.ActiveCfg = basis|x64
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.basis|x64.Build.0 = basis|x64
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.codeanalysis|Win32.ActiveCfg = basis|Win32
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.codeanalysis|Win32.Build.0 = basis|Win32
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.codeanalysis|x64.ActiveCfg = basis|x64
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.codeanalysis|x64.Build.0 = basis|x64
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.memdleak|Win32.ActiveCfg = basis|Win32
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.memdleak|Win32.Build.0 = basis|Win32
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.memdleak|x64.ActiveCfg = basis|x64
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.memdleak|x64.Build.0 = basis|x64
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.no_precompiled_header|Win32.ActiveCfg = basis|Win32
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.no_precompiled_header|Win32.Build.0 = basis|Win32
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.no_precompiled_header|x64.ActiveCfg = basis|x64
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.no_precompiled_header|x64.Build.0 = basis|x64
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.profiler|Win32.ActiveCfg = basis|Win32
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.profiler|Win32.Build.0 = basis|Win32
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.profiler|x64.ActiveCfg = basis|x64
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.profiler|x64.Build.0 = basis|x64
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.stage|Win32.ActiveCfg = stage|Win32
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.stage|Win32.Build.0 = stage|Win32
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.stage|x64.ActiveCfg = stage|x64
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.stage|x64.Build.0 = stage|x64
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.static_basis|Win32.ActiveCfg = basis|Win32
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.static_basis|Win32.Build.0 = basis|Win32
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.static_basis|x64.ActiveCfg = basis|x64
+		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.static_basis|x64.Build.0 = basis|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
