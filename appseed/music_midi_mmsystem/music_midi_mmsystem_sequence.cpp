@@ -178,25 +178,25 @@ Seq_Open_File_Cleanup:
          }
 
 
-         e_result sequence::OpenFile(const char * lpFileName, int32_t openMode)
-         {
+         //e_result sequence::OpenFile(const char * lpFileName, int32_t openMode)
+         //{
 
-            ::file::file_sp file;
+         //   ::file::file_sp file;
 
-            try
-            {
+         //   try
+         //   {
 
-               file = Application.file().get_file(lpFileName, ::file::mode_read | ::file::share_deny_write | ::file::type_binary);
+         //      file = Application.file().get_file(lpFileName, ::file::mode_read | ::file::share_deny_write | ::file::type_binary);
 
-            }
-            catch(...)
-            {
+         //   }
+         //   catch(...)
+         //   {
 
-            }
+         //   }
 
-            return OpenFile(*file, openMode);
+         //   return OpenFile(*file, openMode);
 
-         }
+         //}
 
 
          e_result sequence::OpenFile(memory * pmemorystorage, int32_t openMode, e_storage estorage)
@@ -246,66 +246,66 @@ Seq_Open_File_Cleanup:
 
          }
 
-         e_result sequence::OpenFile(::file::file & ar, int32_t openMode)
-         {
+         //e_result sequence::OpenFile(::file::file & ar, int32_t openMode)
+         //{
 
-            SMFFILEINFO                sfi;
-            e_result                   smfrc = success;
-            uint32_t                   cbBuffer;
+         //   SMFFILEINFO                sfi;
+         //   e_result                   smfrc = success;
+         //   uint32_t                   cbBuffer;
 
-            if (GetState() != status_no_file)
-            {
-               
-               return EFunctionNotSupported;
+         //   if (GetState() != status_no_file)
+         //   {
+         //      
+         //      return EFunctionNotSupported;
 
-            }
+         //   }
 
 
 
-            //   m_pstrFile = _tcsdup(lpFileName);
-            //   m_strFile = lpFileName;
+         //   //   m_pstrFile = _tcsdup(lpFileName);
+         //   //   m_strFile = lpFileName;
 
-            //    ASSERT(m_pstrFile != NULL);
+         //   //    ASSERT(m_pstrFile != NULL);
 
-            m_iOpenMode = openMode;
+         //   m_iOpenMode = openMode;
 
-            //    sofs.pstrName     = m_pstrFile;
+         //   //    sofs.pstrName     = m_pstrFile;
 
-            //PSMF pSmf = new SMF();
+         //   //PSMF pSmf = new SMF();
 
-            //smfrc = file()->OpenFile(&sofs);
-            smfrc = file()->OpenFile(ar, openMode);
+         //   //smfrc = file()->OpenFile(&sofs);
+         //   smfrc = file()->OpenFile(ar, openMode);
 
-            //smfrc = smfOpenFile(&sofs);
-            if (::music::success != smfrc)
-            {
-            }
-            else
-            {
-               //    m_hSmf = sofs.hSmf;
-               //    ((PSMF) m_hSmf)->GetFileInfo(&sfi);
-               file()->GetFileInfo(&sfi);
+         //   //smfrc = smfOpenFile(&sofs);
+         //   if (::music::success != smfrc)
+         //   {
+         //   }
+         //   else
+         //   {
+         //      //    m_hSmf = sofs.hSmf;
+         //      //    ((PSMF) m_hSmf)->GetFileInfo(&sfi);
+         //      file()->GetFileInfo(&sfi);
 
-               m_dwTimeDivision = sfi.dwTimeDivision;
-               m_tkLength       = sfi.tkLength;
-               if(m_iOpenMode == file::OpenForPlaying)
-               {
-                  m_msLength      = TicksToMillisecs(m_tkLength);
-               }
-               /* Track buffers must be big enough to hold the state data returned
-               ** by smfSeek()
-               */
-               cbBuffer = MIN(m_cbBuffer, ::music::midi::GetStateMaxSize());
-            }
+         //      m_dwTimeDivision = sfi.dwTimeDivision;
+         //      m_tkLength       = sfi.tkLength;
+         //      if(m_iOpenMode == file::OpenForPlaying)
+         //      {
+         //         m_msLength      = TicksToMillisecs(m_tkLength);
+         //      }
+         //      /* Track buffers must be big enough to hold the state data returned
+         //      ** by smfSeek()
+         //      */
+         //      cbBuffer = MIN(m_cbBuffer, ::music::midi::GetStateMaxSize());
+         //   }
 
-            if(success != smfrc)
-               CloseFile();
-            else
-               SetState(status_opened);
+         //   if(success != smfrc)
+         //      CloseFile();
+         //   else
+         //      SetState(status_opened);
 
-            return smfrc;
+         //   return smfrc;
 
-         }
+         //}
 
 
          /***************************************************************************
@@ -601,7 +601,7 @@ Seq_Open_File_Cleanup:
 
             m_flags.unsignalize(FlagEOF);
 
-            file()->GetFlags().unsignalize(file::EndOfFile);
+            file()->m_flags &= ~file::EndOfFile;
 
             for (i = 1; i < m_buffera.get_size(); i++)
             {

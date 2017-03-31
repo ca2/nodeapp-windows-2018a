@@ -35,9 +35,9 @@ namespace music
 
             void MuteTrack(int32_t iIndex, bool bMute = true);
 
-            e_result WorkSeekBegin();
+            //e_result WorkSeekBegin();
 
-            e_result CalcTkLength();
+            //e_result CalcTkLength();
 
             //e_result CreateTempoMap();
 
@@ -75,7 +75,7 @@ namespace music
 
             bool IsTune1000File();
 
-            bool IsOpened();
+//            bool IsOpened();
 
             e_result RebuildIndex();
 
@@ -85,11 +85,11 @@ namespace music
 
             e_result ReplaceSameDeltaEvent(::music::midi::event & pEventNew);
 
-            e_result GetPreviousEvent(::music::midi::event * pPreviousEvent, ::music::midi::event * pEvent);
+            //e_result GetPreviousEvent(::music::midi::event * pPreviousEvent, ::music::midi::event * pEvent);
 
             e_result SaveFile(const char * lpFilePath);
 
-            e_result WorkWriteXFTracks(stringa & tokena, imedia::position_array & positiona, ::music::xf::info_header & xfinfoheader);
+            //e_result WorkWriteXFTracks(stringa & tokena, imedia::position_array & positiona, ::music::xf::info_header & xfinfoheader);
 
             //int32_t CalcMelodyTrack(::music::midi::events ** ppEvents, imedia::position_array * pTicks);
 
@@ -103,11 +103,13 @@ namespace music
 
             e_result WorkStreamRender(LPMIDIHDR lpmh, imedia_position tkMax, uint32_t cbPrerollNomimalMax);
 
-            e_result WorkGetNextEvent(::music::midi::event * & pevent, imedia_position tkMax, bool bTkMaxInclusive);
+            //e_result WorkGetNextEvent(::music::midi::event * & pevent, imedia_position tkMax, bool bTkMaxInclusive);
 
-            e_result WorkGetNextRawEvent(::music::midi::event * & pevent, imedia_position tkMax, bool bTkMaxInclusive);
+            //e_result WorkGetNextRawEvent(::music::midi::event * & pevent, imedia_position tkMax, bool bTkMaxInclusive);
 
-            e_result WorkGetNextRawMidiEvent(::music::midi::event * & pevent, imedia_position tkMax, bool bTkMaxInclusive);
+            //e_result WorkGetNextRawMidiEvent(::music::midi::event * & pevent, imedia_position tkMax, bool bTkMaxInclusive);
+            //e_result WorkGetNextRawMidiEvent(::music::midi::event * & pevent, MAX_TICKS, true);
+            //e_result WorkGetNextRawMidiEvent(::music::midi::event * & pevent);
 
             e_result WorkSeek(imedia_position tkPosition, LPMIDIHDR lpmh);
 
@@ -123,13 +125,13 @@ namespace music
 
             void WorkSeekEnd();
 
-            e_result OpenFile(::music::midi::file::buffer &file, int32_t openMode);
+            //e_result OpenFile(::music::midi::file::buffer &file, int32_t openMode);
 
-            e_result OpenFile(::file::file & file, int32_t openMode);
+            //e_result OpenFile(::file::file & file, int32_t openMode);
 
-            e_result OpenFile(memory * pmemstorage, int32_t openMode, ::music::e_storage);
+            //e_result OpenFile(memory * pmemstorage, int32_t openMode, ::music::e_storage);
 
-            e_result OpenFile(memory * pmemstorage, ::music::midi::file::e_open eopenmode, ::music::e_storage estorage);
+            //e_result OpenFile(memory * pmemstorage, ::music::midi::file::e_open eopenmode, ::music::e_storage estorage);
 
             e_result SaveFile(::file::file & file);
 
@@ -169,9 +171,9 @@ namespace music
 
             //e_result Build();
 
-            e_result GetNextEvent(::music::midi::event *& pevent, imedia_position tkMax, bool   bTkMaxInclusive);
+            //e_result GetNextEvent(::music::midi::event *& pevent, imedia_position tkMax, bool   bTkMaxInclusive);
 
-            e_result GetNextEventTkPosition(imedia_position * pTkPosition, imedia_position tkMax);
+            //e_result GetNextEventTkPosition(imedia_position * pTkPosition, imedia_position tkMax);
 
             void _SyncSeek(imedia_position tkPosition, ::ikaraoke::events_tracks_v1 * ptracksv1);
 
@@ -183,7 +185,7 @@ namespace music
 
             e_result InsertPadEvent(imedia_position tkDelta, LPMIDIHDR lpmh);
 
-            void SetOpened(bool bOpened = true);
+            //void SetOpened(bool bOpened = true);
 
 
          };

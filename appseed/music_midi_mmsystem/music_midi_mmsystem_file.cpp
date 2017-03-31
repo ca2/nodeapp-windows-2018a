@@ -57,132 +57,152 @@ namespace music
          }
 
 
-         e_result buffer::OpenFile(::music::midi::file::buffer &file, int32_t openMode)
-         {
-
-            e_result               smfrc = ::music::success;
-
-            m_ptracks->m_iMelodyTrackTipA = -1;
-
-            m_iOpenMode = openMode;
-
-            GetFlags().unsignalize_all();
-
-            if(openMode == file::OpenForParsingLevel3)
-            {
-               GetFlags().signalize(file::DisablePlayLevel1Operations);
-            }
-
-            m_ptracks->GetFlags() = GetFlags();
-
-            uint32_t cbImage = file.GetImageSize();
-            try
-            {
-               allocate(cbImage);
-            }
-            catch(memory_exception * pe)
-            {
-               TRACE( "smfOpenFile: No memory for image! [%08lX]", cbImage);
-               smfrc = ENoMemory;
-               delete pe;
-               goto smf_Open_File_Cleanup;
-            }
-
-            LPBYTE lpbImage;
-
-            lpbImage = GetImage();
-
-            memcpy(lpbImage, file.GetImage(), cbImage);
-
-            /* If the file exists, parse it just enough to pull out the header and
-            ** build a track index.
-            */
-            smfrc = Build();
-
-smf_Open_File_Cleanup:
-
-            if (::music::success != smfrc)
-            {
-            }
-            else
-            {
-               SetOpened();
-            }
-
-            return smfrc;
-         }
-
-         e_result buffer::OpenFile(memory * pmemorystorage, int32_t openMode, e_storage estorage)
-         {
-            ASSERT(pmemorystorage != NULL);
-
-            e_result smfrc = ::music::success;
-
-            m_ptracks->m_iMelodyTrackTipA = -1;
-
-            m_iOpenMode = openMode;
-
-            GetFlags().unsignalize_all();
-
-            if(openMode == file::OpenForParsingLevel3)
-            {
-
-               GetFlags().signalize(file::DisablePlayLevel1Operations);
-
-            }
-
-            m_ptracks->GetFlags() = GetFlags();
-
-            if(estorage == ::music::storage_copy)
-            {
-               this->get_primitive_memory()->operator=(*pmemorystorage);
-            }
-            else if(estorage == ::music::storage_attach)
-            {
-               if(m_estorage == ::music::storage_attach)
-               {
-                  detach();
-               }
-               else if(m_estorage == ::music::storage_own)
-               {
-                  delete detach();
-               }
-               attach(pmemorystorage);
-            }
-            else if(estorage == ::music::storage_own)
-            {
-               if(m_estorage == ::music::storage_attach)
-               {
-                  detach();
-               }
-               this->get_primitive_memory()->operator=(*pmemorystorage);
-            }
-
-            m_estorage = estorage;
-
-
-            /* If the file exists, parse it just enough to pull out the header and
-            ** build a track index.
-            */
-
-            smfrc = Build();
-
-            if (::music::success == smfrc)
-            {
-               SetOpened();
-            }
-            return smfrc;
-         }
-
-
-         e_result buffer::OpenFile(memory * pmemorystorage, file::e_open eopenmode, e_storage estorage)
-         {
-
-            return OpenFile(pmemorystorage, (int32_t) eopenmode, estorage);
-
-         }
-
-
+//         e_result buffer::OpenFile(::music::midi::file::buffer &file, int32_t openMode)
+//         {
+//
+//            e_result               smfrc = ::music::success;
+//
+//            m_ptracks->m_iMelodyTrackTipA = -1;
+//
+//            m_iOpenMode = openMode;
+//
+//            m_flags = 0;
+//
+//            if(openMode == file::OpenForParsingLevel3)
+//            {
+//               
+//               m_flags |= file::DisablePlayLevel1Operations;
+//
+//            }
+//
+//            m_ptracks->m_flags = m_flags;
+//
+//            uint32_t cbImage = file.GetImageSize();
+//            try
+//            {
+//               allocate(cbImage);
+//            }
+//            catch(memory_exception * pe)
+//            {
+//               TRACE( "smfOpenFile: No memory for image! [%08lX]", cbImage);
+//               smfrc = ENoMemory;
+//               delete pe;
+//               goto smf_Open_File_Cleanup;
+//            }
+//
+//            LPBYTE lpbImage;
+//
+//            lpbImage = GetImage();
+//
+//            memcpy(lpbImage, file.GetImage(), cbImage);
+//
+//            /* If the file exists, parse it just enough to pull out the header and
+//            ** build a track index.
+//            */
+//            smfrc = Build();
+//
+//smf_Open_File_Cleanup:
+//
+//            if (::music::success != smfrc)
+//            {
+//            }
+//            else
+//            {
+//               SetOpened();
+//            }
+//
+//            return smfrc;
+//         }
+//
+//         e_result buffer::OpenFile(memory * pmemorystorage, int32_t openMode, e_storage estorage)
+//         {
+//            ASSERT(pmemorystorage != NULL);
+//
+//            e_result smfrc = ::music::success;
+//
+//            m_ptracks->m_iMelodyTrackTipA = -1;
+//
+//            m_iOpenMode = openMode;
+//
+//            m_flags = 0;
+//
+//            if(openMode == file::OpenForParsingLevel3)
+//            {
+//
+//               m_flags |= file::DisablePlayLevel1Operations;
+//
+//            }
+//
+//            m_ptracks->m_flags = m_flags;
+//
+//            if(estorage == ::music::storage_copy)
+//            {
+//
+//               this->get_primitive_memory()->operator=(*pmemorystorage);
+//
+//            }
+//            else if(estorage == ::music::storage_attach)
+//            {
+//
+//               if(m_estorage == ::music::storage_attach)
+//               {
+//
+//                  detach();
+//
+//               }
+//               else if(m_estorage == ::music::storage_own)
+//               {
+//
+//                  delete detach();
+//
+//               }
+//
+//               attach(pmemorystorage);
+//
+//            }
+//            else if(estorage == ::music::storage_own)
+//            {
+//
+//               if(m_estorage == ::music::storage_attach)
+//               {
+//
+//                  detach();
+//
+//               }
+//
+//               this->get_primitive_memory()->operator=(*pmemorystorage);
+//
+//            }
+//
+//            m_estorage = estorage;
+//
+//
+//            /* If the file exists, parse it just enough to pull out the header and
+//            ** build a track index.
+//            */
+//
+//            smfrc = Build();
+//
+//            if (::music::success == smfrc)
+//            {
+//
+//               SetOpened();
+//
+//            }
+//
+//            return smfrc;
+//
+//         }
+//
+//
+//         e_result buffer::OpenFile(memory * pmemorystorage, file::e_open eopenmode, e_storage estorage)
+//         {
+//
+//            return OpenFile(pmemorystorage, (int32_t) eopenmode, estorage);
+//
+//         }
+//
+//
          /*****************************************************************************
          *
          * smfOpenFile
@@ -207,41 +227,41 @@ smf_Open_File_Cleanup:
          *     SMFOPENFILESTRUCT were invalid.
          *
          *****************************************************************************/
-         e_result buffer::OpenFile(::file::file & ar, int32_t openMode)
-         {
-            e_result               smfrc = ::music::success;
+         //e_result buffer::OpenFile(::file::file & ar, int32_t openMode)
+         //{
+         //   e_result               smfrc = ::music::success;
 
-            m_ptracks->m_iMelodyTrackTipA = -1;
+         //   m_ptracks->m_iMelodyTrackTipA = -1;
 
-            m_iOpenMode = openMode;
+         //   m_iOpenMode = openMode;
 
-            GetFlags().unsignalize_all();
+         //   GetFlags().unsignalize_all();
 
-            if(openMode == file::OpenForParsingLevel3)
-            {
-               GetFlags().signalize(file::DisablePlayLevel1Operations);
-            }
+         //   if(openMode == file::OpenForParsingLevel3)
+         //   {
+         //      GetFlags().signalize(file::DisablePlayLevel1Operations);
+         //   }
 
-            m_ptracks->GetFlags() = GetFlags();
+         //   m_ptracks->GetFlags() = GetFlags();
 
 
-            get_memory()->transfer_from_begin(ar);
+         //   get_memory()->transfer_from_begin(ar);
 
-            /* If the file exists, parse it just enough to pull out the header and
-            ** build a track index.
-            */
-            smfrc = Build();
+         //   /* If the file exists, parse it just enough to pull out the header and
+         //   ** build a track index.
+         //   */
+         //   smfrc = Build();
 
-            if (::music::success != smfrc)
-            {
-            }
-            else
-            {
-               SetOpened();
-            }
+         //   if (::music::success != smfrc)
+         //   {
+         //   }
+         //   else
+         //   {
+         //      SetOpened();
+         //   }
 
-            return smfrc;
-         }
+         //   return smfrc;
+         //}
 
          /*****************************************************************************
          *
@@ -393,7 +413,7 @@ smf_Open_File_Cleanup:
 
             if (tkOffset > m_tkLength)
             {
-               TRACE( "sTTM: Clipping ticks to file length!");
+               //TRACE( "sTTM: Clipping ticks to file length!");
                tkOffset = m_tkLength;
             }
 
@@ -532,7 +552,7 @@ smf_Open_File_Cleanup:
 
             if (tkOffset > m_tkLength)
             {
-               TRACE( "sMTT: Clipping ticks to file length!");
+               //TRACE( "sMTT: Clipping ticks to file length!");
                tkOffset = m_tkLength;
             }
 
@@ -770,7 +790,7 @@ smf_Open_File_Cleanup:
             m_cbPendingUserEvent = (uint32_t) m_memstorageF1.get_size();
             m_hpbPendingUserEvent = m_memstorageF1.get_data();
             ASSERT(m_hpbPendingUserEvent);
-            GetFlags().unsignalize(file::InsertSysEx);
+            m_flags &= ~file::InsertSysEx;
             m_dwPendingUserEvent = ((MEVT_F_CALLBACK | MEVT_F_LONG |(((uint32_t)MEVT_COMMENT)<<24)) & 0xFF000000L);
 
             smfrc = InsertParmData(tkDelta, lpmh);
@@ -939,7 +959,7 @@ smf_Open_File_Cleanup:
 
                m_cbPendingUserEvent = (uint32_t) pEvent->GetDataSize();
                m_hpbPendingUserEvent = pEvent->GetData();
-               GetFlags().unsignalize(file::InsertSysEx);
+               m_flags &= ~file::InsertSysEx;
 
                if(pEvent->GetFullType() == ::music::midi::SysExEnd)
                {
@@ -947,7 +967,7 @@ smf_Open_File_Cleanup:
                }
                else if(pEvent->GetFullType() == ::music::midi::SysEx)
                {
-                  GetFlags().signalize(file::InsertSysEx);
+                  m_flags |= file::InsertSysEx;
                   ++m_cbPendingUserEvent;
 
                   /* Falling through...
@@ -1051,7 +1071,7 @@ smf_Open_File_Cleanup:
 
             lpdw = (LPDWORD)(lpmh->lpData + lpmh->dwBytesRecorded);
 
-            if (GetFlags().is_signalized(file::EndOfFile))
+            if (m_flags & file::EndOfFile)
             {
 
                return SEndOfFile;
@@ -1256,7 +1276,7 @@ smf_Open_File_Cleanup:
                   */
                   if(SReachedTkMax == smfrc)
                   {
-                     GetFlags().signalize(file::EndOfFile);
+                     m_flags |= file::EndOfFile;
                   }
 
                   TRACE( "smfReadEvents: ReadEvents() -> %u", (uint32_t)smfrc);
@@ -1267,7 +1287,7 @@ smf_Open_File_Cleanup:
 
             }
 
-            return (GetFlags().is_signalized(file::EndOfFile)) ? SEndOfFile : ::music::success;
+            return (m_flags & file::EndOfFile) ? SEndOfFile : ::music::success;
          }
 
          /******************************************************************************
@@ -1566,11 +1586,11 @@ smf_Open_File_Cleanup:
 
             dwRounded = (dwLength + 3) & (~3L);
 
-            if (GetFlags().is_signalized(file::InsertSysEx))
+            if (m_flags & file::InsertSysEx)
             {
                LPBYTE lpb = (LPBYTE) lpdw;
                *lpb++ = ::music::midi::SysEx;
-               GetFlags().unsignalize(file::InsertSysEx);
+               m_flags &= ~file::InsertSysEx;
                --dwLength;
                --m_cbPendingUserEvent;
                lpdw = (LPDWORD) lpb;
@@ -1663,8 +1683,8 @@ smf_Open_File_Cleanup:
             memset(&m_keyframe.rbProgram, 0x00, sizeof(m_keyframe.rbProgram));
 
             m_ptracks->m_tkPosition = 0;
-            GetFlags().unsignalize(file::EndOfFile);
-            m_ptracks->GetFlags().unsignalize(file::EndOfFile);
+            m_flags &= ~file::EndOfFile;
+            m_ptracks->m_flags &= ~file::EndOfFile;
 
             m_ptracks->seek_begin();
             //for (ptrk = m_rTracks, idxTrack = m_dwTracks; idxTrack--; ptrk++)
@@ -1821,8 +1841,8 @@ smf_Open_File_Cleanup:
 
 
             m_ptracks->m_tkPosition = 0;
-            GetFlags().unsignalize(file::EndOfFile);
-            m_ptracks->GetFlags().unsignalize(file::EndOfFile);
+            m_flags &= ~file::EndOfFile;
+            m_ptracks->m_flags &= ~file::EndOfFile;
 
             m_ptracks->seek_begin();
 
@@ -1837,99 +1857,99 @@ smf_Open_File_Cleanup:
          }
 
 
-         e_result buffer::GetNextEvent(::music::midi::event * & pevent, imedia_position tkMax, bool bTkMaxInclusive)
-         {
+         //e_result buffer::GetNextEvent(::music::midi::event * & pevent, imedia_position tkMax, bool bTkMaxInclusive)
+         //{
 
-            if (GetFlags().is_signalized(file::EndOfFile))
-            {
+         //   if (m_flags & file::EndOfFile)
+         //   {
 
-               return SEndOfFile;
+         //      return SEndOfFile;
 
-            }
+         //   }
 
-            if(!GetFlags().is_signalized(file::DisablePlayLevel1Operations))
-            {
-               if(m_mepaImmediate.get_size() > 0)
-               {
-                  ::music::midi::event * peventImmediate = m_mepaImmediate.element_at(0);
-                  *pevent = *peventImmediate;
-                  delete peventImmediate;
-                  m_mepaImmediate.remove_at(0);
-                  return success;
-               }
-               if(m_mepaOnQuarterNote.get_size() > 0)
-               {
-                  imedia_position tkMod = m_ptracks->m_tkPosition  % WORDSWAP(m_pFileHeader->wDivision);
-                  imedia_position tkQuarterNote;
-                  if(tkMod == 0)
-                  {
-                     tkQuarterNote = m_ptracks->m_tkPosition;
-                  }
-                  else
-                  {
-                     tkQuarterNote = m_ptracks->m_tkPosition + WORDSWAP(m_pFileHeader->wDivision) - tkMod;
-                  }
-                  imedia_position tkPosition;
-                  e_result smfrc = GetNextEventTkPosition(&tkPosition, tkMax);
-                  if(smfrc == SEndOfFile)
-                     GetFlags().signalize(file::EndOfFile);
-                  if(tkPosition > tkQuarterNote)
-                  {
-                     m_ptracks->m_tkPosition  = tkQuarterNote;
-                     *pevent = *m_mepaOnQuarterNote.element_at(0);
-                     delete m_mepaOnQuarterNote.element_at(0);
-                     m_mepaOnQuarterNote.remove_at(0);
-                     return ::music::success;
-                  }
-               }
-            }
+         //   if(!(m_flags & file::DisablePlayLevel1Operations))
+         //   {
+         //      if(m_mepaImmediate.get_size() > 0)
+         //      {
+         //         ::music::midi::event * peventImmediate = m_mepaImmediate.element_at(0);
+         //         *pevent = *peventImmediate;
+         //         delete peventImmediate;
+         //         m_mepaImmediate.remove_at(0);
+         //         return success;
+         //      }
+         //      if(m_mepaOnQuarterNote.get_size() > 0)
+         //      {
+         //         imedia_position tkMod = m_ptracks->m_tkPosition  % WORDSWAP(m_pFileHeader->wDivision);
+         //         imedia_position tkQuarterNote;
+         //         if(tkMod == 0)
+         //         {
+         //            tkQuarterNote = m_ptracks->m_tkPosition;
+         //         }
+         //         else
+         //         {
+         //            tkQuarterNote = m_ptracks->m_tkPosition + WORDSWAP(m_pFileHeader->wDivision) - tkMod;
+         //         }
+         //         imedia_position tkPosition;
+         //         e_result smfrc = GetNextEventTkPosition(&tkPosition, tkMax);
+         //         if(smfrc == SEndOfFile)
+         //            m_flags |= file::EndOfFile;
+         //         if(tkPosition > tkQuarterNote)
+         //         {
+         //            m_ptracks->m_tkPosition  = tkQuarterNote;
+         //            *pevent = *m_mepaOnQuarterNote.element_at(0);
+         //            delete m_mepaOnQuarterNote.element_at(0);
+         //            m_mepaOnQuarterNote.remove_at(0);
+         //            return ::music::success;
+         //         }
+         //      }
+         //   }
 
-            e_result smfrc   = m_ptracks->GetNextEvent(pevent, tkMax, bTkMaxInclusive, false, false);
+         //   e_result smfrc   = m_ptracks->GetNextEvent(pevent, tkMax, bTkMaxInclusive, false, false);
 
-            if(!GetFlags().is_signalized(file::DisablePlayLevel1Operations))
-            {
-               if(pevent->GetType() == ::music::midi::NoteOn &&
-                  pevent->GetNoteVelocity() != 0)
-               {
-                  m_ptracks->m_iaNoteOn.element_at(pevent->GetTrack())++;
-                  m_ptracks->m_iaLevel.element_at(pevent->GetTrack())
-                     = pevent->GetNoteVelocity();
-               }
-               else if((pevent->GetType() == ::music::midi::NoteOn &&
-                  pevent->GetNoteVelocity() == 0) ||
-                  pevent->GetType() == ::music::midi::NoteOff)
-               {
-                  int32_t iCount = m_ptracks->m_iaNoteOn.element_at(pevent->GetTrack());
-                  if(iCount > 0)
-                     iCount--;
-                  m_ptracks->m_iaNoteOn.element_at(pevent->GetTrack()) =
-                     iCount;
-                  if(iCount == 0)
-                     m_ptracks->m_iaLevel.element_at(pevent->GetTrack())
-                     = 0;
-               }
-            }
-            if(smfrc == SEndOfFile)
-               GetFlags().signalize(file::EndOfFile);
-            return smfrc;
+         //   if(!(m_flags & file::DisablePlayLevel1Operations))
+         //   {
+         //      if(pevent->GetType() == ::music::midi::NoteOn &&
+         //         pevent->GetNoteVelocity() != 0)
+         //      {
+         //         m_ptracks->m_iaNoteOn.element_at(pevent->GetTrack())++;
+         //         m_ptracks->m_iaLevel.element_at(pevent->GetTrack())
+         //            = pevent->GetNoteVelocity();
+         //      }
+         //      else if((pevent->GetType() == ::music::midi::NoteOn &&
+         //         pevent->GetNoteVelocity() == 0) ||
+         //         pevent->GetType() == ::music::midi::NoteOff)
+         //      {
+         //         int32_t iCount = m_ptracks->m_iaNoteOn.element_at(pevent->GetTrack());
+         //         if(iCount > 0)
+         //            iCount--;
+         //         m_ptracks->m_iaNoteOn.element_at(pevent->GetTrack()) =
+         //            iCount;
+         //         if(iCount == 0)
+         //            m_ptracks->m_iaLevel.element_at(pevent->GetTrack())
+         //            = 0;
+         //      }
+         //   }
+         //   if(smfrc == SEndOfFile)
+         //      GetFlags().signalize(file::EndOfFile);
+         //   return smfrc;
 
 
 
-         }
+         //}
 
-         e_result buffer::GetNextEventTkPosition(imedia_position * pTkPosition, imedia_position tkMax)
-         {
+         //e_result buffer::GetNextEventTkPosition(imedia_position * pTkPosition, imedia_position tkMax)
+         //{
 
-            if (GetFlags().is_signalized(file::EndOfFile))
-            {
+         //   if (GetFlags().is_signalized(file::EndOfFile))
+         //   {
 
-               return SEndOfFile;
+         //      return SEndOfFile;
 
-            }
+         //   }
 
-            return m_ptracks->GetNextEventTkPosition(pTkPosition, tkMax);
+         //   return m_ptracks->GetNextEventTkPosition(pTkPosition, tkMax);
 
-         }
+         //}
 
 
 
@@ -2149,41 +2169,41 @@ smf_Open_File_Cleanup:
 
          } */
 
-         e_result buffer::GetPreviousEvent(
-            ::music::midi::event  * pPreviousEvent,
-            ::music::midi::event  * pEvent)
-         {
-            UNREFERENCED_PARAMETER(pPreviousEvent);
+         //e_result buffer::GetPreviousEvent(
+         //   ::music::midi::event  * pPreviousEvent,
+         //   ::music::midi::event  * pEvent)
+         //{
+         //   UNREFERENCED_PARAMETER(pPreviousEvent);
 
-            e_result               smfrc;
-            ::music::midi::event *           pevent = NULL;
-            ::music::midi::event *           peventPrevious = NULL;
+         //   e_result               smfrc;
+         //   ::music::midi::event *           pevent = NULL;
+         //   ::music::midi::event *           peventPrevious = NULL;
 
-            m_ptracks->m_tkPosition = 0;
-            GetFlags().unsignalize(file::EndOfFile);
-            m_ptracks->GetFlags().unsignalize(file::EndOfFile);
+         //   m_ptracks->m_tkPosition = 0;
+         //   GetFlags().unsignalize(file::EndOfFile);
+         //   m_ptracks->GetFlags().unsignalize(file::EndOfFile);
 
-            m_ptracks->seek_begin();
-            //for (ptrk = m_rTracks, idxTrack = m_dwTracks; idxTrack--; ptrk++)
+         //   m_ptracks->seek_begin();
+         //   //for (ptrk = m_rTracks, idxTrack = m_dwTracks; idxTrack--; ptrk++)
 
-            while(::music::success == (smfrc = GetNextEvent(pevent, pEvent->GetPosition(), TRUE)))
-            {
-               if(pevent->m_pImage == pEvent->m_pImage)
-               {
-                  pEvent->operator =(*peventPrevious);
-                  return ::music::success;
-               }
-               peventPrevious = pevent;
-            }
+         //   while(::music::success == (smfrc = GetNextEvent(pevent, pEvent->GetPosition(), TRUE)))
+         //   {
+         //      if(pevent->m_pImage == pEvent->m_pImage)
+         //      {
+         //         pEvent->operator =(*peventPrevious);
+         //         return ::music::success;
+         //      }
+         //      peventPrevious = pevent;
+         //   }
 
-            if (SReachedTkMax != smfrc)
-            {
-               return smfrc;
-            }
+         //   if (SReachedTkMax != smfrc)
+         //   {
+         //      return smfrc;
+         //   }
 
-            return ::music::success;
+         //   return ::music::success;
 
-         }
+         //}
 
          e_result buffer::ReplaceSameDeltaEvent(::music::midi::event &eventNew)
          {
@@ -2522,7 +2542,7 @@ smf_Open_File_Cleanup:
 
             lpdw = (LPDWORD)(lpmh->lpData + lpmh->dwBytesRecorded);
 
-            if (GetFlags().is_signalized(file::EndOfFile))
+            if (m_flags & file::EndOfFile)
             {
                return SEndOfFile;
             }
@@ -2671,165 +2691,178 @@ smf_Open_File_Cleanup:
 
             }
 
-            return (GetFlags().is_signalized(file::EndOfFile)) ? SEndOfFile : ::music::success;
+            return (m_flags & file::EndOfFile) ? SEndOfFile : ::music::success;
          }
 
-         e_result buffer::WorkGetNextRawEvent(
-            ::music::midi::event *&      pevent,
-            imedia_position                tkMax,
-            bool                  bTkMaxInclusive)
-         {
-            if(GetFlags().is_signalized(file::EndOfFile))
-            {
-               return SEndOfFile;
-            }
-            e_result smfrc = m_ptracks->WorkGetNextRawEvent(
-               pevent,
-               tkMax,
-               bTkMaxInclusive,
-               false);
-            if(smfrc == SEndOfFile)
-            {
-               GetFlags().signalize(file::EndOfFile);
-            }
-            return smfrc;
-         }
+         //e_result buffer::WorkGetNextRawEvent(
+         //   ::music::midi::event *&      pevent,
+         //   imedia_position                tkMax,
+         //   bool                  bTkMaxInclusive)
+         //{
+         //   if(GetFlags().is_signalized(file::EndOfFile))
+         //   {
+         //      return SEndOfFile;
+         //   }
+         //   e_result smfrc = m_ptracks->WorkGetNextRawEvent(
+         //      pevent,
+         //      tkMax,
+         //      bTkMaxInclusive,
+         //      false);
+         //   if(smfrc == SEndOfFile)
+         //   {
+         //      GetFlags().signalize(file::EndOfFile);
+         //   }
+         //   return smfrc;
+         //}
 
-         e_result buffer::WorkGetNextRawMidiEvent(
-            ::music::midi::event *&      pevent,
-            imedia_position                tkMax,
-            bool                  bTkMaxInclusive)
-         {
-            if(GetFlags().is_signalized(file::EndOfFile))
-            {
-               return SEndOfFile;
-            }
-            e_result smfrc = m_ptracks->WorkGetNextRawMidiEvent(
-               pevent,
-               tkMax,
-               bTkMaxInclusive,
-               false);
-            if(smfrc == SEndOfFile)
-            {
-               GetFlags().signalize(file::EndOfFile);
-            }
-            return smfrc;
-         }
+         //e_result buffer::WorkGetNextRawMidiEvent(::music::midi::event * & pevent)
+         //{
+         //   if(GetFlags().is_signalized(file::EndOfFile))
+         //   {
+         //      return SEndOfFile;
+         //   }
+         //   e_result smfrc = m_ptracks->WorkGetNextRawMidiEvent(pevent);
+         //   if(smfrc == SEndOfFile)
+         //   {
+         //      GetFlags().signalize(file::EndOfFile);
+         //   }
+         //   return smfrc;
+         //}
 
-         e_result buffer::WorkGetNextEvent(
-            ::music::midi::event *&      pevent,
-            imedia_position                tkMax,
-            bool                  bTkMaxInclusive)
-         {
-            if (GetFlags().is_signalized(file::EndOfFile))
-            {
-               return SEndOfFile;
-            }
-            // XXX
-            /*   if(!GetFlags().is_signalized(DisablePlayLevel1Operations))
-            {
-            if(m_mepaImmediate.get_size() > 0)
-            {
-            event * peventImmediate = m_mepaImmediate.element_at(0);
-            pevent = peventImmediate;
-            delete peventImmediate;
-            m_mepaImmediate.remove_at(0);
-            return ::music::success;
-            }
-            if(m_mepaOnQuarterNote.get_size() > 0)
-            {
-            imedia_position tkMod = m_ptracks->m_tkPosition  % WORDSWAP(m_pFileHeader->wDivision);
-            imedia_position tkQuarterNote;
-            if(tkMod == 0)
-            {
-            tkQuarterNote = m_ptracks->m_tkPosition;
-            }
-            else
-            {
-            tkQuarterNote = m_ptracks->m_tkPosition + WORDSWAP(m_pFileHeader->wDivision) - tkMod;
-            }
-            imedia_position tkPosition;
-            e_result smfrc = GetNextEventTkPosition(&tkPosition, tkMax);
-            if(smfrc == SEndOfFile)
-            GetFlags().signalize(file::EndOfFile);
-            if(tkPosition > tkQuarterNote)
-            {
-            m_ptracks->m_tkPosition  = tkQuarterNote;
-            pevent = m_mepaOnQuarterNote.element_at(0);
-            delete m_mepaOnQuarterNote.element_at(0);
-            m_mepaOnQuarterNote.remove_at(0);
-            return ::music::success;
-            }
-            }
-            }*/
+         ////e_result buffer::WorkGetNextRawMidiEvent(
+         ////   ::music::midi::event *&      pevent,
+         ////   imedia_position                tkMax,
+         ////   bool                  bTkMaxInclusive)
+         ////{
+         ////   if (GetFlags().is_signalized(file::EndOfFile))
+         ////   {
+         ////      return SEndOfFile;
+         ////   }
+         ////   e_result smfrc = m_ptracks->WorkGetNextRawMidiEvent(
+         ////      pevent,
+         ////      tkMax,
+         ////      bTkMaxInclusive);
+         ////   if (smfrc == SEndOfFile)
+         ////   {
+         ////      GetFlags().signalize(file::EndOfFile);
+         ////   }
+         ////   return smfrc;
+         ////}
 
-            e_result smfrc;
-            while(true)
-            {
-               smfrc   = m_ptracks->WorkGetNextEvent(
-                  pevent,
-                  tkMax,
-                  bTkMaxInclusive,
-                  false);
-               if(smfrc != ::music::success)
-               {
-                  break;
-               }
-               //      if(GetFlags().is_signalized(DisablePlayLevel1Operations))
-               //    {
-               //     break;
-               //      }
-               if(GetFlags().is_signalized(file::DisableMute))
-               {
-                  break;
-               }
-               else
-               {
-                  if(pevent->GetType() == ::music::midi::NoteOn
-                     && pevent->GetNoteVelocity() > 0
-                     && m_iaMuteTrack.contains(pevent->GetTrack()))
-                  {
-                     ASSERT(TRUE);
-                  }
-                  else
-                  {
-                     break;
-                  }
-               }
-            }
+         //e_result buffer::WorkGetNextEvent(
+         //   ::music::midi::event *&      pevent,
+         //   imedia_position                tkMax,
+         //   bool                  bTkMaxInclusive)
+         //{
+         //   if (GetFlags().is_signalized(file::EndOfFile))
+         //   {
+         //      return SEndOfFile;
+         //   }
+         //   // XXX
+         //   /*   if(!GetFlags().is_signalized(DisablePlayLevel1Operations))
+         //   {
+         //   if(m_mepaImmediate.get_size() > 0)
+         //   {
+         //   event * peventImmediate = m_mepaImmediate.element_at(0);
+         //   pevent = peventImmediate;
+         //   delete peventImmediate;
+         //   m_mepaImmediate.remove_at(0);
+         //   return ::music::success;
+         //   }
+         //   if(m_mepaOnQuarterNote.get_size() > 0)
+         //   {
+         //   imedia_position tkMod = m_ptracks->m_tkPosition  % WORDSWAP(m_pFileHeader->wDivision);
+         //   imedia_position tkQuarterNote;
+         //   if(tkMod == 0)
+         //   {
+         //   tkQuarterNote = m_ptracks->m_tkPosition;
+         //   }
+         //   else
+         //   {
+         //   tkQuarterNote = m_ptracks->m_tkPosition + WORDSWAP(m_pFileHeader->wDivision) - tkMod;
+         //   }
+         //   imedia_position tkPosition;
+         //   e_result smfrc = GetNextEventTkPosition(&tkPosition, tkMax);
+         //   if(smfrc == SEndOfFile)
+         //   GetFlags().signalize(file::EndOfFile);
+         //   if(tkPosition > tkQuarterNote)
+         //   {
+         //   m_ptracks->m_tkPosition  = tkQuarterNote;
+         //   pevent = m_mepaOnQuarterNote.element_at(0);
+         //   delete m_mepaOnQuarterNote.element_at(0);
+         //   m_mepaOnQuarterNote.remove_at(0);
+         //   return ::music::success;
+         //   }
+         //   }
+         //   }*/
 
-            if(!GetFlags().is_signalized(file::DisablePlayLevel1Operations))
-            {
-               if(pevent->GetType() == ::music::midi::NoteOn &&
-                  pevent->GetNoteVelocity() != 0)
-               {
-                  m_ptracks->m_iaNoteOn.element_at(pevent->GetTrack())++;
-                  m_ptracks->m_iaLevel.element_at(pevent->GetTrack())
-                     = pevent->GetNoteVelocity();
-               }
-               else if((pevent->GetType() == ::music::midi::NoteOn &&
-                  pevent->GetNoteVelocity() == 0) ||
-                  pevent->GetType() == ::music::midi::NoteOff)
-               {
-                  int32_t iCount = m_ptracks->m_iaNoteOn.element_at(pevent->GetTrack());
-                  if(iCount > 0)
-                     iCount--;
-                  m_ptracks->m_iaNoteOn.element_at(pevent->GetTrack()) =
-                     iCount;
-                  if(iCount == 0)
-                     m_ptracks->m_iaLevel.element_at(pevent->GetTrack())
-                     = 0;
-               }
-            }
-            if(smfrc == SEndOfFile)
-            {
-               GetFlags().signalize(file::EndOfFile);
-            }
-            return smfrc;
+         //   e_result smfrc;
+         //   while(true)
+         //   {
+         //      smfrc   = m_ptracks->WorkGetNextEvent(
+         //         pevent,
+         //         tkMax,
+         //         bTkMaxInclusive,
+         //         false);
+         //      if(smfrc != ::music::success)
+         //      {
+         //         break;
+         //      }
+         //      //      if(GetFlags().is_signalized(DisablePlayLevel1Operations))
+         //      //    {
+         //      //     break;
+         //      //      }
+         //      if(GetFlags().is_signalized(file::DisableMute))
+         //      {
+         //         break;
+         //      }
+         //      else
+         //      {
+         //         if(pevent->GetType() == ::music::midi::NoteOn
+         //            && pevent->GetNoteVelocity() > 0
+         //            && m_iaMuteTrack.contains(pevent->GetTrack()))
+         //         {
+         //            ASSERT(TRUE);
+         //         }
+         //         else
+         //         {
+         //            break;
+         //         }
+         //      }
+         //   }
+
+         //   if(!GetFlags().is_signalized(file::DisablePlayLevel1Operations))
+         //   {
+         //      if(pevent->GetType() == ::music::midi::NoteOn &&
+         //         pevent->GetNoteVelocity() != 0)
+         //      {
+         //         m_ptracks->m_iaNoteOn.element_at(pevent->GetTrack())++;
+         //         m_ptracks->m_iaLevel.element_at(pevent->GetTrack())
+         //            = pevent->GetNoteVelocity();
+         //      }
+         //      else if((pevent->GetType() == ::music::midi::NoteOn &&
+         //         pevent->GetNoteVelocity() == 0) ||
+         //         pevent->GetType() == ::music::midi::NoteOff)
+         //      {
+         //         int32_t iCount = m_ptracks->m_iaNoteOn.element_at(pevent->GetTrack());
+         //         if(iCount > 0)
+         //            iCount--;
+         //         m_ptracks->m_iaNoteOn.element_at(pevent->GetTrack()) =
+         //            iCount;
+         //         if(iCount == 0)
+         //            m_ptracks->m_iaLevel.element_at(pevent->GetTrack())
+         //            = 0;
+         //      }
+         //   }
+         //   if(smfrc == SEndOfFile)
+         //   {
+         //      GetFlags().signalize(file::EndOfFile);
+         //   }
+         //   return smfrc;
 
 
 
-         }
+         //}
 
 
          e_result buffer::WorkSeek(
@@ -2853,8 +2886,8 @@ smf_Open_File_Cleanup:
             memset(&m_keyframe.rbProgram, 0x00, sizeof(m_keyframe.rbProgram));
 
             m_ptracks->m_tkPosition = 0;
-            GetFlags().unsignalize(file::EndOfFile);
-            m_ptracks->GetFlags().unsignalize(file::EndOfFile);
+            m_flags &= ~file::EndOfFile;
+            m_ptracks->m_flags &= ~file::EndOfFile;
 
             m_ptracks->WorkSeekBegin();
 
@@ -3054,21 +3087,21 @@ smf_Open_File_Cleanup:
 
          }*/
 
-         e_result buffer::CalcTkLength()
-         {
-            m_tkLength = m_ptracks->CalcTkLength();
-            return ::music::success;
+         //e_result buffer::CalcTkLength()
+         //{
+         //   m_tkLength = m_ptracks->CalcTkLength();
+         //   return ::music::success;
 
-         }
+         //}
 
-         e_result buffer::WorkSeekBegin()
-         {
-            m_ptracks->WorkSeekBegin();
-            GetFlags().unsignalize(file::EndOfFile);
-            m_tkLastDelta = 0;
-            ::lemon::set_maximum(m_positionLastWorkRender);
-            return ::music::success;
-         }
+         //e_result buffer::WorkSeekBegin()
+         //{
+         //   m_ptracks->WorkSeekBegin();
+         //   GetFlags().unsignalize(file::EndOfFile);
+         //   m_tkLastDelta = 0;
+         //   ::lemon::set_maximum(m_positionLastWorkRender);
+         //   return ::music::success;
+         //}
 
          void buffer::MuteTrack(int32_t iIndex, bool bMute)
          {
@@ -3199,80 +3232,80 @@ smf_Open_File_Cleanup:
          }
 
 
-         e_result buffer::WorkWriteXFTracks(
-            stringa &  tokena,
-            imedia::position_array & positiona,
-            ::music::xf::info_header & xfinfoheader)
-         {
-            ::music::midi::tracks & tracka = GetTracks();
+         //e_result buffer::WorkWriteXFTracks(
+         //   stringa &  tokena,
+         //   imedia::position_array & positiona,
+         //   ::music::xf::info_header & xfinfoheader)
+         //{
+         //   ::music::midi::tracks & tracka = GetTracks();
 
-            while(tracka.GetTrackCount() > 1)
-            {
-               tracka.remove_at(1);
-            }
-
-
-
-            ::music::midi::track & track = *(class ::music::midi::track *) tracka.TrackAt(0);
-            if(!track.IsXFFile())
-            {
-               BYTE XFVERSIONID[] = {
-                  0x43,  // YAMAHA ID
-                  0x7B,  //
-                  0x00,  //
-                  0x58,  // X
-                  0x46,  // F
-                  0x30,  // 0
-                  0x32,   // 2
-                  0x00,
-                  0x11};
-               track.seek_begin();
-               ::music::midi::event eventV008;
-               eventV008.SetPosition(0);
-               eventV008.SetFullType(::music::midi::Meta);
-               eventV008.SetMetaType(::music::midi::MetaSeqSpecific);
-               eventV008.SetData(XFVERSIONID, sizeof(XFVERSIONID));
-               track.GetWorkTrack().insert_at(0, eventV008);
-            }
-
-            ::music::xf::info_header xfInfoHeader;
-
-            class ::music::midi::track * pmiditrack = tracka.CreateTrack(FOURCC_XFIH);
-
-            pmiditrack->WorkWriteXFInfoHeader(
-               NULL,
-               &xfinfoheader,
-               NULL);
-            pmiditrack->GetEvent().SetFullType(::music::midi::Meta);
-            pmiditrack->GetEvent().SetMetaType(::music::midi::MetaEOT);
-            pmiditrack->GetEvent().SetData(NULL, 0);
-            pmiditrack->GetEvent().SetDelta(0);
-            pmiditrack->WorkWriteEvent();
-
-            pmiditrack = tracka.CreateTrack(FOURCC_XFIH);
-
-            pmiditrack->WriteXFLyricTrack(tokena, positiona, "L1");
-
-            return ::music::success;
-         }
+         //   while(tracka.GetTrackCount() > 1)
+         //   {
+         //      tracka.remove_at(1);
+         //   }
 
 
-         bool buffer::IsOpened()
-         {
-            return GetFlags().is_signalized(file::Opened);
-         }
 
-         void buffer::SetOpened(bool bOpened)
-         {
-            if(bOpened)
-            {
-               GetFlags().signalize(file::Opened);
-            }
-            else
-            {
-               GetFlags().unsignalize(file::Opened);
-            }
-         }
+         //   ::music::midi::track & track = *(class ::music::midi::track *) tracka.TrackAt(0);
+         //   if(!track.IsXFFile())
+         //   {
+         //      BYTE XFVERSIONID[] = {
+         //         0x43,  // YAMAHA ID
+         //         0x7B,  //
+         //         0x00,  //
+         //         0x58,  // X
+         //         0x46,  // F
+         //         0x30,  // 0
+         //         0x32,   // 2
+         //         0x00,
+         //         0x11};
+         //      track.seek_begin();
+         //      ::music::midi::event eventV008;
+         //      eventV008.SetPosition(0);
+         //      eventV008.SetFullType(::music::midi::Meta);
+         //      eventV008.SetMetaType(::music::midi::MetaSeqSpecific);
+         //      eventV008.SetData(XFVERSIONID, sizeof(XFVERSIONID));
+         //      track.GetWorkTrack().insert_at(0, eventV008);
+         //   }
+
+         //   ::music::xf::info_header xfInfoHeader;
+
+         //   class ::music::midi::track * pmiditrack = tracka.CreateTrack(FOURCC_XFIH);
+
+         //   pmiditrack->WorkWriteXFInfoHeader(
+         //      NULL,
+         //      &xfinfoheader,
+         //      NULL);
+         //   pmiditrack->GetEvent().SetFullType(::music::midi::Meta);
+         //   pmiditrack->GetEvent().SetMetaType(::music::midi::MetaEOT);
+         //   pmiditrack->GetEvent().SetData(NULL, 0);
+         //   pmiditrack->GetEvent().SetDelta(0);
+         //   pmiditrack->WorkWriteEvent();
+
+         //   pmiditrack = tracka.CreateTrack(FOURCC_XFIH);
+
+         //   pmiditrack->WriteXFLyricTrack(tokena, positiona, "L1");
+
+         //   return ::music::success;
+         //}
+
+
+         //bool buffer::IsOpened()
+         //{
+         //   return GetFlags().is_signalized(file::Opened);
+         //}
+
+         //void buffer::SetOpened(bool bOpened)
+         //{
+         //   if(bOpened)
+         //   {
+         //      GetFlags().signalize(file::Opened);
+         //   }
+         //   else
+         //   {
+         //      GetFlags().unsignalize(file::Opened);
+         //   }
+         //}
 
 
       } //namespace mmsystem
