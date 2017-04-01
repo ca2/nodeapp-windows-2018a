@@ -4229,12 +4229,16 @@ gdi_fallback:
             }
             return size;*/
 
-      class sized size;
+      //class sized size;
 
-      if(!GetTextExtent(size, str, (int32_t) str.get_length(), (int32_t) str.get_length()))
-         return class size(0, 0);
+      //if(!GetTextExtent(size, str, (int32_t) str.get_length(), (int32_t) str.get_length()))
+      //   return class size(0, 0);
 
-      return class size((long) size.cx, (long) size.cy);
+      return GetTextExtent(str, str.get_length());
+
+         //return class size(0, 0);
+
+      //return class size((long) size.cx, (long) size.cy);
 
       /*if(m_pgraphics == NULL)
          return size(0, 0);
