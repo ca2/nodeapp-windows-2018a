@@ -11,9 +11,7 @@ namespace draw2d_gdiplus
 
 
    dib::dib(::aura::application * papp) :
-      object(papp),
-      m_spbitmap(papp),
-      m_spgraphics(allocer())
+      object(papp)
    {
 
       m_sizeWnd.cx = 0;
@@ -93,7 +91,7 @@ namespace draw2d_gdiplus
       m_spbitmap.alloc(allocer());
       m_spgraphics.alloc(allocer());
 
-      if (m_spbitmap.m_p == NULL)
+      if (m_spbitmap.is_null())
       {
 
          m_size.cx = 0;
