@@ -345,6 +345,7 @@ namespace draw2d_gdiplus
       virtual int32_t draw_text_ex(LPTSTR lpszString,strsize nCount,const RECTD & rect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams);
       virtual int32_t draw_text_ex(const string & str,const RECTD & rect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams);
 
+      virtual ::count graphics::GetEachCharTextExtent(array < size > & sizea, const string & str);
       virtual size GetTextExtent(const char * lpszString, strsize nCount, strsize iIndex) const;
       virtual size GetTextExtent(const char * lpszString, strsize nCount) const;
       virtual size GetTextExtent(const string & str) const;
