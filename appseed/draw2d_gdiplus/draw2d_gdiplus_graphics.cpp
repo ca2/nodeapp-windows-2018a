@@ -3995,7 +3995,8 @@ gdi_fallback:
 
       double dFontWidth = m_spfont->m_dFontWidth;
 
-      int iStep = 1;
+      // 32 is the maximum number of ranges SetMeasurableCharacterRanges accepts as workable argument
+      int iStep = 32;
 
       for (index i = iStart; i < iStart + iCount; i+=iStep)
       {
