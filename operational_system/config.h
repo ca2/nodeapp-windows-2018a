@@ -4,9 +4,9 @@
 #include "config_memdleak.h"
 
 
-#if !defined(_DLL)
-#define CUBE
-#endif
+//#if !defined(_DLL)
+//#define CUBE
+//#endif
 
 #define VARIADIC_TEMPLATE_FORMAT2
 

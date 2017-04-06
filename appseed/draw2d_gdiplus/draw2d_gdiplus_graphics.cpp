@@ -4103,6 +4103,8 @@ gdi_fallback:
 
       wstring wstr = ::str::international::utf8_to_unicode(lpszString, nCount);
 
+      wstring wstrRange = ::str::international::utf8_to_unicode(lpszString, iIndex);
+
       //strsize iRange = 0;
       //strsize i = 0;
       //strsize iLen;
@@ -4119,30 +4121,42 @@ gdi_fallback:
       //      break;
       //}
 
-      //Gdiplus::CharacterRange charRanges[1] = { Gdiplus::CharacterRange(0, (INT) iRange) };
+      Gdiplus::CharacterRange charRanges[1] = { Gdiplus::CharacterRange(0, (INT)wstrRange.get_length()) };
 
       Gdiplus::StringFormat strFormat(Gdiplus::StringFormat::GenericTypographic());
       //Gdiplus::StringFormat strFormat;
 
-      //strFormat.SetMeasurableCharacterRanges(1, charRanges);
+      strFormat.SetMeasurableCharacterRanges(1, charRanges);
 
       strFormat.SetFormatFlags(strFormat.GetFormatFlags()
                                | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
                                | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap);
 
-      //int32_t count = strFormat.GetMeasurableCharacterRangeCount();
+      int32_t count = strFormat.GetMeasurableCharacterRangeCount();
 
-      //Gdiplus::Region * pCharRangeRegions = new Gdiplus::Region[count];
-
-      Gdiplus::RectF box(0.0f, 0.0f, 128.0f * 1024.0f, 128.0f * 1024.0f);
 
       Gdiplus::PointF origin(0, 0);
 
-      m_pgraphics->MeasureString(wstr, (int32_t) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, Gdiplus::StringFormat::GenericTypographic(), &box);
+      if (count <= 0)
+      {
+         Gdiplus::RectF box(0.0f, 0.0f, 0.0f, 0.0f);
 
-      return class ::size((int64_t)(box.Width  * m_spfont->m_dFontWidth), (int64_t)(box.Height));
+         wstr = ::str::international::utf8_to_unicode(lpszString, iIndex);
+         
+         m_pgraphics->MeasureString(wstrRange, (int32_t)wstrRange.get_length(), ((graphics *)this)->gdiplus_font(), origin, Gdiplus::StringFormat::GenericTypographic(), &box);
 
-      //((graphics *)this)->m_pgraphics->MeasureCharacterRanges(wstr, (INT) wstr.get_length(), ((graphics *)this)->gdiplus_font(), box, &strFormat, (INT) count, pCharRangeRegions);
+         return class ::size((int64_t)(box.Width  * m_spfont->m_dFontWidth), (int64_t)(box.Height));
+
+      }
+
+      Gdiplus::RectF box(0.0f, 0.0f, 128.0f * 1024.0f, 128.0f * 1024.0f);
+      Gdiplus::Region * pCharRangeRegions = new Gdiplus::Region[count];
+
+      //m_pgraphics->MeasureString(wstr, (int32_t) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, Gdiplus::StringFormat::GenericTypographic(), &box);
+
+      //return class ::size((int64_t)(box.Width  * m_spfont->m_dFontWidth), (int64_t)(box.Height));
+
+      ((graphics *)this)->m_pgraphics->MeasureCharacterRanges(wstr, (INT) wstr.get_length(), ((graphics *)this)->gdiplus_font(), box, &strFormat, (INT) count, pCharRangeRegions);
 
       //Gdiplus::Region * pregion = NULL;
 
@@ -4154,33 +4168,32 @@ gdi_fallback:
 
       //}
 
+      for(index i = 1; i < count; i++)
+      {
 
+         pCharRangeRegions[0].Union(&pCharRangeRegions[i]);
 
-      //for(i = 1; i < count; i++)
-      //{
-      //   pregion->Union(&pCharRangeRegions[i]);
-      //}
-
+      }
 
       //if(pregion == NULL)
       //   return size(0, 0);
 
-      //delete [] pCharRangeRegions;
 
 
-      //Gdiplus::RectF rectBound;
+      Gdiplus::RectF rectBound;
 
-      //pregion->GetBounds(&rectBound, m_pgraphics);
+      pCharRangeRegions[0].GetBounds(&rectBound, m_pgraphics);
 
       //delete pregion;
 
+      delete[] pCharRangeRegions;
 
 
-      //Gdiplus::SizeF size;
+      Gdiplus::SizeF size;
 
-      //rectBound.GetSize(&size);
+      rectBound.GetSize(&size);
 
-      
+      return class ::size((int64_t)(size.Width  * m_spfont->m_dFontWidth), (int64_t)(size.Height));
 
    }
 
