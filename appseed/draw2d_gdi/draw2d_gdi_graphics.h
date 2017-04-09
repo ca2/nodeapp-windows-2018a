@@ -370,8 +370,8 @@ namespace draw2d_gdi
       virtual int draw_text_ex(const char * lpszString,strsize nCount,const RECT & lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams);
       virtual int draw_text_ex(const string & str,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams);
 
-      virtual size GetTextExtent(const char * lpszString, strsize nCount) const;
-      virtual size GetTextExtent(const string & str) const;
+      virtual sized GetTextExtent(const char * lpszString, strsize nCount) const override;
+      virtual sized GetTextExtent(const string & str) const override;
       virtual size GetOutputTextExtent(const char * lpszString,strsize nCount) const;
       virtual size GetOutputTextExtent(const string & str) const;
       virtual size GetTabbedTextExtent(const char * lpszString,strsize nCount, count nTabPositions, LPINT lpnTabStopPositions) const;

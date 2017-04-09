@@ -2936,8 +2936,8 @@ namespace production
       twitterObj.get_oauth().setConsumerKey(m_strTwitterConsumerKey);
       twitterObj.get_oauth().setConsumerSecret(m_strTwitterConsumerSecret);
 
-      string strPathKey = Application.dir().userappdata() / "twitterClient_token_key" + ::str::from(m_eversion) + ".txt";
-      string strPathSecret = Application.dir().userappdata() / "twitterClient_token_secret" + ::str::from(m_eversion) + ".txt";
+      string strPathKey = Application.dir().userappdata() / "twitterClient_token_key" + ::str::from((int) m_eversion) + ".txt";
+      string strPathSecret = Application.dir().userappdata() / "twitterClient_token_secret" + ::str::from((int) m_eversion) + ".txt";
       /* Step 1: Check if we alredy have OAuth access token from a previous run */
       //    char szKey[1024];
       string myOAuthAccessTokenKey = Application.file().as_string(strPathKey);
@@ -2998,8 +2998,8 @@ namespace production
       twitterObj.get_oauth().setConsumerKey(m_strTwitterConsumerKey);
       twitterObj.get_oauth().setConsumerSecret(m_strTwitterConsumerSecret);
 
-      string strPathKey = Application.dir().userappdata() / "twitterClient_token_key" + ::str::from(m_eversion) + ".txt";
-      string strPathSecret = Application.dir().userappdata() / "twitterClient_token_secret" + ::str::from(m_eversion) + ".txt";
+      string strPathKey = Application.dir().userappdata() / "twitterClient_token_key" + ::str::from((int) m_eversion) + ".txt";
+      string strPathSecret = Application.dir().userappdata() / "twitterClient_token_secret" + ::str::from((int) m_eversion) + ".txt";
       /* Step 1: Check if we alredy have OAuth access token from a previous run */
       //    char szKey[1024];
       string myOAuthAccessTokenKey = Application.file().as_string(strPathKey);

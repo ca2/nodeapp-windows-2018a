@@ -4714,7 +4714,7 @@ namespace draw2d_gdi
 
 
 
-   size graphics::GetTextExtent(const char * lpszString, strsize nCount) const
+   sized graphics::GetTextExtent(const char * lpszString, strsize nCount) const
    {
 
       if(get_handle2() == NULL)
@@ -4738,7 +4738,7 @@ namespace draw2d_gdi
    }
 
 
-   size graphics::GetTextExtent(const string & str) const
+   sized graphics::GetTextExtent(const string & str) const
    {
 
       if(get_handle2() == NULL)
@@ -4752,11 +4752,11 @@ namespace draw2d_gdi
 
       if(!::GetTextExtentPoint32W(get_handle2(), wstr, (int)wstr.get_length(), &size))
       {
-         return class size(0, 0);
+         return class sized(0, 0);
 
       }
 
-      return size;
+      return sized(size);
 
    }
 
