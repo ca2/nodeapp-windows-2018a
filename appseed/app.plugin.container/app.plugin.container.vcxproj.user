@@ -4,6 +4,10 @@
     <LocalDebuggerCommand>C:\Program Files (x86)\ca2\stage\x86\ca2plugin-container.exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">
+    <LocalDebuggerCommand>C:\Program Files (x86)\ca2\stage\x86\ca2plugin-container.exe</LocalDebuggerCommand>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">
     <LocalDebuggerCommand>C:\Program Files (x86)\ca2\stage\x86\ca2plugin-container.exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
