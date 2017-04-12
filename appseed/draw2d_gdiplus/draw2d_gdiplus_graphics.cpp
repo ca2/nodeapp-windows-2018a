@@ -192,6 +192,10 @@ namespace draw2d_gdiplus
 
       m_pgraphics->SetPageUnit(Gdiplus::UnitPixel);
 
+      set_text_rendering(::draw2d::text_rendering_anti_alias);
+
+      set_smooth_mode(::draw2d::smooth_mode_high);
+
       return true;
 
    }
@@ -275,7 +279,7 @@ namespace draw2d_gdiplus
 
       m_pgraphics->SetPageUnit(Gdiplus::UnitPixel);
 
-      //set_text_rendering(::draw2d::text_rendering_anti_alias_grid_fit);
+      set_text_rendering(::draw2d::text_rendering_anti_alias);
 
       set_smooth_mode(::draw2d::smooth_mode_high);
 
@@ -336,7 +340,9 @@ namespace draw2d_gdiplus
 
          m_pgraphics->SetPageUnit(Gdiplus::UnitPixel);
 
-         //set_text_rendering(::draw2d::text_rendering_anti_alias_grid_fit);
+         set_text_rendering(::draw2d::text_rendering_anti_alias);
+
+         set_smooth_mode(::draw2d::smooth_mode_high);
 
          return hbitmap;
 
@@ -382,10 +388,14 @@ namespace draw2d_gdiplus
       return ::GetMapMode(get_handle2());
    }
 
+   
    int32_t graphics::GetGraphicsMode() const
    {
+
       return ::GetGraphicsMode(get_handle2());
+
    }
+
 
    bool graphics::GetWorldTransform(XFORM* pXform) const
    {
@@ -1767,6 +1777,10 @@ gdi_fallback:
 
       m_pgraphics->SetPageUnit(Gdiplus::UnitPixel);
 
+      set_text_rendering(::draw2d::text_rendering_anti_alias);
+
+      set_smooth_mode(::draw2d::smooth_mode_high);
+
       return 1;
 
    }
@@ -2601,7 +2615,9 @@ gdi_fallback:
 
          m_pgraphics->SetPageUnit(Gdiplus::UnitPixel);
 
-         //set_text_rendering(::draw2d::text_rendering_anti_alias_grid_fit);
+         set_text_rendering(::draw2d::text_rendering_anti_alias);
+
+         set_smooth_mode(::draw2d::smooth_mode_high);
 
          m_hdc = (HDC) hdc;
 

@@ -403,9 +403,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{832191B5-B82F-40EA-874E-C31B8D00B794}"
 	ProjectSection(SolutionItems) = preProject
 		Performance17.psess = Performance17.psess
+		Performance21.psess = Performance21.psess
 	EndProjectSection
 EndProject
 Global
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
 		basis|x64 = basis|x64
