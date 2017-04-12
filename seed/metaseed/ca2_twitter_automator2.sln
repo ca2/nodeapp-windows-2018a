@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.0
+VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\app.vcxproj", "{19841115-1984-0411-1977-021977151984}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -51,7 +51,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_ca2_twitter_automator",
 		{84517713-2000-419D-A87F-4338C9DDE3FA} = {84517713-2000-419D-A87F-4338C9DDE3FA}
 		{84517714-2000-419D-A87F-4338C9DDE3FA} = {84517714-2000-419D-A87F-4338C9DDE3FA}
 		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
-		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0} = {4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}
 		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
 		{51778453-C0AA-419D-A87F-4338C9DDE3FA} = {51778453-C0AA-419D-A87F-4338C9DDE3FA}
 		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB} = {1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}
@@ -59,7 +58,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_ca2_twitter_automator",
 		{B39ED2B3-D53A-4077-B957-930979A3577D} = {B39ED2B3-D53A-4077-B957-930979A3577D}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wndfrm_metro", "..\..\..\app-core\appseed\wndfrm_metro\wndfrm_metro.vcxproj", "{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_ca2_twitter_automator2", "..\..\..\app-ca2\appseed\twitter_automator2\twitter_automator2.vcxproj", "{649FDB70-A1DB-449E-BFF2-CFA3DB3EAC16}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0BB1A1D1-7B7D-4484-9DF5-060481390526} = {0BB1A1D1-7B7D-4484-9DF5-060481390526}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wndfrm_anthill", "..\..\..\app-core\appseed\wndfrm_anthill\wndfrm_anthill.vcxproj", "{0BB1A1D1-7B7D-4484-9DF5-060481390526}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -263,18 +267,30 @@ Global
 		{C7AFCEFA-3079-4B23-8F97-4543BB980265}.stage|Win32.Build.0 = stage|Win32
 		{C7AFCEFA-3079-4B23-8F97-4543BB980265}.stage|x64.ActiveCfg = stage|x64
 		{C7AFCEFA-3079-4B23-8F97-4543BB980265}.stage|x64.Build.0 = stage|x64
-		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.basis|Win32.ActiveCfg = basis|Win32
-		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.basis|Win32.Build.0 = basis|Win32
-		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.basis|x64.ActiveCfg = basis|x64
-		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.basis|x64.Build.0 = basis|x64
-		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.cover|Win32.ActiveCfg = cover|Win32
-		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.cover|Win32.Build.0 = cover|Win32
-		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.cover|x64.ActiveCfg = cover|x64
-		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.cover|x64.Build.0 = cover|x64
-		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.stage|Win32.ActiveCfg = stage|Win32
-		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.stage|Win32.Build.0 = stage|Win32
-		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.stage|x64.ActiveCfg = stage|x64
-		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.stage|x64.Build.0 = stage|x64
+		{649FDB70-A1DB-449E-BFF2-CFA3DB3EAC16}.basis|Win32.ActiveCfg = basis|Win32
+		{649FDB70-A1DB-449E-BFF2-CFA3DB3EAC16}.basis|Win32.Build.0 = basis|Win32
+		{649FDB70-A1DB-449E-BFF2-CFA3DB3EAC16}.basis|x64.ActiveCfg = basis|x64
+		{649FDB70-A1DB-449E-BFF2-CFA3DB3EAC16}.basis|x64.Build.0 = basis|x64
+		{649FDB70-A1DB-449E-BFF2-CFA3DB3EAC16}.cover|Win32.ActiveCfg = cover|Win32
+		{649FDB70-A1DB-449E-BFF2-CFA3DB3EAC16}.cover|Win32.Build.0 = cover|Win32
+		{649FDB70-A1DB-449E-BFF2-CFA3DB3EAC16}.cover|x64.ActiveCfg = cover|x64
+		{649FDB70-A1DB-449E-BFF2-CFA3DB3EAC16}.cover|x64.Build.0 = cover|x64
+		{649FDB70-A1DB-449E-BFF2-CFA3DB3EAC16}.stage|Win32.ActiveCfg = stage|Win32
+		{649FDB70-A1DB-449E-BFF2-CFA3DB3EAC16}.stage|Win32.Build.0 = stage|Win32
+		{649FDB70-A1DB-449E-BFF2-CFA3DB3EAC16}.stage|x64.ActiveCfg = stage|x64
+		{649FDB70-A1DB-449E-BFF2-CFA3DB3EAC16}.stage|x64.Build.0 = stage|x64
+		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.basis|Win32.ActiveCfg = basis|Win32
+		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.basis|Win32.Build.0 = basis|Win32
+		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.basis|x64.ActiveCfg = basis|x64
+		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.basis|x64.Build.0 = basis|x64
+		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.cover|Win32.ActiveCfg = cover|Win32
+		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.cover|Win32.Build.0 = cover|Win32
+		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.cover|x64.ActiveCfg = cover|x64
+		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.cover|x64.Build.0 = cover|x64
+		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.stage|Win32.ActiveCfg = stage|Win32
+		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.stage|Win32.Build.0 = stage|Win32
+		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.stage|x64.ActiveCfg = stage|x64
+		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
