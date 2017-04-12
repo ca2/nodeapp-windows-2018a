@@ -2574,10 +2574,44 @@ gdi_fallback:
    void graphics::Draw3dRect(int32_t x, int32_t y, int32_t cx, int32_t cy,
                              COLORREF clrTopLeft, COLORREF clrBottomRight)
    {
-      FillSolidRect(x, y, cx - 1, 1, clrTopLeft);
-      FillSolidRect(x, y, 1, cy - 1, clrTopLeft);
-      FillSolidRect(x + cx - 1, y, 1, cy, clrBottomRight);
-      FillSolidRect(x, y + cy - 1, cx, 1, clrBottomRight);
+      //if (m_pdib != NULL)
+      //{
+      //   m_pdib->map();
+      //   point p = GetViewportOrg();
+      //   m_pdib->vertical_line(x + p.x, argb_get_r_value(clrTopLeft),
+      //      argb_get_r_value(clrTopLeft),
+      //      argb_get_g_value(clrTopLeft),
+      //      argb_get_a_value(clrTopLeft),
+      //      y + p.y + 1,
+      //      x + cx - 1);
+      //   m_pdib->horizontal_line(y + p.y, argb_get_r_value(clrTopLeft),
+      //      argb_get_r_value(clrTopLeft),
+      //      argb_get_g_value(clrTopLeft),
+      //      argb_get_a_value(clrTopLeft),
+      //      x + p.x,
+      //      x + cx - 1);
+      //   m_pdib->horizontal_line(y + p.y, argb_get_r_value(clrTopLeft),
+      //      argb_get_r_value(clrTopLeft),
+      //      argb_get_g_value(clrTopLeft),
+      //      argb_get_a_value(clrTopLeft),
+      //      x + p.x,
+      //      x + cx - 1);
+      //   return;
+      //}
+      //auto e = m_pgraphics->GetSmoothingMode();
+      //m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeNone);
+      ::draw2d::pen_sp pen(allocer());
+      pen->create_solid(1.0, clrTopLeft);
+      SelectObject(pen);
+      MoveTo(x, y + cy - 1);
+      LineTo(x, y);
+      LineTo(x+cx-1, y);
+      pen->create_solid(1.0, clrBottomRight);
+      SelectObject(pen);
+      MoveTo(x+cx-1, y + 1);
+      LineTo(x+cx-1, y + cy - 1);
+      LineTo(x+1, y + cy - 1);
+      //m_pgraphics->SetSmoothingMode(e);
    }
 
 
