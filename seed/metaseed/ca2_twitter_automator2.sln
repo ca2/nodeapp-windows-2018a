@@ -60,16 +60,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_ca2_twitter_automator2"
 	ProjectSection(ProjectDependencies) = postProject
 		{84517713-2000-419D-A87F-4338C9DDE3FA} = {84517713-2000-419D-A87F-4338C9DDE3FA}
 		{84517714-2000-419D-A87F-4338C9DDE3FA} = {84517714-2000-419D-A87F-4338C9DDE3FA}
-		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0} = {4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}
-		{E2D7833B-9B59-4826-BBDF-C270A2115E86} = {E2D7833B-9B59-4826-BBDF-C270A2115E86}
 		{0BB1A1D1-7B7D-4484-9DF5-060481390526} = {0BB1A1D1-7B7D-4484-9DF5-060481390526}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wndfrm_anthill", "..\..\..\app-core\appseed\wndfrm_anthill\wndfrm_anthill.vcxproj", "{0BB1A1D1-7B7D-4484-9DF5-060481390526}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wndfrm_metro", "..\..\..\app-core\appseed\wndfrm_metro\wndfrm_metro.vcxproj", "{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wndfrm_core", "..\..\..\app-core\appseed\wndfrm_core\wndfrm_core.vcxproj", "{E2D7833B-9B59-4826-BBDF-C270A2115E86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -285,30 +279,6 @@ Global
 		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.stage|Win32.Build.0 = stage|Win32
 		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.stage|x64.ActiveCfg = stage|x64
 		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.stage|x64.Build.0 = stage|x64
-		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.basis|Win32.ActiveCfg = basis|Win32
-		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.basis|Win32.Build.0 = basis|Win32
-		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.basis|x64.ActiveCfg = basis|x64
-		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.basis|x64.Build.0 = basis|x64
-		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.cover|Win32.ActiveCfg = cover|Win32
-		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.cover|Win32.Build.0 = cover|Win32
-		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.cover|x64.ActiveCfg = cover|x64
-		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.cover|x64.Build.0 = cover|x64
-		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.stage|Win32.ActiveCfg = stage|Win32
-		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.stage|Win32.Build.0 = stage|Win32
-		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.stage|x64.ActiveCfg = stage|x64
-		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}.stage|x64.Build.0 = stage|x64
-		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.basis|Win32.ActiveCfg = basis|Win32
-		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.basis|Win32.Build.0 = basis|Win32
-		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.basis|x64.ActiveCfg = basis|x64
-		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.basis|x64.Build.0 = basis|x64
-		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.cover|Win32.ActiveCfg = cover|Win32
-		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.cover|Win32.Build.0 = cover|Win32
-		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.cover|x64.ActiveCfg = cover|x64
-		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.cover|x64.Build.0 = cover|x64
-		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.stage|Win32.ActiveCfg = stage|Win32
-		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.stage|Win32.Build.0 = stage|Win32
-		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.stage|x64.ActiveCfg = stage|x64
-		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
