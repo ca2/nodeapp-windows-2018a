@@ -5,6 +5,7 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <time.h>
 #ifdef __MCRTDBG
 #include <crtdbg.h>
 #endif

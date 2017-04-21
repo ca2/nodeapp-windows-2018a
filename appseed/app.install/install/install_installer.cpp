@@ -1,6 +1,7 @@
 #include "framework.h" // from "axis/net/net_sockets.h"
 //#include "axis/net/net_sockets.h"
 //#include "axis/compress/compress.h"
+#include <stdio.h>
 #ifdef WINDOWS
 #include <Shlobj.h>
 #endif
