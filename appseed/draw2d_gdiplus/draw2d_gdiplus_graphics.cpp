@@ -4622,6 +4622,62 @@ namespace draw2d_gdiplus
 
    }
 
+
+   void graphics::FillSolidRect(double x, double y, double cx, double cy, COLORREF clr)
+   {
+
+      try
+      {
+
+         if (m_pgraphics == NULL)
+            return;
+
+         if (m_esmoothmode != ::draw2d::smooth_mode_none)
+         {
+
+            set_smooth_mode(::draw2d::smooth_mode_none);
+
+         }
+         else
+         {
+            //TRACE("optimized smoothing mode");
+         }
+
+         ::draw2d::brush_sp brushCurrent;
+
+         if (m_spbrush.is_null() || m_spbrush->m_etype != ::draw2d::brush::type_solid || m_spbrush->m_cr != clr)
+         {
+
+            brushCurrent = m_spbrush;
+
+            ::draw2d::brush_sp brush(allocer(), clr);
+
+            SelectObject(brush);
+
+         }
+         else
+         {
+
+            //TRACE("optimized brush");
+
+         }
+
+         m_pgraphics->FillRectangle(gdiplus_brush(), 
+            (Gdiplus::REAL)x,
+            (Gdiplus::REAL)y, 
+            (Gdiplus::REAL)cx, 
+            (Gdiplus::REAL)cy);
+
+
+      }
+      catch (...)
+      {
+         return;
+      }
+
+   }
+
+
    void graphics::FillSolidRect(int32_t x, int32_t y, int32_t cx, int32_t cy, COLORREF clr)
    {
 
