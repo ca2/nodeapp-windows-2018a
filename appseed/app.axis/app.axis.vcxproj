@@ -27,7 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{19841115-1984-0411-1977-021977151984}</ProjectGuid>
+    <ProjectGuid>{9E3A2EE6-CE8C-47A4-920E-15A474530882}</ProjectGuid>
     <RootNamespace>app.axis</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <ProjectName>app.axis</ProjectName>
