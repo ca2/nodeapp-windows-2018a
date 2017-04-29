@@ -28,7 +28,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_consolelab", "..\.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_common", "..\..\appseed\app_common\app_common.vcxproj", "{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "appaxis", "..\..\appseed\appaxis\appaxis.vcxproj", "{19841115-1984-0411-1977-021977151984}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app.axis", "..\..\appseed\app.axis\app.axis.vcxproj", "{19841115-1984-0411-1977-021977151984}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

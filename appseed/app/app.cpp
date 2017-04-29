@@ -1,7 +1,7 @@
 #pragma once
 
 #include "core/core/core.h"
-#include "nodeapp/appseed/app_core/app_core.h"
+#include "nodeapp/appseed/app_common/app_common.h"
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -138,7 +138,7 @@ int32_t WINAPI _tWinMain(HINSTANCE hinstance,HINSTANCE hPrevInstance,LPTSTR lpCm
       debug_box("zzzAPPzzz app","zzzAPPzzz app",MB_ICONINFORMATION);
    }
 
-   int iRet = app_core_main(hinstance,hPrevInstance,(char *)(const char *)  ::str::international::unicode_to_utf8(::GetCommandLineW()),nCmdShow,appcore);
+   int iRet = app_common_main(hinstance,hPrevInstance,(char *)(const char *)  ::str::international::unicode_to_utf8(::GetCommandLineW()),nCmdShow,appcore);
 
    if(!defer_core_term())
    {
