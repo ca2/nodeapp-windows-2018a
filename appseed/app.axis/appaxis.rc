@@ -1,0 +1,8 @@
+#include "resource.h"
+#include "axis/version.h"
+
+#if CA2_PLATFORM_VERSION == CA2_BASIS
+1 ICON                    "basis.ico"
+#else
+1 ICON                    "stage.ico"
+#endif
