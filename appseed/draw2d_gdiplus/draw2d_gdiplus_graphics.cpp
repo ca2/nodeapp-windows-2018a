@@ -4164,8 +4164,8 @@ gdi_fallback:
       strFormat.SetMeasurableCharacterRanges(1, charRanges);
 
       strFormat.SetFormatFlags(strFormat.GetFormatFlags()
-                               | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
-                               | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap);
+         | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
+         | Gdiplus::StringFormatFlagsLineLimit);
 
       int32_t count = strFormat.GetMeasurableCharacterRangeCount();
 
@@ -4238,7 +4238,7 @@ gdi_fallback:
 
       strFormat.SetFormatFlags(strFormat.GetFormatFlags()
          | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
-         | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap);
+         | Gdiplus::StringFormatFlagsLineLimit);
 
       int32_t count = strFormat.GetMeasurableCharacterRangeCount();
 
@@ -4294,8 +4294,8 @@ gdi_fallback:
       Gdiplus::StringFormat strFormat(Gdiplus::StringFormat::GenericTypographic());
 
       strFormat.SetFormatFlags(strFormat.GetFormatFlags()
-                               | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
-                               | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap);
+         | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
+         | Gdiplus::StringFormatFlagsLineLimit);
 
       m_pgraphics->MeasureString(wstr, (int32_t) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, &strFormat,  &box);
 
@@ -4457,8 +4457,8 @@ gdi_fallback:
       strFormat.SetMeasurableCharacterRanges(1, charRanges);
 
       strFormat.SetFormatFlags(strFormat.GetFormatFlags()
-                               | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
-                               | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap);
+         | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
+         | Gdiplus::StringFormatFlagsLineLimit);
 
       int32_t count = strFormat.GetMeasurableCharacterRangeCount();
 
@@ -4537,8 +4537,8 @@ gdi_fallback:
       Gdiplus::StringFormat strFormat(Gdiplus::StringFormat::GenericTypographic());
 
       strFormat.SetFormatFlags(strFormat.GetFormatFlags()
-                               | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
-                               | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap);
+         | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
+         | Gdiplus::StringFormatFlagsLineLimit);
       bool bOk = true;
 
       try
@@ -4750,7 +4750,7 @@ namespace draw2d_gdiplus
 
       }
 
-      ::draw2d::keep(this);
+      ::draw2d::keep k(this);
 
       set_alpha_mode(::draw2d::alpha_mode_blend);
 
@@ -4761,9 +4761,8 @@ namespace draw2d_gdiplus
       Gdiplus::StringFormat format(Gdiplus::StringFormat::GenericTypographic());
 
       format.SetFormatFlags(format.GetFormatFlags()
-         | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
-         | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap
-         | Gdiplus::StringFormatFlagsNoFitBlackBox);
+         | Gdiplus::StringFormatFlagsNoClip
+         | Gdiplus::StringFormatFlagsLineLimit);
 
       format.SetLineAlignment(Gdiplus::StringAlignmentNear);
 
