@@ -3771,10 +3771,10 @@ gdi_fallback:
 
       }
 
-      if (m_etextrendering == ::draw2d::text_rendering_none)
+      if (m_etextrendering != m_spfont->m_etextrendering)
       {
 
-         //set_text_rendering(::draw2d::text_rendering_anti_alias_grid_fit);
+         set_text_rendering(m_spfont->m_etextrendering);
 
       }
 
@@ -4754,7 +4754,12 @@ namespace draw2d_gdiplus
 
       set_alpha_mode(::draw2d::alpha_mode_blend);
 
-      //set_text_rendering(::draw2d::text_rendering_anti_alias_grid_fit);
+      //if (m_etextrendering != m_spfont->m_etextrendering)
+      {
+
+         set_text_rendering(m_spfont->m_etextrendering);
+
+      }
 
       Gdiplus::Status status;
 
