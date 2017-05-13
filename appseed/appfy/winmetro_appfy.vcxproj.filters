@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\nodeapp\stage\matter\msvc++\msvcp110d.dll">
+      <Filter>Library</Filter>
+    </None>
+    <None Include="..\..\..\nodeapp\stage\matter\msvc++\msvcr110d.dll">
+      <Filter>Library</Filter>
+    </None>
+    <None Include="..\..\..\nodeapp\stage\matter\msvc++\vccorlib110d.dll">
+      <Filter>Library</Filter>
+    </None>
+    <None Include=".\winmetro_hellomultiverse.pfx" />
+    <None Include="..\..\..\stage\x86\draw2d_direct2d.dll">
+      <Filter>Library</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Visual">
+      <UniqueIdentifier>{a18158b0-d81a-4990-b993-e7bfcaaec3c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library">
+      <UniqueIdentifier>{ace2cb1a-7cb1-4097-af9d-cbaf9cebd184}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="winmetro_hellomultiverse.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\HelloMultiverse30.png">
+      <Filter>Visual</Filter>
+    </Image>
+    <Image Include="assets\HelloMultiverse50.png">
+      <Filter>Visual</Filter>
+    </Image>
+    <Image Include="assets\HelloMultiverse70.png">
+      <Filter>Visual</Filter>
+    </Image>
+    <Image Include="assets\HelloMultiverse150.png">
+      <Filter>Visual</Filter>
+    </Image>
+    <Image Include="assets\HelloMultiverse310.png">
+      <Filter>Visual</Filter>
+    </Image>
+    <Image Include="assets\HelloMultiverse310-150.png">
+      <Filter>Visual</Filter>
+    </Image>
+    <Image Include="assets\HelloMultiverse620-300.png">
+      <Filter>Visual</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
