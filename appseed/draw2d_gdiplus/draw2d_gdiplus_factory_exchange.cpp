@@ -19,7 +19,6 @@ namespace draw2d_gdiplus
       System.factory().cloneable_large < font                  >  (System.type_info < ::draw2d::font                 > ());
       System.factory().cloneable_large < path                  >  (System.type_info < ::draw2d::path                 > ());
       System.factory().cloneable_large < printer               >  (System.type_info < ::aura::printer                > ());
-      System.factory().cloneable_large < window_gdi            >  (System.type_info < window_graphics                > ());
 
 #undef new
 

@@ -1,9 +1,7 @@
 #pragma once
 
 
-#include "base/base/base.h"
-//#include "aura/graphics/graphics.h"
-//#include "aura/aura/aura/aura_printer.h"
+#include "axis/axis/axis.h"
 
 
 #ifdef _DRAW2D_GDIPLUS_STATIC
