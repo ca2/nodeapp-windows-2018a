@@ -47,6 +47,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_common", "..\..\appseed
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app.base", "..\..\appseed\app.base\app.base.vcxproj", "{9E3A2EE6-CE8C-47A4-920E-15A474530882}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_acid", "..\..\..\app\appseed\aura\acid.vcxproj", "{A92C920F-C07D-481E-B523-565B56167CD1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
@@ -257,6 +259,18 @@ Global
 		{9E3A2EE6-CE8C-47A4-920E-15A474530882}.stage|Win32.Build.0 = stage|Win32
 		{9E3A2EE6-CE8C-47A4-920E-15A474530882}.stage|x64.ActiveCfg = stage|x64
 		{9E3A2EE6-CE8C-47A4-920E-15A474530882}.stage|x64.Build.0 = stage|x64
+		{A92C920F-C07D-481E-B523-565B56167CD1}.basis|Win32.ActiveCfg = basis|Win32
+		{A92C920F-C07D-481E-B523-565B56167CD1}.basis|Win32.Build.0 = basis|Win32
+		{A92C920F-C07D-481E-B523-565B56167CD1}.basis|x64.ActiveCfg = basis|x64
+		{A92C920F-C07D-481E-B523-565B56167CD1}.basis|x64.Build.0 = basis|x64
+		{A92C920F-C07D-481E-B523-565B56167CD1}.cover|Win32.ActiveCfg = cover|Win32
+		{A92C920F-C07D-481E-B523-565B56167CD1}.cover|Win32.Build.0 = cover|Win32
+		{A92C920F-C07D-481E-B523-565B56167CD1}.cover|x64.ActiveCfg = cover|x64
+		{A92C920F-C07D-481E-B523-565B56167CD1}.cover|x64.Build.0 = cover|x64
+		{A92C920F-C07D-481E-B523-565B56167CD1}.stage|Win32.ActiveCfg = stage|Win32
+		{A92C920F-C07D-481E-B523-565B56167CD1}.stage|Win32.Build.0 = stage|Win32
+		{A92C920F-C07D-481E-B523-565B56167CD1}.stage|x64.ActiveCfg = stage|x64
+		{A92C920F-C07D-481E-B523-565B56167CD1}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
