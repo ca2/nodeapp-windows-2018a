@@ -9,7 +9,7 @@ namespace draw2d_gdiplus
       object(papp)
    {
 
-      System.factory().cloneable_large < dib                   >  (System.type_info < ::draw2d::dib                  > ());
+      m_pauraapp->m_paurasystem->factory().cloneable_large < dib                   >  (m_pauraapp->m_paurasystem->type_info < ::draw2d::dib                  > ());
       System.factory().cloneable_large < graphics              >  (System.type_info < ::draw2d::graphics             > ());
       System.factory().cloneable_large < bitmap                >  (System.type_info < ::draw2d::bitmap               > ());
       System.factory().cloneable_large < pen                   >  (System.type_info < ::draw2d::pen                  > ());
