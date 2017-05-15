@@ -1,5 +1,15 @@
 
 
+//Gdiplus::ColorMatrix g_mZero = 
+//{
+//   {0.f,0.f,0.f,0.f,0.f},
+//   { 0.f,0.f,0.f,0.f,0.f } ,
+//   { 0.f,0.f,0.f,0.f,0.f },
+//   { 0.f,0.f,0.f,0.f,0.f },
+//   { 0.f,0.f,0.f,0.f,0.f }
+//};
+//
+
 namespace draw2d_gdiplus
 {
 
@@ -239,6 +249,96 @@ namespace draw2d_gdiplus
 
    }
 
+   bool dib::from(point ptDst, ::draw2d::dib * pdibSrc, point ptSrc, class size size)
+   {
+
+
+      ::draw2d::dib * pdibDst = this;
+
+      pdibDst->map();
+
+      pdibSrc->map();
+
+      ptDst += m_pt;
+
+      if (ptSrc.x < 0)
+      {
+         ptDst.x -= ptSrc.x;
+         ptSrc.x = 0;
+      }
+
+      if (ptSrc.y < 0)
+      {
+         ptDst.y -= ptSrc.y;
+         ptSrc.y = 0;
+      }
+
+      if (ptDst.x < 0)
+      {
+         size.cx += ptDst.x;
+         ptDst.x = 0;
+      }
+
+      if (size.cx < 0)
+         return true;
+
+      if (ptDst.y < 0)
+      {
+         size.cy += ptDst.y;
+         ptDst.y = 0;
+      }
+
+      if (size.cy < 0)
+         return true;
+
+      int xEnd = MIN(size.cx, MIN(pdibSrc->m_size.cx - ptSrc.x, pdibDst->m_size.cx - ptDst.x));
+
+      int yEnd = MIN(size.cy, MIN(pdibSrc->m_size.cy - ptSrc.y, pdibDst->m_size.cy - ptDst.y));
+
+      if (xEnd < 0)
+         return false;
+
+      if (yEnd < 0)
+         return false;
+
+      int32_t scanDst = pdibDst->m_iScan;
+
+      int32_t scanSrc = pdibSrc->m_iScan;
+
+      byte * pdst = &((byte *)pdibDst->m_pcolorref)[scanDst * ptDst.y + ptDst.x * sizeof(COLORREF)];
+
+      byte * psrc = &((byte *)pdibSrc->m_pcolorref)[scanSrc * ptSrc.y + ptSrc.x * sizeof(COLORREF)];
+
+      COLORREF * pdst2;
+
+      COLORREF * psrc2;
+
+      for (int y = 0; y < yEnd; y++)
+      {
+
+         pdst2 = (COLORREF *)&pdst[scanDst * y];
+
+         psrc2 = (COLORREF *)&psrc[scanSrc * y];
+
+         memcpy(pdst2, psrc2, xEnd * 4);
+         //for(int x = 0; x < xEnd; x++)
+         //{
+
+         //   *pdst2 = *psrc2;
+
+         //   pdst2++;
+
+         //   psrc2++;
+
+         //}
+         //pdst2 += xEnd;
+         //psrc2 += xEnd;
+
+      }
+
+      return true;
+
+   }
 
 
    void dib::SetIconMask(::visual::icon * picon, int32_t cx, int32_t cy)
@@ -394,6 +494,76 @@ namespace draw2d_gdiplus
          ((dib*)this)->m_bMapped = false;
 
       }
+
+   }
+
+   void dib::tint(::draw2d::dib * pdib, int32_t R, int32_t G, int32_t B)
+   {
+
+      ::draw2d::dib::tint(pdib, R, G, B);
+
+      return;
+
+      if (!create(pdib->m_size))
+      {
+
+         return;
+
+      }
+
+      pdib->unmap();
+
+      if (pdib->get_graphics()->get_current_bitmap() == NULL)
+      {
+
+         ::draw2d::dib::tint(pdib, R, G, B);
+
+      }
+
+      if (pdib->get_graphics()->get_current_bitmap()->get_os_data() == NULL)
+      {
+
+         ::draw2d::dib::tint(pdib, R, G, B);
+
+      }
+
+      unmap();
+
+      if (m_spgraphics.is_null())
+      {
+
+         return;
+
+      }
+
+      //set_alpha_mode(::draw2d::alpha_mode_set);
+
+      //m_spgraphics->FillSolidRect(0, 0, m_size.cx, m_size.cy, 0);
+
+      Gdiplus::ColorMatrix m = {
+      };
+
+
+      m.m[3][3] = 1.0f;
+      m.m[4][0] = R/255.f;
+      m.m[4][1] = G / 255.f;
+      m.m[4][2] = B / 255.f;
+      m.m[4][4] = 1.0f;
+
+      Gdiplus::ImageAttributes attributes;
+
+      //set the color matrix attribute
+      attributes.SetColorMatrix(&m, Gdiplus::ColorMatrixFlagsDefault, Gdiplus::ColorAdjustTypeBitmap);
+
+      Gdiplus::Graphics * pg = (Gdiplus::Graphics *) get_graphics()->get_os_data();
+
+      Gdiplus::Status ret  = pg->DrawImage(
+         (Gdiplus::Bitmap *) pdib->get_graphics()->get_current_bitmap()->get_os_data(),
+         Gdiplus::Rect(0, 0, m_size.cx, m_size.cy), 0, 0, m_size.cx, m_size.cy, Gdiplus::UnitPixel, &attributes);
+      //ColorMatrixFlag.Default,
+      //   ColorAdjustType.Bitmap);
+//      return ret == Gdiplus::Ok;
+      return;
 
    }
 

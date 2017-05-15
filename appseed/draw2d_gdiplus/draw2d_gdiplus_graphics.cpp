@@ -2,6 +2,7 @@
 
 BOOL CALLBACK draw2d_gdiplus_EnumFamCallBack(LPLOGFONT lplf,LPNEWTEXTMETRIC lpntm,DWORD FontType,LPVOID p);
 
+count g_cForkBlend = 0;
 
 class g_keep
 {
@@ -1321,7 +1322,50 @@ namespace draw2d_gdiplus
 
          }
 
+         if (pgraphicsSrc->m_pdib != NULL
+            && m_pdib != NULL)
+         {
 
+            if (m_ealphamode == ::draw2d::alpha_mode_blend)
+            {
+
+               if (nHeight >= get_processor_count() * 4 && (nWidth * nHeight) >= (get_processor_count() * 64))
+               {
+
+                  m_pdib->fork_blend(point(x + GetViewportOrg().x, y + GetViewportOrg().y), pgraphicsSrc->m_pdib,
+                     point(xSrc + pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y),
+                     size(nWidth, nHeight));
+
+                  g_cForkBlend++;
+
+                  if (g_cForkBlend % 100 == 0)
+                  {
+                     output_debug_string("\nfork_blend(" + ::str::from(g_cForkBlend) + ") sample=" + ::str::from(nWidth) + "," + ::str::from(nHeight));
+                  }
+
+               }
+               else
+               {
+                  m_pdib->blend(point(x + GetViewportOrg().x, y + GetViewportOrg().y), pgraphicsSrc->m_pdib,
+                     point(xSrc + pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y),
+                     size(nWidth, nHeight));
+
+               }
+            }
+            else
+            {
+
+               m_pdib->from(point(x + GetViewportOrg().x, y + GetViewportOrg().y), pgraphicsSrc->m_pdib,
+                  point(xSrc + pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y),
+                  size(nWidth, nHeight));
+
+
+            }
+
+
+            return true;
+
+         }
          ret = m_pgraphics->DrawImage(
                    (Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data(),
                    x, y, xSrc + pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y, nWidth, nHeight, Gdiplus::UnitPixel);

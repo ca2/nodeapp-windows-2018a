@@ -51,6 +51,7 @@ namespace draw2d_gdiplus
 
       bool from(::draw2d::graphics * pgraphics);
       bool from(point ptDest, ::draw2d::graphics * pgraphics, point pt, class size sz);
+      virtual bool from(point ptDest, ::draw2d::dib * pdibSrc, point pt, class size sz) override;
 
       bool to(::draw2d::graphics * pgraphics, point pt, class size size, point ptSrc);
 
@@ -147,7 +148,7 @@ namespace draw2d_gdiplus
 
       virtual void map(bool bApplyTransform = true) const override;
       virtual void unmap() const override;
-
+      virtual void tint(::draw2d::dib * pdib, int32_t R, int32_t G, int32_t B) override;
 
    };
 
