@@ -2239,6 +2239,52 @@ gdi_fallback:
 
       }
 
+
+      if (pgraphicsSrc->m_pdib != NULL && m_pdib != NULL && nDestWidth == nSrcWidth && nDestHeight == nSrcHeight)
+      {
+
+         if (m_ealphamode == ::draw2d::alpha_mode_blend)
+         {
+
+            if (nDestHeight >= get_processor_count() * 4 && (nDestWidth * nDestHeight) >= (get_processor_count() * 64))
+            {
+
+               m_pdib->fork_blend(point(xDest + GetViewportOrg().x, yDest + GetViewportOrg().y), pgraphicsSrc->m_pdib,
+                  point(xSrc + pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y),
+                  size(nSrcWidth, nDestHeight), (byte)(dRate * 255.0f));
+
+               g_cForkBlend++;
+
+               if (g_cForkBlend % 100 == 0)
+               {
+                  output_debug_string("\nfork_blend(" + ::str::from(g_cForkBlend) + ") sample=" + ::str::from(nSrcWidth) + "," + ::str::from(nDestHeight));
+               }
+
+            }
+            else
+            {
+               m_pdib->blend(point(xDest + GetViewportOrg().x, yDest + GetViewportOrg().y), pgraphicsSrc->m_pdib,
+                  point(xSrc+pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y),
+                  size(nSrcWidth, nDestHeight), (byte)(dRate * 255.0f));
+
+            }
+         }
+         else
+         {
+
+            m_pdib->from(point(xDest + GetViewportOrg().x, yDest + GetViewportOrg().y), pgraphicsSrc->m_pdib,
+               point(xSrc + pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y),
+               size(nSrcWidth, nDestHeight), (byte) (dRate * 255.0f));
+
+
+         }
+
+
+         return true;
+
+      }
+
+
       float fA = (float) (dRate);
 
       Gdiplus::ColorMatrix matrix = {

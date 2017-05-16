@@ -73,6 +73,88 @@ namespace draw2d_gdiplus
 
    }
 
+   bool dib::host(COLORREF * pcolorref, int iScan, int32_t width, int32_t height)
+   {
+
+      if (width <= 0 || height <= 0 || pcolorref == NULL || iScan <= 0)
+         return false;
+
+      if (m_spbitmap.is_set()
+         && m_spbitmap->get_os_data() != NULL
+         && width == m_size.cx
+         && height == m_size.cy
+         && m_pcolorref == pcolorref
+         && m_iScan == iScan)
+         return true;
+
+      destroy();
+
+      m_info = {};
+
+      m_info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+      m_info.bmiHeader.biWidth = width;
+      m_info.bmiHeader.biHeight = -height;
+      m_info.bmiHeader.biPlanes = 1;
+      m_info.bmiHeader.biBitCount = 32;
+      m_info.bmiHeader.biCompression = BI_RGB;
+      m_info.bmiHeader.biSizeImage = width * height * 4;
+
+      m_spbitmap.alloc(allocer());
+      m_spgraphics.alloc(allocer());
+
+      if (m_spbitmap.is_null())
+      {
+
+         m_size.cx = 0;
+
+         m_size.cy = 0;
+
+         m_iScan = 0;
+
+         return false;
+
+      }
+
+      if (!m_spbitmap->HostDIBSection(NULL, &m_info, DIB_RGB_COLORS, pcolorref, iScan, NULL, 0))
+      {
+
+         m_size.cx = 0;
+
+         m_size.cy = 0;
+
+         m_iScan = 0;
+
+         return false;
+
+      }
+
+      if (m_spbitmap->get_os_data() == NULL)
+      {
+
+         destroy();
+
+         return false;
+
+      }
+
+      m_pcolorref = pcolorref;
+
+      m_iScan = iScan;
+
+      m_spgraphics->SelectObject(m_spbitmap);
+
+      m_spgraphics->m_pdib = this;
+
+      m_size.cx = width;
+
+      m_size.cy = height;
+
+      m_iScan = m_spbitmap->m_iStride;
+
+      return true;
+
+   }
+
 
    bool dib::create(int32_t width, int32_t height)
    {

@@ -44,6 +44,28 @@ namespace draw2d_gdiplus
       return FALSE;
    }
 
+   bool bitmap::HostDIBSection(::draw2d::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void *pdata, int stride, HANDLE hSection, uint32_t offset)
+   {
+
+      UNREFERENCED_PARAMETER(pgraphics);
+
+      ::aura::del(m_pbitmap);
+
+      m_iStride = stride;
+
+      if (pdata == NULL)
+         return false;
+
+      m_pbitmap = new Gdiplus::Bitmap(abs(lpbmi->bmiHeader.biWidth), abs(lpbmi->bmiHeader.biHeight), m_iStride, PixelFormat32bppPARGB, (BYTE *) pdata);
+
+      if (m_pbitmap == NULL)
+      {
+         return FALSE;
+      }
+
+      return TRUE;
+
+   }
 
    bool bitmap::CreateDIBSection(::draw2d::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void **ppvBits, int * stride, HANDLE hSection, uint32_t offset)
    { 

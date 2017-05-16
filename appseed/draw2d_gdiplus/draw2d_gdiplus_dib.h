@@ -29,7 +29,7 @@ namespace draw2d_gdiplus
       virtual void construct(int32_t cx, int32_t cy);
       virtual ~dib();
 
-
+      
       virtual ::draw2d::graphics * get_graphics() const;
       virtual ::draw2d::bitmap_sp get_bitmap() const;
       virtual ::draw2d::bitmap_sp detach_bitmap();
@@ -44,6 +44,7 @@ namespace draw2d_gdiplus
 
       bool create(class size size);
       bool create(int32_t iWidth, int32_t iHeight);
+      virtual bool host(COLORREF * pcolorref, int iScan, int32_t width, int32_t height) override;
       bool create(::draw2d::graphics * pgraphics);
       bool destroy();
 
