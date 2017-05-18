@@ -1322,7 +1322,7 @@ namespace draw2d_gdiplus
 
          }
 
-         if (pgraphicsSrc->m_pdib != NULL
+         if (::get_thread()->m_bDrawModeRelaxedForThroughput && pgraphicsSrc->m_pdib != NULL
             && m_pdib != NULL)
          {
 
