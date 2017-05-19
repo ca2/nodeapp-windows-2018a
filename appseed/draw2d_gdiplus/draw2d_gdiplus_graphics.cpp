@@ -1322,8 +1322,9 @@ namespace draw2d_gdiplus
 
          }
 
-         if (::get_thread()->m_bDrawModeRelaxedForThroughput && pgraphicsSrc->m_pdib != NULL
-            && m_pdib != NULL)
+
+         bool bDrawModeRelaxedForThroughput = ::get_thread()->m_bDrawModeRelaxedForThroughput;
+         if (pgraphicsSrc->m_pdib != NULL && m_pdib != NULL)
          {
 
             if (m_ealphamode == ::draw2d::alpha_mode_blend)
