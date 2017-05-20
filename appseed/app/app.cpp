@@ -167,13 +167,85 @@ int32_t WINAPI _tWinMain(HINSTANCE hinstance,HINSTANCE hPrevInstance,LPTSTR lpCm
    ::OutputDebugStringA(szTimeMessage);
    printf(szTimeMessage);
 
-   sprintf(szTimeMessage,"\n|  Total Elapsed Time %d\n",(uint32_t)dwEnd - appcore.m_dwStartTime);
+   int iMillisecondsTotal = dwEnd - appcore.m_dwStartTime;
+
+   sprintf(szTimeMessage,"\n|  Total Elapsed Time %d ms",(uint32_t)iMillisecondsTotal);
    ::OutputDebugStringA(szTimeMessage);
    printf(szTimeMessage);
 
-   sprintf(szTimeMessage,"\n|  %s\n|\n|\n-------------------------------------------------------------------------------------------- - \n\n\n",szTime);
+   int iMilliseconds = iMillisecondsTotal % 1000;
+   int iSecondsTotal = iMillisecondsTotal / 1000;
+   int iSeconds = iSecondsTotal % 60;
+   int iMinutesTotal = iSecondsTotal / 60;
+   int iMinutes = iMinutesTotal % 60;
+   int iHoursTotal = iMinutesTotal / 60;
+   int iHours = iHoursTotal % 24;
+   int iDays = iHoursTotal / 24;
+
+   if (iDays > 0)
+   {
+
+      sprintf(szTimeMessage, "\n|  Total Elapsed Time %d days %02d:%02d:%02d %03d ms", iDays, iHours, iMinutes, iSeconds, iMilliseconds);
+
+   }
+   else if (iHours > 0)
+   {
+
+      sprintf(szTimeMessage, "\n|  Total Elapsed Time %02d:%02d:%02d %03d ms", iHours, iMinutes, iSeconds, iMilliseconds);
+
+   }
+   else if (iMinutes > 0)
+   {
+
+      sprintf(szTimeMessage, "\n|  Total Elapsed Time %02d:%02d %03d ms", iMinutes, iSeconds, iMilliseconds);
+
+   }
+   else
+   {
+
+      sprintf(szTimeMessage, "\n|  Total Elapsed Time %02ds %03d ms", iSeconds, iMilliseconds);
+
+   }
+
    ::OutputDebugStringA(szTimeMessage);
    printf(szTimeMessage);
+
+   sprintf(szTimeMessage, "\n|");
+   ::OutputDebugStringA(szTimeMessage);
+   printf(szTimeMessage);
+
+   sprintf(szTimeMessage, "\n|  %s",szTime);
+   ::OutputDebugStringA(szTimeMessage);
+   printf(szTimeMessage);
+
+   sprintf(szTimeMessage, "\n|");
+   ::OutputDebugStringA(szTimeMessage);
+   printf(szTimeMessage);
+
+   sprintf(szTimeMessage, "\n|");
+   ::OutputDebugStringA(szTimeMessage);
+   printf(szTimeMessage);
+
+   sprintf(szTimeMessage, "\n-------------------------------------------------------------------------------------------- - ");
+   ::OutputDebugStringA(szTimeMessage);
+   printf(szTimeMessage);
+
+   sprintf(szTimeMessage, "\n");
+   ::OutputDebugStringA(szTimeMessage);
+   printf(szTimeMessage);
+
+   sprintf(szTimeMessage, "\n");
+   ::OutputDebugStringA(szTimeMessage);
+   printf(szTimeMessage);
+
+   sprintf(szTimeMessage, "\n");
+   ::OutputDebugStringA(szTimeMessage);
+   printf(szTimeMessage);
+
+   sprintf(szTimeMessage, "\n");
+   ::OutputDebugStringA(szTimeMessage);
+   printf(szTimeMessage);
+
 
    if(file_exists_raw("C:\\ca2\\config\\system\\show_elapsed.txt"))
    {
