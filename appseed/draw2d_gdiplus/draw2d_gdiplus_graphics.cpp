@@ -1323,9 +1323,11 @@ namespace draw2d_gdiplus
          }
 
 
-         bool bDrawModeRelaxedForThroughput = ::get_thread()->m_bDrawModeRelaxedForThroughput;
+         bool bThreadToolsForIncreasedFps = ::get_thread()->m_bThreadToolsForIncreasedFps;
 
-         if (bDrawModeRelaxedForThroughput && pgraphicsSrc->m_pdib != NULL && m_pdib != NULL)
+         bool bAvoidProcFork = ::get_thread()->m_bAvoidProcFork;
+
+         if (!bAvoidProcFork && bThreadToolsForIncreasedFps && pgraphicsSrc->m_pdib != NULL && m_pdib != NULL)
          {
 
             if (m_ealphamode == ::draw2d::alpha_mode_blend)
@@ -2241,15 +2243,18 @@ gdi_fallback:
    bool graphics::alpha_blendRaw(int32_t xDest, int32_t yDest, int32_t nDestWidth, int32_t nDestHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, double dRate)
    {
 
-      if (m_pgraphics == NULL)
+      if (m_pgraphics == NULL || pgraphicsSrc == NULL)
       {
 
          return false;
 
       }
 
+      bool bThreadToolsForIncreasedFps = ::get_thread()->m_bThreadToolsForIncreasedFps;
 
-      if (pgraphicsSrc->m_pdib != NULL && m_pdib != NULL && nDestWidth == nSrcWidth && nDestHeight == nSrcHeight)
+      bool bAvoidProcFork = ::get_thread()->m_bAvoidProcFork;
+
+      if (!bAvoidProcFork && bThreadToolsForIncreasedFps && nDestWidth == nSrcWidth && nDestHeight == nSrcHeight)
       {
 
          if (m_ealphamode == ::draw2d::alpha_mode_blend)
