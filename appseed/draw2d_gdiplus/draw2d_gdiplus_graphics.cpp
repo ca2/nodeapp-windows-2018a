@@ -1323,9 +1323,9 @@ namespace draw2d_gdiplus
          }
 
 
-         bool bThreadToolsForIncreasedFps = ::get_thread()->m_bThreadToolsForIncreasedFps;
+         bool bThreadToolsForIncreasedFps = ::get_thread()== NULL ? false : ::get_thread()->m_bThreadToolsForIncreasedFps;
 
-         bool bAvoidProcFork = ::get_thread()->m_bAvoidProcFork;
+         bool bAvoidProcFork = ::get_thread() == NULL ? true : ::get_thread()->m_bAvoidProcFork;
 
          if (!bAvoidProcFork && bThreadToolsForIncreasedFps && pgraphicsSrc->m_pdib != NULL && m_pdib != NULL)
          {
