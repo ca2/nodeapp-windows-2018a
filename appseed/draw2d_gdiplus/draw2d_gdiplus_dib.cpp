@@ -649,6 +649,32 @@ namespace draw2d_gdiplus
 
    }
 
+   bool dib::load_thumbnail(const char * psz)
+   {
+
+
+      ::Gdiplus::Graphics * pg = (::Gdiplus::Graphics *)get_graphics()->get_os_data();
+
+      wstring wstr(psz);
+      // Create an image and a thumbnail of the image.
+      ::Gdiplus::Image image(wstr);
+
+      ::Gdiplus::Image* pThumbnail = (Gdiplus::Image *)image.GetThumbnailImage(m_size.cx, m_size.cy, NULL, NULL);
+
+      // Draw the original and the thumbnail images.
+      pg->DrawImage(
+         pThumbnail,
+         0,
+         0,
+         pThumbnail->GetWidth(),
+         pThumbnail->GetHeight());
+
+      delete pThumbnail;
+
+
+      return true;
+
+   }
 
 } // namespace draw2d_gdiplus
 

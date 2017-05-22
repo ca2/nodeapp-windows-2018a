@@ -150,7 +150,7 @@ namespace draw2d_gdiplus
       virtual void map(bool bApplyTransform = true) const override;
       virtual void unmap() const override;
       virtual void tint(::draw2d::dib * pdib, int32_t R, int32_t G, int32_t B) override;
-
+      virtual bool load_thumbnail(const char * psz);
    };
 
 
