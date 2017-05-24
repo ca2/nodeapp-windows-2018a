@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.0
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ace", "..\..\..\app\appseed\ace\ace.vcxproj", "{21DCC811-4BCE-4F16-B674-C0941F847127}"
 EndProject
@@ -63,6 +63,12 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_bzip2", "..\..\..\third\appseed\bzip2\bzip2_static.vcxproj", "{08B3E74C-E939-4184-96FA-2C04AFE153D2}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_zlib", "..\..\..\third\appseed\zlib\zlib_static.vcxproj", "{C5F59C80-FC80-4D10-B669-A1B4A7A268BC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_jpeg", "..\..\..\third\appseed\jpeg\_axisjpeg.vcxproj", "{CBB17F61-CD92-4A68-A9C2-62CDB11AE656}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_png", "..\..\..\third\appseed\png\_axispng.vcxproj", "{6986E741-909A-41AE-A7D6-D522CF67030D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_sqlite", "..\..\..\third\appseed\sqlite\_aurasqlite.vcxproj", "{0FE3E42B-ECAB-4FDE-A8A3-6D94D2FBB73B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -422,6 +428,42 @@ Global
 		{C5F59C80-FC80-4D10-B669-A1B4A7A268BC}.stage|Win32.Build.0 = stage|Win32
 		{C5F59C80-FC80-4D10-B669-A1B4A7A268BC}.stage|x64.ActiveCfg = stage|x64
 		{C5F59C80-FC80-4D10-B669-A1B4A7A268BC}.stage|x64.Build.0 = stage|x64
+		{CBB17F61-CD92-4A68-A9C2-62CDB11AE656}.basis|Win32.ActiveCfg = basis|Win32
+		{CBB17F61-CD92-4A68-A9C2-62CDB11AE656}.basis|Win32.Build.0 = basis|Win32
+		{CBB17F61-CD92-4A68-A9C2-62CDB11AE656}.basis|x64.ActiveCfg = basis|x64
+		{CBB17F61-CD92-4A68-A9C2-62CDB11AE656}.basis|x64.Build.0 = basis|x64
+		{CBB17F61-CD92-4A68-A9C2-62CDB11AE656}.cover|Win32.ActiveCfg = cover|Win32
+		{CBB17F61-CD92-4A68-A9C2-62CDB11AE656}.cover|Win32.Build.0 = cover|Win32
+		{CBB17F61-CD92-4A68-A9C2-62CDB11AE656}.cover|x64.ActiveCfg = cover|x64
+		{CBB17F61-CD92-4A68-A9C2-62CDB11AE656}.cover|x64.Build.0 = cover|x64
+		{CBB17F61-CD92-4A68-A9C2-62CDB11AE656}.stage|Win32.ActiveCfg = stage|Win32
+		{CBB17F61-CD92-4A68-A9C2-62CDB11AE656}.stage|Win32.Build.0 = stage|Win32
+		{CBB17F61-CD92-4A68-A9C2-62CDB11AE656}.stage|x64.ActiveCfg = stage|x64
+		{CBB17F61-CD92-4A68-A9C2-62CDB11AE656}.stage|x64.Build.0 = stage|x64
+		{6986E741-909A-41AE-A7D6-D522CF67030D}.basis|Win32.ActiveCfg = basis|Win32
+		{6986E741-909A-41AE-A7D6-D522CF67030D}.basis|Win32.Build.0 = basis|Win32
+		{6986E741-909A-41AE-A7D6-D522CF67030D}.basis|x64.ActiveCfg = basis|x64
+		{6986E741-909A-41AE-A7D6-D522CF67030D}.basis|x64.Build.0 = basis|x64
+		{6986E741-909A-41AE-A7D6-D522CF67030D}.cover|Win32.ActiveCfg = cover|Win32
+		{6986E741-909A-41AE-A7D6-D522CF67030D}.cover|Win32.Build.0 = cover|Win32
+		{6986E741-909A-41AE-A7D6-D522CF67030D}.cover|x64.ActiveCfg = cover|x64
+		{6986E741-909A-41AE-A7D6-D522CF67030D}.cover|x64.Build.0 = cover|x64
+		{6986E741-909A-41AE-A7D6-D522CF67030D}.stage|Win32.ActiveCfg = stage|Win32
+		{6986E741-909A-41AE-A7D6-D522CF67030D}.stage|Win32.Build.0 = stage|Win32
+		{6986E741-909A-41AE-A7D6-D522CF67030D}.stage|x64.ActiveCfg = stage|x64
+		{6986E741-909A-41AE-A7D6-D522CF67030D}.stage|x64.Build.0 = stage|x64
+		{0FE3E42B-ECAB-4FDE-A8A3-6D94D2FBB73B}.basis|Win32.ActiveCfg = basis|Win32
+		{0FE3E42B-ECAB-4FDE-A8A3-6D94D2FBB73B}.basis|Win32.Build.0 = basis|Win32
+		{0FE3E42B-ECAB-4FDE-A8A3-6D94D2FBB73B}.basis|x64.ActiveCfg = basis|x64
+		{0FE3E42B-ECAB-4FDE-A8A3-6D94D2FBB73B}.basis|x64.Build.0 = basis|x64
+		{0FE3E42B-ECAB-4FDE-A8A3-6D94D2FBB73B}.cover|Win32.ActiveCfg = cover|Win32
+		{0FE3E42B-ECAB-4FDE-A8A3-6D94D2FBB73B}.cover|Win32.Build.0 = cover|Win32
+		{0FE3E42B-ECAB-4FDE-A8A3-6D94D2FBB73B}.cover|x64.ActiveCfg = cover|x64
+		{0FE3E42B-ECAB-4FDE-A8A3-6D94D2FBB73B}.cover|x64.Build.0 = cover|x64
+		{0FE3E42B-ECAB-4FDE-A8A3-6D94D2FBB73B}.stage|Win32.ActiveCfg = stage|Win32
+		{0FE3E42B-ECAB-4FDE-A8A3-6D94D2FBB73B}.stage|Win32.Build.0 = stage|Win32
+		{0FE3E42B-ECAB-4FDE-A8A3-6D94D2FBB73B}.stage|x64.ActiveCfg = stage|x64
+		{0FE3E42B-ECAB-4FDE-A8A3-6D94D2FBB73B}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
