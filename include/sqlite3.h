@@ -42,7 +42,9 @@ extern "C" {
 #endif
 
 #ifdef _WIN32
-#ifdef _AURA_SQLITE
+#ifdef CUBE
+#define SQLITE_API
+#elif defined(_AURA_SQLITE)
 #define SQLITE_API __declspec(dllexport)
 #else
 #define SQLITE_API __declspec(dllimport)
