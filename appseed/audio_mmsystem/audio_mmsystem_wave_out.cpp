@@ -737,7 +737,7 @@ Opened:
 
          ::multimedia::e_result                mmr;
 
-         MMTIME                  mmt;
+         MMTIME                  mmt = {};
 
          mmt.wType = TIME_MS;
 
@@ -805,7 +805,7 @@ Opened:
 
          ::multimedia::e_result                mmr;
          
-         MMTIME                  mmt;
+         MMTIME                  mmt = {};
 
          mmt.wType = TIME_BYTES;
 
