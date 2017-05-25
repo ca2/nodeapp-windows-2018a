@@ -68,7 +68,7 @@ namespace production
       
 
       void GetAreaThumbRect(LPRECT lprect, int32_t iArea);
-      index hit_test(point pt, ::user::control::e_element & eelement);
+      index hit_test(point pt, ::user::e_element & eelement);
 
 
 

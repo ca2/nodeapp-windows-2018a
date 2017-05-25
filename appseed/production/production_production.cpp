@@ -1676,7 +1676,7 @@ namespace production
          ::str::ends_eat(strLocal, "\\");
          ::str::ends_eat(strLocal, "/");
          strFile = strRelease + ".expand_fileset";
-         strTitle = strRelease.name() + ".expand_fileset";
+         strTitle = strRelease.sname() + ".expand_fileset";
          strRelative = strLocal + ".expand_fileset";
          strRelative.replace("/", "\\");
 

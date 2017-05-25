@@ -359,22 +359,22 @@ namespace production
       }
    }
 
-   index view::hit_test(point pt, ::user::control::e_element & eelement)
+   index view::hit_test(point pt, ::user::e_element & eelement)
    {
       rect rectArea;
       GetAreaThumbRect(rectArea, m_iV);
       if(rectArea.contains(pt))
       {
-         eelement = element_area;
+         eelement = ::user::element_area;
          return m_iV;
       }
       GetAreaThumbRect(rectArea, m_iVs);
       if(rectArea.contains(pt))
       {
-         eelement = element_area;
+         eelement = ::user::element_area;
          return m_iVs;
       }
-      eelement = element_none;
+      eelement = ::user::element_none;
       return -1;
    }
 
@@ -393,7 +393,7 @@ namespace production
 
       class point point = pmouse->m_pt;
       ScreenToClient(&point);
-      ::user::control::e_element eelement;
+      ::user::e_element eelement;
       index iHitArea = hit_test(point, eelement);
       if(iHitArea == m_iV)
       {

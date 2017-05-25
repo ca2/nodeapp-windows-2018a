@@ -173,7 +173,7 @@
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>_zlib.lib;_bzip2.lib;libcrypto.lib;libssl.lib;Normaliz.lib;Credui.lib;Wtsapi32.lib;version.lib;Ws2_32.lib;OleAut32.lib;Shlwapi.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;gdi32.lib;msimg32.lib;user32.lib;psapi.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>_zlib.lib;_bzip2.lib;libcrypto.lib;libssl.lib;Normaliz.lib;Credui.lib;Wtsapi32.lib;version.lib;Ws2_32.lib;OleAut32.lib;Shlwapi.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;gdi32.lib;msimg32.lib;user32.lib;Winspool.lib;psapi.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
@@ -251,7 +251,7 @@
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>_zlib.lib;_bzip2.lib;libcrypto.lib;libssl.lib;Normaliz.lib;Credui.lib;Wtsapi32.lib;version.lib;Ws2_32.lib;OleAut32.lib;Shlwapi.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;gdi32.lib;msimg32.lib;user32.lib;psapi.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>_zlib.lib;_bzip2.lib;libcrypto.lib;libssl.lib;Normaliz.lib;Credui.lib;Wtsapi32.lib;version.lib;Ws2_32.lib;OleAut32.lib;Shlwapi.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;gdi32.lib;msimg32.lib;user32.lib;Winspool.lib;psapi.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
@@ -332,7 +332,7 @@
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>_zlib.lib;_bzip2.lib;libcrypto.lib;libssl.lib;Normaliz.lib;Credui.lib;Wtsapi32.lib;version.lib;Ws2_32.lib;OleAut32.lib;Shlwapi.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;gdi32.lib;msimg32.lib;user32.lib;psapi.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>_zlib.lib;_bzip2.lib;libcrypto.lib;libssl.lib;Normaliz.lib;Credui.lib;Wtsapi32.lib;version.lib;Ws2_32.lib;OleAut32.lib;Shlwapi.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;gdi32.lib;msimg32.lib;user32.lib;Winspool.lib;psapi.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
@@ -411,7 +411,7 @@
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>_zlib.lib;_bzip2.lib;libcrypto.lib;libssl.lib;Normaliz.lib;Credui.lib;Wtsapi32.lib;version.lib;Ws2_32.lib;OleAut32.lib;Shlwapi.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;gdi32.lib;msimg32.lib;user32.lib;psapi.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>_zlib.lib;_bzip2.lib;libcrypto.lib;libssl.lib;Normaliz.lib;Credui.lib;Wtsapi32.lib;version.lib;Ws2_32.lib;OleAut32.lib;Shlwapi.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;gdi32.lib;msimg32.lib;user32.lib;Winspool.lib;psapi.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>AsInvoker</UACExecutionLevel>
@@ -475,7 +475,7 @@
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>_zlib.lib;_bzip2.lib;libcrypto.lib;libssl.lib;Normaliz.lib;Credui.lib;Wtsapi32.lib;version.lib;Ws2_32.lib;OleAut32.lib;Shlwapi.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;gdi32.lib;msimg32.lib;user32.lib;psapi.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>_zlib.lib;_bzip2.lib;libcrypto.lib;libssl.lib;Normaliz.lib;Credui.lib;Wtsapi32.lib;version.lib;Ws2_32.lib;OleAut32.lib;Shlwapi.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;gdi32.lib;msimg32.lib;user32.lib;Winspool.lib;psapi.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>AsInvoker</UACExecutionLevel>
@@ -544,7 +544,7 @@
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>_zlib.lib;_bzip2.lib;libcrypto.lib;libssl.lib;Normaliz.lib;Credui.lib;Wtsapi32.lib;version.lib;Ws2_32.lib;OleAut32.lib;Shlwapi.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;gdi32.lib;msimg32.lib;user32.lib;psapi.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>_zlib.lib;_bzip2.lib;libcrypto.lib;libssl.lib;Normaliz.lib;Credui.lib;Wtsapi32.lib;version.lib;Ws2_32.lib;OleAut32.lib;Shlwapi.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;gdi32.lib;msimg32.lib;user32.lib;Winspool.lib;psapi.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>AsInvoker</UACExecutionLevel>
@@ -598,6 +598,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\app\appseed\aura\acid.vcxproj">
       <Project>{a92c920f-c07d-481e-b523-565b56167cd1}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\draw2d_gdiplus\_draw2d_gdiplus.vcxproj">
+      <Project>{573c4b5e-4132-457a-be82-05a882a062ff}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
