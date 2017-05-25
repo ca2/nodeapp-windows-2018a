@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\app.vcxproj", "{19841115-1984-0411-1977-021977151984}"
 EndProject
@@ -15,12 +15,16 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_deepfish", "..\..\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "nodeapp_production", "..\..\appseed\production\production.vcxproj", "{6945864B-2816-46B3-AB26-C31A208A01C9}"
 	ProjectSection(ProjectDependencies) = postProject
+		{84517713-2000-419D-A87F-4338C9DDE3FA} = {84517713-2000-419D-A87F-4338C9DDE3FA}
+		{84517714-2000-419D-A87F-4338C9DDE3FA} = {84517714-2000-419D-A87F-4338C9DDE3FA}
 		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
 		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86} = {E2D7833B-9B59-4826-BBDF-C270A2115E86}
+		{51778453-C0AA-419D-A87F-4338C9DDE3FA} = {51778453-C0AA-419D-A87F-4338C9DDE3FA}
 		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF} = {51F51C57-0947-4D1D-850E-2F4BE6C88DCF}
 		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB} = {1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}
 		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF} = {9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}
+		{B39ED2B3-D53A-4077-B957-930979A3577D} = {B39ED2B3-D53A-4077-B957-930979A3577D}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "base", "..\..\..\app\appseed\base\base.vcxproj", "{4D7D3626-ADA6-4CA2-9566-ED7B131E3D51}"
@@ -28,10 +32,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "core", "..\..\..\app\appseed\core\core.vcxproj", "{E000FFAF-392F-4E32-BF51-FD7ED638991F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "draw2d_gdiplus", "..\..\appseed\draw2d_gdiplus\draw2d_gdiplus.vcxproj", "{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core", "..\..\appseed\app_core\app_core.vcxproj", "{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app._", "..\..\..\app-core\appseed\appfy\appfy.vcxproj", "{3DDD6C31-218E-4979-B095-8AF22563D9C1}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wndfrm_core", "..\..\..\app-core\appseed\wndfrm_core\wndfrm_core.vcxproj", "{E2D7833B-9B59-4826-BBDF-C270A2115E86}"
 EndProject
@@ -53,12 +53,18 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "image_decode_jpeg", "..\..\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "image_decode_png", "..\..\..\app\appseed\image_png\axis_image_png.vcxproj", "{84517714-2000-419D-A87F-4338C9DDE3FA}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_common", "..\..\appseed\app_common\app_common.vcxproj", "{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app._", "..\..\appseed\appfy\appfy.vcxproj", "{3DDD6C31-218E-4979-B095-8AF22563D9C1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
 		basis|x64 = basis|x64
 		codeanalysis|Win32 = codeanalysis|Win32
 		codeanalysis|x64 = codeanalysis|x64
+		cover|Win32 = cover|Win32
+		cover|x64 = cover|x64
 		memdleak|Win32 = memdleak|Win32
 		memdleak|x64 = memdleak|x64
 		no_precompiled_header|Win32 = no_precompiled_header|Win32
@@ -79,6 +85,10 @@ Global
 		{19841115-1984-0411-1977-021977151984}.codeanalysis|Win32.Build.0 = stage|Win32
 		{19841115-1984-0411-1977-021977151984}.codeanalysis|x64.ActiveCfg = stage|x64
 		{19841115-1984-0411-1977-021977151984}.codeanalysis|x64.Build.0 = stage|x64
+		{19841115-1984-0411-1977-021977151984}.cover|Win32.ActiveCfg = cover|Win32
+		{19841115-1984-0411-1977-021977151984}.cover|Win32.Build.0 = cover|Win32
+		{19841115-1984-0411-1977-021977151984}.cover|x64.ActiveCfg = cover|x64
+		{19841115-1984-0411-1977-021977151984}.cover|x64.Build.0 = cover|x64
 		{19841115-1984-0411-1977-021977151984}.memdleak|Win32.ActiveCfg = stage|Win32
 		{19841115-1984-0411-1977-021977151984}.memdleak|Win32.Build.0 = stage|Win32
 		{19841115-1984-0411-1977-021977151984}.memdleak|x64.ActiveCfg = stage|x64
@@ -107,6 +117,12 @@ Global
 		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.codeanalysis|Win32.Build.0 = stage|Win32
 		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.codeanalysis|x64.ActiveCfg = stage|x64
 		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.codeanalysis|x64.Build.0 = stage|x64
+		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.cover|Win32.ActiveCfg = cover|Win32
+		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.cover|Win32.Build.0 = cover|Win32
+		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.cover|Win32.Deploy.0 = cover|Win32
+		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.cover|x64.ActiveCfg = cover|x64
+		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.cover|x64.Build.0 = cover|x64
+		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.cover|x64.Deploy.0 = cover|x64
 		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.memdleak|Win32.ActiveCfg = stage|Win32
 		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.memdleak|Win32.Build.0 = stage|Win32
 		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF}.memdleak|x64.ActiveCfg = stage|x64
@@ -135,6 +151,12 @@ Global
 		{6945864B-2816-46B3-AB26-C31A208A01C9}.codeanalysis|Win32.Build.0 = stage|Win32
 		{6945864B-2816-46B3-AB26-C31A208A01C9}.codeanalysis|x64.ActiveCfg = stage|x64
 		{6945864B-2816-46B3-AB26-C31A208A01C9}.codeanalysis|x64.Build.0 = stage|x64
+		{6945864B-2816-46B3-AB26-C31A208A01C9}.cover|Win32.ActiveCfg = cover|Win32
+		{6945864B-2816-46B3-AB26-C31A208A01C9}.cover|Win32.Build.0 = cover|Win32
+		{6945864B-2816-46B3-AB26-C31A208A01C9}.cover|Win32.Deploy.0 = cover|Win32
+		{6945864B-2816-46B3-AB26-C31A208A01C9}.cover|x64.ActiveCfg = cover|x64
+		{6945864B-2816-46B3-AB26-C31A208A01C9}.cover|x64.Build.0 = cover|x64
+		{6945864B-2816-46B3-AB26-C31A208A01C9}.cover|x64.Deploy.0 = cover|x64
 		{6945864B-2816-46B3-AB26-C31A208A01C9}.memdleak|Win32.ActiveCfg = stage|Win32
 		{6945864B-2816-46B3-AB26-C31A208A01C9}.memdleak|Win32.Build.0 = stage|Win32
 		{6945864B-2816-46B3-AB26-C31A208A01C9}.memdleak|x64.ActiveCfg = stage|x64
@@ -163,6 +185,12 @@ Global
 		{4D7D3626-ADA6-4CA2-9566-ED7B131E3D51}.codeanalysis|Win32.Build.0 = stage|Win32
 		{4D7D3626-ADA6-4CA2-9566-ED7B131E3D51}.codeanalysis|x64.ActiveCfg = stage|x64
 		{4D7D3626-ADA6-4CA2-9566-ED7B131E3D51}.codeanalysis|x64.Build.0 = stage|x64
+		{4D7D3626-ADA6-4CA2-9566-ED7B131E3D51}.cover|Win32.ActiveCfg = cover|Win32
+		{4D7D3626-ADA6-4CA2-9566-ED7B131E3D51}.cover|Win32.Build.0 = cover|Win32
+		{4D7D3626-ADA6-4CA2-9566-ED7B131E3D51}.cover|Win32.Deploy.0 = cover|Win32
+		{4D7D3626-ADA6-4CA2-9566-ED7B131E3D51}.cover|x64.ActiveCfg = cover|x64
+		{4D7D3626-ADA6-4CA2-9566-ED7B131E3D51}.cover|x64.Build.0 = cover|x64
+		{4D7D3626-ADA6-4CA2-9566-ED7B131E3D51}.cover|x64.Deploy.0 = cover|x64
 		{4D7D3626-ADA6-4CA2-9566-ED7B131E3D51}.memdleak|Win32.ActiveCfg = stage|Win32
 		{4D7D3626-ADA6-4CA2-9566-ED7B131E3D51}.memdleak|Win32.Build.0 = stage|Win32
 		{4D7D3626-ADA6-4CA2-9566-ED7B131E3D51}.memdleak|x64.ActiveCfg = stage|x64
@@ -191,6 +219,12 @@ Global
 		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.codeanalysis|Win32.Build.0 = stage|Win32
 		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.codeanalysis|x64.ActiveCfg = stage|x64
 		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.codeanalysis|x64.Build.0 = stage|x64
+		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.cover|Win32.ActiveCfg = cover|Win32
+		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.cover|Win32.Build.0 = cover|Win32
+		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.cover|Win32.Deploy.0 = cover|Win32
+		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.cover|x64.ActiveCfg = cover|x64
+		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.cover|x64.Build.0 = cover|x64
+		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.cover|x64.Deploy.0 = cover|x64
 		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.memdleak|Win32.ActiveCfg = stage|Win32
 		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.memdleak|Win32.Build.0 = stage|Win32
 		{E000FFAF-392F-4E32-BF51-FD7ED638991F}.memdleak|x64.ActiveCfg = stage|x64
@@ -219,6 +253,12 @@ Global
 		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}.codeanalysis|Win32.Build.0 = stage|Win32
 		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}.codeanalysis|x64.ActiveCfg = stage|x64
 		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}.codeanalysis|x64.Build.0 = stage|x64
+		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}.cover|Win32.ActiveCfg = cover|Win32
+		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}.cover|Win32.Build.0 = cover|Win32
+		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}.cover|Win32.Deploy.0 = cover|Win32
+		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}.cover|x64.ActiveCfg = cover|x64
+		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}.cover|x64.Build.0 = cover|x64
+		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}.cover|x64.Deploy.0 = cover|x64
 		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}.memdleak|Win32.ActiveCfg = stage|Win32
 		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}.memdleak|Win32.Build.0 = stage|Win32
 		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}.memdleak|x64.ActiveCfg = stage|x64
@@ -239,62 +279,6 @@ Global
 		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}.static_basis|Win32.Build.0 = basis|Win32
 		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}.static_basis|x64.ActiveCfg = basis|x64
 		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}.static_basis|x64.Build.0 = basis|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.basis|Win32.ActiveCfg = basis|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.basis|Win32.Build.0 = basis|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.basis|x64.ActiveCfg = basis|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.basis|x64.Build.0 = basis|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.codeanalysis|Win32.ActiveCfg = stage|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.codeanalysis|Win32.Build.0 = stage|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.codeanalysis|x64.ActiveCfg = stage|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.codeanalysis|x64.Build.0 = stage|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.memdleak|Win32.ActiveCfg = stage|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.memdleak|Win32.Build.0 = stage|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.memdleak|x64.ActiveCfg = stage|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.memdleak|x64.Build.0 = stage|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.no_precompiled_header|Win32.ActiveCfg = stage|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.no_precompiled_header|Win32.Build.0 = stage|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.no_precompiled_header|x64.ActiveCfg = stage|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.no_precompiled_header|x64.Build.0 = stage|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.profiler|Win32.ActiveCfg = stage|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.profiler|Win32.Build.0 = stage|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.profiler|x64.ActiveCfg = stage|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.profiler|x64.Build.0 = stage|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.stage|Win32.ActiveCfg = stage|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.stage|Win32.Build.0 = stage|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.stage|x64.ActiveCfg = stage|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.stage|x64.Build.0 = stage|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.static_basis|Win32.ActiveCfg = basis|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.static_basis|Win32.Build.0 = basis|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.static_basis|x64.ActiveCfg = basis|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.static_basis|x64.Build.0 = basis|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.basis|Win32.ActiveCfg = basis|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.basis|Win32.Build.0 = basis|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.basis|x64.ActiveCfg = basis|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.basis|x64.Build.0 = basis|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.codeanalysis|Win32.ActiveCfg = stage|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.codeanalysis|Win32.Build.0 = stage|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.codeanalysis|x64.ActiveCfg = stage|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.codeanalysis|x64.Build.0 = stage|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.memdleak|Win32.ActiveCfg = stage|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.memdleak|Win32.Build.0 = stage|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.memdleak|x64.ActiveCfg = stage|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.memdleak|x64.Build.0 = stage|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.no_precompiled_header|Win32.ActiveCfg = stage|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.no_precompiled_header|Win32.Build.0 = stage|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.no_precompiled_header|x64.ActiveCfg = stage|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.no_precompiled_header|x64.Build.0 = stage|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.profiler|Win32.ActiveCfg = stage|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.profiler|Win32.Build.0 = stage|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.profiler|x64.ActiveCfg = stage|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.profiler|x64.Build.0 = stage|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.stage|Win32.ActiveCfg = stage|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.stage|Win32.Build.0 = stage|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.stage|x64.ActiveCfg = stage|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.stage|x64.Build.0 = stage|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.static_basis|Win32.ActiveCfg = basis|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.static_basis|Win32.Build.0 = basis|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.static_basis|x64.ActiveCfg = basis|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.static_basis|x64.Build.0 = basis|x64
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.basis|Win32.ActiveCfg = basis|Win32
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.basis|Win32.Build.0 = basis|Win32
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.basis|x64.ActiveCfg = basis|x64
@@ -303,6 +287,12 @@ Global
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.codeanalysis|Win32.Build.0 = stage|Win32
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.codeanalysis|x64.ActiveCfg = stage|x64
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.codeanalysis|x64.Build.0 = stage|x64
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.cover|Win32.ActiveCfg = cover|Win32
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.cover|Win32.Build.0 = cover|Win32
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.cover|Win32.Deploy.0 = cover|Win32
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.cover|x64.ActiveCfg = cover|x64
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.cover|x64.Build.0 = cover|x64
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.cover|x64.Deploy.0 = cover|x64
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.memdleak|Win32.ActiveCfg = stage|Win32
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.memdleak|Win32.Build.0 = stage|Win32
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.memdleak|x64.ActiveCfg = stage|x64
@@ -331,6 +321,12 @@ Global
 		{03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.codeanalysis|Win32.Build.0 = stage|Win32
 		{03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.codeanalysis|x64.ActiveCfg = stage|x64
 		{03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.codeanalysis|x64.Build.0 = stage|x64
+		{03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.cover|Win32.ActiveCfg = cover|Win32
+		{03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.cover|Win32.Build.0 = cover|Win32
+		{03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.cover|Win32.Deploy.0 = cover|Win32
+		{03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.cover|x64.ActiveCfg = cover|x64
+		{03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.cover|x64.Build.0 = cover|x64
+		{03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.cover|x64.Deploy.0 = cover|x64
 		{03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.memdleak|Win32.ActiveCfg = stage|Win32
 		{03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.memdleak|Win32.Build.0 = stage|Win32
 		{03E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.memdleak|x64.ActiveCfg = stage|x64
@@ -359,6 +355,12 @@ Global
 		{73A245F9-C92F-4487-AEF7-CB0531F665BD}.codeanalysis|Win32.Build.0 = stage|Win32
 		{73A245F9-C92F-4487-AEF7-CB0531F665BD}.codeanalysis|x64.ActiveCfg = stage|x64
 		{73A245F9-C92F-4487-AEF7-CB0531F665BD}.codeanalysis|x64.Build.0 = stage|x64
+		{73A245F9-C92F-4487-AEF7-CB0531F665BD}.cover|Win32.ActiveCfg = cover|Win32
+		{73A245F9-C92F-4487-AEF7-CB0531F665BD}.cover|Win32.Build.0 = cover|Win32
+		{73A245F9-C92F-4487-AEF7-CB0531F665BD}.cover|Win32.Deploy.0 = cover|Win32
+		{73A245F9-C92F-4487-AEF7-CB0531F665BD}.cover|x64.ActiveCfg = cover|x64
+		{73A245F9-C92F-4487-AEF7-CB0531F665BD}.cover|x64.Build.0 = cover|x64
+		{73A245F9-C92F-4487-AEF7-CB0531F665BD}.cover|x64.Deploy.0 = cover|x64
 		{73A245F9-C92F-4487-AEF7-CB0531F665BD}.memdleak|Win32.ActiveCfg = stage|Win32
 		{73A245F9-C92F-4487-AEF7-CB0531F665BD}.memdleak|Win32.Build.0 = stage|Win32
 		{73A245F9-C92F-4487-AEF7-CB0531F665BD}.memdleak|x64.ActiveCfg = stage|x64
@@ -387,6 +389,12 @@ Global
 		{51778453-C0AA-419D-A87F-4338C9DDE3FA}.codeanalysis|Win32.Build.0 = stage|Win32
 		{51778453-C0AA-419D-A87F-4338C9DDE3FA}.codeanalysis|x64.ActiveCfg = stage|x64
 		{51778453-C0AA-419D-A87F-4338C9DDE3FA}.codeanalysis|x64.Build.0 = stage|x64
+		{51778453-C0AA-419D-A87F-4338C9DDE3FA}.cover|Win32.ActiveCfg = cover|Win32
+		{51778453-C0AA-419D-A87F-4338C9DDE3FA}.cover|Win32.Build.0 = cover|Win32
+		{51778453-C0AA-419D-A87F-4338C9DDE3FA}.cover|Win32.Deploy.0 = cover|Win32
+		{51778453-C0AA-419D-A87F-4338C9DDE3FA}.cover|x64.ActiveCfg = cover|x64
+		{51778453-C0AA-419D-A87F-4338C9DDE3FA}.cover|x64.Build.0 = cover|x64
+		{51778453-C0AA-419D-A87F-4338C9DDE3FA}.cover|x64.Deploy.0 = cover|x64
 		{51778453-C0AA-419D-A87F-4338C9DDE3FA}.memdleak|Win32.ActiveCfg = stage|Win32
 		{51778453-C0AA-419D-A87F-4338C9DDE3FA}.memdleak|Win32.Build.0 = stage|Win32
 		{51778453-C0AA-419D-A87F-4338C9DDE3FA}.memdleak|x64.ActiveCfg = stage|x64
@@ -415,6 +423,12 @@ Global
 		{699D6807-4F43-40E9-86AB-2A8B856707A9}.codeanalysis|Win32.Build.0 = basis|Win32
 		{699D6807-4F43-40E9-86AB-2A8B856707A9}.codeanalysis|x64.ActiveCfg = basis|x64
 		{699D6807-4F43-40E9-86AB-2A8B856707A9}.codeanalysis|x64.Build.0 = basis|x64
+		{699D6807-4F43-40E9-86AB-2A8B856707A9}.cover|Win32.ActiveCfg = cover|Win32
+		{699D6807-4F43-40E9-86AB-2A8B856707A9}.cover|Win32.Build.0 = cover|Win32
+		{699D6807-4F43-40E9-86AB-2A8B856707A9}.cover|Win32.Deploy.0 = cover|Win32
+		{699D6807-4F43-40E9-86AB-2A8B856707A9}.cover|x64.ActiveCfg = cover|x64
+		{699D6807-4F43-40E9-86AB-2A8B856707A9}.cover|x64.Build.0 = cover|x64
+		{699D6807-4F43-40E9-86AB-2A8B856707A9}.cover|x64.Deploy.0 = cover|x64
 		{699D6807-4F43-40E9-86AB-2A8B856707A9}.memdleak|Win32.ActiveCfg = basis|Win32
 		{699D6807-4F43-40E9-86AB-2A8B856707A9}.memdleak|Win32.Build.0 = basis|Win32
 		{699D6807-4F43-40E9-86AB-2A8B856707A9}.memdleak|x64.ActiveCfg = basis|x64
@@ -443,6 +457,12 @@ Global
 		{21DCC811-4BCE-4F16-B674-C0941F847127}.codeanalysis|Win32.Build.0 = basis|Win32
 		{21DCC811-4BCE-4F16-B674-C0941F847127}.codeanalysis|x64.ActiveCfg = basis|x64
 		{21DCC811-4BCE-4F16-B674-C0941F847127}.codeanalysis|x64.Build.0 = basis|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.cover|Win32.ActiveCfg = cover|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.cover|Win32.Build.0 = cover|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.cover|Win32.Deploy.0 = cover|Win32
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.cover|x64.ActiveCfg = cover|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.cover|x64.Build.0 = cover|x64
+		{21DCC811-4BCE-4F16-B674-C0941F847127}.cover|x64.Deploy.0 = cover|x64
 		{21DCC811-4BCE-4F16-B674-C0941F847127}.memdleak|Win32.ActiveCfg = basis|Win32
 		{21DCC811-4BCE-4F16-B674-C0941F847127}.memdleak|Win32.Build.0 = basis|Win32
 		{21DCC811-4BCE-4F16-B674-C0941F847127}.memdleak|x64.ActiveCfg = basis|x64
@@ -471,6 +491,12 @@ Global
 		{B39ED2B3-D53A-4077-B957-930979A3577D}.codeanalysis|Win32.Build.0 = basis|Win32
 		{B39ED2B3-D53A-4077-B957-930979A3577D}.codeanalysis|x64.ActiveCfg = basis|x64
 		{B39ED2B3-D53A-4077-B957-930979A3577D}.codeanalysis|x64.Build.0 = basis|x64
+		{B39ED2B3-D53A-4077-B957-930979A3577D}.cover|Win32.ActiveCfg = cover|Win32
+		{B39ED2B3-D53A-4077-B957-930979A3577D}.cover|Win32.Build.0 = cover|Win32
+		{B39ED2B3-D53A-4077-B957-930979A3577D}.cover|Win32.Deploy.0 = cover|Win32
+		{B39ED2B3-D53A-4077-B957-930979A3577D}.cover|x64.ActiveCfg = cover|x64
+		{B39ED2B3-D53A-4077-B957-930979A3577D}.cover|x64.Build.0 = cover|x64
+		{B39ED2B3-D53A-4077-B957-930979A3577D}.cover|x64.Deploy.0 = cover|x64
 		{B39ED2B3-D53A-4077-B957-930979A3577D}.memdleak|Win32.ActiveCfg = basis|Win32
 		{B39ED2B3-D53A-4077-B957-930979A3577D}.memdleak|Win32.Build.0 = basis|Win32
 		{B39ED2B3-D53A-4077-B957-930979A3577D}.memdleak|x64.ActiveCfg = basis|x64
@@ -499,6 +525,12 @@ Global
 		{84517713-2000-419D-A87F-4338C9DDE3FA}.codeanalysis|Win32.Build.0 = basis|Win32
 		{84517713-2000-419D-A87F-4338C9DDE3FA}.codeanalysis|x64.ActiveCfg = basis|x64
 		{84517713-2000-419D-A87F-4338C9DDE3FA}.codeanalysis|x64.Build.0 = basis|x64
+		{84517713-2000-419D-A87F-4338C9DDE3FA}.cover|Win32.ActiveCfg = cover|Win32
+		{84517713-2000-419D-A87F-4338C9DDE3FA}.cover|Win32.Build.0 = cover|Win32
+		{84517713-2000-419D-A87F-4338C9DDE3FA}.cover|Win32.Deploy.0 = cover|Win32
+		{84517713-2000-419D-A87F-4338C9DDE3FA}.cover|x64.ActiveCfg = cover|x64
+		{84517713-2000-419D-A87F-4338C9DDE3FA}.cover|x64.Build.0 = cover|x64
+		{84517713-2000-419D-A87F-4338C9DDE3FA}.cover|x64.Deploy.0 = cover|x64
 		{84517713-2000-419D-A87F-4338C9DDE3FA}.memdleak|Win32.ActiveCfg = basis|Win32
 		{84517713-2000-419D-A87F-4338C9DDE3FA}.memdleak|Win32.Build.0 = basis|Win32
 		{84517713-2000-419D-A87F-4338C9DDE3FA}.memdleak|x64.ActiveCfg = basis|x64
@@ -527,6 +559,12 @@ Global
 		{84517714-2000-419D-A87F-4338C9DDE3FA}.codeanalysis|Win32.Build.0 = basis|Win32
 		{84517714-2000-419D-A87F-4338C9DDE3FA}.codeanalysis|x64.ActiveCfg = basis|x64
 		{84517714-2000-419D-A87F-4338C9DDE3FA}.codeanalysis|x64.Build.0 = basis|x64
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.cover|Win32.ActiveCfg = cover|Win32
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.cover|Win32.Build.0 = cover|Win32
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.cover|Win32.Deploy.0 = cover|Win32
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.cover|x64.ActiveCfg = cover|x64
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.cover|x64.Build.0 = cover|x64
+		{84517714-2000-419D-A87F-4338C9DDE3FA}.cover|x64.Deploy.0 = cover|x64
 		{84517714-2000-419D-A87F-4338C9DDE3FA}.memdleak|Win32.ActiveCfg = basis|Win32
 		{84517714-2000-419D-A87F-4338C9DDE3FA}.memdleak|Win32.Build.0 = basis|Win32
 		{84517714-2000-419D-A87F-4338C9DDE3FA}.memdleak|x64.ActiveCfg = basis|x64
@@ -547,6 +585,70 @@ Global
 		{84517714-2000-419D-A87F-4338C9DDE3FA}.static_basis|Win32.Build.0 = basis|Win32
 		{84517714-2000-419D-A87F-4338C9DDE3FA}.static_basis|x64.ActiveCfg = basis|x64
 		{84517714-2000-419D-A87F-4338C9DDE3FA}.static_basis|x64.Build.0 = basis|x64
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.basis|Win32.ActiveCfg = basis|Win32
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.basis|Win32.Build.0 = basis|Win32
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.basis|x64.ActiveCfg = basis|x64
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.basis|x64.Build.0 = basis|x64
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.codeanalysis|Win32.ActiveCfg = cover|Win32
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.codeanalysis|Win32.Build.0 = cover|Win32
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.codeanalysis|x64.ActiveCfg = cover|x64
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.codeanalysis|x64.Build.0 = cover|x64
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.cover|Win32.ActiveCfg = cover|Win32
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.cover|Win32.Build.0 = cover|Win32
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.cover|x64.ActiveCfg = cover|x64
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.cover|x64.Build.0 = cover|x64
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.memdleak|Win32.ActiveCfg = cover|Win32
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.memdleak|Win32.Build.0 = cover|Win32
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.memdleak|x64.ActiveCfg = cover|x64
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.memdleak|x64.Build.0 = cover|x64
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.no_precompiled_header|Win32.ActiveCfg = cover|Win32
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.no_precompiled_header|Win32.Build.0 = cover|Win32
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.no_precompiled_header|x64.ActiveCfg = cover|x64
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.no_precompiled_header|x64.Build.0 = cover|x64
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.profiler|Win32.ActiveCfg = cover|Win32
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.profiler|Win32.Build.0 = cover|Win32
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.profiler|x64.ActiveCfg = cover|x64
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.profiler|x64.Build.0 = cover|x64
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.stage|Win32.ActiveCfg = stage|Win32
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.stage|Win32.Build.0 = stage|Win32
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.stage|x64.ActiveCfg = stage|x64
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.stage|x64.Build.0 = stage|x64
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.static_basis|Win32.ActiveCfg = basis|Win32
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.static_basis|Win32.Build.0 = basis|Win32
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.static_basis|x64.ActiveCfg = basis|x64
+		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.static_basis|x64.Build.0 = basis|x64
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.basis|Win32.ActiveCfg = basis|Win32
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.basis|Win32.Build.0 = basis|Win32
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.basis|x64.ActiveCfg = basis|x64
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.basis|x64.Build.0 = basis|x64
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.codeanalysis|Win32.ActiveCfg = cover|Win32
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.codeanalysis|Win32.Build.0 = cover|Win32
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.codeanalysis|x64.ActiveCfg = cover|x64
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.codeanalysis|x64.Build.0 = cover|x64
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.cover|Win32.ActiveCfg = cover|Win32
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.cover|Win32.Build.0 = cover|Win32
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.cover|x64.ActiveCfg = cover|x64
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.cover|x64.Build.0 = cover|x64
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.memdleak|Win32.ActiveCfg = cover|Win32
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.memdleak|Win32.Build.0 = cover|Win32
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.memdleak|x64.ActiveCfg = cover|x64
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.memdleak|x64.Build.0 = cover|x64
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.no_precompiled_header|Win32.ActiveCfg = cover|Win32
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.no_precompiled_header|Win32.Build.0 = cover|Win32
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.no_precompiled_header|x64.ActiveCfg = cover|x64
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.no_precompiled_header|x64.Build.0 = cover|x64
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.profiler|Win32.ActiveCfg = cover|Win32
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.profiler|Win32.Build.0 = cover|Win32
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.profiler|x64.ActiveCfg = cover|x64
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.profiler|x64.Build.0 = cover|x64
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.stage|Win32.ActiveCfg = stage|Win32
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.stage|Win32.Build.0 = stage|Win32
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.stage|x64.ActiveCfg = stage|x64
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.stage|x64.Build.0 = stage|x64
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.static_basis|Win32.ActiveCfg = basis|Win32
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.static_basis|Win32.Build.0 = basis|Win32
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.static_basis|x64.ActiveCfg = basis|x64
+		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.static_basis|x64.Build.0 = basis|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
