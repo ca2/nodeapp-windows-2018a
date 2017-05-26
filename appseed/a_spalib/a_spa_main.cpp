@@ -136,7 +136,7 @@ int register_spa_file_type()
    // 1: Create subkey for extension -> HKEY_CLASSES_ROOT\.002
    if (RegCreateKeyExW(HKEY_CLASSES_ROOT, extension.c_str(), 0, 0, 0, KEY_ALL_ACCESS, 0, &hkey, 0) != ERROR_SUCCESS)
    {
-      printf("Could not create or open a registrty key\n");
+      output_debug_string("Could not create or open a registrty key\n");
       return 0;
    }
    RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)desc.c_str(), desc.length() * sizeof(wchar_t)); // default vlaue is description of file extension
@@ -149,7 +149,7 @@ int register_spa_file_type()
    // HKEY_CLASSES_ROOT\.002\Shell\\open with my program\\command
    if (RegCreateKeyExW(HKEY_CLASSES_ROOT, path.c_str(), 0, 0, 0, KEY_ALL_ACCESS, 0, &hkey, 0) != ERROR_SUCCESS)
    {
-      printf("Could not create or open a registrty key\n");
+      output_debug_string("Could not create or open a registrty key\n");
       return 0;
    }
    RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)app.c_str(), app.length() * sizeof(wchar_t));
@@ -160,7 +160,7 @@ int register_spa_file_type()
 
    if (RegCreateKeyExW(HKEY_CLASSES_ROOT, path.c_str(), 0, 0, 0, KEY_ALL_ACCESS, 0, &hkey, 0) != ERROR_SUCCESS)
    {
-      printf("Could not create or open a registrty key\n");
+      output_debug_string("Could not create or open a registrty key\n");
       return 0;
    }
    RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)icon.c_str(), icon.length() * sizeof(wchar_t));

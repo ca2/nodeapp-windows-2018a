@@ -1,5 +1,5 @@
 #include "framework.h"
-
+#include <stdio.h>
 
 extern MSG g_msg;
 extern bool g_bRunMainLoop;
