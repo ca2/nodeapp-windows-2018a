@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|x64'">
-    <LocalDebuggerCommandArguments>net-docs  18 xxx</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>main 229 xxx</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerCommand>C:\repos\main\hooks\post-commit_.exe</LocalDebuggerCommand>
   </PropertyGroup>
 </Project>

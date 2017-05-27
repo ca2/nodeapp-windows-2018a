@@ -861,23 +861,6 @@
     <None Include="draw2d_gdiplus.def" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\app\appseed\ace\ace.vcxproj">
-      <Project>{21dcc811-4bce-4f16-b674-c0941f847127}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\app\appseed\aqua\aqua.vcxproj">
-      <Project>{51778453-c0aa-419d-a87f-4338c9dde3fa}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\app\appseed\aura\aura.vcxproj">
-      <Project>{03e5b8e7-9e3b-44dd-9ede-e0a74d52c1c5}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\app\appseed\axis\axis.vcxproj">
-      <Project>{73a245f9-c92f-4487-aef7-cb0531f665bd}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\app\appseed\base\base.vcxproj">
-      <Project>{4d7d3626-ada6-4ca2-9566-ed7b131e3d51}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <ResourceCompile Include="draw2d_gdiplus.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
