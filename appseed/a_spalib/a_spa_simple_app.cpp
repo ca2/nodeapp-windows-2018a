@@ -1340,7 +1340,7 @@ namespace a_spa
       Sleep(84);
 
 
-      if (install.m_lProcessing < install.m_lTotal || install.m_lBad > 0)
+      if (install.m_lProcessing > 0 || install.m_lBad > 0)
          return 0;
 
       return 1;

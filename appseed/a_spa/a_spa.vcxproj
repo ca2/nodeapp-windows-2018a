@@ -290,6 +290,9 @@
     <ProjectReference Include="..\a_spalib\a_spalib.vcxproj">
       <Project>{fa039458-2e43-45de-9fa9-66dfa7e11e64}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\draw2d_gdiplus\_draw2d_gdiplus.vcxproj">
+      <Project>{573c4b5e-4132-457a-be82-05a882a062ff}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\a_spares\a_spa.rc" />
