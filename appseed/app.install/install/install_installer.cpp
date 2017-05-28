@@ -4152,7 +4152,7 @@ RetryBuildNumber:
 
       wstring wstrFile = u16(dir::stage(process_platform_dir_name2()) / "app");
 
-      wstring wstrParams = u16(pszCommandLine);
+      wstring wstrParams = u16(string(pszCommandLine) + " install");
 
       {
 
