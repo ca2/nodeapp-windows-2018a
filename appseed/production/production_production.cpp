@@ -66,8 +66,8 @@ namespace production
       }
       else
       {
-         m_strTwitterConsumerKey = "AHsGuuGPEqDheXbx93JQ";
-         m_strTwitterConsumerSecret = "6b8zc7HxM0ImjYgq0kOM1AzrHSIxTCxVOWsM7gRN90";
+         m_strTwitterConsumerKey = "duJpErhbQC3T7hocP4imW7tNU";
+         m_strTwitterConsumerSecret = "p3J42fpPNySwRuupwsa3Ra6xZjolQPWx27BPhiAad8mn7mLZEO";
       }
 
 
