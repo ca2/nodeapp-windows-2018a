@@ -2028,8 +2028,19 @@ install_begin:;
       }
 
       dir::mk(dir::name(strStage));
-      
-      System.compress().unbz(get_app(), strStage, strStageGz);
+
+      if (Application.file().length(strStageGz) <= 0)
+      {
+
+         Application.file().touch(strStage);
+
+      }
+      else
+      {
+
+         System.compress().unbz(get_app(), strStage, strStageGz);
+
+      }
 
       str = strStage;
 
@@ -2118,9 +2129,24 @@ install_begin:;
       string str;
       string strMd5 = mapMd5[strPath];
       strUrl.replace_ci("\\", "/");
-      if(!ca2_fy_url(str, strUrl, true, -1, strMd5, -1))
+      
+      if (!ca2_fy_url(str, strUrl, true, -1, strMd5, -1))
+      {
+
          return -2;
+
+      }
+
       _FILE * f = fopen_dup(str, "rb");
+
+      if (f == NULL)
+      {
+         
+         output_debug_string("empty bz file not explicity \"uncompressed\" to empty file?");
+
+         return -2;
+
+      }
 
       string strPlatform = System.install().get_platform();
 

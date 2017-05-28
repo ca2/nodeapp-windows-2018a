@@ -401,7 +401,7 @@ namespace a_spa
       trace("Starting app.install\r\n");
       //trace(0.84);
 
-      start_app_install_in_context(strPlatform);
+      start_app_install_in_context(strPlatform, true);
 
       if (strPlatform == "x86")
       {
@@ -1675,11 +1675,34 @@ namespace a_spa
 
          }
 
+
+         {
+
+            STARTUPINFOW si;
+            memset(&si, 0, sizeof(si));
+            si.cb = sizeof(si);
+            si.dwFlags = STARTF_USESHOWWINDOW;
+            si.wShowWindow = SW_SHOWNORMAL;
+            PROCESS_INFORMATION pi;
+            memset(&pi, 0, sizeof(pi));
+
+            wstring wstrCmdLine = u16(str);
+
+            wstring wstrApp(wstrCmdLine);
+
+            if (::CreateProcessW((wchar_t *)wstrApp.c_str(), (wchar_t *)wstrCmdLine.c_str(),
+               NULL, NULL, FALSE, 0, NULL, NULL,
+               &si, &pi))
+               return TRUE;
+
+         }
+
+
       }
       else
       {
 
-         if (!low_is_spaadmin_running(strPlatform))
+         if (strPlatform == "x86" && !low_is_spaadmin_running(strPlatform))
          {
 
             SHELLEXECUTEINFOW sei = {};

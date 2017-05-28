@@ -84,7 +84,7 @@ namespace a_spa
       virtual int check_soon_app_id2(string wstr);
       virtual string spa_app_id_to_app_name(string strId);
 
-      virtual void start_app_install_in_context(string strPlatform);
+      virtual void start_app_install_in_context(string strPlatform, bool bAlreadyElevated);
       virtual string get_latest_build_number(const char * pszVersion);
 
       virtual int check_user_service(string strPlatform);

@@ -78,7 +78,7 @@ IDTHREAD g_dwMain2;
 #include "axis/app_install_launcher.cpp"
 
 
-void app_install_launcher::start_in_context()
+void app_install_launcher::start_in_context(bool bAlreadyElevated)
 {
 
    if (!ensure_executable())
@@ -105,7 +105,7 @@ void app_install_launcher::start_in_context()
 
    }
 
-   Sleep(2000);
+   //Sleep(2000);
 
 }
 
@@ -535,12 +535,12 @@ namespace a_spa
 {
 
 
-   void simple_app::start_app_install_in_context(string strPlatform)
+   void simple_app::start_app_install_in_context(string strPlatform, bool bAlreadyElevated)
    {
 
       app_install_launcher launcher(strPlatform, "", "");
 
-      launcher.start_in_context();
+      launcher.start_in_context(bAlreadyElevated);
 
    }
 
