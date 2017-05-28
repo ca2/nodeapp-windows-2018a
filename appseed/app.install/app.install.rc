@@ -1,7 +1,7 @@
 #include "resource.h"
 #include "axis/version.h"
 
-ID_MP3_SMALL_BELL       MP3                     "small_bell.mp3"
+ID_WAV_START       WAV                     "start.wav"
 #if CA2_PLATFORM_VERSION == CA2_BASIS
 IDI_CA2_SPA   ICON                    "basis.ico"
 #else

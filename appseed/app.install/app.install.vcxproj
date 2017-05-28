@@ -577,7 +577,7 @@
     <ClInclude Include="framework.h" />
   </ItemGroup>
   <ItemGroup>
-    <Media Include="small_bell.mp3" />
+    <Media Include="start.wav" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\app\appseed\ace\ace.vcxproj">

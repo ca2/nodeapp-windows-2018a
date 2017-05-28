@@ -5,7 +5,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">
-    <LocalDebuggerCommandArguments>"$(OutDir)app.axis.exe" "app_core_consolelab" "$(OutDir)app_core_consolelab1.exe"</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>"$(OutDir)app.exe" "app_core_user_service" "$(OutDir)app_core_user_service1.exe"</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='stage|x64'">

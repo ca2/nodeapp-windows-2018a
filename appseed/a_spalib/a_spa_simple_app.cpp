@@ -966,6 +966,8 @@ namespace a_spa
 
       }
 
+      strCommand += " install";
+
       if (strId == "app-core/user_service")
       {
 

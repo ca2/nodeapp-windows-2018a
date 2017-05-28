@@ -41,13 +41,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Media Include="small_bell.mp3">
-      <Filter>Resource Files</Filter>
-    </Media>
-  </ItemGroup>
-  <ItemGroup>
     <ResourceCompile Include="app.install.rc">
       <Filter>Source Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="start.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
   </ItemGroup>
 </Project>
