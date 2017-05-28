@@ -1212,7 +1212,7 @@ namespace a_spa
          if (file_exists_dup(strApp))
          {
 
-            STARTUPINFOW si;
+            /*STARTUPINFOW si;
             memset(&si, 0, sizeof(si));
             si.cb = sizeof(si);
             si.dwFlags = STARTF_USESHOWWINDOW;
@@ -1227,7 +1227,23 @@ namespace a_spa
             if (::CreateProcessW((wchar_t *)wstrApp.c_str(), (wchar_t *)wstrCmdLine.c_str(),
                NULL, NULL, FALSE, 0, NULL, NULL,
                &si, &pi))
-               return TRUE;
+               return TRUE;*/
+
+
+            SHELLEXECUTEINFOW sei = {};
+
+            wstring wstrFile = u16(strApp.c_str());
+
+            {
+
+               //spaadmin_mutex mutexStartup("-startup");
+
+               sei.cbSize = sizeof(SHELLEXECUTEINFOW);
+//               sei.fMask = SEE_MASK_NOASYNC | SEE_MASK_NOCLOSEPROCESS;
+               sei.lpFile = wstrFile.c_str();
+               ::ShellExecuteExW(&sei);
+
+            }
 
          }
 
@@ -1255,22 +1271,42 @@ namespace a_spa
          if (file_exists_dup(strDll) && file_exists_dup(strApp))
          {
 
-            STARTUPINFOW si;
-            memset(&si, 0, sizeof(si));
-            si.cb = sizeof(si);
-            si.dwFlags = STARTF_USESHOWWINDOW;
-            si.wShowWindow = SW_SHOWNORMAL;
-            PROCESS_INFORMATION pi;
-            memset(&pi, 0, sizeof(pi));
+            //STARTUPINFOW si;
+            //memset(&si, 0, sizeof(si));
+            //si.cb = sizeof(si);
+            //si.dwFlags = STARTF_USESHOWWINDOW;
+            //si.wShowWindow = SW_SHOWNORMAL;
+            //PROCESS_INFORMATION pi;
+            //memset(&pi, 0, sizeof(pi));
 
             wstring wstrCmdLine = u16("\"" + string(strApp) + "\" : app=" + strId + " build_number=installed enable_desktop_launch=" + strId);
 
+            wstring wstrParams = u16(": app=" + strId + " build_number=installed enable_desktop_launch=" + strId);
+
             wstring wstrApp(strApp);
 
-            if (::CreateProcessW((wchar_t *)wstrApp.c_str(), (wchar_t *)wstrCmdLine.c_str(),
-               NULL, NULL, FALSE, 0, NULL, NULL,
-               &si, &pi))
-               return TRUE;
+            //if (::CreateProcessW((wchar_t *)wstrApp.c_str(), (wchar_t *)wstrCmdLine.c_str(),
+            //   NULL, NULL, FALSE, 0, NULL, NULL,
+            //   &si, &pi))
+            //   return TRUE;
+
+
+            SHELLEXECUTEINFOW sei = {};
+
+            wstring wstrFile = wstrCmdLine;
+
+            {
+
+               //spaadmin_mutex mutexStartup("-startup");
+
+               sei.cbSize = sizeof(SHELLEXECUTEINFOW);
+               //               sei.fMask = SEE_MASK_NOASYNC | SEE_MASK_NOCLOSEPROCESS;
+               sei.lpFile = wstrApp.c_str();
+               sei.lpParameters = wstrParams.c_str();
+               ::ShellExecuteExW(&sei);
+
+            }
+
 
          }
 
