@@ -9,11 +9,13 @@
     <RemoteDebuggerServerName>192.168.0.36</RemoteDebuggerServerName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">
-    <LocalDebuggerCommandArguments>: app=app-core/hellomultiverse</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>: app=app-core/flag</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerCommand>C:\Program Files (x86)\ca2\time\Win32\stage\a_spa.exe</LocalDebuggerCommand>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='stage|x64'">
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerCommandArguments>: app=app-cidadedecuritiba/alphaclock</LocalDebuggerCommandArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|x64'">
     <LocalDebuggerCommandArguments>C:\archive\app_veriwell_waven.spa</LocalDebuggerCommandArguments>

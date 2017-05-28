@@ -4148,61 +4148,113 @@ RetryBuildNumber:
 
 #else
 
-      string strPlatform = System.install().get_platform();
+      SHELLEXECUTEINFOW sei = {};
 
-#ifdef WINDOWS
+      wstring wstrFile = u16(dir::stage(process_platform_dir_name2()) / "app");
 
-      //::SetDllDirectory(dir::path(dir::element(), "stage\\" + strPlatform));
+      wstring wstrParams = u16(pszCommandLine);
 
-      ::SetDllDirectory(dir::stage(process_platform_dir_name2()));
+      {
 
-#endif
+         sei.cbSize = sizeof(SHELLEXECUTEINFOW);
+         sei.fMask = SEE_MASK_NOASYNC | SEE_MASK_NOCLOSEPROCESS;
+         sei.lpVerb = L"RunAs";
+         sei.lpFile = wstrFile.c_str();
+         sei.lpParameters = wstrParams.c_str();
+         ::ShellExecuteExW(&sei);
 
-      ::aura::library libraryCore(get_app());
+      }
 
-      string strCore = "core";
+      DWORD dwGetLastError = GetLastError();
 
-      // load core library so that a core system is alloced
-      libraryCore.open(dir::stage(process_platform_dir_name2()) / strCore);
+      DWORD dwExitCode = 0;
 
-      fn_defer_core_init * pfn_core_init = libraryCore.get< fn_defer_core_init *>("defer_" + strCore + "_init");
+      for (int i = 0; i < 1440; i++)
+      {
 
-      fn_defer_core_term * pfn_core_term = libraryCore.get< fn_defer_core_term *>("defer_" + strCore + "_term");
+         if (::GetExitCodeProcess(sei.hProcess, &dwExitCode))
+         {
 
-      ::aura::library libraryOs(get_app());
+            if (dwExitCode != STILL_ACTIVE)
+            {
 
-      libraryOs.open(dir::stage(process_platform_dir_name2()) / "app_core");
+               break;
 
-      PFN_APP_CORE_MAIN pfn_app_core_main = (PFN_APP_CORE_MAIN)libraryOs.raw_get("app_core_main");
+            }
 
-      string strFullCommandLine;
+         }
+         else
+         {
 
-      strFullCommandLine = ::path::app(process_platform_dir_name2());
+            Sleep(500);
 
-      strFullCommandLine = "\"" + strFullCommandLine + "\" ";
+            break;
 
-      strFullCommandLine = strFullCommandLine + pszCommandLine;
+         }
 
-      strFullCommandLine += " install";
+         Sleep(500);
 
-      if(!pfn_core_init())
-         return -1;
+      }
 
-      app_core appcore;
-
-#ifdef WINDOWS
-
-      pfn_app_core_main(::GetModuleHandleA(NULL),NULL,strFullCommandLine,SW_HIDE, appcore);
-
-#else
-
-      pfn_app_core_main(strFullCommandLine, SW_HIDE, appcore);
-
-#endif
-
-      pfn_core_term();
+      ::CloseHandle(sei.hProcess);
 
 #endif
+
+//      string strPlatform = System.install().get_platform();
+//
+//#ifdef WINDOWS
+//
+//      //::SetDllDirectory(dir::path(dir::element(), "stage\\" + strPlatform));
+//
+//      ::SetDllDirectory(dir::stage(process_platform_dir_name2()));
+//
+//#endif
+//
+//      ::aura::library libraryCore(get_app());
+//
+//      string strCore = "core";
+//
+//      // load core library so that a core system is alloced
+//      libraryCore.open(dir::stage(process_platform_dir_name2()) / strCore);
+//
+//      fn_defer_core_init * pfn_core_init = libraryCore.get< fn_defer_core_init *>("defer_" + strCore + "_init");
+//
+//      fn_defer_core_term * pfn_core_term = libraryCore.get< fn_defer_core_term *>("defer_" + strCore + "_term");
+//
+//      ::aura::library libraryOs(get_app());
+//
+//      libraryOs.open(dir::stage(process_platform_dir_name2()) / "app_core");
+//
+//      PFN_APP_CORE_MAIN pfn_app_core_main = (PFN_APP_CORE_MAIN)libraryOs.raw_get("app_core_main");
+//
+//      string strFullCommandLine;
+//
+//      strFullCommandLine = ::path::app(process_platform_dir_name2());
+//
+//      strFullCommandLine = "\"" + strFullCommandLine + "\" ";
+//
+//      strFullCommandLine = strFullCommandLine + pszCommandLine;
+//
+//      strFullCommandLine += " install";
+//
+//      if(!pfn_core_init())
+//         return -1;
+//
+//      app_core appcore;
+//
+//#ifdef WINDOWS
+//
+//      pfn_app_core_main(::GetModuleHandleA(NULL),NULL,strFullCommandLine,SW_HIDE, appcore);
+//
+//#else
+//
+//      pfn_app_core_main(strFullCommandLine, SW_HIDE, appcore);
+//
+//#endif
+//
+//      pfn_core_term();
+//
+//#endif
 
       return 0;
 
