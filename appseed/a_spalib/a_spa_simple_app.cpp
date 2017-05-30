@@ -6,6 +6,8 @@ extern bool g_bRunMainLoop;
 extern IDTHREAD g_dwMain2;
 extern int g_iDownloadingSpaadmin;
 
+bool is_user_service_running();
+
 namespace a_spa
 {
 
@@ -1390,25 +1392,31 @@ namespace a_spa
 
       string strApp = dir::stage(strPlatform) / "app_core_user_service.exe";
 
-      if (file_exists_dup(strApp))
+      if (file_exists_dup(strApp) && !is_user_service_running())
       {
-
-         STARTUPINFOW si;
-         memset(&si, 0, sizeof(si));
-         si.cb = sizeof(si);
-         si.dwFlags = STARTF_USESHOWWINDOW;
-         si.wShowWindow = SW_SHOWNORMAL;
-         PROCESS_INFORMATION pi;
-         memset(&pi, 0, sizeof(pi));
-
-         wstring wstrCmdLine = u16("\"" + string(strApp) + "\"");
 
          wstring wstrApp(strApp);
 
-         if (::CreateProcessW((wchar_t *)wstrApp.c_str(), (wchar_t *)wstrCmdLine.c_str(),
-            NULL, NULL, FALSE, 0, NULL, NULL,
-            &si, &pi))
-            return TRUE;
+         wstring wstrDir(::file::path(strApp).folder());
+
+         ::ShellExecuteW(NULL, L"open", wstrApp, L"", wstrDir, SW_HIDE);
+
+         //STARTUPINFOW si;
+         //memset(&si, 0, sizeof(si));
+         //si.cb = sizeof(si);
+         //si.dwFlags = STARTF_USESHOWWINDOW;
+         //si.wShowWindow = SW_SHOWNORMAL;
+         //PROCESS_INFORMATION pi;
+         //memset(&pi, 0, sizeof(pi));
+
+         //wstring wstrCmdLine = u16("\"" + string(strApp) + "\"");
+
+         //wstring wstrApp(strApp);
+
+         //if (::CreateProcessW((wchar_t *)wstrApp.c_str(), (wchar_t *)wstrCmdLine.c_str(),
+         //   NULL, NULL, FALSE, 0, NULL, NULL,
+         //   &si, &pi))
+         //   return TRUE;
 
       }
 
@@ -2512,4 +2520,11 @@ namespace a_spa
 
 
 
+bool is_user_service_running()
+{
+   
+   spa_mutex mutex("Local\\ca2_application_local_mutex:app-core/user_service");
 
+   return mutex.already_exists();
+
+}
