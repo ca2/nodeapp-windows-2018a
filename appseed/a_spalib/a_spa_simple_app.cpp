@@ -267,7 +267,7 @@ namespace a_spa
 
       }
 
-      if (!spa_main_start("x86"))
+      if (!spa_main_start(process_platform_dir_name2()))
       {
 
          return -2;

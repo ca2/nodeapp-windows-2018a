@@ -75,7 +75,7 @@ namespace install
       m_bForceUpdatedBuild       = false;
       m_bSynch                   = true;
       m_bStarterStart            = false;
-      m_strPlatform              = "";
+      m_strPlatform              = process_platform_dir_name2();
       m_bLaunchDesktopApplicationOnIgnitPhase2 = false;
 
 #if CA2_PLATFORM_VERSION == CA2_BASIS

@@ -15,7 +15,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='stage|x64'">
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>: app=app-cidadedecuritiba/alphaclock</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>: app=app-core/desk</LocalDebuggerCommandArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|x64'">
     <LocalDebuggerCommandArguments>C:\archive\app_veriwell_waven.spa</LocalDebuggerCommandArguments>
