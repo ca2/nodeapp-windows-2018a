@@ -11,12 +11,6 @@
     <Filter Include="Resource Files">
       <UniqueIdentifier>{7ad13f13-8e7c-4186-a97a-ad7b01984cdc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\install">
-      <UniqueIdentifier>{3b1d99ad-4ef6-4c55-94ac-3fab607cd3a1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\install">
-      <UniqueIdentifier>{387537d7-844c-4ed5-b5fd-5408033e90a4}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -25,8 +19,8 @@
     <ClCompile Include="framework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="install\install_installer.cpp">
-      <Filter>Source Files\install</Filter>
+    <ClCompile Include="install_installer.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -36,8 +30,8 @@
     <ClInclude Include="framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="install\install_installer.h">
-      <Filter>Header Files\install</Filter>
+    <ClInclude Include="install_installer.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

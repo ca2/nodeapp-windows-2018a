@@ -39,10 +39,15 @@ namespace a_spa
 
       string_map < install >  m_mapInstall;
 
+      stringa     m_straCommand;
+
 
       simple_app();
       virtual ~simple_app();
 
+
+      void add_command_line(string str);
+      string pick_command_line();
 
       void DragMainWindow();
 
@@ -75,19 +80,19 @@ namespace a_spa
       virtual int do_spa(const char * psz, const char * pszParams = NULL);
 
       virtual string get_app_id(string wstr);
-      virtual int check_soon_launch();
+      virtual int check_soon_launch(string str, bool bLaunch);
       virtual int check_spa_installation(string strPlatform);
       virtual int show_spa_window(bool bShow = true);
-      virtual int check_soon_file_launch(string wstr);
-      virtual int check_soon_app_id(string wstr);
-      virtual int check_soon_app_id1(string wstr);
-      virtual int check_soon_app_id2(string wstr);
+      virtual int check_soon_file_launch(string wstr, bool bLaunch);
+      virtual int check_soon_app_id(string wstr, bool bLaunch);
+      virtual int check_soon_app_id1(string wstr, bool bLaunch);
+      virtual int check_soon_app_id2(string wstr, bool bLaunch);
       virtual string spa_app_id_to_app_name(string strId);
 
       virtual void start_app_install_in_context(string strPlatform, bool bAlreadyElevated);
       virtual string get_latest_build_number(const char * pszVersion);
 
-      virtual int check_user_service(string strPlatform);
+      virtual int check_user_service(string strPlatform, bool bLaunch);
       virtual int check_vcredist(string strPlatform);
       virtual int download_vcredist(string strPlatform);
       virtual string download_tmp_vcredist(string strPlatform);

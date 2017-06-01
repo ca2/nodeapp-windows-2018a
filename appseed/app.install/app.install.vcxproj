@@ -560,7 +560,7 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="install\install_installer.cpp" />
+    <ClCompile Include="install_installer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>
@@ -572,7 +572,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="install\install_installer.h" />
+    <ClInclude Include="install_installer.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="framework.h" />
   </ItemGroup>

@@ -1,12 +1,15 @@
 #include "framework.h"
 #include <stdio.h>
 
+
 extern MSG g_msg;
 extern bool g_bRunMainLoop;
 extern IDTHREAD g_dwMain2;
 extern int g_iDownloadingSpaadmin;
 
+
 bool is_user_service_running();
+
 
 namespace a_spa
 {
@@ -125,7 +128,7 @@ namespace a_spa
    {
 
 
-
+      ::CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
 
       //g_pgdiplusStartupInput     = new Gdiplus::GdiplusStartupInput();
       //g_pgdiplusStartupOutput    = new Gdiplus::GdiplusStartupOutput();
@@ -191,6 +194,8 @@ namespace a_spa
             try
             {
 
+               ::CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
+
                spaadmin_main("x86");
 
             }
@@ -208,6 +213,8 @@ namespace a_spa
 
             try
             {
+
+               ::CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
 
                spaadmin_main("x64");
 
@@ -238,6 +245,67 @@ namespace a_spa
 
    }
 
+   void simple_app::add_command_line(string str)
+   {
+
+      {
+
+         ::mutex mutexCommandFile(get_thread_app(), "Local\\ca2_spa_command:" + process_platform_dir_name2());
+
+         ::file::path path = ::dir::system() / process_platform_dir_name2() / "spa_command.txt";
+
+         stringa stra;
+         
+         if(file_load_stra(path, stra, false))
+         {
+
+            stra.add(str);
+
+            file_save_stra(path, stra);
+
+         }
+
+      }
+
+   }
+
+
+   string simple_app::pick_command_line()
+   {
+
+      ::mutex mutexCommandFile(get_thread_app(), "Local\\ca2_spa_command:" + process_platform_dir_name2());
+
+      ::file::path path = ::dir::system() / process_platform_dir_name2() / "spa_command.txt";
+
+      stringa stra;
+
+      if (!file_load_stra(path, stra, false))
+      {
+
+         return "";
+
+      }
+
+      if (stra.is_empty())
+      {
+
+         return "";
+
+      }
+
+      string str;
+
+      str = stra[0];
+
+      stra.remove_at(0);
+
+      file_save_stra(path, stra);
+
+      return str;
+
+   }
+
+
    int simple_app::spa_main()
    {
 
@@ -245,6 +313,8 @@ namespace a_spa
 
       if (mutex.already_exists())
       {
+
+         add_command_line(::GetCommandLineW());
 
          return -34;
 
@@ -257,10 +327,12 @@ namespace a_spa
       if (str.find(" install ") < 0)
       {
 
-         if (check_soon_launch())
+         if (check_soon_launch(str, true))
             return 0;
 
       }
+
+      add_command_line(str);
 
       if (!show_spa_window())
       {
@@ -395,13 +467,13 @@ namespace a_spa
 
          }
 
-         Sleep(1000);
+         Sleep(500);
 
       }
 
       trace("***Preparing app.install\r\n");
+
       trace("Starting app.install\r\n");
-      //trace(0.84);
 
       start_app_install_in_context(strPlatform, true);
 
@@ -416,10 +488,25 @@ namespace a_spa
             try
             {
 
-               if (check_user_service(strPlatform))
                {
 
-                  break;
+                  int iUserServiceTry = 300;
+
+                  while (!check_user_service("Win32", false))
+                  {
+
+                     Sleep(500);
+
+                     if (iUserServiceTry <= 0)
+                     {
+
+                        break;
+
+                     }
+
+                     iUserServiceTry--;
+
+                  }
 
                }
 
@@ -488,6 +575,8 @@ namespace a_spa
    UINT c_cdecl simple_app::spa_main_proc(LPVOID lpvoid)
    {
 
+      ::CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
+
       simple_app * papp = (simple_app *)lpvoid;
 
       try
@@ -529,8 +618,11 @@ namespace a_spa
 
    }
 
+
    int simple_app::spalib_main_plat()
    {
+
+      bool bSomeSortOfInstall = false;
 
       int iTry;
 
@@ -546,6 +638,8 @@ namespace a_spa
 
       while (!is_file_ok(::path::a_spaadmin(strPlatform), ::path::a_spaadmin(strPlatform).name(), NULL, strPlatform))
       {
+
+         bSomeSortOfInstall = true;
 
          if (!is_downloading_spaadmin())
          {
@@ -563,10 +657,11 @@ namespace a_spa
 
          }
 
-         Sleep(1000);
+         Sleep(500);
 
       }
 
+      bSomeSortOfInstall = false;
 
       iFullInstallationMaxTryCount = 3;
 
@@ -584,6 +679,8 @@ namespace a_spa
 
          while (!check_spa_installation(strPlatform))
          {
+
+            bSomeSortOfInstall = true;
 
             if (!is_downloading_spaadmin()
                && is_file_ok(::path::a_spaadmin(strPlatform), ::path::a_spaadmin(strPlatform).name(), NULL, strPlatform)
@@ -610,83 +707,138 @@ namespace a_spa
 
             }
 
-            Sleep(1000);
+            Sleep(500);
 
          }
 
-         while (!check_user_service("x86"))
+         int iUserServiceTry = 300;
+
+         while (!check_user_service("Win32", false))
          {
 
-            Sleep(5000);
+            Sleep(500);
+
+            if (iUserServiceTry <= 0)
+            {
+
+               break;
+
+            }
+
+            iUserServiceTry--;
 
          }
 
          string strId;
 
-         string wstr(::GetCommandLineW());
-
-         string strParams;
-
-         int iFind1 = 0;
-
-         if (wstr[0] == '\"')
+         while (true)
          {
 
-            iFind1 = wstr.find('\"', 1);
+            string wstr = pick_command_line();
 
-         }
+            if (wstr.is_empty())
+            {
 
-         int iFind = wstr.find(" : ", iFind1 + 1);
+               break;
 
-         if (iFind >= 0)
-         {
-            strParams = wstr.substr(iFind);
-            iFind = wstr.find("app=", iFind);
+            }
+
+            if (check_soon_launch(wstr, false))
+            {
+
+               m_straCommand.add(wstr);
+
+               continue;
+
+            }
+
+            string strParams;
+
+            int iFind1 = 0;
+
+            if (wstr[0] == '\"')
+            {
+
+               iFind1 = wstr.find('\"', 1);
+
+            }
+
+            int iFind = wstr.find(" : ", iFind1 + 1);
+
             if (iFind >= 0)
             {
-               int iEnd = wstr.find(" ", iFind);
-               if (iEnd < 0)
+               strParams = wstr.substr(iFind);
+               iFind = wstr.find("app=", iFind);
+               if (iFind >= 0)
                {
-                  strId = wstr.substr(iFind + 4);
-               }
-               else
-               {
-                  strId = wstr.substr(iFind + 4, iEnd - iFind - 4);
-               }
+                  int iEnd = wstr.find(" ", iFind);
+                  if (iEnd < 0)
+                  {
+                     strId = wstr.substr(iFind + 4);
+                  }
+                  else
+                  {
+                     strId = wstr.substr(iFind + 4, iEnd - iFind - 4);
+                  }
 
-               // trim initial quote
-               if (strId[0] == '\"')
-                  strId = strId.substr(1);
+                  // trim initial quote
+                  if (strId[0] == '\"')
+                     strId = strId.substr(1);
 
-               // trim final quote
-               if (strId[strId.length() - 1] == '\"')
-                  strId = strId.substr(0, strId.length() - 1);
+                  // trim final quote
+                  if (strId[strId.length() - 1] == '\"')
+                     strId = strId.substr(0, strId.length() - 1);
+
+               }
 
             }
-         }
-         else
-         {
-
-            strId = get_app_id(directrix()->m_varTopicFile);
-
-            if (strId.length() <= 0)
+            else
             {
-               return 1;
+
+               strId = get_app_id(directrix()->m_varTopicFile);
+
+               if (strId.length() <= 0)
+               {
+
+                  continue;
+
+               }
+
             }
 
-            HMODULE hmoduleUser32 = ::LoadLibrary("User32");
-            //         g_pfnChangeWindowMessageFilter = (LPFN_ChangeWindowMessageFilter) ::GetProcAddress(hmoduleUser32,"ChangeWindowMessageFilter");
+            m_straCommand.add(wstr);
 
+            if (do_spa(strId, strParams))
+            {
+
+            }
 
          }
 
-         if (do_spa(strId, strParams))
+         for (auto & wstr : m_straCommand)
          {
 
-            break;
+            check_soon_launch(wstr, true);
 
          }
 
+         iUserServiceTry = 300;
+
+         while (!check_user_service("Win32", true))
+         {
+
+            Sleep(500);
+
+            if (iUserServiceTry <= 0)
+            {
+
+               break;
+
+            }
+
+            iUserServiceTry--;
+
+         }
 
 
       }
@@ -740,7 +892,7 @@ namespace a_spa
 
          }
 
-         Sleep(1000);
+         Sleep(500);
 
       }
 
@@ -785,7 +937,7 @@ namespace a_spa
 
                   defer_start_program_files_spa_admin("x86");
 
-                  Sleep(5000);
+                  Sleep(500);
 
                }
 
@@ -804,112 +956,138 @@ namespace a_spa
 
             }
 
-            Sleep(1000);
+            Sleep(500);
 
          }
 
+         int iUserServiceTry = 300;
 
-         iTry = 8;
+         while (!check_user_service("Win32", false))
+         {
+
+            Sleep(500);
+
+            if (iUserServiceTry <= 0)
+            {
+
+               break;
+
+            }
+
+            iUserServiceTry--;
+
+         }
+
 
          while (true)
          {
 
-            try
+            string strId;
+
+            string wstr(pick_command_line());
+
+            if (wstr.is_empty())
             {
 
-               if (check_user_service("x86"))
-               {
-
-                  break;
-
-               }
-
-            }
-            catch (...)
-            {
+               break;
 
             }
 
-            iTry--;
-
-            if (iTry < 0)
+            if (check_soon_launch(wstr, false))
             {
 
-               return 0;
+               m_straCommand.add(wstr);
+
+               continue;
 
             }
 
-            Sleep(5000);
+            string strParams;
 
-         }
+            int iFind1 = 0;
 
-         string strId;
+            if (wstr[0] == '\"')
+            {
 
-         string wstr(::GetCommandLineW());
+               iFind1 = wstr.find('\"', 1);
 
-         string strParams;
+            }
 
-         int iFind1 = 0;
+            int iFind = wstr.find(" : ", iFind1 + 1);
 
-         if (wstr[0] == '\"')
-         {
-
-            iFind1 = wstr.find('\"', 1);
-
-         }
-
-         int iFind = wstr.find(" : ", iFind1 + 1);
-
-         if (iFind >= 0)
-         {
-            strParams = wstr.substr(iFind);
-            iFind = wstr.find("app=", iFind);
             if (iFind >= 0)
             {
-               int iEnd = wstr.find(" ", iFind);
-               if (iEnd < 0)
+               strParams = wstr.substr(iFind);
+               iFind = wstr.find("app=", iFind);
+               if (iFind >= 0)
                {
-                  strId = wstr.substr(iFind + 4);
+                  int iEnd = wstr.find(" ", iFind);
+                  if (iEnd < 0)
+                  {
+                     strId = wstr.substr(iFind + 4);
+                  }
+                  else
+                  {
+                     strId = wstr.substr(iFind + 4, iEnd - iFind - 4);
+                  }
+
+                  // trim initial quote
+                  if (strId[0] == '\"')
+                     strId = strId.substr(1);
+
+                  // trim final quote
+                  if (strId[strId.length() - 1] == '\"')
+                     strId = strId.substr(0, strId.length() - 1);
+
                }
-               else
-               {
-                  strId = wstr.substr(iFind + 4, iEnd - iFind - 4);
-               }
-
-               // trim initial quote
-               if (strId[0] == '\"')
-                  strId = strId.substr(1);
-
-               // trim final quote
-               if (strId[strId.length() - 1] == '\"')
-                  strId = strId.substr(0, strId.length() - 1);
-
             }
-         }
-         else
-         {
-
-            strId = get_app_id(directrix()->m_varTopicFile);
-
-            if (strId.length() <= 0)
+            else
             {
-               return 1;
+
+               strId = get_app_id(directrix()->m_varTopicFile);
+
+               if (strId.length() <= 0)
+               {
+
+                  continue;
+
+               }
+
             }
 
-            HMODULE hmoduleUser32 = ::LoadLibrary("User32");
-            //         g_pfnChangeWindowMessageFilter = (LPFN_ChangeWindowMessageFilter) ::GetProcAddress(hmoduleUser32,"ChangeWindowMessageFilter");
+            m_straCommand.add(wstr);
 
+            if (do_spa(strId, strParams))
+            {
+
+            }
 
          }
 
-         if (do_spa(strId, strParams))
+         for (auto & wstr : m_straCommand)
          {
 
-            break;
+            check_soon_launch(wstr, true);
 
          }
 
+         iUserServiceTry = 300;
 
+         while (!check_user_service("Win32", true))
+         {
+
+            Sleep(500);
+
+            if (iUserServiceTry <= 0)
+            {
+
+               break;
+
+            }
+
+            iUserServiceTry--;
+
+         }
 
       }
 
@@ -917,6 +1095,10 @@ namespace a_spa
 
    }
 
+   //
+   // do_spa
+   // installs the application synchronously
+   // it just installs the application, it doesn't launch it
    int simple_app::do_spa(const char * pszId, const char * pszParams)
    {
 
@@ -935,17 +1117,9 @@ namespace a_spa
       else
       {
 
-         string strLocale;
-         string strSchema;
-
-         get_system_locale_schema(strLocale, strSchema);
-
          strCommandLine = " : app=" + strId;
 
          strCommandLine += " install";
-         strCommandLine += " locale=" + strLocale;
-         strCommandLine += " schema=" + strSchema;
-         strCommandLine += " version=" + m_strVersion;
 
       }
 
@@ -959,57 +1133,34 @@ namespace a_spa
 
       strCommand += strCommandLine;
 
-      bool bBackground = true;
-
-      if (bBackground)
-      {
-
-         strCommand += " background";
-
-      }
-
-      strCommand += " install";
+      string strPlatform;
 
       if (strId == "app-core/user_service")
       {
 
-         app_install_call_sync("x86", strCommand.c_str(), "");
+         strPlatform = "x86";
 
       }
       else
       {
 
-         app_install_call_sync(process_platform_dir_name2(), strCommand.c_str(), "");
+         strPlatform = process_platform_dir_name2();
 
       }
 
-      int iOk = 0;
+      app_install_call_sync(strPlatform, strCommand.c_str(), "");
 
-      if (check_soon_app_id(strId))
-      {
-
-         iOk = 1;
-
-      }
-
-      while (!check_user_service("x86"))
-      {
-
-         Sleep(5000);
-
-      }
-
-      return iOk;
+      return true;
 
    }
 
 
-   int simple_app::check_soon_launch()
+   int simple_app::check_soon_launch(string strCommandLine, bool bLaunch)
    {
 
       string strId;
 
-      string wstr = ::GetCommandLineW();
+      string wstr = strCommandLine;
 
       int iFind1 = 0;
 
@@ -1029,7 +1180,7 @@ namespace a_spa
 
          strFile.trim();
 
-         if (check_soon_file_launch(strFile))
+         if (check_soon_file_launch(strFile, bLaunch))
          {
 
             return 1;
@@ -1050,14 +1201,14 @@ namespace a_spa
             if (get_command_line_param(strId, wstrRequest, "enable_desktop_launch") && strId.length() > 0)
             {
 
-               return check_soon_app_id(strId);
+               return check_soon_app_id(strId, bLaunch);
 
             }
 
             if (get_command_line_param(strId, wstrRequest, "app") && strId.length() > 0)
             {
 
-               return check_soon_app_id(strId);
+               return check_soon_app_id(strId, bLaunch);
 
             }
 
@@ -1068,7 +1219,7 @@ namespace a_spa
             if (get_command_line_param(strId, wstrRequest, "app") && strId.length() > 0)
             {
 
-               return check_soon_app_id(strId);
+               return check_soon_app_id(strId, bLaunch);
 
             }
          }
@@ -1078,7 +1229,7 @@ namespace a_spa
       if (strId.empty())
          return FALSE;
 
-      return check_soon_app_id(strId);
+      return check_soon_app_id(strId, bLaunch);
 
    }
 
@@ -1152,11 +1303,11 @@ namespace a_spa
 
    }
 
-   int simple_app::check_soon_file_launch(string wstr)
+
+   int simple_app::check_soon_file_launch(string wstr, bool bLaunch)
    {
 
-
-      return check_soon_app_id(u16(get_app_id(wstr.c_str()).c_str()));
+      return check_soon_app_id(u16(get_app_id(wstr.c_str()).c_str()), bLaunch);
 
    }
 
@@ -1179,17 +1330,17 @@ namespace a_spa
    }
 
 
-   int simple_app::check_soon_app_id(string strId)
+   int simple_app::check_soon_app_id(string strId, bool bLaunch)
    {
 
-      if (check_soon_app_id1(strId))
+      if (check_soon_app_id1(strId, bLaunch))
       {
 
          return TRUE;
 
       }
 
-      if (check_soon_app_id2(strId))
+      if (check_soon_app_id2(strId, bLaunch))
       {
 
          return TRUE;
@@ -1201,53 +1352,57 @@ namespace a_spa
    }
 
 
-   int simple_app::check_soon_app_id1(string strId)
+   int simple_app::check_soon_app_id1(string strId, bool bLaunch)
    {
 
       if (strId.length() <= 0)
+      {
+
          return 0;
+
+      }
 
       string strName = spa_app_id_to_app_name(strId);
 
+      string strApp = dir::stage(process_platform_dir_name()) / strName + ".exe";
+
+      if (file_exists_dup(strApp))
       {
 
-         string strApp = dir::stage(process_platform_dir_name2()) / strName + ".exe";
-
-         if (file_exists_dup(strApp))
+         if (!bLaunch)
          {
 
-            /*STARTUPINFOW si;
-            memset(&si, 0, sizeof(si));
-            si.cb = sizeof(si);
-            si.dwFlags = STARTF_USESHOWWINDOW;
-            si.wShowWindow = SW_SHOWNORMAL;
-            PROCESS_INFORMATION pi;
-            memset(&pi, 0, sizeof(pi));
+            // if dll loads consider good state
 
-            wstring wstrCmdLine = u16("\"" + string(strApp) + "\"");
+            string strDll = dir::stage(process_platform_dir_name()) / strName + ".dll";
 
-            wstring wstrApp(strApp);
+            HMODULE hmodule = ::LoadLibraryW(wstring(strDll));
 
-            if (::CreateProcessW((wchar_t *)wstrApp.c_str(), (wchar_t *)wstrCmdLine.c_str(),
-               NULL, NULL, FALSE, 0, NULL, NULL,
-               &si, &pi))
-               return TRUE;*/
+            bool bOk = hmodule != NULL;
 
-
-            SHELLEXECUTEINFOW sei = {};
-
-            wstring wstrFile = u16(strApp.c_str());
-
+            if (bOk)
             {
 
-               //spaadmin_mutex mutexStartup("-startup");
-
-               sei.cbSize = sizeof(SHELLEXECUTEINFOW);
-//               sei.fMask = SEE_MASK_NOASYNC | SEE_MASK_NOCLOSEPROCESS;
-               sei.lpFile = wstrFile.c_str();
-               ::ShellExecuteExW(&sei);
+               ::FreeLibrary(hmodule);
 
             }
+
+            return bOk;
+
+         }
+
+         SHELLEXECUTEINFOW sei = {};
+
+         wstring wstrFile(strApp.c_str());
+
+         sei.cbSize = sizeof(SHELLEXECUTEINFOW);
+
+         sei.lpFile = wstrFile.c_str();
+
+         if (::ShellExecuteExW(&sei))
+         {
+
+            return TRUE;
 
          }
 
@@ -1258,59 +1413,65 @@ namespace a_spa
    }
 
 
-   int simple_app::check_soon_app_id2(string strId)
+   int simple_app::check_soon_app_id2(string strId, bool bLaunch)
    {
 
       if (strId.length() <= 0)
+      {
+
          return 0;
+
+      }
 
       string strName = spa_app_id_to_app_name(strId);
 
       {
 
-         string strDll = dir::stage(process_platform_dir_name2()) / strName + ".dll";
+         string strDll = dir::stage(process_platform_dir_name()) / strName + ".dll";
 
-         string strApp = dir::stage(process_platform_dir_name2()) / "app.exe";
+         string strApp = dir::stage(process_platform_dir_name()) / "app.exe";
 
          if (file_exists_dup(strDll) && file_exists_dup(strApp))
          {
 
-            //STARTUPINFOW si;
-            //memset(&si, 0, sizeof(si));
-            //si.cb = sizeof(si);
-            //si.dwFlags = STARTF_USESHOWWINDOW;
-            //si.wShowWindow = SW_SHOWNORMAL;
-            //PROCESS_INFORMATION pi;
-            //memset(&pi, 0, sizeof(pi));
-
-            wstring wstrCmdLine = u16("\"" + string(strApp) + "\" : app=" + strId + " build_number=installed enable_desktop_launch=" + strId);
-
-            wstring wstrParams = u16(": app=" + strId + " build_number=installed enable_desktop_launch=" + strId);
-
-            wstring wstrApp(strApp);
-
-            //if (::CreateProcessW((wchar_t *)wstrApp.c_str(), (wchar_t *)wstrCmdLine.c_str(),
-            //   NULL, NULL, FALSE, 0, NULL, NULL,
-            //   &si, &pi))
-            //   return TRUE;
-
-
-            SHELLEXECUTEINFOW sei = {};
-
-            wstring wstrFile = wstrCmdLine;
-
+            if (!bLaunch)
             {
 
-               //spaadmin_mutex mutexStartup("-startup");
+               // if dll loads consider good state
 
-               sei.cbSize = sizeof(SHELLEXECUTEINFOW);
-               //               sei.fMask = SEE_MASK_NOASYNC | SEE_MASK_NOCLOSEPROCESS;
-               sei.lpFile = wstrApp.c_str();
-               sei.lpParameters = wstrParams.c_str();
-               ::ShellExecuteExW(&sei);
+               HMODULE hmodule = ::LoadLibraryW(wstring(strDll));
+
+               bool bOk = hmodule != NULL;
+
+               if (bOk)
+               {
+
+                  ::FreeLibrary(hmodule);
+
+               }
+
+               return bOk;
 
             }
 
+            wstring wstrParams(": app=" + strId );
+
+            wstring wstrApp(strApp);
+
+            SHELLEXECUTEINFOW sei = {};
+
+            sei.cbSize = sizeof(SHELLEXECUTEINFOW);
+
+            sei.lpFile = wstrApp.c_str();
+            
+            sei.lpParameters = wstrParams.c_str();
+            
+            if (::ShellExecuteExW(&sei))
+            {
+
+               return TRUE;
+
+            }
 
          }
 
@@ -1377,46 +1538,71 @@ namespace a_spa
 
       }
 
-      Sleep(84);
-
+      Sleep(100);
 
       if (install.m_lProcessing > 0 || install.m_lBad > 0)
+      {
+
          return 0;
+
+      }
 
       return 1;
 
    }
 
-   int simple_app::check_user_service(string strPlatform)
+   
+   int simple_app::check_user_service(string strPlatform, bool bLaunch)
    {
 
       string strApp = dir::stage(strPlatform) / "app_core_user_service.exe";
 
-      if (file_exists_dup(strApp) && !is_user_service_running())
+      if (file_exists_dup(strApp))
       {
 
-         wstring wstrApp(strApp);
+         if (is_user_service_running())
+         {
 
-         wstring wstrDir(::file::path(strApp).folder());
+            return TRUE;
 
-         ::ShellExecuteW(NULL, L"open", wstrApp, L"", wstrDir, SW_HIDE);
+         }
 
-         //STARTUPINFOW si;
-         //memset(&si, 0, sizeof(si));
-         //si.cb = sizeof(si);
-         //si.dwFlags = STARTF_USESHOWWINDOW;
-         //si.wShowWindow = SW_SHOWNORMAL;
-         //PROCESS_INFORMATION pi;
-         //memset(&pi, 0, sizeof(pi));
+         if (!bLaunch || spa_get_admin())
+         {
 
-         //wstring wstrCmdLine = u16("\"" + string(strApp) + "\"");
+            // if dll loads consider good state
 
-         //wstring wstrApp(strApp);
+            string strDll = dir::stage(strPlatform) / "app_core_user_service.dll";
 
-         //if (::CreateProcessW((wchar_t *)wstrApp.c_str(), (wchar_t *)wstrCmdLine.c_str(),
-         //   NULL, NULL, FALSE, 0, NULL, NULL,
-         //   &si, &pi))
-         //   return TRUE;
+            HMODULE hmodule = ::LoadLibraryW(wstring(strDll));
+
+            bool bOk = hmodule != NULL;
+
+            if (bOk)
+            {
+
+               ::FreeLibrary(hmodule);
+
+            }
+
+            return bOk;
+
+         }
+
+         SHELLEXECUTEINFOW sei = {};
+
+         wstring wstrFile(strApp);
+
+         sei.cbSize = sizeof(SHELLEXECUTEINFOW);
+
+         sei.lpFile = wstrFile.c_str();
+
+         if (::ShellExecuteExW(&sei))
+         {
+
+            return TRUE;
+
+         }
 
       }
 
@@ -1722,27 +1908,21 @@ namespace a_spa
          }
 
 
+         SHELLEXECUTEINFOW sei = {};
+
+         wstring wstrFile(str);
+
          {
 
-            STARTUPINFOW si;
-            memset(&si, 0, sizeof(si));
-            si.cb = sizeof(si);
-            si.dwFlags = STARTF_USESHOWWINDOW;
-            si.wShowWindow = SW_SHOWNORMAL;
-            PROCESS_INFORMATION pi;
-            memset(&pi, 0, sizeof(pi));
+            spaadmin_mutex mutexStartup("-startup");
 
-            wstring wstrCmdLine = u16(str);
+            sei.cbSize = sizeof(SHELLEXECUTEINFOW);
 
-            wstring wstrApp(wstrCmdLine);
+            sei.lpFile = wstrFile.c_str();
 
-            if (::CreateProcessW((wchar_t *)wstrApp.c_str(), (wchar_t *)wstrCmdLine.c_str(),
-               NULL, NULL, FALSE, 0, NULL, NULL,
-               &si, &pi))
-               return TRUE;
+            ::ShellExecuteExW(&sei);
 
          }
-
 
       }
       else
@@ -1760,9 +1940,13 @@ namespace a_spa
                spaadmin_mutex mutexStartup("-startup");
 
                sei.cbSize = sizeof(SHELLEXECUTEINFOW);
+
                sei.fMask = SEE_MASK_NOASYNC | SEE_MASK_NOCLOSEPROCESS;
+
                sei.lpVerb = L"RunAs";
+
                sei.lpFile = wstrFile.c_str();
+
                ::ShellExecuteExW(&sei);
 
             }
@@ -1790,8 +1974,6 @@ namespace a_spa
                else
                {
 
-                  Sleep(5000);
-
                   break;
 
                }
@@ -1799,17 +1981,11 @@ namespace a_spa
                if (is_file_ok(str, ::path::a_spaadmin(strPlatform).name(), NULL, strPlatform))
                   break;
 
-               Sleep(500);
+               ::WaitForSingleObject(sei.hProcess, 500);
 
             }
 
             ::CloseHandle(sei.hProcess);
-
-            // Wait for the process to complete.
-            //      ::WaitForSingleObject(sei.hProcess,INFINITE);
-            //    DWORD code;
-            //  if(::GetExitCodeProcess(sei.hProcess,&code) == 0)
-            //   return 0;
 
          }
 
@@ -2315,16 +2491,18 @@ namespace a_spa
 
          int iRetry = 0;
 
-         while (install.m_lProcessing > 0 && iRetry < ((84 + 77) * 10))
+         while (install.m_lProcessing > 0 && iRetry < 2000)
          {
-            Sleep(84);
+            
+            Sleep(100);
+
             iRetry++;
+
          }
 
-         Sleep(84);
+         Sleep(100);
 
       }
-
 
       return 1;
 
@@ -2402,14 +2580,13 @@ namespace a_spa
       iRetry++;
 
       strBuildNumber = http_get(strSpaIgnitionBaseUrl + "/query?node=build&version=" + strVersion);
-      //strBuildNumber = ms_get((strSpaIgnitionBaseUrl + "/ca2_build_number?authnon").c_str());
 
       ::str::_008Trim(strBuildNumber);
 
       if (strBuildNumber.length() != 19)
       {
 
-         Sleep(184 * iRetry);
+         Sleep(100 * iRetry);
 
          goto RetryBuildNumber;
 
@@ -2523,8 +2700,11 @@ namespace a_spa
 bool is_user_service_running()
 {
    
-   spa_mutex mutex("Local\\ca2_application_local_mutex:app-core/user_service");
+   mutex mutex(get_thread_app(), "Local\\ca2_application_local_mutex:app-core/user_service");
 
    return mutex.already_exists();
 
 }
+
+
+
