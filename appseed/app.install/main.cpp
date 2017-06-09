@@ -45,8 +45,6 @@ public:
    
    void install_defer_file_transfer();
 
-   bool is_user_using(const char * pszDll);
-
    ATOM spaboot_message_register_class(HINSTANCE hInstance);
 
    int32_t cube_run(const char * id);
@@ -60,8 +58,6 @@ public:
    void installer_call_sync(const char * path, const char * param);
 
    bool are_there_user_files_in_use();
-
-   bool is_user_using(uint32_t processid, const char * pszDll);
 
    virtual void on_receive(::aura::ipc::rx * prx, const char * pszMessage);
 
@@ -269,156 +265,120 @@ void installer::install_defer_file_transfer()
 typedef int32_t (__cdecl * PFN_SPAADMIN_MAIN)(const char * pszCommandLine);
 
 
-// non-thread safe
-bool installer::is_user_using(uint32_t processid, const char * pszDll)
-{
-
-   HANDLE hModuleSnap = INVALID_HANDLE_VALUE;
-   MODULEENTRY32 me32;
-   bool bFound = false;
-
-   hModuleSnap = CreateToolhelp32Snapshot( TH32CS_SNAPMODULE, processid );
-   if( hModuleSnap == INVALID_HANDLE_VALUE )
-   {
-      return false;
-   }
-
-   me32.dwSize = sizeof(MODULEENTRY32);
-
-   if(!Module32First(hModuleSnap, &me32))
-   {
-      ::CloseHandle(hModuleSnap);
-      return false;
-   }
-
-   strcpy_dup(m_pszDllEnds, "\\");
-   strcat_dup(m_pszDllEnds, pszDll);
-
-   do
-   {
-      if(str_ends_ci_dup(me32.szModule, m_pszDllEnds) || stricmp_dup(me32.szModule, pszDll) == 0)
-      {
-         bFound = true;
-         break;
-      }
-
-   }
-   while(Module32Next(hModuleSnap, &me32));
-
-   ::CloseHandle( hModuleSnap );
-   return bFound;
-
-}
-
-// non-thread safe
-bool installer::is_user_using(const char * pszDll)
-{
-   HANDLE hProcessSnap;
-   PROCESSENTRY32 pe32;
-
-   hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-   if(hProcessSnap == INVALID_HANDLE_VALUE)
-   {
-      return false;
-   }
-   
-   pe32.dwSize = sizeof(PROCESSENTRY32);
-
-   if(!Process32First(hProcessSnap, &pe32))
-   {
-      ::CloseHandle(hProcessSnap);
-      return false;
-   }
-
-   bool bUsing = false;
-   do
-   {
-      if(is_user_using(pe32.th32ProcessID, pszDll))
-      {
-         bUsing = true;
-         break;
-      }
-   }
-   while(Process32Next(hProcessSnap, &pe32));
-
-  ::CloseHandle(hProcessSnap);
-
-  return bUsing;
-
-}
 
 void installer::on_receive(::aura::ipc::rx * prx, const char * pszMessage)
 {
+   
    string strMessage(pszMessage);
+
    int32_t iRet = 0;
-   const char * pszSuffix;
-   if((pszSuffix = str_begins_inc_dup(strMessage, "synch_spaadmin:")) != NULL)
+
+   if(::str::begins_eat(strMessage, "app_install:"))
    {
+
       if (System.install().is_installing_ca2())
       {
+
          iRet = 1;
+
          return;
+
       }
+
       if(m_bInstallerInstalling)
       {
+
          iRet = 1;
+
          return;
+
       }
+      
       m_bInstallerInstalling = true;
-      install_synch(pszSuffix);
+      
+      install_synch(strMessage);
+
       m_bInstallerInstalling = false;
+
    }
-   else if((pszSuffix = str_begins_inc_dup(strMessage, "spaadmin:")) != NULL)
+   else if(::str::begins_eat(strMessage, "asynch_app_install:"))
    {
+
       if (System.install().is_installing_ca2())
       {
+
          iRet = 1;
+
          return;
+
       }
+
       if(m_bInstallerInstalling)
       {
+
          iRet = 1;
+
          return;
+
       }
-      install_asynch(pszSuffix);
+
+      install_asynch(strMessage);
+
    }
-   else if(stricmp_dup(strMessage, "ok") == 0)
+   else if(strMessage == "ok")
    {
+
       m_emessage = message_ok;
+
    }
-   else if(stricmp_dup(strMessage, "failed") == 0)
+   else if(strMessage == "failed")
    {
+
       m_emessage = message_failed;
+
    }
-   else if(stricmp_dup(strMessage, "exit") == 0)
+   else if(strMessage == "exit")
    {
+
       PostQuitMessage(0);
+
    }
-   else if(stricmp_dup(strMessage, "quit") == 0)
+   else if(strMessage == "quit")
    {
+
       PostQuitMessage(0);
+
    }
    else
    {
+
       m_emessage = message_unknown;
+
    }
+
 }
 
 
 
 bool installer::are_there_user_files_in_use()
 {
-   if(is_user_using(dir::stage(process_platform_dir_name2()) / "msvcp110d.dll"))
+
+   if (are_dlls_in_use(
+   dir::stage(process_platform_dir_name()) / 
+      stringa({
+         "aura.dll", 
+         "axis.dll",
+         "base.dll"
+      })
+      )
+   {
+
       return true;
-   if(is_user_using(dir::stage(process_platform_dir_name2()) / "msvcr110d.dll"))
-      return true;
-   if(is_user_using(dir::stage(process_platform_dir_name2()) / "ca.dll"))
-      return true;
-   if(is_user_using(dir::stage(process_platform_dir_name2()) / "ca2.dll"))
-      return true;
-   if(is_user_using(dir::stage(process_platform_dir_name2()) / "ca2.dll"))
-      return true;
+
+   }
+
    return false;
+
 }
 
 

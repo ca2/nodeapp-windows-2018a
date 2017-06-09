@@ -28,7 +28,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{573C4B5E-4132-457A-BE82-05A882A062FF}</ProjectGuid>
-    <RootNamespace>draw2d_gdiplus</RootNamespace>
+    <RootNamespace>_draw2d_gdiplus</RootNamespace>
     <Keyword>MFCProj</Keyword>
     <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
