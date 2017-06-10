@@ -2647,7 +2647,7 @@ install_begin:;
          string strSpa(pszStart);
          string str2;
          strSpa = m_strInstall;
-         strSpa += buf;
+         strSpa += pszStart;
          if(pszFind1 != NULL)
          {
             m_iProgressMode = 0;
@@ -2669,10 +2669,6 @@ install_begin:;
             mapGzLen[strSpa] = -1;
       }
       
-      fclose_dup(f);
-
-      memory_free_dbg(buf, 0);
-
    }
 
 
