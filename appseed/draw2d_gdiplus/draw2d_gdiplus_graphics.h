@@ -509,7 +509,7 @@ namespace draw2d_gdiplus
       virtual bool DrawLine(float x1, float y1, float x2, float y2, ::draw2d::pen * ppen);
       virtual bool DrawLine(int32_t x1, int32_t y1, int32_t x2, int32_t y2, ::draw2d::pen * ppen);
 
-      virtual void enum_fonts(::draw2d::font::enum_item_array & itema) override;
+      virtual void enum_fonts(stringa & straPath, stringa & stra, font::csa & csa) override;
 
       virtual bool prefer_mapped_dib_on_mix();
 

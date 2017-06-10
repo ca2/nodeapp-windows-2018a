@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FA039458-2E43-45DE-9FA9-66DFA7E11E64}</ProjectGuid>
-    <RootNamespace>_a_spalib</RootNamespace>
+    <RootNamespace>ccvotagus_ca2_spa</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
     <ProjectName>_a_spalib</ProjectName>

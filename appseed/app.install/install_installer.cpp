@@ -3,9 +3,6 @@
 #include <Shlobj.h>
 
 
-#define RETRY_DELAY_MILLIS 200
-
-
 namespace install
 {
 
@@ -38,9 +35,9 @@ namespace install
       m_oswindow                 = NULL;
       m_bForceUpdatedBuild       = false;
       m_bSynch                   = true;
-//      m_bStarterStart            = false;
+      m_bStarterStart            = false;
       m_strPlatform              = process_platform_dir_name2();
-      m_bLaunchOnFinish          = false;
+      m_bLaunchDesktopApplicationOnIgnitPhase2 = false;
 
 #if CA2_PLATFORM_VERSION == CA2_BASIS
 
@@ -148,7 +145,7 @@ namespace install
 
       stringa straMd5AppInstall;
 
-      straMd5AppInstall = straMd5.islice(0, straMd5.get_count() - 1);
+      straMd5.slice(straMd5AppInstall,0, straMd5.get_count() - 1);
 
       string strIndexMd5 = straMd5.last();
 
@@ -213,6 +210,8 @@ install_begin:;
 
          set_progress(0.3);
 
+#ifdef WINDOWSEX
+
          string path;
 
          LPSTR lpsz = path.GetBufferSetLength(1024 * 4);
@@ -220,6 +219,8 @@ install_begin:;
          ::GetModuleFileNameA(NULL, (char *) (const char *) path, 1024 * 4);
 
          path.ReleaseBuffer();
+
+#endif
 
          string strFile;
 
@@ -242,6 +243,11 @@ install_begin:;
 
          }
 
+         ::xml::document nodeInstall(get_app());
+
+         nodeInstall.load(file_as_string_dup(dir::appdata(process_platform_dir_name2()) / "install.xml"));
+
+         ::xml::node * lpnodeVersion = nodeInstall.get_child(m_strVersion);
 
          System.install().trace().rich_trace("***Downloading file list.");
 
@@ -321,12 +327,6 @@ install_begin:;
 
          }
 
-         ::xml::document nodeInstall(get_app());
-
-         nodeInstall.load(file_as_string_dup(dir::appdata(process_platform_dir_name2()) / "install.xml"));
-
-         ::xml::node * lpnodeVersion = nodeInstall.get_child(m_strVersion);
-
          if(lpnodeVersion != NULL)
          {
 
@@ -365,6 +365,7 @@ install_begin:;
 
          }
 
+
          {
 
             ::file::patha patha;
@@ -387,9 +388,9 @@ install_begin:;
          for(int32_t i = 0; i < straFileList.get_count(); i++)
          {
 
-            output_debug_string(straFileList[i]);
+            ::OutputDebugStringA(straFileList[i]);
 
-            output_debug_string("\r\n");
+            ::OutputDebugStringA("\r\n");
 
          }
 
@@ -399,16 +400,27 @@ install_begin:;
 
          uint_array dwa;
 
-         dll_processes(dwa, m_straTerminateProcesses, dir::stage(process_platform_dir_name()) / "axis.dll");
+#ifndef METROWIN
 
-         dll_processes(dwa, m_straTerminateProcesses, dir::stage(process_platform_dir_name()) / "core.dll");
+         dll_processes(dwa, m_straTerminateProcesses, dir::stage(process_platform_dir_name2()) / "axis.dll");
 
-         dll_processes(dwa, m_straTerminateProcesses, dir::stage(process_platform_dir_name()) / "os.dll");
+         dll_processes(dwa,m_straTerminateProcesses,dir::stage(process_platform_dir_name2()) / "core.dll");
+
+         dll_processes(dwa,m_straTerminateProcesses,dir::stage(process_platform_dir_name2()) / "os.dll");
+
+#endif
+
+#ifdef WINDOWSEX
 
          m_straRestartCommandLine.remove_all();
 
+         m_straRestartProcess.remove_all();
+
          if(m_straTerminateProcesses.get_count() > 0)
          {
+
+            if(!m_bStarterStart)
+               return 0;
 
             string strCommand;
 
@@ -498,6 +510,7 @@ install_begin:;
 
                      m_straRestartCommandLine.add(get_command_line(hProcess));
 
+                     m_straRestartProcess.add(m_straTerminateProcesses.element_at(i));
 
                   }
 
@@ -510,7 +523,7 @@ install_begin:;
                   while(::GetExitCodeProcess(hProcess, &dwExitCode) && dwExitCode == STILL_ACTIVE && iRetry > 0)
                   {
 
-                     Sleep(RETRY_DELAY_MILLIS);
+                     Sleep(184);
 
                      iRetry--;
 
@@ -554,16 +567,14 @@ install_begin:;
 
             if(oswindowSpaBoot != NULL)
             {
-
-               //::MessageBox(NULL, "Error: installer command line restart", "Installer Error", MB_ICONEXCLAMATION);
             
-               string str = m_straRestartCommandLine.implode("\n");
+               string str = m_straRestartCommandLine.encode_v16();
 
                COPYDATASTRUCT cds;
 
                memset_dup(&cds, 0, sizeof(cds));
 
-               cds.dwData = 20001000;
+               cds.dwData = 15111984;
 
                cds.cbData = (uint32_t) str.length();
 
@@ -574,6 +585,12 @@ install_begin:;
             }
 
          }
+
+#else
+
+         throw 0;
+
+#endif
 
          new_progress_end(0.49);
 
@@ -619,7 +636,7 @@ install_begin:;
 
             iRetry++;
 
-            Sleep(RETRY_DELAY_MILLIS);
+            Sleep(184);
 
             if((iRetry % 33) == 0)
             {
@@ -647,7 +664,7 @@ install_begin:;
                == IDYES)
             {
 
-               reboot();
+               m_reboot();
 
             }
 
@@ -655,7 +672,7 @@ install_begin:;
          else
          {
 
-            if(!launch_applications())
+            if(!ignit_phase2())
             {
 
                System.install().trace().rich_trace("***Going to ebing!!");
@@ -671,6 +688,18 @@ install_begin:;
       }
 
       return 0;
+
+   }
+
+
+   uint32_t installer::thread_proc_run(void * lpParam)
+   {
+
+      installer * pinstaller = (installer *) lpParam;
+
+      uint32_t ui = pinstaller->run();
+
+      return ui;
 
    }
 
@@ -2460,6 +2489,8 @@ install_begin:;
                   if(string(lpnode->child_at(ui)->attr("start")).length() > 0)
                   {
 
+                     m_iStart = 4;
+
                      m_strCommandLine = string(lpnode->child_at(ui)->attr("start"));
 
                      get_command_line_param(m_strApplicationId, m_strCommandLine,"app");
@@ -2474,6 +2505,8 @@ install_begin:;
                   if(string(lpnode->child_at(ui)->attr("build")).length() > 0)
                   {
 
+                     m_iStart = 4;
+
                      m_strBuildResource = string(lpnode->child_at(ui)->attr("build"));
 
                   }
@@ -2483,8 +2516,12 @@ install_begin:;
                if(lpnode->child_at(ui)->attr("type").is_set())
                {
 
+#ifdef WINDOWSEX
+
                   if(string(lpnode->child_at(ui)->attr("type")) == "parse_file_name")
                   {
+
+                     m_iStart = 4;
 
                      unichar buf[2048];
 
@@ -2520,7 +2557,10 @@ install_begin:;
                      }
 
                   }
-                  else if(string(lpnode->child_at(ui)->attr("type")) == "online_default")
+                  else
+#endif
+                     
+                     if(string(lpnode->child_at(ui)->attr("type")) == "online_default")
                      {
 
                         m_bOfflineInstall = false;
@@ -2604,43 +2644,51 @@ install_begin:;
          
          char * pszFind3 = next_separator_token(pszFind2, ',');
 
-         if (pszFind1 != NULL)
-         {
-
-            m_iProgressMode = 0;
-
-         }
-
          string strSpa(pszStart);
-
-         mapLen[strSpa] = atoi_dup(pszFind1, -1);
-
-         mapMd5[strSpa] = pszFind2;
-
-         mapGzLen[strSpa] = atoi_dup(pszFind3, -1);
-         
+         string str2;
+         strSpa = m_strInstall;
+         strSpa += buf;
+         if(pszFind1 != NULL)
+         {
+            m_iProgressMode = 0;
+            mapLen[strSpa] = atoi_dup(pszFind1);
+         }
+         else
+            mapLen[strSpa] = -1;
+         if(pszFind2 != NULL)
+         {
+            mapMd5[strSpa] = pszFind2;
+         }
+         else
+            mapMd5[strSpa] = "";
+         if(pszFind3 != NULL)
+         {
+            mapGzLen[strSpa] = atoi_dup(pszFind3);
+         }
+         else
+            mapGzLen[strSpa] = -1;
       }
       
-      // RAII!! with aura file no further heuristiscs for freeing and no leaks for missing freeing
-      // fclose_dup(f);
+      fclose_dup(f);
 
-      // RAII!! with aura memory no further heuristiscs for freeing and no leaks for missing freeing
-      // memory_free_dbg(buf, 0);
+      memory_free_dbg(buf, 0);
 
    }
 
 
    bool installer::spa_exec(const char * psz)
    {
-
       string strExec(psz);
-
       if(strExec.substr(0, 15) == "install_service")
       {
-         
          string strStage;
-
          strStage = dir::element() / strExec.substr(16);
+
+#ifdef METROWIN
+
+         throw "todo";
+
+#else
 
          ::aura::shell_launcher launcher1(m_pwindow == NULL ? NULL : m_pwindow->get_safe_handle(), "open", strStage, " : remove usehostlogin", dir::name(strStage), SW_SHOWNORMAL);
 
@@ -2650,102 +2698,100 @@ install_begin:;
 
          launcher2.execute();
 
+#endif
+
       }
       else if(strExec.substr(0, 10) == "install_ex")
       {
-
          string strStage;
-
          string str2 = strExec.substr(11);
-
          index iPos = str2.find(" ");
-
          string str3 = str2.substr(iPos + 1);
-
          strStage = dir::element() / str3;
 
+#ifdef METROWIN
+
+         throw "todo";
+
+#else
          ::aura::shell_launcher launcher(m_pwindow == NULL ? NULL : m_pwindow->get_safe_handle(), "open", strStage, (" : " + str2.substr(0, iPos) + " usehostlogin"), dir::name(strStage), SW_SHOWNORMAL);
 
          launcher.execute();
 
+#endif
+
       }
-
       return true;
-
    }
 
 
     void send_spaboot_install_post(int32_t a, int32_t b)
    {
 
+#ifdef METROWIN
+
+      throw "todo";
+
+#else
+
       ::aura::ipc::tx txchannel(get_thread_app());
 
-      if (!txchannel.open("core/spaboot_install_callback"))
-      {
-
+      if(!txchannel.open("core/spaboot_install_callback"))
          return;
 
-      }
+#endif
+
+#if defined(WINDOWSEX)
 
       ::PostMessage(txchannel.m_oswindow, WM_USER + 100, a, b);
 
-   }
+#else
 
+       throw "not implemented";
 
-   void installer::restart_restore()
-   {
-
-      //if(m_straRestartProcess.get_count() > 0)
-      //{
-
-      //   string str;
-
-      //   str = "Now :\n\n";
-
-      //   for(int32_t i = 0; i < m_straRestartProcess.get_count(); i++)
-      //   {
-      //      if(file_is_equal_path(file_get_mozilla_firefox_plugin_container_path(), m_straRestartProcess[i]))
-      //      {
-      //         m_straRestartProcess.remove_at(i);
-      //         str += "You may reload the Firefox plugin or plugins that has/have been shutdown.\n\n";
-      //      }
-      //   }
-
-      //   if(m_straRestartProcess.get_count() > 0)
-      //   {
-      //      str += "You may restart the applications listed below if they are not restarted automatically:\n\n";
-      //      for(int32_t i = 0; i < m_straRestartProcess.get_count(); i++)
-      //      {
-      //         str += "\t";
-      //         str += m_straRestartProcess[i];
-      //         if(i == m_straRestartProcess.get_count() - 1)
-      //         {
-      //            str += ".";
-      //         }
-      //         else if(i == m_straRestartProcess.get_count() - 2)
-      //         {
-      //            str += ", and;\n";
-      //         }
-      //         else
-      //         {
-      //            str += ";\n";
-      //         }
-
-      //      }
-
-      //   }
-
-      //   ::simple_message_box(NULL,str,"You may restart the applications ...",MB_ICONINFORMATION | MB_OK);
-
-      //}
+#endif
 
    }
 
 
-   bool installer::launch_applications()
+   bool installer::ignit_phase2()
    {
 
+
+
+      char szFormat[256];
+      string strUrl;
+      strUrl = m_strSpaIgnitionBaseUrl + "/query?node=install_application&id=";
+      strUrl += m_strApplicationId;
+      strUrl += "&key=post_install_count";
+
+      string strCount = http_get(strUrl, false);
+
+      int32_t iCount = atoi_dup(strCount);
+
+      //set_progress(0.2);
+      for(int32_t i = 0; i < iCount; i++)
+      {
+         strUrl = m_strSpaIgnitionBaseUrl + "/query?node=install_application&id=";
+         strUrl += m_strApplicationId;
+         strUrl += "&key=post_install";
+         sprintf(szFormat, "[%d]", i);
+         strUrl += szFormat;
+
+         string strExec = http_get(strUrl, false);
+
+         if(!spa_exec(strExec))
+         {
+            #ifdef WINDOWSEX
+            ::simple_message_box(m_pwindow->get_safe_handle(),"Error","Error",MB_OK);
+            #endif
+         }
+         set_progress(((double) i * (0.5 - 0.2) / (double) iCount) + 0.2);
+      }
+      //set_progress(0.5);
+      //      uint32_t dwStartError;
       System.install().trace().rich_trace("starting app.install.exe...");
+
 
       string strCommandLine = m_strCommandLine;
 
@@ -2758,50 +2804,109 @@ install_begin:;
 
       }
 
-      int32_t iError = run_ca2_application_installer(strCommandLine);
+      int32_t i = run_ca2_application_installer(strCommandLine);
 
-      System.install().trace().rich_trace(".");
-
-      string strPlatform = System.install().get_platform();
-
-      if(iError == 0)
+      /*if(m_bLaunchDesktopApplicationOnIgnitPhase2)
       {
 
-         System.install().set_updated(m_strBuild);
+         start_ca2_application();
 
-         restart_restore();
+      }*/
+
+
+      /*if(m_strStart != "_set_windesk" && is_installed("application", "_set_windesk"))
+      {
+      //uint32_t dwStartError2;
+      System.install().trace().rich_trace("starting windeskPackage...");
+      int32_t i2 = run_ca2_application_installer("_set_windesk");
+      System.install().trace().rich_trace("started windeskPackage");
+      }*/
+      System.install().trace().rich_trace(".");
+      //set_progress(0.9);
+      string strPlatform = System.install().get_platform();
+      if(i == 0)
+      {
+         System.install().set_updated(m_strBuild);
+//         System.install().installation_file_lock(false);
+         //       // keeps g_bInstalling for a while
+         //         Sleep((5000) * 5);
+         //::PostMessage(g_oswindow, WM_CLOSE, 0, 0);
+
+         if(m_straRestartProcess.get_count() > 0)
+         {
+
+            string str;
+
+            str = "Now :\n\n";
+
+            for(int32_t i = 0; i < m_straRestartProcess.get_count(); i++)
+            {
+               if(file_is_equal_path(file_get_mozilla_firefox_plugin_container_path(), m_straRestartProcess[i]))
+               {
+                  m_straRestartProcess.remove_at(i);
+                  str += "You may reload the Firefox plugin or plugins that has/have been shutdown.\n\n";
+               }
+            }
+
+            if(m_straRestartProcess.get_count() > 0)
+            {
+               str += "You may restart the applications listed below if they are not restarted automatically:\n\n";
+               for(int32_t i = 0; i < m_straRestartProcess.get_count(); i++)
+               {
+                  str += "\t";
+                  str += m_straRestartProcess[i];
+                  if(i == m_straRestartProcess.get_count() - 1)
+                  {
+                     str += ".";
+                  }
+                  else if(i == m_straRestartProcess.get_count() - 2)
+                  {
+                     str += ", and;\n";
+                  }
+                  else
+                  {
+                     str += ";\n";
+                  }
+
+               }
+            }
+
+            ::simple_message_box(NULL,str,"You may restart the applications ...",MB_ICONINFORMATION | MB_OK);
+
+         }
 
          System.install().trace().rich_trace(":::::Thank you");
          System.install().trace().rich_trace("***Thank you");
          System.install().trace().rich_trace("Thank you");
          System.install().trace().trace_progress(1.0);
 
-         return true;
 
+         //send_spaboot_install_post(2, 0);
+
+         return true;
       }
       else
       {
-         
+         //uint32_t dwError = dwStartError;
          System.install().trace().rich_trace("");
          System.install().trace().rich_trace("");
          System.install().trace().rich_trace("");
          System.install().trace().rich_trace("");
          System.install().trace().rich_trace("");
          System.install().trace().rich_trace("Failed to install");
-         System.install().trace().rich_trace("Contact support.ca2.cc");
+         System.install().trace().rich_trace("Manually contact mailto:support.veriwell@ca2mail.com");
+         System.install().trace().rich_trace("or Manually go to http://ca2os.com/");
          System.install().trace().rich_trace("");
-         System.install().trace().rich_trace("Access store.ca2.cc");
-         System.install().trace().rich_trace("to download the most recent release");
+         System.install().trace().rich_trace("In ca2os.com you can try to");
+         System.install().trace().rich_trace("download the most recent release version for installation");
+         System.install().trace().rich_trace("(Automatic links not availabe by now)");
          System.install().trace().rich_trace("");
          System.install().trace().rich_trace("");
          System.install().trace().rich_trace("");
          System.install().trace().rich_trace("");
          System.install().trace().rich_trace("");
-
          return false;
-
       }
-
    }
 
 
@@ -2810,76 +2915,110 @@ install_begin:;
 
       m_strFile = pszFile;
 
+      //	MESSAGE msg;
+      //	HACCEL hAccelTable;
+
+
+
       ::xml::document node(get_app());
 
-      string strCa2sp = file_as_string_dup(m_strFile);
-
-      if(strCa2sp.length() == 0)
+      // simple_message_box(NULL, "BegInstall", "Caption", MB_OK);
+      if(m_iStart != 4)
       {
-         
-         strCa2sp = read_resource_as_string_dup(NULL, 1984, "CA2SP");
+         string strCa2sp = file_as_string_dup(m_strFile);
+         if(strCa2sp.length() == 0)
+         {
+#ifdef WINDOWSEX
+            strCa2sp = read_resource_as_string_dup(NULL, 1984, "CA2SP");
+#else
+            throw "TODO";
+#endif
+         }
+         if(strCa2sp.length() > 0)
+         {
+            
+            node.load(strCa2sp);
+            
+            parse_spa_index(node);
 
+         }
+         else
+         {
+            m_strApplicationId = "session";
+            m_strCommandLine = ": app=session session_start=session app_type=application install build_number=\"" + m_strBuild + "\"";
+         }
       }
 
-      if(strCa2sp.length() > 0)
-      {
-            
-         node.load(strCa2sp);
-            
-         parse_spa_index(node);
 
+
+      /*
+      char * pszStart = strstr_dup(lpCmdLine, "start=");
+      char * pszEnd = NULL;
+      if(pszStart != NULL)
+      {
+      pszStart += strlen_dup("start=");
+      pszEnd = pszStart;
+      while(isdigit(*pszEnd) || isalpha_dup(*pszEnd))
+      {
+      pszEnd++;
+      }
+      m_strStart = string(pszStart, pszEnd - pszStart);
       }
       else
       {
-         
-         m_strApplicationId = "session";
+      m_strStart = "bergedge";
+      }*/
 
-         m_strCommandLine = ": app=session session_start=session app_type=application install build_number=\"" + m_strBuild + "\"";
-
+      //   char * pszStart;
+#ifdef WINDOWSEX
+      char * pszEnd = NULL;
+      char * lpCmdLine = ::GetCommandLine();
+      char * pszLocale = strstr_dup((char *) lpCmdLine, "locale=");
+      if(pszLocale != NULL)
+      {
+         pszLocale += strlen_dup("locale=");
+         pszEnd = pszLocale;
+         while(isdigit_dup(*pszEnd) || isalpha_dup(*pszEnd))
+         {
+            pszEnd++;
+         }
+         m_strLocale = string(pszLocale, pszEnd - pszLocale);
       }
+      else
+      {
+         m_strLocale = "";
+      }
+#else
+        throw "todo";
+#endif
 
-      return install(m_strCommandLine, nCmdShow);
-
+      return run_starter_start(nCmdShow);
    }
 
 
-
-
-   int32_t installer::main(const char * pszCommandLine)
+   int32_t installer::starter_start(const char * pszCommandLine)
    {
 
       m_strCommandLine           = pszCommandLine;
 
-      get_command_line_param(m_strApplicationId, pszCommandLine, "app");
+      m_strApplicationId         = get_command_line_param(pszCommandLine, "app", "session", "session_start").trimmed();
 
       get_command_line_param(m_strApplicationType, pszCommandLine,"app_type");
 
-      if (m_strApplicationId.is_empty())
-      {
-
+      if(m_strApplicationId.is_empty())
          return -1;
 
-      }
-
-      if (m_strApplicationType.is_empty())
-      {
-
-         m_strApplicationType = "application";
-
-      }
+      if(m_strApplicationType.is_empty())
+         m_strApplicationType    = "application";
 
       get_command_line_param(m_strInstallLocale, pszCommandLine,"locale");
 
-      get_command_line_param(m_strInstallSchema, pszCommandLine,"schema");
+      get_command_line_param(m_strInstallSchema,pszCommandLine,"schema");
 
-      get_command_line_param(m_strVersion, pszCommandLine, "version");
+      get_command_line_param(m_strVersion,pszCommandLine,"version");
 
-      if (m_strVersion.is_empty())
-      {
-
+      if(m_strVersion.is_empty())
          m_strVersion = "basis";
-
-      }
 
       m_strInstallSchema.trim();
 
@@ -2890,7 +3029,6 @@ install_begin:;
          {
 
             m_strInstallLocale      = "en";
-
             m_strInstallSchema      = "en";
 
          }
@@ -2916,7 +3054,81 @@ install_begin:;
 
       m_bOfflineInstall          = false;
 
+      m_strInstallGz             = "http://ca2os.com/stage/";
+
+      m_strInstall               = "http://ca2os.com/stage/";
+
+      if(m_strInstallLocale.CompareNoCase("sv") == 0 || ::str::begins_ci(m_strInstallLocale,"sv-") || m_strInstallLocale.CompareNoCase("se") == 0)
+      {
+
+         m_strInstallStatusTemplate = "Installera %APPNAME%";
+
+      }
+      else if(m_strInstallLocale.CompareNoCase("_std") == 0 || m_strInstallLocale.CompareNoCase("en") == 0 || ::str::begins_ci(m_strInstallLocale,"en-"))
+      {
+
+         m_strInstallStatusTemplate = "Installing %APPNAME%";
+
+      }
+      else if(m_strInstallLocale.CompareNoCase("pt") == 0 || ::str::begins_ci(m_strInstallLocale,"pt-"))
+      {
+
+         m_strInstallStatusTemplate = "Instalando %APPNAME%";
+
+      }
+      else if(m_strInstallLocale.CompareNoCase("fr") == 0 || ::str::begins_ci(m_strInstallLocale,"fr-"))
+      {
+
+         m_strInstallStatusTemplate = "Installation %APPNAME%";
+
+      }
+      else if(m_strInstallLocale.CompareNoCase("es") == 0 || ::str::begins_ci(m_strInstallLocale,"es-"))
+      {
+
+         m_strInstallStatusTemplate = unitext("Instalación de %APPNAME%");
+
+      }
+      else if(m_strInstallLocale.CompareNoCase("it") == 0 || ::str::begins_ci(m_strInstallLocale,"it-"))
+      {
+
+         m_strInstallStatusTemplate = "L'installazione di %APPNAME%";
+
+      }
+      else if(m_strInstallLocale.CompareNoCase("de") == 0 || ::str::begins_ci(m_strInstallLocale,"de-"))
+      {
+
+         m_strInstallStatusTemplate = unitext("Installieren %APPNAME%");
+
+      }
+      else if(m_strInstallLocale.CompareNoCase("ja") == 0 || ::str::begins_ci(m_strInstallLocale,"ja-") || m_strInstallLocale.CompareNoCase("jp") == 0)
+      {
+
+         m_strInstallStatusTemplate = unitext("%APPNAME%をインストールする");
+
+      }
+      else if(m_strInstallLocale.CompareNoCase("zh-cn") == 0 || ::str::begins_ci(m_strInstallLocale,"zh-") || m_strInstallLocale.CompareNoCase("zh") == 0)
+      {
+
+         m_strInstallStatusTemplate = unitext("安装%APPNAME%");
+
+      }
+      else if(m_strInstallLocale.CompareNoCase("zh-tw") == 0)
+      {
+
+         m_strInstallStatusTemplate = unitext("安裝%APPNAME%");
+
+      }
+      else
+      {
+
+         m_strInstallStatusTemplate = "Installing %APPNAME%";
+         //m_strInstallStatusTemplate = Application.http().get_locale_schema("http://account.ca2.cc/defer_ls_get?sessid=noauth&id=spa::InstallStatusTemplate",m_strInstallLocale,m_strInstallSchema);
+
+      }
+
       m_bForceUpdatedBuild       = true;
+
+      m_bStarterStart            = true;
 
       return run_starter_start(m_bShow ? SW_SHOWNORMAL : SW_HIDE);
 
@@ -2949,18 +3161,24 @@ install_begin:;
 /////////            exit(-1);
             return -1;
          }
-         
          System.install().trace().trace_add(".");
-
-         Sleep(RETRY_DELAY_MILLIS);
-
+         Sleep(184);
       }
 
       string strStatusTemplate;
 
+      if(m_strInstallStatusTemplate.get_length() >= strlen_dup("%APPNAME%"))
+      {
+         strStatusTemplate = m_strInstallStatusTemplate;
+      }
+      else
+      {
+         strStatusTemplate = "Installing %APPNAME%";
+      }
+
       m_strApplicationName = strName;
 
-      strStatusTemplate = "Installing " + strName;
+      strStatusTemplate.replace("%APPNAME%", strName);
 
       strName = strStatusTemplate;
       strName = strName + " " + m_strBuild;
@@ -2971,9 +3189,7 @@ install_begin:;
       m_strTitle = strName;
 
       return 0;
-
    }
-
 
    int32_t installer::appmatter_list()
    {
@@ -3010,11 +3226,8 @@ install_begin:;
 //            exit(-1);
             return -1;
          }
-         
          System.install().trace().trace_add(".");
-         
-         Sleep(RETRY_DELAY_MILLIS);
-
+         Sleep(184);
       }
 
       m_strAppMatterList = str;
@@ -3024,7 +3237,6 @@ install_begin:;
       return 0;
 
    }
-
 
    int32_t installer::ca2_build_version()
    {
@@ -3056,19 +3268,12 @@ RetryBuildNumber:
 
          if(m_strBuild.length() != 19)
          {
-
-            Sleep(RETRY_DELAY_MILLIS);
-
+            Sleep(184);
             goto RetryBuildNumber;
-
          }
-
       }
-
       System.install().trace().rich_trace(m_strBuild);
-
       return 0;
-
    }
 
 
@@ -3176,6 +3381,8 @@ RetryBuildNumber:
 
          }
 
+
+
          property_set set;
 
          set["disable_ca2_sessid"] = true;
@@ -3197,11 +3404,8 @@ RetryBuildNumber:
 
          if (!Application.http().download(*m_psockethandler, psession, strUrl, &file, set))
          {
-            
-            Sleep(RETRY_DELAY_MILLIS);
-
+            Sleep(184);
             goto RetryBuildNumber;
-
          }
 
          file.seek_to_begin();
@@ -3209,11 +3413,8 @@ RetryBuildNumber:
 
          if(file.get_size() < 19)
          {
-            
-            Sleep(RETRY_DELAY_MILLIS);
-
+            Sleep(184);
             goto RetryBuildNumber;
-
          }
 
 
@@ -3223,11 +3424,8 @@ RetryBuildNumber:
 
          if(strBuild.length() != 19)
          {
-            
-            Sleep(RETRY_DELAY_MILLIS);
-
+            Sleep(184);
             goto RetryBuildNumber;
-
          }
 
          strName.Empty();
@@ -3236,11 +3434,8 @@ RetryBuildNumber:
 
          if(strName.length() <= 0)
          {
-            
-            Sleep(RETRY_DELAY_MILLIS);
-
+            Sleep(184);
             goto RetryBuildNumber;
-
          }
 
          strSpaHost.Empty();
@@ -3249,11 +3444,8 @@ RetryBuildNumber:
 
          if(strSpaHost.length() <= 0)
          {
-            
-            Sleep(RETRY_DELAY_MILLIS);
-
+            Sleep(184);
             goto RetryBuildNumber;
-
          }
 
          straMd5.set_size(straTemplate.get_count() + 1);
@@ -3264,30 +3456,20 @@ RetryBuildNumber:
             straMd5[i].Empty();
             string strMd5AndLen;
             file.read_string(strMd5AndLen);
-            
             int iFind =strMd5AndLen.find('|');
-            
             if(iFind < 0)
             {
-               
-               Sleep(RETRY_DELAY_MILLIS);
-
+               Sleep(184);
                goto RetryBuildNumber;
-
             }
-
             string strMd5 = strMd5AndLen.Left(iFind);
             iaLen[i] = atoi(strMd5AndLen.Mid(iFind + 1));
             straMd5[i] = strMd5;
             straMd5[i].trim();
-            
             if(straMd5[i].length() != 32)
             {
-               
-               Sleep(RETRY_DELAY_MILLIS);
-
+               Sleep(184);
                goto RetryBuildNumber;
-
             }
 
          }
@@ -3300,24 +3482,16 @@ RetryBuildNumber:
 
          if(strStatus == "ok")
          {
-            
             if(strIndexMd5.is_empty())
             {
-            
-               Sleep(RETRY_DELAY_MILLIS);
-
+               Sleep(184);
                goto RetryBuildNumber;
-
             }
-
          }
          else if(strStatus != "send")
          {
-            
-            Sleep(RETRY_DELAY_MILLIS);
-
+            Sleep(184);
             goto RetryBuildNumber;
-
          }
          else
          {
@@ -3326,11 +3500,8 @@ RetryBuildNumber:
 
             if(strLen.length() <= 0)
             {
-               
-               Sleep(RETRY_DELAY_MILLIS);
-
+               Sleep(184);
                goto RetryBuildNumber;
-
             }
 
             len = atoi(strLen);
@@ -3367,7 +3538,7 @@ RetryBuildNumber:
                if (uiTotalRead != len)
                {
 
-                  Sleep(RETRY_DELAY_MILLIS);
+                  Sleep(184);
 
                   goto RetryBuildNumber;
 
@@ -3385,7 +3556,16 @@ RetryBuildNumber:
 
       string strStatusTemplate;
 
-      strStatusTemplate = "Installing " + strName;
+      if(m_strInstallStatusTemplate.get_length() >= strlen_dup("%APPNAME%"))
+      {
+         strStatusTemplate = m_strInstallStatusTemplate;
+      }
+      else
+      {
+         strStatusTemplate = "Installing %APPNAME%";
+      }
+
+      strStatusTemplate.replace("%APPNAME%",strName);
 
       strName = strStatusTemplate;
       strName = strName + " " + m_strBuild;
@@ -3394,6 +3574,8 @@ RetryBuildNumber:
       System.install().trace().rich_trace((":::::" + strName));
 
       m_strTitle = strName;
+
+      //strSpaHost = "server.ca2.cc";
 
       strAppMatterList.replace(",","\n");
 
@@ -3406,58 +3588,40 @@ RetryBuildNumber:
 
    int32_t installer::calc_host(string & strSpaHost, int32_t &iHostRetry)
    {
-
    retry_host:
 
       System.install().trace().rich_trace("***Finding optimal server");
 
       if(iHostRetry > 84)
       {
-
+//         exit(-1);
          return -1;
-
       }
       else if(iHostRetry > 0)
       {
-         
          System.install().trace().rich_trace("Retrying to guess host...");
-
       }
-      
       iHostRetry = 1;
-
       if(m_strLastHost.is_empty())
       {
-         
          m_strLastHost = m_strCurrentHost;
-
       }
       else
       {
-         
          m_strLastHost = m_strCurrentHost + ";" + m_strLastHost;
-
       }
-
       string strUrl;
 
       strUrl = m_strSpaIgnitionBaseUrl + "/query?node=spa_host&version=" + m_strVersion;
 
       if(!m_strLastHost.is_empty())
       {
-
          strUrl += "&last_host=" + m_strLastHost;
-
       }
-
       strUrl += "&sessid=noauth";
-
       System.install().trace().rich_trace("***Guessing fastest mirror");
-
       int32_t iGuessRetry = 0;
-
       System.install().trace().rich_trace(".");
-
       while(iGuessRetry < 30)
       {
 
@@ -3465,16 +3629,11 @@ RetryBuildNumber:
 
          if(strSpaHost.is_empty())
          {
-            
             if(m_strLastHost.is_empty())
             {
-               
                System.install().trace().trace_add(".");
-               
-               Sleep(RETRY_DELAY_MILLIS);
-
+               Sleep(184);
                iGuessRetry++;
-
             }
             else
             {
@@ -3486,42 +3645,79 @@ RetryBuildNumber:
          }
          else
          {
-            
             break;
-
          }
+      }
+      if(m_strCurrentHost == strSpaHost)
+      {
+         m_strLastHost.clear();
+         m_strCurrentHost.clear();
+         goto retry_host;
+      }
+      return 0;
+   }
+
+   /*string installer::install(const char * psz)
+   {
+   return m_strInstall + psz;
+   }*/
+
+
+
+   int32_t installer::run_uninstall(const char * lpCmdLine, int32_t nCmdShow)
+   {
+      return run_install(lpCmdLine, nCmdShow);
+   }
+
+   int32_t installer::run_uninstall_run(const char * lpCmdLine, int32_t nCmdShow)
+   {
+      uint32_t dwStartError = 0;
+      return ca2_app_install_run(lpCmdLine, dwStartError, true);
+   }
+
+   int32_t installer::run_install(const char * lpCmdLine, int32_t nCmdShow)
+   {
+      string str = lpCmdLine;
+      string strFile = lpCmdLine;
+
+      index i1 = str.find("\"");
+      if(i1 >= 0)
+      {
+         index i2 =str.find("\"", i1 +1);
+         strFile = str.substr(i1 + 1, i2 - i1 - 1);
+      }
+      else
+      {
+         strFile = str;
+      }
+
+      if(strFile.is_empty())
+      {
+
+         strFile = dir::module() / "spa.xml";
 
       }
 
-      if(m_strCurrentHost == strSpaHost)
+      return run_file(strFile, nCmdShow);
+   }
+
+
+
+   int32_t installer::run_starter_start(int32_t nCmdShow)
+   {
+
+      string strName = "spa ignition";
+
+      if (!init_instance(nCmdShow))
       {
 
-         m_strLastHost.clear();
-
-         m_strCurrentHost.clear();
-
-         goto retry_host;
+         return FALSE;
 
       }
 
       return 0;
 
    }
-
-
-   int32_t installer::run_uninstall_run(const char * lpCmdLine, int32_t nCmdShow)
-   {
-
-      uint32_t dwStartError = 0;
-
-      return ca2_app_install_run(lpCmdLine, dwStartError, true);
-
-   }
-
-
-
-
-
 
 
    bool installer::init_instance(int32_t nCmdShow)
@@ -3543,17 +3739,15 @@ RetryBuildNumber:
       // since the spa.xml is not present and contains turning information.
       if(!m_bOfflineInstall && (m_strApplicationId.length() == 0 || (!m_bForceUpdatedBuild && m_strBuildResource.length() == 0)))
       {
-
          string str = file_as_string_dup(dir::module() / "spa.xml");
-
          ::xml::document node(get_app());
-
          node.load(str);
          
          parse_spa_index(node);
 
       }
 
+#ifdef WINDOWSEX
       // Default stage.bz folder not present, would default to internet install
       // since the spa.xml is not present and contains turning information.
       if(!m_bOfflineInstall && !m_bInstallSet && (m_strApplicationId.length() == 0 || (!m_bForceUpdatedBuild && m_strBuildResource.length() == 0)))
@@ -3568,44 +3762,39 @@ RetryBuildNumber:
          parse_spa_index(node);
 
       }
+#else
+      throw "NEEDED?TODO?";
+#endif
+
 
       if(m_strApplicationId == "***parse_file_name")
       {
 
       }
 
-      m_strIndexGz = m_strInstallGz / ("app\\stage\\metastage\\" + m_strApplicationId + ".spa.bz");
 
+
+      m_strIndexGz = m_strInstallGz / ("app\\stage\\metastage\\" + m_strApplicationId + ".spa.bz");
       m_strIndex = m_strInstallGz / ("app\\stage\\metastage\\" + m_strApplicationId + ".spa");
 
       m_bInternetInstall = !m_bOfflineInstall;
 
       m_iStyle = 0;
 
+
       if(m_bSynch)
       {
-
-         run();
-
+         synch_starter_start();
       }
       else
       {
-
-         ::fork(get_app(), [&]()
-         {
-
-            run();
-
-         });
-
+         start_starter_start();
       }
 
       return TRUE;
-
    }
 
-
-   int32_t installer::app_install(const char * pszCommandLine)
+   int32_t installer::spaadmin_main(const char * pszCommandLine)
    {
 
       ::srand(::get_tick_count());
@@ -3614,65 +3803,118 @@ RetryBuildNumber:
 
       if(!m_machineevent.initialize())
       {
-
          return 5;
-
       }
 
       m_iStyle = 0;
 
       m_bShowPercentage = false;
 
-      string strCommandLine = pszCommandLine;
+      //UNREFERENCED_PARAMETER(lpCmdLine);
+      m_iStart = 0;
+      //m_iStyle = 0;
+
+      string str = pszCommandLine;
 
       string strExe = file_name_dup(file_module_path_dup());
 
-      property_set set;
+//      bool bSpa = false;
 
-      var varFile;
+      if(str.find(" background ") >= 0
+         || str.ends_ci(" background") || strExe.find(" in background ") >= 0
+         || strExe.ends_ci(" in background"))
+      {
+         m_bShow = false;
+      }
 
-      set._008ParseCommandLine(pszCommandLine, varFile);
+      m_bLaunchDesktopApplicationOnIgnitPhase2 =
+         str.find(" enable_desktop_launch ") >= 0
+         || str.ends_ci(" enable_desktop_launch")
+         || strExe.find(" enable_desktop_launch ") >= 0
+         || strExe.ends_ci(" enable_desktop_launch");
 
-      m_bShow = !set.has_property("background");
-
-      m_bLaunchOnFinish = set.has_property("enable_desktop_launch");
+      if(str.find(" spa ") >= 0
+         || str.ends_ci(" spa") || strExe.find(" in spa ") >= 0
+         || strExe.ends_ci(" in spa"))
+      {
+         ::install::installer::do_spa();
+         return 0;
+      }
 
       m_bLoginStartup = false;
-
-      m_strInstallFilter = set["install_filter"];
-
-      m_strApplicationId = set["install"];
-
-      if(m_strApplicationId.has_char())
-      {
-
-         m_strCommandLine = ": app=session session_start="  + m_strApplicationId + " app_type=" + m_strApplicationType + " install build_number=\"" + m_strBuild + "\"";
-
-         return run_command(m_nCmdShow);
-
-      }
-
-      string strFind("starter_start:");
-
-      strsize i = strCommandLine.find(strFind);
-
+      index i = str.find("install_filter=");
       if(i >= 0)
       {
-
-         index iStart = i + strFind.length(); 
-
-         strCommandLine = strCommandLine.substr(iStart);
-
-         return starter_start(strCommandLine);
+         index iStart = i + 15; // 15 = strlen_dup("install_filter=")
+         i = str.find(" ", i);
+         if(i >= 0)
+         {
+            m_strInstallFilter = str.substr(iStart, i - iStart);
+         }
+         else
+         {
+            m_strInstallFilter = str.substr(iStart);
+         }
+      }
+      // simple_message_box(NULL, "xxx", "yyy", MB_OK);
+      i = str.find("install=");
+      if(i >= 0)
+      {
+         index iStart = i + 8; // 8 = strlen_dup("install=")
+         i = str.find(" ", i);
+         if(i >= 0)
+         {
+            m_strApplicationId = str.substr(iStart, i - iStart);
+         }
+         else
+         {
+            m_strApplicationId = str.substr(iStart);
+         }
+         m_strCommandLine = ": app=session session_start="  + m_strApplicationId + " app_type=" + m_strApplicationType + " install build_number=\"" + m_strBuild + "\"";
+         m_iStart = 4;
+         return run_install(pszCommandLine, m_nCmdShow);
 
       }
+      if(strExe.begins_ci("Install "))
+      {
+         ::count iStart = strlen_dup("Install ");
+         i = strExe.find(" ", iStart);
+         string strIdStart;
+         if(i >= 0)
+         {
+            strIdStart = strExe.substr(iStart, i - iStart);
+         }
+         else
+         {
+            strIdStart = strExe.substr(iStart);
+         }
+         m_iStart = 4;
+         return starter_start(strIdStart);
+      }
+      string strFind("starter_start:");
+      i = str.find(strFind);
+      if(i >= 0)
+      {
+         index iStart = i + strFind.length(); // 8 = strlen_dup("install=")
+         //         i = str.find(" ", iStart);
+         //         string strCommandLine;
+         //       if(i>= 0)
+         //     {
+         // strCommandLine = str.substr(iStart, i - iStart);
+         //   }
+         // else
+         //{
+         string strCommandLine;
+         strCommandLine = str.substr(iStart);
+         //       }
+         m_iStart = 4;
+         return starter_start(strCommandLine);
+      }
 
+#ifdef WINDOWSEX
       unichar * lpwstr = ::GetCommandLineW();
-
       int32_t numargs;
-
       int32_t numchars;
-
       wparse_cmdline(
          lpwstr,
          NULL,
@@ -3681,7 +3923,6 @@ RetryBuildNumber:
          &numchars);
 
       unichar * pszCmdLine = new WCHAR[numchars];
-
       unichar ** argv = new WCHAR*[numargs];
 
       wparse_cmdline(
@@ -3693,39 +3934,62 @@ RetryBuildNumber:
 
       if(numargs >= 2)
       {
-
          string str(::str::international::unicode_to_utf8(argv[1]));
-
-         return run_file(str, Application.m_nCmdShow);
-
+         return run_file(str, m_nCmdShow);
       }
 
+
       index iFind;
-
-      if((iFind = strCommandLine.find("uninstall"))>= 0)
+      if((iFind = str.find("uninstall"))>= 0)
       {
-
-         return uninstall_run(&strCommandLine[iFind + 10], Application.m_nCmdShow);
-
+         return run_uninstall_run(&str[iFind + 10], m_nCmdShow);
+      }
+      else if(str.find("uninstall")>= 0)
+      {
+         return run_uninstall(pszCommandLine, m_nCmdShow);
       }
       else
       {
-
          //m_strStart = "_set_windesk";  m_iStart = 4; return run_install(lpCmdLine, nCmdShow);
-
-         return run_command(pszCommandLine, m_nCmdShow);
-
+         return run_install(pszCommandLine, m_nCmdShow);
       }
+#else
 
+      throw "todo";
+
+#endif
    }
 
 
    bool installer::is_application_opened(const char * psz)
    {
 
+      /*   SECURITY_ATTRIBUTES MutexAttributes;
+      memset_dup( &MutexAttributes, 0, sizeof(MutexAttributes) );
+      MutexAttributes.nLength = sizeof( MutexAttributes );
+      MutexAttributes.bInheritHandle = FALSE; // object uninheritable
+      // declare and initialize a security descriptor
+      SECURITY_DESCRIPTOR SD;
+      bool bInitOk = InitializeSecurityDescriptor(
+      &SD,
+      SECURITY_DESCRIPTOR_REVISION );
+      if ( bInitOk )
+      {
+      // give the security descriptor a Null Dacl
+      // done using the  "TRUE, (PACL)NULL" here
+      bool bSetOk = SetSecurityDescriptorDacl( &SD,
+      TRUE,
+      (PACL)NULL,
+      FALSE );
+      if ( bSetOk )
+      {*/
+      // Make the security attributes point
+      // to the security descriptor
+      //MutexAttributes.lpSecurityDescriptor = &SD;
       string strMutex;
       strMutex = "Global\\ca2_application_global_mutex:";
       strMutex += psz;
+      //HANDLE hmutex = ::CreateMutex(&MutexAttributes, FALSE, strMutex);
       mutex mutex(get_thread_app(), false, strMutex);
       bool bOpened = ::GetLastError() == ERROR_ALREADY_EXISTS;
       if(bOpened)
@@ -3743,15 +4007,22 @@ RetryBuildNumber:
          System.install().trace().rich_trace(strMessage);
          System.install().trace().rich_trace(".");
       }
-
       return bOpened;
-
+      /*      }
+      else
+      {
+      return false;
+      }
+      }
+      else
+      {
+      return false;
+      }
+      */
    }
-
 
    bool installer::is_there_application_opened()
    {
-
       return
          is_application_opened("winactionarea")
          || is_application_opened("winservice_1")
@@ -3760,182 +4031,129 @@ RetryBuildNumber:
          || is_application_opened("command")
          || is_application_opened("winservice_filesystemsize")
          || is_application_opened("filemanager");
-
    }
-
 
    void installer::machine_signalize_close_application()
    {
-
       synch_lock lockMachineEvent(&m_machineevent.m_mutex);
       machine_event_data data;
       m_machineevent.read(&data);
       data.m_fixed.m_bRequestCloseApplication = true;
       m_machineevent.write(&data);
-
    }
-
 
    bool installer::machine_unsignalize_close_application()
    {
-
       synch_lock lockMachineEvent(&m_machineevent.m_mutex);
       machine_event_data data;
       m_machineevent.read(&data);
       data.m_fixed.m_bRequestCloseApplication = false;
       bool bOk = m_machineevent.write(&data);
-
       return bOk;
-
    }
-
 
    bool installer::machine_check_close_application(bool bDefault)
    {
-
       synch_lock lockMachineEvent(&m_machineevent.m_mutex);
-
       machine_event_data data;
-
-      if (!m_machineevent.read(&data))
-      {
-
+      if(!m_machineevent.read(&data))
          return false;
-
-      }
-
       return data.m_fixed.m_bRequestCloseApplication;
-
    }
 
 
-   //void installer::do_spa()
-   //{
+   void installer::do_spa()
+   {
 
-   //   ::install::installer * pinstaller = new ::install::installer(get_thread_app());
+      ::install::installer * pinstaller = new ::install::installer(get_thread_app());
 
-   //   pinstaller->m_bStarterStart = false;
+      pinstaller->m_bStarterStart = false;
 
-   //   ::create_thread(NULL, 0, ::install::installer::thread_proc_run, (LPVOID) pinstaller, 0, 0);
+      ::create_thread(NULL, 0, ::install::installer::thread_proc_run, (LPVOID) pinstaller, 0, 0);
 
-   //}
+   }
 
 
    void installer::synch_starter_start()
    {
 
-      //m_bStarterStart = true;
+      m_bStarterStart = true;
 
       run();
 
    }
 
 
-   //void installer::start_starter_start()
-   //{
+   void installer::start_starter_start()
+   {
 
-   //   //m_bStarterStart = true;
+      m_bStarterStart = true;
 
-   //   ::create_thread(NULL, 0, ::install::installer::thread_proc_run, (LPVOID) this, 0, 0);
+      ::create_thread(NULL, 0, ::install::installer::thread_proc_run, (LPVOID) this, 0, 0);
 
-   //}
+   }
+
 
 
    void installer::add_spa_start(const char * pszId)
    {
-
       string strPath = dir::appdata(process_platform_dir_name2())/"spa_start.xml";
-
       string strContents = file_as_string_dup(strPath);
-
       ::xml::document node(get_app());
-
       node.load(strContents);
-
       node.set_name("spa");
-
       ::xml::node * lpnode = node.GetChildByAttr("start", "id", pszId);
-
       if(lpnode == NULL)
       {
-
          lpnode = node.add_child("start");
-
          lpnode->add_attr("id", pszId);
-
          file_put_contents_dup(strPath, node.get_xml());
-
       }
-
    }
-
 
    void installer::remove_spa_start(const char * pszId)
    {
-
       string strPath = dir::appdata(process_platform_dir_name2())/ "spa_start.xml";
-
       string strContents = file_as_string_dup(strPath);
-
       ::xml::document node(get_app());
-
       node.load(strContents);
-
       node.set_name("spa");
-
       ::xml::node * lpnode = node.GetChildByAttr("start", "id", pszId);
-
       if(lpnode != NULL)
       {
-
          node.remove_child(lpnode);
-
          file_put_contents_dup(strPath, node.get_xml());
-
       }
-
    }
+
 
 
    bool installer::m_reboot()
    {
-
+#ifdef WINDOWSEX
       HANDLE hToken;
-
       TOKEN_PRIVILEGES tkp;
-
       if (!OpenProcessToken(GetCurrentProcess(),
          TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken))
-      {
-
          return false;
-
-      }
-
       LookupPrivilegeValue(NULL, SE_SHUTDOWN_NAME, &tkp.Privileges[0].Luid);
-
       tkp.PrivilegeCount = 1;
-
       tkp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
-
       AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0);
-
       if (ExitWindowsEx(EWX_REBOOT, 0) == 0)
-      {
-
          return false;
-
-      }
-
       //reset the previlages
-      
       tkp.Privileges[0].Attributes = 0;
-
       AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0);
-
+#else
+      throw "TODO?";
+#endif
       return true;
-
    }
+
+
+
+
 
 
    int32_t installer::run_ca2_application_installer(const char * pszCommandLine)
@@ -3943,41 +4161,109 @@ RetryBuildNumber:
 
       string strPath;
 
+#if defined(METROWIN)
+
+      throw "todo";
+
+#else
+
       string param;
 
       param = "-install:";
 
       param += pszCommandLine;
 
+#if defined(WINDOWS)
+
       strPath = System.install().app_install_get_intern_executable_path(m_strVersion, m_strBuild);
 
+#elif defined(APPLEOS)
+
+      char path[MAXPATHLEN];
+
+      uint32_t path_len = MAXPATHLEN;
+
+      _NSGetExecutablePath(path, &path_len);
+
+      strPath - path;
+
+
+#elif defined(ANDROID)
+
+      char * psz = NULL;
+
+#else
+
+      strPath = br_find_exe("app.install");
+
+
+#endif
+
       call_sync(strPath, param, 0, SW_HIDE, -1, 84, 0, 0);
+
+#endif
 
       return 0;
 
    }
 
+#ifdef WINDOWSEX
+
+   void get_program_files_x86(wstring &wstr)
+   {
+
+      unichar * lpszModuleFolder = (unichar *)malloc(MAX_PATH * sizeof(unichar) * 8);
+
+      unichar * lpszModuleFilePath = (unichar *)malloc(MAX_PATH * sizeof(unichar) * 8);
+
+      wcscpy(lpszModuleFilePath,_wgetenv(L"PROGRAMFILES(X86)"));
+
+      if(wcslen(lpszModuleFilePath) == 0)
+      {
+
+         SHGetSpecialFolderPathW(
+            NULL,
+            lpszModuleFilePath,
+            CSIDL_PROGRAM_FILES,
+            FALSE);
+
+      }
+
+      if(lpszModuleFilePath[wcslen(lpszModuleFilePath) - 1] == '\\'
+         || lpszModuleFilePath[wcslen(lpszModuleFilePath) - 1] == '/')
+      {
+         lpszModuleFilePath[wcslen(lpszModuleFilePath) - 1] = '\0';
+      }
+
+      wcscpy(lpszModuleFolder,lpszModuleFilePath);
+
+      wstr = lpszModuleFolder + wstr;
+
+   }
+
+
+#endif
+
 
    int32_t installer::start_ca2_application()
    {
 
+   #ifdef WINDOWS
+
       wstring wstrApp;
 
       wstrApp = L"\\ca2\\";
-
 #ifdef _M_X64
-
       wstrApp += L"stage\\x64\\";
-
 #else
-
       wstrApp += L"stage\\x86\\";
-
 #endif
 
       wstrApp += L"app.exe";
 
-      wstrApp = dir::program_files_x86();
+#ifndef METROWIN
+
+      get_program_files_x86(wstrApp);
 
       STARTUPINFOW si;
       memset(&si,0,sizeof(si));
@@ -3998,17 +4284,29 @@ RetryBuildNumber:
 
       return FALSE;
 
+      #endif
+
+
+#endif
+
+      return 0;
+
+
    }
-
-
    typedef bool fn_defer_core_init();
 
-   
    typedef bool fn_defer_core_term();
+
 
 
    int32_t installer::ca2_app_install_run(const char * pszCommandLine, uint32_t & dwStartError, bool bSynch)
    {
+
+#if defined(METROWIN)
+
+      throw "todo";
+
+#else
 
       SHELLEXECUTEINFOW sei = {};
 
@@ -4060,6 +4358,64 @@ RetryBuildNumber:
 
       ::CloseHandle(sei.hProcess);
 
+#endif
+
+//      string strPlatform = System.install().get_platform();
+//
+//#ifdef WINDOWS
+//
+//      //::SetDllDirectory(dir::path(dir::element(), "stage\\" + strPlatform));
+//
+//      ::SetDllDirectory(dir::stage(process_platform_dir_name2()));
+//
+//#endif
+//
+//      ::aura::library libraryCore(get_app());
+//
+//      string strCore = "core";
+//
+//      // load core library so that a core system is alloced
+//      libraryCore.open(dir::stage(process_platform_dir_name2()) / strCore);
+//
+//      fn_defer_core_init * pfn_core_init = libraryCore.get< fn_defer_core_init *>("defer_" + strCore + "_init");
+//
+//      fn_defer_core_term * pfn_core_term = libraryCore.get< fn_defer_core_term *>("defer_" + strCore + "_term");
+//
+//      ::aura::library libraryOs(get_app());
+//
+//      libraryOs.open(dir::stage(process_platform_dir_name2()) / "app_core");
+//
+//      PFN_APP_CORE_MAIN pfn_app_core_main = (PFN_APP_CORE_MAIN)libraryOs.raw_get("app_core_main");
+//
+//      string strFullCommandLine;
+//
+//      strFullCommandLine = ::path::app(process_platform_dir_name2());
+//
+//      strFullCommandLine = "\"" + strFullCommandLine + "\" ";
+//
+//      strFullCommandLine = strFullCommandLine + pszCommandLine;
+//
+//      strFullCommandLine += " install";
+//
+//      if(!pfn_core_init())
+//         return -1;
+//
+//      app_core appcore;
+//
+//#ifdef WINDOWS
+//
+//      pfn_app_core_main(::GetModuleHandleA(NULL),NULL,strFullCommandLine,SW_HIDE, appcore);
+//
+//#else
+//
+//      pfn_app_core_main(strFullCommandLine, SW_HIDE, appcore);
+//
+//#endif
+//
+//      pfn_core_term();
+//
+//#endif
+
       return 0;
 
    }
@@ -4068,9 +4424,11 @@ RetryBuildNumber:
    int32_t installer::install_synch(const char * pszCommandLine)
    {
 
+      m_bStarterStart = true;
+
       m_bSynch = true;
 
-      return app_install(pszCommandLine);
+      return spaadmin_main(pszCommandLine);
 
    }
 
@@ -4078,9 +4436,12 @@ RetryBuildNumber:
    int32_t installer::install_asynch(const char * pszCommandLine)
    {
 
+
+      m_bStarterStart = true;
+
       m_bSynch = false;
 
-      return app_install(pszCommandLine);
+      return spaadmin_main(pszCommandLine);
 
    }
 
@@ -4157,6 +4518,91 @@ RetryBuildNumber:
 
    }
 
+   /*
+   void installer::ms_download_callback(int32_t i, uint_ptr dwLen)
+   {
+      bool bProgress = true;
+      if (i == -1)
+      {
+         m_dwDownloadLen = 0;
+
+         if (bProgress)
+         {
+            //System.install().trace().rich_trace("...");
+         }
+
+      }
+      else if (i == 0)
+      {
+         m_dwDownloadCallbackLast100k = 0;
+         m_iDownloadCallbackColumn = 0;
+      }
+      else if (i == 1)
+      {
+         m_dwDownloadLen = dwLen;
+         /*if(bProgress)
+         {
+         for(int32_t i = 0; i < ((dwLen - m_dwDownloadCallbackLast100k) / (100 * 1024)); i++)
+         {
+         if(m_iDownloadCallbackColumn >= 84)
+         {
+         System.install().trace().rich_trace(".");
+         m_iDownloadCallbackColumn = 1;
+         }
+         else
+         {
+         m_iDownloadCallbackColumn++;
+         System.install().trace().trace_add(".");
+         }
+         }
+         }
+         m_dwDownloadCallbackLast100k += ((dwLen - m_dwDownloadCallbackLast100k) / (100 * 1024) )*(100 / 1024);*/
+   /*      if (m_iProgressTotalGzLen > 0)
+         {
+            dlr(m_iGzLen + dwLen);
+            set_progress((double)(m_iGzLen + dwLen) / (double)m_iProgressTotalGzLen);
+         }
+      }
+      else if (i == 2)
+      {
+         while (bProgress && m_iDownloadCallbackColumn < 84)
+         {
+            //System.install().trace().trace_add(".");
+            m_iDownloadCallbackColumn++;
+         }
+
+      }
+   }
+   */
+
+//   void installer::ms_get_callback(int32_t i, uint_ptr dwLen)
+//   {
+//      //      bool bProgress = true;
+//      if (i == -3)
+//      {
+//         //       uint32_t dwBufferLen = 1024 + 256;
+//         //         simple_http_status * pstatus = (simple_http_status *) reinterpret_cast < void * > (dwLen);
+//         //       System.install().trace().rich_trace("Application.http().get failed : status : " + itoa_dup(pstatus->m_dwStatusCode) + " - " + pstatus->m_pszStatus);
+//      }
+//      else if (i == -2)
+//      {
+//         System.install().trace().rich_trace("Application.http().get failed");
+//#ifdef WINDOWS
+//         uint32_t dw = ::GetLastError();
+//         unichar lastErrorTxt[1024];
+//         memset_dup(lastErrorTxt, 0, sizeof(lastErrorTxt));
+//         FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, NULL, dw, 0, lastErrorTxt, 1024, NULL);
+//         System.install().trace().rich_trace().print_ln(string(lastErrorTxt));
+//         System.install().trace().rich_trace().print_ln("Application.http().get failed : GetLastErrorCode : " + itoa_dup(dw));
+//#endif
+//      }
+//      else
+//      {
+//         ms_download_callback(i, dwLen);
+//      }
+//   }
+//
+//
 
    string installer::http_get(const string & strUrl, bool bScalarListener)
    {
@@ -4186,24 +4632,6 @@ RetryBuildNumber:
       }
 
       return str;
-
-   }
-
-
-
-   bool installer::are_there_user_files_in_use()
-   {
-
-      if (are_dlls_in_use(
-         dir::stage(process_platform_dir_name()) / stringa({ "aura.dll", "axis.dll","base.dll" })
-      ))
-      {
-
-         return true;
-
-      }
-
-      return false;
 
    }
 

@@ -66,7 +66,7 @@ public:
    CTypeLibCache() : m_cRef(0), m_lcid((LCID)-1), m_ptlib(NULL), m_ptinfo(NULL) {}
    void lock();
    void unlock();
-   BOOL lookup(LCID lcid, LPTYPELIB* pptlib);
+   BOOL Lookup(LCID lcid, LPTYPELIB* pptlib);
    void Cache(LCID lcid, LPTYPELIB ptlib);
    BOOL LookupTypeInfo(LCID lcid, REFGUID guid, LPTYPEINFO* pptinfo);
    void CacheTypeInfo(LCID lcid, REFGUID guid, LPTYPEINFO ptinfo);

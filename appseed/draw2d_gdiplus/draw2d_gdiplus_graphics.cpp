@@ -5434,12 +5434,13 @@ namespace draw2d_gdiplus
    }
 
 
-   void graphics::enum_fonts(::draw2d::font::enum_item_array & itema)
+   void graphics::enum_fonts(stringa & straPath, stringa & stra, ::draw2d::font::csa & csa)
    {
 
-      ::draw2d::wingdi_enum_fonts(itema, false, true, false);
+      ::draw2d::wingdi_enum_fonts(stra, csa, false, true, false);
 
-      
+      straPath = stra;
+
    }
 
 

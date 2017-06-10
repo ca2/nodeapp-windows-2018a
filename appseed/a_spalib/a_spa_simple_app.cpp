@@ -1127,7 +1127,7 @@ namespace a_spa
 
       string strCommand;
 
-      strCommand = "app_install:";
+      strCommand = "synch_spaadmin:";
 
       strCommand += "starter_start:";
 

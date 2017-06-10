@@ -19,12 +19,10 @@ namespace install
 
       stringa                          m_straTerminateProcesses;
       stringa                          m_straRestartCommandLine;
-      // persist to file
-      // app_core_user_service to persist and restore state.
-      // stringa                          m_straRestartProcess;
+      stringa                          m_straRestartProcess;
       string                           m_strLastHost;
       string                           m_strCurrentHost;
-      //bool                             m_bStarterStart;
+      bool                             m_bStarterStart;
 #ifdef WINDOWS
       MESSAGE                          m_msg;
 #endif
@@ -66,7 +64,7 @@ namespace install
       double                           m_dProgress1;
       double                           m_dProgress2;
       ::xml::document                  m_xmldocStringTable;
-      //int32_t                          m_iStart;
+      int32_t                          m_iStart;
       double                           m_dDownloadRate;
       bool                             m_bForceUpdatedBuild;
 
@@ -76,6 +74,7 @@ namespace install
       ::file::path                     m_strIndexGz;
       ::file::path                     m_strInstall;
       ::file::path                     m_strInstallGz;
+      string                           m_strInstallStatusTemplate;
 
       bool                             m_bInstallSet;
 
@@ -125,7 +124,7 @@ namespace install
       stringa                          m_straHttpFailure;
 
 
-      bool                             m_bLaunchOnFinish;
+      bool                             m_bLaunchDesktopApplicationOnIgnitPhase2;
 
       sp(::sockets::http_session)      m_phttpsession;
       ::sockets::socket_handler *      m_psockethandler;
@@ -136,11 +135,15 @@ namespace install
       installer(::aura::application * papp);
       ~installer();
 
+      uint32_t run();
+
       string http_get(const string & strUrl, bool bScalarListener);
 
       void set_progress(double dProgress);
 
       ::count download_file_list(::file::patha & stringa, string_to_intptr & mapLen, string_to_string & mapCrc, string_to_intptr & mapGzLen, string_to_intptr & mapFlag);
+
+	   static uint32_t thread_proc_run(void * lpParam);
 
       void paint_opaque_bk(HDC hdc);
 
@@ -184,7 +187,11 @@ namespace install
 
       bool spa_exec(const char * psz);
 
-      bool launch_applications();
+      bool ignit_phase2();
+
+      int32_t run_file(const char * pszFile, int32_t nCmdShow);
+
+      int32_t starter_start(const char * pszCommandLine);
 
       int32_t application_name();
 
@@ -196,17 +203,17 @@ namespace install
 
       int32_t calc_host(string & strSpaHost, int32_t &iHostRetry);
 
-      int32_t main(const char * pszCommandLine);
+      int32_t run_uninstall(const char * lpCmdLine, int32_t nCmdShow);
 
-      int32_t install(const char * pszCommandLine, int32_t nCmdShow);
+      int32_t run_uninstall_run(const char * lpCmdLine, int32_t nCmdShow);
 
-      int32_t uninstall(const char * pszCommandLine, int32_t nCmdShow);
+      int32_t run_install(const char * lpCmdLine, int32_t nCmdShow);
 
-      int32_t run_file(const char * pszFile, int32_t nCmdShow);
+      int32_t run_starter_start(int32_t nCmdShow);
 
-      int32_t start(const char * pszCommandLine);
+      bool init_instance(int32_t nCmdShow);
 
-      uint32_t run();
+      int32_t spaadmin_main(const char * pszCommandLine);
 
       bool is_application_opened(const char * psz);
 
@@ -218,9 +225,18 @@ namespace install
 
       bool machine_check_close_application(bool bDefault);
 
+      // it will install/update if there is a "breach"
+	   static void do_spa();
+
+      // it will install forcing to install as it is possible
+      void synch_starter_start();
+
+      // it will install forcing to install as it is possible
+      void start_starter_start();
+
       void add_spa_start(const char * pszId);
 
-      bool reboot();
+      bool m_reboot();
 
       void remove_spa_start(const char * pszId);
 
@@ -239,12 +255,6 @@ namespace install
       virtual int32_t ca2_app_install_run(const char * pszCommandLine, uint32_t & dwStartError, bool bSynch);
 
       virtual void on_set_scalar(int_scalar_source * psource,e_scalar escalar,int64_t iValue,int iFlags);
-
-      virtual void restart_restore();
-
-      virtual bool are_there_user_files_in_use();
-
-
 
    };
 
