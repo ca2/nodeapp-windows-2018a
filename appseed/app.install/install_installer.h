@@ -136,8 +136,6 @@ namespace install
       installer(::aura::application * papp);
       ~installer();
 
-      uint32_t run();
-
       string http_get(const string & strUrl, bool bScalarListener);
 
       void set_progress(double dProgress);
@@ -188,12 +186,6 @@ namespace install
 
       bool launch_applications();
 
-      int32_t run_file(const char * pszFile, int32_t nCmdShow);
-
-      int32_t run_command(int32_t nCmdShow);
-
-      int32_t starter_start(const char * pszCommandLine);
-
       int32_t application_name();
 
       int32_t appmatter_list();
@@ -204,13 +196,17 @@ namespace install
 
       int32_t calc_host(string & strSpaHost, int32_t &iHostRetry);
 
-      int32_t run_uninstall_run(const char * lpCmdLine, int32_t nCmdShow);
+      int32_t main(const char * pszCommandLine);
 
-      int32_t run_starter_start(int32_t nCmdShow);
+      int32_t install(const char * pszCommandLine, int32_t nCmdShow);
 
-      bool init_instance(int32_t nCmdShow);
+      int32_t uninstall(const char * pszCommandLine, int32_t nCmdShow);
 
-      int32_t app_install(const char * pszCommandLine);
+      int32_t run_file(const char * pszFile, int32_t nCmdShow);
+
+      int32_t start(const char * pszCommandLine);
+
+      uint32_t run();
 
       bool is_application_opened(const char * psz);
 
@@ -222,18 +218,9 @@ namespace install
 
       bool machine_check_close_application(bool bDefault);
 
-      // it will install/update if there is a "breach"
-	   //static void do_spa();
-
-      // it will install forcing to install as it is possible
-      void synch_starter_start();
-
-      // it will install forcing to install as it is possible
-      void start_starter_start();
-
       void add_spa_start(const char * pszId);
 
-      bool m_reboot();
+      bool reboot();
 
       void remove_spa_start(const char * pszId);
 
@@ -254,6 +241,10 @@ namespace install
       virtual void on_set_scalar(int_scalar_source * psource,e_scalar escalar,int64_t iValue,int iFlags);
 
       virtual void restart_restore();
+
+      virtual bool are_there_user_files_in_use();
+
+
 
    };
 

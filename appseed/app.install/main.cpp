@@ -11,10 +11,9 @@
 
 
 
-class installer :
+class app_install :
    public ::base::simple_app,
-   public ::aura::ipc::rx::receiver,
-   public ::install::installer
+   public ::aura::ipc::rx::receiver
 {
 public:
 
@@ -28,22 +27,25 @@ public:
    };
 
 
-   e_message                  m_emessage;
-   HANDLE                     m_hmutexSpabootInstall;
-   ::aura::ipc::rx       m_rxchannel;
+   e_message                     m_emessage;
+   HANDLE                        m_hmutexSpabootInstall;
+   ::aura::ipc::rx               m_rxchannel;
    
-   char *                     m_modpath;
-   char *                     m_pszDllEnds;
+   char *                        m_modpath;
+   char *                        m_pszDllEnds;
    uint32_t *                    m_dwaProcess;
-   int32_t                        m_iSizeProcess;
-   HMODULE *                  m_hmodulea;
-   int32_t                        m_iSizeModule;
-   bool                       m_bInstallerInstalling;
+   int32_t                       m_iSizeProcess;
+   HMODULE *                     m_hmodulea;
+   int32_t                       m_iSizeModule;
+   bool                          m_bInstallerInstalling;
 
-   installer();
-   virtual ~installer();
+   ::install::installer *        m_pinstaller;
+
+
+   app_install();
+   virtual ~app_install();
    
-   void install_defer_file_transfer();
+   //void install_defer_file_transfer();
 
    ATOM spaboot_message_register_class(HINSTANCE hInstance);
 
@@ -57,8 +59,6 @@ public:
 
    void installer_call_sync(const char * path, const char * param);
 
-   bool are_there_user_files_in_use();
-
    virtual void on_receive(::aura::ipc::rx * prx, const char * pszMessage);
 
    virtual int32_t simple_app_pre_run();
@@ -70,40 +70,25 @@ public:
 };
 
 
-// if MSVC CRT is used
 extern "C" int32_t WINAPI
 _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, __in LPTSTR lpCmdLine, int32_t nCmdShow)
 {
 
-   // call shared/exported WinMain
-   return ::base::simple_app_main < installer > (hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+   return ::base::simple_app_main < app_install > (hInstance, hPrevInstance, lpCmdLine, nCmdShow);
 
 }
 
 
-// if MSVC CRT is stripped
-/*extern "C" int32_t WinMainCRTStartup() \
-{ 
-
-   ExitProcess(simple_app::s_main < installer > ());
-
-}*/
-
-
-installer::installer() :
+app_install::app_install() :
    ::object(this),
    ::aura::system(NULL, NULL),
    ::axis::system(NULL),
    ::base::system(NULL),
-   ::install::installer(this),
    m_rxchannel(this)
 {
-   ////////////////////////////////////////////////////////////
-   // configuration encryption system : with C:\\" hardware :-)
-   // short login               short password  access configuration
-   // |                         |               |
-   // -----------------------   --       --------
-   //                       |    |       |
+
+   m_pinstaller = new ::install::installer(this);
+
    if (file_exists_dup("C:\\ca2\\config\\system\\beg_debug_box.txt"))
    {
       debug_box("app.install", "app", 0);
@@ -127,11 +112,15 @@ installer::installer() :
 
 }
 
-installer::~installer()
+
+app_install::~app_install()
 {
+
+
 }
 
-int32_t installer::simple_app_pre_run()
+
+int32_t app_install::simple_app_pre_run()
 {
 
    System.oprop("do_not_initialize_user_presence") = true;
@@ -182,7 +171,7 @@ int32_t installer::simple_app_pre_run()
 
          xxdebug_box(strCommandLine, "simple_app::body", 0);
 
-         ca2_app_install_run(strCommandLine, dwStartError, true);
+         m_pinstaller->ca2_app_install_run(strCommandLine, dwStartError, true);
 
          return -1;
 
@@ -194,7 +183,7 @@ int32_t installer::simple_app_pre_run()
 
 }
 
-bool installer::intro()
+bool app_install::intro()
 {
 
    string strMutex;
@@ -239,34 +228,31 @@ bool installer::intro()
 
 }
 
-void installer::install_defer_file_transfer()
-{
-
-   if (!System.install().is_installing_ca2())
-   {
-
-      System.install().update_updated();
-
-      if(!System.install().is_updated() && !are_there_user_files_in_use())
-      {
-
-         // missing locale schema;
-
-         throw "missing locale and schema parameters for installing";
-         install_synch("starter_start: : app=session session_start=session app_type=application install in background in spa");
-
-      }
-
-   }
-
-}
+//void app_install::install_defer_file_transfer()
+//{
+//
+//   if (!System.install().is_installing_ca2())
+//   {
+//
+//      System.install().update_updated();
+//
+//      if(!System.install().is_updated() && !m_pinstaller->are_there_user_files_in_use())
+//      {
+//
+//         m_pinstaller->install_synch("starter_start: : app=session session_start=session app_type=application install in background in spa");
+//
+//      }
+//
+//   }
+//
+//}
 
 
 typedef int32_t (__cdecl * PFN_SPAADMIN_MAIN)(const char * pszCommandLine);
 
 
 
-void installer::on_receive(::aura::ipc::rx * prx, const char * pszMessage)
+void app_install::on_receive(::aura::ipc::rx * prx, const char * pszMessage)
 {
    
    string strMessage(pszMessage);
@@ -296,7 +282,7 @@ void installer::on_receive(::aura::ipc::rx * prx, const char * pszMessage)
       
       m_bInstallerInstalling = true;
       
-      install_synch(strMessage);
+      m_pinstaller->install_synch(strMessage);
 
       m_bInstallerInstalling = false;
 
@@ -322,7 +308,7 @@ void installer::on_receive(::aura::ipc::rx * prx, const char * pszMessage)
 
       }
 
-      install_asynch(strMessage);
+      m_pinstaller->install_asynch(strMessage);
 
    }
    else if(strMessage == "ok")
@@ -360,29 +346,8 @@ void installer::on_receive(::aura::ipc::rx * prx, const char * pszMessage)
 
 
 
-bool installer::are_there_user_files_in_use()
-{
 
-   if (are_dlls_in_use(
-   dir::stage(process_platform_dir_name()) / 
-      stringa({
-         "aura.dll", 
-         "axis.dll",
-         "base.dll"
-      })
-      )
-   {
-
-      return true;
-
-   }
-
-   return false;
-
-}
-
-
-bool installer::end()
+bool app_install::end()
 {
 
    simple_app::end();
@@ -391,6 +356,8 @@ bool installer::end()
    memory_free(m_dwaProcess);
    memory_free(m_pszDllEnds);
    memory_free(m_modpath);
+
+   ::aura::del(m_pinstaller);
 
    return true;
 

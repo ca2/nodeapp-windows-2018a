@@ -472,12 +472,20 @@ LRESULT CALLBACK spaboot_WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
 	{
    case WM_COPYDATA:
       {
-         COPYDATASTRUCT * pcds = (COPYDATASTRUCT *) lParam;
-         if(pcds->dwData == 15111984)
+         
+      COPYDATASTRUCT * pcds = (COPYDATASTRUCT *) lParam;
+
+         if(pcds->dwData == 20001000)
          {
+            
+            g_straRestartCommandLine.remove_all();
+
             std::string str((const char *) pcds->lpData, pcds->cbData);
-            g_straRestartCommandLine.decode_v16(str.c_str());
+
+            g_straRestartCommandLine.add_lines(str);
+
          }
+
       }
       break;
    default:

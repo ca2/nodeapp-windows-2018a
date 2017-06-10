@@ -148,7 +148,7 @@ namespace install
 
       stringa straMd5AppInstall;
 
-      straMd5.slice(straMd5AppInstall,0, straMd5.get_count() - 1);
+      straMd5AppInstall = straMd5.islice(0, straMd5.get_count() - 1);
 
       string strIndexMd5 = straMd5.last();
 
@@ -554,14 +554,16 @@ install_begin:;
 
             if(oswindowSpaBoot != NULL)
             {
+
+               //::MessageBox(NULL, "Error: installer command line restart", "Installer Error", MB_ICONEXCLAMATION);
             
-               string str = m_straRestartCommandLine.encode_v16();
+               string str = m_straRestartCommandLine.implode("\n");
 
                COPYDATASTRUCT cds;
 
                memset_dup(&cds, 0, sizeof(cds));
 
-               cds.dwData = 15111984;
+               cds.dwData = 20001000;
 
                cds.cbData = (uint32_t) str.length();
 
@@ -645,7 +647,7 @@ install_begin:;
                == IDYES)
             {
 
-               m_reboot();
+               reboot();
 
             }
 
@@ -2836,28 +2838,14 @@ install_begin:;
 
       }
 
-      return run_command(nCmdShow);
+      return install(m_strCommandLine, nCmdShow);
 
    }
 
 
-   int32_t installer::run_command(int32_t nCmdShow)
-   {
-
-      property_set set;
-
-      var varFile;
-
-      set._008ParseCommandLine(string(::GetCommandLineW()), varFile);
-
-      m_strLocale = set["locale"];
-
-      return run_starter_start(nCmdShow);
-
-   }
 
 
-   int32_t installer::starter_start(const char * pszCommandLine)
+   int32_t installer::main(const char * pszCommandLine)
    {
 
       m_strCommandLine           = pszCommandLine;
@@ -3534,21 +3522,6 @@ RetryBuildNumber:
 
 
 
-   int32_t installer::run_starter_start(int32_t nCmdShow)
-   {
-
-      string strName = "spa ignition";
-
-      if (!init_instance(nCmdShow))
-      {
-
-         return FALSE;
-
-      }
-
-      return 0;
-
-   }
 
 
    bool installer::init_instance(int32_t nCmdShow)
@@ -3612,13 +3585,18 @@ RetryBuildNumber:
       if(m_bSynch)
       {
 
-         synch_starter_start();
+         run();
 
       }
       else
       {
 
-         start_starter_start();
+         ::fork(get_app(), [&]()
+         {
+
+            run();
+
+         });
 
       }
 
@@ -3718,22 +3696,16 @@ RetryBuildNumber:
 
          string str(::str::international::unicode_to_utf8(argv[1]));
 
-         return run_file(str, m_nCmdShow);
+         return run_file(str, Application.m_nCmdShow);
 
       }
 
       index iFind;
 
-      if((iFind = str.find("uninstall"))>= 0)
+      if((iFind = strCommandLine.find("uninstall"))>= 0)
       {
 
-         return run_uninstall_run(&str[iFind + 10], m_nCmdShow);
-
-      }
-      else if(str.find("uninstall")>= 0)
-      {
-
-         return run_uninstall(pszCommandLine, m_nCmdShow);
+         return uninstall_run(&strCommandLine[iFind + 10], Application.m_nCmdShow);
 
       }
       else
@@ -3741,7 +3713,7 @@ RetryBuildNumber:
 
          //m_strStart = "_set_windesk";  m_iStart = 4; return run_install(lpCmdLine, nCmdShow);
 
-         return run_install(pszCommandLine, m_nCmdShow);
+         return run_command(pszCommandLine, m_nCmdShow);
 
       }
 
@@ -3859,14 +3831,14 @@ RetryBuildNumber:
    }
 
 
-   void installer::start_starter_start()
-   {
+   //void installer::start_starter_start()
+   //{
 
-      //m_bStarterStart = true;
+   //   //m_bStarterStart = true;
 
-      ::create_thread(NULL, 0, ::install::installer::thread_proc_run, (LPVOID) this, 0, 0);
+   //   ::create_thread(NULL, 0, ::install::installer::thread_proc_run, (LPVOID) this, 0, 0);
 
-   }
+   //}
 
 
    void installer::add_spa_start(const char * pszId)
@@ -4214,6 +4186,24 @@ RetryBuildNumber:
       }
 
       return str;
+
+   }
+
+
+
+   bool installer::are_there_user_files_in_use()
+   {
+
+      if (are_dlls_in_use(
+         dir::stage(process_platform_dir_name()) / stringa({ "aura.dll", "axis.dll","base.dll" })
+      ))
+      {
+
+         return true;
+
+      }
+
+      return false;
 
    }
 
