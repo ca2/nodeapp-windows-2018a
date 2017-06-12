@@ -1,7 +1,5 @@
 #pragma once
 
-#include "aura/net/net.h"
-
 
 
 namespace install
@@ -15,6 +13,7 @@ namespace install
    {
    public:
 
+
       mutex                            m_mutex;
 
       stringa                          m_straTerminateProcesses;
@@ -23,9 +22,13 @@ namespace install
       string                           m_strLastHost;
       string                           m_strCurrentHost;
       bool                             m_bStarterStart;
+
 #ifdef WINDOWS
+
       MESSAGE                          m_msg;
+
 #endif
+
       string                           m_strPlatform;
 
       string                           m_strInstallLocale;
@@ -46,8 +49,11 @@ namespace install
       double                           m_dAppInstallFileCount;
       
 #ifdef WINDOWS
+
       MESSAGE                          m_msgSpaAdminWindow;
+
 #endif
+
       bool                             m_bShowPercentage;
 
       ::user::primitive *              m_pwindow;
@@ -119,7 +125,6 @@ namespace install
 
       string                           m_strFile;
       bool                             m_bSynch;
-      //bool                             m_bInstalling;
 
       stringa                          m_straHttpFailure;
 
@@ -246,21 +251,24 @@ namespace install
 
       int32_t run_ca2_application_installer(const char * id);
 
-      int32_t start_ca2_application();
+      int32_t final_launch_application();
 
       virtual int32_t install_synch(const char * pszCommandLine);
 
       virtual int32_t install_asynch(const char * pszCommandLine);
 
-      virtual int32_t ca2_app_install_run(const char * pszCommandLine, uint32_t & dwStartError, bool bSynch);
+      virtual int32_t app_install_synch(const char * pszCommandLine, uint32_t & dwStartError, bool bSynch);
 
       virtual void on_set_scalar(int_scalar_source * psource,e_scalar escalar,int64_t iValue,int iFlags);
 
    };
 
-   int32_t ca2_app_install_run(const char * pszCommandLine, uint32_t & dwStartError, bool bSynch);
+
+//   int32_t ca2_app_install_run(const char * pszCommandLine, uint32_t & dwStartError, bool bSynch);
 
 
 } // namespace install
+
+
 
 

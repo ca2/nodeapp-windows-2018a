@@ -3668,7 +3668,7 @@ RetryBuildNumber:
    int32_t installer::run_uninstall_run(const char * lpCmdLine, int32_t nCmdShow)
    {
       uint32_t dwStartError = 0;
-      return ca2_app_install_run(lpCmdLine, dwStartError, true);
+      return start_app_install(lpCmdLine, dwStartError, true);
    }
 
    int32_t installer::run_install(const char * lpCmdLine, int32_t nCmdShow)
@@ -4203,110 +4203,68 @@ RetryBuildNumber:
 
    }
 
-#ifdef WINDOWSEX
 
-   void get_program_files_x86(wstring &wstr)
+
+   int32_t installer::final_launch_application()
    {
 
-      unichar * lpszModuleFolder = (unichar *)malloc(MAX_PATH * sizeof(unichar) * 8);
-
-      unichar * lpszModuleFilePath = (unichar *)malloc(MAX_PATH * sizeof(unichar) * 8);
-
-      wcscpy(lpszModuleFilePath,_wgetenv(L"PROGRAMFILES(X86)"));
-
-      if(wcslen(lpszModuleFilePath) == 0)
-      {
-
-         SHGetSpecialFolderPathW(
-            NULL,
-            lpszModuleFilePath,
-            CSIDL_PROGRAM_FILES,
-            FALSE);
-
-      }
-
-      if(lpszModuleFilePath[wcslen(lpszModuleFilePath) - 1] == '\\'
-         || lpszModuleFilePath[wcslen(lpszModuleFilePath) - 1] == '/')
-      {
-         lpszModuleFilePath[wcslen(lpszModuleFilePath) - 1] = '\0';
-      }
-
-      wcscpy(lpszModuleFolder,lpszModuleFilePath);
-
-      wstr = lpszModuleFolder + wstr;
-
-   }
-
-
-#endif
-
-
-   int32_t installer::start_ca2_application()
-   {
-
-   #ifdef WINDOWS
-
-      wstring wstrApp;
-
-      wstrApp = L"\\ca2\\";
-#ifdef _M_X64
-      wstrApp += L"stage\\x64\\";
-#else
-      wstrApp += L"stage\\x86\\";
-#endif
-
-      wstrApp += L"app.exe";
-
-#ifndef METROWIN
-
-      get_program_files_x86(wstrApp);
-
-      STARTUPINFOW si;
-      memset(&si,0,sizeof(si));
-      si.cb = sizeof(si);
-      si.dwFlags = STARTF_USESHOWWINDOW;
-      si.wShowWindow = SW_SHOWNORMAL;
-      PROCESS_INFORMATION pi;
-      memset(&pi,0,sizeof(pi));
 
       // enable_desktop_launch is signaled here to ease the application to know that it is a desktop application, so when it reissues
       // a installation it can send app.install.exe a message with enable_desktop_launch set too.
-      wstring wstrCmdLine = (L"\"" + wstrApp + L"\" : app=" + wstring(m_strApplicationId) + L" build_number=installed enable_desktop_launch").c_str();
+      ::launch_application(get_app(), m_strApplicationId, "enable_desktop_launch", OSBIT);
+      //wstring wstrApp;
 
-      if(::CreateProcessW((unichar *)wstrApp.c_str(),(unichar *)wstrCmdLine.c_str(),
-         NULL,NULL,FALSE,0,NULL,NULL,
-         &si,&pi))
-         return TRUE;
+      //wstrApp = ::dir::program_files_x86();
 
-      return FALSE;
+      //STARTUPINFOW si;
+      //memset(&si,0,sizeof(si));
+      //si.cb = sizeof(si);
+      //si.dwFlags = STARTF_USESHOWWINDOW;
+      //si.wShowWindow = SW_SHOWNORMAL;
+      //PROCESS_INFORMATION pi;
+      //memset(&pi,0,sizeof(pi));
 
-      #endif
+      //wstring wstrCmdLine = (L"\"" + wstrApp + L"\" : app=" + wstring() + L" build_number=installed enable_desktop_launch").c_str();
 
+      //SHELLEXECUTEINFOW sei = {};
 
-#endif
+      //string strAppName = m_strApplicationId
 
-      return 0;
+      //wstring wstrFile = u16(dir::stage(process_platform_dir_name()) / "app");
+
+      //wstring wstrParams = u16(string(pszCommandLine) + " install");
+
+      //{
+
+      //   sei.cbSize = sizeof(SHELLEXECUTEINFOW);
+      //   sei.fMask = SEE_MASK_NOASYNC | SEE_MASK_NOCLOSEPROCESS;
+      //   sei.lpFile = wstrFile.c_str();
+      //   sei.lpParameters = wstrParams.c_str();
+
+      //   if (!::ShellExecuteExW(&sei))
+      //   {
+
+      //      output_debug_string("failed ::install::installer::final_launch_application()");
+
+      //      return false;
+
+      //   }
+
+      //}
+
+      //return TRUE;
 
 
    }
-   typedef bool fn_defer_core_init();
-
-   typedef bool fn_defer_core_term();
 
 
 
-   int32_t installer::ca2_app_install_run(const char * pszCommandLine, uint32_t & dwStartError, bool bSynch)
+   int32_t installer::app_install_synch(const char * pszCommandLine, uint32_t & dwStartError, bool bSynch)
    {
-
-#if defined(METROWIN)
-
-      throw "todo";
-
-#else
 
       SHELLEXECUTEINFOW sei = {};
 
-      wstring wstrFile = u16(dir::stage(process_platform_dir_name2()) / "app");
+      wstring wstrFile = u16(dir::stage(process_platform_dir_name()) / "app");
 
       wstring wstrParams = u16(string(pszCommandLine) + " install");
 
@@ -4325,7 +4283,7 @@ RetryBuildNumber:
 
       DWORD dwExitCode = 0;
 
-      for (int i = 0; i < 1440; i++)
+      for (int i = 0; i < 10 * 1000; i++)
       {
 
          if (::GetExitCodeProcess(sei.hProcess, &dwExitCode))
@@ -4342,75 +4300,17 @@ RetryBuildNumber:
          else
          {
 
-            Sleep(500);
+            Sleep(100);
 
             break;
 
          }
 
-         Sleep(500);
+         Sleep(100);
 
       }
 
       ::CloseHandle(sei.hProcess);
-
-#endif
-
-//      string strPlatform = System.install().get_platform();
-//
-//#ifdef WINDOWS
-//
-//      //::SetDllDirectory(dir::path(dir::element(), "stage\\" + strPlatform));
-//
-//      ::SetDllDirectory(dir::stage(process_platform_dir_name2()));
-//
-//#endif
-//
-//      ::aura::library libraryCore(get_app());
-//
-//      string strCore = "core";
-//
-//      // load core library so that a core system is alloced
-//      libraryCore.open(dir::stage(process_platform_dir_name2()) / strCore);
-//
-//      fn_defer_core_init * pfn_core_init = libraryCore.get< fn_defer_core_init *>("defer_" + strCore + "_init");
-//
-//      fn_defer_core_term * pfn_core_term = libraryCore.get< fn_defer_core_term *>("defer_" + strCore + "_term");
-//
-//      ::aura::library libraryOs(get_app());
-//
-//      libraryOs.open(dir::stage(process_platform_dir_name2()) / "app_core");
-//
-//      PFN_APP_CORE_MAIN pfn_app_core_main = (PFN_APP_CORE_MAIN)libraryOs.raw_get("app_core_main");
-//
-//      string strFullCommandLine;
-//
-//      strFullCommandLine = ::path::app(process_platform_dir_name2());
-//
-//      strFullCommandLine = "\"" + strFullCommandLine + "\" ";
-//
-//      strFullCommandLine = strFullCommandLine + pszCommandLine;
-//
-//      strFullCommandLine += " install";
-//
-//      if(!pfn_core_init())
-//         return -1;
-//
-//      app_core appcore;
-//
-//#ifdef WINDOWS
-//
-//      pfn_app_core_main(::GetModuleHandleA(NULL),NULL,strFullCommandLine,SW_HIDE, appcore);
-//
-//#else
-//
-//      pfn_app_core_main(strFullCommandLine, SW_HIDE, appcore);
-//
-//#endif
-//
-//      pfn_core_term();
-//
-//#endif
 
       return 0;
 
