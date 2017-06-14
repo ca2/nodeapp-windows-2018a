@@ -41,7 +41,7 @@ public:
 
    ::install::installer & installer() { return *m_pinstaller; }
 
-   void install_defer_file_transfer();
+   //void install_defer_file_transfer();
 
    bool is_user_using(const char * pszDll);
 
@@ -57,7 +57,7 @@ public:
 
    void installer_call_sync(const char * path, const char * param);
 
-   bool are_there_user_files_in_use();
+   bool are_ca2_framework_shared_libraries_busy();
 
    virtual void on_receive(::aura::ipc::rx * prx, const char * pszMessage);
 

@@ -136,19 +136,17 @@ namespace install
       spa(::sockets::http_session)     m_httpsessionptra;
       mutex                            m_mutexOmp;
 
+      int                              m_iInstallResult;
+
 
       installer(::aura::application * papp);
       ~installer();
-
-      uint32_t run();
 
       string http_get(const string & strUrl, bool bScalarListener);
 
       void set_progress(double dProgress);
 
       ::count download_file_list(::file::patha & stringa, string_to_intptr & mapLen, string_to_string & mapCrc, string_to_intptr & mapGzLen, string_to_intptr & mapFlag);
-
-	   static uint32_t thread_proc_run(void * lpParam);
 
       void paint_opaque_bk(HDC hdc);
 
@@ -230,18 +228,11 @@ namespace install
 
       bool machine_check_close_application(bool bDefault);
 
-      // it will install/update if there is a "breach"
-	   static void do_spa();
-
-      // it will install forcing to install as it is possible
-      void synch_starter_start();
-
-      // it will install forcing to install as it is possible
-      void start_starter_start();
+      int main();
 
       void add_spa_start(const char * pszId);
 
-      bool m_reboot();
+      bool reboot();
 
       void remove_spa_start(const char * pszId);
 

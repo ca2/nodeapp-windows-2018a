@@ -1,10 +1,6 @@
 ﻿#include "framework.h"
 
 
-#include <psapi.h>
-#include <tlhelp32.h>
-
-
 
 install_app::install_app() :
    ::object(this),
@@ -45,12 +41,14 @@ install_app::install_app() :
 
 }
 
+
 install_app::~install_app()
 {
 
 
 
 }
+
 
 int32_t install_app::simple_app_pre_run()
 {
@@ -65,26 +63,7 @@ int32_t install_app::simple_app_pre_run()
       if (!strncmp_dup(__argv[1], "-install:", strlen_dup("-install:")))
       {
 
-         //Sleep(15 * 1000);
-
          string strCommandLine;
-
-         /*for (int32_t i = 1; i < __argc; i++)
-         {
-
-            if (i == 1)
-            {
-               strCommandLine = &__argv[1][strlen_dup("-install:")];
-            }
-            else
-            {
-               strCommandLine = strCommandLine + " ";
-               strCommandLine = strCommandLine + __argv[i];
-            }
-
-         }
-
-         xxdebug_box(strCommandLine, "simple_app::body", 0);*/
 
          uint32_t dwStartError;
 
@@ -95,15 +74,13 @@ int32_t install_app::simple_app_pre_run()
          if ((iFind = strCommandLine.find_ci("-install:")) >= 0)
          {
 
-            //strCommandLine = strCommandLine.Left(iFind) + " " + strCommandLine.substr(iFind + strlen("-install:"));
-
             strCommandLine = strCommandLine.substr(iFind + strlen("-install:"));
 
          }
 
          xxdebug_box(strCommandLine, "simple_app::body", 0);
 
-         ::install::ca2_app_install_run(strCommandLine, dwStartError, true);
+         m_pinstaller->app_install_synch(strCommandLine, dwStartError, true);
 
          return -1;
 
@@ -114,6 +91,7 @@ int32_t install_app::simple_app_pre_run()
    return 0;
 
 }
+
 
 bool install_app::intro()
 {
@@ -152,106 +130,131 @@ bool install_app::intro()
 
    if(!m_rxchannel.create(strChannel))
    {
+
       m_iReturnCode = -1;
+
       return false;
+
    }
 
    return true;
 
 }
 
-void install_app::install_defer_file_transfer()
-{
-
-   if (!System.install().is_installing_ca2())
-   {
-
-      System.install().update_updated();
-
-      if(!System.install().is_updated() && !are_there_user_files_in_use())
-      {
-
-         // missing locale schema;
-
-         throw "missing locale and schema parameters for installing";
-         install_synch("starter_start: : app=session session_start=session app_type=application install in background in spa");
-
-      }
-
-   }
-
-}
-
-
-typedef int32_t (__cdecl * PFN_SPAADMIN_MAIN)(const char * pszCommandLine);
-
-
 
 void install_app::on_receive(::aura::ipc::rx * prx, const char * pszMessage)
 {
+
    string strMessage(pszMessage);
+
    int32_t iRet = 0;
-   const char * pszSuffix;
-   if((pszSuffix = str_begins_inc_dup(strMessage, "synch_spaadmin:")) != NULL)
+
+   if(::str::begins_eat_ci(strMessage, "synch_spaadmin:"))
    {
+
       if (System.install().is_installing_ca2())
       {
+
          iRet = 1;
+
          return;
+
       }
+
       if(m_bInstallerInstalling)
       {
+
          iRet = 1;
+
          return;
+
       }
+
       m_bInstallerInstalling = true;
-      install_synch(pszSuffix);
+
+      m_pinstaller->install_synch(strMessage);
+
       m_bInstallerInstalling = false;
+
    }
-   else if((pszSuffix = str_begins_inc_dup(strMessage, "spaadmin:")) != NULL)
+   else if(::str::begins_eat_ci(strMessage, "spaadmin:"))
    {
+
       if (System.install().is_installing_ca2())
       {
+
          iRet = 1;
+
          return;
+
       }
+
       if(m_bInstallerInstalling)
       {
+
          iRet = 1;
+
          return;
+
       }
-      install_asynch(pszSuffix);
+
+      m_pinstaller->install_asynch(strMessage);
+
    }
    else if(stricmp_dup(strMessage, "ok") == 0)
    {
+
       m_emessage = message_ok;
+
    }
    else if(stricmp_dup(strMessage, "failed") == 0)
    {
+
       m_emessage = message_failed;
+
    }
    else if(stricmp_dup(strMessage, "exit") == 0)
    {
-      PostQuitMessage(0);
+
+      post_quit();
+
    }
    else if(stricmp_dup(strMessage, "quit") == 0)
    {
-      PostQuitMessage(0);
+      
+      post_quit();
+
    }
    else
    {
+
       m_emessage = message_unknown;
+
    }
+
 }
 
-
-
-bool install_app::are_there_user_files_in_use()
+///////////////////////////
+//
+// heuristic
+//
+bool install_app::are_ca2_framework_shared_libraries_busy()
 {
 
-   if (is_shared_library_busy(
-      dir::stage(process_platform_dir_name2()) / {"aura.dll", "axis.dll", "base.dll", "core.dll"}))
+   stringa stra({ "aura.dll", "axis.dll", "base.dll", "core.dll" });
+
+   ::file::patha patha;
+   
+   patha = dir::stage(process_platform_dir_name()) / stra;
+
+   stra.copy_iter(patha);
+
+   if (is_shared_library_busy(stra))
+   {
+
       return true;
+
+   }
 
    return false;
 

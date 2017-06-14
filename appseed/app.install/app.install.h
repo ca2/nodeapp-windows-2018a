@@ -15,7 +15,7 @@ namespace install
 
 
 #undef App
-#define App(pcaapp) (pcaapp->cast_app < ::install_app > ())
+#define App(pcaapp) (pcaapp->cast_app < ::base::application > ())
 
 
 #include "resource.h"

@@ -74,7 +74,7 @@ namespace install
    }
 
 
-   uint32_t installer::run()
+   int installer::main()
    {
 
       string_to_string mapMd5;
@@ -166,10 +166,15 @@ install_begin:;
       {
 
          m_strLastHost = "";
+
          m_strSpa.remove_all();
+
          m_iTotalGzLen2 = 0;
+
          m_iProgressTotalGzLen2 = 0;
+
          m_NeedRestartBecauseOfReservedFile = false;
+
          m_NeedRestartFatalError = false;
 
          int32_t iRet = 0;
@@ -398,19 +403,13 @@ install_begin:;
 
          m_straTerminateProcesses.remove_all();
 
-         uint_array dwa;
+         dword_array dwaPid;
 
-#ifndef METROWIN
+         shared_library_process(dwaPid, m_straTerminateProcesses, dir::stage(process_platform_dir_name()) / "aura.dll");
 
-         dll_processes(dwa, m_straTerminateProcesses, dir::stage(process_platform_dir_name2()) / "axis.dll");
+//         shared_library_process(dwaPid, m_straTerminateProcesses,dir::stage(process_platform_dir_name2()) / "core.dll");
 
-         dll_processes(dwa,m_straTerminateProcesses,dir::stage(process_platform_dir_name2()) / "core.dll");
-
-         dll_processes(dwa,m_straTerminateProcesses,dir::stage(process_platform_dir_name2()) / "os.dll");
-
-#endif
-
-#ifdef WINDOWSEX
+//         shared_library_process(dwaPid, m_straTerminateProcesses,dir::stage(process_platform_dir_name2()) / "os.dll");
 
          m_straRestartCommandLine.remove_all();
 
@@ -486,7 +485,7 @@ install_begin:;
                if(!bAsk || ::simple_message_box(NULL,str,"need to terminate process to install",MB_ICONEXCLAMATION | MB_YESNO) == IDYES)
                {
 
-                  HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_TERMINATE | PROCESS_VM_READ, FALSE, dwa[i]);
+                  HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_TERMINATE | PROCESS_VM_READ, FALSE, dwaPid[i]);
 
                   if(hProcess == NULL)
                   {
@@ -586,12 +585,6 @@ install_begin:;
 
          }
 
-#else
-
-         throw 0;
-
-#endif
-
          new_progress_end(0.49);
 
          if(m_bInternetInstall)
@@ -664,7 +657,7 @@ install_begin:;
                == IDYES)
             {
 
-               m_reboot();
+               reboot();
 
             }
 
@@ -688,18 +681,6 @@ install_begin:;
       }
 
       return 0;
-
-   }
-
-
-   uint32_t installer::thread_proc_run(void * lpParam)
-   {
-
-      installer * pinstaller = (installer *) lpParam;
-
-      uint32_t ui = pinstaller->run();
-
-      return ui;
 
    }
 
@@ -845,7 +826,7 @@ install_begin:;
 
                string strStageInplace2 = ca2inplace_get_dir(strRelative) / ca2inplace_get_file(strRelative);
 
-               Application.file().ftd(strStageInplace2,strStageInplace);
+               System.file().ftd(strStageInplace2,strStageInplace, get_app());
 
             }
 
@@ -3668,7 +3649,10 @@ RetryBuildNumber:
    int32_t installer::run_uninstall_run(const char * lpCmdLine, int32_t nCmdShow)
    {
       uint32_t dwStartError = 0;
-      return start_app_install(lpCmdLine, dwStartError, true);
+      //return start_app_install(lpCmdLine, dwStartError, true);
+      throw todo(get_app());
+      return -1;
+
    }
 
    int32_t installer::run_install(const char * lpCmdLine, int32_t nCmdShow)
@@ -3743,7 +3727,6 @@ RetryBuildNumber:
 
       }
 
-#ifdef WINDOWSEX
       // Default stage.bz folder not present, would default to internet install
       // since the spa.xml is not present and contains turning information.
       if(!m_bOfflineInstall && !m_bInstallSet && (m_strApplicationId.length() == 0 || (!m_bForceUpdatedBuild && m_strBuildResource.length() == 0)))
@@ -3758,9 +3741,6 @@ RetryBuildNumber:
          parse_spa_index(node);
 
       }
-#else
-      throw "NEEDED?TODO?";
-#endif
 
 
       if(m_strApplicationId == "***parse_file_name")
@@ -3777,14 +3757,23 @@ RetryBuildNumber:
 
       m_iStyle = 0;
 
-
       if(m_bSynch)
       {
-         synch_starter_start();
+         
+         m_iInstallResult = main();
+
       }
       else
       {
-         start_starter_start();
+
+         ::fork(get_app(), []()
+         {
+
+            m_iInstallResult = main();
+
+         });
+
+
       }
 
       return TRUE;
@@ -4055,18 +4044,6 @@ RetryBuildNumber:
       if(!m_machineevent.read(&data))
          return false;
       return data.m_fixed.m_bRequestCloseApplication;
-   }
-
-
-   void installer::do_spa()
-   {
-
-      ::install::installer * pinstaller = new ::install::installer(get_thread_app());
-
-      pinstaller->m_bStarterStart = false;
-
-      ::create_thread(NULL, 0, ::install::installer::thread_proc_run, (LPVOID) pinstaller, 0, 0);
-
    }
 
 
