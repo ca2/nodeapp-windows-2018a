@@ -3896,7 +3896,6 @@ RetryBuildNumber:
          return starter_start(strCommandLine);
       }
 
-#ifdef WINDOWSEX
       unichar * lpwstr = ::GetCommandLineW();
       int32_t numargs;
       int32_t numchars;
@@ -3925,24 +3924,26 @@ RetryBuildNumber:
 
 
       index iFind;
+
       if((iFind = str.find("uninstall"))>= 0)
       {
+
          return run_uninstall_run(&str[iFind + 10], m_nCmdShow);
+
       }
       else if(str.find("uninstall")>= 0)
       {
+
          return run_uninstall(pszCommandLine, m_nCmdShow);
+
       }
       else
       {
-         //m_strStart = "_set_windesk";  m_iStart = 4; return run_install(lpCmdLine, nCmdShow);
+         
          return run_install(pszCommandLine, m_nCmdShow);
+
       }
-#else
 
-      throw "todo";
-
-#endif
    }
 
 

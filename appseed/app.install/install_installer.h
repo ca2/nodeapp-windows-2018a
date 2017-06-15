@@ -21,7 +21,6 @@ namespace install
       stringa                          m_straRestartProcess;
       string                           m_strLastHost;
       string                           m_strCurrentHost;
-      bool                             m_bStarterStart;
 
 #ifdef WINDOWS
 
