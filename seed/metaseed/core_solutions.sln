@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\app.vcxproj", "{19841115-1984-0411-1977-021977151984}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -54,8 +54,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wndfrm_core", "..\..\..\app
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "aqua", "..\..\..\app\appseed\aqua\aqua.vcxproj", "{51778453-C0AA-419D-A87F-4338C9DDE3FA}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app.install", "..\..\appseed\app.install\app.install.vcxproj", "{71BAB50B-DC41-4570-B676-30380CDA3A17}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_wave", "..\..\..\app-core\appseed\audio_decode_wave\audio_decode_wave.vcxproj", "{D620EED4-10A9-4C54-8DEE-A52B9D178A4D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_mmsystem", "..\..\appseed\audio_mmsystem\audio_mmsystem.vcxproj", "{54850FD8-653A-43B6-AA90-E59AC030559C}"
@@ -72,7 +70,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_mixer_mmsystem", "..\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_veriwell_waven", "..\..\..\app-veriwell\appseed\waven\waven.vcxproj", "{5262FA60-FE91-4A5E-AC0D-89479B8A7670}"
 	ProjectSection(ProjectDependencies) = postProject
-		{71BAB50B-DC41-4570-B676-30380CDA3A17} = {71BAB50B-DC41-4570-B676-30380CDA3A17}
 		{84517713-2000-419D-A87F-4338C9DDE3FA} = {84517713-2000-419D-A87F-4338C9DDE3FA}
 		{84517714-2000-419D-A87F-4338C9DDE3FA} = {84517714-2000-419D-A87F-4338C9DDE3FA}
 		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
@@ -115,7 +112,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_spotify", "..\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_veriwell_asciimedia", "..\..\..\app-veriwell\appseed\asciimedia\asciimedia.vcxproj", "{DC455119-050C-4E33-9707-9FB3D6C36524}"
 	ProjectSection(ProjectDependencies) = postProject
-		{71BAB50B-DC41-4570-B676-30380CDA3A17} = {71BAB50B-DC41-4570-B676-30380CDA3A17}
 		{84517713-2000-419D-A87F-4338C9DDE3FA} = {84517713-2000-419D-A87F-4338C9DDE3FA}
 		{84517714-2000-419D-A87F-4338C9DDE3FA} = {84517714-2000-419D-A87F-4338C9DDE3FA}
 		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
@@ -495,40 +491,6 @@ Global
 		{51778453-C0AA-419D-A87F-4338C9DDE3FA}.static_basis|Win32.Build.0 = basis|Win32
 		{51778453-C0AA-419D-A87F-4338C9DDE3FA}.static_basis|x64.ActiveCfg = basis|x64
 		{51778453-C0AA-419D-A87F-4338C9DDE3FA}.static_basis|x64.Build.0 = basis|x64
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.basis|Win32.ActiveCfg = basis|Win32
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.basis|Win32.Build.0 = basis|Win32
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.basis|x64.ActiveCfg = basis|x64
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.basis|x64.Build.0 = basis|x64
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.codeanalysis|Win32.ActiveCfg = stage|Win32
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.codeanalysis|Win32.Build.0 = stage|Win32
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.codeanalysis|x64.ActiveCfg = stage|x64
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.codeanalysis|x64.Build.0 = stage|x64
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.cover|Win32.ActiveCfg = cover|Win32
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.cover|Win32.Build.0 = cover|Win32
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.cover|Win32.Deploy.0 = cover|Win32
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.cover|x64.ActiveCfg = cover|x64
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.cover|x64.Build.0 = cover|x64
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.cover|x64.Deploy.0 = cover|x64
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.memdleak|Win32.ActiveCfg = stage|Win32
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.memdleak|Win32.Build.0 = stage|Win32
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.memdleak|x64.ActiveCfg = stage|x64
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.memdleak|x64.Build.0 = stage|x64
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.no_precompiled_header|Win32.ActiveCfg = stage|Win32
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.no_precompiled_header|Win32.Build.0 = stage|Win32
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.no_precompiled_header|x64.ActiveCfg = stage|x64
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.no_precompiled_header|x64.Build.0 = stage|x64
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.profiler|Win32.ActiveCfg = stage|Win32
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.profiler|Win32.Build.0 = stage|Win32
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.profiler|x64.ActiveCfg = stage|x64
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.profiler|x64.Build.0 = stage|x64
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.stage|Win32.ActiveCfg = stage|Win32
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.stage|Win32.Build.0 = stage|Win32
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.stage|x64.ActiveCfg = stage|x64
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.stage|x64.Build.0 = stage|x64
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.static_basis|Win32.ActiveCfg = basis|Win32
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.static_basis|Win32.Build.0 = basis|Win32
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.static_basis|x64.ActiveCfg = basis|x64
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.static_basis|x64.Build.0 = basis|x64
 		{D620EED4-10A9-4C54-8DEE-A52B9D178A4D}.basis|Win32.ActiveCfg = basis|Win32
 		{D620EED4-10A9-4C54-8DEE-A52B9D178A4D}.basis|Win32.Build.0 = basis|Win32
 		{D620EED4-10A9-4C54-8DEE-A52B9D178A4D}.basis|x64.ActiveCfg = basis|x64
