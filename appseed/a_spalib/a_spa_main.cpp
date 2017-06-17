@@ -382,7 +382,7 @@ void kill_process(string strImageName)
 
       // terminate all pocesses that contain the name
 
-      if (strImageName.CompareNoCase(processName) == 0)
+      if (strImageName.compare_ci(processName) == 0)
       {
 
          TerminateProcess(procHandle, 0);

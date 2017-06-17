@@ -127,7 +127,7 @@ namespace win
       get_all_processes(dwa);
       for(int i = 0; i < dwa.get_count(); i++)
       {
-         if(get_process_path(dwa[i]).CompareNoCase(pszName) == 0)
+         if(get_process_path(dwa[i]).compare_ci(pszName) == 0)
          {
             dwPid = dwa[i];
             return true;
@@ -143,7 +143,7 @@ namespace win
       for(int i = 0; i < dwa.get_count(); i++)
       {
          if(System.file().title_(get_process_path(dwa[i]))
-            .CompareNoCase(pszName) == 0)
+            .compare_ci(pszName) == 0)
          {
             dwPid = dwa[i];
             return true;

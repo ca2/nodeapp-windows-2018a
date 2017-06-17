@@ -22,12 +22,6 @@ public:
    HANDLE                           m_hmutexSpabootInstall;
    ::aura::ipc::rx                  m_rxchannel;
 
-   char *                           m_modpath;
-   char *                           m_pszDllEnds;
-   uint32_t *                       m_dwaProcess;
-   int32_t                          m_iSizeProcess;
-   HMODULE *                        m_hmodulea;
-   int32_t                          m_iSizeModule;
    bool                             m_bInstallerInstalling;
 
    ::install::installer *           m_pinstaller;
@@ -40,8 +34,6 @@ public:
 
 
    ::install::installer & installer() { return *m_pinstaller; }
-
-   //void install_defer_file_transfer();
 
    bool is_user_using(const char * pszDll);
 

@@ -28,10 +28,9 @@ namespace install
 
 #endif
 
-      string                           m_strPlatform;
+      string                           m_strPlat;
+      string                           m_strPlat2;
 
-      string                           m_strInstallLocale;
-      string                           m_strInstallSchema;
       string                           m_strVersion;
 
       string                           m_strAppMatterList;
@@ -46,6 +45,13 @@ namespace install
 
       bool                             m_bProgressModeAppInstall;
       double                           m_dAppInstallFileCount;
+
+      ::file::path                     m_pathBaseUrl;
+
+      string                           m_strLocale;
+      string                           m_strSchema;
+
+      string                           m_strCommand;
       
 #ifdef WINDOWS
 
@@ -53,15 +59,12 @@ namespace install
 
 #endif
 
-      bool                             m_bShowPercentage;
-
       ::user::primitive *              m_pwindow;
 
       string                           m_strBuild;
       string                           m_strBuildResource;
       string                           m_strApplicationId;
       string                           m_strApplicationType;
-      string                           m_strCommandLine;
 
       machine_event                    m_machineevent;
 
@@ -69,17 +72,11 @@ namespace install
       double                           m_dProgress1;
       double                           m_dProgress2;
       ::xml::document                  m_xmldocStringTable;
-      int32_t                          m_iStart;
       double                           m_dDownloadRate;
-      bool                             m_bForceUpdatedBuild;
 
-      bool                             m_bOfflineInstall;
-      bool                             m_bInternetInstall;
-      ::file::path                     m_strIndex;
-      ::file::path                     m_strIndexGz;
-      ::file::path                     m_strInstall;
-      ::file::path                     m_strInstallGz;
-      string                           m_strInstallStatusTemplate;
+      ::file::path                     m_pathIndex;
+      ::file::path                     m_pathIndexCompressed;
+      ::file::path                     m_pathInstall;
 
       bool                             m_bInstallSet;
 
@@ -91,8 +88,6 @@ namespace install
 
       bool                             m_NeedRestartBecauseOfReservedFile;
       bool                             m_NeedRestartFatalError;
-      bool                             m_bLoginStartup;
-      bool                             m_bMsDownload;
       string                           m_strTitle;
       string                           m_strApplicationName;
       string                           m_strSpaIgnitionBaseUrl;
@@ -100,8 +95,6 @@ namespace install
 
 
       int32_t                          m_nCmdShow;
-
-      bool                             m_bShow;
 
       int32_t                          m_iScreen;
       int32_t                          m_iProgressMode;
@@ -114,21 +107,17 @@ namespace install
       double                           m_dAppInstallProgressBase;
 
 
-      int32_t                          m_iStyle;
       string                           m_strLogin;
       string                           m_strSessid;
-      string                           m_strInstallFilter;
-      string                           m_strLocale;
       string                           m_strLoginFailed;
       oswindow                         m_oswindow;
 
       string                           m_strFile;
-      bool                             m_bSynch;
 
       stringa                          m_straHttpFailure;
 
 
-      bool                             m_bLaunchDesktopApplicationOnIgnitPhase2;
+      bool                             m_bLaunch;
 
       sp(::sockets::http_session)      m_phttpsession;
       ::sockets::socket_handler *      m_psockethandler;
@@ -139,15 +128,15 @@ namespace install
 
 
       installer(::aura::application * papp);
+
       ~installer();
+
 
       string http_get(const string & strUrl, bool bScalarListener);
 
       void set_progress(double dProgress);
 
       ::count download_file_list(::file::patha & stringa, string_to_intptr & mapLen, string_to_string & mapCrc, string_to_intptr & mapGzLen, string_to_intptr & mapFlag);
-
-      void paint_opaque_bk(HDC hdc);
 
       bool get(const string& url_in, bool bExist, int64_t iLength, const char * pszCrc, int64_t iGzLen);
 
@@ -181,21 +170,15 @@ namespace install
 
       ::count copy_file_list(::file::patha & stringa,string_to_intptr & mapFlag);
 
-      void parse_spa_index(::xml::node & node);
-
       string load_string(const char * pszId, const char * pszDefault);
 
       void parse_index_file(const char * psz, string_to_intptr & mapLen, string_to_string & mapCrc, string_to_intptr & mapGzLen, string_to_intptr & mapFlag);
 
       bool spa_exec(const char * psz);
 
-      bool ignit_phase2();
+      bool launch_application();
 
-      int32_t run_file(const char * pszFile, int32_t nCmdShow);
-
-      int32_t starter_start(const char * pszCommandLine);
-
-      int32_t application_name();
+      bool launch_applications();
 
       int32_t appmatter_list();
 
@@ -205,17 +188,7 @@ namespace install
 
       int32_t calc_host(string & strSpaHost, int32_t &iHostRetry);
 
-      int32_t run_uninstall(const char * lpCmdLine, int32_t nCmdShow);
-
-      int32_t run_uninstall_run(const char * lpCmdLine, int32_t nCmdShow);
-
-      int32_t run_install(const char * lpCmdLine, int32_t nCmdShow);
-
-      int32_t run_starter_start(int32_t nCmdShow);
-
-      bool init_instance(int32_t nCmdShow);
-
-      int32_t spaadmin_main(const char * pszCommandLine);
+      int32_t install(string strCommand);
 
       bool is_application_opened(const char * psz);
 
@@ -226,8 +199,6 @@ namespace install
       bool machine_unsignalize_close_application();
 
       bool machine_check_close_application(bool bDefault);
-
-      int main();
 
       void add_spa_start(const char * pszId);
 
@@ -242,10 +213,6 @@ namespace install
       int32_t run_ca2_application_installer(const char * id);
 
       int32_t final_launch_application();
-
-      virtual int32_t install_synch(const char * pszCommandLine);
-
-      virtual int32_t install_asynch(const char * pszCommandLine);
 
       virtual int32_t app_install_synch(const char * pszCommandLine, uint32_t & dwStartError, bool bSynch);
 

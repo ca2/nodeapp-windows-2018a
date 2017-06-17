@@ -187,7 +187,7 @@ namespace a_spa
       if (!file_exists_dup(strDownload) || _stricmp(file_md5_dup(strDownload).c_str(), strMd5) != 0)
       {
 
-         if (strFile.CompareNoCase("app.install.exe") == 0)
+         if (strFile.compare_ci("app.install.exe") == 0)
          {
 
             kill_process(strFile);

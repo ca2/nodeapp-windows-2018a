@@ -14,17 +14,8 @@
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_CCVOTAGUS_CA2_SPA   ICON                    "res\\ca2v_2010_07_01.ico"
+IDI_CCVOTAGUS_CA2_SPA   ICON                    "res\\ca2spa.ico"
 
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// CA2SP
-//
-
-ID_CGCL                 CA2SP                   "res\\1977.ca2sp"
-
-IDR_CA2SP1              CA2SP                   "res\\ca2sp1.bin"
 
 
 #ifdef APSTUDIO_INVOKED

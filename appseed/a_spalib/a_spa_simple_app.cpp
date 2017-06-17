@@ -1127,9 +1127,7 @@ namespace a_spa
 
       string strCommand;
 
-      strCommand = "synch_spaadmin:";
-
-      strCommand += "starter_start:";
+      strCommand = "appinstall:";
 
       strCommand += strCommandLine;
 
@@ -2218,7 +2216,7 @@ namespace a_spa
 
       }
 
-      if (straReferenceMd5[0].compare_no_case(file_md5_dup(path1)) != 0)
+      if (straReferenceMd5[0].compare_ci(file_md5_dup(path1)) != 0)
       {
 
          return false;
@@ -2337,7 +2335,7 @@ namespace a_spa
 
          string strMd5 = straMd5[i];
 
-         if (strFileMd5.CompareNoCase(strMd5) != 0)
+         if (strFileMd5.compare_ci(strMd5) != 0)
          {
 
             OutputDebugString("MD5 failed: " + strPath + " file MD5=" + strFileMd5 + " ref MD5=" + strMd5);
@@ -2476,7 +2474,7 @@ namespace a_spa
             if (!file_exists_dup(strDownload) || _stricmp(file_md5_dup(strDownload).c_str(), straMd5[iFile]) != 0)
             {
 
-               if (straFile[iFile].CompareNoCase("app.install.exe") == 0)
+               if (straFile[iFile].compare_ci("app.install.exe") == 0)
                {
 
                   kill_process("app.install.exe");

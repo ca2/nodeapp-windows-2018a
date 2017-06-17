@@ -466,7 +466,7 @@ int configure(HWND window, nssm_service_t *service, nssm_service_t *orig_service
           return 6;
         }
 
-        /* Compare. */
+        /* compare. */
         if (_tcsncmp(password, service->password, service->passwordlen)) {
           popup_message(window, MB_OK | MB_ICONEXCLAMATION, NSSM_GUI_MISSING_PASSWORD);
           SecureZeroMemory(password, service->passwordlen);

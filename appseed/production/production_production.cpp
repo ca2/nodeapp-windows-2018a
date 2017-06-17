@@ -1977,7 +1977,7 @@ namespace production
       for (; i < straFiles.get_size(); i++)
       {
          ::file::path & strFile = straFiles[i];
-         if (strFile.ext().CompareNoCase("zip") == 0)
+         if (strFile.ext().compare_ci("zip") == 0)
          {
          }
          else if (Application.dir().is(strFile))
@@ -3042,7 +3042,7 @@ namespace production
          if(document.get_root()->child_at(0) != NULL && document.get_root()->child_at(0)->get_name() == "error")
          {
          if(document.get_root()->child_at(0)->attr("code") != 34
-         && document.get_root()->child_at(0)->get_value().CompareNoCase("Status is a duplicate.") != 0)
+         && document.get_root()->child_at(0)->get_value().compare_ci("Status is a duplicate.") != 0)
          {
 
          goto retry1;
@@ -3133,7 +3133,7 @@ namespace production
          if(document.get_root()->child_at(0) != NULL && document.get_root()->child_at(0)->get_name() == "error")
          {
          if(document.get_root()->child_at(0)->attr("code") != 34
-         && document.get_root()->child_at(0)->get_value().CompareNoCase("Status is a duplicate.") != 0)
+         && document.get_root()->child_at(0)->get_value().compare_ci("Status is a duplicate.") != 0)
          {
 
          goto retry1;
@@ -3394,16 +3394,16 @@ namespace production
    string production::stage_platform(string strPlatform)
    {
 
-      if(strPlatform.CompareNoCase("x86") == 0
-      || strPlatform.CompareNoCase("Win32") == 0)
+      if(strPlatform.compare_ci("x86") == 0
+      || strPlatform.compare_ci("Win32") == 0)
       {
 
          return "Win32";
 
       }
 
-      if(strPlatform.CompareNoCase("x64") == 0
-      || strPlatform.CompareNoCase("amd64") == 0)
+      if(strPlatform.compare_ci("x64") == 0
+      || strPlatform.compare_ci("amd64") == 0)
       {
 
          return "x64";

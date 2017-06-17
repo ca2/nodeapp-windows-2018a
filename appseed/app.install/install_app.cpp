@@ -1,7 +1,6 @@
 ﻿#include "framework.h"
 
 
-
 install_app::install_app() :
    ::object(this),
    ::aura::system(NULL, NULL),
@@ -20,22 +19,16 @@ install_app::install_app() :
    //                       |    |       |
    if (file_exists_dup("C:\\ca2\\config\\system\\beg_debug_box.txt"))
    {
+
       debug_box("app.install", "app", 0);
+
    }
    
    m_hinstance             = ::GetModuleHandleA(NULL);
    m_hmutexSpabootInstall  = NULL;
-   e_message m_emessage    = message_none;
-   m_modpath               = NULL;
-   m_pszDllEnds            = NULL;
-   m_dwaProcess            = NULL;
-   m_iSizeProcess          = 0;
-   m_hmodulea              = NULL;
-   m_iSizeModule           = 0;
+   m_emessage              = message_none;
    m_bInstallerInstalling  = false;
    m_bMatterFromHttpCache  = true;
-
-   m_bAdvancedGUI          = false;
 
    construct(NULL);
 
@@ -44,8 +37,6 @@ install_app::install_app() :
 
 install_app::~install_app()
 {
-
-
 
 }
 
@@ -57,36 +48,61 @@ int32_t install_app::simple_app_pre_run()
 
    xxdebug_box("app.install", "app.install", MB_OK);
 
-   if (__argc >= 2)
+   if (__argc == 1)
    {
 
-      if (!strncmp_dup(__argv[1], "-install:", strlen_dup("-install:")))
+      ::file::path pathCa2 = (::dir::module() - 3);
+
+      string str = file_as_string_dup(pathCa2 / "spa.appinstall");
+
+      if (str.has_char())
       {
 
-         string strCommandLine;
-
-         uint32_t dwStartError;
-
-         strCommandLine = ::str::international::unicode_to_utf8(::GetCommandLineW());
-
-         strsize iFind;
-
-         if ((iFind = strCommandLine.find_ci("-install:")) >= 0)
-         {
-
-            strCommandLine = strCommandLine.substr(iFind + strlen("-install:"));
-
-         }
-
-         xxdebug_box(strCommandLine, "simple_app::body", 0);
-
-         m_pinstaller->app_install_synch(strCommandLine, dwStartError, true);
-
-         return -1;
+         return m_pinstaller->install(str);
 
       }
 
    }
+   else if (__argc >= 2)
+   {
+
+      ::file::path path;
+
+      path = __argv[1];
+
+      if (path.extension().compare_ci("appinstall") == 0)
+      {
+
+         string str = file_as_string_dup(path);
+
+         if (str.has_char())
+         {
+
+            return m_pinstaller->install(str);
+
+         }
+
+      }
+
+      string strCommandLine;
+
+      strCommandLine = ::str::international::unicode_to_utf8(::GetCommandLineW());
+
+      const char * pszCommand = strCommandLine;
+
+      string strFile = ::str::consume_command_line_argument(pszCommand);
+
+      string strCommand(pszCommand);
+
+      if (strCommand.has_char())
+      {
+
+         return m_pinstaller->install(strCommand);
+
+      }
+
+   }
+
 
    return 0;
 
@@ -111,20 +127,11 @@ bool install_app::intro()
 
    }
 
-   m_modpath      = (char *) memory_alloc(MAX_PATH * 8);
-   m_pszDllEnds   = (char *) memory_alloc(MAX_PATH * 8);
-   m_iSizeProcess = 1024;
-   m_dwaProcess   = (uint32_t *) memory_alloc(m_iSizeProcess);
-   m_iSizeModule  = 1024;
-   m_hmodulea     = (HMODULE *) memory_alloc(m_iSizeModule);
-
    m_rxchannel.m_preceiver = this;
 
    prepare_small_bell();
 
    string strChannel;
-
-   // "core/spaboot_install"
 
    strChannel = "::ca2::fontopus::ca2_spaboot_install_" + process_platform_dir_name2() + "::7807e510-5579-11dd-ae16-0800200c7784";
 
@@ -149,7 +156,7 @@ void install_app::on_receive(::aura::ipc::rx * prx, const char * pszMessage)
 
    int32_t iRet = 0;
 
-   if(::str::begins_eat_ci(strMessage, "synch_spaadmin:"))
+   if(::str::begins_eat_ci(strMessage, "appinstall:"))
    {
 
       if (System.install().is_installing_ca2())
@@ -172,33 +179,9 @@ void install_app::on_receive(::aura::ipc::rx * prx, const char * pszMessage)
 
       m_bInstallerInstalling = true;
 
-      m_pinstaller->install_synch(strMessage);
+      m_pinstaller->install(strMessage);
 
       m_bInstallerInstalling = false;
-
-   }
-   else if(::str::begins_eat_ci(strMessage, "spaadmin:"))
-   {
-
-      if (System.install().is_installing_ca2())
-      {
-
-         iRet = 1;
-
-         return;
-
-      }
-
-      if(m_bInstallerInstalling)
-      {
-
-         iRet = 1;
-
-         return;
-
-      }
-
-      m_pinstaller->install_asynch(strMessage);
 
    }
    else if(stricmp_dup(strMessage, "ok") == 0)
@@ -266,10 +249,10 @@ bool install_app::end()
 
    simple_app::end();
 
-   memory_free(m_hmodulea);
-   memory_free(m_dwaProcess);
-   memory_free(m_pszDllEnds);
-   memory_free(m_modpath);
+   //memory_free(m_hmodulea);
+   //memory_free(m_dwaProcess);
+   //memory_free(m_pszDllEnds);
+   //memory_free(m_modpath);
 
    ::aura::del(m_pinstaller);
 
