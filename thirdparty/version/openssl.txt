@@ -1,6 +1,0 @@
-version 1.0.1c
-
-library\libeay32MT.lib
-library\ssleay32MT.lib
-library\x64\libeay32MT.lib
-library\x64\ssleay32MT.lib
