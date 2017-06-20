@@ -451,9 +451,6 @@
   <ItemGroup>
     <ResourceCompile Include="..\a_spares\a_spa.rc" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\a_spares\res\ca2sp2.bin" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

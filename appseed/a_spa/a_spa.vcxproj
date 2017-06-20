@@ -425,14 +425,6 @@
     <ResourceCompile Include="..\a_spares\a_spa.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\a_spares\res\1977.ca2sp" />
-    <None Include="..\a_spares\res\ca2sp1.bin" />
-    <None Include="..\a_spares\res\ca2sp2.bin" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\a_spares\res\ca2v_2010_07_01.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="..\a_spares\resource.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
