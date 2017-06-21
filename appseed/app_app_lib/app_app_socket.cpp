@@ -1,7 +1,7 @@
 #include "framework.h"
 
 
-namespace a_spa
+namespace app_app
 {
 
 
@@ -94,13 +94,13 @@ namespace a_spa
          //   if (strStart == "/start_x64/")
          //   {
 
-         //      path = ::dir::program_files_x86() / "ca2/a_spa/x64/a_spa.exe";
+         //      path = ::dir::program_files_x86() / "ca2/app_app/x64/app_app.exe";
 
          //   }
          //   else
          //   {
 
-         //      path = ::dir::program_files_x86() / "ca2/a_spa/x86/a_spa.exe";
+         //      path = ::dir::program_files_x86() / "ca2/app_app/x86/app_app.exe";
 
          //   }
 
@@ -125,10 +125,10 @@ namespace a_spa
 
             outheader(__id(content_type)) = "text/plain; charset=UTF-8";
 
-            if (::a_spa::simple_app::s_papp->m_strSpaBootName.has_char())
+            if (::app_app::app::s_papp->m_strSpaBootName.has_char())
             {
 
-               response().file().write("Installing " + ::a_spa::simple_app::s_papp->m_strSpaBootName +"...");
+               response().file().write("Installing " + ::app_app::app::s_papp->m_strSpaBootName +"...");
 
             }
             else
@@ -205,10 +205,10 @@ namespace a_spa
 
          string strH1;
 
-         if (::a_spa::simple_app::s_papp->m_strSpaBootName.has_char())
+         if (::app_app::app::s_papp->m_strSpaBootName.has_char())
          {
 
-            strH1 = "Installing " + ::a_spa::simple_app::s_papp->m_strSpaBootName + " ...";
+            strH1 = "Installing " + ::app_app::app::s_papp->m_strSpaBootName + " ...";
 
          }
          else
@@ -217,18 +217,18 @@ namespace a_spa
             strH1 = "Installing ...";
 
          }
-//         response().file().write("<html><head><meta http-equiv=\"refresh\" content=\"1\"><title>a_spa.exe</title></head><body><h1>"+strH1+"</h1>a_spa.exe is running.<br><br><h2>Current Install Activity:</h2>"+ ::a_spa::simple_app::s_papp->m_strHtmlLog+"</html>");
+//         response().file().write("<html><head><meta http-equiv=\"refresh\" content=\"1\"><title>app_app.exe</title></head><body><h1>"+strH1+"</h1>app_app.exe is running.<br><br><h2>Current Install Activity:</h2>"+ ::app_app::app::s_papp->m_strHtmlLog+"</html>");
 
-         //response().file().write("<html><head><meta http-equiv=\"refresh\" content=\"1\"><title>a_spa.exe</title></head><body><h1>" + strH1 + "</h1>a_spa.exe is running.</html>");
+         //response().file().write("<html><head><meta http-equiv=\"refresh\" content=\"1\"><title>app_app.exe</title></head><body><h1>" + strH1 + "</h1>app_app.exe is running.</html>");
 
-         response().file().write("<html><head><meta http-equiv=\"refresh\" content=\"1\"><title>a_spa.exe</title></head><body><h1>" + strH1 + "</h1>a_spa.exe is running. yOUR req:"+ m_request.m_strRequestUri +"</html>");
+         response().file().write("<html><head><meta http-equiv=\"refresh\" content=\"1\"><title>app_app.exe</title></head><body><h1>" + strH1 + "</h1>app_app.exe is running. yOUR req:"+ m_request.m_strRequestUri +"</html>");
 
       }
 
    }
 
 
-} // namespace a_spa
+} // namespace app_app
 
 
 

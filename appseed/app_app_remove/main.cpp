@@ -14,7 +14,7 @@
 #include <tlhelp32.h>
 
 class removal :
-    public ::aura::simple_app
+    public ::aura::app
 {
 public:
 
@@ -74,7 +74,7 @@ extern "C" int32_t WINAPI _tWinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,
 
    }
 
-   int iRet = ::aura::simple_app_main < removal >(hInstance,hPrevInstance,lpCmdLine,nCmdShow);
+   int iRet = ::aura::app_main < removal >(hInstance,hPrevInstance,lpCmdLine,nCmdShow);
 
    return iRet;
 

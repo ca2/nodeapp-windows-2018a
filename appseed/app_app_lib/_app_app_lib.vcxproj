@@ -31,7 +31,7 @@
     <RootNamespace>ccvotagus_ca2_spa</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
-    <ProjectName>_app_app</ProjectName>
+    <ProjectName>_app_app_lib</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|Win32'" Label="Configuration">
@@ -429,49 +429,27 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="a_spa_install_item.cpp" />
-    <ClCompile Include="a_spa_simple_app.cpp" />
-    <ClCompile Include="a_spa_socket.cpp" />
-    <ClCompile Include="a_spa_socket_handler.cpp" />
-    <ClCompile Include="a_spa_socket_thread.cpp" />
-    <ClCompile Include="a_spa.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="a_spa_trace.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="a_spa_window.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='basis|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='cover|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='stage|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="_a_spa.cpp" />
+    <ClCompile Include="app_app_canvas.cpp" />
+    <ClCompile Include="app_app_install_item.cpp" />
+    <ClCompile Include="app_app_app.cpp" />
+    <ClCompile Include="app_app_socket.cpp" />
+    <ClCompile Include="app_app_socket_handler.cpp" />
+    <ClCompile Include="app_app_socket_thread.cpp" />
+    <ClCompile Include="app_app.cpp" />
+    <ClCompile Include="app_app_trace.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="a_spa_install_item.h" />
-    <ClInclude Include="a_spa_application.h" />
-    <ClInclude Include="a_spa.h" />
-    <ClInclude Include="a_spa_socket.h" />
-    <ClInclude Include="a_spa_socket_handler.h" />
-    <ClInclude Include="a_spa_canvas.h" />
-    <ClInclude Include="a_spa_socket_thread.h" />
-    <ClInclude Include="a_spa_trace.h" />
+    <ClInclude Include="app_app_install_item.h" />
+    <ClInclude Include="app_app_app.h" />
+    <ClInclude Include="app_app.h" />
+    <ClInclude Include="app_app_socket.h" />
+    <ClInclude Include="app_app_socket_handler.h" />
+    <ClInclude Include="app_app_canvas.h" />
+    <ClInclude Include="app_app_socket_thread.h" />
+    <ClInclude Include="app_app_trace.h" />
     <ClInclude Include="framework.h" />
   </ItemGroup>
   <ItemGroup>

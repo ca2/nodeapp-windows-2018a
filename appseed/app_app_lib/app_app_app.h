@@ -1,12 +1,12 @@
 #pragma once
 
 
-namespace a_spa
+namespace app_app
 {
 
 
-   class SPALIB_API application :
-      virtual public ::aura::simple_app
+   class SPALIB_API app :
+      virtual public ::aura::app
    {
    public:
 
@@ -19,17 +19,24 @@ namespace a_spa
 
       };
 
-      ::a_spa::socket_thread *   m_pthreadSsl;
+      TCHAR szTitle[2048];					// The title bar text
+      TCHAR szWindowClass[2048];			// the main window class name
+
+
+
+
+
+      ::app_app::socket_thread *   m_pthreadSsl;
 
       string                     m_strId;
       string                     m_strVersion;
       string                     m_strBuild;
-      spa_canvas *               m_pcanvas;
+      canvas *                   m_pcanvas;
       HWND                       m_hwnd;
 
       string                     m_strPlatform;
 
-      static simple_app *        s_papp;
+      static app *        s_papp;
 
       bool                       m_bFinished;
       string                     m_strSpaBootName;
@@ -42,8 +49,8 @@ namespace a_spa
       stringa     m_straCommand;
 
 
-      application();
-      virtual ~application();
+      app();
+      virtual ~app();
 
 
       void add_command_line(string str);
@@ -118,20 +125,41 @@ namespace a_spa
 
       string http_get(const char * pszUrl, bool bCache = false);
 
-      static simple_app * get();
+      static app * get();
 
       LRESULT window_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
       int create_spa_window();
 
-      virtual void start_a_spa_web_server();
+      virtual void start_app_app_web_server();
 
       void keep_drawing();
+
+      string do_install(const char * psz);
+
+
+      int spalib_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR    lpCmdLine, int       nCmdShow);
+
+      void kill_process(string strImageName);
+      int register_spa_file_type();
+      int is_downloading_spaadmin();
+      void end_spa(::aura::application * papp);
+      bool low_is_spaadmin_running(string strPlatform);
+      void defer_start_program_files_spa_admin(string strPlatform);
+      void get_system_locale_schema(string & strLocale, string & strSchema);
+      void app_install_call_sync(const char * pszPlatform, const char * szParameters, const char * pszBuild);
+      void run_vcredist(string strPlatform);
+      string get_module_path(HMODULE hmodule);
+      string read_resource_as_string(HINSTANCE hinst, UINT nID, LPCTSTR lpcszType);
+
+      ATOM spa_register_class();
+
+
 
    };
 
 
-} // namespace a_spa
+} // namespace app_app
 
 
 

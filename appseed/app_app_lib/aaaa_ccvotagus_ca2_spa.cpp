@@ -1,4 +1,4 @@
-﻿#include "a_spalib.h"
+﻿#include "app_applib.h"
 
 //#include <gdiplus.h>
 
@@ -519,7 +519,7 @@ void CommandStart()
    //}
    /*else
    {
-      string strFileAdmin = dir::path(dir::afterca2().c_str(), ::path::a_spa());
+      string strFileAdmin = dir::path(dir::afterca2().c_str(), ::path::app_app());
       if(!file_exists_dup(strFileAdmin.c_str()))
       {
          MessageBox(g_hwnd, 

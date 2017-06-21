@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace a_spa
+namespace app_app
 {
 
 
@@ -25,7 +25,7 @@ namespace a_spa
    public:
 
 
-      simple_app *            m_papp;
+      app *            m_papp;
       string                  m_strUrlPrefix;
       string                  m_strPath;
       string                  m_strFile;
@@ -36,8 +36,8 @@ namespace a_spa
       e_item_type             m_eitemtype;
 
 
-      install_item(simple_app * paspa, string strFile, string strPlatform, install * pinstall);
-      install_item(simple_app * paspa, string strUrlPrefix, string strPath, string strFile, install * pinstall, string strMd5, string strPlatform);
+      install_item(app * paspa, string strFile, string strPlatform, install * pinstall);
+      install_item(app * paspa, string strUrlPrefix, string strPath, string strFile, install * pinstall, string strMd5, string strPlatform);
 
 
       static UINT c_cdecl proc(LPVOID lp);
@@ -53,7 +53,7 @@ namespace a_spa
    };
 
 
-} // namespace a_spa
+} // namespace app_app
 
 
 

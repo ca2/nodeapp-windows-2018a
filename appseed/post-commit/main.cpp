@@ -8,7 +8,7 @@
 //SPALIB_API string spa_title(string strTitle= "");
 
 class app_t:
-	public ::aura::simple_app
+	public ::aura::app
 {
 public:
 
@@ -364,6 +364,6 @@ int main()
 
    }
    
-   return ::aura::simple_app_main < app_t >(NULL,NULL,NULL,0);
+   return ::aura::app_main < app_t >(NULL,NULL,NULL,0);
 
 }

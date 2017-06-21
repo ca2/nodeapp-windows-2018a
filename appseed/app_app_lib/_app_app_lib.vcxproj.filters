@@ -11,63 +11,60 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="a_spa_socket.cpp">
+    <ClCompile Include="app_app_socket.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="a_spa_socket_handler.cpp">
+    <ClCompile Include="app_app_socket_handler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="a_spa_trace.cpp">
+    <ClCompile Include="app_app_trace.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="a_spa_window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="a_spa_socket_thread.cpp">
+    <ClCompile Include="app_app_socket_thread.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="framework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="a_spa_simple_app.cpp">
+    <ClCompile Include="app_app_install_item.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="a_spa_install_item.cpp">
+    <ClCompile Include="app_app.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="_a_spa.cpp">
+    <ClCompile Include="app_app_canvas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="a_spa.cpp">
+    <ClCompile Include="app_app_app.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="a_spa_socket.h">
+    <ClInclude Include="app_app_socket.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="a_spa_socket_handler.h">
+    <ClInclude Include="app_app_socket_handler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="a_spa_canvas.h">
+    <ClInclude Include="app_app_canvas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="a_spa_socket_thread.h">
+    <ClInclude Include="app_app_socket_thread.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="a_spa.h">
+    <ClInclude Include="app_app.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="a_spa_install_item.h">
+    <ClInclude Include="app_app_install_item.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="a_spa_trace.h">
+    <ClInclude Include="app_app_trace.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="a_spa_application.h">
+    <ClInclude Include="app_app_app.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,6 +6,7 @@
 
 class install_app;
 
+
 namespace install
 {
 
@@ -20,7 +21,8 @@ namespace install
 
 #include "resource.h"
 
-#include "install_installer.h"
+
+#include "app_app_install_installer.h"
 
 
-#include "install_app.h"
+#include "app_app_install_app.h"

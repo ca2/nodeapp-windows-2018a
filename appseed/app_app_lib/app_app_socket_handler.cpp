@@ -1,7 +1,7 @@
 #include "framework.h"
 
 
-namespace a_spa
+namespace app_app
 {
 
 
@@ -14,7 +14,7 @@ namespace a_spa
    }
 
 
-} // namespace a_spa
+} // namespace app_app
 
 
 

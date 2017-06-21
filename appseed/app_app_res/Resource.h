@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by a_spa.rc
+// Used by app_app.rc
 //
 #define IDC_MYICON                      2
 #define IDD_CCVOTAGUS_CA2_SPA_DIALOG    102

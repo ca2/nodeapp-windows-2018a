@@ -107,8 +107,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
       }
    }
 
-   std::string strDir = ::dir::a_spa();
-   std::string strSp = ::path::a_spaadmin();
+   std::string strDir = ::dir::app_app();
+   std::string strSp = ::path::app_appadmin();
    std::string strSpDest;
 
 //   STARTUPINFO si;

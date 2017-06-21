@@ -1,7 +1,8 @@
 #include "framework.h"
-#include "../a_spares/resource.h"
+#include "../app_app_res/resource.h"
 
-namespace a_spa
+
+namespace app_app
 {
 
 
@@ -145,7 +146,7 @@ namespace a_spa
    ::netserver::socket_handler * socket_thread::create_socket_handler()
    {
 
-      return new ::a_spa::socket_handler(get_app());
+      return new ::app_app::socket_handler(get_app());
 
 
    }
@@ -159,5 +160,5 @@ namespace a_spa
    }
 
 
-} // namespace a_spa
+} // namespace app_app
 

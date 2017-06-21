@@ -16,13 +16,13 @@
     <ClCompile Include="framework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="install_installer.cpp">
+    <ClCompile Include="app_app_install.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="install_app.cpp">
+    <ClCompile Include="app_app_install_installer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="app.install.cpp">
+    <ClCompile Include="app_app_install_app.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -33,13 +33,13 @@
     <ClInclude Include="framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="install_installer.h">
+    <ClInclude Include="app_app_install.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="install_app.h">
+    <ClInclude Include="app_app_install_app.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="app.install.h">
+    <ClInclude Include="app_app_install_installer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -49,7 +49,7 @@
     </Media>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="app.install.rc">
+    <ResourceCompile Include="app_app_install.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>

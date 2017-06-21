@@ -1,11 +1,8 @@
-#include "../a_spalib/a_spa.h"
+#include "../app_app_lib/app_app.h"
 
 
 
-int APIENTRY _tWinMain(HINSTANCE hInstance,
-                     HINSTANCE hPrevInstance,
-                     LPTSTR    lpCmdLine,
-                     int       nCmdShow)
+int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
 
    if(!defer_aura_init())
@@ -17,7 +14,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
    
    spa_set_admin(false);
    
-   int iRet = ::aura::simple_app_main < ::a_spa::simple_app >(hInstance,hPrevInstance,lpCmdLine,nCmdShow);
+   int iRet = ::aura::app_main < ::app_app::app >(hInstance,hPrevInstance,lpCmdLine,nCmdShow);
 
    defer_aura_term();
 

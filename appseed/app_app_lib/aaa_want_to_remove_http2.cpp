@@ -1,4 +1,4 @@
-#include "a_spalib.h"
+#include "app_applib.h"
 
 //extern HINTERNET  g_hSession;
 //extern HINTERNET  g_hConnect;
@@ -26,13 +26,13 @@ public:
 };
 
 
-bool a_spa::ms_download(const char * pszUrl, const char * pszFile, bool bUrlEncode, int * piStatus)
+bool app_app::ms_download(const char * pszUrl, const char * pszFile, bool bUrlEncode, int * piStatus)
 {
    return ms_download_progress(pszUrl, pszFile, false, bUrlEncode, piStatus);
 }
 
 
-bool a_spa::ms_download_progress(const char * pszUrl,const char * pszFile,bool bProgress,bool bUrlEncode,int * piStatus)
+bool app_app::ms_download_progress(const char * pszUrl,const char * pszFile,bool bProgress,bool bUrlEncode,int * piStatus)
 {
    download_buffer buffer;
    if(piStatus != NULL)

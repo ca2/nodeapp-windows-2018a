@@ -132,7 +132,7 @@ int register_spa_file_type()
    wstring desc = L"spafile";          // file type description
    wstring content_type = L"application/x-spa";
 
-   wstring app(::path::a_spa("x86"));
+   wstring app(::path::app_app("x86"));
 
    wstring icon(app);
 
@@ -179,7 +179,7 @@ int register_spa_file_type()
    RegSetValueExW(hkey, L"", 0, REG_SZ, (BYTE*)icon.c_str(), icon.length() * sizeof(wchar_t));
    RegCloseKey(hkey);
 
-   wstring wstr(dir::a_spa("x86") / "spa_register.txt");
+   wstring wstr(dir::app_app("x86") / "spa_register.txt");
 
    int iRetry = 9;
 
@@ -207,7 +207,7 @@ void start_program_files_spa_admin(string strPlatform)
 
    SHELLEXECUTEINFOW sei = {};
 
-   string str = ::path::a_spaadmin(strPlatform);
+   string str = ::path::app_appadmin(strPlatform);
 
    if (!::file_exists_dup(str))
    {
@@ -544,11 +544,11 @@ bool app_install_send_short_message(const char * pszPlatform, const char * psz, 
 }
 
 
-namespace a_spa
+namespace app_app
 {
 
 
-   void simple_app::start_app_install_in_context(string strPlatform, bool bAlreadyElevated)
+   void app::start_app_install_in_context(string strPlatform, bool bAlreadyElevated)
    {
 
       app_install_launcher launcher(strPlatform, "", "");
@@ -558,7 +558,7 @@ namespace a_spa
    }
 
 
-} // namespace a_spa
+} // namespace app_app
 
 
 
@@ -595,14 +595,14 @@ string read_resource_as_string(
    return str;
 
 }
-namespace a_spa
+namespace app_app
 {
 
 
-   simple_app * simple_app::s_papp = NULL;
+   app * app::s_papp = NULL;
 
 
-   simple_app::simple_app() :
+   app::app() :
       ::aura::system(NULL, this)
    {
 
@@ -617,14 +617,14 @@ namespace a_spa
    }
 
 
-   simple_app::~simple_app()
+   app::~app()
    {
 
 
    }
 
 
-   bool simple_app::http_download(const char * pszUrl, const char * pszFile, bool bUrlEncode, int * piStatus)
+   bool app::http_download(const char * pszUrl, const char * pszFile, bool bUrlEncode, int * piStatus)
    {
 
       string strUrl = pszUrl;
@@ -651,7 +651,7 @@ namespace a_spa
    }
 
 
-   string simple_app::http_get(const char * pszUrl, bool bCache)
+   string app::http_get(const char * pszUrl, bool bCache)
    {
 
       property_set set;
@@ -677,7 +677,7 @@ namespace a_spa
 
 
 
-   void simple_app::defer_show_debug_box()
+   void app::defer_show_debug_box()
    {
 
       if (::file_exists_dup(::dir::system() / "config/spa/beg_debug_box.txt"))
@@ -688,19 +688,19 @@ namespace a_spa
          if (spa_get_admin())
          {
 
-            str = "zzzAPPzzz a_spaadmin : ";
+            str = "zzzAPPzzz app_appadmin : ";
 
          }
          else
          {
 
-            str = "zzzAPPzzz a_spa : ";
+            str = "zzzAPPzzz app_app : ";
 
          }
 
          str += string(::GetCommandLineW());
 
-         ::MessageBoxA(NULL, str.c_str(), "zzzAPPzzz a_spa", MB_ICONINFORMATION);
+         ::MessageBoxA(NULL, str.c_str(), "zzzAPPzzz app_app", MB_ICONINFORMATION);
 
       }
 
@@ -708,7 +708,7 @@ namespace a_spa
    }
 
 
-   int32_t simple_app::run()
+   int32_t app::run()
    {
 
 
@@ -761,7 +761,7 @@ namespace a_spa
       if (spa_get_admin())
       {
 
-         start_a_spa_web_server();
+         start_app_app_web_server();
 
          manual_reset_event ev86(this);
 
@@ -829,7 +829,7 @@ namespace a_spa
 
    }
 
-   void simple_app::add_command_line(string str)
+   void app::add_command_line(string str)
    {
 
       {
@@ -854,7 +854,7 @@ namespace a_spa
    }
 
 
-   string simple_app::pick_command_line()
+   string app::pick_command_line()
    {
 
       ::mutex mutexCommandFile(get_thread_app(), "Local\\ca2_spa_command:" + process_platform_dir_name2());
@@ -890,7 +890,7 @@ namespace a_spa
    }
 
 
-   int simple_app::spa_main()
+   int app::spa_main()
    {
 
       spa_mutex mutex(process_platform_dir_name2());
@@ -959,7 +959,7 @@ namespace a_spa
 
 
 
-   int simple_app::spaadmin_main(string strPlatform)
+   int app::spaadmin_main(string strPlatform)
    {
 
       //::MessageBoxA(NULL, "Test1", "Test1", MB_OK);
@@ -1136,14 +1136,14 @@ namespace a_spa
 
 
 
-   int simple_app::spa_main_start(string strPlatform)
+   int app::spa_main_start(string strPlatform)
    {
 
       m_bFinished = false;
 
       m_strPlatform = strPlatform;
 
-      if (!__begin_thread(this, &simple_app::spa_main_proc, this, 50, 0, 0, NULL, &g_dwMain2))
+      if (!__begin_thread(this, &app::spa_main_proc, this, 50, 0, 0, NULL, &g_dwMain2))
       {
 
          return 0;
@@ -1156,12 +1156,12 @@ namespace a_spa
 
 
 
-   UINT c_cdecl simple_app::spa_main_proc(LPVOID lpvoid)
+   UINT c_cdecl app::spa_main_proc(LPVOID lpvoid)
    {
 
       ::CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
 
-      simple_app * papp = (simple_app *)lpvoid;
+      app * papp = (app *)lpvoid;
 
       try
       {
@@ -1184,7 +1184,7 @@ namespace a_spa
 
 
 
-   int simple_app::spalib_main2()
+   int app::spalib_main2()
    {
 
       if (m_strPlatform == "x86" || m_strPlatform.is_empty())
@@ -1203,7 +1203,7 @@ namespace a_spa
    }
 
 
-   int simple_app::spalib_main_plat()
+   int app::spalib_main_plat()
    {
 
       bool bSomeSortOfInstall = false;
@@ -1220,7 +1220,7 @@ namespace a_spa
 
    spa_admin:
 
-      while (!is_file_ok(::path::a_spaadmin(strPlatform), ::path::a_spaadmin(strPlatform).name(), NULL, strPlatform))
+      while (!is_file_ok(::path::app_appadmin(strPlatform), ::path::app_appadmin(strPlatform).name(), NULL, strPlatform))
       {
 
          bSomeSortOfInstall = true;
@@ -1267,11 +1267,11 @@ namespace a_spa
             bSomeSortOfInstall = true;
 
             if (!is_downloading_spaadmin()
-               && is_file_ok(::path::a_spaadmin(strPlatform), ::path::a_spaadmin(strPlatform).name(), NULL, strPlatform)
+               && is_file_ok(::path::app_appadmin(strPlatform), ::path::app_appadmin(strPlatform).name(), NULL, strPlatform)
                && !low_is_spaadmin_running(strPlatform))
             {
 
-               if (!is_file_ok(::path::a_spaadmin(strPlatform), ::path::a_spaadmin(strPlatform).name(), NULL, strPlatform))
+               if (!is_file_ok(::path::app_appadmin(strPlatform), ::path::app_appadmin(strPlatform).name(), NULL, strPlatform))
                {
 
                   goto spa_admin;
@@ -1432,7 +1432,7 @@ namespace a_spa
    }
 
 
-   int simple_app::spalib_main32()
+   int app::spalib_main32()
    {
 
       int iTry;
@@ -1480,7 +1480,7 @@ namespace a_spa
 
       }
 
-      ::file::path pathSpaAdmin = ::path::a_spaadmin("x86");
+      ::file::path pathSpaAdmin = ::path::app_appadmin("x86");
 
       ::file::path pathSpaAdminName = pathSpaAdmin.name();
 
@@ -1683,7 +1683,7 @@ namespace a_spa
    // do_spa
    // installs the application synchronously
    // it just installs the application, it doesn't launch it 
-   int simple_app::do_spa(const char * pszId, const char * pszParams)
+   int app::do_spa(const char * pszId, const char * pszParams)
    {
 
       string strId(pszId);
@@ -1737,7 +1737,7 @@ namespace a_spa
    }
 
 
-   int simple_app::check_soon_launch(string strCommandLine, bool bLaunch)
+   int app::check_soon_launch(string strCommandLine, bool bLaunch)
    {
 
       string strId;
@@ -1817,7 +1817,7 @@ namespace a_spa
 
 
 
-   string simple_app::get_app_id(string wstr)
+   string app::get_app_id(string wstr)
    {
 
       if (wstr.length() <= 0)
@@ -1886,7 +1886,7 @@ namespace a_spa
    }
 
 
-   int simple_app::check_soon_file_launch(string wstr, bool bLaunch)
+   int app::check_soon_file_launch(string wstr, bool bLaunch)
    {
 
       return check_soon_app_id(u16(get_app_id(wstr.c_str()).c_str()), bLaunch);
@@ -1894,7 +1894,7 @@ namespace a_spa
    }
 
 
-   string simple_app::spa_app_id_to_app_name(string strId)
+   string app::spa_app_id_to_app_name(string strId)
    {
       string strName;
       for (index i = 0; i < strId.length(); i++)
@@ -1912,7 +1912,7 @@ namespace a_spa
    }
 
 
-   int simple_app::check_soon_app_id(string strId, bool bLaunch)
+   int app::check_soon_app_id(string strId, bool bLaunch)
    {
 
       if (check_soon_app_id1(strId, bLaunch))
@@ -1934,7 +1934,7 @@ namespace a_spa
    }
 
 
-   int simple_app::check_soon_app_id1(string strId, bool bLaunch)
+   int app::check_soon_app_id1(string strId, bool bLaunch)
    {
 
       if (strId.length() <= 0)
@@ -1995,7 +1995,7 @@ namespace a_spa
    }
 
 
-   int simple_app::check_soon_app_id2(string strId, bool bLaunch)
+   int app::check_soon_app_id2(string strId, bool bLaunch)
    {
 
       if (strId.length() <= 0)
@@ -2064,7 +2064,7 @@ namespace a_spa
    }
 
 
-   int simple_app::check_spa_installation(string strPlatform)
+   int app::check_spa_installation(string strPlatform)
    {
 
       install & install = m_mapInstall[strPlatform];
@@ -2089,7 +2089,7 @@ namespace a_spa
       straFile.add("spa");
       straFile.add("vcredist");
 
-      if (!file_exists_dup(dir::a_spa(strPlatform) / "no_install_bin_set.txt"))
+      if (!file_exists_dup(dir::app_app(strPlatform) / "no_install_bin_set.txt"))
       {
 
          straFile.add("install_bin_set");
@@ -2134,7 +2134,7 @@ namespace a_spa
    }
 
    
-   int simple_app::check_user_service(string strPlatform, bool bLaunch)
+   int app::check_user_service(string strPlatform, bool bLaunch)
    {
 
       string strApp = dir::stage(strPlatform) / "app_core_user_service.exe";
@@ -2201,7 +2201,7 @@ namespace a_spa
 
 
 
-   int simple_app::check_vcredist(string strPlatform)
+   int app::check_vcredist(string strPlatform)
    {
 
       string str = ::path::vcredist(strPlatform);
@@ -2239,7 +2239,7 @@ namespace a_spa
       return 1;
 
    }
-   int simple_app::download_vcredist(string strPlatform)
+   int app::download_vcredist(string strPlatform)
    {
 
       string strTempSpa = download_tmp_vcredist(strPlatform);
@@ -2285,7 +2285,7 @@ namespace a_spa
 
    }
 
-   string simple_app::download_tmp_vcredist(string strPlatform)
+   string app::download_tmp_vcredist(string strPlatform)
    {
 
       string strTempSpa = get_temp_file_name_dup(::path::vcredist(strPlatform).title(), ::path::vcredist(strPlatform).extension());
@@ -2329,12 +2329,12 @@ namespace a_spa
    }
 
 
-   int simple_app::check_spa_bin(string strPlatform)
+   int app::check_spa_bin(string strPlatform)
    {
 
-      string str = ::path::a_spa(strPlatform);
+      string str = ::path::app_app(strPlatform);
 
-      if (!is_file_ok(::path::a_spa(strPlatform), ::path::a_spa(strPlatform).name(), NULL, strPlatform))
+      if (!is_file_ok(::path::app_app(strPlatform), ::path::app_app(strPlatform).name(), NULL, strPlatform))
       {
 
          if (!spa_get_admin())
@@ -2351,7 +2351,7 @@ namespace a_spa
 
          }
 
-         if (!is_file_ok(::path::a_spa(strPlatform), ::path::a_spa(strPlatform).name(), NULL, strPlatform))
+         if (!is_file_ok(::path::app_app(strPlatform), ::path::app_app(strPlatform).name(), NULL, strPlatform))
          {
 
             return 0;
@@ -2365,10 +2365,10 @@ namespace a_spa
    }
 
 
-   int simple_app::check_spaadmin_bin(string strPlatform, bool bStartNok)
+   int app::check_spaadmin_bin(string strPlatform, bool bStartNok)
    {
 
-      ::file::path path = ::path::a_spaadmin(strPlatform);
+      ::file::path path = ::path::app_appadmin(strPlatform);
 
       if (!bStartNok && is_file_ok(path, path.name(), NULL, strPlatform))
       {
@@ -2405,12 +2405,12 @@ namespace a_spa
    }
 
 
-   int simple_app::download_spa_bin(string strPlatform)
+   int app::download_spa_bin(string strPlatform)
    {
 
       string strTempSpa = download_tmp_spa_bin(strPlatform);
 
-      if (!is_file_ok(strTempSpa, ::path::a_spa(strPlatform).name(), NULL, strPlatform))
+      if (!is_file_ok(strTempSpa, ::path::app_app(strPlatform).name(), NULL, strPlatform))
       {
 
          return 0;
@@ -2420,7 +2420,7 @@ namespace a_spa
       if (spa_get_admin())
       {
 
-         string str = ::path::a_spa(strPlatform);
+         string str = ::path::app_app(strPlatform);
 
          if (!::CopyFileW(u16(strTempSpa.c_str()).c_str(), u16(str), FALSE))
          {
@@ -2429,7 +2429,7 @@ namespace a_spa
 
          }
 
-         if (!is_file_ok(str, ::path::a_spa(strPlatform).name(), NULL, strPlatform))
+         if (!is_file_ok(str, ::path::app_app(strPlatform).name(), NULL, strPlatform))
          {
 
             return 0;
@@ -2451,12 +2451,12 @@ namespace a_spa
 
    }
 
-   int simple_app::download_spaadmin_bin(string strPlatform)
+   int app::download_spaadmin_bin(string strPlatform)
    {
 
       string strTempSpa = download_tmp_spaadmin_bin(strPlatform);
 
-      if (!is_file_ok(strTempSpa, ::path::a_spaadmin(strPlatform).name(), NULL, strPlatform))
+      if (!is_file_ok(strTempSpa, ::path::app_appadmin(strPlatform).name(), NULL, strPlatform))
       {
 
          return 0;
@@ -2466,7 +2466,7 @@ namespace a_spa
       if (spa_get_admin())
       {
 
-         string str = ::path::a_spaadmin(strPlatform);
+         string str = ::path::app_appadmin(strPlatform);
 
          if (!dir::mk(dir::name(str)))
          {
@@ -2482,7 +2482,7 @@ namespace a_spa
 
          }
 
-         if (!is_file_ok(str, ::path::a_spaadmin(strPlatform).name(), NULL, strPlatform))
+         if (!is_file_ok(str, ::path::app_appadmin(strPlatform).name(), NULL, strPlatform))
          {
 
             return 0;
@@ -2535,7 +2535,7 @@ namespace a_spa
 
             DWORD dwGetLastError = GetLastError();
 
-            string str = ::path::a_spaadmin(strPlatform);
+            string str = ::path::app_appadmin(strPlatform);
 
             DWORD dwExitCode = 0;
 
@@ -2560,7 +2560,7 @@ namespace a_spa
 
                }
 
-               if (is_file_ok(str, ::path::a_spaadmin(strPlatform).name(), NULL, strPlatform))
+               if (is_file_ok(str, ::path::app_appadmin(strPlatform).name(), NULL, strPlatform))
                   break;
 
                ::WaitForSingleObject(sei.hProcess, 500);
@@ -2579,14 +2579,14 @@ namespace a_spa
 
 
 
-   string simple_app::download_tmp_spaadmin_bin(string strPlatform)
+   string app::download_tmp_spaadmin_bin(string strPlatform)
    {
 
-      string strTempSpa = get_temp_file_name_dup(::path::a_spaadmin(strPlatform).title(), ::path::a_spaadmin(strPlatform).extension());
+      string strTempSpa = get_temp_file_name_dup(::path::app_appadmin(strPlatform).title(), ::path::app_appadmin(strPlatform).extension());
 
       string strUrl;
 
-      strUrl = "https://server.ca2.cc/" + strPlatform + "/" + m_strVersion + "/" + ::path::a_spaadmin(strPlatform).name();
+      strUrl = "https://server.ca2.cc/" + strPlatform + "/" + m_strVersion + "/" + ::path::app_appadmin(strPlatform).name();
 
       int iTry = 0;
 
@@ -2600,7 +2600,7 @@ namespace a_spa
          if(bOk)
          {
 
-            bOk = is_file_ok(strTempSpa, ::path::a_spaadmin(strPlatform).name(), NULL, strPlatform);
+            bOk = is_file_ok(strTempSpa, ::path::app_appadmin(strPlatform).name(), NULL, strPlatform);
 
             if (bOk)
             {
@@ -2629,10 +2629,10 @@ namespace a_spa
 
 
 
-   string simple_app::download_tmp_spa_bin(string strPlatform)
+   string app::download_tmp_spa_bin(string strPlatform)
    {
 
-      string strTempSpa = get_temp_file_name_dup(::path::a_spa(strPlatform).title() + "-" + strPlatform, ::path::a_spa(strPlatform).extension());
+      string strTempSpa = get_temp_file_name_dup(::path::app_app(strPlatform).title() + "-" + strPlatform, ::path::app_app(strPlatform).extension());
 
       int iTry = 0;
 
@@ -2641,12 +2641,12 @@ namespace a_spa
       while (iTry <= 3)
       {
 
-         bOk = http_download("https://server.ca2.cc/" + strPlatform + "/" + m_strVersion + "/" + ::path::a_spa(strPlatform).name(), strTempSpa);
+         bOk = http_download("https://server.ca2.cc/" + strPlatform + "/" + m_strVersion + "/" + ::path::app_app(strPlatform).name(), strTempSpa);
 
          if (bOk)
          {
 
-            bOk = is_file_ok(strTempSpa, ::path::a_spa(strPlatform).name(), NULL, strPlatform);
+            bOk = is_file_ok(strTempSpa, ::path::app_app(strPlatform).name(), NULL, strPlatform);
 
             if (bOk)
             {
@@ -2674,7 +2674,7 @@ namespace a_spa
    }
 
 
-   void simple_app::http_get_md5(stringa straTemplate, const char * pszFormatBuild, string strPlatform)
+   void app::http_get_md5(stringa straTemplate, const char * pszFormatBuild, string strPlatform)
    {
 
       if (straTemplate.get_size() <= 0)
@@ -2737,7 +2737,7 @@ namespace a_spa
    }
 
 
-   stringa simple_app::get_reference_md5(stringa straTemplate, const char * pszFormatBuild, string strPlatform)
+   stringa app::get_reference_md5(stringa straTemplate, const char * pszFormatBuild, string strPlatform)
    {
 
       string strFormatBuild(pszFormatBuild);
@@ -2781,7 +2781,7 @@ namespace a_spa
    }
 
 
-   bool simple_app::is_file_ok(const char * path1, const char * pszTemplate, const char * pszFormatBuild, string strPlatform)
+   bool app::is_file_ok(const char * path1, const char * pszTemplate, const char * pszFormatBuild, string strPlatform)
    {
 
       if (!file_exists_dup(path1))
@@ -2812,7 +2812,7 @@ namespace a_spa
    }
 
 
-   bool simple_app::is_file_ok(const stringa & straPath, const stringa & straTemplate, stringa & straMd5, const string & strFormatBuild, int iMd5Retry, string strPlatform)
+   bool app::is_file_ok(const stringa & straPath, const stringa & straTemplate, stringa & straMd5, const string & strFormatBuild, int iMd5Retry, string strPlatform)
    {
 
       bool bOk = true;
@@ -2939,7 +2939,7 @@ namespace a_spa
 
 
 
-   int simple_app::check_install_bin_set(string strPlatform)
+   int app::check_install_bin_set(string strPlatform)
    {
 
       string strPath = path::app_install(strPlatform);
@@ -3092,7 +3092,7 @@ namespace a_spa
 
 
 
-   string simple_app::get_latest_build_number(const char * pszVersion)
+   string app::get_latest_build_number(const char * pszVersion)
    {
 
       if (m_strBuild.length() > 0)
@@ -3182,7 +3182,7 @@ namespace a_spa
 
 
 
-   void simple_app::trace(const string & str)
+   void app::trace(const string & str)
    {
 
       synch_lock sl(m_pmutex);
@@ -3194,7 +3194,7 @@ namespace a_spa
    }
 
 
-   void simple_app::trace(double dRate)
+   void app::trace(double dRate)
    {
 
       synch_lock sl(m_pmutex);
@@ -3209,13 +3209,13 @@ namespace a_spa
 
    }
 
-   void simple_app::start_a_spa_web_server()
+   void app::start_app_app_web_server()
    {
 
       if (m_pthreadSsl == NULL)
       {
 
-         m_pthreadSsl = new ::a_spa::socket_thread(this);
+         m_pthreadSsl = new ::app_app::socket_thread(this);
 
          m_pthreadSsl->m_iSsl = 1;
 
@@ -3275,7 +3275,7 @@ namespace a_spa
    }
 
 
-   LRESULT simple_app::window_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+   LRESULT app::window_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
    {
 
       switch (message)
@@ -3386,7 +3386,7 @@ namespace a_spa
 
 
 
-   void simple_app::DragMainWindow()
+   void app::DragMainWindow()
    {
 
       POINT ptCursor;
@@ -3417,7 +3417,7 @@ namespace a_spa
 
 
 
-   simple_app * simple_app::get()
+   app * app::get()
    {
 
       return s_papp;
@@ -3425,7 +3425,7 @@ namespace a_spa
    }
 
 
-   void simple_app::keep_drawing()
+   void app::keep_drawing()
    {
 
       while (::get_thread_run() && m_pcanvas != NULL && m_pcanvas->m_bDraw)
@@ -3446,9 +3446,177 @@ namespace a_spa
 
 
 
+   int app::show_spa_window(bool bShow)
+   {
+
+      if (m_hwnd == NULL)
+      {
+
+         if (!create_spa_window())
+         {
+
+            return 0;
+
+         }
+
+      }
+
+      if (bShow)
+      {
+
+         ShowWindow(m_hwnd, SW_SHOW);
+
+         start_app_app_web_server();
+
+      }
+      else
+      {
+
+         ShowWindow(m_hwnd, SW_HIDE);
+
+      }
+
+      return TRUE;
+
+   }
 
 
-} // namespace a_spa
+   int app::create_spa_window()
+   {
+
+      // Initialize global strings
+
+      strcpy(szTitle, "ca2 spa");
+
+      strcpy(szWindowClass, "ca2_spa");
+
+      spa_register_class();
+
+      int Width = 800;
+
+      int Height = 584;
+
+      BITMAPINFO m_Info;
+
+      ZeroMemory(&m_Info, sizeof(BITMAPINFO));
+
+      m_Info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+      m_Info.bmiHeader.biWidth = Width;
+      m_Info.bmiHeader.biHeight = -Height;
+      m_Info.bmiHeader.biPlanes = 1;
+      m_Info.bmiHeader.biBitCount = 32;
+      m_Info.bmiHeader.biCompression = BI_RGB;
+      m_Info.bmiHeader.biSizeImage = Width*Height * 4;
+
+      LPDWORD lpdata;
+
+      //g_hbmAlpha=CreateDIBSection(NULL,&m_Info,DIB_RGB_COLORS,(void **)&lpdata,NULL,NULL);
+      //for(int y = 0; y < 584; y++)
+      //{
+      //   for(int x = 0; x < 800; x++)
+      //   {
+      //      lpdata++;
+      //      /*         if(x < 23 || x > 777 || y < 23 || y > 561)
+      //      {
+      //      //*lpdata = (*lpdata & 0xffffff) | 0x7f888888;
+      //      *lpdata = (*lpdata & 0xffffff) | 0x1fffffff;
+      //      *lpdata = 0xCA888888;
+      //      }
+      //      else*/
+      //      {
+      //         *lpdata = 0x88888888;
+      //      }
+      //   }
+      //}
+
+      /*
+      g_hdcAlpha = ::CreateCompatibleDC(NULL);
+      ::SelectObject(g_hdcAlpha,g_hbmAlpha);
+      */
+
+      HWND hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPED, CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, g_hinstance, NULL);
+
+      g_iStyle = 0;
+
+      //g_hbrushBk = ::CreateSolidBrush(RGB(255,255,255));
+
+      if (!hWnd)
+      {
+         return 0;
+      }
+
+      //if(g_iStyle == 0)
+      //{
+      //}
+      //else
+      {
+
+         ::SetWindowLong(hWnd, GWL_EXSTYLE, ::GetWindowLong(hWnd, GWL_EXSTYLE) | WS_EX_LAYERED);
+
+      }
+
+      ::SetWindowLong(hWnd, GWL_STYLE, ::GetWindowLong(hWnd, GWL_EXSTYLE) & ~(WS_BORDER | WS_CAPTION));
+
+      //g_hwnd = hWnd;
+
+      ::__begin_thread(this, &thread_proc_draw, NULL, 50, 0, 0, NULL, NULL);
+
+
+
+      int cxScreen = ::GetSystemMetrics(SM_CXSCREEN);
+
+      int cyScreen = ::GetSystemMetrics(SM_CYSCREEN);
+
+
+      int x = (cxScreen - m_pcanvas->m_cx) / 2;
+
+      int y = (cyScreen - m_pcanvas->m_cy) / 2;
+
+      SetWindowPos(hWnd, NULL, x, y, m_pcanvas->m_cx, m_pcanvas->m_cy, SWP_NOCOPYBITS);
+
+      UpdateWindow(hWnd);
+
+      SetTimer(hWnd, 1984, 5, NULL);
+
+
+
+
+
+      return 1;
+
+   }
+
+
+
+
+   ATOM app::spa_register_class()
+   {
+
+      HINSTANCE hInstance = g_hinstance;
+
+      WNDCLASSEX wcex;
+
+      wcex.cbSize = sizeof(WNDCLASSEX);
+
+      wcex.style = 0;
+      wcex.lpfnWndProc = WndProc;
+      wcex.cbClsExtra = 0;
+      wcex.cbWndExtra = 0;
+      wcex.hInstance = hInstance;
+      wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_CCVOTAGUS_CA2_SPA));
+      wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
+      wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+      //wcex.lpszMenuName	= MAKEINTRESOURCE(IDC_CCVOTAGUS_CA2_SPA);
+      wcex.lpszMenuName = NULL;
+      wcex.lpszClassName = szWindowClass;
+      wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+
+      return RegisterClassEx(&wcex);
+
+   }
+
+
+} // namespace app_app
 
 
 

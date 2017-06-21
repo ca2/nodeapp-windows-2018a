@@ -560,9 +560,9 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="app.install.cpp" />
-    <ClCompile Include="install_installer.cpp" />
-    <ClCompile Include="install_app.cpp" />
+    <ClCompile Include="app_app_install.cpp" />
+    <ClCompile Include="app_app_install_installer.cpp" />
+    <ClCompile Include="app_app_install_app.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">Create</PrecompiledHeader>
@@ -573,9 +573,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="app.install.h" />
-    <ClInclude Include="install_app.h" />
-    <ClInclude Include="install_installer.h" />
+    <ClInclude Include="app_app_install.h" />
+    <ClInclude Include="app_app_install_app.h" />
+    <ClInclude Include="app_app_install_installer.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="framework.h" />
   </ItemGroup>
@@ -600,7 +600,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="app.install.rc" />
+    <ResourceCompile Include="app_app_install.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

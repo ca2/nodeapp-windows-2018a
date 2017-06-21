@@ -96,13 +96,13 @@ namespace user_service
             if (strStart == "/start_x64/")
             {
 
-               path = ::dir::program_files_x86() / "ca2/a_spa/x64/a_spa.exe";
+               path = ::dir::program_files_x86() / "ca2/app_app/x64/app_app.exe";
 
             }
             else
             {
 
-               path = ::dir::program_files_x86() / "ca2/a_spa/x86/a_spa.exe";
+               path = ::dir::program_files_x86() / "ca2/app_app/x86/app_app.exe";
 
             }
 

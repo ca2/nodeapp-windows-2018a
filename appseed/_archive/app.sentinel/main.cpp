@@ -98,7 +98,7 @@ int32_t APIENTRY ca2_cube_install(const char * pszId);
 
 
 class sentinel :
-   public ::base::simple_app,
+   public ::base::app,
    public ::aura::ipc::rx::receiver
 {
 public:
@@ -173,7 +173,7 @@ public:
 /*extern "C" int32_t WinMainCRTStartup() \
 {
 
-ExitProcess(simple_app::s_main < sentinel > ());
+ExitProcess(app::s_main < sentinel > ());
 
 }*/
 
@@ -185,7 +185,7 @@ __in LPTSTR lpCmdLine, int32_t nCmdShow)
    
    // call shared/exported WinMain
 
-   return ::base::simple_app_main < sentinel >(hInstance,hPrevInstance,lpCmdLine,nCmdShow);
+   return ::base::app_main < sentinel >(hInstance,hPrevInstance,lpCmdLine,nCmdShow);
 
 }
 
@@ -433,7 +433,7 @@ bool sentinel::are_there_user_files_in_use()
 bool sentinel::end()
 {
 
-   simple_app::end();
+   app::end();
 
    memory_free(m_hmodulea);
    memory_free(m_dwaProcess);

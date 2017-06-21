@@ -13,17 +13,17 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="a_spa.cpp">
+    <ClCompile Include="app_app.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\a_spares\a_spa.rc">
+    <ResourceCompile Include="..\app_appres\app_app.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\a_spares\resource.h">
+    <ClInclude Include="..\app_appres\resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

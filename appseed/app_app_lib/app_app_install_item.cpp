@@ -1,11 +1,11 @@
 #include "framework.h"
 
 
-namespace a_spa
+namespace app_app
 {
 
 
-   install_item::install_item(simple_app * papp, string strFile, string strPlatform, install * pinstall) :
+   install_item::install_item(app * papp, string strFile, string strPlatform, install * pinstall) :
       object(papp),
       m_papp(papp),
       m_strFile(strFile),
@@ -20,7 +20,7 @@ namespace a_spa
    }
 
 
-   install_item::install_item(simple_app * papp, string strUrlPrefix, string strPath, string strFile, install * pinstall, string strMd5, string strPlatform) :
+   install_item::install_item(app * papp, string strUrlPrefix, string strPath, string strFile, install * pinstall, string strMd5, string strPlatform) :
       object(papp),
       m_papp(papp),
       m_strUrlPrefix(strUrlPrefix),
@@ -190,7 +190,7 @@ namespace a_spa
          if (strFile.compare_ci("app.install.exe") == 0)
          {
 
-            kill_process(strFile);
+            Application.kill_process(strFile);
 
          }
 
@@ -268,7 +268,7 @@ namespace a_spa
 
 
 
-} // namespace a_spa
+} // namespace app_app
 
 
 

@@ -1,4 +1,4 @@
-#include "a_spalib.h"
+#include "app_applib.h"
 
 string url_encode(const char * psz)
 {
@@ -31,7 +31,7 @@ string url_encode(const char * psz)
 
 
 
-SPALIB_API string a_spa::ms_get(const char * pszUrl, bool bCache)
+SPALIB_API string app_app::ms_get(const char * pszUrl, bool bCache)
 {
    string strRet;
    string strUrl(pszUrl);

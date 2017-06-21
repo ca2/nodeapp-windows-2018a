@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace a_spa
+namespace app_app
 {
 
 
@@ -10,14 +10,14 @@ namespace a_spa
    public:
 
 
-      simple_app  *  m_papp;
+      app  *  m_papp;
       mutex          m_mutex;
       synch_lock     m_sl;
 
       HANDLE         m_hfile;
 
 
-      trace_file(simple_app * papp);
+      trace_file(app * papp);
       ~trace_file();
 
 
@@ -28,7 +28,7 @@ namespace a_spa
    };
 
 
-} // namespace a_spa
+} // namespace app_app
 
 
 

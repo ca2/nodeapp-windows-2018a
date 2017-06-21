@@ -99,7 +99,7 @@ void copy(MEM_ICON_ITEM * dst, ICON_ITEM * pitem)
 
 
 class appfy :
-   public ::axis::simple_app
+   public ::axis::app
 {
 public:
 
@@ -152,7 +152,7 @@ extern "C" int32_t WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance
 
 //   return 0;
 
-   int iRet = ::axis::simple_app_main < appfy >(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+   int iRet = ::axis::app_main < appfy >(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
 
    return iRet;
 
@@ -164,7 +164,7 @@ extern "C" int32_t WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance
 /*extern "C" int32_t WinMainCRTStartup() \
 {
 
-ExitProcess(simple_app::s_main < appfy > ());
+ExitProcess(app::s_main < appfy > ());
 
 }*/
 
@@ -524,7 +524,7 @@ int32_t appfy::run()
 bool appfy::end()
 {
 
-   simple_app::end();
+   app::end();
 
    memory_free(m_hmodulea);
    memory_free(m_dwaProcess);

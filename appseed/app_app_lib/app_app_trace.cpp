@@ -8,11 +8,11 @@ FILE * g_ftrace = NULL;
 //string g_strLastStatus;
 int g_iLastStatus = 0;
 
-namespace a_spa
+namespace app_app
 {
 
 
-   trace_file::trace_file(simple_app * papp) :
+   trace_file::trace_file(app * papp) :
       m_papp(papp),
       m_mutex(papp, false, "Global\\ca2-spa-install-" + papp->m_strPlatform),
       m_sl(&m_mutex)
@@ -68,5 +68,5 @@ namespace a_spa
    }
 
 
-} // namespace a_spa
+} // namespace app_app
 
