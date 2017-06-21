@@ -1,0 +1,9 @@
+#include "../spares/resource.h"
+
+ID_CGCLBOOT         CA2SP                   "res\\spa_bspatch.dll"
+ID_CST              CA2SP                   "res\\spalib.bz"
+ID_CSTBOOT          CA2SP                   "res\\spaadmin.bz"
+
+
+
+

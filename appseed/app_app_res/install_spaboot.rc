@@ -1,0 +1,17 @@
+#include "../spares/resource.h"
+
+#ifdef WIN32
+
+ID_CGCLBOOT         CA2SP                   "../../../../time/spa/x86/spa_bspatch.dll"
+ID_CGCL             CA2SP                   "../../../../time/spa/x86/spaboot.bz"
+ID_CST              CA2SP                   "../../../../time/spa/x86/spalib.bz"
+ID_CSTBOOT          CA2SP                   "../../../../time/spa/x86/spaadmin.bz"
+
+#else
+
+ID_CGCLBOOT         CA2SP                   "../../../../time/spa/x64/spa_bspatch.dll"
+ID_CGCL             CA2SP                   "../../../../time/spa/x64/spaboot.bz"
+ID_CST              CA2SP                   "../../../../time/spa/x64/spalib.bz"
+ID_CSTBOOT          CA2SP                   "../../../../time/spa/x64/spaadmin.bz"
+
+#endif
