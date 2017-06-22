@@ -27,7 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{71BAB50B-DC41-4570-B676-30380CDA3A17}</ProjectGuid>
+    <ProjectGuid>{6F512EFE-4B04-4565-80BF-B9AA396D6E72}</ProjectGuid>
     <RootNamespace>app-install</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <ProjectName>app_app_install</ProjectName>

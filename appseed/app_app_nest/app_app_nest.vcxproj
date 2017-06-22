@@ -27,10 +27,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{AD997EA3-A120-472D-A216-EC4B0B81FDC4}</ProjectGuid>
-    <RootNamespace>ca2plugin-container</RootNamespace>
+    <ProjectGuid>{5CE97671-BDA4-4AF1-BA62-D0805C2A1749}</ProjectGuid>
+    <RootNamespace>app_app_nest</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <ProjectName>app.plugin.container</ProjectName>
+    <ProjectName>app_app_nest</ProjectName>
     <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
