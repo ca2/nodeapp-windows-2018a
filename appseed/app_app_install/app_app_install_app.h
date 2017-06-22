@@ -27,7 +27,7 @@ namespace app_app_install
 
       bool                             m_bInstallerInstalling;
 
-      ::install::installer *           m_pinstaller;
+      ::app_app_install::installer *   m_pinstaller;
 
 
 
@@ -36,7 +36,7 @@ namespace app_app_install
 
 
 
-      ::install::installer & installer() { return *m_pinstaller; }
+      ::app_app_install::installer & installer() { return *m_pinstaller; }
 
       bool is_user_using(const char * pszDll);
 

@@ -10,7 +10,7 @@ namespace app_app
    {
    public:
 
-
+      
       socket_handler(::aura::application * papp);
 
 

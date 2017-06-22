@@ -18,12 +18,17 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\app_appres\app_app.rc">
+    <ResourceCompile Include="..\app_app_lib\app_app.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\app_appres\resource.h">
+    <Image Include="..\app_app_lib\app_app.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\app_app_lib\resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -19,9 +19,6 @@ namespace app_app
       ~socket_thread();
 
 
-      //virtual int32_t run();
-
-
       void install_message_handling(::message::dispatch * pinterface);
 
       void setup_socket(::sockets::listen_socket<socket> & ll);

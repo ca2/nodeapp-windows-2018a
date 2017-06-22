@@ -25,7 +25,7 @@ namespace app_app
    public:
 
 
-      app *            m_papp;
+      bootstrap *             m_pbootstrap;
       string                  m_strUrlPrefix;
       string                  m_strPath;
       string                  m_strFile;
@@ -36,8 +36,8 @@ namespace app_app
       e_item_type             m_eitemtype;
 
 
-      install_item(app * paspa, string strFile, string strPlatform, install * pinstall);
-      install_item(app * paspa, string strUrlPrefix, string strPath, string strFile, install * pinstall, string strMd5, string strPlatform);
+      install_item(bootstrap * pbootstrap, string strFile, string strPlatform, install * pinstall);
+      install_item(bootstrap * pbootstrap, string strUrlPrefix, string strPath, string strFile, install * pinstall, string strMd5, string strPlatform);
 
 
       static UINT c_cdecl proc(LPVOID lp);

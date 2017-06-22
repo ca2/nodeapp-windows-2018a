@@ -4,19 +4,19 @@
 #include "base/base/base/base.h"
 
 
-class install_app;
-
-
-namespace install
+namespace app_app_install
 {
 
+
+   class app;
    class installer;
+
 
 } // namespace install
 
 
-#undef App
-#define App(pcaapp) (pcaapp->cast_app < ::base::application > ())
+#undef Sys
+#define Sys(pcaapp) (pcaapp->cast_app < ::app_app_install::app > ())
 
 
 #include "resource.h"

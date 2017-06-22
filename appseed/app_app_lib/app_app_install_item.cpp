@@ -5,9 +5,9 @@ namespace app_app
 {
 
 
-   install_item::install_item(app * papp, string strFile, string strPlatform, install * pinstall) :
-      object(papp),
-      m_papp(papp),
+   install_item::install_item(bootstrap * pbootstrap, string strFile, string strPlatform, install * pinstall) :
+      object(pbootstrap->get_app()),
+      m_pbootstrap(pbootstrap),
       m_strFile(strFile),
       m_strPlatform(strPlatform),
       m_pinstall(pinstall)
@@ -15,14 +15,14 @@ namespace app_app
 
       m_eitemtype = item_type_spa;
 
-      __begin_thread(papp, &install_item::proc, this, 50, 0, 0, NULL, &m_dwThreadId);
+      __begin_thread(get_app(), &install_item::proc, this, 50, 0, 0, NULL, &m_dwThreadId);
 
    }
 
 
-   install_item::install_item(app * papp, string strUrlPrefix, string strPath, string strFile, install * pinstall, string strMd5, string strPlatform) :
-      object(papp),
-      m_papp(papp),
+   install_item::install_item(bootstrap * pbootstrap, string strUrlPrefix, string strPath, string strFile, install * pinstall, string strMd5, string strPlatform) :
+      object(pbootstrap->get_app()),
+      m_pbootstrap(pbootstrap),
       m_strUrlPrefix(strUrlPrefix),
       m_strPath(strPath),
       m_strFile(strFile),
@@ -33,7 +33,7 @@ namespace app_app
 
       m_eitemtype = item_type_set;
 
-      __begin_thread(papp, &install_item::proc, this, 50, 0, 0, NULL, &m_dwThreadId);
+      __begin_thread(get_app(), &install_item::proc, this, 50, 0, 0, NULL, &m_dwThreadId);
 
    }
 
@@ -66,19 +66,19 @@ namespace app_app
    void install_item::progress(double dRate)
    {
 
-      if (spa_get_admin())
+      if (System.get_admin())
       {
 
          if (m_eitemtype == item_type_spa)
          {
 
-            m_papp->trace(0.05 + ((((double)m_pinstall->m_lTotal - (double)(m_pinstall->m_lProcessing)) * (0.25 - 0.05)) / ((double)m_pinstall->m_lTotal)));
+            System.trace(0.05 + ((((double)m_pinstall->m_lTotal - (double)(m_pinstall->m_lProcessing)) * (0.25 - 0.05)) / ((double)m_pinstall->m_lTotal)));
 
          }
          else if (m_eitemtype == item_type_set)
          {
 
-            m_papp->trace(0.3 + ((((double)m_pinstall->m_lTotal - (double)(m_pinstall->m_lProcessing)) * (0.84 - 0.3)) / ((double)m_pinstall->m_lTotal)));
+            System.trace(0.3 + ((((double)m_pinstall->m_lTotal - (double)(m_pinstall->m_lProcessing)) * (0.84 - 0.3)) / ((double)m_pinstall->m_lTotal)));
 
          }
 
@@ -93,7 +93,7 @@ namespace app_app
       if (m_strFile == "spaadmin")
       {
 
-         if (m_papp->check_spaadmin_bin(strPlatform))
+         if (m_pbootstrap->check_app_app_admin_bin(strPlatform))
          {
 
             OutputDebugString("op_spa spaadmin Success\r\n");
@@ -112,7 +112,7 @@ namespace app_app
       else if (m_strFile == "spa")
       {
 
-         if (m_papp->check_spa_bin(strPlatform))
+         if (m_pbootstrap->check_app_app_bin(strPlatform))
          {
 
             OutputDebugString("op_spa spa Success\r\n");
@@ -130,7 +130,7 @@ namespace app_app
       else if (m_strFile == "vcredist")
       {
 
-         if (m_papp->check_vcredist(strPlatform))
+         if (m_pbootstrap->check_vcredist(strPlatform))
          {
 
             OutputDebugString("op_spa vcredist Success\r\n");
@@ -148,7 +148,7 @@ namespace app_app
       else if (m_strFile == "install_bin_set")
       {
 
-         if (m_papp->check_install_bin_set(strPlatform))
+         if (m_pbootstrap->check_install_bin_set(strPlatform))
          {
 
             OutputDebugString("op_spa install_bin_set Success\r\n");
@@ -187,10 +187,10 @@ namespace app_app
       if (!file_exists_dup(strDownload) || _stricmp(file_md5_dup(strDownload).c_str(), strMd5) != 0)
       {
 
-         if (strFile.compare_ci("app.install.exe") == 0)
+         if (strFile.compare_ci("app_app_install.exe") == 0)
          {
 
-            Application.kill_process(strFile);
+            System.os().terminate_processes_by_title(strFile);
 
          }
 
@@ -209,10 +209,10 @@ namespace app_app
          while (iRetry < 8 && !bFileNice)
          {
 
-            if (m_papp->http_download(strUrl, strDownload + ".bz"))
+            if (Application.http_download(strUrl, strDownload + ".bz"))
             {
 
-               App(m_papp).compress().unbz(m_papp, strDownload, strDownload + ".bz");
+               System.compress().unbz(get_app(), strDownload, strDownload + ".bz");
 
                if (file_exists_dup(strDownload) && _stricmp(file_md5_dup(strDownload), strMd5) == 0)
                {

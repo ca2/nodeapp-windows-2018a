@@ -192,7 +192,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>Async</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -429,25 +429,28 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="app_app_canvas.cpp" />
+    <ClCompile Include="app_app_bootstrap.cpp" />
+    <ClCompile Include="app_app_tool.cpp" />
+    <ClCompile Include="app_app_window.cpp" />
     <ClCompile Include="app_app_install_item.cpp" />
     <ClCompile Include="app_app_app.cpp" />
     <ClCompile Include="app_app_socket.cpp" />
     <ClCompile Include="app_app_socket_handler.cpp" />
     <ClCompile Include="app_app_socket_thread.cpp" />
-    <ClCompile Include="app_app.cpp" />
     <ClCompile Include="app_app_trace.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="app_app_bootstrap.h" />
     <ClInclude Include="app_app_install_item.h" />
     <ClInclude Include="app_app_app.h" />
     <ClInclude Include="app_app.h" />
     <ClInclude Include="app_app_socket.h" />
+    <ClInclude Include="app_app_tool.h" />
+    <ClInclude Include="app_app_window.h" />
     <ClInclude Include="app_app_socket_handler.h" />
-    <ClInclude Include="app_app_canvas.h" />
     <ClInclude Include="app_app_socket_thread.h" />
     <ClInclude Include="app_app_trace.h" />
     <ClInclude Include="framework.h" />

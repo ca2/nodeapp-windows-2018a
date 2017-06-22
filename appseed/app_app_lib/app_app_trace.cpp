@@ -1,35 +1,28 @@
 #include "framework.h"
 
-void on_trace(string & str, string & str2);
-
-stringa g_straTrace;
-int g_iTrace = -1;
-FILE * g_ftrace = NULL;
-//string g_strLastStatus;
-int g_iLastStatus = 0;
-
 namespace app_app
 {
 
 
-   trace_file::trace_file(app * papp) :
-      m_papp(papp),
-      m_mutex(papp, false, "Global\\ca2-spa-install-" + papp->m_strPlatform),
-      m_sl(&m_mutex)
+   trace_file::trace_file(::aura::application * papp, const string & strLabel) :
+      ::object(papp),
+      m_mutex(papp, false, "Global\\ca2-app-app-install-" + strLabel),
+      m_sl(&m_mutex),
+      m_strLabel(strLabel)
    {
 
       dir::mk(dir::element().c_str());
 
-      m_hfile = ::CreateFileW(u16(dir::element() / ("install-" + m_papp->m_strPlatform + ".log")), GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+      ::file::path path = dir::element() / ("install-" + strLabel + ".log");
 
-      ::SetFilePointer(m_hfile, 0, NULL, FILE_END);
+      m_pfile = Application.file().get_file(path, ::file::type_binary | ::file::mode_write | ::file::mode_create);
+
+      m_pfile->seek_to_end();
 
    }
 
    trace_file::~trace_file()
    {
-
-      CloseHandle(m_hfile);
 
    }
 
@@ -37,13 +30,14 @@ namespace app_app
    void trace_file::print(const string & str)
    {
 
-      if (m_hfile != NULL && str.length() > 0)
+      if (m_pfile.is_set() && str.length() > 0)
       {
 
-         DWORD dwWritten;
-         ::SetFilePointer(m_hfile, 0, NULL, SEEK_END);
-         WriteFile(m_hfile, str.c_str(), str.length(), &dwWritten, NULL);
-         ::FlushFileBuffers(m_hfile);
+         m_pfile->seek_to_end();
+
+         m_pfile->write(str.c_str(), str.length());
+
+         m_pfile->flush();
 
       }
 

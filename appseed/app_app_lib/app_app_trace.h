@@ -5,19 +5,20 @@ namespace app_app
 {
 
 
-   class SPALIB_API trace_file
+   class SPALIB_API trace_file :
+      virtual public ::object
    {
    public:
 
 
-      app  *  m_papp;
-      mutex          m_mutex;
-      synch_lock     m_sl;
+      string            m_strLabel;
+      ::mutex           m_mutex;
+      synch_lock        m_sl;
 
-      HANDLE         m_hfile;
+      ::file::file_sp   m_pfile;
 
 
-      trace_file(app * papp);
+      trace_file(::aura::application * papp, const string & strLabel);
       ~trace_file();
 
 

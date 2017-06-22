@@ -2,12 +2,11 @@
 
 
 
-namespace install
+namespace app_app_install
 {
 
 
-   class  installer :
-      virtual public object,
+   class installer :
       virtual public ::http::listener,
       virtual public int_scalar_source::listener
    {
@@ -128,8 +127,7 @@ namespace install
 
 
       installer(::aura::application * papp);
-
-      ~installer();
+      virtual ~installer();
 
 
       string http_get(const string & strUrl, bool bScalarListener);
@@ -219,9 +217,6 @@ namespace install
       virtual void on_set_scalar(int_scalar_source * psource,e_scalar escalar,int64_t iValue,int iFlags);
 
    };
-
-
-//   int32_t ca2_app_install_run(const char * pszCommandLine, uint32_t & dwStartError, bool bSynch);
 
 
 } // namespace install

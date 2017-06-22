@@ -14,7 +14,7 @@ namespace app_app_install
       m_rxchannel(this)
    {
 
-      m_pinstaller = new ::install::installer(this);
+      m_pinstaller = new ::app_app_install::installer(this);
 
       ////////////////////////////////////////////////////////////
       // configuration encryption system : with C:\\" hardware :-)

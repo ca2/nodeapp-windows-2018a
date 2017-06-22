@@ -16,8 +16,11 @@ namespace app_app
    public:
 
 
+      bootstrap *          m_pbootstrap;
+
+
       socket(::sockets::base_socket_handler & h);
-      ~socket();
+      virtual ~socket();
 
       virtual void on_send_response() override;
 

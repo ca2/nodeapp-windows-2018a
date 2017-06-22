@@ -11,10 +11,17 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 
    }
 
-   spa_set_admin(true);
+   int iRet = ::aura::app_main < ::app_app::app >(hInstance, hPrevInstance, lpCmdLine, nCmdShow,
+      [](auto papp)
+   {
 
+      papp->set_admin(true);
+
+   });
+
+   defer_aura_term();
  
-   return ::aura::app_main < ::app_app::app >(hInstance,hPrevInstance,lpCmdLine,nCmdShow);
+   return iRet;
 
 }
 

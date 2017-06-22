@@ -3,7 +3,7 @@
 #include <Shlobj.h>
 
 
-namespace install
+namespace app_app_install
 {
 
 
@@ -199,7 +199,7 @@ namespace install
 
       new_progress_end(0.02);
 
-      System.install().app_install_get_extern_executable_path(m_strVersion, m_strBuild, &straMd5AppInstall, &iaLen, this, &mapMd5, &mapLen); // defer install install extern app.install.exe executable
+      System.install().app_install_get_extern_executable_path(m_strVersion, m_strBuild, &straMd5AppInstall, &iaLen, &mapMd5, &mapLen); // defer install install extern app.install.exe executable
 
       m_bProgressModeAppInstall = false;
 
@@ -2382,7 +2382,7 @@ namespace install
 
       string strBuild;
 
-      ::lemon::array::copy(straTemplate, ::install_get_plugin_base_library_list(m_strPlat2, m_strVersion));
+      ::lemon::array::copy(straTemplate, ::install::get_app_app_install_module_list(m_strPlat2, m_strVersion));
 
       string strUrl;
 
@@ -3130,7 +3130,7 @@ namespace install
    }
 
 
-} // namespace install
+} // namespace app_app_install
 
 
 

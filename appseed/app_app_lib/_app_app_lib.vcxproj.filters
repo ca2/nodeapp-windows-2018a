@@ -14,9 +14,6 @@
     <ClCompile Include="app_app_socket.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="app_app_socket_handler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="app_app_trace.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -29,24 +26,24 @@
     <ClCompile Include="app_app_install_item.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="app_app.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="app_app_canvas.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="app_app_app.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="app_app_bootstrap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="app_app_socket_handler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="app_app_window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="app_app_tool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app_app_socket.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="app_app_socket_handler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="app_app_canvas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="app_app_socket_thread.h">
@@ -65,6 +62,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="app_app_app.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="app_app_bootstrap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="app_app_socket_handler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="app_app_window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="app_app_tool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

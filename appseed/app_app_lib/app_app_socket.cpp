@@ -20,7 +20,6 @@ namespace app_app
    }
 
 
-
    socket::~socket()
    {
 
@@ -125,16 +124,16 @@ namespace app_app
 
             outheader(__id(content_type)) = "text/plain; charset=UTF-8";
 
-            if (::app_app::app::s_papp->m_strSpaBootName.has_char())
+            if (m_pbootstrap->m_strSpaBootName.has_char())
             {
 
-               response().file().write("Installing " + ::app_app::app::s_papp->m_strSpaBootName +"...");
+               response().file().write("install:" + System.get_id());
 
             }
             else
             {
 
-               response().file().write("Installing ...");
+               response().file().write("ok");
 
             }
 
@@ -205,10 +204,10 @@ namespace app_app
 
          string strH1;
 
-         if (::app_app::app::s_papp->m_strSpaBootName.has_char())
+         if (m_pbootstrap->m_strSpaBootName.has_char())
          {
 
-            strH1 = "Installing " + ::app_app::app::s_papp->m_strSpaBootName + " ...";
+            strH1 = "Installing " + m_pbootstrap->m_strSpaBootName + " ...";
 
          }
          else
@@ -217,7 +216,7 @@ namespace app_app
             strH1 = "Installing ...";
 
          }
-//         response().file().write("<html><head><meta http-equiv=\"refresh\" content=\"1\"><title>app_app.exe</title></head><body><h1>"+strH1+"</h1>app_app.exe is running.<br><br><h2>Current Install Activity:</h2>"+ ::app_app::app::s_papp->m_strHtmlLog+"</html>");
+//         response().file().write("<html><head><meta http-equiv=\"refresh\" content=\"1\"><title>app_app.exe</title></head><body><h1>"+strH1+"</h1>app_app.exe is running.<br><br><h2>Current Install Activity:</h2>"+ m_pbootstrap->m_strHtmlLog+"</html>");
 
          //response().file().write("<html><head><meta http-equiv=\"refresh\" content=\"1\"><title>app_app.exe</title></head><body><h1>" + strH1 + "</h1>app_app.exe is running.</html>");
 
