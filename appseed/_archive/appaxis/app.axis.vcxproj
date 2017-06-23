@@ -28,9 +28,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9E3A2EE6-CE8C-47A4-920E-15A474530882}</ProjectGuid>
-    <RootNamespace>app.axis</RootNamespace>
+    <RootNamespace>app</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <ProjectName>app.axis</ProjectName>
+    <ProjectName>app</ProjectName>
     <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

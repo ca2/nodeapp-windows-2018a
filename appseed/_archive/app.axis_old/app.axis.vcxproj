@@ -62,7 +62,7 @@
     <ProjectGuid>{19841115-1984-0411-1977-021977151984}</ProjectGuid>
     <RootNamespace>app</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <ProjectName>app.axis</ProjectName>
+    <ProjectName>app</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|Win32'" Label="Configuration">

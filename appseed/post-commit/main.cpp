@@ -363,7 +363,13 @@ int main()
       return -1;
 
    }
+
+   app_t * psystem = new app_t;
    
-   return ::aura::app_main < app_t >(NULL,NULL,NULL,0);
+   int iReturnCode = ::app_main(psystem, NULL,NULL,NULL,0);
+
+   defer_aura_term();
+
+   return iReturnCode;
 
 }
