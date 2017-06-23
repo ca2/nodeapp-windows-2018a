@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.13
+VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "base", "..\..\..\app\appseed\base\base.vcxproj", "{4D7D3626-ADA6-4CA2-9566-ED7B131E3D51}"
 EndProject
@@ -33,7 +33,7 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_user_service", "..\..\..\app-core\appseed\user_service\user_service.vcxproj", "{24C82076-D68C-476A-ADCF-0054511FC3E4}"
 	ProjectSection(ProjectDependencies) = postProject
 		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
+		{11AFE887-61B7-4217-913C-36736B359F39} = {11AFE887-61B7-4217-913C-36736B359F39}
 		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB} = {1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}
 	EndProjectSection
 EndProject
@@ -45,9 +45,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_app", "..\..\appseed\ap
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_app_admin", "..\..\appseed\app_app_admin\app_app_admin.vcxproj", "{AE18AC57-1A37-4D2E-9E73-258D36E35340}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_app_install", "..\..\appseed\app_app_install\app_app_install.vcxproj", "{71BAB50B-DC41-4570-B676-30380CDA3A17}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_app_install", "..\..\appseed\app_app_install\app_app_install.vcxproj", "{6F512EFE-4B04-4565-80BF-B9AA396D6E72}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app._", "..\..\appseed\app._\app._.vcxproj", "{3DDD6C31-218E-4979-B095-8AF22563D9C1}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app._", "..\..\appseed\app._\app._.vcxproj", "{11AFE887-61B7-4217-913C-36736B359F39}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_app_app_lib", "..\..\appseed\app_app_lib\_app_app_lib.vcxproj", "{FA039458-2E43-45DE-9FA9-66DFA7E11E64}"
 EndProject
@@ -289,30 +289,30 @@ Global
 		{AE18AC57-1A37-4D2E-9E73-258D36E35340}.stage|Win32.Build.0 = stage|Win32
 		{AE18AC57-1A37-4D2E-9E73-258D36E35340}.stage|x64.ActiveCfg = stage|x64
 		{AE18AC57-1A37-4D2E-9E73-258D36E35340}.stage|x64.Build.0 = stage|x64
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.basis|Win32.ActiveCfg = basis|Win32
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.basis|Win32.Build.0 = basis|Win32
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.basis|x64.ActiveCfg = basis|x64
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.basis|x64.Build.0 = basis|x64
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.cover|Win32.ActiveCfg = cover|Win32
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.cover|Win32.Build.0 = cover|Win32
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.cover|x64.ActiveCfg = cover|x64
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.cover|x64.Build.0 = cover|x64
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.stage|Win32.ActiveCfg = stage|Win32
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.stage|Win32.Build.0 = stage|Win32
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.stage|x64.ActiveCfg = stage|x64
-		{71BAB50B-DC41-4570-B676-30380CDA3A17}.stage|x64.Build.0 = stage|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.basis|Win32.ActiveCfg = basis|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.basis|Win32.Build.0 = basis|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.basis|x64.ActiveCfg = basis|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.basis|x64.Build.0 = basis|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.cover|Win32.ActiveCfg = cover|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.cover|Win32.Build.0 = cover|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.cover|x64.ActiveCfg = cover|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.cover|x64.Build.0 = cover|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.stage|Win32.ActiveCfg = stage|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.stage|Win32.Build.0 = stage|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.stage|x64.ActiveCfg = stage|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.stage|x64.Build.0 = stage|x64
+		{6F512EFE-4B04-4565-80BF-B9AA396D6E72}.basis|Win32.ActiveCfg = basis|Win32
+		{6F512EFE-4B04-4565-80BF-B9AA396D6E72}.basis|Win32.Build.0 = basis|Win32
+		{6F512EFE-4B04-4565-80BF-B9AA396D6E72}.basis|x64.ActiveCfg = basis|x64
+		{6F512EFE-4B04-4565-80BF-B9AA396D6E72}.basis|x64.Build.0 = basis|x64
+		{6F512EFE-4B04-4565-80BF-B9AA396D6E72}.cover|Win32.ActiveCfg = cover|Win32
+		{6F512EFE-4B04-4565-80BF-B9AA396D6E72}.cover|Win32.Build.0 = cover|Win32
+		{6F512EFE-4B04-4565-80BF-B9AA396D6E72}.cover|x64.ActiveCfg = cover|x64
+		{6F512EFE-4B04-4565-80BF-B9AA396D6E72}.cover|x64.Build.0 = cover|x64
+		{6F512EFE-4B04-4565-80BF-B9AA396D6E72}.stage|Win32.ActiveCfg = stage|Win32
+		{6F512EFE-4B04-4565-80BF-B9AA396D6E72}.stage|Win32.Build.0 = stage|Win32
+		{6F512EFE-4B04-4565-80BF-B9AA396D6E72}.stage|x64.ActiveCfg = stage|x64
+		{6F512EFE-4B04-4565-80BF-B9AA396D6E72}.stage|x64.Build.0 = stage|x64
+		{11AFE887-61B7-4217-913C-36736B359F39}.basis|Win32.ActiveCfg = basis|Win32
+		{11AFE887-61B7-4217-913C-36736B359F39}.basis|Win32.Build.0 = basis|Win32
+		{11AFE887-61B7-4217-913C-36736B359F39}.basis|x64.ActiveCfg = basis|x64
+		{11AFE887-61B7-4217-913C-36736B359F39}.basis|x64.Build.0 = basis|x64
+		{11AFE887-61B7-4217-913C-36736B359F39}.cover|Win32.ActiveCfg = cover|Win32
+		{11AFE887-61B7-4217-913C-36736B359F39}.cover|Win32.Build.0 = cover|Win32
+		{11AFE887-61B7-4217-913C-36736B359F39}.cover|x64.ActiveCfg = cover|x64
+		{11AFE887-61B7-4217-913C-36736B359F39}.cover|x64.Build.0 = cover|x64
+		{11AFE887-61B7-4217-913C-36736B359F39}.stage|Win32.ActiveCfg = stage|Win32
+		{11AFE887-61B7-4217-913C-36736B359F39}.stage|Win32.Build.0 = stage|Win32
+		{11AFE887-61B7-4217-913C-36736B359F39}.stage|x64.ActiveCfg = stage|x64
+		{11AFE887-61B7-4217-913C-36736B359F39}.stage|x64.Build.0 = stage|x64
 		{FA039458-2E43-45DE-9FA9-66DFA7E11E64}.basis|Win32.ActiveCfg = basis|Win32
 		{FA039458-2E43-45DE-9FA9-66DFA7E11E64}.basis|Win32.Build.0 = basis|Win32
 		{FA039458-2E43-45DE-9FA9-66DFA7E11E64}.basis|x64.ActiveCfg = basis|x64

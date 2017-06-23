@@ -43,6 +43,8 @@ namespace app_app
 
       m_hwnd = NULL;
 
+      m_bRunMainLoop = true;
+
    }
 
 
