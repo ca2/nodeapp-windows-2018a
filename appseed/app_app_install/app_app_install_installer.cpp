@@ -14,8 +14,6 @@ namespace app_app_install
       m_mutexOmp(papp)
    {
 
-      m_pathBaseUrl = "http://server.ca2.cc/ccvotagus/" + m_strVersion + "/";
-
       m_psockethandler = new ::sockets::socket_handler(papp);
 
       m_daProgress.add(0.0);
@@ -43,6 +41,8 @@ namespace app_app_install
       m_strVersion = "stage";
 
 #endif
+
+      m_pathBaseUrl = "http://server.ca2.cc/ccvotagus/" + m_strVersion + "/";
 
       m_phttpsession = NULL;
 
@@ -1760,9 +1760,9 @@ namespace app_app_install
 
       }
 
-      _FILE * f = fopen_dup(str, "rb");
+      string strContents = Application.file().as_string(str);
 
-      if (f == NULL)
+      if (strContents.is_empty())
       {
 
          output_debug_string("empty bz file not explicity \"uncompressed\" to empty file?");
@@ -1777,21 +1777,16 @@ namespace app_app_install
 
       string strVersion = m_strVersion;
 
-      while (fgets_dup(buf, sizeof(buf), f))
+      ::stringa straLines;
+
+      straLines.add_lines(strContents);
+
+      for(string & strLine : straLines)
       {
-
-         buf[sizeof(buf) - 1] = '\0';
-
-         while (buf[strlen_dup(buf) - 1] == '\r' || buf[strlen_dup(buf) - 1] == '\n')
-         {
-
-            buf[strlen_dup(buf) - 1] = '\0';
-
-         }
 
          string str2;
 
-         string strPathParam(buf);
+         string strPathParam(strLine);
 
          if (m_strVersion == "stage")
          {
@@ -1849,8 +1844,6 @@ namespace app_app_install
          }
 
       }
-
-      fclose_dup(f);
 
       return 1;
 
