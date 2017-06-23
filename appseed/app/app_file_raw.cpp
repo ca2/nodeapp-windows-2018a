@@ -1,4 +1,7 @@
 #include "framework.h"
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 
 int_bool file_exists_raw(const char * path1)

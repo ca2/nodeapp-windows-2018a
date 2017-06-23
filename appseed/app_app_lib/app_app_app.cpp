@@ -571,7 +571,7 @@ namespace app_app
 
       }
 
-      string strName = app_id_to_app_name(strId);
+      string strName = ::process::app_id_to_app_name(strId);
 
       string strApp = dir::stage(process_platform_dir_name()) / strName + ".exe";
 
@@ -632,7 +632,7 @@ namespace app_app
 
       }
 
-      string strName = app_id_to_app_name(strId);
+      string strName = ::process::app_id_to_app_name(strId);
 
       {
 
