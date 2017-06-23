@@ -12,13 +12,13 @@
     <ClCompile Include="framework.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="appplugincontainer.cpp">
+    <ClCompile Include="app_app_nest.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="appplugincontainer_application.cpp">
+    <ClCompile Include="app_app_nest_application.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="appplugincontainer_host.cpp">
+    <ClCompile Include="app_app_nest_host.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,18 +29,18 @@
     <ClInclude Include="resource.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="appplugincontainer.h">
+    <ClInclude Include="app_app_nest.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="appplugincontainer_application.h">
+    <ClInclude Include="app_app_nest_application.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="appplugincontainer_host.h">
+    <ClInclude Include="app_app_nest_host.h">
       <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="appplugincontainer.rc">
+    <ResourceCompile Include="app_app_nest.rc">
       <Filter>Source</Filter>
     </ResourceCompile>
   </ItemGroup>

@@ -74,7 +74,11 @@ extern "C" int32_t WINAPI _tWinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,
 
    }
 
-   int iRet = ::aura::app_main < removal >(hInstance,hPrevInstance,lpCmdLine,nCmdShow);
+   removal * premoval = new removal();
+
+   int iRet = ::app_main(premoval, hInstance,hPrevInstance,lpCmdLine,nCmdShow);
+
+   defer_aura_term();
 
    return iRet;
 
