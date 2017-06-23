@@ -1,5 +1,5 @@
 1 VERSIONINFO
-   FILEVERSION 2017,313,1734,28
+   FILEVERSION 2017,623,1905,05
    PRODUCTVERSION 0,0,0,0
    FILEFLAGSMASK 0x0L
    FILEFLAGS 0x1L
@@ -12,7 +12,7 @@
          BLOCK "040904E4"
          BEGIN
             VALUE "CompanyName", "ca2 Desenvolvimento de Software Ltda."
-            VALUE "FileVersion", "2017.313.1734.28"
+            VALUE "FileVersion", "2017.623.1905.05"
             VALUE "FileDescription", "draw2d_gdiplus Dynamic Link Library"
             VALUE "LegalCopyright", "2014 ca2 Desenvolvimento de Software Ltda."
         END

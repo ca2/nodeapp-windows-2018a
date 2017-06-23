@@ -400,7 +400,7 @@ namespace production
          */
 
 
-         m_strSignTool = System.dir().element()/ "nodeapp/thirdparty/binary/signtool.exe";
+         m_strSignTool = "C:\\bergedge\\hi5\\program\\bin\\signtool.exe";
          m_strSpc = "C:\\sensitive\\sensitive\\certificate\\ca2.p12";
          m_strSignPass = Application.file().as_string("C:\\sensitive\\sensitive\\certificate\\2011-05-ca2.pass");
 
