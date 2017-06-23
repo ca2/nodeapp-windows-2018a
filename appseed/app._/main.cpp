@@ -503,7 +503,7 @@ int32_t appfy::run()
       }
       if (strCoreApp.has_char())
       {
-         UpdateResource(hupdate, "APPID", MAKEINTRESOURCE(1984), MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL), (LPVOID)(LPCTSTR)strCoreApp, strCoreApp.get_length());
+         UpdateResource(hupdate, "APPID", MAKEINTRESOURCE(2000), MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL), (LPVOID)(LPCTSTR)strCoreApp, strCoreApp.get_length());
          dprint("APPID should be updated");
       }
 

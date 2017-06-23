@@ -515,16 +515,6 @@ namespace app_app
 
       }
 
-      /*if(pnode->GetChildCount() <= 0)
-      {
-      if(pnode->name == "meta")
-      {
-      return file::name(strPath.c_str());
-      }
-
-      return "";
-      }*/
-
       const char * psz = pnode->GetChildAttrValue("launch", "app");
 
       if (psz == NULL || *psz == '\0')
@@ -547,22 +537,6 @@ namespace app_app
    }
 
 
-   string app::app_id_to_app_name(string strId)
-   {
-      string strName;
-      for (index i = 0; i < strId.length(); i++)
-      {
-         if (strId[i] == L'-' || strId[i] == L'/' || strId[i] == L'\\')
-         {
-            strName += L"_";
-         }
-         else
-         {
-            strName += strId[i];
-         }
-      }
-      return strName;
-   }
 
 
    int app::check_soon_app_id(string strId, bool bLaunch)

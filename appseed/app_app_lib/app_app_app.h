@@ -76,7 +76,6 @@ namespace app_app
       virtual int check_soon_app_id(string wstr, bool bLaunch);
       virtual int check_soon_app_id1(string wstr, bool bLaunch);
       virtual int check_soon_app_id2(string wstr, bool bLaunch);
-      virtual string app_id_to_app_name(string strId);
 
       virtual void trace(const string & str);
       virtual void trace(double dRate);
