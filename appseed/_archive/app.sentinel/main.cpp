@@ -205,7 +205,7 @@ m_rxchannel(this)
    //                       |    |       |
    if (file_exists_dup("C:\\ca2\\config\\beg_debug_box.txt"))
    {
-      debug_box("app.install", "app", 0);
+      debug_box("app_app_install", "app", 0);
    }
 
    m_hinstance = ::GetModuleHandleA(NULL);
@@ -295,7 +295,7 @@ bool sentinel::intro()
 
    prepare_small_bell();
 
-   if (!m_rxchannel.create("core/spaboot_install", "app.install.exe"))
+   if (!m_rxchannel.create("core/spaboot_install", "app_app_install.exe"))
    {
       m_iError = -1;
       return false;

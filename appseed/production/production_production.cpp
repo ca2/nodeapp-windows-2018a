@@ -724,7 +724,7 @@ namespace production
 
          update_rc_file_version(m_strBase / "app\\appseed\\base\\base.rc");
          update_rc_file_version(m_strBase / "app-core\\appseed\\iexca2\\iexca2.rc");
-         update_rc_file_version(m_strBase / "nodeapp\\appseed\\app.install\\app.install.rc");
+         update_rc_file_version(m_strBase / "nodeapp\\appseed\\app_app_install\\app_app_install.rc");
          update_rc_file_version(m_strBase / "nodeapp\\appseed\\draw2d_gdiplus\\draw2d_gdiplus.rc");
 
          if (!commit_for_new_build_and_new_release())
@@ -2333,9 +2333,9 @@ namespace production
 
 
 
-      //add_status("Signing app.install.exe for Firefox ...");
-      //strFile = strDir /  "npca2/plugins", "app.install.exe");
-      //Application.file().copy(strFile, m_strVrel / "stage/" + strPlatform + "/app.install.exe"));
+      //add_status("Signing app_app_install.exe for Firefox ...");
+      //strFile = strDir /  "npca2/plugins", "app_app_install.exe");
+      //Application.file().copy(strFile, m_strVrel / "stage/" + strPlatform + "/app_app_install.exe"));
       //strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       //System.process().synch(strCmd);
 
@@ -2672,9 +2672,9 @@ namespace production
       //string strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       //System.process().synch(strCmd);
 
-      //add_status("Signing app.install.exe for Chrome ...");
-      //strFile = strDir /  "app.install.exe");
-      //Application.file().copy(strFile, m_strVrel / "stage/" + strPlatform + "/app.install.exe"));
+      //add_status("Signing app_app_install.exe for Chrome ...");
+      //strFile = strDir /  "app_app_install.exe");
+      //Application.file().copy(strFile, m_strVrel / "stage/" + strPlatform + "/app_app_install.exe"));
       //strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       //System.process().synch(strCmd);
 

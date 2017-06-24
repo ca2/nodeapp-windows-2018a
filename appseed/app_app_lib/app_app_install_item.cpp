@@ -232,7 +232,7 @@ namespace app_app
          {
 
             // failed by too much retry in any number of the files already downloaded :
-            // so, return failure (no eligible app.install.exe file).
+            // so, return failure (no eligible app_app_install.exe file).
             //return "";
 
          }

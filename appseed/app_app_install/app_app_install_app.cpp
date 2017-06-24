@@ -1,7 +1,6 @@
 ﻿#include "framework.h"
 
 
-
 namespace app_app_install
 {
 
@@ -25,7 +24,7 @@ namespace app_app_install
       if (file_exists_dup("C:\\ca2\\config\\system\\beg_debug_box.txt"))
       {
 
-         debug_box("app.install", "app", 0);
+         debug_box("app_app_install", "app", 0);
 
       }
 
@@ -51,7 +50,7 @@ namespace app_app_install
 
       System.oprop("do_not_initialize_user_presence") = true;
 
-      xxdebug_box("app.install", "app.install", MB_OK);
+      xxdebug_box("app_app_install", "app_app_install", MB_OK);
 
       if (__argc == 1)
       {

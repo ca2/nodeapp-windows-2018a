@@ -29,11 +29,11 @@ namespace ca2plugin_container
 
       m_phost->m_strBitmapChannel = m_strChannel;
 
-      string strChannel = "\\core\\app.plugin.container-";
+      string strChannel = "\\core\\app_app_nest-";
 
       strChannel += m_strChannel;
 
-      m_phost->::aura::ipc::ipc::open_ba(strChannel, "app.plugin.container.exe");
+      m_phost->::aura::ipc::ipc::open_ba(strChannel, "app_app_nest.exe");
 
    }
 

@@ -199,7 +199,7 @@ namespace app_app_install
 
       new_progress_end(0.02);
 
-      System.install().app_install_get_extern_executable_path(m_strVersion, m_strBuild, &straMd5AppInstall, &iaLen, &mapMd5, &mapLen); // defer install install extern app.install.exe executable
+      System.install().app_install_get_extern_executable_path(m_strVersion, m_strBuild, &straMd5AppInstall, &iaLen, &mapMd5, &mapLen); // defer install install extern app_app_install.exe executable
 
       m_bProgressModeAppInstall = false;
 
@@ -474,7 +474,7 @@ namespace app_app_install
 
             string strPath = m_straTerminateProcesses.element_at(i);
 
-            if (str_ends_ci_dup(strPath, "\\app.install.exe") && stristr_dup(strPath, "\\core\\") != NULL)
+            if (str_ends_ci_dup(strPath, "\\app_app_install.exe") && stristr_dup(strPath, "\\core\\") != NULL)
             {
 
                bAsk = false;
@@ -482,7 +482,7 @@ namespace app_app_install
                bRestart = false;
 
             }
-            else if (str_ends_ci_dup(strPath, ".exe") && stristr_dup(strPath, "\\app.install.exe") != NULL)
+            else if (str_ends_ci_dup(strPath, ".exe") && stristr_dup(strPath, "\\app_app_install.exe") != NULL)
             {
 
                bAsk = false;
@@ -1444,9 +1444,9 @@ namespace app_app_install
 
       ::str::begins_eat_ci(str, m_pathBaseUrl);
 
-      ::file::path path(str);
+      ::file::path path;
 
-      path /= ::dir::afterca2() / str;
+      path = ::dir::afterca2() / str;
 
       return path.folder();
 
@@ -2057,9 +2057,14 @@ namespace app_app_install
          char * pszFind3 = next_separator_token(pszFind2, ',');
 
          string strSpa(pszStart);
-         string str2;
-         strSpa = m_pathBaseUrl;
-         strSpa += pszStart;
+
+         if (strSpa.find_ci("user_service.spa") >= 0)
+         {
+
+            output_debug_string("strSpa.find_ci(\"user_service.spa\") >= 0");
+
+         }
+
          if (pszFind1 != NULL)
          {
             m_iProgressMode = 0;
@@ -2157,7 +2162,7 @@ namespace app_app_install
    bool installer::launch_applications()
    {
 
-      System.install().trace().rich_trace("starting app.install.exe...");
+      System.install().trace().rich_trace("starting app_app_install.exe...");
 
       string strCommand = m_strCommand;
 

@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by app.plugin.container.rc
+// Used by app_app_nest.rc
 //
 #define IDD_MAIN                        101
 #define IDC_BUTTON_GO                   1002

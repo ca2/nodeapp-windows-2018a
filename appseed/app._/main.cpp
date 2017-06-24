@@ -1,22 +1,8 @@
 #include "axis/axis/axis/axis.h"
-//#include "aura/node/windows/windows.h"
+#include "aura/node/windows/windows.h"
 #include <stdio.h>
-
 #include <psapi.h>
-
-
 #include <tlhelp32.h>
-
-//#undef App
-//#undef Application
-//#undef CoreApp
-//#undef CoreApplication
-//#undef Sys
-//#define CoreApp(pbaseapp) (*pbaseapp->m_pcoreapp)
-//#define CoreApplication (CoreApp(m_pauraapp->m_pcoreapp))
-//#define App(pbaseapp) (CoreApp(pbaseapp))
-//#define Application (App(m_pauraapp->m_pcoreapp))
-
 
 #define IDI_CCVOTAGUS_CA2_SPA			107
 
@@ -141,20 +127,21 @@ public:
 extern "C" int32_t WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
 {
 
-   UNREFERENCED_PARAMETER(lpCmdLine);
+   if (!defer_axis_init())
+   {
 
-   //g_ee = (::exception::engine *) malloc(sizeof(exception::engine(NULL)));
+      return -1;
 
-   //init_ee(g_ee);
-
-   //memdleak_dump();
+   }
 
 
-//   return 0;
+   appfy * psystem = new appfy;
 
-   int iRet = ::axis::app_main < appfy >(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+   int iReturnCode = ::app_main(psystem, hInstance, hPrevInstance, lpCmdLine, nCmdShow);
 
-   return iRet;
+   defer_axis_term();
+
+   return iReturnCode;
 
 
 
@@ -215,7 +202,7 @@ appfy::appfy() :
    //                       |    |       |
    if (file_exists_dup(::dir::system() / "config\\appfy\\appfy_beg_debug_box.txt"))
    {
-      debug_box("app.install", "app", 0);
+      debug_box("app_app_install", "app", 0);
    }
 
    m_hinstance = ::GetModuleHandleA(NULL);
@@ -568,125 +555,6 @@ string path_url_dir_name_for_relative(const char * pszPath)
 
 }
 
-//string solve_relative_compressions(const char * pszAbsolute)
-//{
-//   string strAbsolute(pszAbsolute);
-//
-//   strAbsolute.replace(PATH_SEP1 "." PATH_SEP1, PATH_SEP1);
-//   strAbsolute.replace(PATH_SEP1 "." PATH_SEP2, PATH_SEP1);
-//   strAbsolute.replace(PATH_SEP2 "." PATH_SEP1, PATH_SEP1);
-//   strAbsolute.replace(PATH_SEP2 "." PATH_SEP2, PATH_SEP1);
-//
-//   strsize iFind;
-//
-//   while ((iFind = strAbsolute.find(PATH_SEP1 ".." PATH_SEP1)) >= 0)
-//   {
-//      strsize iFind2 = strAbsolute.reverse_find(PATH_SEP1, iFind - 1);
-//      strsize iFind3 = strAbsolute.reverse_find(PATH_SEP2, iFind - 1);
-//      strsize iFind4 = MAX(iFind2, iFind3);
-//      if (iFind4 <= 0)
-//      {
-//         strAbsolute = strAbsolute.substr(iFind + 3);
-//      }
-//      else
-//      {
-//         strAbsolute = strAbsolute.substr(0, iFind4) + strAbsolute.substr(iFind + 3);
-//      }
-//   }
-//
-//   while ((iFind = strAbsolute.find(PATH_SEP1 ".." PATH_SEP2)) >= 0)
-//   {
-//      strsize iFind2 = strAbsolute.reverse_find(PATH_SEP1, iFind - 1);
-//      strsize iFind3 = strAbsolute.reverse_find(PATH_SEP2, iFind - 1);
-//      strsize iFind4 = MAX(iFind2, iFind3);
-//      if (iFind4 <= 0)
-//      {
-//         strAbsolute = strAbsolute.substr(iFind + 3);
-//      }
-//      else
-//      {
-//         strAbsolute = strAbsolute.substr(0, iFind4) + strAbsolute.substr(iFind + 3);
-//      }
-//   }
-//
-//   while ((iFind = strAbsolute.find(PATH_SEP2 ".." PATH_SEP1)) >= 0)
-//   {
-//      strsize iFind2 = strAbsolute.reverse_find(PATH_SEP1, iFind - 1);
-//      strsize iFind3 = strAbsolute.reverse_find(PATH_SEP2, iFind - 1);
-//      strsize iFind4 = MAX(iFind2, iFind3);
-//      if (iFind4 <= 0)
-//      {
-//         strAbsolute = strAbsolute.substr(iFind + 3);
-//      }
-//      else
-//      {
-//         strAbsolute = strAbsolute.substr(0, iFind4) + strAbsolute.substr(iFind + 3);
-//      }
-//   }
-//
-//   while ((iFind = strAbsolute.find(PATH_SEP2 ".." PATH_SEP2)) >= 0)
-//   {
-//      strsize iFind2 = strAbsolute.reverse_find(PATH_SEP1, iFind - 1);
-//      strsize iFind3 = strAbsolute.reverse_find(PATH_SEP2, iFind - 1);
-//      strsize iFind4 = MAX(iFind2, iFind3);
-//      if (iFind4 <= 0)
-//      {
-//         strAbsolute = strAbsolute.substr(iFind + 3);
-//      }
-//      else
-//      {
-//         strAbsolute = strAbsolute.substr(0, iFind4) + strAbsolute.substr(iFind + 3);
-//      }
-//   }
-//
-//
-//   return strAbsolute;
-//}
-
-///*
-//string path_defer_solve_relative_name(const char * pszRelative, const char * pszAbsolute)
-//{
-//   string strRelative(pszRelative);
-//   string strAbsolute(pszAbsolute);
-//   if (strRelative.is_empty())
-//      return "";
-//   if (strAbsolute.is_empty())
-//      return solve_relative_compressions(strRelative);
-///*   if (str::begins_ci(strRelative, "http://"))
-//      return solve_relative_compressions(strRelative);
-//   if (str::begins_ci(strRelative, "https://"))
-//      return solve_relative_compressions(strRelative);
-//   if (str::begins_ci(strRelative, "ftp://"))
-//      return solve_relative_compressions(strRelative);
-//   if (str::begins_ci(strRelative, "ext://"))
-//      return solve_relative_compressions(strRelative);*/
-//
-//   index iFind = strRelative.find(":\\");
-//
-//   if (iFind >= 0)
-//   {
-//      index i = 0;
-//      for (; i < iFind; i++)
-//      {
-//         if (!isalpha_dup(strRelative[i]) && !isdigit_dup(strRelative[i]))
-//            break;
-//      }
-//
-//      if (i == iFind)
-//         return solve_relative_compressions(strRelative);
-//
-//   }
-//
-//   strAbsolute = ::url_dir_name_for_relative(strAbsolute);
-//
-//   if (!str::ends(strAbsolute, "/"))
-//      strAbsolute += "/";
-//   strRelative = strAbsolute + strRelative;
-//
-//
-//   return solve_relative_compressions(strRelative);
-//
-//}
 
 
 #undef new

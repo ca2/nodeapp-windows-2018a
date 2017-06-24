@@ -101,7 +101,7 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
    //if(file_exists_dup("C:\\ca2\\config\\plugin\\npca2_beg_debug_box.txt"))
    //{
 
-   //   debug_box("app.plugin.container boxmain NP_Initialize","app.plugin.container box",MB_OK);
+   //   debug_box("app_app_nest boxmain NP_Initialize","app_app_nest box",MB_OK);
 
    //}
 
@@ -109,7 +109,7 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 
    string strChannel(get_command_line_param(::GetCommandLine(), "channel"));
 
-   g_hmutex = ::CreateMutex(NULL, FALSE, "Global\\::ca2::fontopus::app.plugin.container::" + strChannel);
+   g_hmutex = ::CreateMutex(NULL, FALSE, "Global\\::ca2::fontopus::app_app_nest::" + strChannel);
 
    if (::GetLastError() == ERROR_ALREADY_EXISTS)
    {
@@ -121,7 +121,7 @@ int32_t __win_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
    if (file_exists_dup("C:\\ca2\\config\\system\\beg_debug_box.txt"))
    {
 
-      debug_box("app.plugin.container", "app.plugin.container", MB_OK);
+      debug_box("app_app_nest", "app_app_nest", MB_OK);
 
    }
 
