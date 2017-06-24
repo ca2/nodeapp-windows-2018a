@@ -146,7 +146,7 @@ namespace app_app
 
          string strFile = dir::element() / ("install-" + strPlatform + ".log");
 
-         ::file::file_sp file = Application.file().get_file(strFile, ::file::type_binary | ::file::mode_read);
+         ::file::file_sp file = Application.file().get_file(strFile, ::file::type_binary | ::file::mode_read | ::file::share_deny_none);
 
          if (file.is_set())
          {

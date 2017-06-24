@@ -15,7 +15,7 @@ namespace app_app
 
       ::file::path path = dir::element() / ("install-" + strLabel + ".log");
 
-      m_pfile = Application.file().get_file(path, ::file::type_binary | ::file::mode_write | ::file::mode_create);
+      m_pfile = Application.file().get_file(path, ::file::type_binary | ::file::mode_write | ::file::mode_create | ::file::share_deny_write);
 
       m_pfile->seek_to_end();
 
