@@ -1762,12 +1762,12 @@ namespace app_app_install
 
       string strContents = Application.file().as_string(str);
 
+      strContents.trim();
+
       if (strContents.is_empty())
       {
 
-         output_debug_string("empty bz file not explicity \"uncompressed\" to empty file?");
-
-         return -2;
+         return 1;
 
       }
 

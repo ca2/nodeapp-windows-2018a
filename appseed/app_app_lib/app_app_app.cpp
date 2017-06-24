@@ -356,7 +356,7 @@ namespace app_app
 
       m_bootstrap[strPlatform] = new bootstrap(this);
 
-      m_bootstrap["x86"]->m_pthreadInstall = ::fork(this, [=]()
+      m_bootstrap[strPlatform]->m_pthreadInstall = ::fork(this, [=]()
       {
 
          ::CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);

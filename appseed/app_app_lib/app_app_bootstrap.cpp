@@ -394,7 +394,7 @@ namespace app_app
 
       bSomeSortOfInstall = false;
 
-      iFullInstallationMaxTryCount = 3;
+      iFullInstallationMaxTryCount = 200;
 
       iFullInstallationTryCount = 0;
 
@@ -642,7 +642,7 @@ namespace app_app
 
          int iTry;
 
-         iTry = 1440;
+         iTry = 2000;
 
          while (true)
          {
@@ -687,7 +687,7 @@ namespace app_app
 
             }
 
-            Sleep(500);
+            Sleep(5000);
 
          }
 
