@@ -153,7 +153,7 @@ namespace app_app
       else
       {
 
-         m_strTraceLabel = "app-app-" + m_strVersion + "-" + ::str::from(OSBIT);
+         m_strTraceLabel = "app_app-" + m_strVersion + "-" + ::str::from(OSBIT);
 
          m_iReturnCode = app_app_main();
 

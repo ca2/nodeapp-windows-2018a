@@ -140,7 +140,7 @@ namespace app_app
 
          string strPlatform = "x86";
 
-         ::mutex m(NULL, false, "Global\\ca2-spa-install-" + strPlatform);
+         ::mutex m(NULL, false, "Global\\ca2-app_app-install-" + strPlatform);
 
          synch_lock sl(&m);
 
@@ -253,7 +253,7 @@ namespace app_app
 
          string strPlatform = "x64";
 
-         ::mutex m(NULL, false, "Global\\ca2-spa-install-" + strPlatform);
+         ::mutex m(NULL, false, "Global\\ca2-app_app-install-" + strPlatform);
 
          synch_lock sl(&m);
 

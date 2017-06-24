@@ -109,19 +109,19 @@ namespace app_app
          }
 
       }
-      else if (m_strFile == "spa")
+      else if (m_strFile == "app_app")
       {
 
          if (m_pbootstrap->check_app_app_bin(strPlatform))
          {
 
-            OutputDebugString("op_spa spa Success\r\n");
+            OutputDebugString("op_spa app_app Success\r\n");
             InterlockedIncrement(&m_pinstall->m_lOk);
 
          }
          else
          {
-            OutputDebugString("op_spa spa Failed\r\n");
+            OutputDebugString("op_spa app_app Failed\r\n");
             InterlockedIncrement(&m_pinstall->m_lBad);
 
          }

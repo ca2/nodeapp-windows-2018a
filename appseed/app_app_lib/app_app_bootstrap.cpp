@@ -30,96 +30,12 @@ namespace app_app
    }
 
 
-   //bool bootstrap::http_download(const char * pszUrl, const char * pszFile, bool bUrlEncode, int * piStatus)
-   //{
-
-   //   string strUrl = pszUrl;
-
-   //   if (bUrlEncode)
-   //   {
-
-   //      strUrl = url_encode(strUrl);
-   //      strUrl = str::replace("%5C", "\\", strUrl);
-   //      strUrl = str::replace("\\", "/", strUrl);
-   //      strUrl = str::replace("%3A", ":", strUrl);
-   //      strUrl = str::replace("%2F", "/", strUrl);
-
-   //   }
-
-   //   property_set set;
-
-   //   set["raw_http"] = true;
-
-   //   set["disable_common_name_cert_check"] = true;
-
-   //   return http().download(strUrl, pszFile, set);
-
-   //}
-
-
-   //string bootstrap::http_get(const char * pszUrl, bool bCache)
-   //{
-
-   //   property_set set;
-
-   //   set["get_response"] = "";
-
-   //   set["raw_http"] = true;
-
-   //   set["disable_common_name_cert_check"] = true;
-
-   //   if (!http().get(pszUrl, set))
-   //   {
-
-   //      return "";
-
-   //   }
-
-   //   string strResponse = set["get_response"].get_string();
-
-   //   return strResponse;
-
-   //}
-
-
-
-   //void bootstrap::defer_show_debug_box()
-   //{
-
-   //   if (::file_exists_dup(::dir::system() / "config/spa/beg_debug_box.txt"))
-   //   {
-
-   //      string str;
-
-   //      if (get_admin())
-   //      {
-
-   //         str = "zzzAPPzzz app_appadmin : ";
-
-   //      }
-   //      else
-   //      {
-
-   //         str = "zzzAPPzzz app_app : ";
-
-   //      }
-
-   //      str += string(::GetCommandLineW());
-
-   //      ::MessageBoxA(NULL, str.c_str(), "zzzAPPzzz app_app", MB_ICONINFORMATION);
-
-   //   }
-
-
-   //}
-
-
    void bootstrap::add_command_line(string str)
    {
 
-      ::mutex mutexCommandFile(get_thread_app(), "Local\\ca2_spa_command:" + process_platform_dir_name2());
+      ::mutex mutexCommandFile(get_thread_app(), false, "Local\\ca2_app_app_command:" + process_platform_dir_name2());
 
-      ::file::path path = ::dir::system() / process_platform_dir_name2() / "spa_command.txt";
+      ::file::path path = ::dir::system() / process_platform_dir_name2() / "app_app_command.txt";
 
       stringa stra;
 
@@ -138,9 +54,9 @@ namespace app_app
    string bootstrap::pick_command_line()
    {
 
-      ::mutex mutexCommandFile(get_thread_app(), "Local\\ca2_spa_command:" + process_platform_dir_name2());
+      ::mutex mutexCommandFile(get_thread_app(), false, "Local\\ca2_app_app_command:" + process_platform_dir_name2());
 
-      ::file::path path = ::dir::system() / process_platform_dir_name2() / "spa_command.txt";
+      ::file::path path = ::dir::system() / process_platform_dir_name2() / "app_app_command.txt";
 
       stringa stra;
 
@@ -188,8 +104,8 @@ namespace app_app
       System.defer_show_debug_box();
 
       System.trace("--\r\n");
-      System.trace(":::::Installing spa and installer\r\n");
-      System.trace("***Installing spa\r\n");
+      System.trace(":::::Installing app_app, app_app_admin, app_app_install and app_core_user_service and installer\r\n");
+      System.trace("***Installing ca2 Store Installer System\r\n");
       System.trace("Registering spa file handler\r\n");
       System.trace(0.0);
 
@@ -909,7 +825,7 @@ namespace app_app
       stringa straFile;
 
       straFile.add("app_app_admin");
-      straFile.add("spa");
+      straFile.add("app_app");
       straFile.add("vcredist");
 
       if (!file_exists_dup(dir::app_app(strPlatform) / "no_install_bin_set.txt"))
@@ -1005,7 +921,11 @@ namespace app_app
          if (::ShellExecuteExW(&sei))
          {
 
-            return TRUE;
+            // don't rely on this result to check if user service is running
+
+            // going to rely on is_user_service_running() function
+
+            return FALSE;
 
          }
 
@@ -1018,7 +938,11 @@ namespace app_app
 
       }
 
-      return 1;
+      // don't rely on this result to check if user service is running
+
+      // going to rely on is_user_service_running() function
+
+      return FALSE;
 
    }
 
@@ -1659,7 +1583,7 @@ namespace app_app
    bool bootstrap::is_user_service_running()
    {
 
-      ::mutex mutex(get_thread_app(), "Local\\ca2_application_local_mutex:app-core/user_service");
+      ::mutex mutex(get_thread_app(), false, "Local\\ca2_application_local_mutex:app-core/user_service");
 
       return mutex.already_exists();
 

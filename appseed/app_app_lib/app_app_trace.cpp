@@ -6,7 +6,7 @@ namespace app_app
 
    trace_file::trace_file(::aura::application * papp, const string & strLabel) :
       ::object(papp),
-      m_mutex(papp, false, "Global\\ca2-app-app-install-" + strLabel),
+      m_mutex(papp, false, "Global\\ca2-app_app-install-" + strLabel),
       m_sl(&m_mutex),
       m_strLabel(strLabel)
    {
