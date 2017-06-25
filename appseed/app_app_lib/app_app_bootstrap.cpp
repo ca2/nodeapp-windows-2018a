@@ -360,7 +360,7 @@ namespace app_app
 
          int iUserServiceTry = 300;
 
-         while (!check_user_service("Win32", false))
+         while (!check_user_service("Win32", true))
          {
 
             Sleep(500);
@@ -609,7 +609,7 @@ namespace app_app
 
          int iUserServiceTry = 300;
 
-         while (!check_user_service("Win32", false))
+         while (!check_user_service("Win32", true))
          {
 
             Sleep(500);
@@ -891,22 +891,8 @@ namespace app_app
          if (!bLaunch || get_admin())
          {
 
-            // if dll loads consider good state
 
-            string strDll = dir::stage(strPlatform) / "app_core_user_service.dll";
-
-            HMODULE hmodule = ::LoadLibraryW(wstring(strDll));
-
-            bool bOk = hmodule != NULL;
-
-            if (bOk)
-            {
-
-               ::FreeLibrary(hmodule);
-
-            }
-
-            return bOk;
+            return 1;
 
          }
 
