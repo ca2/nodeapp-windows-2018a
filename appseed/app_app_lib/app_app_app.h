@@ -23,7 +23,7 @@ namespace app_app
 
       ::app_app::socket_thread *    m_pthreadSsl;
 
-      string                        m_strVersion;
+      string                        m_strConfiguration;
       bool                          m_bFinished;
 
       string                        m_strBuild;
@@ -45,9 +45,6 @@ namespace app_app
 
       void set_id(const char * psz);
 
-      virtual string get_latest_build_number(const char * pszVersion);
-
-
       virtual int32_t run() override;
 
       virtual int app_app_main();
@@ -64,7 +61,7 @@ namespace app_app
 
       virtual bool is_user_service_running();
 
-      virtual string get_version(string strVersion);
+      //virtual string get_configuration(string strConfiguration);
 
       virtual string get_title(string strTitle);
 

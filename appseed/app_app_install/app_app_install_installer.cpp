@@ -102,9 +102,6 @@ namespace app_app_install
 
       string strValue;
 
-      bool bLaunch;
-
-      bLaunch = get_command_line_param(strValue, strCommand, "launch");
 
       if (System.install().is_installing_ca2())
       {
@@ -129,8 +126,6 @@ namespace app_app_install
       m_strLocale = strLocale;
 
       m_strSchema = strSchema;
-
-      m_bLaunch = bLaunch;
 
       m_dProgressStart = 0.0;
 
@@ -682,21 +677,21 @@ namespace app_app_install
          }
 
       }
-      else
-      {
+      //else
+      //{
 
-         if (!launch_applications())
-         {
+      //   //if (!launch_applications())
+      //   //{
 
-            System.install().trace().rich_trace("***Going to ebing!!");
+      //   //   System.install().trace().rich_trace("***Going to ebing!!");
 
-            Sleep(2000);
+      //   //   Sleep(2000);
 
-            goto install_begin;
+      //   //   goto install_begin;
 
-         }
+      //   //}
 
-      }
+      //}
 
    }
 
@@ -2159,107 +2154,107 @@ namespace app_app_install
    }
 
 
-   bool installer::launch_applications()
-   {
+   //bool installer::launch_applications()
+   //{
 
-      System.install().trace().rich_trace("starting app_app_install.exe...");
+   //   System.install().trace().rich_trace("starting app_app_install.exe...");
 
-      string strCommand = m_strCommand;
+   //   string strCommand = m_strCommand;
 
-      int32_t i = run_ca2_application_installer(strCommand);
+   //   int32_t i = run_ca2_application_installer(strCommand);
 
-      System.install().trace().rich_trace(".");
+   //   System.install().trace().rich_trace(".");
 
-      string strPlatform = System.install().get_platform();
+   //   string strPlatform = System.install().get_platform();
 
-      if (i == 0)
-      {
+   //   if (i == 0)
+   //   {
 
-         System.install().set_updated(m_strBuild);
+   //      System.install().set_updated(m_strBuild);
 
-         if (m_straRestartProcess.get_count() > 0)
-         {
+   //      if (m_straRestartProcess.get_count() > 0)
+   //      {
 
-            string str;
+   //         string str;
 
-            str = "Now :\n\n";
+   //         str = "Now :\n\n";
 
-            for (int32_t i = 0; i < m_straRestartProcess.get_count(); i++)
-            {
-               if (file_is_equal_path(file_get_mozilla_firefox_plugin_container_path(), m_straRestartProcess[i]))
-               {
-                  m_straRestartProcess.remove_at(i);
-                  str += "You may reload the Firefox plugin or plugins that has/have been shutdown.\n\n";
-               }
-            }
+   //         for (int32_t i = 0; i < m_straRestartProcess.get_count(); i++)
+   //         {
+   //            if (file_is_equal_path(file_get_mozilla_firefox_plugin_container_path(), m_straRestartProcess[i]))
+   //            {
+   //               m_straRestartProcess.remove_at(i);
+   //               str += "You may reload the Firefox plugin or plugins that has/have been shutdown.\n\n";
+   //            }
+   //         }
 
-            if (m_straRestartProcess.get_count() > 0)
-            {
+   //         if (m_straRestartProcess.get_count() > 0)
+   //         {
 
-               str += "You may restart the applications listed below if they are not restarted automatically:\n\n";
+   //            str += "You may restart the applications listed below if they are not restarted automatically:\n\n";
 
-               for (int32_t i = 0; i < m_straRestartProcess.get_count(); i++)
-               {
+   //            for (int32_t i = 0; i < m_straRestartProcess.get_count(); i++)
+   //            {
 
-                  str += "\t";
+   //               str += "\t";
 
-                  str += m_straRestartProcess[i];
+   //               str += m_straRestartProcess[i];
 
-                  if (i == m_straRestartProcess.get_count() - 1)
-                  {
+   //               if (i == m_straRestartProcess.get_count() - 1)
+   //               {
 
-                     str += ".";
+   //                  str += ".";
 
-                  }
-                  else if (i == m_straRestartProcess.get_count() - 2)
-                  {
+   //               }
+   //               else if (i == m_straRestartProcess.get_count() - 2)
+   //               {
 
-                     str += ", and;\n";
+   //                  str += ", and;\n";
 
-                  }
-                  else
-                  {
-                     str += ";\n";
-                  }
+   //               }
+   //               else
+   //               {
+   //                  str += ";\n";
+   //               }
 
-               }
-            }
+   //            }
+   //         }
 
-            ::simple_message_box(NULL, str, "You may restart the applications ...", MB_ICONINFORMATION | MB_OK);
+   //         ::simple_message_box(NULL, str, "You may restart the applications ...", MB_ICONINFORMATION | MB_OK);
 
-         }
+   //      }
 
-         System.install().trace().rich_trace(":::::Thank you");
-         System.install().trace().rich_trace("***Thank you");
-         System.install().trace().rich_trace("Thank you");
-         System.install().trace().trace_progress(1.0);
+   //      System.install().trace().rich_trace(":::::Thank you");
+   //      System.install().trace().rich_trace("***Thank you");
+   //      System.install().trace().rich_trace("Thank you");
+   //      System.install().trace().trace_progress(1.0);
 
-         return true;
+   //      return true;
 
-      }
-      else
-      {
-         
-         System.install().trace().rich_trace("");
-         System.install().trace().rich_trace("");
-         System.install().trace().rich_trace("");
-         System.install().trace().rich_trace("");
-         System.install().trace().rich_trace("");
-         System.install().trace().rich_trace("Failed to install");
-         System.install().trace().rich_trace("Manually contact mailto:support.veriwell@ca2mail.com");
-         System.install().trace().rich_trace("or Manually go to http://ca2os.com/");
-         System.install().trace().rich_trace("");
-         System.install().trace().rich_trace("In ca2os.com you can try to");
-         System.install().trace().rich_trace("download the most recent release version for installation");
-         System.install().trace().rich_trace("(Automatic links not availabe by now)");
-         System.install().trace().rich_trace("");
-         System.install().trace().rich_trace("");
-         System.install().trace().rich_trace("");
-         System.install().trace().rich_trace("");
-         System.install().trace().rich_trace("");
-         return false;
-      }
-   }
+   //   }
+   //   else
+   //   {
+   //      
+   //      System.install().trace().rich_trace("");
+   //      System.install().trace().rich_trace("");
+   //      System.install().trace().rich_trace("");
+   //      System.install().trace().rich_trace("");
+   //      System.install().trace().rich_trace("");
+   //      System.install().trace().rich_trace("Failed to install");
+   //      System.install().trace().rich_trace("Manually contact mailto:support.veriwell@ca2mail.com");
+   //      System.install().trace().rich_trace("or Manually go to http://ca2os.com/");
+   //      System.install().trace().rich_trace("");
+   //      System.install().trace().rich_trace("In ca2os.com you can try to");
+   //      System.install().trace().rich_trace("download the most recent release version for installation");
+   //      System.install().trace().rich_trace("(Automatic links not availabe by now)");
+   //      System.install().trace().rich_trace("");
+   //      System.install().trace().rich_trace("");
+   //      System.install().trace().rich_trace("");
+   //      System.install().trace().rich_trace("");
+   //      System.install().trace().rich_trace("");
+   //      return false;
+   //   }
+   //}
 
 
    int32_t installer::appmatter_list()
@@ -2955,14 +2950,14 @@ namespace app_app_install
    }
 
 
-   bool installer::launch_application()
-   {
+   //bool installer::launch_application()
+   //{
 
-      ::launch_application(get_app(), m_strApplicationId, "enable_desktop_launch", OSBIT);
+   //   ::launch_application(get_app(), m_strApplicationId, "enable_desktop_launch", OSBIT);
 
-      return true;
+   //   return true;
 
-   }
+   //}
 
 
    int32_t installer::app_install_synch(const char * pszCommandLine, uint32_t & dwStartError, bool bSynch)

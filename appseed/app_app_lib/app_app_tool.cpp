@@ -111,7 +111,7 @@ namespace app_app
 
       string strUrl;
 
-      strUrl = "https://" + System.m_strVersion + "-server.ca2.cc/api/spaignition/md5a?authnone&version=" + System.m_strVersion + "&stage=";
+      strUrl = "https://" + System.get_system_configuration() + "-server.ca2.cc/api/spaignition/md5a?authnone&version=" + System.get_system_configuration() + "&stage=";
       strUrl += System.url().url_encode(straTemplate.implode(","));
       strUrl += "&build=";
       strUrl += System.url().url_encode(strFormatBuild);

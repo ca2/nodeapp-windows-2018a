@@ -1,5 +1,0 @@
-LIBRARY "app_core"
-
-EXPORTS
-app_core_main
-

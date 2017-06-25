@@ -72,20 +72,10 @@ namespace app_app
 
       ::CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
 
-#if CA2_PLATFORM_VERSION == CA2_BASIS
-
-      m_strVersion = "basis";
-
-#else
-
-      m_strVersion = "stage";
-
-#endif
-
       if (get_admin())
       {
 
-         m_strTraceLabel = "app-admin-" + m_strVersion + "-" + ::str::from(OSBIT);
+         m_strTraceLabel = "app-admin-" + get_system_configuration() + "-" + ::str::from(OSBIT);
 
          start_web_server();
 
@@ -107,7 +97,7 @@ namespace app_app
 
                m_bootstrap["admin:x86"] = new bootstrap(this);
 
-               m_bootstrap["admin:x86"]->m_strTraceLabel = "bootstrap-admin-" + m_strVersion + "-x86";
+               m_bootstrap["admin:x86"]->m_strTraceLabel = "bootstrap-admin-" + get_system_configuration() + "-x86";
 
                m_bootstrap["admin:x86"]->admin_main("x86");
 
@@ -131,7 +121,7 @@ namespace app_app
 
                m_bootstrap["admin:x64"] = new bootstrap(this);
 
-               m_bootstrap["admin:x64"]->m_strTraceLabel = "bootstrap-admin-" + m_strVersion + "-x64";
+               m_bootstrap["admin:x64"]->m_strTraceLabel = "bootstrap-admin-" + get_system_configuration() + "-x64";
 
                m_bootstrap["admin:x64"]->admin_main("x64");
 
@@ -153,7 +143,7 @@ namespace app_app
       else
       {
 
-         m_strTraceLabel = "app_app-" + m_strVersion + "-" + ::str::from(OSBIT);
+         m_strTraceLabel = "app_app-" + get_system_configuration() + "-" + ::str::from(OSBIT);
 
          m_iReturnCode = app_app_main();
 
@@ -179,7 +169,7 @@ namespace app_app
          if(file_load_stra(path, stra, false))
          {
 
-            stra.add(str);
+            stra.add_unique_ci(str);
 
             file_save_stra(path, stra);
 
@@ -217,7 +207,7 @@ namespace app_app
 
       str = stra[0];
 
-      stra.remove_at(0);
+      stra.remove_ci(str);
 
       file_save_stra(path, stra);
 
@@ -363,7 +353,7 @@ namespace app_app
 
          m_bootstrap[strPlatform]->m_strPlatform = strPlatform;
 
-         m_bootstrap[strPlatform]->m_strTraceLabel = "bootstrap-" + m_strVersion + "-" + strPlatform;
+         m_bootstrap[strPlatform]->m_strTraceLabel = "bootstrap-" + get_system_configuration() + "-" + strPlatform;
 
          try
          {
@@ -820,29 +810,29 @@ namespace app_app
 
 
 
-   string app::get_version(string strVersion)
-   {
-      static string  s_strVersion;
+   //string app::get_version(string strVersion)
+   //{
+   //   static string  s_strVersion;
 
-      if (strVersion.has_char())
-      {
-         s_strVersion = strVersion;
-      }
+   //   if (strVersion.has_char())
+   //   {
+   //      s_strVersion = strVersion;
+   //   }
 
-      if (s_strVersion.is_empty())
-      {
-         if (_ca_is_basis())
-         {
-            s_strVersion = "basis";
-         }
-         else
-         {
-            s_strVersion = "stage";
-         }
-      }
+   //   if (s_strVersion.is_empty())
+   //   {
+   //      if (_ca_is_basis())
+   //      {
+   //         s_strVersion = "basis";
+   //      }
+   //      else
+   //      {
+   //         s_strVersion = "stage";
+   //      }
+   //   }
 
-      return s_strVersion;
-   }
+   //   return s_strVersion;
+   //}
 
 
    string app::get_title(string strTitle)
@@ -1072,91 +1062,91 @@ namespace app_app
 
 
 
-   string app::get_latest_build_number(const char * pszVersion)
-   {
+   //string app::get_latest_build_number(const char * pszVersion)
+   //{
 
-      if (m_strBuild.length() > 0)
-      {
+   //   if (m_strBuild.length() > 0)
+   //   {
 
-         return m_strBuild;
+   //      return m_strBuild;
 
-      }
+   //   }
 
-      string strBuildNumber;
+   //   string strBuildNumber;
 
-      string strSpaIgnitionBaseUrl;
+   //   string strSpaIgnitionBaseUrl;
 
-      string strVersion(pszVersion);
+   //   string strVersion(pszVersion);
 
-      if (file_as_string_dup("C:\\ca2\\config\\system\\ignition_server.txt").length() > 0)
-      {
+   //   if (file_as_string_dup("C:\\ca2\\config\\system\\ignition_server.txt").length() > 0)
+   //   {
 
-         strSpaIgnitionBaseUrl = "https://" + file_as_string_dup("C:\\ca2\\config\\system\\ignition_server.txt") + "/api/spaignition";
+   //      strSpaIgnitionBaseUrl = "https://" + file_as_string_dup("C:\\ca2\\config\\system\\ignition_server.txt") + "/api/spaignition";
 
-      }
-      else if (pszVersion != NULL && !strcmp(pszVersion, "basis"))
-      {
+   //   }
+   //   else if (pszVersion != NULL && !strcmp(pszVersion, "basis"))
+   //   {
 
-         strSpaIgnitionBaseUrl = "https://server.ca2.cc/api/spaignition";
+   //      strSpaIgnitionBaseUrl = "https://server.ca2.cc/api/spaignition";
 
-      }
-      else if (pszVersion != NULL && !strcmp(pszVersion, "stage"))
-      {
+   //   }
+   //   else if (pszVersion != NULL && !strcmp(pszVersion, "stage"))
+   //   {
 
-         strSpaIgnitionBaseUrl = "https://server.ca2.cc/api/spaignition";
+   //      strSpaIgnitionBaseUrl = "https://server.ca2.cc/api/spaignition";
 
-      }
-      else
-      {
+   //   }
+   //   else
+   //   {
 
-         if (m_strVersion == "basis")
-         {
+   //      if (m_strVersion == "basis")
+   //      {
 
-            strVersion = "basis";
+   //         strVersion = "basis";
 
-            strSpaIgnitionBaseUrl = "https://server.ca2.cc/api/spaignition";
+   //         strSpaIgnitionBaseUrl = "https://server.ca2.cc/api/spaignition";
 
-         }
-         else
-         {
+   //      }
+   //      else
+   //      {
 
-            strVersion = "stage";
+   //         strVersion = "stage";
 
-            strSpaIgnitionBaseUrl = "https://server.ca2.cc/api/spaignition";
+   //         strSpaIgnitionBaseUrl = "https://server.ca2.cc/api/spaignition";
 
-         }
+   //      }
 
-      }
+   //   }
 
-      int iRetry = 0;
+   //   int iRetry = 0;
 
-   RetryBuildNumber:
+   //RetryBuildNumber:
 
-      if (iRetry > 10)
-      {
+   //   if (iRetry > 10)
+   //   {
 
-         return "";
+   //      return "";
 
-      }
+   //   }
 
-      iRetry++;
+   //   iRetry++;
 
-      strBuildNumber = http_get(strSpaIgnitionBaseUrl + "/query?node=build&version=" + strVersion);
+   //   strBuildNumber = http_get(strSpaIgnitionBaseUrl + "/query?node=build&version=" + strVersion);
 
-      ::str::_008Trim(strBuildNumber);
+   //   ::str::_008Trim(strBuildNumber);
 
-      if (strBuildNumber.length() != 19)
-      {
+   //   if (strBuildNumber.length() != 19)
+   //   {
 
-         Sleep(100 * iRetry);
+   //      Sleep(100 * iRetry);
 
-         goto RetryBuildNumber;
+   //      goto RetryBuildNumber;
 
-      }
+   //   }
 
-      return strBuildNumber;
+   //   return strBuildNumber;
 
-   }
+   //}
 
 
    bool bootstrap::is_downloading_admin()

@@ -44,9 +44,6 @@ namespace app_app
       virtual ~bootstrap();
 
 
-      //void add_command_line(string str);
-      //string pick_command_line();
-
       virtual int app_app();
       virtual int app_app_x86();
       virtual int app_app_proper();
@@ -54,7 +51,7 @@ namespace app_app
 
       bool is_user_service_running();
 
-      string get_version(string strVersion);
+      //string get_configuration(string strConfiguration);
 
       string get_title(string strTitle);
 

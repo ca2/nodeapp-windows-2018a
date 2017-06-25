@@ -1,5 +1,0 @@
-#include "resource.h"
-
-IDI_CA2_SPA   ICON                    "ca2v_2011_04_02.ico"
-ID_MP3_SMALL_BELL       MP3                     "small_bell.mp3"
-1984                    CGCL                    "mplite.txt"

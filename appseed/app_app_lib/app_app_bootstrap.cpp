@@ -17,7 +17,7 @@ namespace app_app
    {
 
       m_bForceUpdatedBuild = false;
-      
+
       m_bInstalling = false;
 
    }
@@ -28,63 +28,6 @@ namespace app_app
 
 
    }
-
-
-   //void bootstrap::add_command_line(string str)
-   //{
-
-   //   ::mutex mutexCommandFile(get_thread_app(), false, "Local\\ca2_app_app_command:" + process_platform_dir_name2());
-
-   //   ::file::path path = ::dir::system() / process_platform_dir_name2() / "app_app_command.txt";
-
-   //   stringa stra;
-
-   //   if (file_load_stra(path, stra, false))
-   //   {
-
-   //      stra.add(str);
-
-   //      file_save_stra(path, stra);
-
-   //   }
-
-   //}
-
-
-   //string bootstrap::pick_command_line()
-   //{
-
-   //   ::mutex mutexCommandFile(get_thread_app(), false, "Local\\ca2_app_app_command:" + process_platform_dir_name2());
-
-   //   ::file::path path = ::dir::system() / process_platform_dir_name2() / "app_app_command.txt";
-
-   //   stringa stra;
-
-   //   if (!file_load_stra(path, stra, false))
-   //   {
-
-   //      return "";
-
-   //   }
-
-   //   if (stra.is_empty())
-   //   {
-
-   //      return "";
-
-   //   }
-
-   //   string str;
-
-   //   str = stra[0];
-
-   //   stra.remove_at(0);
-
-   //   file_save_stra(path, stra);
-
-   //   return str;
-
-   //}
 
 
    int bootstrap::admin_main(string strPlatform)
@@ -125,7 +68,7 @@ namespace app_app
 
       System.trace(0.05);
 
-      int iTry = 1440;
+      int iTry = 100;
 
       while (true)
       {
@@ -273,13 +216,9 @@ namespace app_app
 
       int iTry;
 
-      iTry = 1440;
+      iTry = 100;
 
       string strPlatform = m_strPlatform;
-
-      int iFullInstallationMaxTryCount;
-
-      int iFullInstallationTryCount;
 
    spa_admin:
 
@@ -310,185 +249,200 @@ namespace app_app
 
       bSomeSortOfInstall = false;
 
-      iFullInstallationMaxTryCount = 200;
+      int iCommandRetry = 0;
 
-      iFullInstallationTryCount = 0;
+   command_retry:
 
-      while (iFullInstallationTryCount < iFullInstallationMaxTryCount)
+      iTry = 100;
+
+      while (!check_app_app_installation(strPlatform))
       {
 
-         iFullInstallationTryCount++;
+         bSomeSortOfInstall = true;
 
-         int iTry;
-
-
-         iTry = 1440;
-
-         while (!check_app_app_installation(strPlatform))
+         if (!is_downloading_admin()
+            && is_file_ok(::path::app_app_admin(strPlatform), ::path::app_app_admin(strPlatform).name(), NULL, strPlatform)
+            && !System.low_is_app_app_admin_running(strPlatform))
          {
 
-            bSomeSortOfInstall = true;
-
-            if (!is_downloading_admin()
-               && is_file_ok(::path::app_app_admin(strPlatform), ::path::app_app_admin(strPlatform).name(), NULL, strPlatform)
-               && !System.low_is_app_app_admin_running(strPlatform))
+            if (!is_file_ok(::path::app_app_admin(strPlatform), ::path::app_app_admin(strPlatform).name(), NULL, strPlatform))
             {
 
-               if (!is_file_ok(::path::app_app_admin(strPlatform), ::path::app_app_admin(strPlatform).name(), NULL, strPlatform))
+               goto spa_admin;
+
+            }
+
+            System.defer_start_program_files_app_app_admin(strPlatform);
+
+         }
+
+         iTry--;
+
+         if (iTry < 0)
+         {
+
+            return 0;
+
+         }
+
+         Sleep(500);
+
+      }
+
+      int iUserServiceTry = 300;
+
+      while (!check_user_service("Win32", true))
+      {
+
+         Sleep(500);
+
+         if (iUserServiceTry <= 0)
+         {
+
+            break;
+
+         }
+
+         iUserServiceTry--;
+
+      }
+
+      string strId;
+
+      while (true)
+      {
+
+         string str = System.pick_command_line();
+
+         if (str.is_empty())
+         {
+
+            break;
+
+         }
+
+         if (System.check_soon_launch(str, false))
+         {
+
+            m_straCommand.add(str);
+
+            continue;
+
+         }
+
+         string strParams;
+
+         int iFind1 = 0;
+
+         if (str[0] == '\"')
+         {
+
+            iFind1 = str.find('\"', 1);
+
+         }
+
+         int iFind = str.find(" : ", iFind1 + 1);
+
+         if (iFind >= 0)
+         {
+            strParams = str.substr(iFind);
+            iFind = str.find("app=", iFind);
+            if (iFind >= 0)
+            {
+               int iEnd = str.find(" ", iFind);
+               if (iEnd < 0)
                {
-
-                  goto spa_admin;
-
+                  strId = str.substr(iFind + 4);
+               }
+               else
+               {
+                  strId = str.substr(iFind + 4, iEnd - iFind - 4);
                }
 
-               System.defer_start_program_files_app_app_admin(strPlatform);
+               // trim initial quote
+               if (strId[0] == '\"')
+                  strId = strId.substr(1);
+
+               // trim final quote
+               if (strId[strId.length() - 1] == '\"')
+                  strId = strId.substr(0, strId.length() - 1);
 
             }
-
-            iTry--;
-
-            if (iTry < 0)
-            {
-
-               return 0;
-
-            }
-
-            Sleep(500);
 
          }
-
-         int iUserServiceTry = 300;
-
-         while (!check_user_service("Win32", true))
+         else
          {
 
-            Sleep(500);
+            strId = System.get_app_id(System.directrix()->m_varTopicFile);
 
-            if (iUserServiceTry <= 0)
+            if (strId.length() <= 0)
             {
-
-               break;
-
-            }
-
-            iUserServiceTry--;
-
-         }
-
-         string strId;
-
-         while (true)
-         {
-
-            string str = System.pick_command_line();
-
-            if (str.is_empty())
-            {
-
-               break;
-
-            }
-
-            if (System.check_soon_launch(str, false))
-            {
-
-               m_straCommand.add(str);
 
                continue;
 
             }
 
-            string strParams;
+         }
 
-            int iFind1 = 0;
+         m_straCommand.add(str);
 
-            if (str[0] == '\"')
-            {
-
-               iFind1 = str.find('\"', 1);
-
-            }
-
-            int iFind = str.find(" : ", iFind1 + 1);
-
-            if (iFind >= 0)
-            {
-               strParams = str.substr(iFind);
-               iFind = str.find("app=", iFind);
-               if (iFind >= 0)
-               {
-                  int iEnd = str.find(" ", iFind);
-                  if (iEnd < 0)
-                  {
-                     strId = str.substr(iFind + 4);
-                  }
-                  else
-                  {
-                     strId = str.substr(iFind + 4, iEnd - iFind - 4);
-                  }
-
-                  // trim initial quote
-                  if (strId[0] == '\"')
-                     strId = strId.substr(1);
-
-                  // trim final quote
-                  if (strId[strId.length() - 1] == '\"')
-                     strId = strId.substr(0, strId.length() - 1);
-
-               }
-
-            }
-            else
-            {
-
-               strId = System.get_app_id(System.directrix()->m_varTopicFile);
-
-               if (strId.length() <= 0)
-               {
-
-                  continue;
-
-               }
-
-            }
-
-            m_straCommand.add(str);
-
-            if (do_app_app(strId, strParams))
-            {
-
-            }
+         if (do_app_app(strId, strParams))
+         {
 
          }
+
+      }
+
+      {
+
+         int iCommandFailCount = 0;
 
          for (auto & strCommand : m_straCommand)
          {
 
-            System.check_soon_launch(strCommand, true);
-
-         }
-
-         iUserServiceTry = 300;
-
-         while (!check_user_service("Win32", true))
-         {
-
-            Sleep(500);
-
-            if (iUserServiceTry <= 0)
+            if (!System.check_soon_launch(strCommand, true))
             {
 
-               break;
+               iCommandFailCount++;
 
             }
 
-            iUserServiceTry--;
+         }
+
+         if (iCommandFailCount > 0)
+         {
+
+            if (iCommandRetry < 10)
+            {
+
+               iCommandRetry++;
+
+               goto command_retry;
+
+            }
 
          }
 
+      }
+
+      iUserServiceTry = 300;
+
+      while (!check_user_service("Win32", true))
+      {
+
+         Sleep(500);
+
+         if (iUserServiceTry <= 0)
+         {
+
+            break;
+
+         }
+
+         iUserServiceTry--;
 
       }
+
 
       return 1;
 
@@ -503,10 +457,6 @@ namespace app_app
       iTry = 1440;
 
       string strPlatform = m_strPlatform;
-
-      int iFullInstallationMaxTryCount;
-
-      int iFullInstallationTryCount;
 
    spa_admin:
 
@@ -547,196 +497,213 @@ namespace app_app
 
       ::file::path pathSpaAdminName = pathSpaAdmin.name();
 
-      iFullInstallationMaxTryCount = 200;
+      int iCommandRetry = 0;
 
-      iFullInstallationTryCount = 0;
+   command_retry:
 
-      while (iFullInstallationTryCount < iFullInstallationMaxTryCount)
+      while (true)
       {
 
-         iFullInstallationTryCount++;
-
-         int iTry;
-
-         iTry = 2000;
-
-         while (true)
+         try
          {
 
-            try
-            {
-
-               if (check_app_app_installation("x86") && check_app_app_installation("x64"))
-               {
-
-                  break;
-
-               }
-
-               if (!is_file_ok(pathSpaAdmin, pathSpaAdminName, NULL, "x86"))
-               {
-
-                  goto spa_admin;
-
-               }
-               else if (!is_downloading_admin() && !System.low_is_app_app_admin_running("x86"))
-               {
-
-                  System.defer_start_program_files_app_app_admin("x86");
-
-                  Sleep(500);
-
-               }
-
-            }
-            catch (...)
-            {
-
-            }
-
-            iTry--;
-
-            if (iTry < 0)
-            {
-
-               return 0;
-
-            }
-
-            Sleep(5000);
-
-         }
-
-         int iUserServiceTry = 300;
-
-         while (!check_user_service("Win32", true))
-         {
-
-            Sleep(500);
-
-            if (iUserServiceTry <= 0)
+            if (check_app_app_installation("x86") && check_app_app_installation("x64"))
             {
 
                break;
 
             }
 
-            iUserServiceTry--;
-
-         }
-
-
-         while (true)
-         {
-
-            string strId;
-
-            string wstr(System.pick_command_line());
-
-            if (wstr.is_empty())
+            if (!is_file_ok(pathSpaAdmin, pathSpaAdminName, NULL, "x86"))
             {
 
-               break;
+               goto spa_admin;
+
+            }
+            else if (!is_downloading_admin() && !System.low_is_app_app_admin_running("x86"))
+            {
+
+               System.defer_start_program_files_app_app_admin("x86");
+
+               Sleep(500);
 
             }
 
-            if (System.check_soon_launch(wstr, false))
-            {
+         }
+         catch (...)
+         {
 
-               m_straCommand.add(wstr);
+         }
+
+         iTry--;
+
+         if (iTry < 0)
+         {
+
+            return 0;
+
+         }
+
+         Sleep(5000);
+
+      }
+
+      int iUserServiceTry = 300;
+
+      while (!check_user_service("Win32", true))
+      {
+
+         Sleep(500);
+
+         if (iUserServiceTry <= 0)
+         {
+
+            break;
+
+         }
+
+         iUserServiceTry--;
+
+      }
+
+
+      while (true)
+      {
+
+         string strId;
+
+         string wstr(System.pick_command_line());
+
+         if (wstr.is_empty())
+         {
+
+            break;
+
+         }
+
+         if (System.check_soon_launch(wstr, false))
+         {
+
+            m_straCommand.add(wstr);
+
+            continue;
+
+         }
+
+         string strParams;
+
+         int iFind1 = 0;
+
+         if (wstr[0] == '\"')
+         {
+
+            iFind1 = wstr.find('\"', 1);
+
+         }
+
+         int iFind = wstr.find(" : ", iFind1 + 1);
+
+         if (iFind >= 0)
+         {
+            strParams = wstr.substr(iFind);
+            iFind = wstr.find("app=", iFind);
+            if (iFind >= 0)
+            {
+               int iEnd = wstr.find(" ", iFind);
+               if (iEnd < 0)
+               {
+                  strId = wstr.substr(iFind + 4);
+               }
+               else
+               {
+                  strId = wstr.substr(iFind + 4, iEnd - iFind - 4);
+               }
+
+               // trim initial quote
+               if (strId[0] == '\"')
+                  strId = strId.substr(1);
+
+               // trim final quote
+               if (strId[strId.length() - 1] == '\"')
+                  strId = strId.substr(0, strId.length() - 1);
+
+            }
+         }
+         else
+         {
+
+            strId = System.get_app_id(System.directrix()->m_varTopicFile);
+
+            if (strId.length() <= 0)
+            {
 
                continue;
 
             }
 
-            string strParams;
-
-            int iFind1 = 0;
-
-            if (wstr[0] == '\"')
-            {
-
-               iFind1 = wstr.find('\"', 1);
-
-            }
-
-            int iFind = wstr.find(" : ", iFind1 + 1);
-
-            if (iFind >= 0)
-            {
-               strParams = wstr.substr(iFind);
-               iFind = wstr.find("app=", iFind);
-               if (iFind >= 0)
-               {
-                  int iEnd = wstr.find(" ", iFind);
-                  if (iEnd < 0)
-                  {
-                     strId = wstr.substr(iFind + 4);
-                  }
-                  else
-                  {
-                     strId = wstr.substr(iFind + 4, iEnd - iFind - 4);
-                  }
-
-                  // trim initial quote
-                  if (strId[0] == '\"')
-                     strId = strId.substr(1);
-
-                  // trim final quote
-                  if (strId[strId.length() - 1] == '\"')
-                     strId = strId.substr(0, strId.length() - 1);
-
-               }
-            }
-            else
-            {
-
-               strId = System.get_app_id(System.directrix()->m_varTopicFile);
-
-               if (strId.length() <= 0)
-               {
-
-                  continue;
-
-               }
-
-            }
-
-            m_straCommand.add(wstr);
-
-            if (do_app_app(strId, strParams))
-            {
-
-            }
-
          }
 
-         for (auto & wstr : m_straCommand)
+         m_straCommand.add(wstr);
+
+         if (do_app_app(strId, strParams))
          {
-
-            System.check_soon_launch(wstr, true);
-
-         }
-
-         iUserServiceTry = 300;
-
-         while (!check_user_service("Win32", true))
-         {
-
-            Sleep(500);
-
-            if (iUserServiceTry <= 0)
-            {
-
-               break;
-
-            }
-
-            iUserServiceTry--;
 
          }
 
       }
+
+      {
+
+         int iCommandFailCount = 0;
+
+         for (auto & strCommand : m_straCommand)
+         {
+
+            if (!System.check_soon_launch(strCommand, true))
+            {
+
+               iCommandFailCount++;
+
+            }
+
+         }
+
+         if (iCommandFailCount > 0)
+         {
+
+            if (iCommandRetry < 10)
+            {
+
+               iCommandRetry++;
+
+               goto command_retry;
+
+            }
+
+         }
+
+      }
+
+      iUserServiceTry = 300;
+
+      while (!check_user_service("Win32", true))
+      {
+
+         Sleep(500);
+
+         if (iUserServiceTry <= 0)
+         {
+
+            break;
+
+         }
+
+         iUserServiceTry--;
+
+      }
+
+
+
 
       return 1;
 
@@ -800,7 +767,7 @@ namespace app_app
    }
 
 
-   
+
 
 
    bool bootstrap::check_app_app_installation(string strPlatform)
@@ -1319,7 +1286,7 @@ namespace app_app
 
       string strUrl;
 
-      strUrl = "https://server.ca2.cc/" + strPlatform + "/" + System.m_strVersion + "/" + ::path::app_app_admin(strPlatform).name();
+      strUrl = "https://server.ca2.cc/" + strPlatform + "/" + System.get_system_configuration() + "/" + ::path::app_app_admin(strPlatform).name();
 
       int iTry = 0;
 
@@ -1374,7 +1341,7 @@ namespace app_app
       while (iTry <= 3)
       {
 
-         bOk = Application.http_download("https://server.ca2.cc/" + strPlatform + "/" + System.m_strVersion + "/" + ::path::app_app(strPlatform).name(), strTempSpa);
+         bOk = Application.http_download("https://server.ca2.cc/" + strPlatform + "/" + System.get_system_configuration() + "/" + ::path::app_app(strPlatform).name(), strTempSpa);
 
          if (bOk)
          {
@@ -1413,7 +1380,7 @@ namespace app_app
 
       string strPath = path::app_app_install(strPlatform);
 
-      stringa straFile = ::install::get_app_app_install_module_list(strPlatform, System.m_strVersion);
+      stringa straFile = ::install::get_app_app_install_module_list(strPlatform, System.get_system_configuration());
 
       if (!::dir::is(dir::name(strPath)))
       {
@@ -1438,7 +1405,7 @@ namespace app_app
 
       stringa straMd5;
 
-      string strFormatBuild = System.get_latest_build_number(System.m_strVersion);
+      string strFormatBuild = System.get_latest_build_number(System.get_system_configuration());
 
       int iMd5Retry = 0;
 
@@ -1514,7 +1481,7 @@ namespace app_app
 
          System.trace("Downloading install bin set\r\n");
 
-         string strUrlPrefix = "https://server.ca2.cc/ccvotagus/" + System.m_strVersion + "/" + strBuild + "/install/" + strPlatform + "/";
+         string strUrlPrefix = "https://server.ca2.cc/ccvotagus/" + System.get_system_configuration() + "/" + strBuild + "/install/" + strPlatform + "/";
 
 
          //#pragma omp parallel for
@@ -1583,29 +1550,29 @@ namespace app_app
 
 
 
-   string bootstrap::get_version(string strVersion)
-   {
-      static string  s_strVersion;
+   //string bootstrap::get_version(string strVersion)
+   //{
+   //   static string  s_strVersion;
 
-      if (strVersion.has_char())
-      {
-         s_strVersion = strVersion;
-      }
+   //   if (strVersion.has_char())
+   //   {
+   //      s_strVersion = strVersion;
+   //   }
 
-      if (s_strVersion.is_empty())
-      {
-         if (_ca_is_basis())
-         {
-            s_strVersion = "basis";
-         }
-         else
-         {
-            s_strVersion = "stage";
-         }
-      }
+   //   if (s_strVersion.is_empty())
+   //   {
+   //      if (_ca_is_basis())
+   //      {
+   //         s_strVersion = "basis";
+   //      }
+   //      else
+   //      {
+   //         s_strVersion = "stage";
+   //      }
+   //   }
 
-      return s_strVersion;
-   }
+   //   return s_strVersion;
+   //}
 
 
    string bootstrap::get_title(string strTitle)
@@ -1623,7 +1590,7 @@ namespace app_app
 
 
 
-   
+
 
 
 

@@ -115,8 +115,6 @@ namespace app_app_install
       stringa                          m_straHttpFailure;
 
 
-      bool                             m_bLaunch;
-
       sp(::sockets::http_session)      m_phttpsession;
       ::sockets::socket_handler *      m_psockethandler;
       spa(::sockets::http_session)     m_httpsessionptra;
@@ -173,9 +171,9 @@ namespace app_app_install
 
       bool spa_exec(const char * psz);
 
-      bool launch_application();
+      //bool launch_application();
 
-      bool launch_applications();
+      ///bool launch_applications();
 
       int32_t appmatter_list();
 
