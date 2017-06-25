@@ -8,8 +8,6 @@ namespace app_app_install
    app::app() :
       ::object(this),
       ::aura::system(NULL, NULL),
-      ::axis::system(NULL),
-      ::base::system(NULL),
       m_rxchannel(this)
    {
 
@@ -251,7 +249,7 @@ namespace app_app_install
    bool app::end()
    {
 
-      app::end();
+      ::aura::app::end();
 
       //memory_free(m_hmodulea);
       //memory_free(m_dwaProcess);

@@ -2170,7 +2170,8 @@ namespace production
 
       ::file::listing straBase;
 
-      ::lemon::array::copy(straBase, ::install::get_app_app_install_module_list(pszPlatform, m_strVersion));
+      //::lemon::array::copy(straBase, ::install::get_app_app_install_module_list(pszPlatform, m_strVersion));
+      ::lemon::array::copy(straBase, ::install::get_app_app_install_module_list());
 
       for(index i = 0; i < straBase.get_count(); i++)
       {
@@ -2341,7 +2342,8 @@ namespace production
 
       ::file::listing straBase;
 
-      ::lemon::array::copy(straBase,::install::get_app_app_install_module_list(strPlatform, m_strVersion));
+      //::lemon::array::copy(straBase,::install::get_app_app_install_module_list(strPlatform, m_strVersion));
+      ::lemon::array::copy(straBase, ::install::get_app_app_install_module_list());
 
       straBase.add("npca2.dll");
 
@@ -2641,7 +2643,8 @@ namespace production
 
       ::file::listing straBase;
 
-      ::lemon::array::copy(straBase,::install::get_app_app_install_module_list(strPlatform, m_strVersion));
+      //::lemon::array::copy(straBase,::install::get_app_app_install_module_list(strPlatform, m_strVersion));
+      ::lemon::array::copy(straBase, ::install::get_app_app_install_module_list());
 
       straBase.add("npca2.dll");
 

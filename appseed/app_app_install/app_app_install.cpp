@@ -7,7 +7,7 @@ extern "C" int32_t WINAPI
 _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, __in LPTSTR lpCmdLine, int32_t nCmdShow)
 {
 
-   if (!defer_base_init())
+   if (!defer_aura_init())
    {
 
       return -1;
@@ -18,7 +18,7 @@ _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, __in LPTSTR lpCmdLine, i
 
    int iReturnCode = ::app_main(psystem, hInstance, hPrevInstance, lpCmdLine, nCmdShow);
 
-   defer_base_term();
+   defer_aura_term();
 
    return iReturnCode;
 

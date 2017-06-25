@@ -6,7 +6,7 @@ namespace app_app_install
 
 
    class app :
-      virtual public ::base::app,
+      virtual public ::aura::app,
       virtual public ::aura::ipc::rx::receiver
    {
    public:

@@ -1380,7 +1380,8 @@ namespace app_app
 
       string strPath = path::app_app_install(strPlatform);
 
-      stringa straFile = ::install::get_app_app_install_module_list(strPlatform, System.get_system_configuration());
+      //stringa straFile = ::install::get_app_app_install_module_list(strPlatform, System.get_system_configuration());
+      stringa straFile = ::install::get_app_app_install_module_list();
 
       if (!::dir::is(dir::name(strPath)))
       {

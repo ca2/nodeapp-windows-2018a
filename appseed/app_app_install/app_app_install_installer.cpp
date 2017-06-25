@@ -163,7 +163,7 @@ namespace app_app_install
 
       }
 
-      System.install().m_strVersion = strVersion;
+      //System.install().m_strVersion = strVersion;
 
       m_strSpaIgnitionBaseUrl = "http://spaignition.ca2.cc/api/spaignition";
 
@@ -194,7 +194,8 @@ namespace app_app_install
 
       new_progress_end(0.02);
 
-      System.install().app_install_get_extern_executable_path(m_strVersion, m_strBuild, &straMd5AppInstall, &iaLen, &mapMd5, &mapLen); // defer install install extern app_app_install.exe executable
+//      System.install().app_install_get_extern_executable_path(m_strVersion, m_strBuild, &straMd5AppInstall, &iaLen, &mapMd5, &mapLen); // defer install install extern app_app_install.exe executable
+      System.install().app_install_get_extern_executable_path(&straMd5AppInstall, &iaLen, &mapMd5, &mapLen); // defer install install extern app_app_install.exe executable
 
       m_bProgressModeAppInstall = false;
 
@@ -202,7 +203,7 @@ namespace app_app_install
 
       m_dwInstallStartTime = ::get_tick_count();
 
-   install_begin:;
+   //install_begin:;
 
    {
 
@@ -626,7 +627,7 @@ namespace app_app_install
 
       }
 
-      System.install().set_ca2_updated(m_strBuild);
+//      System.install().set_ca2_updated(m_strBuild);
 
       new_progress_end(1.0);
 
@@ -2375,7 +2376,8 @@ namespace app_app_install
 
       string strBuild;
 
-      ::lemon::array::copy(straTemplate, ::install::get_app_app_install_module_list(m_strPlat2, m_strVersion));
+      //::lemon::array::copy(straTemplate, ::install::get_app_app_install_module_list(m_strPlat2, m_strVersion));
+      ::lemon::array::copy(straTemplate, ::install::get_app_app_install_module_list());
 
       string strUrl;
 
@@ -2941,7 +2943,8 @@ namespace app_app_install
 
       param += pszCommandLine;
 
-      strPath = System.install().app_install_get_intern_executable_path(m_strVersion, m_strBuild);
+      //strPath = System.install().app_install_get_intern_executable_path(m_strVersion, m_strBuild);
+      strPath = System.install().app_install_get_intern_executable_path();
 
       call_sync(strPath, param, 0, SW_HIDE, -1, 84, 0, 0);
 
