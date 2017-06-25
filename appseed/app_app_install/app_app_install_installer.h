@@ -29,8 +29,6 @@ namespace app_app_install
       string                           m_strPlat;
       string                           m_strPlat2;
 
-      string                           m_strVersion;
-
       string                           m_strAppMatterList;
 
       uint32_t                         m_dwDownloadCallbackLast100k;
@@ -60,9 +58,8 @@ namespace app_app_install
       ::user::primitive *              m_pwindow;
 
       string                           m_strBuild;
-      string                           m_strBuildResource;
-      string                           m_strApplicationId;
-      string                           m_strApplicationType;
+      string                           m_strAppId;
+      string                           m_strAppType;
 
       machine_event                    m_machineevent;
 

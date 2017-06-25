@@ -32,17 +32,7 @@ namespace app_app_install
       m_strPlat = process_platform_dir_name();
       m_strPlat2 = process_platform_dir_name2();
 
-#if CA2_PLATFORM_VERSION == CA2_BASIS
-
-      m_strVersion = "basis";
-
-#else
-
-      m_strVersion = "stage";
-
-#endif
-
-      m_pathBaseUrl = "http://server.ca2.cc/ccvotagus/" + m_strVersion + "/";
+      m_pathBaseUrl = "http://server.ca2.cc/ccvotagus/" + System.get_system_configuration() + "/";
 
       m_phttpsession = NULL;
 
@@ -81,16 +71,20 @@ namespace app_app_install
 
       }
 
-      string strId;
+      string strAppId;
 
-      get_command_line_param(strId, strCommand, "app");
+      get_command_line_param(strAppId, strCommand, "app");
 
-      if (strId.is_empty())
+      if (strAppId.is_empty())
       {
 
          return -1;
 
       }
+
+      string strAppType;
+
+      get_command_line_param(strAppType, strCommand, "app_type", "application");
 
       string strLocale;
 
@@ -101,7 +95,6 @@ namespace app_app_install
       get_command_line_param(strSchema, strCommand, "schema", strLocale);
 
       string strValue;
-
 
       if (System.install().is_installing_ca2())
       {
@@ -121,7 +114,9 @@ namespace app_app_install
 
       m_strCommand = strCommand;
 
-      m_strApplicationId = strId;
+      m_strAppId = strAppId;
+
+      m_strAppType = strAppType;
 
       m_strLocale = strLocale;
 
@@ -146,24 +141,7 @@ namespace app_app_install
 
       m_bProgressModeAppInstall = true;
 
-      string strVersion(m_strVersion);
-
-      if (strVersion.is_empty())
-      {
-
-#if CA2_PLATFORM_VERSION == CA2_BASIS
-
-         strVersion = "basis";
-
-#else
-
-         strVersion = "stage";
-
-#endif
-
-      }
-
-      //System.install().m_strVersion = strVersion;
+      string strConfiguration(System.get_system_configuration());
 
       m_strSpaIgnitionBaseUrl = "http://spaignition.ca2.cc/api/spaignition";
 
@@ -194,8 +172,7 @@ namespace app_app_install
 
       new_progress_end(0.02);
 
-//      System.install().app_install_get_extern_executable_path(m_strVersion, m_strBuild, &straMd5AppInstall, &iaLen, &mapMd5, &mapLen); // defer install install extern app_app_install.exe executable
-      System.install().app_install_get_extern_executable_path(&straMd5AppInstall, &iaLen, &mapMd5, &mapLen); // defer install install extern app_app_install.exe executable
+      System.install().app_install_get_extern_executable_path(&straMd5AppInstall, &iaLen, &mapMd5, &mapLen);
 
       m_bProgressModeAppInstall = false;
 
@@ -276,7 +253,7 @@ namespace app_app_install
       if (iHostRetry > 0)
       {
 
-         strUrl = "http://" + strSpaHost + "/ccvotagus/" + m_strVersion + "/app/stage/metastage/index-" + strBuild + ".md5";
+         strUrl = "http://" + strSpaHost + "/ccvotagus/" + System.get_system_configuration() + "/app/stage/metastage/index-" + strBuild + ".md5";
 
          strIndexMd5 = http_get(strUrl, false);
 
@@ -286,7 +263,7 @@ namespace app_app_install
 
       nodeInstall.load(file_as_string_dup(dir::appdata(process_platform_dir_name2()) / "install.xml"));
 
-      ::xml::node * lpnodeVersion = nodeInstall.get_child(m_strVersion);
+      ::xml::node * lpnodeVersion = nodeInstall.get_child(System.get_system_configuration());
 
       System.install().trace().rich_trace("***Downloading file list.");
 
@@ -340,7 +317,7 @@ namespace app_app_install
 
       set_progress(0.7);
 
-      if (!get_file_list(straFileList, ("app/stage/metastage/" + m_strApplicationId + ".spa"), mapLen, mapGzLen, mapMd5, mapFlag))
+      if (!get_file_list(straFileList, ("app/stage/metastage/" + m_strAppId + ".spa"), mapLen, mapGzLen, mapMd5, mapFlag))
       {
 
          System.install().trace().rich_trace("Failed to download file list!");
@@ -387,7 +364,7 @@ namespace app_app_install
 
                      string strId = lpnodeType->child_at(ui)->attr("id");
 
-                     if (strcmp_dup(strId, m_strApplicationId) != 0)
+                     if (strcmp_dup(strId, m_strAppId) != 0)
                      {
 
                         get_file_list(straFileList, ("app/stage/metastage/" + strId + ".spa"), mapLen, mapGzLen, mapMd5, mapFlag);
@@ -931,7 +908,7 @@ namespace app_app_install
             if (bDownload && (::str::ends_ci(strFileName, ".exe") || ::str::ends_ci(strFileName, ".dll")))
             {
 
-               string strCandidate = ::dir::app_install(System.install().get_platform()) / strFileName;
+               string strCandidate = ::dir::app_install(System.get_system_platform()) / strFileName;
 
                if (file_exists_dup(strCandidate)
                   && iLen != -1 && file_length_dup(strCandidate) == iLen
@@ -1649,11 +1626,11 @@ namespace app_app_install
 
       int32_t iCurrent;
 
-      string strPlatform = System.install().get_platform();
+      string strPlatform = System.get_system_platform();
 
       string strBinaryPlatform = time_binary_platform(strPlatform);
 
-      string strVersion = m_strVersion;
+      string strConfiguration = System.get_system_configuration();
 
       for (int32_t i = 0; i < patha.get_count(); i++)
       {
@@ -1663,7 +1640,7 @@ namespace app_app_install
          if (strPathParam.begins_ci("stage\\basis\\"))
          {
 
-            strPathParam = "time\\" + strBinaryPlatform + "\\" + strVersion + strPathParam.substr(11);
+            strPathParam = "time\\" + strBinaryPlatform + "\\" + strConfiguration + strPathParam.substr(11);
 
          }
 
@@ -1767,11 +1744,11 @@ namespace app_app_install
 
       }
 
-      string strPlatform = System.install().get_platform();
+      string strPlatform = System.get_system_platform();
 
       string strBinaryPlatform = time_binary_platform(strPlatform);
 
-      string strVersion = m_strVersion;
+      string strConfiguration = System.get_system_configuration();
 
       ::stringa straLines;
 
@@ -1784,7 +1761,7 @@ namespace app_app_install
 
          string strPathParam(strLine);
 
-         if (m_strVersion == "stage")
+         if (System.get_system_configuration() == "stage")
          {
 
             strPathParam = ::str::replace_ci("vcruntime140d.dll", "vcruntime140.dll", strPathParam);
@@ -1809,7 +1786,7 @@ namespace app_app_install
          if (strPathParam.begins_ci("stage\\basis\\"))
          {
 
-            strPathParam = "time\\" + strBinaryPlatform + "\\" + strVersion + strPathParam.substr(11);
+            strPathParam = "time\\" + strBinaryPlatform + "\\" + strConfiguration + strPathParam.substr(11);
 
          }
 
@@ -2166,7 +2143,7 @@ namespace app_app_install
 
    //   System.install().trace().rich_trace(".");
 
-   //   string strPlatform = System.install().get_platform();
+   //   string strPlatform = System.get_system_platform();
 
    //   if (i == 0)
    //   {
@@ -2263,18 +2240,18 @@ namespace app_app_install
 
       string strUrl;
 
-      System.install().trace().rich_trace(("get appmatter list for application with id : \"" + m_strApplicationId + "\" "));
+      System.install().trace().rich_trace(("get appmatter list for application with id : \"" + m_strAppId + "\" "));
       System.install().trace().rich_trace(("locale : \"" + m_strLocale + "\" "));
       System.install().trace().rich_trace(("schema : \"" + m_strSchema + "\" "));
 
       strUrl = m_strSpaIgnitionBaseUrl + "/appmatter_spa_list?app=";
-      strUrl += m_strApplicationId;
+      strUrl += m_strAppId;
       strUrl += "&locale=";
       strUrl += m_strLocale;
       strUrl += "&schema=";
       strUrl += m_strSchema;
       strUrl += "&version=";
-      strUrl += m_strVersion;
+      strUrl += System.get_system_configuration();
 
       string str;
       int32_t iRetry = 0;
@@ -2309,50 +2286,37 @@ namespace app_app_install
    int32_t installer::ca2_build_version()
    {
 
-      string strPlatform = System.install().get_platform();
+      string strPlatform = System.get_system_platform();
 
       int32_t iRetry = 0;
 
    RetryBuildNumber:
 
-      if (m_strBuildResource.length() == 19) // heuristically valid
-      {
-         
-         System.install().trace().rich_trace("***Internal build number");
+      System.install().trace().rich_trace("***Getting build number");
 
-         m_strBuild = m_strBuildResource;
+      if (iRetry > 10)
+      {
+
+         System.install().trace().rich_trace("could not get build number. exiting");
+
+         //            exit(-1);
+
+         return -1;
 
       }
-      else
+
+      iRetry++;
+
+      m_strBuild = http_get(m_strSpaIgnitionBaseUrl + "/query?node=build&sessid=noauth&version=" + System.get_system_configuration() + "&platform=" + strPlatform, false);
+
+      m_strBuild.trim();
+
+      if (m_strBuild.length() != 19)
       {
 
-         System.install().trace().rich_trace("***Getting build number");
+         Sleep(184);
 
-         if (iRetry > 10)
-         {
-
-            System.install().trace().rich_trace("could not get build number. exiting");
-
-            //            exit(-1);
-
-            return -1;
-
-         }
-
-         iRetry++;
-
-         m_strBuild = http_get(m_strSpaIgnitionBaseUrl + "/query?node=build&sessid=noauth&version=" + m_strVersion + "&platform=" + strPlatform, false);
-
-         m_strBuild.trim();
-
-         if (m_strBuild.length() != 19)
-         {
-
-            Sleep(184);
-
-            goto RetryBuildNumber;
-
-         }
+         goto RetryBuildNumber;
 
       }
 
@@ -2376,7 +2340,7 @@ namespace app_app_install
 
       string strBuild;
 
-      //::lemon::array::copy(straTemplate, ::install::get_app_app_install_module_list(m_strPlat2, m_strVersion));
+      //::lemon::array::copy(straTemplate, ::install::get_app_app_install_module_list(m_strPlat2, System.get_system_configuration()));
       ::lemon::array::copy(straTemplate, ::install::get_app_app_install_module_list());
 
       string strUrl;
@@ -2399,7 +2363,7 @@ namespace app_app_install
 
       string strBuildPath;
 
-      strBuildPath = System.dir().element_commonappdata(::dir::element()) / "spa_build_" + System.install().get_platform() + ".txt";
+      strBuildPath = System.dir().element_commonappdata(::dir::element()) / "spa_build_" + System.get_system_platform() + ".txt";
 
       // using a guess for build number (the latest installed one)
       {
@@ -2429,218 +2393,205 @@ namespace app_app_install
 
    RetryBuildNumber:
 
-      if (m_strBuildResource.length() == 19) // heuristically valid
+      System.install().trace().rich_trace("***Getting build number");
+
+      if (iRetry > 10)
       {
 
-         System.install().trace().rich_trace("***Internal build number");
+         System.install().trace().rich_trace("could not get build number. exiting");
 
-         m_strBuild = m_strBuildResource;
+         //            exit(-1);
 
+         return -1;
+
+      }
+
+      iRetry++;
+
+      strUrl = m_strSpaIgnitionBaseUrl + "/query?node=build__host_and_application_name&sessid=noauth";
+      strUrl += "&version=";
+      strUrl += System.get_system_configuration();
+      strUrl += "&appid=";
+      strUrl += m_strAppId;
+      strUrl += "&stage=";
+      strUrl += straTemplate.implode(",");
+      strUrl += "&locale=";
+      strUrl += m_strLocale;
+      strUrl += "&schema=";
+      strUrl += m_strSchema;
+      strUrl += "&platform=";
+      strUrl += System.get_system_platform();
+
+      if (strIndexMd5.has_char())
+      {
+
+         strUrl += "&index_md5=";
+
+         strUrl += strIndexMd5;
+
+      }
+
+      property_set set;
+
+      set["disable_ca2_sessid"] = true;
+
+      set["raw_http"] = true;
+
+      file.Truncate(0);
+
+      file.seek_to_begin();
+
+      single_lock sl(&m_mutexOmp);
+
+      sl.lock();
+      sp(::sockets::http_session) & psession = m_httpsessionptra.element_at_grow(0);
+      sl.unlock();
+
+      System.install().trace().trace_add("\ndownloading " + strUrl + "\n");
+
+      if (!Application.http().download(*m_psockethandler, psession, strUrl, &file, set))
+      {
+         Sleep(184);
+         goto RetryBuildNumber;
+      }
+
+      string strDebug;
+
+      strDebug = file.get_primitive_memory()->to_string();
+
+      file.seek_to_begin();
+      //         strEtc = http_get(strUrl, true);
+
+      if (file.get_size() < 19)
+      {
+         Sleep(184);
+         goto RetryBuildNumber;
+      }
+
+
+      strBuild.Empty();
+
+      file.read_string(strBuild);
+
+      if (strBuild.length() != 19)
+      {
+         Sleep(184);
+         goto RetryBuildNumber;
+      }
+
+      strName.Empty();
+
+      file.read_string(strName);
+
+      if (strName.length() <= 0)
+      {
+         Sleep(184);
+         goto RetryBuildNumber;
+      }
+
+      strSpaHost.Empty();
+
+      file.read_string(strSpaHost);
+
+      if (strSpaHost.length() <= 0)
+      {
+         Sleep(184);
+         goto RetryBuildNumber;
+      }
+
+      straMd5.set_size(straTemplate.get_count() + 1);
+      iaLen.set_size(straTemplate.get_count() + 1);
+
+      for (index i = 0; i < straMd5.get_size(); i++)
+      {
+         straMd5[i].Empty();
+         string strMd5AndLen;
+         file.read_string(strMd5AndLen);
+         int iFind = strMd5AndLen.find('|');
+         if (iFind < 0)
+         {
+            Sleep(184);
+            goto RetryBuildNumber;
+         }
+         string strMd5 = strMd5AndLen.Left(iFind);
+         iaLen[i] = atoi(strMd5AndLen.Mid(iFind + 1));
+         straMd5[i] = strMd5;
+         straMd5[i].trim();
+         if (straMd5[i].length() != 32)
+         {
+            Sleep(184);
+            goto RetryBuildNumber;
+         }
+
+      }
+
+      file.read_string(strAppMatterList);
+
+      strLen.Empty();
+
+      file.read_string(strStatus);
+
+      if (strStatus == "ok")
+      {
+         if (strIndexMd5.is_empty())
+         {
+            Sleep(184);
+            goto RetryBuildNumber;
+         }
+      }
+      else if (strStatus != "send")
+      {
+         Sleep(184);
+         goto RetryBuildNumber;
       }
       else
       {
 
-         System.install().trace().rich_trace("***Getting build number");
+         file.read_string(strLen);
 
-         if (iRetry > 10)
-         {
-
-            System.install().trace().rich_trace("could not get build number. exiting");
-
-            //            exit(-1);
-
-            return -1;
-
-         }
-
-         iRetry++;
-
-         strUrl = m_strSpaIgnitionBaseUrl + "/query?node=build__host_and_application_name&sessid=noauth";
-         strUrl += "&version=";
-         strUrl += m_strVersion;
-         strUrl += "&appid=";
-         strUrl += m_strApplicationId;
-         strUrl += "&stage=";
-         strUrl += straTemplate.implode(",");
-         strUrl += "&locale=";
-         strUrl += m_strLocale;
-         strUrl += "&schema=";
-         strUrl += m_strSchema;
-         strUrl += "&platform=";
-         strUrl += System.install().get_platform();
-
-         if (strIndexMd5.has_char())
-         {
-
-            strUrl += "&index_md5=";
-
-            strUrl += strIndexMd5;
-
-         }
-
-         property_set set;
-
-         set["disable_ca2_sessid"] = true;
-
-         set["raw_http"] = true;
-
-         file.Truncate(0);
-
-         file.seek_to_begin();
-
-         single_lock sl(&m_mutexOmp);
-
-         sl.lock();
-         sp(::sockets::http_session) & psession = m_httpsessionptra.element_at_grow(0);
-         sl.unlock();
-
-         System.install().trace().trace_add("\ndownloading " + strUrl + "\n");
-
-         if (!Application.http().download(*m_psockethandler, psession, strUrl, &file, set))
+         if (strLen.length() <= 0)
          {
             Sleep(184);
             goto RetryBuildNumber;
          }
 
-         string strDebug;
+         len = atoi(strLen);
 
-         strDebug = file.get_primitive_memory()->to_string();
+         strIndexBuild = strBuild;
 
-         file.seek_to_begin();
-         //         strEtc = http_get(strUrl, true);
+         strIndexBuild.replace(" ", "_");
 
-         if (file.get_size() < 19)
+         strIndexBuild.replace(":", "-");
+
+         strIndexPath = "app/stage/metastage/index-" + strIndexBuild + ".spa.bz";
+
+         strIndexPath = ca2_get_dir(strIndexPath) / ca2_get_file(strIndexPath);
+
          {
-            Sleep(184);
-            goto RetryBuildNumber;
-         }
 
+            ::file::file_sp file2 = Application.file().get_file(strIndexPath, ::file::mode_create | ::file::type_binary | ::file::mode_write | ::file::defer_create_directory);
 
-         strBuild.Empty();
+            mem.allocate(1024 * 1024);
 
-         file.read_string(strBuild);
+            file_size_t uiTotalRead = 0;
 
-         if (strBuild.length() != 19)
-         {
-            Sleep(184);
-            goto RetryBuildNumber;
-         }
+            memory_size_t uiRead;
 
-         strName.Empty();
-
-         file.read_string(strName);
-
-         if (strName.length() <= 0)
-         {
-            Sleep(184);
-            goto RetryBuildNumber;
-         }
-
-         strSpaHost.Empty();
-
-         file.read_string(strSpaHost);
-
-         if (strSpaHost.length() <= 0)
-         {
-            Sleep(184);
-            goto RetryBuildNumber;
-         }
-
-         straMd5.set_size(straTemplate.get_count() + 1);
-         iaLen.set_size(straTemplate.get_count() + 1);
-
-         for (index i = 0; i < straMd5.get_size(); i++)
-         {
-            straMd5[i].Empty();
-            string strMd5AndLen;
-            file.read_string(strMd5AndLen);
-            int iFind = strMd5AndLen.find('|');
-            if (iFind < 0)
+            while ((uiRead = file.read(mem, mem.get_size())))
             {
-               Sleep(184);
-               goto RetryBuildNumber;
-            }
-            string strMd5 = strMd5AndLen.Left(iFind);
-            iaLen[i] = atoi(strMd5AndLen.Mid(iFind + 1));
-            straMd5[i] = strMd5;
-            straMd5[i].trim();
-            if (straMd5[i].length() != 32)
-            {
-               Sleep(184);
-               goto RetryBuildNumber;
+
+               file2->write(mem, uiRead);
+
+               uiTotalRead += uiRead;
+
             }
 
-         }
-
-         file.read_string(strAppMatterList);
-
-         strLen.Empty();
-
-         file.read_string(strStatus);
-
-         if (strStatus == "ok")
-         {
-            if (strIndexMd5.is_empty())
+            if (uiTotalRead != len)
             {
+
                Sleep(184);
+
                goto RetryBuildNumber;
-            }
-         }
-         else if (strStatus != "send")
-         {
-            Sleep(184);
-            goto RetryBuildNumber;
-         }
-         else
-         {
-
-            file.read_string(strLen);
-
-            if (strLen.length() <= 0)
-            {
-               Sleep(184);
-               goto RetryBuildNumber;
-            }
-
-            len = atoi(strLen);
-
-            strIndexBuild = strBuild;
-
-            strIndexBuild.replace(" ", "_");
-
-            strIndexBuild.replace(":", "-");
-
-            strIndexPath = "app/stage/metastage/index-" + strIndexBuild + ".spa.bz";
-
-            strIndexPath = ca2_get_dir(strIndexPath) / ca2_get_file(strIndexPath);
-
-            {
-
-               ::file::file_sp file2 = Application.file().get_file(strIndexPath, ::file::mode_create | ::file::type_binary | ::file::mode_write | ::file::defer_create_directory);
-
-               mem.allocate(1024 * 1024);
-
-               file_size_t uiTotalRead = 0;
-
-               memory_size_t uiRead;
-
-               while ((uiRead = file.read(mem, mem.get_size())))
-               {
-
-                  file2->write(mem, uiRead);
-
-                  uiTotalRead += uiRead;
-
-               }
-
-               if (uiTotalRead != len)
-               {
-
-                  Sleep(184);
-
-                  goto RetryBuildNumber;
-
-               }
 
             }
 
@@ -2696,7 +2647,7 @@ namespace app_app_install
       }
       string strUrl;
 
-      strUrl = m_strSpaIgnitionBaseUrl + "/query?node=spa_host&version=" + m_strVersion;
+      strUrl = m_strSpaIgnitionBaseUrl + "/query?node=spa_host&version=" + System.get_system_configuration();
 
       if (!m_strLastHost.is_empty())
       {
@@ -2722,7 +2673,7 @@ namespace app_app_install
             else
             {
 
-               strUrl = m_strSpaIgnitionBaseUrl + "/query?node=spa_host&version=" + m_strVersion;
+               strUrl = m_strSpaIgnitionBaseUrl + "/query?node=spa_host&version=" + System.get_system_configuration();
 
             }
 
@@ -2943,7 +2894,7 @@ namespace app_app_install
 
       param += pszCommandLine;
 
-      //strPath = System.install().app_install_get_intern_executable_path(m_strVersion, m_strBuild);
+      //strPath = System.install().app_install_get_intern_executable_path(System.get_system_configuration(), m_strBuild);
       strPath = System.install().app_install_get_intern_executable_path();
 
       call_sync(strPath, param, 0, SW_HIDE, -1, 84, 0, 0);
@@ -2956,7 +2907,7 @@ namespace app_app_install
    //bool installer::launch_application()
    //{
 
-   //   ::launch_application(get_app(), m_strApplicationId, "enable_desktop_launch", OSBIT);
+   //   ::launch_application(get_app(), m_strAppId, "enable_desktop_launch", OSBIT);
 
    //   return true;
 
