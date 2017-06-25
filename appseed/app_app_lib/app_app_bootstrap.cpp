@@ -30,61 +30,61 @@ namespace app_app
    }
 
 
-   void bootstrap::add_command_line(string str)
-   {
+   //void bootstrap::add_command_line(string str)
+   //{
 
-      ::mutex mutexCommandFile(get_thread_app(), false, "Local\\ca2_app_app_command:" + process_platform_dir_name2());
+   //   ::mutex mutexCommandFile(get_thread_app(), false, "Local\\ca2_app_app_command:" + process_platform_dir_name2());
 
-      ::file::path path = ::dir::system() / process_platform_dir_name2() / "app_app_command.txt";
+   //   ::file::path path = ::dir::system() / process_platform_dir_name2() / "app_app_command.txt";
 
-      stringa stra;
+   //   stringa stra;
 
-      if (file_load_stra(path, stra, false))
-      {
+   //   if (file_load_stra(path, stra, false))
+   //   {
 
-         stra.add(str);
+   //      stra.add(str);
 
-         file_save_stra(path, stra);
+   //      file_save_stra(path, stra);
 
-      }
+   //   }
 
-   }
+   //}
 
 
-   string bootstrap::pick_command_line()
-   {
+   //string bootstrap::pick_command_line()
+   //{
 
-      ::mutex mutexCommandFile(get_thread_app(), false, "Local\\ca2_app_app_command:" + process_platform_dir_name2());
+   //   ::mutex mutexCommandFile(get_thread_app(), false, "Local\\ca2_app_app_command:" + process_platform_dir_name2());
 
-      ::file::path path = ::dir::system() / process_platform_dir_name2() / "app_app_command.txt";
+   //   ::file::path path = ::dir::system() / process_platform_dir_name2() / "app_app_command.txt";
 
-      stringa stra;
+   //   stringa stra;
 
-      if (!file_load_stra(path, stra, false))
-      {
+   //   if (!file_load_stra(path, stra, false))
+   //   {
 
-         return "";
+   //      return "";
 
-      }
+   //   }
 
-      if (stra.is_empty())
-      {
+   //   if (stra.is_empty())
+   //   {
 
-         return "";
+   //      return "";
 
-      }
+   //   }
 
-      string str;
+   //   string str;
 
-      str = stra[0];
+   //   str = stra[0];
 
-      stra.remove_at(0);
+   //   stra.remove_at(0);
 
-      file_save_stra(path, stra);
+   //   file_save_stra(path, stra);
 
-      return str;
+   //   return str;
 
-   }
+   //}
 
 
    int bootstrap::admin_main(string strPlatform)
@@ -381,7 +381,7 @@ namespace app_app
          while (true)
          {
 
-            string str = pick_command_line();
+            string str = System.pick_command_line();
 
             if (str.is_empty())
             {
@@ -547,7 +547,7 @@ namespace app_app
 
       ::file::path pathSpaAdminName = pathSpaAdmin.name();
 
-      iFullInstallationMaxTryCount = 3;
+      iFullInstallationMaxTryCount = 200;
 
       iFullInstallationTryCount = 0;
 
@@ -631,7 +631,7 @@ namespace app_app
 
             string strId;
 
-            string wstr(pick_command_line());
+            string wstr(System.pick_command_line());
 
             if (wstr.is_empty())
             {

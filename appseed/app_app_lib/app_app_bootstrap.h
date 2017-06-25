@@ -44,8 +44,8 @@ namespace app_app
       virtual ~bootstrap();
 
 
-      void add_command_line(string str);
-      string pick_command_line();
+      //void add_command_line(string str);
+      //string pick_command_line();
 
       virtual int app_app();
       virtual int app_app_x86();
