@@ -682,9 +682,6 @@
     <ProjectReference Include="..\..\..\app\appseed\core\core.vcxproj">
       <Project>{e000ffaf-392f-4e32-bf51-fd7ed638991f}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\app_common\app_common.vcxproj">
-      <Project>{1ab44f85-c63d-4f5e-bb76-b416dc4da2cb}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h" />
