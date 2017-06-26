@@ -528,7 +528,7 @@ namespace production
 
          pdoc->get_operation_doc(true)->m_thread.queue_copy(
             m_pproduction->m_straFiles, 
-            "C:\\ca2\\vrel\\" + m_pproduction->m_strVersion + "\\" + m_pproduction->m_strFormatBuild, 
+            "C:\\ca2\\vrel\\" + m_pproduction->m_strConfiguration + "\\" + m_pproduction->m_strFormatBuild, 
             strBase,
             false,
             true, 
