@@ -201,17 +201,17 @@ namespace production
 
             //if (m_eversion == version_basis)
             //{
-            //   set["post"]["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #882266; display: block; margin-bottom: 1.5em;\">Retried " + ::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!</span>";
+            //   set["post"]["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #882266; display: block; margin-bottom: 1.5em;\">Retried " + ::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strConfiguration + " build command!</span>";
             //}
             //else
             //{
-            //   set["post"]["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">Retried " + ::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!</span>";
+            //   set["post"]["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">Retried " + ::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strConfiguration + " build command!</span>";
             //}
 
             //Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
 
-            //string strTwit =  version_to_international_datetime(m_strStartTime) + " UTC Retried " + ::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strVersion + " build command!";
+            //string strTwit =  version_to_international_datetime(m_strStartTime) + " UTC Retried " + ::str::from(m_iGlobalRetry) + " times - \"giving up\" " + m_strConfiguration + " build command!";
 
             //twitter_twit(strTwit);
 
@@ -267,7 +267,7 @@ namespace production
 
       //   ::datetime::time timeNow = ::datetime::time::get_current_time();
 
-      //   string strTwit = "General failure of build " + version_to_international_datetime(m_strBuild) + ". Starting " + m_strTry + " retry of build " + m_strVersion + " - " + System.datetime().international().get_gmt_date_time(timeNow) + ". More details at http://status.ca2.cc/" + m_strStatusEmail;
+      //   string strTwit = "General failure of build " + version_to_international_datetime(m_strBuild) + ". Starting " + m_strTry + " retry of build " + m_strConfiguration + " - " + System.datetime().international().get_gmt_date_time(timeNow) + ". More details at http://status.ca2.cc/" + m_strStatusEmail;
 
       //   twitter_twit(strTwit);*/
 
@@ -309,14 +309,14 @@ namespace production
             m_strStdPostColor = "color: #882277;";
             m_strBackPostColor = "background-color: #CFC2CF;";
             m_strEmpPostColor = "color: #660060;";
-            m_strVersion = "basis";
+            m_strConfiguration = "basis";
          }
          else
          {
             m_strStdPostColor = "color: #448855;";
             m_strBackPostColor = "background-color: #A0CCAA;";
             m_strEmpPostColor = "color: #007700;";
-            m_strVersion = "stage";
+            m_strConfiguration = "stage";
          }
 
          bool bMediumSizeStatusText = false;
@@ -633,11 +633,11 @@ namespace production
 
                if(m_iGlobalRetry <= 0)
                {
-                  strTwit = "ca2twit-lib : new " + m_strVersion + " build starting " + version_to_international_datetime(m_strBuild) + " UTC. More details at http://status.ca2.cc/" + m_strStatusEmail;
+                  strTwit = "ca2twit-lib : new " + m_strConfiguration + " build starting " + version_to_international_datetime(m_strBuild) + " UTC. More details at http://status.ca2.cc/" + m_strStatusEmail;
                }
                else
                {
-                  strTwit = "ca2twit-lib : " + m_strTry + " automatic retry " + m_strVersion + " build starting " + version_to_international_datetime(m_strBuild) + " UTC. More details at http://status.ca2.cc/" + m_strStatusEmail;
+                  strTwit = "ca2twit-lib : " + m_strTry + " automatic retry " + m_strConfiguration + " build starting " + version_to_international_datetime(m_strBuild) + " UTC. More details at http://status.ca2.cc/" + m_strStatusEmail;
                }
 
                twitter_twit(strTwit);*/
@@ -659,7 +659,7 @@ namespace production
 
             string strStatus;
             m_strTag = strTime + " " + strSVNKey;
-            m_strTagPath = ::file::path("C:\\ca2\\build")/ m_strVersion,m_strFormatBuild + ".txt";
+            m_strTagPath = ::file::path("C:\\ca2\\build")/ m_strConfiguration,m_strFormatBuild + ".txt";
 
             string strBuildH;
             strBuildH.Format("-c1-production -c2-producer -t12n-producing -mmmi- %s",m_strTag);
@@ -673,11 +673,11 @@ namespace production
             strBuildH += "\r\n";
             strBuildH += "\r\n";
 
-         m_strVrel = "C:\\ca2\\vrel\\" + m_strVersion + "\\" + m_strFormatBuild;
+         m_strVrel = "C:\\ca2\\vrel\\" + m_strConfiguration + "\\" + m_strFormatBuild;
 
-         m_strCCAuth = "C:\\home\\ccvotagus\\ca2_spa\\" + m_strVersion + "\\" + m_strFormatBuild;
-         m_strCCVrel = "C:\\home\\ccvotagus\\ca2_spa\\" + m_strVersion + "";
-         m_strCCVrelNew = "C:\\home\\ccvotagus\\ca2_spa\\ccvrelnew\\" + m_strVersion + "\\" + m_strFormatBuild;
+         m_strCCAuth = "C:\\home\\ccvotagus\\ca2_spa\\" + m_strConfiguration + "\\" + m_strFormatBuild;
+         m_strCCVrel = "C:\\home\\ccvotagus\\ca2_spa\\" + m_strConfiguration + "";
+         m_strCCVrelNew = "C:\\home\\ccvotagus\\ca2_spa\\ccvrelnew\\" + m_strConfiguration + "\\" + m_strFormatBuild;
 
          uint32_t dwExitCode;
 
@@ -759,7 +759,7 @@ namespace production
          //   System.dir().element() / "time\\spaignition_update.txt"), NULL, post, headers, ::ca2::app(get_app()).user()->get_user());
          /*add_status("Cleaning ccvotagus folder...");
          ::process::process_sp process(allocer());
-         Application.file().put_contents(strPath, "rmdir /s /q C:\\ca2\\vrel\\" + m_strVersion);
+         Application.file().put_contents(strPath, "rmdir /s /q C:\\ca2\\vrel\\" + m_strConfiguration);
          if (!process->create_child_process(strPath, false))
          {
             uint32_t dw = GetLastError();
@@ -785,8 +785,8 @@ namespace production
          m_straFiles.remove_all();
 
 
-         get_file_list(m_strBase, "time/Win32/" + m_strVersion, m_straFiles);
-         get_file_list(m_strBase, "time/x64/" + m_strVersion, m_straFiles);
+         get_file_list(m_strBase, "time/Win32/" + m_strConfiguration, m_straFiles);
+         get_file_list(m_strBase, "time/x64/" + m_strConfiguration, m_straFiles);
          get_file_list(m_strBase, "app/stage/metastage", m_straFiles);
 
 
@@ -965,8 +965,8 @@ namespace production
          {
          return 1;
          }*/
-         Application.dir().mk("C:\\home\\ccvotagus\\ca2_spa\\"+m_strVersion+"\\app\\");
-         Application.file().put_contents("C:\\home\\ccvotagus\\ca2_spa\\"+m_strVersion+"\\app\\build.txt", m_strBuild);
+         Application.dir().mk("C:\\home\\ccvotagus\\ca2_spa\\"+m_strConfiguration+"\\app\\");
+         Application.file().put_contents("C:\\home\\ccvotagus\\ca2_spa\\"+m_strConfiguration+"\\app\\build.txt", m_strBuild);
          Application.file().put_contents(m_strCCVrelNew + "\\app\\build.txt", m_strBuild);
          Application.dir().mk(m_strTagPath.folder());
          Application.file().put_contents(m_strTagPath, m_strTag);
@@ -1166,7 +1166,7 @@ namespace production
          //straServer.add("de-api.ca2.cc");
          straServer.add("a.ca2.com.de");
 
-         if(m_strVersion == "basis")
+         if(m_strConfiguration == "basis")
          {
 
             straStatus.swap(0,1);
@@ -1221,9 +1221,9 @@ namespace production
          //straServer.add("cyan-api.ca2.cc");
 
 
-         string strObject1 = "/api/production/main/release_ca2?authnone=1&version=" + m_strVersion + "&build=" + m_strFormatBuild;
+         string strObject1 = "/api/production/main/release_ca2?authnone=1&configuration=" + m_strConfiguration + "&build=" + m_strFormatBuild;
 
-         string strObject = "/api/production/mirror/release_ca2?authnone=1&version=" + m_strVersion + "&build=" + m_strFormatBuild;
+         string strObject = "/api/production/mirror/release_ca2?authnone=1&configuration=" + m_strConfiguration + "&build=" + m_strFormatBuild;
 
          {
 
@@ -1310,8 +1310,8 @@ namespace production
          add_status("Making available debugging symbols");
          {
 
-            string strCmdLine = "\"C:\\bergedge\\hi5\\program\\hstart.exe\" \"C:\\bergedge\\lemon\\windows\\scripts\\production\\" + m_strVersion + "\\index.bat\"";
-            string strDir = "C:\\bergedge\\lemon\\windows\\scripts\\production\\" + m_strVersion + "\\";
+            string strCmdLine = "\"C:\\bergedge\\hi5\\program\\hstart.exe\" \"C:\\bergedge\\lemon\\windows\\scripts\\production\\" + m_strConfiguration + "\\index.bat\"";
+            string strDir = "C:\\bergedge\\lemon\\windows\\scripts\\production\\" + m_strConfiguration + "\\";
             System.process().launch(strCmdLine,SW_SHOWNORMAL,strDir);
 
          }
@@ -1723,8 +1723,8 @@ namespace production
 
       stringa straStageDir;
 
-      straStageDir.add(m_strBase / "time/Win32" / + m_strVersion);
-      straStageDir.add(m_strBase / "time/x64" / + m_strVersion);
+      straStageDir.add(m_strBase / "time/Win32" / + m_strConfiguration);
+      straStageDir.add(m_strBase / "time/x64" / + m_strConfiguration);
 
       string strStatus;
 
@@ -2170,7 +2170,7 @@ namespace production
 
       ::file::listing straBase;
 
-      //::lemon::array::copy(straBase, ::install::get_app_app_install_module_list(pszPlatform, m_strVersion));
+      //::lemon::array::copy(straBase, ::install::get_app_app_install_module_list(pszPlatform, m_strConfiguration));
       ::lemon::array::copy(straBase, ::install::get_app_app_install_module_list());
 
       for(index i = 0; i < straBase.get_count(); i++)
@@ -2342,7 +2342,7 @@ namespace production
 
       ::file::listing straBase;
 
-      //::lemon::array::copy(straBase,::install::get_app_app_install_module_list(strPlatform, m_strVersion));
+      //::lemon::array::copy(straBase,::install::get_app_app_install_module_list(strPlatform, m_strConfiguration));
       ::lemon::array::copy(straBase, ::install::get_app_app_install_module_list());
 
       straBase.add("npca2.dll");
@@ -2360,7 +2360,7 @@ namespace production
 
          strFile = strDir /  "npca2/plugins" / strLibrary;
 
-         Application.file().copy(strFile, m_strVrel / "time" / stage_platform(strPlatform) / m_strVersion / strLibrary);
+         Application.file().copy(strFile, m_strVrel / "time" / stage_platform(strPlatform) / m_strConfiguration / strLibrary);
 
          strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
 
@@ -2406,7 +2406,7 @@ namespace production
 
       create_xpi(pszPlatform, false);
 
-      Application.file().copy(m_strVrel / "time" / stage_platform(strPlatform) / m_strVersion / "npca2.xpi", strDir /  "npca2.xpi");
+      Application.file().copy(m_strVrel / "time" / stage_platform(strPlatform) / m_strConfiguration / "npca2.xpi", strDir /  "npca2.xpi");
       Application.file().copy(m_strCCVrel / "plugin" / strPlatform / "npca2_windows.rdf", strDir /  "npca2_windows.rdf");
 
       return true;
@@ -2550,7 +2550,7 @@ namespace production
       string str;
       ::process::process_sp process(allocer());
       ::file::path strPath;
-      strPath = m_strBase /  "nodeapp\\stage\\script\\makecab" + string(pszPlatform) + "_" + m_strVersion + ".bat";
+      strPath = m_strBase /  "nodeapp\\stage\\script\\makecab" + string(pszPlatform) + "_" + m_strConfiguration + ".bat";
       if (!process->create_child_process(strPath, false,strPath.folder()))
       {
          uint32_t dw = GetLastError();
@@ -2569,7 +2569,7 @@ namespace production
          i++;
       }
 
-      Application.file().copy(m_strVrel / "time" / stage_platform(strPlatform) / m_strVersion / "iexca2.cab", m_strBase /  "time\\iexca2" / strPlatform / "iexca2.cab");
+      Application.file().copy(m_strVrel / "time" / stage_platform(strPlatform) / m_strConfiguration / "iexca2.cab", m_strBase /  "time\\iexca2" / strPlatform / "iexca2.cab");
 
       return true;
 
@@ -2643,7 +2643,7 @@ namespace production
 
       ::file::listing straBase;
 
-      //::lemon::array::copy(straBase,::install::get_app_app_install_module_list(strPlatform, m_strVersion));
+      //::lemon::array::copy(straBase,::install::get_app_app_install_module_list(strPlatform, m_strConfiguration));
       ::lemon::array::copy(straBase, ::install::get_app_app_install_module_list());
 
       straBase.add("npca2.dll");
@@ -2661,7 +2661,7 @@ namespace production
 
          strFile = strDir / "npca2/plugins" / strLibrary;
 
-         Application.file().copy(strFile,m_strVrel / "time" / stage_platform(strPlatform) / m_strVersion / strLibrary);
+         Application.file().copy(strFile,m_strVrel / "time" / stage_platform(strPlatform) / m_strConfiguration / strLibrary);
 
          strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
 
@@ -2744,7 +2744,7 @@ namespace production
       }
 
 
-      Application.file().copy(m_strVrel / "time" / stage_platform(strPlatform) / m_strVersion / "crxca2.crx",strDir.folder() / "crxca2.crx");
+      Application.file().copy(m_strVrel / "time" / stage_platform(strPlatform) / m_strConfiguration / "crxca2.crx",strDir.folder() / "crxca2.crx");
 
       return true;
    }

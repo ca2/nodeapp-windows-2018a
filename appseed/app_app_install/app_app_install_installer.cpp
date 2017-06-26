@@ -2250,7 +2250,7 @@ namespace app_app_install
       strUrl += m_strLocale;
       strUrl += "&schema=";
       strUrl += m_strSchema;
-      strUrl += "&version=";
+      strUrl += "&configuration=";
       strUrl += System.get_system_configuration();
 
       string str;
@@ -2307,7 +2307,7 @@ namespace app_app_install
 
       iRetry++;
 
-      m_strBuild = http_get(m_strSpaIgnitionBaseUrl + "/query?node=build&sessid=noauth&version=" + System.get_system_configuration() + "&platform=" + strPlatform, false);
+      m_strBuild = http_get(m_strSpaIgnitionBaseUrl + "/query?node=build&sessid=noauth&configuration=" + System.get_system_configuration() + "&platform=" + strPlatform, false);
 
       m_strBuild.trim();
 
@@ -2409,7 +2409,7 @@ namespace app_app_install
       iRetry++;
 
       strUrl = m_strSpaIgnitionBaseUrl + "/query?node=build__host_and_application_name&sessid=noauth";
-      strUrl += "&version=";
+      strUrl += "&configuration=";
       strUrl += System.get_system_configuration();
       strUrl += "&appid=";
       strUrl += m_strAppId;
@@ -2647,7 +2647,7 @@ namespace app_app_install
       }
       string strUrl;
 
-      strUrl = m_strSpaIgnitionBaseUrl + "/query?node=spa_host&version=" + System.get_system_configuration();
+      strUrl = m_strSpaIgnitionBaseUrl + "/query?node=spa_host&configuration=" + System.get_system_configuration();
 
       if (!m_strLastHost.is_empty())
       {
@@ -2673,7 +2673,7 @@ namespace app_app_install
             else
             {
 
-               strUrl = m_strSpaIgnitionBaseUrl + "/query?node=spa_host&version=" + System.get_system_configuration();
+               strUrl = m_strSpaIgnitionBaseUrl + "/query?node=spa_host&configuration=" + System.get_system_configuration();
 
             }
 

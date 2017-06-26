@@ -1131,7 +1131,7 @@ namespace app_app
 
    //   iRetry++;
 
-   //   strBuildNumber = http_get(strSpaIgnitionBaseUrl + "/query?node=build&version=" + strVersion);
+   //   strBuildNumber = http_get(strSpaIgnitionBaseUrl + "/query?node=build&configuration=" + strVersion);
 
    //   ::str::_008Trim(strBuildNumber);
 

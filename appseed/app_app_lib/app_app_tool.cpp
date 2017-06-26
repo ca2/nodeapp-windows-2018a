@@ -100,7 +100,7 @@ namespace app_app
 
       //string strUrl;
 
-      //strUrl = "https://" + m_strVersion + "-server.ca2.cc/api/spaignition/md5a?authnone&version=" + m_strVersion + "&stage=";
+      //strUrl = "https://" + m_strVersion + "-server.ca2.cc/api/spaignition/md5a?authnone&configuration=" + m_strVersion + "&stage=";
       //strUrl += url().url_encode(string(pszTemplate));
       //strUrl += "&build=";
       //strUrl += url().url_encode(string(pszFormatBuild));
@@ -111,7 +111,7 @@ namespace app_app
 
       string strUrl;
 
-      strUrl = "https://" + System.get_system_configuration() + "-server.ca2.cc/api/spaignition/md5a?authnone&version=" + System.get_system_configuration() + "&stage=";
+      strUrl = "https://" + System.get_system_configuration() + "-server.ca2.cc/api/spaignition/md5a?authnone&configuration=" + System.get_system_configuration() + "&stage=";
       strUrl += System.url().url_encode(straTemplate.implode(","));
       strUrl += "&build=";
       strUrl += System.url().url_encode(strFormatBuild);
@@ -261,7 +261,7 @@ namespace app_app
 
          /*string strUrl;
 
-         strUrl = "https://" + m_strVersion + "-server.ca2.cc/api/spaignition/md5a?authnone&version=" + m_strVersion + "&stage=";
+         strUrl = "https://" + m_strVersion + "-server.ca2.cc/api/spaignition/md5a?authnone&configuration=" + m_strVersion + "&stage=";
          strUrl += url().url_encode(straTemplate.implode(","));
          strUrl += "&build=";
          strUrl += url().url_encode(strFormatBuild);

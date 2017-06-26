@@ -72,7 +72,7 @@ namespace production
       string                  m_strStdPostColor;
       string                  m_strBackPostColor;
       string                  m_strEmpPostColor;
-      string                  m_strVersion;
+      string                  m_strConfiguration;
       string                  m_strStatusEmail;
       int32_t                 m_iGlobalRetry;
       string                  m_strTry;
