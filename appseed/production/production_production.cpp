@@ -1,5 +1,6 @@
 ﻿#include "framework.h"
 #include "core/user/hi5/hi5.h"
+#include <mmsystem.h>
 
 
 namespace production
@@ -135,6 +136,7 @@ namespace production
    int32_t production::run()
    {
 
+      PlaySoundW(L"C:\\bergedge\\hi5\\audio\\production_ready.wav", NULL, SND_FILENAME);
       string str;
 
       property_set set;
@@ -154,7 +156,7 @@ namespace production
             || !file_exists_dup(pathMirrorStatus))
          {
 
-            MessageBox(NULL, "both " + pathMirror + " and " + pathMirrorStatus + " files must exist and maybe empty...","The h***!!", MB_ICONEXCLAMATION);
+            MessageBox(NULL, "both " + pathMirror + " and " + pathMirrorStatus + " files must exist and maybe empty...", "The h***!!", MB_ICONEXCLAMATION);
             return -1;
 
          }
@@ -222,54 +224,54 @@ namespace production
 
          add_status("General build failure. Restarting");
 
-      ///*   if (m_iGlobalRetry == 1)
-      //   {
-      //      m_strTry = "1st";
-      //   }
-      //   else if (m_iGlobalRetry == 2)
-      //   {
-      //      m_strTry = "2nd";
-      //   }
-      //   else if (m_iGlobalRetry == 3)
-      //   {
-      //      m_strTry = "3rd";
-      //   }
-      //   else
-      //   {
-      //      m_strTry = ::str::from(m_iGlobalRetry) + "th";
-      //   }
+         ///*   if (m_iGlobalRetry == 1)
+         //   {
+         //      m_strTry = "1st";
+         //   }
+         //   else if (m_iGlobalRetry == 2)
+         //   {
+         //      m_strTry = "2nd";
+         //   }
+         //   else if (m_iGlobalRetry == 3)
+         //   {
+         //      m_strTry = "3rd";
+         //   }
+         //   else
+         //   {
+         //      m_strTry = ::str::from(m_iGlobalRetry) + "th";
+         //   }
 
-      //   if (m_eversion == version_basis)
-      //   {
-      //      set["post"]["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #222218; display: block; margin-bottom: 1.5em;\">General build failure. Starting " + m_strTry + " retry of new <a href=\"http://code.ca2.cc/\" class=\"fluidbasis\" >basis</a> release.<br />";
-      //   }
-      //   else
-      //   {
-      //      set["post"]["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #222218; display: block; margin-bottom: 1.5em;\">General build failure. Starting " + m_strTry + " retry  of new <a href=\"http://ca2.cc/\">stage</a> release.<br />";
-      //   }
+         //   if (m_eversion == version_basis)
+         //   {
+         //      set["post"]["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #222218; display: block; margin-bottom: 1.5em;\">General build failure. Starting " + m_strTry + " retry of new <a href=\"http://code.ca2.cc/\" class=\"fluidbasis\" >basis</a> release.<br />";
+         //   }
+         //   else
+         //   {
+         //      set["post"]["new_status"] = "<div style=\"display: block; " + strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #555550;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #222218; display: block; margin-bottom: 1.5em;\">General build failure. Starting " + m_strTry + " retry  of new <a href=\"http://ca2.cc/\">stage</a> release.<br />";
+         //   }
 
-      //   if (m_straStatus.get_count() > 1)
-      //   {
-      //      single_lock sl(&m_mutexStatus,TRUE);
-      //      set["post"]["new_status"] = set["post"]["new_status"] + "Last Stati:<br />";
-      //      for (::count i = MIN(5, m_straStatus.get_count() - 1); i >= 1; i--)
-      //      {
-      //         set["post"]["new_status"] = set["post"]["new_status"] + System.m_phtml->entities(m_straStatus.element_at(i));
-      //         set["post"]["new_status"] = set["post"]["new_status"] + "<br />";
-      //      }
-      //      set["post"]["new_status"] = set["post"]["new_status"] + "<br />";
-      //      set["post"]["new_status"] = set["post"]["new_status"] + "</span>";
+         //   if (m_straStatus.get_count() > 1)
+         //   {
+         //      single_lock sl(&m_mutexStatus,TRUE);
+         //      set["post"]["new_status"] = set["post"]["new_status"] + "Last Stati:<br />";
+         //      for (::count i = MIN(5, m_straStatus.get_count() - 1); i >= 1; i--)
+         //      {
+         //         set["post"]["new_status"] = set["post"]["new_status"] + System.m_phtml->entities(m_straStatus.element_at(i));
+         //         set["post"]["new_status"] = set["post"]["new_status"] + "<br />";
+         //      }
+         //      set["post"]["new_status"] = set["post"]["new_status"] + "<br />";
+         //      set["post"]["new_status"] = set["post"]["new_status"] + "</span>";
 
-      //   }
+         //   }
 
 
-      //   Application.http().get("http://api.ca2.cc/status/insert", str, set);
+         //   Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
-      //   ::datetime::time timeNow = ::datetime::time::get_current_time();
+         //   ::datetime::time timeNow = ::datetime::time::get_current_time();
 
-      //   string strTwit = "General failure of build " + version_to_international_datetime(m_strBuild) + ". Starting " + m_strTry + " retry of build " + m_strConfiguration + " - " + System.datetime().international().get_gmt_date_time(timeNow) + ". More details at http://status.ca2.cc/" + m_strStatusEmail;
+         //   string strTwit = "General failure of build " + version_to_international_datetime(m_strBuild) + ". Starting " + m_strTry + " retry of build " + m_strConfiguration + " - " + System.datetime().international().get_gmt_date_time(timeNow) + ". More details at http://status.ca2.cc/" + m_strStatusEmail;
 
-      //   twitter_twit(strTwit);*/
+         //   twitter_twit(strTwit);*/
 
       }
 
@@ -366,7 +368,7 @@ namespace production
 
 
          /*
-         
+
          {
 
             string strContentsSrc = m_strBase /  "include", "product.version.config.h");
@@ -378,20 +380,20 @@ namespace production
             if (m_eversion == version_basis)
             {
 
-               strContentsSet = "#pragma once\n\n\n#define CA2_PLATFORM_VERSION CA2_BASIS\n\n\n\n";
+              strContentsSet = "#pragma once\n\n\n#define CA2_PLATFORM_VERSION CA2_BASIS\n\n\n\n";
 
             }
             else
             {
 
-               strContentsSet = "#pragma once\n\n\n#define CA2_PLATFORM_VERSION CA2_STAGE\n\n\n\n";
+              strContentsSet = "#pragma once\n\n\n#define CA2_PLATFORM_VERSION CA2_STAGE\n\n\n\n";
 
             }
 
             if (strContentsSet != strContentsGet)
             {
 
-               Application.file().put_contents(strContentsSrc, strContentsSet);
+              Application.file().put_contents(strContentsSrc, strContentsSet);
 
             }
 
@@ -421,7 +423,7 @@ namespace production
 
          }
 
-//         m_straRoot.filter([](const ::file::path & p) {return ::str::begins_ci(p.name(),"app-"); });
+         //         m_straRoot.filter([](const ::file::path & p) {return ::str::begins_ci(p.name(),"app-"); });
 
          m_straRoot.insert_at(0, "app");
 
@@ -439,13 +441,13 @@ namespace production
 
             bool bSkip1 = false;
 
-            if(!bSkip1 && m_iGlobalRetry <= 0)
+            if (!bSkip1 && m_iGlobalRetry <= 0)
             {
 
-               for(int32_t i = 0; i < m_straRoot.get_size(); i++)
+               for (int32_t i = 0; i < m_straRoot.get_size(); i++)
                {
 
-                  if(!sync_source(m_straRoot[i],NULL))
+                  if (!sync_source(m_straRoot[i], NULL))
                      return 1;
 
                }
@@ -458,19 +460,19 @@ namespace production
             string strTime;
             ::datetime::time time;
             time = m_timeStart;
-            time.FormatGmt(strTime,"%Y-%m-%d %H-%M-%S");
+            time.FormatGmt(strTime, "%Y-%m-%d %H-%M-%S");
             string strVerWin;
-            time.FormatGmt(strVerWin,"%Y,%m%d,%H%M,%S");
+            time.FormatGmt(strVerWin, "%Y,%m%d,%H%M,%S");
             string strSvnVersionCmd;
-            strSvnVersionCmd.Format("svnversion %s",m_strBase/"app");
+            strSvnVersionCmd.Format("svnversion %s", m_strBase / "app");
             m_strBuild = strTime;
             m_strFormatBuild = strTime;
-            m_strFormatBuild.replace(" ","_");
+            m_strFormatBuild.replace(" ", "_");
 
             {
 
                string strStatus;
-               strStatus.Format("Getting Revision: %s ...","app");
+               strStatus.Format("Getting Revision: %s ...", "app");
                add_status(strStatus);
 
             }
@@ -481,11 +483,11 @@ namespace production
             {
 
                string strStatus;
-               strStatus.Format("Revision of %s is %s","app",strRevision);
+               strStatus.Format("Revision of %s is %s", "app", strRevision);
                add_status(strStatus);
 
             }
-            if(str::from(atoi(strRevision)) != strRevision)
+            if (str::from(atoi(strRevision)) != strRevision)
             {
                // good pratice to initialize authentication of ca2status.com with account.ca2.cc auth information
                //string str;
@@ -498,22 +500,22 @@ namespace production
 
                //}
 
-            //{
+             //{
 
-            //   property_set set(get_app());
+             //   property_set set(get_app());
 
-            //   if(m_eversion == version_basis)
-            //   {
-            //      set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #552250;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #882266; display: block; margin-bottom: 1.5em;\">Check app working copy.</span>";
-            //   }
-            //   else
-            //   {
-            //      set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #22552F;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">Check app working copy.</span>";
-            //   }
+             //   if(m_eversion == version_basis)
+             //   {
+             //      set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #552250;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #882266; display: block; margin-bottom: 1.5em;\">Check app working copy.</span>";
+             //   }
+             //   else
+             //   {
+             //      set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #22552F;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">Check app working copy.</span>";
+             //   }
 
-            //   Application.http().get("http://api.ca2.cc/status/insert",str,set);
+             //   Application.http().get("http://api.ca2.cc/status/insert",str,set);
 
-            //}
+             //}
 
                return 4;
             }
@@ -522,12 +524,12 @@ namespace production
             string strSVN = "SVN" + strRevision;
             strSVN.trim();
 
-            if(m_iGlobalRetry <= 0 && m_strSubversionRevision == strSVN)
+            if (m_iGlobalRetry <= 0 && m_strSubversionRevision == strSVN)
             {
 
                iRetry++;
 
-               if(iRetry > 3)
+               if (iRetry > 3)
                   return 3;
 
                goto restart;
@@ -539,17 +541,17 @@ namespace production
 
             strSVNKey = "app:" + strSVN;
 
-            if(!bSkip1)
+            if (!bSkip1)
             {
 
-               for(int32_t i = 1; i < m_straRoot.get_size(); i++)
+               for (int32_t i = 1; i < m_straRoot.get_size(); i++)
                {
 
-                  strSvnVersionCmd.Format("svnversion %s",m_strBase / m_straRoot[i]);
+                  strSvnVersionCmd.Format("svnversion %s", m_strBase / m_straRoot[i]);
                   {
 
                      string strStatus;
-                     strStatus.Format("Getting Revision: %s ...",m_straRoot[i]);
+                     strStatus.Format("Getting Revision: %s ...", m_straRoot[i]);
                      add_status(strStatus);
 
                   }
@@ -558,7 +560,7 @@ namespace production
                   {
 
                      string strStatus;
-                     strStatus.Format("Revision of %s is %s",m_straRoot[i],strAddRevision);
+                     strStatus.Format("Revision of %s is %s", m_straRoot[i], strAddRevision);
                      add_status(strStatus);
 
                   }
@@ -573,7 +575,7 @@ namespace production
 
             m_bReleased = false;
             m_iLoop = -1;
-            m_timeStart.FormatGmt(m_strStartTime,"%Y-%m-%d %H-%M-%S");
+            m_timeStart.FormatGmt(m_strStartTime, "%Y-%m-%d %H-%M-%S");
             add_status("Build starting at " + version_to_international_datetime(m_strStartTime) + " - build version!");
 
             //{
@@ -610,37 +612,37 @@ namespace production
 
                //   string str;
 
-                  m_timeEnd = m_timeStart;
-                     string strEndTime;
+            m_timeEnd = m_timeStart;
+            string strEndTime;
 
-                  m_timeEnd.FormatGmt(strEndTime, "%Y-%m-%d %H-%M-%S");
+            m_timeEnd.FormatGmt(strEndTime, "%Y-%m-%d %H-%M-%S");
 
-               //if (m_eversion == version_basis)
-               //{
-               //   set["post"]["new_status"] = "<div style=\"display: block; background-color: #FFE0FF; \"><h2 style=\"margin-bottom:0px; color: #FF55CC;\">" + version_to_international_datetime(m_strBuild) + "</h2><span style=\"color: #882255; display: block; margin-bottom: 1.5em;\">" + m_strBuildTook + " and finished at " + strEndTime + "<br>New release of <a href=\"http://code.ca2.cc/\" class=\"fluidbasis\" >basis</a> applications labeled " + m_strBuild + " is ready for download through compatible gateways.<br>Check <a href=\"http://laboratory.ca2.cc/\" class=\"fluidbasis\" >laboratory.ca2.cc</a> or <a href=\"http://warehouse.ca2.cc/\" class=\"fluidbasis\" >warehouse.ca2.cc</a> for simple gateway implementations.</span></div>";
-               //}
-               //else
-               //{
-               //   set["post"]["new_status"] = "<div style=\"display: block; background-color: #E0FFCC; \"><h2 style=\"margin-bottom:0px; color: #55CCAA;\">" + version_to_international_datetime(m_strBuild) + "</h2><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">" + m_strBuildTook + " and finished at " + strEndTime + "<br>New release of <a href=\"http://ca2.cc/\">stage</a> applications labeled " + m_strBuild + " is ready for download through compatible gateways.<br>Check <a href=\"http://desktop.ca2.cc/\">desktop.ca2.cc</a> or <a href=\"http://store.ca2.cc/\">store.ca2.cc</a> for simple gateway implementations.</span></div";
-               //}
+            //if (m_eversion == version_basis)
+            //{
+            //   set["post"]["new_status"] = "<div style=\"display: block; background-color: #FFE0FF; \"><h2 style=\"margin-bottom:0px; color: #FF55CC;\">" + version_to_international_datetime(m_strBuild) + "</h2><span style=\"color: #882255; display: block; margin-bottom: 1.5em;\">" + m_strBuildTook + " and finished at " + strEndTime + "<br>New release of <a href=\"http://code.ca2.cc/\" class=\"fluidbasis\" >basis</a> applications labeled " + m_strBuild + " is ready for download through compatible gateways.<br>Check <a href=\"http://laboratory.ca2.cc/\" class=\"fluidbasis\" >laboratory.ca2.cc</a> or <a href=\"http://warehouse.ca2.cc/\" class=\"fluidbasis\" >warehouse.ca2.cc</a> for simple gateway implementations.</span></div>";
+            //}
+            //else
+            //{
+            //   set["post"]["new_status"] = "<div style=\"display: block; background-color: #E0FFCC; \"><h2 style=\"margin-bottom:0px; color: #55CCAA;\">" + version_to_international_datetime(m_strBuild) + "</h2><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">" + m_strBuildTook + " and finished at " + strEndTime + "<br>New release of <a href=\"http://ca2.cc/\">stage</a> applications labeled " + m_strBuild + " is ready for download through compatible gateways.<br>Check <a href=\"http://desktop.ca2.cc/\">desktop.ca2.cc</a> or <a href=\"http://store.ca2.cc/\">store.ca2.cc</a> for simple gateway implementations.</span></div";
+            //}
 
-               //Application.http().get("http://api.ca2.cc/status/insert", str, set);
+            //Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
-               //}
+            //}
 
 
      /*          string strTwit;
 
-               if(m_iGlobalRetry <= 0)
-               {
-                  strTwit = "ca2twit-lib : new " + m_strConfiguration + " build starting " + version_to_international_datetime(m_strBuild) + " UTC. More details at http://status.ca2.cc/" + m_strStatusEmail;
-               }
-               else
-               {
-                  strTwit = "ca2twit-lib : " + m_strTry + " automatic retry " + m_strConfiguration + " build starting " + version_to_international_datetime(m_strBuild) + " UTC. More details at http://status.ca2.cc/" + m_strStatusEmail;
-               }
+            if(m_iGlobalRetry <= 0)
+            {
+               strTwit = "ca2twit-lib : new " + m_strConfiguration + " build starting " + version_to_international_datetime(m_strBuild) + " UTC. More details at http://status.ca2.cc/" + m_strStatusEmail;
+            }
+            else
+            {
+               strTwit = "ca2twit-lib : " + m_strTry + " automatic retry " + m_strConfiguration + " build starting " + version_to_international_datetime(m_strBuild) + " UTC. More details at http://status.ca2.cc/" + m_strStatusEmail;
+            }
 
-               twitter_twit(strTwit);*/
+            twitter_twit(strTwit);*/
 
             //}
 
@@ -649,20 +651,20 @@ namespace production
 
             m_bEndStatus = false;
 
-            keep < bool > keepFinishedFalse(&m_bFinished,false,true,true);
+            keep < bool > keepFinishedFalse(&m_bFinished, false, true, true);
             string str;
             m_iBaseLen = m_strBase.get_length();
-            if(m_strBase.Right(1) != "/" && m_strBase.Right(1) != "\\")
+            if (m_strBase.Right(1) != "/" && m_strBase.Right(1) != "\\")
                m_iBaseLen++;
 
 
 
             string strStatus;
             m_strTag = strTime + " " + strSVNKey;
-            m_strTagPath = ::file::path("C:\\ca2\\build")/ m_strConfiguration,m_strFormatBuild + ".txt";
+            m_strTagPath = ::file::path("C:\\ca2\\build") / m_strConfiguration, m_strFormatBuild + ".txt";
 
             string strBuildH;
-            strBuildH.Format("-c1-production -c2-producer -t12n-producing -mmmi- %s",m_strTag);
+            strBuildH.Format("-c1-production -c2-producer -t12n-producing -mmmi- %s", m_strTag);
             strBuildH += " - ";
             strBuildH += Application.file().as_string(m_strBase / "app/stage" / "build_machine_pp_comment.txt");
             strBuildH += "#define THIS_PRODUCT_VERSION \"" + m_strTag + "\\0\"\r\n#define THIS_FILE_VERSION \"" + m_strTag + "\\0\"\r\n";
@@ -673,18 +675,72 @@ namespace production
             strBuildH += "\r\n";
             strBuildH += "\r\n";
 
-         m_strVrel = "C:\\ca2\\vrel\\" + m_strConfiguration + "\\" + m_strFormatBuild;
+            m_strVrel = "C:\\ca2\\vrel\\" + m_strConfiguration + "\\" + m_strFormatBuild;
 
-         m_strCCAuth = "C:\\home\\ccvotagus\\ca2_spa\\" + m_strConfiguration + "\\" + m_strFormatBuild;
-         m_strCCVrel = "C:\\home\\ccvotagus\\ca2_spa\\" + m_strConfiguration + "";
-         m_strCCVrelNew = "C:\\home\\ccvotagus\\ca2_spa\\ccvrelnew\\" + m_strConfiguration + "\\" + m_strFormatBuild;
+            m_strCCAuth = "C:\\home\\ccvotagus\\ca2_spa\\" + m_strConfiguration + "\\" + m_strFormatBuild;
+            m_strCCVrel = "C:\\home\\ccvotagus\\ca2_spa\\" + m_strConfiguration + "";
+            m_strCCVrelNew = "C:\\home\\ccvotagus\\ca2_spa\\ccvrelnew\\" + m_strConfiguration + "\\" + m_strFormatBuild;
 
-         uint32_t dwExitCode;
+            uint32_t dwExitCode;
 
-         int32_t i;
-         if (m_bClean)
-         {
-            add_status("Cleaning ca2 fontopus ccvotagus ...");
+            int32_t i;
+            if (m_bClean)
+            {
+               add_status("Cleaning ca2 fontopus ccvotagus ...");
+               //{
+               //   string str;
+
+
+               //   property_set set;
+
+               //   set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Cleaning...</span></div>";
+
+               //   Application.http().get("http://api.ca2.cc/status/insert", str, set);
+
+               //}
+               ::process::process_sp process(allocer());
+               string strPath;
+               strPath = System.dir().element() / "nodeapp\\stage\\script\\stage_clean.bat";
+               if (!process->create_child_process(strPath, false))
+               {
+                  uint32_t dw = GetLastError();
+                  string str;
+                  str.Format("Error creating clean process: %d", dw);
+                  add_status(str);
+                  return 0;
+               }
+               i = 1;
+               while (!process->has_exited(&dwExitCode))
+               {
+                  Sleep(5000);
+                  str.Format("%d Cleaning ca2 fontopus ccvotagus ...", i);
+                  add_status(str);
+                  i++;
+               }
+            }
+
+            //Application.dir().mk(m_strBase /  "time"));
+            Application.file().put_contents(m_strBase / "app\\build.txt", m_strBuild);
+            Application.file().put_contents_utf8(m_strBase / "app\\this_version_info.h", strBuildH);
+            Application.file().put_contents_utf8(m_strBase / "app\\this_version_info.txt", strBuildH);
+
+            update_rc_file_version(m_strBase / "app\\appseed\\base\\base.rc");
+            update_rc_file_version(m_strBase / "app-core\\appseed\\iexca2\\iexca2.rc");
+            update_rc_file_version(m_strBase / "nodeapp\\appseed\\app_app_install\\app_app_install.rc");
+            update_rc_file_version(m_strBase / "nodeapp\\appseed\\draw2d_gdiplus\\draw2d_gdiplus.rc");
+
+            if (!commit_for_new_build_and_new_release())
+               return 2;
+
+
+            m_strSubversionRevision = "SVN" + str::from(atoi(strRevision) + 1);
+
+            //if (m_bBuild)
+            {
+               //build()
+               build("nodeapp");
+            }
+
             //{
             //   string str;
 
@@ -696,88 +752,34 @@ namespace production
             //   Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
             //}
+
+            add_status("Cleaning site...");
+            ::file::path strPath = System.dir().element() / "time\\stage\\app\\matter\\job.bat";
+
+
+            //System.http().ms_download("http://api.ca2.cc/spaignition/clean", 
+            //   System.dir().element() / "time\\spaignition_update.txt"), NULL, post, headers, ::ca2::app(get_app()).user()->get_user());
+            /*add_status("Cleaning ccvotagus folder...");
             ::process::process_sp process(allocer());
-            string strPath;
-            strPath = System.dir().element() / "nodeapp\\stage\\script\\stage_clean.bat";
+            Application.file().put_contents(strPath, "rmdir /s /q C:\\ca2\\vrel\\" + m_strConfiguration);
             if (!process->create_child_process(strPath, false))
             {
                uint32_t dw = GetLastError();
                string str;
-               str.Format("Error creating clean process: %d", dw);
+               str.Format("Error creating process: %d", dw);
                add_status(str);
                return 0;
             }
             i = 1;
             while (!process->has_exited(&dwExitCode))
             {
-               Sleep(5000);
-               str.Format("%d Cleaning ca2 fontopus ccvotagus ...", i);
+               Sleep(500);
+               str.Format("%d Cleaning ccvotagus folder ...", i);
                add_status(str);
                i++;
-            }
+            }*/
+
          }
-
-         //Application.dir().mk(m_strBase /  "time"));
-         Application.file().put_contents(m_strBase /  "app\\build.txt", m_strBuild);
-         Application.file().put_contents_utf8(m_strBase /  "app\\this_version_info.h", strBuildH);
-         Application.file().put_contents_utf8(m_strBase /  "app\\this_version_info.txt", strBuildH);
-
-         update_rc_file_version(m_strBase / "app\\appseed\\base\\base.rc");
-         update_rc_file_version(m_strBase / "app-core\\appseed\\iexca2\\iexca2.rc");
-         update_rc_file_version(m_strBase / "nodeapp\\appseed\\app_app_install\\app_app_install.rc");
-         update_rc_file_version(m_strBase / "nodeapp\\appseed\\draw2d_gdiplus\\draw2d_gdiplus.rc");
-
-         if (!commit_for_new_build_and_new_release())
-            return 2;
-
-
-         m_strSubversionRevision = "SVN" + str::from(atoi(strRevision) + 1);
-
-         //if (m_bBuild)
-         {
-            //build()
-            build("nodeapp");
-         }
-
-         //{
-         //   string str;
-
-
-         //   property_set set;
-
-         //   set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h5 style=\"margin-bottom:0px; " + m_strEmpPostColor + "\">" + version_to_international_datetime(m_strStartTime) + "</h5><span style=\"" + m_strStdPostColor + m_strBackPostColor + " display: block; margin-bottom: 0.95em;\">" + version_to_international_datetime(::datetime::time::get_current_time().FormatGmt("%Y-%m-%d %H-%M-%S")) + " Cleaning...</span></div>";
-
-         //   Application.http().get("http://api.ca2.cc/status/insert", str, set);
-
-         //}
-
-         add_status("Cleaning site...");
-         ::file::path strPath = System.dir().element() / "time\\stage\\app\\matter\\job.bat";
-
-
-         //System.http().ms_download("http://api.ca2.cc/spaignition/clean", 
-         //   System.dir().element() / "time\\spaignition_update.txt"), NULL, post, headers, ::ca2::app(get_app()).user()->get_user());
-         /*add_status("Cleaning ccvotagus folder...");
-         ::process::process_sp process(allocer());
-         Application.file().put_contents(strPath, "rmdir /s /q C:\\ca2\\vrel\\" + m_strConfiguration);
-         if (!process->create_child_process(strPath, false))
-         {
-            uint32_t dw = GetLastError();
-            string str;
-            str.Format("Error creating process: %d", dw);
-            add_status(str);
-            return 0;
-         }
-         i = 1;
-         while (!process->has_exited(&dwExitCode))
-         {
-            Sleep(500);
-            str.Format("%d Cleaning ccvotagus folder ...", i);
-            add_status(str);
-            i++;
-         }*/
-
-                  }
 
 
 
@@ -807,7 +809,7 @@ namespace production
          }
          TRACE("\n");
          string strStatus;
-         
+
          ::file::path pathTarget;
 
          ::count cDirMkErrorCount = 0;
@@ -815,10 +817,10 @@ namespace production
 
          int iBaseLen = m_strBase.length();
 
-         if(m_strBase.ends_ci("\\") || m_strBase.ends_ci("/"))
+         if (m_strBase.ends_ci("\\") || m_strBase.ends_ci("/"))
          {
-            
-            iBaseLen ++;
+
+            iBaseLen++;
 
          }
 
@@ -836,16 +838,16 @@ namespace production
 
             pathFolder = pathTarget.folder();
 
-            if(pathFolder != pathLastFolder)
+            if (pathFolder != pathLastFolder)
             {
 
-               if(!::dir::is(pathTarget.folder()))
+               if (!::dir::is(pathTarget.folder()))
                {
 
-                  if(!::dir::mk(pathTarget.folder()))
+                  if (!::dir::mk(pathTarget.folder()))
                   {
 
-                     strStatus+="<1>";
+                     strStatus += "<1>";
 
                      cDirMkErrorCount++;
 
@@ -867,14 +869,14 @@ namespace production
 
             }
 
-            if(!::file_copy_dup(pathTarget,m_straFiles[i],true))
+            if (!::file_copy_dup(pathTarget, m_straFiles[i], true))
             {
-               strStatus+="<2>";
+               strStatus += "<2>";
                cFileCopyErrorCount++;
 
             }
 
-            if(strStatus.is_empty())
+            if (strStatus.is_empty())
             {
 
                strStatus = "ok";
@@ -883,10 +885,10 @@ namespace production
             output_debug_string(strStatus + " " + m_straFiles[i] + "\n");
          }
 
-         if(cDirMkErrorCount == 0 && cFileCopyErrorCount == 0)
+         if (cDirMkErrorCount == 0 && cFileCopyErrorCount == 0)
          {
-            
-            output_debug_string("100% Successfull file copy batch to \""+m_strVrel+"\"\n");
+
+            output_debug_string("100% Successfull file copy batch to \"" + m_strVrel + "\"\n");
 
          }
          else
@@ -910,9 +912,9 @@ namespace production
          //   Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
          //}
-      //}
-      //else if (m_iStep == 2)
-      //{
+       //}
+       //else if (m_iStep == 2)
+       //{
          string m_strStartTime;
          m_timeStart.FormatGmt(m_strStartTime, "%Y-%m-%d %H-%M-%S");
          //{
@@ -965,8 +967,8 @@ namespace production
          {
          return 1;
          }*/
-         Application.dir().mk("C:\\home\\ccvotagus\\ca2_spa\\"+m_strConfiguration+"\\app\\");
-         Application.file().put_contents("C:\\home\\ccvotagus\\ca2_spa\\"+m_strConfiguration+"\\app\\build.txt", m_strBuild);
+         Application.dir().mk("C:\\home\\ccvotagus\\ca2_spa\\" + m_strConfiguration + "\\app\\");
+         Application.file().put_contents("C:\\home\\ccvotagus\\ca2_spa\\" + m_strConfiguration + "\\app\\build.txt", m_strBuild);
          Application.file().put_contents(m_strCCVrelNew + "\\app\\build.txt", m_strBuild);
          Application.dir().mk(m_strTagPath.folder());
          Application.file().put_contents(m_strTagPath, m_strTag);
@@ -1134,7 +1136,7 @@ namespace production
 
 
          }
-         
+
 
          m_bEndProduction = true;
 
@@ -1146,17 +1148,17 @@ namespace production
 
 
 
-//         178.33.157.33 fr - api.ca2.cc
-  //          178.33.157.34 de - api.ca2.cc
-    //        158.69.159.130 west - api.ca2.cc
-      //      158.69.159.129 east - api.ca2.cc
+         //         178.33.157.33 fr - api.ca2.cc
+           //          178.33.157.34 de - api.ca2.cc
+            //        158.69.159.130 west - api.ca2.cc
+              //      158.69.159.129 east - api.ca2.cc
 
 
-		 straStatus.add(unitext("100 releasing at North America netnode, Beauharnois, Canada"));
-		 straServer.add("ca2.cc");
+         straStatus.add(unitext("100 releasing at North America netnode, Beauharnois, Canada"));
+         straServer.add("ca2.cc");
 
-       straStatus.add(m_straMirrorStatus);
-       straServer.add(m_straMirror);
+         straStatus.add(m_straMirrorStatus);
+         straServer.add(m_straMirror);
          /*
          straStatus.add(unitext("330 releasing at netnode : France (Gravelines, France)"));
          //straServer.add("fr-api.ca2.cc");
@@ -1227,7 +1229,7 @@ namespace production
 
          {
 
-            for(index i = 0; i < straStatus.get_count(); i++)
+            for (index i = 0; i < straStatus.get_count(); i++)
             {
 
                string strStatus = straStatus[i];
@@ -1236,10 +1238,10 @@ namespace production
 
                add_status(strStatus);
 
-               if(i == 0)
+               if (i == 0)
                {
-                  
-                  class release * prelease = new class release(this,"https://" + strServer + strObject1,strServer);
+
+                  class release * prelease = new class release(this, "https://" + strServer + strObject1, strServer);
 
                   prelease->raw_run();
 
@@ -1247,7 +1249,7 @@ namespace production
                else
                {
 
-                  class release * prelease = new class release(this,"https://" + strServer + strObject,strServer);
+                  class release * prelease = new class release(this, "https://" + strServer + strObject, strServer);
 
                   prelease->begin();
 
@@ -1312,7 +1314,7 @@ namespace production
 
             string strCmdLine = "\"C:\\bergedge\\hi5\\program\\hstart.exe\" \"C:\\bergedge\\lemon\\windows\\scripts\\production\\" + m_strConfiguration + "\\index.bat\"";
             string strDir = "C:\\bergedge\\lemon\\windows\\scripts\\production\\" + m_strConfiguration + "\\";
-            System.process().launch(strCmdLine,SW_SHOWNORMAL,strDir);
+            System.process().launch(strCmdLine, SW_SHOWNORMAL, strDir);
 
          }
 
@@ -1323,10 +1325,10 @@ namespace production
          add_status("");
          add_status("");
 
-		 PlaySoundW(L"C:\\bergedge\\hi5\\audio\\production_ready.wav", NULL, SND_FILENAME);
+         PlaySoundW(L"C:\\bergedge\\hi5\\audio\\production_ready.wav", NULL, SND_FILENAME);
 
 
-		 Sleep(5000);
+         Sleep(5000);
 
          m_evFinish.SetEvent();
 
@@ -1379,7 +1381,7 @@ namespace production
    retry2:
       try
       {
-         System.compress().bz(get_app(), m_strCCAuth /  lpcszRelative + ".bz", strSrcFile);
+         System.compress().bz(get_app(), m_strCCAuth / lpcszRelative + ".bz", strSrcFile);
       }
       catch (...)
       {
@@ -1394,7 +1396,7 @@ namespace production
             add_status("build failure compressing " + string(lpcszRelative));
          }
       }
-      
+
       strStatus.Format("%s compressed", lpcszRelative.name());
 
       add_status(strStatus);
@@ -1444,7 +1446,7 @@ namespace production
       sl.unlock();
 
       uint32_t uiProcessorCount = get_current_process_affinity_order();
-	  //uiProcessorCount = 0;
+      //uiProcessorCount = 0;
       array < compress_thread * > threada;
       if (uiProcessorCount == 0)
       {
@@ -1569,7 +1571,7 @@ namespace production
       si.wShowWindow = SW_HIDE;
       if (pszRevision != NULL && pszRevision[0] != '\0')
       {
-         str.Format("svn update --revision %s %s",pszRevision,strBase / psz);
+         str.Format("svn update --revision %s %s", pszRevision, strBase / psz);
       }
       else
       {
@@ -1633,11 +1635,11 @@ namespace production
       si.wShowWindow = SW_HIDE;
       if (string(psz).find(":\\") > 0)
       {
-         str.Format("svn commit --force-log --encoding utf-8 --file %s %s",          m_strBase /  "app\\this_version_info.txt",           psz);
+         str.Format("svn commit --force-log --encoding utf-8 --file %s %s", m_strBase / "app\\this_version_info.txt", psz);
       }
       else
       {
-         str.Format("svn commit --force-log --encoding utf-8 --file %s %s",            m_strBase /  "app\\this_version_info.txt", strBase/ psz);
+         str.Format("svn commit --force-log --encoding utf-8 --file %s %s", m_strBase / "app\\this_version_info.txt", strBase / psz);
       }
       if (!::CreateProcess(NULL, (LPTSTR)(const char *)str, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
       {
@@ -1662,7 +1664,7 @@ namespace production
       return true;
    }
 
-   bool production::get_file_list(const char * pszBase, const char * pszDir,  ::file::listing & stra, bool bFileSet)
+   bool production::get_file_list(const char * pszBase, const char * pszDir, ::file::listing & stra, bool bFileSet)
    {
       ::file::path strBase(pszBase);
       ::file::path strRelease;
@@ -1705,9 +1707,9 @@ namespace production
       }
       else
       {
-         
+
          stra.m_pprovider = get_app();
-         
+
          stra.rls_file(strRelease);
 
       }
@@ -1728,8 +1730,8 @@ namespace production
 
       stringa straStageDir;
 
-      straStageDir.add(m_strBase / "time/Win32" / + m_strConfiguration);
-      straStageDir.add(m_strBase / "time/x64" / + m_strConfiguration);
+      straStageDir.add(m_strBase / "time/Win32" / +m_strConfiguration);
+      straStageDir.add(m_strBase / "time/x64" / +m_strConfiguration);
 
       string strStatus;
 
@@ -1755,14 +1757,14 @@ namespace production
          }
          if (straStageDir.str_find_first_begins_ci(strFile) >= 0
             && !m_straStageDirAcceptedFileExtensions.contains(
-            strFile.final_extension()))
+               strFile.final_extension()))
          {
             continue;
          }
          //strStatus.Format("compressing %s", strFile);
          //add_status(strStatus);
          strRelative = strFile.Mid(iBaseLen);
-         
+
          strBz = m_strCCAuth / strRelative + ".bz";
          strUn = m_strVrel / strRelative;
 
@@ -1770,11 +1772,11 @@ namespace production
 
          varUnSize = Application.file().length(strUn);
          varBzSize = Application.file().length(strBz);
-         
+
          strRelease = m_strCCVrel / strRelative;
          strRelease += ".bz.";
          strRelease += strMd5;
-         
+
          strReleaseNew = m_strCCVrelNew / strRelative;
          strReleaseNew += ".bz.";
          strReleaseNew += strMd5;
@@ -1791,8 +1793,8 @@ namespace production
 
          if (!Application.file().exists(strRelease))
          {
-         
-            if(Application.file().copy(strRelease,strBz,false).failed())
+
+            if (Application.file().copy(strRelease, strBz, false).failed())
             {
 
                strStatus += "<1>";
@@ -1801,14 +1803,14 @@ namespace production
 
          }
 
-         if(Application.file().copy(strReleaseNew,strBz,false).failed())
+         if (Application.file().copy(strReleaseNew, strBz, false).failed())
          {
 
             strStatus += "<2>";
 
          }
 
-         if(strStatus.is_empty())
+         if (strStatus.is_empty())
          {
 
             strStatus = "ok";
@@ -1825,7 +1827,7 @@ namespace production
 
       m_strIndexMd5 = System.file().md5(strIndex);
 
-      strBz = m_strCCAuth /  strRelative + ".bz";
+      strBz = m_strCCAuth / strRelative + ".bz";
       ::DeleteFileW(::str::international::utf8_to_unicode(strBz));
       compress(strRelative);
 
@@ -1843,11 +1845,11 @@ namespace production
       Application.file().copy(strRelease, strBz);
       strRelease = m_strCCVrel / strRelativeMd5;
       Application.file().copy(strRelease, strMd5);
-      strReleaseNew = m_strCCVrelNew/ strRelative + ".bz";
+      strReleaseNew = m_strCCVrelNew / strRelative + ".bz";
       //::DeleteFileW(::str::international::utf8_to_unicode(
       // strRelease));
       Application.file().copy(strReleaseNew, strBz);
-      strReleaseNew = m_strCCVrelNew/ strRelativeMd5;
+      strReleaseNew = m_strCCVrelNew / strRelativeMd5;
       Application.file().copy(strReleaseNew, strMd5);
    }
 
@@ -1866,19 +1868,19 @@ namespace production
 
       ::file::listing listing(get_app());
 
-      string strBase = m_strBase /  pszRoot / "appmatter";
+      string strBase = m_strBase / pszRoot / "appmatter";
 
       listing.ls_dir(strBase);
 
-      for(int32_t i = 0; i < listing.get_count(); i++)
+      for (int32_t i = 0; i < listing.get_count(); i++)
       {
-         if(::str::begins(listing[i].name(),"_"))
+         if (::str::begins(listing[i].name(), "_"))
          {
-            generate_appmatter_spa_folder(pszRoot,listing[i].name());
+            generate_appmatter_spa_folder(pszRoot, listing[i].name());
          }
          else
          {
-            generate_appmatter_spa_locale(pszRoot,listing[i].name());
+            generate_appmatter_spa_locale(pszRoot, listing[i].name());
          }
       }
 
@@ -1889,21 +1891,21 @@ namespace production
 
       ::file::listing listing(get_app());
 
-      ::file::path strBase = m_strBase /  pszRoot/ "appmatter";
+      ::file::path strBase = m_strBase / pszRoot / "appmatter";
 
-      strBase = strBase /  pszRelative;
+      strBase = strBase / pszRelative;
 
       listing.ls_dir(strBase);
 
-      for(int32_t i = 0; i < listing.get_count(); i++)
+      for (int32_t i = 0; i < listing.get_count(); i++)
       {
-         if(::str::begins(listing[i].relative(),"_") && listing[i].relative() != "_std")
+         if (::str::begins(listing[i].relative(), "_") && listing[i].relative() != "_std")
          {
-            generate_appmatter_spa_folder(pszRoot,pszRelative/listing[i].relative());
+            generate_appmatter_spa_folder(pszRoot, pszRelative / listing[i].relative());
          }
          else
          {
-            generate_appmatter_spa_locale(pszRoot,pszRelative / listing[i].relative());
+            generate_appmatter_spa_locale(pszRoot, pszRelative / listing[i].relative());
          }
       }
 
@@ -1911,10 +1913,10 @@ namespace production
 
    void production::generate_appmatter_spa_locale(const ::file::path & pszRoot, const ::file::path & pszRelative)
    {
-      
+
       ::file::listing listing(get_app());
 
-      ::file::path strBase = m_strBase /  pszRoot / "appmatter";
+      ::file::path strBase = m_strBase / pszRoot / "appmatter";
 
       strBase = strBase / pszRelative;
 
@@ -1923,7 +1925,7 @@ namespace production
       for (int32_t i = 0; i < listing.get_count(); i++)
       {
 
-         generate_appmatter_spa_style(pszRoot,pszRelative / listing[i].name());
+         generate_appmatter_spa_style(pszRoot, pszRelative / listing[i].name());
 
       }
 
@@ -1934,16 +1936,16 @@ namespace production
 
       ::file::listing listing(get_app());
 
-      ::file::path strBase = m_strBase /  pszRoot/ "appmatter";
+      ::file::path strBase = m_strBase / pszRoot / "appmatter";
 
       strBase /= pszRelative;
 
       listing.ls_dir(strBase);
 
-      for(int32_t i = 0; i < listing.get_count(); i++)
+      for (int32_t i = 0; i < listing.get_count(); i++)
       {
 
-         generate_appmatter_spa(pszRoot,pszRelative / listing[i].name());
+         generate_appmatter_spa(pszRoot, pszRelative / listing[i].name());
 
       }
 
@@ -2012,28 +2014,28 @@ namespace production
          strContents += "\n";
 
          m_straFiles.add(strFile);
-//         m_straTitle.add(System.file().title_(strFile));
-  //       m_straRelative.add(strRelative);
+         //         m_straTitle.add(System.file().title_(strFile));
+           //       m_straRelative.add(strRelative);
 
          stra1.add(strFile);
-    //     stra2.add(straRelative[i]);
+         //     stra2.add(straRelative[i]);
 
       }
 
       strRelative = string(pszRoot) + "\\appmatter\\" + string(pszRelative);
 
-      strFile = m_strBase /  "app\\stage\\metastage"/ strRelative + ".expand_fileset.spa";
+      strFile = m_strBase / "app\\stage\\metastage" / strRelative + ".expand_fileset.spa";
 
       m_straFiles.add(strFile);
 
-//      m_straTitle.add(System.file().title_(strFile));
+      //      m_straTitle.add(System.file().title_(strFile));
 
-      //m_straRelative.add("app\\stage\\metastagez\\" + strRelative + ".expand_fileset.spa");
+           //m_straRelative.add("app\\stage\\metastagez\\" + strRelative + ".expand_fileset.spa");
 
       Application.file().put_contents(strFile, strContents);
 
 
-      strFile = m_strBase /  strRelative + ".expand_fileset";
+      strFile = m_strBase / strRelative + ".expand_fileset";
 
 
       System.file().dtf(strFile, stra1, get_app());
@@ -2156,7 +2158,7 @@ namespace production
       m_straSignature.add(string(pszSignature) + xpi_digest(memManifest));
    }
 
-   void production::add_path(const ::file::path & pszDir,const ::file::path & pszRelative)
+   void production::add_path(const ::file::path & pszDir, const ::file::path & pszRelative)
    {
       m_straPath.add(pszDir / pszRelative);
       m_straPath.last().m_iRelative = strlen(pszDir) + 1;
@@ -2178,10 +2180,10 @@ namespace production
       //::lemon::array::copy(straBase, ::install::get_app_app_install_module_list(pszPlatform, m_strConfiguration));
       ::lemon::array::copy(straBase, ::install::get_app_app_install_module_list());
 
-      for(index i = 0; i < straBase.get_count(); i++)
+      for (index i = 0; i < straBase.get_count(); i++)
       {
 
-         add_path(pszDir,"plugins\\" + straBase[i]);
+         add_path(pszDir, "plugins\\" + straBase[i]);
 
       }
 
@@ -2201,13 +2203,13 @@ namespace production
       //add_path(pszDir, "plugins\\msvcr120d.dll");
       //add_path(pszDir, "plugins\\draw2d_gdiplus.dll");
       string strIconUrl;
-      if(m_eversion == version_basis)
+      if (m_eversion == version_basis)
       {
-         add_path(pszDir,"skin\\classic\\fluidbasis-5c-32.png");
+         add_path(pszDir, "skin\\classic\\fluidbasis-5c-32.png");
       }
       else
       {
-         add_path(pszDir,"skin\\classic\\ca2-5c-32.png");
+         add_path(pszDir, "skin\\classic\\ca2-5c-32.png");
       }
       add_path(pszDir, "META-INF\\manifest.mf");
       add_path(pszDir, "META-INF\\zigbert.sf");
@@ -2259,7 +2261,7 @@ namespace production
       string strPlatform(pszPlatform);
 
       string strDir;
-      strDir = m_strBase /  "time/npca2" / strPlatform;
+      strDir = m_strBase / "time/npca2" / strPlatform;
 
 
       string strNpca2Version;
@@ -2272,7 +2274,7 @@ namespace production
          atoi(m_strFormatBuild.Mid(11, 2)),
          atoi(m_strFormatBuild.Mid(14, 2)),
          atoi(m_strFormatBuild.Mid(17, 2))
-         );
+      );
 
       string strVersionUrl;
       string strIconUrl;
@@ -2287,14 +2289,14 @@ namespace production
          strIconUrl = "chrome://npca2@ca2.cc/skin/ca2-5c-32.png";
       }
 
-      string strChromeManifest = Application.file().as_string(m_strBase /  "nodeapp/stage/matter/npca2/chrome.manifest");
+      string strChromeManifest = Application.file().as_string(m_strBase / "nodeapp/stage/matter/npca2/chrome.manifest");
       strChromeManifest.replace("%BUILD%", strNpca2Version);
       strChromeManifest.replace("%PLATFORM%", "/" + m_strFormatBuild + "/stage/" + strPlatform);
       strChromeManifest.replace("%DOWNLOADSITE%", m_strDownloadSite);
       strChromeManifest.replace("%VERSION%", strVersionUrl);
-      strChromeManifest.replace("%ICONURL%",strIconUrl);
-      
-      Application.file().put_contents(strDir /  "npca2" / "chrome.manifest", strChromeManifest);
+      strChromeManifest.replace("%ICONURL%", strIconUrl);
+
+      Application.file().put_contents(strDir / "npca2" / "chrome.manifest", strChromeManifest);
 
       string strIcon;
       string strIconName;
@@ -2310,25 +2312,25 @@ namespace production
          strIcon = Application.dir().matter("ca2-5c-32.png");
          strIconName = "ca2-5c-32.png";
       }
-      Application.file().copy(strDir /  "npca2/skin/classic" / strIconName, strIcon);
+      Application.file().copy(strDir / "npca2/skin/classic" / strIconName, strIcon);
 
-      string strInstall = Application.file().as_string(m_strBase /  "nodeapp/stage/matter/npca2/install.rdf");
+      string strInstall = Application.file().as_string(m_strBase / "nodeapp/stage/matter/npca2/install.rdf");
       strInstall.replace("%BUILD%", strNpca2Version);
       strInstall.replace("%PLATFORM%", "/plugin/" + strPlatform);
       strInstall.replace("%DOWNLOADSITE%", "anycast.ca2.cc/ccvotagus");
       strInstall.replace("%VERSION%", strVersionUrl);
-      strInstall.replace("%ICONURL%",strIconUrl);
+      strInstall.replace("%ICONURL%", strIconUrl);
 
-      Application.file().put_contents(strDir /  "npca2/install.rdf", strInstall);
+      Application.file().put_contents(strDir / "npca2/install.rdf", strInstall);
 
 
-      string strWindows = Application.file().as_string(m_strBase /  "nodeapp/stage/matter/npca2/npca2_windows.rdf");
+      string strWindows = Application.file().as_string(m_strBase / "nodeapp/stage/matter/npca2/npca2_windows.rdf");
       strWindows.replace("%BUILD%", strNpca2Version);
       strWindows.replace("%PLATFORM%", "/" + m_strFormatBuild + "/stage/" + strPlatform);
       strWindows.replace("%DOWNLOADSITE%", m_strDownloadSite + "/ccvotagus");
       strWindows.replace("%VERSION%", strVersionUrl);
-      strWindows.replace("%ICONURL%",strIconUrl);
-      Application.file().put_contents(strDir /  "npca2_windows.rdf", strWindows);
+      strWindows.replace("%ICONURL%", strIconUrl);
+      Application.file().put_contents(strDir / "npca2_windows.rdf", strWindows);
 
 
       //add_status("Signing npca2.dll for Firefox ...");
@@ -2356,14 +2358,14 @@ namespace production
 
       string strCmd;
 
-      for(index i = 0; i < straBase.get_count(); i++)
+      for (index i = 0; i < straBase.get_count(); i++)
       {
-         
+
          ::file::path strLibrary = straBase[i];
 
          add_status("Signing " + strLibrary + " for Firefox ...");
 
-         strFile = strDir /  "npca2/plugins" / strLibrary;
+         strFile = strDir / "npca2/plugins" / strLibrary;
 
          Application.file().copy(strFile, m_strVrel / "time" / stage_platform(strPlatform) / m_strConfiguration / strLibrary);
 
@@ -2380,7 +2382,7 @@ namespace production
       //strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       //System.process().synch(strCmd);
 
-/*
+  /*
       add_status("Signing os.dll for Firefox ...");
       strFile = strDir /  "npca2/plugins", "os.dll");
       Application.file().copy(strFile, m_strVrel / "stage/" + strPlatform + "/os.dll"));
@@ -2407,12 +2409,12 @@ namespace production
 
       add_status("Signing code for Firefox ...");
 
-      Application.file().del(strDir /  "npca2.xpi");
+      Application.file().del(strDir / "npca2.xpi");
 
       create_xpi(pszPlatform, false);
 
-      Application.file().copy(m_strVrel / "time" / stage_platform(strPlatform) / m_strConfiguration / "npca2.xpi", strDir /  "npca2.xpi");
-      Application.file().copy(m_strCCVrel / "plugin" / strPlatform / "npca2_windows.rdf", strDir /  "npca2_windows.rdf");
+      Application.file().copy(m_strVrel / "time" / stage_platform(strPlatform) / m_strConfiguration / "npca2.xpi", strDir / "npca2.xpi");
+      Application.file().copy(m_strCCVrel / "plugin" / strPlatform / "npca2_windows.rdf", strDir / "npca2_windows.rdf");
 
       return true;
    }
@@ -2424,9 +2426,9 @@ namespace production
 
       string strDir;
 
-      strDir = m_strBase /  "time/npca2/" + strPlatform;
+      strDir = m_strBase / "time/npca2/" + strPlatform;
 
-      Application.dir().rm(strDir /  "npca2/META-INF");
+      Application.dir().rm(strDir / "npca2/META-INF");
 
 
       if (bSigned)
@@ -2447,15 +2449,15 @@ namespace production
 
       string strDir;
 
-      strDir = m_strBase /  "time/npca2" / strPlatform;
+      strDir = m_strBase / "time/npca2" / strPlatform;
 
       add_status("Signing extension ...");
 
-      xpi_sign_dir(pszPlatform, strDir /  "npca2");
+      xpi_sign_dir(pszPlatform, strDir / "npca2");
 
       string str;
 
-      string strXpi = strDir /  "npca2.xpi";
+      string strXpi = strDir / "npca2.xpi";
 
       string strPath;
 
@@ -2466,7 +2468,7 @@ namespace production
       for (int32_t i = 0; i < m_straPath.get_count(); i++)
       {
          strPath = "zip -9 \"" + strXpi + "\" \"" + m_straPath[i].relative() + "\"";
-         if (!process->create_child_process(strPath, false, strDir /  "npca2"))
+         if (!process->create_child_process(strPath, false, strDir / "npca2"))
          {
             uint32_t dw = GetLastError();
             string str;
@@ -2490,15 +2492,15 @@ namespace production
       string strPlatform(pszPlatform);
 
       string strDir;
-      strDir = m_strBase /  "time/npca2" / strPlatform;
+      strDir = m_strBase / "time/npca2" / strPlatform;
 
       add_status("Creating uint32_t extension ...");
       string str;
       uint32_t dwExitCode;
-      string strXpi = strDir /  "npca2.xpi";
+      string strXpi = strDir / "npca2.xpi";
       ::process::process_sp process(allocer());
       string strPath = "zip -9 -r -D \"" + strXpi + "\" * ";
-      if (!process->create_child_process(strPath, false, strDir /  "npca2"))
+      if (!process->create_child_process(strPath, false, strDir / "npca2"))
       {
          uint32_t dw = GetLastError();
          string str;
@@ -2529,34 +2531,34 @@ namespace production
       string strPlatform(pszPlatform);
 
 
-      Application.dir().mk(m_strBase /  "time\\iexca2" / strPlatform);
+      Application.dir().mk(m_strBase / "time\\iexca2" / strPlatform);
 
       string strNpca2Version;
 
       strNpca2Version.Format(
          "%d,%d%02d,%d%02d,%d",
-         atoi(m_strFormatBuild.Mid(0,4)),
-         atoi(m_strFormatBuild.Mid(5,2)),
-         atoi(m_strFormatBuild.Mid(8,2)),
-         atoi(m_strFormatBuild.Mid(11,2)),
-         atoi(m_strFormatBuild.Mid(14,2)),
-         atoi(m_strFormatBuild.Mid(17,2))
-         );
+         atoi(m_strFormatBuild.Mid(0, 4)),
+         atoi(m_strFormatBuild.Mid(5, 2)),
+         atoi(m_strFormatBuild.Mid(8, 2)),
+         atoi(m_strFormatBuild.Mid(11, 2)),
+         atoi(m_strFormatBuild.Mid(14, 2)),
+         atoi(m_strFormatBuild.Mid(17, 2))
+      );
 
       string strChromeManifest = Application.file().as_string(m_strBase / "nodeapp/stage/script/iexca2.inf");
-      strChromeManifest.replace("%VERSION%",strNpca2Version);
+      strChromeManifest.replace("%VERSION%", strNpca2Version);
       //      strChromeManifest.replace("%PLATFORM%", "/" + m_strFormatBuild + "/stage/" + strPlatform);
       //    strChromeManifest.replace("%DOWNLOADSITE%", m_strDownloadSite);
       //      strChromeManifest.replace("%VERSION%", strVersionUrl);
-      Application.file().put_contents(m_strBase / "time\\iexca2" / strPlatform / "iexca2.inf",strChromeManifest);
+      Application.file().put_contents(m_strBase / "time\\iexca2" / strPlatform / "iexca2.inf", strChromeManifest);
 
 
       uint32_t dwExitCode;
       string str;
       ::process::process_sp process(allocer());
       ::file::path strPath;
-      strPath = m_strBase /  "nodeapp\\stage\\script\\makecab" + string(pszPlatform) + "_" + m_strConfiguration + ".bat";
-      if (!process->create_child_process(strPath, false,strPath.folder()))
+      strPath = m_strBase / "nodeapp\\stage\\script\\makecab" + string(pszPlatform) + "_" + m_strConfiguration + ".bat";
+      if (!process->create_child_process(strPath, false, strPath.folder()))
       {
          uint32_t dw = GetLastError();
          string str;
@@ -2574,7 +2576,7 @@ namespace production
          i++;
       }
 
-      Application.file().copy(m_strVrel / "time" / stage_platform(strPlatform) / m_strConfiguration / "iexca2.cab", m_strBase /  "time\\iexca2" / strPlatform / "iexca2.cab");
+      Application.file().copy(m_strVrel / "time" / stage_platform(strPlatform) / m_strConfiguration / "iexca2.cab", m_strBase / "time\\iexca2" / strPlatform / "iexca2.cab");
 
       return true;
 
@@ -2587,18 +2589,18 @@ namespace production
 
       ::file::path strDir;
 
-      strDir = m_strBase /  "time/crxca2" / strPlatform / "crxca2";
+      strDir = m_strBase / "time/crxca2" / strPlatform / "crxca2";
 
       string strCrxca2Version;
 
-      int iHour = atoi(m_strFormatBuild.Mid(11,2));
+      int iHour = atoi(m_strFormatBuild.Mid(11, 2));
 
-      if(iHour == 0)
+      if (iHour == 0)
          iHour = 24;
 
-      int iSecond = atoi(m_strFormatBuild.Mid(17,2));
+      int iSecond = atoi(m_strFormatBuild.Mid(17, 2));
 
-      if(iSecond == 0)
+      if (iSecond == 0)
          iSecond = 60;
 
       strCrxca2Version.Format(
@@ -2612,7 +2614,7 @@ namespace production
          iSecond);
 
       string strIconUrl;
-      if(m_eversion == version_basis)
+      if (m_eversion == version_basis)
       {
          strIconUrl = "fluidbasis-5c-32.png";
       }
@@ -2622,16 +2624,16 @@ namespace production
       }
 
 
-      string strManifestJson = Application.file().as_string(m_strBase /  "nodeapp/stage/matter/crxca2/manifest.json");
+      string strManifestJson = Application.file().as_string(m_strBase / "nodeapp/stage/matter/crxca2/manifest.json");
       strManifestJson.replace("%BUILD%", strCrxca2Version);
       strManifestJson.replace("%PLATFORM%", strPlatform);
       strManifestJson.replace("%DOWNLOADSITE%", m_strDownloadSite);
-      strManifestJson.replace("%ICONURL%",strIconUrl);
-      Application.file().put_contents(strDir /  "manifest.json", strManifestJson);
+      strManifestJson.replace("%ICONURL%", strIconUrl);
+      Application.file().put_contents(strDir / "manifest.json", strManifestJson);
 
       string strIcon;
       string strIconName;
-      if(m_eversion == version_basis)
+      if (m_eversion == version_basis)
       {
          strIcon = Application.dir().matter("fluidbasis-5c-32.png");
          strIconName = "fluidbasis-5c-32.png";
@@ -2643,7 +2645,7 @@ namespace production
          strIcon = Application.dir().matter("ca2-5c-32.png");
          strIconName = "ca2-5c-32.png";
       }
-      Application.file().copy(strDir / strIconName,strIcon);
+      Application.file().copy(strDir / strIconName, strIcon);
 
 
       ::file::listing straBase;
@@ -2657,7 +2659,7 @@ namespace production
 
       string strCmd;
 
-      for(index i = 0; i < straBase.get_count(); i++)
+      for (index i = 0; i < straBase.get_count(); i++)
       {
 
          ::file::path strLibrary = straBase[i];
@@ -2666,7 +2668,7 @@ namespace production
 
          strFile = strDir / "npca2/plugins" / strLibrary;
 
-         Application.file().copy(strFile,m_strVrel / "time" / stage_platform(strPlatform) / m_strConfiguration / strLibrary);
+         Application.file().copy(strFile, m_strVrel / "time" / stage_platform(strPlatform) / m_strConfiguration / strLibrary);
 
          strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
 
@@ -2692,7 +2694,7 @@ namespace production
       //strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       //System.process().synch(strCmd);
 
-/*
+  /*
       add_status("Signing os.dll for Chrome ...");
       strFile = strDir /  "os.dll");
       Application.file().copy(strFile, m_strVrel / "stage/" + strPlatform + "/os.dll"));
@@ -2749,7 +2751,7 @@ namespace production
       }
 
 
-      Application.file().copy(m_strVrel / "time" / stage_platform(strPlatform) / m_strConfiguration / "crxca2.crx",strDir.folder() / "crxca2.crx");
+      Application.file().copy(m_strVrel / "time" / stage_platform(strPlatform) / m_strConfiguration / "crxca2.crx", strDir.folder() / "crxca2.crx");
 
       return true;
    }
@@ -2758,7 +2760,7 @@ namespace production
    void production::add_status(const char * psz)
    {
       {
-         single_lock sl(&m_mutexStatus,TRUE);
+         single_lock sl(&m_mutexStatus, TRUE);
          m_straStatus.add(psz);
       }
       TRACE0(psz);
@@ -2768,8 +2770,8 @@ namespace production
    void production::change_status(const char * psz)
    {
       {
-         single_lock sl(&m_mutexStatus,TRUE);
-         if(m_straStatus.get_count() == 0)
+         single_lock sl(&m_mutexStatus, TRUE);
+         if (m_straStatus.get_count() == 0)
          {
             m_straStatus.add(psz);
          }
@@ -2816,14 +2818,14 @@ namespace production
 
    int32_t production::release::raw_run()
    {
-      
+
       string str;
 
       property_set set(get_app());
 
       set["disable_ca2_sessid"] = true;
 
-      Application.http().get(m_strRelease,str,set);
+      Application.http().get(m_strRelease, str, set);
 
       synch_lock sl(&m_pproduction->m_mutexRelease);
 
@@ -2839,7 +2841,7 @@ namespace production
 
    int32_t production::release::run()
    {
-      
+
       int32_t iResult = raw_run();
 
       m_pproduction->OnUpdateRelease();
@@ -2873,7 +2875,7 @@ namespace production
          {
             set["post"]["new_status"] = "<div style=\"display: block; background-color: #E0FFCC; \"><h2 style=\"margin-bottom:0px; color: #55CCAA;\">" + version_to_international_datetime(m_strBuild) + "</h2><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">" + m_strBuildTook + " and finished at " + strEndTime + "<br>New release of <a href=\"http://ca2.cc/\">stage</a> applications labeled " + m_strBuild + " is ready for download through compatible gateways.<br>Check <a href=\"http://desktop.ca2.cc/\">desktop.ca2.cc</a> or <a href=\"http://store.ca2.cc/\">store.ca2.cc</a> for simple gateway implementations.</span></div";
          }
-         
+
          string str;
 
          Application.http().get("http://api.ca2.cc/status/insert", str, set);
@@ -2895,7 +2897,7 @@ namespace production
             }
          }
 
-         if(Application.m_eversion == version_basis)
+         if (Application.m_eversion == version_basis)
          {
 
             strTwit += " : http://basis.ca2.cc/";
@@ -2921,7 +2923,7 @@ namespace production
       {
          synch_lock sl(&m_mutexRelease);
          string strStatus;
-         strStatus.Format("There are %d releases in command list!! (%s)",m_iRelease,m_straRelease.implode(";"));
+         strStatus.Format("There are %d releases in command list!! (%s)", m_iRelease, m_straRelease.implode(";"));
          add_status(strStatus);
 
       }
@@ -2944,8 +2946,8 @@ namespace production
       twitterObj.get_oauth().setConsumerKey(m_strTwitterConsumerKey);
       twitterObj.get_oauth().setConsumerSecret(m_strTwitterConsumerSecret);
 
-      string strPathKey = Application.dir().userappdata() / "twitterClient_token_key" + ::str::from((int) m_eversion) + ".txt";
-      string strPathSecret = Application.dir().userappdata() / "twitterClient_token_secret" + ::str::from((int) m_eversion) + ".txt";
+      string strPathKey = Application.dir().userappdata() / "twitterClient_token_key" + ::str::from((int)m_eversion) + ".txt";
+      string strPathSecret = Application.dir().userappdata() / "twitterClient_token_secret" + ::str::from((int)m_eversion) + ".txt";
       /* Step 1: Check if we alredy have OAuth access token from a previous run */
       //    char szKey[1024];
       string myOAuthAccessTokenKey = Application.file().as_string(strPathKey);
@@ -3006,8 +3008,8 @@ namespace production
       twitterObj.get_oauth().setConsumerKey(m_strTwitterConsumerKey);
       twitterObj.get_oauth().setConsumerSecret(m_strTwitterConsumerSecret);
 
-      string strPathKey = Application.dir().userappdata() / "twitterClient_token_key" + ::str::from((int) m_eversion) + ".txt";
-      string strPathSecret = Application.dir().userappdata() / "twitterClient_token_secret" + ::str::from((int) m_eversion) + ".txt";
+      string strPathKey = Application.dir().userappdata() / "twitterClient_token_key" + ::str::from((int)m_eversion) + ".txt";
+      string strPathSecret = Application.dir().userappdata() / "twitterClient_token_secret" + ::str::from((int)m_eversion) + ".txt";
       /* Step 1: Check if we alredy have OAuth access token from a previous run */
       //    char szKey[1024];
       string myOAuthAccessTokenKey = Application.file().as_string(strPathKey);
@@ -3281,11 +3283,11 @@ namespace production
       string strPath;
       if (Application.m_eversion == version_basis)
       {
-         strPath = m_strBase / strApp/"stage\\script\\basis_build.bat";
+         strPath = m_strBase / strApp / "stage\\script\\basis_build.bat";
       }
       else
       {
-         strPath = m_strBase /  strApp/ "stage\\script\\stage_build.bat";
+         strPath = m_strBase / strApp / "stage\\script\\stage_build.bat";
       }
       if (!process->create_child_process(strPath, true))
       {
@@ -3303,31 +3305,31 @@ namespace production
       {
          Sleep(84);
          //str.Format("%d Building ca2 fontopus ccvotagus " + strApp + "...", i);
-         while(true)
+         while (true)
          {
             str = process->read();
-            strAccumul+=str;
-            if(!str.has_char())
+            strAccumul += str;
+            if (!str.has_char())
                break;
          }
          index iFind;
-         while((iFind = strAccumul.find("\r\n")) >= 0)
+         while ((iFind = strAccumul.find("\r\n")) >= 0)
          {
             add_status(strAccumul.Left(iFind));
             strAccumul = strAccumul.Mid(iFind + 2);
          }
-         
+
          i++;
       }
-      while(true)
+      while (true)
       {
          str = process->read();
-         strAccumul+=str;
-         if(!str.has_char())
+         strAccumul += str;
+         if (!str.has_char())
             break;
       }
       index iFind;
-      while((iFind = strAccumul.find("\r\n")) >= 0)
+      while ((iFind = strAccumul.find("\r\n")) >= 0)
       {
          add_status(strAccumul.Left(iFind));
          strAccumul = strAccumul.Mid(iFind + 2);
@@ -3350,7 +3352,7 @@ namespace production
       string str = Application.file().as_string(pszUrl);
 
       index iFind1 = str.find_tail("FILEVERSION ");
-      if(iFind1 > 0)
+      if (iFind1 > 0)
       {
 
          index iFind2 = str.find("\r\n", iFind1);
@@ -3359,35 +3361,35 @@ namespace production
 
          strVersion1.Format(
             "%d,%d%02d,%d%02d,%d",
-            atoi(m_strFormatBuild.Mid(0,4)),
-            atoi(m_strFormatBuild.Mid(5,2)),
-            atoi(m_strFormatBuild.Mid(8,2)),
-            atoi(m_strFormatBuild.Mid(11,2)),
-            atoi(m_strFormatBuild.Mid(14,2)),
-            atoi(m_strFormatBuild.Mid(17,2))
-            );
+            atoi(m_strFormatBuild.Mid(0, 4)),
+            atoi(m_strFormatBuild.Mid(5, 2)),
+            atoi(m_strFormatBuild.Mid(8, 2)),
+            atoi(m_strFormatBuild.Mid(11, 2)),
+            atoi(m_strFormatBuild.Mid(14, 2)),
+            atoi(m_strFormatBuild.Mid(17, 2))
+         );
 
          str = str.Left(iFind1) + strVersion1 + str.Mid(iFind2);
 
       }
 
       iFind1 = str.find_tail("VALUE \"FileVersion\", \"");
-      if(iFind1 > 0)
+      if (iFind1 > 0)
       {
 
-         index iFind2 = str.find("\"",iFind1);
+         index iFind2 = str.find("\"", iFind1);
 
          string strVersion2;
 
          strVersion2.Format(
             "%d.%d%02d.%d%02d.%d",
-            atoi(m_strFormatBuild.Mid(0,4)),
-            atoi(m_strFormatBuild.Mid(5,2)),
-            atoi(m_strFormatBuild.Mid(8,2)),
-            atoi(m_strFormatBuild.Mid(11,2)),
-            atoi(m_strFormatBuild.Mid(14,2)),
-            atoi(m_strFormatBuild.Mid(17,2))
-            );
+            atoi(m_strFormatBuild.Mid(0, 4)),
+            atoi(m_strFormatBuild.Mid(5, 2)),
+            atoi(m_strFormatBuild.Mid(8, 2)),
+            atoi(m_strFormatBuild.Mid(11, 2)),
+            atoi(m_strFormatBuild.Mid(14, 2)),
+            atoi(m_strFormatBuild.Mid(17, 2))
+         );
 
          str = str.Left(iFind1) + strVersion2 + str.Mid(iFind2);
 
@@ -3402,16 +3404,16 @@ namespace production
    string production::stage_platform(string strPlatform)
    {
 
-      if(strPlatform.compare_ci("x86") == 0
-      || strPlatform.compare_ci("Win32") == 0)
+      if (strPlatform.compare_ci("x86") == 0
+         || strPlatform.compare_ci("Win32") == 0)
       {
 
          return "Win32";
 
       }
 
-      if(strPlatform.compare_ci("x64") == 0
-      || strPlatform.compare_ci("amd64") == 0)
+      if (strPlatform.compare_ci("x64") == 0
+         || strPlatform.compare_ci("amd64") == 0)
       {
 
          return "x64";
