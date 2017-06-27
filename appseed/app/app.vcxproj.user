@@ -19,7 +19,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|x64'">
-    <LocalDebuggerCommandArguments>: app=core/hellomultiverse</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>: install app=app-core/hellomultiverse configuration=basis platform=x64 locale=pt-br schema=pt-br</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='cover|x64'">
