@@ -136,7 +136,8 @@ namespace production
    int32_t production::run()
    {
 
-      PlaySoundW(L"C:\\bergedge\\hi5\\audio\\production_ready.wav", NULL, SND_FILENAME);
+      //PlaySoundW(L"C:\\bergedge\\hi5\\audio\\production_ready.wav", NULL, SND_FILENAME);
+
       string str;
 
       property_set set;
