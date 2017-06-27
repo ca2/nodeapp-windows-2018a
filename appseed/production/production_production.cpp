@@ -1323,6 +1323,11 @@ namespace production
          add_status("");
          add_status("");
 
+		 PlaySoundW(L"C:\\bergedge\\hi5\\audio\\production_ready.wav", NULL, SND_FILENAME);
+
+
+		 Sleep(5000);
+
          m_evFinish.SetEvent();
 
       }
