@@ -287,7 +287,7 @@ namespace app_app_install
       if (iHostRetry > 0 || !bOkIndexPath)
       {
 
-         if (strIndexMd5.length() != 32 || stricmp_dup(System.file().md5(strIndexPath), strIndexMd5) != 0)
+         if (strIndexMd5.length() != 32 || stricmp_dup(Application.file().md5(strIndexPath), strIndexMd5) != 0)
          {
 
             System.install().trace().rich_trace("Invalid file list!");
@@ -784,7 +784,7 @@ namespace app_app_install
 
             if (file_exists_dup(strStageInplace)
                && (iLen != -1) && file_length_dup(strStageInplace) == iLen
-               && strMd5.has_char() && stricmp_dup(System.file().md5(strStageInplace), strMd5) == 0)
+               && strMd5.has_char() && stricmp_dup(Application.file().md5(strStageInplace), strMd5) == 0)
             {
 
                bDownload = false;
@@ -800,7 +800,7 @@ namespace app_app_install
 
                if (file_exists_dup(strStageInplace)
                   && (iLen != -1) && file_length_dup(strStageInplace) == iLen
-                  && strMd5.has_char() && stricmp_dup(System.file().md5(strStageInplace), strMd5) == 0)
+                  && strMd5.has_char() && stricmp_dup(Application.file().md5(strStageInplace), strMd5) == 0)
                   bDownload = false;
 
             }
@@ -898,7 +898,7 @@ namespace app_app_install
 
             if (file_exists_dup(strStageInplace)
                && (iLen != -1) && file_length_dup(strStageInplace) == iLen
-               && strMd5.has_char() && stricmp_dup(System.file().md5(strStageInplace), strMd5) == 0)
+               && strMd5.has_char() && stricmp_dup(Application.file().md5(strStageInplace), strMd5) == 0)
             {
 
                bDownload = false;
@@ -912,7 +912,7 @@ namespace app_app_install
 
                if (file_exists_dup(strCandidate)
                   && iLen != -1 && file_length_dup(strCandidate) == iLen
-                  && strMd5.has_char() && stricmp_dup(System.file().md5(strCandidate), strMd5) == 0)
+                  && strMd5.has_char() && stricmp_dup(Application.file().md5(strCandidate), strMd5) == 0)
                {
 
                   bDownload = !::file_copy_dup(strStageInplace, strCandidate, false);
@@ -930,7 +930,7 @@ namespace app_app_install
 
                if (file_exists_dup(strStageInplace)
                   && (iLen != -1) && file_length_dup(strStageInplace) == iLen
-                  && strMd5.has_char() && stricmp_dup(System.file().md5(strStageInplace), strMd5) == 0)
+                  && strMd5.has_char() && stricmp_dup(Application.file().md5(strStageInplace), strMd5) == 0)
                   bDownload = false;
 
             }
@@ -1071,7 +1071,7 @@ namespace app_app_install
             if (iLength == -1 || iLength == file_length_dup((dir2 + file2)))
             {
 
-               if (pszMd5 != NULL && strlen_dup(pszMd5) > 0 && stricmp_dup(System.file().md5((dir2 + file2)), pszMd5) == 0)
+               if (pszMd5 != NULL && strlen_dup(pszMd5) > 0 && stricmp_dup(Application.file().md5((dir2 + file2)), pszMd5) == 0)
                {
 
                   return true;
@@ -1233,7 +1233,7 @@ namespace app_app_install
             if (iLength != -1 && iLength == file_length_dup(inplace))
             {
 
-               if (pszMd5 != NULL && strlen_dup(pszMd5) > 0 && stricmp_dup(System.file().md5(inplace), pszMd5) == 0)
+               if (pszMd5 != NULL && strlen_dup(pszMd5) > 0 && stricmp_dup(Application.file().md5(inplace), pszMd5) == 0)
                {
 
                   System.install().trace().trace_add(unitext(" up-to-date c"));
@@ -1329,7 +1329,7 @@ namespace app_app_install
                if (bOk)
                {
 
-                  bOk = pszMd5 == NULL || strlen_dup(pszMd5) == 0 || stricmp_dup(System.file().md5(inplace), pszMd5) == 0;
+                  bOk = pszMd5 == NULL || strlen_dup(pszMd5) == 0 || stricmp_dup(Application.file().md5(inplace), pszMd5) == 0;
 
                   if (bOk)
                   {
@@ -1539,7 +1539,7 @@ namespace app_app_install
             if (iLength == -1 || iLength == file_length_dup((strStage)))
             {
 
-               if (pszMd5 != NULL && strlen_dup(pszMd5) > 0 && stricmp_dup(System.file().md5((strStage)), pszMd5) == 0)
+               if (pszMd5 != NULL && strlen_dup(pszMd5) > 0 && stricmp_dup(Application.file().md5((strStage)), pszMd5) == 0)
                {
 
                   str = strStage;
@@ -2383,7 +2383,7 @@ namespace app_app_install
          if (file_exists_dup(strIndexPath))
          {
 
-            strIndexMd5 = System.file().md5(strIndexPath);
+            strIndexMd5 = Application.file().md5(strIndexPath);
 
          }
 
