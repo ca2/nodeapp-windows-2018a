@@ -1769,7 +1769,7 @@ namespace production
          strBz = m_strCCAuth / strRelative + ".bz";
          strUn = m_strVrel / strRelative;
 
-         strMd5 = System.file().md5(strUn);
+         strMd5 = Application.file().md5(strUn);
 
          varUnSize = Application.file().length(strUn);
          varBzSize = Application.file().length(strBz);
@@ -1826,7 +1826,7 @@ namespace production
       string strIndex = m_strVrel / strRelative;
       Application.file().put_contents(strIndex, strContents);
 
-      m_strIndexMd5 = System.file().md5(strIndex);
+      m_strIndexMd5 = Application.file().md5(strIndex);
 
       strBz = m_strCCAuth / strRelative + ".bz";
       ::DeleteFileW(::str::international::utf8_to_unicode(strBz));
