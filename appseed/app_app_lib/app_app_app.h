@@ -11,6 +11,26 @@ namespace app_app
    public:
 
 
+      struct status
+      {
+
+         int         m_iCheck;
+         bool        m_bSlopeOk;
+         bool        m_bOk;
+         DWORD       m_dwLastOk;
+
+         status()
+         {
+
+            m_iCheck = 0;
+            m_bSlopeOk = false;
+            m_bOk = false;
+
+         }
+
+      };
+
+
       window *                      m_pwindow;
       bool                          m_bRunMainLoop;
       bool                          m_bAdmin;
@@ -31,6 +51,8 @@ namespace app_app
       string_map < bootstrap * >    m_bootstrap;
 
       string                        m_strTraceLabel;
+      string_map < status >         m_mapStatus;
+
 
 
       app();
@@ -88,6 +110,8 @@ namespace app_app
 
       
       virtual bool low_is_app_app_admin_running(string strPlatform);
+
+      virtual bool is_application_updated(string strAppId);
 
 
    };

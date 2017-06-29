@@ -123,6 +123,7 @@ namespace app_app_install
       installer(::aura::application * papp);
       virtual ~installer();
 
+      bool application_prelude(string strAppId);
 
       string http_get(const string & strUrl, bool bScalarListener);
 

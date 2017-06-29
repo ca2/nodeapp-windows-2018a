@@ -655,21 +655,103 @@ namespace app_app_install
          }
 
       }
-      //else
-      //{
+      else
+      {
 
-      //   //if (!launch_applications())
-      //   //{
+         //if (!launch_applications())
+         //{
 
-      //   //   System.install().trace().rich_trace("***Going to ebing!!");
+         //   System.install().trace().rich_trace("***Going to ebing!!");
 
-      //   //   Sleep(2000);
+         //   Sleep(2000);
 
-      //   //   goto install_begin;
+         //   goto install_begin;
 
-      //   //}
+         //}
 
-      //}
+         System.install().trace().rich_trace("starting app_app_install.exe...");
+
+         string strCommand = m_strCommand;
+
+         int32_t i = application_prelude(m_strAppId);
+
+         //System.install().trace().rich_trace(".");
+
+         //string strPlatform = System.get_system_platform();
+
+         //if (i == 0)
+         //{
+
+         //   System.install().set_updated(m_strBuild);
+
+         //   if (m_straRestartProcess.get_count() > 0)
+         //   {
+
+         //      string str;
+
+         //      str = "Now :\n\n";
+
+         //      for (int32_t i = 0; i < m_straRestartProcess.get_count(); i++)
+         //      {
+         //         if (file_is_equal_path(file_get_mozilla_firefox_plugin_container_path(), m_straRestartProcess[i]))
+         //         {
+         //            m_straRestartProcess.remove_at(i);
+         //            str += "You may reload the Firefox plugin or plugins that has/have been shutdown.\n\n";
+         //         }
+         //      }
+
+         //      if (m_straRestartProcess.get_count() > 0)
+         //      {
+
+         //         str += "You may restart the applications listed below if they are not restarted automatically:\n\n";
+
+         //         for (int32_t i = 0; i < m_straRestartProcess.get_count(); i++)
+         //         {
+
+         //            str += "\t";
+
+         //            str += m_straRestartProcess[i];
+
+         //            if (i == m_straRestartProcess.get_count() - 1)
+         //            {
+
+         //               str += ".";
+
+         //            }
+         //            else if (i == m_straRestartProcess.get_count() - 2)
+         //            {
+
+         //               str += ", and;\n";
+
+         //            }
+         //            else
+         //            {
+         //               str += ";\n";
+         //            }
+
+         //         }
+         //      }
+
+         //      ::simple_message_box(NULL, str, "You may restart the applications ...", MB_ICONINFORMATION | MB_OK);
+
+         //   }
+
+         //   System.install().trace().rich_trace(":::::Thank you");
+         //   System.install().trace().rich_trace("***Thank you");
+         //   System.install().trace().rich_trace("Thank you");
+         //   System.install().trace().trace_progress(1.0);
+
+         //   return true;
+
+         //}
+         //else
+         //{
+         //      
+         //   return false;
+
+         //}
+         
+      }
 
    }
 
@@ -2793,9 +2875,6 @@ namespace app_app_install
    }
 
 
-
-
-
    void installer::add_spa_start(const char * pszId)
    {
       
@@ -2883,25 +2962,69 @@ namespace app_app_install
    }
 
 
-   int32_t installer::run_ca2_application_installer(const char * pszCommandLine)
+   bool installer::application_prelude(string strAppId)
    {
 
-      string strPath;
+      if (strAppId.is_empty())
+      {
 
-      string param;
+         return 0;
 
-      param = "-install:";
+      }
 
-      param += pszCommandLine;
+      string strName = ::process::app_id_to_app_name(strAppId);
 
-      //strPath = System.install().app_install_get_intern_executable_path(System.get_system_configuration(), m_strBuild);
-      strPath = System.install().app_install_get_intern_executable_path();
+      string strApp = dir::stage(process_platform_dir_name()) / strName + ".exe";
 
-      call_sync(strPath, param, 0, SW_HIDE, -1, 84, 0, 0);
+      if (!file_exists_dup(strApp))
+      {
 
-      return 0;
+         return false;
+
+      }
+
+      SHELLEXECUTEINFOW sei = {};
+
+      wstring wstrFile(strApp.c_str());
+
+      sei.cbSize = sizeof(SHELLEXECUTEINFOW);
+
+      sei.lpFile = wstrFile.c_str();
+
+      sei.lpParameters = L": install";
+
+      if (!::ShellExecuteExW(&sei))
+      {
+
+         return false;
+
+      }
+
+      return true;
 
    }
+
+
+
+   //int32_t installer::run_ca2_application_installer(const char * pszCommandLine)
+   //{
+
+   //   string strPath;
+
+   //   string param;
+
+   //   param = "-install:";
+
+   //   param += pszCommandLine;
+
+   //   //strPath = System.install().app_install_get_intern_executable_path(System.get_system_configuration(), m_strBuild);
+   //   strPath = System.install().app_install_get_intern_executable_path();
+
+   //   call_sync(strPath, param, 0, SW_HIDE, -1, 84, 0, 0);
+
+   //   return 0;
+
+   //}
 
 
    //bool installer::launch_application()
@@ -2912,6 +3035,7 @@ namespace app_app_install
    //   return true;
 
    //}
+
 
 
    int32_t installer::app_install_synch(const char * pszCommandLine, uint32_t & dwStartError, bool bSynch)

@@ -301,7 +301,11 @@ namespace app_app
       {
 
          if (check_soon_launch(str, true))
+         {
+
             return 0;
+
+         }
 
       }
 
@@ -565,7 +569,22 @@ namespace app_app
 
       string strApp = dir::stage(process_platform_dir_name()) / strName + ".exe";
 
-      if (file_exists_dup(strApp))
+      bool bOk;
+
+      if (bLaunch)
+      {
+
+         bOk = System.is_application_installed(strId);
+
+      }
+      else
+      {
+
+         bOk = System.is_application_updated(strId);
+
+      }
+
+      if (file_exists_dup(strApp) && bOk)
       {
 
          if (!bLaunch)
@@ -630,7 +649,22 @@ namespace app_app
 
          string strApp = dir::stage(process_platform_dir_name()) / "app.exe";
 
-         if (file_exists_dup(strDll) && file_exists_dup(strApp))
+         bool bOk;
+
+         if (bLaunch)
+         {
+
+            bOk = System.is_application_installed(strId);
+
+         }
+         else
+         {
+
+            bOk = System.is_application_updated(strId);
+
+         }
+
+         if (file_exists_dup(strDll) && file_exists_dup(strApp) && bOk)
          {
 
             if (!bLaunch)
@@ -1149,10 +1183,87 @@ namespace app_app
    //}
 
 
-   bool bootstrap::is_downloading_admin()
+   bool app::is_application_updated(string strAppId)
    {
 
-      return m_bDownloadingAdmin;
+      status & status = m_mapStatus[strAppId];
+
+      if (status.m_iCheck >= 1)
+      {
+
+         if (status.m_bSlopeOk)
+         {
+
+            status.m_iCheck++;
+
+            return true;
+
+         }
+
+         if (status.m_bOk)
+         {
+
+            status.m_iCheck++;
+
+            if (get_tick_count() - status.m_dwLastOk < 5000)
+            {
+
+               return false; // still return not-updated status for 5s
+
+            }
+            else
+            {
+
+               return true;
+
+
+            }
+
+
+         }
+
+      }
+
+      bool bApplicationUpdated = false;
+
+      string strName = ::process::app_id_to_app_name(strAppId);
+
+      string strApplication = dir::stage(process_platform_dir_name()) / strName + ".exe";
+
+      string strDll = dir::stage(process_platform_dir_name()) / strName + ".dll";
+
+      string strApp = dir::stage(process_platform_dir_name()) / "app.exe";
+
+      if (file_exists_dup(strApplication) || (file_exists_dup(strDll) && file_exists_dup(strApp)))
+      {
+
+         string strConfiguration = System.get_system_configuration();
+
+         string strLatestBuildNumber = System.get_latest_build_number(strConfiguration);
+
+         bApplicationUpdated = System.is_application_installed(strAppId, strLatestBuildNumber);
+
+      }
+
+      status.m_iCheck++;
+
+      if (!status.m_bOk && bApplicationUpdated)
+      {
+
+         status.m_dwLastOk = get_tick_count();
+
+      }
+
+      status.m_bOk = bApplicationUpdated;
+
+      if (status.m_iCheck <= 1)
+      {
+
+         status.m_bSlopeOk = bApplicationUpdated;
+
+      }
+
+      return bApplicationUpdated;
 
    }
 

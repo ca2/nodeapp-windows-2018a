@@ -216,7 +216,7 @@ namespace app_app
 
       int iTry;
 
-      iTry = 100;
+      iTry = 2000;
 
       string strPlatform = m_strPlatform;
 
@@ -243,7 +243,7 @@ namespace app_app
 
          }
 
-         Sleep(500);
+         Sleep(250);
 
       }
 
@@ -253,7 +253,7 @@ namespace app_app
 
    command_retry:
 
-      iTry = 100;
+      iTry = 2000;
 
       while (!check_app_app_installation(strPlatform))
       {
@@ -285,16 +285,16 @@ namespace app_app
 
          }
 
-         Sleep(500);
+         Sleep(250);
 
       }
 
-      int iUserServiceTry = 300;
+      int iUserServiceTry = 2000;
 
       while (!check_user_service("Win32", true))
       {
 
-         Sleep(500);
+         Sleep(250);
 
          if (iUserServiceTry <= 0)
          {
@@ -321,10 +321,10 @@ namespace app_app
 
          }
 
+         m_straCommand.add(str);
+
          if (System.check_soon_launch(str, false))
          {
-
-            m_straCommand.add(str);
 
             continue;
 
@@ -384,10 +384,24 @@ namespace app_app
 
          }
 
-         m_straCommand.add(str);
 
-         if (do_app_app(strId, strParams))
+         int iTry = 2000;
+
+         while (iTry > 0)
          {
+
+            do_app_app(strId, strParams);
+
+            if (System.is_application_updated(strId))
+            {
+
+               break;
+
+            }
+
+            Sleep(250);
+
+            iTry--;
 
          }
 
@@ -412,7 +426,7 @@ namespace app_app
          if (iCommandFailCount > 0)
          {
 
-            if (iCommandRetry < 10)
+            if (iCommandRetry < 50)
             {
 
                iCommandRetry++;
@@ -425,12 +439,12 @@ namespace app_app
 
       }
 
-      iUserServiceTry = 300;
+      iUserServiceTry = 2000;
 
       while (!check_user_service("Win32", true))
       {
 
-         Sleep(500);
+         Sleep(250);
 
          if (iUserServiceTry <= 0)
          {
@@ -454,7 +468,7 @@ namespace app_app
 
       int iTry;
 
-      iTry = 1440;
+      iTry = 2000;
 
       string strPlatform = m_strPlatform;
 
@@ -489,7 +503,7 @@ namespace app_app
 
          }
 
-         Sleep(500);
+         Sleep(250);
 
       }
 
@@ -525,7 +539,7 @@ namespace app_app
 
                System.defer_start_program_files_app_app_admin("x86");
 
-               Sleep(500);
+               Sleep(250);
 
             }
 
@@ -544,16 +558,16 @@ namespace app_app
 
          }
 
-         Sleep(5000);
+         Sleep(250);
 
       }
 
-      int iUserServiceTry = 300;
+      int iUserServiceTry = 2000;
 
       while (!check_user_service("Win32", true))
       {
 
-         Sleep(500);
+         Sleep(250);
 
          if (iUserServiceTry <= 0)
          {
@@ -581,10 +595,10 @@ namespace app_app
 
          }
 
+         m_straCommand.add(wstr);
+
          if (System.check_soon_launch(wstr, false))
          {
-
-            m_straCommand.add(wstr);
 
             continue;
 
@@ -643,10 +657,23 @@ namespace app_app
 
          }
 
-         m_straCommand.add(wstr);
+         int iTry = 2000;
 
-         if (do_app_app(strId, strParams))
+         while (iTry > 0)
          {
+
+            do_app_app(strId, strParams);
+
+            if (System.is_application_updated(strId))
+            {
+
+               break;
+
+            }
+
+            Sleep(250);
+
+            iTry--;
 
          }
 
@@ -671,7 +698,7 @@ namespace app_app
          if (iCommandFailCount > 0)
          {
 
-            if (iCommandRetry < 10)
+            if (iCommandRetry < 50)
             {
 
                iCommandRetry++;
@@ -684,12 +711,12 @@ namespace app_app
 
       }
 
-      iUserServiceTry = 300;
+      iUserServiceTry = 2000;
 
       while (!check_user_service("Win32", true))
       {
 
-         Sleep(500);
+         Sleep(250);
 
          if (iUserServiceTry <= 0)
          {
@@ -701,9 +728,6 @@ namespace app_app
          iUserServiceTry--;
 
       }
-
-
-
 
       return 1;
 
@@ -843,9 +867,7 @@ namespace app_app
    int bootstrap::check_user_service(string strPlatform, bool bLaunch)
    {
 
-      string strApp = dir::stage(strPlatform) / "app_core_user_service.exe";
-
-      if (file_exists_dup(strApp))
+      if (System.is_application_updated("app-core/user_service"))
       {
 
          if (is_user_service_running())
@@ -863,9 +885,11 @@ namespace app_app
 
          }
 
+         string strApplication = dir::stage(strPlatform) / "app_core_user_service.exe";
+
          SHELLEXECUTEINFOW sei = {};
 
-         wstring wstrFile(strApp);
+         wstring wstrFile(strApplication);
 
          sei.cbSize = sizeof(SHELLEXECUTEINFOW);
 
@@ -1591,9 +1615,12 @@ namespace app_app
 
 
 
+   bool bootstrap::is_downloading_admin()
+   {
 
+      return m_bDownloadingAdmin;
 
-
+   }
 
 
 
