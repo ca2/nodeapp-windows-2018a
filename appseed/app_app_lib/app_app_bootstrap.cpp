@@ -117,71 +117,71 @@ namespace app_app
 
       start_app_install_in_context(strPlatform, true);
 
-      if (strPlatform == "x86")
-      {
+      //if (strPlatform == "x86")
+      //{
 
-         iTry = 8;
+      //   iTry = 8;
 
-         while (true)
-         {
+      //   while (true)
+      //   {
 
-            try
-            {
+      //      try
+      //      {
 
-               {
+      //         {
 
-                  int iUserServiceTry = 500;
+      //            int iUserServiceTry = 500;
 
-                  while (!check_user_service("Win32", false, System.m_dwGoodToCheckAgain))
-                  {
+      //            while (!check_user_service("Win32", false, System.m_dwGoodToCheckAgain))
+      //            {
 
-                     while (::get_tick_count() < System.m_dwGoodToCheckAgain)
-                     {
+      //               while (::get_tick_count() < System.m_dwGoodToCheckAgain)
+      //               {
 
-                        Sleep(100);
+      //                  Sleep(100);
 
-                     }
+      //               }
 
-                     if (iUserServiceTry <= 0)
-                     {
+      //               if (iUserServiceTry <= 0)
+      //               {
 
-                        break;
+      //                  break;
 
-                     }
+      //               }
 
-                     iUserServiceTry--;
+      //               iUserServiceTry--;
 
-                  }
+      //            }
 
-               }
+      //         }
 
-               if (!check_app_app_admin_bin(strPlatform))
-               {
+      //         if (!check_app_app_admin_bin(strPlatform))
+      //         {
 
-                  return 0;
+      //            return 0;
 
-               }
+      //         }
 
-            }
-            catch (...)
-            {
+      //      }
+      //      catch (...)
+      //      {
 
-            }
+      //      }
 
-            iTry--;
+      //      iTry--;
 
-            if (iTry < 0)
-            {
+      //      if (iTry < 0)
+      //      {
 
-               return 0;
+      //         return 0;
 
-            }
+      //      }
 
-            Sleep(500);
+      //      Sleep(500);
 
-         }
+      //   }
 
-      }
+      //}
 
       System.trace(":::::Thank you\r\n");
       System.trace("***Thank you\r\n");

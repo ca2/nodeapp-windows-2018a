@@ -72,6 +72,11 @@ namespace app_app
 
       ::CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
 
+      // this is currently hard-coded:
+      dir().m_pathCa2Module = dir::program_files_x86() / "ca2/time/Win32/basis";
+      dir().m_strCa2 = dir::program_files_x86() / "ca2";
+
+
       if (get_admin())
       {
 
@@ -1240,7 +1245,7 @@ namespace app_app
 
       }
 
-
+      return dwGoodToCheckAgain;
 
    }
 

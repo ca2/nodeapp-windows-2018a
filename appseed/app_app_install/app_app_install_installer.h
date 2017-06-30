@@ -123,8 +123,6 @@ namespace app_app_install
       installer(::aura::application * papp);
       virtual ~installer();
 
-      bool application_prelude(string strAppId);
-
       string http_get(const string & strUrl, bool bScalarListener);
 
       void set_progress(double dProgress);
@@ -210,6 +208,8 @@ namespace app_app_install
       virtual int32_t app_install_synch(const char * pszCommandLine, uint32_t & dwStartError, bool bSynch);
 
       virtual void on_set_scalar(int_scalar_source * psource,e_scalar escalar,int64_t iValue,int iFlags);
+
+      bool application_prelude(string strAppId, string strBuild);
 
    };
 

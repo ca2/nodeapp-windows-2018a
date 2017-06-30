@@ -673,7 +673,7 @@ namespace app_app_install
 
          string strCommand = m_strCommand;
 
-         int32_t i = application_prelude(m_strAppId);
+         int32_t i = application_prelude(m_strAppId, m_strBuild);
 
          //System.install().trace().rich_trace(".");
 
@@ -2962,7 +2962,7 @@ namespace app_app_install
    }
 
 
-   bool installer::application_prelude(string strAppId)
+   bool installer::application_prelude(string strAppId, string strBuild)
    {
 
       if (strAppId.is_empty())
@@ -2991,7 +2991,11 @@ namespace app_app_install
 
       sei.lpFile = wstrFile.c_str();
 
-      sei.lpParameters = L": install";
+      string strParams = ": install build=" + strBuild;
+
+      wstring wstrParams(strParams);
+
+      sei.lpParameters = wstrParams;
 
       if (!::ShellExecuteExW(&sei))
       {
