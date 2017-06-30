@@ -15,18 +15,21 @@ namespace app_app
       {
 
          int         m_iCheck;
-         bool        m_bSlopeOk;
+         //bool        m_bSlopeOk;
          bool        m_bOk;
-         DWORD       m_dwLastOk;
+         //DWORD       m_dwLastOk;
 
          status()
          {
 
             m_iCheck = 0;
-            m_bSlopeOk = false;
+            //m_bSlopeOk = false;
             m_bOk = false;
 
          }
+
+
+         DWORD calc_when_is_good_to_check_again();
 
       };
 
@@ -51,8 +54,10 @@ namespace app_app
       string_map < bootstrap * >    m_bootstrap;
 
       string                        m_strTraceLabel;
-      string_map < status >         m_mapStatus;
+      string_map < status >         m_mapUpdated;
+      string_map < status >         m_mapInstalled;
 
+      DWORD                         m_dwGoodToCheckAgain;
 
 
       app();
@@ -90,11 +95,11 @@ namespace app_app
       virtual string get_build();
 
       virtual string get_app_id(string wstr);
-      virtual int check_soon_launch(string str, bool bLaunch);
-      virtual int check_soon_file_launch(string wstr, bool bLaunch);
-      virtual int check_soon_app_id(string wstr, bool bLaunch);
-      virtual int check_soon_app_id1(string wstr, bool bLaunch);
-      virtual int check_soon_app_id2(string wstr, bool bLaunch);
+      virtual int check_soon_launch(string str, bool bLaunch, DWORD & dwGoodToCheckAgain);
+      virtual int check_soon_file_launch(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain);
+      virtual int check_soon_app_id(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain);
+      virtual int check_soon_app_id1(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain);
+      virtual int check_soon_app_id2(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain);
 
       virtual void trace(const string & str);
       virtual void trace(double dRate);
@@ -111,7 +116,9 @@ namespace app_app
       
       virtual bool low_is_app_app_admin_running(string strPlatform);
 
-      virtual bool is_application_updated(string strAppId);
+      virtual bool is_application_installed(string strAppId, DWORD & dwGoodToCheckAgain);
+
+      virtual bool is_application_updated(string strAppId, DWORD & dwGoodToCheckAgain);
 
 
    };

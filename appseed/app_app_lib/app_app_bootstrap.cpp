@@ -130,12 +130,17 @@ namespace app_app
 
                {
 
-                  int iUserServiceTry = 300;
+                  int iUserServiceTry = 500;
 
-                  while (!check_user_service("Win32", false))
+                  while (!check_user_service("Win32", false, System.m_dwGoodToCheckAgain))
                   {
 
-                     Sleep(500);
+                     while (::get_tick_count() < System.m_dwGoodToCheckAgain)
+                     {
+
+                        Sleep(100);
+
+                     }
 
                      if (iUserServiceTry <= 0)
                      {
@@ -291,10 +296,15 @@ namespace app_app
 
       int iUserServiceTry = 2000;
 
-      while (!check_user_service("Win32", true))
+      while (!check_user_service("Win32", true, System.m_dwGoodToCheckAgain))
       {
 
-         Sleep(250);
+         while (::get_tick_count() < System.m_dwGoodToCheckAgain)
+         {
+
+            Sleep(100);
+
+         }
 
          if (iUserServiceTry <= 0)
          {
@@ -323,7 +333,7 @@ namespace app_app
 
          m_straCommand.add(str);
 
-         if (System.check_soon_launch(str, false))
+         if (System.check_soon_launch(str, false, System.m_dwGoodToCheckAgain))
          {
 
             continue;
@@ -392,14 +402,19 @@ namespace app_app
 
             do_app_app(strId, strParams);
 
-            if (System.is_application_updated(strId))
+            if (System.is_application_updated(strId, System.m_dwGoodToCheckAgain))
             {
 
                break;
 
             }
 
-            Sleep(250);
+            while (::get_tick_count() < System.m_dwGoodToCheckAgain)
+            {
+
+               Sleep(100);
+
+            }
 
             iTry--;
 
@@ -414,7 +429,7 @@ namespace app_app
          for (auto & strCommand : m_straCommand)
          {
 
-            if (!System.check_soon_launch(strCommand, true))
+            if (!System.check_soon_launch(strCommand, true, System.m_dwGoodToCheckAgain))
             {
 
                iCommandFailCount++;
@@ -441,10 +456,15 @@ namespace app_app
 
       iUserServiceTry = 2000;
 
-      while (!check_user_service("Win32", true))
+      while (!check_user_service("Win32", true, System.m_dwGoodToCheckAgain))
       {
 
-         Sleep(250);
+         while (::get_tick_count() < System.m_dwGoodToCheckAgain)
+         {
+
+            Sleep(100);
+
+         }
 
          if (iUserServiceTry <= 0)
          {
@@ -564,10 +584,15 @@ namespace app_app
 
       int iUserServiceTry = 2000;
 
-      while (!check_user_service("Win32", true))
+      while (!check_user_service("Win32", true, System.m_dwGoodToCheckAgain))
       {
 
-         Sleep(250);
+         while (::get_tick_count() < System.m_dwGoodToCheckAgain)
+         {
+
+            Sleep(100);
+
+         }
 
          if (iUserServiceTry <= 0)
          {
@@ -597,7 +622,7 @@ namespace app_app
 
          m_straCommand.add(wstr);
 
-         if (System.check_soon_launch(wstr, false))
+         if (System.check_soon_launch(wstr, false, System.m_dwGoodToCheckAgain))
          {
 
             continue;
@@ -664,14 +689,19 @@ namespace app_app
 
             do_app_app(strId, strParams);
 
-            if (System.is_application_updated(strId))
+            if (System.is_application_updated(strId, System.m_dwGoodToCheckAgain))
             {
 
                break;
 
             }
 
-            Sleep(250);
+            while (::get_tick_count() < System.m_dwGoodToCheckAgain)
+            {
+
+               Sleep(100);
+
+            }
 
             iTry--;
 
@@ -686,7 +716,7 @@ namespace app_app
          for (auto & strCommand : m_straCommand)
          {
 
-            if (!System.check_soon_launch(strCommand, true))
+            if (!System.check_soon_launch(strCommand, true, System.m_dwGoodToCheckAgain))
             {
 
                iCommandFailCount++;
@@ -713,10 +743,15 @@ namespace app_app
 
       iUserServiceTry = 2000;
 
-      while (!check_user_service("Win32", true))
+      while (!check_user_service("Win32", true, System.m_dwGoodToCheckAgain))
       {
 
-         Sleep(250);
+         while (::get_tick_count() < System.m_dwGoodToCheckAgain)
+         {
+
+            Sleep(100);
+
+         }
 
          if (iUserServiceTry <= 0)
          {
@@ -864,10 +899,10 @@ namespace app_app
    }
 
 
-   int bootstrap::check_user_service(string strPlatform, bool bLaunch)
+   int bootstrap::check_user_service(string strPlatform, bool bLaunch, DWORD & dwGoodToCheckAgain)
    {
 
-      if (System.is_application_updated("app-core/user_service"))
+      if (System.is_application_updated("app-core/user_service", dwGoodToCheckAgain))
       {
 
          if (is_user_service_running())
@@ -879,7 +914,6 @@ namespace app_app
 
          if (!bLaunch || get_admin())
          {
-
 
             return 1;
 

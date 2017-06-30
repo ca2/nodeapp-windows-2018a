@@ -300,7 +300,7 @@ namespace app_app
       if (str.find(" install ") < 0)
       {
 
-         if (check_soon_launch(str, true))
+         if (check_soon_launch(str, true, m_dwGoodToCheckAgain))
          {
 
             return 0;
@@ -384,7 +384,7 @@ namespace app_app
 
 
 
-   int app::check_soon_launch(string strCommandLine, bool bLaunch)
+   int app::check_soon_launch(string strCommandLine, bool bLaunch, DWORD & dwGoodToCheckAgain)
    {
 
       string strId;
@@ -409,7 +409,7 @@ namespace app_app
 
          strFile.trim();
 
-         if (check_soon_file_launch(strFile, bLaunch))
+         if (check_soon_file_launch(strFile, bLaunch, dwGoodToCheckAgain))
          {
 
             return 1;
@@ -430,14 +430,14 @@ namespace app_app
             if (get_command_line_param(strId, wstrRequest, "enable_desktop_launch") && strId.length() > 0)
             {
 
-               return check_soon_app_id(strId, bLaunch);
+               return check_soon_app_id(strId, bLaunch, dwGoodToCheckAgain);
 
             }
 
             if (get_command_line_param(strId, wstrRequest, "app") && strId.length() > 0)
             {
 
-               return check_soon_app_id(strId, bLaunch);
+               return check_soon_app_id(strId, bLaunch, dwGoodToCheckAgain);
 
             }
 
@@ -448,7 +448,7 @@ namespace app_app
             if (get_command_line_param(strId, wstrRequest, "app") && strId.length() > 0)
             {
 
-               return check_soon_app_id(strId, bLaunch);
+               return check_soon_app_id(strId, bLaunch, dwGoodToCheckAgain);
 
             }
          }
@@ -458,7 +458,7 @@ namespace app_app
       if (strId.empty())
          return FALSE;
 
-      return check_soon_app_id(strId, bLaunch);
+      return check_soon_app_id(strId, bLaunch, dwGoodToCheckAgain);
 
    }
 
@@ -523,27 +523,27 @@ namespace app_app
    }
 
 
-   int app::check_soon_file_launch(string wstr, bool bLaunch)
+   int app::check_soon_file_launch(string wstr, bool bLaunch, DWORD & dwGoodToCheckAgain)
    {
 
-      return check_soon_app_id(u16(get_app_id(wstr.c_str()).c_str()), bLaunch);
+      return check_soon_app_id(u16(get_app_id(wstr.c_str()).c_str()), bLaunch, dwGoodToCheckAgain);
 
    }
 
 
 
 
-   int app::check_soon_app_id(string strId, bool bLaunch)
+   int app::check_soon_app_id(string strId, bool bLaunch, DWORD & dwGoodToCheckAgain)
    {
 
-      if (check_soon_app_id1(strId, bLaunch))
+      if (check_soon_app_id1(strId, bLaunch, dwGoodToCheckAgain))
       {
 
          return TRUE;
 
       }
 
-      if (check_soon_app_id2(strId, bLaunch))
+      if (check_soon_app_id2(strId, bLaunch, dwGoodToCheckAgain))
       {
 
          return TRUE;
@@ -555,7 +555,7 @@ namespace app_app
    }
 
 
-   int app::check_soon_app_id1(string strId, bool bLaunch)
+   int app::check_soon_app_id1(string strId, bool bLaunch, DWORD & dwGoodToCheckAgain)
    {
 
       if (strId.length() <= 0)
@@ -574,13 +574,13 @@ namespace app_app
       if (bLaunch)
       {
 
-         bOk = System.is_application_installed(strId);
+         bOk = is_application_installed(strId, dwGoodToCheckAgain);
 
       }
       else
       {
 
-         bOk = System.is_application_updated(strId);
+         bOk = is_application_updated(strId, dwGoodToCheckAgain);
 
       }
 
@@ -631,7 +631,7 @@ namespace app_app
    }
 
 
-   int app::check_soon_app_id2(string strId, bool bLaunch)
+   int app::check_soon_app_id2(string strId, bool bLaunch, DWORD & dwGoodToCheckAgain)
    {
 
       if (strId.length() <= 0)
@@ -654,13 +654,13 @@ namespace app_app
          if (bLaunch)
          {
 
-            bOk = System.is_application_installed(strId);
+            bOk = System.is_application_installed(strId, dwGoodToCheckAgain);
 
          }
          else
          {
 
-            bOk = System.is_application_updated(strId);
+            bOk = System.is_application_updated(strId, dwGoodToCheckAgain);
 
          }
 
@@ -1182,49 +1182,116 @@ namespace app_app
 
    //}
 
-
-   bool app::is_application_updated(string strAppId)
+   
+   DWORD app::status::calc_when_is_good_to_check_again()
    {
 
-      status & status = m_mapStatus[strAppId];
+      // by default it is good to check again any time sooner
+      DWORD dwGoodToCheckAgain = MAX(1, get_tick_count()) - 1;
 
-      if (status.m_iCheck >= 1)
+      if (m_bOk)
       {
 
-         if (status.m_bSlopeOk)
+         if (m_iCheck > 1) 
          {
 
-            status.m_iCheck++;
+            // The first and previous probes were not ok and now it is ok,
+            // signal it is better to wait a bit to proceed (5s)
+            // (a new check can be issued but must not probe for the moment, it should just return true)
 
-            return true;
+            dwGoodToCheckAgain += 5000;
 
          }
 
-         if (status.m_bOk)
+      }
+      else
+      {
+
+         if (m_iCheck < 4)
          {
 
-            status.m_iCheck++;
+            // After the first few failed probes,
+            // a sooner check (sooner compared to the *on duty* mode) is suggested, because the
+            // solution (installation, update) may be short
 
-            if (get_tick_count() - status.m_dwLastOk < 5000)
-            {
+            dwGoodToCheckAgain += 3500; // pragmatic pardon, because we know** (it can be short)
 
-               return false; // still return not-updated status for 5s
+         }
+         else if (m_iCheck < 10)
+         {
 
-            }
-            else
-            {
+            // "On Duty" mode
+            // It already took long on failed probes,
+            // so suggest to really wait more (coffee, lunch, sleep, vacation)
 
-               return true;
+            dwGoodToCheckAgain += 7000; // pardon precisely infinite - sometimes you find it was never reckt, because was never there? (ghost, devil, "not-blood-and-meat", ::not-actually-present,Imean,SorryTheSystemRequiresAuthenticationAndComingToOfficeToValidateTheRemoteAccessForExampleJustBecauseThereAreSoMany*)
 
+         }
+         else
+         {
 
-            }
+            // "Hell Mode"
+            // Can check again as crazy, until the patient goes away
+            // ("Will it ever happen to install, update or whatever?" is a hell isn't it?)
 
+            dwGoodToCheckAgain += 250;
 
          }
 
       }
 
-      bool bApplicationUpdated = false;
+
+
+   }
+
+
+   bool app::is_application_updated(string strAppId, DWORD & dwGoodToCheckAgain)
+   {
+
+      if (!is_application_installed(strAppId, dwGoodToCheckAgain))
+      {
+
+         return false;
+
+      }
+
+      status & status = m_mapUpdated[strAppId];
+
+      status.m_iCheck++;
+
+      if (status.m_bOk)
+      {
+
+         return true;
+
+      }
+
+      string strConfiguration = System.get_system_configuration();
+
+      string strLatestBuildNumber = System.get_latest_build_number(strConfiguration);
+
+      status.m_bOk = System.::aura::system::is_application_installed(strAppId, strLatestBuildNumber);
+
+      dwGoodToCheckAgain = status.calc_when_is_good_to_check_again();
+
+      return status.m_bOk;
+
+   }
+
+
+   bool app::is_application_installed(string strAppId, DWORD & dwGoodToCheckAgain)
+   {
+
+      status & status = m_mapInstalled[strAppId];
+
+      status.m_iCheck++;
+
+      if (status.m_bOk)
+      {
+
+         return true;
+
+      }
 
       string strName = ::process::app_id_to_app_name(strAppId);
 
@@ -1234,38 +1301,14 @@ namespace app_app
 
       string strApp = dir::stage(process_platform_dir_name()) / "app.exe";
 
-      if (file_exists_dup(strApplication) || (file_exists_dup(strDll) && file_exists_dup(strApp)))
-      {
+      status.m_bOk = file_exists_dup(strApplication) || (file_exists_dup(strDll) && file_exists_dup(strApp));
 
-         string strConfiguration = System.get_system_configuration();
+      dwGoodToCheckAgain = status.calc_when_is_good_to_check_again();
 
-         string strLatestBuildNumber = System.get_latest_build_number(strConfiguration);
-
-         bApplicationUpdated = System.is_application_installed(strAppId, strLatestBuildNumber);
-
-      }
-
-      status.m_iCheck++;
-
-      if (!status.m_bOk && bApplicationUpdated)
-      {
-
-         status.m_dwLastOk = get_tick_count();
-
-      }
-
-      status.m_bOk = bApplicationUpdated;
-
-      if (status.m_iCheck <= 1)
-      {
-
-         status.m_bSlopeOk = bApplicationUpdated;
-
-      }
-
-      return bApplicationUpdated;
+      return status.m_bOk;
 
    }
+
 
 
 } // namespace app_app

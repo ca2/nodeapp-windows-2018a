@@ -60,7 +60,7 @@ namespace app_app
 
       virtual bool check_app_app_installation(string strPlatform);
 
-      virtual int check_user_service(string strPlatform, bool bLaunch);
+      virtual int check_user_service(string strPlatform, bool bLaunch, DWORD & dwGoodToCheckAgain);
       virtual int check_vcredist(string strPlatform);
       virtual int download_vcredist(string strPlatform);
       virtual string download_tmp_vcredist(string strPlatform);
