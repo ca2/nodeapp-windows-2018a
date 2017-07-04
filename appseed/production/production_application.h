@@ -30,7 +30,7 @@ namespace production
 
       virtual bool bergedge_start();
 
-      virtual void on_request(sp(::create) pcreatecontext);
+      virtual void on_request(::create * pcreatecontext);
 
 	   virtual bool _001OnCmdMsg(::aura::cmd_msg * pcmdmsg);
    		

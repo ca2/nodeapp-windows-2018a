@@ -5,9 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{fed67213-78b4-43de-a2fe-3ce0eac0d9c9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{b4df329c-50d7-4b9b-804d-cfdf12bc0321}</UniqueIdentifier>
     </Filter>
@@ -18,18 +15,18 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\app_app_lib\app_app.rc">
+    <ResourceCompile Include="app_app.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\app_app_lib\app_app.ico">
+    <Image Include="app_app.ico">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\app_app_lib\resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <None Include="app_app.def">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

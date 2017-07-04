@@ -30,7 +30,7 @@
     <ProjectGuid>{6F512EFE-4B04-4565-80BF-B9AA396D6E72}</ProjectGuid>
     <RootNamespace>app-install</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <ProjectName>app_app_install</ProjectName>
+    <ProjectName>app_app_admin</ProjectName>
     <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -560,7 +560,7 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="app_app_install.cpp" />
+    <ClCompile Include="app_app_admin.cpp" />
     <ClCompile Include="app_app_install_installer.cpp" />
     <ClCompile Include="app_app_install_app.cpp" />
     <ClCompile Include="framework.cpp">
@@ -573,7 +573,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="app_app_install.h" />
+    <ClInclude Include="app_app_admin.h" />
     <ClInclude Include="app_app_install_app.h" />
     <ClInclude Include="app_app_install_installer.h" />
     <ClInclude Include="resource.h" />
@@ -583,7 +583,7 @@
     <Media Include="start.wav" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="app_app_install.rc" />
+    <ResourceCompile Include="app_app_admin.rc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\app\appseed\aura\acid.vcxproj">

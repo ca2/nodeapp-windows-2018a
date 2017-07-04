@@ -8,9 +8,6 @@
     <Filter Include="Resource Files">
       <UniqueIdentifier>{4aef53be-43f3-476c-9db4-e79ab901044a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{52e8074f-3bab-46cc-82d8-129e59a61bf9}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="app_app_admin.cpp">
@@ -18,18 +15,18 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\app_app_lib\app_app.rc">
+    <ResourceCompile Include="app_app.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\app_app_lib\app_app.ico">
+    <Image Include="app_app.ico">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\app_app_lib\resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <None Include="app_app_admin.def">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

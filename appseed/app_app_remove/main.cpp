@@ -258,7 +258,7 @@ int32_t removal::run()
    m_hmutex_app_removal = ::CreateMutex(NULL, FALSE, "Global\\::ca2::fontopus::ccca2_spa_app_removal::7807e510-5579-11dd-ae16-0800200c7784");
    if(::GetLastError() == ERROR_ALREADY_EXISTS)
    {
-      ::MessageBox(NULL, "ca2 app.removal.exe is already running.\n\nPlease wait for app.removal to finish or close it - using Task Manager - Ctrl+Shift+ESC - to continue.", "app_app_install.exe is running!", MB_ICONEXCLAMATION);
+      ::MessageBox(NULL, "ca2 app.removal.exe is already running.\n\nPlease wait for app.removal to finish or close it - using Task Manager - Ctrl+Shift+ESC - to continue.", "app_app_admin.exe is running!", MB_ICONEXCLAMATION);
       return false;
    }
 
@@ -291,7 +291,7 @@ int32_t removal::run()
 
 
    system("taskkill /F /IM app.exe");
-   system("taskkill /F /IM app_app_install.exe");
+   system("taskkill /F /IM app_app_admin.exe");
    system("taskkill /F /IM app_app_nest.exe");
    
    if(file_exists_dup("C:\\ca2\\config\\app-removal\\kill_browsers.txt") || file_exists_dup("C:\\ca2\\config\\app-removal\\kill_plugin_container.txt"))
@@ -386,7 +386,7 @@ int32_t removal::run()
 
    ::DeleteFile("C:\\Windows\\Downloaded Program Files\\iexca2.dll");
    ::DeleteFile("C:\\Windows\\Downloaded Program Files\\iexca2.inf");
-   ::DeleteFile("C:\\Windows\\Downloaded Program Files\\app_app_install.exe");
+   ::DeleteFile("C:\\Windows\\Downloaded Program Files\\app_app_admin.exe");
 
    ::reg_delete_tree_dup(HKEY_LOCAL_MACHINE, "SOFTWARE\\Wow6432Node\\MozillaPlugins\\@ca2.cc/npca2");
    ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "Wow6432Node\\CLSID\\{CA211984-1984-1977-A861-F8AA2A7AEE4B}");

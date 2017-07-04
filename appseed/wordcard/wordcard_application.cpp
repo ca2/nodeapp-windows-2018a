@@ -84,7 +84,7 @@ namespace wordcard
       return true;
    }
 
-   void application::on_request(sp(::create) pcreatecontext)
+   void application::on_request(::create * pcreatecontext)
    {
 
       sp(::user::document) pdoc = m_pdoctemplateMain->open_document_file(pcreatecontext);
