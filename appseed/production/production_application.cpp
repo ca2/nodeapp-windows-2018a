@@ -84,7 +84,7 @@ namespace production
       return true;
    }
 
-   void application::on_request(::create * pcreatecontext)
+   void application::on_request(::create * pcreate)
    {
 
       string strVersion = Application.file().as_string("C:\\ca2\\config\\nodeapp-windows\\production\\version.txt").trimmed();
@@ -102,16 +102,16 @@ namespace production
 
       }
       
-      sp(::user::document) pdoc = m_pdoctemplateMain->open_document_file(pcreatecontext);
+      sp(::user::document) pdoc = m_pdoctemplateMain->open_document_file(pcreate);
 
       if(pdoc.is_null())
          return;
 
-      if (pcreatecontext->m_spCommandLine->m_varQuery.has_property("start"))
+      if (pcreate->m_spCommandLine->m_varQuery.has_property("start"))
       {
          m_pview->make_production();
       }
-      else if (pcreatecontext->m_spCommandLine->m_varQuery.has_property("start_deferred"))
+      else if (pcreate->m_spCommandLine->m_varQuery.has_property("start_deferred"))
       {
          m_pview->production_loop(Application.command()->m_varTopicQuery["start_deferred"]);
       }

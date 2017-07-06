@@ -84,10 +84,10 @@ namespace wordcard
       return true;
    }
 
-   void application::on_request(::create * pcreatecontext)
+   void application::on_request(::create * pcreate)
    {
 
-      sp(::user::document) pdoc = m_pdoctemplateMain->open_document_file(pcreatecontext);
+      sp(::user::document) pdoc = m_pdoctemplateMain->open_document_file(pcreate);
 
       if(pdoc.is_null())
          return;

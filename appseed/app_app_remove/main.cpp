@@ -1,5 +1,5 @@
 ﻿#include "framework.h"
-#include "aura/node/windows/windows.h"
+#include "aura/os/windows/windows_app.inl"
 #include <Shlobj.h>
 #include "winnls.h"
 #include "shobjidl.h"
@@ -61,35 +61,41 @@ public:
 };
 
 
-// if MSVC CRT is used
-extern "C" int32_t WINAPI _tWinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLine,int32_t nCmdShow)
+//// if MSVC CRT is used
+//extern "C" int32_t WINAPI _tWinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR lpCmdLine,int32_t nCmdShow)
+//{
+//
+//   UNREFERENCED_PARAMETER(lpCmdLine);
+//
+//   if(!defer_aura_init())
+//   {
+//
+//      return -1;
+//
+//   }
+//
+//   removal * premoval = new removal();
+//
+//   int iRet = ::app_main(premoval, hInstance,hPrevInstance,lpCmdLine,nCmdShow);
+//
+//   defer_aura_term();
+//
+//   return iRet;
+//
+//
+//
+//}
+
+
+::aura::application * get_acid_app(::aura::application * pappParent)
 {
-
-   UNREFERENCED_PARAMETER(lpCmdLine);
-
-   if(!defer_aura_init())
-   {
-
-      return -1;
-
-   }
-
-   removal * premoval = new removal();
-
-   int iRet = ::app_main(premoval, hInstance,hPrevInstance,lpCmdLine,nCmdShow);
-
-   defer_aura_term();
-
-   return iRet;
-
-
+   
+   return new removal();
 
 }
 
 
-
-removal::removal() :
-   ::aura::system(this, NULL)
+removal::removal() 
 {
    m_hinstance             = ::GetModuleHandleA(NULL);
    m_hmutex_app_removal  = NULL;
@@ -493,26 +499,26 @@ bool removal::is_user_using(const char * pszDll)
 bool removal::are_there_user_files_in_use()
 {
 #ifdef X86
-   if(is_user_using(dir().element()/"stage\\x86\\msvcp110d.dll"))
+   if(is_user_using(System.dir().element()/"stage\\x86\\msvcp110d.dll"))
       return true;
-   if(is_user_using(dir().element()/"stage\\x86\\msvcr110d.dll"))
+   if(is_user_using(System.dir().element()/"stage\\x86\\msvcr110d.dll"))
       return true;
-   if(is_user_using(dir().element()/"stage\\x86\\ca.dll"))
+   if(is_user_using(System.dir().element()/"stage\\x86\\ca.dll"))
       return true;
-   if(is_user_using(dir().element()/"stage\\x86\\ca2.dll"))
+   if(is_user_using(System.dir().element()/"stage\\x86\\ca2.dll"))
       return true;
-   if(is_user_using(dir().element()/"stage\\x86\\ca2.dll"))
+   if(is_user_using(System.dir().element()/"stage\\x86\\ca2.dll"))
       return true;
 #else
-   if(is_user_using(dir().element() / "stage\\x64\\msvcp110d.dll"))
+   if(is_user_using(System.dir().element() / "stage\\x64\\msvcp110d.dll"))
       return true;
-   if(is_user_using(dir().element() / "stage\\x64\\msvcr110d.dll"))
+   if(is_user_using(System.dir().element() / "stage\\x64\\msvcr110d.dll"))
       return true;
-   if(is_user_using(dir().element() / "stage\\x64\\ca.dll"))
+   if(is_user_using(System.dir().element() / "stage\\x64\\ca.dll"))
       return true;
-   if(is_user_using(dir().element() / "stage\\x64\\ca2.dll"))
+   if(is_user_using(System.dir().element() / "stage\\x64\\ca2.dll"))
       return true;
-   if(is_user_using(dir().element() / "stage\\x64\\ca2.dll"))
+   if(is_user_using(System.dir().element() / "stage\\x64\\ca2.dll"))
       return true;
 #endif
    return false;
