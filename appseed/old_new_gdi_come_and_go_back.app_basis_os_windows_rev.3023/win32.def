@@ -1,7 +1,0 @@
-LIBRARY "os"
-
-EXPORTS
-_WinMain@16
-ca2_factory_exchange
-ca2_main
-

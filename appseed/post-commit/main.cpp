@@ -42,162 +42,9 @@ public:
 	virtual void win_sync_out(string str,string strRepos);
 
 
-	virtual int32_t run()
-	{
-		/*printf("I am the post-commit wizard and oracle!!\n");
-		printf("First: Be patient!! Keep calm, take it easy and try to enjoy the ride!!\n");
-		printf("Second: If you are patient, you are, let's say, sick or ill!!\n");
-		printf("Third: If you are an Angel or great God, you act immediately!!\n");
-		printf("Few people are like the last because they are still patient and ill!!\n");
-		printf("Straw-man shut up, you just fit words, they do not make sense, at least, I don't want to believe it, even if it is true (EVEN IF IT IS ***TRUE***) I prefer a lie and illusion than another bigbang childhood!!\n");
-		*/
+   virtual int32_t run();
 
-		//Sleep(25000);
-
-		printf("Number of arguments : %d\n",m_argc);
-
-		for(index i = 0; i < m_argc; i++)
-		{
-			printf("m_argv[%d] = \"%s\"\n",i , m_argv[i]);
-		}
-
-		string str;
-
-		stringa stra;
-
-		if(m_argc >= 2)
-		{
-
-			::file::path path = m_argv[1];
-
-			string strRepos = path.name();
-
-			if(strRepos.find_ci("repos2")>= 0)
-			{
-				m_bMainRepos = false;
-			}
-
-         string strUser = file_as_string_dup("C:\\sensitive\\sensitive\\seed\\user.txt");
-
-			string strPass = file_as_string_dup("C:\\sensitive\\sensitive\\seed\\pass.txt");
-
-			if(m_bMainRepos)
-			{
-
-				str = file_as_string_dup("C:\\ca2\\config\\repos\\mirror_list.txt");
-
-				stra.add_lines(str);
-
-				for(auto str : stra)
-				{
-					if(str.has_char())
-					{
-
-						::system("C:\\bergedge\\hi5\\program\\hstart /NOCONSOLE \"svnsync --non-interactive --sync-username " + strUser + " --sync-password " + strPass + " --source-username " + strUser + " --source-password " + strPass + " sync https://" + str + "-repos.ca2.cc:8443/" + strRepos + "\"");
-					}
-				}
-
-			}
-
-			str = file_as_string_dup("C:\\ca2\\config\\repos\\mirror_list_here.txt");
-
-			stra.remove_all();
-
-			stra.add_lines(str);
-
-
-			int iCount = 0;
-
-			for(auto str : stra)
-			{
-				if(str.has_char())
-				{
-					iCount++;
-					::fork(this,[&]() 
-					{
-
-						win_sync_out(str,strRepos);
-
-						iCount--;
-
-					});
-
-					
-				}
-			}
-
-			while(iCount > 0)
-			{
-				Sleep(500);
-			}
-
-		}
-
-		return 0;
-	}
-
-	string call(string str)
-	{
-
-		string strLog;
-
-		try
-		{
-
-			DWORD dwTimeout = 840 * 1000; // 14 minutes
-
-			::process::process_sp process(allocer());
-
-			process->create_child_process(str,true,NULL,::multithreading::priority_highest);
-
-			uint32_t dwStart = ::get_tick_count();
-
-			uint32_t dwExitCode;
-
-			bool bTimeout = false;
-
-			while(true)
-			{
-
-				strLog += process->read();
-
-				if(process->has_exited(&dwExitCode))
-					break;
-
-				Sleep(100);
-
-				if(::get_tick_count() - dwStart > dwTimeout) // 14 minutes
-				{
-
-					bTimeout = true;
-
-					break;
-
-				}
-
-			}
-
-			strLog += process->read();
-
-			if(bTimeout)
-			{
-
-				process->kill();
-
-				return "";
-
-			}
-		}
-		catch(...)
-		{
-
-		}
-
-		return strLog;
-
-	}
-
-
+   string call(string str);
 
 
 } ;
@@ -380,3 +227,164 @@ void app_t::win_sync_out(string strLocal,string strRepos)
    return new app_t();
 
 }
+
+
+
+
+
+
+int32_t app_t::run()
+{
+   /*printf("I am the post-commit wizard and oracle!!\n");
+   printf("First: Be patient!! Keep calm, take it easy and try to enjoy the ride!!\n");
+   printf("Second: If you are patient, you are, let's say, sick or ill!!\n");
+   printf("Third: If you are an Angel or great God, you act immediately!!\n");
+   printf("Few people are like the last because they are still patient and ill!!\n");
+   printf("Straw-man shut up, you just fit words, they do not make sense, at least, I don't want to believe it, even if it is true (EVEN IF IT IS ***TRUE***) I prefer a lie and illusion than another bigbang childhood!!\n");
+   */
+
+   //Sleep(25000);
+
+   printf("Number of arguments : %d\n", m_argc);
+
+   for (index i = 0; i < m_argc; i++)
+   {
+      printf("m_argv[%d] = \"%s\"\n", i, m_argv[i]);
+   }
+
+   string str;
+
+   stringa stra;
+
+   if (m_argc >= 2)
+   {
+
+      ::file::path path = m_argv[1];
+
+      string strRepos = path.name();
+
+      if (strRepos.find_ci("repos2") >= 0)
+      {
+         m_bMainRepos = false;
+      }
+
+      string strUser = file_as_string_dup("C:\\sensitive\\sensitive\\seed\\user.txt");
+
+      string strPass = file_as_string_dup("C:\\sensitive\\sensitive\\seed\\pass.txt");
+
+      if (m_bMainRepos)
+      {
+
+         str = file_as_string_dup("C:\\ca2\\config\\repos\\mirror_list.txt");
+
+         stra.add_lines(str);
+
+         for (auto str : stra)
+         {
+            if (str.has_char())
+            {
+
+               ::system("C:\\bergedge\\hi5\\program\\hstart /NOCONSOLE \"svnsync --non-interactive --sync-username " + strUser + " --sync-password " + strPass + " --source-username " + strUser + " --source-password " + strPass + " sync https://" + str + "-repos.ca2.cc:8443/" + strRepos + "\"");
+            }
+         }
+
+      }
+
+      str = file_as_string_dup("C:\\ca2\\config\\repos\\mirror_list_here.txt");
+
+      stra.remove_all();
+
+      stra.add_lines(str);
+
+
+      int iCount = 0;
+
+      for (auto str : stra)
+      {
+         if (str.has_char())
+         {
+            iCount++;
+            ::fork(this, [&]()
+            {
+
+               win_sync_out(str, strRepos);
+
+               iCount--;
+
+            });
+
+
+         }
+      }
+
+      while (iCount > 0)
+      {
+         Sleep(500);
+      }
+
+   }
+
+   return 0;
+}
+
+string app_t::call(string str)
+{
+
+   string strLog;
+
+   try
+   {
+
+      DWORD dwTimeout = 840 * 1000; // 14 minutes
+
+      ::process::process_sp process(allocer());
+
+      process->create_child_process(str, true, NULL, ::multithreading::priority_highest);
+
+      uint32_t dwStart = ::get_tick_count();
+
+      uint32_t dwExitCode;
+
+      bool bTimeout = false;
+
+      while (true)
+      {
+
+         strLog += process->read();
+
+         if (process->has_exited(&dwExitCode))
+            break;
+
+         Sleep(100);
+
+         if (::get_tick_count() - dwStart > dwTimeout) // 14 minutes
+         {
+
+            bTimeout = true;
+
+            break;
+
+         }
+
+      }
+
+      strLog += process->read();
+
+      if (bTimeout)
+      {
+
+         process->kill();
+
+         return "";
+
+      }
+   }
+   catch (...)
+   {
+
+   }
+
+   return strLog;
+
+}
+
