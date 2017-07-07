@@ -1,7 +1,7 @@
 #pragma once
 
 #include "aura/aura/aura.h"
-#include "aura/node/windows/windows.h"
+#include "aura/os/windows/windows_app_console.inl"
 
 #include <stdio.h>
 //SPALIB_API string spa_version(string strVersion= "");
@@ -15,8 +15,7 @@ public:
 	bool m_bMainRepos;
 
 
-	app_t():
-		::aura::system(this ,NULL)
+	app_t()
 	{
 
       //Sleep(15000);
@@ -354,22 +353,30 @@ void app_t::win_sync_out(string strLocal,string strRepos)
 }
 
 
-int main()
+//int main()
+//{
+//
+//   if(!defer_aura_init())
+//   {
+//
+//      return -1;
+//
+//   }
+//
+//   app_t * psystem = new app_t;
+//   
+//   int iReturnCode = ::app_main(psystem, NULL,NULL,NULL,0);
+//
+//   defer_aura_term();
+//
+//   return iReturnCode;
+//
+//}
+
+
+::aura::application * get_acid_app(::aura::application * papp)
 {
 
-   if(!defer_aura_init())
-   {
-
-      return -1;
-
-   }
-
-   app_t * psystem = new app_t;
-   
-   int iReturnCode = ::app_main(psystem, NULL,NULL,NULL,0);
-
-   defer_aura_term();
-
-   return iReturnCode;
+   return new app_t();
 
 }

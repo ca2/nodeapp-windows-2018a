@@ -137,6 +137,7 @@
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+      <ModuleDefinitionFile>post-commit.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -189,6 +190,7 @@
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ModuleDefinitionFile>post-commit.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -228,6 +230,7 @@
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+      <ModuleDefinitionFile>post-commit.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
       <Command>copy $(TargetPath) C:\repos\main\hooks\post-commit_.exe
@@ -275,6 +278,7 @@ C_reposupdatepostcommitexe</Command>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <ModuleDefinitionFile>post-commit.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -296,6 +300,9 @@ C_reposupdatepostcommitexe</Command>
     <ProjectReference Include="..\draw2d_gdiplus\_draw2d_gdiplus.vcxproj">
       <Project>{573c4b5e-4132-457a-be82-05a882a062ff}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="post-commit.def" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
