@@ -726,7 +726,7 @@ Opened:
       imedia_time wave_out::wave_out_get_position_millis()
       {
 
-         return m_imediatime;
+         return device_wave_out_get_position_millis();
 
       }
 
@@ -739,7 +739,7 @@ Opened:
 
          MMTIME                  mmt = {};
 
-         mmt.wType = TIME_MS;
+         mmt.wType = TIME_BYTES;
 
          if(m_hwaveout != NULL)
          {
@@ -793,7 +793,9 @@ Opened:
       imedia_position wave_out::wave_out_get_position()
       {
          
-         return m_imediaposition;
+         //return m_imediaposition;
+
+         return device_wave_out_get_position();
 
       }
 
