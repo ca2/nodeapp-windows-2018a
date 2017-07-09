@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.14
+VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_flag", "..\..\..\app-core\appseed\flag\flag.vcxproj", "{4467CF99-AD0F-403B-8E30-3CBA23756713}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -109,6 +109,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_clockverse", "..\.
 	ProjectSection(ProjectDependencies) = postProject
 		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86} = {E2D7833B-9B59-4826-BBDF-C270A2115E86}
+		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0} = {DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}
 		{11AFE887-61B7-4217-913C-36736B359F39} = {11AFE887-61B7-4217-913C-36736B359F39}
 		{B46A198F-4171-4DEE-8CFD-164D99B42057} = {B46A198F-4171-4DEE-8CFD-164D99B42057}
 		{D620EED4-10A9-4C54-8DEE-A52B9D178A4D} = {D620EED4-10A9-4C54-8DEE-A52B9D178A4D}
@@ -167,6 +168,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app._", "..\..\appseed\app._\app._.vcxproj", "{11AFE887-61B7-4217-913C-36736B359F39}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_libmpg123", "..\..\..\app-veriwell\appseed\audio_decode_libmpg123\audio_decode_libmpg123.vcxproj", "{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -674,6 +677,18 @@ Global
 		{11AFE887-61B7-4217-913C-36736B359F39}.stage|Win32.Build.0 = stage|Win32
 		{11AFE887-61B7-4217-913C-36736B359F39}.stage|x64.ActiveCfg = stage|x64
 		{11AFE887-61B7-4217-913C-36736B359F39}.stage|x64.Build.0 = stage|x64
+		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.basis|Win32.ActiveCfg = basis|Win32
+		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.basis|Win32.Build.0 = basis|Win32
+		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.basis|x64.ActiveCfg = basis|x64
+		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.basis|x64.Build.0 = basis|x64
+		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.cover|Win32.ActiveCfg = cover|Win32
+		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.cover|Win32.Build.0 = cover|Win32
+		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.cover|x64.ActiveCfg = cover|x64
+		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.cover|x64.Build.0 = cover|x64
+		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.stage|Win32.ActiveCfg = stage|Win32
+		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.stage|Win32.Build.0 = stage|Win32
+		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.stage|x64.ActiveCfg = stage|x64
+		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

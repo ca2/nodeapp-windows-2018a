@@ -102,7 +102,9 @@ namespace production
 
       }
       
-      sp(::user::document) pdoc = m_pdoctemplateMain->open_document_file(pcreate);
+      m_pdoctemplateMain->request_create(pcreate);
+
+      sp(::user::document) pdoc = ::user::get_document(pcreate);
 
       if(pdoc.is_null())
          return;

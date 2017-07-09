@@ -1,12 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_cd", "..\..\..\app-core\appseed\audio_decode_cd\audio_decode_cd.vcxproj", "{C12F946A-2A59-4566-B650-D6A84408B165}"
 	ProjectSection(ProjectDependencies) = postProject
 		{B2E38F2D-2D8C-4C63-8865-02DC220DC360} = {B2E38F2D-2D8C-4C63-8865-02DC220DC360}
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
 		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0} = {DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}
 		{16422A53-47AC-40A0-B3BA-0EF2CFF83CBF} = {16422A53-47AC-40A0-B3BA-0EF2CFF83CBF}
 		{FCEBB077-A523-4949-B958-9F7879E56067} = {FCEBB077-A523-4949-B958-9F7879E56067}
@@ -19,24 +18,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_cd", "..\..\..
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_wave", "..\..\..\app-core\appseed\audio_decode_wave\audio_decode_wave.vcxproj", "{D620EED4-10A9-4C54-8DEE-A52B9D178A4D}"
-	ProjectSection(ProjectDependencies) = postProject
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_libmpg123", "..\..\..\app-veriwell\appseed\audio_decode_libmpg123\audio_decode_libmpg123.vcxproj", "{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}"
-	ProjectSection(ProjectDependencies) = postProject
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_vorbis", "..\..\..\app-veriwell\appseed\audio_decode_vorbis\audio_decode_vorbis.vcxproj", "{FCEBB077-A523-4949-B958-9F7879E56067}"
-	ProjectSection(ProjectDependencies) = postProject
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_windows_media", "..\..\..\app-veriwell\appseed\audio_decode_windows_media\audio_decode_windows_media.vcxproj", "{2453409D-7D51-4E7E-A739-86234FFF3509}"
-	ProjectSection(ProjectDependencies) = postProject
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "video_decode_ffmpeg", "..\..\..\app-veriwell\appseed\video_decode_ffmpeg\video_decode_ffmpeg.vcxproj", "{67DC7693-61A5-4991-AF68-559CABB20EAB}"
 EndProject
@@ -69,22 +56,14 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "music_midi_mmsystem", "..\..\appseed\music_midi_mmsystem\music_midi_mmsystem.vcxproj", "{B2E38F2D-2D8C-4C63-8865-02DC220DC360}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_mixer_mmsystem", "..\..\appseed\audio_mixer_mmsystem\audio_mixer_mmsystem.vcxproj", "{B46A198F-4171-4DEE-8CFD-164D99B42057}"
-	ProjectSection(ProjectDependencies) = postProject
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_mmsystem", "..\..\appseed\audio_mmsystem\audio_mmsystem.vcxproj", "{54850FD8-653A-43B6-AA90-E59AC030559C}"
-	ProjectSection(ProjectDependencies) = postProject
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "base", "..\..\..\app\appseed\base\base.vcxproj", "{4D7D3626-ADA6-4CA2-9566-ED7B131E3D51}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "core", "..\..\..\app\appseed\core\core.vcxproj", "{E000FFAF-392F-4E32-BF51-FD7ED638991F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multimedia_mmsystem", "..\..\appseed\multimedia_mmsystem\multimedia_mmsystem.vcxproj", "{21DA4A8C-5A05-40A4-BF5B-FF62B9DDD150}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app._", "..\..\..\app-core\appseed\appfy\appfy.vcxproj", "{3DDD6C31-218E-4979-B095-8AF22563D9C1}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axis", "..\..\..\app\appseed\axis\axis.vcxproj", "{73A245F9-C92F-4487-AEF7-CB0531F665BD}"
 EndProject
@@ -110,7 +89,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_veriwell_verisimplevide
 	ProjectSection(ProjectDependencies) = postProject
 		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
 		{B2E38F2D-2D8C-4C63-8865-02DC220DC360} = {B2E38F2D-2D8C-4C63-8865-02DC220DC360}
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
+		{B5B26A30-A18D-4DC2-BACE-48C2DE33CD75} = {B5B26A30-A18D-4DC2-BACE-48C2DE33CD75}
 		{E2D7833B-9B59-4826-BBDF-C27019771984} = {E2D7833B-9B59-4826-BBDF-C27019771984}
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86} = {E2D7833B-9B59-4826-BBDF-C270A2115E86}
 		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0} = {DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}
@@ -119,7 +98,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_veriwell_verisimplevide
 		{C12F946A-2A59-4566-B650-D6A84408B165} = {C12F946A-2A59-4566-B650-D6A84408B165}
 		{00845177-0000-0000-0000-000000000000} = {00845177-0000-0000-0000-000000000000}
 		{FCEBB077-A523-4949-B958-9F7879E56067} = {FCEBB077-A523-4949-B958-9F7879E56067}
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB} = {1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}
+		{11AFE887-61B7-4217-913C-36736B359F39} = {11AFE887-61B7-4217-913C-36736B359F39}
 		{21DA4A8C-5A05-40A4-BF5B-FF62B9778451} = {21DA4A8C-5A05-40A4-BF5B-FF62B9778451}
 		{21DA4A8C-5A05-40A4-BF5B-FF62B9DDD150} = {21DA4A8C-5A05-40A4-BF5B-FF62B9DDD150}
 		{8451778C-2015-40A4-BF5B-FF62B9778451} = {8451778C-2015-40A4-BF5B-FF62B9778451}
@@ -139,11 +118,18 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_veriwell_asciimedia", "..\..\..\app-veriwell\appseed\asciimedia\asciimedia.vcxproj", "{DC455119-050C-4E33-9707-9FB3D6C36524}"
 	ProjectSection(ProjectDependencies) = postProject
 		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB} = {1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}
+		{B5B26A30-A18D-4DC2-BACE-48C2DE33CD75} = {B5B26A30-A18D-4DC2-BACE-48C2DE33CD75}
+		{11AFE887-61B7-4217-913C-36736B359F39} = {11AFE887-61B7-4217-913C-36736B359F39}
+		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF} = {9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_veriwell_waven", "..\..\..\app-veriwell\appseed\waven\waven.vcxproj", "{5262FA60-FE91-4A5E-AC0D-89479B8A7670}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
+		{B5B26A30-A18D-4DC2-BACE-48C2DE33CD75} = {B5B26A30-A18D-4DC2-BACE-48C2DE33CD75}
+		{11AFE887-61B7-4217-913C-36736B359F39} = {11AFE887-61B7-4217-913C-36736B359F39}
+		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF} = {9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_veriwell_mplite", "..\..\..\app-veriwell\appseed\mplite\mplite.vcxproj", "{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -152,7 +138,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_veriwell_mplite", "..\.
 		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
 		{B2E38F2D-2D8C-4C63-8865-02DC220DC360} = {B2E38F2D-2D8C-4C63-8865-02DC220DC360}
 		{B5B26A30-A18D-4DC2-BACE-48C2DE33CD75} = {B5B26A30-A18D-4DC2-BACE-48C2DE33CD75}
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1} = {3DDD6C31-218E-4979-B095-8AF22563D9C1}
 		{E2D7833B-9B59-4826-BBDF-C27019771984} = {E2D7833B-9B59-4826-BBDF-C27019771984}
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86} = {E2D7833B-9B59-4826-BBDF-C270A2115E86}
 		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0} = {DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}
@@ -160,7 +145,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_veriwell_mplite", "..\.
 		{C12F946A-2A59-4566-B650-D6A84408B165} = {C12F946A-2A59-4566-B650-D6A84408B165}
 		{00845177-0000-0000-0000-000000000000} = {00845177-0000-0000-0000-000000000000}
 		{FCEBB077-A523-4949-B958-9F7879E56067} = {FCEBB077-A523-4949-B958-9F7879E56067}
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB} = {1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}
+		{11AFE887-61B7-4217-913C-36736B359F39} = {11AFE887-61B7-4217-913C-36736B359F39}
 		{21DA4A8C-5A05-40A4-BF5B-FF62B9778451} = {21DA4A8C-5A05-40A4-BF5B-FF62B9778451}
 		{21DA4A8C-5A05-40A4-BF5B-FF62B9DDD150} = {21DA4A8C-5A05-40A4-BF5B-FF62B9DDD150}
 		{8451778C-2015-40A4-BF5B-FF62B9778451} = {8451778C-2015-40A4-BF5B-FF62B9778451}
@@ -175,6 +160,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_veriwell_mplite", "..\.
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_veriwell_vmsplayer", "..\..\..\app-veriwell\appseed\vmsplayer\vmsplayer.vcxproj", "{0EBB4EDE-16AF-480F-B8C8-6494D168A8D7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
+		{B5B26A30-A18D-4DC2-BACE-48C2DE33CD75} = {B5B26A30-A18D-4DC2-BACE-48C2DE33CD75}
+		{11AFE887-61B7-4217-913C-36736B359F39} = {11AFE887-61B7-4217-913C-36736B359F39}
+		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF} = {9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_ace", "..\..\..\app\appseed\ace\_ace.vcxproj", "{699D6807-4F43-40E9-86AB-2A8B856707A9}"
 EndProject
@@ -191,16 +182,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_spotify", "..\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multimedia_playlist_spotify", "..\..\..\app-core\appseed\multimedia_playlist_spotify\multimedia_playlist_spotify.vcxproj", "{16422A53-47AC-40A0-B3BA-0EF2CFF83CBF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BE786FEC-EF06-4436-A711-AE4731E7A600}"
-	ProjectSection(SolutionItems) = preProject
-		Performance1.psess = Performance1.psess
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "draw2d_cairo", "..\..\..\app\appseed\draw2d_cairo\draw2d_cairo.vcxproj", "{B5B26A30-A18D-4DC2-BACE-48C2DE33CD75}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_auraverse", "..\..\..\app-core\appseed\auraverse\auraverse.vcxproj", "{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_common", "..\..\appseed\app_common\app_common.vcxproj", "{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app._", "..\..\appseed\app._\app._.vcxproj", "{11AFE887-61B7-4217-913C-36736B359F39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -834,40 +820,6 @@ Global
 		{21DA4A8C-5A05-40A4-BF5B-FF62B9DDD150}.static_basis|Win32.Build.0 = basis|Win32
 		{21DA4A8C-5A05-40A4-BF5B-FF62B9DDD150}.static_basis|x64.ActiveCfg = basis|x64
 		{21DA4A8C-5A05-40A4-BF5B-FF62B9DDD150}.static_basis|x64.Build.0 = basis|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.basis|Win32.ActiveCfg = basis|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.basis|Win32.Build.0 = basis|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.basis|x64.ActiveCfg = basis|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.basis|x64.Build.0 = basis|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.codeanalysis|Win32.ActiveCfg = stage|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.codeanalysis|Win32.Build.0 = stage|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.codeanalysis|x64.ActiveCfg = stage|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.codeanalysis|x64.Build.0 = stage|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.cover|Win32.ActiveCfg = cover|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.cover|Win32.Build.0 = cover|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.cover|Win32.Deploy.0 = cover|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.cover|x64.ActiveCfg = cover|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.cover|x64.Build.0 = cover|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.cover|x64.Deploy.0 = cover|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.memdleak|Win32.ActiveCfg = stage|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.memdleak|Win32.Build.0 = stage|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.memdleak|x64.ActiveCfg = stage|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.memdleak|x64.Build.0 = stage|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.no_precompiled_header|Win32.ActiveCfg = stage|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.no_precompiled_header|Win32.Build.0 = stage|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.no_precompiled_header|x64.ActiveCfg = stage|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.no_precompiled_header|x64.Build.0 = stage|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.profiler|Win32.ActiveCfg = stage|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.profiler|Win32.Build.0 = stage|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.profiler|x64.ActiveCfg = stage|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.profiler|x64.Build.0 = stage|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.stage|Win32.ActiveCfg = stage|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.stage|Win32.Build.0 = stage|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.stage|x64.ActiveCfg = stage|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.stage|x64.Build.0 = stage|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.static_basis|Win32.ActiveCfg = basis|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.static_basis|Win32.Build.0 = basis|Win32
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.static_basis|x64.ActiveCfg = basis|x64
-		{3DDD6C31-218E-4979-B095-8AF22563D9C1}.static_basis|x64.Build.0 = basis|x64
 		{73A245F9-C92F-4487-AEF7-CB0531F665BD}.basis|Win32.ActiveCfg = basis|Win32
 		{73A245F9-C92F-4487-AEF7-CB0531F665BD}.basis|Win32.Build.0 = basis|Win32
 		{73A245F9-C92F-4487-AEF7-CB0531F665BD}.basis|x64.ActiveCfg = basis|x64
@@ -1681,38 +1633,38 @@ Global
 		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.static_basis|Win32.Build.0 = basis|Win32
 		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.static_basis|x64.ActiveCfg = basis|x64
 		{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}.static_basis|x64.Build.0 = basis|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.basis|Win32.ActiveCfg = basis|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.basis|Win32.Build.0 = basis|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.basis|x64.ActiveCfg = basis|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.basis|x64.Build.0 = basis|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.codeanalysis|Win32.ActiveCfg = cover|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.codeanalysis|Win32.Build.0 = cover|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.codeanalysis|x64.ActiveCfg = cover|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.codeanalysis|x64.Build.0 = cover|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.cover|Win32.ActiveCfg = cover|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.cover|Win32.Build.0 = cover|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.cover|x64.ActiveCfg = cover|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.cover|x64.Build.0 = cover|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.memdleak|Win32.ActiveCfg = cover|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.memdleak|Win32.Build.0 = cover|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.memdleak|x64.ActiveCfg = cover|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.memdleak|x64.Build.0 = cover|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.no_precompiled_header|Win32.ActiveCfg = cover|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.no_precompiled_header|Win32.Build.0 = cover|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.no_precompiled_header|x64.ActiveCfg = cover|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.no_precompiled_header|x64.Build.0 = cover|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.profiler|Win32.ActiveCfg = cover|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.profiler|Win32.Build.0 = cover|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.profiler|x64.ActiveCfg = cover|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.profiler|x64.Build.0 = cover|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.stage|Win32.ActiveCfg = stage|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.stage|Win32.Build.0 = stage|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.stage|x64.ActiveCfg = stage|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.stage|x64.Build.0 = stage|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.static_basis|Win32.ActiveCfg = basis|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.static_basis|Win32.Build.0 = basis|Win32
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.static_basis|x64.ActiveCfg = basis|x64
-		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}.static_basis|x64.Build.0 = basis|x64
+		{11AFE887-61B7-4217-913C-36736B359F39}.basis|Win32.ActiveCfg = basis|Win32
+		{11AFE887-61B7-4217-913C-36736B359F39}.basis|Win32.Build.0 = basis|Win32
+		{11AFE887-61B7-4217-913C-36736B359F39}.basis|x64.ActiveCfg = basis|x64
+		{11AFE887-61B7-4217-913C-36736B359F39}.basis|x64.Build.0 = basis|x64
+		{11AFE887-61B7-4217-913C-36736B359F39}.codeanalysis|Win32.ActiveCfg = cover|Win32
+		{11AFE887-61B7-4217-913C-36736B359F39}.codeanalysis|Win32.Build.0 = cover|Win32
+		{11AFE887-61B7-4217-913C-36736B359F39}.codeanalysis|x64.ActiveCfg = cover|x64
+		{11AFE887-61B7-4217-913C-36736B359F39}.codeanalysis|x64.Build.0 = cover|x64
+		{11AFE887-61B7-4217-913C-36736B359F39}.cover|Win32.ActiveCfg = cover|Win32
+		{11AFE887-61B7-4217-913C-36736B359F39}.cover|Win32.Build.0 = cover|Win32
+		{11AFE887-61B7-4217-913C-36736B359F39}.cover|x64.ActiveCfg = cover|x64
+		{11AFE887-61B7-4217-913C-36736B359F39}.cover|x64.Build.0 = cover|x64
+		{11AFE887-61B7-4217-913C-36736B359F39}.memdleak|Win32.ActiveCfg = cover|Win32
+		{11AFE887-61B7-4217-913C-36736B359F39}.memdleak|Win32.Build.0 = cover|Win32
+		{11AFE887-61B7-4217-913C-36736B359F39}.memdleak|x64.ActiveCfg = cover|x64
+		{11AFE887-61B7-4217-913C-36736B359F39}.memdleak|x64.Build.0 = cover|x64
+		{11AFE887-61B7-4217-913C-36736B359F39}.no_precompiled_header|Win32.ActiveCfg = cover|Win32
+		{11AFE887-61B7-4217-913C-36736B359F39}.no_precompiled_header|Win32.Build.0 = cover|Win32
+		{11AFE887-61B7-4217-913C-36736B359F39}.no_precompiled_header|x64.ActiveCfg = cover|x64
+		{11AFE887-61B7-4217-913C-36736B359F39}.no_precompiled_header|x64.Build.0 = cover|x64
+		{11AFE887-61B7-4217-913C-36736B359F39}.profiler|Win32.ActiveCfg = cover|Win32
+		{11AFE887-61B7-4217-913C-36736B359F39}.profiler|Win32.Build.0 = cover|Win32
+		{11AFE887-61B7-4217-913C-36736B359F39}.profiler|x64.ActiveCfg = cover|x64
+		{11AFE887-61B7-4217-913C-36736B359F39}.profiler|x64.Build.0 = cover|x64
+		{11AFE887-61B7-4217-913C-36736B359F39}.stage|Win32.ActiveCfg = stage|Win32
+		{11AFE887-61B7-4217-913C-36736B359F39}.stage|Win32.Build.0 = stage|Win32
+		{11AFE887-61B7-4217-913C-36736B359F39}.stage|x64.ActiveCfg = stage|x64
+		{11AFE887-61B7-4217-913C-36736B359F39}.stage|x64.Build.0 = stage|x64
+		{11AFE887-61B7-4217-913C-36736B359F39}.static_basis|Win32.ActiveCfg = basis|Win32
+		{11AFE887-61B7-4217-913C-36736B359F39}.static_basis|Win32.Build.0 = basis|Win32
+		{11AFE887-61B7-4217-913C-36736B359F39}.static_basis|x64.ActiveCfg = basis|x64
+		{11AFE887-61B7-4217-913C-36736B359F39}.static_basis|x64.Build.0 = basis|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
