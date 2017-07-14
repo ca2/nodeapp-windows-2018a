@@ -4,6 +4,10 @@
 ::aura::application * get_acid_app(::aura::application * papp)
 {
 
-   return new ::install::application(papp, true);
+   ::install::application * pinstallapp = new ::install::application();
+
+   pinstallapp->m_bAdmin = true;
+
+   return pinstallapp;
 
 }

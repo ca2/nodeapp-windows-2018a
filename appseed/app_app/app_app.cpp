@@ -4,6 +4,6 @@
 ::aura::application * get_acid_app(::aura::application * papp)
 {
 
-   return new ::install::application(papp);
+   return new ::install::application();
 
 }
