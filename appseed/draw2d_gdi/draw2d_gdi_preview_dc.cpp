@@ -474,7 +474,7 @@ size preview_dc::ScaleWindowExt(int xNum, int xDenom, int yNum, int yDenom)
 /////////////////////////////////////////////////////////////////////////////
 // Text Functions
 
-// private helpers for TextOut functions
+// private helpers for text_out functions
 
 AFX_STATIC int CLASS_DECL_DRAW2D_GDI _AfxComputeNextTab(int x, UINT nTabStops, LPINT lpnTabStops, int nTabOrigin, int nTabWidth)
 {
@@ -635,7 +635,7 @@ size preview_dc::ComputeDeltas(int& x, const char * lpszString, UINT &nCount,
    return sizeExtent;
 }
 
-bool preview_dc::TextOut(int x, int y, const char * lpszString, int nCount)
+bool preview_dc::text_out(int x, int y, const char * lpszString, int nCount)
 {
    return ExtTextOut(x, y, 0, NULL, lpszString, nCount, NULL);
 }
@@ -790,8 +790,8 @@ bool preview_dc::GrayString(::draw2d::brush*,
             bool (CALLBACK *)(HDC, LPARAM, int),
                LPARAM lpData, int nCount, int x, int y, int, int)
 {
-   TRACE(::radix::trace::category_AppMsg, 0, "TextOut() substituted for GrayString() in Print Preview.\n");
-   return TextOut(x, y, (const char *)lpData, nCount);
+   TRACE(::radix::trace::category_AppMsg, 0, "text_out() substituted for GrayString() in Print Preview.\n");
+   return text_out(x, y, (const char *)lpData, nCount);
 }
 
 int preview_dc::Escape(int nEscape, int nCount, const char * lpszInData, void * lpOutData)

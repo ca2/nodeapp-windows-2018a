@@ -1618,12 +1618,12 @@ namespace draw2d_gdi
 
 
 
-   bool graphics::TextOut(double x, double y, const char * lpszString, strsize nCount)
+   bool graphics::text_out(double x, double y, const char * lpszString, strsize nCount)
    {
 
       synch_lock ml(m_pmutex);
 
-      if (::draw2d::graphics::TextOut(x, y, lpszString, nCount))
+      if (::draw2d::graphics::text_out(x, y, lpszString, nCount))
          return true;
 
       if (get_handle1() == NULL)
@@ -1722,10 +1722,10 @@ namespace draw2d_gdi
    // double blend
    //// COLOR_DEST = SRC_ALPHA * BLEND_ALPHA * COLOR_SRC  + (1 - SRC_ALPHA * BLEND_ALPHA) * COLOR_DST
 
-   bool graphics::TextOut(int x, int y, const string & str)
+   bool graphics::text_out(int x, int y, const string & str)
    { 
 
-      return TextOut(x, y, str, (int) str.get_length());
+      return text_out(x, y, str, (int) str.get_length());
 
    }
 

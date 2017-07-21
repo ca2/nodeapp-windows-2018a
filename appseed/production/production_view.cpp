@@ -180,7 +180,7 @@ namespace production
 
       pgraphics->SelectObject(System.visual().fonts().GetListCtrlFont());
 
-      size sz = pgraphics->GetTextExtent("ÁÍqg");
+      size sz = pgraphics->GetTextExtent("ï¿½ï¿½qg");
       m_iLineHeight = MAX(1, sz.cy);
 
       pgraphics->FillSolidRect(rectClient, ARGB(255, 255, 255, 255));
@@ -237,7 +237,7 @@ namespace production
          uint32_t dwMin = (m_pproduction->m_dwEndTick - m_pproduction->m_dwStartTick) / 1000 / 60;
          uint32_t dwSeg = ((m_pproduction->m_dwEndTick - m_pproduction->m_dwStartTick) / 1000) % 60;
          strTime.Format("%dm %ds", dwMin, dwSeg);
-         pgraphics->TextOut(rectArea.right + 23, rectArea.top, strTime);
+         pgraphics->text_out(rectArea.right + 23, rectArea.top, strTime);
       }
 
    }
