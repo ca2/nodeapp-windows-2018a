@@ -349,30 +349,74 @@ int32_t appfy::run()
             strRoot = "rootkiller";
             strDomain = strParse;
          }
-         else if (::str::begins_eat_ci(strParse, "app_"))
-         {
-            int iFind = strParse.find("_");
-            if (iFind < 0)
-            {
-               strRoot = strApp;
-               strDomain = "main";
-            }
-            else
-            {
-               strRoot = "app-" + strParse.Left(iFind);
-               strDomain = strParse.Mid(iFind + 1);
-            }
-         }
-         else if (::str::begins_eat_ci(strParse, "nodeapp_"))
-         {
-            strRoot = "nodeapp";
-            strDomain = strParse;
-         }
          else
          {
-            strRoot = strApp;
-            strDomain = "";
+            
+            ::file::listing listing(get_app());
+            
+            listing.ls_dir(System.dir().element());
+
+            listing.pred_each([&](auto & path)
+            {
+               
+               string strPrefix(path.title());
+
+               strPrefix.replace("-", "_");
+
+               strPrefix += "_";
+
+               string strParse2 = strParse;
+
+               if (path.title().length() > strRoot.length()
+                  && ::str::begins_eat_ci(strParse2, strPrefix))
+               {
+
+                  strRoot = path.title();
+                  strDomain = strParse2;
+
+               }
+
+            });
+
+            if (strRoot.is_empty() || strDomain.is_empty())
+            {
+
+               if (::str::begins_eat_ci(strParse, "app_"))
+               {
+
+                  int iFind = strParse.find("_");
+
+                  if (iFind < 0)
+                  {
+
+                     strRoot = strApp;
+                     strDomain = "main";
+
+                  }
+                  else
+                  {
+
+                     strRoot = "app-" + strParse.Left(iFind);
+                     strDomain = strParse.Mid(iFind + 1);
+
+                  }
+
+               }
+               else if (::str::begins_eat_ci(strParse, "nodeapp_"))
+               {
+                  strRoot = "nodeapp";
+                  strDomain = strParse;
+               }
+               else
+               {
+                  strRoot = strApp;
+                  strDomain = "";
+               }
+
+            }
+
          }
+
       }
 
       dprint("a bit of parsing!!");
