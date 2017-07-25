@@ -357,8 +357,8 @@ namespace draw2d_gdi
       virtual bool GetTextExtent(sized & size, const char * lpszString, strsize nCount, strsize iIndex) const;
 
    // Text Functions
-      virtual bool text_out(double x, double y, const char * lpszString, strsize nCount);
-      virtual bool text_out(int x, int y, const string & str);
+      virtual bool TextOut(double x, double y, const char * lpszString, strsize nCount);
+      virtual bool TextOut(int x, int y, const string & str);
       virtual bool ExtTextOut(int x, int y, UINT nOptions, const RECT & lpRect, const char * lpszString, count nCount, LPINT lpDxWidths);
       virtual bool ExtTextOut(int x, int y, UINT nOptions, const RECT & lpRect, const string & str, LPINT lpDxWidths);
       virtual size TabbedTextOut(int x, int y, const char * lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions, int32_t nTabOrigin);
