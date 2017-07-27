@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.15
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_flag", "..\..\..\app-core\appseed\flag\flag.vcxproj", "{4467CF99-AD0F-403B-8E30-3CBA23756713}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -170,6 +170,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app._", "..\..\appseed\app._\app._.vcxproj", "{11AFE887-61B7-4217-913C-36736B359F39}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_libmpg123", "..\..\..\app-veriwell\appseed\audio_decode_libmpg123\audio_decode_libmpg123.vcxproj", "{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tesseract", "..\..\..\app-core\appseed\tesseract\tesseract.vcxproj", "{437699AD-7464-4E5F-ACF3-7167487A9E3D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -689,6 +691,18 @@ Global
 		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.stage|Win32.Build.0 = stage|Win32
 		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.stage|x64.ActiveCfg = stage|x64
 		{DA8CDF3B-FA9F-4D59-A053-CF4DBC85E6F0}.stage|x64.Build.0 = stage|x64
+		{437699AD-7464-4E5F-ACF3-7167487A9E3D}.basis|Win32.ActiveCfg = basis|Win32
+		{437699AD-7464-4E5F-ACF3-7167487A9E3D}.basis|Win32.Build.0 = basis|Win32
+		{437699AD-7464-4E5F-ACF3-7167487A9E3D}.basis|x64.ActiveCfg = basis|x64
+		{437699AD-7464-4E5F-ACF3-7167487A9E3D}.basis|x64.Build.0 = basis|x64
+		{437699AD-7464-4E5F-ACF3-7167487A9E3D}.cover|Win32.ActiveCfg = cover|Win32
+		{437699AD-7464-4E5F-ACF3-7167487A9E3D}.cover|Win32.Build.0 = cover|Win32
+		{437699AD-7464-4E5F-ACF3-7167487A9E3D}.cover|x64.ActiveCfg = cover|x64
+		{437699AD-7464-4E5F-ACF3-7167487A9E3D}.cover|x64.Build.0 = cover|x64
+		{437699AD-7464-4E5F-ACF3-7167487A9E3D}.stage|Win32.ActiveCfg = stage|Win32
+		{437699AD-7464-4E5F-ACF3-7167487A9E3D}.stage|Win32.Build.0 = stage|Win32
+		{437699AD-7464-4E5F-ACF3-7167487A9E3D}.stage|x64.ActiveCfg = stage|x64
+		{437699AD-7464-4E5F-ACF3-7167487A9E3D}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
