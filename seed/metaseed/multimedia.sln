@@ -170,12 +170,29 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "draw2d_cairo", "..\..\..\app\appseed\draw2d_cairo\draw2d_cairo.vcxproj", "{B5B26A30-A18D-4DC2-BACE-48C2DE33CD75}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_auraverse", "..\..\..\app-core\appseed\auraverse\auraverse.vcxproj", "{C1CB9B61-AB05-43DF-8564-BA9BF4FE0E7A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{699D6807-4F43-40E9-86AB-2A8B856707A9} = {699D6807-4F43-40E9-86AB-2A8B856707A9}
+		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
+		{11AFE887-61B7-4217-913C-36736B359F39} = {11AFE887-61B7-4217-913C-36736B359F39}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app._", "..\..\appseed\app._\app._.vcxproj", "{11AFE887-61B7-4217-913C-36736B359F39}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B5B26A30-A18D-4DC2-BACE-48C2DE33CD75} = {B5B26A30-A18D-4DC2-BACE-48C2DE33CD75}
+		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF} = {9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_veriwell_musical_player_lite", "..\..\..\app-veriwell\appseed\musical_player_lite\musical_player_lite.vcxproj", "{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
+		{11AFE887-61B7-4217-913C-36736B359F39} = {11AFE887-61B7-4217-913C-36736B359F39}
+	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_veriwell_vmsplayer", "..\..\..\app-veriwell\appseed\musical_player\musical_player.vcxproj", "{0EBB4EDE-16AF-480F-B8C8-6494D168A8D7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_veriwell_musical_player", "..\..\..\app-veriwell\appseed\musical_player\musical_player.vcxproj", "{0EBB4EDE-16AF-480F-B8C8-6494D168A8D7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
+		{11AFE887-61B7-4217-913C-36736B359F39} = {11AFE887-61B7-4217-913C-36736B359F39}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
