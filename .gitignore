@@ -4,5 +4,7 @@
 ._.DS_Store
 *.suo
 *.ipch
+*.psess
+*.vspx
 browse.vc.db
 solution.vc.db*
