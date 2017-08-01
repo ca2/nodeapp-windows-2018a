@@ -393,6 +393,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		Performance1.psess = Performance1.psess
 		Performance17.psess = Performance17.psess
+		Performance2.psess = Performance2.psess
 		Performance21.psess = Performance21.psess
 		Performance22.psess = Performance22.psess
 		Performance23.psess = Performance23.psess
@@ -402,6 +403,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Performance27.psess = Performance27.psess
 		Performance28.psess = Performance28.psess
 		Performance29.psess = Performance29.psess
+		Performance3.psess = Performance3.psess
 		Performance30.psess = Performance30.psess
 	EndProjectSection
 EndProject
@@ -1477,6 +1479,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true
