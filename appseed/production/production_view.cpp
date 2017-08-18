@@ -418,7 +418,7 @@ namespace production
          menu.set_app(get_app());
          ::aura::menu menuPopup(menu.GetSubMenu(0));
          menuPopup.set_app(get_app());
-         menuPopup.TrackPopupMenu(0, pmouse->m_pt.x, pmouse->m_pt.y, GetParentFrame()->GetSafeoswindow_());
+         menuPopup.track_popup_menu(0, pmouse->m_pt.x, pmouse->m_pt.y, GetParentFrame()->GetSafeoswindow_());
       }
      */ 
    }

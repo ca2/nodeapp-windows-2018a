@@ -1,4 +1,4 @@
-
+#include "framework.h"
 
 namespace draw2d_gdiplus
 {
