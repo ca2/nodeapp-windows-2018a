@@ -501,7 +501,7 @@ int32_t appfy::run()
 
    }
 
-   do_events();
+   System.post_quit();
 
    return 0;
 

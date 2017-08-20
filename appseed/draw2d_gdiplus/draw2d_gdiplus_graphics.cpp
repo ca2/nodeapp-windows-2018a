@@ -2187,7 +2187,46 @@ gdi_fallback:
    bool graphics::fill_path(::draw2d::path * ppath, ::draw2d::brush * pbrush)
    {
 
-      return m_pgraphics->FillPath((::Gdiplus::Brush *) pbrush->get_os_data(),(dynamic_cast < ::draw2d_gdiplus::path * > (ppath))->get_os_path(m_pgraphics)) == Gdiplus::Status::Ok;
+      if (ppath == NULL)
+      {
+
+         return false;
+
+      }
+
+      if (pbrush == NULL)
+      {
+
+         return false;
+
+      }
+
+      if (m_pgraphics == NULL)
+      {
+
+         return false;
+
+      }
+
+      ::Gdiplus::Brush * pbr = (::Gdiplus::Brush *) pbrush->get_os_data();
+
+      if (pbr == NULL)
+      {
+
+         return false;
+
+      }
+
+      Gdiplus::GraphicsPath * ppathOs = (dynamic_cast <::draw2d_gdiplus::path *> (ppath))->get_os_path(m_pgraphics);
+
+      if (ppathOs == NULL)
+      {
+
+         return false;
+
+      }
+         
+      return m_pgraphics->FillPath(pbr, ppathOs) == Gdiplus::Status::Ok;
 
    }
 
