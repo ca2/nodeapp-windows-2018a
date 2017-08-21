@@ -185,7 +185,7 @@
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
-      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <ObjectFileName>$(IntDir)%(Directory)</ObjectFileName>
       <SDLCheck>true</SDLCheck>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
@@ -273,7 +273,7 @@
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
-      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <ObjectFileName>$(IntDir)%(Directory)</ObjectFileName>
       <SDLCheck>true</SDLCheck>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
@@ -367,7 +367,7 @@
       </SDLCheck>
       <OmitFramePointers>true</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <ObjectFileName>$(IntDir)%(Directory)</ObjectFileName>
       <CreateHotpatchableImage>false</CreateHotpatchableImage>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
@@ -458,7 +458,7 @@
       <EnableParallelCodeGeneration>false</EnableParallelCodeGeneration>
       <CreateHotpatchableImage>false</CreateHotpatchableImage>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
-      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <ObjectFileName>$(IntDir)%(Directory)</ObjectFileName>
       <OmitFramePointers>false</OmitFramePointers>
       <SDLCheck>true</SDLCheck>
       <UseFullPaths>true</UseFullPaths>
@@ -541,7 +541,7 @@
       <EnableParallelCodeGeneration>false</EnableParallelCodeGeneration>
       <CreateHotpatchableImage>false</CreateHotpatchableImage>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
-      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <ObjectFileName>$(IntDir)%(Directory)</ObjectFileName>
       <OmitFramePointers>false</OmitFramePointers>
       <SDLCheck>true</SDLCheck>
       <UseFullPaths>true</UseFullPaths>
@@ -630,7 +630,7 @@
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
       <SDLCheck>
       </SDLCheck>
-      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <ObjectFileName>$(IntDir)%(Directory)</ObjectFileName>
       <CreateHotpatchableImage>false</CreateHotpatchableImage>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
