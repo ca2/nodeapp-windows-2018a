@@ -21,7 +21,7 @@ namespace multimedia
       }
       
       
-      void wave_out::helper_thread::install_message_handling(::message::dispatch * pinterface)
+      void wave_out::helper_thread::install_message_routing(::message::sender * pinterface)
       {
 
          IGUI_WIN_MSG_LINK(MM_WOM_OPEN, pinterface, this, &wave_out::helper_thread::OnMultimediaOpen);
@@ -30,7 +30,7 @@ namespace multimedia
 
       }
 
-      void wave_out::helper_thread::OnMultimediaOpen(::signal_details * pobj)
+      void wave_out::helper_thread::OnMultimediaOpen(::message::message * pobj)
       {
 
          m_pwaveout->OnMultimediaOpen(pobj);
@@ -38,12 +38,12 @@ namespace multimedia
       }
 
 
-      void wave_out::helper_thread::OnMultimediaDone(::signal_details * pobj)
+      void wave_out::helper_thread::OnMultimediaDone(::message::message * pobj)
       {
          m_pwaveout->OnMultimediaDone(pobj);
       }
 
-      void wave_out::helper_thread::OnMultimediaClose(::signal_details * pobj)
+      void wave_out::helper_thread::OnMultimediaClose(::message::message * pobj)
       {
          m_pwaveout->OnMultimediaDone(pobj);
       }
@@ -76,10 +76,10 @@ namespace multimedia
 
       }
 
-      void wave_out::install_message_handling(::message::dispatch * pinterface)
+      void wave_out::install_message_routing(::message::sender * pinterface)
       {
 
-         ::multimedia::audio::wave_out::install_message_handling(pinterface);
+         ::multimedia::audio::wave_out::install_message_routing(pinterface);
 
       }
 
@@ -529,7 +529,7 @@ Opened:
       }
 
 
-      void wave_out::OnMultimediaOpen(::signal_details * pobj)
+      void wave_out::OnMultimediaOpen(::message::message * pobj)
       {
 
          UNREFERENCED_PARAMETER(pobj);
@@ -537,7 +537,7 @@ Opened:
       }
 
 
-      void wave_out::OnMultimediaDone(::signal_details * pobj)
+      void wave_out::OnMultimediaDone(::message::message * pobj)
       {
          
          //synch_lock sl(m_pmutex);
@@ -569,7 +569,7 @@ Opened:
       }
 
 
-      void wave_out::OnMultimediaClose(::signal_details * pobj)
+      void wave_out::OnMultimediaClose(::message::message * pobj)
       {
 
          UNREFERENCED_PARAMETER(pobj);

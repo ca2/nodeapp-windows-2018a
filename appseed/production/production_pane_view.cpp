@@ -42,7 +42,7 @@ namespace production
    /////////////////////////////////////////////////////////////////////////////
    // pane_view message handlers
 
-   void pane_view::_001OnCreate(::signal_details * pobj) 
+   void pane_view::_001OnCreate(::message::message * pobj) 
    {
 //      SCAST_PTR(::message::create, pcreate, pobj);
       if(pobj->previous())
@@ -266,15 +266,15 @@ namespace production
 
 
 
-   void pane_view::_001OnMenuMessage(::signal_details * pobj)
+   void pane_view::_001OnMenuMessage(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       set_cur_tab_by_id(m_pviewdataOld->m_id);
    }
 
-   void pane_view::install_message_handling(::message::dispatch * pinterface)
+   void pane_view::install_message_routing(::message::sender * pinterface)
    {
-      ::user::tab_view::install_message_handling(pinterface);
+      ::user::tab_view::install_message_routing(pinterface);
 
       IGUI_WIN_MSG_LINK(WM_USER, pinterface, this, &pane_view::_001OnUserMessage);
 	   IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &pane_view::_001OnCreate);
@@ -341,7 +341,7 @@ namespace production
         return  (::user::impact::get_document());
      }
 
-     void pane_view::_001OnUserMessage(::signal_details * pobj)
+     void pane_view::_001OnUserMessage(::message::message * pobj)
      {
         SCAST_PTR(::message::base, pbase, pobj);
            if(pbase->m_wparam == 1)

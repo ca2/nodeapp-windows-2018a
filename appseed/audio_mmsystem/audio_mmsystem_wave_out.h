@@ -24,7 +24,7 @@ namespace multimedia
 
             helper_thread(::aura::application * papp);
             virtual ~helper_thread();
-            void install_message_handling(::message::dispatch * pinterface);
+            void install_message_routing(::message::sender * pinterface);
             DECL_GEN_SIGNAL(OnMultimediaOpen);
             DECL_GEN_SIGNAL(OnMultimediaDone);
             DECL_GEN_SIGNAL(OnMultimediaClose);
@@ -43,7 +43,7 @@ namespace multimedia
          virtual ~wave_out();
 
 
-         void install_message_handling(::message::dispatch * pinterface);
+         void install_message_routing(::message::sender * pinterface);
 
          virtual imedia_time device_wave_out_get_position_millis();
          virtual imedia_time wave_out_get_position_millis();

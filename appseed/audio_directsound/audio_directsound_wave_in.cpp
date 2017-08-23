@@ -45,7 +45,7 @@ namespace multimedia
          return thread::exit_thread();
       }
 
-      void wave_in::pre_translate_message(::signal_details * pobj)
+      void wave_in::pre_translate_message(::message::message * pobj)
       {
          SCAST_PTR(::message::base, pbase, pobj);
          //ASSERT(GetMainWnd() == NULL);
@@ -411,7 +411,7 @@ namespace multimedia
       }
 
 
-      void wave_in::translate_wave_in_message(::signal_details * pobj)
+      void wave_in::translate_wave_in_message(::message::message * pobj)
       {
 
          SCAST_PTR(::message::base, pbase, pobj);

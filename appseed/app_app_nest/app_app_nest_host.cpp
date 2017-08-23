@@ -59,10 +59,10 @@ namespace ca2plugin_container
    }
 
 
-   void host::install_message_handling(::message::dispatch * pinterface)
+   void host::install_message_routing(::message::sender * pinterface)
    {
 
-      ::hotplugin::host::install_message_handling(pinterface);
+      ::hotplugin::host::install_message_routing(pinterface);
 
       ////IGUI_WIN_MSG_LINK(WM_TIMER,pinterface,this,&host::_001OnTimer);
 
@@ -215,7 +215,7 @@ namespace ca2plugin_container
    }
 
 
-   void host::message_handler(signal_details * pobj)
+   void host::message_handler(::message::message * pobj)
    {
 
       ::hotplugin::host::message_handler(pobj);

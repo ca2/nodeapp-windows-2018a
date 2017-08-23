@@ -37,12 +37,12 @@ namespace multimedia
             );
 
 
-         void install_message_handling(::message::dispatch * pinterface);
+         void install_message_routing(::message::sender * pinterface);
 
          virtual bool initialize_thread() override;
          virtual int32_t exit_thread() override;
          // virtual bool on_idle(LONG lCount);
-         virtual void pre_translate_message(::signal_details * pobj);
+         virtual void pre_translate_message(::message::message * pobj);
 
 
          DECL_GEN_SIGNAL(OnMixerMessage);

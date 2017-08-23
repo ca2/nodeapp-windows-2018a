@@ -43,7 +43,7 @@ namespace production
    }
    #endif //DEBUG
 
-   void document::data_on_after_change(::signal_details * pobj)
+   void document::data_on_after_change(::message::message * pobj)
    {
 
 

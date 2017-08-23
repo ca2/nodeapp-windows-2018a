@@ -38,11 +38,11 @@ namespace multimedia
          ::multimedia::e_result wave_in_start();
          ::multimedia::e_result wave_in_reset();
 
-         virtual void translate_wave_in_message(::signal_details * pobj);
+         virtual void translate_wave_in_message(::message::message * pobj);
 
          virtual bool initialize_thread() override;
          virtual int32_t exit_thread() override;
-         virtual void pre_translate_message(::signal_details * pobj);
+         virtual void pre_translate_message(::message::message * pobj);
 
          static void CALLBACK wave_in_proc(HWAVEIN hwi, UINT uMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2);
 

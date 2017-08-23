@@ -63,8 +63,8 @@ namespace draw2d_gdi
 
       bool to(::draw2d::graphics * pgraphics, point pt, class size size, point ptSrc);
 
-      virtual bool update_window(::aura::draw_interface * pwnd,signal_details * pobj,bool bTransferBuffer = true);
-      virtual bool print_window(::aura::draw_interface * pwnd,signal_details * pobj);
+      virtual bool update_window(::aura::draw_interface * pwnd,::message::message * pobj,bool bTransferBuffer = true);
+      virtual bool print_window(::aura::draw_interface * pwnd,::message::message * pobj);
 
       void SetIconMask(::visual::icon * picon, int32_t cx, int32_t cy);
 
