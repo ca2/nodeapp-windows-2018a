@@ -70,8 +70,8 @@ namespace music
             void player::install_message_routing(::message::sender * pinterface)
             {
                ::music::midi::player::player::install_message_routing(pinterface);
-               IGUI_WIN_MSG_LINK(MM_MOM_DONE, pinterface, this, &player::OnMultimediaMidiOutputMessageDone);
-               IGUI_WIN_MSG_LINK(MM_MOM_POSITIONCB, pinterface, this, &player::OnMultimediaMidiOutputMessagePositionCB);
+               IGUI_MSG_LINK(MM_MOM_DONE, pinterface, this, &player::OnMultimediaMidiOutputMessageDone);
+               IGUI_MSG_LINK(MM_MOM_POSITIONCB, pinterface, this, &player::OnMultimediaMidiOutputMessagePositionCB);
             }
 
             bool player::Play(imedia_position tkStart, uint32_t dwEllapse)
@@ -265,7 +265,7 @@ namespace music
                //   }
                if(pbase->m_pwnd == NULL)
                {
-                  switch(pbase->m_uiMessage)
+                  switch(pbase->m_id)
                   {
                   case WM_USER + 100:
                      {
@@ -276,13 +276,13 @@ namespace music
                      return;
                   }
                }
-               if(pbase->m_uiMessage == MMSG_DONE)
+               if(pbase->m_id == MMSG_DONE)
                {
                   OnMmsgDone((::music::midi::sequence *) pbase->m_wparam);
                   pbase->m_bRet = true;
                   return;
                }
-               else if(pbase->m_uiMessage == WM_USER)
+               else if(pbase->m_id == WM_USER)
                {
                   //      OnUserMessage(pMsg->wParam, pMsg->lParam);
                }

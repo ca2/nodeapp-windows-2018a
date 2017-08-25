@@ -24,9 +24,9 @@ namespace multimedia
       void wave_out::helper_thread::install_message_routing(::message::sender * pinterface)
       {
 
-         IGUI_WIN_MSG_LINK(MM_WOM_OPEN, pinterface, this, &wave_out::helper_thread::OnMultimediaOpen);
-         IGUI_WIN_MSG_LINK(MM_WOM_DONE, pinterface, this, &wave_out::helper_thread::OnMultimediaDone);
-         IGUI_WIN_MSG_LINK(MM_WOM_CLOSE, pinterface, this, &wave_out::helper_thread::OnMultimediaClose);
+         IGUI_MSG_LINK(MM_WOM_OPEN, pinterface, this, &wave_out::helper_thread::OnMultimediaOpen);
+         IGUI_MSG_LINK(MM_WOM_DONE, pinterface, this, &wave_out::helper_thread::OnMultimediaDone);
+         IGUI_MSG_LINK(MM_WOM_CLOSE, pinterface, this, &wave_out::helper_thread::OnMultimediaClose);
 
       }
 

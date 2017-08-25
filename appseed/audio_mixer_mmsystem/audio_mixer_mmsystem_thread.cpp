@@ -50,8 +50,8 @@ namespace multimedia
 
       void thread::install_message_routing(::message::sender * pinterface)
       {
-         IGUI_WIN_MSG_LINK(thread::MessageMixerThread, pinterface, this, &thread::OnMixerMessage);
-         IGUI_WIN_MSG_LINK(WM_USER, pinterface, this, &thread::OnUserMessage);
+         IGUI_MSG_LINK(thread::MessageMixerThread, pinterface, this, &thread::OnMixerMessage);
+         IGUI_MSG_LINK(WM_USER, pinterface, this, &thread::OnUserMessage);
       }
 
       // BEGIN_MESSAGE_MAP(thread, thread)
@@ -277,7 +277,7 @@ namespace multimedia
             break;
          case 534231:
             {
-               //GetKarWnd()->SendMessageToDescendants(WM_USER, 534231);
+               //GetKarWnd()->send_message_to_descendants(WM_USER, 534231);
             }
             break;
 

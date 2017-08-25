@@ -47,9 +47,9 @@ namespace multimedia
       {
          SCAST_PTR(::message::base, pbase, pobj);
          //ASSERT(GetMainWnd() == NULL);
-         //if(pbase->m_uiMessage == MM_WIM_OPEN ||
-         //   pbase->m_uiMessage == MM_WIM_CLOSE ||
-         //   pbase->m_uiMessage == MM_WIM_DATA)
+         //if(pbase->m_id == MM_WIM_OPEN ||
+         //   pbase->m_id == MM_WIM_CLOSE ||
+         //   pbase->m_id == MM_WIM_DATA)
          //{
          //   translate_wave_in_message(pbase);
          //   if(pbase->m_bRet)
@@ -414,9 +414,9 @@ namespace multimedia
 
          SCAST_PTR(::message::base, pbase, pobj);
 
-         //ASSERT(pbase->m_uiMessage == MM_WIM_OPEN || pbase->m_uiMessage == MM_WIM_CLOSE || pbase->m_uiMessage == MM_WIM_DATA);
+         //ASSERT(pbase->m_id == MM_WIM_OPEN || pbase->m_id == MM_WIM_CLOSE || pbase->m_id == MM_WIM_DATA);
 
-         //if(pbase->m_uiMessage == MM_WIM_DATA)
+         //if(pbase->m_id == MM_WIM_DATA)
          //{
          //   
          //   m_iBuffer--;

@@ -64,7 +64,7 @@ namespace ca2plugin_container
 
       ::hotplugin::host::install_message_routing(pinterface);
 
-      ////IGUI_WIN_MSG_LINK(WM_TIMER,pinterface,this,&host::_001OnTimer);
+      ////IGUI_MSG_LINK(WM_TIMER,pinterface,this,&host::_001OnTimer);
 
    }
 

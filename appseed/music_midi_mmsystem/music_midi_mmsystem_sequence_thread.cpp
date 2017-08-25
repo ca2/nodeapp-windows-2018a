@@ -38,10 +38,10 @@ namespace music
          void sequence_thread::install_message_routing(::message::sender * pinterface)
          {
             ::music::midi::sequence_thread::install_message_routing(pinterface);
-            //IGUI_WIN_MSG_LINK(::music::midi::player::message_command, pinterface, this, &sequence_thread::OnCommand);
-            IGUI_WIN_MSG_LINK(::music::midi::sequence::message_event, pinterface, this, &sequence_thread::OnMidiSequenceEvent);
-            IGUI_WIN_MSG_LINK(MM_MOM_DONE, pinterface, this, &sequence_thread::OnDone);
-            IGUI_WIN_MSG_LINK(MM_MOM_POSITIONCB, pinterface, this, &sequence_thread::OnPositionCB);
+            //IGUI_MSG_LINK(::music::midi::player::message_command, pinterface, this, &sequence_thread::OnCommand);
+            IGUI_MSG_LINK(::music::midi::sequence::message_event, pinterface, this, &sequence_thread::OnMidiSequenceEvent);
+            IGUI_MSG_LINK(MM_MOM_DONE, pinterface, this, &sequence_thread::OnDone);
+            IGUI_MSG_LINK(MM_MOM_POSITIONCB, pinterface, this, &sequence_thread::OnPositionCB);
          }
 
          void sequence_thread::Stop(imedia_time msEllapse)
