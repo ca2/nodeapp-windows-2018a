@@ -1333,7 +1333,9 @@ namespace draw2d_gdiplus
             if (m_ealphamode == ::draw2d::alpha_mode_blend)
             {
 
-               if (nHeight >= get_processor_count() * 4 && (nWidth * nHeight) >= (get_processor_count() * 64))
+               single_lock sl(::get_thread_toolset(::thread::tool_draw2d)->m_pmutex);
+
+               if (nHeight >= get_processor_count() * 4 && (nWidth * nHeight) >= (get_processor_count() * 64) && sl.lock(millis(0)))
                {
 
                   m_pdib->fork_blend(point(x + GetViewportOrg().x, y + GetViewportOrg().y), pgraphicsSrc->m_pdib,

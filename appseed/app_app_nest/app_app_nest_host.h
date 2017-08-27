@@ -48,7 +48,7 @@ namespace ca2plugin_container
 
 
 
-      void message_handler(::message::message * pobj);
+      void message_handler(::message::base * pbase);
 
 
       virtual void * get_system();

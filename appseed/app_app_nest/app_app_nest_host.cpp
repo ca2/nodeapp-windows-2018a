@@ -215,10 +215,10 @@ namespace ca2plugin_container
    }
 
 
-   void host::message_handler(::message::message * pobj)
+   void host::message_handler(::message::base * pbase)
    {
 
-      ::hotplugin::host::message_handler(pobj);
+      ::hotplugin::host::message_handler(pbase);
 
    }
 
