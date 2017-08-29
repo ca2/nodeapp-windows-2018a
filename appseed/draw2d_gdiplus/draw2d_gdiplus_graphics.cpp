@@ -3022,17 +3022,26 @@ gdi_fallback:
       return StartDoc(&di);
    }
 
+   
    int32_t graphics::SaveDC()
    {
-      return m_pgraphics->Save();
+
+      Gdiplus::GraphicsState state = m_pgraphics->Save();
+
+      return (int) state;
+
    }
 
+   
    bool graphics::RestoreDC(int32_t nSavedDC)
    {
-
-      return m_pgraphics->Restore(nSavedDC) != FALSE;
+      
+      Gdiplus::Status status = m_pgraphics->Restore((Gdiplus::GraphicsState) nSavedDC);
+   
+      return status == Gdiplus::Ok;
 
    }
+
 
 //   ::draw2d::object* graphics::SelectGdiObject(::aura::application * papp, HDC hDC, HGDIOBJ h)
    // {
