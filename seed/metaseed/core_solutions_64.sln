@@ -410,7 +410,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app._", "..\..\appseed\app.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_acid", "..\..\..\app\appseed\aura\acid.vcxproj", "{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "expat", "..\..\..\third\appseed\expat\auraexpat.vcxproj", "{2F3AE856-C0BB-413E-A451-0F867A07EBEC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "resident_mixercom", "..\..\..\app-core\appseed\resident_youtube\resident_youtube.vcxproj", "{200E6DC9-AAC2-4A32-825E-FF968AD1ED28}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1468,18 +1468,18 @@ Global
 		{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.stage|x64.ActiveCfg = stage|x64
 		{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.stage|x64.Build.0 = stage|x64
 		{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.stage|x64.Deploy.0 = stage|x64
-		{2F3AE856-C0BB-413E-A451-0F867A07EBEC}.basis|Win32.ActiveCfg = basis|Win32
-		{2F3AE856-C0BB-413E-A451-0F867A07EBEC}.basis|Win32.Build.0 = basis|Win32
-		{2F3AE856-C0BB-413E-A451-0F867A07EBEC}.basis|x64.ActiveCfg = basis|x64
-		{2F3AE856-C0BB-413E-A451-0F867A07EBEC}.basis|x64.Build.0 = basis|x64
-		{2F3AE856-C0BB-413E-A451-0F867A07EBEC}.cover|Win32.ActiveCfg = cover|Win32
-		{2F3AE856-C0BB-413E-A451-0F867A07EBEC}.cover|Win32.Build.0 = cover|Win32
-		{2F3AE856-C0BB-413E-A451-0F867A07EBEC}.cover|x64.ActiveCfg = cover|x64
-		{2F3AE856-C0BB-413E-A451-0F867A07EBEC}.cover|x64.Build.0 = cover|x64
-		{2F3AE856-C0BB-413E-A451-0F867A07EBEC}.stage|Win32.ActiveCfg = stage|Win32
-		{2F3AE856-C0BB-413E-A451-0F867A07EBEC}.stage|Win32.Build.0 = stage|Win32
-		{2F3AE856-C0BB-413E-A451-0F867A07EBEC}.stage|x64.ActiveCfg = stage|x64
-		{2F3AE856-C0BB-413E-A451-0F867A07EBEC}.stage|x64.Build.0 = stage|x64
+		{200E6DC9-AAC2-4A32-825E-FF968AD1ED28}.basis|Win32.ActiveCfg = basis|Win32
+		{200E6DC9-AAC2-4A32-825E-FF968AD1ED28}.basis|Win32.Build.0 = basis|Win32
+		{200E6DC9-AAC2-4A32-825E-FF968AD1ED28}.basis|x64.ActiveCfg = basis|x64
+		{200E6DC9-AAC2-4A32-825E-FF968AD1ED28}.basis|x64.Build.0 = basis|x64
+		{200E6DC9-AAC2-4A32-825E-FF968AD1ED28}.cover|Win32.ActiveCfg = cover|Win32
+		{200E6DC9-AAC2-4A32-825E-FF968AD1ED28}.cover|Win32.Build.0 = cover|Win32
+		{200E6DC9-AAC2-4A32-825E-FF968AD1ED28}.cover|x64.ActiveCfg = cover|x64
+		{200E6DC9-AAC2-4A32-825E-FF968AD1ED28}.cover|x64.Build.0 = cover|x64
+		{200E6DC9-AAC2-4A32-825E-FF968AD1ED28}.stage|Win32.ActiveCfg = stage|Win32
+		{200E6DC9-AAC2-4A32-825E-FF968AD1ED28}.stage|Win32.Build.0 = stage|Win32
+		{200E6DC9-AAC2-4A32-825E-FF968AD1ED28}.stage|x64.ActiveCfg = stage|x64
+		{200E6DC9-AAC2-4A32-825E-FF968AD1ED28}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
