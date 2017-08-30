@@ -514,7 +514,8 @@ namespace draw2d_gdiplus
       virtual bool prefer_mapped_dib_on_mix();
 
 
-      
+      virtual bool TextOutAlphaBlend(double x, double y, const char * lpszString, strsize nCount) override;
+      virtual bool BitBltAlphaBlend(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, uint32_t dwRop) override;
 
 
    };

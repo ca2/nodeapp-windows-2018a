@@ -5630,8 +5630,127 @@ namespace draw2d_gdiplus
    }
 
 
+   bool graphics::TextOutAlphaBlend(double x, double y, const char * lpszString, strsize nCount)
+   {
+
+      if (m_pdibAlphaBlend != NULL)
+      {
+
+         single_lock sl(m_pmutex);
+
+         if (nCount < 0)
+         {
+
+            return false;
+
+         }
+
+         // "Reference" implementation for TextOutAlphaBlend
+
+         rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
+
+         ::size size = ::size(GetTextExtent(lpszString, nCount));
+
+         //size.cx = size.cx * 110 / 100;
+
+         //size.cy = size.cy * 110 / 100;
+
+         rect rectText(point((int64_t)x, (int64_t)y), size);
+
+         if (rectIntersect.intersect(rectIntersect, rectText))
+         {
+
+            ::draw2d::dib_sp dib1(allocer());
+            //#ifdef METROWIN
+            //            g_pdiba->add(dib1);
+            //#endif
+
+            dib1->create(rectText.size());
+
+            dib1->get_graphics()->SelectObject(get_current_font());
+
+            dib1->get_graphics()->SelectObject(get_current_brush());
+
+            dib1->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
+
+            dib1->get_graphics()->text_out(0, 0, lpszString, nCount);
+
+            dib1->blend2(null_point(), m_pdibAlphaBlend, point((int)MAX(0, x - m_ptAlphaBlend.x), (int)MAX(0, y - m_ptAlphaBlend.y)), rectText.size(), 255);
+
+            BitBltRaw((int)x, (int)y, rectText.width(), rectText.height(), dib1->get_graphics(), 0, 0, SRCCOPY);
+
+            return true;
+
+         }
 
 
+
+      }
+
+      return false;
+
+   }
+
+
+   bool graphics::BitBltAlphaBlend(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, uint32_t dwRop)
+   {
+
+      if (m_pdibAlphaBlend != NULL)
+      {
+
+         rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
+
+         rect rectBlt(point((int64_t)x, (int64_t)y), size(nWidth, nHeight));
+
+         if (rectIntersect.intersect(rectIntersect, rectBlt))
+         {
+
+            // The following commented out code does not work well when there is clipping
+            // and some calculations are not precise
+            //if (m_pdib != NULL && pgraphicsSrc->m_pdib != NULL)
+            //{
+
+            //   point ptOff = GetViewportOrg();
+
+            //   x += ptOff.x;
+
+            //   y += ptOff.y;
+
+            //   return m_pdib->blend(point(x, y), pgraphicsSrc->m_pdib, point(xSrc, ySrc), m_pdibAlphaBlend, point(m_ptAlphaBlend.x - x, m_ptAlphaBlend.y - y), rectBlt.size());
+
+            //}
+            //else
+            {
+
+               ::draw2d::dib_sp dib1(allocer());
+               //#ifdef METROWIN
+               //               g_pdiba->add(dib1);
+               //#endif
+
+               dib1->create(rectBlt.size());
+
+               dib1->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
+
+               if (!dib1->from(null_point(), pgraphicsSrc, point(xSrc, ySrc), rectBlt.size()))
+                  return false;
+
+               dib1->blend2(point(0, 0), m_pdibAlphaBlend, point((int)MAX(0, x - m_ptAlphaBlend.x), (int)MAX(0, y - m_ptAlphaBlend.y)), rectBlt.size(), 255);
+
+               BitBltRaw(x, y, nWidth, nHeight, dib1->get_graphics(), 0, 0, dwRop);
+
+            }
+
+            return true;
+
+         }
+
+
+
+      }
+
+      return false;
+
+   }
 
 
 } // namespace draw2d_gdiplus
