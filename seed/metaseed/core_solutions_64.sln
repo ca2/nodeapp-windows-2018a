@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.10
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\app.vcxproj", "{19841115-1984-0411-1977-021977151984}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -409,8 +409,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app._", "..\..\appseed\app._\app._.vcxproj", "{11AFE887-61B7-4217-913C-36736B359F39}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_acid", "..\..\..\app\appseed\aura\acid.vcxproj", "{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "strophe", "..\..\..\third\appseed\strophe\strophe.vcxproj", "{3F8D41B1-CA9D-4171-B17E-D5A1265C8447}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "expat", "..\..\..\third\appseed\expat\auraexpat.vcxproj", "{2F3AE856-C0BB-413E-A451-0F867A07EBEC}"
 EndProject
@@ -1470,18 +1468,6 @@ Global
 		{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.stage|x64.ActiveCfg = stage|x64
 		{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.stage|x64.Build.0 = stage|x64
 		{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.stage|x64.Deploy.0 = stage|x64
-		{3F8D41B1-CA9D-4171-B17E-D5A1265C8447}.basis|Win32.ActiveCfg = basis|Win32
-		{3F8D41B1-CA9D-4171-B17E-D5A1265C8447}.basis|Win32.Build.0 = basis|Win32
-		{3F8D41B1-CA9D-4171-B17E-D5A1265C8447}.basis|x64.ActiveCfg = basis|x64
-		{3F8D41B1-CA9D-4171-B17E-D5A1265C8447}.basis|x64.Build.0 = basis|x64
-		{3F8D41B1-CA9D-4171-B17E-D5A1265C8447}.cover|Win32.ActiveCfg = cover|Win32
-		{3F8D41B1-CA9D-4171-B17E-D5A1265C8447}.cover|Win32.Build.0 = cover|Win32
-		{3F8D41B1-CA9D-4171-B17E-D5A1265C8447}.cover|x64.ActiveCfg = cover|x64
-		{3F8D41B1-CA9D-4171-B17E-D5A1265C8447}.cover|x64.Build.0 = cover|x64
-		{3F8D41B1-CA9D-4171-B17E-D5A1265C8447}.stage|Win32.ActiveCfg = stage|Win32
-		{3F8D41B1-CA9D-4171-B17E-D5A1265C8447}.stage|Win32.Build.0 = stage|Win32
-		{3F8D41B1-CA9D-4171-B17E-D5A1265C8447}.stage|x64.ActiveCfg = stage|x64
-		{3F8D41B1-CA9D-4171-B17E-D5A1265C8447}.stage|x64.Build.0 = stage|x64
 		{2F3AE856-C0BB-413E-A451-0F867A07EBEC}.basis|Win32.ActiveCfg = basis|Win32
 		{2F3AE856-C0BB-413E-A451-0F867A07EBEC}.basis|Win32.Build.0 = basis|Win32
 		{2F3AE856-C0BB-413E-A451-0F867A07EBEC}.basis|x64.ActiveCfg = basis|x64

@@ -836,9 +836,25 @@ namespace draw2d_gdiplus
    bool graphics::DrawEllipse(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    {
 
+      if (m_pgraphics == NULL)
+      {
+
+         return false;
+
+      }
+
+      Gdiplus::Pen * ppen = gdiplus_pen();
+
+      if (ppen == NULL)
+      {
+
+         return false;
+
+      }
+
       set_smooth_mode(::draw2d::smooth_mode_high);
 
-      return (m_pgraphics->DrawEllipse(gdiplus_pen(), x1, y1, x2 - x1, y2 - y1)) == Gdiplus::Status::Ok;
+      return (m_pgraphics->DrawEllipse(ppen, x1, y1, x2 - x1, y2 - y1)) == Gdiplus::Status::Ok;
 
    }
 
@@ -846,28 +862,25 @@ namespace draw2d_gdiplus
    bool graphics::DrawEllipse(const RECT &  rectParam)
    {
 
-      set_smooth_mode(::draw2d::smooth_mode_high);
+      if (m_pgraphics == NULL)
+      {
 
-      return (m_pgraphics->DrawEllipse(gdiplus_pen(),rectParam.left,rectParam.top,rectParam.right - rectParam.left,rectParam.bottom - rectParam.top)) == Gdiplus::Status::Ok;
+         return false;
 
-   }
+      }
 
+      Gdiplus::Pen * ppen = gdiplus_pen();
 
-   bool graphics::FillEllipse(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
-   {
+      if (ppen == NULL)
+      {
 
-      set_smooth_mode(::draw2d::smooth_mode_high);
+         return false;
 
-      return (m_pgraphics->FillEllipse(gdiplus_brush(), x1, y1, x2 - x1, y2 - y1)) == Gdiplus::Status::Ok;
-
-   }
-
-   bool graphics::FillEllipse(const RECT &  rectParam)
-   {
+      }
 
       set_smooth_mode(::draw2d::smooth_mode_high);
 
-      return (m_pgraphics->FillEllipse(gdiplus_brush(), rectParam.left, rectParam.top, rectParam.right - rectParam.left, rectParam.bottom - rectParam.top)) == Gdiplus::Status::Ok;
+      return (m_pgraphics->DrawEllipse(ppen,rectParam.left,rectParam.top,rectParam.right - rectParam.left,rectParam.bottom - rectParam.top)) == Gdiplus::Status::Ok;
 
    }
 
@@ -876,9 +889,25 @@ namespace draw2d_gdiplus
    bool graphics::DrawEllipse(double x1,double y1,double x2,double y2)
    {
 
+      if (m_pgraphics == NULL)
+      {
+
+         return false;
+
+      }
+
+      Gdiplus::Pen * ppen = gdiplus_pen();
+
+      if (ppen == NULL)
+      {
+
+         return false;
+
+      }
+
       set_smooth_mode(::draw2d::smooth_mode_high);
 
-      return (m_pgraphics->DrawEllipse(gdiplus_pen(),(Gdiplus::REAL)x1,(Gdiplus::REAL)y1,(Gdiplus::REAL)(x2 - x1),(Gdiplus::REAL)(y2 - y1))) == Gdiplus::Status::Ok;
+      return (m_pgraphics->DrawEllipse(ppen,(Gdiplus::REAL)x1,(Gdiplus::REAL)y1,(Gdiplus::REAL)(x2 - x1),(Gdiplus::REAL)(y2 - y1))) == Gdiplus::Status::Ok;
 
    }
 
@@ -886,11 +915,79 @@ namespace draw2d_gdiplus
    bool graphics::DrawEllipse(const RECTD & rectParam)
    {
 
+      if (m_pgraphics == NULL)
+      {
+
+         return false;
+
+      }
+
+      Gdiplus::Pen * ppen = gdiplus_pen();
+
+      if (ppen == NULL)
+      {
+
+         return false;
+
+      }
+
       set_smooth_mode(::draw2d::smooth_mode_high);
 
-      return (m_pgraphics->DrawEllipse(gdiplus_pen(),(Gdiplus::REAL)rectParam.left,(Gdiplus::REAL)rectParam.top,
+      return (m_pgraphics->DrawEllipse(ppen,(Gdiplus::REAL)rectParam.left,(Gdiplus::REAL)rectParam.top,
                                        (Gdiplus::REAL)(rectParam.right - rectParam.left),
                                        (Gdiplus::REAL)(rectParam.bottom - rectParam.top))) == Gdiplus::Status::Ok;
+
+   }
+
+
+   bool graphics::FillEllipse(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
+   {
+
+      if (m_pgraphics == NULL)
+      {
+
+         return false;
+
+      }
+
+      Gdiplus::Brush * pbrush = gdiplus_brush();
+
+      if (pbrush == NULL)
+      {
+
+         return false;
+
+      }
+
+      set_smooth_mode(::draw2d::smooth_mode_high);
+
+      return (m_pgraphics->FillEllipse(pbrush, x1, y1, x2 - x1, y2 - y1)) == Gdiplus::Status::Ok;
+
+   }
+
+
+   bool graphics::FillEllipse(const RECT &  rectParam)
+   {
+
+      if (m_pgraphics == NULL)
+      {
+
+         return false;
+
+      }
+
+      Gdiplus::Brush * pbrush = gdiplus_brush();
+
+      if (pbrush == NULL)
+      {
+
+         return false;
+
+      }
+
+      set_smooth_mode(::draw2d::smooth_mode_high);
+
+      return (m_pgraphics->FillEllipse(pbrush, rectParam.left, rectParam.top, rectParam.right - rectParam.left, rectParam.bottom - rectParam.top)) == Gdiplus::Status::Ok;
 
    }
 
@@ -898,18 +995,51 @@ namespace draw2d_gdiplus
    bool graphics::FillEllipse(double x1,double y1,double x2,double y2)
    {
 
+      if (m_pgraphics == NULL)
+      {
+
+         return false;
+
+      }
+
+      Gdiplus::Brush * pbrush = gdiplus_brush();
+
+      if (pbrush == NULL)
+      {
+
+         return false;
+
+      }
+
       set_smooth_mode(::draw2d::smooth_mode_high);
 
-      return (m_pgraphics->FillEllipse(gdiplus_brush(),(Gdiplus::REAL)x1,(Gdiplus::REAL)y1,(Gdiplus::REAL)(x2 - x1),(Gdiplus::REAL)(y2 - y1))) == Gdiplus::Status::Ok;
+      return (m_pgraphics->FillEllipse(pbrush,(Gdiplus::REAL)x1,(Gdiplus::REAL)y1,(Gdiplus::REAL)(x2 - x1),(Gdiplus::REAL)(y2 - y1))) == Gdiplus::Status::Ok;
 
    }
+
 
    bool graphics::FillEllipse(const RECTD & rectParam)
    {
 
+      if (m_pgraphics == NULL)
+      {
+
+         return false;
+
+      }
+
+      Gdiplus::Brush * pbrush = gdiplus_brush();
+
+      if (pbrush == NULL)
+      {
+
+         return false;
+
+      }
+
       set_smooth_mode(::draw2d::smooth_mode_high);
 
-      return (m_pgraphics->FillEllipse(gdiplus_brush(),(Gdiplus::REAL)rectParam.left,(Gdiplus::REAL)rectParam.top,
+      return (m_pgraphics->FillEllipse(pbrush,(Gdiplus::REAL)rectParam.left,(Gdiplus::REAL)rectParam.top,
                                        (Gdiplus::REAL)(rectParam.right - rectParam.left),
                                        (Gdiplus::REAL)(rectParam.bottom - rectParam.top))) == Gdiplus::Status::Ok;
 
