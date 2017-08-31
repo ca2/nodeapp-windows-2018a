@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "netnode_dynamic_source_script", "..\..\..\app-core\appseed\netnode_dynamic_source_script\netnode_dynamic_source_script.vcxproj", "{7F80EE33-BA33-4F1D-9EF7-73EB4AC73DCD}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -23,7 +23,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "draw2d_gdiplus", "..\..\app
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_netnodelite", "..\..\..\app-core\appseed\netnodelite\netnodelite.vcxproj", "{4C73CC26-F125-4DAA-95B6-D11079EC3453}"
 	ProjectSection(ProjectDependencies) = postProject
-		{A92C920F-C07D-481E-B523-565B56167CD1} = {A92C920F-C07D-481E-B523-565B56167CD1}
+		{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5} = {05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}
 		{19841511-0204-1977-2204-195149AA3AF6} = {19841511-0204-1977-2204-195149AA3AF6}
 		{84517713-2000-419D-A87F-4338C9DDE3FA} = {84517713-2000-419D-A87F-4338C9DDE3FA}
 		{84517714-2000-419D-A87F-4338C9DDE3FA} = {84517714-2000-419D-A87F-4338C9DDE3FA}
@@ -75,7 +75,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "userdatetime", "..\..\..\ap
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ace", "..\..\..\app\appseed\ace\ace.vcxproj", "{21DCC811-4BCE-4F16-B674-C0941F847127}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_acid", "..\..\..\app\appseed\aura\acid.vcxproj", "{A92C920F-C07D-481E-B523-565B56167CD1}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_acid", "..\..\..\app\appseed\aura\acid.vcxproj", "{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "axisfreeimage", "..\..\..\app\appseed\freeimage\axisfreeimage.vcxproj", "{B39ED2B3-D53A-4077-B957-930979A3577D}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -380,21 +380,21 @@ Global
 		{21DCC811-4BCE-4F16-B674-C0941F847127}.stage|Win32.Deploy.0 = stage|Win32
 		{21DCC811-4BCE-4F16-B674-C0941F847127}.stage|x64.ActiveCfg = stage|x64
 		{21DCC811-4BCE-4F16-B674-C0941F847127}.stage|x64.Build.0 = stage|x64
-		{A92C920F-C07D-481E-B523-565B56167CD1}.basis|Win32.ActiveCfg = basis|Win32
-		{A92C920F-C07D-481E-B523-565B56167CD1}.basis|Win32.Build.0 = basis|Win32
-		{A92C920F-C07D-481E-B523-565B56167CD1}.basis|x64.ActiveCfg = basis|x64
-		{A92C920F-C07D-481E-B523-565B56167CD1}.basis|x64.Build.0 = basis|x64
-		{A92C920F-C07D-481E-B523-565B56167CD1}.cover|Win32.ActiveCfg = cover|Win32
-		{A92C920F-C07D-481E-B523-565B56167CD1}.cover|Win32.Build.0 = cover|Win32
-		{A92C920F-C07D-481E-B523-565B56167CD1}.cover|Win32.Deploy.0 = cover|Win32
-		{A92C920F-C07D-481E-B523-565B56167CD1}.cover|x64.ActiveCfg = cover|x64
-		{A92C920F-C07D-481E-B523-565B56167CD1}.cover|x64.Build.0 = cover|x64
-		{A92C920F-C07D-481E-B523-565B56167CD1}.cover|x64.Deploy.0 = cover|x64
-		{A92C920F-C07D-481E-B523-565B56167CD1}.stage|Win32.ActiveCfg = stage|Win32
-		{A92C920F-C07D-481E-B523-565B56167CD1}.stage|Win32.Build.0 = stage|Win32
-		{A92C920F-C07D-481E-B523-565B56167CD1}.stage|Win32.Deploy.0 = stage|Win32
-		{A92C920F-C07D-481E-B523-565B56167CD1}.stage|x64.ActiveCfg = stage|x64
-		{A92C920F-C07D-481E-B523-565B56167CD1}.stage|x64.Build.0 = stage|x64
+		{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.basis|Win32.ActiveCfg = basis|Win32
+		{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.basis|Win32.Build.0 = basis|Win32
+		{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.basis|x64.ActiveCfg = basis|x64
+		{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.basis|x64.Build.0 = basis|x64
+		{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.cover|Win32.ActiveCfg = cover|Win32
+		{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.cover|Win32.Build.0 = cover|Win32
+		{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.cover|Win32.Deploy.0 = cover|Win32
+		{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.cover|x64.ActiveCfg = cover|x64
+		{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.cover|x64.Build.0 = cover|x64
+		{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.cover|x64.Deploy.0 = cover|x64
+		{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.stage|Win32.ActiveCfg = stage|Win32
+		{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.stage|Win32.Build.0 = stage|Win32
+		{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.stage|Win32.Deploy.0 = stage|Win32
+		{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.stage|x64.ActiveCfg = stage|x64
+		{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}.stage|x64.Build.0 = stage|x64
 		{B39ED2B3-D53A-4077-B957-930979A3577D}.basis|Win32.ActiveCfg = basis|Win32
 		{B39ED2B3-D53A-4077-B957-930979A3577D}.basis|Win32.Build.0 = basis|Win32
 		{B39ED2B3-D53A-4077-B957-930979A3577D}.basis|x64.ActiveCfg = basis|x64
@@ -546,6 +546,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0D21017E-619C-417A-8898-5CA88F6D7AE8}
 	EndGlobalSection
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true
