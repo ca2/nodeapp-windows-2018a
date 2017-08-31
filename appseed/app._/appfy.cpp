@@ -88,7 +88,7 @@ void copy(MEM_ICON_ITEM * dst, ICON_ITEM * pitem)
 
 
 class appfy :
-   public ::axis::app
+   public ::aura::app
 {
 public:
 

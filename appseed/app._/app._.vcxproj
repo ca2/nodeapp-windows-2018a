@@ -689,18 +689,15 @@
     <ProjectReference Include="..\..\..\app\appseed\aura\aura.vcxproj">
       <Project>{03e5b8e7-9e3b-44dd-9ede-e0a74d52c1c5}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\app\appseed\axis\axis.vcxproj">
-      <Project>{73a245f9-c92f-4487-aef7-cb0531f665bd}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="appfy.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="framework.h" />
+    <None Include="Source.def" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Source.def" />
+    <ClInclude Include="framework.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
