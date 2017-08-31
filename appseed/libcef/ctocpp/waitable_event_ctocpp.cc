@@ -42,7 +42,7 @@ void CefWaitableEventCToCpp::Reset() {
   _struct->reset(_struct);
 }
 
-void CefWaitableEventCToCpp::Signal() {
+void CefWaitableEventCToCpp::message::sender() {
   cef_waitable_event_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, signal))
     return;

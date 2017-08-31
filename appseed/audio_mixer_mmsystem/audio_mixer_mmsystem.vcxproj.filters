@@ -86,9 +86,6 @@
     <ClCompile Include="audio_mixer_mmsystem_interaction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="_audio_mixer_mmsystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="audio_mixer_mmsystem.def">

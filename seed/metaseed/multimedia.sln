@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_cd", "..\..\..\app-core\appseed\audio_decode_cd\audio_decode_cd.vcxproj", "{C12F946A-2A59-4566-B650-D6A84408B165}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -185,7 +185,11 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_veriwell_musical_player_lite", "..\..\..\app-veriwell\appseed\musical_player_lite\musical_player_lite.vcxproj", "{9E956594-D3DC-47D7-A3D5-E4FE7D2B11BB}"
 	ProjectSection(ProjectDependencies) = postProject
 		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
+		{B2E38F2D-2D8C-4C63-8865-02DC220DC360} = {B2E38F2D-2D8C-4C63-8865-02DC220DC360}
 		{11AFE887-61B7-4217-913C-36736B359F39} = {11AFE887-61B7-4217-913C-36736B359F39}
+		{21DA4A8C-5A05-40A4-BF5B-FF62B9DDD150} = {21DA4A8C-5A05-40A4-BF5B-FF62B9DDD150}
+		{B46A198F-4171-4DEE-8CFD-164D99B42057} = {B46A198F-4171-4DEE-8CFD-164D99B42057}
+		{54850FD8-653A-43B6-AA90-E59AC030559C} = {54850FD8-653A-43B6-AA90-E59AC030559C}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_veriwell_musical_player", "..\..\..\app-veriwell\appseed\musical_player\musical_player.vcxproj", "{0EBB4EDE-16AF-480F-B8C8-6494D168A8D7}"
@@ -1722,6 +1726,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8B161AF8-FC6C-42BB-9496-C2A4BDAE4BDC}
 	EndGlobalSection
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true

@@ -1,3 +1,4 @@
+#include "framework.h"
 
 #include <WinSpool.h>
 

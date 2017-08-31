@@ -2,7 +2,7 @@
 #include "aura/node/windows/windows.h"
 
 
-CLASS_DECL_AURA int32_t __win_main(sp(::aura::system) psystem,::windows::main_init_data * pmaininitdata);
+CLASS_DECL_AURA int32_t __win_main(sp(::aura::system) psystem,::windows::command * pmaininitdata);
 
 
 extern "C" int32_t app_core_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow, app_core & appcore)
@@ -20,12 +20,12 @@ extern "C" int32_t app_core_main(HINSTANCE hinstance, HINSTANCE hPrevInstance, L
 
    ASSERT(hPrevInstance == NULL);
 
-   ::windows::main_init_data * pmaininitdata    = new ::windows::main_init_data;
+   ::windows::command * pmaininitdata    = new ::windows::command;
 
 
    pmaininitdata->m_hInstance                   = hinstance;
    pmaininitdata->m_hPrevInstance               = hPrevInstance;
-   pmaininitdata->m_vssCommandLine              = lpCmdLine;
+   pmaininitdata->m_strCommandLine              = lpCmdLine;
    pmaininitdata->m_nCmdShow                    = nCmdShow;
 
 

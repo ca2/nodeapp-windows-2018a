@@ -160,7 +160,7 @@ namespace multimedia
          
          ::multimedia::e_result wave_out_start(const imedia_position & position);
          virtual bool  on_run_step();
-         void install_message_handling(::message::dispatch * pinterface);
+         void install_message_routing(::message::sender * pinterface);
 
          virtual imedia_time wave_out_get_position_millis();
          imedia_position wave_out_get_position();

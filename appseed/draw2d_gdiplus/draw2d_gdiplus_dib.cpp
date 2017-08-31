@@ -1,3 +1,4 @@
+#include "framework.h"
 
 
 //Gdiplus::ColorMatrix g_mZero = 

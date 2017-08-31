@@ -35,10 +35,10 @@ namespace multimedia
 
       }
 
-      void wave_out::install_message_handling(::message::dispatch * pinterface)
+      void wave_out::install_message_routing(::message::sender * pinterface)
       {
 
-         ::multimedia::audio::wave_out::install_message_handling(pinterface);
+         ::multimedia::audio::wave_out::install_message_routing(pinterface);
 
       }
 
@@ -57,7 +57,7 @@ namespace multimedia
       int32_t wave_out::run()
       {
 
-         while(get_run_thread())
+         while(thread_get_run())
          {
 
             ::thread::run();
@@ -886,7 +886,7 @@ Opened:
       int32_t wave_out::run_step_thread::run()
       {
 
-         while(get_run_thread() && m_pout->m_estate == wave_out::state_playing)
+         while(thread_get_run() && m_pout->m_estate == wave_out::state_playing)
          {
 
             m_pout->wave_out_run_step();

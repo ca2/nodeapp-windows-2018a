@@ -43,31 +43,31 @@ namespace wordcard
    }
 
 
-   void view::install_message_handling(::message::dispatch * pinterface)
+   void view::install_message_routing(::message::sender * pinterface)
    {
-      ::user::scroll_view::install_message_handling(pinterface);
+      ::user::scroll_view::install_message_routing(pinterface);
 
-	   IGUI_WIN_MSG_LINK(WM_DESTROY, pinterface, this, &view::_001OnDestroy);
-	   IGUI_WIN_MSG_LINK(WM_SIZE, pinterface, this, &view::_001OnSize);
-	   //IGUI_WIN_MSG_LINK(WM_PAINT, pinterface, this, &view::_001OnPaint);
-	   IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &view::_001OnCreate);
-	   IGUI_WIN_MSG_LINK(WM_CONTEXTMENU, pinterface, this, &view::_001OnContextMenu);
-	   IGUI_WIN_MSG_LINK(WM_SETCURSOR, pinterface, this, &view::_001OnSetCursor);
+	   IGUI_MSG_LINK(WM_DESTROY, pinterface, this, &view::_001OnDestroy);
+	   IGUI_MSG_LINK(WM_SIZE, pinterface, this, &view::_001OnSize);
+	   //IGUI_MSG_LINK(WM_PAINT, pinterface, this, &view::_001OnPaint);
+	   IGUI_MSG_LINK(WM_CREATE, pinterface, this, &view::_001OnCreate);
+	   IGUI_MSG_LINK(WM_CONTEXTMENU, pinterface, this, &view::_001OnContextMenu);
+	   IGUI_MSG_LINK(WM_SETCURSOR, pinterface, this, &view::_001OnSetCursor);
 
-   //   IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &::user::interaction::_001OnLButtonDown);
-   //   IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &::user::interaction::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_KEYDOWN, pinterface, this, &::user::interaction::_001OnKeyDown);
-      IGUI_WIN_MSG_LINK(WM_KEYUP, pinterface, this, &::user::interaction::_001OnKeyUp);
+   //   IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &::user::interaction::_001OnLButtonDown);
+   //   IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &::user::interaction::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_KEYDOWN, pinterface, this, &::user::interaction::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_KEYUP, pinterface, this, &::user::interaction::_001OnKeyUp);
 
-      IGUI_WIN_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &view::_001OnLButtonDown);
-      IGUI_WIN_MSG_LINK(WM_LBUTTONUP, pinterface, this, &view::_001OnLButtonUp);
-      IGUI_WIN_MSG_LINK(WM_RBUTTONUP, pinterface, this, &view::_001OnRButtonUp);
+      IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &view::_001OnLButtonDown);
+      IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &view::_001OnLButtonUp);
+      IGUI_MSG_LINK(WM_RBUTTONUP, pinterface, this, &view::_001OnRButtonUp);
       
 
-      IGUI_WIN_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &view::_001OnShowWindow);
-      IGUI_WIN_MSG_LINK(WM_DESTROY, pinterface, this, &view::_001OnDestroy);
+      IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &view::_001OnShowWindow);
+      IGUI_MSG_LINK(WM_DESTROY, pinterface, this, &view::_001OnDestroy);
 
-      IGUI_WIN_MSG_LINK(WM_USER, pinterface, this, &view::_001OnUser);
+      IGUI_MSG_LINK(WM_USER, pinterface, this, &view::_001OnUser);
 
       
 
@@ -109,12 +109,12 @@ namespace wordcard
    	
    }
 
-   void view::_001OnDestroy(::signal_details * pobj) 
+   void view::_001OnDestroy(::message::message * pobj) 
    {
 	   ::user::impact::_001OnDestroy(pobj);
    }
 
-   void view::_001OnSize(::signal_details * pobj) 
+   void view::_001OnSize(::message::message * pobj) 
    {
       UNREFERENCED_PARAMETER(pobj);
 //      SCAST_PTR(::message::size, psize, pobj);
@@ -159,7 +159,7 @@ namespace wordcard
 
    }
 
-   void view::_001OnCreate(::signal_details * pobj) 
+   void view::_001OnCreate(::message::message * pobj) 
    {
       if(pobj->previous())
          return;
@@ -218,7 +218,7 @@ namespace wordcard
    }
 
 
-   void view::_001OnContextMenu(::signal_details * pobj) 
+   void view::_001OnContextMenu(::message::message * pobj) 
    {
       SCAST_PTR(::message::context_menu, pcontextmenu, pobj);
       point point = pcontextmenu->GetPoint();
@@ -233,7 +233,7 @@ namespace wordcard
    }
 
 
-   void view::_001OnSetCursor(::signal_details * pobj) 
+   void view::_001OnSetCursor(::message::message * pobj) 
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -292,7 +292,7 @@ namespace wordcard
       return -1;
    }
 
-   void view::_001OnLButtonDown(::signal_details * pobj)
+   void view::_001OnLButtonDown(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
   //    SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -301,7 +301,7 @@ namespace wordcard
 
    }
 
-   void view::_001OnLButtonUp(::signal_details * pobj)
+   void view::_001OnLButtonUp(::message::message * pobj)
    {
       SCAST_PTR(::message::mouse, pmouse, pobj);
 
@@ -313,7 +313,7 @@ namespace wordcard
 
    }
 
-   void view::_001OnRButtonUp(::signal_details * pobj)
+   void view::_001OnRButtonUp(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
   //    SCAST_PTR(::message::mouse, pmouse, pobj);
@@ -325,7 +325,7 @@ namespace wordcard
          menu.set_app(get_app());
          ::aura::menu menuPopup(menu.GetSubMenu(0));
          menuPopup.set_app(get_app());
-         menuPopup.TrackPopupMenu(0, pmouse->m_pt.x, pmouse->m_pt.y, GetParentFrame()->GetSafeoswindow_());
+         menuPopup.track_popup_menu(0, pmouse->m_pt.x, pmouse->m_pt.y, GetParentFrame()->GetSafeoswindow_());
       }
      */ 
    }
@@ -363,7 +363,7 @@ namespace wordcard
 
 
 
-   void view::_001OnShowWindow(::signal_details * pobj) 
+   void view::_001OnShowWindow(::message::message * pobj) 
    {
       UNREFERENCED_PARAMETER(pobj);
 //      SCAST_PTR(::message::show_window, pshowwindow, pobj);
@@ -374,7 +374,7 @@ namespace wordcard
 
 
 
-   void view::_001OnUser(::signal_details * pobj)
+   void view::_001OnUser(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       if(pbase->m_wparam == 1)

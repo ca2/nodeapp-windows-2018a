@@ -1,4 +1,4 @@
-
+#include "framework.h"
 
 BOOL CALLBACK draw2d_gdiplus_EnumFamCallBack(LPLOGFONT lplf,LPNEWTEXTMETRIC lpntm,DWORD FontType,LPVOID p);
 
@@ -836,9 +836,25 @@ namespace draw2d_gdiplus
    bool graphics::DrawEllipse(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    {
 
+      if (m_pgraphics == NULL)
+      {
+
+         return false;
+
+      }
+
+      Gdiplus::Pen * ppen = gdiplus_pen();
+
+      if (ppen == NULL)
+      {
+
+         return false;
+
+      }
+
       set_smooth_mode(::draw2d::smooth_mode_high);
 
-      return (m_pgraphics->DrawEllipse(gdiplus_pen(), x1, y1, x2 - x1, y2 - y1)) == Gdiplus::Status::Ok;
+      return (m_pgraphics->DrawEllipse(ppen, x1, y1, x2 - x1, y2 - y1)) == Gdiplus::Status::Ok;
 
    }
 
@@ -846,28 +862,25 @@ namespace draw2d_gdiplus
    bool graphics::DrawEllipse(const RECT &  rectParam)
    {
 
-      set_smooth_mode(::draw2d::smooth_mode_high);
+      if (m_pgraphics == NULL)
+      {
 
-      return (m_pgraphics->DrawEllipse(gdiplus_pen(),rectParam.left,rectParam.top,rectParam.right - rectParam.left,rectParam.bottom - rectParam.top)) == Gdiplus::Status::Ok;
+         return false;
 
-   }
+      }
 
+      Gdiplus::Pen * ppen = gdiplus_pen();
 
-   bool graphics::FillEllipse(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
-   {
+      if (ppen == NULL)
+      {
 
-      set_smooth_mode(::draw2d::smooth_mode_high);
+         return false;
 
-      return (m_pgraphics->FillEllipse(gdiplus_brush(), x1, y1, x2 - x1, y2 - y1)) == Gdiplus::Status::Ok;
-
-   }
-
-   bool graphics::FillEllipse(const RECT &  rectParam)
-   {
+      }
 
       set_smooth_mode(::draw2d::smooth_mode_high);
 
-      return (m_pgraphics->FillEllipse(gdiplus_brush(), rectParam.left, rectParam.top, rectParam.right - rectParam.left, rectParam.bottom - rectParam.top)) == Gdiplus::Status::Ok;
+      return (m_pgraphics->DrawEllipse(ppen,rectParam.left,rectParam.top,rectParam.right - rectParam.left,rectParam.bottom - rectParam.top)) == Gdiplus::Status::Ok;
 
    }
 
@@ -876,9 +889,25 @@ namespace draw2d_gdiplus
    bool graphics::DrawEllipse(double x1,double y1,double x2,double y2)
    {
 
+      if (m_pgraphics == NULL)
+      {
+
+         return false;
+
+      }
+
+      Gdiplus::Pen * ppen = gdiplus_pen();
+
+      if (ppen == NULL)
+      {
+
+         return false;
+
+      }
+
       set_smooth_mode(::draw2d::smooth_mode_high);
 
-      return (m_pgraphics->DrawEllipse(gdiplus_pen(),(Gdiplus::REAL)x1,(Gdiplus::REAL)y1,(Gdiplus::REAL)(x2 - x1),(Gdiplus::REAL)(y2 - y1))) == Gdiplus::Status::Ok;
+      return (m_pgraphics->DrawEllipse(ppen,(Gdiplus::REAL)x1,(Gdiplus::REAL)y1,(Gdiplus::REAL)(x2 - x1),(Gdiplus::REAL)(y2 - y1))) == Gdiplus::Status::Ok;
 
    }
 
@@ -886,11 +915,79 @@ namespace draw2d_gdiplus
    bool graphics::DrawEllipse(const RECTD & rectParam)
    {
 
+      if (m_pgraphics == NULL)
+      {
+
+         return false;
+
+      }
+
+      Gdiplus::Pen * ppen = gdiplus_pen();
+
+      if (ppen == NULL)
+      {
+
+         return false;
+
+      }
+
       set_smooth_mode(::draw2d::smooth_mode_high);
 
-      return (m_pgraphics->DrawEllipse(gdiplus_pen(),(Gdiplus::REAL)rectParam.left,(Gdiplus::REAL)rectParam.top,
+      return (m_pgraphics->DrawEllipse(ppen,(Gdiplus::REAL)rectParam.left,(Gdiplus::REAL)rectParam.top,
                                        (Gdiplus::REAL)(rectParam.right - rectParam.left),
                                        (Gdiplus::REAL)(rectParam.bottom - rectParam.top))) == Gdiplus::Status::Ok;
+
+   }
+
+
+   bool graphics::FillEllipse(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
+   {
+
+      if (m_pgraphics == NULL)
+      {
+
+         return false;
+
+      }
+
+      Gdiplus::Brush * pbrush = gdiplus_brush();
+
+      if (pbrush == NULL)
+      {
+
+         return false;
+
+      }
+
+      set_smooth_mode(::draw2d::smooth_mode_high);
+
+      return (m_pgraphics->FillEllipse(pbrush, x1, y1, x2 - x1, y2 - y1)) == Gdiplus::Status::Ok;
+
+   }
+
+
+   bool graphics::FillEllipse(const RECT &  rectParam)
+   {
+
+      if (m_pgraphics == NULL)
+      {
+
+         return false;
+
+      }
+
+      Gdiplus::Brush * pbrush = gdiplus_brush();
+
+      if (pbrush == NULL)
+      {
+
+         return false;
+
+      }
+
+      set_smooth_mode(::draw2d::smooth_mode_high);
+
+      return (m_pgraphics->FillEllipse(pbrush, rectParam.left, rectParam.top, rectParam.right - rectParam.left, rectParam.bottom - rectParam.top)) == Gdiplus::Status::Ok;
 
    }
 
@@ -898,18 +995,51 @@ namespace draw2d_gdiplus
    bool graphics::FillEllipse(double x1,double y1,double x2,double y2)
    {
 
+      if (m_pgraphics == NULL)
+      {
+
+         return false;
+
+      }
+
+      Gdiplus::Brush * pbrush = gdiplus_brush();
+
+      if (pbrush == NULL)
+      {
+
+         return false;
+
+      }
+
       set_smooth_mode(::draw2d::smooth_mode_high);
 
-      return (m_pgraphics->FillEllipse(gdiplus_brush(),(Gdiplus::REAL)x1,(Gdiplus::REAL)y1,(Gdiplus::REAL)(x2 - x1),(Gdiplus::REAL)(y2 - y1))) == Gdiplus::Status::Ok;
+      return (m_pgraphics->FillEllipse(pbrush,(Gdiplus::REAL)x1,(Gdiplus::REAL)y1,(Gdiplus::REAL)(x2 - x1),(Gdiplus::REAL)(y2 - y1))) == Gdiplus::Status::Ok;
 
    }
+
 
    bool graphics::FillEllipse(const RECTD & rectParam)
    {
 
+      if (m_pgraphics == NULL)
+      {
+
+         return false;
+
+      }
+
+      Gdiplus::Brush * pbrush = gdiplus_brush();
+
+      if (pbrush == NULL)
+      {
+
+         return false;
+
+      }
+
       set_smooth_mode(::draw2d::smooth_mode_high);
 
-      return (m_pgraphics->FillEllipse(gdiplus_brush(),(Gdiplus::REAL)rectParam.left,(Gdiplus::REAL)rectParam.top,
+      return (m_pgraphics->FillEllipse(pbrush,(Gdiplus::REAL)rectParam.left,(Gdiplus::REAL)rectParam.top,
                                        (Gdiplus::REAL)(rectParam.right - rectParam.left),
                                        (Gdiplus::REAL)(rectParam.bottom - rectParam.top))) == Gdiplus::Status::Ok;
 
@@ -1333,7 +1463,9 @@ namespace draw2d_gdiplus
             if (m_ealphamode == ::draw2d::alpha_mode_blend)
             {
 
-               if (nHeight >= get_processor_count() * 4 && (nWidth * nHeight) >= (get_processor_count() * 64))
+               single_lock sl(::get_thread_toolset(::thread::tool_draw2d)->m_pmutex);
+
+               if (nHeight >= get_processor_count() * 4 && (nWidth * nHeight) >= (get_processor_count() * 64) && sl.lock(millis(0)))
                {
 
                   m_pdib->fork_blend(point(x + GetViewportOrg().x, y + GetViewportOrg().y), pgraphicsSrc->m_pdib,
@@ -2187,7 +2319,46 @@ gdi_fallback:
    bool graphics::fill_path(::draw2d::path * ppath, ::draw2d::brush * pbrush)
    {
 
-      return m_pgraphics->FillPath((::Gdiplus::Brush *) pbrush->get_os_data(),(dynamic_cast < ::draw2d_gdiplus::path * > (ppath))->get_os_path(m_pgraphics)) == Gdiplus::Status::Ok;
+      if (ppath == NULL)
+      {
+
+         return false;
+
+      }
+
+      if (pbrush == NULL)
+      {
+
+         return false;
+
+      }
+
+      if (m_pgraphics == NULL)
+      {
+
+         return false;
+
+      }
+
+      ::Gdiplus::Brush * pbr = (::Gdiplus::Brush *) pbrush->get_os_data();
+
+      if (pbr == NULL)
+      {
+
+         return false;
+
+      }
+
+      Gdiplus::GraphicsPath * ppathOs = (dynamic_cast <::draw2d_gdiplus::path *> (ppath))->get_os_path(m_pgraphics);
+
+      if (ppathOs == NULL)
+      {
+
+         return false;
+
+      }
+         
+      return m_pgraphics->FillPath(pbr, ppathOs) == Gdiplus::Status::Ok;
 
    }
 
@@ -2981,17 +3152,26 @@ gdi_fallback:
       return StartDoc(&di);
    }
 
+   
    int32_t graphics::SaveDC()
    {
-      return m_pgraphics->Save();
+
+      Gdiplus::GraphicsState state = m_pgraphics->Save();
+
+      return (int) state;
+
    }
 
+   
    bool graphics::RestoreDC(int32_t nSavedDC)
    {
-
-      return m_pgraphics->Restore(nSavedDC) != FALSE;
+      
+      Gdiplus::Status status = m_pgraphics->Restore((Gdiplus::GraphicsState) nSavedDC);
+   
+      return status == Gdiplus::Ok;
 
    }
+
 
 //   ::draw2d::object* graphics::SelectGdiObject(::aura::application * papp, HDC hDC, HGDIOBJ h)
    // {
@@ -5450,8 +5630,127 @@ namespace draw2d_gdiplus
    }
 
 
+   bool graphics::TextOutAlphaBlend(double x, double y, const char * lpszString, strsize nCount)
+   {
+
+      if (m_pdibAlphaBlend != NULL)
+      {
+
+         single_lock sl(m_pmutex);
+
+         if (nCount < 0)
+         {
+
+            return false;
+
+         }
+
+         // "Reference" implementation for TextOutAlphaBlend
+
+         rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
+
+         ::size size = ::size(GetTextExtent(lpszString, nCount));
+
+         //size.cx = size.cx * 110 / 100;
+
+         //size.cy = size.cy * 110 / 100;
+
+         rect rectText(point((int64_t)x, (int64_t)y), size);
+
+         if (rectIntersect.intersect(rectIntersect, rectText))
+         {
+
+            ::draw2d::dib_sp dib1(allocer());
+            //#ifdef METROWIN
+            //            g_pdiba->add(dib1);
+            //#endif
+
+            dib1->create(rectText.size());
+
+            dib1->get_graphics()->SelectObject(get_current_font());
+
+            dib1->get_graphics()->SelectObject(get_current_brush());
+
+            dib1->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
+
+            dib1->get_graphics()->text_out(0, 0, lpszString, nCount);
+
+            dib1->blend2(null_point(), m_pdibAlphaBlend, point((int)MAX(0, x - m_ptAlphaBlend.x), (int)MAX(0, y - m_ptAlphaBlend.y)), rectText.size(), 255);
+
+            BitBltRaw((int)x, (int)y, rectText.width(), rectText.height(), dib1->get_graphics(), 0, 0, SRCCOPY);
+
+            return true;
+
+         }
 
 
+
+      }
+
+      return false;
+
+   }
+
+
+   bool graphics::BitBltAlphaBlend(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::draw2d::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, uint32_t dwRop)
+   {
+
+      if (m_pdibAlphaBlend != NULL)
+      {
+
+         rect rectIntersect(m_ptAlphaBlend, m_pdibAlphaBlend->size());
+
+         rect rectBlt(point((int64_t)x, (int64_t)y), size(nWidth, nHeight));
+
+         if (rectIntersect.intersect(rectIntersect, rectBlt))
+         {
+
+            // The following commented out code does not work well when there is clipping
+            // and some calculations are not precise
+            //if (m_pdib != NULL && pgraphicsSrc->m_pdib != NULL)
+            //{
+
+            //   point ptOff = GetViewportOrg();
+
+            //   x += ptOff.x;
+
+            //   y += ptOff.y;
+
+            //   return m_pdib->blend(point(x, y), pgraphicsSrc->m_pdib, point(xSrc, ySrc), m_pdibAlphaBlend, point(m_ptAlphaBlend.x - x, m_ptAlphaBlend.y - y), rectBlt.size());
+
+            //}
+            //else
+            {
+
+               ::draw2d::dib_sp dib1(allocer());
+               //#ifdef METROWIN
+               //               g_pdiba->add(dib1);
+               //#endif
+
+               dib1->create(rectBlt.size());
+
+               dib1->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
+
+               if (!dib1->from(null_point(), pgraphicsSrc, point(xSrc, ySrc), rectBlt.size()))
+                  return false;
+
+               dib1->blend2(point(0, 0), m_pdibAlphaBlend, point((int)MAX(0, x - m_ptAlphaBlend.x), (int)MAX(0, y - m_ptAlphaBlend.y)), rectBlt.size(), 255);
+
+               BitBltRaw(x, y, nWidth, nHeight, dib1->get_graphics(), 0, 0, dwRop);
+
+            }
+
+            return true;
+
+         }
+
+
+
+      }
+
+      return false;
+
+   }
 
 
 } // namespace draw2d_gdiplus

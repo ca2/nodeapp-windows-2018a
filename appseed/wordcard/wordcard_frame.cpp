@@ -34,13 +34,13 @@ namespace wordcard
 
 
 
-   void frame::install_message_handling(::message::dispatch * pinterface)
+   void frame::install_message_routing(::message::sender * pinterface)
    {
-      simple_frame_window::install_message_handling(pinterface);
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &frame::_001OnCreate);
+      simple_frame_window::install_message_routing(pinterface);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &frame::_001OnCreate);
    }
 
-   void frame::_001OnCreate(::signal_details * pobj)
+   void frame::_001OnCreate(::message::message * pobj)
    {
 
       pobj->previous();

@@ -40,7 +40,7 @@ namespace ca2plugin_container
       virtual bool reload_plugin();
 
 
-      virtual void install_message_handling(::message::dispatch * pinterface);
+      virtual void install_message_routing(::message::sender * pinterface);
 
       void start_plugin();
 
@@ -48,7 +48,7 @@ namespace ca2plugin_container
 
 
 
-      void message_handler(signal_details * pobj);
+      void message_handler(::message::base * pbase);
 
 
       virtual void * get_system();

@@ -94,9 +94,6 @@
     <ClCompile Include="framework\framework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="_draw2d_gdi.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="draw2d_gdi.def">

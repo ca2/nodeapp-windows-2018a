@@ -35,13 +35,13 @@ namespace music
             return thread::exit_thread();
          }
 
-         void sequence_thread::install_message_handling(::message::dispatch * pinterface)
+         void sequence_thread::install_message_routing(::message::sender * pinterface)
          {
-            ::music::midi::sequence_thread::install_message_handling(pinterface);
-            //IGUI_WIN_MSG_LINK(::music::midi::player::message_command, pinterface, this, &sequence_thread::OnCommand);
-            IGUI_WIN_MSG_LINK(::music::midi::sequence::message_event, pinterface, this, &sequence_thread::OnMidiSequenceEvent);
-            IGUI_WIN_MSG_LINK(MM_MOM_DONE, pinterface, this, &sequence_thread::OnDone);
-            IGUI_WIN_MSG_LINK(MM_MOM_POSITIONCB, pinterface, this, &sequence_thread::OnPositionCB);
+            ::music::midi::sequence_thread::install_message_routing(pinterface);
+            //IGUI_MSG_LINK(::music::midi::player::message_command, pinterface, this, &sequence_thread::OnCommand);
+            IGUI_MSG_LINK(::music::midi::sequence::message_event, pinterface, this, &sequence_thread::OnMidiSequenceEvent);
+            IGUI_MSG_LINK(MM_MOM_DONE, pinterface, this, &sequence_thread::OnDone);
+            IGUI_MSG_LINK(MM_MOM_POSITIONCB, pinterface, this, &sequence_thread::OnPositionCB);
          }
 
          void sequence_thread::Stop(imedia_time msEllapse)
@@ -73,7 +73,7 @@ namespace music
 
          }
 
-         void sequence_thread::OnMidiSequenceEvent(::signal_details * pobj)
+         void sequence_thread::OnMidiSequenceEvent(::message::message * pobj)
          {
 
             SCAST_PTR(::message::base, pbase, pobj);
@@ -320,7 +320,7 @@ namespace music
          }
 
 
-         //void sequence_thread::OnCommand(::signal_details * pobj)
+         //void sequence_thread::OnCommand(::message::message * pobj)
          //{
          //   SCAST_PTR(::message::base, pbase, pobj);
          //   smart_pointer < ::music::midi::player::command > spcommand;
@@ -421,7 +421,7 @@ namespace music
          }
 
          
-         void sequence_thread::OnDone(::signal_details * pobj)
+         void sequence_thread::OnDone(::message::message * pobj)
          {
 
             SCAST_PTR(::message::base, pbase, pobj);
@@ -440,7 +440,7 @@ namespace music
          }
             
          
-         void sequence_thread::OnPositionCB(::signal_details * pobj)
+         void sequence_thread::OnPositionCB(::message::message * pobj)
          {
 
             SCAST_PTR(::message::base, pbase, pobj);

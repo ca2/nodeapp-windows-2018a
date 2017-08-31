@@ -42,7 +42,7 @@ namespace wordcard
    /////////////////////////////////////////////////////////////////////////////
    // pane_view message handlers
 
-   void pane_view::_001OnCreate(::signal_details * pobj)
+   void pane_view::_001OnCreate(::message::message * pobj)
    {
       //      SCAST_PTR(::message::create, pcreate, pobj);
       if (pobj->previous())
@@ -295,20 +295,20 @@ namespace wordcard
 
 
 
-   void pane_view::_001OnMenuMessage(::signal_details * pobj)
+   void pane_view::_001OnMenuMessage(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
       set_cur_tab_by_id(m_pviewdataOld->m_id);
    }
 
-   void pane_view::install_message_handling(::message::dispatch * pinterface)
+   void pane_view::install_message_routing(::message::sender * pinterface)
    {
-      ::user::tab_view::install_message_handling(pinterface);
+      ::user::tab_view::install_message_routing(pinterface);
 
-      IGUI_WIN_MSG_LINK(WM_USER, pinterface, this, &pane_view::_001OnUserMessage);
-      IGUI_WIN_MSG_LINK(WM_CREATE, pinterface, this, &pane_view::_001OnCreate);
-      //	IGUI_WIN_MSG_LINK(WM_SIZE, pinterface, this, &pane_view::_001OnSize);
-      IGUI_WIN_MSG_LINK(WM_USER + 1122, pinterface, this, &pane_view::_001OnMenuMessage);
+      IGUI_MSG_LINK(WM_USER, pinterface, this, &pane_view::_001OnUserMessage);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &pane_view::_001OnCreate);
+      //	IGUI_MSG_LINK(WM_SIZE, pinterface, this, &pane_view::_001OnSize);
+      IGUI_MSG_LINK(WM_USER + 1122, pinterface, this, &pane_view::_001OnMenuMessage);
 
 
    }
@@ -422,7 +422,7 @@ namespace wordcard
       return  (::user::impact::get_document());
    }
 
-   void pane_view::_001OnUserMessage(::signal_details * pobj)
+   void pane_view::_001OnUserMessage(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);
       if (pbase->m_wparam == 1)

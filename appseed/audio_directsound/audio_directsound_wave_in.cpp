@@ -45,13 +45,13 @@ namespace multimedia
          return thread::exit_thread();
       }
 
-      void wave_in::pre_translate_message(::signal_details * pobj)
+      void wave_in::pre_translate_message(::message::message * pobj)
       {
          SCAST_PTR(::message::base, pbase, pobj);
          //ASSERT(GetMainWnd() == NULL);
-         //if(pbase->m_uiMessage == MM_WIM_OPEN ||
-         //   pbase->m_uiMessage == MM_WIM_CLOSE ||
-         //   pbase->m_uiMessage == MM_WIM_DATA)
+         //if(pbase->m_id == MM_WIM_OPEN ||
+         //   pbase->m_id == MM_WIM_CLOSE ||
+         //   pbase->m_id == MM_WIM_DATA)
          //{
          //   translate_wave_in_message(pbase);
          //   if(pbase->m_bRet)
@@ -411,14 +411,14 @@ namespace multimedia
       }
 
 
-      void wave_in::translate_wave_in_message(::signal_details * pobj)
+      void wave_in::translate_wave_in_message(::message::message * pobj)
       {
 
          SCAST_PTR(::message::base, pbase, pobj);
 
-         //ASSERT(pbase->m_uiMessage == MM_WIM_OPEN || pbase->m_uiMessage == MM_WIM_CLOSE || pbase->m_uiMessage == MM_WIM_DATA);
+         //ASSERT(pbase->m_id == MM_WIM_OPEN || pbase->m_id == MM_WIM_CLOSE || pbase->m_id == MM_WIM_DATA);
 
-         //if(pbase->m_uiMessage == MM_WIM_DATA)
+         //if(pbase->m_id == MM_WIM_DATA)
          //{
          //   
          //   m_iBuffer--;
