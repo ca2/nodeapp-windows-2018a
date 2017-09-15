@@ -33,13 +33,13 @@ namespace draw2d_gdiplus
       virtual bool internal_begin_figure(bool bFill, ::draw2d::e_fill_mode efillmode);
       virtual bool internal_end_figure(bool bClose);
 
-      virtual bool internal_add_line(int32_t x1, int32_t y1, int32_t x2, int32_t y2);
-      virtual bool internal_add_rect(int32_t x,int32_t y,int32_t cx,int32_t cy);
-      virtual bool internal_add_line(int32_t x, int32_t y);
-      virtual bool internal_add_move(int32_t x,int32_t y);
+      virtual bool internal_add_line(double x1, double y1, double x2, double y2);
+      virtual bool internal_add_rect(double x, double y, double cx, double cy);
+      virtual bool internal_add_line(double x, double y);
+      virtual bool internal_add_move(double x, double y);
 
-      virtual bool internal_add_rect(double x,double y,double cx,double cy);
-      virtual bool internal_add_move(double x,double y);
+      //virtual bool internal_add_rect(double x,double y,double cx,double cy);
+      //virtual bool internal_add_move(double x,double y);
 
       virtual bool internal_add_string(Gdiplus::Graphics * pgraphics, int32_t x,int32_t y,const string & strText,::draw2d::font_sp spfont);
 
