@@ -4971,13 +4971,13 @@ namespace draw2d_gdiplus
          if(m_pgraphics == NULL)
             return;
 
-         if(m_esmoothmode != ::draw2d::smooth_mode_none)
+         //if(m_esmoothmode != ::draw2d::smooth_mode_none)
          {
 
             set_smooth_mode(::draw2d::smooth_mode_none);
 
          }
-         else
+         //else
          {
             //TRACE("optimized smoothing mode");
          }
