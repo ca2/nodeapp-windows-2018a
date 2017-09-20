@@ -5,7 +5,7 @@
 #include <tlhelp32.h>
 
 
-#define IDI_CCVOTAGUS_CA2_SPA			107
+#define IDI_CCVOTAGUS_CA2_SPA       107
 
 string path_dir_name_for_relative(const char * pszPath);
 //string solve_relative_compressions(const char * pszAbsolute);
@@ -16,21 +16,21 @@ string path_dir_name_for_relative(const char * pszPath);
 // in an ICO file.
 struct ICON_ITEM
 {
-   BYTE	bWidth;               // Width of the image
-   BYTE	bHeight;              // Height of the image (times 2)
-   BYTE	bColorCount;          // Number of colors in image (0 if >=8bpp)
-   BYTE	bReserved;            // Reserved
-   WORD	wPlanes;              // Color Planes
-   WORD	wBitCount;            // Bits per pixel
-   DWORD	dwBytesInRes;         // how many bytes in this resource?
-   DWORD	dwImageOffset;        // where in the file is this image
+   BYTE  bWidth;               // Width of the image
+   BYTE  bHeight;              // Height of the image (times 2)
+   BYTE  bColorCount;          // Number of colors in image (0 if >=8bpp)
+   BYTE  bReserved;            // Reserved
+   WORD  wPlanes;              // Color Planes
+   WORD  wBitCount;            // Bits per pixel
+   DWORD dwBytesInRes;         // how many bytes in this resource?
+   DWORD dwImageOffset;        // where in the file is this image
 };
 
 struct ICON_HEADER
 {
-   WORD			idReserved;   // Reserved
-   WORD			idType;       // resource type (1 for icons)
-   WORD			idCount;      // how many images?
+   WORD        idReserved;   // Reserved
+   WORD        idType;       // resource type (1 for icons)
+   WORD        idCount;      // how many images?
 };
 
 
@@ -52,22 +52,22 @@ void dprint(const char * psz)
 
 struct MEM_ICON_ITEM
 {
-   BYTE	bWidth;               // Width of the image
-   BYTE	bHeight;              // Height of the image (times 2)
-   BYTE	bColorCount;          // Number of colors in image (0 if >=8bpp)
-   BYTE	bReserved;            // Reserved
-   WORD	wPlanes;              // Color Planes
-   WORD	wBitCount;            // Bits per pixel
-   DWORD	dwBytesInRes;         // how many bytes in this resource?
-   WORD	nID;                  // the ID
+   BYTE  bWidth;               // Width of the image
+   BYTE  bHeight;              // Height of the image (times 2)
+   BYTE  bColorCount;          // Number of colors in image (0 if >=8bpp)
+   BYTE  bReserved;            // Reserved
+   WORD  wPlanes;              // Color Planes
+   WORD  wBitCount;            // Bits per pixel
+   DWORD dwBytesInRes;         // how many bytes in this resource?
+   WORD  nID;                  // the ID
 
 };
 
 struct MEM_ICON_HEADER
 {
-   WORD			idReserved;   // Reserved
-   WORD			idType;       // resource type (1 for icons)
-   WORD			idCount;      // how many images?
+   WORD        idReserved;   // Reserved
+   WORD        idType;       // resource type (1 for icons)
+   WORD        idCount;      // how many images?
 };
 
 
@@ -88,37 +88,37 @@ void copy(MEM_ICON_ITEM * dst, ICON_ITEM * pitem)
 class appfy :
    public ::aura::app
 {
-public:
+   public:
 
 
-   enum e_message
-   {
-      message_none,
-      message_ok,
-      message_failed,
-      message_unknown,
-   };
+      enum e_message
+      {
+         message_none,
+         message_ok,
+         message_failed,
+         message_unknown,
+      };
 
 
-   e_message                  m_emessage;
-   HANDLE                     m_hmutexSpabootInstall;
-   ::aura::ipc::rx       m_rxchannel;
+      e_message                  m_emessage;
+      HANDLE                     m_hmutexSpabootInstall;
+      ::aura::ipc::rx       m_rxchannel;
 
-   char *                     m_modpath;
-   char *                     m_pszDllEnds;
-   uint32_t *                    m_dwaProcess;
-   int32_t                        m_iSizeProcess;
-   HMODULE *                  m_hmodulea;
-   int32_t                        m_iSizeModule;
-   bool                       m_bInstallerInstalling;
+      char *                     m_modpath;
+      char *                     m_pszDllEnds;
+      uint32_t *                    m_dwaProcess;
+      int32_t                        m_iSizeProcess;
+      HMODULE *                  m_hmodulea;
+      int32_t                        m_iSizeModule;
+      bool                       m_bInstallerInstalling;
 
-   appfy();
-   virtual ~appfy();
+      appfy();
+      virtual ~appfy();
 
 
-   virtual int32_t run();
+      virtual int32_t run();
 
-   virtual bool end();
+      virtual bool end();
 
 };
 
@@ -350,7 +350,9 @@ int32_t appfy::run()
          }
          else if (::str::begins_eat_ci(strParse, "app_"))
          {
-            int iFind = strParse.find("_");
+
+            auto iFind = strParse.find("_");
+
             if (iFind < 0)
             {
                strRoot = strApp;
@@ -461,7 +463,7 @@ int32_t appfy::run()
             fileHd.write(&item, 14);
          }
 
-         UpdateResource(hupdate, RT_GROUP_ICON, "MAINICON", MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL), fileHd.get_data(), fileHd.get_size());
+         UpdateResource(hupdate, RT_GROUP_ICON, "MAINICON", MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL), fileHd.get_data(), convert < DWORD > (fileHd.get_size()));
 
          dprint("icon should be updated");
 
@@ -489,7 +491,7 @@ int32_t appfy::run()
       }
       if (strCoreApp.has_char())
       {
-         UpdateResource(hupdate, "APPID", MAKEINTRESOURCE(1), MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL), (LPVOID)(LPCTSTR)strCoreApp, strCoreApp.get_length());
+         UpdateResource(hupdate, "APPID", MAKEINTRESOURCE(1), MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL), (LPVOID)(LPCTSTR)strCoreApp, convert < DWORD > (strCoreApp.get_length()));
          dprint("APPID should be updated");
       }
 
@@ -559,7 +561,7 @@ string path_url_dir_name_for_relative(const char * pszPath)
 #undef new
 void init_exception_engine(class ::exception::engine * pexceptionengine)
 {
-   
+
    new(pexceptionengine) class ::exception::engine(NULL);
 
 }

@@ -74,7 +74,7 @@ namespace ca2plugin_container
 
       ::hotplugin::host::_001OnTimer(ptimer);
 
-      if(ptimer->m_nIDEvent == 1984 + 77 + 3)
+      if(ptimer->m_nIDEvent == 2000 + 77 + 3)
       {
 
          _001UpdateWindow();
@@ -183,7 +183,7 @@ namespace ca2plugin_container
    bool host::open_link(const string & strLink,const string & strTarget)
    {
 
-      ensure_tx(::hotplugin::message_open_url,(void *)strLink.c_str(),(int32_t)strLink.get_length(), 1984);
+      ensure_tx(::hotplugin::message_open_url,(void *)strLink.c_str(),(int32_t)strLink.get_length(), 2000);
       
       return true;
 

@@ -13,7 +13,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "os", "..\..\os\os.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_tesseract", "..\..\..\app-core\appseed\tesseract\tesseract.vcxproj", "{437699AD-7464-4E5F-ACF3-7167487A9E3D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\app.vcxproj", "{19841115-1984-0411-1977-021977151984}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\app.vcxproj", "{20001115-2000-0411-1977-021977152000}"
 	ProjectSection(ProjectDependencies) = postProject
 		{437699AD-7464-4E5F-ACF3-7167487A9E3D} = {437699AD-7464-4E5F-ACF3-7167487A9E3D}
 		{51F51C57-0947-4D1D-850E-2F4BE6C88DCF} = {51F51C57-0947-4D1D-850E-2F4BE6C88DCF}
@@ -34,7 +34,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_freeimage", "..\..\..\app\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_ca2zlib", "..\..\..\app\thirdparty\appseed\zlib\_ca2zlib.vcxproj", "{9FFC2CF6-737C-43DB-A1EE-383F7BFDB05B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_alarm", "..\..\..\app-core\appseed\alarm\alarm.vcxproj", "{19841511-0204-1977-2204-195149AA3AF6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_alarm", "..\..\..\app-core\appseed\alarm\alarm.vcxproj", "{20001511-0204-1977-2204-195149AA3AF6}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_deepfish_alarm", "..\..\..\app-core\appseed\deepfish_alarm\deepfish_alarm.vcxproj", "{11223319-6F3A-45AC-926B-256082D8FF5D}"
 EndProject
@@ -174,22 +174,22 @@ Global
 		{437699AD-7464-4E5F-ACF3-7167487A9E3D}.profiler|Win32.Build.0 = profiler|Win32
 		{437699AD-7464-4E5F-ACF3-7167487A9E3D}.profiler|x64.ActiveCfg = profiler|x64
 		{437699AD-7464-4E5F-ACF3-7167487A9E3D}.profiler|x64.Build.0 = profiler|x64
-		{19841115-1984-0411-1977-021977151984}.basis|ARM.ActiveCfg = basis|Win32
-		{19841115-1984-0411-1977-021977151984}.basis|Win32.ActiveCfg = basis|Win32
-		{19841115-1984-0411-1977-021977151984}.basis|Win32.Build.0 = basis|Win32
-		{19841115-1984-0411-1977-021977151984}.basis|x64.ActiveCfg = basis|x64
-		{19841115-1984-0411-1977-021977151984}.basis|x64.Build.0 = basis|x64
-		{19841115-1984-0411-1977-021977151984}.codeanalysis|ARM.ActiveCfg = codeanalysis|Win32
-		{19841115-1984-0411-1977-021977151984}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
-		{19841115-1984-0411-1977-021977151984}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
-		{19841115-1984-0411-1977-021977151984}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
-		{19841115-1984-0411-1977-021977151984}.codeanalysis|x64.Build.0 = codeanalysis|x64
-		{19841115-1984-0411-1977-021977151984}.memdleak|ARM.ActiveCfg = memdleak|Win32
-		{19841115-1984-0411-1977-021977151984}.memdleak|Win32.ActiveCfg = memdleak|Win32
-		{19841115-1984-0411-1977-021977151984}.memdleak|Win32.Build.0 = memdleak|Win32
-		{19841115-1984-0411-1977-021977151984}.memdleak|x64.ActiveCfg = memdleak|x64
-		{19841115-1984-0411-1977-021977151984}.memdleak|x64.Build.0 = memdleak|x64
-		{19841115-1984-0411-1977-021977151984}.profiler|ARM.ActiveCfg = profiler|Win32
+		{20001115-2000-0411-1977-021977152000}.basis|ARM.ActiveCfg = basis|Win32
+		{20001115-2000-0411-1977-021977152000}.basis|Win32.ActiveCfg = basis|Win32
+		{20001115-2000-0411-1977-021977152000}.basis|Win32.Build.0 = basis|Win32
+		{20001115-2000-0411-1977-021977152000}.basis|x64.ActiveCfg = basis|x64
+		{20001115-2000-0411-1977-021977152000}.basis|x64.Build.0 = basis|x64
+		{20001115-2000-0411-1977-021977152000}.codeanalysis|ARM.ActiveCfg = codeanalysis|Win32
+		{20001115-2000-0411-1977-021977152000}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
+		{20001115-2000-0411-1977-021977152000}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
+		{20001115-2000-0411-1977-021977152000}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
+		{20001115-2000-0411-1977-021977152000}.codeanalysis|x64.Build.0 = codeanalysis|x64
+		{20001115-2000-0411-1977-021977152000}.memdleak|ARM.ActiveCfg = memdleak|Win32
+		{20001115-2000-0411-1977-021977152000}.memdleak|Win32.ActiveCfg = memdleak|Win32
+		{20001115-2000-0411-1977-021977152000}.memdleak|Win32.Build.0 = memdleak|Win32
+		{20001115-2000-0411-1977-021977152000}.memdleak|x64.ActiveCfg = memdleak|x64
+		{20001115-2000-0411-1977-021977152000}.memdleak|x64.Build.0 = memdleak|x64
+		{20001115-2000-0411-1977-021977152000}.profiler|ARM.ActiveCfg = profiler|Win32
 		{19841115-1984-0411-1977-021977151984}.profiler|Win32.ActiveCfg = profiler|Win32
 		{19841115-1984-0411-1977-021977151984}.profiler|Win32.Build.0 = profiler|Win32
 		{19841115-1984-0411-1977-021977151984}.profiler|x64.ActiveCfg = profiler|x64

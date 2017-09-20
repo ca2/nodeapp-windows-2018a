@@ -20,20 +20,20 @@ namespace multimedia
          waveformatex.nBlockAlign       = pwaveformat->nBlockAlign;          /* block size of data */
          waveformatex.wBitsPerSample    = pwaveformat->wBitsPerSample;       /* number of bits per sample of mono data */
          waveformatex.cbSize            = pwaveformat->cbSize;               /* the count in bytes of the size of */
-                                                                                 /* extra information (after cbSize) */
+         /* extra information (after cbSize) */
 
       }
 
 
-      void translate(WAVEHDR & wavehdr, ::multimedia::audio::wave_buffer * pwavebuffer, int iBuffer)
+      void translate(WAVEHDR & wavehdr, ::multimedia::audio::wave_buffer * pwavebuffer, index iBuffer)
       {
 
          ::multimedia::audio::wave_buffer::buffer * pbuffer = pwavebuffer->get_buffer(iBuffer);
-            
+
          pbuffer->m_posdata            = &wavehdr;
 
          wavehdr.lpData                = (LPSTR) pbuffer->m_pData;
-         wavehdr.dwBufferLength        = pwavebuffer->m_uiBufferSize;
+         convert(wavehdr.dwBufferLength, pwavebuffer->m_uiBufferSize);
          wavehdr.dwBytesRecorded       = 0;
          wavehdr.dwUser                = pbuffer->m_iIndex;
          wavehdr.dwFlags               = 0;
@@ -41,7 +41,7 @@ namespace multimedia
       }
 
 
-      LPWAVEHDR create_new_WAVEHDR(::multimedia::audio::wave_buffer * pwavebuffer, int iBuffer)
+      LPWAVEHDR create_new_WAVEHDR(::multimedia::audio::wave_buffer * pwavebuffer, index iBuffer)
       {
 
          LPWAVEHDR lpwavehdr = new WAVEHDR;
@@ -52,9 +52,9 @@ namespace multimedia
 
       }
 
-      LPWAVEHDR get_os_data(::multimedia::audio::wave_buffer * pwavebuffer, int iBuffer)
+      LPWAVEHDR get_os_data(::multimedia::audio::wave_buffer * pwavebuffer, index iBuffer)
       {
-         
+
          ::multimedia::audio::wave_buffer::buffer * pbuffer = pwavebuffer->get_buffer(iBuffer);
 
          LPWAVEHDR pwavehdr = (LPWAVEHDR) pbuffer->get_os_data();

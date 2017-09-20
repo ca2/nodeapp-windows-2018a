@@ -13,14 +13,14 @@ namespace multimedia
          ::thread(papp)
       {
 
-            }
+      }
 
       wave_out::helper_thread::~helper_thread()
       {
 
       }
-      
-      
+
+
       void wave_out::helper_thread::install_message_routing(::message::sender * pinterface)
       {
 
@@ -54,7 +54,7 @@ namespace multimedia
          wave_base(papp),
          ::multimedia::audio::wave_out(papp)
       {
-         
+
          m_phelperthread = new helper_thread(papp);
          m_phelperthread->m_pwaveout = this;
          m_phelperthread->begin_synch(NULL, ::multithreading::priority_highest);
@@ -106,9 +106,10 @@ namespace multimedia
 
       }
 
-      ::multimedia::e_result wave_out::wave_out_open(thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount)
+
+      ::multimedia::e_result wave_out::wave_out_open(thread * pthreadCallback, ::count iBufferCount, count iBufferSampleCount)
       {
-         
+
          synch_lock sl(m_pmutex);
 
          if(m_hwaveout != NULL && m_estate != state_initial)
@@ -129,32 +130,32 @@ namespace multimedia
          sp(::multimedia::audio::wave) audiowave = Application.audiowave();
 
          if(MMSYSERR_NOERROR == (mmr = mmsystem::translate(waveOutOpen(
-            &m_hwaveout,
-            audiowave->m_uiWaveInDevice,
-            wave_format(),
-            m_phelperthread->get_os_int(),
-            (uint32_t) 0,
-            CALLBACK_THREAD))))
+                                          &m_hwaveout,
+                                          audiowave->m_uiWaveInDevice,
+                                          wave_format(),
+                                          m_phelperthread->get_os_int(),
+                                          (uint32_t) 0,
+                                          CALLBACK_THREAD))))
             goto Opened;
          m_pwaveformat->nSamplesPerSec = 22050;
          m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
          if(MMSYSERR_NOERROR == (mmr = mmsystem::translate(waveOutOpen(
-            &m_hwaveout,
-            WAVE_MAPPER,
-            wave_format(),
-            (uint32_t)m_phelperthread->get_os_int(),
-            (uint32_t) 0,
-            CALLBACK_THREAD))))
+                                          &m_hwaveout,
+                                          WAVE_MAPPER,
+                                          wave_format(),
+                                          (uint32_t)m_phelperthread->get_os_int(),
+                                          (uint32_t) 0,
+                                          CALLBACK_THREAD))))
             goto Opened;
          m_pwaveformat->nSamplesPerSec = 11025;
          m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
          if(MMSYSERR_NOERROR == (mmr = mmsystem::translate(waveOutOpen(
-            &m_hwaveout,
-            WAVE_MAPPER,
-            wave_format(),
-            (uint32_t)m_phelperthread->get_os_int(),
-            (uint32_t) 0,
-            CALLBACK_THREAD))))
+                                          &m_hwaveout,
+                                          WAVE_MAPPER,
+                                          wave_format(),
+                                          (uint32_t)m_phelperthread->get_os_int(),
+                                          (uint32_t) 0,
+                                          CALLBACK_THREAD))))
             goto Opened;
 
          if(mmr != ::multimedia::result_success)
@@ -163,13 +164,13 @@ namespace multimedia
          }
 
 Opened:
-         uint32_t uiBufferSizeLog2;
-         uint32_t uiBufferSize;
-         uint32_t uiAnalysisSize;
-         uint32_t uiAllocationSize;
-         uint32_t uiInterestSize;
-         uint32_t uiSkippedSamplesCount;
-         uint32_t uiBufferCount = iBufferCount;
+         memory_size_t uiBufferSizeLog2;
+         memory_size_t uiBufferSize;
+         memory_size_t uiAnalysisSize;
+         memory_size_t uiAllocationSize;
+         memory_size_t uiInterestSize;
+         memory_size_t uiSkippedSamplesCount;
+         memory_size_t uiBufferCount = iBufferCount;
 
          if(m_pwaveformat->nSamplesPerSec == 44100)
          {
@@ -205,7 +206,7 @@ Opened:
             uiInterestSize = 200;
             uiSkippedSamplesCount = 1;
          }
-         
+
          wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, uiBufferCount,128, m_pwaveformat, m_pwaveformat);
 
          m_pprebuffer->open(
@@ -214,8 +215,10 @@ Opened:
             uiBufferCount, // group count
             iBufferSampleCount); // group sample count
 
-         int32_t i, iSize;
-         iSize = wave_out_get_buffer()->GetBufferCount();
+         index i;
+
+         auto iSize = wave_out_get_buffer()->GetBufferCount();
+
          for(i = 0; i < iSize; i++)
          {
 
@@ -225,14 +228,14 @@ Opened:
                return mmr;
             }
          }
-         
+
          m_estate = state_opened;
 
          return ::multimedia::result_success;
 
       }
 
-      ::multimedia::e_result wave_out::wave_out_open_ex(thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample,::multimedia::audio::e_purpose epurpose)
+      ::multimedia::e_result wave_out::wave_out_open_ex(thread * pthreadCallback, count iBufferCount, count iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample,::multimedia::audio::e_purpose epurpose)
       {
 
          synch_lock sl(m_pmutex);
@@ -309,7 +312,7 @@ Opened:
 
          }
 
-      Opened:
+Opened:
 
          uint32_t uiBufferSizeLog2;
 
@@ -325,7 +328,7 @@ Opened:
          }
          else if(epurpose == ::multimedia::audio::purpose_playground)
          {
-         
+
             iBufferSampleCount = (1 << 10);
 
             uiBufferSizeLog2 = 16;
@@ -345,12 +348,12 @@ Opened:
          }
 
          //iBufferSampleCount = (1 << 12);
-         uint32_t uiBufferSize;
-         uint32_t uiAnalysisSize;
-         uint32_t uiAllocationSize;
-         uint32_t uiInterestSize;
-         uint32_t uiSkippedSamplesCount;
-         uint32_t uiBufferCount = iBufferCount;
+         memory_size_t uiBufferSize;
+         memory_size_t uiAnalysisSize;
+         memory_size_t uiAllocationSize;
+         memory_size_t uiInterestSize;
+         memory_size_t uiSkippedSamplesCount;
+         memory_size_t uiBufferCount = iBufferCount;
 
          //   if(m_pwaveformat->nSamplesPerSec == 44100)
          if(true)
@@ -389,12 +392,12 @@ Opened:
 
          wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, uiBufferCount,128, m_pwaveformat, m_pwaveformat);
 
-         m_pprebuffer->open(this, m_pwaveformat->nChannels, uiBufferCount, iBufferSampleCount); 
+         m_pprebuffer->open(this, m_pwaveformat->nChannels, uiBufferCount, iBufferSampleCount);
 
-         int32_t i, iSize;
-         
-         iSize = wave_out_get_buffer()->GetBufferCount();
-         
+         index i;
+
+         auto iSize = wave_out_get_buffer()->GetBufferCount();
+
          for(i = 0; i < iSize; i++)
          {
 
@@ -422,7 +425,7 @@ Opened:
 
                while (i >= 1)
                {
-                  
+
                   i--;
 
                   mmresult2 = waveOutUnprepareHeader(m_hwaveout, wave_hdr(i), sizeof(WAVEHDR));
@@ -502,9 +505,9 @@ Opened:
 
          ::multimedia::e_result mmr;
 
-         int32_t i, iSize;
+         index i;
 
-         iSize =  wave_out_get_buffer()->GetBufferCount();
+         auto iSize =  wave_out_get_buffer()->GetBufferCount();
 
          for(i = 0; i < iSize; i++)
          {
@@ -539,7 +542,7 @@ Opened:
 
       void wave_out::OnMultimediaDone(::message::message * pobj)
       {
-         
+
          //synch_lock sl(m_pmutex);
 
          try
@@ -577,9 +580,9 @@ Opened:
       }
 
 
-      void wave_out::wave_out_buffer_ready(int iBuffer)
+      void wave_out::wave_out_buffer_ready(index iBuffer)
       {
-         
+
          return wave_out_buffer_ready(wave_hdr(iBuffer));
 
       }
@@ -603,7 +606,7 @@ Opened:
          }
 
          mmr = mmsystem::translate(waveOutWrite(m_hwaveout, lpwavehdr, sizeof(WAVEHDR)));
-         
+
          //VERIFY(::multimedia::result_success == mmr);
 
          if(mmr != ::multimedia::result_success)
@@ -723,12 +726,14 @@ Opened:
             return dwMillis + dwPosition - ((m_dwLostSampleCount) * 1000 / m_pwaveformat->nSamplesPerSec);
       }*/
 
+
       imedia_time wave_out::wave_out_get_position_millis()
       {
 
          return device_wave_out_get_position_millis();
 
       }
+
 
       imedia_time wave_out::device_wave_out_get_position_millis()
       {
@@ -737,7 +742,7 @@ Opened:
 
          ::multimedia::e_result                mmr;
 
-         MMTIME                  mmt = {};
+         MMTIME mmt = {};
 
          mmt.wType = TIME_BYTES;
 
@@ -748,52 +753,87 @@ Opened:
 
             try
             {
+
                if (::multimedia::result_success != mmr)
                {
+
                   TRACE( "waveOutGetPosition() returned %lu", (uint32_t)mmr);
+
                   //      return MCIERR_DEVICE_NOT_READY;
+
                   return 0;
+
                }
+
             }
             catch(...)
             {
+
                //return MCIERR_DEVICE_NOT_READY;
+
                return 0;
+
             }
+
             if(mmt.wType == TIME_BYTES)
             {
+
                int64_t i = mmt.u.cb;
+
                i *= 8 * 1000;
+
                i /= m_pwaveformat->wBitsPerSample * m_pwaveformat->nChannels * m_pwaveformat->nSamplesPerSec;
+
                return i;
 
             }
             else
             {
+
                //*pTicks += mmt.u.ticks;
+
                return (uint32_t) mmt.u.ms;
+
             }
+
          }
          else
+         {
+
             return 0;
 
+         }
 
       }
 
-      /*imedia_position wave_out::get_position_for_synch()
-      {
-         imedia_position position = get_position();
-         if(m_pprebuffer != NULL && m_pprebuffer->m_pdecoder != NULL)
-            return m_pprebuffer->m_position + position - m_pprebuffer->m_pdecoder->audio_plugin_get_lost_position_offset(position) - m_dwLostSampleCount * m_pwaveformat->wBitsPerSample * m_pwaveformat->nChannels / 8;
-         else
-            return m_pprebuffer->m_position + position - m_dwLostSampleCount * m_pwaveformat->wBitsPerSample * m_pwaveformat->nChannels / 8;
-      }*/
 
-      
+      /*
+
+      imedia_position wave_out::get_position_for_synch()
+      {
+
+         imedia_position position = get_position();
+
+         if(m_pprebuffer != NULL && m_pprebuffer->m_pdecoder != NULL)
+         {
+
+            return m_pprebuffer->m_position + position - m_pprebuffer->m_pdecoder->audio_plugin_get_lost_position_offset(position) - m_dwLostSampleCount * m_pwaveformat->wBitsPerSample * m_pwaveformat->nChannels / 8;
+
+         }
+         else
+         {
+
+            return m_pprebuffer->m_position + position - m_dwLostSampleCount * m_pwaveformat->wBitsPerSample * m_pwaveformat->nChannels / 8;
+
+         }
+
+      }
+
+      */
+
+
       imedia_position wave_out::wave_out_get_position()
       {
-         
-         //return m_imediaposition;
 
          return device_wave_out_get_position();
 
@@ -802,18 +842,18 @@ Opened:
 
       imedia_position wave_out::device_wave_out_get_position()
       {
-         
+
          synch_lock sl(m_pmutex);
 
          ::multimedia::e_result                mmr;
-         
+
          MMTIME                  mmt = {};
 
          mmt.wType = TIME_BYTES;
 
          if(m_hwaveout != NULL)
          {
-            
+
             mmr = mmsystem::translate(waveOutGetPosition(m_hwaveout, &mmt, sizeof(mmt)));
 
             try
@@ -831,24 +871,46 @@ Opened:
             }
             catch(...)
             {
+
                return 0;
+
             }
+
             if(mmt.wType == TIME_MS)
             {
+
                imedia_position position = (uint32_t) mmt.u.ms;
+
                position *= m_pwaveformat->wBitsPerSample * m_pwaveformat->nChannels * m_pwaveformat->nSamplesPerSec;
+
                position /= 8 * 1000;
+
                return position;
+
             }
             else if (mmt.wType == TIME_BYTES)
             {
+
                return (uint32_t)mmt.u.cb;
+
             }
+            else
+            {
+
+               return 0;
+
+            }
+
          }
          else
+         {
+
             return 0;
 
+         }
+
       }
+
 
       void wave_out::wave_out_free(int iBuffer)
       {
@@ -864,6 +926,7 @@ Opened:
 
       }
 
+
       void wave_out::wave_out_on_playback_end()
       {
 
@@ -873,9 +936,13 @@ Opened:
 
          if(m_pprebuffer->m_pstreameffectOut != NULL)
          {
+
             ::multimedia::iaudio::wave_stream_effect * peffect = m_pprebuffer->m_pstreameffectOut;
+
             m_pprebuffer->m_pstreameffectOut = NULL;
+
             delete peffect;
+
          }
 
          m_eventStopped.SetEvent();
@@ -883,7 +950,6 @@ Opened:
          m_pplayer->OnEvent(::multimedia::audio::wave_player::EventPlaybackEnd);
 
       }
-
 
 
       WAVEFORMATEX * wave_out::wave_format()
@@ -895,24 +961,35 @@ Opened:
 
       }
 
+
       HWAVEOUT wave_out::wave_out_get_safe_HWAVEOUT()
       {
-         
-         if(this == NULL)
+
+         if (this == NULL)
+         {
+
             return NULL;
+
+         }
 
          return m_hwaveout;
 
       }
+
 
       void * wave_out::get_os_data()
       {
+
          return m_hwaveout;
+
       }
 
-      LPWAVEHDR wave_out::wave_hdr(int iBuffer)
+
+      LPWAVEHDR wave_out::wave_hdr(index iBuffer)
       {
+
          return ::multimedia::mmsystem::get_os_data(wave_out_get_buffer(), iBuffer);
+
       }
 
 
@@ -920,9 +997,6 @@ Opened:
 
 
 } // namespace multimedia
-
-
-
 
 
 

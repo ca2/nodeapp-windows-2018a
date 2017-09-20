@@ -395,9 +395,9 @@ int32_t removal::run()
    ::DeleteFile("C:\\Windows\\Downloaded Program Files\\app_app_admin.exe");
 
    ::reg_delete_tree_dup(HKEY_LOCAL_MACHINE, "SOFTWARE\\Wow6432Node\\MozillaPlugins\\@ca2.cc/npca2");
-   ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "Wow6432Node\\CLSID\\{CA211984-1984-1977-A861-F8AA2A7AEE4B}");
+   ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "Wow6432Node\\CLSID\\{CA212000-2000-1977-A861-F8AA2A7AEE4B}");
    ::reg_delete_tree_dup(HKEY_LOCAL_MACHINE, "SOFTWARE\\MozillaPlugins\\@ca2.cc/npca2");
-   ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "CLSID\\{CA211984-1984-1977-A861-F8AA2A7AEE4B}");
+   ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "CLSID\\{CA212000-2000-1977-A861-F8AA2A7AEE4B}");
 
    ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "ca2os.ca2.fontopus.iexca2");
    ::reg_delete_tree_dup(HKEY_CLASSES_ROOT, "ca2os.ca2.fontopus.iexca2.2");

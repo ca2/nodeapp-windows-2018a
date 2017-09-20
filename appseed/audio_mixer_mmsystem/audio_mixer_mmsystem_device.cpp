@@ -40,7 +40,7 @@ namespace multimedia
 
       }
 
-      ::multimedia::e_result device::open(uint32_t uiMixerId, uint32_t dwCallback, uint32_t dwInstance, uint32_t fdwOpen)
+      ::multimedia::e_result device::open(uint32_t uiMixerId, UINT_PTR dwCallback, uint32_t dwInstance, uint32_t fdwOpen)
       {
 
          ::multimedia::e_result            mmrc;
@@ -60,7 +60,7 @@ namespace multimedia
 
                strMessage.Format("mixerClose() failed on hmx=%.04Xh, mmr=%u!", m_hMixer, mmrct);
                System.simple_message_box(NULL, strMessage, MB_OK | MB_ICONEXCLAMATION
-               );
+                                        );
 
             }
 
@@ -75,7 +75,7 @@ namespace multimedia
 
             strMessage.Format("mixerGetDevCaps() failed on uMxId=%u, mmr=%u!", uiMixerId, mmrc);
             System.simple_message_box(NULL, strMessage, MB_OK | MB_ICONEXCLAMATION
-            );
+                                     );
 
             return mmrc;
 
@@ -91,7 +91,7 @@ namespace multimedia
 
             strMessage.Format("mixerOpen() failed on uMxId=%u, mmr=%u!", uiMixerId, mmrc);
             System.simple_message_box(NULL, strMessage, MB_OK | MB_ICONEXCLAMATION
-            );
+                                     );
 
             return mmrc;
 
@@ -124,7 +124,7 @@ namespace multimedia
 
             strMessage.Format("mixerGetDevCaps() failed on uMxId=%u, mmr=%u!", m_uiMixerID, mmrc);
             System.simple_message_box(NULL, strMessage, MB_OK | MB_ICONEXCLAMATION
-            );
+                                     );
 
 
             return mmrc;
@@ -185,7 +185,7 @@ namespace multimedia
 
       ::multimedia::e_result device::get_destination(::multimedia::audio_mixer::e_destination edestination, ::multimedia::audio_mixer::destination **ppDestination)
       {
-         
+
          uint32_t dwComponentType;
 
          switch(edestination)
@@ -257,18 +257,18 @@ namespace multimedia
 
       void device::map_lines()
       {
-         
+
          m_mapIDToLine.remove_all();
-         
+
          for(int32_t i = 0; i < m_mixerdestinationa.get_size(); i++)
          {
-            
+
             sp(::multimedia::audio_mixer_mmsystem::destination) destination = m_mixerdestinationa[i];
-            
+
             m_mapIDToLine.set_at(destination->get_mixer_line().dwLineID, destination);
 
             ::multimedia::audio_mixer::source_array & sourcea = destination->get_source_info();
-            
+
             for(int32_t j = 0; j < sourcea.get_size(); j++)
             {
 
@@ -383,7 +383,7 @@ namespace multimedia
          ::multimedia::audio_mixer::control * pcontrol;
 
          if(m_mapDlgItemIDToControl.Lookup(uiID, pcontrol)
-            && pcontrol->OnCommand(wparam, lparam))
+               && pcontrol->OnCommand(wparam, lparam))
             return true;
 
          return false;

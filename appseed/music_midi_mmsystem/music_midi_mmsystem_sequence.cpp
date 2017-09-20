@@ -1,4 +1,4 @@
-#include "framework.h"
+п»ї#include "framework.h"
 
 
 namespace music
@@ -255,7 +255,7 @@ Seq_Open_File_Cleanup:
 
          //   if (GetState() != status_no_file)
          //   {
-         //      
+         //
          //      return EFunctionNotSupported;
 
          //   }
@@ -372,15 +372,15 @@ Seq_Open_File_Cleanup:
             if (m_hstream == NULL)
             {
 
-               
+
 
                mmrc = translate_os_result(midiStreamOpen(&m_hstream, &uDeviceID, 1, (DWORD_PTR)m_pthread->get_os_int(), (DWORD_PTR)(sequence *) this, CALLBACK_THREAD), "sequence::mm_start", "midiStreamOpen error");
 
                if (mmrc != ::multimedia::result_success)
                {
-                  
+
                   m_hstream = NULL;
-                  
+
                   if (bThrow)
                   {
                      SetState(status_opened);
@@ -391,7 +391,7 @@ Seq_Open_File_Cleanup:
 
                }
 
-               PatchChange((HMIDIOUT)m_hstream);  //from RSDN!! Thank you God!! And Thank you RSDN!!              // Выберем текущий тембр
+               PatchChange((HMIDIOUT)m_hstream);  //from RSDN!! Thank you God!! And Thank you RSDN!!              // пѕ‚йЋ¤и¤ћи¤Њ о€њгѓ»оќѓгѓ»о€њгѓ»гѓ»
 
 
                mmrc = translate_os_result(midiOutSetVolume((HMIDIOUT) m_hstream, 0xFFFF));
@@ -452,7 +452,8 @@ Seq_Open_File_Cleanup:
             {
                if (m_uiSpecialModeV001Operation == SPMV001GMReset)
                {
-                  const uchar gmModeOn[] = {
+                  const uchar gmModeOn[] =
+                  {
                      //        0x00, 0x00, 0x00, 0x00,
                      //        0x00, 0x00, 0x00, 0x00,
                      //        0x1b, 0x8a, 0x06, MEVT_TEMPO,
@@ -460,7 +461,8 @@ Seq_Open_File_Cleanup:
                      0x00, 0x00, 0x00, 0x00,
                      0x06, 0x00, 0x00, MEVT_LONGMSG,
                      0xf0, 0x7e, 0x7f, 0x09,
-                     0x01, 0xf7, 0x00, 0x00 };
+                     0x01, 0xf7, 0x00, 0x00
+                  };
                   char * lpch = m_buffera[0].m_midihdr.lpData + m_buffera[0].m_midihdr.dwBytesRecorded;
                   m_buffera[0].m_midihdr.dwBytesRecorded += sizeof(gmModeOn);
                   memcpy(lpch, gmModeOn, sizeof(gmModeOn));
@@ -492,7 +494,7 @@ Seq_Open_File_Cleanup:
                }
 
             }
-         mm_start_Cleanup:
+mm_start_Cleanup:
 
             if (mmrc != ::multimedia::result_success)
             {
@@ -555,7 +557,7 @@ Seq_Open_File_Cleanup:
          ****************************************************************************/
          ::multimedia::e_result sequence::Preroll(::thread * pthread, ::music::midi::LPPREROLL lpPreroll, bool bThrow)
          {
-            
+
             UNREFERENCED_PARAMETER(pthread);
 
             synch_lock slMidi(&get_midi_mutex());
@@ -569,7 +571,7 @@ Seq_Open_File_Cleanup:
 
             if(GetState() == status_playing)
             {
-               
+
                Stop();
 
             }
@@ -582,8 +584,8 @@ Seq_Open_File_Cleanup:
             m_mmrcLastErr = ::multimedia::result_success;
 
             if(GetState() != status_opened &&
-               GetState() != status_pre_rolled &&
-               !IsInSpecialModeV001())
+                  GetState() != status_pre_rolled &&
+                  !IsInSpecialModeV001())
                return ::multimedia::result_unsupported_function;
 
             m_tkBase = lpPreroll->tkBase;
@@ -605,16 +607,16 @@ Seq_Open_File_Cleanup:
 
             for (i = 1; i < m_buffera.get_size(); i++)
             {
-               
+
                LPMIDIHDR lpmh = m_buffera[i].GetMidiHdr();
 
                smfrc = file()->WorkStreamRender(lpmh, m_tkEnd, m_cbPrerollNominalMax);
 
                if (success != smfrc && SEndOfFile != smfrc)
                {
-                  
+
                   TRACE("SFP: smfReadEvents() -> %u", (uint32_t)smfrc);
-                  
+
                   mmrc = translate(smfrc);
 
                   goto seq_Preroll_Cleanup;
@@ -676,14 +678,14 @@ seq_Preroll_Cleanup:
          ***************************************************************************/
          ::multimedia::e_result sequence::Start()
          {
-            
+
             single_lock sl(&m_mutex, TRUE);
-            
+
             if (::music::midi::sequence::status_pre_rolled != GetState())
             {
-               
+
                TRACE( "seqStart(): State is wrong! [%u]", GetState());
-               
+
                return ::multimedia::result_unsupported_function;
 
             }
@@ -815,7 +817,7 @@ seq_Preroll_Cleanup:
 
             // Automatic success if we're already stopped
             if (GetState() != status_playing
-               && GetState() != status_paused)
+                  && GetState() != status_paused)
             {
                m_flags.unsignalize(::music::midi::sequence::FlagWaiting);
                GetPlayerLink().OnFinishCommand(::music::midi::player::command_stop);
@@ -829,7 +831,7 @@ seq_Preroll_Cleanup:
 
             if(m_hstream != NULL)
             {
-               
+
                m_mmrcLastErr = translate_os_result(midiStreamStop(m_hstream), "Stop", "midiStreamStop");
 
                if(::multimedia::result_success != m_mmrcLastErr)
@@ -887,12 +889,12 @@ seq_Preroll_Cleanup:
             MMTIME                  mmt;
 
             if ((::music::midi::sequence::status_playing != GetState() &&
-               ::music::midi::sequence::status_paused != GetState() &&
-               //::music::midi::sequence::status_pre_rolling != GetState() &&
-               //::music::midi::sequence::status_pre_rolled != GetState() &&
-               ::music::midi::sequence::status_opened != GetState() &&
-               ::music::midi::sequence::status_stopping != GetState())
-               || m_hstream == NULL)
+                  ::music::midi::sequence::status_paused != GetState() &&
+                  //::music::midi::sequence::status_pre_rolling != GetState() &&
+                  //::music::midi::sequence::status_pre_rolled != GetState() &&
+                  ::music::midi::sequence::status_opened != GetState() &&
+                  ::music::midi::sequence::status_stopping != GetState())
+                  || m_hstream == NULL)
             {
                return ::multimedia::result_unsupported_function;
             }
@@ -965,11 +967,11 @@ seq_Preroll_Cleanup:
             MMTIME                  mmt;
 
             if (status_playing != GetState() &&
-               status_paused != GetState() &&
-               status_pre_rolling != GetState() &&
-               status_pre_rolled != GetState() &&
-               status_opened != GetState() &&
-               status_stopping != GetState())
+                  status_paused != GetState() &&
+                  status_pre_rolling != GetState() &&
+                  status_pre_rolled != GetState() &&
+                  status_opened != GetState() &&
+                  status_stopping != GetState())
             {
                TRACE( "seqTime(): State wrong! [is %u]", GetState());
                return ::multimedia::result_unsupported_function;
@@ -1054,11 +1056,11 @@ seq_Preroll_Cleanup:
 
          void sequence::OnDone(HMIDISTRM hmidistream, LPMIDIHDR lpmidihdr)
          {
-            
+
             UNREFERENCED_PARAMETER(hmidistream);
-            
+
             e_result               smfrc;
-            
+
             ASSERT(lpmidihdr != NULL);
 
             midi_callback_data * pcallbackdata = buffer::get(lpmidihdr)->get_midi_callback_data();
@@ -1141,7 +1143,8 @@ seq_Preroll_Cleanup:
                {
                   if(m_uiSpecialModeV001Operation == SPMV001GMReset)
                   {
-                     const uchar gmModeOn[] = {
+                     const uchar gmModeOn[] =
+                     {
                         //        0x00, 0x00, 0x00, 0x00,
                         //        0x00, 0x00, 0x00, 0x00,
                         //        0x1b, 0x8a, 0x06, MEVT_TEMPO,
@@ -1149,7 +1152,8 @@ seq_Preroll_Cleanup:
                         0x00, 0x00, 0x00, 0x00,
                         0x06, 0x00, 0x00, MEVT_LONGMSG,
                         0xf0, 0x7e, 0x7f, 0x09,
-                        0x01, 0xf7, 0x00, 0x00};
+                        0x01, 0xf7, 0x00, 0x00
+                     };
                      lpmidihdr->dwBytesRecorded = sizeof(gmModeOn);
                      memcpy(lpmidihdr->lpData, gmModeOn, sizeof(gmModeOn));
                   }
@@ -1201,53 +1205,53 @@ seq_Preroll_Cleanup:
             switch(pheader->m_dwType)
             {
             case 0:
+            {
+               array < ::ikaraoke::lyric_event_v1, ::ikaraoke::lyric_event_v1 &> * plyriceventa = NULL;
+               array < ::ikaraoke::lyric_event_v1, ::ikaraoke::lyric_event_v1 &> lyriceventa;
+               for(int32_t i = sizeof(file::buffer::midi_stream_event_header); i < iSize;)
                {
-                  array < ::ikaraoke::lyric_event_v1, ::ikaraoke::lyric_event_v1 &> * plyriceventa = NULL;
-                  array < ::ikaraoke::lyric_event_v1, ::ikaraoke::lyric_event_v1 &> lyriceventa;
-                  for(int32_t i = sizeof(file::buffer::midi_stream_event_header); i < iSize;)
+                  pheader = (file::buffer::midi_stream_event_header *) &lpbData[i];
+                  lpdwParam = (LPDWORD) &lpbData[i + sizeof(file::buffer::midi_stream_event_header)];
+                  ASSERT(*lpdwParam == pheader->m_dwType);
+                  switch(pheader->m_dwType)
                   {
-                     pheader = (file::buffer::midi_stream_event_header *) &lpbData[i];
-                     lpdwParam = (LPDWORD) &lpbData[i + sizeof(file::buffer::midi_stream_event_header)];
-                     ASSERT(*lpdwParam == pheader->m_dwType);
-                     switch(pheader->m_dwType)
+                  case EVENT_ID_LYRIC_V1:
+                  {
+                     if(plyriceventa == NULL)
                      {
-                     case EVENT_ID_LYRIC_V1:
-                        {
-                           if(plyriceventa == NULL)
-                           {
-                              plyriceventa = new array <::ikaraoke::lyric_event_v1, ::ikaraoke::lyric_event_v1 &>;
-                           }
-                           ::memory_file memFile(get_app(), (LPBYTE) &lpdwParam[1], pheader->m_dwLength - sizeof(uint32_t));
-                           /* x2x                  CArchive ar(&memFile, CArchive::load);
-                           lyriceventa.Serialize(ar);
-                           plyriceventa->append(lyriceventa); */
-                        }
-                        break;
-                     case EVENT_ID_PAD:
-                        {
-                        }
-                        break;
-                     case EVENT_ID_NOTE_ON:
-                        {
-                           memory_file file(get_app(), (LPBYTE)&lpdwParam[1], pheader->m_dwLength - sizeof(uint32_t));
-                           ::file::byte_stream memFile(&file);
-                           for(int32_t i = 0; i < m_iaLevel.get_size(); i++)
-                           {
-                              BYTE b;
-                              memFile >> b;
-                              m_iaLevel.element_at(i) = b;
-                           }
-                        }
-                        break;
+                        plyriceventa = new array <::ikaraoke::lyric_event_v1, ::ikaraoke::lyric_event_v1 &>;
                      }
-                     i += pheader->m_dwLength + sizeof(file::buffer::midi_stream_event_header);
+                     ::memory_file memFile(get_app(), (LPBYTE) &lpdwParam[1], pheader->m_dwLength - sizeof(uint32_t));
+                     /* x2x                  CArchive ar(&memFile, CArchive::load);
+                     lyriceventa.Serialize(ar);
+                     plyriceventa->append(lyriceventa); */
                   }
-                  /*         if(plyriceventa != NULL)
+                  break;
+                  case EVENT_ID_PAD:
                   {
-                  ::PostMessage(m_midicallbackdata.oswindow, WM_APP + 3388, 3388, (LPARAM) plyriceventa);
-                  }*/
+                  }
+                  break;
+                  case EVENT_ID_NOTE_ON:
+                  {
+                     memory_file file(get_app(), (LPBYTE)&lpdwParam[1], pheader->m_dwLength - sizeof(uint32_t));
+                     ::file::byte_stream memFile(&file);
+                     for(int32_t i = 0; i < m_iaLevel.get_size(); i++)
+                     {
+                        BYTE b;
+                        memFile >> b;
+                        m_iaLevel.element_at(i) = b;
+                     }
+                  }
+                  break;
+                  }
+                  i += pheader->m_dwLength + sizeof(file::buffer::midi_stream_event_header);
                }
-               break;
+               /*         if(plyriceventa != NULL)
+               {
+               ::PostMessage(m_midicallbackdata.oswindow, WM_APP + 3388, 3388, (LPARAM) plyriceventa);
+               }*/
+            }
+            break;
             case EVENT_ID_PAD:
                break;
             default:
@@ -1456,7 +1460,7 @@ seq_Preroll_Cleanup:
          ::music::e_result sequence::SetTempoShift(double dTempoShift)
          {
 
-            return file()->SetTempoShift(dTempoShift);
+            return file()->SetTempoShift(convert < int32_t > (dTempoShift));
 
          }
 
@@ -1490,7 +1494,7 @@ seq_Preroll_Cleanup:
 
             if (m_hstream != NULL)
             {
-               
+
                close_device();
 
             }
@@ -1515,21 +1519,21 @@ seq_Preroll_Cleanup:
             midiOutReset((HMIDIOUT)m_hstream);
 
             //while (m_iBuffersInMMSYSTEM > 0)
-              // Sleep(100);
-            
+            // Sleep(100);
+
             if ((mmrc = m_buffera.midiOutUnprepareHeader((HMIDIOUT)m_hstream)) != ::multimedia::result_success)
             {
                TRACE("midiOutUnprepareHeader failed in seqBufferDone! (%lu)", (uint32_t)mmrc);
             }
-            
+
             midiStreamClose(m_hstream);
-   
+
             m_hstream = NULL;
 
 
 
             SetState(::music::midi::sequence::status_opened);
-   
+
             return ::music::success;
 
          }
@@ -1574,113 +1578,113 @@ seq_Preroll_Cleanup:
             switch(pevent->m_eevent)
             {
             case EventSpecialModeV001End:
-               {
-                  SetSpecialModeV001Flag(false);
-                  OnMidiPlaybackEnd(pevent);
-                  SetState(m_uiPreSpecialModeV001State);
-               }
-               break;
+            {
+               SetSpecialModeV001Flag(false);
+               OnMidiPlaybackEnd(pevent);
+               SetState(m_uiPreSpecialModeV001State);
+            }
+            break;
             case EventStopped:
-               {
-                  OnMidiPlaybackEnd(pevent);
-                  SetState(status_opened);
-               }
-               break;
+            {
+               OnMidiPlaybackEnd(pevent);
+               SetState(status_opened);
+            }
+            break;
             case EventMidiPlaybackEnd:
-               {
-                  OnMidiPlaybackEnd(pevent);
-                  SetState(status_opened);
-               }
-               break;
+            {
+               OnMidiPlaybackEnd(pevent);
+               SetState(status_opened);
+            }
+            break;
             case EventMidiStreamOut:
+            {
+
+
+
+               single_lock sl(&m_mutex, TRUE);
+
+               ::music::midi::mmsystem::sequence::event * pev = (::music::midi::mmsystem::sequence::event *) pevent;
+
+               if(m_flags.is_signalized(FlagEOF))
                {
 
+                  return;
+
+               }
+
+               LPMIDIHDR lpmh = pev->m_lpmh;
+
+               e_result smfrc;
+
+               if(IsInSpecialModeV001())
+               {
+                  TRACE("::music::midi::sequence::OnEvent EventMidiStreamOut IsInSpecialModeV001");
+               }
+               else
+               {
+                  smfrc = file()->WorkStreamRender(lpmh, m_tkEnd, m_cbPrerollNominalMax);
+               }
+
+               switch(smfrc)
+               {
+               case ::music::success:
+
+                  break;
+
+               case SEndOfFile:
+
+                  m_flags.signalize(FlagEOF);
+
+                  smfrc = ::music::success;
+
+                  break;
+
+               default:
 
 
-                  single_lock sl(&m_mutex, TRUE);
+                  TRACE( "smfReadEvents returned %lu in callback!", (uint32_t) smfrc);
 
-                  ::music::midi::mmsystem::sequence::event * pev = (::music::midi::mmsystem::sequence::event *) pevent;
+                  SetState(status_stopping);
 
-                  if(m_flags.is_signalized(FlagEOF))
+                  break;
+
+               }
+
+               if(::music::midi::sequence::status_stopping == GetState())
+               {
+
+                  thread()->PostMidiSequenceEvent(this, EventMidiPlaybackEnd, lpmh);
+
+                  return;
+
+               }
+
+               ::multimedia::e_result mmrc;
+
+               if(m_hstream != NULL)
+               {
+
+                  mmrc = translate_os_result(midiStreamOut(m_hstream, lpmh, sizeof(*lpmh)), "OnEvent", "midiStreamOut");
+
+                  if(mmrc == ::multimedia::result_success)
                   {
 
-                     return;
+                     ++m_iBuffersInMMSYSTEM;
 
-                  }
-
-                  LPMIDIHDR lpmh = pev->m_lpmh;
-
-                  e_result smfrc;
-
-                  if(IsInSpecialModeV001())
-                  {
-                     TRACE("::music::midi::sequence::OnEvent EventMidiStreamOut IsInSpecialModeV001");
                   }
                   else
                   {
-                     smfrc = file()->WorkStreamRender(lpmh, m_tkEnd, m_cbPrerollNominalMax);
-                  }
 
-                  switch(smfrc)
-                  {
-                  case ::music::success:
+                     TRACE("seqBufferDone(): midiStreamOut() returned %lu!", (uint32_t)mmrc);
 
-                     break;
-
-                  case SEndOfFile:
-
-                     m_flags.signalize(FlagEOF);
-
-                     smfrc = ::music::success;
-
-                     break;
-
-                  default:
-
-
-                     TRACE( "smfReadEvents returned %lu in callback!", (uint32_t) smfrc);
-
-                     SetState(status_stopping);
-
-                     break;
+                     SetState(::music::midi::sequence::status_stopping);
 
                   }
 
-                  if(::music::midi::sequence::status_stopping == GetState())
-                  {
-
-                     thread()->PostMidiSequenceEvent(this, EventMidiPlaybackEnd, lpmh);
-
-                     return;
-
-                  }
-
-                  ::multimedia::e_result mmrc;
-
-                  if(m_hstream != NULL)
-                  {
-
-                     mmrc = translate_os_result(midiStreamOut(m_hstream, lpmh, sizeof(*lpmh)), "OnEvent", "midiStreamOut");
-
-                     if(mmrc == ::multimedia::result_success)
-                     {
-
-                        ++m_iBuffersInMMSYSTEM;
-
-                     }
-                     else
-                     {
-
-                        TRACE("seqBufferDone(): midiStreamOut() returned %lu!", (uint32_t)mmrc);
-
-                        SetState(::music::midi::sequence::status_stopping);
-
-                     }
-
-
-                  }
 
                }
+
+            }
             default:
                break;
             }
@@ -1694,10 +1698,10 @@ seq_Preroll_Cleanup:
             MMTIME mmt;
             mmt.wType = TIME_TICKS;
             if(::multimedia::result_success ==
-               midiStreamPosition(
-               m_hstream,
-               &mmt,
-               sizeof(mmt)))
+                  midiStreamPosition(
+                     m_hstream,
+                     &mmt,
+                     sizeof(mmt)))
                return mmt.u.ticks + m_tkPrerollBase;
             else
                return -1;
@@ -1863,9 +1867,9 @@ seq_Preroll_Cleanup:
                {
                   pLyricEventsV2->m_iTrack =
                      file.WorkCalcMelodyTrack(
-                     &pMidiEventsV1,
-                     tka2DTokensTicks.operator()(i),
-                     ia2TokenLine[i]);
+                        &pMidiEventsV1,
+                        tka2DTokensTicks.operator()(i),
+                        ia2TokenLine[i]);
                }
                else
                {
@@ -2106,7 +2110,7 @@ seq_Preroll_Cleanup:
                   ms2DNoteOffMillis(i),
                   ms2DNoteOnMillis(i));
 
-               /*         
+               /*
                pLyricEventsV2->m_msaNotesDuration.Diff(
                ms2DNoteOffMillis[i],
                ms2DNoteOnMillis[i]);
@@ -2348,20 +2352,20 @@ seq_Preroll_Cleanup:
 
          void sequence::buffer::Reset()
          {
-            
+
             ZERO(m_midihdr);
 
             m_midihdr.lpData                 = (char *)m_storage.get_data();
             m_midihdr.dwBufferLength         = (uint32_t)m_storage.get_size();
             m_midihdr.dwUser                 = (DWORD_PTR) this;
-            
+
             zero(m_midihdr.lpData, m_midihdr.dwBufferLength);
 
          }
 
          sequence::buffer::buffer()
          {
-            
+
             m_pbuffera = NULL;
 
          }
@@ -2397,7 +2401,7 @@ seq_Preroll_Cleanup:
 
          ::multimedia::e_result sequence::buffer::midiOutPrepareHeader(HMIDIOUT hmidiout)
          {
-            
+
             ::multimedia::e_result mmr = ::multimedia::result_success;
 
             if(hmidiout == NULL)
@@ -2436,7 +2440,7 @@ seq_Preroll_Cleanup:
 
          }
 
-         
+
          sequence::buffer * sequence::buffer::get(LPMIDIHDR lpmidihdr)
          {
 
@@ -2455,7 +2459,7 @@ seq_Preroll_Cleanup:
 
          ::multimedia::e_result sequence::buffer::midiOutUnprepareHeader(HMIDIOUT hmidiout)
          {
-            
+
             ::multimedia::e_result mmr = ::multimedia::result_success;
 
             if(hmidiout == NULL)
@@ -2481,7 +2485,7 @@ seq_Preroll_Cleanup:
 
          ::multimedia::e_result sequence::buffer_array::midiOutUnprepareHeader(HMIDIOUT hmidiout)
          {
-            
+
             ::multimedia::e_result mmr = ::multimedia::result_success;
 
             for (int32_t i = 0; i < this->get_size(); i++)
@@ -2560,7 +2564,7 @@ seq_Preroll_Cleanup:
             {
 
                mmrc = this->element_at(i).midiStreamOut(hmidiout);
-               
+
                if (mmrc == ::multimedia::result_success)
                {
 
@@ -2672,7 +2676,7 @@ seq_Preroll_Cleanup:
 
          }
 
-         
+
          ::multimedia::e_result sequence::SendGMReset()
          {
 
@@ -2695,12 +2699,14 @@ seq_Preroll_Cleanup:
             if (mmr != MMSYSERR_NOERROR)
                return translate_os_result(mmr);
 
-            const uchar gmModeOn[] = {
+            const uchar gmModeOn[] =
+            {
                0x00, 0x00, 0x00, 0x00,
                0x00, 0x00, 0x00, 0x00,
                0x06, 0x00, 0x00, MEVT_LONGMSG,
                0xf0, 0x7e, 0x7f, 0x09,
-               0x01, 0xf7, 0x00, 0x00 };
+               0x01, 0xf7, 0x00, 0x00
+            };
 
             MIDIHDR mh;
 
@@ -2735,7 +2741,7 @@ seq_Preroll_Cleanup:
             if (mmr != MMSYSERR_NOERROR)
                goto End;
 
-         End:
+End:
 
             ::multimedia::e_result mmrc = translate_os_result(mmr);
 
@@ -2743,7 +2749,7 @@ seq_Preroll_Cleanup:
 
             if (mmr != MMSYSERR_NOERROR)
             {
-               
+
                translate_os_result(mmr);
 
             }
@@ -2753,44 +2759,46 @@ seq_Preroll_Cleanup:
          }
 
          //
-         // Посылка сообщения о смене тембра
+         // пѕЏв…Ійљќгѓ» о…©й«њоќЂж№њпЈі гѓ»о…§и¤Љгѓ»о€њгѓ»о‚џ
          // ================================
          //
 
          //void SendPatchChange(void) {
 
-         //   MidiOutChan(0xC0, BYTE(Patch), 0); // Сообщение структуры Cn pp
+         //   MidiOutChan(0xC0, BYTE(Patch), 0); // пѕ‘гѓ»зўји¤Љйџѓ о…­о‚Ігѓ»о‹Јгѓ»Cn pp
 
          //}
 
          //
-         // Отработка смены тембра
+         // пѕЋо€§зЏ®в…ігѓ» о…§и¤Љгѓ»о€њгѓ»о‚џ
          // ======================
          //
 
          void PatchChange(HMIDIOUT hmidiout)
          {
 
-            if (!hmidiout) {
+            if (!hmidiout)
+            {
 
                return;
 
             }
 
             int i;
-            PATCHARRAY Patches;           // Массив включенных тембров
+            PATCHARRAY Patches;           // пѕЊз‘°о…Јгѓ»зІІгѓ»о—€жѕµйЎҐ о€њгѓ»о‚­гѓ»
 
-            for (i = 0; i < MIDIPATCHSIZE; i++) {
+            for (i = 0; i < MIDIPATCHSIZE; i++)
+            {
 
-               Patches[i] = 0xFFFF;            // Обнуляем массив тембров
+               Patches[i] = 0xFFFF;            // пѕЋзЎјо‹ћпЈіи¤Њ гѓ»о…¬йћЈ о€њгѓ»о‚­гѓ»
 
             }
 
-            //Patches[Patch] = 0xFFFF;     // Включим тембр для всех каналов
+            //Patches[Patch] = 0xFFFF;     // пѕ‚гѓ»пЈІо—‹гѓ»о€њгѓ»гѓ»и“ЃпЈі зі‚иҐ„ гѓ»жµЇгѓ»гѓ»
 
-            //MMRESULT mmr = midiOutCachePatches(hmidiout, 0, Patches, MIDI_CACHE_ALL); // Загрузим тембры
+            //MMRESULT mmr = midiOutCachePatches(hmidiout, 0, Patches, MIDI_CACHE_ALL); // пѕ‡з’ўо‚Ій‰…гѓ»о€њгѓ»о‚є
 
-            //SendPatchChange();           // Пошлем сообщение о смене тембра
+            //SendPatchChange();           // пѕЏв…№гѓ»гѓ»о…©й«њоќЂж№њгѓ»гѓ»о…§и¤Љгѓ»о€њгѓ»о‚џ
 
          }
 

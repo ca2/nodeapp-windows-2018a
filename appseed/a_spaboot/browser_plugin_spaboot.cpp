@@ -74,7 +74,7 @@ int APIENTRY ca2_cube_install(const char * pszId)
             while(::GetLastError() == ERROR_ALREADY_EXISTS)
             {
                ::CloseHandle(g_hmutexBoot);
-               Sleep(1984 + 1977);
+               Sleep(2000 + 1977);
                g_hmutexBoot = ::CreateMutex(&MutexAttributes, FALSE, "Global\\ca2::fontopus::ccvotagus_ca2_spa::7807e510-5579-11dd-ae16-0800200c7784");
             }
          }
@@ -83,14 +83,14 @@ int APIENTRY ca2_cube_install(const char * pszId)
       else
       {
          ::OutputDebugString("error when trying to analyze if another instance of spa is already running");
-         Sleep(1984 + 1977);
+         Sleep(2000 + 1977);
          return -200;
       }
    }
    else
    {
       ::OutputDebugString("error when trying to analyze if another instance of spa is already running");
-      Sleep(1984 + 1977);
+      Sleep(2000 + 1977);
       return -201;
    }
 
@@ -125,7 +125,7 @@ int APIENTRY ca2_cube_install(const char * pszId)
          break;
       if(dwExitCode != STILL_ACTIVE)
          break;
-      Sleep(184);
+      Sleep(200);
       i++;
    }
    std::string strInstall;
@@ -146,7 +146,7 @@ int APIENTRY ca2_cube_install(const char * pszId)
       iRetry++;
       if(iRetry > 30)
          break;
-      Sleep(1984 + 1977);
+      Sleep(2000 + 1977);
    }
    if(iRetry > 30)
    {
