@@ -1,7 +1,7 @@
 #include "framework.h"
 
 
-//Gdiplus::ColorMatrix g_mZero = 
+//Gdiplus::ColorMatrix g_mZero =
 //{
 //   {0.f,0.f,0.f,0.f,0.f},
 //   { 0.f,0.f,0.f,0.f,0.f } ,
@@ -81,11 +81,11 @@ namespace draw2d_gdiplus
          return false;
 
       if (m_spbitmap.is_set()
-         && m_spbitmap->get_os_data() != NULL
-         && width == m_size.cx
-         && height == m_size.cy
-         && m_pcolorref == pcolorref
-         && m_iScan == iScan)
+            && m_spbitmap->get_os_data() != NULL
+            && width == m_size.cx
+            && height == m_size.cy
+            && m_pcolorref == pcolorref
+            && m_iScan == iScan)
          return true;
 
       destroy();
@@ -164,9 +164,9 @@ namespace draw2d_gdiplus
          return false;
 
       if (m_spbitmap.is_set()
-         && m_spbitmap->get_os_data() != NULL
-         && width == m_size.cx
-         && height == m_size.cy)
+            && m_spbitmap->get_os_data() != NULL
+            && width == m_size.cx
+            && height == m_size.cy)
          return true;
 
       destroy();
@@ -359,6 +359,7 @@ namespace draw2d_gdiplus
       if (ptDst.x < 0)
       {
          size.cx += ptDst.x;
+         ptSrc.x -= ptDst.x;
          ptDst.x = 0;
       }
 
@@ -368,6 +369,7 @@ namespace draw2d_gdiplus
       if (ptDst.y < 0)
       {
          size.cy += ptDst.y;
+         ptSrc.y -= ptDst.y;
          ptDst.y = 0;
       }
 
@@ -623,7 +625,8 @@ namespace draw2d_gdiplus
 
       //m_spgraphics->FillSolidRect(0, 0, m_size.cx, m_size.cy, 0);
 
-      Gdiplus::ColorMatrix m = {
+      Gdiplus::ColorMatrix m =
+      {
       };
 
 
@@ -641,8 +644,8 @@ namespace draw2d_gdiplus
       Gdiplus::Graphics * pg = (Gdiplus::Graphics *) get_graphics()->get_os_data();
 
       Gdiplus::Status ret  = pg->DrawImage(
-         (Gdiplus::Bitmap *) pdib->get_graphics()->get_current_bitmap()->get_os_data(),
-         Gdiplus::Rect(0, 0, m_size.cx, m_size.cy), 0, 0, m_size.cx, m_size.cy, Gdiplus::UnitPixel, &attributes);
+                                (Gdiplus::Bitmap *) pdib->get_graphics()->get_current_bitmap()->get_os_data(),
+                                Gdiplus::Rect(0, 0, m_size.cx, m_size.cy), 0, 0, m_size.cx, m_size.cy, Gdiplus::UnitPixel, &attributes);
       //ColorMatrixFlag.Default,
       //   ColorAdjustType.Bitmap);
 //      return ret == Gdiplus::Ok;
