@@ -90,8 +90,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ace", "..\..\..\app\appseed
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_rdpclient", "..\..\..\app-core\appseed\rdpclient\rdpclient.vcxproj", "{8CE1D482-81F1-48E8-989F-8EA919841977}"
 	ProjectSection(ProjectDependencies) = postProject
-		{E4841F02-7CCA-4144-89A2-149302677B3F} = {E4841F02-7CCA-4144-89A2-149302677B3F}
-		{3C27B10B-E5DB-4DBA-8292-051830AAF103} = {3C27B10B-E5DB-4DBA-8292-051830AAF103}
 		{84517713-2000-419D-A87F-4338C9DDE3FA} = {84517713-2000-419D-A87F-4338C9DDE3FA}
 		{84517714-2000-419D-A87F-4338C9DDE3FA} = {84517714-2000-419D-A87F-4338C9DDE3FA}
 		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
@@ -100,7 +98,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_rdpclient", "..\..
 		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF} = {9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}
 		{D47829CA-5441-4A01-9C34-19C3598410DF} = {D47829CA-5441-4A01-9C34-19C3598410DF}
 		{D620EED4-10A9-4C54-8DEE-A52B9D178A4D} = {D620EED4-10A9-4C54-8DEE-A52B9D178A4D}
-		{E0D54AEC-E0A5-475B-8A02-8758BDD686E1} = {E0D54AEC-E0A5-475B-8A02-8758BDD686E1}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_clockverse", "..\..\..\app-core\appseed\clockverse\clockverse.vcxproj", "{8477055E-C614-4A5D-BB61-197784151104}"
@@ -172,13 +169,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_libmpg123", ".
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tesseract", "..\..\..\app-core\appseed\tesseract\tesseract.vcxproj", "{437699AD-7464-4E5F-ACF3-7167487A9E3D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "clientchannels", "..\..\..\third\appseed\clientchannels\axisclientchannels.vcxproj", "{3C27B10B-E5DB-4DBA-8292-051830AAF103}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "winpr", "..\..\..\third\appseed\winpr\axiswinpr.vcxproj", "{E4841F02-7CCA-4144-89A2-149302677B3F}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "freerdp", "..\..\..\third\appseed\freerdp\axisfreerdp.vcxproj", "{E0D54AEC-E0A5-475B-8A02-8758BDD686E1}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rdpsnd-client-audio_decode", "..\..\..\third\appseed\rdpsnd-client-audio_decode\rdpsnd-client-audio_decode.vcxproj", "{D47829CA-5441-4A01-9C34-19C3598410DF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rdpsnd-client-audio_decode", "..\..\..\app-core\appseed\rdpsnd-client-audio_decode\rdpsnd-client-audio_decode.vcxproj", "{D47829CA-5441-4A01-9C34-19C3598410DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -710,42 +701,6 @@ Global
 		{437699AD-7464-4E5F-ACF3-7167487A9E3D}.stage|Win32.Build.0 = stage|Win32
 		{437699AD-7464-4E5F-ACF3-7167487A9E3D}.stage|x64.ActiveCfg = stage|x64
 		{437699AD-7464-4E5F-ACF3-7167487A9E3D}.stage|x64.Build.0 = stage|x64
-		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.basis|Win32.ActiveCfg = basis|Win32
-		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.basis|Win32.Build.0 = basis|Win32
-		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.basis|x64.ActiveCfg = basis|x64
-		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.basis|x64.Build.0 = basis|x64
-		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.cover|Win32.ActiveCfg = cover|Win32
-		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.cover|Win32.Build.0 = cover|Win32
-		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.cover|x64.ActiveCfg = cover|x64
-		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.cover|x64.Build.0 = cover|x64
-		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.stage|Win32.ActiveCfg = stage|Win32
-		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.stage|Win32.Build.0 = stage|Win32
-		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.stage|x64.ActiveCfg = stage|x64
-		{3C27B10B-E5DB-4DBA-8292-051830AAF103}.stage|x64.Build.0 = stage|x64
-		{E4841F02-7CCA-4144-89A2-149302677B3F}.basis|Win32.ActiveCfg = basis|Win32
-		{E4841F02-7CCA-4144-89A2-149302677B3F}.basis|Win32.Build.0 = basis|Win32
-		{E4841F02-7CCA-4144-89A2-149302677B3F}.basis|x64.ActiveCfg = basis|x64
-		{E4841F02-7CCA-4144-89A2-149302677B3F}.basis|x64.Build.0 = basis|x64
-		{E4841F02-7CCA-4144-89A2-149302677B3F}.cover|Win32.ActiveCfg = cover|Win32
-		{E4841F02-7CCA-4144-89A2-149302677B3F}.cover|Win32.Build.0 = cover|Win32
-		{E4841F02-7CCA-4144-89A2-149302677B3F}.cover|x64.ActiveCfg = cover|x64
-		{E4841F02-7CCA-4144-89A2-149302677B3F}.cover|x64.Build.0 = cover|x64
-		{E4841F02-7CCA-4144-89A2-149302677B3F}.stage|Win32.ActiveCfg = stage|Win32
-		{E4841F02-7CCA-4144-89A2-149302677B3F}.stage|Win32.Build.0 = stage|Win32
-		{E4841F02-7CCA-4144-89A2-149302677B3F}.stage|x64.ActiveCfg = stage|x64
-		{E4841F02-7CCA-4144-89A2-149302677B3F}.stage|x64.Build.0 = stage|x64
-		{E0D54AEC-E0A5-475B-8A02-8758BDD686E1}.basis|Win32.ActiveCfg = basis|Win32
-		{E0D54AEC-E0A5-475B-8A02-8758BDD686E1}.basis|Win32.Build.0 = basis|Win32
-		{E0D54AEC-E0A5-475B-8A02-8758BDD686E1}.basis|x64.ActiveCfg = basis|x64
-		{E0D54AEC-E0A5-475B-8A02-8758BDD686E1}.basis|x64.Build.0 = basis|x64
-		{E0D54AEC-E0A5-475B-8A02-8758BDD686E1}.cover|Win32.ActiveCfg = cover|Win32
-		{E0D54AEC-E0A5-475B-8A02-8758BDD686E1}.cover|Win32.Build.0 = cover|Win32
-		{E0D54AEC-E0A5-475B-8A02-8758BDD686E1}.cover|x64.ActiveCfg = cover|x64
-		{E0D54AEC-E0A5-475B-8A02-8758BDD686E1}.cover|x64.Build.0 = cover|x64
-		{E0D54AEC-E0A5-475B-8A02-8758BDD686E1}.stage|Win32.ActiveCfg = stage|Win32
-		{E0D54AEC-E0A5-475B-8A02-8758BDD686E1}.stage|Win32.Build.0 = stage|Win32
-		{E0D54AEC-E0A5-475B-8A02-8758BDD686E1}.stage|x64.ActiveCfg = stage|x64
-		{E0D54AEC-E0A5-475B-8A02-8758BDD686E1}.stage|x64.Build.0 = stage|x64
 		{D47829CA-5441-4A01-9C34-19C3598410DF}.basis|Win32.ActiveCfg = basis|Win32
 		{D47829CA-5441-4A01-9C34-19C3598410DF}.basis|Win32.Build.0 = basis|Win32
 		{D47829CA-5441-4A01-9C34-19C3598410DF}.basis|x64.ActiveCfg = basis|x64
