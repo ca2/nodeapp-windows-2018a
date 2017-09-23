@@ -4359,7 +4359,7 @@ gdi_fallback:
          {
 
             charRanges[j].First = 0;
-            convert(charRanges[j].Length, i + j+ 1);
+            charRanges[j].Length = (INT) (i + j+ 1);
 
          }
 
@@ -4372,7 +4372,7 @@ gdi_fallback:
                                   | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
                                   | Gdiplus::StringFormatFlagsLineLimit);
 
-         strFormat.SetMeasurableCharacterRanges(convert < INT > (cRanges), charRanges);
+         strFormat.SetMeasurableCharacterRanges(INT (cRanges), charRanges);
 
 
          //strFormat.SetFormatFlags(strFormat.GetFormatFlags()
@@ -4527,7 +4527,7 @@ gdi_fallback:
 
       wstring wstrRange = ::str::international::utf8_to_unicode(lpszString, iIndex);
 
-      Gdiplus::CharacterRange charRanges[1] = { Gdiplus::CharacterRange(convert < INT > (wstrRange.get_length()), convert < INT > (wstr.get_length() - wstrRange.get_length())) };
+      Gdiplus::CharacterRange charRanges[1] = { Gdiplus::CharacterRange(INT(wstrRange.get_length()), INT(wstr.get_length() - wstrRange.get_length())) };
 
       Gdiplus::StringFormat strFormat(Gdiplus::StringFormat::GenericTypographic());
 

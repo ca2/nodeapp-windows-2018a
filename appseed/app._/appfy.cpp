@@ -463,7 +463,7 @@ int32_t appfy::run()
             fileHd.write(&item, 14);
          }
 
-         UpdateResource(hupdate, RT_GROUP_ICON, "MAINICON", MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL), fileHd.get_data(), convert < DWORD > (fileHd.get_size()));
+         UpdateResource(hupdate, RT_GROUP_ICON, "MAINICON", MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL), fileHd.get_data(), (DWORD)(fileHd.get_size()));
 
          dprint("icon should be updated");
 
@@ -491,7 +491,7 @@ int32_t appfy::run()
       }
       if (strCoreApp.has_char())
       {
-         UpdateResource(hupdate, "APPID", MAKEINTRESOURCE(1), MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL), (LPVOID)(LPCTSTR)strCoreApp, convert < DWORD > (strCoreApp.get_length()));
+         UpdateResource(hupdate, "APPID", MAKEINTRESOURCE(1), MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL), (LPVOID)(LPCTSTR)strCoreApp, (DWORD) (strCoreApp.get_length()));
          dprint("APPID should be updated");
       }
 
