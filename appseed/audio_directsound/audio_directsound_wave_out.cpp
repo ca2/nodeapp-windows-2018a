@@ -7,8 +7,8 @@ namespace multimedia
 
    namespace audio_directsound
    {
-      
-      
+
+
 
       wave_out::wave_out(sp(::axis::application) papp) :
          ::object(papp),
@@ -18,7 +18,7 @@ namespace multimedia
       {
 
 
-         
+
 
          m_estate             = state_initial;
          m_pthreadCallback    = NULL;
@@ -68,7 +68,7 @@ namespace multimedia
 
       }
 
-      
+
       int32_t wave_out::exit_thread()
       {
 
@@ -78,10 +78,10 @@ namespace multimedia
 
       }
 
-      
+
       ::multimedia::e_result wave_out::wave_out_open(thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount)
       {
-         
+
          synch_lock sl(m_pmutex);
 
          if (m_pdirectsound != NULL && m_psoundbuffer != NULL && m_estate != state_initial)
@@ -93,7 +93,7 @@ namespace multimedia
 
 
          m_pthreadCallback = pthreadCallback;
-         ::multimedia::e_result mmr;
+         //::multimedia::e_result mmr;
          ASSERT(m_pdirectsound == NULL);
          ASSERT(m_psoundbuffer == NULL);
          ASSERT(m_estate == state_initial);
@@ -126,7 +126,7 @@ namespace multimedia
 
          {
 
-            DSBUFFERDESC BufferDescription ={};
+            DSBUFFERDESC BufferDescription = {};
             BufferDescription.dwSize = sizeof(BufferDescription);
             BufferDescription.dwFlags = DSBCAPS_PRIMARYBUFFER;
 
@@ -192,7 +192,7 @@ namespace multimedia
          //   return mmr;
          //}
 
-Opened:
+//Opened:
          uint32_t uiBufferSizeLog2;
          uint32_t uiBufferSize;
          uint32_t uiAnalysisSize;
@@ -235,7 +235,7 @@ Opened:
             uiInterestSize = 200;
             uiSkippedSamplesCount = 1;
          }
-         
+
          wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, uiBufferCount,128,m_pwaveformat, m_pwaveformat);
 
          m_pprebuffer->open(
@@ -246,12 +246,12 @@ Opened:
 
 
          // TODO(casey): DSBCAPS_GETCURRENTPOSITION2
-         DSBUFFERDESC BufferDescription ={};
+         DSBUFFERDESC BufferDescription = {};
          BufferDescription.dwSize = sizeof(BufferDescription);
          BufferDescription.dwFlags = 0;
          BufferDescription.dwBufferBytes = uiBufferSize * uiBufferCount;
          BufferDescription.lpwfxFormat = wave_format();
-         LPDIRECTSOUNDBUFFER SecondaryBuffer;
+         //LPDIRECTSOUNDBUFFER SecondaryBuffer;
          HRESULT Error = m_pdirectsound->CreateSoundBuffer(&BufferDescription,&m_psoundbuffer,0);
          if(FAILED(Error))
          {
@@ -270,7 +270,7 @@ Opened:
          //      return mmr;
          //   }
          //}
-         
+
          m_estate = state_opened;
 
          return ::multimedia::result_success;
@@ -321,7 +321,7 @@ Opened:
 
          {
 
-            DSBUFFERDESC BufferDescription ={};
+            DSBUFFERDESC BufferDescription = {};
             BufferDescription.dwSize = sizeof(BufferDescription);
             BufferDescription.dwFlags = DSBCAPS_PRIMARYBUFFER;
 
@@ -362,7 +362,7 @@ Opened:
 
          }
 
-Opened:
+//Opened:
 
          iBufferCount = 4;
          iBufferSampleCount = (1 << 10);
@@ -372,12 +372,12 @@ Opened:
 
 
          // TODO(casey): DSBCAPS_GETCURRENTPOSITION2
-         DSBUFFERDESC BufferDescription ={};
+         DSBUFFERDESC BufferDescription = {};
          BufferDescription.dwSize = sizeof(BufferDescription);
          BufferDescription.dwFlags = DSBCAPS_CTRLPOSITIONNOTIFY;
          BufferDescription.dwBufferBytes = uiBufferSize * iBufferCount;
          BufferDescription.lpwfxFormat = wave_format();
-         LPDIRECTSOUNDBUFFER SecondaryBuffer;
+         //LPDIRECTSOUNDBUFFER SecondaryBuffer;
          HRESULT Error = m_pdirectsound->CreateSoundBuffer(&BufferDescription,&m_psoundbuffer,0);
          if(FAILED(Error))
          {
@@ -385,7 +385,8 @@ Opened:
             return ::multimedia::result_error;
          }
          //Query DirectSoundNotify
-         if(FAILED(m_psoundbuffer->QueryInterface(IID_IDirectSoundNotify,(LPVOID *)&m_psoundnotify))) {
+         if(FAILED(m_psoundbuffer->QueryInterface(IID_IDirectSoundNotify,(LPVOID *)&m_psoundnotify)))
+         {
             OutputDebugString(_T("QueryInterface DirectSoundNotify Failed!"));
             //m_strLastError = _T("MyDirectSound SetFormat Failed!");
             return ::multimedia::result_error;
@@ -398,22 +399,22 @@ Opened:
          {
 
             m_haEvent.add(CreateEvent(NULL,FALSE,FALSE,NULL));
-            m_notifya.element_at_grow(i).dwOffset = uiBufferSize *i;
+            m_notifya.element_at_grow(i).dwOffset = (DWORD) (uiBufferSize * i);
             m_notifya.element_at_grow(i).hEventNotify = m_haEvent[i];
          }
 
 
-         if(FAILED(m_psoundnotify->SetNotificationPositions(m_notifya.get_count(),m_notifya.get_data())))
+         if(FAILED(m_psoundnotify->SetNotificationPositions((DWORD) m_notifya.get_count(),m_notifya.get_data())))
          {
             OutputDebugString(_T("Set NotificationPosition Failed!"));
             return ::multimedia::result_error;
          }
 
 
-         
+
          wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, iBufferCount,128, m_pwaveformat, m_pwaveformat);
 
-         m_pprebuffer->open(this, m_pwaveformat->nChannels, iBufferCount, iBufferSampleCount); 
+         m_pprebuffer->open(this, m_pwaveformat->nChannels, iBufferCount, iBufferSampleCount);
 
          m_pprebuffer->SetMinL1BufferCount(wave_out_get_buffer()->GetBufferCount() + 4);
 
@@ -438,9 +439,9 @@ Opened:
          if(m_estate != state_opened)
             return ::multimedia::result_success;
 
-         ::multimedia::e_result mmr;
+         //::multimedia::e_result mmr;
 
-         int32_t i, iSize;
+         ::count iSize;
 
          iSize =  wave_out_get_buffer()->GetBufferCount();
 
@@ -470,9 +471,9 @@ Opened:
 
 
 
-      void wave_out::wave_out_buffer_ready(int iBuffer)
+      void wave_out::wave_out_buffer_ready(index iBuffer)
       {
-         
+
          on_free(iBuffer);
 
          return;
@@ -480,21 +481,22 @@ Opened:
       }
 
 
-      void wave_out::on_free(int i)
+      void wave_out::on_free(index i)
       {
+
          synch_lock sl(m_pmutex);
          LPVOID lpvAudio1 = NULL,lpvAudio2 = NULL;
          DWORD dwBytesAudio1 = 0,dwBytesAudio2 = 0;
          DWORD dwRetSamples = 0,dwRetBytes = 0;
 
-         DWORD dwWrite;
+         //DWORD dwWrite;
 
 
          //         wave_out_out_buffer_done(i);
 
          if(i >= 0)
          {
-            HRESULT hr = m_psoundbuffer->Lock(i * wave_out_get_buffer_size(),wave_out_get_buffer_size(),&lpvAudio1,&dwBytesAudio1,&lpvAudio2,&dwBytesAudio2,0);
+            HRESULT hr = m_psoundbuffer->Lock((DWORD)(i * wave_out_get_buffer_size()), (DWORD) wave_out_get_buffer_size(),&lpvAudio1,&dwBytesAudio1,&lpvAudio2,&dwBytesAudio2,0);
             if(FAILED(hr))
             {
                return;
@@ -659,7 +661,7 @@ Opened:
 
          synch_lock sl(m_pmutex);
 
-         ::multimedia::e_result                mmr;
+         //::multimedia::e_result                mmr;
 
          return 0;
 
@@ -717,18 +719,18 @@ Opened:
 
       imedia_position wave_out::wave_out_get_position()
       {
-         
+
          synch_lock sl(m_pmutex);
 
-         ::multimedia::e_result                mmr;
-         
+         //::multimedia::e_result                mmr;
+
          //MMTIME                  mmt;
 
          //mmt.wType = TIME_BYTES;
 
          //if(m_hwaveout != NULL)
          //{
-         //   
+         //
          //   mmr = directsound::translate(waveOutGetPosition(m_hwaveout, &mmt, sizeof(mmt)));
 
          //   try
@@ -765,7 +767,8 @@ Opened:
          return 0;
       }
 
-      void wave_out::wave_out_free(int iBuffer)
+
+      void wave_out::wave_out_free(index iBuffer)
       {
 
          //wave_out_free(wave_hdr(iBuffer));
@@ -812,7 +815,7 @@ Opened:
 
       //HWAVEOUT wave_out::wave_out_get_safe_HWAVEOUT()
       //{
-      //   
+      //
       //   if(this == NULL)
       //      return NULL;
 
@@ -839,8 +842,8 @@ Opened:
 
          int iPlay =  -1;
 
-         int r = WaitForMultipleObjects(m_haEvent.get_count(),m_haEvent.get_data(),FALSE,INFINITE);
-         
+         int r = WaitForMultipleObjects((DWORD) m_haEvent.get_count(), m_haEvent.get_data(),FALSE,INFINITE);
+
          if(r >= WAIT_OBJECT_0 && r < WAIT_OBJECT_0 + MAXIMUM_WAIT_OBJECTS)
          {
 
@@ -869,7 +872,7 @@ Opened:
 
          }
 
-         
+
 
 
       }
