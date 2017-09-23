@@ -2479,7 +2479,7 @@ namespace production
          }
          while (!process->has_exited(&dwExitCode))
          {
-            Sleep(284);
+            Sleep(300);
             str.Format("%d Compressing npca2 ...", i);
             add_status(str);
          }
@@ -2512,7 +2512,7 @@ namespace production
       int32_t i = 1;
       while (!process->has_exited(&dwExitCode))
       {
-         Sleep(284);
+         Sleep(300);
          str.Format("%d Compressing npca2 ...", i);
          add_status(str);
          i++;
@@ -2915,7 +2915,7 @@ namespace production
 
          m_bReleased = true;
 
-         Sleep(1984 + 1977);
+         Sleep(2000 + 1977);
 
          defer_quit();
 
@@ -3304,7 +3304,7 @@ namespace production
       string strAccumul;
       while (!process->has_exited(&dwExitCode))
       {
-         Sleep(84);
+         Sleep(100);
          //str.Format("%d Building ca2 fontopus ccvotagus " + strApp + "...", i);
          while (true)
          {

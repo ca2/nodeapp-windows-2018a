@@ -1,14 +1,14 @@
 #pragma once
 
 
-#include "base/base/base.h"
+#include "aura/aura/aura/aura.h"
 
 
 
 #ifdef _DRAW2D_GDI_LIBRARY
-    #define CLASS_DECL_DRAW2D_GDI  _declspec(dllexport)
+#define CLASS_DECL_DRAW2D_GDI  CLASS_DECL_EXPORT
 #else
-    #define CLASS_DECL_DRAW2D_GDI  _declspec(dllimport)
+#define CLASS_DECL_DRAW2D_GDI  CLASS_DECL_IMPORT
 #endif
 
 
@@ -30,7 +30,7 @@
 #include "draw2d_gdi_graphics.h"
 
 
-#pragma comment(lib, "Msimg32.lib") 
+#pragma comment(lib, "Msimg32.lib")
 
 
 #define GDI_GRAPHICS(pgraphics) (dynamic_cast < ::draw2d_gdi::graphics * > (dynamic_cast < ::draw2d::graphics * > (pgraphics)))

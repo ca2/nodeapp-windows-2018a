@@ -6,8 +6,8 @@
 //21 Sep 2012 9:31 AM
 
 //0
-// MSDN Blogs > Matthew van Eerde's web log > Enumerating MIDI devices 
-
+// MSDN Blogs > Matthew van Eerde's web log > Enumerating MIDI devices
+#undef LOG
 #define LOG(format, ...) TRACE(format, __VA_ARGS__)
 
 
@@ -32,7 +32,7 @@ namespace music
             ::music::midi::midi(papp)
          {
 
-               m_uiMidiOutDevice = 0;
+            m_uiMidiOutDevice = 0;
 
          }
 
@@ -45,21 +45,21 @@ namespace music
 
          ::multimedia::e_result midi::enumerate_midi_devices()
          {
-            
+
             UINT_PTR devs = midiInGetNumDevs();
-            
+
             LOG("midiIn devices: %u", devs);
 
-            for (UINT_PTR dev = 0; dev < devs; dev++) 
+            for (UINT_PTR dev = 0; dev < devs; dev++)
             {
-            
+
                MIDIINCAPSW caps = {};
 
                MMRESULT mmr = midiInGetDevCapsW(dev, &caps, sizeof(caps));
 
-               if (MMSYSERR_NOERROR != mmr) 
+               if (MMSYSERR_NOERROR != mmr)
                {
-                  
+
                   return translate_os_result(mmr, "enumerate_midi_devices", "midiInGetDevCapsW");
 
                }
@@ -73,19 +73,19 @@ namespace music
             }
 
             devs = midiOutGetNumDevs();
-            
+
             LOG("midiOut devices: %u", devs);
-            
+
             for (UINT dev = 0; dev < devs; dev++)
             {
-               
+
                MIDIOUTCAPSW caps = {};
 
                MMRESULT mmr = midiOutGetDevCapsW(dev, &caps, sizeof(caps));
 
                if (MMSYSERR_NOERROR != mmr)
                {
-                  
+
                   return translate_os_result(mmr, "enumerate_midi_devices", "midiOutGetDevCaps");
 
                }
@@ -110,21 +110,24 @@ namespace music
             HMIDIIN h = reinterpret_cast<HMIDIIN>(i);
             ULONG size = 0;
             MMRESULT mmr = midiInMessage(
-               h,
-               DRV_QUERYDEVICEINTERFACESIZE,
-               reinterpret_cast<DWORD_PTR>(&size),
-               0
-               );
-            if (MMSYSERR_NOERROR != mmr) {
+                              h,
+                              DRV_QUERYDEVICEINTERFACESIZE,
+                              reinterpret_cast<DWORD_PTR>(&size),
+                              0
+                           );
+            if (MMSYSERR_NOERROR != mmr)
+            {
                LOG("midiInMessage(DRV_QUERYDEVICEINTERFACESIZE) failed: mmr = 0x%08x", mmr);
                return;
             }
 
-            if (0 == size) {
+            if (0 == size)
+            {
                LOG("No device interface");
                return;
             }
-            if (size % sizeof(WCHAR)) {
+            if (size % sizeof(WCHAR))
+            {
                LOG("Device interface length in bytes (%u) should be a multiple of the size of a WCHAR!", size);
                return;
             }
@@ -136,12 +139,13 @@ namespace music
 
 
             mmr = midiInMessage(
-               h,
-               DRV_QUERYDEVICEINTERFACE,
-               reinterpret_cast<DWORD_PTR>((wchar_t *) wstr),
-               size
-               );
-            if (MMSYSERR_NOERROR != mmr) {
+                     h,
+                     DRV_QUERYDEVICEINTERFACE,
+                     reinterpret_cast<DWORD_PTR>((wchar_t *) wstr),
+                     size
+                  );
+            if (MMSYSERR_NOERROR != mmr)
+            {
                LOG("midiInMessage(DRV_QUERYDEVICEINTERFACE) failed: mmr = 0x%08x", mmr);
                return;
             }
@@ -158,21 +162,24 @@ namespace music
             HMIDIOUT h = reinterpret_cast<HMIDIOUT>(i);
             ULONG size = 0;
             MMRESULT mmr = midiOutMessage(
-               h,
-               DRV_QUERYDEVICEINTERFACESIZE,
-               reinterpret_cast<DWORD_PTR>(&size),
-               0
-               );
-            if (MMSYSERR_NOERROR != mmr) {
+                              h,
+                              DRV_QUERYDEVICEINTERFACESIZE,
+                              reinterpret_cast<DWORD_PTR>(&size),
+                              0
+                           );
+            if (MMSYSERR_NOERROR != mmr)
+            {
                LOG("midiOutMessage(DRV_QUERYDEVICEINTERFACESIZE) failed: mmr = 0x%08x", mmr);
                return;
             }
 
-            if (0 == size) {
+            if (0 == size)
+            {
                LOG("No device interface");
                return;
             }
-            if (size % sizeof(WCHAR)) {
+            if (size % sizeof(WCHAR))
+            {
                LOG("Device interface length in bytes (%u) should be a multiple of the size of a WCHAR!", size);
                return;
             }
@@ -181,12 +188,13 @@ namespace music
             wstr.alloc(size);
 
             mmr = midiOutMessage(
-               h,
-               DRV_QUERYDEVICEINTERFACE,
-               reinterpret_cast<DWORD_PTR>((wchar_t *) wstr),
-               size
-               );
-            if (MMSYSERR_NOERROR != mmr) {
+                     h,
+                     DRV_QUERYDEVICEINTERFACE,
+                     reinterpret_cast<DWORD_PTR>((wchar_t *) wstr),
+                     size
+                  );
+            if (MMSYSERR_NOERROR != mmr)
+            {
                LOG("midiOutMessage(DRV_QUERYDEVICEINTERFACE) failed: mmr = 0x%08x", mmr);
                return;
             }
@@ -196,7 +204,8 @@ namespace music
             LOG("    Device interface: \"%S\"", str);
          }
 
-         void midi::mmsystem_LogMidiInCaps(UINT_PTR i, MIDIINCAPSW caps) {
+         void midi::mmsystem_LogMidiInCaps(UINT_PTR i, MIDIINCAPSW caps)
+         {
             LOG(
                "-- %u: %S --\n"
                "    Device ID: %u\n"
@@ -214,7 +223,7 @@ namespace music
                caps.vDriverVersion / 256, caps.vDriverVersion % 256,
                caps.szPname ? caps.szPname : L"(no name)",
                caps.dwSupport
-               );
+            );
             string strName;
             if (caps.szPname != NULL)
             {
@@ -227,7 +236,8 @@ namespace music
             m_straIn.add(strName);
          }
 
-         void midi::mmsystem_LogMidiOutCaps(UINT_PTR i, MIDIOUTCAPSW caps) {
+         void midi::mmsystem_LogMidiOutCaps(UINT_PTR i, MIDIOUTCAPSW caps)
+         {
             LOG(
                "-- %u: %S --\n"
                "    Device ID: %u\n"
@@ -266,7 +276,7 @@ namespace music
                (caps.dwSupport & MIDICAPS_LRVOLUME) ? L"\n        MIDICAPS_LRVOLUME" : L"",
                (caps.dwSupport & MIDICAPS_STREAM) ? L"\n        MIDICAPS_STREAM" : L"",
                (caps.dwSupport & MIDICAPS_VOLUME) ? L"\n        MIDICAPS_VOLUME" : L""
-               );
+            );
             string strName;
             if (caps.szPname != NULL)
             {

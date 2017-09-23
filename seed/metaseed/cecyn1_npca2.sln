@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\app.vcxproj", "{19841115-1984-0411-1977-021977151984}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\app.vcxproj", "{20001115-2000-0411-1977-021977152000}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E000FFAF-392F-4E32-BF51-FD7ED638991F} = {E000FFAF-392F-4E32-BF51-FD7ED638991F}
 	EndProjectSection
@@ -39,7 +39,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app.plugin.container", "..\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app._", "..\..\..\app-core\appseed\appfy\appfy.vcxproj", "{3DDD6C31-218E-4979-B095-8AF22563D9C1}"
 	ProjectSection(ProjectDependencies) = postProject
-		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
+		{20001115-2000-0411-1977-021977152000} = {20001115-2000-0411-1977-021977152000}
 		{1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB} = {1AB44F85-C63D-4F5E-BB76-B416DC4DA2CB}
 	EndProjectSection
 EndProject
@@ -83,34 +83,34 @@ Global
 		static_basis|x64 = static_basis|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{19841115-1984-0411-1977-021977151984}.basis|Win32.ActiveCfg = basis|Win32
-		{19841115-1984-0411-1977-021977151984}.basis|Win32.Build.0 = basis|Win32
-		{19841115-1984-0411-1977-021977151984}.basis|x64.ActiveCfg = basis|x64
-		{19841115-1984-0411-1977-021977151984}.basis|x64.Build.0 = basis|x64
-		{19841115-1984-0411-1977-021977151984}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
-		{19841115-1984-0411-1977-021977151984}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
-		{19841115-1984-0411-1977-021977151984}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
-		{19841115-1984-0411-1977-021977151984}.codeanalysis|x64.Build.0 = codeanalysis|x64
-		{19841115-1984-0411-1977-021977151984}.memdleak|Win32.ActiveCfg = memdleak|Win32
-		{19841115-1984-0411-1977-021977151984}.memdleak|Win32.Build.0 = memdleak|Win32
-		{19841115-1984-0411-1977-021977151984}.memdleak|x64.ActiveCfg = memdleak|x64
-		{19841115-1984-0411-1977-021977151984}.memdleak|x64.Build.0 = memdleak|x64
-		{19841115-1984-0411-1977-021977151984}.no_precompiled_header|Win32.ActiveCfg = profiler|Win32
-		{19841115-1984-0411-1977-021977151984}.no_precompiled_header|Win32.Build.0 = profiler|Win32
-		{19841115-1984-0411-1977-021977151984}.no_precompiled_header|x64.ActiveCfg = profiler|x64
-		{19841115-1984-0411-1977-021977151984}.no_precompiled_header|x64.Build.0 = profiler|x64
-		{19841115-1984-0411-1977-021977151984}.profiler|Win32.ActiveCfg = profiler|Win32
-		{19841115-1984-0411-1977-021977151984}.profiler|Win32.Build.0 = profiler|Win32
-		{19841115-1984-0411-1977-021977151984}.profiler|x64.ActiveCfg = profiler|x64
-		{19841115-1984-0411-1977-021977151984}.profiler|x64.Build.0 = profiler|x64
-		{19841115-1984-0411-1977-021977151984}.stage|Win32.ActiveCfg = stage|Win32
-		{19841115-1984-0411-1977-021977151984}.stage|Win32.Build.0 = stage|Win32
-		{19841115-1984-0411-1977-021977151984}.stage|x64.ActiveCfg = stage|x64
-		{19841115-1984-0411-1977-021977151984}.stage|x64.Build.0 = stage|x64
-		{19841115-1984-0411-1977-021977151984}.static_basis|Win32.ActiveCfg = basis|Win32
-		{19841115-1984-0411-1977-021977151984}.static_basis|Win32.Build.0 = basis|Win32
-		{19841115-1984-0411-1977-021977151984}.static_basis|x64.ActiveCfg = basis|x64
-		{19841115-1984-0411-1977-021977151984}.static_basis|x64.Build.0 = basis|x64
+		{20001115-2000-0411-1977-021977152000}.basis|Win32.ActiveCfg = basis|Win32
+		{20001115-2000-0411-1977-021977152000}.basis|Win32.Build.0 = basis|Win32
+		{20001115-2000-0411-1977-021977152000}.basis|x64.ActiveCfg = basis|x64
+		{20001115-2000-0411-1977-021977152000}.basis|x64.Build.0 = basis|x64
+		{20001115-2000-0411-1977-021977152000}.codeanalysis|Win32.ActiveCfg = codeanalysis|Win32
+		{20001115-2000-0411-1977-021977152000}.codeanalysis|Win32.Build.0 = codeanalysis|Win32
+		{20001115-2000-0411-1977-021977152000}.codeanalysis|x64.ActiveCfg = codeanalysis|x64
+		{20001115-2000-0411-1977-021977152000}.codeanalysis|x64.Build.0 = codeanalysis|x64
+		{20001115-2000-0411-1977-021977152000}.memdleak|Win32.ActiveCfg = memdleak|Win32
+		{20001115-2000-0411-1977-021977152000}.memdleak|Win32.Build.0 = memdleak|Win32
+		{20001115-2000-0411-1977-021977152000}.memdleak|x64.ActiveCfg = memdleak|x64
+		{20001115-2000-0411-1977-021977152000}.memdleak|x64.Build.0 = memdleak|x64
+		{20001115-2000-0411-1977-021977152000}.no_precompiled_header|Win32.ActiveCfg = profiler|Win32
+		{20001115-2000-0411-1977-021977152000}.no_precompiled_header|Win32.Build.0 = profiler|Win32
+		{20001115-2000-0411-1977-021977152000}.no_precompiled_header|x64.ActiveCfg = profiler|x64
+		{20001115-2000-0411-1977-021977152000}.no_precompiled_header|x64.Build.0 = profiler|x64
+		{20001115-2000-0411-1977-021977152000}.profiler|Win32.ActiveCfg = profiler|Win32
+		{20001115-2000-0411-1977-021977152000}.profiler|Win32.Build.0 = profiler|Win32
+		{20001115-2000-0411-1977-021977152000}.profiler|x64.ActiveCfg = profiler|x64
+		{20001115-2000-0411-1977-021977152000}.profiler|x64.Build.0 = profiler|x64
+		{20001115-2000-0411-1977-021977152000}.stage|Win32.ActiveCfg = stage|Win32
+		{20001115-2000-0411-1977-021977152000}.stage|Win32.Build.0 = stage|Win32
+		{20001115-2000-0411-1977-021977152000}.stage|x64.ActiveCfg = stage|x64
+		{20001115-2000-0411-1977-021977152000}.stage|x64.Build.0 = stage|x64
+		{20001115-2000-0411-1977-021977152000}.static_basis|Win32.ActiveCfg = basis|Win32
+		{20001115-2000-0411-1977-021977152000}.static_basis|Win32.Build.0 = basis|Win32
+		{20001115-2000-0411-1977-021977152000}.static_basis|x64.ActiveCfg = basis|x64
+		{20001115-2000-0411-1977-021977152000}.static_basis|x64.Build.0 = basis|x64
 		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}.basis|Win32.ActiveCfg = basis|Win32
 		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}.basis|Win32.Build.0 = basis|Win32
 		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}.basis|x64.ActiveCfg = basis|x64

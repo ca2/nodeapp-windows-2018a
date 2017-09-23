@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <math.h>
 
 namespace music
@@ -34,7 +34,7 @@ namespace music
             m_tempomap.set_size(0, C_TEMPO_MAP_CHK);
 
             m_iKeyShift             = 0;
-            m_dTempoShift           = 0.0;
+            m_dTempoShift           = 0;
 
 
             m_pFileHeader = NULL;
@@ -70,7 +70,7 @@ namespace music
 //
 //            if(openMode == file::OpenForParsingLevel3)
 //            {
-//               
+//
 //               m_flags |= file::DisablePlayLevel1Operations;
 //
 //            }
@@ -281,7 +281,7 @@ namespace music
          *****************************************************************************/
          e_result buffer::CloseFile()
          {
-            
+
             synch_lock sl(m_pmutex);
 
             SetOpened(false);
@@ -295,7 +295,7 @@ namespace music
 
          void buffer::delete_contents()
          {
-            
+
             synch_lock sl(m_pmutex);
 
             SetOpened(false);
@@ -334,7 +334,7 @@ namespace music
             m_hpbPendingUserEvent   = 0;
 
             m_iKeyShift             = 0;
-            m_dTempoShift           = 0.0;
+            m_dTempoShift           = 0;
 
             m_pFileHeader           = NULL;
 
@@ -401,7 +401,7 @@ namespace music
 
             if (!IsOpened())
             {
-             
+
                return ::numeric_info < int_ptr >::allset_value();
 
             }
@@ -429,7 +429,7 @@ namespace music
                   uSMPTE = 30;
 
                dwTicksPerSec = (uint32_t)uSMPTE *
-                  (uint32_t)(BYTE)(m_dwTimeDivision & 0xFF);
+                               (uint32_t)(BYTE)(m_dwTimeDivision & 0xFF);
 
                return (uint32_t)muldiv32((int32_t) tkOffset, 1000L, dwTicksPerSec);
             }
@@ -461,7 +461,13 @@ namespace music
             /* ptempo is the tempo map entry preceding the requested tick offset.
             */
 
-            return ptempo->mcBase / 1000 + muldiv32((int32_t)(tkOffset - ptempo->tkTempo), ptempo->dwTempo , 1000L * m_dwTimeDivision);
+            return convert < int_ptr > (
+                      ptempo->mcBase / 1000 +
+                      muldiv32(
+                         (int32_t)(tkOffset - ptempo->tkTempo),
+                         ptempo->dwTempo,
+                         1000L * m_dwTimeDivision)
+                   );
 
          }
 
@@ -539,16 +545,30 @@ namespace music
             //for (idx = 0; idx < m_cTempoMap; idx++, ptempo++)
             for (idx = 0; idx < m_tempomap.get_size(); idx++)
             {
+
                ptempo = &m_tempomap.element_at(idx);
-               if (msOffset < ptempo->mcBase / 1000)
+
+               if (::comparison::lt(msOffset, ptempo->mcBase / 1000))
+               {
+
                   break;
+
+               }
+
             }
             ptempo = &m_tempomap.element_at(--idx);
 
             /* ptempo is the tempo map entry preceding the requested tick offset.
             */
 
-            tkOffset = ptempo->tkTempo + muldiv32((int32_t) msOffset-ptempo->mcBase / 1000, 1000L * m_dwTimeDivision, ptempo->dwTempo);
+            convert(tkOffset,
+                    ptempo->tkTempo +
+                    muldiv32(
+                       convert < int32_t > (msOffset-ptempo->mcBase / 1000),
+                       convert < int32_t > (1000L * m_dwTimeDivision),
+                       convert < int32_t > (ptempo->dwTempo)
+                    )
+                   );
 
             if (tkOffset > m_tkLength)
             {
@@ -596,7 +616,7 @@ namespace music
                      tkResult = 0xFFFFFFFF;
                   timea.add(
                      PositionToTime(
-                     tkResult));
+                        tkResult));
                }
             }
          }
@@ -647,7 +667,7 @@ namespace music
                   pMillisArray->add(
                      (imedia_time)
                      TicksToMillisecs(
-                     tkResult));
+                        tkResult));
                }
             }
             else
@@ -661,7 +681,7 @@ namespace music
                   pMillisArray->add(
                      (imedia_time)
                      TicksToMillisecs(
-                     tkResult));
+                        tkResult));
                }
             }
          }
@@ -683,7 +703,7 @@ namespace music
                   pTickArray->add(
                      (imedia_position)
                      MillisecsToTicks(
-                     msResult));
+                        msResult));
                }
             }
             else
@@ -697,7 +717,7 @@ namespace music
                   pTickArray->add(
                      (imedia_position)
                      MillisecsToTicks(
-                     msResult));
+                        msResult));
                }
             }
 
@@ -718,7 +738,7 @@ namespace music
                      msResult = 0;
                   positiona.add(
                      TimeToPosition(
-                     msResult));
+                        msResult));
                }
             }
             else
@@ -731,18 +751,18 @@ namespace music
                      msResult = 0xffffffff;
                   positiona.add(
                      TimeToPosition(
-                     msResult));
+                        msResult));
                }
             }
 
          }
 
          ::music::e_result buffer::StreamEventF1(imedia_position tkDelta,
-            array < ::music::midi::event *, ::music::midi::event * > & eventptra,
-            LPMIDIHDR lpmh,
-            imedia_position tkMax,
-            uint32_t cbPrerollNomimalMax
-            )
+                                                 array < ::music::midi::event *, ::music::midi::event * > & eventptra,
+                                                 LPMIDIHDR lpmh,
+                                                 imedia_position tkMax,
+                                                 uint32_t cbPrerollNomimalMax
+                                                )
          {
             UNREFERENCED_PARAMETER(tkMax);
             UNREFERENCED_PARAMETER(cbPrerollNomimalMax);
@@ -835,14 +855,14 @@ namespace music
                   //}
                }
                if(pEvent->GetTrack() == 9 ||
-                  pEvent->GetTrack() == 15)
+                     pEvent->GetTrack() == 15)
                {
                   //         TRACE("ReadEvents Track %d Program %d", pEvent->GetTrack(), m_keyframe.rbProgram[pEvent->GetTrack()]);
                }
                if((pEvent->GetType() == ::music::midi::NoteOn ||
-                  pEvent->GetType() == ::music::midi::NoteOff)
-                  && !((m_keyframe.rbProgram[pEvent->GetTrack()] == 0)
-                  ))
+                     pEvent->GetType() == ::music::midi::NoteOff)
+                     && !((m_keyframe.rbProgram[pEvent->GetTrack()] == 0)
+                         ))
                   //&& (pEvent->GetTrack() == 9 ||
                   //pEvent->GetTrack() == 15)))
                {
@@ -862,14 +882,14 @@ namespace music
                *lpdw++ = (uint32_t)tkDelta;
                *lpdw++ = 0;
                *lpdw++ = (((uint32_t)MEVT_SHORTMSG)<<24) |
-                  ((uint32_t)pEvent->GetFullType()) |
-                  (((uint32_t)pEvent->GetChB1()) << 8) |
-                  (((uint32_t)pEvent->GetChB2()) << 16);
+                         ((uint32_t)pEvent->GetFullType()) |
+                         (((uint32_t)pEvent->GetChB1()) << 8) |
+                         (((uint32_t)pEvent->GetChB2()) << 16);
 
                lpmh->dwBytesRecorded += 3*sizeof(uint32_t);
             }
             else if (pEvent->GetFullType() == ::music::midi::Meta &&
-               pEvent->GetMetaType() ==  ::music::midi::MetaEOT)
+                     pEvent->GetMetaType() ==  ::music::midi::MetaEOT)
             {
                /* These are ignoreable since smfReadNextEvent()
                ** takes care of track merging
@@ -888,8 +908,8 @@ namespace music
                }
 
                dwTempo = (((uint32_t)pEvent->GetData()[0])<<16)|
-                  (((uint32_t)pEvent->GetData()[1])<<8)|
-                  ((uint32_t)pEvent->GetData()[2]);
+                         (((uint32_t)pEvent->GetData()[1])<<8)|
+                         ((uint32_t)pEvent->GetData()[2]);
                dwTempo = (uint32_t) ((double) dwTempo / GetTempoShiftRate());
                uint32_t dw = (((uint32_t)MEVT_TEMPO)<<24)| dwTempo;
 
@@ -988,7 +1008,7 @@ namespace music
             else // Meta
             {
                // se o meta event possuir tkDelta > 0,
-               // insere o evento no stream para que n�o haja perda de sincronismo
+               // insere o evento no stream para que n縊 haja perda de sincronismo
                if(tkDelta > 0)
                {
                   InsertPadEvent(tkDelta, lpmh);
@@ -1725,8 +1745,8 @@ namespace music
             /* Tempo change event?
             */
             if (KF_EMPTY != m_keyframe.rbTempo[0] ||
-               KF_EMPTY != m_keyframe.rbTempo[1] ||
-               KF_EMPTY != m_keyframe.rbTempo[2])
+                  KF_EMPTY != m_keyframe.rbTempo[1] ||
+                  KF_EMPTY != m_keyframe.rbTempo[2])
             {
                if (lpmh->dwBufferLength - lpmh->dwBytesRecorded < 3*sizeof(uint32_t))
                   return ENoMemory;
@@ -1744,8 +1764,8 @@ namespace music
                //            (((uint32_t)MEVT_SHORTMSG) << 24);
 
                uint32_t dwTempo =   (((uint32_t)m_keyframe.rbTempo[0])<<16)|
-                  (((uint32_t)m_keyframe.rbTempo[1])<<8)|
-                  ((uint32_t)m_keyframe.rbTempo[2]);
+                                    (((uint32_t)m_keyframe.rbTempo[1])<<8)|
+                                    ((uint32_t)m_keyframe.rbTempo[2]);
                dwTempo = (uint32_t) ((double) dwTempo / GetTempoShiftRate());
                uint32_t dw = (((uint32_t)MEVT_TEMPO)<<24)| dwTempo;
 
@@ -1779,9 +1799,9 @@ namespace music
                   *lpdw++ = 0;
                   *lpdw++ = 0;
                   *lpdw++ = (((uint32_t)MEVT_SHORTMSG) << 24)      |
-                     ((uint32_t)::music::midi::ProgramChange)         |
-                     ((uint32_t)idx)                        |
-                     (((uint32_t)m_keyframe.rbProgram[idx]) << 8);
+                            ((uint32_t)::music::midi::ProgramChange)         |
+                            ((uint32_t)idx)                        |
+                            (((uint32_t)m_keyframe.rbProgram[idx]) << 8);
 
                   lpmh->dwBytesRecorded += 3*sizeof(uint32_t);
                }
@@ -1801,10 +1821,10 @@ namespace music
                      *lpdw++ = 0;
                      *lpdw++ = 0;
                      *lpdw++ = (((uint32_t)MEVT_SHORTMSG << 24)     |
-                        ((uint32_t)::music::midi::ControlChange)       |
-                        ((uint32_t)idxChannel)               |
-                        (((uint32_t)idxController) << 8)     |
-                        (((uint32_t)m_keyframe.rbControl[idxChannel][idxController]) << 16));
+                                ((uint32_t)::music::midi::ControlChange)       |
+                                ((uint32_t)idxChannel)               |
+                                (((uint32_t)idxController) << 8)     |
+                                (((uint32_t)m_keyframe.rbControl[idxChannel][idxController]) << 16));
 
 
                      lpmh->dwBytesRecorded += 3*sizeof(uint32_t);
@@ -1964,25 +1984,29 @@ namespace music
          uint32_t mysmfGetTrackEventData(sp(::music::midi::file::buffer) pSmf, ::music::midi::event * pEvent, BYTE * pData[])
          {
 
-            uint32_t                len;
             byte *                  hpbImage;
+
             uint32_t                index;
 
             ASSERT(pSmf != NULL);
+
             ASSERT(pEvent != NULL);
 
-            len = pEvent->GetDataSize();
+            auto len = pEvent->GetDataSize();
 
             *pData = (uchar *) LocalAlloc(LPTR,len);
 
             hpbImage = (byte *) pEvent->GetData();
 
-            for(index = 0; len; index++)
+            for(index = 0; index < len; index++)
             {
+
                *pData[index] = *hpbImage++;
+
             }
 
-            return len;
+            return convert < uint32_t > (len);
+
          }
 
 
@@ -2022,7 +2046,7 @@ namespace music
 
             for(i = 0; i < m_ptracks->GetMidiTrackCount(); i++)
             {
-               
+
                ptrack = m_ptracks->MidiTrackAt(i);
                hpbSrc = ptrack->GetTrackImage();
                memcpy(hpbDest, hpbSrc, ptrack->GetTrackImageLength());
@@ -2060,8 +2084,8 @@ namespace music
 
          //int32_t buffer::CalcMelodyTrack(::music::midi::events **ppEvents, imedia::position_array *pTicks)
          //{
-            //    return -1;
-           // return m_ptracks->CalcMelodyTrack(ppEvents, pTicks, m_pFileHeader->wFormat);
+         //    return -1;
+         // return m_ptracks->CalcMelodyTrack(ppEvents, pTicks, m_pFileHeader->wFormat);
          //}
 
          /*int32_t buffer::WorkCalcMelodyTrack(
@@ -2373,7 +2397,7 @@ namespace music
          {
 
             return ::music::midi::file::buffer::SetTempoShift(dTempoShift);
-            
+
          }
 
 
@@ -2494,13 +2518,13 @@ namespace music
 
          ::multimedia::e_result buffer::ImmediatePutTempoChange()
          {
-            
+
             ::music::midi::event * pevent = new ::music::midi::event;
-            
+
             GetTempoEvent(*pevent);
-            
+
             m_mepaImmediate.add(pevent);
-            
+
             return ::multimedia::result_success;
 
          }
@@ -2555,7 +2579,7 @@ namespace music
             {
                ASSERT(lpmh->dwBytesRecorded <= lpmh->dwBufferLength);
                if(lpmh->dwBytesRecorded > cbPrerollNominalMax && lpmh->dwBytesRecorded > 0
-                  && eventptraPositionCB.get_size() <= 0)
+                     && eventptraPositionCB.get_size() <= 0)
                {
                   break;
                }
@@ -2926,8 +2950,8 @@ namespace music
             /* Tempo change event?
             */
             if (KF_EMPTY != m_keyframe.rbTempo[0] ||
-               KF_EMPTY != m_keyframe.rbTempo[1] ||
-               KF_EMPTY != m_keyframe.rbTempo[2])
+                  KF_EMPTY != m_keyframe.rbTempo[1] ||
+                  KF_EMPTY != m_keyframe.rbTempo[2])
             {
                if (lpmh->dwBufferLength - lpmh->dwBytesRecorded < 3*sizeof(uint32_t))
                   return ENoMemory;
@@ -2935,8 +2959,8 @@ namespace music
                *lpdw++ = 0;
                *lpdw++ = 0;
                uint32_t dwTempo =   (((uint32_t)m_keyframe.rbTempo[0])<<16)|
-                  (((uint32_t)m_keyframe.rbTempo[1])<<8)|
-                  ((uint32_t)m_keyframe.rbTempo[2]);
+                                    (((uint32_t)m_keyframe.rbTempo[1])<<8)|
+                                    ((uint32_t)m_keyframe.rbTempo[2]);
                double dTempoShiftRate = GetTempoShiftRate();
                dwTempo = (uint32_t) ((double) dwTempo / dTempoShiftRate);
                uint32_t dw = (((uint32_t)MEVT_TEMPO)<<24)| dwTempo;
@@ -2958,9 +2982,9 @@ namespace music
                   *lpdw++ = 0;
                   *lpdw++ = 0;
                   *lpdw++ = (((uint32_t)MEVT_SHORTMSG) << 24)      |
-                     ((uint32_t)::music::midi::ProgramChange)         |
-                     ((uint32_t)idx)                        |
-                     (((uint32_t)m_keyframe.rbProgram[idx]) << 8);
+                            ((uint32_t)::music::midi::ProgramChange)         |
+                            ((uint32_t)idx)                        |
+                            (((uint32_t)m_keyframe.rbProgram[idx]) << 8);
 
                   lpmh->dwBytesRecorded += 3*sizeof(uint32_t);
                }
@@ -2980,10 +3004,10 @@ namespace music
                      *lpdw++ = 0;
                      *lpdw++ = 0;
                      *lpdw++ = (((uint32_t)MEVT_SHORTMSG << 24)     |
-                        ((uint32_t)ControlChange)       |
-                        ((uint32_t)idxChannel)               |
-                        (((uint32_t)idxController) << 8)     |
-                        (((uint32_t)m_keyframe.rbControl[idxChannel][idxController]) << 16));
+                                ((uint32_t)ControlChange)       |
+                                ((uint32_t)idxChannel)               |
+                                (((uint32_t)idxController) << 8)     |
+                                (((uint32_t)m_keyframe.rbControl[idxChannel][idxController]) << 16));
 
 
                      lpmh->dwBytesRecorded += 3*sizeof(uint32_t);
@@ -3012,78 +3036,78 @@ namespace music
             return ::music::success;
          }
 
-/*         e_result buffer::CreateTempoMap()
+         /*         e_result buffer::CreateTempoMap()
+                  {
+                     bool bFirst = true;
+                     ::music::midi::tempo_map_entry tempo;
+                     e_result smfrc;
+                     ::music::midi::event * pevent;
+                     m_ptracks->WorkSeekBegin();
+                     while (::music::success
+                        == (smfrc = WorkGetNextRawMidiEvent(pevent, MAX_TICKS, TRUE)))
+                     {
+                        if (::music::midi::Meta == pevent->GetFullType() &&
+                           ::music::midi::MetaTempo == pevent->GetMetaType() &&
+                           (pevent->GetFlags() != 1))
+                        {
+                           if (3 != pevent->GetParamSize())
+                           {
+                              return EInvalidFile;
+                           }
+
+                           if (bFirst && m_ptracks->m_tkPosition != 0)
+                           {
+                              /* Inserting first event and the absolute time is zero.
+                              ** Use defaults of 500,000 uSec/qn from MIDI spec
+                              */
+
+         /*tempo.tkTempo = 0;
+         tempo.msBase  = 0;
+         tempo.dwTempo = ::music::midi::DefaultTempo;
+         m_tempomap.add(tempo);
+
+
+         bFirst = false;
+         }
+
+         tempo.tkTempo = m_ptracks->m_tkPosition;
+
+         if (bFirst)
+         tempo.msBase = 0;
+         else
          {
-            bool bFirst = true;
-            ::music::midi::tempo_map_entry tempo;
-            e_result smfrc;
-            ::music::midi::event * pevent;
-            m_ptracks->WorkSeekBegin();
-            while (::music::success
-               == (smfrc = WorkGetNextRawMidiEvent(pevent, MAX_TICKS, TRUE)))
-            {
-               if (::music::midi::Meta == pevent->GetFullType() &&
-                  ::music::midi::MetaTempo == pevent->GetMetaType() &&
-                  (pevent->GetFlags() != 1))
-               {
-                  if (3 != pevent->GetParamSize())
-                  {
-                     return EInvalidFile;
-                  }
+         ::music::midi::tempo_map_entry * pLastTempo = &m_tempomap.element_at(m_tempomap.get_size() - 1) ;
+         /* NOTE: Better not be here unless we're q/n format!
+         */
+         //                ptempo->msBase = (ptempo-1)->msBase +
+         //                               muldiv32(ptempo->tkTempo-((ptempo-1)->tkTempo),
+         //                                      (ptempo-1)->dwTempo,
+         //                                    1000L*m_dwTimeDivision);
+         /*tempo.msBase = (pLastTempo)->msBase +
+            muldiv32((int32_t) (tempo.tkTempo-((pLastTempo)->tkTempo)),
+            (pLastTempo)->dwTempo,
+            1000L * m_dwTimeDivision);
+         }
 
-                  if (bFirst && m_ptracks->m_tkPosition != 0)
-                  {
-                     /* Inserting first event and the absolute time is zero.
-                     ** Use defaults of 500,000 uSec/qn from MIDI spec
-                     */
+         tempo.dwTempo = (((uint32_t)pevent->GetParam()[0])<<16) |
+         (((uint32_t)pevent->GetParam()[1])<<8) |
+         ((uint32_t)pevent->GetParam()[2]);
 
-                     /*tempo.tkTempo = 0;
-                     tempo.msBase  = 0;
-                     tempo.dwTempo = ::music::midi::DefaultTempo;
-                     m_tempomap.add(tempo);
+         m_tempomap.add(tempo);
+         }
+         }
+         if (0 == m_tempomap.get_size())
+         {
+         TRACE("File contains no tempo map! Insert default tempo.");
 
+         ::music::midi::tempo_map_entry * ptempo = &m_tempomap.add_new();
+         ptempo->tkTempo = 0;
+         ptempo->msBase  = 0;
+         //      ptempo->dwTempo = DefaultTempo;
+         ptempo->dwTempo = ::music::midi::DefaultTempo;
+         }
 
-                     bFirst = false;
-                  }
-
-                  tempo.tkTempo = m_ptracks->m_tkPosition;
-
-                  if (bFirst)
-                     tempo.msBase = 0;
-                  else
-                  {
-                     ::music::midi::tempo_map_entry * pLastTempo = &m_tempomap.element_at(m_tempomap.get_size() - 1) ;
-                     /* NOTE: Better not be here unless we're q/n format!
-                     */
-                     //                ptempo->msBase = (ptempo-1)->msBase +
-                     //                               muldiv32(ptempo->tkTempo-((ptempo-1)->tkTempo),
-                     //                                      (ptempo-1)->dwTempo,
-                     //                                    1000L*m_dwTimeDivision);
-                     /*tempo.msBase = (pLastTempo)->msBase +
-                        muldiv32((int32_t) (tempo.tkTempo-((pLastTempo)->tkTempo)),
-                        (pLastTempo)->dwTempo,
-                        1000L * m_dwTimeDivision);
-                  }
-
-                  tempo.dwTempo = (((uint32_t)pevent->GetParam()[0])<<16) |
-                     (((uint32_t)pevent->GetParam()[1])<<8) |
-                     ((uint32_t)pevent->GetParam()[2]);
-
-                  m_tempomap.add(tempo);
-               }
-            }
-            if (0 == m_tempomap.get_size())
-            {
-               TRACE("File contains no tempo map! Insert default tempo.");
-
-               ::music::midi::tempo_map_entry * ptempo = &m_tempomap.add_new();
-               ptempo->tkTempo = 0;
-               ptempo->msBase  = 0;
-               //      ptempo->dwTempo = DefaultTempo;
-               ptempo->dwTempo = ::music::midi::DefaultTempo;
-            }
-
-            return ::music::success;
+         return ::music::success;
 
          }*/
 

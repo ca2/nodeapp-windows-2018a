@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.10
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_flag", "..\..\..\app-core\appseed\flag\flag.vcxproj", "{4467CF99-AD0F-403B-8E30-3CBA23756713}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -96,6 +96,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_rdpclient", "..\..
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86} = {E2D7833B-9B59-4826-BBDF-C270A2115E86}
 		{11AFE887-61B7-4217-913C-36736B359F39} = {11AFE887-61B7-4217-913C-36736B359F39}
 		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF} = {9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}
+		{D47829CA-5441-4A01-9C34-19C3598410DF} = {D47829CA-5441-4A01-9C34-19C3598410DF}
+		{D620EED4-10A9-4C54-8DEE-A52B9D178A4D} = {D620EED4-10A9-4C54-8DEE-A52B9D178A4D}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_clockverse", "..\..\..\app-core\appseed\clockverse\clockverse.vcxproj", "{8477055E-C614-4A5D-BB61-197784151104}"
@@ -167,10 +169,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audio_decode_libmpg123", ".
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tesseract", "..\..\..\app-core\appseed\tesseract\tesseract.vcxproj", "{437699AD-7464-4E5F-ACF3-7167487A9E3D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rdpsnd-client-audio_decode", "..\..\..\app-core\appseed\rdpsnd-client-audio_decode\rdpsnd-client-audio_decode.vcxproj", "{D47829CA-5441-4A01-9C34-19C3598410DF}"
+EndProject
 Global
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
 		basis|x64 = basis|x64
@@ -700,12 +701,27 @@ Global
 		{437699AD-7464-4E5F-ACF3-7167487A9E3D}.stage|Win32.Build.0 = stage|Win32
 		{437699AD-7464-4E5F-ACF3-7167487A9E3D}.stage|x64.ActiveCfg = stage|x64
 		{437699AD-7464-4E5F-ACF3-7167487A9E3D}.stage|x64.Build.0 = stage|x64
+		{D47829CA-5441-4A01-9C34-19C3598410DF}.basis|Win32.ActiveCfg = basis|Win32
+		{D47829CA-5441-4A01-9C34-19C3598410DF}.basis|Win32.Build.0 = basis|Win32
+		{D47829CA-5441-4A01-9C34-19C3598410DF}.basis|x64.ActiveCfg = basis|x64
+		{D47829CA-5441-4A01-9C34-19C3598410DF}.basis|x64.Build.0 = basis|x64
+		{D47829CA-5441-4A01-9C34-19C3598410DF}.cover|Win32.ActiveCfg = cover|Win32
+		{D47829CA-5441-4A01-9C34-19C3598410DF}.cover|Win32.Build.0 = cover|Win32
+		{D47829CA-5441-4A01-9C34-19C3598410DF}.cover|x64.ActiveCfg = cover|x64
+		{D47829CA-5441-4A01-9C34-19C3598410DF}.cover|x64.Build.0 = cover|x64
+		{D47829CA-5441-4A01-9C34-19C3598410DF}.stage|Win32.ActiveCfg = stage|Win32
+		{D47829CA-5441-4A01-9C34-19C3598410DF}.stage|Win32.Build.0 = stage|Win32
+		{D47829CA-5441-4A01-9C34-19C3598410DF}.stage|x64.ActiveCfg = stage|x64
+		{D47829CA-5441-4A01-9C34-19C3598410DF}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7B0DDBB4-15A7-4406-9A77-701A91DF487E}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true

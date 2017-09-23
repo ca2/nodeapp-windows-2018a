@@ -28,7 +28,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "draw2d_gdiplus", "..\..\app
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wndfrm_core", "..\..\..\app-core\appseed\wndfrm_core\wndfrm_core.vcxproj", "{E2D7833B-9B59-4826-BBDF-C270A2115E86}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\app.vcxproj", "{19841115-1984-0411-1977-021977151984}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\app.vcxproj", "{20001115-2000-0411-1977-021977152000}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_user_service", "..\..\..\app-core\appseed\user_service\user_service.vcxproj", "{24C82076-D68C-476A-ADCF-0054511FC3E4}"
 EndProject
@@ -204,20 +204,20 @@ Global
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.stage|Win32.Build.0 = stage|Win32
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.stage|x64.ActiveCfg = stage|x64
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.stage|x64.Build.0 = stage|x64
-		{19841115-1984-0411-1977-021977151984}.basis|Win32.ActiveCfg = basis|Win32
-		{19841115-1984-0411-1977-021977151984}.basis|Win32.Build.0 = basis|Win32
-		{19841115-1984-0411-1977-021977151984}.basis|x64.ActiveCfg = basis|x64
-		{19841115-1984-0411-1977-021977151984}.basis|x64.Build.0 = basis|x64
-		{19841115-1984-0411-1977-021977151984}.cover|Win32.ActiveCfg = cover|Win32
-		{19841115-1984-0411-1977-021977151984}.cover|Win32.Build.0 = cover|Win32
-		{19841115-1984-0411-1977-021977151984}.cover|Win32.Deploy.0 = cover|Win32
-		{19841115-1984-0411-1977-021977151984}.cover|x64.ActiveCfg = cover|x64
-		{19841115-1984-0411-1977-021977151984}.cover|x64.Build.0 = cover|x64
-		{19841115-1984-0411-1977-021977151984}.cover|x64.Deploy.0 = cover|x64
-		{19841115-1984-0411-1977-021977151984}.stage|Win32.ActiveCfg = stage|Win32
-		{19841115-1984-0411-1977-021977151984}.stage|Win32.Build.0 = stage|Win32
-		{19841115-1984-0411-1977-021977151984}.stage|x64.ActiveCfg = stage|x64
-		{19841115-1984-0411-1977-021977151984}.stage|x64.Build.0 = stage|x64
+		{20001115-2000-0411-1977-021977152000}.basis|Win32.ActiveCfg = basis|Win32
+		{20001115-2000-0411-1977-021977152000}.basis|Win32.Build.0 = basis|Win32
+		{20001115-2000-0411-1977-021977152000}.basis|x64.ActiveCfg = basis|x64
+		{20001115-2000-0411-1977-021977152000}.basis|x64.Build.0 = basis|x64
+		{20001115-2000-0411-1977-021977152000}.cover|Win32.ActiveCfg = cover|Win32
+		{20001115-2000-0411-1977-021977152000}.cover|Win32.Build.0 = cover|Win32
+		{20001115-2000-0411-1977-021977152000}.cover|Win32.Deploy.0 = cover|Win32
+		{20001115-2000-0411-1977-021977152000}.cover|x64.ActiveCfg = cover|x64
+		{20001115-2000-0411-1977-021977152000}.cover|x64.Build.0 = cover|x64
+		{20001115-2000-0411-1977-021977152000}.cover|x64.Deploy.0 = cover|x64
+		{20001115-2000-0411-1977-021977152000}.stage|Win32.ActiveCfg = stage|Win32
+		{20001115-2000-0411-1977-021977152000}.stage|Win32.Build.0 = stage|Win32
+		{20001115-2000-0411-1977-021977152000}.stage|x64.ActiveCfg = stage|x64
+		{20001115-2000-0411-1977-021977152000}.stage|x64.Build.0 = stage|x64
 		{24C82076-D68C-476A-ADCF-0054511FC3E4}.basis|Win32.ActiveCfg = basis|Win32
 		{24C82076-D68C-476A-ADCF-0054511FC3E4}.basis|Win32.Build.0 = basis|Win32
 		{24C82076-D68C-476A-ADCF-0054511FC3E4}.basis|x64.ActiveCfg = basis|x64

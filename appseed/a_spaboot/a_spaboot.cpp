@@ -72,7 +72,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
    if(!spaboot_RegisterClass(hInstance))
       return -1;
 
-   g_hwndMessage = ::CreateWindowExA(0, "TeDigoSó", "ca2::fontopus::ccvotagus::spaboot:callback_window", 0, 0, 0, 0, 0, HWND_MESSAGE, NULL, NULL, NULL);
+   g_hwndMessage = ::CreateWindowExA(0, "TeDigoSï¿½", "ca2::fontopus::ccvotagus::spaboot:callback_window", 0, 0, 0, 0, 0, HWND_MESSAGE, NULL, NULL, NULL);
 
    DWORD dw = GetLastError();
    if(g_hwndMessage == NULL)
@@ -167,7 +167,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
          break;
       if(dwExitCode != STILL_ACTIVE)
          break;
-      Sleep(84);
+      Sleep(100);
       if(PeekMessage(&g_msg, NULL, 0, 0xffffffffu, PM_REMOVE))
       {
    //		if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
@@ -195,7 +195,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
       iRetry++;
       if(iRetry > 30)
          break;
-      Sleep(1984 + 1977);
+      Sleep(2000 + 1977);
    }
    if(iRetry > 30)
    {
@@ -213,7 +213,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		   DispatchMessage(&g_msg);
    //		}
 	   }
-      Sleep(84);
+      Sleep(100);
    }
 
    return start();
@@ -450,7 +450,7 @@ ATOM spaboot_RegisterClass(HINSTANCE hInstance)
 	wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
 	//wcex.lpszMenuName	= MAKEINTRESOURCE(IDC_CCVOTAGUS_CA2_SPA);
    wcex.lpszMenuName	   = NULL;
-	wcex.lpszClassName	= "TeDigoSó";
+	wcex.lpszClassName	= "TeDigoSï¿½";
 	wcex.hIconSm		   = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
 	return RegisterClassEx(&wcex);
@@ -473,7 +473,7 @@ LRESULT CALLBACK spaboot_WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
    case WM_COPYDATA:
       {
          COPYDATASTRUCT * pcds = (COPYDATASTRUCT *) lParam;
-         if(pcds->dwData == 15111984)
+         if(pcds->dwData == 15112000)
          {
             std::string str((const char *) pcds->lpData, pcds->cbData);
             g_straRestartCommandLine.decode_v16(str.c_str());

@@ -1,5 +1,17 @@
 #include "framework.h"
 
+bool almost_integer(double d)
+{
+
+   if (fmod(fabs(d), 1.0) < 0.01)
+   {
+
+      return true;
+
+   }
+
+   return false;
+}
 
 namespace draw2d_gdiplus
 {
@@ -124,7 +136,7 @@ namespace draw2d_gdiplus
 
    }
 
-   bool path::internal_add_line(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
+   bool path::internal_add_line(double x1, double y1, double x2, double y2)
    {
 
 
@@ -146,15 +158,42 @@ namespace draw2d_gdiplus
 
          if (m_bHasPointInternal)
          {
+            if (almost_integer(m_ptInternal.X)
+                  && almost_integer(m_ptInternal.Y)
+                  && almost_integer(x1)
+                  && almost_integer(x2))
+            {
 
-            bOk1 = m_ppath->AddLine(m_ptInternal.X, m_ptInternal.Y, (FLOAT)x1, (FLOAT)y1) == Gdiplus::Status::Ok;
+               bOk1 = m_ppath->AddLine((INT) m_ptInternal.X, (INT)m_ptInternal.Y, (INT)x1, (INT)y1) == Gdiplus::Status::Ok;
+
+            }
+            else
+            {
+
+               bOk1 = m_ppath->AddLine(m_ptInternal.X, m_ptInternal.Y, (FLOAT)x1, (FLOAT)y1) == Gdiplus::Status::Ok;
+
+            }
 
          }
 
          if (bOk1)
          {
 
-            bOk2 = m_ppath->AddLine(x1, y1, x2, y2) == Gdiplus::Status::Ok;
+            if (almost_integer(m_ptInternal.X)
+                  && almost_integer(m_ptInternal.Y)
+                  && almost_integer(x1)
+                  && almost_integer(x2))
+            {
+
+               bOk2 = m_ppath->AddLine((INT) x1, (INT) y1, (INT) x2, (INT) y2) == Gdiplus::Status::Ok;
+
+            }
+            else
+            {
+
+               bOk2 = m_ppath->AddLine((FLOAT)x1, (FLOAT)y1, (FLOAT)x2, (FLOAT)y2) == Gdiplus::Status::Ok;
+
+            }
 
          }
 
@@ -174,7 +213,7 @@ namespace draw2d_gdiplus
    }
 
 
-   bool path::internal_add_rect(int32_t x,int32_t y,int32_t cx,int32_t cy)
+   bool path::internal_add_rect(double x,double y, double cx, double cy)
    {
 
       if (m_ppath == NULL)
@@ -184,27 +223,59 @@ namespace draw2d_gdiplus
 
       }
 
-      Gdiplus::Rect rect(x,y,cx,cy);
-
       bool bOk2 = false;
 
-      try
+      if (almost_integer(x) && almost_integer(cx) && almost_integer(y) && almost_integer(cy))
       {
 
-         bOk2 = m_ppath->AddRectangle(rect) == Gdiplus::Status::Ok;
+         Gdiplus::Rect rect(
+            convert < INT > (x),
+            convert < INT > (y),
+            convert < INT > (cx),
+            convert < INT > (cy)
+         );
+
+         try
+         {
+
+            bOk2 = m_ppath->AddRectangle(rect) == Gdiplus::Status::Ok;
+
+         }
+         catch (...)
+         {
+
+
+         }
 
       }
-      catch (...)
+      else
       {
 
+         Gdiplus::RectF rect(
+            convert < FLOAT >(x),
+            convert < FLOAT >(y),
+            convert < FLOAT >(cx),
+            convert < FLOAT >(cy)
+         );
 
+         try
+         {
+
+            bOk2 = m_ppath->AddRectangle(rect) == Gdiplus::Status::Ok;
+
+         }
+         catch (...)
+         {
+
+
+         }
       }
 
       return bOk2;
 
    }
 
-   bool path::internal_add_line(int32_t x, int32_t y)
+   bool path::internal_add_line(double x, double y)
    {
 
       bool bOk1 = true;
@@ -212,7 +283,21 @@ namespace draw2d_gdiplus
       if(m_bHasPointInternal)
       {
 
-         bOk1 = m_ppath->AddLine(m_ptInternal.X, m_ptInternal.Y, (FLOAT) x, (FLOAT) y) == Gdiplus::Status::Ok;
+         if (almost_integer(m_ptInternal.X)
+               && almost_integer(m_ptInternal.Y)
+               && almost_integer(x)
+               && almost_integer(y))
+         {
+
+            bOk1 = m_ppath->AddLine((INT) m_ptInternal.X, (INT)m_ptInternal.Y, (INT)x, (INT)y) == Gdiplus::Status::Ok;
+
+         }
+         else
+         {
+
+            bOk1 = m_ppath->AddLine((FLOAT)m_ptInternal.X, (FLOAT) m_ptInternal.Y, (FLOAT)x, (FLOAT)y) == Gdiplus::Status::Ok;
+
+         }
 
       }
 
@@ -233,7 +318,7 @@ namespace draw2d_gdiplus
    }
 
 
-   bool path::internal_add_move(int32_t x, int32_t y)
+   bool path::internal_add_move(double x, double y)
    {
 
       if(!m_bHasPointInternal)
@@ -250,53 +335,53 @@ namespace draw2d_gdiplus
 
    }
 
-   bool path::internal_add_rect(double x,double y,double cx,double cy)
-   {
+   //bool path::internal_add_rect(double x,double y,double cx,double cy)
+   //{
 
-      if (m_ppath == NULL)
-      {
+   //   if (m_ppath == NULL)
+   //   {
 
-         return false;
+   //      return false;
 
-      }
+   //   }
 
-      bool bOk2 = false;
+   //   bool bOk2 = false;
 
-      try
-      {
+   //   try
+   //   {
 
-         Gdiplus::RectF rectf((Gdiplus::REAL)x, (Gdiplus::REAL)y, (Gdiplus::REAL)cx, (Gdiplus::REAL)cy);
+   //      Gdiplus::RectF rectf((Gdiplus::REAL)x, (Gdiplus::REAL)y, (Gdiplus::REAL)cx, (Gdiplus::REAL)cy);
 
-         bOk2 = m_ppath->AddRectangle(rectf) == Gdiplus::Status::Ok;
+   //      bOk2 = m_ppath->AddRectangle(rectf) == Gdiplus::Status::Ok;
 
-      }
-      catch (...)
-      {
-
-
-      }
-
-      return bOk2;
-
-   }
+   //   }
+   //   catch (...)
+   //   {
 
 
-   bool path::internal_add_move(double x,double y)
-   {
+   //   }
 
-      if(!m_bHasPointInternal)
-      {
-         internal_begin_figure(m_bFill,m_efillmode);
-      }
+   //   return bOk2;
 
-      m_ptInternal.X   = (Gdiplus::REAL) x;
-      m_ptInternal.Y   = (Gdiplus::REAL) y;
-      m_bHasPointInternal     = true;
+   //}
 
 
-      return true;
+   //bool path::internal_add_move(double x,double y)
+   //{
 
-   }
+   //   if(!m_bHasPointInternal)
+   //   {
+   //      internal_begin_figure(m_bFill,m_efillmode);
+   //   }
+
+   //   m_ptInternal.X   = (Gdiplus::REAL) x;
+   //   m_ptInternal.Y   = (Gdiplus::REAL) y;
+   //   m_bHasPointInternal     = true;
+
+
+   //   return true;
+
+   //}
 
 
    bool path::create(Gdiplus::Graphics * pgraphics)
@@ -465,12 +550,12 @@ namespace draw2d_gdiplus
          ((Gdiplus::Font *) spfont->get_os_data())->GetFamily(&fontFamily);
          //      Gdiplus::Status status;
 
-               //Gdiplus::StringFormat format();
+         //Gdiplus::StringFormat format();
 
          format.SetFormatFlags(format.GetFormatFlags()
-            | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
-            | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap
-            | Gdiplus::StringFormatFlagsNoFitBlackBox);
+                               | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
+                               | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap
+                               | Gdiplus::StringFormatFlagsNoFitBlackBox);
 
 
          format.SetLineAlignment(Gdiplus::StringAlignmentNear);
@@ -523,7 +608,7 @@ namespace draw2d_gdiplus
    bool path::set(const ::draw2d::path::line & l)
    {
 
-      internal_add_line((int32_t) l.m_x, (int32_t) l.m_y);
+      internal_add_line(l.m_x, l.m_y);
 
       return true;
 

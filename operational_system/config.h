@@ -38,9 +38,10 @@
 #endif
 #define DECL_C __cdecl
 
-#ifndef NOCRYPT
-#define NOCRYPT
-#endif
+// This avoids use of crypt for Zip compressing code
+// #ifndef NOCRYPT
+// #define NOCRYPT
+// #endif
 
 #ifndef _CRT_SECURE_NO_WARNINGS
 #define _CRT_SECURE_NO_WARNINGS
