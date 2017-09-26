@@ -215,7 +215,7 @@ appfy::appfy() :
    m_iSizeModule = 0;
    m_bInstallerInstalling = false;
 
-   construct(NULL);
+   //construct(NULL);
 
    m_pauraapp = this;
 
