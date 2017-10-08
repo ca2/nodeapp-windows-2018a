@@ -2661,7 +2661,7 @@ seq_Preroll_Cleanup:
 
             synch_lock sl(&get_midi_mutex());
 
-            TRACE0("::music::midi::mmsystem::player::SendReset : (0)");
+            TRACE("::music::midi::mmsystem::player::SendReset : (0)");
 
             HMIDIOUT hmidiout = NULL;
 

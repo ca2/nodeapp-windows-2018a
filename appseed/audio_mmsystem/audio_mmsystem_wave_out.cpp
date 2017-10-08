@@ -306,7 +306,7 @@ Opened:
          if(mmr != ::multimedia::result_success)
          {
 
-            TRACE0(::multimedia::strerror(mmr));
+            TRACE(::multimedia::strerror(mmr));
 
             return mmr;
 
