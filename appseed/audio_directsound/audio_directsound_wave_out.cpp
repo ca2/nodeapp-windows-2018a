@@ -356,7 +356,7 @@ namespace multimedia
          if(mmr != ::multimedia::result_success)
          {
 
-            TRACE0(::multimedia::strerror(mmr));
+            TRACE("%s", ::multimedia::strerror(mmr));
 
             return mmr;
 
