@@ -515,7 +515,7 @@
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <CompileAsManaged>false</CompileAsManaged>
-      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <CompileAsWinRT>false</CompileAsWinRT>
@@ -529,6 +529,8 @@
       </SDLCheck>
       <CreateHotpatchableImage>false</CreateHotpatchableImage>
       <UseFullPaths>true</UseFullPaths>
+      <OmitFramePointers>true</OmitFramePointers>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -885,19 +887,19 @@
       <CompileAsManaged>false</CompileAsManaged>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <CompileAsWinRT>false</CompileAsWinRT>
-      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
       <FloatingPointModel>Fast</FloatingPointModel>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
-      <BufferSecurityCheck>
-      </BufferSecurityCheck>
-      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <EnableParallelCodeGeneration>false</EnableParallelCodeGeneration>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <WholeProgramOptimization>true</WholeProgramOptimization>
       <SDLCheck>
       </SDLCheck>
       <CreateHotpatchableImage>false</CreateHotpatchableImage>
       <UseFullPaths>true</UseFullPaths>
+      <OmitFramePointers>true</OmitFramePointers>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>

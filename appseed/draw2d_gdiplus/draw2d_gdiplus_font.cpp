@@ -27,46 +27,49 @@ namespace draw2d_gdiplus
 
 
    font::~font()
-   { 
+   {
 
       if(m_pfont != NULL)
       {
          delete m_pfont;
          m_pfont = NULL;
       }
-   
+
    }
 
    void font::construct(const ::draw2d::font & fontParam)
+   {
+      class font & font = const_cast < ::draw2d_gdiplus::font & > (dynamic_cast < const ::draw2d_gdiplus::font & > (fontParam));
+      if(font.m_pfont == NULL)
       {
-         class font & font = const_cast < ::draw2d_gdiplus::font & > (dynamic_cast < const ::draw2d_gdiplus::font & > (fontParam));
-         if(font.m_pfont == NULL)
+         if(m_pfont != NULL)
          {
-            if(m_pfont != NULL)
-            {
-               delete m_pfont;
-               m_pfont = NULL;
-            }
-         }
-         else
-         {
-            m_pfont = font.m_pfont->Clone();
+            delete m_pfont;
+            m_pfont = NULL;
          }
       }
-
-
-      void font::dump(dump_context & dumpcontext) const
+      else
       {
-         ::draw2d::object::dump(dumpcontext);
-
+         m_pfont = font.m_pfont->Clone();
       }
+   }
 
+
+#ifdef DEBUG
+
+   void font::dump(dump_context & dumpcontext) const
+   {
+      ::draw2d::object::dump(dumpcontext);
+
+   }
+
+#endif
 
 
 
    void * font::get_os_data() const
    {
-      
+
       if(m_pfont == NULL || !m_bUpdated)
       {
          if(m_pfont != NULL)
@@ -118,14 +121,14 @@ namespace draw2d_gdiplus
             unit = Gdiplus::UnitPoint;
             break;
          };
-         
+
          //retry_single_lock slGdiplus(&System.s_mutexGdiplus, millis(1), millis(1));
 
          ((font *) this)->m_pfont = new Gdiplus::Font(
-               ::str::international::utf8_to_unicode(m_strFontFamilyName),
-               (Gdiplus::REAL) m_dFontSize,
-               iStyle,
-               unit);
+            ::str::international::utf8_to_unicode(m_strFontFamilyName),
+            (Gdiplus::REAL) m_dFontSize,
+            iStyle,
+            unit);
 
       }
 

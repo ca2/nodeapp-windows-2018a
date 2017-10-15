@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 BOOL CALLBACK draw2d_gdiplus_EnumFamCallBack(LPLOGFONT lplf,LPNEWTEXTMETRIC lpntm,DWORD FontType,LPVOID p);
 
@@ -54,7 +54,7 @@ namespace draw2d_gdiplus
 
    }
 
-
+#ifdef DEBUG
    void graphics::assert_valid() const
    {
 
@@ -74,6 +74,7 @@ namespace draw2d_gdiplus
       dumpcontext << "\n";
    }
 
+#endif
 
    graphics::~graphics()
    {

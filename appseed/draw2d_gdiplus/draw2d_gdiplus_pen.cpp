@@ -7,14 +7,14 @@ namespace draw2d_gdiplus
 
    pen::pen(::aura::application * papp) :
       ::object(papp)
-   { 
+   {
       m_egdiplusalign = (Gdiplus::PenAlignment) -1;
       m_ppen = NULL;
 
    }
 
    pen::~pen()
-   { 
+   {
       if(m_ppen != NULL)
       {
          delete m_ppen;
@@ -24,54 +24,56 @@ namespace draw2d_gdiplus
 
 
 
+#ifdef DEBUG
+
    void pen::dump(dump_context & dumpcontext) const
    {
       ::draw2d::object::dump(dumpcontext);
 
-/*      if (get_handle() == NULL)
-         return;
+      /*      if (get_handle() == NULL)
+               return;
 
-      if (!afxData.bWin95 && ::GetObjectType(get_handle()) != OBJ_PEN)
-      {
-         // not a valid object
-         dumpcontext << "has ILLEGAL HPEN!";
-         return;
-      }
+            if (!afxData.bWin95 && ::GetObjectType(get_handle()) != OBJ_PEN)
+            {
+               // not a valid object
+               dumpcontext << "has ILLEGAL HPEN!";
+               return;
+            }
 
-      LOGPEN lp;
-      VERIFY(GetObject(sizeof(lp), &lp));
-      dumpcontext << "lgpn.lopnStyle = " << lp.lopnStyle;
-      dumpcontext << "\nlgpn.lopnWidth.x (width) = " << lp.lopnWidth.x;
-      dumpcontext << "\nlgpn.lopnColor = " << (void *)(uint_ptr)lp.lopnColor;
+            LOGPEN lp;
+            VERIFY(GetObject(sizeof(lp), &lp));
+            dumpcontext << "lgpn.lopnStyle = " << lp.lopnStyle;
+            dumpcontext << "\nlgpn.lopnWidth.x (width) = " << lp.lopnWidth.x;
+            dumpcontext << "\nlgpn.lopnColor = " << (void *)(uint_ptr)lp.lopnColor;
 
-      dumpcontext << "\n";*/
+            dumpcontext << "\n";*/
    }
 
+#endif
 
 
 
+   // IMPLEMENT_DYNAMIC(resource_exception, ::exception::base)
+   //resource_exception _simpleResourceException(FALSE, __IDS_RESOURCE_EXCEPTION);
 
-      // IMPLEMENT_DYNAMIC(resource_exception, ::exception::base)
-      //resource_exception _simpleResourceException(FALSE, __IDS_RESOURCE_EXCEPTION);
+   // IMPLEMENT_DYNAMIC(user_exception, ::exception::base)
+   //user_exception _simpleUserException(FALSE, __IDS_USER_EXCEPTION);
 
-      // IMPLEMENT_DYNAMIC(user_exception, ::exception::base)
-      //user_exception _simpleUserException(FALSE, __IDS_USER_EXCEPTION);
+   // IMPLEMENT_DYNCREATE(::draw2d::graphics_sp, object)
+   // IMPLEMENT_DYNAMIC(CClientDC, ::draw2d::graphics_sp)
+   // IMPLEMENT_DYNAMIC(CWindowDC, ::draw2d::graphics_sp)
+   // IMPLEMENT_DYNAMIC(CPaintDC, ::draw2d::graphics_sp)
+   // IMPLEMENT_DYNCREATE(::draw2d::object, object)
 
-      // IMPLEMENT_DYNCREATE(::draw2d::graphics_sp, object)
-      // IMPLEMENT_DYNAMIC(CClientDC, ::draw2d::graphics_sp)
-      // IMPLEMENT_DYNAMIC(CWindowDC, ::draw2d::graphics_sp)
-      // IMPLEMENT_DYNAMIC(CPaintDC, ::draw2d::graphics_sp)
-      // IMPLEMENT_DYNCREATE(::draw2d::object, object)
+   // IMPLEMENT_DYNAMIC(pen, ::draw2d::object)
+   // IMPLEMENT_DYNAMIC(::draw2d::brush, ::draw2d::object)
+   // IMPLEMENT_DYNAMIC(::draw2d::font, ::draw2d::object)
+   // IMPLEMENT_DYNAMIC(::draw2d::bitmap, ::draw2d::object)
+   // IMPLEMENT_DYNAMIC(::draw2d::palette, ::draw2d::object)
+   // IMPLEMENT_DYNAMIC(::draw2d::region, ::draw2d::object)
 
-      // IMPLEMENT_DYNAMIC(pen, ::draw2d::object)
-      // IMPLEMENT_DYNAMIC(::draw2d::brush, ::draw2d::object)
-      // IMPLEMENT_DYNAMIC(::draw2d::font, ::draw2d::object)
-      // IMPLEMENT_DYNAMIC(::draw2d::bitmap, ::draw2d::object)
-      // IMPLEMENT_DYNAMIC(::draw2d::palette, ::draw2d::object)
-      // IMPLEMENT_DYNAMIC(::draw2d::region, ::draw2d::object)
-
-      /////////////////////////////////////////////////////////////////////////////
-      // Standard exception processing
+   /////////////////////////////////////////////////////////////////////////////
+   // Standard exception processing
 
 
    /*void __get_gray_bitmap(::aura::application * papp, const ::draw2d::bitmap &rSrc, ::draw2d::bitmap *pDest, COLORREF crBackground)
@@ -92,7 +94,7 @@ namespace draw2d_gdiplus
          graphicsMask->CreateCompatibleDC(NULL))
       {
          const_cast<::draw2d::bitmap &>(rSrc).GetBitmap(&bm);
-//         pDest->delete_object();
+   //         pDest->delete_object();
          if(pDest->CreateBitmap(bm.bmWidth, bm.bmHeight, bm.bmPlanes, bm.bmBitsPixel, NULL) &&
             bmpMask->CreateBitmap(bm.bmWidth, bm.bmHeight, 1, 1, NULL))
          {
@@ -306,11 +308,11 @@ namespace draw2d_gdiplus
       }
    }
 
-*/
+   */
 
    void * pen::get_os_data() const
    {
-      
+
       if(m_ppen == NULL || !m_bUpdated)
       {
          if(m_ppen != NULL)
@@ -319,17 +321,17 @@ namespace draw2d_gdiplus
          }
          if (m_etype == type_brush)
          {
-            
+
             ((pen *) this)->m_ppen = new Gdiplus::Pen((Gdiplus::Brush *) m_br.cast < brush >()->get_os_data(), (Gdiplus::REAL) m_dWidth);
 
          }
          else
          {
             ((pen *) this)->m_ppen = new Gdiplus::Pen(Gdiplus::Color(
-               argb_get_a_value(m_cr),
-               argb_get_r_value(m_cr),
-               argb_get_g_value(m_cr),
-               argb_get_b_value(m_cr)), (Gdiplus::REAL) m_dWidth);
+                     argb_get_a_value(m_cr),
+                     argb_get_r_value(m_cr),
+                     argb_get_g_value(m_cr),
+                     argb_get_b_value(m_cr)), (Gdiplus::REAL) m_dWidth);
 
          }
          switch(m_elinejoin)
