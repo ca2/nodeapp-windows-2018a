@@ -9,7 +9,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_axis", "..\..\..\app\appse
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_draw2d_gdiplus", "..\..\appseed\draw2d_gdiplus\_draw2d_gdiplus.vcxproj", "{573C4B5E-4132-457A-BE82-05A882A062FF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_app_helloworld", "..\..\..\app\appseed\helloaxis\_helloaxis.vcxproj", "{C7AFCEFA-3079-4B23-8F97-4543BB980265}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_app_helloaxis", "..\..\..\app\appseed\helloaxis\_helloaxis.vcxproj", "{C7AFCEFA-3079-4B23-8F97-4543BB980265}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_app_helloaura", "..\..\..\..\basis\app\appseed\helloaura\_helloaura.vcxproj", "{DF41F4CA-E115-416F-9A54-4673473FB593}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +89,22 @@ Global
 		{C7AFCEFA-3079-4B23-8F97-4543BB980265}.stage|Win32.Build.0 = stage|Win32
 		{C7AFCEFA-3079-4B23-8F97-4543BB980265}.stage|x64.ActiveCfg = stage|x64
 		{C7AFCEFA-3079-4B23-8F97-4543BB980265}.stage|x64.Build.0 = stage|x64
+		{DF41F4CA-E115-416F-9A54-4673473FB593}.basis|Win32.ActiveCfg = basis|Win32
+		{DF41F4CA-E115-416F-9A54-4673473FB593}.basis|Win32.Build.0 = basis|Win32
+		{DF41F4CA-E115-416F-9A54-4673473FB593}.basis|x64.ActiveCfg = basis|x64
+		{DF41F4CA-E115-416F-9A54-4673473FB593}.basis|x64.Build.0 = basis|x64
+		{DF41F4CA-E115-416F-9A54-4673473FB593}.cover|Win32.ActiveCfg = cover|Win32
+		{DF41F4CA-E115-416F-9A54-4673473FB593}.cover|Win32.Build.0 = cover|Win32
+		{DF41F4CA-E115-416F-9A54-4673473FB593}.cover|x64.ActiveCfg = cover|x64
+		{DF41F4CA-E115-416F-9A54-4673473FB593}.cover|x64.Build.0 = cover|x64
+		{DF41F4CA-E115-416F-9A54-4673473FB593}.small|Win32.ActiveCfg = small|Win32
+		{DF41F4CA-E115-416F-9A54-4673473FB593}.small|Win32.Build.0 = small|Win32
+		{DF41F4CA-E115-416F-9A54-4673473FB593}.small|x64.ActiveCfg = small|x64
+		{DF41F4CA-E115-416F-9A54-4673473FB593}.small|x64.Build.0 = small|x64
+		{DF41F4CA-E115-416F-9A54-4673473FB593}.stage|Win32.ActiveCfg = stage|Win32
+		{DF41F4CA-E115-416F-9A54-4673473FB593}.stage|Win32.Build.0 = stage|Win32
+		{DF41F4CA-E115-416F-9A54-4673473FB593}.stage|x64.ActiveCfg = stage|x64
+		{DF41F4CA-E115-416F-9A54-4673473FB593}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
