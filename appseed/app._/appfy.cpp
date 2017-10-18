@@ -122,39 +122,6 @@ class appfy :
 
 };
 
-//CLASS_DECL_AURA ::exception::engine * g_ee;
-//void init_ee(::exception::engine * ee);
-// if MSVC CRT is used
-//extern "C" int32_t WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
-//{
-//
-//   if (!defer_aura_init())
-//   {
-//
-//      return -1;
-//
-//   }
-//
-//
-//   appfy * psystem = new appfy;
-//
-//   int iReturnCode = ::app_main(psystem, hInstance, hPrevInstance, lpCmdLine, nCmdShow);
-//
-//   defer_aura_term();
-//
-//   return iReturnCode;
-//
-//
-//
-//}
-
-// if MSVC CRT is stripped
-/*extern "C" int32_t WinMainCRTStartup() \
-{
-
-ExitProcess(app::s_main < appfy > ());
-
-}*/
 
 
 appfy::appfy() :
