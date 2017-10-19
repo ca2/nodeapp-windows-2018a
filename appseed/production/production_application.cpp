@@ -40,7 +40,7 @@ namespace production
       if(!::core::application::initialize_application())
          return false;
 
-//      Session.filemanager().std().m_strLevelUp = "levelup";
+//      Session.filemanager()->m_strLevelUp = "levelup";
 
 
 	   m_pdoctemplateMain = new ::user::single_document_template(
