@@ -44,7 +44,7 @@ namespace draw2d_gdiplus
       return FALSE;
    }
 
-   bool bitmap::HostDIBSection(::draw2d::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void *pdata, int stride, HANDLE hSection, uint32_t offset)
+   bool bitmap::HostDIBSection(::draw2d::graphics * pgraphics, int cx, int cy, UINT usage, void *pdata, int stride, HANDLE hSection, uint32_t offset)
    {
 
       UNREFERENCED_PARAMETER(pgraphics);
@@ -56,7 +56,7 @@ namespace draw2d_gdiplus
       if (pdata == NULL)
          return false;
 
-      m_pbitmap = new Gdiplus::Bitmap(abs(lpbmi->bmiHeader.biWidth), abs(lpbmi->bmiHeader.biHeight), m_iStride, PixelFormat32bppPARGB, (BYTE *) pdata);
+      m_pbitmap = new Gdiplus::Bitmap(abs(cx), abs(cy), m_iStride, PixelFormat32bppPARGB, (BYTE *) pdata);
 
       if (m_pbitmap == NULL)
       {
@@ -67,9 +67,21 @@ namespace draw2d_gdiplus
 
    }
 
-   bool bitmap::CreateDIBSection(::draw2d::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void **ppvBits, int * stride, HANDLE hSection, uint32_t offset)
+   bool bitmap::CreateDIBSection(::draw2d::graphics * pgraphics, int width, int height, UINT usage, void **ppvBits, int * stride, HANDLE hSection, uint32_t offset)
    {
 
+      BITMAPINFO info = {};
+
+      info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+      info.bmiHeader.biWidth = width;
+      info.bmiHeader.biHeight = -height;
+      info.bmiHeader.biPlanes = 1;
+      info.bmiHeader.biBitCount = 32;
+      info.bmiHeader.biCompression = BI_RGB;
+      info.bmiHeader.biSizeImage = width * height * 4;
+
+
+      const BITMAPINFO * lpbmi = &info;
       UNREFERENCED_PARAMETER(pgraphics);
 
       ::aura::del(m_pbitmap);
@@ -103,7 +115,7 @@ namespace draw2d_gdiplus
    }
 
 
-   bool bitmap::CreateDIBitmap(::draw2d::graphics * pgraphics, const BITMAPINFOHEADER *pbmih, uint32_t flInit, const void *pjBits, const BITMAPINFO *pbmi, UINT iUsage)
+   bool bitmap::CreateDIBitmap(::draw2d::graphics * pgraphics, int cx, int cy, uint32_t flInit, const void *pjBits, UINT iUsage)
    {
       return FALSE;
    }
