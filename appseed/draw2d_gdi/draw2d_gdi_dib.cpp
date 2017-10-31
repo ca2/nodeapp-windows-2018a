@@ -105,7 +105,8 @@ namespace draw2d_gdi
          return FALSE;
       }
 
-      if(!m_spbitmap->CreateDIBSection(NULL, &m_info, DIB_RGB_COLORS, (void **) &m_pcolorref, &m_iScan, NULL, 0))
+      //if(!m_spbitmap->CreateDIBSection(NULL, &m_info, DIB_RGB_COLORS, (void **) &m_pcolorref, &m_iScan, NULL, 0))
+      if (!m_spbitmap->CreateDIBSection(NULL, width, height, DIB_RGB_COLORS, (void **)&m_pcolorref, &m_iScan, NULL, 0))
       {
          this->m_size.cx = 0;
          this->m_size.cy = 0;
@@ -199,11 +200,11 @@ namespace draw2d_gdi
    bool dib::to(::draw2d::graphics * pgraphics, point pt, class size size, point ptSrc)
    {
       return SetDIBitsToDevice(
-                (dynamic_cast<::draw2d_gdi::graphics * >(pgraphics))->get_handle1(),
-                pt.x, pt.y,
-                size.cx, size.cy,
-                ptSrc.x, ptSrc.y, ptSrc.y, this->m_size.cy - ptSrc.y,
-                m_pcolorref, &m_info, 0)
+             (dynamic_cast<::draw2d_gdi::graphics * >(pgraphics))->get_handle1(),
+             pt.x, pt.y,
+             size.cx, size.cy,
+             ptSrc.x, ptSrc.y, ptSrc.y, this->m_size.cy - ptSrc.y,
+             m_pcolorref, &m_info, 0)
              != FALSE;
    }
 
@@ -1631,12 +1632,12 @@ namespace draw2d_gdi
       dib1.set(255, 255, 255);
 
       dib1.m_spgraphics->DrawIcon(
-         0, 0,
-         picon,
-         cx, cy,
-         0,
-         NULL,
-         DI_IMAGE | DI_MASK);
+      0, 0,
+      picon,
+      cx, cy,
+      0,
+      NULL,
+      DI_IMAGE | DI_MASK);
 
       // Black blend dib
       ::draw2d::dib_sp spdib2(allocer());
@@ -1644,24 +1645,24 @@ namespace draw2d_gdi
       spdib2->Fill(0, 0, 0, 0);
 
       spdib2->get_graphics()->DrawIcon(
-         0, 0,
-         picon,
-         cx, cy,
-         0,
-         NULL,
-         DI_IMAGE | DI_MASK);
+      0, 0,
+      picon,
+      cx, cy,
+      0,
+      NULL,
+      DI_IMAGE | DI_MASK);
 
       // Mask dib
       dib dibM(get_app());
       dibM.create(cx, cy);
 
       dibM.m_spgraphics->DrawIcon(
-         0, 0,
-         picon,
-         cx, cy,
-         0,
-         NULL,
-         DI_MASK);
+      0, 0,
+      picon,
+      cx, cy,
+      0,
+      NULL,
+      DI_MASK);
 
       BYTE * r1=(BYTE*)dib1.m_pcolorref;
       BYTE * r2=(BYTE*)spdib2->get_data();
@@ -2287,15 +2288,15 @@ namespace draw2d_gdi
    void dib::stretch_dib(::draw2d::dib * pdib)
    {
       ::StretchDIBits(
-         GDI_HDC(m_spgraphics.m_p),
-         0, 0,
-         this->m_size.cx, this->m_size.cy,
-         0, 0,
-         pdib->m_size.cx, pdib->m_size.cy,
-         pdib->m_pcolorref,
-         &dynamic_cast < dib * > (pdib)->m_info,
-         DIB_RGB_COLORS,
-         SRCCOPY);
+      GDI_HDC(m_spgraphics.m_p),
+      0, 0,
+      this->m_size.cx, this->m_size.cy,
+      0, 0,
+      pdib->m_size.cx, pdib->m_size.cy,
+      pdib->m_pcolorref,
+      &dynamic_cast < dib * > (pdib)->m_info,
+      DIB_RGB_COLORS,
+      SRCCOPY);
    }
 
    ::draw2d::graphics * dib::get_graphics() const
