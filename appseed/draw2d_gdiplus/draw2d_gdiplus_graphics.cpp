@@ -7,26 +7,26 @@ count g_cForkBlend = 0;
 class g_keep
 {
 
-   public:
+public:
 
-      Gdiplus::Graphics * p;
-      Gdiplus::GraphicsState s;
+   Gdiplus::Graphics * p;
+   Gdiplus::GraphicsState s;
 
-      g_keep(Gdiplus::Graphics * p1)
-      {
+   g_keep(Gdiplus::Graphics * p1)
+   {
 
-         p = p1;
+      p = p1;
 
-         s = p->Save();
+      s = p->Save();
 
-      }
+   }
 
-      ~g_keep()
-      {
+   ~g_keep()
+   {
 
-         p->Restore(s);
+      p->Restore(s);
 
-      }
+   }
 
 };
 
@@ -1508,8 +1508,8 @@ namespace draw2d_gdiplus
 
          }
          ret = m_pgraphics->DrawImage(
-                  (Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data(),
-                  x, y, xSrc + pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y, nWidth, nHeight, Gdiplus::UnitPixel);
+               (Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data(),
+               x, y, xSrc + pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y, nWidth, nHeight, Gdiplus::UnitPixel);
 
          if(ret != Gdiplus::Status::Ok)
          {
@@ -2391,7 +2391,7 @@ gdi_fallback:
 
       Gdiplus::RectF rect((Gdiplus::REAL) rectBounds.left,(Gdiplus::REAL) rectBounds.top,(Gdiplus::REAL) width(rectBounds),(Gdiplus::REAL) height(rectBounds));
 
-      pointer < Gdiplus::Metafile > pMeta = new Gdiplus::Metafile(hEnhMF, false);
+      ap(Gdiplus::Metafile) pMeta = new Gdiplus::Metafile(hEnhMF, false);
 
       //m_pgraphcis->EnumerateMetafile(pMeta, rect, metaCallback, PMETAHEADER);
 
@@ -3404,10 +3404,10 @@ gdi_fallback:
       Gdiplus::Point origin(0, 0);
 
       m_pgraphics->TransformPoints(
-         Gdiplus::CoordinateSpacePage,
-         Gdiplus::CoordinateSpaceWorld,
-         &origin,
-         1);
+      Gdiplus::CoordinateSpacePage,
+      Gdiplus::CoordinateSpaceWorld,
+      &origin,
+      1);
 
       return point((int64_t) origin.X, (int64_t) origin.Y);
 
@@ -3899,33 +3899,33 @@ gdi_fallback:
          break;
       case META_SETWINDOWEXT:
          (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SetWindowExt(
-            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
+         (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SETWINDOWORG:
          (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SetWindowOrg(
-            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
+         (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SETVIEWPORTEXT:
          (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SetViewportExt(
-            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
+         (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SETVIEWPORTORG:
          (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SetViewportOrg(
-            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
+         (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SCALEWINDOWEXT:
          (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->ScaleWindowExt(
-            (int32_t)(int16_t)pMetaRec->rdParm[3], (int32_t)(int16_t)pMetaRec->rdParm[2],
-            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
+         (int32_t)(int16_t)pMetaRec->rdParm[3], (int32_t)(int16_t)pMetaRec->rdParm[2],
+         (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SCALEVIEWPORTEXT:
          (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->ScaleViewportExt(
-            (int32_t)(int16_t)pMetaRec->rdParm[3], (int32_t)(int16_t)pMetaRec->rdParm[2],
-            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
+         (int32_t)(int16_t)pMetaRec->rdParm[3], (int32_t)(int16_t)pMetaRec->rdParm[2],
+         (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_OFFSETVIEWPORTORG:
          (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->OffsetViewportOrg(
-            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
+         (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SAVEDC:
          (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SaveDC();
@@ -4157,7 +4157,7 @@ gdi_fallback:
 
             status = m_pgraphics->GetTransform(&m);
 
-            pointer< Gdiplus::Matrix > pmNew = m.Clone();
+            ap(Gdiplus::Matrix) pmNew = m.Clone();
 
             status = pmNew->Translate((Gdiplus::REAL) rectParam.left, (Gdiplus::REAL) rectParam.top);
 
@@ -5119,7 +5119,7 @@ namespace draw2d_gdiplus
 
          m_pgraphics->GetTransform(&m);
 
-         pointer < Gdiplus::Matrix > pmNew;
+         ap(Gdiplus::Matrix) pmNew;
 
          if (m_ppath != NULL)
          {
