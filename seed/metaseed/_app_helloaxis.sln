@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2002
+VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_acid", "..\..\..\app\appseed\aura\acid.vcxproj", "{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}"
 EndProject
@@ -9,9 +9,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_axis", "..\..\..\app\appse
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_draw2d_gdiplus", "..\..\appseed\draw2d_gdiplus\_draw2d_gdiplus.vcxproj", "{573C4B5E-4132-457A-BE82-05A882A062FF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_app_helloaxis", "..\..\..\app\appseed\helloaxis\_helloaxis.vcxproj", "{C7AFCEFA-3079-4B23-8F97-4543BB980265}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_helloaxis", "..\..\..\app\appseed\helloaxis\_helloaxis.vcxproj", "{C7AFCEFA-3079-4B23-8F97-4543BB980265}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_app_helloaura", "..\..\..\..\basis\app\appseed\helloaura\_helloaura.vcxproj", "{DF41F4CA-E115-416F-9A54-4673473FB593}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_helloaura", "..\..\..\app\appseed\helloaura\_helloaura.vcxproj", "{DF41F4CA-E115-416F-9A54-4673473FB593}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_helloaxis", "..\..\..\app\appseed\helloaxis\app_helloaxis.vcxproj", "{D78E0B01-D329-4023-913C-A3005090BBED}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_helloaura", "..\..\..\app\appseed\helloaura\app_helloaura.vcxproj", "{159C0B0C-463E-49CE-A7D9-46DF03F4E6E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,6 +109,38 @@ Global
 		{DF41F4CA-E115-416F-9A54-4673473FB593}.stage|Win32.Build.0 = stage|Win32
 		{DF41F4CA-E115-416F-9A54-4673473FB593}.stage|x64.ActiveCfg = stage|x64
 		{DF41F4CA-E115-416F-9A54-4673473FB593}.stage|x64.Build.0 = stage|x64
+		{D78E0B01-D329-4023-913C-A3005090BBED}.basis|Win32.ActiveCfg = basis|Win32
+		{D78E0B01-D329-4023-913C-A3005090BBED}.basis|Win32.Build.0 = basis|Win32
+		{D78E0B01-D329-4023-913C-A3005090BBED}.basis|x64.ActiveCfg = basis|x64
+		{D78E0B01-D329-4023-913C-A3005090BBED}.basis|x64.Build.0 = basis|x64
+		{D78E0B01-D329-4023-913C-A3005090BBED}.cover|Win32.ActiveCfg = cover|Win32
+		{D78E0B01-D329-4023-913C-A3005090BBED}.cover|Win32.Build.0 = cover|Win32
+		{D78E0B01-D329-4023-913C-A3005090BBED}.cover|x64.ActiveCfg = cover|x64
+		{D78E0B01-D329-4023-913C-A3005090BBED}.cover|x64.Build.0 = cover|x64
+		{D78E0B01-D329-4023-913C-A3005090BBED}.small|Win32.ActiveCfg = stage|Win32
+		{D78E0B01-D329-4023-913C-A3005090BBED}.small|Win32.Build.0 = stage|Win32
+		{D78E0B01-D329-4023-913C-A3005090BBED}.small|x64.ActiveCfg = stage|x64
+		{D78E0B01-D329-4023-913C-A3005090BBED}.small|x64.Build.0 = stage|x64
+		{D78E0B01-D329-4023-913C-A3005090BBED}.stage|Win32.ActiveCfg = stage|Win32
+		{D78E0B01-D329-4023-913C-A3005090BBED}.stage|Win32.Build.0 = stage|Win32
+		{D78E0B01-D329-4023-913C-A3005090BBED}.stage|x64.ActiveCfg = stage|x64
+		{D78E0B01-D329-4023-913C-A3005090BBED}.stage|x64.Build.0 = stage|x64
+		{159C0B0C-463E-49CE-A7D9-46DF03F4E6E0}.basis|Win32.ActiveCfg = basis|Win32
+		{159C0B0C-463E-49CE-A7D9-46DF03F4E6E0}.basis|Win32.Build.0 = basis|Win32
+		{159C0B0C-463E-49CE-A7D9-46DF03F4E6E0}.basis|x64.ActiveCfg = basis|x64
+		{159C0B0C-463E-49CE-A7D9-46DF03F4E6E0}.basis|x64.Build.0 = basis|x64
+		{159C0B0C-463E-49CE-A7D9-46DF03F4E6E0}.cover|Win32.ActiveCfg = cover|Win32
+		{159C0B0C-463E-49CE-A7D9-46DF03F4E6E0}.cover|Win32.Build.0 = cover|Win32
+		{159C0B0C-463E-49CE-A7D9-46DF03F4E6E0}.cover|x64.ActiveCfg = cover|x64
+		{159C0B0C-463E-49CE-A7D9-46DF03F4E6E0}.cover|x64.Build.0 = cover|x64
+		{159C0B0C-463E-49CE-A7D9-46DF03F4E6E0}.small|Win32.ActiveCfg = stage|Win32
+		{159C0B0C-463E-49CE-A7D9-46DF03F4E6E0}.small|Win32.Build.0 = stage|Win32
+		{159C0B0C-463E-49CE-A7D9-46DF03F4E6E0}.small|x64.ActiveCfg = stage|x64
+		{159C0B0C-463E-49CE-A7D9-46DF03F4E6E0}.small|x64.Build.0 = stage|x64
+		{159C0B0C-463E-49CE-A7D9-46DF03F4E6E0}.stage|Win32.ActiveCfg = stage|Win32
+		{159C0B0C-463E-49CE-A7D9-46DF03F4E6E0}.stage|Win32.Build.0 = stage|Win32
+		{159C0B0C-463E-49CE-A7D9-46DF03F4E6E0}.stage|x64.ActiveCfg = stage|x64
+		{159C0B0C-463E-49CE-A7D9-46DF03F4E6E0}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
