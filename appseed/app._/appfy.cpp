@@ -1,5 +1,5 @@
-#include "aura/aura/aura/aura.h"
-#include "aura/aura/os/windows/windows_app.inl"
+﻿#include "aura/aura/aura/aura.h"
+#include "aura/aura/app/acid.inl"
 #include <stdio.h>
 #include <psapi.h>
 #include <tlhelp32.h>
@@ -88,37 +88,37 @@ void copy(MEM_ICON_ITEM * dst, ICON_ITEM * pitem)
 class appfy :
    public ::aura::app
 {
-   public:
+public:
 
 
-      enum e_message
-      {
-         message_none,
-         message_ok,
-         message_failed,
-         message_unknown,
-      };
+   enum e_message
+   {
+      message_none,
+      message_ok,
+      message_failed,
+      message_unknown,
+   };
 
 
-      e_message                  m_emessage;
-      HANDLE                     m_hmutexSpabootInstall;
-      ::aura::ipc::rx       m_rxchannel;
+   e_message                  m_emessage;
+   HANDLE                     m_hmutexSpabootInstall;
+   ::aura::ipc::rx       m_rxchannel;
 
-      char *                     m_modpath;
-      char *                     m_pszDllEnds;
-      uint32_t *                    m_dwaProcess;
-      int32_t                        m_iSizeProcess;
-      HMODULE *                  m_hmodulea;
-      int32_t                        m_iSizeModule;
-      bool                       m_bInstallerInstalling;
+   char *                     m_modpath;
+   char *                     m_pszDllEnds;
+   uint32_t *                    m_dwaProcess;
+   int32_t                        m_iSizeProcess;
+   HMODULE *                  m_hmodulea;
+   int32_t                        m_iSizeModule;
+   bool                       m_bInstallerInstalling;
 
-      appfy();
-      virtual ~appfy();
+   appfy();
+   virtual ~appfy();
 
 
-      virtual int32_t run();
+   virtual int32_t run();
 
-      virtual bool end();
+   virtual bool end();
 
 };
 
