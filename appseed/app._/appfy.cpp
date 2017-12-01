@@ -86,7 +86,7 @@ void copy(MEM_ICON_ITEM * dst, ICON_ITEM * pitem)
 
 
 class appfy :
-   public ::aura::app
+   public ::aura::application
 {
 public:
 
@@ -116,9 +116,9 @@ public:
    virtual ~appfy();
 
 
-   virtual int32_t run();
+   virtual void run() override;
 
-   virtual bool end();
+   virtual void term_instance() override;
 
 };
 
@@ -196,7 +196,7 @@ appfy::~appfy()
 }
 
 
-int32_t appfy::run()
+void appfy::run()
 {
 
    string strSrc;
@@ -234,7 +234,9 @@ int32_t appfy::run()
 
          ::simple_message_box(NULL, "Incorrect Number of Arguments passed to appfy. Expected 3 or 4; passed " + ::str::from(__argc - 1), "", 0);
 
-         return -2;
+         m_error.set(-2);
+
+         return;
 
       }
 
@@ -388,7 +390,9 @@ int32_t appfy::run()
 
          dprint("hupdate false");
 
-         return -3;
+         m_error.set(-3);
+
+         return;
 
       }
 
@@ -470,23 +474,20 @@ int32_t appfy::run()
 
    System.post_quit();
 
-   return 0;
-
 }
 
 
-
-bool appfy::end()
+void appfy::term_instance()
 {
 
-   app::end();
+   ::aura::application::term_instance();
 
    memory_free(m_hmodulea);
    memory_free(m_dwaProcess);
    memory_free(m_pszDllEnds);
    memory_free(m_modpath);
 
-   return true;
+   ///return true;
 
 }
 

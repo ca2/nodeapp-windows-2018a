@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace multimedia
@@ -27,29 +27,41 @@ namespace multimedia
       {
       }
 
-      bool wave_in::initialize_thread()
+
+      bool wave_in::init_thread()
       {
+
          TRACE("wave_in::initialize_instance %X\n", get_os_int());
+
          //SetMainWnd(NULL);
          //ASSERT(GetMainWnd() == NULL);
+
          set_thread_priority(::multithreading::priority_highest);
+
          m_evInitialized.SetEvent();
+
          return true;
+
       }
 
-      int32_t wave_in::exit_thread()
+
+      void wave_in::term_thread()
       {
+
          m_eventExitInstance.SetEvent();
-         return thread::exit_thread();
+
+         thread::term_thread();
+
       }
+
 
       void wave_in::pre_translate_message(::message::message * pobj)
       {
          SCAST_PTR(::message::base, pbase, pobj);
          //ASSERT(GetMainWnd() == NULL);
          if(pbase->m_id == MM_WIM_OPEN ||
-            pbase->m_id == MM_WIM_CLOSE ||
-            pbase->m_id == MM_WIM_DATA)
+               pbase->m_id == MM_WIM_CLOSE ||
+               pbase->m_id == MM_WIM_DATA)
          {
             translate_wave_in_message(pbase);
             if(pbase->m_bRet)
@@ -85,33 +97,33 @@ namespace multimedia
          m_iBuffer = 0;
 
          if(MMSYSERR_NOERROR == (mmr = mmsystem::translate(waveInOpen(
-            &m_hwavein,
-            audiowave->m_uiWaveInDevice,
-            wave_format(),
-            get_os_int(),
-            (uint32_t) 0,
-            CALLBACK_THREAD))))
+                                       &m_hwavein,
+                                       audiowave->m_uiWaveInDevice,
+                                       wave_format(),
+                                       get_os_int(),
+                                       (uint32_t) 0,
+                                       CALLBACK_THREAD))))
             goto Opened;
 
          m_pwaveformat->nSamplesPerSec = 22050;
          m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
          if(MMSYSERR_NOERROR == (mmr = mmsystem::translate(waveInOpen(
-            &m_hwavein,
-            WAVE_MAPPER,
-            wave_format(),
-            (uint32_t) get_os_int(),
-            (uint32_t) 0,
-            CALLBACK_THREAD))))
+                                       &m_hwavein,
+                                       WAVE_MAPPER,
+                                       wave_format(),
+                                       (uint32_t) get_os_int(),
+                                       (uint32_t) 0,
+                                       CALLBACK_THREAD))))
             goto Opened;
          m_pwaveformat->nSamplesPerSec = 11025;
          m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
          if(MMSYSERR_NOERROR == (mmr = mmsystem::translate(waveInOpen(
-            &m_hwavein,
-            WAVE_MAPPER,
-            wave_format(),
-            (uint32_t) get_os_int(),
-            (uint32_t) 0,
-            CALLBACK_THREAD))))
+                                       &m_hwavein,
+                                       WAVE_MAPPER,
+                                       wave_format(),
+                                       (uint32_t) get_os_int(),
+                                       (uint32_t) 0,
+                                       CALLBACK_THREAD))))
             goto Opened;
 
          if(mmr !=MMSYSERR_NOERROR)
@@ -175,19 +187,19 @@ Opened:
             uiSkippedSamplesCount = 1;
          }
          wave_in_get_buffer()->FFTOpen(
-            uiAllocationSize,
-            uiBufferSize,
-            uiAnalysisSize,
-            uiInterestSize,
-            uiSkippedSamplesCount);
-         
+         uiAllocationSize,
+         uiBufferSize,
+         uiAnalysisSize,
+         uiInterestSize,
+         uiSkippedSamplesCount);
+
          int32_t i, iSize;
-         
+
          iSize = (int32_t) wave_in_get_buffer()->GetBufferCount();
 
          for(i = 0; i < iSize; i++)
          {
-            
+
             if(MMSYSERR_NOERROR != (mmr = mmsystem::translate(waveInPrepareHeader(m_hwavein, mmsystem::create_new_WAVEHDR(wave_in_get_buffer(), i), sizeof(WAVEHDR)))))
             {
                TRACE("ERROR OPENING Preparing INPUT DEVICE buffer");
@@ -257,12 +269,12 @@ Opened:
 
       ::multimedia::e_result wave_in::wave_in_start()
       {
-         
+
          single_lock sLock(m_pmutex, TRUE);
-         
+
          if(m_estate == state_recording)
             return ::multimedia::result_success;
-         
+
          //ASSERT(m_estate == state_opened || m_estate == state_stopped);
 
          if(m_estate != state_opened && m_estate != state_stopped)
@@ -388,7 +400,7 @@ Opened:
 
             if(::multimedia::result_success != (mmr = mmsystem::translate(waveInReset(m_hwavein))))
             {
-               
+
                TRACE("wave_in::Reset error resetting input device");
 
                return mmr;
@@ -418,11 +430,11 @@ Opened:
 
          if(pbase->m_id == MM_WIM_DATA)
          {
-            
+
             m_iBuffer--;
-            
+
             uint32_t msSampleTime = timeGetTime();
-            
+
             LPWAVEHDR lpwavehdr = (LPWAVEHDR) pbase->m_lparam.m_lparam;
 
             wave_in_get_buffer()->get_buffer((int32_t) lpwavehdr->dwUser)->OnMultimediaDone();
@@ -448,7 +460,7 @@ Opened:
 
       ::multimedia::e_result wave_in::wave_in_add_buffer(int32_t iBuffer)
       {
-         
+
          return wave_in_add_buffer(wave_hdr(iBuffer));
 
       }
@@ -497,7 +509,7 @@ Opened:
 
       HWAVEIN wave_in::wave_in_get_safe_HWAVEIN()
       {
-         
+
          if(this == NULL)
             return NULL;
 

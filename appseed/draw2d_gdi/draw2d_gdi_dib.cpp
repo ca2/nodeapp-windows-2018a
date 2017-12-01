@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 inline byte byte_clip(int32_t i)
@@ -124,7 +124,7 @@ namespace draw2d_gdi
 
       m_spgraphics->CreateCompatibleDC(NULL);
 
-      m_spgraphics->m_pdib = dynamic_cast < ::draw2d::dib * > (this);
+      m_spgraphics->m_pdibDraw2dGraphics = dynamic_cast < ::draw2d::dib * > (this);
 
       m_hbitmapOriginal = (HBITMAP) m_spgraphics->get_os_data_ex(::draw2d_gdi::graphics::data_bitmap);
 

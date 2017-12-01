@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace multimedia
@@ -84,25 +84,29 @@ namespace multimedia
       }
 
 
-      bool wave_out::initialize_thread()
+      bool wave_out::init_thread()
       {
 
          register_dependent_thread(m_phelperthread);
 
-         if(!::multimedia::audio::wave_out::initialize_thread())
+         if (!::multimedia::audio::wave_out::init_thread())
+         {
+
             return false;
+
+         }
 
          return true;
 
       }
 
 
-      int32_t wave_out::exit_thread()
+      void wave_out::term_thread()
       {
 
-         ::multimedia::audio::wave_out::exit_thread();
+         ::multimedia::audio::wave_out::term_thread();
 
-         return ::thread::exit_thread();
+         ::thread::term_thread();
 
       }
 
@@ -130,32 +134,32 @@ namespace multimedia
          sp(::multimedia::audio::wave) audiowave = Application.audiowave();
 
          if(MMSYSERR_NOERROR == (mmr = mmsystem::translate(waveOutOpen(
-                                          &m_hwaveout,
-                                          audiowave->m_uiWaveInDevice,
-                                          wave_format(),
-                                          m_phelperthread->get_os_int(),
-                                          (uint32_t) 0,
-                                          CALLBACK_THREAD))))
+                                       &m_hwaveout,
+                                       audiowave->m_uiWaveInDevice,
+                                       wave_format(),
+                                       m_phelperthread->get_os_int(),
+                                       (uint32_t) 0,
+                                       CALLBACK_THREAD))))
             goto Opened;
          m_pwaveformat->nSamplesPerSec = 22050;
          m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
          if(MMSYSERR_NOERROR == (mmr = mmsystem::translate(waveOutOpen(
-                                          &m_hwaveout,
-                                          WAVE_MAPPER,
-                                          wave_format(),
-                                          (uint32_t)m_phelperthread->get_os_int(),
-                                          (uint32_t) 0,
-                                          CALLBACK_THREAD))))
+                                       &m_hwaveout,
+                                       WAVE_MAPPER,
+                                       wave_format(),
+                                       (uint32_t)m_phelperthread->get_os_int(),
+                                       (uint32_t) 0,
+                                       CALLBACK_THREAD))))
             goto Opened;
          m_pwaveformat->nSamplesPerSec = 11025;
          m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
          if(MMSYSERR_NOERROR == (mmr = mmsystem::translate(waveOutOpen(
-                                          &m_hwaveout,
-                                          WAVE_MAPPER,
-                                          wave_format(),
-                                          (uint32_t)m_phelperthread->get_os_int(),
-                                          (uint32_t) 0,
-                                          CALLBACK_THREAD))))
+                                       &m_hwaveout,
+                                       WAVE_MAPPER,
+                                       wave_format(),
+                                       (uint32_t)m_phelperthread->get_os_int(),
+                                       (uint32_t) 0,
+                                       CALLBACK_THREAD))))
             goto Opened;
 
          if(mmr != ::multimedia::result_success)
@@ -210,10 +214,10 @@ Opened:
          wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, uiBufferCount,128, m_pwaveformat, m_pwaveformat);
 
          m_pprebuffer->open(
-            this, // callback thread (thread)
-            m_pwaveformat->nChannels, // channel count
-            uiBufferCount, // group count
-            iBufferSampleCount); // group sample count
+         this, // callback thread (thread)
+         m_pwaveformat->nChannels, // channel count
+         uiBufferCount, // group count
+         iBufferSampleCount); // group sample count
 
          index i;
 

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 //Gdiplus::ColorMatrix g_mZero =
@@ -133,7 +133,7 @@ namespace draw2d_gdiplus
 
       m_spgraphics->SelectObject(m_spbitmap);
 
-      m_spgraphics->m_pdib = this;
+      m_spgraphics->m_pdibDraw2dGraphics = this;
 
       m_size.cx = width;
 
@@ -211,7 +211,7 @@ namespace draw2d_gdiplus
 
       m_spgraphics->SelectObject(m_spbitmap);
 
-      m_spgraphics->m_pdib = this;
+      m_spgraphics->m_pdibDraw2dGraphics = this;
 
       m_size.cx = width;
 
