@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 
@@ -14,7 +14,7 @@ namespace music
       {
 
 
-         class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM sequence_thread : 
+         class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM sequence_thread :
             virtual public ::music::midi::sequence_thread
          {
          public:
@@ -46,9 +46,9 @@ namespace music
             void ExecuteCommand(smart_pointer < ::music::midi::player::command > pcommand);
             void _ExecuteCommand(smart_pointer < ::music::midi::player::command > pcommand);
 
-            
-            virtual bool initialize_thread() override;
-            virtual int32_t exit_thread() override;
+
+            virtual bool init_thread() override;
+            virtual void term_thread() override;
 
 
             DECL_GEN_SIGNAL(OnMidiSequenceEvent);

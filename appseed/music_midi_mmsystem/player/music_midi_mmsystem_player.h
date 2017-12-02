@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 
@@ -46,12 +46,12 @@ namespace music
                bool Play(double dRate = 0.0, uint32_t dwEllapse = (uint32_t) -1);
                bool Play(imedia_position tkStart, uint32_t dwEllapse = (uint32_t)-1);
 
-               virtual bool initialize_thread() override;
-               virtual int32_t exit_thread() override;
+               virtual bool init_thread() override;
+               virtual void term_thread() override;
                virtual void pre_translate_message(::message::message * pobj);
                void OnMmsgDone(::music::midi::sequence *pSeq);
                DECL_GEN_SIGNAL(OnUserMessage);
-                  void SaveFile(const char * lpszPathName);
+               void SaveFile(const char * lpszPathName);
                void SetPosition(double dRate);
                void Pause();
                void CloseFile();
@@ -77,11 +77,11 @@ namespace music
 
 
                //DECL_GEN_SIGNAL(OnNotifyEvent);
-                  DECL_GEN_SIGNAL(OnMultimediaMidiOutputMessageDone);
-                  DECL_GEN_SIGNAL(OnMultimediaMidiOutputMessagePositionCB);
+               DECL_GEN_SIGNAL(OnMultimediaMidiOutputMessageDone);
+               DECL_GEN_SIGNAL(OnMultimediaMidiOutputMessagePositionCB);
 
-                  // midi central listener
-                  DECL_GEN_SIGNAL(on_attribute_change);
+               // midi central listener
+               DECL_GEN_SIGNAL(on_attribute_change);
 
 
             };

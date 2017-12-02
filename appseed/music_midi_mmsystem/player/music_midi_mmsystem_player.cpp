@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <math.h>
 
 
@@ -36,7 +36,7 @@ namespace music
             }
 
 
-            bool player::initialize_thread()
+            bool player::init_thread()
             {
 
                m_psequencethread->ResumeThread();
@@ -52,7 +52,8 @@ namespace music
                return true;
             }
 
-            int32_t player::exit_thread()
+
+            void player::term_thread()
             {
                // TODO:  perform any per-thread cleanup here
                //   if(!get_sequence()->IsNull())
@@ -64,15 +65,22 @@ namespace music
                //    delete m_pmidicallbackdata;
                ///  m_pmidicallbackdata = NULL;
                //}
-               return thread::exit_thread();
+
+               thread::term_thread();
+
             }
+
 
             void player::install_message_routing(::message::sender * pinterface)
             {
+
                ::music::midi::player::player::install_message_routing(pinterface);
+
                IGUI_MSG_LINK(MM_MOM_DONE, pinterface, this, &player::OnMultimediaMidiOutputMessageDone);
                IGUI_MSG_LINK(MM_MOM_POSITIONCB, pinterface, this, &player::OnMultimediaMidiOutputMessagePositionCB);
+
             }
+
 
             bool player::Play(imedia_position tkStart, uint32_t dwEllapse)
             {
@@ -228,8 +236,8 @@ namespace music
                {
                   ::music::midi::sequence::PlayerLink & link = get_sequence()->GetPlayerLink();
                   link.ModifyFlag(
-                     ::music::midi::sequence::FlagSettingPos,
-                     ::music::midi::sequence::FlagNull);
+                  ::music::midi::sequence::FlagSettingPos,
+                  ::music::midi::sequence::FlagNull);
                   link.m_tkRestart = RateToTicks(dRate);
                   get_sequence()->Stop();
                }
@@ -485,8 +493,8 @@ namespace music
                   get_sequence()->GetPosition(tkPosition);
                   ::music::midi::sequence::PlayerLink & link = get_sequence()->GetPlayerLink();
                   link.ModifyFlag(
-                     ::music::midi::sequence::FlagTempoChange,
-                     ::music::midi::sequence::FlagNull);
+                  ::music::midi::sequence::FlagTempoChange,
+                  ::music::midi::sequence::FlagNull);
                   link.m_tkRestart = tkPosition;
                   get_sequence()->Stop();
                }
