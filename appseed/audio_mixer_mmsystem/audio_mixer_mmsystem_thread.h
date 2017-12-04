@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 namespace multimedia
@@ -31,23 +31,23 @@ namespace multimedia
 
 
          static LRESULT CALLBACK MessageProc(
-            int32_t code,       // hook code
-            WPARAM wParam,  // undefined
-            LPARAM lParam   // address of structure with message data
-            );
+         int32_t code,       // hook code
+         WPARAM wParam,  // undefined
+         LPARAM lParam   // address of structure with message data
+         );
 
 
          void install_message_routing(::message::sender * pinterface);
 
-         virtual bool initialize_thread() override;
-         virtual int32_t exit_thread() override;
+         virtual bool init_thread() override;
+         virtual void term_thread() override;
          // virtual bool on_idle(LONG lCount);
          virtual void pre_translate_message(::message::message * pobj);
 
 
          DECL_GEN_SIGNAL(OnMixerMessage);
-            DECL_GEN_SIGNAL(OnVmsmException);
-            DECL_GEN_SIGNAL(OnUserMessage);
+         DECL_GEN_SIGNAL(OnVmsmException);
+         DECL_GEN_SIGNAL(OnUserMessage);
 
 
       };

@@ -1,5 +1,4 @@
-#include "aura/aura/aura/aura.h"
-#include "aura/aura/os/windows/windows_app.inl"
+﻿#include "aura/aura/aura/aura.h"
 #include <stdio.h>
 #include <psapi.h>
 #include <tlhelp32.h>
@@ -86,75 +85,42 @@ void copy(MEM_ICON_ITEM * dst, ICON_ITEM * pitem)
 
 
 class appfy :
-   public ::aura::app
+   public ::aura::application
 {
-   public:
+public:
 
 
-      enum e_message
-      {
-         message_none,
-         message_ok,
-         message_failed,
-         message_unknown,
-      };
+   enum e_message
+   {
+      message_none,
+      message_ok,
+      message_failed,
+      message_unknown,
+   };
 
 
-      e_message                  m_emessage;
-      HANDLE                     m_hmutexSpabootInstall;
-      ::aura::ipc::rx       m_rxchannel;
+   e_message                  m_emessage;
+   HANDLE                     m_hmutexSpabootInstall;
+   ::aura::ipc::rx       m_rxchannel;
 
-      char *                     m_modpath;
-      char *                     m_pszDllEnds;
-      uint32_t *                    m_dwaProcess;
-      int32_t                        m_iSizeProcess;
-      HMODULE *                  m_hmodulea;
-      int32_t                        m_iSizeModule;
-      bool                       m_bInstallerInstalling;
+   char *                     m_modpath;
+   char *                     m_pszDllEnds;
+   uint32_t *                    m_dwaProcess;
+   int32_t                        m_iSizeProcess;
+   HMODULE *                  m_hmodulea;
+   int32_t                        m_iSizeModule;
+   bool                       m_bInstallerInstalling;
 
-      appfy();
-      virtual ~appfy();
+   appfy();
+   virtual ~appfy();
 
 
-      virtual int32_t run();
+   virtual void run() override;
 
-      virtual bool end();
+   virtual void term_instance() override;
 
 };
 
-//CLASS_DECL_AURA ::exception::engine * g_ee;
-//void init_ee(::exception::engine * ee);
-// if MSVC CRT is used
-//extern "C" int32_t WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int32_t nCmdShow)
-//{
-//
-//   if (!defer_aura_init())
-//   {
-//
-//      return -1;
-//
-//   }
-//
-//
-//   appfy * psystem = new appfy;
-//
-//   int iReturnCode = ::app_main(psystem, hInstance, hPrevInstance, lpCmdLine, nCmdShow);
-//
-//   defer_aura_term();
-//
-//   return iReturnCode;
-//
-//
-//
-//}
-
-// if MSVC CRT is stripped
-/*extern "C" int32_t WinMainCRTStartup() \
-{
-
-ExitProcess(app::s_main < appfy > ());
-
-}*/
 
 
 appfy::appfy() :
@@ -215,7 +181,7 @@ appfy::appfy() :
    m_iSizeModule = 0;
    m_bInstallerInstalling = false;
 
-   construct(NULL);
+   //construct(NULL);
 
    m_pauraapp = this;
 
@@ -229,7 +195,7 @@ appfy::~appfy()
 }
 
 
-int32_t appfy::run()
+void appfy::run()
 {
 
    string strSrc;
@@ -267,7 +233,9 @@ int32_t appfy::run()
 
          ::simple_message_box(NULL, "Incorrect Number of Arguments passed to appfy. Expected 3 or 4; passed " + ::str::from(__argc - 1), "", 0);
 
-         return -2;
+         m_error.set(-2);
+
+         return;
 
       }
 
@@ -421,7 +389,9 @@ int32_t appfy::run()
 
          dprint("hupdate false");
 
-         return -3;
+         m_error.set(-3);
+
+         return;
 
       }
 
@@ -463,7 +433,7 @@ int32_t appfy::run()
             fileHd.write(&item, 14);
          }
 
-         UpdateResource(hupdate, RT_GROUP_ICON, "MAINICON", MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL), fileHd.get_data(), convert < DWORD > (fileHd.get_size()));
+         UpdateResource(hupdate, RT_GROUP_ICON, "MAINICON", MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL), fileHd.get_data(), (DWORD)(fileHd.get_size()));
 
          dprint("icon should be updated");
 
@@ -491,7 +461,7 @@ int32_t appfy::run()
       }
       if (strCoreApp.has_char())
       {
-         UpdateResource(hupdate, "APPID", MAKEINTRESOURCE(1), MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL), (LPVOID)(LPCTSTR)strCoreApp, convert < DWORD > (strCoreApp.get_length()));
+         UpdateResource(hupdate, "APPID", MAKEINTRESOURCE(1), MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL), (LPVOID)(LPCTSTR)strCoreApp, (DWORD) (strCoreApp.get_length()));
          dprint("APPID should be updated");
       }
 
@@ -503,23 +473,20 @@ int32_t appfy::run()
 
    System.post_quit();
 
-   return 0;
-
 }
 
 
-
-bool appfy::end()
+void appfy::term_instance()
 {
 
-   app::end();
+   ::aura::application::term_instance();
 
    memory_free(m_hmodulea);
    memory_free(m_dwaProcess);
    memory_free(m_pszDllEnds);
    memory_free(m_modpath);
 
-   return true;
+   ///return true;
 
 }
 

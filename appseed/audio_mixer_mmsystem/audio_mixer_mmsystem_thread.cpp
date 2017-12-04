@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace multimedia
@@ -21,12 +21,12 @@ namespace multimedia
 
       thread::~thread()
       {
-         
+
 
       }
 
 
-      bool thread::initialize_thread()
+      bool thread::init_thread()
       {
 
 //         set_auto_delete(false);
@@ -36,7 +36,7 @@ namespace multimedia
       }
 
 
-      int32_t thread::exit_thread()
+      void thread::term_thread()
       {
          // TODO:  perform any per-thread cleanup here
          //    CVMSApp * pApp = (CVMSApp *) &System;
@@ -45,8 +45,11 @@ namespace multimedia
          //pmfmh->MessageFilterUnhook();
 
          CoUninitialize();
-         return ::thread::exit_thread();
+
+         ::thread::term_thread();
+
       }
+
 
       void thread::install_message_routing(::message::sender * pinterface)
       {
@@ -159,35 +162,35 @@ namespace multimedia
             //GetPlayerDocTemplate()->ReserveSong(lParam, false, true);
             break;
          case 22:
-            {
-               //  CDWArray * pdwa = (CDWArray *) lParam;
-               //GetPlayerDocTemplate()->ReserveSong((LPINT) &pdwa->get_data()[1], pdwa->get_at(0), false, true);
-               //delete pdwa;
-            }
-            break;
+         {
+            //  CDWArray * pdwa = (CDWArray *) lParam;
+            //GetPlayerDocTemplate()->ReserveSong((LPINT) &pdwa->get_data()[1], pdwa->get_at(0), false, true);
+            //delete pdwa;
+         }
+         break;
          case 23:
-            {
-               //CStrArray * pstra = (CStrArray *) lParam;
-               //GetPlayerDocTemplate()->ReserveSong(pstra, false, true);
-               //delete pstra;
-            }
-            break;
+         {
+            //CStrArray * pstra = (CStrArray *) lParam;
+            //GetPlayerDocTemplate()->ReserveSong(pstra, false, true);
+            //delete pstra;
+         }
+         break;
          case 543:
+         {
+
+            //            if(m_poptionsview == NULL)
             {
-
-               //            if(m_poptionsview == NULL)
-               {
-                  //                m_poptionsview = new COptionsDialog();
-                  //              m_poptionsview->create(NULL);
-               }
-
-               //            if(m_poptionsview != NULL)
-               {
-                  //            m_poptionsview->ShowWindow(SW_SHOWNORMAL);
-               }
-
+               //                m_poptionsview = new COptionsDialog();
+               //              m_poptionsview->create(NULL);
             }
-            break;
+
+            //            if(m_poptionsview != NULL)
+            {
+               //            m_poptionsview->ShowWindow(SW_SHOWNORMAL);
+            }
+
+         }
+         break;
 
          }
 
@@ -197,89 +200,89 @@ namespace multimedia
             // ViewToolsAlbum();
             break;
          case 565758:
+         {
+            /*CDBBuildAlbumThreadData * lpdata =
+            (CDBBuildAlbumThreadData *)lParam;
+            sp(single_document_template) pAlbumDocTemplate = NULL;
+            if(GetAlbumThread())
             {
-               /*CDBBuildAlbumThreadData * lpdata =
-               (CDBBuildAlbumThreadData *)lParam;
-               sp(single_document_template) pAlbumDocTemplate = NULL;
-               if(GetAlbumThread())
-               {
-               pAlbumDocTemplate = GetAlbumThread()->GetMixerDocTemplate();
-               }
-               bool bVisible = false;
-               if(pAlbumDocTemplate != NULL)
-               {
-               bVisible = pAlbumDocTemplate->get_document_count() != NULL;
-
-               // avoid thread quit on close all documents
-               GetAlbumThread()->GetMainWnd() = NULL;
-
-               GetAlbumThread()->GetMixerDocTemplate()->close_all_documents(false);
-               }
-               //CMixerFrameWnd * pAlbum = GetMixerDocTemplate();
-               //bool bVisible;
-               //if(pAlbum != NULL)
-               //{
-               //  bVisible = (pAlbum->GetStyle() & WS_VISIBLE) != 0;
-               //if(bVisible)
-               //  pAlbum->ShowWindow(SW_HIDE);
-               //}
-               lpdata->bVisible = bVisible;*/
+            pAlbumDocTemplate = GetAlbumThread()->GetMixerDocTemplate();
             }
-            break;
+            bool bVisible = false;
+            if(pAlbumDocTemplate != NULL)
+            {
+            bVisible = pAlbumDocTemplate->get_document_count() != NULL;
+
+            // avoid thread quit on close all documents
+            GetAlbumThread()->GetMainWnd() = NULL;
+
+            GetAlbumThread()->GetMixerDocTemplate()->close_all_documents(false);
+            }
+            //CMixerFrameWnd * pAlbum = GetMixerDocTemplate();
+            //bool bVisible;
+            //if(pAlbum != NULL)
+            //{
+            //  bVisible = (pAlbum->GetStyle() & WS_VISIBLE) != 0;
+            //if(bVisible)
+            //  pAlbum->ShowWindow(SW_HIDE);
+            //}
+            lpdata->bVisible = bVisible;*/
+         }
+         break;
          case 676869:
+         {
+            //ASSERT(FALSE);
+            /*            CDBBuildAlbumThreadData * lpdata =
+            (CDBBuildAlbumThreadData *)lParam;
+            if(!lpdata->m_ptaskdlg->create(IDD_TASK))
             {
-               //ASSERT(FALSE);
-               /*            CDBBuildAlbumThreadData * lpdata =
-               (CDBBuildAlbumThreadData *)lParam;
-               if(!lpdata->m_ptaskdlg->create(IDD_TASK))
-               {
-               System.simple_message_box("Could not create task dialog");
-               return;
-               }
-
-               GetAlbumThread()->GetMainWnd() = lpdata->m_ptaskdlg;
-               */
+            System.simple_message_box("Could not create task dialog");
+            return;
             }
+
+            GetAlbumThread()->GetMainWnd() = lpdata->m_ptaskdlg;
+            */
+         }
          case 787970:
+         {
+            /*CDBBuildAlbumThreadData * lpdata =
+            (CDBBuildAlbumThreadData *)lParam;
+            if(m_pMixerDocTemplate != NULL)
             {
-               /*CDBBuildAlbumThreadData * lpdata =
-               (CDBBuildAlbumThreadData *)lParam;
-               if(m_pMixerDocTemplate != NULL)
-               {
-               if(lpdata->bVisible)
-               {
-               lpdata->lpDataCentral->m_csBuildAlbumThreadData.lock();
-               lpdata->m_evStarted.lock();
-               //lpdata->m_ptaskdlg->m_pCloseWindow = pAlbum;
-               //            lpdata->m_ptaskdlg->m_lparamClose = 10;
-               lpdata->lpDataCentral->m_csBuildAlbumThreadData.unlock();
-               }
-               }*/
+            if(lpdata->bVisible)
+            {
+            lpdata->lpDataCentral->m_csBuildAlbumThreadData.lock();
+            lpdata->m_evStarted.lock();
+            //lpdata->m_ptaskdlg->m_pCloseWindow = pAlbum;
+            //            lpdata->m_ptaskdlg->m_lparamClose = 10;
+            lpdata->lpDataCentral->m_csBuildAlbumThreadData.unlock();
             }
-            break;
+            }*/
+         }
+         break;
          case 345456:
-            {
+         {
 
-            }
-            break;
+         }
+         break;
          case 321432:
-            {
-               // On Task Dialog Stop
-               //ASSERT(m_pdbcentral != NULL);
-               //m_pdbcentral->SetBuildAlbumThreadsCancelFlag();
-            }
-            break;
+         {
+            // On Task Dialog Stop
+            //ASSERT(m_pdbcentral != NULL);
+            //m_pdbcentral->SetBuildAlbumThreadsCancelFlag();
+         }
+         break;
          case 3214:
-            {
-               //OnChangeEconoMode();
+         {
+            //OnChangeEconoMode();
 
-            }
-            break;
+         }
+         break;
          case 534231:
-            {
-               //GetKarWnd()->send_message_to_descendants(WM_USER, 534231);
-            }
-            break;
+         {
+            //GetKarWnd()->send_message_to_descendants(WM_USER, 534231);
+         }
+         break;
 
          default:;
             break;

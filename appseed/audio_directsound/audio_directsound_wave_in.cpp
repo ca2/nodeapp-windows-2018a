@@ -182,14 +182,14 @@ namespace multimedia
 //            uiAnalysisSize,
 //            uiInterestSize,
 //            uiSkippedSamplesCount);
-//         
+//
 //         int32_t i, iSize;
-//         
+//
 //         iSize = (int32_t) wave_in_get_buffer()->GetBufferCount();
 //
 //         for(i = 0; i < iSize; i++)
 //         {
-//            
+//
 //            if(MMSYSERR_NOERROR != (mmr = directsound::translate(waveInPrepareHeader(m_hwavein, directsound::create_new_WAVEHDR(wave_in_get_buffer(), i), sizeof(WAVEHDR)))))
 //            {
 //               TRACE("ERROR OPENING Preparing INPUT DEVICE buffer");
@@ -259,12 +259,12 @@ namespace multimedia
 
       ::multimedia::e_result wave_in::wave_in_start()
       {
-         
+
          synch_lock sl(m_pmutex);
-         
+
          if(m_estate == state_recording)
             return ::multimedia::result_success;
-         
+
          //ASSERT(m_estate == state_opened || m_estate == state_stopped);
 
          if(m_estate != state_opened && m_estate != state_stopped)
@@ -292,7 +292,7 @@ namespace multimedia
          if(m_estate != state_recording)
             return ::multimedia::result_error;
 
-         ::multimedia::e_result mmr;
+         //::multimedia::e_result mmr;
 
          m_estate = state_stopping;
 
@@ -390,7 +390,7 @@ namespace multimedia
 
          //   if(::multimedia::result_success != (mmr = directsound::translate(waveInReset(m_hwavein))))
          //   {
-         //      
+         //
          //      TRACE("wave_in::Reset error resetting input device");
 
          //      return mmr;
@@ -420,11 +420,11 @@ namespace multimedia
 
          //if(pbase->m_id == MM_WIM_DATA)
          //{
-         //   
+         //
          //   m_iBuffer--;
-         //   
+         //
          //   uint32_t msSampleTime = timeGetTime();
-         //   
+         //
          //   LPWAVEHDR lpwavehdr = (LPWAVEHDR) pbase->m_lparam.m_lparam;
 
          //   wave_in_get_buffer()->get_buffer((int32_t) lpwavehdr->dwUser)->OnMultimediaDone();
@@ -450,7 +450,7 @@ namespace multimedia
 
       ::multimedia::e_result wave_in::wave_in_add_buffer(int32_t iBuffer)
       {
-         
+
          //return wave_in_add_buffer(wave_hdr(iBuffer));
 
          return ::multimedia::result_success;
@@ -501,7 +501,7 @@ namespace multimedia
 
       //HWAVEIN wave_in::wave_in_get_safe_HWAVEIN()
       //{
-      //   
+      //
       //   if(this == NULL)
       //      return NULL;
 

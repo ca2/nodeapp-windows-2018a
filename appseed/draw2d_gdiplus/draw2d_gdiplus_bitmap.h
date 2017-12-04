@@ -5,7 +5,7 @@ namespace draw2d_gdiplus
 {
 
 
-   class CLASS_DECL_DRAW2D_GDIPLUS bitmap : 
+   class CLASS_DECL_DRAW2D_GDIPLUS bitmap :
       virtual public ::draw2d::bitmap
    {
    public:
@@ -18,6 +18,11 @@ namespace draw2d_gdiplus
       bitmap(::aura::application * papp);
       virtual ~bitmap();
 
+#ifdef DEBUG
+
+      virtual void dump(dump_context & dumpcontext) const;
+
+#endif
 
       void * get_os_data() const;
 
@@ -25,16 +30,16 @@ namespace draw2d_gdiplus
       bool LoadBitmap(const char * lpszResourceName);
       bool LoadBitmap(UINT nIDResource);
       bool LoadOEMBitmap(UINT nIDBitmap); // for OBM_/OCR_/OIC_
-   //#ifndef ___NO_AFXCMN_SUPPORT
-   //   bool LoadMappedBitmap(UINT nIDBitmap, UINT nFlags = 0, LPCOLORMAP lpColorMap = NULL, int32_t nMapSize = 0);
-   //#endif
+      //#ifndef ___NO_AFXCMN_SUPPORT
+      //   bool LoadMappedBitmap(UINT nIDBitmap, UINT nFlags = 0, LPCOLORMAP lpColorMap = NULL, int32_t nMapSize = 0);
+      //#endif
       bool CreateBitmap(::draw2d::graphics * pgraphics, int32_t nWidth, int32_t nHeight, UINT nPlanes, UINT nBitcount, const void * lpBits, int32_t stride);
       bool CreateBitmapIndirect(::draw2d::graphics * pgraphics, LPBITMAP lpBitmap);
       bool CreateCompatibleBitmap(::draw2d::graphics * pgraphics, int32_t nWidth, int32_t nHeight);
       bool CreateDiscardableBitmap(::draw2d::graphics * pgraphics, int32_t nWidth, int32_t nHeight);
-      bool HostDIBSection(::draw2d::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void *pvBits, int stride, HANDLE hSection, uint32_t offset);
-      bool CreateDIBSection(::draw2d::graphics * pgraphics, const BITMAPINFO * lpbmi, UINT usage, void **ppvBits, int * stride, HANDLE hSection, uint32_t offset);
-      bool CreateDIBitmap(::draw2d::graphics * pgraphics, const BITMAPINFOHEADER *pbmih, uint32_t flInit, const void *pjBits, const BITMAPINFO *pbmi, UINT iUsage);
+      virtual bool HostDIBSection(::draw2d::graphics * pgraphics, int cx, int cy, UINT usage, void *pvBits, int stride, HANDLE hSection, uint32_t offset);
+      virtual bool CreateDIBSection(::draw2d::graphics * pgraphics, int cx, int cy, UINT usage, void **ppvBits, int * stride, HANDLE hSection, uint32_t offset) override;
+      virtual bool CreateDIBitmap(::draw2d::graphics * pgraphics, int cx, int cy, uint32_t flInit, const void *pjBits, UINT iUsage) override;
 
 
       int32_t GetBitmap(BITMAP* pBitMap);
@@ -44,8 +49,6 @@ namespace draw2d_gdiplus
       uint32_t GetBitmapBits(uint32_t dwCount, LPVOID lpBits) const;
       class size SetBitmapDimension(int32_t nWidth, int32_t nHeight);
       class size GetBitmapDimension() const;
-
-      virtual void dump(dump_context & dumpcontext) const;
 
 
       virtual bool attach(void * posdata);

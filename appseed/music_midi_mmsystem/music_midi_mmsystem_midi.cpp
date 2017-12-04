@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <mmddk.h>
 
 // http://blogs.msdn.com/b/matthew_van_eerde/archive/2012/09/21/enumerating-midi-devices.aspx
@@ -110,10 +110,10 @@ namespace music
             HMIDIIN h = reinterpret_cast<HMIDIIN>(i);
             ULONG size = 0;
             MMRESULT mmr = midiInMessage(
-                              h,
-                              DRV_QUERYDEVICEINTERFACESIZE,
-                              reinterpret_cast<DWORD_PTR>(&size),
-                              0
+                           h,
+                           DRV_QUERYDEVICEINTERFACESIZE,
+                           reinterpret_cast<DWORD_PTR>(&size),
+                           0
                            );
             if (MMSYSERR_NOERROR != mmr)
             {
@@ -139,10 +139,10 @@ namespace music
 
 
             mmr = midiInMessage(
-                     h,
-                     DRV_QUERYDEVICEINTERFACE,
-                     reinterpret_cast<DWORD_PTR>((wchar_t *) wstr),
-                     size
+                  h,
+                  DRV_QUERYDEVICEINTERFACE,
+                  reinterpret_cast<DWORD_PTR>((wchar_t *) wstr),
+                  size
                   );
             if (MMSYSERR_NOERROR != mmr)
             {
@@ -162,10 +162,10 @@ namespace music
             HMIDIOUT h = reinterpret_cast<HMIDIOUT>(i);
             ULONG size = 0;
             MMRESULT mmr = midiOutMessage(
-                              h,
-                              DRV_QUERYDEVICEINTERFACESIZE,
-                              reinterpret_cast<DWORD_PTR>(&size),
-                              0
+                           h,
+                           DRV_QUERYDEVICEINTERFACESIZE,
+                           reinterpret_cast<DWORD_PTR>(&size),
+                           0
                            );
             if (MMSYSERR_NOERROR != mmr)
             {
@@ -188,10 +188,10 @@ namespace music
             wstr.alloc(size);
 
             mmr = midiOutMessage(
-                     h,
-                     DRV_QUERYDEVICEINTERFACE,
-                     reinterpret_cast<DWORD_PTR>((wchar_t *) wstr),
-                     size
+                  h,
+                  DRV_QUERYDEVICEINTERFACE,
+                  reinterpret_cast<DWORD_PTR>((wchar_t *) wstr),
+                  size
                   );
             if (MMSYSERR_NOERROR != mmr)
             {
@@ -207,22 +207,22 @@ namespace music
          void midi::mmsystem_LogMidiInCaps(UINT_PTR i, MIDIINCAPSW caps)
          {
             LOG(
-               "-- %u: %S --\n"
-               "    Device ID: %u\n"
-               "    Manufacturer identifier: %u\n"
-               "    Product identifier: %u\n"
-               "    Driver version: %u.%u\n"
-               "    Product name: %S\n"
-               "    Support: 0x%x"
-               ,
-               i,
-               caps.szPname ? caps.szPname : L"(no name)",
-               i,
-               caps.wMid,
-               caps.wPid,
-               caps.vDriverVersion / 256, caps.vDriverVersion % 256,
-               caps.szPname ? caps.szPname : L"(no name)",
-               caps.dwSupport
+            "-- %u: %S --\n"
+            "    Device ID: %u\n"
+            "    Manufacturer identifier: %u\n"
+            "    Product identifier: %u\n"
+            "    Driver version: %u.%u\n"
+            "    Product name: %S\n"
+            "    Support: 0x%x"
+            ,
+            i,
+            caps.szPname ? caps.szPname : L"(no name)",
+            i,
+            caps.wMid,
+            caps.wPid,
+            caps.vDriverVersion / 256, caps.vDriverVersion % 256,
+            caps.szPname ? caps.szPname : L"(no name)",
+            caps.dwSupport
             );
             string strName;
             if (caps.szPname != NULL)
@@ -239,43 +239,43 @@ namespace music
          void midi::mmsystem_LogMidiOutCaps(UINT_PTR i, MIDIOUTCAPSW caps)
          {
             LOG(
-               "-- %u: %S --\n"
-               "    Device ID: %u\n"
-               "    Manufacturer identifier: %u\n"
-               "    Product identifier: %u\n"
-               "    Driver version: %u.%u\n"
-               "    Product name: %S\n"
-               "    Technology: %u (%S)\n"
-               "    Voices: %u\n"
-               "    Notes: %u\n"
-               "    Channel mask: 0x%x\n"
-               "    Support: 0x%x"
-               "%S%S%S%S"
-               ,
-               i,
-               caps.szPname ? caps.szPname : L"(no name)",
-               i,
-               caps.wMid,
-               caps.wPid,
-               caps.vDriverVersion / 256, caps.vDriverVersion % 256,
-               caps.szPname ? caps.szPname : L"(no name)",
-               caps.wTechnology,
-               caps.wTechnology == MOD_MIDIPORT ? L"MOD_MIDIPORT" :
-               caps.wTechnology == MOD_SYNTH ? L"MOD_SYNTH" :
-               caps.wTechnology == MOD_SQSYNTH ? L"MOD_SQSYNTH" :
-               caps.wTechnology == MOD_FMSYNTH ? L"MOD_FMSYNTH" :
-               caps.wTechnology == MOD_MAPPER ? L"MOD_MAPPER" :
-               caps.wTechnology == MOD_WAVETABLE ? L"MOD_WAVETABLE" :
-               caps.wTechnology == MOD_SWSYNTH ? L"MOD_SWSYNTH" :
-               L"Unrecognized",
-               caps.wVoices,
-               caps.wNotes,
-               caps.wChannelMask,
-               caps.dwSupport,
-               (caps.dwSupport & MIDICAPS_CACHE) ? L"\n        MIDICAPS_CACHE" : L"",
-               (caps.dwSupport & MIDICAPS_LRVOLUME) ? L"\n        MIDICAPS_LRVOLUME" : L"",
-               (caps.dwSupport & MIDICAPS_STREAM) ? L"\n        MIDICAPS_STREAM" : L"",
-               (caps.dwSupport & MIDICAPS_VOLUME) ? L"\n        MIDICAPS_VOLUME" : L""
+            "-- %u: %S --\n"
+            "    Device ID: %u\n"
+            "    Manufacturer identifier: %u\n"
+            "    Product identifier: %u\n"
+            "    Driver version: %u.%u\n"
+            "    Product name: %S\n"
+            "    Technology: %u (%S)\n"
+            "    Voices: %u\n"
+            "    Notes: %u\n"
+            "    Channel mask: 0x%x\n"
+            "    Support: 0x%x"
+            "%S%S%S%S"
+            ,
+            i,
+            caps.szPname ? caps.szPname : L"(no name)",
+            i,
+            caps.wMid,
+            caps.wPid,
+            caps.vDriverVersion / 256, caps.vDriverVersion % 256,
+            caps.szPname ? caps.szPname : L"(no name)",
+            caps.wTechnology,
+            caps.wTechnology == MOD_MIDIPORT ? L"MOD_MIDIPORT" :
+            caps.wTechnology == MOD_SYNTH ? L"MOD_SYNTH" :
+            caps.wTechnology == MOD_SQSYNTH ? L"MOD_SQSYNTH" :
+            caps.wTechnology == MOD_FMSYNTH ? L"MOD_FMSYNTH" :
+            caps.wTechnology == MOD_MAPPER ? L"MOD_MAPPER" :
+            caps.wTechnology == MOD_WAVETABLE ? L"MOD_WAVETABLE" :
+            caps.wTechnology == MOD_SWSYNTH ? L"MOD_SWSYNTH" :
+            L"Unrecognized",
+            caps.wVoices,
+            caps.wNotes,
+            caps.wChannelMask,
+            caps.dwSupport,
+            (caps.dwSupport & MIDICAPS_CACHE) ? L"\n        MIDICAPS_CACHE" : L"",
+            (caps.dwSupport & MIDICAPS_LRVOLUME) ? L"\n        MIDICAPS_LRVOLUME" : L"",
+            (caps.dwSupport & MIDICAPS_STREAM) ? L"\n        MIDICAPS_STREAM" : L"",
+            (caps.dwSupport & MIDICAPS_VOLUME) ? L"\n        MIDICAPS_VOLUME" : L""
             );
             string strName;
             if (caps.szPname != NULL)
@@ -309,7 +309,8 @@ namespace music
 
             if(s_pmutex == NULL)
             {
-               s_pmutex = new mutex(::get_thread_app());
+
+               s_pmutex = new mutex(::get_app());
 
                // TODO :
                // register s_pmutex in Sys(::get_thread_app()).register_static_system_object

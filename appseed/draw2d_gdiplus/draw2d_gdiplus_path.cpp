@@ -229,10 +229,10 @@ namespace draw2d_gdiplus
       {
 
          Gdiplus::Rect rect(
-            convert < INT > (x),
-            convert < INT > (y),
-            convert < INT > (cx),
-            convert < INT > (cy)
+            (INT) (x),
+            (INT)(y),
+            (INT)(cx),
+            (INT)(cy)
          );
 
          try
@@ -252,10 +252,10 @@ namespace draw2d_gdiplus
       {
 
          Gdiplus::RectF rect(
-            convert < FLOAT >(x),
-            convert < FLOAT >(y),
-            convert < FLOAT >(cx),
-            convert < FLOAT >(cy)
+            (float)(x),
+            (float)(y),
+            (float)(cx),
+            (float)(cy)
          );
 
          try

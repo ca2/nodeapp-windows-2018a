@@ -461,7 +461,7 @@ namespace music
             /* ptempo is the tempo map entry preceding the requested tick offset.
             */
 
-            return convert < int_ptr > (
+            return (int_ptr) (
                       ptempo->mcBase / 1000 +
                       muldiv32(
                          (int32_t)(tkOffset - ptempo->tkTempo),
@@ -556,19 +556,26 @@ namespace music
                }
 
             }
+            if (idx == 0)
+            {
+
+               return 0;
+
+            }
             ptempo = &m_tempomap.element_at(--idx);
 
             /* ptempo is the tempo map entry preceding the requested tick offset.
             */
 
-            convert(tkOffset,
-                    ptempo->tkTempo +
-                    muldiv32(
-                       convert < int32_t > (msOffset-ptempo->mcBase / 1000),
-                       convert < int32_t > (1000L * m_dwTimeDivision),
-                       convert < int32_t > (ptempo->dwTempo)
-                    )
-                   );
+            tkOffset =  (imedia_position)
+                        (
+                           ptempo->tkTempo +
+                           muldiv32(
+                              (int32_t) (msOffset-ptempo->mcBase / 1000),
+                              (int32_t)(1000L * m_dwTimeDivision),
+                              (int32_t)(ptempo->dwTempo)
+                           )
+                        );
 
             if (tkOffset > m_tkLength)
             {
@@ -2005,7 +2012,7 @@ namespace music
 
             }
 
-            return convert < uint32_t > (len);
+            return ( uint32_t ) (len);
 
          }
 

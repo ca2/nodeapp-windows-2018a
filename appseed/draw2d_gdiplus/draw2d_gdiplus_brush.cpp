@@ -7,19 +7,21 @@ namespace draw2d_gdiplus
 
    brush::brush(::aura::application * papp) :
       ::object(papp)
-   { 
+   {
 
       m_pbrush = NULL;
 
    }
 
    brush::~brush()
-   { 
-   
+   {
+
       ::aura::del(m_pbrush);
 
    }
 
+
+#ifdef DEBUG
 
    void brush::dump(dump_context & dumpcontext) const
    {
@@ -28,11 +30,11 @@ namespace draw2d_gdiplus
 
    }
 
-
+#endif
 
    void * brush::get_os_data() const
    {
-      
+
       if(m_pbrush == NULL || !m_bUpdated)
       {
          ::aura::del(((brush *) this)->m_pbrush);
@@ -62,7 +64,7 @@ namespace draw2d_gdiplus
          }
          else if(m_etype == type_radial_gradient_color)
          {
-            
+
             try
             {
 
@@ -75,9 +77,9 @@ namespace draw2d_gdiplus
                Gdiplus::Color c1(argb_get_a_value(m_cr1),argb_get_r_value(m_cr1),argb_get_g_value(m_cr1),argb_get_b_value(m_cr1));
                Gdiplus::Color c2(argb_get_a_value(m_cr2),argb_get_r_value(m_cr2),argb_get_g_value(m_cr2),argb_get_b_value(m_cr2));
 
-                  INT c = 1;
+               INT c = 1;
 
-                  pgb->SetCenterPoint(Gdiplus::PointF((Gdiplus::REAL) m_pt.x,(Gdiplus::REAL) m_pt.y));
+               pgb->SetCenterPoint(Gdiplus::PointF((Gdiplus::REAL) m_pt.x,(Gdiplus::REAL) m_pt.y));
                pgb->SetCenterColor(c1);
                pgb->SetSurroundColors(&c2,&c);
 
@@ -89,7 +91,7 @@ namespace draw2d_gdiplus
          }
          else if (m_etype == type_pattern)
          {
-            
+
             try
             {
 
@@ -108,10 +110,10 @@ namespace draw2d_gdiplus
          }
          else
          {
-            
+
             try
             {
-               
+
                ((brush *) this)->m_pbrush = new Gdiplus::SolidBrush(Gdiplus::Color(argb_get_a_value(m_cr), argb_get_r_value(m_cr), argb_get_g_value(m_cr), argb_get_b_value(m_cr)));
 
             }

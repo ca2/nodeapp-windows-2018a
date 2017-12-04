@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 //Gdiplus::ColorMatrix g_mZero =
@@ -76,7 +76,6 @@ namespace draw2d_gdiplus
 
    bool dib::host(COLORREF * pcolorref, int iScan, int32_t width, int32_t height)
    {
-
       if (width <= 0 || height <= 0 || pcolorref == NULL || iScan <= 0)
          return false;
 
@@ -89,16 +88,6 @@ namespace draw2d_gdiplus
          return true;
 
       destroy();
-
-      m_info = {};
-
-      m_info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-      m_info.bmiHeader.biWidth = width;
-      m_info.bmiHeader.biHeight = -height;
-      m_info.bmiHeader.biPlanes = 1;
-      m_info.bmiHeader.biBitCount = 32;
-      m_info.bmiHeader.biCompression = BI_RGB;
-      m_info.bmiHeader.biSizeImage = width * height * 4;
 
       m_spbitmap.alloc(allocer());
       m_spgraphics.alloc(allocer());
@@ -116,7 +105,7 @@ namespace draw2d_gdiplus
 
       }
 
-      if (!m_spbitmap->HostDIBSection(NULL, &m_info, DIB_RGB_COLORS, pcolorref, iScan, NULL, 0))
+      if (!m_spbitmap->HostDIBSection(NULL, width, height, DIB_RGB_COLORS, pcolorref, iScan, NULL, 0))
       {
 
          m_size.cx = 0;
@@ -144,7 +133,7 @@ namespace draw2d_gdiplus
 
       m_spgraphics->SelectObject(m_spbitmap);
 
-      m_spgraphics->m_pdib = this;
+      m_spgraphics->m_pdibDraw2dGraphics = this;
 
       m_size.cx = width;
 
@@ -171,15 +160,15 @@ namespace draw2d_gdiplus
 
       destroy();
 
-      m_info = {};
+      //m_info = {};
 
-      m_info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-      m_info.bmiHeader.biWidth = width;
-      m_info.bmiHeader.biHeight = -height;
-      m_info.bmiHeader.biPlanes = 1;
-      m_info.bmiHeader.biBitCount = 32;
-      m_info.bmiHeader.biCompression = BI_RGB;
-      m_info.bmiHeader.biSizeImage = width * height * 4;
+      //m_info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+      //m_info.bmiHeader.biWidth = width;
+      //m_info.bmiHeader.biHeight = -height;
+      //m_info.bmiHeader.biPlanes = 1;
+      //m_info.bmiHeader.biBitCount = 32;
+      //m_info.bmiHeader.biCompression = BI_RGB;
+      //m_info.bmiHeader.biSizeImage = width * height * 4;
 
       m_spbitmap.alloc(allocer());
       m_spgraphics.alloc(allocer());
@@ -197,7 +186,8 @@ namespace draw2d_gdiplus
 
       }
 
-      if (!m_spbitmap->CreateDIBSection(NULL, &m_info, DIB_RGB_COLORS, (void **)&m_pcolorref, &m_iScan, NULL, 0))
+      //if (!m_spbitmap->CreateDIBSection(NULL, &m_info, DIB_RGB_COLORS, (void **)&m_pcolorref, &m_iScan, NULL, 0))
+      if (!m_spbitmap->CreateDIBSection(NULL, width, height, DIB_RGB_COLORS, (void **)&m_pcolorref, &m_iScan, NULL, 0))
       {
 
          m_size.cx = 0;
@@ -221,7 +211,7 @@ namespace draw2d_gdiplus
 
       m_spgraphics->SelectObject(m_spbitmap);
 
-      m_spgraphics->m_pdib = this;
+      m_spgraphics->m_pdibDraw2dGraphics = this;
 
       m_size.cx = width;
 
@@ -313,7 +303,7 @@ namespace draw2d_gdiplus
 
       }
 
-      bool bOk = GetDIBits(GDIPLUS_HDC(pgraphics), (HBITMAP)pbitmap->get_os_data(), 0, m_size.cy, m_pcolorref, &(m_info), DIB_RGB_COLORS) != FALSE;
+      bool bOk = GetDIBits(GDIPLUS_HDC(pgraphics), (HBITMAP)pbitmap->get_os_data(), 0, m_size.cy, m_pcolorref, NULL, DIB_RGB_COLORS) != FALSE;
 
       GDIPLUS_GRAPHICS(pgraphics)->SelectObject(pbitmap);
 
@@ -440,12 +430,12 @@ namespace draw2d_gdiplus
       dib1.set(255, 255, 255);
 
       dib1.m_spgraphics->DrawIcon(
-         0, 0,
-         picon,
-         cx, cy,
-         0,
-         NULL,
-         DI_IMAGE | DI_MASK);
+      0, 0,
+      picon,
+      cx, cy,
+      0,
+      NULL,
+      DI_IMAGE | DI_MASK);
 
       // Black blend dib
       ::draw2d::dib_sp spdib2(allocer());
@@ -453,24 +443,24 @@ namespace draw2d_gdiplus
       spdib2->Fill(0, 0, 0, 0);
 
       spdib2->get_graphics()->DrawIcon(
-         0, 0,
-         picon,
-         cx, cy,
-         0,
-         NULL,
-         DI_IMAGE | DI_MASK);
+      0, 0,
+      picon,
+      cx, cy,
+      0,
+      NULL,
+      DI_IMAGE | DI_MASK);
 
       // Mask dib
       dib dibM(get_app());
       dibM.create(cx, cy);
 
       dibM.m_spgraphics->DrawIcon(
-         0, 0,
-         picon,
-         cx, cy,
-         0,
-         NULL,
-         DI_MASK);
+      0, 0,
+      picon,
+      cx, cy,
+      0,
+      NULL,
+      DI_MASK);
 
       BYTE * r1 = (BYTE*)dib1.m_pcolorref;
       BYTE * r2 = (BYTE*)spdib2->get_data();
@@ -644,8 +634,8 @@ namespace draw2d_gdiplus
       Gdiplus::Graphics * pg = (Gdiplus::Graphics *) get_graphics()->get_os_data();
 
       Gdiplus::Status ret  = pg->DrawImage(
-                                (Gdiplus::Bitmap *) pdib->get_graphics()->get_current_bitmap()->get_os_data(),
-                                Gdiplus::Rect(0, 0, m_size.cx, m_size.cy), 0, 0, m_size.cx, m_size.cy, Gdiplus::UnitPixel, &attributes);
+                             (Gdiplus::Bitmap *) pdib->get_graphics()->get_current_bitmap()->get_os_data(),
+                             Gdiplus::Rect(0, 0, m_size.cx, m_size.cy), 0, 0, m_size.cx, m_size.cy, Gdiplus::UnitPixel, &attributes);
       //ColorMatrixFlag.Default,
       //   ColorAdjustType.Bitmap);
 //      return ret == Gdiplus::Ok;
@@ -667,11 +657,11 @@ namespace draw2d_gdiplus
 
       // Draw the original and the thumbnail images.
       pg->DrawImage(
-         pThumbnail,
-         0,
-         0,
-         pThumbnail->GetWidth(),
-         pThumbnail->GetHeight());
+      pThumbnail,
+      0,
+      0,
+      pThumbnail->GetWidth(),
+      pThumbnail->GetHeight());
 
       delete pThumbnail;
 

@@ -1321,18 +1321,6 @@ seq_Preroll_Cleanup:
          }
 
 
-         uint32_t sequence::SetState(uint32_t uiState)
-         {
-
-            m_uiPreviousState = m_uiState;
-
-            m_uiState = uiState;
-
-            return m_uiPreviousState;
-
-         }
-
-
          void sequence::SetSpecialModeV001Flag(bool bSet)
          {
 
@@ -1460,7 +1448,7 @@ seq_Preroll_Cleanup:
          ::music::e_result sequence::SetTempoShift(double dTempoShift)
          {
 
-            return file()->SetTempoShift(convert < int32_t > (dTempoShift));
+            return file()->SetTempoShift((int32_t) (dTempoShift));
 
          }
 
@@ -2651,15 +2639,6 @@ seq_Preroll_Cleanup:
                m_flags.unsignalize(::music::midi::sequence::FlagSettingPos);
          }
 
-         uint32_t sequence::GetPreviousState()
-         {
-            return m_uiPreviousState;
-         }
-
-         uint32_t sequence::GetState()
-         {
-            return m_uiState;
-         }
 
          ::music::midi::sequence::event * sequence::create_new_event(::music::midi::sequence::e_event eevent, LPMIDIHDR lpmidihdr)
          {
@@ -2682,7 +2661,7 @@ seq_Preroll_Cleanup:
 
             synch_lock sl(&get_midi_mutex());
 
-            TRACE0("::music::midi::mmsystem::player::SendReset : (0)");
+            TRACE("::music::midi::mmsystem::player::SendReset : (0)");
 
             HMIDIOUT hmidiout = NULL;
 

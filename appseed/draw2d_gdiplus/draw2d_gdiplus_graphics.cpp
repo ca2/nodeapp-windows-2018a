@@ -7,26 +7,26 @@ count g_cForkBlend = 0;
 class g_keep
 {
 
-   public:
+public:
 
-      Gdiplus::Graphics * p;
-      Gdiplus::GraphicsState s;
+   Gdiplus::Graphics * p;
+   Gdiplus::GraphicsState s;
 
-      g_keep(Gdiplus::Graphics * p1)
-      {
+   g_keep(Gdiplus::Graphics * p1)
+   {
 
-         p = p1;
+      p = p1;
 
-         s = p->Save();
+      s = p->Save();
 
-      }
+   }
 
-      ~g_keep()
-      {
+   ~g_keep()
+   {
 
-         p->Restore(s);
+      p->Restore(s);
 
-      }
+   }
 
 };
 
@@ -54,7 +54,7 @@ namespace draw2d_gdiplus
 
    }
 
-
+#ifdef DEBUG
    void graphics::assert_valid() const
    {
 
@@ -74,6 +74,7 @@ namespace draw2d_gdiplus
       dumpcontext << "\n";
    }
 
+#endif
 
    graphics::~graphics()
    {
@@ -1461,7 +1462,7 @@ namespace draw2d_gdiplus
 
          bool bAvoidProcFork = ::get_thread() == NULL ? true : ::get_thread()->m_bAvoidProcFork;
 
-         if (!bAvoidProcFork && bThreadToolsForIncreasedFps && pgraphicsSrc->m_pdib != NULL && m_pdib != NULL)
+         if (!bAvoidProcFork && bThreadToolsForIncreasedFps && pgraphicsSrc->m_pdibDraw2dGraphics != NULL && m_pdibDraw2dGraphics != NULL)
          {
 
             if (m_ealphamode == ::draw2d::alpha_mode_blend)
@@ -1472,9 +1473,9 @@ namespace draw2d_gdiplus
                if (nHeight >= get_processor_count() * 4 && (nWidth * nHeight) >= (get_processor_count() * 64) && sl.lock(millis(0)))
                {
 
-                  m_pdib->fork_blend(point(x + GetViewportOrg().x, y + GetViewportOrg().y), pgraphicsSrc->m_pdib,
-                                     point(xSrc + pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y),
-                                     size(nWidth, nHeight));
+                  m_pdibDraw2dGraphics->fork_blend(point(x + GetViewportOrg().x, y + GetViewportOrg().y), pgraphicsSrc->m_pdibDraw2dGraphics,
+                                                   point(xSrc + pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y),
+                                                   size(nWidth, nHeight));
 
                   g_cForkBlend++;
 
@@ -1486,18 +1487,18 @@ namespace draw2d_gdiplus
                }
                else
                {
-                  m_pdib->blend(point(x + GetViewportOrg().x, y + GetViewportOrg().y), pgraphicsSrc->m_pdib,
-                                point(xSrc + pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y),
-                                size(nWidth, nHeight));
+                  m_pdibDraw2dGraphics->blend(point(x + GetViewportOrg().x, y + GetViewportOrg().y), pgraphicsSrc->m_pdibDraw2dGraphics,
+                                              point(xSrc + pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y),
+                                              size(nWidth, nHeight));
 
                }
             }
             else
             {
 
-               m_pdib->from(point(x + GetViewportOrg().x, y + GetViewportOrg().y), pgraphicsSrc->m_pdib,
-                            point(xSrc + pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y),
-                            size(nWidth, nHeight));
+               m_pdibDraw2dGraphics->from(point(x + GetViewportOrg().x, y + GetViewportOrg().y), pgraphicsSrc->m_pdibDraw2dGraphics,
+                                          point(xSrc + pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y),
+                                          size(nWidth, nHeight));
 
 
             }
@@ -1507,8 +1508,8 @@ namespace draw2d_gdiplus
 
          }
          ret = m_pgraphics->DrawImage(
-                  (Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data(),
-                  x, y, xSrc + pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y, nWidth, nHeight, Gdiplus::UnitPixel);
+               (Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data(),
+               x, y, xSrc + pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y, nWidth, nHeight, Gdiplus::UnitPixel);
 
          if(ret != Gdiplus::Status::Ok)
          {
@@ -2390,7 +2391,7 @@ gdi_fallback:
 
       Gdiplus::RectF rect((Gdiplus::REAL) rectBounds.left,(Gdiplus::REAL) rectBounds.top,(Gdiplus::REAL) width(rectBounds),(Gdiplus::REAL) height(rectBounds));
 
-      pointer < Gdiplus::Metafile > pMeta = new Gdiplus::Metafile(hEnhMF, false);
+      ap(Gdiplus::Metafile) pMeta = new Gdiplus::Metafile(hEnhMF, false);
 
       //m_pgraphcis->EnumerateMetafile(pMeta, rect, metaCallback, PMETAHEADER);
 
@@ -2446,9 +2447,9 @@ gdi_fallback:
             if (nDestHeight >= get_processor_count() * 4 && (nDestWidth * nDestHeight) >= (get_processor_count() * 64))
             {
 
-               m_pdib->fork_blend(point(xDest + GetViewportOrg().x, yDest + GetViewportOrg().y), pgraphicsSrc->m_pdib,
-                                  point(xSrc + pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y),
-                                  size(nSrcWidth, nDestHeight), (byte)(dRate * 255.0f));
+               m_pdibDraw2dGraphics->fork_blend(point(xDest + GetViewportOrg().x, yDest + GetViewportOrg().y), pgraphicsSrc->m_pdibDraw2dGraphics,
+                                                point(xSrc + pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y),
+                                                size(nSrcWidth, nDestHeight), (byte)(dRate * 255.0f));
 
                g_cForkBlend++;
 
@@ -2460,18 +2461,18 @@ gdi_fallback:
             }
             else
             {
-               m_pdib->blend(point(xDest + GetViewportOrg().x, yDest + GetViewportOrg().y), pgraphicsSrc->m_pdib,
-                             point(xSrc+pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y),
-                             size(nSrcWidth, nDestHeight), (byte)(dRate * 255.0f));
+               m_pdibDraw2dGraphics->blend(point(xDest + GetViewportOrg().x, yDest + GetViewportOrg().y), pgraphicsSrc->m_pdibDraw2dGraphics,
+                                           point(xSrc+pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y),
+                                           size(nSrcWidth, nDestHeight), (byte)(dRate * 255.0f));
 
             }
          }
          else
          {
 
-            m_pdib->from(point(xDest + GetViewportOrg().x, yDest + GetViewportOrg().y), pgraphicsSrc->m_pdib,
-                         point(xSrc + pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y),
-                         size(nSrcWidth, nDestHeight), (byte) (dRate * 255.0f));
+            m_pdibDraw2dGraphics->from(point(xDest + GetViewportOrg().x, yDest + GetViewportOrg().y), pgraphicsSrc->m_pdibDraw2dGraphics,
+                                       point(xSrc + pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y),
+                                       size(nSrcWidth, nDestHeight), (byte) (dRate * 255.0f));
 
 
          }
@@ -2862,23 +2863,23 @@ gdi_fallback:
    void graphics::Draw3dRect(int32_t x, int32_t y, int32_t cx, int32_t cy,
                              COLORREF clrTopLeft, COLORREF clrBottomRight)
    {
-      //if (m_pdib != NULL)
+      //if (m_pdibDraw2dGraphics != NULL)
       //{
-      //   m_pdib->map();
+      //   m_pdibDraw2dGraphics->map();
       //   point p = GetViewportOrg();
-      //   m_pdib->vertical_line(x + p.x, argb_get_r_value(clrTopLeft),
+      //   m_pdibDraw2dGraphics->vertical_line(x + p.x, argb_get_r_value(clrTopLeft),
       //      argb_get_r_value(clrTopLeft),
       //      argb_get_g_value(clrTopLeft),
       //      argb_get_a_value(clrTopLeft),
       //      y + p.y + 1,
       //      x + cx - 1);
-      //   m_pdib->horizontal_line(y + p.y, argb_get_r_value(clrTopLeft),
+      //   m_pdibDraw2dGraphics->horizontal_line(y + p.y, argb_get_r_value(clrTopLeft),
       //      argb_get_r_value(clrTopLeft),
       //      argb_get_g_value(clrTopLeft),
       //      argb_get_a_value(clrTopLeft),
       //      x + p.x,
       //      x + cx - 1);
-      //   m_pdib->horizontal_line(y + p.y, argb_get_r_value(clrTopLeft),
+      //   m_pdibDraw2dGraphics->horizontal_line(y + p.y, argb_get_r_value(clrTopLeft),
       //      argb_get_r_value(clrTopLeft),
       //      argb_get_g_value(clrTopLeft),
       //      argb_get_a_value(clrTopLeft),
@@ -3403,10 +3404,10 @@ gdi_fallback:
       Gdiplus::Point origin(0, 0);
 
       m_pgraphics->TransformPoints(
-         Gdiplus::CoordinateSpacePage,
-         Gdiplus::CoordinateSpaceWorld,
-         &origin,
-         1);
+      Gdiplus::CoordinateSpacePage,
+      Gdiplus::CoordinateSpaceWorld,
+      &origin,
+      1);
 
       return point((int64_t) origin.X, (int64_t) origin.Y);
 
@@ -3898,33 +3899,33 @@ gdi_fallback:
          break;
       case META_SETWINDOWEXT:
          (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SetWindowExt(
-            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
+         (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SETWINDOWORG:
          (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SetWindowOrg(
-            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
+         (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SETVIEWPORTEXT:
          (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SetViewportExt(
-            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
+         (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SETVIEWPORTORG:
          (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SetViewportOrg(
-            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
+         (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SCALEWINDOWEXT:
          (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->ScaleWindowExt(
-            (int32_t)(int16_t)pMetaRec->rdParm[3], (int32_t)(int16_t)pMetaRec->rdParm[2],
-            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
+         (int32_t)(int16_t)pMetaRec->rdParm[3], (int32_t)(int16_t)pMetaRec->rdParm[2],
+         (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SCALEVIEWPORTEXT:
          (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->ScaleViewportExt(
-            (int32_t)(int16_t)pMetaRec->rdParm[3], (int32_t)(int16_t)pMetaRec->rdParm[2],
-            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
+         (int32_t)(int16_t)pMetaRec->rdParm[3], (int32_t)(int16_t)pMetaRec->rdParm[2],
+         (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_OFFSETVIEWPORTORG:
          (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->OffsetViewportOrg(
-            (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
+         (int32_t)(int16_t)pMetaRec->rdParm[1], (int32_t)(int16_t)pMetaRec->rdParm[0]);
          break;
       case META_SAVEDC:
          (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SaveDC();
@@ -3959,7 +3960,7 @@ gdi_fallback:
             if (hObjOld == hStockFont)
             {
                // got the stock object back, so must be selecting a font
-               throw not_implemented(get_thread_app());
+               throw not_implemented(get_app());
 //                  (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SelectObject(::draw2d_gdiplus::font::from_handle(pgraphics->get_app(), (HFONT)hObject));
                break;  // don't play the default record
             }
@@ -3975,7 +3976,7 @@ gdi_fallback:
          {
             // play back as graphics::SelectObject(::draw2d::font*)
 //               (dynamic_cast<::draw2d_gdiplus::graphics * >(pgraphics))->SelectObject(::draw2d_gdiplus::font::from_handle(pgraphics->get_app(), (HFONT)hObject));
-            throw not_implemented(get_thread_app());
+            throw not_implemented(get_app());
             break;  // don't play the default record
          }
       }
@@ -4156,7 +4157,7 @@ gdi_fallback:
 
             status = m_pgraphics->GetTransform(&m);
 
-            pointer< Gdiplus::Matrix > pmNew = m.Clone();
+            ap(Gdiplus::Matrix) pmNew = m.Clone();
 
             status = pmNew->Translate((Gdiplus::REAL) rectParam.left, (Gdiplus::REAL) rectParam.top);
 
@@ -4359,7 +4360,7 @@ gdi_fallback:
          {
 
             charRanges[j].First = 0;
-            convert(charRanges[j].Length, i + j+ 1);
+            charRanges[j].Length = (INT) (i + j+ 1);
 
          }
 
@@ -4372,7 +4373,7 @@ gdi_fallback:
                                   | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
                                   | Gdiplus::StringFormatFlagsLineLimit);
 
-         strFormat.SetMeasurableCharacterRanges(convert < INT > (cRanges), charRanges);
+         strFormat.SetMeasurableCharacterRanges(INT (cRanges), charRanges);
 
 
          //strFormat.SetFormatFlags(strFormat.GetFormatFlags()
@@ -4527,7 +4528,7 @@ gdi_fallback:
 
       wstring wstrRange = ::str::international::utf8_to_unicode(lpszString, iIndex);
 
-      Gdiplus::CharacterRange charRanges[1] = { Gdiplus::CharacterRange(convert < INT > (wstrRange.get_length()), convert < INT > (wstr.get_length() - wstrRange.get_length())) };
+      Gdiplus::CharacterRange charRanges[1] = { Gdiplus::CharacterRange(INT(wstrRange.get_length()), INT(wstr.get_length() - wstrRange.get_length())) };
 
       Gdiplus::StringFormat strFormat(Gdiplus::StringFormat::GenericTypographic());
 
@@ -5118,7 +5119,7 @@ namespace draw2d_gdiplus
 
          m_pgraphics->GetTransform(&m);
 
-         pointer < Gdiplus::Matrix > pmNew;
+         ap(Gdiplus::Matrix) pmNew;
 
          if (m_ppath != NULL)
          {
@@ -5720,7 +5721,7 @@ namespace draw2d_gdiplus
 
             // The following commented out code does not work well when there is clipping
             // and some calculations are not precise
-            //if (m_pdib != NULL && pgraphicsSrc->m_pdib != NULL)
+            //if (m_pdibDraw2dGraphics != NULL && pgraphicsSrc->m_pdibDraw2dGraphics != NULL)
             //{
 
             //   point ptOff = GetViewportOrg();
@@ -5729,7 +5730,7 @@ namespace draw2d_gdiplus
 
             //   y += ptOff.y;
 
-            //   return m_pdib->blend(point(x, y), pgraphicsSrc->m_pdib, point(xSrc, ySrc), m_pdibAlphaBlend, point(m_ptAlphaBlend.x - x, m_ptAlphaBlend.y - y), rectBlt.size());
+            //   return m_pdibDraw2dGraphics->blend(point(x, y), pgraphicsSrc->m_pdibDraw2dGraphics, point(xSrc, ySrc), m_pdibAlphaBlend, point(m_ptAlphaBlend.x - x, m_ptAlphaBlend.y - y), rectBlt.size());
 
             //}
             //else
