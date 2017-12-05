@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 // thank you (casey) : tahnk oy coed prjsoetc China Cai Tao
 
 namespace multimedia
@@ -43,39 +43,33 @@ namespace multimedia
       }
 
 
-      bool wave_out::initialize_thread()
+      bool wave_out::init_thread()
       {
 
-         if(!::multimedia::audio::wave_out::initialize_thread())
+         if (!::multimedia::audio::wave_out::init_thread())
+         {
+
             return false;
+
+         }
 
          return true;
 
       }
 
 
-      int32_t wave_out::run()
+      void wave_out::run()
       {
 
-         while(thread_get_run())
-         {
-
-            ::thread::run();
-
-         }
-
-         return 0;
+         ::thread::run();
 
       }
 
 
-      int32_t wave_out::exit_thread()
+      void wave_out::term_thread()
       {
 
-         ::multimedia::audio::wave_out::exit_thread();
-
-         return ::thread::exit_thread();
-
+         ::multimedia::audio::wave_out::term_thread();
       }
 
 
@@ -239,10 +233,10 @@ namespace multimedia
          wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, uiBufferCount,128,m_pwaveformat, m_pwaveformat);
 
          m_pprebuffer->open(
-            this, // callback thread (thread)
-            m_pwaveformat->nChannels, // channel count
-            uiBufferCount, // group count
-            iBufferSampleCount); // group sample count
+         this, // callback thread (thread)
+         m_pwaveformat->nChannels, // channel count
+         uiBufferCount, // group count
+         iBufferSampleCount); // group sample count
 
 
          // TODO(casey): DSBCAPS_GETCURRENTPOSITION2
@@ -886,7 +880,7 @@ namespace multimedia
       }
 
 
-      int32_t wave_out::run_step_thread::run()
+      void wave_out::run_step_thread::run()
       {
 
          while(thread_get_run() && m_pout->m_estate == wave_out::state_playing)
@@ -895,8 +889,6 @@ namespace multimedia
             m_pout->wave_out_run_step();
 
          }
-
-         return 0;
 
       }
 

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2008
+VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\app.vcxproj", "{19841115-1984-0411-1977-021977151984}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -32,10 +32,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ace", "..\..\..\app\appseed\ace\ace.vcxproj", "{21DCC811-4BCE-4F16-B674-C0941F847127}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_ace", "..\..\..\app\appseed\ace\_ace.vcxproj", "{699D6807-4F43-40E9-86AB-2A8B856707A9}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "image_decode_jpeg", "..\..\..\app\appseed\image_jpeg\axis_image_jpeg.vcxproj", "{84517713-2000-419D-A87F-4338C9DDE3FA}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "image_decode_png", "..\..\..\app\appseed\image_png\axis_image_png.vcxproj", "{84517714-2000-419D-A87F-4338C9DDE3FA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_verilux", "..\..\..\app-core\appseed\verilux\verilux.vcxproj", "{32AFCA36-804D-4FC9-9D86-6EB6655B8EC0}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -259,34 +255,6 @@ Global
 		{699D6807-4F43-40E9-86AB-2A8B856707A9}.stage|Win32.Build.0 = stage|Win32
 		{699D6807-4F43-40E9-86AB-2A8B856707A9}.stage|x64.ActiveCfg = stage|x64
 		{699D6807-4F43-40E9-86AB-2A8B856707A9}.stage|x64.Build.0 = stage|x64
-		{84517713-2000-419D-A87F-4338C9DDE3FA}.basis|Win32.ActiveCfg = basis|Win32
-		{84517713-2000-419D-A87F-4338C9DDE3FA}.basis|Win32.Build.0 = basis|Win32
-		{84517713-2000-419D-A87F-4338C9DDE3FA}.basis|x64.ActiveCfg = basis|x64
-		{84517713-2000-419D-A87F-4338C9DDE3FA}.basis|x64.Build.0 = basis|x64
-		{84517713-2000-419D-A87F-4338C9DDE3FA}.cover|Win32.ActiveCfg = cover|Win32
-		{84517713-2000-419D-A87F-4338C9DDE3FA}.cover|Win32.Build.0 = cover|Win32
-		{84517713-2000-419D-A87F-4338C9DDE3FA}.cover|Win32.Deploy.0 = cover|Win32
-		{84517713-2000-419D-A87F-4338C9DDE3FA}.cover|x64.ActiveCfg = cover|x64
-		{84517713-2000-419D-A87F-4338C9DDE3FA}.cover|x64.Build.0 = cover|x64
-		{84517713-2000-419D-A87F-4338C9DDE3FA}.cover|x64.Deploy.0 = cover|x64
-		{84517713-2000-419D-A87F-4338C9DDE3FA}.stage|Win32.ActiveCfg = stage|Win32
-		{84517713-2000-419D-A87F-4338C9DDE3FA}.stage|Win32.Build.0 = stage|Win32
-		{84517713-2000-419D-A87F-4338C9DDE3FA}.stage|x64.ActiveCfg = stage|x64
-		{84517713-2000-419D-A87F-4338C9DDE3FA}.stage|x64.Build.0 = stage|x64
-		{84517714-2000-419D-A87F-4338C9DDE3FA}.basis|Win32.ActiveCfg = basis|Win32
-		{84517714-2000-419D-A87F-4338C9DDE3FA}.basis|Win32.Build.0 = basis|Win32
-		{84517714-2000-419D-A87F-4338C9DDE3FA}.basis|x64.ActiveCfg = basis|x64
-		{84517714-2000-419D-A87F-4338C9DDE3FA}.basis|x64.Build.0 = basis|x64
-		{84517714-2000-419D-A87F-4338C9DDE3FA}.cover|Win32.ActiveCfg = cover|Win32
-		{84517714-2000-419D-A87F-4338C9DDE3FA}.cover|Win32.Build.0 = cover|Win32
-		{84517714-2000-419D-A87F-4338C9DDE3FA}.cover|Win32.Deploy.0 = cover|Win32
-		{84517714-2000-419D-A87F-4338C9DDE3FA}.cover|x64.ActiveCfg = cover|x64
-		{84517714-2000-419D-A87F-4338C9DDE3FA}.cover|x64.Build.0 = cover|x64
-		{84517714-2000-419D-A87F-4338C9DDE3FA}.cover|x64.Deploy.0 = cover|x64
-		{84517714-2000-419D-A87F-4338C9DDE3FA}.stage|Win32.ActiveCfg = stage|Win32
-		{84517714-2000-419D-A87F-4338C9DDE3FA}.stage|Win32.Build.0 = stage|Win32
-		{84517714-2000-419D-A87F-4338C9DDE3FA}.stage|x64.ActiveCfg = stage|x64
-		{84517714-2000-419D-A87F-4338C9DDE3FA}.stage|x64.Build.0 = stage|x64
 		{32AFCA36-804D-4FC9-9D86-6EB6655B8EC0}.basis|Win32.ActiveCfg = basis|Win32
 		{32AFCA36-804D-4FC9-9D86-6EB6655B8EC0}.basis|Win32.Build.0 = basis|Win32
 		{32AFCA36-804D-4FC9-9D86-6EB6655B8EC0}.basis|x64.ActiveCfg = basis|x64
