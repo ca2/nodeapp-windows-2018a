@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace draw2d_gdiplus
@@ -315,10 +315,14 @@ namespace draw2d_gdiplus
 
       if(m_ppen == NULL || !m_bUpdated)
       {
+
          if(m_ppen != NULL)
          {
-            delete m_ppen;
+
+            ::aura::del(((pen *)this)->m_ppen);
+
          }
+
          if (m_etype == type_brush)
          {
 
@@ -327,13 +331,15 @@ namespace draw2d_gdiplus
          }
          else
          {
+
             ((pen *) this)->m_ppen = new Gdiplus::Pen(Gdiplus::Color(
-                     argb_get_a_value(m_cr),
-                     argb_get_r_value(m_cr),
-                     argb_get_g_value(m_cr),
-                     argb_get_b_value(m_cr)), (Gdiplus::REAL) m_dWidth);
+                  argb_get_a_value(m_cr),
+                  argb_get_r_value(m_cr),
+                  argb_get_g_value(m_cr),
+                  argb_get_b_value(m_cr)), (Gdiplus::REAL) m_dWidth);
 
          }
+
          switch(m_elinejoin)
          {
          case line_join_miter:
@@ -349,6 +355,7 @@ namespace draw2d_gdiplus
             ((pen *) this)->m_ppen->SetLineJoin(Gdiplus::LineJoinMiterClipped);
             break;
          }
+
          switch(m_elinecapBeg)
          {
          case line_cap_flat:
@@ -361,6 +368,7 @@ namespace draw2d_gdiplus
             ((pen *) this)->m_ppen->SetStartCap(Gdiplus::LineCapSquare);
             break;
          }
+
          switch(m_elinecapEnd)
          {
          case line_cap_flat:
@@ -373,8 +381,10 @@ namespace draw2d_gdiplus
             ((pen *) this)->m_ppen->SetEndCap(Gdiplus::LineCapSquare);
             break;
          }
+
          if(m_etype == type_dot)
          {
+
             Gdiplus::REAL dashVals[4];
 
             dashVals[0] = 1;
@@ -384,12 +394,16 @@ namespace draw2d_gdiplus
 
             // Set the dash pattern for the custom dashed line.
             ((pen *) this)->m_ppen->SetDashPattern(dashVals,2);
+
          }
+
       }
 
       if(m_ppen != NULL)
       {
+
          ((pen *) this)->m_bUpdated = true;
+
       }
 
       return (void *) (Gdiplus::Pen *) m_ppen;
