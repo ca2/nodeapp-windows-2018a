@@ -1,7 +1,5 @@
 ﻿#include "framework.h"
 
-BOOL CALLBACK draw2d_gdiplus_EnumFamCallBack(LPLOGFONT lplf,LPNEWTEXTMETRIC lpntm,DWORD FontType,LPVOID p);
-
 count g_cForkBlend = 0;
 
 class g_keep
@@ -2392,8 +2390,6 @@ gdi_fallback:
       Gdiplus::RectF rect((Gdiplus::REAL) rectBounds.left,(Gdiplus::REAL) rectBounds.top,(Gdiplus::REAL) width(rectBounds),(Gdiplus::REAL) height(rectBounds));
 
       ap(Gdiplus::Metafile) pMeta = new Gdiplus::Metafile(hEnhMF, false);
-
-      //m_pgraphcis->EnumerateMetafile(pMeta, rect, metaCallback, PMETAHEADER);
 
       Gdiplus::Status ret = m_pgraphics->DrawImage(pMeta, rect);
 
@@ -5631,7 +5627,7 @@ namespace draw2d_gdiplus
    void graphics::enum_fonts(::draw2d::font::enum_item_array & itema)
    {
 
-      ::draw2d::wingdi_enum_fonts(itema, false, true, false);
+      ::draw2d::wingdi_enum_fonts(itema, false, true, true);
 
    }
 
