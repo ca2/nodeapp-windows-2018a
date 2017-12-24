@@ -5715,6 +5715,19 @@ namespace draw2d_gdiplus
          if (rectIntersect.intersect(rectIntersect, rectBlt))
          {
 
+            //if (m_ptAlphaBlend.x < 0)
+            //{
+
+            //   xSrc += -m_ptAlphaBlend.x;
+
+            //}
+            //if (m_ptAlphaBlend.y < 0)
+            //{
+
+            //   ySrc += -m_ptAlphaBlend.y;
+
+            //}
+
             // The following commented out code does not work well when there is clipping
             // and some calculations are not precise
             //if (m_pdibDraw2dGraphics != NULL && pgraphicsSrc->m_pdibDraw2dGraphics != NULL)
@@ -5733,9 +5746,6 @@ namespace draw2d_gdiplus
             {
 
                ::draw2d::dib_sp dib1(allocer());
-               //#ifdef METROWIN
-               //               g_pdiba->add(dib1);
-               //#endif
 
                dib1->create(rectBlt.size());
 
@@ -5744,7 +5754,7 @@ namespace draw2d_gdiplus
                if (!dib1->from(null_point(), pgraphicsSrc, point(xSrc, ySrc), rectBlt.size()))
                   return false;
 
-               dib1->blend2(point(0, 0), m_pdibAlphaBlend, point((int)MAX(0, x - m_ptAlphaBlend.x), (int)MAX(0, y - m_ptAlphaBlend.y)), rectBlt.size(), 255);
+               dib1->blend2(point(0, 0), m_pdibAlphaBlend, point(x - m_ptAlphaBlend.x, y - m_ptAlphaBlend.y), rectBlt.size(), 255);
 
                BitBltRaw(x, y, nWidth, nHeight, dib1->get_graphics(), 0, 0, dwRop);
 
@@ -5753,8 +5763,6 @@ namespace draw2d_gdiplus
             return true;
 
          }
-
-
 
       }
 
