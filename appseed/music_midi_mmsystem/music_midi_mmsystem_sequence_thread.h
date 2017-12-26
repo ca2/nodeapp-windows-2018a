@@ -43,8 +43,8 @@ namespace music
             void PostTempoChange();
             void SendTempoChange();
 
-            void ExecuteCommand(smart_pointer < ::music::midi::player::command > pcommand);
-            void _ExecuteCommand(smart_pointer < ::music::midi::player::command > pcommand);
+            void ExecuteCommand(::music::midi::player::command * pcommand);
+            void _ExecuteCommand(::music::midi::player::command * pcommand);
 
 
             virtual bool init_thread() override;
