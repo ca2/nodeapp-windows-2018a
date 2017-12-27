@@ -418,7 +418,9 @@ namespace music
                link.ModifyFlag(
                ::music::midi::sequence::FlagStopAndRestart,
                ::music::midi::sequence::FlagNull);
-               link.m_tkRestart = get_sequence()->GetPositionTicks();
+
+               link.m_tkRestart = get_sequence()->get_position_ticks();
+
                if(::multimedia::result_success != (mmrc = get_sequence()->Stop()))
                {
                   throw new exception(get_app(), EMidiPlayerStop);

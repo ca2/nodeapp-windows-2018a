@@ -72,11 +72,11 @@ namespace music
          * before the SEQUENCE structure is discarded.
          *
          ***************************************************************************/
-         ::multimedia::e_result sequence::AllocBuffers()
-         {
-            return ::multimedia::result_error;
+         //::multimedia::e_result sequence::AllocBuffers()
+         //{
+         //   return ::multimedia::result_error;
 
-         }
+         //}
 
          /***************************************************************************
          *
@@ -91,10 +91,10 @@ namespace music
          * performed on the instance before it is destroyed.
          *
          ****************************************************************************/
-         VOID sequence::FreeBuffers()
-         {
-            ASSERT(FALSE);
-         }
+         //VOID sequence::FreeBuffers()
+         //{
+         //   ASSERT(FALSE);
+         //}
 
          /***************************************************************************
          *
@@ -331,7 +331,7 @@ Seq_Open_File_Cleanup:
          e_result sequence::CloseFile()
          {
 
-            single_lock sl(&m_mutex, true);
+            synch_lock sl(m_pmutex);
 
             file()->CloseFile();
 
@@ -562,7 +562,7 @@ mm_start_Cleanup:
 
             synch_lock slMidi(&get_midi_mutex());
 
-            single_lock sl(&m_mutex, TRUE);
+            synch_lock sl(m_pmutex);
 
 
             int32_t                 i;
@@ -679,7 +679,7 @@ seq_Preroll_Cleanup:
          ::multimedia::e_result sequence::Start()
          {
 
-            single_lock sl(&m_mutex, TRUE);
+            synch_lock sl(m_pmutex);
 
             if (::music::midi::sequence::status_pre_rolled != GetState())
             {
@@ -727,7 +727,7 @@ seq_Preroll_Cleanup:
          ::multimedia::e_result sequence::Pause()
 
          {
-            single_lock sl(&m_mutex, TRUE);
+            synch_lock sl(m_pmutex);
 
             //    assert(NULL != pSeq);
 
@@ -771,7 +771,7 @@ seq_Preroll_Cleanup:
          {
             //    assert(NULL != pSeq);
 
-            single_lock sl(&m_mutex, TRUE);
+            synch_lock sl(m_pmutex);
 
             if (status_paused != GetState())
                return ::multimedia::result_unsupported_function;
@@ -810,7 +810,7 @@ seq_Preroll_Cleanup:
          ::multimedia::e_result sequence::Stop()
          {
 
-            single_lock sl(&m_mutex, TRUE);
+            synch_lock sl(m_pmutex);
 
             if(GetState() == status_stopping)
                return ::multimedia::result_success;
@@ -881,9 +881,8 @@ seq_Preroll_Cleanup:
          ***************************************************************************/
          ::multimedia::e_result sequence::get_ticks(imedia_position &  pTicks)
          {
-            single_lock sl(&m_mutex);
-            if(!sl.lock(millis(184)))
-               return ::multimedia::result_internal;
+
+            synch_lock sl(m_pmutex);
 
             ::multimedia::e_result                mmr;
             MMTIME                  mmt;
@@ -957,11 +956,10 @@ seq_Preroll_Cleanup:
             get_millis(time);
          }
 
+
          ::multimedia::e_result sequence::get_millis(imedia_time & time)
          {
-            single_lock sl(&m_mutex);
-            if(!sl.lock(millis(184)))
-               return ::multimedia::result_internal;
+            synch_lock sl(m_pmutex);
 
             ::multimedia::e_result                mmr;
             MMTIME                  mmt;
@@ -1030,10 +1028,10 @@ seq_Preroll_Cleanup:
          * Returns the number of ticks into the stream.
          *
          ***************************************************************************/
-         imedia_position sequence::MillisecsToTicks(imedia_time msOffset)
-         {
-            return file()->MillisecsToTicks(msOffset);
-         }
+         //imedia_position sequence::MillisecsToTicks(imedia_time msOffset)
+         //{
+         //   return file()->MillisecsToTicks(msOffset);
+         //}
 
          /***************************************************************************
          *
@@ -1049,10 +1047,10 @@ seq_Preroll_Cleanup:
          * Returns the number of milliseconds into the stream.
          *
          ***************************************************************************/
-         imedia_time sequence::TicksToMillisecs(imedia_position tkOffset)
-         {
-            return file()->TicksToMillisecs(tkOffset);
-         }
+         //imedia_time sequence::TicksToMillisecs(imedia_position tkOffset)
+         //{
+         //   return file()->TicksToMillisecs(tkOffset);
+         //}
 
          void sequence::OnDone(HMIDISTRM hmidistream, LPMIDIHDR lpmidihdr)
          {
@@ -1107,9 +1105,9 @@ seq_Preroll_Cleanup:
                   m_flags.unsignalize(FlagSpecialModeV001End);
                   TRACE("void CALLBACK ::music::midi::sequence::MidiOutProc m_flags.is_signalized(FlagSpecialModeV001End\n");
                   pthread->PostMidiSequenceEvent(
-                     this,
-                     ::music::midi::sequence::EventSpecialModeV001End,
-                     lpmidihdr);
+                  this,
+                  ::music::midi::sequence::EventSpecialModeV001End,
+                  lpmidihdr);
                }
                else if(bStopping)
                {
@@ -1117,9 +1115,9 @@ seq_Preroll_Cleanup:
                   {
                      TRACE("void CALLBACK ::music::midi::sequence::MidiOutProc status_stopping == pSeq->GetState()\n");
                      pthread->PostMidiSequenceEvent(
-                        this,
-                        ::music::midi::sequence::EventStopped,
-                        lpmidihdr);
+                     this,
+                     ::music::midi::sequence::EventStopped,
+                     lpmidihdr);
                   }
                }
                else
@@ -1131,9 +1129,9 @@ seq_Preroll_Cleanup:
                   if(m_iBuffersInMMSYSTEM <= 0)
                   {
                      pthread->PostMidiSequenceEvent(
-                        this,
-                        ::music::midi::sequence::EventMidiPlaybackEnd,
-                        lpmidihdr);
+                     this,
+                     ::music::midi::sequence::EventMidiPlaybackEnd,
+                     lpmidihdr);
                   }
                }
             }
@@ -1171,9 +1169,9 @@ seq_Preroll_Cleanup:
                   }
                   //post_thread_message(lpData->dwThreadID, MIDIPLAYERMESSAGE_STREAMOUT, (WPARAM) pSeq, (LPARAM) lpmidihdr);
                   pthread->PostMidiSequenceEvent(
-                     this,
-                     EventMidiStreamOut,
-                     lpmidihdr);
+                  this,
+                  EventMidiStreamOut,
+                  lpmidihdr);
                   m_flags.signalize(FlagSpecialModeV001End);
                   smfrc = ::music::success;
                   return;
@@ -1182,9 +1180,9 @@ seq_Preroll_Cleanup:
                // Not EOF yet; attempt to fill another buffer
                //
                pthread->PostMidiSequenceEvent(
-                  this,
-                  EventMidiStreamOut,
-                  lpmidihdr);
+               this,
+               EventMidiStreamOut,
+               lpmidihdr);
             }
 
          }
@@ -1412,7 +1410,7 @@ seq_Preroll_Cleanup:
             if(bPlay)
             {
 
-               ticks = GetPositionTicks();
+               ticks = get_position_ticks();
 
                Stop();
 
@@ -1465,7 +1463,7 @@ seq_Preroll_Cleanup:
          ::multimedia::e_result sequence::CloseStream()
          {
 
-            single_lock sl(&m_mutex, TRUE);
+            synch_lock sl(m_pmutex);
 
             if(IsPlaying())
             {
@@ -1495,7 +1493,7 @@ seq_Preroll_Cleanup:
          ::music::e_result sequence::close_device()
          {
 
-            single_lock sl(&m_mutex, true);
+            synch_lock sl(m_pmutex);
 
             if (m_hstream == NULL)
                return ::music::success;
@@ -1539,7 +1537,7 @@ seq_Preroll_Cleanup:
          void sequence::OnMidiPlaybackEnd(::music::midi::sequence::event * pevent)
          {
             UNREFERENCED_PARAMETER(pevent);
-            single_lock sl(&m_mutex, TRUE);
+            synch_lock sl(m_pmutex);
             //   LPMIDIHDR lpmh = pevent->m_lpmh;
             //   midi_callback_data * lpData = &m_midicallbackdata;
 //            ::multimedia::e_result mmrc;
@@ -1589,7 +1587,7 @@ seq_Preroll_Cleanup:
 
 
 
-               single_lock sl(&m_mutex, TRUE);
+               synch_lock sl(m_pmutex);
 
                ::music::midi::mmsystem::sequence::event * pev = (::music::midi::mmsystem::sequence::event *) pevent;
 
@@ -1678,18 +1676,21 @@ seq_Preroll_Cleanup:
             }
          }
 
-         imedia_position sequence::GetPositionTicks()
+
+         imedia_position sequence::get_position_ticks()
          {
-            single_lock sl(&m_mutex);
-            if(!sl.lock(millis(0)))
-               return -1;
+
+            single_lock sl(m_pmutex);
+
             MMTIME mmt;
+
             mmt.wType = TIME_TICKS;
+
             if(::multimedia::result_success ==
                   midiStreamPosition(
-                     m_hstream,
-                     &mmt,
-                     sizeof(mmt)))
+                  m_hstream,
+                  &mmt,
+                  sizeof(mmt)))
                return mmt.u.ticks + m_tkPrerollBase;
             else
                return -1;
@@ -1728,10 +1729,14 @@ seq_Preroll_Cleanup:
             return imedia_time(TicksToMillisecs((imedia_position) (int_ptr) tk));
          }
 
-         void sequence::GetPosition(imedia_position & position)
+
+         void sequence::get_position(imedia_position & position)
          {
+
             get_ticks(position);
+
          }
+
 
          bool sequence::IsOpened()
          {
@@ -1746,11 +1751,11 @@ seq_Preroll_Cleanup:
 
 
          void sequence::Prepare(
-            string2a & str2a,
-            imedia::position_2darray & tka2DTokensTicks,
-            int32_t iMelodyTrack,
-            int2a & ia2TokenLine,
-            ::ikaraoke::data & data)
+         string2a & str2a,
+         imedia_position_2darray & tka2DTokensTicks,
+         int32_t iMelodyTrack,
+         int2a & ia2TokenLine,
+         ::ikaraoke::data & data)
          {
 
             UNREFERENCED_PARAMETER(str2a);
@@ -1777,15 +1782,15 @@ seq_Preroll_Cleanup:
             }
             staticdata.m_LyricsDisplay = 30;
 
-            imedia::position_2darray tk2DNoteOnPositions(get_app());
-            imedia::position_2darray tk2DNoteOffPositions(get_app());
-            imedia::position_2darray tk2DBegPositions(get_app());
-            imedia::position_2darray tk2DEndPositions(get_app());
-            imedia::time_2darray ms2DTokensMillis(get_app());
-            imedia::time_2darray ms2DNoteOnMillis(get_app());
-            imedia::time_2darray ms2DNoteOffMillis(get_app());
-            imedia::time_2darray ms2DBegMillis(get_app());
-            imedia::time_2darray ms2DEndMillis(get_app());
+            imedia_position_2darray tk2DNoteOnPositions(get_app());
+            imedia_position_2darray tk2DNoteOffPositions(get_app());
+            imedia_position_2darray tk2DBegPositions(get_app());
+            imedia_position_2darray tk2DEndPositions(get_app());
+            imedia_time_2darray ms2DTokensMillis(get_app());
+            imedia_time_2darray ms2DNoteOnMillis(get_app());
+            imedia_time_2darray ms2DNoteOffMillis(get_app());
+            imedia_time_2darray ms2DBegMillis(get_app());
+            imedia_time_2darray ms2DEndMillis(get_app());
             ::music::midi::events midiEvents;
 
 
@@ -1813,9 +1818,9 @@ seq_Preroll_Cleanup:
 
 
             file.PositionToTime(
-               ms2DTokensMillis,
-               tka2DTokensTicks,
-               0);
+            ms2DTokensMillis,
+            tka2DTokensTicks,
+            0);
 
             ::ikaraoke::lyric_events_v2 *pLyricEventsV2;
             ::ikaraoke::lyric_events_v2 *pLyricEventsV2_;
@@ -1854,10 +1859,10 @@ seq_Preroll_Cleanup:
                if(iMelodyTrack < 0)
                {
                   pLyricEventsV2->m_iTrack =
-                     file.WorkCalcMelodyTrack(
-                        &pMidiEventsV1,
-                        tka2DTokensTicks.operator()(i),
-                        ia2TokenLine[i]);
+                  file.WorkCalcMelodyTrack(
+                  &pMidiEventsV1,
+                  tka2DTokensTicks.operator()(i),
+                  ia2TokenLine[i]);
                }
                else
                {
@@ -1880,47 +1885,47 @@ seq_Preroll_Cleanup:
                   {
                      tracks.TrackAt(0)->WorkSeekBegin();
                      ((::music::midi::track *)tracks.TrackAt(0))->WorkGetNoteOnOffEventsV1(
-                        &midiEvents,
-                        (int32_t) pLyricEventsV2->m_iTrack,
-                        file.GetFormat() == 1);
+                     &midiEvents,
+                     (int32_t) pLyricEventsV2->m_iTrack,
+                     file.GetFormat() == 1);
                      tracks.TrackAt(0)->WorkSeekBegin();
                      ((::music::midi::track *)tracks.TrackAt(0))->WorkGetLevel2Events(
-                        &midiEventsLevel2,
-                        (int32_t) pLyricEventsV2->m_iTrack,
-                        file.GetFormat() == 1);
+                     &midiEventsLevel2,
+                     (int32_t) pLyricEventsV2->m_iTrack,
+                     file.GetFormat() == 1);
                   }
                   else
                   {
                      tracks.TrackAt(pLyricEventsV2->m_iTrack)->seek_begin();
                      ((::music::midi::track *)tracks.TrackAt(pLyricEventsV2->m_iTrack))->GetLevel2Events(
-                        &midiEvents,
-                        (int32_t) pLyricEventsV2->m_iTrack,
-                        file.GetFormat() == 1);
+                     &midiEvents,
+                     (int32_t) pLyricEventsV2->m_iTrack,
+                     file.GetFormat() == 1);
                      tracks.TrackAt(pLyricEventsV2->m_iTrack)->seek_begin();
                      ((::music::midi::track *)tracks.TrackAt(pLyricEventsV2->m_iTrack))->GetLevel2Events(
-                        &midiEventsLevel2,
-                        (int32_t) pLyricEventsV2->m_iTrack,
-                        file.GetFormat() == 1);
+                     &midiEventsLevel2,
+                     (int32_t) pLyricEventsV2->m_iTrack,
+                     file.GetFormat() == 1);
                   }
                }
 
                ::music::midi::util miditutil(get_app());
 
                miditutil.PrepareNoteOnOffEvents(
-                  &noteOnEvents,
-                  &noteOffEvents,
-                  (int32_t) pLyricEventsV2->m_iTrack,
-                  file.GetFormat(),
-                  &midiEvents,
-                  tka2DTokensTicks.operator()(i));
+               &noteOnEvents,
+               &noteOffEvents,
+               (int32_t) pLyricEventsV2->m_iTrack,
+               file.GetFormat(),
+               &midiEvents,
+               tka2DTokensTicks.operator()(i));
 
                miditutil.PrepareLevel2Events(
-                  &eventsLevel2Beg,
-                  &eventsLevel2End,
-                  (int32_t) pLyricEventsV2->m_iTrack,
-                  file.GetFormat(),
-                  &midiEventsLevel2,
-                  tka2DTokensTicks.operator()(i));
+               &eventsLevel2Beg,
+               &eventsLevel2End,
+               (int32_t) pLyricEventsV2->m_iTrack,
+               file.GetFormat(),
+               &midiEventsLevel2,
+               tka2DTokensTicks.operator()(i));
 
 
                tk2DNoteOnPositions(i)     = noteOnEvents.m_tkaEventsPosition;
@@ -1941,24 +1946,24 @@ seq_Preroll_Cleanup:
             }
 
             file.PositionToTime(
-               ms2DNoteOnMillis,
-               tk2DNoteOnPositions,
-               0);
+            ms2DNoteOnMillis,
+            tk2DNoteOnPositions,
+            0);
 
             file.PositionToTime(
-               ms2DNoteOffMillis,
-               tk2DNoteOffPositions,
-               0);
+            ms2DNoteOffMillis,
+            tk2DNoteOffPositions,
+            0);
 
             file.PositionToTime(
-               ms2DBegMillis,
-               tk2DBegPositions,
-               0);
+            ms2DBegMillis,
+            tk2DBegPositions,
+            0);
 
             file.PositionToTime(
-               ms2DEndMillis,
-               tk2DEndPositions,
-               0);
+            ms2DEndMillis,
+            tk2DEndPositions,
+            0);
 
 
             ::ikaraoke::lyric_events_v1 *pLyricEventsV1;
@@ -1969,39 +1974,39 @@ seq_Preroll_Cleanup:
                pLyricEventsV2 = (::ikaraoke::lyric_events_v2 *) lyricEvents.get_at(i);
                staticdata.m_eventstracks.add(pLyricEventsV2);
                file.TimeToPosition(
-                  pLyricEventsV2->m_tkaTokensPosition,
-                  ms2DTokensMillis(i),
-                  0);
+               pLyricEventsV2->m_tkaTokensPosition,
+               ms2DTokensMillis(i),
+               0);
                file.TimeToPosition(
-                  pLyricEventsV2->m_tkaNotesPosition,
-                  ms2DNoteOnMillis(i),
-                  0);
+               pLyricEventsV2->m_tkaNotesPosition,
+               ms2DNoteOnMillis(i),
+               0);
 
                imedia_time time1(0);
                imedia_time time2(0);
 
                pLyricEventsV2->m_msaTokensPosition.CopySorted(
-                  ms2DTokensMillis(i),
-                  time1,
-                  time2);
+               ms2DTokensMillis(i),
+               time1,
+               time2);
 
                pLyricEventsV2->m_msaNotesDuration.Diff(
-                  ms2DNoteOffMillis(i),
-                  ms2DNoteOnMillis(i));
+               ms2DNoteOffMillis(i),
+               ms2DNoteOnMillis(i));
 
                imedia_time time3(0);
                imedia_time time4(0);
 
                pLyricEventsV2->m_msaNotesPosition.CopySorted(
-                  ms2DNoteOnMillis(i),
-                  time3,
-                  time4);
+               ms2DNoteOnMillis(i),
+               time3,
+               time4);
 
                imedia_time time5(0x7fffffff);
 
                pLyricEventsV2->m_msaTokensDuration.ElementDiff(
-                  ms2DTokensMillis(i),
-                  time5);
+               ms2DTokensMillis(i),
+               time5);
 
             }
 
@@ -2013,9 +2018,9 @@ seq_Preroll_Cleanup:
                pLyricEventsV1->m_iOrder = i;
                //staticdata.m_eventsTracksForPositionCB.add(pLyricEventsV1);
                file.TimeToPosition(
-                  pLyricEventsV1->m_tkaTokensPosition,
-                  ms2DTokensMillis(i),
-                  -1000);
+               pLyricEventsV1->m_tkaTokensPosition,
+               ms2DTokensMillis(i),
+               -1000);
                //lyric_track * pLyricTrk = file.GetTracks().CreateLyricTrack();
                //pLyricTrk->Prepare(*pLyricEventsV1);
             }
@@ -2026,39 +2031,39 @@ seq_Preroll_Cleanup:
                pLyricEventsV2 = (::ikaraoke::lyric_events_v2 *) lyricEventsForScoring.get_at(i);
                staticdata.m_eventsTracksForScoring.add(pLyricEventsV2);
                file.TimeToPosition(
-                  pLyricEventsV2->m_tkaTokensPosition,
-                  ms2DTokensMillis(i),
-                  0);
+               pLyricEventsV2->m_tkaTokensPosition,
+               ms2DTokensMillis(i),
+               0);
                file.TimeToPosition(
-                  pLyricEventsV2->m_tkaNotesPosition,
-                  ms2DNoteOnMillis(i),
-                  0);
+               pLyricEventsV2->m_tkaNotesPosition,
+               ms2DNoteOnMillis(i),
+               0);
 
                imedia_time time1(-100);
                imedia_time time2(0);
 
                pLyricEventsV2->m_msaTokensPosition.CopySorted(
-                  ms2DTokensMillis(i),
-                  time1,
-                  time2);
+               ms2DTokensMillis(i),
+               time1,
+               time2);
 
                pLyricEventsV2->m_msaNotesDuration.Diff(
-                  ms2DNoteOffMillis(i),
-                  ms2DNoteOnMillis(i));
+               ms2DNoteOffMillis(i),
+               ms2DNoteOnMillis(i));
 
                imedia_time time3(-100);
                imedia_time time4(0);
 
                pLyricEventsV2->m_msaNotesPosition.CopySorted(
-                  ms2DNoteOnMillis(i),
-                  time3,
-                  time4);
+               ms2DNoteOnMillis(i),
+               time3,
+               time4);
 
                imedia_time time5(0x7fffffff);
 
                pLyricEventsV2->m_msaTokensDuration.ElementDiff(
-                  ms2DTokensMillis(i),
-                  time5);
+               ms2DTokensMillis(i),
+               time5);
 
                pLyricEventsV2->PrepareForScoring(this);
             }
@@ -2077,26 +2082,26 @@ seq_Preroll_Cleanup:
                staticdata.m_eventstracksV002.add(pLyricEventsV2);
 
                file.TimeToPosition(
-                  pLyricEventsV2->m_tkaTokensPosition,
-                  ms2DTokensMillis(i),
-                  -100);
+               pLyricEventsV2->m_tkaTokensPosition,
+               ms2DTokensMillis(i),
+               -100);
 
                file.TimeToPosition(
-                  pLyricEventsV2->m_tkaNotesPosition,
-                  ms2DNoteOnMillis(i),
-                  -100);
+               pLyricEventsV2->m_tkaNotesPosition,
+               ms2DNoteOnMillis(i),
+               -100);
 
                imedia_time time1(-100);
                imedia_time time2(0);
 
                pLyricEventsV2->m_msaTokensPosition.CopySorted(
-                  ms2DTokensMillis(i),
-                  time1,
-                  time2);
+               ms2DTokensMillis(i),
+               time1,
+               time2);
 
                pLyricEventsV2->m_msaNotesDuration.Diff(
-                  ms2DNoteOffMillis(i),
-                  ms2DNoteOnMillis(i));
+               ms2DNoteOffMillis(i),
+               ms2DNoteOnMillis(i));
 
                /*
                pLyricEventsV2->m_msaNotesDuration.Diff(
@@ -2109,15 +2114,15 @@ seq_Preroll_Cleanup:
                imedia_time time4(0);
 
                pLyricEventsV2->m_msaNotesPosition.CopySorted(
-                  ms2DNoteOnMillis(i),
-                  time3,
-                  time4);
+               ms2DNoteOnMillis(i),
+               time3,
+               time4);
 
                imedia_time time5(0x7fffffff);
 
                pLyricEventsV2->m_msaTokensDuration.ElementDiff(
-                  ms2DTokensMillis(i),
-                  time5);
+               ms2DTokensMillis(i),
+               time5);
 
                pLyricEventsV2->PrepareForLyricsDisplay(this);
                //lyric_track * pLyricTrk = file.GetTracks().CreateLyricTrack();
@@ -2139,26 +2144,26 @@ seq_Preroll_Cleanup:
                staticdata.m_eventsTracksForBouncingBall.add(pLyricEventsV2);
 
                file.TimeToPosition(
-                  pLyricEventsV2->m_tkaTokensPosition,
-                  ms2DTokensMillis(i),
-                  -100);
+               pLyricEventsV2->m_tkaTokensPosition,
+               ms2DTokensMillis(i),
+               -100);
 
                file.TimeToPosition(
-                  pLyricEventsV2->m_tkaNotesPosition,
-                  ms2DNoteOnMillis(i),
-                  -100);
+               pLyricEventsV2->m_tkaNotesPosition,
+               ms2DNoteOnMillis(i),
+               -100);
 
                imedia_time time1(-100);
                imedia_time time2(0);
 
                pLyricEventsV2->m_msaTokensPosition.CopySorted(
-                  ms2DTokensMillis(i),
-                  time1,
-                  time2);
+               ms2DTokensMillis(i),
+               time1,
+               time2);
 
                pLyricEventsV2->m_msaNotesDuration.Diff(
-                  ms2DEndMillis(i),
-                  ms2DBegMillis(i));
+               ms2DEndMillis(i),
+               ms2DBegMillis(i));
 
                /*
                pLyricEventsV2->m_msaNotesDuration.Diff(
@@ -2170,15 +2175,15 @@ seq_Preroll_Cleanup:
                imedia_time time4(0);
 
                pLyricEventsV2->m_msaNotesPosition.CopySorted(
-                  ms2DNoteOnMillis(i),
-                  time3,
-                  time4);
+               ms2DNoteOnMillis(i),
+               time3,
+               time4);
 
                imedia_time time5(0x7fffffff);
 
                pLyricEventsV2->m_msaTokensDuration.ElementDiff(
-                  ms2DTokensMillis(i),
-                  time5);
+               ms2DTokensMillis(i),
+               time5);
 
                pLyricEventsV2->PrepareForBouncingBall(this);
             }
@@ -2194,7 +2199,7 @@ seq_Preroll_Cleanup:
 
             string2a & str2a = data.GetStaticData().m_str2aRawTokens;
 
-            imedia::position_2darray position2a;
+            imedia_position_2darray position2a;
 
             int2a ia2TokenLine;
 
@@ -2203,17 +2208,17 @@ seq_Preroll_Cleanup:
 
             tracks.WorkSeekBegin();
             tracks.WorkGetEmptyXFTokens(
-               iTrack,
-               str2a,
-               position2a,
-               NULL);
+            iTrack,
+            str2a,
+            position2a,
+            NULL);
 
             Prepare(
-               str2a,
-               position2a,
-               iTrack,
-               ia2TokenLine,
-               data);
+            str2a,
+            position2a,
+            iTrack,
+            ia2TokenLine,
+            data);
 
          }
 
@@ -2222,7 +2227,7 @@ seq_Preroll_Cleanup:
             ::music::midi::mmsystem::buffer & file = *this->file();
             ::music::midi::tracks & tracks = file.GetTracks();
             string2a & str2a = data.GetStaticData().m_str2aRawTokens;
-            imedia::position_2darray position2a;
+            imedia_position_2darray position2a;
             int2a i2aTokenLine;
 
             ::music::xf::info_headers xfihs;
@@ -2268,11 +2273,11 @@ seq_Preroll_Cleanup:
             tracks.WorkGetXFTokens((uint32_t) -1, str2a, position2a, i2aTokenLine, NULL, false);
 
             Prepare(
-               str2a,
-               position2a,
-               -1,
-               i2aTokenLine,
-               data);
+            str2a,
+            position2a,
+            -1,
+            i2aTokenLine,
+            data);
 
             tracks.WorkSeekBegin();
             tracks.WorkGetLongestXFLyrics(staticdata.m_strLyrics, false);
@@ -2585,7 +2590,7 @@ seq_Preroll_Cleanup:
             imedia_position ticks = 0;
             if(bPlay)
             {
-               ticks = GetPositionTicks();
+               ticks = get_position_ticks();
                Stop();
             }
             get_file()->MuteAll(bMute, iExcludeTrack);
@@ -2600,11 +2605,16 @@ seq_Preroll_Cleanup:
          {
             bool bPlay = IsPlaying();
             imedia_position ticks = 0;
+
             if(bPlay)
             {
-               ticks = GetPositionTicks();
+
+               ticks = get_position_ticks();
+
                Stop();
+
             }
+
             get_file()->MuteTrack(iIndex, bMute);
             if(bPlay)
             {
