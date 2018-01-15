@@ -40,13 +40,19 @@ namespace multimedia
 
       void wave_out::helper_thread::OnMultimediaDone(::message::message * pobj)
       {
+
          m_pwaveout->OnMultimediaDone(pobj);
+
       }
+
 
       void wave_out::helper_thread::OnMultimediaClose(::message::message * pobj)
       {
+
          m_pwaveout->OnMultimediaDone(pobj);
+
       }
+
 
       wave_out::wave_out(::aura::application * papp) :
          ::object(papp),
