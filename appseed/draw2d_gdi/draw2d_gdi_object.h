@@ -1,10 +1,10 @@
-#pragma once
+﻿#pragma once
 
 
 namespace draw2d_gdi
 {
 
-   
+
    class graphics;
 
 
@@ -14,8 +14,8 @@ namespace draw2d_gdi
    public:
 
 
-      HGDIOBJ                                            m_hgdiobj;
-      ref_array < ::draw2d_gdi::graphics >      m_ptraGraphics;
+      HGDIOBJ                                         m_hgdiobj;
+      pointer_array < ::draw2d_gdi::graphics * >      m_ptraGraphics;
 
 
       object();
