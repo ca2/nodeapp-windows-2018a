@@ -8,6 +8,35 @@ namespace multimedia
    namespace audio_mmsystem
    {
 
+      void CALLBACK waveOutProc(
+      HWAVEOUT  hwo,
+      UINT      uMsg,
+      DWORD_PTR dwInstance,
+      DWORD_PTR dwParam1,
+      DWORD_PTR dwParam2
+      )
+      {
+
+         ///wave_out * pwaveout = (wave_out *)dwInstance;
+
+         if (uMsg == WOM_DONE)
+         {
+
+            LPWAVEHDR lpwavehdr = (LPWAVEHDR) dwParam1;
+
+            ::PostThreadMessage(dwInstance, wave_out::message_free, lpwavehdr->dwUser, 0);
+
+            //synch_lock sl(&pwaveout->m_mutexFree);
+
+            //pwaveout->m_iaFree.add(lpwavehdr->dwUser);
+
+            //pwaveout->m_evFree.SetEvent();
+
+         }
+
+      }
+
+
 
       wave_out::helper_thread::helper_thread(::aura::application * papp) :
          object(papp),
@@ -59,12 +88,17 @@ namespace multimedia
          ::object(papp),
          ::thread(papp),
          wave_base(papp),
-         ::multimedia::audio::wave_out(papp)
+         ::multimedia::audio::wave_out(papp),
+         m_evFree(papp),
+         m_mutexFree(papp)
       {
 
          m_phelperthread = new helper_thread(papp);
          m_phelperthread->m_pwaveout = this;
          m_phelperthread->begin_synch(::multithreading::priority_time_critical);
+
+
+         m_pthreadFree = NULL;
 
          m_estate             = state_initial;
          m_pthreadCallback    = NULL;
@@ -278,10 +312,81 @@ Opened:
 
          sp(::multimedia::audio::wave) audiowave = Application.audiowave();
 
+         //if (m_pthreadFree == NULL)
+         //{
+
+         //   m_pthreadFree = fork([this]()
+         //   {
+
+         //      while (::get_thread_run())
+         //      {
+
+         //         if (m_evFree.wait(one_second()).succeeded())
+         //         {
+
+         //            synch_lock sl(&m_mutexFree);
+
+         //            while (m_iaFree.has_elements())
+         //            {
+
+         //               int iFree = m_iaFree[0];
+
+         //               m_iaFree.remove_at(0);
+
+         //               sl.unlock();
+
+         //               wave_out_free(iFree);
+
+         //               sl.lock();
+
+         //            }
+
+         //            m_evFree.ResetEvent();
+
+         //         }
+
+         //      }
+
+         //      m_pthreadFree = NULL;
+
+         //   });
+
+         //}
+         if (m_pthreadFree == NULL)
+         {
+            //m_pthreadFree->post_quit();
+            //}
+
+            m_pthreadFree = fork([this]()
+            {
+
+               ::get_thread()->set_thread_priority(::multithreading::priority_time_critical);
+
+               MESSAGE msg;
+
+               while (::GetMessage(&msg, NULL, 0, 0))
+               {
+
+                  if (msg.message == message_free)
+                  {
+
+                     //wave_out_free(msg.wParam);
+                     wave_out_out_buffer_done(msg.wParam);
+
+                  }
+
+               }
+
+               output_debug_string("quit");
+
+            });
+
+         }
+
          try
          {
 
-            mmresult = waveOutOpen(&m_hwaveout, audiowave->m_uiWaveInDevice, wave_format(), m_phelperthread->get_os_int(), (uint32_t)0, CALLBACK_THREAD);
+            mmresult = waveOutOpen(&m_hwaveout, audiowave->m_uiWaveInDevice, wave_format(), (DWORD_PTR) &waveOutProc, (DWORD_PTR) m_pthreadFree->get_os_int(), CALLBACK_FUNCTION);
 
             if (mmresult == MMSYSERR_NOERROR)
             {
@@ -572,6 +677,92 @@ Opened:
       {
 
          return wave_out_buffer_ready(wave_hdr(iBuffer));
+
+      }
+
+
+      bool wave_out::raw_pump_message()
+      {
+
+         try
+         {
+
+            MESSAGE msg;
+            if (!::GetMessage(&msg, NULL, 0, 0))
+            {
+
+               TRACE(::aura::trace::category_AppMsg, 1, "thread::pump_message - Received wm_quit.\n");
+
+               ::output_debug_string("thread::pump_message - Received wm_quit.\n");
+
+               m_nDisablePumpCount++; // application must die
+               // Note: prevents calling message loop things in 'exit_thread'
+               // will never be decremented
+               return false;
+
+            }
+
+            if (msg.message == message_free)
+            {
+
+               wave_out_free(msg.wParam);
+
+            }
+            else
+            {
+
+               raw_process_message(&msg);
+
+
+            }
+
+            return true;
+
+         }
+         catch (exit_exception * pexception)
+         {
+
+            _rethrow(pexception);
+
+         }
+         catch (::exception::exception * pexception)
+         {
+
+            esp671 esp(pexception);
+
+            if (on_run_exception(esp))
+               return true;
+
+            // get_app() may be it self, it is ok...
+            if (Application.final_handle_exception(esp))
+               return true;
+
+         }
+         catch (...)
+         {
+
+         }
+
+         return false;
+
+         //   if(m_pthreadimpl.is_null())
+         //   {
+         //      if(dynamic_cast <::timer *> ((thread *) this) != NULL)
+         //      {
+         //         m_pthreadimpl.alloc(allocer());
+         //         if(m_pthreadimpl.is_null())
+         //         {
+         //            return false;
+         //         }
+         //         m_pthreadimpl->m_pthread = this;
+         //      }
+         //      else
+         //      {
+         //         return false;
+         //      }
+         //   }
+         //
+         //   return m_pthreadimpl->pump_message();
 
       }
 

@@ -46,6 +46,10 @@ namespace multimedia
          imedia_time                      m_imediatime;
          imedia_time                      m_imediaposition;
          helper_thread *                  m_phelperthread;
+         manual_reset_event               m_evFree;
+         thread *                         m_pthreadFree;
+         int_array                        m_iaFree;
+         mutex                            m_mutexFree;
 
 
          wave_out(::aura::application * papp);
@@ -87,6 +91,10 @@ namespace multimedia
 
          WAVEFORMATEX * wave_format();
          LPWAVEHDR wave_hdr(index iBuffer);
+
+
+         virtual bool raw_pump_message() override;
+
 
       };
 
