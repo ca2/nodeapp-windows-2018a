@@ -8,6 +8,7 @@ namespace multimedia
    namespace audio_mmsystem
    {
 
+
       wave_out::helper_thread::helper_thread(::aura::application * papp) :
          object(papp),
          ::thread(papp)
@@ -63,14 +64,13 @@ namespace multimedia
 
          m_phelperthread = new helper_thread(papp);
          m_phelperthread->m_pwaveout = this;
-         m_phelperthread->begin_synch(NULL, ::multithreading::priority_highest);
+         m_phelperthread->begin_synch(::multithreading::priority_time_critical);
 
          m_estate             = state_initial;
          m_pthreadCallback    = NULL;
          m_hwaveout           = NULL;
          m_iBufferedCount     = 0;
          m_peffect            = NULL;
-         //         m_dwLostSampleCount = 0;
 
       }
 
@@ -86,6 +86,8 @@ namespace multimedia
       {
 
          ::multimedia::audio::wave_out::install_message_routing(pinterface);
+
+         IGUI_MSG_LINK(message_free, pinterface, this, &wave_out::on_free);
 
       }
 
@@ -245,13 +247,17 @@ Opened:
 
       }
 
-      ::multimedia::e_result wave_out::wave_out_open_ex(thread * pthreadCallback, count iBufferCount, count iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample,::multimedia::audio::e_purpose epurpose)
+      ::multimedia::e_result wave_out::wave_out_open_ex(thread * pthreadCallback, ::count iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample,::multimedia::audio::e_purpose epurpose)
       {
 
          synch_lock sl(m_pmutex);
 
-         if(m_hwaveout != NULL && m_estate != state_initial)
+         if (m_hwaveout != NULL && m_estate != state_initial)
+         {
+
             return ::multimedia::result_success;
+
+         }
 
          m_imediatime = 0;
 
@@ -324,24 +330,20 @@ Opened:
 
 Opened:
 
-         uint32_t uiBufferSizeLog2;
+         int iBufferCount;
 
          if(epurpose == ::multimedia::audio::purpose_playback)
          {
 
-            uiBufferSizeLog2 = 16;
+            iBufferSampleCount = uiSamplesPerSec / 20;
 
-            iBufferSampleCount = (1 << 10) * 4;
-
-            iBufferCount = 4;
+            iBufferCount = 16;
 
          }
          else if(epurpose == ::multimedia::audio::purpose_playground)
          {
 
-            iBufferSampleCount = (1 << 10);
-
-            uiBufferSizeLog2 = 16;
+            iBufferSampleCount = uiSamplesPerSec / 40;
 
             iBufferCount = 4;
 
@@ -349,60 +351,17 @@ Opened:
          else
          {
 
-            iBufferSampleCount = (1 << 10);
-
-            uiBufferSizeLog2 = 16;
+            iBufferSampleCount = uiSamplesPerSec / 40;
 
             iBufferCount = 4;
 
          }
 
-         //iBufferSampleCount = (1 << 12);
-         memory_size_t uiBufferSize;
-         memory_size_t uiAnalysisSize;
-         memory_size_t uiAllocationSize;
-         memory_size_t uiInterestSize;
-         memory_size_t uiSkippedSamplesCount;
-         memory_size_t uiBufferCount = iBufferCount;
+         int iBufferSize = iBufferSampleCount * uiBitsPerSample * uiChannelCount / 8;
 
-         //   if(m_pwaveformat->nSamplesPerSec == 44100)
-         if(true)
-         {
-            uiBufferSize = m_pwaveformat->nChannels * 2 * iBufferSampleCount; // 512 kbytes
-            uiAnalysisSize = 4 * 1 << uiBufferSizeLog2;
-            if(iBufferCount > 0)
-            {
-               uiAllocationSize = iBufferCount * uiAnalysisSize;
-            }
-            else
-            {
-               uiAllocationSize = 8 * uiAnalysisSize;
-            }
-            uiInterestSize = 200;
-            uiSkippedSamplesCount = 2;
-         }
-         else if(m_pwaveformat->nSamplesPerSec == 22050)
-         {
-            uiBufferSizeLog2 = 10;
-            uiBufferSize = 4 * 1 << uiBufferSizeLog2;
-            uiAnalysisSize = 4 * 1 << uiBufferSizeLog2;
-            uiAllocationSize = 4 * uiAnalysisSize;
-            uiInterestSize = 200;
-            uiSkippedSamplesCount = 1;
-         }
-         else if(m_pwaveformat->nSamplesPerSec == 11025)
-         {
-            uiBufferSizeLog2 = 10;
-            uiBufferSize = 2 * 1 << uiBufferSizeLog2;
-            uiAnalysisSize = 2 * 1 << uiBufferSizeLog2;
-            uiAllocationSize = 4 * uiAnalysisSize;
-            uiInterestSize = 200;
-            uiSkippedSamplesCount = 1;
-         }
+         wave_out_get_buffer()->PCMOutOpen(this, iBufferSize, iBufferCount,128, m_pwaveformat, m_pwaveformat);
 
-         wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, uiBufferCount,128, m_pwaveformat, m_pwaveformat);
-
-         m_pprebuffer->open(this, m_pwaveformat->nChannels, uiBufferCount, iBufferSampleCount);
+         m_pprebuffer->open(this, m_pwaveformat->nChannels, iBufferCount, iBufferSampleCount);
 
          index i;
 
@@ -581,11 +540,30 @@ Opened:
 
       }
 
+      void wave_out::wave_out_out_buffer_done(index iBuffer)
+      {
+
+         m_iBufferedCount--;
+
+         wave_out_free(iBuffer);
+
+      }
+
 
       void wave_out::OnMultimediaClose(::message::message * pobj)
       {
 
          UNREFERENCED_PARAMETER(pobj);
+
+      }
+
+
+      void wave_out::on_free(::message::message * pobj)
+      {
+
+         SCAST_PTR(::message::base, pbase, pobj);
+
+         wave_out_free(pbase->m_wparam);
 
       }
 
@@ -609,13 +587,7 @@ Opened:
             return;
          }
 
-         ::multimedia::e_result mmr;
-         if(m_peffect != NULL)
-         {
-            m_peffect->Process16bits((int16_t *) lpwavehdr->lpData, lpwavehdr->dwBytesRecorded / 2);
-         }
-
-         mmr = mmsystem::translate(waveOutWrite(m_hwaveout, lpwavehdr, sizeof(WAVEHDR)));
+         ::multimedia::e_result mmr = mmsystem::translate(waveOutWrite(m_hwaveout, lpwavehdr, sizeof(WAVEHDR)));
 
          //VERIFY(::multimedia::result_success == mmr);
 
@@ -629,6 +601,7 @@ Opened:
          }
 
       }
+
 
       ::multimedia::e_result wave_out::wave_out_stop()
       {

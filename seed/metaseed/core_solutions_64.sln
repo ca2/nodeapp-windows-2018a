@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "..\..\appseed\app\app.vcxproj", "{19841115-1984-0411-1977-021977151984}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -374,6 +374,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		Performance1.psess = Performance1.psess
 		Performance2.psess = Performance2.psess
+		Performance4.psess = Performance4.psess
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wndfrm_anthill", "..\..\..\app-core\appseed\wndfrm_anthill\wndfrm_anthill.vcxproj", "{0BB1A1D1-7B7D-4484-9DF5-060481390526}"
@@ -399,6 +400,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_acid", "..\..\..\app\appseed\aura\acid.vcxproj", "{05E5B8E7-9E3B-44DD-9EDE-E0A74D52C1C5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "resident_youtube", "..\..\..\app-core\appseed\resident_youtube\resident_youtube.vcxproj", "{200E6DC9-AAC2-4A32-825E-FF968AD1ED28}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_helper", "..\..\..\app-core\appseed\helper\helper.vcxproj", "{83F8DA23-7756-4B02-AA40-790B0B5ECF28}"
 EndProject
 Global
 	GlobalSection(Performance) = preSolution
@@ -1429,12 +1432,27 @@ Global
 		{200E6DC9-AAC2-4A32-825E-FF968AD1ED28}.stage|Win32.Build.0 = stage|Win32
 		{200E6DC9-AAC2-4A32-825E-FF968AD1ED28}.stage|x64.ActiveCfg = stage|x64
 		{200E6DC9-AAC2-4A32-825E-FF968AD1ED28}.stage|x64.Build.0 = stage|x64
+		{83F8DA23-7756-4B02-AA40-790B0B5ECF28}.basis|Win32.ActiveCfg = basis|Win32
+		{83F8DA23-7756-4B02-AA40-790B0B5ECF28}.basis|Win32.Build.0 = basis|Win32
+		{83F8DA23-7756-4B02-AA40-790B0B5ECF28}.basis|x64.ActiveCfg = basis|x64
+		{83F8DA23-7756-4B02-AA40-790B0B5ECF28}.basis|x64.Build.0 = basis|x64
+		{83F8DA23-7756-4B02-AA40-790B0B5ECF28}.cover|Win32.ActiveCfg = cover|Win32
+		{83F8DA23-7756-4B02-AA40-790B0B5ECF28}.cover|Win32.Build.0 = cover|Win32
+		{83F8DA23-7756-4B02-AA40-790B0B5ECF28}.cover|x64.ActiveCfg = cover|x64
+		{83F8DA23-7756-4B02-AA40-790B0B5ECF28}.cover|x64.Build.0 = cover|x64
+		{83F8DA23-7756-4B02-AA40-790B0B5ECF28}.stage|Win32.ActiveCfg = stage|Win32
+		{83F8DA23-7756-4B02-AA40-790B0B5ECF28}.stage|Win32.Build.0 = stage|Win32
+		{83F8DA23-7756-4B02-AA40-790B0B5ECF28}.stage|x64.ActiveCfg = stage|x64
+		{83F8DA23-7756-4B02-AA40-790B0B5ECF28}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {68D0CE57-7B21-4289-B0DC-382B607631F2}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true
