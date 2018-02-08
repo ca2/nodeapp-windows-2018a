@@ -49,7 +49,7 @@ namespace backup
          keep < bool > keepFinishedFalse(&m_bFinished, false, true, true);
          string str;
 
-         string strFile = System.dir().element() / "basis/ca2/app/dbbk.bat";
+         string strFile = System.dir().install() / "basis/ca2/app/dbbk.bat";
          if(!Application.file().exists(strFile))
          {
             string str;
@@ -182,7 +182,7 @@ namespace backup
       ::file::path strdump = get_new_db_local_path("all.sql");
       Application.dir().mk(strdump.folder());
 
-      str.Format("%s \"%s\"", System.dir().element() / "basis/ca2/app/dbbk.bat", strdump);
+      str.Format("%s \"%s\"", System.dir().install() / "basis/ca2/app/dbbk.bat", strdump);
 
       if(!::CreateProcess(NULL, (LPTSTR) (const char *) str,
          NULL, NULL, FALSE, 0, NULL,

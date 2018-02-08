@@ -107,7 +107,7 @@ namespace wordcard
       else if (m_pviewdata->m_id == PaneViewContextMenu)
       {
          sp(::filemanager::manager) pdoc = (m_pviewdata->m_pdoc);
-         pdoc->FileManagerBrowse(Application.dir().userappdata() / "wordcard\\menu", ::action::source::system_default());
+         pdoc->FileManagerBrowse(Application.dir().appdata() / "wordcard\\menu", ::action::source::system_default());
       }
       else
       {
@@ -143,7 +143,7 @@ namespace wordcard
             pdoc->update_all_views(NULL, 1234);
             pdoc->update_all_views(NULL, 123458);
             sp(::user::impact) pview = pdoc->get_view();
-            pdoc->FileManagerBrowse(Application.dir().userappdata() / "wordcard\\menu", ::action::source::system_default());
+            pdoc->FileManagerBrowse(Application.dir().appdata() / "wordcard\\menu", ::action::source::system_default());
             if (pview != NULL)
             {
                sp(::user::frame_window) pframe = (pview->GetParentFrame());
@@ -215,7 +215,7 @@ namespace wordcard
             pdoc->update_all_views(NULL, 1234);
             pdoc->update_all_views(NULL, 123458);
             sp(::user::impact) pview = pdoc->get_view();
-            pdoc->FileManagerBrowse(Application.dir().userappdata() / "wordcard\\3-action-launch", ::action::source::system_default());
+            pdoc->FileManagerBrowse(Application.dir().appdata() / "wordcard\\3-action-launch", ::action::source::system_default());
             if (pview != NULL)
             {
                sp(::user::frame_window) pframe = (pview->GetParentFrame());

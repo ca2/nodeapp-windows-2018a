@@ -150,3 +150,13 @@
 #define FONT_SANS_FX "Tahoma"
 #define FONT_SERIF_FX "Georgia"
 
+
+
+#ifdef __cplusplus
+
+#define LOG_THIS_TAG (typeid(*this).name())
+#define LOG_MEMBER_PREFIX __FUNCTION__
+
+#endif
+
+

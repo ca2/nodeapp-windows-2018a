@@ -148,6 +148,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2FA3C3E6-C271-4DE3-822C-B93B3FCA897F}"
 	ProjectSection(SolutionItems) = preProject
 		Performance3.psess = Performance3.psess
+		Performance5.psess = Performance5.psess
 	EndProjectSection
 EndProject
 Global
@@ -645,6 +646,12 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B8D9C346-A33F-474A-8D88-313AAA1D73D6}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true

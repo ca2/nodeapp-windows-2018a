@@ -701,7 +701,7 @@ namespace production
                //}
                ::process::process_sp process(allocer());
                string strPath;
-               strPath = System.dir().element() / "nodeapp\\stage\\script\\stage_clean.bat";
+               strPath = System.dir().install() / "nodeapp\\stage\\script\\stage_clean.bat";
                if (!process->create_child_process(strPath, false))
                {
                   uint32_t dw = GetLastError();
@@ -755,11 +755,11 @@ namespace production
             //}
 
             add_status("Cleaning site...");
-            ::file::path strPath = System.dir().element() / "time\\stage\\app\\matter\\job.bat";
+            ::file::path strPath = System.dir().install() / "time\\stage\\app\\matter\\job.bat";
 
 
             //System.http().ms_download("http://api.ca2.cc/spaignition/clean", 
-            //   System.dir().element() / "time\\spaignition_update.txt"), NULL, post, headers, ::ca2::app(get_app()).user()->get_user());
+            //   System.dir().install() / "time\\spaignition_update.txt"), NULL, post, headers, ::ca2::app(get_app()).user()->get_user());
             /*add_status("Cleaning ccvotagus folder...");
             ::process::process_sp process(allocer());
             Application.file().put_contents(strPath, "rmdir /s /q C:\\ca2\\vrel\\" + m_strConfiguration);
@@ -996,7 +996,7 @@ namespace production
 
             uint32_t dwExitCode;
 
-            ::file::path strPath = System.dir().element() / "time\\stage\\app\\matter\\store_symbols_job_x86.bat";
+            ::file::path strPath = System.dir().install() / "time\\stage\\app\\matter\\store_symbols_job_x86.bat";
 
             ::process::process_sp process(allocer());
             string strCommand = "\"C:\\Program Files (x86)\\Windows Kits\\8.0\\Debuggers\\x86\\symstore.exe\"  add /r  -:REL /f \\\\sewindows\\stage\\" + m_strFormatBuild + "\\stage\\x86\\ /s \\\\sewindows\\SymbolServer\\ /t \"ca2\" /v \"" + m_strFormatBuild + "\"";
@@ -1034,7 +1034,7 @@ namespace production
 
             uint32_t dwExitCode;
 
-            ::file::path strPath = System.dir().element() / "time\\stage\\app\\matter\\store_symbols_job_x64.bat";
+            ::file::path strPath = System.dir().install() / "time\\stage\\app\\matter\\store_symbols_job_x64.bat";
 
             ::process::process_sp process(allocer());
             string strCommand = "\"C:\\Program Files (x86)\\Windows Kits\\8.0\\Debuggers\\x64\\symstore.exe\"  add /r  -:REL /f \\\\sewindows\\stage\\" + m_strFormatBuild + "\\stage\\x64\\ /s \\\\sewindows\\SymbolServer\\ /t \"ca2\" /v \"" + m_strFormatBuild + "\"";
@@ -1549,7 +1549,7 @@ namespace production
 
 
    System.http().ms_download(strUrl,
-   System.dir().element() / "time\\spaignition_update.txt"), NULL, post, headers, Session.user()->get_user());
+   System.dir().install() / "time\\spaignition_update.txt"), NULL, post, headers, Session.user()->get_user());
    i += 8;
    }
    }*/
@@ -2947,8 +2947,8 @@ namespace production
       twitterObj.get_oauth().setConsumerKey(m_strTwitterConsumerKey);
       twitterObj.get_oauth().setConsumerSecret(m_strTwitterConsumerSecret);
 
-      string strPathKey = Application.dir().userappdata() / "twitterClient_token_key" + ::str::from((int)m_eversion) + ".txt";
-      string strPathSecret = Application.dir().userappdata() / "twitterClient_token_secret" + ::str::from((int)m_eversion) + ".txt";
+      string strPathKey = Application.dir().appdata() / "twitterClient_token_key" + ::str::from((int)m_eversion) + ".txt";
+      string strPathSecret = Application.dir().appdata() / "twitterClient_token_secret" + ::str::from((int)m_eversion) + ".txt";
       /* Step 1: Check if we alredy have OAuth access token from a previous run */
       //    char szKey[1024];
       string myOAuthAccessTokenKey = Application.file().as_string(strPathKey);
@@ -3009,8 +3009,8 @@ namespace production
       twitterObj.get_oauth().setConsumerKey(m_strTwitterConsumerKey);
       twitterObj.get_oauth().setConsumerSecret(m_strTwitterConsumerSecret);
 
-      string strPathKey = Application.dir().userappdata() / "twitterClient_token_key" + ::str::from((int)m_eversion) + ".txt";
-      string strPathSecret = Application.dir().userappdata() / "twitterClient_token_secret" + ::str::from((int)m_eversion) + ".txt";
+      string strPathKey = Application.dir().appdata() / "twitterClient_token_key" + ::str::from((int)m_eversion) + ".txt";
+      string strPathSecret = Application.dir().appdata() / "twitterClient_token_secret" + ::str::from((int)m_eversion) + ".txt";
       /* Step 1: Check if we alredy have OAuth access token from a previous run */
       //    char szKey[1024];
       string myOAuthAccessTokenKey = Application.file().as_string(strPathKey);
@@ -3100,8 +3100,8 @@ namespace production
       twitterObj.get_oauth().setConsumerKey(m_strTwitterConsumerKey);
       twitterObj.get_oauth().setConsumerSecret(m_strTwitterConsumerSecret);
 
-      string strPathKey = Application.dir().userappdata() / "facebookClient_token_key" + ::str::from_int(m_eversion) + ".txt";
-      string strPathSecret = Application.dir().userappdata() / "facebookClient_token_secret" + ::str::from_int(m_eversion) + ".txt";
+      string strPathKey = Application.dir().appdata() / "facebookClient_token_key" + ::str::from_int(m_eversion) + ".txt";
+      string strPathSecret = Application.dir().appdata() / "facebookClient_token_secret" + ::str::from_int(m_eversion) + ".txt";
       /* Step 1: Check if we alredy have OAuth access token from a previous run */
       //    char szKey[1024];
       string myOAuthAccessTokenKey = Application.file().as_string(strPathKey);

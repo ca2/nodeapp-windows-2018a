@@ -95,6 +95,8 @@ namespace multimedia
 
          virtual bool raw_pump_message() override;
 
+         virtual void wave_out_launch_buffers() override;
+
 
       };
 

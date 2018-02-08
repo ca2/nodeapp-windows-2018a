@@ -499,26 +499,26 @@ bool removal::is_user_using(const char * pszDll)
 bool removal::are_there_user_files_in_use()
 {
 #ifdef X86
-   if(is_user_using(System.dir().element()/"stage\\x86\\msvcp110d.dll"))
+   if(is_user_using(System.dir().install()/"stage\\x86\\msvcp110d.dll"))
       return true;
-   if(is_user_using(System.dir().element()/"stage\\x86\\msvcr110d.dll"))
+   if(is_user_using(System.dir().install()/"stage\\x86\\msvcr110d.dll"))
       return true;
-   if(is_user_using(System.dir().element()/"stage\\x86\\ca.dll"))
+   if(is_user_using(System.dir().install()/"stage\\x86\\ca.dll"))
       return true;
-   if(is_user_using(System.dir().element()/"stage\\x86\\ca2.dll"))
+   if(is_user_using(System.dir().install()/"stage\\x86\\ca2.dll"))
       return true;
-   if(is_user_using(System.dir().element()/"stage\\x86\\ca2.dll"))
+   if(is_user_using(System.dir().install()/"stage\\x86\\ca2.dll"))
       return true;
 #else
-   if(is_user_using(System.dir().element() / "stage\\x64\\msvcp110d.dll"))
+   if(is_user_using(System.dir().install() / "stage\\x64\\msvcp110d.dll"))
       return true;
-   if(is_user_using(System.dir().element() / "stage\\x64\\msvcr110d.dll"))
+   if(is_user_using(System.dir().install() / "stage\\x64\\msvcr110d.dll"))
       return true;
-   if(is_user_using(System.dir().element() / "stage\\x64\\ca.dll"))
+   if(is_user_using(System.dir().install() / "stage\\x64\\ca.dll"))
       return true;
-   if(is_user_using(System.dir().element() / "stage\\x64\\ca2.dll"))
+   if(is_user_using(System.dir().install() / "stage\\x64\\ca2.dll"))
       return true;
-   if(is_user_using(System.dir().element() / "stage\\x64\\ca2.dll"))
+   if(is_user_using(System.dir().install() / "stage\\x64\\ca2.dll"))
       return true;
 #endif
    return false;

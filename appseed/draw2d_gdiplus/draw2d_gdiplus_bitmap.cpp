@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace draw2d_gdiplus
@@ -86,7 +86,7 @@ namespace draw2d_gdiplus
 
       ::aura::del(m_pbitmap);
 
-      m_iStride = ((4 * lpbmi->bmiHeader.biWidth + 15) / 16) * 16;
+      m_iStride = 4 * lpbmi->bmiHeader.biWidth;
 
       m_mem.allocate(abs(m_iStride * lpbmi->bmiHeader.biHeight));
 
@@ -245,6 +245,7 @@ namespace draw2d_gdiplus
 
    bool bitmap::attach(void * posdata)
    {
+
       ::aura::del(m_pbitmap);
 
       m_pbitmap = (Gdiplus::Bitmap *) posdata;
