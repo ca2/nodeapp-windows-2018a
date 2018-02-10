@@ -410,7 +410,7 @@ namespace multimedia
 
          m_pprebuffer->open(this, m_pwaveformat->nChannels, iBufferCount, iBufferSampleCount);
 
-         m_pprebuffer->SetMinL1BufferCount(wave_out_get_buffer()->GetBufferCount() + 4);
+//         m_pprebuffer->SetMinL1BufferCount(wave_out_get_buffer()->GetBufferCount() + 4);
 
          m_estate = state_opened;
 
@@ -455,7 +455,7 @@ namespace multimedia
 
          //m_hwaveout = NULL;
 
-         m_pprebuffer->Reset();
+//         m_pprebuffer->Reset();
 
          m_estate = state_initial;
 
@@ -525,7 +525,7 @@ namespace multimedia
 
          m_eventStopped.ResetEvent();
 
-         m_pprebuffer->Stop();
+//         m_pprebuffer->Stop();
 
          m_estate = state_stopping;
 
