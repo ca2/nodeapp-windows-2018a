@@ -14,7 +14,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|x64'">
-    <LocalDebuggerCommandArguments>"$(OutDir)app.exe" "app_core_mydns" $(OutDir)app_core_mydns2"</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>"$(OutDir)app.exe" "app_core_auratype" "$(OutDir)app_core_auratype2.exe"</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='cover|x64'">
