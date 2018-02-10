@@ -35,11 +35,12 @@ namespace production
 
          virtual bool initialize_thread() override;
 
-         virtual int32_t run();
+         virtual void run() override;
 
          virtual int32_t raw_run();
 
       };
+
 
       class compress_thread :
          virtual public thread

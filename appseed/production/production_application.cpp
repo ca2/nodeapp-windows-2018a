@@ -57,7 +57,7 @@ namespace production
    }
 
 
-   int32_t application::exit_application()
+   void application::term_instance()
    {
 
       int32_t iExitCode = 0;
@@ -65,13 +65,13 @@ namespace production
       try
       {
 
-         iExitCode = ::core::application::exit_application();
+         ::core::application::term_instance();
 
       }
       catch(...)
       {
 
-         iExitCode = -1;
+         m_error.m_iaErrorCode2.add(-1);
 
       }
 

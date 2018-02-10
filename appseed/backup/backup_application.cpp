@@ -43,7 +43,7 @@ namespace backup
       return true;
    }
 
-   int32_t application::exit_application()
+   void application::term_instance()
    {
       
       int32_t iExitCode = 0;
@@ -57,7 +57,7 @@ namespace backup
       catch(...)
       {
 
-         iExitCode = -1;
+         m_error.m_iaErrorCode2.add(-1);
 
       }
 

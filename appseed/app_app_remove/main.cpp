@@ -1,5 +1,5 @@
 ﻿#include "framework.h"
-#include "aura/os/windows/windows_app.inl"
+#include "aura/aura/app/acid.inl"
 #include <Shlobj.h>
 #include "winnls.h"
 #include "shobjidl.h"
@@ -13,8 +13,10 @@
 #define WINDOWS
 #include <tlhelp32.h>
 
+void reg_delete_tree_dup(HKEY hkey, const char * name);
+
 class removal :
-    public ::aura::app
+    public ::aura::application
 {
 public:
 
@@ -42,7 +44,7 @@ public:
 
    bool is_user_using(UINT processid, const char * pszDll);
 
-   virtual int32_t run();
+   virtual void run() override;
 
    virtual bool finalize();
 
@@ -257,7 +259,7 @@ void removal::g_n_rmdir_n_v(const KNOWNFOLDERID & rfid, const char * pszDir)
 
 
 
-int32_t removal::run()
+void removal::run()
 {
 
 
@@ -265,7 +267,8 @@ int32_t removal::run()
    if(::GetLastError() == ERROR_ALREADY_EXISTS)
    {
       ::MessageBox(NULL, "ca2 app.removal.exe is already running.\n\nPlease wait for app.removal to finish or close it - using Task Manager - Ctrl+Shift+ESC - to continue.", "app_app_admin.exe is running!", MB_ICONEXCLAMATION);
-      return false;
+      m_error.m_iaErrorCode2.add(-1);
+      return;
    }
 
    char szFile[MAX_PATH * 8];
@@ -282,8 +285,11 @@ int32_t removal::run()
    {
       INT i = ::MessageBox(NULL,"Do you want to place a shortcut to ca2 app.removal in Desktop?\n\nProgram has already been copied to Program Files Folder.","app.removal installation",MB_ICONQUESTION | MB_YESNOCANCEL);
 
-      if(i == IDCANCEL)
-         return false;
+      if (i == IDCANCEL)
+      {
+         m_error.m_iaErrorCode2.add(-2);
+         return;
+      }
 
       if(i == IDYES)
       {
@@ -410,7 +416,6 @@ int32_t removal::run()
 
 
 
-   return false;
 
 }
 
