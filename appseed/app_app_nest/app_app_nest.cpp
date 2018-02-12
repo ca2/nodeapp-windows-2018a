@@ -10,7 +10,7 @@ HANDLE g_hmutex = NULL;
 uint32_t plugin_container_app(const string & strChannel)
 {
 
-   ::plugin::system * psystem = new ::plugin::system(NULL);
+   ::plugin::system * psystem = new ::plugin::system(NULL, NULL);
 
    psystem->m_hinstance = ::GetModuleHandle(NULL);
 
@@ -22,7 +22,7 @@ uint32_t plugin_container_app(const string & strChannel)
       if(!psystem->pre_run())
       {
 
-         return papp->get_exit_code();
+         return psystem->get_exit_code();
 
       }
 
@@ -76,11 +76,13 @@ uint32_t plugin_container_app(const string & strChannel)
 
    }
 
-   int32_t nReturnCode = papp->main();
+   papp->main();
 
-   ExitProcess(nReturnCode);
+   int iExitCode = papp->get_exit_code();
 
-   return nReturnCode;
+   ExitProcess(iExitCode);
+
+   return iExitCode;
 
 }
 

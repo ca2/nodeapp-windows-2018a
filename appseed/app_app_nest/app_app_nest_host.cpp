@@ -156,11 +156,11 @@ namespace ca2plugin_container
       return m_bStream && m_bOk;
 
    }
-   
+
 
    void host::post_message(uint32_t uiMessage, WPARAM wparam, LPARAM lparam)
    {
-      
+
       ::PostMessage(m_oswindow, uiMessage, wparam, lparam);
 
    }
@@ -170,7 +170,7 @@ namespace ca2plugin_container
    {
 
       m_bInitialized = false;
-      
+
       ::KillTimer(m_oswindowMessage, (uint_ptr) this);
 
       plugin_finalize();
@@ -184,7 +184,7 @@ namespace ca2plugin_container
    {
 
       ensure_tx(::hotplugin::message_open_url,(void *)strLink.c_str(),(int32_t)strLink.get_length(), 2000);
-      
+
       return true;
 
    }
@@ -230,29 +230,29 @@ namespace ca2plugin_container
 
    ATOM register_class(HINSTANCE hInstance)
    {
-	   WNDCLASSEX wcex;
+      WNDCLASSEX wcex;
 
-	   wcex.cbSize = sizeof(WNDCLASSEX);
+      wcex.cbSize = sizeof(WNDCLASSEX);
 
-	   wcex.style			   = 0;
-	   wcex.lpfnWndProc	   = &window_proc;
-	   wcex.cbClsExtra	   = 0;
-	   wcex.cbWndExtra	   = 0;
-	   wcex.hInstance		   = hInstance;
-	   wcex.hIcon			   = NULL;
-	   wcex.hCursor		   = LoadCursor(NULL, IDC_ARROW);
-	   wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
+      wcex.style			   = 0;
+      wcex.lpfnWndProc	   = &window_proc;
+      wcex.cbClsExtra	   = 0;
+      wcex.cbWndExtra	   = 0;
+      wcex.hInstance		   = hInstance;
+      wcex.hIcon			   = NULL;
+      wcex.hCursor		   = LoadCursor(NULL, IDC_ARROW);
+      wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
       wcex.lpszMenuName	   = NULL;
-	   wcex.lpszClassName	= "npca2_message_queue";
-	   wcex.hIconSm		   = NULL;
+      wcex.lpszClassName	= "npca2_message_queue";
+      wcex.hIconSm		   = NULL;
 
-	   return RegisterClassEx(&wcex);
+      return RegisterClassEx(&wcex);
    }
 
 
    bool host::plugin_finalize()
    {
-      
+
       ::KillTimer(m_oswindowMessage, (uint_ptr) this);
 
       return ::hotplugin::host::plugin_finalize();
@@ -260,25 +260,25 @@ namespace ca2plugin_container
    }
 
 
-/*   NPError host::GetValue(NPPVariable variable, void *value)
-   {
-       
-      switch (variable)
+   /*   NPError host::GetValue(NPPVariable variable, void *value)
       {
-      case NPPVpluginNameString:
-         *((const char **)value) = m_vssPluginName;
-         break;
-      case NPPVpluginDescriptionString:
-         *((const char **)value) = m_vssPluginDescription;
-         break;
-      case NPPVpluginScriptableNPObject:
-         *(NPObject **)value = getScriptableObject();
-         break;
-      default:
-         return NPERR_GENERIC_ERROR;
-      }
-      return NPERR_NO_ERROR;
-   }*/
+
+         switch (variable)
+         {
+         case NPPVpluginNameString:
+            *((const char **)value) = m_vssPluginName;
+            break;
+         case NPPVpluginDescriptionString:
+            *((const char **)value) = m_vssPluginDescription;
+            break;
+         case NPPVpluginScriptableNPObject:
+            *(NPObject **)value = getScriptableObject();
+            break;
+         default:
+            return NPERR_GENERIC_ERROR;
+         }
+         return NPERR_NO_ERROR;
+      }*/
 
    /*
 
@@ -291,27 +291,27 @@ namespace ca2plugin_container
        /* Bugfix from Facebook: Certain older versions of webkit do a retain when
         * you return an NPObject from NPP_GetValue instead of assuming that we do
         * it before returninglike the NPAPI spec instructs; this results in a memory
-        * leak if we don't fix it.   
+        * leak if we don't fix it.
         */
-       /* //today// if (m_retainReturnedNPObject)
-           m_npHost->RetainObject(m_obj);*/
-    
-     //  return m_phostjs;
+   /* //today// if (m_retainReturnedNPObject)
+       m_npHost->RetainObject(m_obj);*/
+
+   //  return m_phostjs;
    //}
 //   */
    // This is the preferred method to get strings from NPIdentifiers, since you
 // don't have to worry about cleaning it up =]
-/*string host::StringFromIdentifier(NPIdentifier identifier)
-{
- //   assertMainThread();
-    NPUTF8* idStr = NPN_UTF8FromIdentifier(identifier);
-    string str;
-    if (idStr != NULL)
-        str = idStr;
-    NPN_MemFree(idStr);
-    return str;
-}
-*/
+   /*string host::StringFromIdentifier(NPIdentifier identifier)
+   {
+    //   assertMainThread();
+       NPUTF8* idStr = NPN_UTF8FromIdentifier(identifier);
+       string str;
+       if (idStr != NULL)
+           str = idStr;
+       NPN_MemFree(idStr);
+       return str;
+   }
+   */
    void * host::get_system()
    {
 
@@ -378,7 +378,7 @@ namespace ca2plugin_container
 
          //if(message == ::hotplugin::message_init)
          //{
-         //   
+         //
          //   NPWindow * pwindow = (NPWindow *) pdata;
 
          //   try
@@ -396,7 +396,7 @@ namespace ca2plugin_container
 //         else if(message == ::hotplugin::message_set_window)
          if(message == ::hotplugin::message_set_window)
          {
-            
+
             const RECT & rect = *((LPCRECT) pdata);
 
             //if(m_rect != rect)
@@ -425,8 +425,8 @@ namespace ca2plugin_container
          }
          else if(message == ::hotplugin::message_paint)
          {
-            
-            
+
+
             const rect & rect = *((LPCRECT) pdata);
 
             try
@@ -478,7 +478,7 @@ namespace ca2plugin_container
                m_memory.assign(pdata, len);
 
 //  xxx             if(m_puchMemory != NULL)
-  //                m_bStream = true;
+               //                m_bStream = true;
 
 
                string str((const char *) m_memory.get_data(), len);
@@ -514,9 +514,9 @@ namespace ca2plugin_container
 
                if(LOWORD(pmsg->wParam) == WA_ACTIVE)
                {
-                  
+
                   Session.m_puiActive = this;
-                  
+
                }
                else
                {
@@ -530,7 +530,7 @@ namespace ca2plugin_container
             }
             else if(pmsg->message == WM_SETFOCUS)
             {
-               
+
                Session.set_keyboard_focus(this);
 
                return;
@@ -538,7 +538,7 @@ namespace ca2plugin_container
             }
             else if(pmsg->message == WM_KILLFOCUS)
             {
-               
+
                Session.set_keyboard_focus(NULL);
 
                return;
@@ -556,7 +556,7 @@ namespace ca2plugin_container
             try
             {
 
-               message_handler(get_base(pmsg->message, pmsg->wParam, pmsg->lParam));
+               message_handler(::user::interaction::get_message_base(pmsg->message, pmsg->wParam, pmsg->lParam));
 
             }
             catch(...)
@@ -565,7 +565,7 @@ namespace ca2plugin_container
 
 
          }
-      
+
       }
 
    }
@@ -575,7 +575,7 @@ namespace ca2plugin_container
 
       bool bOk = ::hotplugin::host::SetWindowPos(z,x,y,cx,cy,nFlags);
 
-  
+
       try
       {
 
@@ -610,7 +610,7 @@ namespace ca2plugin_container
 
    }
 
-   
+
    void host::_001Print(::draw2d::graphics * pgraphics)
    {
 
