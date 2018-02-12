@@ -133,7 +133,7 @@ namespace production
 
 
 
-   int32_t production::run()
+   void production::run()
    {
 
       //PlaySoundW(L"C:\\bergedge\\hi5\\audio\\production_ready.wav", NULL, SND_FILENAME);
@@ -158,7 +158,8 @@ namespace production
          {
 
             MessageBox(NULL, "both " + pathMirror + " and " + pathMirrorStatus + " files must exist and maybe empty...", "The h***!!", MB_ICONEXCLAMATION);
-            return -1;
+            m_error.m_iaErrorCode2.add(-1);
+            return ;
 
          }
 
@@ -218,7 +219,8 @@ namespace production
 
             //twitter_twit(strTwit);
 
-            return -1;
+            m_error.m_iaErrorCode2.add(-1);
+            return;
 
          }
 
@@ -285,7 +287,12 @@ namespace production
 
       OnUpdateRelease();
 
-      return iProduce;
+      if (iProduce != 0)
+      {
+
+         m_error.m_iaErrorCode2.add(iProduce);
+
+      }
 
 
    }
@@ -682,8 +689,6 @@ namespace production
             m_strCCVrel = "C:\\home\\ccvotagus\\ca2_spa\\" + m_strConfiguration + "";
             m_strCCVrelNew = "C:\\home\\ccvotagus\\ca2_spa\\ccvrelnew\\" + m_strConfiguration + "\\" + m_strFormatBuild;
 
-            uint32_t dwExitCode;
-
             int32_t i;
             if (m_bClean)
             {
@@ -711,7 +716,7 @@ namespace production
                   return 0;
                }
                i = 1;
-               while (!process->has_exited(&dwExitCode))
+               while (!process->has_exited())
                {
                   Sleep(5000);
                   str.Format("%d Cleaning ca2 fontopus ccvotagus ...", i);
@@ -994,8 +999,6 @@ namespace production
 
             add_status("Storing Symbols x86...");
 
-            uint32_t dwExitCode;
-
             ::file::path strPath = System.dir().install() / "time\\stage\\app\\matter\\store_symbols_job_x86.bat";
 
             ::process::process_sp process(allocer());
@@ -1014,7 +1017,7 @@ namespace production
 
             string str;
 
-            while (!process->has_exited(&dwExitCode))
+            while (!process->has_exited())
             {
                Sleep(500);
                str.Format("%d Storing Symbols x86 ...", i);
@@ -1031,8 +1034,6 @@ namespace production
          {
 
             add_status("Storing Symbols x64...");
-
-            uint32_t dwExitCode;
 
             ::file::path strPath = System.dir().install() / "time\\stage\\app\\matter\\store_symbols_job_x64.bat";
 
@@ -1052,7 +1053,7 @@ namespace production
 
             string str;
 
-            while (!process->has_exited(&dwExitCode))
+            while (!process->has_exited())
             {
                Sleep(500);
                str.Format("%d Storing Symbols x86 ...", i);
@@ -1505,11 +1506,15 @@ namespace production
       thread(pproduction->get_app()),
       m_pevFinished(peventFinished)
    {
+      
       m_pevFinished->ResetEvent();
+      
       m_pproduction = pproduction;
+
    }
 
-   int32_t production::compress_thread::run()
+
+   void production::compress_thread::run()
    {
 
       SetThreadAffinityMask(::GetCurrentThread(), m_dwThreadAffinityMask);
@@ -1521,8 +1526,6 @@ namespace production
       }
 
       m_pevFinished->SetEvent();
-
-      return 0;
 
    }
 
@@ -2464,8 +2467,6 @@ namespace production
 
       ::process::process_sp process(allocer());
 
-      uint32_t dwExitCode;
-
       for (int32_t i = 0; i < m_straPath.get_count(); i++)
       {
          strPath = "zip -9 \"" + strXpi + "\" \"" + m_straPath[i].relative() + "\"";
@@ -2477,7 +2478,7 @@ namespace production
             add_status(str);
             return 0;
          }
-         while (!process->has_exited(&dwExitCode))
+         while (!process->has_exited())
          {
             Sleep(300);
             str.Format("%d Compressing npca2 ...", i);
@@ -2497,7 +2498,6 @@ namespace production
 
       add_status("Creating uint32_t extension ...");
       string str;
-      uint32_t dwExitCode;
       string strXpi = strDir / "npca2.xpi";
       ::process::process_sp process(allocer());
       string strPath = "zip -9 -r -D \"" + strXpi + "\" * ";
@@ -2510,7 +2510,7 @@ namespace production
          return 0;
       }
       int32_t i = 1;
-      while (!process->has_exited(&dwExitCode))
+      while (!process->has_exited())
       {
          Sleep(300);
          str.Format("%d Compressing npca2 ...", i);
@@ -2554,7 +2554,6 @@ namespace production
       Application.file().put_contents(m_strBase / "time\\iexca2" / strPlatform / "iexca2.inf", strChromeManifest);
 
 
-      uint32_t dwExitCode;
       string str;
       ::process::process_sp process(allocer());
       ::file::path strPath;
@@ -2569,7 +2568,7 @@ namespace production
       }
       int32_t i;
       i = 1;
-      while (!process->has_exited(&dwExitCode))
+      while (!process->has_exited())
       {
          Sleep(5000);
          str.Format("%d Creating iexca2.cab  " + string(pszPlatform) + "...", i);
@@ -2764,7 +2763,7 @@ namespace production
          single_lock sl(&m_mutexStatus, TRUE);
          m_straStatus.add(psz);
       }
-      TRACE0(psz);
+      TRACE("%s", psz);
       m_pview->post_message(WM_USER, 1);
    }
 
@@ -2809,7 +2808,7 @@ namespace production
 
    }
 
-   bool production::release::initialize_thread()
+   bool production::release::init_thread()
    {
 
       return true;
@@ -2840,14 +2839,19 @@ namespace production
 
 
 
-   int32_t production::release::run()
+   void production::release::run()
    {
 
-      int32_t iResult = raw_run();
+      int iResult = raw_run();
 
       m_pproduction->OnUpdateRelease();
 
-      return iResult;
+      if (iResult != 0)
+      {
+
+         m_error.m_iaErrorCode2.add(iResult);
+
+      }
 
    }
 
@@ -2947,8 +2951,8 @@ namespace production
       twitterObj.get_oauth().setConsumerKey(m_strTwitterConsumerKey);
       twitterObj.get_oauth().setConsumerSecret(m_strTwitterConsumerSecret);
 
-      string strPathKey = Application.dir().appdata() / "twitterClient_token_key" + ::str::from((int)m_eversion) + ".txt";
-      string strPathSecret = Application.dir().appdata() / "twitterClient_token_secret" + ::str::from((int)m_eversion) + ".txt";
+      string strPathKey = System.dir().appdata() / "twitterClient_token_key" + ::str::from((int)m_eversion) + ".txt";
+      string strPathSecret = System.dir().appdata() / "twitterClient_token_secret" + ::str::from((int)m_eversion) + ".txt";
       /* Step 1: Check if we alredy have OAuth access token from a previous run */
       //    char szKey[1024];
       string myOAuthAccessTokenKey = Application.file().as_string(strPathKey);
@@ -3009,8 +3013,8 @@ namespace production
       twitterObj.get_oauth().setConsumerKey(m_strTwitterConsumerKey);
       twitterObj.get_oauth().setConsumerSecret(m_strTwitterConsumerSecret);
 
-      string strPathKey = Application.dir().appdata() / "twitterClient_token_key" + ::str::from((int)m_eversion) + ".txt";
-      string strPathSecret = Application.dir().appdata() / "twitterClient_token_secret" + ::str::from((int)m_eversion) + ".txt";
+      string strPathKey = System.dir().appdata() / "twitterClient_token_key" + ::str::from((int)m_eversion) + ".txt";
+      string strPathSecret = System.dir().appdata() / "twitterClient_token_secret" + ::str::from((int)m_eversion) + ".txt";
       /* Step 1: Check if we alredy have OAuth access token from a previous run */
       //    char szKey[1024];
       string myOAuthAccessTokenKey = Application.file().as_string(strPathKey);
@@ -3100,8 +3104,8 @@ namespace production
       twitterObj.get_oauth().setConsumerKey(m_strTwitterConsumerKey);
       twitterObj.get_oauth().setConsumerSecret(m_strTwitterConsumerSecret);
 
-      string strPathKey = Application.dir().appdata() / "facebookClient_token_key" + ::str::from_int(m_eversion) + ".txt";
-      string strPathSecret = Application.dir().appdata() / "facebookClient_token_secret" + ::str::from_int(m_eversion) + ".txt";
+      string strPathKey = System.dir().appdata() / "facebookClient_token_key" + ::str::from_int(m_eversion) + ".txt";
+      string strPathSecret = System.dir().appdata() / "facebookClient_token_secret" + ::str::from_int(m_eversion) + ".txt";
       /* Step 1: Check if we alredy have OAuth access token from a previous run */
       //    char szKey[1024];
       string myOAuthAccessTokenKey = Application.file().as_string(strPathKey);
@@ -3299,10 +3303,9 @@ namespace production
          return;
       }
       int32_t i = 1;
-      uint32_t dwExitCode;
       string str;
       string strAccumul;
-      while (!process->has_exited(&dwExitCode))
+      while (!process->has_exited())
       {
          Sleep(100);
          //str.Format("%d Building ca2 fontopus ccvotagus " + strApp + "...", i);

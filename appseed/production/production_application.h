@@ -26,13 +26,13 @@ namespace production
       virtual void construct();
 
       virtual bool initialize_application();
-      virtual int32_t  exit_application() override;
+      virtual void term_instance() override;
 
       virtual bool bergedge_start();
 
       virtual void on_request(::create * pcreate);
 
-	   virtual bool _001OnCmdMsg(::aura::cmd_msg * pcommand);
+	   virtual void _001OnCmdMsg(::user::command * pcommand);
    		
 
       virtual void OnFileManagerOpenFile(

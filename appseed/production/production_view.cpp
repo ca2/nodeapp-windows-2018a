@@ -61,8 +61,8 @@ namespace production
 
    //   IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &::user::interaction::_001OnLButtonDown);
    //   IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &::user::interaction::_001OnLButtonUp);
-      IGUI_MSG_LINK(WM_KEYDOWN, pinterface, this, &::user::interaction::_001OnKeyDown);
-      IGUI_MSG_LINK(WM_KEYUP, pinterface, this, &::user::interaction::_001OnKeyUp);
+      IGUI_MSG_LINK(WM_KEYDOWN, pinterface, this, &view::_001OnKeyDown);
+      IGUI_MSG_LINK(WM_KEYUP, pinterface, this, &view::_001OnKeyUp);
 
       IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &view::_001OnLButtonDown);
       IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &view::_001OnLButtonUp);
@@ -303,6 +303,15 @@ namespace production
 
    }
 
+   void view::_001OnKeyDown(::message::message * pobj)
+   {
+
+   }
+
+   
+   void view::_001OnKeyUp(::message::message * pobj)
+   {
+   }
 
    void view::_001OnContextMenu(::message::message * pobj) 
    {

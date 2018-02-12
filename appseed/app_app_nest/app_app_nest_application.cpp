@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace ca2plugin_container
@@ -89,10 +89,10 @@ namespace ca2plugin_container
    }
 
 
-   int32_t application::run()
+   void application::run()
    {
 
-      return thread::run();
+      thread::run();
 
    }
 
@@ -126,7 +126,7 @@ namespace ca2plugin_container
 
       //if(!::core::application::on_run_step())
       //{
-      // 
+      //
       //   return false;
 
       //}

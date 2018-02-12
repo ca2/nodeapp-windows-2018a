@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 
 namespace backup
@@ -9,14 +9,13 @@ namespace backup
       ::object(papp),
       production::frame(papp)
    {
-      
 
-      m_dataid = "::ca2::backup::frame";
-      
    }
+
 
    frame::~frame()
    {
+
    }
 
 

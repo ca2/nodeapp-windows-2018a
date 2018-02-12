@@ -9,7 +9,7 @@ namespace production
       ::object(papp),
       simple_frame_window(papp)
    {
-      m_dataid = "::ca2::production::frame";
+
    }
 
    frame::~frame()

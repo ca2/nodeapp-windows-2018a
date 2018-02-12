@@ -37,7 +37,7 @@ namespace production
       System.factory().creatable_small < pane_view >();
 
 
-      if(!::core::application::initialize_application())
+      if(!::core::application::init_instance())
          return false;
 
 //      Session.filemanager()->m_strLevelUp = "levelup";
@@ -75,9 +75,8 @@ namespace production
 
       }
 
-      return iExitCode;
-
    }
+
 
    bool application::bergedge_start()
    {
@@ -115,17 +114,17 @@ namespace production
       }
       else if (pcreate->m_spCommandLine->m_varQuery.has_property("start_deferred"))
       {
-         m_pview->production_loop(Application.command()->m_varTopicQuery["start_deferred"]);
+         m_pview->production_loop(Application.handler()->m_varTopicQuery["start_deferred"]);
       }
 
 
    }
 
 
-   bool application::_001OnCmdMsg(::aura::cmd_msg * pcommand)
+   void application::_001OnCmdMsg(::user::command * pcommand)
    		
    {
-      return ::core::application::_001OnCmdMsg(pcommand);
+      ::core::application::_001OnCmdMsg(pcommand);
    }
 
 

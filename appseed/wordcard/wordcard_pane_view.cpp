@@ -107,7 +107,7 @@ namespace wordcard
       else if (m_pviewdata->m_id == PaneViewContextMenu)
       {
          sp(::filemanager::manager) pdoc = (m_pviewdata->m_pdoc);
-         pdoc->FileManagerBrowse(Application.dir().appdata() / "wordcard\\menu", ::action::source::system_default());
+         pdoc->FileManagerBrowse(System.dir().appdata() / "wordcard\\menu", ::action::source::system_default());
       }
       else
       {
@@ -137,13 +137,13 @@ namespace wordcard
             pdoc->get_filemanager_data()->m_bListText = true;
             pdoc->get_filemanager_data()->m_bListSelection = false;
             pdoc->get_filemanager_template()->m_strFilePopup = "filemanager\\file_popup.xml";
-            pdoc->get_filemanager_data()->m_strDISection = "wordcard_menu";
+            pdoc->get_filemanager_data()->m_strDataKeyModifier = "wordcard_menu";
             pdoc->get_filemanager_data()->m_pcallback = this;
             pdoc->Initialize(true);
             pdoc->update_all_views(NULL, 1234);
             pdoc->update_all_views(NULL, 123458);
             sp(::user::impact) pview = pdoc->get_view();
-            pdoc->FileManagerBrowse(Application.dir().appdata() / "wordcard\\menu", ::action::source::system_default());
+            pdoc->FileManagerBrowse(System.dir().appdata() / "wordcard\\menu", ::action::source::system_default());
             if (pview != NULL)
             {
                sp(::user::frame_window) pframe = (pview->GetParentFrame());
@@ -182,7 +182,7 @@ namespace wordcard
                   sp(::filemanager::manager) pdoc = get_document()->m_pfilemanagerdoc;
                   if(pdoc != NULL)
                   {
-                     pdoc->get_filemanager_data()->m_strDISection = "wordcard_filemanager";
+                     pdoc->get_filemanager_data()->m_strDataKeyModifier = "wordcard_filemanager";
                      pdoc->Initialize(true);
                      pdoc->update_all_views(NULL, 1234);
                      pdoc->update_all_views(NULL, 123458);
@@ -210,12 +210,12 @@ namespace wordcard
             pdoc->get_filemanager_data()->m_bListText = false;
             pdoc->get_filemanager_data()->m_bListSelection = false;
             pdoc->get_filemanager_data()->m_pcallback = this;
-            pdoc->get_filemanager_data()->m_strDISection = "wordcard_3-action-launch";
+            pdoc->get_filemanager_data()->m_strDataKeyModifier = "wordcard_3-action-launch";
             pdoc->Initialize(true);
             pdoc->update_all_views(NULL, 1234);
             pdoc->update_all_views(NULL, 123458);
             sp(::user::impact) pview = pdoc->get_view();
-            pdoc->FileManagerBrowse(Application.dir().appdata() / "wordcard\\3-action-launch", ::action::source::system_default());
+            pdoc->FileManagerBrowse(System.dir().appdata() / "wordcard\\3-action-launch", ::action::source::system_default());
             if (pview != NULL)
             {
                sp(::user::frame_window) pframe = (pview->GetParentFrame());

@@ -659,7 +659,7 @@ namespace ca2plugin_container
 
                      pgraphics->set_text_color(ARGB(255,255,255,0));
 
-                     pgraphics->TextOutA(300,20,str);
+                     pgraphics->text_out(300,20,str);
 
 #endif
 

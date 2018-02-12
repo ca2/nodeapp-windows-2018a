@@ -35,7 +35,7 @@ namespace ca2plugin_container
 
       virtual bool os_native_bergedge_start();
 
-      virtual int32_t run();
+      virtual void run();
 
       virtual void restart_aura_ipc();
 

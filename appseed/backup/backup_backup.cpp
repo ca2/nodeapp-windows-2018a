@@ -35,8 +35,10 @@ namespace backup
       return strNewRepos;
    }
 
-   int32_t backup::run()
+
+   void backup::run()
    {
+
       if(m_iStep == 1)
       {
          string strStartTime;
@@ -55,42 +57,42 @@ namespace backup
             string str;
             str.Format("***File %s does not exist. (mysqldump -uroot -ppassword --opt --all-databases > %%1)", strFile);
             add_status(str);
-            return 0;
+            return;
          }
 
          if(!hotcopy_repos("ca2os"))
-            return 0;
+            return;
          if(!hotcopy_repos("app"))
-            return 0;
+            return;
          if(!hotcopy_repos("net"))
-            return 0;
+            return;
          if(!hotcopy_repos("hi5"))
-            return 0;
+            return;
          if(!hotcopy_repos("hi5-net"))
-            return 0;
+            return;
          if(!hotcopy_repos("public_reading"))
-            return 0;
+            return;
          if(!hotcopy_repos("main"))
-            return 0;
+            return;
          if(!all_db_dump())
-            return 0;
+            return;
 
          if(!compress_repos("ca2os"))
-            return 0;
+            return;
          if(!compress_repos("app"))
-            return 0;
+            return;
          if(!compress_repos("net"))
-            return 0;
+            return;
          if(!compress_repos("hi5"))
-            return 0;
+            return;
          if(!compress_repos("hi5-net"))
-            return 0;
-         if(!compress_repos("public_reading"))
-            return 0;
+            return;
+         if (!compress_repos("public_reading"))
+            return;
          if(!compress_repos("main"))
-            return 0;
+            return;
          if(!db_copy())
-            return 0;
+            return;
 
 
          throw not_implemented(get_app());
@@ -119,8 +121,8 @@ namespace backup
       }
 
 
-      return 0;
    }
+
 
    bool  backup::hotcopy_repos(const char * psz)
    {
@@ -131,12 +133,12 @@ namespace backup
       string str;
       string strBase = m_strBase;
       STARTUPINFO si;
-      PROCESS_INFORMATION pi; 
+      PROCESS_INFORMATION pi;
       memset(&si, 0, sizeof(si));
       memset(&pi, 0, sizeof(pi));
       si.cb = sizeof(si);
       si.dwFlags = STARTF_USESHOWWINDOW;
-      si.wShowWindow = SW_HIDE; 
+      si.wShowWindow = SW_HIDE;
       ::file::path strNewRepos = get_new_repos_local_path(psz);
       Application.dir().mk(strNewRepos.folder());
       str.Format("svnadmin hotcopy C:\\repos\\%s %s", psz, strNewRepos);
@@ -173,20 +175,20 @@ namespace backup
       string str;
       string strBase = m_strBase;
       STARTUPINFO si;
-      PROCESS_INFORMATION pi; 
+      PROCESS_INFORMATION pi;
       memset(&si, 0, sizeof(si));
       memset(&pi, 0, sizeof(pi));
       si.cb = sizeof(si);
       si.dwFlags = STARTF_USESHOWWINDOW;
-      si.wShowWindow = SW_HIDE; 
+      si.wShowWindow = SW_HIDE;
       ::file::path strdump = get_new_db_local_path("all.sql");
       Application.dir().mk(strdump.folder());
 
       str.Format("%s \"%s\"", System.dir().install() / "basis/ca2/app/dbbk.bat", strdump);
 
       if(!::CreateProcess(NULL, (LPTSTR) (const char *) str,
-         NULL, NULL, FALSE, 0, NULL,
-         "C:\\", &si, &pi))
+                          NULL, NULL, FALSE, 0, NULL,
+                          "C:\\", &si, &pi))
       {
          strStatus.Format("     Error: Check svn installation!!");
          add_status(strStatus);
@@ -218,12 +220,12 @@ namespace backup
       string str;
       string strBase = m_strBase;
       STARTUPINFO si;
-      PROCESS_INFORMATION pi; 
+      PROCESS_INFORMATION pi;
       memset(&si, 0, sizeof(si));
       memset(&pi, 0, sizeof(pi));
       si.cb = sizeof(si);
       si.dwFlags = STARTF_USESHOWWINDOW;
-      si.wShowWindow = SW_HIDE; 
+      si.wShowWindow = SW_HIDE;
       string strNewRepos = get_new_repos_local_path(psz);
       ::file::path strTar;
       strTar = ::file::path("C:\\ca2\\bk") / m_strTag  / "repos" / psz + ".tar";

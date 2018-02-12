@@ -16,7 +16,7 @@ namespace backup
       backup(::aura::application * papp);
       virtual ~backup();
 
-      virtual int32_t run();
+      virtual void run();
 
       bool hotcopy_repos(const char * psz);
       bool compress_repos(const char * psz);

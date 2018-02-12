@@ -98,6 +98,8 @@ namespace production
 	   DECL_GEN_SIGNAL(_001OnSetCursor);
       DECL_GEN_SIGNAL(_001OnShowWindow);
       DECL_GEN_SIGNAL(_001OnUser);
+      DECL_GEN_SIGNAL(_001OnKeyDown);
+      DECL_GEN_SIGNAL(_001OnKeyUp);
 
 
       virtual size get_total_size();

@@ -33,7 +33,7 @@ namespace production
 
          release(production * pproduction,const char * pszRelease,const char * pszServer);
 
-         virtual bool initialize_thread() override;
+         virtual bool init_thread() override;
 
          virtual void run() override;
 
@@ -51,7 +51,7 @@ namespace production
          manual_reset_event * m_pevFinished;
          production *   m_pproduction;
          uint32_t                m_dwThreadAffinityMask;
-         int32_t run();
+         virtual void run();
       };
 
       stringa                 m_straMirror;
@@ -152,7 +152,7 @@ namespace production
       string version_to_international_datetime(const char * psz);
 
 
-      virtual int32_t run();
+      virtual void run();
 
 
       virtual int32_t produce();

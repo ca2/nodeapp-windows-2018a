@@ -22,7 +22,7 @@ uint32_t plugin_container_app(const string & strChannel)
       if(!psystem->pre_run())
       {
 
-         return psystem->m_iReturnCode;
+         return papp->get_exit_code();
 
       }
 
@@ -64,7 +64,7 @@ uint32_t plugin_container_app(const string & strChannel)
       if(!papp->pre_run())
       {
 
-         return papp->m_iReturnCode;
+         return papp->get_exit_code();
 
       }
 
