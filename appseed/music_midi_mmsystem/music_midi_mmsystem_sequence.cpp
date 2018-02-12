@@ -42,7 +42,7 @@ namespace music
          sequence::~sequence()
          {
 
-            CloseFile();
+            close_file();
 
          }
 
@@ -135,7 +135,7 @@ namespace music
             e_result                smfrc;
             uint32_t                cbBuffer;
 
-            if (GetState() != status_no_file)
+            if (get_status() != status_no_file)
             {
 
                return EFunctionNotSupported;
@@ -170,9 +170,9 @@ namespace music
 
 Seq_Open_File_Cleanup:
             if (::multimedia::result_success != rc)
-               CloseFile();
+               close_file();
             else
-               SetState(status_opened);
+               set_status(status_opened);
 
             return rc;
          }
@@ -206,10 +206,10 @@ Seq_Open_File_Cleanup:
             e_result                   smfrc;
             uint32_t                   cbBuffer;
 
-            if (GetState() != status_no_file)
+            if (get_status() != status_no_file)
             {
 
-               CloseFile();
+               close_file();
 
             }
 
@@ -238,9 +238,9 @@ Seq_Open_File_Cleanup:
             }
 
             if(::music::success != smfrc)
-               CloseFile();
+               close_file();
             else
-               SetState(status_opened);
+               set_status(status_opened);
 
             return smfrc;
 
@@ -253,7 +253,7 @@ Seq_Open_File_Cleanup:
          //   e_result                   smfrc = success;
          //   uint32_t                   cbBuffer;
 
-         //   if (GetState() != status_no_file)
+         //   if (get_status() != status_no_file)
          //   {
          //
          //      return EFunctionNotSupported;
@@ -299,9 +299,9 @@ Seq_Open_File_Cleanup:
          //   }
 
          //   if(success != smfrc)
-         //      CloseFile();
+         //      close_file();
          //   else
-         //      SetState(status_opened);
+         //      set_status(status_opened);
 
          //   return smfrc;
 
@@ -328,12 +328,12 @@ Seq_Open_File_Cleanup:
          * stopped before this call will be accepted.
          *
          ***************************************************************************/
-         e_result sequence::CloseFile()
+         e_result sequence::close_file()
          {
 
             synch_lock sl(m_pmutex);
 
-            file()->CloseFile();
+            file()->close_file();
 
             if (m_hstream != NULL)
             {
@@ -342,7 +342,7 @@ Seq_Open_File_Cleanup:
 
             }
 
-            SetState(status_no_file);
+            set_status(status_no_file);
 
             return success;
 
@@ -383,7 +383,7 @@ Seq_Open_File_Cleanup:
 
                   if (bThrow)
                   {
-                     SetState(status_opened);
+                     set_status(status_opened);
                      throw new exception(get_app(), EMidiPlayerPrerollStreamOpen);
                   }
 
@@ -418,7 +418,7 @@ Seq_Open_File_Cleanup:
                   if (bThrow)
                   {
 
-                     SetState(status_opened);
+                     set_status(status_opened);
 
                      throw new exception(get_app(), EMidiPlayerPrerollStreamProperty);
 
@@ -438,7 +438,7 @@ Seq_Open_File_Cleanup:
                TRACE("sequence::mm_start midiOutPrepareHeader Error!! -> %lu", (uint32_t)mmrc);
                if (bThrow)
                {
-                  SetState(status_opened);
+                  set_status(status_opened);
                   throw new exception(get_app(), EMidiPlayerPrerollPrepareHeader);
                }
                else
@@ -481,7 +481,7 @@ Seq_Open_File_Cleanup:
                if (bThrow)
                {
 
-                  SetState(status_opened);
+                  set_status(status_opened);
 
                   throw new exception(get_app(), EMidiPlayerPrerollPrepareHeader2);
 
@@ -499,7 +499,7 @@ mm_start_Cleanup:
             if (mmrc != ::multimedia::result_success)
             {
 
-               SetState(status_pre_rolled);
+               set_status(status_pre_rolled);
 
                m_flags.unsignalize(::music::midi::sequence::FlagWaiting);
 
@@ -511,11 +511,11 @@ mm_start_Cleanup:
 
                if (mmrc != ::multimedia::result_success)
                {
-                  SetState(status_pre_rolled);
+                  set_status(status_pre_rolled);
                }
                else
                {
-                  SetState(status_playing);
+                  set_status(status_playing);
                }
 
             }
@@ -569,7 +569,7 @@ mm_start_Cleanup:
             e_result                smfrc;
             ::multimedia::e_result  mmrc = ::multimedia::result_success;
 
-            if(GetState() == status_playing)
+            if(get_status() == status_playing)
             {
 
                Stop();
@@ -583,8 +583,8 @@ mm_start_Cleanup:
 
             m_mmrcLastErr = ::multimedia::result_success;
 
-            if(GetState() != status_opened &&
-                  GetState() != status_pre_rolled &&
+            if(get_status() != status_opened &&
+                  get_status() != status_pre_rolled &&
                   !IsInSpecialModeV001())
                return ::multimedia::result_unsupported_function;
 
@@ -593,7 +593,7 @@ mm_start_Cleanup:
 
             m_iBuffersInMMSYSTEM = 0;
 
-            SetState(::music::midi::sequence::status_pre_rolling);
+            set_status(::music::midi::sequence::status_pre_rolling);
 
             m_buffera.Reset();
 
@@ -637,7 +637,7 @@ seq_Preroll_Cleanup:
             if (mmrc != ::multimedia::result_success)
             {
 
-               SetState(status_opened);
+               set_status(status_opened);
 
                m_flags.unsignalize(::music::midi::sequence::FlagWaiting);
 
@@ -645,7 +645,7 @@ seq_Preroll_Cleanup:
             else
             {
 
-               SetState(status_pre_rolled);
+               set_status(status_pre_rolled);
 
             }
 
@@ -681,16 +681,16 @@ seq_Preroll_Cleanup:
 
             synch_lock sl(m_pmutex);
 
-            if (::music::midi::sequence::status_pre_rolled != GetState())
+            if (::music::midi::sequence::status_pre_rolled != get_status())
             {
 
-               TRACE( "seqStart(): State is wrong! [%u]", GetState());
+               TRACE( "seqStart(): State is wrong! [%u]", get_status());
 
                return ::multimedia::result_unsupported_function;
 
             }
 
-            SetState(::music::midi::sequence::status_playing);
+            set_status(::music::midi::sequence::status_playing);
 
             m_evMmsgDone.ResetEvent();
 
@@ -731,10 +731,10 @@ seq_Preroll_Cleanup:
 
             //    assert(NULL != pSeq);
 
-            if (status_playing != GetState())
+            if (status_playing != get_status())
                return ::multimedia::result_unsupported_function;
 
-            SetState(status_paused);
+            set_status(status_paused);
 
             ::multimedia::e_result mmrc = ::multimedia::result_success;
             //    single_lock slStream(&m_csStream, false);
@@ -773,10 +773,10 @@ seq_Preroll_Cleanup:
 
             synch_lock sl(m_pmutex);
 
-            if (status_paused != GetState())
+            if (status_paused != get_status())
                return ::multimedia::result_unsupported_function;
 
-            SetState(status_playing);
+            set_status(status_playing);
             m_evMmsgDone.ResetEvent();
 
             //    ::multimedia::e_result mmrc = 0;
@@ -812,19 +812,19 @@ seq_Preroll_Cleanup:
 
             synch_lock sl(m_pmutex);
 
-            if(GetState() == status_stopping)
+            if(get_status() == status_stopping)
                return ::multimedia::result_success;
 
             // Automatic success if we're already stopped
-            if (GetState() != status_playing
-                  && GetState() != status_paused)
+            if (get_status() != status_playing
+                  && get_status() != status_paused)
             {
                m_flags.unsignalize(::music::midi::sequence::FlagWaiting);
                GetPlayerLink().OnFinishCommand(::music::midi::player::command_stop);
                return ::multimedia::result_success;
             }
 
-            SetState(status_stopping);
+            set_status(status_stopping);
             m_flags.signalize(::music::midi::sequence::FlagWaiting);
 
             m_eventMidiPlaybackEnd.ResetEvent();
@@ -887,22 +887,22 @@ seq_Preroll_Cleanup:
             ::multimedia::e_result                mmr;
             MMTIME                  mmt;
 
-            if ((::music::midi::sequence::status_playing != GetState() &&
-                  ::music::midi::sequence::status_paused != GetState() &&
-                  //::music::midi::sequence::status_pre_rolling != GetState() &&
-                  //::music::midi::sequence::status_pre_rolled != GetState() &&
-                  ::music::midi::sequence::status_opened != GetState() &&
-                  ::music::midi::sequence::status_stopping != GetState())
+            if ((::music::midi::sequence::status_playing != get_status() &&
+                  ::music::midi::sequence::status_paused != get_status() &&
+                  //::music::midi::sequence::status_pre_rolling != get_status() &&
+                  //::music::midi::sequence::status_pre_rolled != get_status() &&
+                  ::music::midi::sequence::status_opened != get_status() &&
+                  ::music::midi::sequence::status_stopping != get_status())
                   || m_hstream == NULL)
             {
                return ::multimedia::result_unsupported_function;
             }
 
             pTicks = 0;
-            if (status_opened != GetState())
+            if (status_opened != get_status())
             {
                pTicks = m_tkBase;
-               if (status_pre_rolled != GetState())
+               if (status_pre_rolled != get_status())
                {
                   mmt.wType = TIME_TICKS;
                   //            single_lock slStream(&m_csStream, false);
@@ -964,22 +964,22 @@ seq_Preroll_Cleanup:
             ::multimedia::e_result                mmr;
             MMTIME                  mmt;
 
-            if (status_playing != GetState() &&
-                  status_paused != GetState() &&
-                  status_pre_rolling != GetState() &&
-                  status_pre_rolled != GetState() &&
-                  status_opened != GetState() &&
-                  status_stopping != GetState())
+            if (status_playing != get_status() &&
+                  status_paused != get_status() &&
+                  status_pre_rolling != get_status() &&
+                  status_pre_rolled != get_status() &&
+                  status_opened != get_status() &&
+                  status_stopping != get_status())
             {
-               TRACE( "seqTime(): State wrong! [is %u]", GetState());
+               TRACE( "seqTime(): State wrong! [is %u]", get_status());
                return ::multimedia::result_unsupported_function;
             }
 
             time = 0;
-            if (status_opened != GetState())
+            if (status_opened != get_status())
             {
                time = (int_ptr) TicksToMillisecs(m_tkBase);
-               if (status_pre_rolled != GetState())
+               if (status_pre_rolled != get_status())
                {
                   mmt.wType = TIME_MS;
                   //            single_lock slStream(&m_csStream, false);
@@ -1078,7 +1078,7 @@ seq_Preroll_Cleanup:
                m_evBuffersZero.SetEvent();
             }
 
-            if (status_reset == GetState())
+            if (status_reset == get_status())
             {
                // We're recollecting buffers from MMSYSTEM
                //
@@ -1090,7 +1090,7 @@ seq_Preroll_Cleanup:
                return;
             }
 
-            bool bStopping = status_stopping == GetState();
+            bool bStopping = status_stopping == get_status();
             bool bEndOfPlay = m_iBuffersInMMSYSTEM <= 0;
             bool bSpecialModeV001End = m_flags.is_signalized(FlagSpecialModeV001End);
 
@@ -1113,7 +1113,7 @@ seq_Preroll_Cleanup:
                {
                   if(m_iBuffersInMMSYSTEM == 0)
                   {
-                     TRACE("void CALLBACK ::music::midi::sequence::MidiOutProc status_stopping == pSeq->GetState()\n");
+                     TRACE("void CALLBACK ::music::midi::sequence::MidiOutProc status_stopping == pSeq->get_status()\n");
                      pthread->PostMidiSequenceEvent(
                      this,
                      ::music::midi::sequence::EventStopped,
@@ -1290,7 +1290,7 @@ seq_Preroll_Cleanup:
          bool sequence::IsPlaying()
          {
 
-            return GetState() == status_playing || GetState() == status_stopping;
+            return get_status() == status_playing || get_status() == status_stopping;
 
          }
 
@@ -1335,18 +1335,6 @@ seq_Preroll_Cleanup:
          }
 
 
-         void sequence::SetSpecialModeV001Operation(uint32_t uiOperation)
-         {
-
-            m_uiPreSpecialModeV001State = m_uiState;
-
-            SetSpecialModeV001Flag();
-
-            m_uiSpecialModeV001Operation = uiOperation;
-
-         }
-
-
          bool sequence::IsInSpecialModeV001()
          {
 
@@ -1368,9 +1356,9 @@ seq_Preroll_Cleanup:
 
             lpmdd->m_flags = m_flags;
 
-            lpmdd->m_uiSeqPreviousState = m_uiPreviousState;
+            lpmdd->m_uiSeqPreviousState = m_estatusPrevious;
 
-            lpmdd->m_uiSeqState = m_uiState;
+            lpmdd->m_uiSeqState = m_estatus;
 
          }
 
@@ -1485,7 +1473,7 @@ seq_Preroll_Cleanup:
 
             }
 
-            SetState(status_opened);
+            set_status(status_opened);
 
             return ::multimedia::result_success;
          }
@@ -1500,7 +1488,7 @@ seq_Preroll_Cleanup:
 
             ::multimedia::e_result mmrc;
 
-            SetState(::music::midi::sequence::status_reset);
+            set_status(::music::midi::sequence::status_reset);
 
             midiOutReset((HMIDIOUT)m_hstream);
 
@@ -1518,7 +1506,7 @@ seq_Preroll_Cleanup:
 
 
 
-            SetState(::music::midi::sequence::status_opened);
+            set_status(::music::midi::sequence::status_opened);
 
             return ::music::success;
 
@@ -1567,19 +1555,19 @@ seq_Preroll_Cleanup:
             {
                SetSpecialModeV001Flag(false);
                OnMidiPlaybackEnd(pevent);
-               SetState(m_uiPreSpecialModeV001State);
+               set_status(m_estatusPreSpecialModeV001);
             }
             break;
             case EventStopped:
             {
                OnMidiPlaybackEnd(pevent);
-               SetState(status_opened);
+               set_status(status_opened);
             }
             break;
             case EventMidiPlaybackEnd:
             {
                OnMidiPlaybackEnd(pevent);
-               SetState(status_opened);
+               set_status(status_opened);
             }
             break;
             case EventMidiStreamOut:
@@ -1630,13 +1618,13 @@ seq_Preroll_Cleanup:
 
                   TRACE( "smfReadEvents returned %lu in callback!", (uint32_t) smfrc);
 
-                  SetState(status_stopping);
+                  set_status(status_stopping);
 
                   break;
 
                }
 
-               if(::music::midi::sequence::status_stopping == GetState())
+               if(::music::midi::sequence::status_stopping == get_status())
                {
 
                   thread()->PostMidiSequenceEvent(this, EventMidiPlaybackEnd, lpmh);
@@ -1663,7 +1651,7 @@ seq_Preroll_Cleanup:
 
                      TRACE("seqBufferDone(): midiStreamOut() returned %lu!", (uint32_t)mmrc);
 
-                     SetState(::music::midi::sequence::status_stopping);
+                     set_status(::music::midi::sequence::status_stopping);
 
                   }
 
@@ -1740,7 +1728,7 @@ seq_Preroll_Cleanup:
 
          bool sequence::IsOpened()
          {
-            return GetState() != status_no_file;
+            return get_status() != status_no_file;
          }
 
          void sequence::GetTimeLength(imedia_time & time)

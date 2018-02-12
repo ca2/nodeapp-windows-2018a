@@ -1,11 +1,6 @@
 ﻿#pragma once
 
 
-
-
-
-
-
 namespace music
 {
 
@@ -25,9 +20,6 @@ namespace music
          {
 
 
-
-
-
             class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_MMSYSTEM player :
                virtual public ::music::midi::player::player
             {
@@ -38,49 +30,46 @@ namespace music
                virtual ~player();
 
 
-               void install_message_routing(::message::sender * pinterface);
+               virtual void install_message_routing(::message::sender * pinterface) override;
 
 
-               void SendMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd);
-               void SetCallbackUi(sp(::user::interaction) puie);
-               bool Play(double dRate = 0.0, uint32_t dwEllapse = (uint32_t) -1);
-               bool Play(imedia_position tkStart, uint32_t dwEllapse = (uint32_t)-1);
+               virtual void SendMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd) override;
+               virtual bool Play(double dRate = 0.0, uint32_t dwEllapse = (uint32_t) -1) override;
+               virtual bool Play(imedia_position tkStart, uint32_t dwEllapse = (uint32_t)-1) override;
 
                virtual bool init_thread() override;
                virtual void term_thread() override;
-               virtual void pre_translate_message(::message::message * pobj);
-               void OnMmsgDone(::music::midi::sequence *pSeq);
-               DECL_GEN_SIGNAL(OnUserMessage);
-               void SaveFile(const char * lpszPathName);
-               void SetPosition(double dRate);
-               void Pause();
-               void CloseFile();
-               bool ExecuteCommand(::music::midi::player::e_command ecommand, uint32_t dwEllapse);
-               virtual void OnMidiOutDeviceChange();
+               virtual void pre_translate_message(::message::message * pobj) override;
+               virtual void OnMmsgDone(::music::midi::sequence *pSeq) override;
+               virtual void SaveFile(const char * lpszPathName) override;
+               virtual void SetPosition(double dRate) override;
+               virtual void pause() override;
+               virtual void close_file() override;
+               virtual bool ExecuteCommand(::music::midi::player::e_command ecommand, uint32_t dwEllapse) override;
+               virtual void OnMidiOutDeviceChange() override;
 
-               uint32_t GetMidiOutDevice();
-               void PostNotifyEvent(::music::midi::player::e_notify_event eevent);
+               virtual uint32_t GetMidiOutDevice() override;
+               virtual void PostNotifyEvent(::music::midi::player::e_notify_event eevent) override;
 
-               imedia_position RateToTicks(double dRate);
+               virtual imedia_position RateToTicks(double dRate) override;
 
-               virtual ::music::e_result SetTempoShift(double dTempoShift);
+               virtual ::music::e_result SetTempoShift(double dTempoShift) override;
 
-               bool SetMidiOutDevice(uint32_t uiDevice);
+               virtual bool SetMidiOutDevice(uint32_t uiDevice) override;
 
-               virtual ::multimedia::e_result set_client(::music::midi::player::player_client * pclient);
+               virtual ::multimedia::e_result set_client(::music::midi::player::player_client * pclient) override;
 
-               bool IsPlaying();
+               virtual bool IsPlaying() override;
 
-               void PostGMReset();
-               void PostTempoChange();
-               void SendTempoChange(); // verificar
+               virtual void PostGMReset() override;
+               virtual void PostTempoChange() override;
+               virtual void SendTempoChange() override;
 
 
-               //DECL_GEN_SIGNAL(OnNotifyEvent);
                DECL_GEN_SIGNAL(OnMultimediaMidiOutputMessageDone);
                DECL_GEN_SIGNAL(OnMultimediaMidiOutputMessagePositionCB);
+               DECL_GEN_SIGNAL(OnUserMessage);
 
-               // midi central listener
                DECL_GEN_SIGNAL(on_attribute_change);
 
 

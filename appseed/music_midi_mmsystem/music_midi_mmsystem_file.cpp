@@ -45,7 +45,7 @@ namespace music
          buffer::~buffer()
          {
 
-            CloseFile();
+            close_file();
 
             if(m_estorage == ::music::storage_attach)
             {
@@ -277,7 +277,7 @@ namespace music
          * call.
          *
          *****************************************************************************/
-//         e_result buffer::CloseFile()
+//         e_result buffer::close_file()
 //         {
 //
 //            synch_lock sl(m_pmutex);

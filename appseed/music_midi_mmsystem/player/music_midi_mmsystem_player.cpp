@@ -193,12 +193,12 @@ namespace music
             }
 
 
-            void player::CloseFile()
+            void player::close_file()
             {
 
                e_result            mmrc;
 
-               if(success != (mmrc = get_sequence()->CloseFile()) && mmrc != EFunctionNotSupported)
+               if(success != (mmrc = get_sequence()->close_file()) && mmrc != EFunctionNotSupported)
                {
 
                   throw new exception(get_app(), EMidiPlayerClose);
@@ -207,10 +207,10 @@ namespace music
 
             }
 
-            void player::Pause()
+            void player::pause()
             {
 
-               if (get_sequence()->GetState() == ::music::midi::sequence::status_paused)
+               if (get_sequence()->get_status() == ::music::midi::sequence::status_paused)
                {
 
                   get_sequence()->Restart();
@@ -227,9 +227,9 @@ namespace music
 
             void player::SetPosition(double dRate)
             {
-               if (::music::midi::sequence::status_playing != get_sequence()->GetState() &&
-                     ::music::midi::sequence::status_stopping != get_sequence()->GetState() &&
-                     ::music::midi::sequence::status_opened != get_sequence()->GetState())
+               if (::music::midi::sequence::status_playing != get_sequence()->get_status() &&
+                     ::music::midi::sequence::status_stopping != get_sequence()->get_status() &&
+                     ::music::midi::sequence::status_opened != get_sequence()->get_status())
                   return;
 
                if(get_sequence()->IsPlaying())
@@ -459,14 +459,6 @@ namespace music
             {
 
                return Application.midi()->GetMidiOutDevice();
-
-            }
-
-
-            void player::SetCallbackUi(sp(::user::interaction) puie)
-            {
-
-               m_puie = puie;
 
             }
 

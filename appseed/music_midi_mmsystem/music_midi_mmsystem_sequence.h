@@ -198,7 +198,6 @@ namespace music
             virtual void GetMidiDoneData(::music::midi::LPMIDIDONEDATA lpmdd);
             virtual bool IsInSpecialModeV001();
             virtual bool WasInSpecialModeV001();
-            virtual void SetSpecialModeV001Operation(uint32_t uiOperation);
 
             virtual void OnEvent(::music::midi::sequence::event * pevent);
 
@@ -213,7 +212,7 @@ namespace music
             //e_result OpenFile(const char * lpFileName, int32_t openMode);
             e_result OpenFile(memory * pmemorystorage, int32_t openMode, ::music::e_storage estorage);
 
-            e_result CloseFile();
+            e_result close_file() override;
             e_result SaveFile(const char * lpFileName);
             e_result SaveFile();
             e_result SaveFile(::file::file_sp &ar);

@@ -219,7 +219,7 @@ namespace music
          void sequence_thread::Play(imedia_position tkStart)
          {
             ASSERT(get_sequence() != NULL);
-            ASSERT(get_sequence()->GetState() == ::music::midi::sequence::status_opened);
+            ASSERT(get_sequence()->get_status() == ::music::midi::sequence::status_opened);
 
             PrerollAndWait(tkStart);
             get_sequence()->Start();
@@ -228,7 +228,7 @@ namespace music
          void sequence_thread::Play(double dRate)
          {
             ASSERT(get_sequence() != NULL);
-            ASSERT(get_sequence()->GetState() == ::music::midi::sequence::status_opened);
+            ASSERT(get_sequence()->get_status() == ::music::midi::sequence::status_opened);
 
             PrerollAndWait(dRate);
             get_sequence()->Start();
@@ -379,7 +379,7 @@ namespace music
                if(get_sequence() != NULL)
                {
 
-                  get_sequence()->CloseFile();
+                  get_sequence()->close_file();
 
                }
 
