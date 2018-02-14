@@ -30,7 +30,7 @@ namespace music
 
             m_cbPreroll = 8 * 1024;
 
-            m_cbPrerollNominalMax =  128;
+            m_cbPrerollNominalMax =  24;
 
             m_midicallbackdata.m_psequence = this;
 
@@ -605,6 +605,15 @@ mm_start_Cleanup:
 
             file()->m_flags &= ~file::EndOfFile;
 
+            m_iaRefVolume.set_size(16);
+
+            for (auto & iVolume : m_iaRefVolume)
+            {
+
+               iVolume = 255;
+
+            }
+
             for (i = 1; i < m_buffera.get_size(); i++)
             {
 
@@ -850,6 +859,8 @@ seq_Preroll_Cleanup:
             //m_eventMidiPlaybackEnd.lock();
 
             SetLevelMeter(0);
+
+            m_eeffect = effect_none;
 
             return ::multimedia::result_success;
 
@@ -1674,14 +1685,16 @@ seq_Preroll_Cleanup:
 
             mmt.wType = TIME_TICKS;
 
-            if(::multimedia::result_success ==
+            if(::multimedia::result_success !=
                   midiStreamPosition(
                   m_hstream,
                   &mmt,
                   sizeof(mmt)))
-               return mmt.u.ticks + m_tkPrerollBase;
-            else
                return -1;
+
+            return mmt.u.ticks + m_tkPrerollBase;
+
+
          }
 
 

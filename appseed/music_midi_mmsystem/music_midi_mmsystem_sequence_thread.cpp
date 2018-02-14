@@ -397,6 +397,19 @@ namespace music
 
             }
             break;
+            case ::music::midi::player::command_fade_out_and_stop:
+            {
+               m_eventStop.ResetEvent();
+               ::multimedia::e_result            mmrc;
+               sequence::PlayerLink & link = get_sequence()->GetPlayerLink();
+               link.SetCommand(spcommand);
+               link.ModifyFlag(sequence::FlagFadeOutAndStop, sequence::FlagNull);
+               if (::multimedia::result_success != (mmrc = get_sequence()->FadeOutAndStop()))
+               {
+                  _throw(exception(get_app(), ::music::EMidiPlayerStop, mmrc));
+               }
+            }
+            break;
             case ::music::midi::player::command_stop:
             {
                m_eventStop.ResetEvent();

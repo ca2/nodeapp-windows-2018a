@@ -843,6 +843,9 @@ namespace music
             e_result    smfrc;
             lpdw = (LPDWORD)(lpmh->lpData + lpmh->dwBytesRecorded);
             ASSERT(!(pEvent->GetFlags() & 1));
+
+
+
             if(pEvent->GetFlags() & 1)
             {
                ASSERT(FALSE);
@@ -2486,8 +2489,9 @@ namespace music
 //
          e_result buffer::WorkStreamRender(LPMIDIHDR lpmh, imedia_position tkMax, uint32_t cbPrerollNominalMax)
          {
+
             e_result       smfrc;
-            ::music::midi::event *           pevent;
+            ::music::midi::event *           pevent = NULL;
             array < ::music::midi::event *, ::music::midi::event * > eventptraPositionCB;
             LPDWORD                    lpdw;
             imedia_position                        tkDelta;
@@ -2498,6 +2502,7 @@ namespace music
             imedia_position      tkPositionF1;
             imedia_position &    tkLastPosition = m_positionLastWorkRender;
             ASSERT(lpmh != NULL);
+
 
             /////////////////////////////////////////////////////////////////////////////
             // read events from the track and pack them into the buffer in polymsg
@@ -2517,8 +2522,6 @@ namespace music
                }
             }
 
-            lpdw = (LPDWORD)(lpmh->lpData + lpmh->dwBytesRecorded);
-
             if (m_flags & file::EndOfFile)
             {
                return SEndOfFile;
@@ -2526,15 +2529,24 @@ namespace music
 
             if(tkLastPosition > GetPosition())
             {
+
                tkLastPosition = GetPosition();
+
             }
+
             while(true)
             {
+
+               lpdw = (LPDWORD)(lpmh->lpData + lpmh->dwBytesRecorded);
+
                ASSERT(lpmh->dwBytesRecorded <= lpmh->dwBufferLength);
+
                if(lpmh->dwBytesRecorded > cbPrerollNominalMax && lpmh->dwBytesRecorded > 0
                      && eventptraPositionCB.get_size() <= 0)
                {
+
                   break;
+
                }
 
                // If we know ahead of time we won't have room for the
@@ -2551,18 +2563,22 @@ namespace music
                //
                if (lpmh->dwBufferLength - lpmh->dwBytesRecorded < 4*sizeof(uint32_t))
                {
+
                   break;
+
                }
 
                tkLastDelta = 0;
 
                if (lpmh->dwBufferLength - lpmh->dwBytesRecorded < 4*sizeof(uint32_t))
                {
-                  //         m_ptracks->m_tkPosition += tkDelta;
+
                   break;
+
                }
 
                smfrc = WorkGetNextEvent(pevent, tkMax, TRUE);
+
                if (::music::success != smfrc)
                {
                   // smfGetNextEvent doesn't set this because smfSeek uses it
@@ -2582,7 +2598,129 @@ namespace music
                ASSERT(GetPosition() >= tkLastPosition);
 
                tkPosition  = GetPosition();
-               tkDelta     = tkPosition - tkLastPosition;
+
+               imedia_position tkDiv = m_psequence->GetQuarterNote() / 4;
+
+               while((m_psequence->TicksToMillisecs(tkPosition + tkDiv) - m_psequence->TicksToMillisecs(tkPosition)) > 50)
+               {
+
+                  tkDiv /= 2;
+
+               }
+
+               while(true)
+               {
+
+                  imedia_position tkOp = ((m_tkLastOp + tkDiv) / tkDiv) * tkDiv;
+
+                  if (tkOp > tkPosition)
+                  {
+
+                     break;
+
+                  }
+
+                  if (tkOp < tkLastPosition)
+                  {
+
+                     tkOp = tkPosition;
+
+                  }
+
+                  tkDelta = tkOp - tkLastPosition;
+
+                  int iBytesRecorded = 0;
+
+                  if (m_psequence->m_eeffect == sequence::effect_fade_in || m_psequence->m_eeffect == sequence::effect_fade_out)
+                  {
+
+                     double dVolume = m_psequence->get_fade_volume(m_psequence->TicksToMillisecs(tkOp));
+
+                     for (int iTrack = 0; iTrack < 16; iTrack++)
+                     {
+
+                        clip(0, 127, m_psequence->m_iaRefVolume[iTrack]);
+
+                        byte bVolume = (byte)(m_psequence->m_iaRefVolume[iTrack] * MAX(0.0, MIN(1.0, dVolume)));
+
+                        if (abs((int)m_keyframe.rbControl[iTrack][ControlChangeVolume] - (int)bVolume) < 3)
+                        {
+
+                           TRACE("too few difference!! opt-ed out");
+
+                        }
+                        else
+                        {
+
+                           uint32_t uiFullType = ControlChange;
+                           uiFullType |= iTrack & 0xf;
+                           uint32_t uiChB1 = ControlChangeVolume;
+                           uint32_t uiChB2 = bVolume;
+
+                           *lpdw++ = (uint32_t)tkDelta;
+                           *lpdw++ = 0;
+                           *lpdw++ = (((uint32_t)MEVT_SHORTMSG) << 24) |
+                                     (uiFullType) |
+                                     (uiChB1 << 8) |
+                                     (uiChB2 << 16);
+
+
+                           tkLastPosition += tkDelta;
+
+                           tkDelta = 0;
+
+                           lpmh->dwBytesRecorded += 3 * sizeof(uint32_t);
+
+                           iBytesRecorded += 3 * sizeof(uint32_t);
+
+                        }
+
+                     }
+
+                  }
+                  else
+                  {
+
+                     for (int iTrack = 0; iTrack < 16; iTrack++)
+                     {
+
+                        clip(0, 127, m_keyframe.rbControl[iTrack][ControlChangeVolume]);
+
+                        int iVolume = m_keyframe.rbControl[iTrack][ControlChangeVolume];
+
+                        m_psequence->m_iaRefVolume.set_at_grow(iTrack, iVolume);
+
+                     }
+
+                     *lpdw++ = (uint32_t)tkDelta;
+                     *lpdw++ = 0;
+                     *lpdw++ = (MEVT_NOP << 24);
+
+                     tkLastPosition += tkDelta;
+
+                     tkDelta = 0;
+
+                     lpmh->dwBytesRecorded += 3 * sizeof(uint32_t);
+
+                     iBytesRecorded += 3 * sizeof(uint32_t);
+
+
+                  }
+
+                  m_tkLastOp = tkOp;
+
+                  cbPrerollNominalMax += iBytesRecorded;
+
+                  if (cbPrerollNominalMax + iBytesRecorded > lpmh->dwBufferLength / 2)
+                  {
+
+                     break;
+
+                  }
+
+               }
+
+               tkDelta = tkPosition - tkLastPosition;
 
                // The position CB events are grouped in a single position CB
                // event after other type of simultaneous events.
@@ -2848,7 +2986,7 @@ namespace music
          {
 
             e_result        smfrc;
-            ::music::midi::event *           pevent;
+            ::music::midi::event *           pevent = NULL;
             LPDWORD                    lpdw;
             BYTE                       bEvent;
             uint32_t                       idx;
@@ -2861,6 +2999,7 @@ namespace music
 
             memset(&m_keyframe, 0xFF, sizeof(m_keyframe));
             memset(&m_keyframe.rbProgram, 0x00, sizeof(m_keyframe.rbProgram));
+
 
             m_ptracks->m_tkPosition = 0;
             m_flags &= ~file::EndOfFile;
@@ -2880,7 +3019,7 @@ namespace music
                      memcpy((byte *)m_keyframe.rbTempo, pevent->GetData(), pevent->GetDataSize());
                   }
                }
-               if((bEvent & 0xF0) == ::music::midi::ProgramChange)
+               else if((bEvent & 0xF0) == ::music::midi::ProgramChange)
                {
                   m_keyframe.rbProgram[bEvent & 0x0F] = pevent->GetChB1();
                }
@@ -3292,6 +3431,7 @@ namespace music
 
 
 } // namespace music
+
 
 
 

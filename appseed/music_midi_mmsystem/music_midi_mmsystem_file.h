@@ -18,6 +18,8 @@ namespace music
          {
          public:
 
+            imedia_time m_tkLastOp;
+
 
 
             buffer(::aura::application * papp);
