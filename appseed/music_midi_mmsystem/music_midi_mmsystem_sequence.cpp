@@ -30,7 +30,7 @@ namespace music
 
             m_cbPreroll = 8 * 1024;
 
-            m_cbPrerollNominalMax =  24;
+            m_cbPrerollNominalMax =  48;
 
             m_midicallbackdata.m_psequence = this;
 
@@ -583,12 +583,17 @@ mm_start_Cleanup:
 
             m_mmrcLastErr = ::multimedia::result_success;
 
-            if(get_status() != status_opened &&
+            if (get_status() != status_opened &&
                   get_status() != status_pre_rolled &&
                   !IsInSpecialModeV001())
+            {
+
                return ::multimedia::result_unsupported_function;
 
+            }
+
             m_tkBase = lpPreroll->tkBase;
+
             m_tkEnd = lpPreroll->tkEnd;
 
             m_iBuffersInMMSYSTEM = 0;
@@ -1603,11 +1608,15 @@ seq_Preroll_Cleanup:
 
                if(IsInSpecialModeV001())
                {
+
                   TRACE("::music::midi::sequence::OnEvent EventMidiStreamOut IsInSpecialModeV001");
+
                }
                else
                {
+
                   smfrc = file()->WorkStreamRender(lpmh, m_tkEnd, m_cbPrerollNominalMax);
+
                }
 
                switch(smfrc)
