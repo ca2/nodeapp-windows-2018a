@@ -31,50 +31,50 @@ namespace multimedia
 
 
 
-      wave_out::helper_thread::helper_thread(::aura::application * papp) :
-         object(papp),
-         ::thread(papp)
-      {
+      // wave_out::helper_thread::helper_thread(::aura::application * papp) :
+      //    object(papp),
+      //    ::thread(papp)
+      // {
 
-      }
+      // }
 
-      wave_out::helper_thread::~helper_thread()
-      {
+      // wave_out::helper_thread::~helper_thread()
+      // {
 
-      }
-
-
-      void wave_out::helper_thread::install_message_routing(::message::sender * pinterface)
-      {
-
-         IGUI_MSG_LINK(MM_WOM_OPEN, pinterface, this, &wave_out::helper_thread::OnMultimediaOpen);
-         IGUI_MSG_LINK(MM_WOM_DONE, pinterface, this, &wave_out::helper_thread::OnMultimediaDone);
-         IGUI_MSG_LINK(MM_WOM_CLOSE, pinterface, this, &wave_out::helper_thread::OnMultimediaClose);
-
-      }
-
-      void wave_out::helper_thread::OnMultimediaOpen(::message::message * pobj)
-      {
-
-         m_pwaveout->OnMultimediaOpen(pobj);
-
-      }
+      // }
 
 
-      void wave_out::helper_thread::OnMultimediaDone(::message::message * pobj)
-      {
+      // void wave_out::helper_thread::install_message_routing(::message::sender * pinterface)
+      // {
 
-         m_pwaveout->OnMultimediaDone(pobj);
+      //    IGUI_MSG_LINK(MM_WOM_OPEN, pinterface, this, &wave_out::helper_thread::OnMultimediaOpen);
+      //    IGUI_MSG_LINK(MM_WOM_DONE, pinterface, this, &wave_out::helper_thread::OnMultimediaDone);
+      //    IGUI_MSG_LINK(MM_WOM_CLOSE, pinterface, this, &wave_out::helper_thread::OnMultimediaClose);
 
-      }
+      // }
+
+      // void wave_out::helper_thread::OnMultimediaOpen(::message::message * pobj)
+      // {
+
+      //    m_pwaveout->OnMultimediaOpen(pobj);
+
+      // }
 
 
-      void wave_out::helper_thread::OnMultimediaClose(::message::message * pobj)
-      {
+      // void wave_out::helper_thread::OnMultimediaDone(::message::message * pobj)
+      // {
 
-         m_pwaveout->OnMultimediaDone(pobj);
+      //    m_pwaveout->OnMultimediaDone(pobj);
 
-      }
+      // }
+
+
+      // void wave_out::helper_thread::OnMultimediaClose(::message::message * pobj)
+      // {
+
+      //    m_pwaveout->OnMultimediaDone(pobj);
+
+      // }
 
 
       wave_out::wave_out(::aura::application * papp) :
@@ -86,9 +86,9 @@ namespace multimedia
          m_mutexFree(papp)
       {
 
-         m_phelperthread = new helper_thread(papp);
-         m_phelperthread->m_pwaveout = this;
-         m_phelperthread->begin_synch(::multithreading::priority_time_critical);
+      //    m_phelperthread = new helper_thread(papp);
+      //    m_phelperthread->m_pwaveout = this;
+      //    m_phelperthread->begin_synch(::multithreading::priority_time_critical);
 
 
          m_pthreadFree = NULL;
@@ -113,8 +113,6 @@ namespace multimedia
       {
 
          ::multimedia::audio::wave_out::install_message_routing(pinterface);
-
-         IGUI_MSG_LINK(message_free, pinterface, this, &wave_out::on_free);
 
       }
 
@@ -168,39 +166,39 @@ namespace multimedia
          m_pwaveformat->cbSize = 0;
          sp(::multimedia::audio::wave) audiowave = Application.audiowave();
 
-         if(MMSYSERR_NOERROR == (mmr = mmsystem::translate(waveOutOpen(
-                                       &m_hwaveout,
-                                       audiowave->m_uiWaveInDevice,
-                                       wave_format(),
-                                       m_phelperthread->get_os_int(),
-                                       (uint32_t) 0,
-                                       CALLBACK_THREAD))))
-            goto Opened;
-         m_pwaveformat->nSamplesPerSec = 22050;
-         m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
-         if(MMSYSERR_NOERROR == (mmr = mmsystem::translate(waveOutOpen(
-                                       &m_hwaveout,
-                                       WAVE_MAPPER,
-                                       wave_format(),
-                                       (uint32_t)m_phelperthread->get_os_int(),
-                                       (uint32_t) 0,
-                                       CALLBACK_THREAD))))
-            goto Opened;
-         m_pwaveformat->nSamplesPerSec = 11025;
-         m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
-         if(MMSYSERR_NOERROR == (mmr = mmsystem::translate(waveOutOpen(
-                                       &m_hwaveout,
-                                       WAVE_MAPPER,
-                                       wave_format(),
-                                       (uint32_t)m_phelperthread->get_os_int(),
-                                       (uint32_t) 0,
-                                       CALLBACK_THREAD))))
-            goto Opened;
+      //    if(MMSYSERR_NOERROR == (mmr = mmsystem::translate(waveOutOpen(
+      //                                  &m_hwaveout,
+      //                                  audiowave->m_uiWaveInDevice,
+      //                                  wave_format(),
+      //                                  m_phelperthread->get_os_int(),
+      //                                  (uint32_t) 0,
+      //                                  CALLBACK_THREAD))))
+      //       goto Opened;
+      //    m_pwaveformat->nSamplesPerSec = 22050;
+      //    m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
+      //    if(MMSYSERR_NOERROR == (mmr = mmsystem::translate(waveOutOpen(
+      //                                  &m_hwaveout,
+      //                                  WAVE_MAPPER,
+      //                                  wave_format(),
+      //                                  (uint32_t)m_phelperthread->get_os_int(),
+      //                                  (uint32_t) 0,
+      //                                  CALLBACK_THREAD))))
+      //       goto Opened;
+      //    m_pwaveformat->nSamplesPerSec = 11025;
+      //    m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
+      //    if(MMSYSERR_NOERROR == (mmr = mmsystem::translate(waveOutOpen(
+      //                                  &m_hwaveout,
+      //                                  WAVE_MAPPER,
+      //                                  wave_format(),
+      //                                  (uint32_t)m_phelperthread->get_os_int(),
+      //                                  (uint32_t) 0,
+      //                                  CALLBACK_THREAD))))
+      //       goto Opened;
 
-         if(mmr != ::multimedia::result_success)
-         {
-            return mmr;
-         }
+      //    if(mmr != ::multimedia::result_success)
+      //    {
+      //       return mmr;
+      //    }
 
 Opened:
          memory_size_t uiBufferSizeLog2;
@@ -673,16 +671,6 @@ Opened:
       }
 
 
-      void wave_out::on_free(::message::message * pobj)
-      {
-
-         SCAST_PTR(::message::base, pbase, pobj);
-
-         wave_out_free(pbase->m_wparam);
-
-      }
-
-
       void wave_out::wave_out_buffer_ready(index iBuffer)
       {
 
@@ -691,90 +679,6 @@ Opened:
       }
 
 
-      bool wave_out::raw_pump_message()
-      {
-
-         try
-         {
-
-            MESSAGE msg;
-            if (!::GetMessage(&msg, NULL, 0, 0))
-            {
-
-               TRACE(::aura::trace::category_AppMsg, 1, "thread::pump_message - Received wm_quit.\n");
-
-               ::output_debug_string("thread::pump_message - Received wm_quit.\n");
-
-               m_nDisablePumpCount++; // application must die
-               // Note: prevents calling message loop things in 'exit_thread'
-               // will never be decremented
-               return false;
-
-            }
-
-            if (msg.message == message_free)
-            {
-
-               wave_out_free(msg.wParam);
-
-            }
-            else
-            {
-
-               raw_process_message(&msg);
-
-
-            }
-
-            return true;
-
-         }
-         catch (exit_exception * pexception)
-         {
-
-            _rethrow(pexception);
-
-         }
-         catch (::exception::exception * pexception)
-         {
-
-            esp671 esp(pexception);
-
-            if (on_run_exception(esp))
-               return true;
-
-            // get_app() may be it self, it is ok...
-            if (Application.final_handle_exception(esp))
-               return true;
-
-         }
-         catch (...)
-         {
-
-         }
-
-         return false;
-
-         //   if(m_pthreadimpl.is_null())
-         //   {
-         //      if(dynamic_cast <::timer *> ((thread *) this) != NULL)
-         //      {
-         //         m_pthreadimpl.alloc(allocer());
-         //         if(m_pthreadimpl.is_null())
-         //         {
-         //            return false;
-         //         }
-         //         m_pthreadimpl->m_pthread = this;
-         //      }
-         //      else
-         //      {
-         //         return false;
-         //      }
-         //   }
-         //
-         //   return m_pthreadimpl->pump_message();
-
-      }
 
       void wave_out::wave_out_launch_buffers()
       {
@@ -1089,11 +993,6 @@ Opened:
 
       void wave_out::wave_out_free(int iBuffer)
       {
-
-         //m_pprebuffer->fill_buffer(iBuffer);
-         //::multimedia::audio::wave_out::wave_out_free(iBuffer);
-
-
 
 
       }

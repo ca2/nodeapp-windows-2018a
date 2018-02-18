@@ -678,6 +678,13 @@ namespace music
                      for (int iTrack = 0; iTrack < 16; iTrack++)
                      {
 
+                        if(m_keyframe.rbControl[iTrack][ControlChangeVolume] == KF_EMPTY)
+                        {
+
+                              m_keyframe.rbControl[iTrack][ControlChangeVolume] = 100;
+
+                        }
+
                         clip(0, 127, m_keyframe.rbControl[iTrack][ControlChangeVolume]);
 
                         int iVolume = m_keyframe.rbControl[iTrack][ControlChangeVolume];

@@ -85,7 +85,6 @@ namespace multimedia
          DECL_GEN_SIGNAL(OnMultimediaOpen);
          DECL_GEN_SIGNAL(OnMultimediaDone);
          DECL_GEN_SIGNAL(OnMultimediaClose);
-         DECL_GEN_SIGNAL(on_free);
 
          virtual void wave_out_out_buffer_done(index iBuffer) override;
 
