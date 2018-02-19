@@ -93,14 +93,20 @@ namespace music
 
             switch(pevent->m_eevent)
             {
-            case ::music::midi::sequence::EventStopped:
+            case ::music::midi::sequence::EventMidiPlaybackEnd:
             {
+               
                ::music::midi::sequence::PlayerLink & link = get_sequence()->GetPlayerLink();
+
                if(link.TestFlag(::music::midi::sequence::FlagStop))
                {
+                  
                   link.ModifyFlag(::music::midi::sequence::FlagNull, ::music::midi::sequence::FlagStop);
+                  
                   link.OnFinishCommand(::music::midi::player::command_stop);
-                  PostNotifyEvent(::music::midi::player::notify_event_playback_stop);
+                  
+                  PostNotifyEvent(::music::midi::player::notify_event_playback_end);
+
                }
                else if(link.TestFlag(::music::midi::sequence::FlagTempoChange))
                {
@@ -188,12 +194,6 @@ namespace music
                PostNotifyEvent(::music::midi::player::notify_event_midi_stream_out);
             }
             break;
-            case ::music::midi::sequence::EventMidiPlaybackEnd:
-            {
-               PostNotifyEvent(::music::midi::player::notify_event_playback_end);
-            }
-            break;
-
             }
 
          }
@@ -225,13 +225,18 @@ namespace music
             get_sequence()->Start();
          }
 
-         void sequence_thread::Play(double dRate)
+         
+         void sequence_thread::PlayRate(double dRate)
          {
+            
             ASSERT(get_sequence() != NULL);
+            
             ASSERT(get_sequence()->get_status() == ::music::midi::sequence::status_opened);
 
-            PrerollAndWait(dRate);
+            PrerollRateAndWait(dRate);
+            
             get_sequence()->Start();
+
          }
 
 
@@ -262,7 +267,7 @@ namespace music
          }
 
 
-         void sequence_thread::PrerollAndWait(double dRate)
+         void sequence_thread::PrerollRateAndWait(double dRate)
          {
             ::music::midi::PREROLL                 preroll;
 
@@ -361,7 +366,7 @@ namespace music
             {
                if(spcommand->m_flags.is_signalized(::music::midi::player::command::flag_dRate))
                {
-                  Play(spcommand->m_dRate);
+                  PlayRate(spcommand->m_dRate);
                }
                else if(spcommand->m_flags.is_signalized(::music::midi::player::command::flag_ticks))
                {
@@ -369,7 +374,7 @@ namespace music
                }
                else
                {
-                  Play();
+                  PlayRate();
                }
             }
             break;

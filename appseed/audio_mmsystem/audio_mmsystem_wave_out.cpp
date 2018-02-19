@@ -120,7 +120,7 @@ namespace multimedia
       bool wave_out::init_thread()
       {
 
-         register_dependent_thread(m_phelperthread);
+//         register_dependent_thread(m_phelperthread);
 
          if (!::multimedia::audio::wave_out::init_thread())
          {

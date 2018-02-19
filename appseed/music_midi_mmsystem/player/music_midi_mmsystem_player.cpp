@@ -122,7 +122,7 @@ namespace music
             }
 
 
-            bool player::Play(double dRate, uint32_t dwEllapse)
+            bool player::PlayRate(double dRate, uint32_t dwEllapse)
             {
 
                sp(::music::midi::player::command) pcommand = canew(::music::midi::player::command(get_app()));
@@ -264,7 +264,7 @@ namespace music
                   }
                   catch(exception *pe)
                   {
-                     SendMmsgDone(pSeq, NULL);
+                     //SendMmsgDone(pSeq, NULL);
                      pe->Delete();
                      return;
                   }
@@ -443,17 +443,17 @@ namespace music
             }
 
 
-            void player::SendMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd)
-            {
+            //void player::SendMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd)
+            //{
 
-               if(m_puie != NULL)
-               {
+            //   if(m_puie != NULL)
+            //   {
 
-                  m_puie->post_message(MMSG_DONE, (WPARAM) pSeq, (LPARAM) lpmdd);
+            //      m_puie->post_message(MMSG_DONE, (WPARAM) pSeq, (LPARAM) lpmdd);
 
-               }
+            //   }
 
-            }
+            //}
 
             uint32_t player::GetMidiOutDevice()
             {

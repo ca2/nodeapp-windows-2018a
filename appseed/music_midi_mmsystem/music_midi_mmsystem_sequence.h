@@ -195,7 +195,7 @@ namespace music
             virtual bool IsChangingTempo();
 
             virtual double GetTempoShift();
-            virtual void GetMidiDoneData(::music::midi::LPMIDIDONEDATA lpmdd);
+            //virtual void GetMidiDoneData(::music::midi::LPMIDIDONEDATA lpmdd);
             virtual bool IsInSpecialModeV001();
             virtual bool WasInSpecialModeV001();
 
@@ -228,8 +228,8 @@ namespace music
             ::multimedia::e_result Stop();
 
             virtual imedia_position get_position_ticks() override;
-            virtual void get_position(imedia_position  & time) override;
-            virtual void get_time(imedia_time  & time) override;
+            virtual void karaoke_get_time(imedia_position  & time) override;
+//            virtual void get_time(imedia_time  & time) override;
 
             virtual ::multimedia::e_result get_ticks(imedia_position & time) override;
             virtual ::multimedia::e_result get_millis(imedia_time & time) override;
@@ -263,11 +263,12 @@ namespace music
             using ::music::midi::sequence::create_new_event;
             virtual ::music::midi::sequence::event * create_new_event(::music::midi::sequence::e_event eevent, LPMIDIHDR lpmidihdr);
 
-
             virtual ::multimedia::e_result SendGMReset();
 
-
             virtual ::multimedia::e_result mm_start();
+
+            virtual void music_midi_on_playback_end();
+
 
          };
 

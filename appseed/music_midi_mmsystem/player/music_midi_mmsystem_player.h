@@ -33,8 +33,8 @@ namespace music
                virtual void install_message_routing(::message::sender * pinterface) override;
 
 
-               virtual void SendMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd) override;
-               virtual bool Play(double dRate = 0.0, uint32_t dwEllapse = (uint32_t) -1) override;
+               //virtual void SendMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd) override;
+               virtual bool PlayRate(double dRate = 0.0, uint32_t dwEllapse = (uint32_t) -1) override;
                virtual bool Play(imedia_position tkStart, uint32_t dwEllapse = (uint32_t)-1) override;
 
                virtual bool init_thread() override;
