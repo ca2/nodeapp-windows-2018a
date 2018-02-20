@@ -98,17 +98,7 @@ namespace music
                
                ::music::midi::sequence::PlayerLink & link = get_sequence()->GetPlayerLink();
 
-               if(link.TestFlag(::music::midi::sequence::FlagStop))
-               {
-                  
-                  link.ModifyFlag(::music::midi::sequence::FlagNull, ::music::midi::sequence::FlagStop);
-                  
-                  link.OnFinishCommand(::music::midi::player::command_stop);
-                  
-                  PostNotifyEvent(::music::midi::player::notify_event_playback_end);
-
-               }
-               else if(link.TestFlag(::music::midi::sequence::FlagTempoChange))
+               if(link.TestFlag(::music::midi::sequence::FlagTempoChange))
                {
                   PrerollAndWait(link.m_tkRestart);
                   get_sequence()->SetTempoChangeFlag(false);
@@ -171,6 +161,18 @@ namespace music
                   }
                   get_sequence()->Start();
                   //PostNotifyEvent(player::notify_event_position_set);
+               }
+               else // if (link.TestFlag(::music::midi::sequence::FlagStop))
+               {
+
+                  bool bStopWasSetRemarkJustForDebugging = link.TestFlag(::music::midi::sequence::FlagStop);
+
+                  link.ModifyFlag(::music::midi::sequence::FlagNull, ::music::midi::sequence::FlagStop);
+
+                  link.OnFinishCommand(::music::midi::player::command_stop);
+
+                  PostNotifyEvent(::music::midi::player::notify_event_playback_end);
+
                }
 
             }
