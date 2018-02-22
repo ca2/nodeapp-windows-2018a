@@ -603,7 +603,7 @@ namespace music
                while(true)
                {
 
-                  imedia_position tkOp = ((m_tkLastOp + tkDiv) / tkDiv) * tkDiv;
+                  imedia_position tkOp = floor((m_tkLastOp + tkDiv) / tkDiv) * tkDiv;
 
                   if (tkOp > tkPosition)
                   {
