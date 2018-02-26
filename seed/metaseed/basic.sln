@@ -151,6 +151,15 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tesseract", "..\..\..\app-c
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rdpsnd-client-audio_decode", "..\..\..\app-core\appseed\rdpsnd-client-audio_decode\rdpsnd-client-audio_decode.vcxproj", "{D47829CA-5441-4A01-9C34-19C3598410DF}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "scorpionilluminati_beatmapper", "..\..\..\scorpionilluminati\appseed\beatmapper\beatmapper.vcxproj", "{188CF8F3-FC6C-4DC6-9902-4E41FA7A7127}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
+		{4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0} = {4FF5112B-2AAF-47D3-8E93-FC31F8F10FF0}
+		{E2D7833B-9B59-4826-BBDF-C270A2115E86} = {E2D7833B-9B59-4826-BBDF-C270A2115E86}
+		{EBB7FB48-31AA-4282-999B-D52C9B3B887B} = {EBB7FB48-31AA-4282-999B-D52C9B3B887B}
+		{11AFE887-61B7-4217-913C-36736B359F39} = {11AFE887-61B7-4217-913C-36736B359F39}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
@@ -651,6 +660,18 @@ Global
 		{D47829CA-5441-4A01-9C34-19C3598410DF}.stage|Win32.Build.0 = stage|Win32
 		{D47829CA-5441-4A01-9C34-19C3598410DF}.stage|x64.ActiveCfg = stage|x64
 		{D47829CA-5441-4A01-9C34-19C3598410DF}.stage|x64.Build.0 = stage|x64
+		{188CF8F3-FC6C-4DC6-9902-4E41FA7A7127}.basis|Win32.ActiveCfg = basis|Win32
+		{188CF8F3-FC6C-4DC6-9902-4E41FA7A7127}.basis|Win32.Build.0 = basis|Win32
+		{188CF8F3-FC6C-4DC6-9902-4E41FA7A7127}.basis|x64.ActiveCfg = basis|x64
+		{188CF8F3-FC6C-4DC6-9902-4E41FA7A7127}.basis|x64.Build.0 = basis|x64
+		{188CF8F3-FC6C-4DC6-9902-4E41FA7A7127}.cover|Win32.ActiveCfg = cover|Win32
+		{188CF8F3-FC6C-4DC6-9902-4E41FA7A7127}.cover|Win32.Build.0 = cover|Win32
+		{188CF8F3-FC6C-4DC6-9902-4E41FA7A7127}.cover|x64.ActiveCfg = cover|x64
+		{188CF8F3-FC6C-4DC6-9902-4E41FA7A7127}.cover|x64.Build.0 = cover|x64
+		{188CF8F3-FC6C-4DC6-9902-4E41FA7A7127}.stage|Win32.ActiveCfg = stage|Win32
+		{188CF8F3-FC6C-4DC6-9902-4E41FA7A7127}.stage|Win32.Build.0 = stage|Win32
+		{188CF8F3-FC6C-4DC6-9902-4E41FA7A7127}.stage|x64.ActiveCfg = stage|x64
+		{188CF8F3-FC6C-4DC6-9902-4E41FA7A7127}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

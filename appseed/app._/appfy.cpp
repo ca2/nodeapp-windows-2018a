@@ -339,8 +339,19 @@ void appfy::run()
          }
          else
          {
-            strRoot = strApp;
-            strDomain = "";
+            
+            auto iFind = strParse.find("_");
+
+            if (iFind > 0)
+            {
+               strRoot = strParse.Left(iFind);
+               strDomain = strParse.Mid(iFind+1);
+            }
+            else
+            {
+               strRoot = strApp;
+               strDomain = "";
+            }
          }
       }
 
