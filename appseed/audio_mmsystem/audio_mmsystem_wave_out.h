@@ -66,7 +66,7 @@ namespace multimedia
          virtual void wave_out_buffer_ready(index iBuffer) override;
          virtual void wave_out_buffer_ready(LPWAVEHDR lpwavehdr);
 
-         virtual ::multimedia::e_result wave_out_open_ex(::thread * pthreadCallback, ::count iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample, ::multimedia::audio::e_purpose epurpose) override;
+         virtual ::multimedia::e_result wave_out_open_ex(::thread * pthreadCallback,  uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample, ::multimedia::audio::e_purpose epurpose) override;
          virtual ::multimedia::e_result wave_out_stop() override;
          virtual ::multimedia::e_result wave_out_close() override;
          virtual ::multimedia::e_result wave_out_pause() override;

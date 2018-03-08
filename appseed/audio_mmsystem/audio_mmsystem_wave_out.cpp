@@ -84,7 +84,7 @@ namespace multimedia
       }
 
 
-      ::multimedia::e_result wave_out::wave_out_open_ex(thread * pthreadCallback, ::count iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample,::multimedia::audio::e_purpose epurpose)
+      ::multimedia::e_result wave_out::wave_out_open_ex(thread * pthreadCallback, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample,::multimedia::audio::e_purpose epurpose)
       {
 
          synch_lock sl(m_pmutex);
@@ -216,6 +216,7 @@ namespace multimedia
 Opened:
 
          int iBufferCount;
+         int iBufferSampleCount;
 
          if(epurpose == ::multimedia::audio::purpose_playback)
          {
