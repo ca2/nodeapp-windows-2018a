@@ -14,8 +14,6 @@
 extern "C" {
 #endif
 
-#define OPENSSL_MIN_API   0x10100000L
-
 #ifdef OPENSSL_ALGORITHM_DEFINES
 # error OPENSSL_ALGORITHM_DEFINES no longer supported
 #endif

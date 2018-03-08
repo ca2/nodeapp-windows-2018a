@@ -1,0 +1,14 @@
+prefix=/c/third/ffmpeg/build/x86/stage
+exec_prefix=${prefix}
+libdir=/c/third/ffmpeg/build/x86/stage/lib
+includedir=/c/third/ffmpeg/build/x86/stage/include
+
+Name: libavutil
+Description: FFmpeg utility library
+Version: 55.78.100
+Requires: 
+Requires.private: 
+Conflicts:
+Libs: -L${libdir}  -lavutil 
+Libs.private: 
+Cflags: -I${includedir}
