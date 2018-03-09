@@ -1,14 +1,14 @@
-prefix=/c/third/ffmpeg/build/x86/stage
+prefix=/c/basis/nodeapp/Win32/stage
 exec_prefix=${prefix}
-libdir=/c/third/ffmpeg/build/x86/stage/lib
-includedir=/c/third/ffmpeg/build/x86/stage/include
+libdir=${prefix}/lib
+includedir=${prefix}/include
 
 Name: libavformat
 Description: FFmpeg container format library
-Version: 57.83.100
+Version: 57.71.100
 Requires: 
-Requires.private: libavcodec >= 57.107.100, libswresample >= 2.9.100, libavutil >= 55.78.100
+Requires.private: libavcodec >= 57.89.100, libswresample >= 2.7.100, libavutil >= 55.58.100
 Conflicts:
 Libs: -L${libdir}  -lavformat 
-Libs.private: user32.lib ws2_32.lib vfw32.lib user32.lib secur32.lib psapi.lib advapi32.lib shell32.lib ole32.lib
+Libs.private: ws2_32.lib vfw32.lib user32.lib gdi32.lib psapi.lib ole32.lib strmiids.lib uuid.lib oleaut32.lib shlwapi.lib user32.lib secur32.lib psapi.lib advapi32.lib shell32.lib
 Cflags: -I${includedir}

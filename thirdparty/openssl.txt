@@ -1,0 +1,16 @@
+
+
+OPENSSL 86
+perl Configure VC-WIN32 --openssldir=/c/basis/nodeapp/ssl/Win32/stage --prefix=/c/basis/nodeapp/Win32/stage -MD
+
+OPENSSL 86d
+
+perl Configure VC-WIN32 --openssldir=/c/basis/nodeapp/ssl/Win32/basis --prefix=/c/basis/nodeapp/Win32/basis --debug -MDd
+
+OPENSSL 64
+
+perl Configure VC-WIN64A --openssldir=/c/basis/nodeapp/ssl/x64/stage --prefix=/c/basis/nodeapp/x64/stage -MD 
+
+OPENSSL 64d
+
+perl Configure VC-WIN64A --openssldir=/c/basis/nodeapp/ssl/x64/basis --prefix=/c/basis/nodeapp/x64/basis --debug -MDd

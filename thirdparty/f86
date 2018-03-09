@@ -1,0 +1,20 @@
+#!/bin/bash
+
+
+function m()
+{
+
+   cd /c/third
+   mkdir ffmpeg86
+   tar -xjvf $1 -C ffmpeg86 --strip-components=1
+   cd ffmpeg86
+   ./configure --enable-gpl --enable-asm --enable-yasm --disable-ffserver --disable-doc --disable-ffplay --disable-ffprobe --disable-ffmpeg --enable-shared --disable-static --disable-bzlib --disable-libopenjpeg --disable-iconv --disable-zlib --prefix=/c/basis/nodeapp/Win32/stage --toolchain=msvc --arch=i386 --extra-cflags="-MD"
+
+}
+
+bz2=`cat /c/basis/nodeapp/thirdparty/fbzip2.txt`
+
+m $bz2
+
+cd /c/third/ffmpeg86
+

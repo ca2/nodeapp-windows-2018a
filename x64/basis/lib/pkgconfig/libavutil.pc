@@ -1,11 +1,11 @@
-prefix=/c/third/ffmpeg/build/x64/basis
+prefix=/c/basis/nodeapp/x64/basis
 exec_prefix=${prefix}
-libdir=/c/third/ffmpeg/build/x64/basis/lib
-includedir=/c/third/ffmpeg/build/x64/basis/include
+libdir=${prefix}/lib
+includedir=${prefix}/include
 
 Name: libavutil
 Description: FFmpeg utility library
-Version: 55.78.100
+Version: 55.58.100
 Requires: 
 Requires.private: 
 Conflicts:

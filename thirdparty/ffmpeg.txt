@@ -1,0 +1,12 @@
+
+FFMPEG 86
+./configure --enable-gpl --enable-asm --enable-x86asm --disable-ffserver --disable-doc --disable-ffplay --disable-ffprobe --disable-ffmpeg --enable-shared --disable-static --disable-bzlib --disable-libopenjpeg --disable-iconv --disable-zlib --prefix=/c/basis/nodeapp/Win32/stage --toolchain=msvc --arch=i386 --extra-cflags="-MD"
+
+FFMPEG 86d
+./configure --enable-gpl --enable-asm --enable-x86asm --disable-ffserver --disable-doc --disable-ffplay --disable-ffprobe --disable-ffmpeg --enable-shared --disable-static --disable-bzlib --disable-libopenjpeg --disable-iconv --disable-zlib --prefix=/c/basis/nodeapp/Win32/basis --toolchain=msvc --arch=i386 --extra-cflags="-MDd" --enable-debug
+
+FFMPEG 64
+./configure --enable-gpl --enable-asm --disable-ffserver --disable-doc --disable-ffplay --disable-ffprobe --disable-ffmpeg --enable-shared --disable-static --disable-bzlib --disable-libopenjpeg --disable-iconv --disable-zlib --prefix=/c/basis/nodeapp/x64/stage --toolchain=msvc --arch=x86_64 --extra-cflags="-MD"
+
+FFMPEG 64d
+./configure --enable-gpl --enable-asm --disable-ffserver --disable-doc --disable-ffplay --disable-ffprobe --disable-ffmpeg --enable-shared --disable-static --disable-bzlib --disable-libopenjpeg --disable-iconv --disable-zlib --prefix=/c/basis/nodeapp/x64/basis --toolchain=msvc --arch=x86_64 --extra-cflags="-MDd" --enable-debug
