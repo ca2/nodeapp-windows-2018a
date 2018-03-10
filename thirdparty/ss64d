@@ -1,0 +1,20 @@
+#!/bin/bash
+
+
+function m()
+{
+
+   cd /c/third
+   mkdir $1
+   tar -xzvf $2 -C $1 --strip-components=1
+   cd $1
+   perl Configure VC-WIN64A no-shared --openssldir=/c/third/static/ssl/x64/basis --prefix=/c/third/static/x64/basis --debug -MTd
+
+}
+
+gz=`cat /c/basis/nodeapp/thirdparty/sgz.txt`
+
+m 'sopenssl64d' $gz
+
+
+
