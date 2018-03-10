@@ -1,13 +1,13 @@
 prefix=/c/basis/nodeapp/x64/stage
 exec_prefix=${prefix}
-libdir=${prefix}/lib
-includedir=${prefix}/include
+libdir=/c/basis/nodeapp/x64/stage/lib
+includedir=/c/basis/nodeapp/x64/stage/include
 
 Name: libpostproc
 Description: FFmpeg postprocessing library
-Version: 54.5.100
+Version: 54.7.100
 Requires: 
-Requires.private: libavutil >= 55.58.100
+Requires.private: libavutil >= 55.78.100
 Conflicts:
 Libs: -L${libdir}  -lpostproc 
 Libs.private: 
