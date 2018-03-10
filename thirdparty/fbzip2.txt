@@ -1,1 +1,1 @@
-ffmpeg-3.3.6.tar.bz2
+ffmpeg-3.4.2.tar.bz2

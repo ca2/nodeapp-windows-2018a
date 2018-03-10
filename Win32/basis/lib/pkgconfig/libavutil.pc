@@ -1,11 +1,11 @@
 prefix=/c/basis/nodeapp/Win32/basis
 exec_prefix=${prefix}
-libdir=${prefix}/lib
-includedir=${prefix}/include
+libdir=/c/basis/nodeapp/Win32/basis/lib
+includedir=/c/basis/nodeapp/Win32/basis/include
 
 Name: libavutil
 Description: FFmpeg utility library
-Version: 55.58.100
+Version: 55.78.100
 Requires: 
 Requires.private: 
 Conflicts:
