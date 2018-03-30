@@ -396,6 +396,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "resident_youtube", "..\..\.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_helper", "..\..\..\app-core\appseed\helper\helper.vcxproj", "{83F8DA23-7756-4B02-AA40-790B0B5ECF28}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8E2DA747-D784-4B3F-8961-913CBA4D215A}"
+	ProjectSection(SolutionItems) = preProject
+		Performance9.psess = Performance9.psess
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true
@@ -1443,6 +1448,9 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {68D0CE57-7B21-4289-B0DC-382B607631F2}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true
