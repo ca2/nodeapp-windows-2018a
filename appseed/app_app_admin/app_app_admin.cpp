@@ -1,4 +1,4 @@
-#include "aura/aura/os/windows/windows_app.inl"
+#include "aura/aura/app/acid.inl"
 
 
 ::aura::application * get_acid_app(::aura::application * papp)

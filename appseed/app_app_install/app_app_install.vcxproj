@@ -30,8 +30,8 @@
     <ProjectGuid>{6F512EFE-4B04-4565-80BF-B9AA396D6E72}</ProjectGuid>
     <RootNamespace>app-install</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <ProjectName>app_app_admin</ProjectName>
-    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+    <ProjectName>app_app_install</ProjectName>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|Win32'" Label="Configuration">
@@ -148,7 +148,7 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <BufferSecurityCheck>true</BufferSecurityCheck>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <StringPooling>false</StringPooling>
@@ -174,8 +174,8 @@
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;version.lib;Winspool.lib;Ws2_32.lib;Normaliz.lib;OleAut32.lib;Shlwapi.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;gdi32.lib;msimg32.lib;user32.lib;psapi.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Windowscodecs.lib;dwrite.lib;d3d11.lib;d2d1.lib;version.lib;Winspool.lib;Ws2_32.lib;Normaliz.lib;OleAut32.lib;Shlwapi.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;gdi32.lib;msimg32.lib;user32.lib;psapi.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/$(PlatformName)/$(Configuration)/lib;$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
@@ -219,7 +219,7 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <BufferSecurityCheck>true</BufferSecurityCheck>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <StringPooling>false</StringPooling>
@@ -245,8 +245,8 @@
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;version.lib;Winspool.lib;Ws2_32.lib;Normaliz.lib;OleAut32.lib;Shlwapi.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;gdi32.lib;msimg32.lib;user32.lib;psapi.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Windowscodecs.lib;dwrite.lib;d3d11.lib;d2d1.lib;version.lib;Winspool.lib;Ws2_32.lib;Normaliz.lib;OleAut32.lib;Shlwapi.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;gdi32.lib;msimg32.lib;user32.lib;psapi.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/$(PlatformName)/$(Configuration)/lib;$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
@@ -292,7 +292,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <BufferSecurityCheck>
       </BufferSecurityCheck>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <StringPooling>false</StringPooling>
@@ -320,8 +320,8 @@
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;version.lib;Winspool.lib;Ws2_32.lib;Normaliz.lib;OleAut32.lib;Shlwapi.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;gdi32.lib;msimg32.lib;user32.lib;psapi.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Windowscodecs.lib;dwrite.lib;d3d11.lib;d2d1.lib;version.lib;Winspool.lib;Ws2_32.lib;Normaliz.lib;OleAut32.lib;Shlwapi.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;gdi32.lib;msimg32.lib;user32.lib;psapi.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/$(PlatformName)/$(Configuration)/lib;$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
@@ -366,7 +366,7 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <BufferSecurityCheck>true</BufferSecurityCheck>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <StringPooling>false</StringPooling>
@@ -392,8 +392,8 @@
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;version.lib;Winspool.lib;Ws2_32.lib;Normaliz.lib;OleAut32.lib;Shlwapi.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;gdi32.lib;msimg32.lib;user32.lib;psapi.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Windowscodecs.lib;dwrite.lib;d3d11.lib;d2d1.lib;version.lib;Winspool.lib;Ws2_32.lib;Normaliz.lib;OleAut32.lib;Shlwapi.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;gdi32.lib;msimg32.lib;user32.lib;psapi.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/$(PlatformName)/$(Configuration)/lib;$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
@@ -431,7 +431,7 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <BufferSecurityCheck>true</BufferSecurityCheck>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <StringPooling>false</StringPooling>
@@ -457,8 +457,8 @@
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;version.lib;Winspool.lib;Ws2_32.lib;Normaliz.lib;OleAut32.lib;Shlwapi.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;gdi32.lib;msimg32.lib;user32.lib;psapi.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Windowscodecs.lib;dwrite.lib;d3d11.lib;d2d1.lib;version.lib;Winspool.lib;Ws2_32.lib;Normaliz.lib;OleAut32.lib;Shlwapi.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;gdi32.lib;msimg32.lib;user32.lib;psapi.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/$(PlatformName)/$(Configuration)/lib;$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
@@ -497,7 +497,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <BufferSecurityCheck>
       </BufferSecurityCheck>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <StringPooling>false</StringPooling>
@@ -528,8 +528,8 @@
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;version.lib;Winspool.lib;Ws2_32.lib;Normaliz.lib;OleAut32.lib;Shlwapi.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;gdi32.lib;msimg32.lib;user32.lib;psapi.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Windowscodecs.lib;dwrite.lib;d3d11.lib;d2d1.lib;version.lib;Winspool.lib;Ws2_32.lib;Normaliz.lib;OleAut32.lib;Shlwapi.lib;Secur32.lib;Crypt32.lib;Ole32.lib;Gdiplus.lib;gdi32.lib;msimg32.lib;user32.lib;psapi.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;Advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/$(PlatformName)/$(Configuration)/lib;$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
@@ -560,30 +560,7 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="app_app_admin.cpp" />
-    <ClCompile Include="app_app_install_installer.cpp" />
-    <ClCompile Include="app_app_install_app.cpp" />
-    <ClCompile Include="framework.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='cover|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='stage|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="app_app_admin.h" />
-    <ClInclude Include="app_app_install_app.h" />
-    <ClInclude Include="app_app_install_installer.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="framework.h" />
-  </ItemGroup>
-  <ItemGroup>
     <Media Include="start.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="app_app_admin.rc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\app\appseed\aura\acid.vcxproj">
@@ -592,6 +569,12 @@
     <ProjectReference Include="..\draw2d_gdiplus\_draw2d_gdiplus.vcxproj">
       <Project>{573c4b5e-4132-457a-be82-05a882a062ff}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="app_app_install.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\app_app_admin\app_app_admin.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

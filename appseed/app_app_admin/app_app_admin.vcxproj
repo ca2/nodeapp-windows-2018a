@@ -30,7 +30,7 @@
     <ProjectGuid>{AE18AC57-1A37-4D2E-9E73-258D36E35340}</ProjectGuid>
     <RootNamespace>spaadmin</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
     <ProjectName>app_app_admin</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -171,7 +171,7 @@
     <Link>
       <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Winmm.lib;ws2_32.lib;Normaliz.lib;Crypt32.lib;Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;Psapi.lib;WinINet.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/$(PlatformName)/$(Configuration)/lib;$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
@@ -225,7 +225,7 @@
     <Link>
       <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Winmm.lib;ws2_32.lib;Normaliz.lib;Crypt32.lib;Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;Psapi.lib;WinINet.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/$(PlatformName)/$(Configuration)/lib;$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
@@ -279,7 +279,7 @@
     <Link>
       <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Winmm.lib;ws2_32.lib;Normaliz.lib;Crypt32.lib;Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;Psapi.lib;WinINet.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/$(PlatformName)/$(Configuration)/lib;$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
@@ -332,7 +332,7 @@
     <Link>
       <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Winmm.lib;ws2_32.lib;Normaliz.lib;Crypt32.lib;Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;Psapi.lib;WinINet.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/$(PlatformName)/$(Configuration)/lib;$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
@@ -385,7 +385,7 @@
     <Link>
       <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Winmm.lib;ws2_32.lib;Normaliz.lib;Crypt32.lib;Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;Psapi.lib;WinINet.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/$(PlatformName)/$(Configuration)/lib;$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
@@ -439,7 +439,7 @@
     <Link>
       <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Winmm.lib;ws2_32.lib;Normaliz.lib;Crypt32.lib;Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;Psapi.lib;WinINet.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/$(PlatformName)/$(Configuration)/lib;$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>

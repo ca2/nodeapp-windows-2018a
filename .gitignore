@@ -6,5 +6,6 @@
 *.ipch
 *.psess
 *.vspx
+*.aps
 browse.vc.db
 solution.vc.db*

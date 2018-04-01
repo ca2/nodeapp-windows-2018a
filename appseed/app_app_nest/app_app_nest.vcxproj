@@ -157,8 +157,8 @@
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>Async</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
@@ -193,9 +193,9 @@
       <AdditionalIncludeDirectories>$(SolutionDir)../../../;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../appseedcore/ca2/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>Ole32.lib;Gdiplus.lib;msimg32.lib;psapi.lib;user32.lib;winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;gdi32.lib;Advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Windowscodecs.lib;dwrite.lib;d3d11.lib;d2d1.lib;Winmm.lib;ws2_32.lib;Normaliz.lib;Crypt32.lib;Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;Psapi.lib;WinINet.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/$(PlatformName)/$(Configuration)/lib;$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
@@ -265,8 +265,8 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>Async</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
@@ -301,9 +301,9 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
       <AdditionalIncludeDirectories>$(SolutionDir)../../../;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../appseedcore/ca2/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>Ole32.lib;Gdiplus.lib;msimg32.lib;psapi.lib;user32.lib;winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;gdi32.lib;Advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Windowscodecs.lib;dwrite.lib;d3d11.lib;d2d1.lib;Winmm.lib;ws2_32.lib;Normaliz.lib;Crypt32.lib;Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;Psapi.lib;WinINet.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/$(PlatformName)/$(Configuration)/lib;$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
@@ -373,8 +373,8 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>Async</ExceptionHandling>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
@@ -411,9 +411,9 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
       <AdditionalIncludeDirectories>$(SolutionDir)../../../;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../appseedcore/ca2/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>Ole32.lib;Gdiplus.lib;msimg32.lib;psapi.lib;user32.lib;winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;gdi32.lib;Advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Windowscodecs.lib;dwrite.lib;d3d11.lib;d2d1.lib;Winmm.lib;ws2_32.lib;Normaliz.lib;Crypt32.lib;Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;Psapi.lib;WinINet.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/$(PlatformName)/$(Configuration)/lib;$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
@@ -484,8 +484,8 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>Async</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
@@ -519,9 +519,9 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
       <AdditionalIncludeDirectories>$(SolutionDir)../../../;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../appseedcore/ca2/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>Ole32.lib;Gdiplus.lib;psapi.lib;msimg32.lib;user32.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;gdi32.lib;Advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Windowscodecs.lib;dwrite.lib;d3d11.lib;d2d1.lib;Winmm.lib;ws2_32.lib;Normaliz.lib;Crypt32.lib;Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;Psapi.lib;WinINet.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/$(PlatformName)/$(Configuration)/lib;$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
@@ -586,8 +586,8 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>Async</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
@@ -621,9 +621,9 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
       <AdditionalIncludeDirectories>$(SolutionDir)../../../;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../appseedcore/ca2/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>Ole32.lib;Gdiplus.lib;psapi.lib;msimg32.lib;user32.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;gdi32.lib;Advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Windowscodecs.lib;dwrite.lib;d3d11.lib;d2d1.lib;Winmm.lib;ws2_32.lib;Normaliz.lib;Crypt32.lib;Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;Psapi.lib;WinINet.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/$(PlatformName)/$(Configuration)/lib;$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
@@ -688,8 +688,8 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>Async</ExceptionHandling>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
@@ -728,9 +728,9 @@ copy "$(SolutionDir)..\..\thirdparty\binary\libvorbisfile.dll" "$(OutDir)libvorb
       <AdditionalIncludeDirectories>$(SolutionDir)../../../;$(SolutionDir)../../../app/appseed;$(SolutionDir)../../appseedcore/ca2/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>Ole32.lib;Gdiplus.lib;psapi.lib;msimg32.lib;user32.lib;Winmm.lib;WinINet.lib;kernel32.lib;shell32.lib;gdi32.lib;Advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Windowscodecs.lib;dwrite.lib;d3d11.lib;d2d1.lib;Winmm.lib;ws2_32.lib;Normaliz.lib;Crypt32.lib;Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;Psapi.lib;WinINet.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/$(PlatformName)/$(Configuration)/lib;$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>

@@ -1,36 +1,34 @@
-#include "resource.h"
-#include "axis/version.h"
 
-ID_WAV_START       WAV                     "start.wav"
+100       WAV                     "start.wav"
 #if CA2_PLATFORM_VERSION == CA2_BASIS
-IDI_CA2_SPA   ICON                    "basis.ico"
+1   ICON                    "basis.ico"
 #else
-IDI_CA2_SPA   ICON                    "stage.ico"
+1   ICON                    "stage.ico"
 #endif
 
 1 VERSIONINFO
-   FILEVERSION 2017,313,1734,28
-   PRODUCTVERSION 0,0,0,0
-   FILEFLAGSMASK 0x0L
-   FILEFLAGS 0x1L
-   FILEOS 0x4L
-   FILETYPE 0x1L
-   FILESUBTYPE 0x0L
-   BEGIN
-      BLOCK "StringFileInfo"
-      BEGIN
-         BLOCK "040904E4"
-         BEGIN
-            VALUE "CompanyName", "ca2 Desenvolvimento de Software Ltda."
-            VALUE "FileVersion", "2017.313.1734.28"
-            VALUE "FileDescription", "app.install Executable"
-            VALUE "LegalCopyright", "2014 ca2 Desenvolvimento de Software Ltda."
-        END
-      END
-      BLOCK "VarFileInfo"
-      BEGIN
-         VALUE "Translation", 0x409, 1200
-      END
-   END
+FILEVERSION 2017,313,1734,28
+PRODUCTVERSION 0,0,0,0
+FILEFLAGSMASK 0x0L
+FILEFLAGS 0x1L
+FILEOS 0x4L
+FILETYPE 0x1L
+FILESUBTYPE 0x0L
+BEGIN
+BLOCK "StringFileInfo"
+BEGIN
+BLOCK "040904E4"
+BEGIN
+VALUE "CompanyName", "ca2 Desenvolvimento de Software Ltda."
+VALUE "FileVersion", "2017.313.1734.28"
+VALUE "FileDescription", "app.install Executable"
+VALUE "LegalCopyright", "2014 ca2 Desenvolvimento de Software Ltda."
+END
+END
+BLOCK "VarFileInfo"
+BEGIN
+VALUE "Translation", 0x409, 1200
+END
+END
 
 

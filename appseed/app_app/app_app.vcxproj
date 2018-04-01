@@ -30,7 +30,7 @@
     <ProjectGuid>{A4A61B3B-CC87-4BB6-A130-C68DB95FAA7C}</ProjectGuid>
     <RootNamespace>ccvotagus_ca2_spa</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
     <ProjectName>app_app</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -166,9 +166,9 @@
       </AdditionalOptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Winmm.lib;ws2_32.lib;Normaliz.lib;Crypt32.lib;Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;Psapi.lib;WinINet.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Windowscodecs.lib;dwrite.lib;d3d11.lib;d2d1.lib;Winmm.lib;ws2_32.lib;Normaliz.lib;Crypt32.lib;Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;Psapi.lib;WinINet.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/$(PlatformName)/$(Configuration)/lib;$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>AsInvoker</UACExecutionLevel>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
@@ -216,9 +216,9 @@
       </AdditionalOptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Winmm.lib;ws2_32.lib;Normaliz.lib;Crypt32.lib;Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;Psapi.lib;WinINet.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Windowscodecs.lib;dwrite.lib;d3d11.lib;d2d1.lib;Winmm.lib;ws2_32.lib;Normaliz.lib;Crypt32.lib;Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;Psapi.lib;WinINet.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/$(PlatformName)/$(Configuration)/lib;$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>AsInvoker</UACExecutionLevel>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
@@ -271,9 +271,9 @@
       <WholeProgramOptimization>true</WholeProgramOptimization>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Winmm.lib;ws2_32.lib;Normaliz.lib;Crypt32.lib;Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;Psapi.lib;WinINet.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Windowscodecs.lib;dwrite.lib;d3d11.lib;d2d1.lib;Winmm.lib;ws2_32.lib;Normaliz.lib;Crypt32.lib;Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;Psapi.lib;WinINet.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/$(PlatformName)/$(Configuration)/lib;$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -312,9 +312,9 @@
       <AdditionalOptions />
     </ClCompile>
     <Link>
-      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Winmm.lib;ws2_32.lib;Normaliz.lib;Crypt32.lib;Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;Psapi.lib;WinINet.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Windowscodecs.lib;dwrite.lib;d3d11.lib;d2d1.lib;Winmm.lib;ws2_32.lib;Normaliz.lib;Crypt32.lib;Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;Psapi.lib;WinINet.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/$(PlatformName)/$(Configuration)/lib;$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>AsInvoker</UACExecutionLevel>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
@@ -354,9 +354,9 @@
       </AdditionalOptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Winmm.lib;ws2_32.lib;Normaliz.lib;Crypt32.lib;Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;Psapi.lib;WinINet.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Windowscodecs.lib;dwrite.lib;d3d11.lib;d2d1.lib;Winmm.lib;ws2_32.lib;Normaliz.lib;Crypt32.lib;Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;Psapi.lib;WinINet.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/$(PlatformName)/$(Configuration)/lib;$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>AsInvoker</UACExecutionLevel>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
@@ -401,9 +401,9 @@
       <WholeProgramOptimization>true</WholeProgramOptimization>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Winmm.lib;ws2_32.lib;Normaliz.lib;Crypt32.lib;Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;Psapi.lib;WinINet.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>_zlib.lib;_bzip2.lib;_libcrypto.lib;_libssl.lib;Windowscodecs.lib;dwrite.lib;d3d11.lib;d2d1.lib;Winmm.lib;ws2_32.lib;Normaliz.lib;Crypt32.lib;Secur32.lib;Advapi32.lib;version.lib;gdiplus.lib;Psapi.lib;WinINet.lib;Userenv.lib;Wtsapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)../../../nodeapp/$(PlatformName)/$(Configuration)/lib;$(SolutionDir)../../../nodeapp/thirdparty/library/$(PlatformName)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>AsInvoker</UACExecutionLevel>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -430,14 +430,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\app\appseed\aura\acid.vcxproj">
-      <Project>{a92c920f-c07d-481e-b523-565b56167cd1}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\draw2d_gdiplus\_draw2d_gdiplus.vcxproj">
-      <Project>{573c4b5e-4132-457a-be82-05a882a062ff}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <ResourceCompile Include="app_app.rc" />
   </ItemGroup>
   <ItemGroup>
@@ -445,6 +437,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app_app.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\app\appseed\aura\acid.vcxproj">
+      <Project>{05e5b8e7-9e3b-44dd-9ede-e0a74d52c1c5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\draw2d_gdiplus\_draw2d_gdiplus.vcxproj">
+      <Project>{573c4b5e-4132-457a-be82-05a882a062ff}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
