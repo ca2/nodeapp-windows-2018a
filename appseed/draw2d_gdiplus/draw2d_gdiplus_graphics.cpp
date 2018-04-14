@@ -718,11 +718,19 @@ namespace draw2d_gdiplus
       try
       {
 
-         if(picon == NULL)
-            return FALSE;
+         if (picon == NULL)
+         {
 
-         if(m_pgraphics == NULL)
-            return FALSE;
+            return false;
+
+         }
+
+         if (m_pgraphics == NULL)
+         {
+
+            return false;
+
+         }
 
 
          ::draw2d::dib_sp dib = picon->get_dib(cx, cy);
