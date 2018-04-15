@@ -727,18 +727,24 @@ namespace production
             }
 
             //Application.dir().mk(m_strBase /  "time"));
-            Application.file().put_contents(m_strBase / "app\\build.txt", m_strBuild);
-            Application.file().put_contents_utf8(m_strBase / "app\\this_version_info.h", strBuildH);
+
+            for (auto & strRoot : m_straRoot)
+            {
+
+               Application.file().put_contents(m_strBase / strRoot / "build.txt", m_strBuild);
+
+            }
+
+            //Application.file().put_contents_utf8(m_strBase / "app\\this_version_info.h", strBuildH);
             Application.file().put_contents_utf8(m_strBase / "app\\this_version_info.txt", strBuildH);
 
-            update_rc_file_version(m_strBase / "app\\appseed\\base\\base.rc");
-            update_rc_file_version(m_strBase / "app-core\\appseed\\iexca2\\iexca2.rc");
-            update_rc_file_version(m_strBase / "nodeapp\\appseed\\app_app_admin\\app_app_admin.rc");
-            update_rc_file_version(m_strBase / "nodeapp\\appseed\\draw2d_gdiplus\\draw2d_gdiplus.rc");
+            //update_rc_file_version(m_strBase / "app\\appseed\\base\\base.rc");
+            //update_rc_file_version(m_strBase / "app-core\\appseed\\iexca2\\iexca2.rc");
+            //update_rc_file_version(m_strBase / "nodeapp\\appseed\\app_app_admin\\app_app_admin.rc");
+            //update_rc_file_version(m_strBase / "nodeapp\\appseed\\draw2d_gdiplus\\draw2d_gdiplus.rc");
 
-            Sleep(5000);
-            //if (!commit_for_new_build_and_new_release())
-            //   return 2;
+            if (!commit_for_new_build_and_new_release())
+               return 2;
 
 
             m_strSubversionRevision = "SVN" + str::from(atoi(strRevision) + 1);
@@ -1641,11 +1647,11 @@ retry2:
       si.wShowWindow = SW_HIDE;
       if (string(psz).find(":\\") > 0)
       {
-         str.Format("svn commit --force-log --encoding utf-8 --file %s %s", m_strBase / "app\\this_version_info.txt", psz);
+         str.Format("git stage %s", psz);
       }
       else
       {
-         str.Format("svn commit --force-log --encoding utf-8 --file %s %s", m_strBase / "app\\this_version_info.txt", strBase / psz);
+         str.Format("git stage %s", strBase / psz);
       }
       if (!::CreateProcess(NULL, (LPTSTR)(const char *)str, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
       {
@@ -1663,10 +1669,91 @@ retry2:
          if (dwExitCode != STILL_ACTIVE)
             break;
          Sleep(2300);
+         str.Format("%d: Stage for new Build and new Release : %s ...", i, psz);
+         add_status(str);
+         i++;
+      }
+      if (dwExitCode != 0)
+      {
+         strStatus.Format("     Stage of %s failed!!", psz);
+         add_status(strStatus);
+         return false;
+
+      }
+      strStatus.Format("     Stage of %s succesful", psz);
+      add_status(strStatus);
+
+      if (string(psz).find(":\\") > 0)
+      {
+         str.Format("git commit --file=%s %s", m_strBase / "app\\this_version_info.txt", psz);
+      }
+      else
+      {
+         str.Format("git commit --file=%s %s", m_strBase / "app\\this_version_info.txt", strBase / psz);
+      }
+      if (!::CreateProcess(NULL, (LPTSTR)(const char *)str, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
+      {
+         strStatus.Format("     Error: Check svn installation!!");
+         add_status(strStatus);
+         return false;
+      }
+
+      i = 1;
+      while (true)
+      {
+         if (!GetExitCodeProcess(pi.hProcess, &dwExitCode))
+            break;
+         if (dwExitCode != STILL_ACTIVE)
+            break;
+         Sleep(2300);
          str.Format("%d: Commit for new Build and new Release : %s ...", i, psz);
          add_status(str);
          i++;
       }
+      if (dwExitCode != 0)
+      {
+         strStatus.Format("     Commit of %s failed!!", psz);
+         add_status(strStatus);
+         return false;
+
+      }
+      strStatus.Format("     Commit of %s succesful", psz);
+      add_status(strStatus);
+      if (string(psz).find(":\\") > 0)
+      {
+         str.Format("git push %s", psz);
+      }
+      else
+      {
+         str.Format("git push %s", strBase / psz);
+      }
+      if (!::CreateProcess(NULL, (LPTSTR)(const char *)str, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
+      {
+         strStatus.Format("     Error: Check svn installation!!");
+         add_status(strStatus);
+         return false;
+      }
+
+      i = 1;
+      while (true)
+      {
+         if (!GetExitCodeProcess(pi.hProcess, &dwExitCode))
+            break;
+         if (dwExitCode != STILL_ACTIVE)
+            break;
+         Sleep(2300);
+         str.Format("%d: Push for new Build and new Release : %s ...", i, psz);
+         add_status(str);
+         i++;
+      }
+      if (dwExitCode != 0)
+      {
+         strStatus.Format("     Push of %s failed!!", psz);
+         add_status(strStatus);
+         return false;
+      }
+      strStatus.Format("     Push of %s succesful", psz);
+      add_status(strStatus);
       return true;
    }
 
