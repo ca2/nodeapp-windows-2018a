@@ -492,6 +492,14 @@ namespace production
       m_pproduction->start_loop(papp->m_eversion, iLoopCount);
    }
 
+   void view::release_production()
+   {
+
+      production_loop(1);
+
+   }
+
+
    void view::_001OnUser(::message::message * pobj)
    {
       SCAST_PTR(::message::base, pbase, pobj);

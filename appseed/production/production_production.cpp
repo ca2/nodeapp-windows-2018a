@@ -449,18 +449,18 @@ namespace production
 
             bool bSkip1 = false;
 
-            if (!bSkip1 && m_iGlobalRetry <= 0)
-            {
+            //if (!bSkip1 && m_iGlobalRetry <= 0)
+            //{
 
-               for (int32_t i = 0; i < m_straRoot.get_size(); i++)
-               {
+            //   for (int32_t i = 0; i < m_straRoot.get_size(); i++)
+            //   {
 
-                  if (!sync_source(m_straRoot[i], NULL))
-                     return 1;
+            //      if (!sync_source(m_straRoot[i], NULL))
+            //         return 1;
 
-               }
+            //   }
 
-            }
+            //}
 
 
             string strRevision;
@@ -471,115 +471,115 @@ namespace production
             time.FormatGmt(strTime, "%Y-%m-%d %H-%M-%S");
             string strVerWin;
             time.FormatGmt(strVerWin, "%Y,%m%d,%H%M,%S");
-            string strSvnVersionCmd;
-            strSvnVersionCmd.Format("svnversion %s", m_strBase / "app");
+            //string strSvnVersionCmd;
+            //strSvnVersionCmd.Format("svnversion %s", m_strBase / "app");
             m_strBuild = strTime;
             m_strFormatBuild = strTime;
             m_strFormatBuild.replace(" ", "_");
 
-            {
+            //{
 
-               string strStatus;
-               strStatus.Format("Getting Revision: %s ...", "app");
-               add_status(strStatus);
+            //   string strStatus;
+            //   strStatus.Format("Getting Revision: %s ...", "app");
+            //   add_status(strStatus);
 
-            }
+            //}
 
-            strRevision = System.process().get_output(strSvnVersionCmd);
-            strRevision.trim();
+            //strRevision = System.process().get_output(strSvnVersionCmd);
+            //strRevision.trim();
 
-            {
+            //{
 
-               string strStatus;
-               strStatus.Format("Revision of %s is %s", "app", strRevision);
-               add_status(strStatus);
+            //   string strStatus;
+            //   strStatus.Format("Revision of %s is %s", "app", strRevision);
+            //   add_status(strStatus);
 
-            }
-            if (str::from(atoi(strRevision)) != strRevision)
-            {
-               // good pratice to initialize authentication of ca2status.com with account.ca2.cc auth information
-               //string str;
+            //}
+            //if (str::from(atoi(strRevision)) != strRevision)
+            //{
+            //   // good pratice to initialize authentication of ca2status.com with account.ca2.cc auth information
+            //   //string str;
 
-               //{
+            //   //{
 
-               //   property_set set(get_app());
+            //   //   property_set set(get_app());
 
-               //   Application.http().get("http://api.ca2.cc/status/insert",set);
+            //   //   Application.http().get("http://api.ca2.cc/status/insert",set);
 
-               //}
+            //   //}
 
-               //{
+            //   //{
 
-               //   property_set set(get_app());
+            //   //   property_set set(get_app());
 
-               //   if(m_eversion == version_basis)
-               //   {
-               //      set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #552250;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #882266; display: block; margin-bottom: 1.5em;\">Check app working copy.</span>";
-               //   }
-               //   else
-               //   {
-               //      set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #22552F;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">Check app working copy.</span>";
-               //   }
+            //   //   if(m_eversion == version_basis)
+            //   //   {
+            //   //      set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #552250;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #882266; display: block; margin-bottom: 1.5em;\">Check app working copy.</span>";
+            //   //   }
+            //   //   else
+            //   //   {
+            //   //      set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #22552F;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">Check app working copy.</span>";
+            //   //   }
 
-               //   Application.http().get("http://api.ca2.cc/status/insert",str,set);
+            //   //   Application.http().get("http://api.ca2.cc/status/insert",str,set);
 
-               //}
+            //   //}
 
-               return 4;
-            }
+            //   return 4;
+            //}
 
 
-            string strSVN = "SVN" + strRevision;
-            strSVN.trim();
+            //string strSVN = "SVN" + strRevision;
+            //strSVN.trim();
 
-            if (m_iGlobalRetry <= 0 && m_strSubversionRevision == strSVN)
-            {
+            //if (m_iGlobalRetry <= 0 && m_strSubversionRevision == strSVN)
+            //{
 
-               iRetry++;
+            //   iRetry++;
 
-               if (iRetry > 3)
-                  return 3;
+            //   if (iRetry > 3)
+            //      return 3;
 
-               goto restart;
+            //   goto restart;
 
-            }
+            //}
 
-            string strSVNKey;
-            string strAddRevision;
+            //string strSVNKey;
+            //string strAddRevision;
 
-            strSVNKey = "app:" + strSVN;
+            //strSVNKey = "app:" + strSVN;
 
-            if (!bSkip1)
-            {
+            //if (!bSkip1)
+            //{
 
-               for (int32_t i = 1; i < m_straRoot.get_size(); i++)
-               {
+            //   for (int32_t i = 1; i < m_straRoot.get_size(); i++)
+            //   {
 
-                  strSvnVersionCmd.Format("svnversion %s", m_strBase / m_straRoot[i]);
-                  {
+            //      strSvnVersionCmd.Format("svnversion %s", m_strBase / m_straRoot[i]);
+            //      {
 
-                     string strStatus;
-                     strStatus.Format("Getting Revision: %s ...", m_straRoot[i]);
-                     add_status(strStatus);
+            //         string strStatus;
+            //         strStatus.Format("Getting Revision: %s ...", m_straRoot[i]);
+            //         add_status(strStatus);
 
-                  }
-                  strAddRevision = System.process().get_output(strSvnVersionCmd);
-                  strAddRevision.trim();
-                  {
+            //      }
+            //      strAddRevision = System.process().get_output(strSvnVersionCmd);
+            //      strAddRevision.trim();
+            //      {
 
-                     string strStatus;
-                     strStatus.Format("Revision of %s is %s", m_straRoot[i], strAddRevision);
-                     add_status(strStatus);
+            //         string strStatus;
+            //         strStatus.Format("Revision of %s is %s", m_straRoot[i], strAddRevision);
+            //         add_status(strStatus);
 
-                  }
+            //      }
 
-                  strSVNKey += ", " + m_straRoot[i] + ":SVN" + strAddRevision;
+            //      strSVNKey += ", " + m_straRoot[i] + ":SVN" + strAddRevision;
 
-               }
+            //   }
 
-            }
+            //}
 
-            m_iGlobalRetry++;
+            //m_iGlobalRetry++;
 
             m_bReleased = false;
             m_iLoop = -1;
@@ -668,7 +668,8 @@ namespace production
 
 
             string strStatus;
-            m_strTag = strTime + " " + strSVNKey;
+            //m_strTag = strTime + " " + strSVNKey;
+            m_strTag = strTime;
             m_strTagPath = ::file::path("C:\\ca2\\build") / m_strConfiguration, m_strFormatBuild + ".txt";
 
             string strBuildH;
@@ -735,8 +736,9 @@ namespace production
             update_rc_file_version(m_strBase / "nodeapp\\appseed\\app_app_admin\\app_app_admin.rc");
             update_rc_file_version(m_strBase / "nodeapp\\appseed\\draw2d_gdiplus\\draw2d_gdiplus.rc");
 
-            if (!commit_for_new_build_and_new_release())
-               return 2;
+            Sleep(5000);
+            //if (!commit_for_new_build_and_new_release())
+            //   return 2;
 
 
             m_strSubversionRevision = "SVN" + str::from(atoi(strRevision) + 1);

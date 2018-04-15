@@ -1,7 +1,7 @@
-; app_production.def : Declares the module parameters for the DLL.
+; nodeapp_production.def : Declares the module parameters for the DLL.
 
 LIBRARY      "nodeapp_production"
 ; DESCRIPTION  'production Windows Dynamic Link Library'
 
 EXPORTS
-get_new_library
+nodeapp_production_get_new_library

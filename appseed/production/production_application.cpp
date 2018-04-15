@@ -28,7 +28,7 @@ namespace production
    }
 
 
-   bool application::initialize_application()
+   bool application::init_instance()
    {
       
       System.factory().creatable_small < document >();
@@ -80,24 +80,27 @@ namespace production
 
    bool application::bergedge_start()
    {
+      
       return true;
+
    }
 
+   
    void application::on_request(::create * pcreate)
    {
 
-      string strVersion = Application.file().as_string("C:\\ca2\\config\\nodeapp-windows\\production\\version.txt").trimmed();
+      string strVersion = pcreate->m_spCommandLine->m_varQuery["version"];
 
-      if (strVersion == "stage")
+      if (strVersion == "basis")
       {
 
-         m_eversion = ::production::production::version_stage;
+         m_eversion = ::production::production::version_basis;
 
       }
       else
       {
 
-         m_eversion = ::production::production::version_basis;
+         m_eversion = ::production::production::version_stage;
 
       }
       
@@ -108,14 +111,16 @@ namespace production
       if(pdoc.is_null())
          return;
 
-      if (pcreate->m_spCommandLine->m_varQuery.has_property("start"))
-      {
-         m_pview->make_production();
-      }
-      else if (pcreate->m_spCommandLine->m_varQuery.has_property("start_deferred"))
-      {
-         m_pview->production_loop(Application.handler()->m_varTopicQuery["start_deferred"]);
-      }
+      //if (pcreate->m_spCommandLine->m_varQuery.has_property("start"))
+      //{
+        // m_pview->make_production();
+      //}
+      //else if (pcreate->m_spCommandLine->m_varQuery.has_property("start_deferred"))
+      //{
+        // m_pview->production_loop(Application.handler()->m_varTopicQuery["start_deferred"]);
+      //}
+
+      m_pview->release_production();
 
 
    }
@@ -154,10 +159,16 @@ namespace production
 
 
 extern "C"
-::aura::library * get_new_library(::aura::application * papp)
+::aura::library * nodeapp_production_get_new_library(::aura::application * papp)
 {
 
-   return new ::aura::single_application_library < production::application > (papp, "nodeapp");
+   return new ::aura::single_application_library < production::application > (papp, "nodeapp/production");
 
 }
+
+
+aura_app aura_app_core_hellomultiverse("nodeapp/production", &nodeapp_production_get_new_library);
+
+
+
 

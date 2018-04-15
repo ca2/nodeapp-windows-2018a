@@ -71,7 +71,7 @@ namespace production
       index hit_test(point pt, ::user::e_element & eelement);
 
 
-
+      void release_production();
       void make_production();
       void production_loop(int32_t iLoopCount);
 

@@ -25,7 +25,7 @@ namespace production
 
       virtual void construct();
 
-      virtual bool initialize_application();
+      virtual bool init_instance();
       virtual void term_instance() override;
 
       virtual bool bergedge_start();
