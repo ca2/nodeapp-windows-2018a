@@ -592,7 +592,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\app\appseed\aura\acid.vcxproj">
-      <Project>{a92c920f-c07d-481e-b523-565b56167cd1}</Project>
+      <Project>{05e5b8e7-9e3b-44dd-9ede-e0a74d52c1c5}</Project>
     </ProjectReference>
     <ProjectReference Include="..\draw2d_gdiplus\_draw2d_gdiplus.vcxproj">
       <Project>{573c4b5e-4132-457a-be82-05a882a062ff}</Project>
