@@ -743,8 +743,8 @@ namespace production
             //update_rc_file_version(m_strBase / "nodeapp\\appseed\\app_app_admin\\app_app_admin.rc");
             //update_rc_file_version(m_strBase / "nodeapp\\appseed\\draw2d_gdiplus\\draw2d_gdiplus.rc");
 
-            if (!commit_for_new_build_and_new_release())
-               return 2;
+            //if (!commit_for_new_build_and_new_release())
+              // return 2;
 
 
             m_strSubversionRevision = "SVN" + str::from(atoi(strRevision) + 1);
@@ -1614,6 +1614,7 @@ retry2:
 
    bool production::commit_for_new_build_and_new_release()
    {
+      return false;
       string strStatus;
       strStatus = unitext("Commit for new Build and new Release!!");
       add_status(strStatus);
@@ -1645,43 +1646,44 @@ retry2:
       si.cb = sizeof(si);
       si.dwFlags = STARTF_USESHOWWINDOW;
       si.wShowWindow = SW_HIDE;
-      if (string(psz).find(":\\") > 0)
-      {
-         str.Format("git stage %s", psz);
-      }
-      else
-      {
-         str.Format("git stage %s", strBase / psz);
-      }
-      if (!::CreateProcess(NULL, (LPTSTR)(const char *)str, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
-      {
-         strStatus.Format("     Error: Check svn installation!!");
-         add_status(strStatus);
-         return false;
-      }
 
       DWORD dwExitCode;
       int32_t i = 1;
-      while (true)
+      ::file::path pathDir = strBase;
+      pathDir /= psz;
+
+      if (string(psz).find(":\\") <= 0)
       {
-         if (!GetExitCodeProcess(pi.hProcess, &dwExitCode))
-            break;
-         if (dwExitCode != STILL_ACTIVE)
-            break;
-         Sleep(2300);
-         str.Format("%d: Stage for new Build and new Release : %s ...", i, psz);
-         add_status(str);
-         i++;
-      }
-      if (dwExitCode != 0)
-      {
-         strStatus.Format("     Stage of %s failed!!", psz);
+         str.Format("git stage .");
+         if (!::CreateProcess(NULL, (LPTSTR)(const char *)str, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, pathDir, &si, &pi))
+         {
+            strStatus.Format("     Error: Check svn installation!!");
+            add_status(strStatus);
+            return false;
+         }
+
+         while (true)
+         {
+            if (!GetExitCodeProcess(pi.hProcess, &dwExitCode))
+               break;
+            if (dwExitCode != STILL_ACTIVE)
+               break;
+            Sleep(2300);
+            str.Format("%d: Stage for new Build and new Release : %s ...", i, psz);
+            add_status(str);
+            i++;
+         }
+         if (dwExitCode != 0)
+         {
+            strStatus.Format("     Stage of %s failed!!", psz);
+            add_status(strStatus);
+            return false;
+
+         }
+         strStatus.Format("     Stage of %s succesful", psz);
          add_status(strStatus);
-         return false;
 
       }
-      strStatus.Format("     Stage of %s succesful", psz);
-      add_status(strStatus);
 
       if (string(psz).find(":\\") > 0)
       {
