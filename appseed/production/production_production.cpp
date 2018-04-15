@@ -154,7 +154,7 @@ namespace production
          ::file::path pathMirrorStatus = dir::system() / "config/production/mirror_status.txt";
 
          if (!file_exists_dup(pathMirror)
-               || !file_exists_dup(pathMirrorStatus))
+            || !file_exists_dup(pathMirrorStatus))
          {
 
             MessageBox(NULL, "both " + pathMirror + " and " + pathMirrorStatus + " files must exist and maybe empty...", "The h***!!", MB_ICONEXCLAMATION);
@@ -306,7 +306,7 @@ namespace production
 
       int32_t iRetry = 0;
 
-restart:
+   restart:
 
       if (m_iStep == 1)
       {
