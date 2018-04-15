@@ -336,36 +336,36 @@ namespace ca2plugin_container
    {
 
 
-      if(System.install().is_installing_ca2())
-      {
+      //if(System.install().is_installing_ca2())
+      //{
 
-         if(!m_bInstalling)
-         {
-            m_bInstalling = true;
-            // shouldn't do advanced operations using ca2
-            // starter_start will only kick a default app_app_admin.exe if one isn't already running, cleaning file lock if any
-            start_app_install(": app=session session_start=session app_type=application install");
-         }
-         return;
-      }
+      //   if(!m_bInstalling)
+      //   {
+      //      m_bInstalling = true;
+      //      // shouldn't do advanced operations using ca2
+      //      // starter_start will only kick a default app_app_admin.exe if one isn't already running, cleaning file lock if any
+      //      start_app_install(": app=session session_start=session app_type=application install");
+      //   }
+      //   return;
+      //}
 
-      System.install().update_ca2_installed(false);
+      //System.install().update_ca2_installed(false);
 
-      if (System.install().is_ca2_installed())
-      {
+      //if (System.install().is_ca2_installed())
+      //{
 
-         if(!init())
-            return;
+      //   if(!init())
+      //      return;
 
-         return;
+      //   return;
 
-      }
-      else
-      {
+      //}
+      //else
+      //{
 
-         start_app_install(": app=session session_start=session app_type=application install");
+      //   start_app_install(": app=session session_start=session app_type=application install");
 
-      }
+      //}
 
    }
 

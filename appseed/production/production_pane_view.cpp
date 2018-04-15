@@ -319,7 +319,7 @@ namespace production
             sp(::user::check_box) pcheckbox =  (pui);
             view_update_hint uh;
             uh.m_eoption = view_update_hint::OptionClean;
-            uh.m_bOption = pcheckbox->_001GetCheck() == check::checked;
+            uh.m_bOption = pcheckbox->_001GetCheck() == ::check::checked;
             get_document()->update_all_views(NULL, 0, &uh);
          }
          else if(pevent->m_puie->m_id == "build")
@@ -328,7 +328,7 @@ namespace production
             sp(::user::check_box) pcheckbox =  (pui);
             view_update_hint uh;
             uh.m_eoption = view_update_hint::OptionBuild;
-            uh.m_bOption = pcheckbox->_001GetCheck() == check::checked;
+            uh.m_bOption = pcheckbox->_001GetCheck() == ::check::checked;
             get_document()->update_all_views(NULL, 0, &uh);
          }
       }

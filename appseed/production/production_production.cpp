@@ -154,7 +154,7 @@ namespace production
          ::file::path pathMirrorStatus = dir::system() / "config/production/mirror_status.txt";
 
          if (!file_exists_dup(pathMirror)
-            || !file_exists_dup(pathMirrorStatus))
+               || !file_exists_dup(pathMirrorStatus))
          {
 
             MessageBox(NULL, "both " + pathMirror + " and " + pathMirrorStatus + " files must exist and maybe empty...", "The h***!!", MB_ICONEXCLAMATION);
@@ -306,7 +306,7 @@ namespace production
 
       int32_t iRetry = 0;
 
-   restart:
+restart:
 
       if (m_iStep == 1)
       {
@@ -358,7 +358,7 @@ namespace production
             //   {
             //      set["post"]["new_status"] = "<div style=\"display: block; background-color: #FFE0FF; \"><h2 style=\"margin-bottom:0px; color: #FF55CC;\">Medium Size Status Text" + version_to_international_datetime(m_strBuild) + "</h2><span style=\"color: #882255; display: block; margin-bottom: 1.5em;\">" + m_strBuildTook + " and finished at " + strEndTime + "<br>New release of <a href=\"http://code.ca2.cc/\" class=\"fluidbasis\" >basis</a> applications labeled " + m_strBuild + " is ready for download through compatible gateways.<br>Check <a href=\"http://laboratory.ca2.cc/\" class=\"fluidbasis\" >laboratory.ca2.cc</a> or <a href=\"http://warehouse.ca2.cc/\" class=\"fluidbasis\" >warehouse.ca2.cc</a> for simple gateway implementations.</span></div>";
             //   }
-            //   else  
+            //   else
             //   {
             //      set["post"]["new_status"] = "<div style=\"display: block; background-color: #E0FFCC; \"><h2 style=\"margin-bottom:0px; color: #55CCAA;\">Medium Size Status Text" + version_to_international_datetime(m_strBuild) + "</h2><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">" + m_strBuildTook + " and finished at " + strEndTime + "<br>New release of <a href=\"http://ca2.cc/\">stage</a> applications labeled " + m_strBuild + " is ready for download through compatible gateways.<br>Check <a href=\"http://desktop.ca2.cc/\">desktop.ca2.cc</a> or <a href=\"http://store.ca2.cc/\">store.ca2.cc</a> for simple gateway implementations.</span></div";
             //   }
@@ -508,22 +508,22 @@ namespace production
 
                //}
 
-             //{
+               //{
 
-             //   property_set set(get_app());
+               //   property_set set(get_app());
 
-             //   if(m_eversion == version_basis)
-             //   {
-             //      set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #552250;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #882266; display: block; margin-bottom: 1.5em;\">Check app working copy.</span>";
-             //   }
-             //   else
-             //   {
-             //      set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #22552F;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">Check app working copy.</span>";
-             //   }
+               //   if(m_eversion == version_basis)
+               //   {
+               //      set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #552250;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #882266; display: block; margin-bottom: 1.5em;\">Check app working copy.</span>";
+               //   }
+               //   else
+               //   {
+               //      set["post"]["new_status"] = "<div style=\"display: block; " + m_strBackPostColor + "\"><h3 style=\"margin-bottom:0px; color: #22552F;\">" + version_to_international_datetime(m_strStartTime) + "</h3><span style=\"color: #228855; display: block; margin-bottom: 1.5em;\">Check app working copy.</span>";
+               //   }
 
-             //   Application.http().get("http://api.ca2.cc/status/insert",str,set);
+               //   Application.http().get("http://api.ca2.cc/status/insert",str,set);
 
-             //}
+               //}
 
                return 4;
             }
@@ -614,11 +614,11 @@ namespace production
 
             //}
 
-               //{
+            //{
 
-               //   property_set set(get_app());
+            //   property_set set(get_app());
 
-               //   string str;
+            //   string str;
 
             m_timeEnd = m_timeStart;
             string strEndTime;
@@ -639,18 +639,18 @@ namespace production
             //}
 
 
-     /*          string strTwit;
+            /*          string strTwit;
 
-            if(m_iGlobalRetry <= 0)
-            {
-               strTwit = "ca2twit-lib : new " + m_strConfiguration + " build starting " + version_to_international_datetime(m_strBuild) + " UTC. More details at http://status.ca2.cc/" + m_strStatusEmail;
-            }
-            else
-            {
-               strTwit = "ca2twit-lib : " + m_strTry + " automatic retry " + m_strConfiguration + " build starting " + version_to_international_datetime(m_strBuild) + " UTC. More details at http://status.ca2.cc/" + m_strStatusEmail;
-            }
+                   if(m_iGlobalRetry <= 0)
+                   {
+                      strTwit = "ca2twit-lib : new " + m_strConfiguration + " build starting " + version_to_international_datetime(m_strBuild) + " UTC. More details at http://status.ca2.cc/" + m_strStatusEmail;
+                   }
+                   else
+                   {
+                      strTwit = "ca2twit-lib : " + m_strTry + " automatic retry " + m_strConfiguration + " build starting " + version_to_international_datetime(m_strBuild) + " UTC. More details at http://status.ca2.cc/" + m_strStatusEmail;
+                   }
 
-            twitter_twit(strTwit);*/
+                   twitter_twit(strTwit);*/
 
             //}
 
@@ -763,7 +763,7 @@ namespace production
             ::file::path strPath = System.dir().install() / "time\\stage\\app\\matter\\job.bat";
 
 
-            //System.http().ms_download("http://api.ca2.cc/spaignition/clean", 
+            //System.http().ms_download("http://api.ca2.cc/spaignition/clean",
             //   System.dir().install() / "time\\spaignition_update.txt"), NULL, post, headers, ::ca2::app(get_app()).user()->get_user());
             /*add_status("Cleaning ccvotagus folder...");
             ::process::process_sp process(allocer());
@@ -918,9 +918,9 @@ namespace production
          //   Application.http().get("http://api.ca2.cc/status/insert", str, set);
 
          //}
-       //}
-       //else if (m_iStep == 2)
-       //{
+         //}
+         //else if (m_iStep == 2)
+         //{
          string m_strStartTime;
          m_timeStart.FormatGmt(m_strStartTime, "%Y-%m-%d %H-%M-%S");
          //{
@@ -967,7 +967,7 @@ namespace production
          }
          //if (!release_crxca2("x86"))
          //{
-           // return 1;
+         // return 1;
          //}
          /*if(!release_crxca2("x64"))
          {
@@ -1151,9 +1151,9 @@ namespace production
 
 
          //         178.33.157.33 fr - api.ca2.cc
-           //          178.33.157.34 de - api.ca2.cc
-            //        158.69.159.130 west - api.ca2.cc
-              //      158.69.159.129 east - api.ca2.cc
+         //          178.33.157.34 de - api.ca2.cc
+         //        158.69.159.130 west - api.ca2.cc
+         //      158.69.159.129 east - api.ca2.cc
 
 
          straStatus.add(unitext("100 releasing at North America netnode, Beauharnois, Canada"));
@@ -1351,9 +1351,9 @@ namespace production
       add_status(strStatus);
       string strSrcFile = m_strVrel / lpcszRelative;
       if (::str::ends_ci(lpcszRelative, ".dll")
-         || ::str::ends_ci(lpcszRelative, ".exe")
-         || ::str::ends_ci(lpcszRelative, ".ocx")
-         || ::str::ends_ci(lpcszRelative, ".cab"))
+            || ::str::ends_ci(lpcszRelative, ".exe")
+            || ::str::ends_ci(lpcszRelative, ".ocx")
+            || ::str::ends_ci(lpcszRelative, ".cab"))
       {
 
          string strStatus;
@@ -1380,7 +1380,7 @@ namespace production
 
       }
       int32_t iRetry = 0;
-   retry2:
+retry2:
       try
       {
          System.compress().bz(get_app(), m_strCCAuth / lpcszRelative + ".bz", strSrcFile);
@@ -1506,9 +1506,9 @@ namespace production
       thread(pproduction->get_app()),
       m_pevFinished(peventFinished)
    {
-      
+
       m_pevFinished->ResetEvent();
-      
+
       m_pproduction = pproduction;
 
    }
@@ -1760,7 +1760,7 @@ namespace production
             continue;
          }
          if (straStageDir.str_find_first_begins_ci(strFile) >= 0
-            && !m_straStageDirAcceptedFileExtensions.contains(
+               && !m_straStageDirAcceptedFileExtensions.contains(
                strFile.final_extension()))
          {
             continue;
@@ -1839,7 +1839,7 @@ namespace production
       strMd5 = m_strVrel / strRelativeMd5;
       Application.file().put_contents(strMd5, m_strIndexMd5);
 
-      //string strStage = System.dir().path("C:\\home\\ccvotagus\\ca2_spa\\" + m_strVersionShift, strRelative) + ".bz"; 
+      //string strStage = System.dir().path("C:\\home\\ccvotagus\\ca2_spa\\" + m_strVersionShift, strRelative) + ".bz";
       //::DeleteFileW(::str::international::utf8_to_unicode(
       // strStage));
       //System.file().copy(strStage, strBz);
@@ -2019,7 +2019,7 @@ namespace production
 
          m_straFiles.add(strFile);
          //         m_straTitle.add(System.file().title_(strFile));
-           //       m_straRelative.add(strRelative);
+         //       m_straRelative.add(strRelative);
 
          stra1.add(strFile);
          //     stra2.add(straRelative[i]);
@@ -2034,7 +2034,7 @@ namespace production
 
       //      m_straTitle.add(System.file().title_(strFile));
 
-           //m_straRelative.add("app\\stage\\metastagez\\" + strRelative + ".expand_fileset.spa");
+      //m_straRelative.add("app\\stage\\metastagez\\" + strRelative + ".expand_fileset.spa");
 
       Application.file().put_contents(strFile, strContents);
 
@@ -2149,8 +2149,8 @@ namespace production
       memMd5.from_hex(System.crypto().md5(mem));
       memSha1.from_hex(System.crypto().sha1(mem));
       return string("Digest-Algorithms: MD5 SHA1\n") +
-         "MD5-Digest: " + System.base64().encode(memMd5) + "\n" +
-         "SHA1-Digest: " + System.base64().encode(memSha1) + "\n";
+             "MD5-Digest: " + System.base64().encode(memMd5) + "\n" +
+             "SHA1-Digest: " + System.base64().encode(memSha1) + "\n";
 
    }
 
@@ -2182,14 +2182,14 @@ namespace production
       ::file::listing straBase;
 
       //::lemon::array::copy(straBase, ::install::get_app_app_install_module_list(pszPlatform, m_strConfiguration));
-      ::lemon::array::copy(straBase, ::install::get_app_app_install_module_list());
+      //::lemon::array::copy(straBase, ::install::get_app_app_install_module_list());
 
-      for (index i = 0; i < straBase.get_count(); i++)
-      {
+      //for (index i = 0; i < straBase.get_count(); i++)
+      //{
 
-         add_path(pszDir, "plugins\\" + straBase[i]);
+      //   add_path(pszDir, "plugins\\" + straBase[i]);
 
-      }
+      //}
 
       //add_path(pszDir,"plugins\\aura.dll");
       //add_path(pszDir,"plugins\\aurasqlite.dll");
@@ -2271,13 +2271,13 @@ namespace production
       string strNpca2Version;
 
       strNpca2Version.Format(
-         "%d.%d%02d.%d%02d.%d",
-         atoi(m_strFormatBuild.Mid(0, 4)),
-         atoi(m_strFormatBuild.Mid(5, 2)),
-         atoi(m_strFormatBuild.Mid(8, 2)),
-         atoi(m_strFormatBuild.Mid(11, 2)),
-         atoi(m_strFormatBuild.Mid(14, 2)),
-         atoi(m_strFormatBuild.Mid(17, 2))
+      "%d.%d%02d.%d%02d.%d",
+      atoi(m_strFormatBuild.Mid(0, 4)),
+      atoi(m_strFormatBuild.Mid(5, 2)),
+      atoi(m_strFormatBuild.Mid(8, 2)),
+      atoi(m_strFormatBuild.Mid(11, 2)),
+      atoi(m_strFormatBuild.Mid(14, 2)),
+      atoi(m_strFormatBuild.Mid(17, 2))
       );
 
       string strVersionUrl;
@@ -2354,7 +2354,7 @@ namespace production
       ::file::listing straBase;
 
       //::lemon::array::copy(straBase,::install::get_app_app_install_module_list(strPlatform, m_strConfiguration));
-      ::lemon::array::copy(straBase, ::install::get_app_app_install_module_list());
+//      ::lemon::array::copy(straBase, ::install::get_app_app_install_module_list());
 
       straBase.add("npca2.dll");
 
@@ -2386,13 +2386,13 @@ namespace production
       //strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       //System.process().synch(strCmd);
 
-  /*
-      add_status("Signing os.dll for Firefox ...");
-      strFile = strDir /  "npca2/plugins", "os.dll");
-      Application.file().copy(strFile, m_strVrel / "stage/" + strPlatform + "/os.dll"));
-      strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
-      System.process().synch(strCmd);
-      */
+      /*
+          add_status("Signing os.dll for Firefox ...");
+          strFile = strDir /  "npca2/plugins", "os.dll");
+          Application.file().copy(strFile, m_strVrel / "stage/" + strPlatform + "/os.dll"));
+          strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
+          System.process().synch(strCmd);
+          */
 
       //add_status("Signing msvcr120d.dll for Firefox ...");
       //strFile = strDir /  "npca2/plugins", "msvcr120d.dll");
@@ -2537,13 +2537,13 @@ namespace production
       string strNpca2Version;
 
       strNpca2Version.Format(
-         "%d,%d%02d,%d%02d,%d",
-         atoi(m_strFormatBuild.Mid(0, 4)),
-         atoi(m_strFormatBuild.Mid(5, 2)),
-         atoi(m_strFormatBuild.Mid(8, 2)),
-         atoi(m_strFormatBuild.Mid(11, 2)),
-         atoi(m_strFormatBuild.Mid(14, 2)),
-         atoi(m_strFormatBuild.Mid(17, 2))
+      "%d,%d%02d,%d%02d,%d",
+      atoi(m_strFormatBuild.Mid(0, 4)),
+      atoi(m_strFormatBuild.Mid(5, 2)),
+      atoi(m_strFormatBuild.Mid(8, 2)),
+      atoi(m_strFormatBuild.Mid(11, 2)),
+      atoi(m_strFormatBuild.Mid(14, 2)),
+      atoi(m_strFormatBuild.Mid(17, 2))
       );
 
       string strChromeManifest = Application.file().as_string(m_strBase / "nodeapp/stage/script/iexca2.inf");
@@ -2604,14 +2604,14 @@ namespace production
          iSecond = 60;
 
       strCrxca2Version.Format(
-         "%d.%d%02d.%d%02d.%d",
-         atoi(m_strFormatBuild.Mid(0, 4)),
-         atoi(m_strFormatBuild.Mid(5, 2)),
-         atoi(m_strFormatBuild.Mid(8, 2)),
-         iHour,
-         atoi(m_strFormatBuild.Mid(14, 2)),
-         atoi(m_strFormatBuild.Mid(17, 2)),
-         iSecond);
+      "%d.%d%02d.%d%02d.%d",
+      atoi(m_strFormatBuild.Mid(0, 4)),
+      atoi(m_strFormatBuild.Mid(5, 2)),
+      atoi(m_strFormatBuild.Mid(8, 2)),
+      iHour,
+      atoi(m_strFormatBuild.Mid(14, 2)),
+      atoi(m_strFormatBuild.Mid(17, 2)),
+      iSecond);
 
       string strIconUrl;
       if (m_eversion == version_basis)
@@ -2651,9 +2651,9 @@ namespace production
       ::file::listing straBase;
 
       //::lemon::array::copy(straBase,::install::get_app_app_install_module_list(strPlatform, m_strConfiguration));
-      ::lemon::array::copy(straBase, ::install::get_app_app_install_module_list());
+      //::lemon::array::copy(straBase, ::install::get_app_app_install_module_list());
 
-      straBase.add("npca2.dll");
+      //straBase.add("npca2.dll");
 
       string strFile;
 
@@ -2694,13 +2694,13 @@ namespace production
       //strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
       //System.process().synch(strCmd);
 
-  /*
-      add_status("Signing os.dll for Chrome ...");
-      strFile = strDir /  "os.dll");
-      Application.file().copy(strFile, m_strVrel / "stage/" + strPlatform + "/os.dll"));
-      strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
-      System.process().synch(strCmd);
-      */
+      /*
+          add_status("Signing os.dll for Chrome ...");
+          strFile = strDir /  "os.dll");
+          Application.file().copy(strFile, m_strVrel / "stage/" + strPlatform + "/os.dll"));
+          strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strFile + "\"";
+          System.process().synch(strCmd);
+          */
 
       //add_status("Signing msvcp120d.dll for Chrome ...");
       //strFile = strDir /  "msvcp120d.dll");
@@ -3002,7 +3002,7 @@ namespace production
 
       int32_t iRetry = 0;
 
-   Retry2:
+Retry2:
 
       ::hi5::twit twitterObj(get_app());
       string tmpStr("");
@@ -3075,7 +3075,7 @@ namespace production
          //printf( "\ntwitterClient:: twitCurl::statusUpdate error:\n%s\n", replyMsg.c_str() );
       }
       return replyMsg;
-   retry1:
+retry1:
       if (iRetry >= 3)
       {
          return replyMsg = "failed";
@@ -3093,7 +3093,7 @@ namespace production
 
       int32_t iRetry = 0;
 
-   Retry2:
+Retry2:
 
       ::hi5::twit twitterObj(get_app());
       string tmpStr("");
@@ -3166,7 +3166,7 @@ namespace production
          //printf( "\ntwitterClient:: twitCurl::statusUpdate error:\n%s\n", replyMsg.c_str() );
       }
       return replyMsg;
-   retry1:
+retry1:
       if (iRetry >= 3)
       {
          return replyMsg = "failed";
@@ -3364,13 +3364,13 @@ namespace production
          string strVersion1;
 
          strVersion1.Format(
-            "%d,%d%02d,%d%02d,%d",
-            atoi(m_strFormatBuild.Mid(0, 4)),
-            atoi(m_strFormatBuild.Mid(5, 2)),
-            atoi(m_strFormatBuild.Mid(8, 2)),
-            atoi(m_strFormatBuild.Mid(11, 2)),
-            atoi(m_strFormatBuild.Mid(14, 2)),
-            atoi(m_strFormatBuild.Mid(17, 2))
+         "%d,%d%02d,%d%02d,%d",
+         atoi(m_strFormatBuild.Mid(0, 4)),
+         atoi(m_strFormatBuild.Mid(5, 2)),
+         atoi(m_strFormatBuild.Mid(8, 2)),
+         atoi(m_strFormatBuild.Mid(11, 2)),
+         atoi(m_strFormatBuild.Mid(14, 2)),
+         atoi(m_strFormatBuild.Mid(17, 2))
          );
 
          str = str.Left(iFind1) + strVersion1 + str.Mid(iFind2);
@@ -3386,13 +3386,13 @@ namespace production
          string strVersion2;
 
          strVersion2.Format(
-            "%d.%d%02d.%d%02d.%d",
-            atoi(m_strFormatBuild.Mid(0, 4)),
-            atoi(m_strFormatBuild.Mid(5, 2)),
-            atoi(m_strFormatBuild.Mid(8, 2)),
-            atoi(m_strFormatBuild.Mid(11, 2)),
-            atoi(m_strFormatBuild.Mid(14, 2)),
-            atoi(m_strFormatBuild.Mid(17, 2))
+         "%d.%d%02d.%d%02d.%d",
+         atoi(m_strFormatBuild.Mid(0, 4)),
+         atoi(m_strFormatBuild.Mid(5, 2)),
+         atoi(m_strFormatBuild.Mid(8, 2)),
+         atoi(m_strFormatBuild.Mid(11, 2)),
+         atoi(m_strFormatBuild.Mid(14, 2)),
+         atoi(m_strFormatBuild.Mid(17, 2))
          );
 
          str = str.Left(iFind1) + strVersion2 + str.Mid(iFind2);
@@ -3409,7 +3409,7 @@ namespace production
    {
 
       if (strPlatform.compare_ci("x86") == 0
-         || strPlatform.compare_ci("Win32") == 0)
+            || strPlatform.compare_ci("Win32") == 0)
       {
 
          return "Win32";
@@ -3417,7 +3417,7 @@ namespace production
       }
 
       if (strPlatform.compare_ci("x64") == 0
-         || strPlatform.compare_ci("amd64") == 0)
+            || strPlatform.compare_ci("amd64") == 0)
       {
 
          return "x64";
