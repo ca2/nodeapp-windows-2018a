@@ -160,3 +160,7 @@
 #endif
 
 
+#define STR_NEWLINE "\r\n"
+
+
+

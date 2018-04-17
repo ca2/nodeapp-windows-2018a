@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">
-    <LocalDebuggerCommandArguments>"$(OutDir)app.exe" "app_core_desk" "$(OutDir)app_core_desk2.exe"</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>"$(OutDir)app.exe" "app_core_installer" "$(OutDir)app_core_installer2.exe"</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='cover|Win32'">
@@ -13,7 +13,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|x64'">
-    <LocalDebuggerCommandArguments>"$(OutDir)app.exe" "app_core_desk" "$(OutDir)app_core_desk2.exe"</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>"$(OutDir)app.exe" "app_core_installer" "$(OutDir)app_core_installer2.exe"</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='cover|x64'">

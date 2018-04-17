@@ -48,8 +48,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_ace", "..\..\..\app\appsee
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app._", "..\..\appseed\app._\app._.vcxproj", "{11AFE887-61B7-4217-913C-36736B359F39}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sphere", "..\..\..\app\appseed\sphere\sphere.vcxproj", "{441F5CF8-7CE3-4F6F-A2E4-35351F0DE150}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_installer", "..\..\..\app-core\appseed\installer\installer.vcxproj", "{396EAFAC-6ED5-49B5-8B62-6C412D8C2E2F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
@@ -219,18 +217,6 @@ Global
 		{11AFE887-61B7-4217-913C-36736B359F39}.stage|Win32.Build.0 = stage|Win32
 		{11AFE887-61B7-4217-913C-36736B359F39}.stage|x64.ActiveCfg = stage|x64
 		{11AFE887-61B7-4217-913C-36736B359F39}.stage|x64.Build.0 = stage|x64
-		{441F5CF8-7CE3-4F6F-A2E4-35351F0DE150}.basis|Win32.ActiveCfg = basis|Win32
-		{441F5CF8-7CE3-4F6F-A2E4-35351F0DE150}.basis|Win32.Build.0 = basis|Win32
-		{441F5CF8-7CE3-4F6F-A2E4-35351F0DE150}.basis|x64.ActiveCfg = basis|x64
-		{441F5CF8-7CE3-4F6F-A2E4-35351F0DE150}.basis|x64.Build.0 = basis|x64
-		{441F5CF8-7CE3-4F6F-A2E4-35351F0DE150}.cover|Win32.ActiveCfg = cover|Win32
-		{441F5CF8-7CE3-4F6F-A2E4-35351F0DE150}.cover|Win32.Build.0 = cover|Win32
-		{441F5CF8-7CE3-4F6F-A2E4-35351F0DE150}.cover|x64.ActiveCfg = cover|x64
-		{441F5CF8-7CE3-4F6F-A2E4-35351F0DE150}.cover|x64.Build.0 = cover|x64
-		{441F5CF8-7CE3-4F6F-A2E4-35351F0DE150}.stage|Win32.ActiveCfg = stage|Win32
-		{441F5CF8-7CE3-4F6F-A2E4-35351F0DE150}.stage|Win32.Build.0 = stage|Win32
-		{441F5CF8-7CE3-4F6F-A2E4-35351F0DE150}.stage|x64.ActiveCfg = stage|x64
-		{441F5CF8-7CE3-4F6F-A2E4-35351F0DE150}.stage|x64.Build.0 = stage|x64
 		{396EAFAC-6ED5-49B5-8B62-6C412D8C2E2F}.basis|Win32.ActiveCfg = basis|Win32
 		{396EAFAC-6ED5-49B5-8B62-6C412D8C2E2F}.basis|Win32.Build.0 = basis|Win32
 		{396EAFAC-6ED5-49B5-8B62-6C412D8C2E2F}.basis|x64.ActiveCfg = basis|x64
