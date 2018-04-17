@@ -370,8 +370,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_desk", "..\..\..\a
 		{9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF} = {9A5FBFB1-76E6-4F7E-933A-328C1EEC95AF}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wndfrm_anthill", "..\..\..\app-core\appseed\wndfrm_anthill\wndfrm_anthill.vcxproj", "{0BB1A1D1-7B7D-4484-9DF5-060481390526}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_desk_tb", "..\..\..\app-core\appseed\desk_tb\desk_tb.vcxproj", "{19518477-1511-2204-0204-5872E30F2300}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_draw2d_gdiplus", "..\..\appseed\draw2d_gdiplus\_draw2d_gdiplus.vcxproj", "{573C4B5E-4132-457A-BE82-05A882A062FF}"
@@ -401,10 +399,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Performance9.psess = Performance9.psess
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wndfrm_anthill", "..\..\..\app\appseed\wndfrm_anthill\wndfrm_anthill.vcxproj", "{0BB1A1D1-7B7D-4484-9DF5-060481390526}"
+EndProject
 Global
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
 		basis|x64 = basis|x64
@@ -1316,18 +1313,6 @@ Global
 		{2F713E16-07D5-40C4-A85B-41E97286FA6C}.stage|Win32.Build.0 = stage|Win32
 		{2F713E16-07D5-40C4-A85B-41E97286FA6C}.stage|x64.ActiveCfg = stage|x64
 		{2F713E16-07D5-40C4-A85B-41E97286FA6C}.stage|x64.Build.0 = stage|x64
-		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.basis|Win32.ActiveCfg = basis|Win32
-		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.basis|Win32.Build.0 = basis|Win32
-		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.basis|x64.ActiveCfg = basis|x64
-		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.basis|x64.Build.0 = basis|x64
-		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.cover|Win32.ActiveCfg = cover|Win32
-		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.cover|Win32.Build.0 = cover|Win32
-		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.cover|x64.ActiveCfg = cover|x64
-		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.cover|x64.Build.0 = cover|x64
-		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.stage|Win32.ActiveCfg = stage|Win32
-		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.stage|Win32.Build.0 = stage|Win32
-		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.stage|x64.ActiveCfg = stage|x64
-		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.stage|x64.Build.0 = stage|x64
 		{19518477-1511-2204-0204-5872E30F2300}.basis|Win32.ActiveCfg = basis|Win32
 		{19518477-1511-2204-0204-5872E30F2300}.basis|Win32.Build.0 = basis|Win32
 		{19518477-1511-2204-0204-5872E30F2300}.basis|x64.ActiveCfg = basis|x64
@@ -1442,12 +1427,27 @@ Global
 		{83F8DA23-7756-4B02-AA40-790B0B5ECF28}.stage|Win32.Build.0 = stage|Win32
 		{83F8DA23-7756-4B02-AA40-790B0B5ECF28}.stage|x64.ActiveCfg = stage|x64
 		{83F8DA23-7756-4B02-AA40-790B0B5ECF28}.stage|x64.Build.0 = stage|x64
+		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.basis|Win32.ActiveCfg = basis|Win32
+		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.basis|Win32.Build.0 = basis|Win32
+		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.basis|x64.ActiveCfg = basis|x64
+		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.basis|x64.Build.0 = basis|x64
+		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.cover|Win32.ActiveCfg = cover|Win32
+		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.cover|Win32.Build.0 = cover|Win32
+		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.cover|x64.ActiveCfg = cover|x64
+		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.cover|x64.Build.0 = cover|x64
+		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.stage|Win32.ActiveCfg = stage|Win32
+		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.stage|Win32.Build.0 = stage|Win32
+		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.stage|x64.ActiveCfg = stage|x64
+		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {68D0CE57-7B21-4289-B0DC-382B607631F2}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true
