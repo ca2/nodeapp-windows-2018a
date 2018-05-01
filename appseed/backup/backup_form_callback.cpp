@@ -20,7 +20,7 @@ namespace backup
    }
 
 
-   bool form_callback::BaseOnControlEvent(::user::form * pview, ::user::control_event * pevent)
+   bool form_callback::BaseOnControlEvent(::user::control_event * pevent)
    {
 
       if(pevent->m_eevent == ::user::event_button_clicked)

@@ -315,19 +315,19 @@ namespace wordcard
 
 
    void pane_view::OnFileManagerOpenFile(
-      ::filemanager::data * pdata,
-      ::fs::item_array & itema)
+   ::filemanager::data * pdata,
+   ::fs::item_array & itema)
    {
       UNREFERENCED_PARAMETER(pdata);
       if (itema.get_size() > 0)
       {
          int_ptr i = (int_ptr) ::ShellExecuteW(
-            NULL,
-            NULL,
-            ::str::international::utf8_to_unicode("\"" + itema[0]->m_filepath + "\""),
-            NULL,
-            ::str::international::utf8_to_unicode("\"" + itema[0]->m_filepath.folder() + "\""),
-            SW_SHOWNORMAL);
+                     NULL,
+                     NULL,
+                     ::str::international::utf8_to_unicode("\"" + itema[0]->m_filepath + "\""),
+                     NULL,
+                     ::str::international::utf8_to_unicode("\"" + itema[0]->m_filepath.folder() + "\""),
+                     SW_SHOWNORMAL);
          //string str;
          //str.Format("%d", i);
          //Application.simple_message_box(str);
@@ -338,7 +338,7 @@ namespace wordcard
       GetParentFrame()->ShowWindow(SW_HIDE);
    }
 
-   bool pane_view::BaseOnControlEvent(::user::form_window * pform, ::user::control_event * pevent)
+   bool pane_view::BaseOnControlEvent(::user::control_event * pevent)
    {
 
       if (pevent->m_eevent == ::user::event_button_clicked)
@@ -364,9 +364,9 @@ namespace wordcard
 
             ::fork(get_app(), [=]()
             {
-               
+
                wordcard_do(str);
-            
+
             });
 
          }
@@ -380,7 +380,7 @@ namespace wordcard
 
             if (m_pedit != NULL)
             {
-               
+
                string str;
 
                m_pedit->_001GetText(str);

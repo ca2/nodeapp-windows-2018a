@@ -11,7 +11,7 @@ namespace production
    {
    }
 
-   void form_callback::on_update(::user::form * pview, sp(::user::impact) pSender, LPARAM lHint, ::object* phint) 
+   void form_callback::on_update(::user::form * pview, sp(::user::impact) pSender, LPARAM lHint, ::object* phint)
    {
       UNREFERENCED_PARAMETER(pview);
       UNREFERENCED_PARAMETER(pSender);
@@ -20,7 +20,7 @@ namespace production
    }
 
 
-   bool form_callback::BaseOnControlEvent(::user::form * pview, ::user::control_event * pevent)
+   bool form_callback::BaseOnControlEvent(::user::control_event * pevent)
    {
       UNREFERENCED_PARAMETER(pview);
       UNREFERENCED_PARAMETER(pevent);
