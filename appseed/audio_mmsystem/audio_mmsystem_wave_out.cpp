@@ -231,7 +231,7 @@ Opened:
 
             iBufferSampleCount = uiSamplesPerSec / 40;
 
-            iBufferCount = 3;
+            iBufferCount = 4;
 
          }
          else
@@ -239,7 +239,7 @@ Opened:
 
             iBufferSampleCount = uiSamplesPerSec / 40;
 
-            iBufferCount = 4;
+            iBufferCount = 6;
 
          }
 
