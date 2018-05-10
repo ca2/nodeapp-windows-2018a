@@ -34,13 +34,13 @@ namespace draw2d_gdiplus
    }
 
 
-   void    dib::construct(int32_t cx, int32_t cy)
-   {
-      m_pcolorref = NULL;
-      cx = 0;
-      cy = 0;
-      create(cx, cy);
-   }
+   //void    dib::construct(int32_t cx, int32_t cy)
+   //{
+   //   m_pcolorref = NULL;
+   //   cx = 0;
+   //   cy = 0;
+   //   create(cx, cy);
+   //}
 
 
    dib::~dib()
@@ -99,6 +99,10 @@ namespace draw2d_gdiplus
 
          m_size.cy = 0;
 
+         m_sizeAlloc.cx = 0;
+
+         m_sizeAlloc.cy = 0;
+
          m_iScan = 0;
 
          return false;
@@ -111,6 +115,10 @@ namespace draw2d_gdiplus
          m_size.cx = 0;
 
          m_size.cy = 0;
+
+         m_sizeAlloc.cx = 0;
+
+         m_sizeAlloc.cy = 0;
 
          m_iScan = 0;
 
@@ -138,6 +146,10 @@ namespace draw2d_gdiplus
       m_size.cx = width;
 
       m_size.cy = height;
+
+      m_sizeAlloc.cx = width;
+
+      m_sizeAlloc.cy = height;
 
       m_iScan = m_spbitmap->m_iStride;
 
@@ -180,6 +192,10 @@ namespace draw2d_gdiplus
 
          m_size.cy = 0;
 
+         m_sizeAlloc.cx = 0;
+
+         m_sizeAlloc.cy = 0;
+
          m_iScan = 0;
 
          return false;
@@ -216,6 +232,10 @@ namespace draw2d_gdiplus
       m_size.cx = width;
 
       m_size.cy = height;
+
+      m_sizeAlloc.cx = width;
+
+      m_sizeAlloc.cy = height;
 
       m_iScan = m_spbitmap->m_iStride;
 
@@ -255,11 +275,14 @@ namespace draw2d_gdiplus
    bool dib::destroy()
    {
 
+      ::draw2d::dib::destroy();
+
       m_spbitmap.release();
 
       m_spgraphics.release();
 
       m_size = {};
+      m_sizeAlloc = {};
       m_iScan = 0;
       m_pcolorref = NULL;
 
@@ -532,6 +555,50 @@ namespace draw2d_gdiplus
       ((dib *) this)->unmap();
 
       return m_spgraphics;
+
+   }
+
+
+   void dib::draw2d_gdiplus_dib_common_construct()
+   {
+
+      m_spbitmap.release();
+      m_spgraphics.release();
+      m_hbitmap               = NULL;
+      m_sizeWnd               = ::size64(0, 0);
+      ZERO(m_bitmapinfo);
+
+   }
+
+
+   bool dib::detach(::draw2d::dib * pdib)
+   {
+
+      ::draw2d_gdiplus::dib * pdibgdiplus = dynamic_cast <::draw2d_gdiplus::dib *>(pdib);
+
+      if (pdibgdiplus == NULL)
+      {
+
+         return false;
+
+      }
+
+      if (!::draw2d::dib::detach(pdib))
+      {
+
+         return false;
+
+      }
+
+      m_spbitmap     = pdibgdiplus->m_spbitmap;
+      m_spgraphics   = pdibgdiplus->m_spgraphics;
+      m_hbitmap      = pdibgdiplus->m_hbitmap;
+      m_sizeWnd      = pdibgdiplus->m_sizeWnd;
+      m_bitmapinfo   = pdibgdiplus->m_bitmapinfo;
+
+      pdibgdiplus->draw2d_gdiplus_dib_common_construct();
+
+      return true;
 
    }
 

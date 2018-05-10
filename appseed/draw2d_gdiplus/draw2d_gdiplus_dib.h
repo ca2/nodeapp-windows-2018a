@@ -18,18 +18,20 @@ namespace draw2d_gdiplus
    public:
 
 
-      ::draw2d::bitmap_sp      m_spbitmap;
-      ::draw2d::graphics_sp    m_spgraphics;
+      ::draw2d::bitmap_sp        m_spbitmap;
+      ::draw2d::graphics_sp      m_spgraphics;
       HBITMAP                    m_hbitmap;
-      class size64                       m_sizeWnd;
-      BITMAPINFO           m_bitmapinfo;
+      class size64               m_sizeWnd;
+      BITMAPINFO                 m_bitmapinfo;
 
 
       dib(::aura::application * papp);
-      virtual void construct(int32_t cx, int32_t cy);
       virtual ~dib();
 
-      
+
+      virtual void draw2d_gdiplus_dib_common_construct();
+      virtual bool detach(::draw2d::dib * pdib) override;
+
       virtual ::draw2d::graphics * get_graphics() const;
       virtual ::draw2d::bitmap_sp get_bitmap() const;
       virtual ::draw2d::bitmap_sp detach_bitmap();
@@ -40,7 +42,7 @@ namespace draw2d_gdiplus
 
 
 
-      
+
 
       bool create(class size size);
       bool create(int32_t iWidth, int32_t iHeight);
@@ -85,7 +87,7 @@ namespace draw2d_gdiplus
       //void rotate(::draw2d::dib * pdib, const RECT & rect, double dAngle, double dScale);
       //void rotate(::draw2d::dib * pdib, double dAngle, double dScale);
       //void Rotate034(::draw2d::dib * pdib, double dAngle, double dScale);
-      
+
       //void RadialFill(BYTE a, BYTE r, BYTE g, BYTE b, int32_t x, int32_t y, int32_t iRadius);
       //void RadialFill(
       //   BYTE a1, BYTE r1, BYTE g1, BYTE b1, // center colors
@@ -126,7 +128,7 @@ namespace draw2d_gdiplus
       void FillRect ( int32_t x, int32_t y, int32_t w, int32_t h, int32_t R, int32_t G, int32_t B );
       void FillGlassRect ( int32_t x, int32_t y, int32_t w, int32_t h, int32_t R, int32_t G, int32_t B, int32_t A );
       void FillStippledGlassRect ( int32_t x, int32_t y, int32_t w, int32_t h, int32_t R, int32_t G, int32_t B );
-      
+
       void BlendRect ( ::draw2d::dib *dib, int32_t x, int32_t y, int32_t A );
       void DarkenRect ( ::draw2d::dib *dib, int32_t x, int32_t y );
       void DifferenceRect ( ::draw2d::dib *dib, int32_t x, int32_t y );

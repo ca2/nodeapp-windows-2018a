@@ -2,6 +2,132 @@
 
 count g_cForkBlend = 0;
 
+
+/**
+*
+* Trilinear scale two images, pixels and pixels2, to get a new
+* interpolated image with size width * height.
+* pixels is the larger image with size w * h.
+* pixels2 is the smaller image with size w2 * h2.
+* width must be w >= width >= w2, width != 0
+* height must be h >= height >= h2, height != 0
+* Note: in Mip Mapping pixels2 should be half of pixels in dimension.
+*
+* @param pixels Larger image pixels.
+* @param w Larger image width.
+* @param h Larger image height.
+* @param pixels2 Smaller image pixels.
+* @param w2 Smaller image width.
+* @param h2 Smaller image height.
+* @param width New width.
+* @param height New height.
+* @return New array with size width * height
+*/
+void trilinearImageScaling(
+COLORREF * ret, int width, int height, int scan,
+COLORREF * pixels, int w, int h, // larger image
+COLORREF * pixels2, int w2, int h2, // smaller image
+int scan2)
+{
+
+   int index, index2;
+   COLORREF A, B, C, D, E, F, G, H;
+   float x, y, x2, y2, w_diff, h_diff, w2_diff, h2_diff, red, green, blue, alpha;
+   // find ratio for larger image
+   float w_ratio = ((float)(w - 1)) / width;
+   float h_ratio = ((float)(h - 1)) / height;
+   // find ratio for smaller image
+   float w2_ratio = ((float)(w2 - 1)) / width;
+   float h2_ratio = ((float)(h2 - 1)) / height;
+   // estimate h3 distance
+   float h3_diff = (w - width) / (float)(w - w2);
+   int offset = 0;
+   COLORREF * line;
+   COLORREF * line2;
+   COLORREF * lineRet;
+   int wscan = scan / sizeof(COLORREF);
+   int wscan2 = scan2 / sizeof(COLORREF);
+   for (int i = 0; i<height; i++)
+   {
+      lineRet = ret + wscan * i;
+      line = pixels + wscan2 * i;
+      line2 = pixels2 + wscan2 * i;
+      for (int j = 0; j<width; j++)
+      {
+         // find w1 and h1 for larger image
+         x = w_ratio * j;
+         y = h_ratio * i;
+         w_diff = x - (int)x;
+         h_diff = y - (int)y;
+         index = (y)*wscan2 + (x);
+         A = line[index];
+         B = line[index + 1];
+         C = line[index + wscan2];
+         D = line[index + wscan2 + 1];
+         // find w2 and h2 for smaller image
+         x2 = w2_ratio * j;
+         y2 = h2_ratio * i;
+         w2_diff = x2 - (int)x2;
+         h2_diff = y2 - (int)y2;
+         index2 = (y2)*wscan2 + (x2);
+         E = line2[index2];
+         F = line2[index2 + 1];
+         G = line2[index2 + wscan2];
+         H = line2[index2 + wscan2 + 1];
+
+
+         // trilinear interpolate blue element
+         blue = (A & 0xff)*(1 - w_diff)*(1 - h_diff)*(1 - h3_diff) +
+                (B & 0xff)*(w_diff)*(1 - h_diff)*(1 - h3_diff) +
+                (C & 0xff)*(h_diff)*(1 - w_diff)*(1 - h3_diff) +
+                (D & 0xff)*(w_diff)*(h_diff)*(1 - h3_diff) +
+                (E & 0xff)*(1 - w2_diff)*(1 - h2_diff)*(h3_diff)+
+                (F & 0xff)*(w2_diff)*(1 - h2_diff)*(h3_diff)+
+                (G & 0xff)*(h2_diff)*(1 - w2_diff)*(h3_diff)+
+                (H & 0xff)*(w2_diff)*(h2_diff)*(h3_diff);
+
+         // trilinear interpolate green element
+         green = ((A >> 8) & 0xff)*(1 - w_diff)*(1 - h_diff)*(1 - h3_diff) +
+                 ((B >> 8) & 0xff)*(w_diff)*(1 - h_diff)*(1 - h3_diff) +
+                 ((C >> 8) & 0xff)*(h_diff)*(1 - w_diff)*(1 - h3_diff) +
+                 ((D >> 8) & 0xff)*(w_diff)*(h_diff)*(1 - h3_diff) +
+                 ((E >> 8) & 0xff)*(1 - w2_diff)*(1 - h2_diff)*(h3_diff)+
+                 ((F >> 8) & 0xff)*(w2_diff)*(1 - h2_diff)*(h3_diff)+
+                 ((G >> 8) & 0xff)*(h2_diff)*(1 - w2_diff)*(h3_diff)+
+                 ((H >> 8) & 0xff)*(w2_diff)*(h2_diff)*(h3_diff);
+
+         // trilinear interpolate red element
+         red = ((A >> 16) & 0xff)*(1 - w_diff)*(1 - h_diff)*(1 - h3_diff) +
+               ((B >> 16) & 0xff)*(w_diff)*(1 - h_diff)*(1 - h3_diff) +
+               ((C >> 16) & 0xff)*(h_diff)*(1 - w_diff)*(1 - h3_diff) +
+               ((D >> 16) & 0xff)*(w_diff)*(h_diff)*(1 - h3_diff) +
+               ((E >> 16) & 0xff)*(1 - w2_diff)*(1 - h2_diff)*(h3_diff)+
+               ((F >> 16) & 0xff)*(w2_diff)*(1 - h2_diff)*(h3_diff)+
+               ((G >> 16) & 0xff)*(h2_diff)*(1 - w2_diff)*(h3_diff)+
+               ((H >> 16) & 0xff)*(w2_diff)*(h2_diff)*(h3_diff);
+
+         // trilinear interpolate alpha element
+         alpha = ((A >> 24) & 0xff)*(1 - w_diff)*(1 - h_diff)*(1 - h3_diff) +
+                 ((B >> 24) & 0xff)*(w_diff)*(1 - h_diff)*(1 - h3_diff) +
+                 ((C >> 24) & 0xff)*(h_diff)*(1 - w_diff)*(1 - h3_diff) +
+                 ((D >> 24) & 0xff)*(w_diff)*(h_diff)*(1 - h3_diff) +
+                 ((E >> 24) & 0xff)*(1 - w2_diff)*(1 - h2_diff)*(h3_diff)+
+                 ((F >> 24) & 0xff)*(w2_diff)*(1 - h2_diff)*(h3_diff)+
+                 ((G >> 24) & 0xff)*(h2_diff)*(1 - w2_diff)*(h3_diff)+
+                 ((H >> 24) & 0xff)*(w2_diff)*(h2_diff)*(h3_diff);
+
+
+         *lineRet =
+         (int)(blue) |
+         ((int)(green)) << 8 |
+         ((int)(red)) << 16 |
+         ((int)(alpha)) << 24;
+         lineRet++;
+      }
+   }
+
+}
+
 class g_keep
 {
 
@@ -1584,6 +1710,193 @@ gdi_fallback:
          return false;
 
       Gdiplus::Status ret = Gdiplus::Status::GenericError;
+
+      //m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeNearestNeighbor);
+
+      //m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeBilinear);
+
+      if (pgraphicsSrc->m_pdibDraw2dGraphics != NULL)
+      {
+
+         if (pgraphicsSrc->m_pdibDraw2dGraphics->m_emipmap == ::draw2d::mipmap_anisotropic
+               && (pgraphicsSrc->m_pdibDraw2dGraphics->m_size.cx == nSrcWidth
+                   && pgraphicsSrc->m_pdibDraw2dGraphics->m_size.cy == nSrcHeight
+                   && xSrc == 0 && ySrc == 0 && nDstWidth > 0 && nDstHeight > 0))
+         {
+
+            try
+            {
+
+               /*int x1 = 0;
+               int y1 = 0;
+               int x2 = 0;
+               int y2 = 0;
+               int dx = nSrcWidth;
+               int dy = nSrcHeight;
+               int cx1 = nSrcWidth;
+               int cy1 = nSrcHeight;
+               int cx2 = nSrcWidth;
+               int cy2 = nSrcHeight;
+
+               while (dx >= nDstWidth)
+               {
+                  x1 = x2;
+                  x2 += dx;
+                  cx1 = dx;
+                  dx /= 2;
+                  cx2 = dx;
+               }
+
+               while (dy >= nSrcHeight)
+               {
+                  y1 = y2;
+                  y2 += dy;
+                  cy1 = dy;
+                  dy /= 2;
+                  cy2 = dy;
+               }
+
+               if (y1 == nSrcHeight)
+               {
+                  y1 = 0;
+               }
+               if (y2 == nSrcHeight)
+               {
+                  y2 = 0;
+               }*/
+
+               //::draw2d::dib * dib = m_pdibDraw2dGraphics;
+               //int iScan = dib->m_iScan;
+               //::draw2d::dib * dibMipmap = pgraphicsSrc->m_pdibDraw2dGraphics;
+               //COLORREF * pcrMipmap = dibMipmap->m_pcolorref;
+               //int iMimapScan = dibMipmap->m_iScan;
+               //size sizeMipmap = dibMipmap->m_size;
+
+               //trilinearImageScaling(
+               //&dib->m_pcolorref[xDst + iScan * yDst / sizeof(COLORREF)],
+               //nDstWidth, nDstHeight,
+               //iScan,
+               //&pcrMipmap[x1 + y1 * iMimapScan / sizeof(COLORREF)],
+               //cx1, cy1,
+               //&pcrMipmap[x2 + y2 * iMimapScan / sizeof(COLORREF)],
+               //cx2, cy2,
+               //iMimapScan);
+
+               int iFind = -1;
+
+               double dRateFound = 1024.0;
+
+               int xFound;
+               int yFound;
+               int cxFound;
+               int cyFound;
+
+               for (index i = 0; i < pgraphicsSrc->m_pdibDraw2dGraphics->get_dib_count(); i++)
+               {
+
+                  int x1 = 0;
+                  int y1 = 0;
+                  int x2 = 0;
+                  int y2 = 0;
+                  int dx = nSrcWidth;
+                  int dy = nSrcHeight;
+                  int cx1 = nSrcWidth;
+                  int cy1 = nSrcHeight;
+                  int cx2 = nSrcWidth;
+                  int cy2 = nSrcHeight;
+
+                  while (dx >= nDstWidth)
+                  {
+                     x1 = x2;
+                     x2 += dx;
+                     cx1 = dx;
+                     dx /= 2;
+                     cx2 = dx;
+                  }
+
+                  while (dy >= nSrcHeight)
+                  {
+                     y1 = y2;
+                     y2 += dy;
+                     cy1 = dy;
+                     dy /= 2;
+                     cy2 = dy;
+                  }
+
+                  if (y1 == nSrcHeight)
+                  {
+                     y1 = 0;
+                  }
+                  if (y2 == nSrcHeight)
+                  {
+                     y2 = 0;
+                  }
+
+                  double dRateX = (double)nDstWidth / (double)cx1;
+
+                  double dRateY = (double)nDstHeight / (double)cy1;
+
+                  double dRateArea = dRateX * dRateY;
+
+                  if (dRateArea < dRateFound)
+                  {
+
+                     iFind = i;
+
+                     dRateFound = dRateArea;
+
+                     xFound = x1;
+
+                     yFound = y1;
+
+                     cxFound = cx1;
+
+                     cyFound = cy1;
+
+                  }
+
+               }
+
+               if (iFind >= 0)
+               {
+
+                  ::draw2d::dib * pdib = pgraphicsSrc->m_pdibDraw2dGraphics->get_dib(iFind);
+
+                  auto emode = m_pgraphics->GetInterpolationMode();
+
+                  m_pgraphics->SetPixelOffsetMode(Gdiplus::PixelOffsetModeHighSpeed);
+
+                  m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeNearestNeighbor);
+
+                  //m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeBilinear);
+
+                  ret = m_pgraphics->DrawImage(
+                        (Gdiplus::Bitmap *) pdib->get_bitmap()->get_os_data(),
+                        dstRect, xFound, yFound, cxFound, cyFound, Gdiplus::UnitPixel);
+
+                  m_pgraphics->SetInterpolationMode(emode);
+
+                  if (ret == Gdiplus::Status::Ok)
+                  {
+
+                     return true;
+
+                  }
+
+               }
+
+            }
+            catch (...)
+            {
+
+
+            }
+
+
+
+         }
+
+      }
 
       try
       {
