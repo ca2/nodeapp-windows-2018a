@@ -3209,14 +3209,14 @@ gdi_fallback:
       ::draw2d::pen_sp pen(allocer());
       pen->create_solid(1.0, clrTopLeft);
       SelectObject(pen);
-      MoveTo(x, y + cy - 1);
-      LineTo(x, y);
-      LineTo(x+cx-1, y);
+      move_to(x, y + cy - 1);
+      line_to(x, y);
+      line_to(x+cx-1, y);
       pen->create_solid(1.0, clrBottomRight);
       SelectObject(pen);
-      MoveTo(x+cx-1, y + 1);
-      LineTo(x+cx-1, y + cy - 1);
-      LineTo(x+1, y + cy - 1);
+      move_to(x+cx-1, y + 1);
+      line_to(x+cx-1, y + cy - 1);
+      line_to(x+1, y + cy - 1);
       //m_pgraphics->SetSmoothingMode(e);
    }
 
@@ -5494,7 +5494,7 @@ namespace draw2d_gdiplus
    }
 
 
-   bool graphics::LineTo(double x, double y)
+   bool graphics::line_to(double x, double y)
    {
 
       synch_lock sl(m_pmutex);
@@ -5508,7 +5508,7 @@ namespace draw2d_gdiplus
 
       }
 
-      m_pgraphics->DrawLine(gdiplus_pen(), Gdiplus::PointF((Gdiplus::REAL) m_x, (Gdiplus::REAL)  m_y), Gdiplus::PointF((Gdiplus::REAL) x, (Gdiplus::REAL) y));
+      m_pgraphics->draw_line(gdiplus_pen(), Gdiplus::PointF((Gdiplus::REAL) m_x, (Gdiplus::REAL)  m_y), Gdiplus::PointF((Gdiplus::REAL) x, (Gdiplus::REAL) y));
 
       m_x = x;
 
@@ -5518,7 +5518,7 @@ namespace draw2d_gdiplus
 
    }
 
-   bool graphics::LineTo(int x,int y)
+   bool graphics::line_to(int x,int y)
    {
 
       synch_lock sl(m_pmutex);
@@ -5532,7 +5532,7 @@ namespace draw2d_gdiplus
 
       }
 
-      m_pgraphics->DrawLine(gdiplus_pen(),Gdiplus::Point((INT) m_x,(INT) m_y),Gdiplus::Point((INT) x,(INT) y));
+      m_pgraphics->draw_line(gdiplus_pen(),Gdiplus::Point((INT) m_x,(INT) m_y),Gdiplus::Point((INT) x,(INT) y));
 
       m_x = x;
 
@@ -5542,14 +5542,14 @@ namespace draw2d_gdiplus
 
    }
 
-   bool graphics::DrawLine(float x1, float y1, float x2, float y2, ::draw2d::pen * ppen)
+   bool graphics::draw_line(float x1, float y1, float x2, float y2, ::draw2d::pen * ppen)
    {
 
       synch_lock sl(m_pmutex);
 
       ((Gdiplus::Pen *) ppen->get_os_data())->SetAlignment(Gdiplus::PenAlignment::PenAlignmentCenter);
 
-      m_pgraphics->DrawLine((Gdiplus::Pen *) ppen->get_os_data(), Gdiplus::PointF((Gdiplus::REAL) x1, (Gdiplus::REAL)  y1), Gdiplus::PointF((Gdiplus::REAL) x2, (Gdiplus::REAL) y2));
+      m_pgraphics->draw_line((Gdiplus::Pen *) ppen->get_os_data(), Gdiplus::PointF((Gdiplus::REAL) x1, (Gdiplus::REAL)  y1), Gdiplus::PointF((Gdiplus::REAL) x2, (Gdiplus::REAL) y2));
 
       m_x = x2;
 
@@ -5560,14 +5560,14 @@ namespace draw2d_gdiplus
    }
 
 
-   bool graphics::DrawLine(int32_t x1, int32_t y1, int32_t x2, int32_t y2, ::draw2d::pen * ppen)
+   bool graphics::draw_line(int32_t x1, int32_t y1, int32_t x2, int32_t y2, ::draw2d::pen * ppen)
    {
 
       synch_lock sl(m_pmutex);
 
       ((Gdiplus::Pen *) ppen->get_os_data())->SetAlignment(Gdiplus::PenAlignment::PenAlignmentCenter);
 
-      m_pgraphics->DrawLine((Gdiplus::Pen *) ppen->get_os_data(), Gdiplus::Point(x1, y1), Gdiplus::Point(x2, y2));
+      m_pgraphics->draw_line((Gdiplus::Pen *) ppen->get_os_data(), Gdiplus::Point(x1, y1), Gdiplus::Point(x2, y2));
 
       m_x = x2;
 
