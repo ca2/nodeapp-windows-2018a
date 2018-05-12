@@ -1,5 +1,9 @@
 #include "framework.h"
 
+
+#undef new
+
+
 namespace draw2d_gdiplus
 {
 
@@ -125,10 +129,10 @@ namespace draw2d_gdiplus
          //retry_single_lock slGdiplus(&System.s_mutexGdiplus, millis(1), millis(1));
 
          ((font *) this)->m_pfont = new Gdiplus::Font(
-            ::str::international::utf8_to_unicode(m_strFontFamilyName),
-            (Gdiplus::REAL) m_dFontSize,
-            iStyle,
-            unit);
+         ::str::international::utf8_to_unicode(m_strFontFamilyName),
+         (Gdiplus::REAL) m_dFontSize,
+         iStyle,
+         unit);
 
       }
 

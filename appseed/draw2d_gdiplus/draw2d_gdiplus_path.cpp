@@ -1,5 +1,9 @@
 #include "framework.h"
 
+
+#undef new
+
+
 bool almost_integer(double d)
 {
 
@@ -229,10 +233,10 @@ namespace draw2d_gdiplus
       {
 
          Gdiplus::Rect rect(
-            (INT) (x),
-            (INT)(y),
-            (INT)(cx),
-            (INT)(cy)
+         (INT) (x),
+         (INT)(y),
+         (INT)(cx),
+         (INT)(cy)
          );
 
          try
@@ -252,10 +256,10 @@ namespace draw2d_gdiplus
       {
 
          Gdiplus::RectF rect(
-            (float)(x),
-            (float)(y),
-            (float)(cx),
-            (float)(cy)
+         (float)(x),
+         (float)(y),
+         (float)(cx),
+         (float)(cy)
          );
 
          try

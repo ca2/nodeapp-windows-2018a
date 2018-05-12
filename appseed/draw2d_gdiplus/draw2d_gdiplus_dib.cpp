@@ -294,7 +294,7 @@ namespace draw2d_gdiplus
    bool dib::to(::draw2d::graphics * pgraphics, point pt, class size size, point ptSrc)
    {
 
-      return pgraphics->BitBlt(pt, size, get_graphics(), ptSrc);
+      return pgraphics->draw(pt, size, get_graphics(), ptSrc);
 
    }
 
@@ -341,7 +341,7 @@ namespace draw2d_gdiplus
       if (m_spgraphics.is_null())
          return false;
 
-      return m_spgraphics->BitBlt(ptDest, sz, pgraphics, pt, SRCCOPY) != FALSE;
+      return m_spgraphics->draw(ptDest, sz, pgraphics, pt, SRCCOPY) != FALSE;
 
    }
 
@@ -680,7 +680,7 @@ namespace draw2d_gdiplus
 
       //set_alpha_mode(::draw2d::alpha_mode_set);
 
-      //m_spgraphics->FillSolidRect(0, 0, m_size.cx, m_size.cy, 0);
+      //m_spgraphics->fill_solid_rect(0, 0, m_size.cx, m_size.cy, 0);
 
       Gdiplus::ColorMatrix m =
       {

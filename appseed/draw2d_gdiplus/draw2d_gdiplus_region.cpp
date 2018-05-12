@@ -1,6 +1,9 @@
 #include "framework.h"
 
 
+#undef new
+
+
 namespace draw2d_gdiplus
 {
 
@@ -16,8 +19,8 @@ namespace draw2d_gdiplus
 
    region::region(::aura::application * papp) :
       ::object(papp)
-   { 
-      
+   {
+
       m_pregion = NULL;
       m_bUpdated = false;
 
@@ -25,7 +28,7 @@ namespace draw2d_gdiplus
 
    region::~region()
    {
-      
+
       if(m_pregion != NULL)
       {
          delete m_pregion;
@@ -34,38 +37,38 @@ namespace draw2d_gdiplus
 
    }
 
-/*
-   int32_t region::GetRegionData(LPRGNDATA lpRgnData, int32_t nDataSize) const
-   { ASSERT(get_os_data() != NULL); return (int32_t)::GetRegionData((HRGN)get_os_data(), nDataSize, lpRgnData); }
-   void region::SetRectRgn(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
-   { ASSERT(get_os_data() != NULL); ::SetRectRgn((HRGN)get_os_data(), x1, y1, x2, y2); }
-   
-   void region::SetRectRgn(LPCRECT lpRect)
-   { 
-      ::SetRectRgn((HRGN)get_os_data(), lpRect->left, lpRect->top, lpRect->right, lpRect->bottom); 
-   }
+   /*
+      int32_t region::GetRegionData(LPRGNDATA lpRgnData, int32_t nDataSize) const
+      { ASSERT(get_os_data() != NULL); return (int32_t)::GetRegionData((HRGN)get_os_data(), nDataSize, lpRgnData); }
+      void region::SetRectRgn(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
+      { ASSERT(get_os_data() != NULL); ::SetRectRgn((HRGN)get_os_data(), x1, y1, x2, y2); }
 
-   int32_t region::CombineRgn(const ::draw2d::region* pRgn1, const ::draw2d::region* pRgn2, int32_t nCombineMode)
-   { ASSERT(get_os_data() != NULL); return ::CombineRgn((HRGN)get_os_data(), (HRGN)pRgn1->get_os_data(),
-   (HRGN)pRgn2->get_os_data(), nCombineMode); }
-   int32_t region::CopyRgn(const ::draw2d::region* pRgnSrc)
-   { ASSERT(get_os_data() != NULL); return ::CombineRgn((HRGN)get_os_data(), (HRGN)pRgnSrc->get_os_data(), NULL, RGN_COPY); }
+      void region::SetRectRgn(LPCRECT lpRect)
+      {
+         ::SetRectRgn((HRGN)get_os_data(), lpRect->left, lpRect->top, lpRect->right, lpRect->bottom);
+      }
 
-   bool region::EqualRgn(const ::draw2d::region* pRgn) const
-   {
-      
-      ASSERT(get_os_data() != NULL); 
-      
-      return ::EqualRgn((HRGN)get_os_data(), (HRGN)pRgn->get_os_data()) != FALSE;
+      int32_t region::CombineRgn(const ::draw2d::region* pRgn1, const ::draw2d::region* pRgn2, int32_t nCombineMode)
+      { ASSERT(get_os_data() != NULL); return ::CombineRgn((HRGN)get_os_data(), (HRGN)pRgn1->get_os_data(),
+      (HRGN)pRgn2->get_os_data(), nCombineMode); }
+      int32_t region::CopyRgn(const ::draw2d::region* pRgnSrc)
+      { ASSERT(get_os_data() != NULL); return ::CombineRgn((HRGN)get_os_data(), (HRGN)pRgnSrc->get_os_data(), NULL, RGN_COPY); }
 
-   }
+      bool region::EqualRgn(const ::draw2d::region* pRgn) const
+      {
 
-   int32_t region::OffsetRgn(int32_t x, int32_t y)
-   { ASSERT(get_os_data() != NULL); return ::OffsetRgn((HRGN)get_os_data(), x, y); }
-   int32_t region::OffsetRgn(POINT point)
-   { ASSERT(get_os_data() != NULL); return ::OffsetRgn((HRGN)get_os_data(), point.x, point.y); }
+         ASSERT(get_os_data() != NULL);
 
-   */
+         return ::EqualRgn((HRGN)get_os_data(), (HRGN)pRgn->get_os_data()) != FALSE;
+
+      }
+
+      int32_t region::OffsetRgn(int32_t x, int32_t y)
+      { ASSERT(get_os_data() != NULL); return ::OffsetRgn((HRGN)get_os_data(), x, y); }
+      int32_t region::OffsetRgn(POINT point)
+      { ASSERT(get_os_data() != NULL); return ::OffsetRgn((HRGN)get_os_data(), point.x, point.y); }
+
+      */
    bool region::get_bounding_box(LPRECT lprect) const
    {
 
@@ -80,29 +83,29 @@ namespace draw2d_gdiplus
       lprect->top = rect.Y;
       lprect->right = rect.X + rect.Width;
       lprect->bottom = rect.Y + rect.Height;
-      
+
       return true;
 
    }
    /*
    bool region::PtInRegion(int32_t x, int32_t y) const
-   { 
+   {
 
       Gdiplus::PointF pointf((Gdiplus::REAL) x, (Gdiplus::REAL) y);
-      
-      ASSERT(get_os_data() != NULL); //return ::PtInRegion((HRGN)get_os_data(), x, y); 
+
+      ASSERT(get_os_data() != NULL); //return ::PtInRegion((HRGN)get_os_data(), x, y);
 
       return m_pregion->IsVisible(pointf)  != FALSE;
-   
+
    }
    */
    bool region::contains(POINT point) const
-   { 
+   {
 
       ((region *) (this))->defer_update();
 
       Gdiplus::PointF pointf((Gdiplus::REAL) point.x, (Gdiplus::REAL) point.y);
-      
+
       ASSERT(get_os_data() != NULL);
 
       return m_pregion->IsVisible(pointf)  != FALSE;
@@ -110,12 +113,12 @@ namespace draw2d_gdiplus
    }
    /*
    bool region::RectInRegion(LPCRECT lpRect) const
-   { 
-      //ASSERT(get_os_data() != NULL); return ::RectInRegion((HRGN)get_os_data(), lpRect); 
+   {
+      //ASSERT(get_os_data() != NULL); return ::RectInRegion((HRGN)get_os_data(), lpRect);
 
       Gdiplus::RectF rectf((Gdiplus::REAL) lpRect->left, (Gdiplus::REAL) lpRect->top, (Gdiplus::REAL) (lpRect->right - lpRect->left), (Gdiplus::REAL) (lpRect->bottom - lpRect->top));
-      
-      ASSERT(get_os_data() != NULL); //return ::PtInRegion((HRGN)get_os_data(), x, y); 
+
+      ASSERT(get_os_data() != NULL); //return ::PtInRegion((HRGN)get_os_data(), x, y);
 
       return m_pregion->IsVisible(rectf)  != FALSE;
 
@@ -140,7 +143,7 @@ namespace draw2d_gdiplus
 
          if(m_pregion != NULL)
          {
-            
+
             ::aura::del(m_pregion);
 
          }
@@ -170,7 +173,7 @@ namespace draw2d_gdiplus
 
    Gdiplus::Region * region::get()
    {
-      
+
       switch(m_etype)
       {
       case type_none:
@@ -208,13 +211,13 @@ namespace draw2d_gdiplus
       path.AddRectangle(rect);
 
       return new Gdiplus::Region(&path);
-         
+
    }
 
 
    Gdiplus::Region * region::get_oval()
    {
-      
+
       Gdiplus::GraphicsPath path;
 
       path.AddEllipse((INT) m_x1, (INT) m_y1, (INT) (m_x2 - m_x1), (INT) (m_y2 - m_y1));
@@ -306,7 +309,7 @@ namespace draw2d_gdiplus
       {
          pregion->Union(pregionOp);
       }
-      
+
       return pregion;
 
    }

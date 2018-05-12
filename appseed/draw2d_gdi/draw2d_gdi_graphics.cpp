@@ -79,14 +79,13 @@ namespace draw2d_gdi
    }
 
 
-
-
    HDC graphics::get_handle1() const
    {
 
       return this == NULL ? NULL : (HDC) m_hdc;
 
    }
+
 
    HDC graphics::get_handle2() const
    {
@@ -95,12 +94,14 @@ namespace draw2d_gdi
 
    }
 
+
    void * graphics::get_os_data() const
    {
 
       return (void *) get_handle1();
 
    }
+
 
    void * graphics::get_os_data_ex(int i) const
    {
@@ -137,7 +138,7 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::IsPrinting() const
+   bool graphics::IsPrinting()
    {
 
       return m_bPrinting;
@@ -191,7 +192,7 @@ namespace draw2d_gdi
    }
 
 
-   int graphics::GetDeviceCaps(int nIndex) const
+   int graphics::GetDeviceCaps(int nIndex)
    {
 
       ASSERT(get_handle2() != NULL);
@@ -201,7 +202,7 @@ namespace draw2d_gdi
    }
 
 
-   point graphics::GetBrushOrg() const
+   point graphics::GetBrushOrg()
    {
 
       ASSERT(get_handle1() != NULL);
@@ -298,7 +299,7 @@ namespace draw2d_gdi
 
    }
 
-   COLORREF graphics::GetNearestColor(COLORREF crColor) const
+   COLORREF graphics::GetNearestColor(COLORREF crColor)
    {
 
       return ::GetNearestColor(get_handle2(), crColor) ;
@@ -325,7 +326,7 @@ namespace draw2d_gdi
 
 
 
-   COLORREF graphics::GetBkColor() const
+   COLORREF graphics::GetBkColor()
    {
 
       return ::GetBkColor(get_handle2());
@@ -334,7 +335,7 @@ namespace draw2d_gdi
 
 
 
-   int graphics::GetBkMode() const
+   int graphics::GetBkMode()
    {
 
       return ::GetBkMode(get_handle2());
@@ -343,7 +344,7 @@ namespace draw2d_gdi
 
 
 
-   int graphics::GetPolyFillMode() const
+   int graphics::GetPolyFillMode()
    {
 
       return ::GetPolyFillMode(get_handle2());
@@ -352,7 +353,7 @@ namespace draw2d_gdi
 
 
 
-   int graphics::GetROP2() const
+   int graphics::GetROP2()
    {
 
       return ::GetROP2(get_handle2());
@@ -361,7 +362,7 @@ namespace draw2d_gdi
 
 
 
-   int graphics::GetStretchBltMode() const
+   int graphics::GetStretchBltMode()
    {
 
       return ::GetStretchBltMode(get_handle2());
@@ -371,7 +372,7 @@ namespace draw2d_gdi
 
 
 
-   COLORREF graphics::GetTextColor() const
+   COLORREF graphics::GetTextColor()
    {
 
       return ::GetTextColor(get_handle2());
@@ -379,7 +380,7 @@ namespace draw2d_gdi
    }
 
 
-   int graphics::GetMapMode() const
+   int graphics::GetMapMode()
    {
 
       return ::GetMapMode(get_handle2());
@@ -387,7 +388,7 @@ namespace draw2d_gdi
    }
 
 
-   int graphics::GetGraphicsMode() const
+   int graphics::GetGraphicsMode()
    {
 
       return ::GetGraphicsMode(get_handle2());
@@ -395,7 +396,7 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::GetWorldTransform(XFORM* pXform) const
+   bool graphics::GetWorldTransform(XFORM* pXform)
    {
 
       return ::GetWorldTransform(get_handle2(),pXform) != FALSE;
@@ -403,7 +404,7 @@ namespace draw2d_gdi
    }
 
 
-   point graphics::GetViewportOrg() const
+   point graphics::GetViewportOrg()
    {
 
       POINT point;
@@ -415,7 +416,7 @@ namespace draw2d_gdi
    }
 
 
-   class size graphics::GetViewportExt() const
+   class size graphics::GetViewportExt()
    {
 
       SIZE size;
@@ -426,7 +427,7 @@ namespace draw2d_gdi
 
    }
 
-   point graphics::GetWindowOrg() const
+   point graphics::GetWindowOrg()
    {
 
       POINT point;
@@ -438,7 +439,7 @@ namespace draw2d_gdi
    }
 
 
-   class size graphics::GetWindowExt() const
+   class size graphics::GetWindowExt()
    {
 
       SIZE size;
@@ -491,7 +492,7 @@ namespace draw2d_gdi
 
 
 
-   void graphics::DPtoLP(LPPOINT lpPoints, count nCount) const
+   void graphics::DPtoLP(LPPOINT lpPoints, count nCount)
    {
 
       ::DPtoLP(get_handle2(), lpPoints, (int) nCount);
@@ -501,7 +502,7 @@ namespace draw2d_gdi
 
 
 
-   void graphics::DPtoLP(LPRECT lpRect) const
+   void graphics::DPtoLP(LPRECT lpRect)
    {
 
       ::DPtoLP(get_handle2(), (LPPOINT)lpRect, 2);
@@ -511,7 +512,7 @@ namespace draw2d_gdi
 
 
 
-   void graphics::LPtoDP(LPPOINT lpPoints, count nCount) const
+   void graphics::LPtoDP(LPPOINT lpPoints, count nCount)
    {
 
       ::LPtoDP(get_handle2(), lpPoints, (int) nCount);
@@ -521,7 +522,7 @@ namespace draw2d_gdi
 
 
 
-   void graphics::LPtoDP(LPRECT lpRect) const
+   void graphics::LPtoDP(LPRECT lpRect)
    {
 
       ::LPtoDP(get_handle2(), (LPPOINT)lpRect, 2);
@@ -567,7 +568,7 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::PtVisible(int x, int y) const
+   bool graphics::PtVisible(int x, int y)
    {
 
       ASSERT(get_handle1() != NULL);
@@ -577,7 +578,7 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::PtVisible(POINT point) const
+   bool graphics::PtVisible(POINT point)
    {
 
       ASSERT(get_handle1() != NULL);
@@ -587,7 +588,7 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::RectVisible(const RECT & rect) const
+   bool graphics::RectVisible(const RECT & rect)
    {
 
       ASSERT(get_handle1() != NULL);
@@ -597,7 +598,7 @@ namespace draw2d_gdi
    }
 
 
-   point graphics::GetCurrentPosition() const
+   pointd graphics::current_position()
    {
 
       ASSERT(get_handle2() != NULL);
@@ -607,26 +608,6 @@ namespace draw2d_gdi
       VERIFY(::GetCurrentPositionEx(get_handle2(), &point));
 
       return point;
-
-   }
-
-
-   point graphics::MoveTo(POINT point)
-   {
-
-      ASSERT(get_handle1() != NULL);
-
-      return MoveTo(point.x, point.y);
-
-   }
-
-
-   bool graphics::LineTo(POINT point)
-   {
-
-      ASSERT(get_handle1() != NULL);
-
-      return LineTo(point.x, point.y);
 
    }
 
@@ -661,32 +642,24 @@ namespace draw2d_gdi
    }
 
 
-   void graphics::FillRect(const RECT & lpRect, ::draw2d::brush* pBrush)
+   void graphics::fill_rect(LPCRECT lpcrect, ::draw2d::brush * pbrush)
    {
 
       ASSERT(get_handle1() != NULL);
 
-      //::FillRect(get_handle1(), lpRect, (HBRUSH)pBrush->get_os_data());
-
-      int x = lpRect.left;
-      int y = lpRect.top;
-      int cx = width(lpRect);
-      int cy = height(lpRect);
-
-      COLORREF clr = pBrush->m_cr;
+      COLORREF clr = pbrush->m_cr;
 
       if (m_pdibDraw2dGraphics == NULL)
       {
 
          ::SetBkColor(get_handle1(), clr);
-         rect rect(x, y, x + cx, y + cy);
-         ::ExtTextOut(get_handle1(), 0, 0, ETO_OPAQUE, &rect, NULL, 0, NULL);
+         ::ExtTextOut(get_handle1(), 0, 0, ETO_OPAQUE, lpcrect, NULL, 0, NULL);
 
       }
       else if (argb_get_a_value(clr) == 255)
       {
 
-         m_pdibDraw2dGraphics->FillRect(x, y, cx, cy, 255, argb_get_r_value(clr), argb_get_g_value(clr), argb_get_b_value(clr));
+         m_pdibDraw2dGraphics->fill_rect(x, y, cx, cy, 255, argb_get_r_value(clr), argb_get_g_value(clr), argb_get_b_value(clr));
 
       }
       else
@@ -1557,7 +1530,7 @@ namespace draw2d_gdi
    }
 
 
-   COLORREF graphics::GetPixel(int x, int y) const
+   COLORREF graphics::GetPixel(int x, int y)
    {
 
       ASSERT(get_handle1() != NULL);
@@ -1567,7 +1540,7 @@ namespace draw2d_gdi
    }
 
 
-   COLORREF graphics::GetPixel(POINT point) const
+   COLORREF graphics::GetPixel(POINT point)
    {
 
       ASSERT(get_handle1() != NULL);
@@ -1805,7 +1778,7 @@ namespace draw2d_gdi
    }
 
 
-   class size graphics::GetTabbedTextExtent(const char * lpszString,strsize nCount,count  nTabPositions,LPINT lpnTabStopPositions) const
+   class size graphics::GetTabbedTextExtent(const char * lpszString,strsize nCount,count  nTabPositions,LPINT lpnTabStopPositions)
    {
 
       ASSERT(get_handle2() != NULL);
@@ -1815,7 +1788,7 @@ namespace draw2d_gdi
    }
 
 
-   class size graphics::GetTabbedTextExtent(const string & str, count nTabPositions, LPINT lpnTabStopPositions) const
+   class size graphics::GetTabbedTextExtent(const string & str, count nTabPositions, LPINT lpnTabStopPositions)
    {
 
       ASSERT(get_handle2() != NULL);
@@ -1825,7 +1798,7 @@ namespace draw2d_gdi
    }
 
 
-   class size graphics::GetOutputTabbedTextExtent(const char * lpszString,strsize nCount, count nTabPositions,LPINT lpnTabStopPositions) const
+   class size graphics::GetOutputTabbedTextExtent(const char * lpszString,strsize nCount, count nTabPositions,LPINT lpnTabStopPositions)
    {
 
       ASSERT(get_handle1() != NULL);
@@ -1835,7 +1808,7 @@ namespace draw2d_gdi
    }
 
 
-   class size graphics::GetOutputTabbedTextExtent(const string & str, count nTabPositions, LPINT lpnTabStopPositions) const
+   class size graphics::GetOutputTabbedTextExtent(const string & str, count nTabPositions, LPINT lpnTabStopPositions)
    {
 
       ASSERT(get_handle1() != NULL);
@@ -1855,7 +1828,7 @@ namespace draw2d_gdi
    }
 
 
-   UINT graphics::GetTextAlign() const
+   UINT graphics::GetTextAlign()
    {
 
       ASSERT(get_handle2() != NULL);
@@ -1865,7 +1838,7 @@ namespace draw2d_gdi
    }
 
 
-   int graphics::GetTextFace(count nCount, LPTSTR lpszFacename) const
+   int graphics::GetTextFace(count nCount, LPTSTR lpszFacename)
    {
 
       ASSERT(get_handle2() != NULL);
@@ -1875,7 +1848,7 @@ namespace draw2d_gdi
    }
 
 
-   int graphics::GetTextFace(string & rString) const
+   int graphics::GetTextFace(string & rString)
    {
 
       ASSERT(get_handle2() != NULL);
@@ -1887,7 +1860,7 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::get_text_metrics(::draw2d::text_metric * lpMetrics) const
+   bool graphics::get_text_metrics(::draw2d::text_metric * lpMetrics)
    {
 
       HDC h2 = get_handle2();
@@ -1926,7 +1899,7 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::get_output_text_metrics(::draw2d::text_metric * lpMetrics) const
+   bool graphics::get_output_text_metrics(::draw2d::text_metric * lpMetrics)
    {
 
       ASSERT(get_handle1() != NULL);
@@ -1963,21 +1936,21 @@ namespace draw2d_gdi
    }
 
 
-   int graphics::GetTextCharacterExtra() const
+   int graphics::GetTextCharacterExtra()
    {
       ASSERT(get_handle2() != NULL); return ::GetTextCharacterExtra(get_handle2());
 
    }
 
 
-   bool graphics::GetCharWidth(UINT nFirstChar, UINT nLastChar, LPINT lpBuffer) const
+   bool graphics::GetCharWidth(UINT nFirstChar, UINT nLastChar, LPINT lpBuffer)
    {
       ASSERT(get_handle2() != NULL); return ::GetCharWidth(get_handle2(), nFirstChar, nLastChar, lpBuffer) != FALSE;
 
    }
 
 
-   bool graphics::GetOutputCharWidth(UINT nFirstChar, UINT nLastChar, LPINT lpBuffer) const
+   bool graphics::GetOutputCharWidth(UINT nFirstChar, UINT nLastChar, LPINT lpBuffer)
    {
 
       ASSERT(get_handle1() != NULL);
@@ -1987,7 +1960,7 @@ namespace draw2d_gdi
    }
 
 
-   uint32_t graphics::GetFontLanguageInfo() const
+   uint32_t graphics::GetFontLanguageInfo()
    {
 
       ASSERT(get_handle1() != NULL);
@@ -1998,7 +1971,7 @@ namespace draw2d_gdi
 
 
 
-   uint32_t graphics::GetCharacterPlacement(const char * lpString, strsize nCount, strsize nMaxExtent, LPGCP_RESULTS lpResults, uint32_t dwFlags) const
+   uint32_t graphics::GetCharacterPlacement(const char * lpString, strsize nCount, strsize nMaxExtent, LPGCP_RESULTS lpResults, uint32_t dwFlags)
    {
 
       ASSERT(get_handle1() != NULL);
@@ -2008,7 +1981,7 @@ namespace draw2d_gdi
    }
 
 
-   uint32_t graphics::GetCharacterPlacement(string & str, strsize nMaxExtent, LPGCP_RESULTS lpResults, uint32_t dwFlags) const
+   uint32_t graphics::GetCharacterPlacement(string & str, strsize nMaxExtent, LPGCP_RESULTS lpResults, uint32_t dwFlags)
    {
 
       ASSERT(get_handle1() != NULL);
@@ -2020,7 +1993,7 @@ namespace draw2d_gdi
 
 
 
-   size graphics::GetAspectRatioFilter() const
+   size graphics::GetAspectRatioFilter()
    {
       ASSERT(get_handle2() != NULL);
       SIZE size;
@@ -2070,14 +2043,14 @@ namespace draw2d_gdi
 
    bool graphics::ResetDC(const DEVMODE* lpDevMode)
    { ASSERT(get_handle2() != NULL); return ::ResetDC(get_handle2(), lpDevMode) != NULL; }
-   UINT graphics::GetOutlineTextMetrics(UINT cbData, LPOUTLINETEXTMETRICW lpotm) const
+   UINT graphics::GetOutlineTextMetrics(UINT cbData, LPOUTLINETEXTMETRICW lpotm)
    {
       ASSERT(get_handle2() != NULL); return ::GetOutlineTextMetricsW(get_handle2(), cbData, lpotm) != FALSE;
 
    }
 
 
-   bool graphics::GetCharABCWidths(UINT nFirstChar, UINT nLastChar, LPABC lpabc) const
+   bool graphics::GetCharABCWidths(UINT nFirstChar, UINT nLastChar, LPABC lpabc)
    {
       ASSERT(get_handle2() != NULL); return ::GetCharABCWidths(get_handle2(), nFirstChar, nLastChar, lpabc) != FALSE;
 
@@ -2085,14 +2058,14 @@ namespace draw2d_gdi
 
 
    uint32_t graphics::GetFontData(uint32_t dwTable, uint32_t dwOffset, LPVOID lpData,
-                                  uint32_t cbData) const
+                                  uint32_t cbData)
    {
       ASSERT(get_handle2() != NULL); return ::GetFontData(get_handle2(), dwTable, dwOffset, lpData, cbData);
 
    }
 
 
-   int graphics::GetKerningPairs(int nPairs, LPKERNINGPAIR lpkrnpair) const
+   int graphics::GetKerningPairs(int nPairs, LPKERNINGPAIR lpkrnpair)
    {
       ASSERT(get_handle2() != NULL); return ::GetKerningPairs(get_handle2(), nPairs, lpkrnpair);
 
@@ -2100,7 +2073,7 @@ namespace draw2d_gdi
 
 
    uint32_t graphics::GetGlyphOutline(UINT nChar, UINT nFormat, LPGLYPHMETRICS lpgm,
-                                      uint32_t cbBuffer, LPVOID lpBuffer, const MAT2* lpmat2) const
+                                      uint32_t cbBuffer, LPVOID lpBuffer, const MAT2* lpmat2)
    {
       ASSERT(get_handle2() != NULL); return ::GetGlyphOutline(get_handle2(), nChar, nFormat,
                                             lpgm, cbBuffer, lpBuffer, lpmat2);
@@ -2238,7 +2211,7 @@ namespace draw2d_gdi
 
 
 
-   int graphics::GetArcDirection() const
+   int graphics::GetArcDirection()
    {
 
       ASSERT(get_handle2() != NULL); return ::GetArcDirection(get_handle2());
@@ -2260,7 +2233,7 @@ namespace draw2d_gdi
 
 
 
-   bool graphics::GetColorAdjustment(LPCOLORADJUSTMENT lpColorAdjust) const
+   bool graphics::GetColorAdjustment(LPCOLORADJUSTMENT lpColorAdjust)
    {
 
       ASSERT(get_handle2() != NULL);
@@ -2297,7 +2270,7 @@ namespace draw2d_gdi
    }
 
 
-   ::draw2d::pen_sp graphics::get_current_pen() const
+   ::draw2d::pen_sp graphics::get_current_pen()
    {
 
       if(m_sppen.is_set())
@@ -2312,7 +2285,7 @@ namespace draw2d_gdi
    }
 
 
-   ::draw2d::brush_sp graphics::get_current_brush() const
+   ::draw2d::brush_sp graphics::get_current_brush()
    {
 
       if(m_spbrush.is_set())
@@ -2337,7 +2310,7 @@ namespace draw2d_gdi
    }
 
 
-   ::draw2d::palette_sp graphics::get_current_palette() const
+   ::draw2d::palette_sp graphics::get_current_palette()
    {
 
 
@@ -2347,7 +2320,7 @@ namespace draw2d_gdi
    }
 
 
-   ::draw2d::font_sp graphics::get_current_font() const
+   ::draw2d::font_sp graphics::get_current_font()
    {
 
       if(m_spfont.is_set())
@@ -2362,7 +2335,7 @@ namespace draw2d_gdi
    }
 
 
-   ::draw2d::bitmap_sp graphics::get_current_bitmap() const
+   ::draw2d::bitmap_sp graphics::get_current_bitmap()
    {
 
       if(m_spbitmap.is_set() && m_spbitmap->get_os_data() == (void *) ::GetCurrentObject(get_handle2(), OBJ_BITMAP))
@@ -2411,7 +2384,7 @@ namespace draw2d_gdi
 
 
 
-   bool graphics::GetCharABCWidths(UINT nFirstChar, UINT nLastChar, LPABCFLOAT lpABCF) const
+   bool graphics::GetCharABCWidths(UINT nFirstChar, UINT nLastChar, LPABCFLOAT lpABCF)
    {
 
       ASSERT(get_handle2() != NULL);
@@ -2421,7 +2394,7 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::GetCharWidth(UINT nFirstChar, UINT nLastChar, float* lpFloatBuffer) const
+   bool graphics::GetCharWidth(UINT nFirstChar, UINT nLastChar, float* lpFloatBuffer)
    {
 
       ASSERT(get_handle2() != NULL);
@@ -2699,7 +2672,7 @@ namespace draw2d_gdi
    }
 
 
-   float graphics::GetMiterLimit() const
+   float graphics::GetMiterLimit()
    {
 
       ASSERT(get_handle1() != NULL);
@@ -2713,7 +2686,7 @@ namespace draw2d_gdi
    }
 
 
-   int graphics::GetPath(LPPOINT lpPoints, LPBYTE lpTypes, count nCount) const
+   int graphics::GetPath(LPPOINT lpPoints, LPBYTE lpTypes, count nCount)
    {
 
       ASSERT(get_handle1() != NULL);
@@ -3252,7 +3225,7 @@ namespace draw2d_gdi
 
    // Always Inline. Functions only in Win98/Win2K or later
 
-   inline COLORREF graphics::GetDCBrushColor() const
+   inline COLORREF graphics::GetDCBrushColor()
    {
 
       ASSERT(get_handle1() != NULL);
@@ -3273,7 +3246,7 @@ namespace draw2d_gdi
 
 
 
-   inline COLORREF graphics::GetDCPenColor() const
+   inline COLORREF graphics::GetDCPenColor()
    {
 
       ASSERT(get_handle1() != NULL);
@@ -3294,7 +3267,7 @@ namespace draw2d_gdi
 
 
 
-   inline bool graphics::GetCharABCWidthsI(UINT giFirst, UINT cgi, LPWORD pgi, LPABC lpabc) const
+   inline bool graphics::GetCharABCWidthsI(UINT giFirst, UINT cgi, LPWORD pgi, LPABC lpabc)
    {
 
       ASSERT(get_handle1() != NULL);
@@ -3304,7 +3277,7 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::GetCharWidthI(UINT giFirst, UINT cgi, LPWORD pgi, LPINT lpBuffer) const
+   bool graphics::GetCharWidthI(UINT giFirst, UINT cgi, LPWORD pgi, LPINT lpBuffer)
    {
 
       ASSERT(get_handle1() != NULL);
@@ -3314,7 +3287,7 @@ namespace draw2d_gdi
    }
 
 
-   bool graphics::GetTextExtent(sized & size, const char * lpszString, strsize nCount, strsize iIndex) const
+   bool graphics::GetTextExtent(sized & size, const char * lpszString, strsize nCount, strsize iIndex)
    {
 
       ::size sz = GetTextExtent(string(lpszString), iIndex);
@@ -3328,7 +3301,7 @@ namespace draw2d_gdi
 
 
 
-   inline bool graphics::GetTextExtentExPointI(LPWORD pgiIn, int cgi, int nMaxExtent, LPINT lpnFit, LPINT alpDx, LPSIZE lpSize) const
+   inline bool graphics::GetTextExtentExPointI(LPWORD pgiIn, int cgi, int nMaxExtent, LPINT lpnFit, LPINT alpDx, LPSIZE lpSize)
    {
       ENSURE(lpSize != NULL);
       ASSERT(get_handle1() != NULL);
@@ -3337,7 +3310,7 @@ namespace draw2d_gdi
    }
 
 
-   inline bool graphics::GetTextExtentPointI(LPWORD pgiIn, int cgi, LPSIZE lpSize) const
+   inline bool graphics::GetTextExtentPointI(LPWORD pgiIn, int cgi, LPSIZE lpSize)
    {
       ENSURE(lpSize != NULL);
       ASSERT(get_handle1() != NULL);
@@ -3358,7 +3331,7 @@ namespace draw2d_gdi
 
 #define HIMETRIC_INCH   2540    // HIMETRIC units per inch
 
-   void graphics::DPtoHIMETRIC(LPSIZE lpSize) const
+   void graphics::DPtoHIMETRIC(LPSIZE lpSize)
    {
 
       int nMapMode;
@@ -3403,7 +3376,7 @@ namespace draw2d_gdi
 
    }
 
-   void graphics::HIMETRICtoDP(LPSIZE lpSize) const
+   void graphics::HIMETRICtoDP(LPSIZE lpSize)
    {
 
       int nMapMode;
@@ -3448,7 +3421,7 @@ namespace draw2d_gdi
 
    }
 
-   void graphics::LPtoHIMETRIC(LPSIZE lpSize) const
+   void graphics::LPtoHIMETRIC(LPSIZE lpSize)
    {
 
       LPtoDP(lpSize);
@@ -3458,7 +3431,7 @@ namespace draw2d_gdi
 
 
 
-   void graphics::HIMETRICtoLP(LPSIZE lpSize) const
+   void graphics::HIMETRICtoLP(LPSIZE lpSize)
    {
 
       HIMETRICtoDP(lpSize);
@@ -3723,7 +3696,7 @@ namespace draw2d_gdi
 
 
 
-   void graphics::assert_valid() const
+   void graphics::assert_valid()
    {
       object::assert_valid();
 
@@ -3731,7 +3704,7 @@ namespace draw2d_gdi
 
 
 
-   void graphics::dump(dump_context & dumpcontext) const
+   void graphics::dump(dump_context & dumpcontext)
    {
       object::dump(dumpcontext);
 
@@ -4187,7 +4160,7 @@ namespace draw2d_gdi
       return size;
    }
 
-   int graphics::GetClipBox(LPRECT lpRect) const
+   int graphics::GetClipBox(LPRECT lpRect)
    {
       return ::GetClipBox(get_handle1(), lpRect);
 
@@ -4349,7 +4322,7 @@ namespace draw2d_gdi
    typedef uint32_t (CALLBACK* AFX_GDIGETLAYOUTPROC)(HDC);
    typedef uint32_t (CALLBACK* AFX_GDISETLAYOUTPROC)(HDC, uint32_t);
 
-   uint32_t graphics::GetLayout() const
+   uint32_t graphics::GetLayout()
    {
       HINSTANCE hInst = ::GetModuleHandleA("GDI32.DLL");
       ASSERT(hInst != NULL);
@@ -4694,7 +4667,7 @@ namespace draw2d_gdi
    /////////////////////////////////////////////////////////////////////////////
    // Coordinate transforms
 
-   void graphics::LPtoDP(LPSIZE lpSize) const
+   void graphics::LPtoDP(LPSIZE lpSize)
    {
 
       size sizeWinExt = GetWindowExt();
@@ -4706,7 +4679,7 @@ namespace draw2d_gdi
 
 
 
-   void graphics::DPtoLP(LPSIZE lpSize) const
+   void graphics::DPtoLP(LPSIZE lpSize)
    {
 
       size sizeWinExt = GetWindowExt();
@@ -4723,7 +4696,7 @@ namespace draw2d_gdi
 
 
 
-   sized graphics::GetTextExtent(const char * lpszString, strsize nCount) const
+   sized graphics::GetTextExtent(const char * lpszString, strsize nCount)
    {
 
       if(get_handle2() == NULL)
@@ -4747,7 +4720,7 @@ namespace draw2d_gdi
    }
 
 
-   sized graphics::GetTextExtent(const string & str) const
+   sized graphics::GetTextExtent(const string & str)
    {
 
       if(get_handle2() == NULL)
@@ -4770,7 +4743,7 @@ namespace draw2d_gdi
    }
 
 
-   size graphics::GetOutputTextExtent(const char * lpszString,strsize nCount) const
+   size graphics::GetOutputTextExtent(const char * lpszString,strsize nCount)
    {
       ASSERT(get_handle1() != NULL);
       SIZE size;
@@ -4779,7 +4752,7 @@ namespace draw2d_gdi
       VERIFY(::GetTextExtentPoint32W(get_handle1(), wstr, (int)wstr.get_length(), &size));
       return size;
    }
-   size graphics::GetOutputTextExtent(const string & str) const
+   size graphics::GetOutputTextExtent(const string & str)
    {
       ASSERT(get_handle1() != NULL);
       SIZE size;

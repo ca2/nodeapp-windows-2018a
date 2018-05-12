@@ -2,20 +2,17 @@
 
 
 #include "aura/aura/aura/aura.h"
+#include "aura/aura/os/windows/windows_gdiplus.h"
 
 
 #ifdef _DRAW2D_GDIPLUS_STATIC
-    #define CLASS_DECL_DRAW2D_GDIPLUS
+#define CLASS_DECL_DRAW2D_GDIPLUS
 #elif defined(_DRAW2D_GDIPLUS_LIBRARY)
-    #define CLASS_DECL_DRAW2D_GDIPLUS  CLASS_DECL_EXPORT
+#define CLASS_DECL_DRAW2D_GDIPLUS  CLASS_DECL_EXPORT
 #else
-    #define CLASS_DECL_DRAW2D_GDIPLUS  CLASS_DECL_IMPORT
+#define CLASS_DECL_DRAW2D_GDIPLUS  CLASS_DECL_IMPORT
 #endif
 
-#undef new
-#define min MIN
-#define max MAX
-#include <GdiPlus.h>
 
 
 #include "draw2d_gdiplus_factory_exchange.h"

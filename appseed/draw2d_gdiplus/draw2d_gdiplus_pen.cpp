@@ -1,6 +1,9 @@
 ﻿#include "framework.h"
 
 
+#undef new
+
+
 namespace draw2d_gdiplus
 {
 
@@ -114,7 +117,7 @@ namespace draw2d_gdiplus
 
             if(graphicsMem->SelectObject(pDest))
             {
-               graphicsMem->FillSolidRect(0, 0, bm.bmWidth, bm.bmHeight, crBackground);
+               graphicsMem->fill_solid_rect(0, 0, bm.bmWidth, bm.bmHeight, crBackground);
 
                graphicsMem->SetBkColor(RGB(255, 255, 255));
 
@@ -165,7 +168,7 @@ namespace draw2d_gdiplus
          graphicsMem->SetBkColor(RGB(255, 255, 255));
          graphicsMask->BitBlt(0, 0, bm.bmWidth, bm.bmHeight, graphicsMem, 0, 0, NOTSRCERASE);
 
-         pgraphics->FillSolidRect(x, y, bm.bmWidth, bm.bmHeight, crBackground);
+         pgraphics->fill_solid_rect(x, y, bm.bmWidth, bm.bmHeight, crBackground);
 
          pgraphics->SetBkColor(RGB(255, 255, 255));
 
@@ -234,7 +237,7 @@ namespace draw2d_gdiplus
                {
                   cr1 = graphicsDest->SetTextColor(cr1);
                   cr2 = graphicsDest->SetBkColor(cr2);
-                  graphicsDest->FillRect(rect(0, 0, bm.bmWidth, bm.bmHeight), &brChecker);
+                  graphicsDest->fill_rect(rect(0, 0, bm.bmWidth, bm.bmHeight), &brChecker);
                   graphicsDest->SetTextColor(cr1);
                   graphicsDest->SetBkColor(cr2);
 
@@ -294,7 +297,7 @@ namespace draw2d_gdiplus
          // Checker the background with white and crBackground
          cr1 = pgraphics->SetTextColor(cr1);
          cr2 = pgraphics->SetBkColor(cr2);
-         pgraphics->FillRect(rect(x, y, x + bm.bmWidth, y + bm.bmHeight), &brChecker);
+         pgraphics->fill_rect(rect(x, y, x + bm.bmWidth, y + bm.bmHeight), &brChecker);
          pgraphics->SetTextColor(cr1);
          pgraphics->SetBkColor(cr2);
 

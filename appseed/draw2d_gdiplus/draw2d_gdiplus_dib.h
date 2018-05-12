@@ -125,7 +125,7 @@ namespace draw2d_gdiplus
       void copy ( ::draw2d::dib *dib, int32_t x, int32_t y );
       void PasteRect ( ::draw2d::dib *dib, int32_t x, int32_t y );
 
-      void FillRect ( int32_t x, int32_t y, int32_t w, int32_t h, int32_t R, int32_t G, int32_t B );
+      void fill_rect ( int32_t x, int32_t y, int32_t w, int32_t h, int32_t R, int32_t G, int32_t B );
       void FillGlassRect ( int32_t x, int32_t y, int32_t w, int32_t h, int32_t R, int32_t G, int32_t B, int32_t A );
       void FillStippledGlassRect ( int32_t x, int32_t y, int32_t w, int32_t h, int32_t R, int32_t G, int32_t B );
 

@@ -1,6 +1,9 @@
 #include "framework.h"
 
 
+#undef new
+
+
 namespace draw2d_gdiplus
 {
 
@@ -53,10 +56,10 @@ namespace draw2d_gdiplus
             try
             {
                ((brush *) this)->m_pbrush = new Gdiplus::LinearGradientBrush(
-                  Gdiplus::PointF((Gdiplus::REAL) m_pt1.x,(Gdiplus::REAL) m_pt1.y),
-                  Gdiplus::PointF((Gdiplus::REAL) m_pt2.x,(Gdiplus::REAL) m_pt2.y),
-                  Gdiplus::Color(argb_get_a_value(m_cr1), argb_get_r_value(m_cr1), argb_get_g_value(m_cr1), argb_get_b_value(m_cr1)),
-                  Gdiplus::Color(argb_get_a_value(m_cr2), argb_get_r_value(m_cr2), argb_get_g_value(m_cr2), argb_get_b_value(m_cr2)));
+               Gdiplus::PointF((Gdiplus::REAL) m_pt1.x,(Gdiplus::REAL) m_pt1.y),
+               Gdiplus::PointF((Gdiplus::REAL) m_pt2.x,(Gdiplus::REAL) m_pt2.y),
+               Gdiplus::Color(argb_get_a_value(m_cr1), argb_get_r_value(m_cr1), argb_get_g_value(m_cr1), argb_get_b_value(m_cr1)),
+               Gdiplus::Color(argb_get_a_value(m_cr2), argb_get_r_value(m_cr2), argb_get_g_value(m_cr2), argb_get_b_value(m_cr2)));
             }
             catch(...)
             {
