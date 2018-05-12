@@ -1373,13 +1373,23 @@ namespace draw2d_gdiplus
 
       copy(rect, lpcrect);
 
-      auto e = m_pgraphics->GetSmoothingMode();
+      auto emodeOld = m_pgraphics->GetSmoothingMode();
 
-      m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeNone);
+      if (emodeOld != Gdiplus::SmoothingModeNone)
+      {
+
+         m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeNone);
+
+      }
 
       bool bOk = m_pgraphics->FillRectangle((Gdiplus::Brush *) pbrush->get_os_data(), rect) == Gdiplus::Status::Ok;
 
-      m_pgraphics->SetSmoothingMode(e);
+      if (emodeOld != Gdiplus::SmoothingModeNone)
+      {
+
+         m_pgraphics->SetSmoothingMode(emodeOld);
+
+      }
 
       return bOk;
 
