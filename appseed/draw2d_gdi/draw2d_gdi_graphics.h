@@ -321,8 +321,7 @@ namespace draw2d_gdi
 
       // Bitmap Functions
       bool PatBlt(int x, int y, int nWidth, int nHeight, uint32_t dwRop) override;
-      bool BitBlt(int x, int y, int nWidth, int nHeight, ::draw2d::graphics * pgraphicsSrc,
-                  int xSrc, int ySrc, uint32_t dwRop) override;
+      bool draw(LPCRECT lpcrect, ::draw2d::graphics * pgraphicsSrc, LPCPOINT lppt, u32 dwRop) override;
       bool StretchBlt(int x, int y, int nWidth, int nHeight, ::draw2d::graphics * pgraphicsSrc,
                       int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, uint32_t dwRop) override;
       COLORREF GetPixel(int x, int y) override;
@@ -475,11 +474,12 @@ namespace draw2d_gdi
       static ::draw2d::brush* GetHalftoneBrush(::aura::application * papp);
       void DrawDragRect(const RECT & lpRect, SIZE size,
                         const RECT & lpRectLast, SIZE sizeLast, ::draw2d::brush* pBrush = NULL, ::draw2d::brush* pBrushLast = NULL) override;
-      void FillSolidRect(const RECT64 * lpRect, COLORREF clr) override;
-      void FillSolidRect(const RECT & lpRect, COLORREF clr) override;
-      void FillSolidRect(int x, int y, int cx, int cy, COLORREF clr) override;
-      void Draw3dRect(const RECT & lpRect, COLORREF clrTopLeft, COLORREF clrBottomRight) override;
-      void Draw3dRect(int x, int y, int cx, int cy, COLORREF clrTopLeft, COLORREF clrBottomRight) override;
+
+      using ::draw2d::graphics::fill_solid_rect;
+      void fill_solid_rect(LPCRECT lpcrect, COLORREF cr) override;
+
+      using ::draw2d::graphics::draw3d_rect;
+      void draw3d_rect(LPCRECT lpcrect, COLORREF crTopLeft, COLORREF crBottomRight) override;
 
       virtual void assert_valid() const override;
       virtual void dump(dump_context & dumpcontext) const override;

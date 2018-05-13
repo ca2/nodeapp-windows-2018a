@@ -788,6 +788,31 @@ namespace draw2d_gdiplus
    }
 
 
+   bool graphics::rectangle(LPCRECT lpcrect)
+   {
+
+      bool bOk1 = fill_rect(lpcrect);
+
+      bool bOk2 = draw_rect(lpcrect);
+
+      return bOk1 && bOk2;
+
+   }
+
+
+   bool graphics::rectangle(LPCRECTD lpcrect)
+   {
+
+      bool bOk1 = fill_rect(lpcrect);
+
+      bool bOk2 = draw_rect(lpcrect);
+
+      return bOk1 && bOk2;
+
+
+   }
+
+
    bool graphics::draw_rect(LPCRECT lpcrect, ::draw2d::pen * ppen)
    {
 

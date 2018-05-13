@@ -95,7 +95,7 @@ namespace music
             {
             case ::music::midi::sequence::EventMidiPlaybackEnd:
             {
-               
+
                ::music::midi::sequence::PlayerLink & link = get_sequence()->GetPlayerLink();
 
                if(link() & ::music::midi::sequence::FlagTempoChange)
@@ -226,16 +226,16 @@ namespace music
             get_sequence()->Start();
          }
 
-         
+
          void sequence_thread::PlayRate(double dRate)
          {
-            
+
             ASSERT(get_sequence() != NULL);
-            
+
             ASSERT(get_sequence()->get_status() == ::music::midi::sequence::status_opened);
 
             PrerollRateAndWait(dRate);
-            
+
             get_sequence()->Start();
 
          }
@@ -460,7 +460,7 @@ namespace music
 
             HMIDISTRM hmidistrm = (HMIDISTRM) pbase->m_wparam;
 
-            LPMIDIHDR lpmidihdr = (LPMIDIHDR)pbase->m_lparam;
+            LPMIDIHDR lpmidihdr = pbase->m_lparam.cast < MIDIHDR >();
 
             pseq->OnDone(hmidistrm, lpmidihdr);
 

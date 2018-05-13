@@ -2459,7 +2459,7 @@ namespace draw2d_gdi
          }
       */
 
-      rect rect(rectWindow);
+      class rect rect(rectWindow);
 
       //Application.window_graphics_update_window(pwnd->get_window_graphics(),pwnd->get_handle(),m_pcolorref,rect,m_size.cx,m_size.cy,m_iScan, bTransferBuffer);
 
@@ -2558,7 +2558,7 @@ namespace draw2d_gdi
 
       m_spgraphics->attach((HDC) pbase->m_wparam);
 
-      rect rectx;
+      class rect rectx;
 
       ::draw2d::bitmap * pbitmap = m_spgraphics->get_current_bitmap();
 
@@ -2575,7 +2575,7 @@ namespace draw2d_gdi
       try
       {
 
-         rect rectWindow;
+         class rect rectWindow;
 
          pwnd->GetWindowRect(rectWindow);
 
@@ -2589,8 +2589,8 @@ namespace draw2d_gdi
          if(pgraphics->get_os_data() == NULL)
             return false;
 
-         rect rectPaint;
-         rect rectUpdate;
+         class rect rectPaint;
+         class rect rectUpdate;
          rectUpdate = rectWindow;
          rectPaint = rectWindow;
          rectPaint.offset(-rectPaint.top_left());
@@ -2614,7 +2614,9 @@ namespace draw2d_gdi
       catch(...)
       {
       }
-      m_spgraphics->FillSolidRect(rectx, RGB(255, 255, 255));
+
+      m_spgraphics->fill_solid_rect(rectx, RGB(255, 255, 255));
+
       pobj->m_bRet = true;
       pbase->set_lresult(0);
 
@@ -2762,9 +2764,9 @@ namespace draw2d_gdi
             int s = pdibSrc->m_iScan - m_size.cx * sizeof(COLORREF);
             int c = m_size.cx;
 
-            rect r1(x, y,  x  + m_size.cx, y + m_size.cy);
-            rect r2(0, 0, pdibSrc->m_size.cx, pdibSrc->m_size.cy);
-            rect r3;
+            class rect r1(x, y,  x  + m_size.cx, y + m_size.cy);
+            class rect r2(0, 0, pdibSrc->m_size.cx, pdibSrc->m_size.cy);
+            class rect r3;
 
             r3.intersect(r1, r2);
 

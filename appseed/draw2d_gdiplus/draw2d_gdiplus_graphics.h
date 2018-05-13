@@ -278,8 +278,11 @@ namespace draw2d_gdiplus
       bool draw_polygon(LPCPOINTD ppoints, count nCount) override;
       bool fill_polygon(LPCPOINT ppoints, count nCount) override;
       bool fill_polygon(LPCPOINTD ppoints, count nCount) override;
+      using ::draw2d::graphics::rectangle;
       using ::draw2d::graphics::draw_rect;
       using ::draw2d::graphics::fill_rect;
+      virtual bool rectangle(LPCRECT lpcrect) override;
+      virtual bool rectangle(LPCRECTD lpcrect) override;
       virtual bool draw_rect(LPCRECT lpcrect, ::draw2d::pen * ppen) override;
       virtual bool draw_rect(LPCRECTD lpcrect, ::draw2d::pen * ppen) override;
       virtual bool fill_rect(LPCRECT lpcrect, ::draw2d::brush * pbrush) override;
