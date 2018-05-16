@@ -32,7 +32,7 @@ namespace wordcard
 
       virtual void on_request(::create * pcreate);
 
-	   virtual bool _001OnCmdMsg(::aura::cmd_msg * pcommand);
+	   virtual bool route_command_message(::aura::cmd_msg * pcommand);
    		
 
       virtual void OnFileManagerOpenFile(

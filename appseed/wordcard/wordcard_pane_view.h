@@ -30,7 +30,7 @@ namespace wordcard
 
       sp(::wordcard::document) get_document();
 
-      bool BaseOnControlEvent(::user::control_event * pevent);
+      void on_control_event(::user::control_event * pevent);
 
       virtual void on_create_view(::user::view_creator_data * pcreatordata);
       virtual void on_show_view();

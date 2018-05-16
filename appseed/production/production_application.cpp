@@ -126,10 +126,10 @@ namespace production
    }
 
 
-   void application::_001OnCmdMsg(::user::command * pcommand)
+   void application::route_command_message(::user::command * pcommand)
    		
    {
-      ::core::application::_001OnCmdMsg(pcommand);
+      ::core::application::route_command_message(pcommand);
    }
 
 

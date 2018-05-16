@@ -98,10 +98,10 @@ namespace wordcard
    }
 
 
-   bool application::_001OnCmdMsg(::aura::cmd_msg * pcommand)
+   bool application::route_command_message(::aura::cmd_msg * pcommand)
    		
    {
-      return ::core::application::_001OnCmdMsg(pcommand);
+      return ::core::application::route_command_message(pcommand);
    }
 
 
