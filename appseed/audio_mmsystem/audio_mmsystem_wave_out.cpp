@@ -465,6 +465,7 @@ Opened:
 
       }
 
+
       void wave_out::wave_out_buffer_ready(LPWAVEHDR lpwavehdr)
       {
 
@@ -472,8 +473,11 @@ Opened:
 
          if(wave_out_get_state() != state_playing)
          {
+
             TRACE("ERROR wave_out::BufferReady while wave_out_get_state() != state_playing");
+
             return;
+
          }
 
          m_pprebuffer->read_buffer(lpwavehdr->lpData, m_pprebuffer->get_buffer_size(), lpwavehdr->dwUser);
