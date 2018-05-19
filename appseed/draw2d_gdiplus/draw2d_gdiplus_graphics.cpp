@@ -4320,7 +4320,11 @@ gdi_fallback:
    {
 
       if (m_pgraphics == NULL)
+      {
+
          return FALSE;
+
+      }
 
       Gdiplus::Status status = Gdiplus::Status::GenericError;
 
