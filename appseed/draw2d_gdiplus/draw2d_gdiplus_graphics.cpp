@@ -5878,7 +5878,7 @@ gdi_fallback:
             //            g_pdiba->add(dib1);
             //#endif
 
-            dib1->create(rectText.size());
+            dib1->create(rectText.get_size());
 
             dib1->get_graphics()->SelectObject(get_current_font());
 
@@ -5888,7 +5888,7 @@ gdi_fallback:
 
             dib1->get_graphics()->text_out(0, 0, lpszString, nCount);
 
-            dib1->blend2(null_point(), m_pdibAlphaBlend, point((int)MAX(0, x - m_ptAlphaBlend.x), (int)MAX(0, y - m_ptAlphaBlend.y)), rectText.size(), 255);
+            dib1->blend2(null_point(), m_pdibAlphaBlend, point((int)MAX(0, x - m_ptAlphaBlend.x), (int)MAX(0, y - m_ptAlphaBlend.y)), rectText.get_size(), 255);
 
             BitBltRaw((int)x, (int)y, rectText.width(), rectText.height(), dib1->get_graphics(), 0, 0, SRCCOPY);
 
@@ -5950,14 +5950,14 @@ gdi_fallback:
 
                ::draw2d::dib_sp dib1(allocer());
 
-               dib1->create(rectBlt.size());
+               dib1->create(rectBlt.get_size());
 
                dib1->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
 
-               if (!dib1->from(null_point(), pgraphicsSrc, point(xSrc, ySrc), rectBlt.size()))
+               if (!dib1->from(null_point(), pgraphicsSrc, point(xSrc, ySrc), rectBlt.get_size()))
                   return false;
 
-               dib1->blend2(point(0, 0), m_pdibAlphaBlend, point(x - m_ptAlphaBlend.x, y - m_ptAlphaBlend.y), rectBlt.size(), 255);
+               dib1->blend2(point(0, 0), m_pdibAlphaBlend, point(x - m_ptAlphaBlend.x, y - m_ptAlphaBlend.y), rectBlt.get_size(), 255);
 
                BitBltRaw(x, y, nWidth, nHeight, dib1->get_graphics(), 0, 0, dwRop);
 
