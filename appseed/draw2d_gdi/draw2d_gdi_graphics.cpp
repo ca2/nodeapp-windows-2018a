@@ -2613,7 +2613,7 @@ namespace draw2d_gdi
 
          //m_sppath->get_bounding_rect(rect);
 
-         ::draw2d::dib * pdib = dib_work(rect.size(), false);
+         ::draw2d::dib * pdib = dib_work(rect.get_size(), false);
 
          if(pdib == NULL || pdib->area() <= 0)
             return false;
@@ -2787,7 +2787,7 @@ namespace draw2d_gdi
          bf.SourceConstantAlpha = 0xFF;
          bf.AlphaFormat = AC_SRC_ALPHA;
 
-         ::draw2d::dib * pdib = dib_work(rect.size(), false);
+         ::draw2d::dib * pdib = dib_work(rect.get_size(), false);
 
          if(pdib == NULL || pdib->area() <= 0)
             return false;
@@ -2864,7 +2864,7 @@ namespace draw2d_gdi
          bf.SourceConstantAlpha = 0xFF;
          bf.AlphaFormat = AC_SRC_ALPHA;
 
-         ::draw2d::dib * pdib = dib_work(rect.size(), false);
+         ::draw2d::dib * pdib = dib_work(rect.get_size(), false);
 
          if(pdib == NULL || pdib->area() <= 0)
             return false;
