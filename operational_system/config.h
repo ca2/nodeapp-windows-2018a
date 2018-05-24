@@ -142,7 +142,7 @@
 #pragma warning(disable: 4263 4264)  // base class method is hidden
 
 
-#define FONT_SANS "Arial Unicode"
+#define FONT_SANS "Segoe UI"
 #define FONT_SERIF "Times New Roman"
 #define FONT_MONO "Courier New"
 #define FONT_SANS_EX "Geneva"
