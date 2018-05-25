@@ -4335,7 +4335,7 @@ gdi_fallback:
 
       }
 
-      if (m_etextrendering != m_spfont->m_etextrendering)
+      if (m_spfont.is_set() && m_etextrendering != m_spfont->m_etextrendering)
       {
 
          set_text_rendering(m_spfont->m_etextrendering);
@@ -4352,7 +4352,7 @@ gdi_fallback:
       format.SetFormatFlags((format.GetFormatFlags()
                              //| Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
                              | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
-                             | Gdiplus::StringFormatFlagsNoWrap)
+                             | (nFormat & DT_SINGLELINE ? Gdiplus::StringFormatFlagsNoWrap: 0))
                             & ~(Gdiplus::StringFormatFlagsLineLimit));
 
       if (nFormat & DT_PATH_ELLIPSIS)
