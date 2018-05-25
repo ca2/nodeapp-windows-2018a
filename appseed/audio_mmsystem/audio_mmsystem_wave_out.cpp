@@ -166,7 +166,7 @@ namespace multimedia
          try
          {
 
-            mmresult = waveOutOpen(&m_hwaveout, audiowave->m_uiWaveInDevice, wave_format(), (DWORD_PTR) &waveOutProc, (DWORD_PTR) m_pthreadFree->get_os_int(), CALLBACK_FUNCTION);
+            mmresult = waveOutOpen(&m_hwaveout, audiowave->m_uiWaveOutDevice, wave_format(), (DWORD_PTR) &waveOutProc, (DWORD_PTR) m_pthreadFree->get_os_int(), CALLBACK_FUNCTION);
 
             if (mmresult == MMSYSERR_NOERROR)
             {
