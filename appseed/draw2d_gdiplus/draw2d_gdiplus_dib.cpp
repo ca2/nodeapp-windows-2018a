@@ -33,6 +33,19 @@ namespace draw2d_gdiplus
 
    }
 
+   dib::dib(const dib & dib) :
+      object(dib.get_app())
+   {
+
+      m_sizeWnd.cx = 0;
+      m_sizeWnd.cy = 0;
+      m_hbitmap = NULL;
+
+      ZERO(m_bitmapinfo);
+
+      ::draw2d::dib::from(&dib);
+
+   }
 
    //void    dib::construct(int32_t cx, int32_t cy)
    //{

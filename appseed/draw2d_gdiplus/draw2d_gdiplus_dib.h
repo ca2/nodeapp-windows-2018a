@@ -26,6 +26,7 @@ namespace draw2d_gdiplus
 
 
       dib(::aura::application * papp);
+      dib(const dib & dib);
       virtual ~dib();
 
 
