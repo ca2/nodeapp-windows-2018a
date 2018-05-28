@@ -3728,11 +3728,16 @@ gdi_fallback:
 
    size graphics::ScaleViewportExt(int32_t xNum, int32_t xDenom, int32_t yNum, int32_t yDenom)
    {
-      //size size(0, 0);
-      //if(get_handle1() != NULL && get_handle1() != get_handle2())
-      //   ::ScaleViewportExtEx(get_handle1(), xNum, xDenom, yNum, yDenom, &size);
-      //if(get_handle2() != NULL)
-      //   ::ScaleViewportExtEx(get_handle2(), xNum, xDenom, yNum, yDenom, &size);
+      Gdiplus::Matrix m;
+
+      Gdiplus::Status status = m_pgraphics->GetTransform(&m);
+
+      ap(Gdiplus::Matrix) pmNew = m.Clone();
+
+      status = pmNew->Scale((Gdiplus::REAL) xNum/ (Gdiplus::REAL)xDenom, (Gdiplus::REAL) yNum / (Gdiplus::REAL)yDenom, Gdiplus::MatrixOrderPrepend);
+
+      status = m_pgraphics->SetTransform(pmNew);
+
       return size(0, 0);
    }
 
