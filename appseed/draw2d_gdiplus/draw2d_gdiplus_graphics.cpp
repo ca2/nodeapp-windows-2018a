@@ -4293,7 +4293,7 @@ gdi_fallback:
    }
 
 
-   int32_t graphics::draw_text(const char * lpszString,strsize nCount,const RECT & lpRect,UINT nFormat)
+   bool graphics::draw_text(const char * lpszString,strsize nCount,const RECT & lpRect,UINT nFormat)
    {
 
       return draw_text(string(lpszString,nCount),lpRect,nFormat);
@@ -4301,7 +4301,7 @@ gdi_fallback:
    }
 
 
-   int32_t graphics::draw_text(const string & str,const RECT & rectParam,UINT nFormat)
+   bool graphics::draw_text(const string & str,const RECT & rectParam,UINT nFormat)
    {
 
       ::rectd rect;
@@ -4313,7 +4313,7 @@ gdi_fallback:
    }
 
 
-   int32_t graphics::draw_text(const char * lpszString, strsize nCount, const RECTD & rectParam, UINT nFormat)
+   bool graphics::draw_text(const char * lpszString, strsize nCount, const RECTD & rectParam, UINT nFormat)
    {
 
       return draw_text(string(lpszString,nCount),rectParam,nFormat);
@@ -4321,13 +4321,22 @@ gdi_fallback:
    }
 
 
-   int32_t graphics::draw_text(const string & str, const RECTD & rectParam, UINT nFormat)
+   bool graphics::draw_text(const string & str, const RECTD & rectParam, UINT nFormat)
    {
+
+      synch_lock sl(m_pmutex);
+
+      if (m_spfont.is_null())
+      {
+
+         return false;
+
+      }
 
       if (m_pgraphics == NULL)
       {
 
-         return FALSE;
+         return false;
 
       }
 
@@ -4477,7 +4486,7 @@ gdi_fallback:
    }
 
 
-   int32_t graphics::draw_text_ex(const char * lpszString,strsize nCount,const RECT & rectParam,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
+   bool graphics::draw_text_ex(const char * lpszString,strsize nCount,const RECT & rectParam,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
    {
 
       if(get_handle1() == NULL)
@@ -4492,7 +4501,7 @@ gdi_fallback:
    }
 
 
-   int32_t graphics::draw_text_ex(const string & str,const RECT & rectParam,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
+   bool graphics::draw_text_ex(const string & str,const RECT & rectParam,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
    {
       ASSERT(get_handle1() != NULL);
       // these flags would modify the string
@@ -4503,7 +4512,7 @@ gdi_fallback:
    }
 
 
-   int32_t graphics::draw_text_ex(const char * lpszString,strsize nCount,const RECTD & rectParam,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
+   bool graphics::draw_text_ex(const char * lpszString,strsize nCount,const RECTD & rectParam,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
    {
 
       return ::draw2d::graphics::draw_text_ex(lpszString,nCount,rectParam,nFormat,lpDTParams);
@@ -4511,7 +4520,7 @@ gdi_fallback:
    }
 
 
-   int32_t graphics::draw_text_ex(const string & str,const RECTD & rectParam,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
+   bool graphics::draw_text_ex(const string & str,const RECTD & rectParam,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
    {
 
       return ::draw2d::graphics::draw_text_ex(str,rectParam,nFormat,lpDTParams);

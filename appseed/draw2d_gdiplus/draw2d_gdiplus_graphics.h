@@ -330,17 +330,17 @@ namespace draw2d_gdiplus
 
 
 
-      virtual i32 draw_text(const char * lpszString,strsize nCount,const RECT & lpRect,UINT nFormat) override;
-      virtual i32 draw_text(const string & str,const RECT & lpRect,UINT nFormat) override;
+      virtual bool draw_text(const char * lpszString,strsize nCount,const RECT & lpRect,UINT nFormat) override;
+      virtual bool draw_text(const string & str,const RECT & lpRect,UINT nFormat) override;
 
-      virtual i32 draw_text_ex(const char * lpszString,strsize nCount,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams) override;
-      virtual i32 draw_text_ex(const string & str,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams) override;
+      virtual bool draw_text_ex(const char * lpszString,strsize nCount,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams) override;
+      virtual bool draw_text_ex(const string & str,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams) override;
 
-      virtual i32 draw_text(const char * lpszString,strsize nCount,const RECTD & rect,UINT nFormat) override;
-      virtual i32 draw_text(const string & str,const RECTD & rect,UINT nFormat) override;
+      virtual bool draw_text(const char * lpszString,strsize nCount,const RECTD & rect,UINT nFormat) override;
+      virtual bool draw_text(const string & str,const RECTD & rect,UINT nFormat) override;
 
-      virtual i32 draw_text_ex(const char * lpszString,strsize nCount,const RECTD & rect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams) override;
-      virtual i32 draw_text_ex(const string & str,const RECTD & rect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams) override;
+      virtual bool draw_text_ex(const char * lpszString,strsize nCount,const RECTD & rect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams) override;
+      virtual bool draw_text_ex(const string & str,const RECTD & rect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams) override;
 
       virtual ::count GetEachCharTextExtent(array < size > & sizea, const string & str, strsize iStart = 0, strsize iEnd = -1) override;
       virtual sized GetTextExtent(const char * lpszString, strsize nCount, strsize iIndex) override;
