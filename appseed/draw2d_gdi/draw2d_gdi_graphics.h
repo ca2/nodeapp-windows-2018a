@@ -359,11 +359,11 @@ namespace draw2d_gdi
       virtual size TabbedTextOut(int x, int y, const char * lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions, int32_t nTabOrigin) override;
       virtual size TabbedTextOut(int x, int y, const string & str, count nTabPositions, LPINT lpnTabStopPositions, int32_t nTabOrigin) override;
 
-      virtual int draw_text(const char * lpszString,strsize nCount,const RECT & lpRect, UINT nFormat) override;
-      virtual int draw_text(const string & str,const RECT & lpRect,UINT nFormat) override;
+      virtual bool draw_text(const char * lpszString,strsize nCount,const RECT & lpRect, UINT nFormat) override;
+      virtual bool draw_text(const string & str,const RECT & lpRect,UINT nFormat) override;
 
-      virtual int draw_text_ex(const char * lpszString,strsize nCount,const RECT & lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams) override;
-      virtual int draw_text_ex(const string & str,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams) override;
+      virtual bool draw_text_ex(const char * lpszString,strsize nCount,const RECT & lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams) override;
+      virtual bool draw_text_ex(const string & str,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams) override;
 
       virtual sized GetTextExtent(const char * lpszString, strsize nCount) override;
       virtual sized GetTextExtent(const string & str) override;

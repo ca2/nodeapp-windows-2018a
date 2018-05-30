@@ -1725,7 +1725,7 @@ namespace draw2d_gdi
    }
 
 
-   int graphics::draw_text(const char * lpszString, strsize nCount, const RECT & lpRect, UINT nFormat)
+   bool graphics::draw_text(const char * lpszString, strsize nCount, const RECT & lpRect, UINT nFormat)
    {
 
       return _DrawText(lpszString, nCount, lpRect, nFormat);
@@ -1733,7 +1733,7 @@ namespace draw2d_gdi
    }
 
 
-   int graphics::draw_text(const string & str,const RECT & lpRect,UINT nFormat)
+   bool graphics::draw_text(const string & str,const RECT & lpRect,UINT nFormat)
    {
 
       return draw_text(str, (int) str.get_length(), lpRect, nFormat);
@@ -1741,7 +1741,7 @@ namespace draw2d_gdi
    }
 
 
-   int graphics::draw_text_ex(const char * lpszString,strsize nCount,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
+   bool graphics::draw_text_ex(const char * lpszString,strsize nCount,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
    {
 
       wstring wstr(string(lpszString, nCount));
@@ -1751,7 +1751,7 @@ namespace draw2d_gdi
    }
 
 
-   int graphics::draw_text_ex(const string & str,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
+   bool graphics::draw_text_ex(const string & str,const RECT & lpRect,UINT nFormat,LPDRAWTEXTPARAMS lpDTParams)
    {
 
       return draw_text_ex((char *) (const char *) str, (int) str.get_length(), lpRect, nFormat, lpDTParams);
