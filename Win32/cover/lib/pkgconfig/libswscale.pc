@@ -5,9 +5,9 @@ includedir=/c/basis/nodeapp/Win32/stage/include
 
 Name: libswscale
 Description: FFmpeg image rescaling library
-Version: 4.8.100
+Version: 5.1.100
 Requires: 
-Requires.private: libavutil >= 55.78.100
+Requires.private: libavutil >= 56.14.100
 Conflicts:
 Libs: -L${libdir}  -lswscale 
 Libs.private: 

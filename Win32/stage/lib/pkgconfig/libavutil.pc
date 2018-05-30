@@ -5,10 +5,10 @@ includedir=/c/basis/nodeapp/Win32/stage/include
 
 Name: libavutil
 Description: FFmpeg utility library
-Version: 55.78.100
+Version: 56.14.100
 Requires: 
 Requires.private: 
 Conflicts:
 Libs: -L${libdir}  -lavutil 
-Libs.private: 
+Libs.private: user32.lib bcrypt.lib
 Cflags: -I${includedir}

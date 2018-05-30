@@ -12,8 +12,8 @@
 # Perl c_rehash script, scan all files in a directory
 # and add symbolic links to their hash values.
 
-my $dir = "c:/basis/nodeapp/ssl/x64/stage";
-my $prefix = "c:/basis/nodeapp/x64/stage";
+my $dir = c:/basis/nodeapp/ssl/x64/stage;
+my $prefix = c:/basis/nodeapp/x64/stage;
 
 my $errorcount = 0;
 my $openssl = $ENV{OPENSSL} || "openssl";

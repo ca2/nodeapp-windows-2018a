@@ -5,9 +5,9 @@ includedir=/c/basis/nodeapp/Win32/basis/include
 
 Name: libpostproc
 Description: FFmpeg postprocessing library
-Version: 54.7.100
+Version: 55.1.100
 Requires: 
-Requires.private: libavutil >= 55.78.100
+Requires.private: libavutil >= 56.14.100
 Conflicts:
 Libs: -L${libdir}  -lpostproc 
 Libs.private: 

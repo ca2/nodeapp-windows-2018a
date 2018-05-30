@@ -5,9 +5,9 @@ includedir=/c/basis/nodeapp/Win32/basis/include
 
 Name: libswresample
 Description: FFmpeg audio resampling library
-Version: 2.9.100
+Version: 3.1.100
 Requires: 
-Requires.private: libavutil >= 55.78.100
+Requires.private: libavutil >= 56.14.100
 Conflicts:
 Libs: -L${libdir}  -lswresample 
 Libs.private: 
