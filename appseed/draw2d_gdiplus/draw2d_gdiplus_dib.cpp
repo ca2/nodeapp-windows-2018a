@@ -11,6 +11,36 @@
 //};
 //
 
+///// <summary>
+///// Rotate the given bitmap according to Exif Orientation data
+///// </summary>
+///// <param name="img">source image</param>
+///// <param name="updateExifData">set it to TRUE to update image Exif data after rotation (default is TRUE)</param>
+///// <returns>The RotateFlipType value corresponding to the applied rotation. If no rotation occurred, RotateFlipType.RotateNoneFlipNone will be returned.</returns>
+//static Gdiplus::RotateFlipType RotateImageByExifOrientationData(Gdiplus::Image * pimg)
+//{
+//   int orientationId = 0x0112;
+//   var fType = RotateFlipType.RotateNoneFlipNone;
+//   if (img.PropertyIdList.Contains(orientationId))
+//   {
+//      var pItem = img.GetPropertyItem(orientationId);
+//      fType = GetRotateFlipTypeByExifOrientationData(pItem.Value[0]);
+//      if (fType != RotateFlipType.RotateNoneFlipNone)
+//      {
+//         img.RotateFlip(fType);
+//         // Remove Exif orientation tag (if requested)
+//         if (updateExifData) img.RemovePropertyItem(orientationId);
+//      }
+//   }
+//   return fType;
+//}
+
+/// <summary>
+/// Return the proper System.Drawing.RotateFlipType according to given orientation EXIF metadata
+/// </summary>
+/// <param name="orientation">Exif "Orientation"</param>
+/// <returns>the corresponding System.Drawing.RotateFlipType enum value</returns>
+
 namespace draw2d_gdiplus
 {
 
@@ -747,6 +777,11 @@ namespace draw2d_gdiplus
 
 
       return true;
+
+   }
+
+   void dib::on_exif_orientation()
+   {
 
    }
 

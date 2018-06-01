@@ -41,7 +41,7 @@ namespace draw2d_gdiplus
 
       bool dc_select(bool bSelect = true);
 
-
+      virtual void on_exif_orientation();
 
 
 
