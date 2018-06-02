@@ -780,10 +780,14 @@ namespace draw2d_gdiplus
 
    }
 
+
    void dib::on_exif_orientation()
    {
 
+      ::draw2d::dib::on_exif_orientation();
+
    }
+
 
 } // namespace draw2d_gdiplus
 
