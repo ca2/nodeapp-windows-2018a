@@ -99,6 +99,16 @@ namespace draw2d_gdiplus
 
    }
    */
+
+
+   void region::max_bounding_box(LPRECTD lprect)
+   {
+      rect r;
+      ((region*)this)->get_bounding_box(r);
+      ::copy(lprect, r);
+   }
+
+
    bool region::contains(POINT point) const
    {
 

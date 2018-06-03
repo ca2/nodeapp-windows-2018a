@@ -35,7 +35,7 @@ namespace draw2d_gdiplus
       bool contains(POINT point) const;
       //bool RectInRegion(LPCRECT lpRect) const;
       //int32_t GetRegionData(LPRGNDATA lpRgnData, int32_t nCount) const;
-
+      virtual void max_bounding_box(LPRECTD lprect);
       virtual bool destroy();
 
       // platform-specific or platform-internals

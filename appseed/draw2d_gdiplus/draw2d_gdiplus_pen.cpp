@@ -399,6 +399,22 @@ namespace draw2d_gdiplus
             ((pen *) this)->m_ppen->SetDashPattern(dashVals,2);
 
          }
+         else if (m_etype == type_dash)
+         {
+
+            Gdiplus::REAL dashVals[4];
+
+            dashVals[0] = 10;
+            dashVals[1] = 10;
+
+            // Create a Pen object.
+
+            // Set the dash pattern for the custom dashed line.
+            ((pen *)this)->m_ppen->SetDashPattern(dashVals, 2);
+            //((pen *)this)->m_ppen->SetDashStyle(Gdiplus::DashStyleDash
+            //                                 );
+
+         }
 
       }
 

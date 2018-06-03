@@ -6003,6 +6003,71 @@ gdi_fallback:
    }
 
 
+   bool graphics::get(::draw2d::matrix & matrix)
+   {
+
+      Gdiplus::Matrix m;
+
+      if (m_pgraphics->GetTransform(&m) != Gdiplus::Ok)
+      {
+
+         return false;
+
+      }
+
+      float fa[6];
+
+      m.GetElements(fa);
+
+      matrix = ::draw2d::matrix();
+
+      matrix.SetElements(fa);
+
+      return true;
+
+   }
+
+
+   bool graphics::set(const ::draw2d::matrix & matrix)
+   {
+
+      Gdiplus::Matrix m;
+
+      m.SetElements(matrix.a1, matrix.a2, matrix.b1, matrix.b2, matrix.c1, matrix.c2);
+
+      return m_pgraphics->SetTransform(&m) == Gdiplus::Ok;
+
+   }
+
+
+   bool graphics::append(const ::draw2d::matrix & matrix)
+   {
+
+      ::draw2d::matrix m;
+
+      get(m);
+
+      m.append(matrix);
+
+      return set(m);
+
+   }
+
+
+   bool graphics::prepend(const ::draw2d::matrix & matrix)
+   {
+
+      ::draw2d::matrix m;
+
+      get(m);
+
+      m.prepend(matrix);
+
+      return set(m);
+
+   }
+
+
 } // namespace draw2d_gdiplus
 
 
