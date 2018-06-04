@@ -1,0 +1,27 @@
+#!/bin/bash
+
+cp /c/third/static/Win32/basis/lib/libcrypto.lib /c/basis/nodeapp/Win32/basis/lib/_libcrypto.lib
+cp /c/third/static/Win32/basis/lib/libssl.lib /c/basis/nodeapp/Win32/basis/lib/_libssl.lib
+cp /c/third/static/Win32/basis/lib/ossl_static.pdb /c/basis/nodeapp/Win32/basis/lib/ossl_static.pdb
+
+cp /c/third/static/Win32/stage/lib/libcrypto.lib /c/basis/nodeapp/Win32/cover/lib/_libcrypto.lib
+cp /c/third/static/Win32/stage/lib/libssl.lib /c/basis/nodeapp/Win32/cover/lib/_libssl.lib
+cp /c/third/static/Win32/stage/lib/ossl_static.pdb /c/basis/nodeapp/Win32/cover/lib/ossl_static.pdb
+
+cp /c/third/static/Win32/stage/lib/libcrypto.lib /c/basis/nodeapp/Win32/stage/lib/_libcrypto.lib
+cp /c/third/static/Win32/stage/lib/libssl.lib /c/basis/nodeapp/Win32/stage/lib/_libssl.lib
+cp /c/third/static/Win32/stage/lib/ossl_static.pdb /c/basis/nodeapp/Win32/stage/lib/ossl_static.pdb
+
+
+cp /c/third/static/x64/basis/lib/libcrypto.lib /c/basis/nodeapp/x64/basis/lib/_libcrypto.lib
+cp /c/third/static/x64/basis/lib/libssl.lib /c/basis/nodeapp/x64/basis/lib/_libssl.lib
+cp /c/third/static/x64/basis/lib/ossl_static.pdb /c/basis/nodeapp/x64/basis/lib/ossl_static.pdb
+
+cp /c/third/static/x64/stage/lib/libcrypto.lib /c/basis/nodeapp/x64/cover/lib/_libcrypto.lib
+cp /c/third/static/x64/stage/lib/libssl.lib /c/basis/nodeapp/x64/cover/lib/_libssl.lib
+cp /c/third/static/x64/stage/lib/ossl_static.pdb /c/basis/nodeapp/x64/cover/lib/ossl_static.pdb
+
+cp /c/third/static/x64/stage/lib/libcrypto.lib /c/basis/nodeapp/x64/stage/lib/_libcrypto.lib
+cp /c/third/static/x64/stage/lib/libssl.lib /c/basis/nodeapp/x64/stage/lib/_libssl.lib
+cp /c/third/static/x64/stage/lib/ossl_static.pdb /c/basis/nodeapp/x64/stage/lib/ossl_static.pdb
+

@@ -12,3 +12,6 @@ copy ss86 C:\msys\bin\
 copy ss86d C:\msys\bin\
 copy ss64 C:\msys\bin\
 copy ss64d C:\msys\bin\
+
+copy releasess C:\msys\bin\
+copy releasethird C:\msys\bin\

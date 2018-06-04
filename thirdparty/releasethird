@@ -1,0 +1,9 @@
+#!/bin/bash
+
+mv /c/basis/nodeapp/Win32/basis/bin/*.lib /c/basis/nodeapp/Win32/basis/lib/
+mv /c/basis/nodeapp/Win32/stage/bin/*.lib /c/basis/nodeapp/Win32/stage/lib/
+mv /c/basis/nodeapp/x64/basis/bin/*.lib /c/basis/nodeapp/x64/basis/lib/
+mv /c/basis/nodeapp/x64/stage/bin/*.lib /c/basis/nodeapp/x64/stage/lib/
+
+cp -Rf /c/basis/nodeapp/Win32/stage/* /c/basis/nodeapp/Win32/cover/
+cp -Rf /c/basis/nodeapp/x64/stage/* /c/basis/nodeapp/x64/cover/
