@@ -7,14 +7,10 @@ namespace production
 
    pane_view::pane_view(::aura::application * papp) :
       ::object(papp),
-      ::user::tab(papp),
-
       ::user::tab_view(papp),
       ::userex::pane_tab_view(papp),
       place_holder_container(papp)
    {
-
-
 
    }
 
@@ -330,9 +326,11 @@ namespace production
             uh.m_eoption = view_update_hint::OptionBuild;
             uh.m_bOption = pcheckbox->_001GetCheck() == ::check::checked;
             get_document()->update_all_views(NULL, 0, &uh);
+
          }
+
       }
-      return false;
+
    }
 
 

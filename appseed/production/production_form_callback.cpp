@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 
 namespace production
 {
@@ -22,9 +22,10 @@ namespace production
 
    void form_callback::on_control_event(::user::control_event * pevent)
    {
-      UNREFERENCED_PARAMETER(pview);
+
       UNREFERENCED_PARAMETER(pevent);
-      return false;
+
    }
+
 
 } // namespace production

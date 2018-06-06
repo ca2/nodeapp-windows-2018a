@@ -23,6 +23,8 @@ namespace backup
    void form_callback::on_control_event(::user::control_event * pevent)
    {
 
+      auto pview = pevent->get_form();
+
       if(pevent->m_eevent == ::user::event_button_clicked)
       {
          if(pevent->m_puie->m_id == "lfs")
@@ -36,6 +38,12 @@ namespace backup
             sp(::user::edit_text) ptext =pui;
             string strPath;
             ptext->_001SetText(strPath, uh.m_actioncontext);
+
+            pevent->Ret();
+
+            return;
+
+
          }
          else if(pevent->m_puie->m_id == "ftp")
          {
@@ -44,6 +52,11 @@ namespace backup
             uh.m_etype = ::user::form_update_hint::type_browse;
             uh.m_strForm = "filemanager_add_location_ftp.xhtml";
             dynamic_cast < ::user::form_view * > (pview)->get_document()->update_all_views(NULL,0,&uh);
+            pevent->Ret();
+
+            return;
+
+
          }
          else if(pevent->m_puie->m_id == "submit")
          {
@@ -73,9 +86,19 @@ namespace backup
                         //ptext->_001GetText(uh.m_strReplace);
                         pview->GetDocument()->update_all_views(NULL, 0, &uh);
                      }*/
+            pevent->Ret();
+
+            return;
+
          }
+
       }
-      return false;
+
    }
 
+
 } // namespace backup
+
+
+
+

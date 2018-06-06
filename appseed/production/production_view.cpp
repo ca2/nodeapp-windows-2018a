@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include <Psapi.h>
 
 
@@ -9,7 +9,7 @@ namespace production
 
    view::view(::aura::application * papp) :
       ::object(papp),
-      ::user::interaction(papp), 
+      ::user::interaction(papp),
       m_dibV(allocer()),
       m_dibVs(allocer()),
       m_brushBkActive(allocer()),
@@ -17,7 +17,7 @@ namespace production
    {
 
       m_pproduction = NULL;
-      
+
       //System.file().ftd("C:\\home2\\ca2os\\ca2_spa\\stage", "C:\\teste.fileset");
 
 
@@ -52,56 +52,56 @@ namespace production
    {
       ::user::scroll_view::install_message_routing(pinterface);
 
-	   IGUI_MSG_LINK(WM_DESTROY, pinterface, this, &view::_001OnDestroy);
-	   IGUI_MSG_LINK(WM_SIZE, pinterface, this, &view::_001OnSize);
-	   //IGUI_MSG_LINK(WM_PAINT, pinterface, this, &view::_001OnPaint);
-	   IGUI_MSG_LINK(WM_CREATE, pinterface, this, &view::_001OnCreate);
-	   IGUI_MSG_LINK(WM_CONTEXTMENU, pinterface, this, &view::_001OnContextMenu);
-	   IGUI_MSG_LINK(WM_SETCURSOR, pinterface, this, &view::_001OnSetCursor);
+      IGUI_MSG_LINK(WM_DESTROY, pinterface, this, &view::_001OnDestroy);
+      IGUI_MSG_LINK(WM_SIZE, pinterface, this, &view::_001OnSize);
+      //IGUI_MSG_LINK(WM_PAINT, pinterface, this, &view::_001OnPaint);
+      IGUI_MSG_LINK(WM_CREATE, pinterface, this, &view::_001OnCreate);
+      IGUI_MSG_LINK(WM_CONTEXTMENU, pinterface, this, &view::_001OnContextMenu);
+      IGUI_MSG_LINK(WM_SETCURSOR, pinterface, this, &view::_001OnSetCursor);
 
-   //   IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &::user::interaction::_001OnLButtonDown);
-   //   IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &::user::interaction::_001OnLButtonUp);
+      //   IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &::user::interaction::_001OnLButtonDown);
+      //   IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &::user::interaction::_001OnLButtonUp);
       IGUI_MSG_LINK(WM_KEYDOWN, pinterface, this, &view::_001OnKeyDown);
       IGUI_MSG_LINK(WM_KEYUP, pinterface, this, &view::_001OnKeyUp);
 
       IGUI_MSG_LINK(WM_LBUTTONDOWN, pinterface, this, &view::_001OnLButtonDown);
       IGUI_MSG_LINK(WM_LBUTTONUP, pinterface, this, &view::_001OnLButtonUp);
       IGUI_MSG_LINK(WM_RBUTTONUP, pinterface, this, &view::_001OnRButtonUp);
-      
+
 
       IGUI_MSG_LINK(WM_SHOWWINDOW, pinterface, this, &view::_001OnShowWindow);
       IGUI_MSG_LINK(WM_DESTROY, pinterface, this, &view::_001OnDestroy);
 
       IGUI_MSG_LINK(WM_USER, pinterface, this, &view::_001OnUser);
 
-      
+
 
    }
 
-   #ifdef DEBUG
+#ifdef DEBUG
    void view::assert_valid() const
    {
-	   ::user::impact::assert_valid();
+      ::user::impact::assert_valid();
    }
 
    void view::dump(dump_context & dumpcontext) const
    {
-	   ::user::impact::dump(dumpcontext);
+      ::user::impact::dump(dumpcontext);
    }
-   #endif //DEBUG
+#endif //DEBUG
 
    bool view::pre_create_window(::user::create_struct& cs)
    {
       cs.style &= ~WS_EX_CLIENTEDGE;
-	   return ::user::impact::pre_create_window(cs);
+      return ::user::impact::pre_create_window(cs);
    }
 
-   void view::_001OnInitialUpdate() 
+   void view::_001OnInitialUpdate()
    {
       ::user::impact::_001OnInitialUpdate();
    }
 
-   void view::on_update(::user::impact * pSender, LPARAM lHint, ::object * phint) 
+   void view::on_update(::user::impact * pSender, LPARAM lHint, ::object * phint)
    {
       UNREFERENCED_PARAMETER(pSender);
       if(lHint == 5432108)
@@ -123,15 +123,15 @@ namespace production
             }
          }
       }
-   	
+
    }
 
-   void view::_001OnDestroy(::message::message * pobj) 
+   void view::_001OnDestroy(::message::message * pobj)
    {
-	   ::user::impact::_001OnDestroy(pobj);
+      ::user::impact::_001OnDestroy(pobj);
    }
 
-   void view::_001OnSize(::message::message * pobj) 
+   void view::_001OnSize(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
 //      SCAST_PTR(::message::size, psize, pobj);
@@ -171,8 +171,8 @@ namespace production
    void view:: _001OnDraw(::draw2d::graphics * pgraphics)
    {
 
-      
-      
+
+
       single_lock sl(&m_pproduction->m_mutexStatus,TRUE);
 
       rect rectClient;
@@ -183,7 +183,7 @@ namespace production
       size sz = pgraphics->GetTextExtent("��qg");
       m_iLineHeight = MAX(1, sz.cy);
 
-      pgraphics->FillSolidRect(rectClient, ARGB(255, 255, 255, 255));
+      pgraphics->fill_solid_rect(rectClient, ARGB(255, 255, 255, 255));
 
       rect rectText(rectClient);
 
@@ -242,7 +242,7 @@ namespace production
 
    }
 
-   void view::_001OnCreate(::message::message * pobj) 
+   void view::_001OnCreate(::message::message * pobj)
    {
       if(pobj->previous())
          return;
@@ -250,29 +250,29 @@ namespace production
       class rect rect;
       rect.null();
 
-	   //if(!m_pscrollbarHorz->create_window(
-		  // orientation_horizontal,
-		  // WS_CHILD 
-		  // | WS_VISIBLE,
-		  // rect,
-		  // this,
-		  // 1024))
-    //  {
-		  // return;
-    //  }
+      //if(!m_pscrollbarHorz->create_window(
+      // orientation_horizontal,
+      // WS_CHILD
+      // | WS_VISIBLE,
+      // rect,
+      // this,
+      // 1024))
+      //  {
+      // return;
+      //  }
 
-    //  rect.null();
+      //  rect.null();
 
-	   //if(!m_pscrollbarVert->create_window(
-		  // orientation_vertical,
-		  // WS_CHILD 
-		  // | WS_VISIBLE,
-		  // rect,
-		  // this,
-		  // 1025))
-    //  {
-		  // return;
-    //  }
+      //if(!m_pscrollbarVert->create_window(
+      // orientation_vertical,
+      // WS_CHILD
+      // | WS_VISIBLE,
+      // rect,
+      // this,
+      // 1025))
+      //  {
+      // return;
+      //  }
 
       SetTimer(31, 230, NULL);
       SetTimer(3003, 300, NULL);
@@ -283,7 +283,7 @@ namespace production
       m_dibVs.load_from_matter("bambu49transr.png");
       //System.visual().imaging().free(pfi);
 
-      
+
 
       //make_production();
 
@@ -308,12 +308,12 @@ namespace production
 
    }
 
-   
+
    void view::_001OnKeyUp(::message::message * pobj)
    {
    }
 
-   void view::_001OnContextMenu(::message::message * pobj) 
+   void view::_001OnContextMenu(::message::message * pobj)
    {
       SCAST_PTR(::message::context_menu, pcontextmenu, pobj);
       point point = pcontextmenu->GetPoint();
@@ -328,14 +328,14 @@ namespace production
    }
 
 
-   void view::_001OnSetCursor(::message::message * pobj) 
+   void view::_001OnSetCursor(::message::message * pobj)
    {
 
       SCAST_PTR(::message::mouse, pmouse, pobj);
 
       pmouse->m_ecursor = ::visual::cursor_arrow;
-   	
-	   pobj->previous();
+
+      pobj->previous();
 
    }
 
@@ -390,7 +390,7 @@ namespace production
    void view::_001OnLButtonDown(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
-  //    SCAST_PTR(::message::mouse, pmouse, pobj);
+      //    SCAST_PTR(::message::mouse, pmouse, pobj);
 
 //      int32_t iHitArea = hit_test(pmouse->m_pt);
 
@@ -418,24 +418,24 @@ namespace production
    void view::_001OnRButtonUp(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
-  //    SCAST_PTR(::message::mouse, pmouse, pobj);
+      //    SCAST_PTR(::message::mouse, pmouse, pobj);
 
 //      int32_t iHitArea = hit_test(pmouse->m_pt);
-   /*   {
-         ::aura::menu menu;
-         menu.LoadXmlMenu(get_app(), "production\\popup_production.xml");
-         menu.set_app(get_app());
-         ::aura::menu menuPopup(menu.GetSubMenu(0));
-         menuPopup.set_app(get_app());
-         menuPopup.track_popup_menu(0, pmouse->m_pt.x, pmouse->m_pt.y, GetParentFrame()->GetSafeoswindow_());
-      }
-     */ 
+      /*   {
+            ::aura::menu menu;
+            menu.LoadXmlMenu(get_app(), "production\\popup_production.xml");
+            menu.set_app(get_app());
+            ::aura::menu menuPopup(menu.GetSubMenu(0));
+            menuPopup.set_app(get_app());
+            menuPopup.track_popup_menu(0, pmouse->m_pt.x, pmouse->m_pt.y, GetParentFrame()->GetSafeoswindow_());
+         }
+        */
    }
 
 
 
 
-   void view::_001OnTimer(::timer * ptimer) 
+   void view::_001OnTimer(::timer * ptimer)
    {
       ::user::scroll_view::_001OnTimer(ptimer);
       if(ptimer->m_nIDEvent == 543218)
@@ -471,7 +471,7 @@ namespace production
 
 
 
-   void view::_001OnShowWindow(::message::message * pobj) 
+   void view::_001OnShowWindow(::message::message * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
 //      SCAST_PTR(::message::show_window, pshowwindow, pobj);
@@ -544,15 +544,15 @@ namespace production
          m_iStep = 2;
 
          pdoc->get_operation_doc(true)->m_thread.queue_copy(
-            m_pproduction->m_straFiles, 
-            "C:\\ca2\\vrel\\" + m_pproduction->m_strConfiguration + "\\" + m_pproduction->m_strFormatBuild, 
-            strBase,
-            false,
-            true, 
-            this);
+         m_pproduction->m_straFiles,
+         "C:\\ca2\\vrel\\" + m_pproduction->m_strConfiguration + "\\" + m_pproduction->m_strFormatBuild,
+         strBase,
+         false,
+         true,
+         this);
 
          pdoc->get_operation_doc(true)->m_thread.kick();
-         
+
       }
       else if(pbase->m_wparam == 0x1000)
       {
