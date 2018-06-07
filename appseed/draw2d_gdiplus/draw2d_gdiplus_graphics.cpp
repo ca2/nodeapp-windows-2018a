@@ -5560,8 +5560,14 @@ gdi_fallback:
          case ::draw2d::text_rendering_single_bit_per_pixel:
             m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintSingleBitPerPixel);
             break;
+         case ::draw2d::text_rendering_single_bit_per_pixel_grid_fit:
+            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintSingleBitPerPixelGridFit);
+            break;
          case ::draw2d::text_rendering_clear_type_grid_fit:
             m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintClearTypeGridFit);
+            break;
+         case ::draw2d::text_rendering_none:
+            m_pgraphics->SetTextRenderingHint(Gdiplus::TextRenderingHintSystemDefault);
             break;
          }
 
