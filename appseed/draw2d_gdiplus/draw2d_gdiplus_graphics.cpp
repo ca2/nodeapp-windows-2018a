@@ -4565,7 +4565,7 @@ gdi_fallback:
 
    //}
 
-   ::count graphics::GetEachCharTextExtent(array < size > & sizea, const string & str, strsize iStartParam, strsize iCountParam)
+   ::count graphics::GetEachCharTextExtent(array < sized > & sizea, const string & str, strsize iStartParam, strsize iCountParam)
    {
 
       if (iCountParam < 0)
@@ -4711,7 +4711,7 @@ gdi_fallback:
 
             rectBound.GetSize(&s);
 
-            ::size sz((int64_t)(s.Width * dFontWidth), (int64_t)(s.Height));
+            ::sized sz((s.Width * dFontWidth), (s.Height));
 
             sizea.add(sz);
 
