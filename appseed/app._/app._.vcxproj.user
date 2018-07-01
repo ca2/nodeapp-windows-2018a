@@ -13,7 +13,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|x64'">
-    <LocalDebuggerCommandArguments>"$(OutDir)app.exe" "app_ca2_twitter_automator2" "$(OutDir)app_ca2_twitter_automator2_2.exe"</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>"$(OutDir)app.exe" "app_core_hellomultiverse" "$(OutDir)app_core_hellomultiverse2.exe"</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='cover|x64'">

@@ -115,7 +115,7 @@ public:
    virtual ~appfy();
 
 
-   virtual void run() override;
+   virtual void on_request(::create * pcreate) override;
 
    virtual void term_instance() override;
 
@@ -195,7 +195,7 @@ appfy::~appfy()
 }
 
 
-void appfy::run()
+void appfy::on_request(::create * pcreate)
 {
 
    string strSrc;
@@ -482,7 +482,7 @@ void appfy::run()
 
    }
 
-   System.post_quit();
+   post_quit();
 
 }
 
