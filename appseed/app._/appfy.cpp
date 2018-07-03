@@ -363,7 +363,9 @@ void appfy::on_request(::create * pcreate)
 
       ::file::path pathIcon;
 
-      string strMatter = Application.dir().matter("main/icon.ico", false, strRoot, strDomain);
+      string strMatter = System.dir().matter("main/icon.ico", false, strRoot, strDomain);
+
+      strMatter = System.get_matter_cache_path(strMatter);
 
       if (Application.file().exists(strMatter))
       {
