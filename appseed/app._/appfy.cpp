@@ -339,7 +339,7 @@ void appfy::on_request(::create * pcreate)
          }
          else
          {
-            
+
             auto iFind = strParse.find("_");
 
             if (iFind > 0)
@@ -361,22 +361,30 @@ void appfy::on_request(::create * pcreate)
 
       dprint("main copy should be done!!");
 
-      string strIcon;
+      ::file::path pathIcon;
 
-      string strCandidate = Application.dir().matter("main/icon.ico", false, strRoot, strDomain);
+      string strMatter = Application.dir().matter("main/icon.ico", false, strRoot, strDomain);
 
-      if (Application.file().exists(strCandidate))
-         strIcon = strCandidate;
+      if (Application.file().exists(strMatter))
+      {
+
+         pathIcon = strMatter;
+
+      }
 
       dprint("does main frame icon exist 1!!");
 
-      if (strIcon.is_empty())
+      if (pathIcon.is_empty())
       {
 
-         strCandidate = Application.dir().matter("main/icon.ico", false);
+         strMatter = Application.dir().matter("main/icon.ico", false);
 
-         if (Application.file().exists(strCandidate))
-            strIcon = strCandidate;
+         if (Application.file().exists(strMatter))
+         {
+
+            pathIcon = strMatter;
+
+         }
 
          dprint("does main frame icon exist 2!!");
 
@@ -406,16 +414,14 @@ void appfy::on_request(::create * pcreate)
 
       }
 
-      if (Application.file().exists(strIcon))
+      if (Application.file().exists(pathIcon))
       {
-
-
 
          memory memory;
          ::memory memoryItem;
          ::memory_file fileHd(get_app());
 
-         Application.file().as_memory(strIcon, memory);
+         Application.file().as_memory(pathIcon, memory);
 
          dprint("icon as memory");
 
