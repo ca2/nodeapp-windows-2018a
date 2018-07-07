@@ -35,11 +35,19 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multimedia_mmsystem", "..\.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wndfrm_anthill", "..\..\..\app\appseed\wndfrm_anthill\wndfrm_anthill.vcxproj", "{0BB1A1D1-7B7D-4484-9DF5-060481390526}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_textformat", "..\..\..\app-core\appseed\textformat\textformat.vcxproj", "{32BD35EA-BABA-412D-A9B5-3E75AD31E3CA}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wndfrm_core", "..\..\..\app\appseed\wndfrm_core\wndfrm_core.vcxproj", "{E2D7833B-9B59-4826-BBDF-C270A2115E86}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_veriwell_drum_factory", "..\..\..\app-veriwell\appseed\drum_factory\drum_factory.vcxproj", "{69F2F552-40F8-4C71-87C4-78FB7D45AB43}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "design_textformat", "..\..\..\design\appseed\textformat\textformat.vcxproj", "{32BD35EA-BABA-412D-A9B5-3E75AD31E3CA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
+		{11AFE887-61B7-4217-913C-36736B359F39} = {11AFE887-61B7-4217-913C-36736B359F39}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mattigianni_drum_factory", "..\..\..\mattigianni\appseed\drum_factory\drum_factory.vcxproj", "{69F2F552-40F8-4C71-87C4-78FB7D45AB43}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19841115-1984-0411-1977-021977151984} = {19841115-1984-0411-1977-021977151984}
+		{11AFE887-61B7-4217-913C-36736B359F39} = {11AFE887-61B7-4217-913C-36736B359F39}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -257,18 +265,6 @@ Global
 		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.stage|Win32.Build.0 = stage|Win32
 		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.stage|x64.ActiveCfg = stage|x64
 		{0BB1A1D1-7B7D-4484-9DF5-060481390526}.stage|x64.Build.0 = stage|x64
-		{32BD35EA-BABA-412D-A9B5-3E75AD31E3CA}.basis|Win32.ActiveCfg = basis|Win32
-		{32BD35EA-BABA-412D-A9B5-3E75AD31E3CA}.basis|Win32.Build.0 = basis|Win32
-		{32BD35EA-BABA-412D-A9B5-3E75AD31E3CA}.basis|x64.ActiveCfg = basis|x64
-		{32BD35EA-BABA-412D-A9B5-3E75AD31E3CA}.basis|x64.Build.0 = basis|x64
-		{32BD35EA-BABA-412D-A9B5-3E75AD31E3CA}.cover|Win32.ActiveCfg = cover|Win32
-		{32BD35EA-BABA-412D-A9B5-3E75AD31E3CA}.cover|Win32.Build.0 = cover|Win32
-		{32BD35EA-BABA-412D-A9B5-3E75AD31E3CA}.cover|x64.ActiveCfg = cover|x64
-		{32BD35EA-BABA-412D-A9B5-3E75AD31E3CA}.cover|x64.Build.0 = cover|x64
-		{32BD35EA-BABA-412D-A9B5-3E75AD31E3CA}.stage|Win32.ActiveCfg = stage|Win32
-		{32BD35EA-BABA-412D-A9B5-3E75AD31E3CA}.stage|Win32.Build.0 = stage|Win32
-		{32BD35EA-BABA-412D-A9B5-3E75AD31E3CA}.stage|x64.ActiveCfg = stage|x64
-		{32BD35EA-BABA-412D-A9B5-3E75AD31E3CA}.stage|x64.Build.0 = stage|x64
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.basis|Win32.ActiveCfg = basis|Win32
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.basis|Win32.Build.0 = basis|Win32
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.basis|x64.ActiveCfg = basis|x64
@@ -281,6 +277,18 @@ Global
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.stage|Win32.Build.0 = stage|Win32
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.stage|x64.ActiveCfg = stage|x64
 		{E2D7833B-9B59-4826-BBDF-C270A2115E86}.stage|x64.Build.0 = stage|x64
+		{32BD35EA-BABA-412D-A9B5-3E75AD31E3CA}.basis|Win32.ActiveCfg = basis|Win32
+		{32BD35EA-BABA-412D-A9B5-3E75AD31E3CA}.basis|Win32.Build.0 = basis|Win32
+		{32BD35EA-BABA-412D-A9B5-3E75AD31E3CA}.basis|x64.ActiveCfg = basis|x64
+		{32BD35EA-BABA-412D-A9B5-3E75AD31E3CA}.basis|x64.Build.0 = basis|x64
+		{32BD35EA-BABA-412D-A9B5-3E75AD31E3CA}.cover|Win32.ActiveCfg = cover|Win32
+		{32BD35EA-BABA-412D-A9B5-3E75AD31E3CA}.cover|Win32.Build.0 = cover|Win32
+		{32BD35EA-BABA-412D-A9B5-3E75AD31E3CA}.cover|x64.ActiveCfg = cover|x64
+		{32BD35EA-BABA-412D-A9B5-3E75AD31E3CA}.cover|x64.Build.0 = cover|x64
+		{32BD35EA-BABA-412D-A9B5-3E75AD31E3CA}.stage|Win32.ActiveCfg = stage|Win32
+		{32BD35EA-BABA-412D-A9B5-3E75AD31E3CA}.stage|Win32.Build.0 = stage|Win32
+		{32BD35EA-BABA-412D-A9B5-3E75AD31E3CA}.stage|x64.ActiveCfg = stage|x64
+		{32BD35EA-BABA-412D-A9B5-3E75AD31E3CA}.stage|x64.Build.0 = stage|x64
 		{69F2F552-40F8-4C71-87C4-78FB7D45AB43}.basis|Win32.ActiveCfg = basis|Win32
 		{69F2F552-40F8-4C71-87C4-78FB7D45AB43}.basis|Win32.Build.0 = basis|Win32
 		{69F2F552-40F8-4C71-87C4-78FB7D45AB43}.basis|x64.ActiveCfg = basis|x64
