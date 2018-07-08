@@ -1598,7 +1598,7 @@ gdi_fallback:
       if (nDstWidth == nSrcWidth && nDstHeight == nSrcHeight)
       {
 
-         return BitBlt(xDst, yDst, nDstWidth, nDstWidth, pgraphicsSrc, xSrc, ySrc, dwRop);
+         return BitBlt(xDst, yDst, nSrcWidth, nSrcHeight, pgraphicsSrc, xSrc, ySrc, dwRop);
 
       }
 
