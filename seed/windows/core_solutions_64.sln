@@ -353,6 +353,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_veriwell_waven", "..\..
 		{54850FD8-653A-43B6-AA90-E59AC030559C} = {54850FD8-653A-43B6-AA90-E59AC030559C}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "icat", "..\..\..\app-core\appseed\consolelab\icat.vcxproj", "{5E7B9C5F-05C4-4A1C-9043-B51EE73172B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
@@ -1317,6 +1319,18 @@ Global
 		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.stage|Win32.Build.0 = stage|Win32
 		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.stage|x64.ActiveCfg = stage|x64
 		{5262FA60-FE91-4A5E-AC0D-89479B8A7670}.stage|x64.Build.0 = stage|x64
+		{5E7B9C5F-05C4-4A1C-9043-B51EE73172B1}.basis|Win32.ActiveCfg = basis|Win32
+		{5E7B9C5F-05C4-4A1C-9043-B51EE73172B1}.basis|Win32.Build.0 = basis|Win32
+		{5E7B9C5F-05C4-4A1C-9043-B51EE73172B1}.basis|x64.ActiveCfg = basis|x64
+		{5E7B9C5F-05C4-4A1C-9043-B51EE73172B1}.basis|x64.Build.0 = basis|x64
+		{5E7B9C5F-05C4-4A1C-9043-B51EE73172B1}.cover|Win32.ActiveCfg = cover|Win32
+		{5E7B9C5F-05C4-4A1C-9043-B51EE73172B1}.cover|Win32.Build.0 = cover|Win32
+		{5E7B9C5F-05C4-4A1C-9043-B51EE73172B1}.cover|x64.ActiveCfg = cover|x64
+		{5E7B9C5F-05C4-4A1C-9043-B51EE73172B1}.cover|x64.Build.0 = cover|x64
+		{5E7B9C5F-05C4-4A1C-9043-B51EE73172B1}.stage|Win32.ActiveCfg = stage|Win32
+		{5E7B9C5F-05C4-4A1C-9043-B51EE73172B1}.stage|Win32.Build.0 = stage|Win32
+		{5E7B9C5F-05C4-4A1C-9043-B51EE73172B1}.stage|x64.ActiveCfg = stage|x64
+		{5E7B9C5F-05C4-4A1C-9043-B51EE73172B1}.stage|x64.Build.0 = stage|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
