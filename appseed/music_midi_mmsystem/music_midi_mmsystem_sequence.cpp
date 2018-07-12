@@ -1129,7 +1129,7 @@ seq_Preroll_Cleanup:
                }
                else if(m_iBuffersInMMSYSTEM <= 0)
                {
-                  
+
                   TRACE("void CALLBACK ::music::midi::sequence::MidiOutProc status_stopping == pSeq->get_status()\n");
 
                   music_midi_on_playback_end();
@@ -1234,7 +1234,7 @@ seq_Preroll_Cleanup:
                   case EVENT_ID_NOTE_ON:
                   {
                      memory_file file(get_app(), (LPBYTE)&lpdwParam[1], pheader->m_dwLength - sizeof(uint32_t));
-                     ::file::byte_stream memFile(&file);
+                     serialize memFile(&file);
                      for(int32_t i = 0; i < m_iaLevel.get_size(); i++)
                      {
                         BYTE b;

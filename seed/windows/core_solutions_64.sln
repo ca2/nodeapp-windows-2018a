@@ -341,6 +341,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_helper", "..\..\..
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8E2DA747-D784-4B3F-8961-913CBA4D215A}"
 	ProjectSection(SolutionItems) = preProject
+		Performance10.psess = Performance10.psess
 		Performance9.psess = Performance9.psess
 	EndProjectSection
 EndProject
@@ -356,6 +357,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "icat", "..\..\..\app-core\appseed\consolelab\icat.vcxproj", "{5E7B9C5F-05C4-4A1C-9043-B51EE73172B1}"
 EndProject
 Global
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
 		basis|x64 = basis|x64
