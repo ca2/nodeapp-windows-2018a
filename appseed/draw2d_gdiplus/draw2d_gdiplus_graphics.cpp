@@ -572,18 +572,14 @@ namespace draw2d_gdiplus
       return size;
    }
 
-   // non-virtual helpers calling virtual mapping functions
-   point graphics::SetViewportOrg(POINT point)
-   {
-
-      return SetViewportOrg(point.x, point.y);
-
-   }
 
    size graphics::SetViewportExt(SIZE size)
    {
+
       return SetViewportExt(size.cx, size.cy);
+
    }
+
 
    point graphics::SetWindowOrg(POINT point)
    {
@@ -1542,6 +1538,7 @@ namespace draw2d_gdiplus
             return true;
 
          }
+
          ret = m_pgraphics->DrawImage(
                (Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data(),
                x, y, xSrc + pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y, nWidth, nHeight, Gdiplus::UnitPixel);
@@ -2730,11 +2727,13 @@ gdi_fallback:
             }
             else
             {
+
                m_pdibDraw2dGraphics->blend(point(xDest + GetViewportOrg().x, yDest + GetViewportOrg().y), pgraphicsSrc->m_pdibDraw2dGraphics,
                                            point(xSrc+pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y),
                                            size(nSrcWidth, nDestHeight), (byte)(dRate * 255.0f));
 
             }
+
          }
          else
          {
@@ -2745,7 +2744,6 @@ gdi_fallback:
 
 
          }
-
 
          return true;
 
@@ -3649,97 +3647,22 @@ gdi_fallback:
       if(get_handle2() != NULL)
          nRetVal = ::SetMapMode(get_handle2(), nMapMode);
       return nRetVal;
-   }
-
-   point graphics::GetViewportOrg()
-   {
-      //POINT point;
-      //::GetViewportOrgEx(get_handle2(), &point);
-
-      if (m_pgraphics == NULL)
-      {
-
-         return null_point();
-
-      }
-
-      Gdiplus::Point origin(0, 0);
-
-      m_pgraphics->TransformPoints(
-      Gdiplus::CoordinateSpacePage,
-      Gdiplus::CoordinateSpaceWorld,
-      &origin,
-      1);
-
-      return point((int64_t) origin.X, (int64_t) origin.Y);
 
    }
 
-
-
-   point graphics::SetViewportOrg(int32_t x, int32_t y)
-   {
-
-      if (m_pgraphics == NULL)
-      {
-
-         return null_point();
-
-      }
-
-      m_pm->Reset();
-
-      m_pm->Translate((Gdiplus::REAL) x, (Gdiplus::REAL) y);
-
-      m_pgraphics->SetTransform(m_pm);
-
-      return point(x, y);
-
-   }
-
-
-   point graphics::OffsetViewportOrg(int32_t nWidth, int32_t nHeight)
-   {
-
-      point point = GetViewportOrg();
-
-      if (nWidth == 0 && nHeight == 0)
-      {
-
-         return point;
-
-      }
-
-      point.offset(nWidth, nHeight);
-
-      return SetViewportOrg(point.x, point.y);
-
-   }
 
    size graphics::SetViewportExt(int32_t x, int32_t y)
    {
+
       size size(0, 0);
       //if(get_handle1() != NULL && get_handle1() != get_handle2())
       //   ::SetViewportExtEx(get_handle1(), x, y, &size);
       //if(get_handle2() != NULL)
       //   ::SetViewportExtEx(get_handle2(), x, y, &size);
       return size;
+
    }
 
-   size graphics::ScaleViewportExt(int32_t xNum, int32_t xDenom, int32_t yNum, int32_t yDenom)
-   {
-      Gdiplus::Matrix m;
-
-      Gdiplus::Status status = m_pgraphics->GetTransform(&m);
-
-      ap(Gdiplus::Matrix) pmNew = m.Clone();
-
-      status = pmNew->Scale((Gdiplus::REAL) xNum/ (Gdiplus::REAL)xDenom, (Gdiplus::REAL) yNum / (Gdiplus::REAL)yDenom, Gdiplus::MatrixOrderPrepend);
-
-      status = m_pgraphics->SetTransform(pmNew);
-
-      return size(0, 0);
-   }
 
    point graphics::SetWindowOrg(int32_t x, int32_t y)
    {
@@ -5254,7 +5177,7 @@ gdi_fallback:
 
       }
 
-      ::draw2d::keep k(this);
+      ::draw2d::savedc k(this);
 
       set_alpha_mode(::draw2d::alpha_mode_blend);
 
@@ -6009,7 +5932,7 @@ gdi_fallback:
    }
 
 
-   bool graphics::get(::draw2d::matrix & matrix)
+   bool graphics::_get(::draw2d::matrix & matrix)
    {
 
       Gdiplus::Matrix m;
@@ -6034,7 +5957,7 @@ gdi_fallback:
    }
 
 
-   bool graphics::set(const ::draw2d::matrix & matrix)
+   bool graphics::_set(const ::draw2d::matrix & matrix)
    {
 
       Gdiplus::Matrix m;
@@ -6046,32 +5969,32 @@ gdi_fallback:
    }
 
 
-   bool graphics::append(const ::draw2d::matrix & matrix)
-   {
+   //bool graphics::append(const ::draw2d::matrix & matrix)
+   //{
 
-      ::draw2d::matrix m;
+   //   ::draw2d::matrix m;
 
-      get(m);
+   //   get(m);
 
-      m.append(matrix);
+   //   m.append(matrix);
 
-      return set(m);
+   //   return set(m);
 
-   }
+   //}
 
 
-   bool graphics::prepend(const ::draw2d::matrix & matrix)
-   {
+   //bool graphics::prepend(const ::draw2d::matrix & matrix)
+   //{
 
-      ::draw2d::matrix m;
+   //   ::draw2d::matrix m;
 
-      get(m);
+   //   get(m);
 
-      m.prepend(matrix);
+   //   m.prepend(matrix);
 
-      return set(m);
+   //   return set(m);
 
-   }
+   //}
 
 
 } // namespace draw2d_gdiplus

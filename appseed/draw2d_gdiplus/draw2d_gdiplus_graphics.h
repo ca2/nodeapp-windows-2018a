@@ -114,10 +114,10 @@ namespace draw2d_gdiplus
       i32 GetROP2() override;
       i32 GetStretchBltMode() override;
 
-      bool get(::draw2d::matrix & matrix) override;
-      bool set(const ::draw2d::matrix & matrix) override;
-      bool append(const ::draw2d::matrix & matrix) override;
-      bool prepend(const ::draw2d::matrix & matrix) override;
+      bool _get(::draw2d::matrix & matrix) override;
+      bool _set(const ::draw2d::matrix & matrix) override;
+      //bool append(const ::draw2d::matrix & matrix) override;
+      //bool prepend(const ::draw2d::matrix & matrix) override;
 
       i32 SetPolyFillMode(i32 nPolyFillMode) override;
       i32 SetROP2(i32 nDrawMode) override;
@@ -147,18 +147,18 @@ namespace draw2d_gdiplus
 
       // Mapping Functions
       virtual i32 GetMapMode() override;
-      virtual point GetViewportOrg() override;
+      //virtual point GetViewportOrg() override;
       virtual i32 SetMapMode(i32 nMapMode) override;
       // Viewport Origin
-      virtual point SetViewportOrg(i32 x, i32 y) override;
-      virtual point SetViewportOrg(POINT point) override;
-      virtual point OffsetViewportOrg(i32 nWidth, i32 nHeight) override;
+      //virtual point SetViewportOrg(i32 x, i32 y) override;
+      //virtual point SetViewportOrg(POINT point) override;
+      //virtual point OffsetViewportOrg(i32 nWidth, i32 nHeight) override;
 
       // Viewport Extent
       virtual size GetViewportExt() override;
       virtual size SetViewportExt(i32 cx, i32 cy) override;
       virtual size SetViewportExt(SIZE size) override;
-      virtual size ScaleViewportExt(i32 xNum, i32 xDenom, i32 yNum, i32 yDenom) override;
+      //virtual size ScaleViewportExt(i32 xNum, i32 xDenom, i32 yNum, i32 yDenom) override;
 
       // Window Origin
       point GetWindowOrg() override;
