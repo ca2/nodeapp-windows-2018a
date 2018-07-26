@@ -16,13 +16,13 @@
 void reg_delete_tree_dup(HKEY hkey, const char * name);
 
 class removal :
-    public ::aura::application
+   public ::aura::application
 {
 public:
 
-   
+
    HANDLE                     m_hmutex_app_removal;
-   
+
    char *                     m_modpath;
    char *                     m_pszDllEnds;
    UINT *                     m_dwaProcess;
@@ -35,7 +35,7 @@ public:
    removal();
 
    virtual ~removal();
-   
+
    bool is_user_using(const char * pszDll);
 
    INT cube_run(const char * id);
@@ -91,13 +91,13 @@ public:
 
 ::aura::application * get_acid_app(::aura::application * pappParent)
 {
-   
+
    return new removal();
 
 }
 
 
-removal::removal() 
+removal::removal()
 {
    m_hinstance             = ::GetModuleHandleA(NULL);
    m_hmutex_app_removal  = NULL;
@@ -116,72 +116,11 @@ removal::~removal()
 }
 
 
-// CreateLink - Uses the Shell's IShellLink and IPersistFile interfaces 
-//              to create and store a shortcut to the specified object. 
-//
-// Returns the result of calling the member functions of the interfaces. 
-//
-// Parameters:
-// lpszPathObj  - Address of a buffer that contains the path of the object,
-//                including the file name.
-// lpszPathLink - Address of a buffer that contains the path where the 
-//                Shell link is to be stored, including the file name.
-// lpszDesc     - Address of a buffer that contains a description of the 
-//                Shell link, stored in the Comment field of the link
-//                properties.
-
-
-HRESULT CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc, LPCWSTR lpszIconPath = NULL, INT iIcon = 0) 
-{ 
-    HRESULT hres; 
-    IShellLinkW* psl; 
- 
-    // Get a pointer to the IShellLink interface. It is assumed that CoInitialize
-    // has already been called.
-    hres = CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLinkW, (LPVOID*)&psl); 
-    if (SUCCEEDED(hres)) 
-    { 
-        IPersistFile* ppf; 
- 
-        // set the path to the shortcut target and add the description. 
-        psl->SetPath(lpszPathObj); 
-        psl->SetDescription(lpszDesc); 
-        if(lpszIconPath!= NULL)
-        {
-        psl->SetIconLocation(lpszIconPath, iIcon);
-        }
- 
-        // Query IShellLink for the IPersistFile interface, used for saving the 
-        // shortcut in persistent storage. 
-        hres = psl->QueryInterface(IID_IPersistFile, (LPVOID*)&ppf); 
- 
-        if (SUCCEEDED(hres)) 
-        { 
-            //WCHAR wsz[MAX_PATH]; 
- 
-            // Ensure that the string is Unicode. 
-//            MultiByteToWideChar(CP_ACP, 0, lpszPathLink, -1, wsz, MAX_PATH); 
-            
-            // Add code here to check return value from MultiByteWideChar 
-            // for success.
- 
-            // Save the link by calling IPersistFile::Save. 
-            hres = ppf->Save(lpszPathLink, TRUE); 
-            ppf->Release(); 
-        } 
-        psl->Release(); 
-    } 
-    return hres; 
-
-}
-
-
-
 ::file::path removal::get_known_folder_dir(const KNOWNFOLDERID & rfid,const char * lpcsz)
 {
 
    wchar_t * buf = NULL;
-   
+
    SHGetKnownFolderPath(rfid, 0, NULL, &buf);
 
    ::file::path str(buf);
@@ -201,22 +140,22 @@ void removal::system(const char * pszCmd)
    System.process().synch(pszCmd);
 
 
-/*STARTUPINFO si;
-PROCESS_INFORMATION pi;
+   /*STARTUPINFO si;
+   PROCESS_INFORMATION pi;
 
-ZeroMemory(&si, sizeof(si));
-si.cb = sizeof(si);
-ZeroMemory(&pi, sizeof(pi));
+   ZeroMemory(&si, sizeof(si));
+   si.cb = sizeof(si);
+   ZeroMemory(&pi, sizeof(pi));
 
-si.dwFlags |= STARTF_USESHOWWINDOW;
-si.wShowWindow = SW_HIDE;
+   si.dwFlags |= STARTF_USESHOWWINDOW;
+   si.wShowWindow = SW_HIDE;
 
-if (CreateProcess(NULL, (char *) pszCmd, NULL, NULL, FALSE, CREATE_NO_WINDOW | CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
-{
-    WaitForSingleObject(pi.hProcess, INFINITE);
-    CloseHandle(pi.hProcess);
-    CloseHandle(pi.hThread);
-}*/
+   if (CreateProcess(NULL, (char *) pszCmd, NULL, NULL, FALSE, CREATE_NO_WINDOW | CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
+   {
+       WaitForSingleObject(pi.hProcess, INFINITE);
+       CloseHandle(pi.hProcess);
+       CloseHandle(pi.hThread);
+   }*/
 
 }
 
@@ -240,7 +179,7 @@ void removal::rmdir_n_v(const char * pszDir)
    string str2 = get_known_folder_dir(FOLDERID_LocalAppData, "Microsoft\\Windows\\Temporary Internet Files\\Virtualized")/  str;
    rmdir(str2.c_str());
 
-  
+
    str2 = get_known_folder_dir(FOLDERID_LocalAppData,"Microsoft\\Windows\\INetCache\\Virtualized") / str;
    rmdir(str2.c_str());
 
@@ -305,7 +244,7 @@ void removal::run()
    system("taskkill /F /IM app.exe");
    system("taskkill /F /IM app_app_admin.exe");
    system("taskkill /F /IM app_app_nest.exe");
-   
+
    if(file_exists_dup("C:\\ca2\\config\\app-removal\\kill_browsers.txt") || file_exists_dup("C:\\ca2\\config\\app-removal\\kill_plugin_container.txt"))
    {
 
@@ -333,7 +272,7 @@ void removal::run()
    {
       straDrives.explode(",",strOnlyDrives);
    }
-   
+
    g_n_rmdir_n_v(FOLDERID_ProgramFilesX86, "ca2");
    g_n_rmdir_n_v(FOLDERID_ProgramFiles,"ca2");
 
@@ -472,7 +411,7 @@ bool removal::is_user_using(const char * pszDll)
    {
       return false;
    }
-   
+
    pe32.dwSize = sizeof(PROCESSENTRY32);
 
    if(!Process32First(hProcessSnap, &pe32))
@@ -492,9 +431,9 @@ bool removal::is_user_using(const char * pszDll)
    }
    while(Process32Next(hProcessSnap, &pe32));
 
-  ::CloseHandle(hProcessSnap);
+   ::CloseHandle(hProcessSnap);
 
-  return bUsing;
+   return bUsing;
 
 }
 
