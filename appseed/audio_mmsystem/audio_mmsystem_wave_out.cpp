@@ -131,7 +131,7 @@ namespace multimedia
                   if (msg.message == message_free)
                   {
 
-                     if (m_pprebuffer->m_bPlay)
+                     if (m_pprebuffer->m_bPlayPreBuffer)
                      {
 
                         wave_out_buffer_ready(msg.wParam);
