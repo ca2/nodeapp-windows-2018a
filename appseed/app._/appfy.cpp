@@ -183,7 +183,7 @@ appfy::appfy() :
 
    //construct(NULL);
 
-   m_pauraapp = this;
+   m_papp = this;
 
    m_bLicense = false;
 

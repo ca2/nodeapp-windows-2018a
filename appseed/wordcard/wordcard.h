@@ -22,7 +22,7 @@ namespace wordcard
 
 
 #undef App
-#define App(pcaapp) (pcaapp->cast_app < ::wordcard::application > ())
+#define App(papp) (*papp->cast < ::wordcard::application > ())
 
 #include "wordcard_frame.h"
 #include "wordcard_form_callback.h"

@@ -22,7 +22,7 @@ namespace production
 
 
 #undef App
-#define App(pcaapp) (pcaapp->cast_app < ::production::application > ())
+#define App(papp) (*papp->cast < ::production::application > ())
 
 
 //#include "hi5_facebook.h"

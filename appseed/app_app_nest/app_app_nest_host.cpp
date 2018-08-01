@@ -123,21 +123,21 @@ namespace ca2plugin_container
 
       m_pplugin                              = pplugin;
 
-      m_pplugin->m_paurasession              = m_paurasession;
+      m_pplugin->m_psession              = m_psession;
 
-      m_pplugin->m_paxissession              = m_paxissession;
+      m_pplugin->m_psession              = m_psession;
 
-      m_pplugin->m_pbasesession              = m_pbasesession;
+      m_pplugin->m_psession              = m_psession;
 
-      m_pplugin->m_pbasesystem               = m_pbasesystem;
+      m_pplugin->m_psystem               = m_psystem;
 
-      m_pplugin->m_paxisapp                  = m_paxisapp;
+      m_pplugin->m_papp                  = m_papp;
 
-      m_pplugin->m_pbaseapp                  = m_pbaseapp;
+      m_pplugin->m_papp                  = m_papp;
 
       m_pplugin->m_pcoreapp                  = m_pcoreapp;
 
-      m_pplugin->m_pcoresession        = m_pcoresession;
+      m_pplugin->m_psession        = m_psession;
 
       m_pplugin->m_phost                     = this;
 
@@ -315,7 +315,7 @@ namespace ca2plugin_container
    void * host::get_system()
    {
 
-      return m_pbaseapp->m_pbasesystem;
+      return m_papp->m_psystem;
 
    }
 
@@ -325,7 +325,7 @@ namespace ca2plugin_container
 
       //::hotplugin::host::set_system(pvoidSystem);
 
-      m_pbaseapp = (::base::system *) pvoidSystem;
+      m_papp = (::base::system *) pvoidSystem;
 
 
    }
