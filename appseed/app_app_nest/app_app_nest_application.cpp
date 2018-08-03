@@ -102,19 +102,9 @@ namespace ca2plugin_container
 
       m_phost = new host(this);
 
-      m_phost->m_psession = m_psession;
-
-      m_phost->m_psession = m_psession;
-
-      m_phost->m_psession = m_psession;
-
-      m_phost->m_papp = m_papp;
+      m_phost->::aura::application::m_psession = m_psession;
 
       m_phost->m_papp = this;
-
-      m_phost->m_pcoreapp = this;
-
-      m_phost->m_papp->m_pcoreapp = this;
 
       return m_phost;
 

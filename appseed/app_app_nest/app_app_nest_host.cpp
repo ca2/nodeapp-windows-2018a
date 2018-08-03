@@ -120,21 +120,11 @@ namespace ca2plugin_container
 
       m_pplugin                              = pplugin;
 
-      m_pplugin->m_psession              = m_psession;
-
-      m_pplugin->m_psession              = m_psession;
-
-      m_pplugin->m_psession              = m_psession;
+      m_pplugin->::aura::application::m_psession              = ::aura::application::m_psession;
 
       m_pplugin->m_psystem               = m_psystem;
 
       m_pplugin->m_papp                  = m_papp;
-
-      m_pplugin->m_papp                  = m_papp;
-
-      m_pplugin->m_pcoreapp                  = m_pcoreapp;
-
-      m_pplugin->m_psession        = m_psession;
 
       m_pplugin->m_phost                     = this;
 
