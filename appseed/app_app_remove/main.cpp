@@ -236,7 +236,7 @@ void removal::run()
          wstring wstrTarget(strTarget);
          wstring wstrLink(strLink);
          // create shortcurt;
-         CreateLink(wstrTarget.c_str(), wstrLink.c_str(), L"ca2 app.removal Tool", wstrTarget.c_str(), 0);
+         os_create_link(wstrTarget.c_str(), wstrLink.c_str(), L"ca2 app.removal Tool", wstrTarget.c_str(), 0);
       }
    }
 

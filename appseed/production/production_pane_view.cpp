@@ -133,7 +133,7 @@ namespace production
             pdoc->get_filemanager_data()->m_bListText = true;
             pdoc->get_filemanager_data()->m_bListSelection = false;
             pdoc->get_filemanager_template()->m_strFilePopup = "filemanager\\file_popup.xml";
-            pdoc->get_filemanager_data()->m_strDataKeyModifier = "production_menu";
+            pdoc->get_filemanager_data()->m_datakey = "production_menu";
             pdoc->get_filemanager_data()->m_pcallback = this;
             pdoc->Initialize(true);
             pdoc->update_all_views(NULL, 1234);
@@ -203,7 +203,7 @@ namespace production
             pdoc->get_filemanager_data()->m_bListText = false;
             pdoc->get_filemanager_data()->m_bListSelection = false;
             pdoc->get_filemanager_data()->m_pcallback = this;
-            pdoc->get_filemanager_data()->m_strDataKeyModifier = "production_3-action-launch";
+            pdoc->get_filemanager_data()->m_datakey = "production_3-action-launch";
             pdoc->Initialize(true);
             pdoc->update_all_views(NULL, 1234);
             pdoc->update_all_views(NULL, 123458);

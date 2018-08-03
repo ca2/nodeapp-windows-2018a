@@ -48,9 +48,6 @@ namespace ca2plugin_container
       m_oswindow              = NULL;
       m_bStream               = false;
 
-      m_bMayProDevian         = false;
-
-
    }
 
    host::~host()
