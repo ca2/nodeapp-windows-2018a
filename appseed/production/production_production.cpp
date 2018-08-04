@@ -1002,6 +1002,13 @@ namespace production
          //}
 
 
+         string strStageUnc;
+
+         // \\\\sewindows\\stage -> C:\\ca2\\vrel\\stage
+         // \\\\sewindows\\symbol_server -> M:\\symbol_server ?
+         // \\\\sewindows -> strStageUnc
+
+         strStageUnc = "\\\\canetnode";
 
          {
 
@@ -1009,8 +1016,10 @@ namespace production
 
             ::file::path strPath = System.dir().install() / "time\\stage\\app\\matter\\store_symbols_job_x86.bat";
 
+            
+
             ::process::process_sp process(allocer());
-            string strCommand = "\"C:\\Program Files (x86)\\Windows Kits\\8.0\\Debuggers\\x86\\symstore.exe\"  add /r  -:REL /f \\\\sewindows\\stage\\" + m_strFormatBuild + "\\stage\\x86\\ /s \\\\sewindows\\SymbolServer\\ /t \"ca2\" /v \"" + m_strFormatBuild + "\"";
+            string strCommand = "\"C:\\Program Files (x86)\\Windows Kits\\10\\Debuggers\\x86\\symstore.exe\"  add /r /f "+strStageUnc+"\\stage\\" + m_strFormatBuild + "\\time\\Win32\\stage\\*.pdb /s " + strStageUnc + "\\symbol_server\\ /t \"ca2\" /v \"" + m_strFormatBuild + "\"";
             Application.file().put_contents(strPath, strCommand);
             if (!process->create_child_process(strPath, false))
             {
@@ -1046,7 +1055,7 @@ namespace production
             ::file::path strPath = System.dir().install() / "time\\stage\\app\\matter\\store_symbols_job_x64.bat";
 
             ::process::process_sp process(allocer());
-            string strCommand = "\"C:\\Program Files (x86)\\Windows Kits\\8.0\\Debuggers\\x64\\symstore.exe\"  add /r  -:REL /f \\\\sewindows\\stage\\" + m_strFormatBuild + "\\stage\\x64\\ /s \\\\sewindows\\SymbolServer\\ /t \"ca2\" /v \"" + m_strFormatBuild + "\"";
+            string strCommand = "\"C:\\Program Files (x86)\\Windows Kits\\10\\Debuggers\\x64\\symstore.exe\"  add /r /f " + strStageUnc + "\\stage\\" + m_strFormatBuild + "\\time\\x64\\stage\\*.pdb /s " + strStageUnc + "\\symbol_server\\ /t \"ca2\" /v \"" + m_strFormatBuild + "\"";
             Application.file().put_contents(strPath, strCommand);
             if (!process->create_child_process(strPath, false))
             {
@@ -1358,35 +1367,35 @@ namespace production
       strStatus.Format("compressing %s", lpcszRelative.name());
       add_status(strStatus);
       string strSrcFile = m_strVrel / lpcszRelative;
-      if (::str::ends_ci(lpcszRelative, ".dll")
-            || ::str::ends_ci(lpcszRelative, ".exe")
-            || ::str::ends_ci(lpcszRelative, ".ocx")
-            || ::str::ends_ci(lpcszRelative, ".cab"))
-      {
+      //if (::str::ends_ci(lpcszRelative, ".dll")
+      //      || ::str::ends_ci(lpcszRelative, ".exe")
+      //      || ::str::ends_ci(lpcszRelative, ".ocx")
+      //      || ::str::ends_ci(lpcszRelative, ".cab"))
+      //{
 
-         string strStatus;
-         strStatus.Format("signing %s", lpcszRelative.name());
-         add_status(strStatus);
+      //   string strStatus;
+      //   strStatus.Format("signing %s", lpcszRelative.name());
+      //   add_status(strStatus);
 
-         string strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strSrcFile + "\"";
-         System.process().synch(strCmd);
+      //   string strCmd = "\"" + m_strSignTool + "\" sign /f \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strSrcFile + "\"";
+      //   System.process().synch(strCmd);
 
-         add_status("Signing code ...");
+      //   add_status("Signing code ...");
 
-      }
-      else if (::str::ends_ci(lpcszRelative, ".sys"))
-      {
+      //}
+      //else if (::str::ends_ci(lpcszRelative, ".sys"))
+      //{
 
-         string strStatus;
-         strStatus.Format("signing driver %s", lpcszRelative.name());
-         add_status(strStatus);
+      //   string strStatus;
+      //   strStatus.Format("signing driver %s", lpcszRelative.name());
+      //   add_status(strStatus);
 
-         string strCmd = "\"" + m_strSignTool + "\" sign /v /ac \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strSrcFile + "\"";
-         System.process().synch(strCmd);
+      //   string strCmd = "\"" + m_strSignTool + "\" sign /v /ac \"" + m_strSpc + "\" /p " + m_strSignPass + " \"" + strSrcFile + "\"";
+      //   System.process().synch(strCmd);
 
-         add_status("Signing driver code ...");
+      //   add_status("Signing driver code ...");
 
-      }
+      //}
       int32_t iRetry = 0;
 retry2:
       try
