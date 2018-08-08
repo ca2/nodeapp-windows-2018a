@@ -70,20 +70,15 @@ namespace draw2d_gdiplus
       m_sizeWnd.cx = 0;
       m_sizeWnd.cy = 0;
       m_hbitmap = NULL;
+      m_bColorMatrix = dib.m_bColorMatrix;
+
+      m_colormatrix = dib.m_colormatrix;
 
       ZERO(m_bitmapinfo);
 
       ::draw2d::dib::from(&dib);
 
    }
-
-   //void    dib::construct(int32_t cx, int32_t cy)
-   //{
-   //   m_pcolorref = NULL;
-   //   cx = 0;
-   //   cy = 0;
-   //   create(cx, cy);
-   //}
 
 
    dib::~dib()

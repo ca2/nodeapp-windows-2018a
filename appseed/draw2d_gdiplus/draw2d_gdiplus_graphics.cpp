@@ -1539,10 +1539,37 @@ namespace draw2d_gdiplus
 
          }
 
-         ret = m_pgraphics->DrawImage(
-               (Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data(),
-               x, y, xSrc + pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y, nWidth, nHeight, Gdiplus::UnitPixel);
+         Gdiplus::Bitmap * pbitmap = (Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data();
 
+         if (pgraphicsSrc->m_pdibDraw2dGraphics != NULL && pgraphicsSrc->m_pdibDraw2dGraphics->m_bColorMatrix)
+         {
+
+            Gdiplus::ImageAttributes imageattributes;
+
+            Gdiplus::ColorMatrix colormatrix;
+
+            copy_color_matrix(colormatrix.m, pgraphicsSrc->m_pdibDraw2dGraphics->m_colormatrix.a);
+
+            imageattributes.SetColorMatrix(
+            &colormatrix,
+            ColorMatrixFlagsDefault,
+            ColorAdjustTypeBitmap);
+
+            Gdiplus::Rect r(x, y, nWidth, nHeight);
+
+            ret = m_pgraphics->DrawImage(
+                  pbitmap,
+                  r, xSrc + pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y, nWidth, nHeight, Gdiplus::UnitPixel, &imageattributes);
+
+         }
+         else
+         {
+
+            ret = m_pgraphics->DrawImage(
+                  pbitmap,
+                  x, y, xSrc + pgraphicsSrc->GetViewportOrg().x, ySrc + pgraphicsSrc->GetViewportOrg().y, nWidth, nHeight, Gdiplus::UnitPixel);
+
+         }
          if(ret != Gdiplus::Status::Ok)
          {
 
@@ -1801,7 +1828,31 @@ gdi_fallback:
       try
       {
 
-         ret = m_pgraphics->DrawImage((Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data(), dstRect, xSrc, ySrc, nSrcWidth, nSrcHeight, Gdiplus::UnitPixel);
+         Gdiplus::Bitmap * pbitmap = (Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data();
+
+         if (pgraphicsSrc->m_pdibDraw2dGraphics != NULL && pgraphicsSrc->m_pdibDraw2dGraphics->m_bColorMatrix)
+         {
+
+            Gdiplus::ImageAttributes imageattributes;
+
+            Gdiplus::ColorMatrix colormatrix;
+
+            copy_color_matrix(colormatrix.m, pgraphicsSrc->m_pdibDraw2dGraphics->m_colormatrix.a);
+
+            imageattributes.SetColorMatrix(
+            &colormatrix,
+            ColorMatrixFlagsDefault,
+            ColorAdjustTypeBitmap);
+
+            ret = m_pgraphics->DrawImage(pbitmap, dstRect, xSrc, ySrc, nSrcWidth, nSrcHeight, Gdiplus::UnitPixel, &imageattributes);
+
+         }
+         else
+         {
+
+            ret = m_pgraphics->DrawImage(pbitmap, dstRect, xSrc, ySrc, nSrcWidth, nSrcHeight, Gdiplus::UnitPixel);
+
+         }
 
          if(ret != Gdiplus::Status::Ok)
          {
@@ -2576,7 +2627,7 @@ gdi_fallback:
    {
 
       m_pgraphics->SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias8x8);
-      m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
+      //m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
 
 
       return m_pgraphics->DrawPath(gdiplus_pen(),(dynamic_cast < ::draw2d_gdiplus::path * > (ppath))->get_os_path(m_pgraphics)) == Gdiplus::Status::Ok;
@@ -2752,18 +2803,32 @@ gdi_fallback:
 
       float fA = (float) (dRate);
 
-      Gdiplus::ColorMatrix matrix =
+
+      Gdiplus::ColorMatrix colormatrix;
+
+      if (pgraphicsSrc->m_pdibDraw2dGraphics != NULL && pgraphicsSrc->m_pdibDraw2dGraphics->m_bColorMatrix)
       {
-         1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-         0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-         0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-         0.0f, 0.0f, 0.0f, fA, 0.0f,
-         0.0f, 0.0f, 0.0f, 0.0f, 1.0f
-      };
 
-      Gdiplus::ImageAttributes attributes;
+         copy_color_matrix(colormatrix.m, pgraphicsSrc->m_pdibDraw2dGraphics->m_colormatrix.a);
 
-      attributes.SetColorMatrix(&matrix, Gdiplus::ColorMatrixFlagsDefault, Gdiplus::ColorAdjustTypeBitmap);
+      }
+      else
+      {
+
+         ::draw2d::color_matrix m;
+
+         copy_color_matrix(colormatrix.m, m.a);
+
+      }
+
+      colormatrix.m[3][3] = fA;
+
+      Gdiplus::ImageAttributes imageattributes;
+
+      imageattributes.SetColorMatrix(
+      &colormatrix,
+      ColorMatrixFlagsDefault,
+      ColorAdjustTypeBitmap);
 
       Gdiplus::RectF dstRect((Gdiplus::REAL) xDest, (Gdiplus::REAL) yDest, (Gdiplus::REAL) nDestWidth, (Gdiplus::REAL) nDestHeight);
 
@@ -2799,7 +2864,7 @@ gdi_fallback:
       if(pbitmap != NULL)
       {
 
-         ret =  m_pgraphics->DrawImage(pbitmap,dstRect,(Gdiplus::REAL) xSrc,(Gdiplus::REAL) ySrc,(Gdiplus::REAL) nSrcWidth,(Gdiplus::REAL) nSrcHeight,Gdiplus::UnitPixel,&attributes);
+         ret =  m_pgraphics->DrawImage(pbitmap,dstRect,(Gdiplus::REAL) xSrc,(Gdiplus::REAL) ySrc,(Gdiplus::REAL) nSrcWidth,(Gdiplus::REAL) nSrcHeight,Gdiplus::UnitPixel,&imageattributes);
 
          if (ret != Gdiplus::Status::Ok)
          {
@@ -5995,7 +6060,6 @@ gdi_fallback:
    //   return set(m);
 
    //}
-
 
 } // namespace draw2d_gdiplus
 

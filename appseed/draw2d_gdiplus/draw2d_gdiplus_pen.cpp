@@ -415,6 +415,12 @@ namespace draw2d_gdiplus
             //                                 );
 
          }
+         if (m_ealign == align_inset)
+         {
+
+            ((pen *)this)->m_ppen->SetAlignment(Gdiplus::PenAlignmentInset);
+
+         }
 
       }
 
