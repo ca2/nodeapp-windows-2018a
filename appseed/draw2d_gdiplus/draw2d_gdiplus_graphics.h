@@ -70,8 +70,8 @@ namespace draw2d_gdiplus
       void release_hdc(HDC hdc);
 
 
-      virtual f64 get_dpix() override;
-      virtual f64 get_dpiy() override;
+      virtual double get_dpix() override;
+      virtual double get_dpiy() override;
 
       // Constructors
       bool CreateDC(const char * lpszDriverName, const char * lpszDeviceName,
@@ -219,10 +219,10 @@ namespace draw2d_gdiplus
 
       using ::draw2d::graphics::Arc;
       bool Arc(i32 x1,i32 y1,i32 x2,i32 y2,i32 x3,i32 y3,i32 x4,i32 y4) override;
-      bool Arc(f64 x1,f64 y1,f64 x2,f64 y2,f64 x3,f64 y3,f64 x4,f64 y4) override;
+      bool Arc(double x1,double y1,double x2,double y2,double x3,double y3,double x4,double y4) override;
 
-      bool Arc(i32 x1,i32 y1,i32 x2,i32 y2,f64 start, f64 extends) override;
-      bool Arc(f64 x1,f64 y1,f64 x2,f64 y2,f64 start, f64 extends) override;
+      bool Arc(i32 x1,i32 y1,i32 x2,i32 y2,double start, double extends) override;
+      bool Arc(double x1,double y1,double x2,double y2,double start, double extends) override;
 
       bool AngleArc(i32 x,i32 y,i32 nRadius,float fStartAngle,float fSweepAngle) override;
       bool ArcTo(i32 x1, i32 y1, i32 x2, i32 y2, i32 x3, i32 y3, i32 x4, i32 y4) override;
@@ -271,9 +271,9 @@ namespace draw2d_gdiplus
       bool FillEllipse(i32 x1, i32 y1, i32 x2, i32 y2) override;
       bool FillEllipse(const RECT &  lpRect) override;
 
-      bool DrawEllipse(f64 x1,f64 y1,f64 x2,f64 y2) override;
+      bool DrawEllipse(double x1,double y1,double x2,double y2) override;
       bool DrawEllipse(const RECTD & lpRect) override;
-      bool FillEllipse(f64 x1,f64 y1,f64 x2,f64 y2) override;
+      bool FillEllipse(double x1,double y1,double x2,double y2) override;
       bool FillEllipse(const RECTD & lpRect) override;
 
       bool Pie(i32 x1, i32 y1, i32 x2, i32 y2, i32 x3, i32 y3, i32 x4, i32 y4) override;
@@ -320,14 +320,14 @@ namespace draw2d_gdiplus
                           ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight,
                           UINT clrTransparent) override;
 
-      virtual bool alpha_blendRaw(i32 xDest, i32 yDest, i32 nDestWidth, i32 nDestHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, f64 dOpacity) override;
+      virtual bool alpha_blendRaw(i32 xDest, i32 yDest, i32 nDestWidth, i32 nDestHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight, double dOpacity) override;
 
       /*bool alpha_blend(i32 xDest, i32 yDest, i32 nDestWidth, i32 nDestHeight,
         ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, i32 nSrcWidth, i32 nSrcHeight,
         BLENDFUNCTION blend) override;*/
 
       // Text Functions
-      virtual bool TextOutRaw(f64 x, f64 y, const char * lpszString, strsize nCount) override;
+      virtual bool TextOutRaw(double x, double y, const char * lpszString, strsize nCount) override;
       virtual bool ExtTextOut(i32 x, i32 y, UINT nOptions, const RECT &  lpRect, const char * lpszString,strsize nCount, LPINT lpDxWidths) override;
       virtual bool ExtTextOut(i32 x, i32 y, UINT nOptions, const RECT &  lpRect, const string & str, LPINT lpDxWidths) override;
       virtual size TabbedTextOut(i32 x, i32 y, const char * lpszString, strsize nCount,count nTabPositions, LPINT lpnTabStopPositions, i32 nTabOrigin) override;
@@ -496,7 +496,7 @@ namespace draw2d_gdiplus
 
       virtual Gdiplus::FillMode gdiplus_get_fill_mode();
 
-      bool blur(bool bExpand, f64 dRadius, const RECT & rect) override;
+      bool blur(bool bExpand, double dRadius, const RECT & rect) override;
 
 
       virtual bool flush() override;
@@ -510,7 +510,7 @@ namespace draw2d_gdiplus
       virtual bool prefer_mapped_dib_on_mix() override;
 
 
-      virtual bool TextOutAlphaBlend(f64 x, f64 y, const char * lpszString, strsize nCount) override;
+      virtual bool TextOutAlphaBlend(double x, double y, const char * lpszString, strsize nCount) override;
       virtual bool BitBltAlphaBlend(i32 x, i32 y, i32 nWidth, i32 nHeight, ::draw2d::graphics * pgraphicsSrc, i32 xSrc, i32 ySrc, uint32_t dwRop) override;
 
 
