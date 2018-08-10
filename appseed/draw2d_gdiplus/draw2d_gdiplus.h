@@ -13,7 +13,7 @@
 #define CLASS_DECL_DRAW2D_GDIPLUS  CLASS_DECL_IMPORT
 #endif
 
-
+Gdiplus::Status gdiplus_draw_text(Gdiplus::Graphics * p, Gdiplus::GraphicsPath * p2, const string & str, const RECTD & rectParam, UINT nFormat, Gdiplus::Font * pfont, double dFontWidth, Gdiplus::Brush * pbrush = NULL);
 
 #include "draw2d_gdiplus_factory_exchange.h"
 

@@ -459,7 +459,8 @@ namespace draw2d_gdiplus
          set(e.u.m_rect);
          break;
       case ::draw2d::path::element::type_string:
-         set(pgraphics,e.m_stringpath);
+      case ::draw2d::path::element::type_draw_text:
+         set(pgraphics,e.m_etype, e.m_stringpath);
          break;
       case ::draw2d::path::element::type_end:
          internal_end_figure(e.u.m_end.m_bClose);
@@ -578,6 +579,16 @@ namespace draw2d_gdiplus
    }
 
 
+   bool path::internal_add_draw_text(Gdiplus::Graphics * pgraphics, LPCRECT lpcrect, const string & strText, ::draw2d::font_sp spfont, int nFormat)
+   {
+
+      rectd r(lpcrect);
+
+      return gdiplus_draw_text(pgraphics, m_ppath, strText, r, nFormat, (Gdiplus::Font *) spfont->get_os_data(), 1.0) == Gdiplus::Status::Ok;
+
+   }
+
+
    bool path::set( const ::draw2d::path::arc & arc)
    {
 
@@ -629,10 +640,23 @@ namespace draw2d_gdiplus
 
    }
 
-   bool path::set(Gdiplus::Graphics * pgraphics, const ::draw2d::path::string_path & s)
+   bool path::set(Gdiplus::Graphics * pgraphics, ::draw2d::path::element::e_type etype, const ::draw2d::path::string_path & s)
    {
 
-      internal_add_string(pgraphics,(int32_t)s.m_x,(int32_t)s.m_y,s.m_strText,s.m_spfont);
+      switch (etype)
+      {
+      case ::draw2d::path::element::type_string:
+         internal_add_string(pgraphics, (int32_t)s.m_x, (int32_t)s.m_y, s.m_strText, s.m_spfont);
+         break;
+      case ::draw2d::path::element::type_draw_text:
+         internal_add_draw_text(pgraphics, s.m_rect, s.m_strText, s.m_spfont, s.m_iDrawTextFlags);
+         break;
+      default:
+         _throw(not_supported_exception(get_app()));
+         break;
+      }
+
+
 
       return true;
 

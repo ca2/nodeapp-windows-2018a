@@ -3,8 +3,230 @@
 
 #undef new
 
+class g_keep
+{
+
+public:
+
+   Gdiplus::Graphics * p;
+   Gdiplus::GraphicsState s;
+
+   g_keep(Gdiplus::Graphics * p1)
+   {
+
+      p = p1;
+
+      s = p->Save();
+
+   }
+
+   ~g_keep()
+   {
+
+      p->Restore(s);
+
+   }
+
+};
 
 count g_cForkBlend = 0;
+
+Gdiplus::Status gdiplus_draw_text(Gdiplus::Graphics * p, Gdiplus::GraphicsPath * p2, const string & str, const RECTD & rectParam, UINT nFormat, Gdiplus::Font * pfont, double dFontWidth, Gdiplus::Brush * pbrush)
+{
+
+   ASSERT(p != NULL || p2 != NULL);
+   ASSERT(pfont != NULL);
+   ASSERT(p2 != NULL || pbrush != NULL);
+
+   Gdiplus::Status status = Gdiplus::Status::GenericError;
+
+   Gdiplus::StringFormat format(Gdiplus::StringFormat::GenericTypographic());
+
+
+   //format.SetFormatFlags(format.GetFormatFlags()
+   //                      | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
+   //                      | Gdiplus::StringFormatFlagsLineLimit);
+
+   format.SetFormatFlags((format.GetFormatFlags()
+                          //| Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
+                          | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
+                          | (nFormat & DT_SINGLELINE ? Gdiplus::StringFormatFlagsNoWrap : 0))
+                         & ~(Gdiplus::StringFormatFlagsLineLimit));
+
+   if (nFormat & DT_PATH_ELLIPSIS)
+   {
+
+      format.SetTrimming(Gdiplus::StringTrimmingEllipsisPath);
+
+   }
+   else if (nFormat & DT_END_ELLIPSIS)
+   {
+
+      format.SetTrimming(Gdiplus::StringTrimmingEllipsisCharacter);
+
+   }
+
+   if (nFormat & DT_LEFT)
+   {
+      format.SetAlignment(Gdiplus::StringAlignmentNear);
+   }
+   else if (nFormat & DT_RIGHT)
+   {
+      format.SetAlignment(Gdiplus::StringAlignmentFar);
+   }
+   else if (nFormat & DT_CENTER)
+   {
+      format.SetAlignment(Gdiplus::StringAlignmentCenter);
+   }
+   else
+   {
+      format.SetAlignment(Gdiplus::StringAlignmentNear);
+   }
+
+   if (nFormat & DT_BOTTOM)
+   {
+      format.SetLineAlignment(Gdiplus::StringAlignmentFar);
+   }
+   else if (nFormat & DT_TOP)
+   {
+      format.SetLineAlignment(Gdiplus::StringAlignmentNear);
+   }
+   else if (nFormat & DT_VCENTER)
+   {
+      format.SetLineAlignment(Gdiplus::StringAlignmentCenter);
+   }
+   else
+   {
+      format.SetLineAlignment(Gdiplus::StringAlignmentNear);
+   }
+
+   //Gdiplus::REAL stops[] = {16,32,48,64,80,96,112,128};
+
+   //format.SetTabStops(0,8,stops);
+
+   //m_dFontSize             = fontSrc.m_dFontSize;
+
+   try
+   {
+
+      Gdiplus::FontFamily f;
+      int nStyle;
+      Gdiplus::REAL size;
+      Gdiplus::Unit unit;
+
+      if (p2)
+      {
+
+         pfont->GetFamily(&f);
+         nStyle = pfont->GetStyle();
+         size = pfont->GetSize();
+         unit = pfont->GetUnit();
+
+         if (unit == Gdiplus::UnitPoint)
+         {
+
+            size = p->GetDpiY() * size / 73.0f;
+
+         }
+
+      }
+
+      if (dFontWidth == 1.0)
+      {
+
+         Gdiplus::RectF rectf((Gdiplus::REAL) rectParam.left, (Gdiplus::REAL) rectParam.top, (Gdiplus::REAL) (width(rectParam) * dFontWidth), (Gdiplus::REAL) (height(rectParam)));
+
+         wstring wstr = ::str::international::utf8_to_unicode(str);
+
+         strsize iSize = wstr.get_length();
+
+         if (p2)
+         {
+
+            status = p2->AddString(wstr, (INT)iSize, &f, nStyle, size, rectf, &format);
+
+         }
+         else if (p)
+         {
+
+            auto e = p->GetTextRenderingHint();
+
+            status = p->DrawString(wstr, (INT)iSize, pfont, rectf, &format, pbrush);
+
+         }
+
+
+      }
+      else if(p)
+      {
+
+         g_keep k(p);
+
+         Gdiplus::Matrix m;
+
+         status = p->GetTransform(&m);
+
+
+         ap(Gdiplus::Matrix) pmNew = m.Clone();
+
+         status = pmNew->Translate((Gdiplus::REAL) rectParam.left, (Gdiplus::REAL) rectParam.top);
+
+         status = pmNew->Scale((Gdiplus::REAL) dFontWidth, (Gdiplus::REAL) 1.0, Gdiplus::MatrixOrderAppend);
+
+         Gdiplus::RectF rectf(0, 0, (Gdiplus::REAL) (width(rectParam) * dFontWidth), (Gdiplus::REAL) (height(rectParam)));
+
+         status = p->SetTransform(pmNew);
+
+         wstring wstr = ::str::international::utf8_to_unicode(str);
+
+         strsize iSize = wstr.get_length();
+
+         status = p->DrawString(wstr, (INT)iSize, pfont, rectf, &format, pbrush);
+
+      }
+      else if(p2)
+      {
+
+         throw not_supported_exception(get_app());
+         //Gdiplus::Matrix m;
+
+         //status = p2->GetTransform(&m);
+
+         //ap(Gdiplus::Matrix) pmNew = m.Clone();
+
+         //status = pmNew->Translate((Gdiplus::REAL) rectParam.left, (Gdiplus::REAL) rectParam.top);
+
+         //status = pmNew->Scale((Gdiplus::REAL) m_spfont->m_dFontWidth, (Gdiplus::REAL) 1.0, Gdiplus::MatrixOrderAppend);
+
+         //Gdiplus::RectF rectf(0, 0, (Gdiplus::REAL) (width(rectParam) * m_spfont->m_dFontWidth), (Gdiplus::REAL) (height(rectParam)));
+
+         //status = p2->SetTransform(pmNew);
+
+         //wstring wstr = ::str::international::utf8_to_unicode(str);
+
+         //Gdiplus::Font * pfont = gdiplus_font();
+
+         //Gdiplus::Brush * pbrush = gdiplus_brush();
+
+         //strsize iSize = wstr.get_length();
+
+         //status = p2->AddString(wstr, (INT)iSize, f, nStyle, emSize, rectf, &format);
+
+         //status = p2->SetTransform(m);
+
+      }
+
+
+   }
+   catch (...)
+   {
+
+   }
+
+   return Gdiplus::Status::Ok;
+
+}
+
 
 
 /**
@@ -132,31 +354,6 @@ int scan2)
 
 }
 
-class g_keep
-{
-
-public:
-
-   Gdiplus::Graphics * p;
-   Gdiplus::GraphicsState s;
-
-   g_keep(Gdiplus::Graphics * p1)
-   {
-
-      p = p1;
-
-      s = p->Save();
-
-   }
-
-   ~g_keep()
-   {
-
-      p->Restore(s);
-
-   }
-
-};
 
 
 
@@ -4344,132 +4541,132 @@ gdi_fallback:
 
       }
 
-      Gdiplus::StringFormat format(Gdiplus::StringFormat::GenericTypographic());
+      //Gdiplus::StringFormat format(Gdiplus::StringFormat::GenericTypographic());
 
 
-      //format.SetFormatFlags(format.GetFormatFlags()
-      //                      | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
-      //                      | Gdiplus::StringFormatFlagsLineLimit);
+      ////format.SetFormatFlags(format.GetFormatFlags()
+      ////                      | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
+      ////                      | Gdiplus::StringFormatFlagsLineLimit);
 
-      format.SetFormatFlags((format.GetFormatFlags()
-                             //| Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
-                             | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
-                             | (nFormat & DT_SINGLELINE ? Gdiplus::StringFormatFlagsNoWrap: 0))
-                            & ~(Gdiplus::StringFormatFlagsLineLimit));
+      //format.SetFormatFlags((format.GetFormatFlags()
+      //                       //| Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
+      //                       | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
+      //                       | (nFormat & DT_SINGLELINE ? Gdiplus::StringFormatFlagsNoWrap: 0))
+      //                      & ~(Gdiplus::StringFormatFlagsLineLimit));
 
-      if (nFormat & DT_PATH_ELLIPSIS)
-      {
+      //if (nFormat & DT_PATH_ELLIPSIS)
+      //{
 
-         format.SetTrimming(Gdiplus::StringTrimmingEllipsisPath);
+      //   format.SetTrimming(Gdiplus::StringTrimmingEllipsisPath);
 
-      }
-      else if (nFormat & DT_END_ELLIPSIS)
-      {
+      //}
+      //else if (nFormat & DT_END_ELLIPSIS)
+      //{
 
-         format.SetTrimming(Gdiplus::StringTrimmingEllipsisCharacter);
+      //   format.SetTrimming(Gdiplus::StringTrimmingEllipsisCharacter);
 
-      }
+      //}
 
-      if(nFormat & DT_LEFT)
-      {
-         format.SetAlignment(Gdiplus::StringAlignmentNear);
-      }
-      else if(nFormat & DT_RIGHT)
-      {
-         format.SetAlignment(Gdiplus::StringAlignmentFar);
-      }
-      else if(nFormat & DT_CENTER)
-      {
-         format.SetAlignment(Gdiplus::StringAlignmentCenter);
-      }
-      else
-      {
-         format.SetAlignment(Gdiplus::StringAlignmentNear);
-      }
+      //if(nFormat & DT_LEFT)
+      //{
+      //   format.SetAlignment(Gdiplus::StringAlignmentNear);
+      //}
+      //else if(nFormat & DT_RIGHT)
+      //{
+      //   format.SetAlignment(Gdiplus::StringAlignmentFar);
+      //}
+      //else if(nFormat & DT_CENTER)
+      //{
+      //   format.SetAlignment(Gdiplus::StringAlignmentCenter);
+      //}
+      //else
+      //{
+      //   format.SetAlignment(Gdiplus::StringAlignmentNear);
+      //}
 
-      if(nFormat & DT_BOTTOM)
-      {
-         format.SetLineAlignment(Gdiplus::StringAlignmentFar);
-      }
-      else if(nFormat & DT_TOP)
-      {
-         format.SetLineAlignment(Gdiplus::StringAlignmentNear);
-      }
-      else if(nFormat & DT_VCENTER)
-      {
-         format.SetLineAlignment(Gdiplus::StringAlignmentCenter);
-      }
-      else
-      {
-         format.SetLineAlignment(Gdiplus::StringAlignmentNear);
-      }
+      //if(nFormat & DT_BOTTOM)
+      //{
+      //   format.SetLineAlignment(Gdiplus::StringAlignmentFar);
+      //}
+      //else if(nFormat & DT_TOP)
+      //{
+      //   format.SetLineAlignment(Gdiplus::StringAlignmentNear);
+      //}
+      //else if(nFormat & DT_VCENTER)
+      //{
+      //   format.SetLineAlignment(Gdiplus::StringAlignmentCenter);
+      //}
+      //else
+      //{
+      //   format.SetLineAlignment(Gdiplus::StringAlignmentNear);
+      //}
 
-      //Gdiplus::REAL stops[] = {16,32,48,64,80,96,112,128};
+      ////Gdiplus::REAL stops[] = {16,32,48,64,80,96,112,128};
 
-      //format.SetTabStops(0,8,stops);
+      ////format.SetTabStops(0,8,stops);
 
-      //m_dFontSize             = fontSrc.m_dFontSize;
+      ////m_dFontSize             = fontSrc.m_dFontSize;
 
-      try
-      {
+      //try
+      //{
 
-         if (m_spfont->m_dFontWidth == 1.0)
-         {
+      //   if (m_spfont->m_dFontWidth == 1.0)
+      //   {
 
-            Gdiplus::RectF rectf((Gdiplus::REAL) rectParam.left, (Gdiplus::REAL) rectParam.top, (Gdiplus::REAL) (width(rectParam) * m_spfont->m_dFontWidth), (Gdiplus::REAL) (height(rectParam)));
+      //      Gdiplus::RectF rectf((Gdiplus::REAL) rectParam.left, (Gdiplus::REAL) rectParam.top, (Gdiplus::REAL) (width(rectParam) * m_spfont->m_dFontWidth), (Gdiplus::REAL) (height(rectParam)));
 
-            wstring wstr = ::str::international::utf8_to_unicode(str);
+      //      wstring wstr = ::str::international::utf8_to_unicode(str);
 
-            Gdiplus::Font * pfont = gdiplus_font();
+      //      Gdiplus::Font * pfont = gdiplus_font();
 
-            Gdiplus::Brush * pbrush = gdiplus_brush();
+      //      Gdiplus::Brush * pbrush = gdiplus_brush();
 
-            strsize iSize = wstr.get_length();
+      //      strsize iSize = wstr.get_length();
 
-            auto e = m_pgraphics->GetTextRenderingHint();
+      //      auto e = m_pgraphics->GetTextRenderingHint();
 
-            status = m_pgraphics->DrawString(wstr, (INT)iSize, pfont, rectf, &format, pbrush);
+      //      status = m_pgraphics->DrawString(wstr, (INT)iSize, pfont, rectf, &format, pbrush);
 
-         }
-         else
-         {
+      //   }
+      //   else
+      //   {
 
-            g_keep k(m_pgraphics);
+      //      g_keep k(m_pgraphics);
 
-            Gdiplus::Matrix m;
+      //      Gdiplus::Matrix m;
 
-            status = m_pgraphics->GetTransform(&m);
+      //      status = m_pgraphics->GetTransform(&m);
 
-            ap(Gdiplus::Matrix) pmNew = m.Clone();
+      //      ap(Gdiplus::Matrix) pmNew = m.Clone();
 
-            status = pmNew->Translate((Gdiplus::REAL) rectParam.left, (Gdiplus::REAL) rectParam.top);
+      //      status = pmNew->Translate((Gdiplus::REAL) rectParam.left, (Gdiplus::REAL) rectParam.top);
 
-            status = pmNew->Scale((Gdiplus::REAL) m_spfont->m_dFontWidth, (Gdiplus::REAL) 1.0, Gdiplus::MatrixOrderAppend);
+      //      status = pmNew->Scale((Gdiplus::REAL) m_spfont->m_dFontWidth, (Gdiplus::REAL) 1.0, Gdiplus::MatrixOrderAppend);
 
-            Gdiplus::RectF rectf(0, 0, (Gdiplus::REAL) (width(rectParam) * m_spfont->m_dFontWidth), (Gdiplus::REAL) (height(rectParam)));
+      //      Gdiplus::RectF rectf(0, 0, (Gdiplus::REAL) (width(rectParam) * m_spfont->m_dFontWidth), (Gdiplus::REAL) (height(rectParam)));
 
-            status = m_pgraphics->SetTransform(pmNew);
+      //      status = m_pgraphics->SetTransform(pmNew);
 
-            wstring wstr = ::str::international::utf8_to_unicode(str);
+      //      wstring wstr = ::str::international::utf8_to_unicode(str);
 
-            Gdiplus::Font * pfont = gdiplus_font();
+      //      Gdiplus::Font * pfont = gdiplus_font();
 
-            Gdiplus::Brush * pbrush = gdiplus_brush();
+      //      Gdiplus::Brush * pbrush = gdiplus_brush();
 
-            strsize iSize = wstr.get_length();
+      //      strsize iSize = wstr.get_length();
 
-            status = m_pgraphics->DrawString(wstr, (INT)iSize, pfont, rectf, &format, pbrush);
+      //      status = m_pgraphics->DrawString(wstr, (INT)iSize, pfont, rectf, &format, pbrush);
 
-         }
+      //   }
 
 
-      }
-      catch (...)
-      {
+      //}
+      //catch (...)
+      //{
 
-      }
+      //}
 
-      return status == Gdiplus::Status::Ok;
+      return gdiplus_draw_text(m_pgraphics, NULL, str, rectParam, nFormat, gdiplus_font(), m_spfont->m_dFontWidth, gdiplus_brush ()) == Gdiplus::Status::Ok;
 
    }
 

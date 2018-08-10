@@ -42,6 +42,7 @@ namespace draw2d_gdiplus
       //virtual bool internal_add_move(double x,double y);
 
       virtual bool internal_add_string(Gdiplus::Graphics * pgraphics, int32_t x,int32_t y,const string & strText,::draw2d::font_sp spfont);
+      virtual bool internal_add_draw_text(Gdiplus::Graphics * pgraphics, LPCRECT lpcrect, const string & strText, ::draw2d::font_sp spfont, int nFormat);
 
       virtual bool create(Gdiplus::Graphics * pgraphics);
       virtual bool destroy();
@@ -56,7 +57,7 @@ namespace draw2d_gdiplus
 
       virtual bool set(const ::draw2d::path::move & p);
 
-      virtual bool set(Gdiplus::Graphics * pgraphics, const ::draw2d::path::string_path & p);
+      virtual bool set(Gdiplus::Graphics * pgraphics, ::draw2d::path::element::e_type etype, const ::draw2d::path::string_path & p);
 
 
    };
