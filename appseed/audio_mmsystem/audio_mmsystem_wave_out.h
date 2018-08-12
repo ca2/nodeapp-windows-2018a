@@ -47,7 +47,7 @@ namespace multimedia
          imedia_time                      m_imediaposition;
 //         helper_thread *                  m_phelperthread;
          manual_reset_event               m_evFree;
-         thread *                         m_pthreadFree;
+         sp(thread)                       m_pthreadFree;
          int_array                        m_iaFree;
          mutex                            m_mutexFree;
 

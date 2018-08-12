@@ -33,8 +33,6 @@ namespace multimedia
          m_mutexFree(papp)
       {
 
-         m_pthreadFree = NULL;
-
          m_estate             = state_initial;
          m_pthreadCallback    = NULL;
          m_hwaveout           = NULL;
@@ -115,7 +113,7 @@ namespace multimedia
 
          sp(::multimedia::audio::wave) audiowave = Application.audiowave();
 
-         if (m_pthreadFree == NULL)
+         if (m_pthreadFree.is_null())
          {
 
             m_pthreadFree = fork([this]()
@@ -156,6 +154,8 @@ namespace multimedia
                   }
 
                }
+
+               m_pthreadFree.release();
 
                output_debug_string("quit");
 
