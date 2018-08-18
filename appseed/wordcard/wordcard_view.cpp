@@ -340,7 +340,7 @@ namespace wordcard
       {
          if(IsWindowVisible())
          {
-            //RedrawWindow();
+            //set_need_redraw();
          }
       }
       else if(ptimer->m_nIDEvent == 5432108)
@@ -382,7 +382,7 @@ namespace wordcard
          int32_t iLineHeight = m_iLineHeight;
          {
          }
-         RedrawWindow();
+         set_need_redraw();
       }
       else if(pbase->m_wparam == 2)
       {

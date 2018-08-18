@@ -81,7 +81,7 @@ namespace ca2plugin_container
          //if(!m_bMayProDevian && GetParent() == NULL)
          //{
 
-         //   //RedrawWindow();
+         //   //set_need_redraw();
 
          //}
 

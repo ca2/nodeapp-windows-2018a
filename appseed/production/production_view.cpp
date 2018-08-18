@@ -442,7 +442,7 @@ namespace production
       {
          if(IsWindowVisible())
          {
-            //RedrawWindow();
+            //set_need_redraw();
          }
       }
       else if(ptimer->m_nIDEvent == 5432108)
@@ -461,7 +461,7 @@ namespace production
          if(!m_pproduction->m_bFinished)
          {
             m_pproduction->m_dwEndTick = ::GetTickCount();
-            RedrawWindow();
+            set_need_redraw();
          }
 
       }
@@ -523,7 +523,7 @@ namespace production
                m_sizeTotal.cy = 80;
             }
          }
-         RedrawWindow();
+         set_need_redraw();
       }
       else if(pbase->m_wparam == 2)
       {
