@@ -350,6 +350,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_core_helper", "..\..\..\app-core\appseed\helper\helper.vcxproj", "{83F8DA23-7756-4B02-AA40-790B0B5ECF28}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8E2DA747-D784-4B3F-8961-913CBA4D215A}"
+	ProjectSection(SolutionItems) = preProject
+		Performance1.psess = Performance1.psess
+		Performance2.psess = Performance2.psess
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wndfrm_anthill", "..\..\..\app\appseed\wndfrm_anthill\wndfrm_anthill.vcxproj", "{0BB1A1D1-7B7D-4484-9DF5-060481390526}"
 EndProject
@@ -388,6 +392,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "clientchannels", "..\..\..\third\appseed\clientchannels\axisclientchannels.vcxproj", "{3C27B10B-E5DB-4DBA-8292-051830AAF103}"
 EndProject
 Global
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		basis|Win32 = basis|Win32
 		basis|x64 = basis|x64
@@ -1451,6 +1458,9 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {68D0CE57-7B21-4289-B0DC-382B607631F2}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true
